@@ -5836,6 +5836,54 @@ class AppLocalizationsPt extends AppLocalizations {
   String get deeperPlusOnly => 'Com o Astute+';
 
   @override
+  String get deeperSimpleLead =>
+      'A ideia da carta, como a contarias a uma criança curiosa de dez anos.';
+
+  @override
+  String get deeperSidesLead =>
+      'Os argumentos mais fortes de cada lado, e o que resolveria a questão.';
+
+  @override
+  String get deeperExampleLead =>
+      'Um momento de um dia qualquer em que esta ideia aparece.';
+
+  @override
+  String get deeperQuizLead =>
+      'Um caso que a carta não menciona: uma pergunta, três respostas.';
+
+  @override
+  String get deeperYourTakeLead =>
+      'O que se aguenta no teu raciocínio, onde falha, e uma pergunta para o pôr à prova.';
+
+  @override
+  String get deeperAskLead =>
+      'Tudo o que a carta te deixou com vontade de perguntar.';
+
+  @override
+  String get deeperSideA => 'Um lado';
+
+  @override
+  String get deeperSideB => 'O outro lado';
+
+  @override
+  String get deeperVersus => 'VS';
+
+  @override
+  String get deeperRetry => 'Tentar de novo';
+
+  @override
+  String get deeperSimpleGo => 'Explica-me';
+
+  @override
+  String get deeperSidesGo => 'Mostra-me os dois lados';
+
+  @override
+  String get deeperExampleGo => 'Dá-me um exemplo';
+
+  @override
+  String get deeperQuizGo => 'Põe-me à prova';
+
+  @override
   String get bookOfTheWeek => 'Livro da semana';
 
   @override

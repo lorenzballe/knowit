@@ -8190,6 +8190,90 @@ abstract class AppLocalizations {
   /// **'With Astute+'**
   String get deeperPlusOnly;
 
+  /// Go deeper, Astute+: under the name of the part that asks Claude to explain the card simply, what it gives, before it is asked.
+  ///
+  /// In en, this message translates to:
+  /// **'The card\'s idea, the way you\'d tell a curious ten-year-old.'**
+  String get deeperSimpleLead;
+
+  /// Go deeper, Astute+: under the name of the part that asks Claude for both sides of the card's question, what it gives, before it is asked.
+  ///
+  /// In en, this message translates to:
+  /// **'The strongest case on each side, and what would settle it.'**
+  String get deeperSidesLead;
+
+  /// Go deeper, Astute+: under the name of the part that asks Claude for an everyday example of the card's idea, what it gives, before it is asked.
+  ///
+  /// In en, this message translates to:
+  /// **'A moment from an ordinary day where this idea shows up.'**
+  String get deeperExampleLead;
+
+  /// Go deeper, Astute+: under the name of the part that asks Claude for a new multiple-choice question on the card's idea, what it gives: one question, three answers to pick from.
+  ///
+  /// In en, this message translates to:
+  /// **'A case the card doesn\'t mention: one question, three answers.'**
+  String get deeperQuizLead;
+
+  /// Go deeper, Astute+: under the name of the part where the reader writes their own reasoning about the card, what Claude says back: what is strong in it, its weakest step, and a question that tests it.
+  ///
+  /// In en, this message translates to:
+  /// **'What holds in your reasoning, where it slips, and a question to test it.'**
+  String get deeperYourTakeLead;
+
+  /// Go deeper, Astute+: under the name of the part where the reader asks Claude their own question about the card.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything the card left you wondering about.'**
+  String get deeperAskLead;
+
+  /// Go deeper, the two views facing each other: the name over the first view when the card gives it no label of its own.
+  ///
+  /// In en, this message translates to:
+  /// **'One side'**
+  String get deeperSideA;
+
+  /// Go deeper, the two views facing each other: the name over the second view when the card gives it no label of its own, and over a debate card's other side.
+  ///
+  /// In en, this message translates to:
+  /// **'The other side'**
+  String get deeperSideB;
+
+  /// Go deeper: the short word on the disc between the two views facing each other, as on a poster for a match. Two or three letters; keep VS where it is understood.
+  ///
+  /// In en, this message translates to:
+  /// **'VS'**
+  String get deeperVersus;
+
+  /// Go deeper: the button under 'It didn't come through' that asks Claude again.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get deeperRetry;
+
+  /// Go deeper, Astute+: the button that asks Claude to explain the card simply, under the part's name 'Explain it simply'. Short: it sits on one line beside a spark.
+  ///
+  /// In en, this message translates to:
+  /// **'Explain it'**
+  String get deeperSimpleGo;
+
+  /// Go deeper, Astute+: the button that asks Claude for the strongest case on each side of the card's question, under the part's name 'Both sides'. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'Show me both sides'**
+  String get deeperSidesGo;
+
+  /// Go deeper, Astute+: the button that asks Claude for an everyday example of the card's idea, under the part's name 'An example from everyday life'. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'Give me an example'**
+  String get deeperExampleGo;
+
+  /// Go deeper, Astute+: the button that asks Claude for a new question on the card's idea, under the part's name 'Test me on a new case'. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'Test me'**
+  String get deeperQuizGo;
+
   /// Books in pills, the Explore row of books in a few cards: bookOfTheWeek
   ///
   /// In en, this message translates to:

@@ -490,7 +490,9 @@ Every new card fills the first two; the third only where it belongs.
   policy, a live scientific dispute: each side at its strongest, written by
   someone who holds it, as `"Label: one or two sentences"`, with its best
   evidence. Never on settled science, never a straw man. A debate has its
-  `counterpoint` instead. Astute+.
+  `counterpoint` instead. Astute+. The app sets each label large over its
+  own half of the two facing each other, so a label is the side's claim in
+  a few words ("Competition protects customers"), not a sentence.
 
 `tool/cards/check.py` holds `why` to 60 words and the answer's own words
 out of it, and `views` to two labelled views of under 45 words each.

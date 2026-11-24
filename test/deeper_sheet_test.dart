@@ -1,14 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/card_json.dart';
+import 'package:astuto/data/topics.dart';
 import 'package:astuto/debug_flags.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/card_ask.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/deeper/look.dart';
+import 'package:astuto/widgets/deeper/pieces.dart' show splitView;
 import 'package:astuto/widgets/deeper_sheet.dart';
 import 'package:astuto/widgets/web/page_messages.dart';
 
@@ -42,15 +48,27 @@ Future<AppState> _app({required bool plus}) async {
   return app;
 }
 
-Future<void> _open(WidgetTester tester, AppState app, Pill pill) async {
-  tester.view.physicalSize = const Size(420, 1400);
+Future<void> _open(
+  WidgetTester tester,
+  AppState app,
+  Pill pill, {
+  Brightness theme = Brightness.light,
+  Size size = const Size(420, 1400),
+  double textScale = 1,
+}) async {
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
     MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: buildAstutoTheme(Brightness.light),
+      theme: buildAstutoTheme(theme),
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: TextScaler.linear(textScale)),
+        child: child!,
+      ),
       home: Builder(
         builder: (context) => Scaffold(
           body: Center(
@@ -133,7 +151,9 @@ void main() {
     );
     await _open(tester, await _app(plus: true), _card(full: false));
 
-    await tester.tap(find.text('Explain it simply').last);
+    // The part says what it is; its button, what it does.
+    expect(find.text('Explain it simply'), findsOneWidget);
+    await tester.tap(find.text('Explain it'));
     await tester.pumpAndSettle();
     expect(find.text('Answer for simple.'), findsOneWidget);
 
@@ -177,7 +197,7 @@ void main() {
     );
     await _open(tester, await _app(plus: true), _card(full: false));
 
-    final Finder button = find.text('Test me on a new case').last;
+    final Finder button = find.text('Test me');
     await tester.ensureVisible(button);
     await tester.tap(button);
     await tester.pumpAndSettle();
@@ -253,5 +273,313 @@ void main() {
 
   test('a page says its source was tapped', () {
     expect(PageMessage.parse('{"t":"deeper"}'), isA<PageDeeper>());
+  });
+
+  testWidgets('the two views face each other, each under its own label', (
+    tester,
+  ) async {
+    await _open(tester, await _app(plus: true), _card());
+    expect(find.text('Screen everyone'), findsOneWidget);
+    expect(find.text('it finds cases early.'), findsOneWidget);
+    expect(find.text('Screen few'), findsOneWidget);
+    expect(find.text('it saves false alarms.'), findsOneWidget);
+    expect(find.text('VS'), findsOneWidget);
+  });
+
+  test('a view is split into its label and its words; one with no label '
+      'of its own is given one', () {
+    expect(splitView('Screen everyone: it finds cases early.', 'One side'), (
+      'Screen everyone',
+      'it finds cases early.',
+    ));
+    expect(splitView('Nobody labelled this view.', 'One side'), (
+      'One side',
+      'Nobody labelled this view.',
+    ));
+  });
+
+  testWidgets('on the free plan with the answers on, every part Claude '
+      'writes is marked, and asking opens the paywall instead', (tester) async {
+    debugToolsOn = true;
+    int asked = 0;
+    CardAsk.call = (card, mode, {text = '', required language}) async {
+      asked++;
+      return const AskAnswer('Never shown.');
+    };
+    addTearDown(
+      () =>
+          CardAsk.call = (c, m, {text = '', required language}) async =>
+              const AskNone(AskWhyNot.later),
+    );
+    await _open(tester, await _app(plus: false), _card());
+    // Why and the views behind glass, as before; the example, the new
+    // case, the reader's idea and their question marked.
+    expect(find.text('With Astute+'), findsNWidgets(2));
+    expect(find.text('ASTUTE+'), findsNWidgets(4));
+    final Finder example = find.text('Give me an example');
+    await tester.ensureVisible(example);
+    await tester.tap(example);
+    for (int i = 0; i < 20; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+    expect(find.byType(PaywallScreen), findsOneWidget);
+    expect(asked, 0);
+  });
+
+  testWidgets('while the answer comes the button says so over lines where '
+      'it will be, and then it unfolds in their place', (tester) async {
+    debugToolsOn = true;
+    final Completer<AskResult> answer = Completer<AskResult>();
+    CardAsk.call = (card, mode, {text = '', required language}) =>
+        answer.future;
+    addTearDown(
+      () =>
+          CardAsk.call = (c, m, {text = '', required language}) async =>
+              const AskNone(AskWhyNot.later),
+    );
+    await _open(tester, await _app(plus: true), _card(full: false));
+    await tester.tap(find.text('Explain it'));
+    for (int i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+    expect(find.text('Thinking…'), findsOneWidget);
+    answer.complete(const AskAnswer('A small crowd in a big one.'));
+    await tester.pumpAndSettle();
+    expect(find.text('Thinking…'), findsNothing);
+    expect(find.text('A small crowd in a big one.'), findsOneWidget);
+  });
+
+  testWidgets('the reader\'s words go up into the conversation; an answer '
+      'that did not come says so, and asking again sends the same words', (
+    tester,
+  ) async {
+    debugToolsOn = true;
+    final List<(AskMode, String)> asked = [];
+    CardAsk.call = (card, mode, {text = '', required language}) async {
+      asked.add((mode, text));
+      return asked.length == 1
+          ? const AskNone(AskWhyNot.later)
+          : const AskAnswer('Strong start; the weak step is the rate.');
+    };
+    addTearDown(
+      () =>
+          CardAsk.call = (c, m, {text = '', required language}) async =>
+              const AskNone(AskWhyNot.later),
+    );
+    await _open(tester, await _app(plus: true), _card(full: false));
+    const String words = 'The test is right nineteen times in twenty.';
+    final Finder box = find.descendant(
+      of: find.byKey(const ValueKey('deeper-take')),
+      matching: find.byType(TextField),
+    );
+    await tester.enterText(box, words);
+    await tester.pump();
+    await tester.ensureVisible(find.text('Look at it'));
+    await tester.tap(find.text('Look at it'));
+    await tester.pumpAndSettle();
+    // Theirs, as a sent message; the box empty for the next words.
+    expect(find.text(words), findsOneWidget);
+    expect(tester.widget<TextField>(box).controller!.text, isEmpty);
+    expect(
+      find.text('It didn\'t come through. Try again in a moment.'),
+      findsOneWidget,
+    );
+    await tester.ensureVisible(find.text('Try again'));
+    await tester.tap(find.text('Try again'));
+    await tester.pumpAndSettle();
+    expect(asked, [(AskMode.take, words), (AskMode.take, words)]);
+    expect(
+      find.text('Strong start; the weak step is the rate.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('for a reader who asked for less motion, nothing moves: the '
+      'parts are there at once and the head\'s lights are still', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(420, 1400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final AppState app = await _app(plus: true);
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.dark),
+        builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(disableAnimations: true),
+          child: child!,
+        ),
+        home: Scaffold(
+          body: DeeperSheet(app: app, pill: _card()),
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(tester.binding.hasScheduledFrame, isFalse);
+    final Opacity first = tester.widget<Opacity>(
+      find
+          .ancestor(
+            of: find.byKey(const ValueKey('deeper-simple')),
+            matching: find.byType(Opacity),
+          )
+          .first,
+    );
+    expect(first.opacity, 1);
+  });
+
+  for (final Brightness theme in Brightness.values) {
+    testWidgets('at twice the text size on a small phone, in the '
+        '${theme.name}, every part and every answer lays out', (tester) async {
+      debugToolsOn = true;
+      CardAsk.call = (card, mode, {text = '', required language}) async =>
+          AskAnswer(switch (mode) {
+            AskMode.quiz =>
+              'Q: Which number do you ask for first?\n'
+                  'A) How common it is\nB) How sure the test is\n'
+                  'C) How many were tested\nRIGHT: A\n'
+                  'WHY: The base rate sets the odds before the test speaks.',
+            _ =>
+              'An answer long enough to wrap over several lines at a '
+                  'large size, with a word like Wahrscheinlichkeitsrechnung.',
+          });
+      addTearDown(
+        () =>
+            CardAsk.call = (c, m, {text = '', required language}) async =>
+                const AskNone(AskWhyNot.later),
+      );
+      final AppState app = await _app(plus: true);
+      await _open(
+        tester,
+        app,
+        _card(full: false),
+        theme: theme,
+        size: const Size(360, 740),
+        textScale: 2,
+      );
+      for (final String go in ['Explain it', 'Show me both sides', 'Test me']) {
+        await tester.ensureVisible(find.text(go));
+        await tester.tap(find.text(go));
+        await tester.pumpAndSettle();
+      }
+      final Finder pick = find.byKey(const ValueKey('deeper-quiz-option-0'));
+      await tester.ensureVisible(pick);
+      await tester.tap(pick);
+      await tester.pumpAndSettle();
+      for (final (String key, String send) in [
+        ('deeper-take', 'Look at it'),
+        ('deeper-ask', 'Ask'),
+      ]) {
+        final Finder box = find.descendant(
+          of: find.byKey(ValueKey(key)),
+          matching: find.byType(TextField),
+        );
+        await tester.ensureVisible(box);
+        await tester.enterText(box, 'My own words about the card.');
+        await tester.pump();
+        await tester.ensureVisible(find.text(send).last);
+        await tester.tap(find.text(send).last);
+        await tester.pumpAndSettle();
+      }
+      expect(find.text('My own words about the card.'), findsNWidgets(2));
+      expect(tester.takeException(), isNull);
+    });
+  }
+
+  test('every subject\'s sheet reads, in the dark and on paper: names on '
+      'their parts, words on their colours, the question on its head', () {
+    for (final TopicStyle subject in kTopics.values) {
+      for (final bool dark in [true, false]) {
+        final Palette p = dark ? Palette.dark : Palette.light;
+        final DeeperLook look = DeeperLook.of(subject.color, dark: dark);
+        final String where = '${subject.name}, ${dark ? 'dark' : 'light'}';
+        for (final DeeperPart part in DeeperPart.values) {
+          final DeeperTone tone = look.tone(part);
+          for (final Color ground in [tone.tile, tone.wash]) {
+            expect(
+              contrastOf(tone.title, ground),
+              greaterThanOrEqualTo(4.5),
+              reason: '$where, ${part.name}: its name',
+            );
+            expect(
+              contrastOf(p.ink, ground),
+              greaterThanOrEqualTo(7),
+              reason: '$where, ${part.name}: its words',
+            );
+            expect(
+              contrastOf(p.inkMuted, ground),
+              greaterThanOrEqualTo(4.5),
+              reason: '$where, ${part.name}: the line under its name',
+            );
+          }
+          expect(
+            contrastOf(tone.accent, tone.field),
+            greaterThanOrEqualTo(3),
+            reason: '$where, ${part.name}: its marks',
+          );
+          expect(
+            contrastOf(p.ink, tone.field),
+            greaterThanOrEqualTo(7),
+            reason: '$where, ${part.name}: words in its box',
+          );
+          for (final Color fill in [tone.vivid.fill, tone.vivid.deep]) {
+            expect(
+              contrastOf(tone.vivid.ink, fill),
+              greaterThanOrEqualTo(4.5),
+              reason: '$where, ${part.name}: its button',
+            );
+          }
+        }
+        for (final DeeperVivid side in [look.sideA, look.sideB]) {
+          for (final Color fill in [side.fill, side.deep]) {
+            expect(
+              contrastOf(side.ink, fill),
+              greaterThanOrEqualTo(4.5),
+              reason: '$where: a view on its half',
+            );
+          }
+        }
+        // The question is large, so three to one is the bar for it; on a
+        // light card, where the ink is dark, four and a half. No light
+        // drifting over the head may read worse than the card itself.
+        final double need = subject.ink.computeLuminance() < 0.5
+            ? 4.5
+            : contrastOf(subject.color, subject.ink).clamp(0, 3) - 0.05;
+        for (final Color light in [look.world, ...look.glow]) {
+          expect(
+            contrastOf(look.worldInk, light),
+            greaterThanOrEqualTo(need),
+            reason: '$where: the question on its head',
+          );
+        }
+      }
+    }
+  });
+
+  testWidgets('to a screen reader: the question and every part\'s name are '
+      'headings, the asking is a button named for what it does, and the '
+      'drawings and the VS stay out of the way', (tester) async {
+    final SemanticsHandle semantics = tester.ensureSemantics();
+    debugToolsOn = true;
+    await _open(tester, await _app(plus: true), _card());
+    expect(
+      tester.getSemantics(find.text('Why do rare illnesses fool good tests?')),
+      containsSemantics(isHeader: true),
+    );
+    expect(
+      tester.getSemantics(find.text('Why it matters')),
+      containsSemantics(isHeader: true),
+    );
+    expect(
+      tester.getSemantics(find.text('Give me an example')),
+      containsSemantics(
+        label: 'Give me an example',
+        isButton: true,
+        isEnabled: true,
+      ),
+    );
+    expect(find.bySemanticsLabel('VS'), findsNothing);
+    semantics.dispose();
   });
 }

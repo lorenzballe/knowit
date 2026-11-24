@@ -6040,6 +6040,53 @@ class AppLocalizationsRu extends AppLocalizations {
   String get deeperPlusOnly => 'С Astute+';
 
   @override
+  String get deeperSimpleLead =>
+      'Идея карточки простыми словами — как для любопытного десятилетнего ребёнка.';
+
+  @override
+  String get deeperSidesLead =>
+      'Самые сильные доводы каждой стороны — и что решило бы спор.';
+
+  @override
+  String get deeperExampleLead =>
+      'Момент из обычного дня, когда эта идея даёт о себе знать.';
+
+  @override
+  String get deeperQuizLead =>
+      'Случай, которого нет в карточке: один вопрос, три ответа.';
+
+  @override
+  String get deeperYourTakeLead =>
+      'Что в твоём рассуждении держится, где оно спотыкается, и вопрос, чтобы его проверить.';
+
+  @override
+  String get deeperAskLead => 'Всё, что после карточки хочется спросить.';
+
+  @override
+  String get deeperSideA => 'Одна сторона';
+
+  @override
+  String get deeperSideB => 'Другая сторона';
+
+  @override
+  String get deeperVersus => 'VS';
+
+  @override
+  String get deeperRetry => 'Повторить';
+
+  @override
+  String get deeperSimpleGo => 'Объясни мне';
+
+  @override
+  String get deeperSidesGo => 'Покажи обе стороны';
+
+  @override
+  String get deeperExampleGo => 'Приведи пример';
+
+  @override
+  String get deeperQuizGo => 'Проверь меня';
+
+  @override
   String get bookOfTheWeek => 'Книга недели';
 
   @override

@@ -1,0 +1,413 @@
+/// The head of Go deeper (deeper_sheet.dart): the card's own colour, lit by
+/// slow lights that drift across it, the subject's mark and name as the
+/// card wears them, and the card's question set large in the display face.
+///
+/// As the sheet scrolls, the head moves slower than the parts sliding up
+/// over it, so they read as lying on top of it.
+library;
+
+import 'dart:math' as math;
+import 'dart:ui' as ui;
+
+import 'package:flutter/foundation.dart' show ValueListenable;
+import 'package:flutter/material.dart';
+
+import '../../l10n/l10n.dart';
+import '../../models/pill.dart';
+import '../../theme.dart';
+import '../subject_icon.dart';
+import 'look.dart';
+
+class DeeperHeader extends StatelessWidget {
+  const DeeperHeader({
+    super.key,
+    required this.pill,
+    required this.look,
+    required this.drift,
+    required this.scroll,
+    required this.entrance,
+    required this.still,
+    required this.overlap,
+  });
+
+  final Pill pill;
+  final DeeperLook look;
+
+  /// The lights' one slow drift, 0 to 1, at rest at both ends.
+  final Animation<double> drift;
+
+  /// How far the sheet has scrolled.
+  final ValueListenable<double> scroll;
+
+  /// The sheet's arrival, 0 to 1: the head's words come in at its start.
+  final Animation<double> entrance;
+
+  /// Whether the reader asked for less motion: then nothing drifts or
+  /// lags, and everything is where it ends.
+  final bool still;
+
+  /// How far the first part lies over the head's foot.
+  final double overlap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Color ink = look.worldInk;
+    final double width = MediaQuery.sizeOf(context).width;
+    final double size = (width / 13.2).clamp(25.0, 32.0);
+    final String subject = l.subjectOf(pill.topic);
+
+    final Widget words = Padding(
+      padding: EdgeInsets.fromLTRB(24, 12, 24, 34 + overlap),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Container(
+              width: 40,
+              height: 5,
+              decoration: BoxDecoration(
+                color: ink.withValues(alpha: 0.28),
+                borderRadius: BorderRadius.circular(9),
+              ),
+            ),
+          ),
+          const SizedBox(height: 22),
+          _Rise(
+            animation: entrance,
+            from: 0.02,
+            to: 0.3,
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 12,
+              runSpacing: 10,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CardMark(pill: pill, size: 18, ink: ink),
+                    const SizedBox(width: 9),
+                    Flexible(
+                      child: Text(
+                        subject.toUpperCase(),
+                        style: AppText.label(
+                          size: 11.5,
+                          weight: FontWeight.w700,
+                          spacing: 1.6,
+                          color: ink.withValues(alpha: 0.86),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                // The sheet's name, worn as a card wears its tag.
+                Semantics(
+                  header: true,
+                  label: l.deeperTitle,
+                  child: ExcludeSemantics(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: ink,
+                        borderRadius: BorderRadius.circular(99),
+                      ),
+                      child: Text(
+                        l.deeperTitle.toUpperCase(),
+                        style: AppText.label(
+                          size: 11,
+                          weight: FontWeight.w800,
+                          spacing: 1.5,
+                          color: look.pearl
+                              ? Colors.white
+                              : Color.lerp(look.world, Colors.white, 0.12),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 18),
+          _Rise(
+            animation: entrance,
+            from: 0.06,
+            to: 0.38,
+            child: Semantics(
+              header: true,
+              child: Text(
+                pill.question,
+                style: AppText.display(
+                  size: size,
+                  weight: FontWeight.w700,
+                  height: 1.13,
+                  spacing: -0.6,
+                  color: ink,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    return ClipRect(
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: RepaintBoundary(
+              child: CustomPaint(
+                painter: _Glow(
+                  look: look,
+                  drift: drift,
+                  scroll: still ? null : scroll,
+                  foot: overlap,
+                ),
+              ),
+            ),
+          ),
+          // The subject's mark, drawn large and faint past the head's edge:
+          // the card's signature.
+          Positioned(
+            right: -38,
+            top: 4,
+            child: _Lag(
+              scroll: scroll,
+              still: still,
+              factor: 0.22,
+              child: ExcludeSemantics(
+                child: Transform.rotate(
+                  angle: -0.2,
+                  child: SubjectIcon(
+                    subject: pill.topic,
+                    size: 200,
+                    stroke: 1.5,
+                    ink: ink.withValues(alpha: look.pearl ? 0.06 : 0.1),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          _Lag(
+            scroll: scroll,
+            still: still,
+            factor: 0.42,
+            fade: true,
+            child: words,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Fades and lifts [child] in over a stretch of the sheet's arrival.
+class _Rise extends StatelessWidget {
+  const _Rise({
+    required this.animation,
+    required this.from,
+    required this.to,
+    required this.child,
+  });
+
+  final Animation<double> animation;
+  final double from;
+  final double to;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: animation,
+    child: child,
+    builder: (context, child) {
+      final double v = Curves.easeOutCubic.transform(
+        ((animation.value - from) / (to - from)).clamp(0.0, 1.0),
+      );
+      return Opacity(
+        opacity: v,
+        child: Transform.translate(
+          offset: Offset(0, 16 * (1 - v)),
+          child: child,
+        ),
+      );
+    },
+  );
+}
+
+/// Holds [child] back as the sheet scrolls, by [factor] of the distance, and
+/// with [fade] lets it go as it does.
+class _Lag extends StatelessWidget {
+  const _Lag({
+    required this.scroll,
+    required this.still,
+    required this.factor,
+    required this.child,
+    this.fade = false,
+  });
+
+  final ValueListenable<double> scroll;
+  final bool still;
+  final double factor;
+  final bool fade;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (still) return child;
+    return AnimatedBuilder(
+      animation: scroll,
+      // Drawn once, then only moved and faded as the sheet scrolls.
+      child: RepaintBoundary(child: child),
+      builder: (context, child) {
+        final double s = scroll.value.clamp(0.0, 600.0);
+        return Opacity(
+          opacity: fade ? (1 - s / 300).clamp(0.0, 1.0) : 1,
+          child: Transform.translate(
+            offset: Offset(0, s * factor),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// The head's ground: the card's colour, the lights drifting over it, a
+/// sheen across the top, and the foot deepening where the first part lies.
+class _Glow extends CustomPainter {
+  _Glow({
+    required this.look,
+    required this.drift,
+    required this.scroll,
+    required this.foot,
+  }) : super(repaint: Listenable.merge([drift, scroll]));
+
+  final DeeperLook look;
+  final Animation<double> drift;
+  final ValueListenable<double>? scroll;
+  final double foot;
+
+  /// Where each light rests, as parts of the head's width and height, how
+  /// big it is against the width, and the turns it makes in one drift.
+  static const List<(double, double, double, double, double)> _lights = [
+    (0.1, 0.15, 0.62, 1, 0.3),
+    (0.9, 0.05, 0.55, 2, 1.7),
+    (0.72, 0.95, 0.68, 1, 3.1),
+    (0.08, 0.98, 0.58, 2, 4.4),
+  ];
+
+  /// How far the lights travel, as parts of the head's width and height.
+  static const double _reachX = 0.3;
+  static const double _reachY = 0.24;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Rect box = Offset.zero & size;
+    final double v = drift.value;
+    // Under way within a second, slowing to rest over the last two: the
+    // lights are where they started at both ends, so a drift begun again
+    // starts from where the last one stopped.
+    final double swing =
+        Curves.easeOut.transform((v / 0.07).clamp(0.0, 1.0)) *
+        Curves.easeInOut.transform(((1 - v) / 0.14).clamp(0.0, 1.0));
+    final double lag = (scroll?.value ?? 0).clamp(0.0, 600.0) * 0.3;
+
+    canvas.drawRect(
+      box,
+      Paint()
+        ..shader = ui.Gradient.linear(
+          box.topLeft,
+          box.bottomRight,
+          [look.glow[1], look.world, look.glow[3]],
+          const [0, 0.5, 1],
+        ),
+    );
+
+    for (int i = 0; i < _lights.length; i++) {
+      final (double x, double y, double r, double turns, double phase) =
+          _lights[i];
+      final double a = 2 * math.pi * v * turns + phase;
+      final Offset centre = Offset(
+        size.width * (x + _reachX * swing * (math.sin(a) - math.sin(phase))),
+        size.height * (y + _reachY * swing * (math.cos(a) - math.cos(phase))) +
+            lag,
+      );
+      final double radius = size.width * r;
+      final Color colour = look.glow[i];
+      canvas.drawCircle(
+        centre,
+        radius,
+        Paint()
+          ..shader = ui.Gradient.radial(
+            centre,
+            radius,
+            [
+              colour.withValues(alpha: look.pearl ? 0.95 : 0.9),
+              colour.withValues(alpha: look.pearl ? 0.5 : 0.42),
+              colour.withValues(alpha: 0),
+            ],
+            const [0, 0.5, 1],
+          ),
+      );
+    }
+
+    // Once, as the sheet opens, light runs across the head as across a
+    // card turned in the hand.
+    final double glint = (v - 0.03) / 0.15;
+    if (glint > 0 && glint < 1) {
+      final double at = -0.4 + glint * 1.8;
+      canvas.drawRect(
+        box,
+        Paint()
+          ..shader = ui.Gradient.linear(
+            Offset(size.width * (at - 0.25), 0),
+            Offset(size.width * (at + 0.25), size.height * 0.6),
+            [
+              Colors.white.withValues(alpha: 0),
+              Colors.white.withValues(alpha: 0.2),
+              Colors.white.withValues(alpha: 0),
+            ],
+            const [0, 0.5, 1],
+          ),
+      );
+    }
+
+    // A soft light across the top left, as on glazed paper.
+    canvas.drawRect(
+      box,
+      Paint()
+        ..shader = ui.Gradient.linear(
+          box.topLeft,
+          Offset(size.width * 0.55, size.height * 0.7),
+          [
+            Colors.white.withValues(alpha: look.pearl ? 0.35 : 0.16),
+            Colors.white.withValues(alpha: 0),
+          ],
+        ),
+    );
+
+    // The foot, where the first part lies: let go into the sheet's own
+    // ground below the words, so the head has no edge, only an end.
+    final double melt = foot + 20;
+    canvas.drawRect(
+      Rect.fromLTRB(0, size.height - melt, size.width, size.height),
+      Paint()
+        ..shader = ui.Gradient.linear(
+          Offset(0, size.height - melt),
+          Offset(0, size.height),
+          [look.ground.withValues(alpha: 0), look.ground],
+        ),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_Glow old) =>
+      old.look != look ||
+      old.drift != drift ||
+      old.scroll != scroll ||
+      old.foot != foot;
+}

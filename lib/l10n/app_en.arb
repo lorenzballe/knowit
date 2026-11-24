@@ -6327,6 +6327,62 @@
  "@deeperPlusOnly": {
   "description": "Go deeper, the sheet a tap on a card's source opens: deeperPlusOnly"
  },
+ "deeperSimpleLead": "The card's idea, the way you'd tell a curious ten-year-old.",
+ "@deeperSimpleLead": {
+  "description": "Go deeper, Astute+: under the name of the part that asks Claude to explain the card simply, what it gives, before it is asked."
+ },
+ "deeperSidesLead": "The strongest case on each side, and what would settle it.",
+ "@deeperSidesLead": {
+  "description": "Go deeper, Astute+: under the name of the part that asks Claude for both sides of the card's question, what it gives, before it is asked."
+ },
+ "deeperExampleLead": "A moment from an ordinary day where this idea shows up.",
+ "@deeperExampleLead": {
+  "description": "Go deeper, Astute+: under the name of the part that asks Claude for an everyday example of the card's idea, what it gives, before it is asked."
+ },
+ "deeperQuizLead": "A case the card doesn't mention: one question, three answers.",
+ "@deeperQuizLead": {
+  "description": "Go deeper, Astute+: under the name of the part that asks Claude for a new multiple-choice question on the card's idea, what it gives: one question, three answers to pick from."
+ },
+ "deeperYourTakeLead": "What holds in your reasoning, where it slips, and a question to test it.",
+ "@deeperYourTakeLead": {
+  "description": "Go deeper, Astute+: under the name of the part where the reader writes their own reasoning about the card, what Claude says back: what is strong in it, its weakest step, and a question that tests it."
+ },
+ "deeperAskLead": "Anything the card left you wondering about.",
+ "@deeperAskLead": {
+  "description": "Go deeper, Astute+: under the name of the part where the reader asks Claude their own question about the card."
+ },
+ "deeperSideA": "One side",
+ "@deeperSideA": {
+  "description": "Go deeper, the two views facing each other: the name over the first view when the card gives it no label of its own."
+ },
+ "deeperSideB": "The other side",
+ "@deeperSideB": {
+  "description": "Go deeper, the two views facing each other: the name over the second view when the card gives it no label of its own, and over a debate card's other side."
+ },
+ "deeperVersus": "VS",
+ "@deeperVersus": {
+  "description": "Go deeper: the short word on the disc between the two views facing each other, as on a poster for a match. Two or three letters; keep VS where it is understood."
+ },
+ "deeperRetry": "Try again",
+ "@deeperRetry": {
+  "description": "Go deeper: the button under 'It didn't come through' that asks Claude again."
+ },
+ "deeperSimpleGo": "Explain it",
+ "@deeperSimpleGo": {
+  "description": "Go deeper, Astute+: the button that asks Claude to explain the card simply, under the part's name 'Explain it simply'. Short: it sits on one line beside a spark."
+ },
+ "deeperSidesGo": "Show me both sides",
+ "@deeperSidesGo": {
+  "description": "Go deeper, Astute+: the button that asks Claude for the strongest case on each side of the card's question, under the part's name 'Both sides'. Short."
+ },
+ "deeperExampleGo": "Give me an example",
+ "@deeperExampleGo": {
+  "description": "Go deeper, Astute+: the button that asks Claude for an everyday example of the card's idea, under the part's name 'An example from everyday life'. Short."
+ },
+ "deeperQuizGo": "Test me",
+ "@deeperQuizGo": {
+  "description": "Go deeper, Astute+: the button that asks Claude for a new question on the card's idea, under the part's name 'Test me on a new case'. Short."
+ },
  "bookOfTheWeek": "Book of the week",
  "@bookOfTheWeek": {
   "description": "Books in pills, the Explore row of books in a few cards: bookOfTheWeek"

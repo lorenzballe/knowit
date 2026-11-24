@@ -5569,6 +5569,48 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deeperPlusOnly => 'Astute+ で';
 
   @override
+  String get deeperSimpleLead => 'このカードの考えを、好奇心いっぱいの10歳に話すように。';
+
+  @override
+  String get deeperSidesLead => 'それぞれの立場のいちばん強い言い分と、決め手になるもの。';
+
+  @override
+  String get deeperExampleLead => 'ふつうの一日の中で、この考えが顔を出す瞬間。';
+
+  @override
+  String get deeperQuizLead => 'カードにない場面で、問題がひとつ、答えが三つ。';
+
+  @override
+  String get deeperYourTakeLead => 'あなたの考えの筋が通っているところ、つまずくところ、そして確かめるための質問。';
+
+  @override
+  String get deeperAskLead => 'このカードで気になったことを、なんでも。';
+
+  @override
+  String get deeperSideA => '一方の立場';
+
+  @override
+  String get deeperSideB => 'もう一方の立場';
+
+  @override
+  String get deeperVersus => 'VS';
+
+  @override
+  String get deeperRetry => 'もう一度';
+
+  @override
+  String get deeperSimpleGo => '説明して';
+
+  @override
+  String get deeperSidesGo => '両方の立場を見せて';
+
+  @override
+  String get deeperExampleGo => '例を出して';
+
+  @override
+  String get deeperQuizGo => '試してみる';
+
+  @override
   String get bookOfTheWeek => '今週の本';
 
   @override
