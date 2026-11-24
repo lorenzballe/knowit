@@ -5843,6 +5843,53 @@ class AppLocalizationsDe extends AppLocalizations {
   String get deeperPlusOnly => 'Mit Astute+';
 
   @override
+  String get deeperSimpleLead =>
+      'Die Idee der Karte, so erzählt wie einem neugierigen Zehnjährigen.';
+
+  @override
+  String get deeperSidesLead =>
+      'Die stärksten Argumente beider Seiten, und was die Frage entscheiden würde.';
+
+  @override
+  String get deeperExampleLead =>
+      'Ein Moment aus einem ganz normalen Tag, in dem diese Idee auftaucht.';
+
+  @override
+  String get deeperQuizLead =>
+      'Ein Fall, den die Karte nicht nennt: eine Frage, drei Antworten.';
+
+  @override
+  String get deeperYourTakeLead =>
+      'Was an deinem Gedankengang trägt, wo er hakt, und eine Frage, die ihn prüft.';
+
+  @override
+  String get deeperAskLead => 'Alles, was die Karte bei dir offengelassen hat.';
+
+  @override
+  String get deeperSideA => 'Die eine Seite';
+
+  @override
+  String get deeperSideB => 'Die andere Seite';
+
+  @override
+  String get deeperVersus => 'VS';
+
+  @override
+  String get deeperRetry => 'Erneut versuchen';
+
+  @override
+  String get deeperSimpleGo => 'Erklär es mir';
+
+  @override
+  String get deeperSidesGo => 'Zeig mir beide Seiten';
+
+  @override
+  String get deeperExampleGo => 'Gib mir ein Beispiel';
+
+  @override
+  String get deeperQuizGo => 'Teste mich';
+
+  @override
   String get bookOfTheWeek => 'Buch der Woche';
 
   @override

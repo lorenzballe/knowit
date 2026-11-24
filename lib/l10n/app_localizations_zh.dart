@@ -5570,6 +5570,48 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deeperPlusOnly => '使用 Astute+';
 
   @override
+  String get deeperSimpleLead => '把这张卡片的道理，讲给一个好奇的十岁孩子听。';
+
+  @override
+  String get deeperSidesLead => '双方最有力的理由，以及什么能让争论有定论。';
+
+  @override
+  String get deeperExampleLead => '平常一天里，这个道理冒出来的某个瞬间。';
+
+  @override
+  String get deeperQuizLead => '一个卡片没提到的情境：一道题，三个选项。';
+
+  @override
+  String get deeperYourTakeLead => '你的推理哪里站得住、哪里有漏洞，再给一个检验它的问题。';
+
+  @override
+  String get deeperAskLead => '这张卡片让你好奇的任何问题。';
+
+  @override
+  String get deeperSideA => '一方';
+
+  @override
+  String get deeperSideB => '另一方';
+
+  @override
+  String get deeperVersus => 'VS';
+
+  @override
+  String get deeperRetry => '重试';
+
+  @override
+  String get deeperSimpleGo => '讲给我听';
+
+  @override
+  String get deeperSidesGo => '看看正反两面';
+
+  @override
+  String get deeperExampleGo => '举个例子';
+
+  @override
+  String get deeperQuizGo => '考考我';
+
+  @override
   String get bookOfTheWeek => '本周之书';
 
   @override

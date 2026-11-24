@@ -5729,6 +5729,53 @@ class AppLocalizationsTr extends AppLocalizations {
   String get deeperPlusOnly => 'Astute+ ile';
 
   @override
+  String get deeperSimpleLead =>
+      'Kartın fikri, meraklı on yaşında bir çocuğa anlatır gibi.';
+
+  @override
+  String get deeperSidesLead =>
+      'Her iki tarafın en güçlü gerekçeleri ve meseleyi neyin çözeceği.';
+
+  @override
+  String get deeperExampleLead =>
+      'Sıradan bir günden, bu fikrin karşına çıktığı bir an.';
+
+  @override
+  String get deeperQuizLead =>
+      'Kartın söz etmediği bir durum: bir soru, üç cevap.';
+
+  @override
+  String get deeperYourTakeLead =>
+      'Akıl yürütmende sağlam olan, aksayan yer ve onu sınayacak bir soru.';
+
+  @override
+  String get deeperAskLead => 'Kartın sende merak bıraktığı her şey.';
+
+  @override
+  String get deeperSideA => 'Bir taraf';
+
+  @override
+  String get deeperSideB => 'Öteki taraf';
+
+  @override
+  String get deeperVersus => 'VS';
+
+  @override
+  String get deeperRetry => 'Tekrar dene';
+
+  @override
+  String get deeperSimpleGo => 'Bana anlat';
+
+  @override
+  String get deeperSidesGo => 'İki tarafı göster';
+
+  @override
+  String get deeperExampleGo => 'Bana bir örnek ver';
+
+  @override
+  String get deeperQuizGo => 'Beni sına';
+
+  @override
   String get bookOfTheWeek => 'Haftanın kitabı';
 
   @override

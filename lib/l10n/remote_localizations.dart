@@ -5546,6 +5546,57 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('deeperPlusOnly') ?? _base.deeperPlusOnly;
 
   @override
+  String get deeperSimpleLead =>
+      _words.text('deeperSimpleLead') ?? _base.deeperSimpleLead;
+
+  @override
+  String get deeperSidesLead =>
+      _words.text('deeperSidesLead') ?? _base.deeperSidesLead;
+
+  @override
+  String get deeperExampleLead =>
+      _words.text('deeperExampleLead') ?? _base.deeperExampleLead;
+
+  @override
+  String get deeperQuizLead =>
+      _words.text('deeperQuizLead') ?? _base.deeperQuizLead;
+
+  @override
+  String get deeperYourTakeLead =>
+      _words.text('deeperYourTakeLead') ?? _base.deeperYourTakeLead;
+
+  @override
+  String get deeperAskLead =>
+      _words.text('deeperAskLead') ?? _base.deeperAskLead;
+
+  @override
+  String get deeperSideA => _words.text('deeperSideA') ?? _base.deeperSideA;
+
+  @override
+  String get deeperSideB => _words.text('deeperSideB') ?? _base.deeperSideB;
+
+  @override
+  String get deeperVersus => _words.text('deeperVersus') ?? _base.deeperVersus;
+
+  @override
+  String get deeperRetry => _words.text('deeperRetry') ?? _base.deeperRetry;
+
+  @override
+  String get deeperSimpleGo =>
+      _words.text('deeperSimpleGo') ?? _base.deeperSimpleGo;
+
+  @override
+  String get deeperSidesGo =>
+      _words.text('deeperSidesGo') ?? _base.deeperSidesGo;
+
+  @override
+  String get deeperExampleGo =>
+      _words.text('deeperExampleGo') ?? _base.deeperExampleGo;
+
+  @override
+  String get deeperQuizGo => _words.text('deeperQuizGo') ?? _base.deeperQuizGo;
+
+  @override
   String get bookOfTheWeek =>
       _words.text('bookOfTheWeek') ?? _base.bookOfTheWeek;
 

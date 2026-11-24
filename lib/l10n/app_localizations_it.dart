@@ -5832,6 +5832,53 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deeperPlusOnly => 'Con Astute+';
 
   @override
+  String get deeperSimpleLead =>
+      'L\'idea della carta, come la racconteresti a un bambino curioso di dieci anni.';
+
+  @override
+  String get deeperSidesLead =>
+      'Le ragioni più forti di ciascuna parte, e cosa chiuderebbe la questione.';
+
+  @override
+  String get deeperExampleLead =>
+      'Un momento di una giornata qualunque in cui questa idea salta fuori.';
+
+  @override
+  String get deeperQuizLead =>
+      'Un caso che la carta non cita: una domanda, tre risposte.';
+
+  @override
+  String get deeperYourTakeLead =>
+      'Cosa regge nel tuo ragionamento, dove scivola, e una domanda per metterlo alla prova.';
+
+  @override
+  String get deeperAskLead => 'Quello che la carta ti ha lasciato da chiedere.';
+
+  @override
+  String get deeperSideA => 'Una parte';
+
+  @override
+  String get deeperSideB => 'L\'altra parte';
+
+  @override
+  String get deeperVersus => 'VS';
+
+  @override
+  String get deeperRetry => 'Riprova';
+
+  @override
+  String get deeperSimpleGo => 'Spiegamelo';
+
+  @override
+  String get deeperSidesGo => 'Mostrami le due parti';
+
+  @override
+  String get deeperExampleGo => 'Fammi un esempio';
+
+  @override
+  String get deeperQuizGo => 'Mettimi alla prova';
+
+  @override
   String get bookOfTheWeek => 'Libro della settimana';
 
   @override

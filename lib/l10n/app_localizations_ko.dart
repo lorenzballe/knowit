@@ -5590,6 +5590,48 @@ class AppLocalizationsKo extends AppLocalizations {
   String get deeperPlusOnly => 'Astute+로';
 
   @override
+  String get deeperSimpleLead => '이 카드의 생각을, 호기심 많은 열 살 아이에게 들려주듯이.';
+
+  @override
+  String get deeperSidesLead => '양쪽의 가장 강한 논거와, 무엇이 결론을 낼지.';
+
+  @override
+  String get deeperExampleLead => '평범한 하루 속에서 이 생각이 드러나는 순간.';
+
+  @override
+  String get deeperQuizLead => '카드에 없는 상황: 질문 하나, 답 셋.';
+
+  @override
+  String get deeperYourTakeLead => '내 추론에서 탄탄한 부분, 흔들리는 부분, 그리고 그것을 시험할 질문.';
+
+  @override
+  String get deeperAskLead => '카드를 보고 궁금해진 것이면 무엇이든.';
+
+  @override
+  String get deeperSideA => '한쪽 입장';
+
+  @override
+  String get deeperSideB => '다른 쪽 입장';
+
+  @override
+  String get deeperVersus => 'VS';
+
+  @override
+  String get deeperRetry => '다시 시도';
+
+  @override
+  String get deeperSimpleGo => '설명 듣기';
+
+  @override
+  String get deeperSidesGo => '양쪽 입장 보기';
+
+  @override
+  String get deeperExampleGo => '예시 보기';
+
+  @override
+  String get deeperQuizGo => '시험해 보기';
+
+  @override
   String get bookOfTheWeek => '이번 주의 책';
 
   @override
