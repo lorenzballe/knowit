@@ -5452,6 +5452,65 @@ class AppLocalizationsRu extends AppLocalizations {
       'Сейчас здесь не во что играть. Возвращайся завтра.';
 
   @override
+  String get challengesTitle => 'Испытания';
+
+  @override
+  String get challengesLine => 'По минуте-другой на каждое. Выбери и играй.';
+
+  @override
+  String challengesPage(int n, int of) {
+    return 'Страница $n из $of';
+  }
+
+  @override
+  String get gamePlay => 'Играть';
+
+  @override
+  String get sixtyRules =>
+      'Восемь утверждений: правда или ложь? У тебя минута. Доверься чутью.';
+
+  @override
+  String get sixtyNewRecord => 'Новый рекорд!';
+
+  @override
+  String get sixtyReview => 'Восемь утверждений';
+
+  @override
+  String get gameRight => 'Верно';
+
+  @override
+  String get gameWrong => 'Неверно';
+
+  @override
+  String get gameUnanswered => 'Нет ответа';
+
+  @override
+  String get gameNext => 'Следующее испытание';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · Шестьдесят секунд · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$n из $of верно · $s с';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: 'Осталось $s секунды',
+      many: 'Осталось $s секунд',
+      few: 'Осталось $s секунды',
+      one: 'Осталась $s секунда',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, уровень $n';
   }

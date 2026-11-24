@@ -5227,6 +5227,63 @@ class AppLocalizationsEn extends AppLocalizations {
       'Nothing to play here right now. Come back tomorrow.';
 
   @override
+  String get challengesTitle => 'Challenges';
+
+  @override
+  String get challengesLine => 'A minute or two each. Pick one and play.';
+
+  @override
+  String challengesPage(int n, int of) {
+    return 'Page $n of $of';
+  }
+
+  @override
+  String get gamePlay => 'Play';
+
+  @override
+  String get sixtyRules =>
+      'Eight claims, true or false. You have one minute: go with your gut.';
+
+  @override
+  String get sixtyNewRecord => 'New record!';
+
+  @override
+  String get sixtyReview => 'The eight claims';
+
+  @override
+  String get gameRight => 'Right';
+
+  @override
+  String get gameWrong => 'Wrong';
+
+  @override
+  String get gameUnanswered => 'No answer';
+
+  @override
+  String get gameNext => 'Next challenge';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · Sixty seconds · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$n of $of right · $s s';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: '$s seconds left',
+      one: '1 second left',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, level $n';
   }

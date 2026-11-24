@@ -4994,6 +4994,64 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('exploreGameNone') ?? _base.exploreGameNone;
 
   @override
+  String get challengesTitle =>
+      _words.text('challengesTitle') ?? _base.challengesTitle;
+
+  @override
+  String get challengesLine =>
+      _words.text('challengesLine') ?? _base.challengesLine;
+
+  @override
+  String challengesPage(int n, int of) =>
+      _words.format('challengesPage', localeName, {'n': n, 'of': of}) ??
+      _base.challengesPage(n, of);
+
+  @override
+  String get gamePlay => _words.text('gamePlay') ?? _base.gamePlay;
+
+  @override
+  String get sixtyRules => _words.text('sixtyRules') ?? _base.sixtyRules;
+
+  @override
+  String get sixtyNewRecord =>
+      _words.text('sixtyNewRecord') ?? _base.sixtyNewRecord;
+
+  @override
+  String get sixtyReview => _words.text('sixtyReview') ?? _base.sixtyReview;
+
+  @override
+  String get gameRight => _words.text('gameRight') ?? _base.gameRight;
+
+  @override
+  String get gameWrong => _words.text('gameWrong') ?? _base.gameWrong;
+
+  @override
+  String get gameUnanswered =>
+      _words.text('gameUnanswered') ?? _base.gameUnanswered;
+
+  @override
+  String get gameNext => _words.text('gameNext') ?? _base.gameNext;
+
+  @override
+  String sixtyShareHead(String date) =>
+      _words.format('sixtyShareHead', localeName, {'date': date}) ??
+      _base.sixtyShareHead(date);
+
+  @override
+  String sixtyShareScore(int n, int of, int s) =>
+      _words.format('sixtyShareScore', localeName, {
+        'n': n,
+        'of': of,
+        's': s,
+      }) ??
+      _base.sixtyShareScore(n, of, s);
+
+  @override
+  String sixtySecondsLeftLabel(int s) =>
+      _words.format('sixtySecondsLeftLabel', localeName, {'s': s}) ??
+      _base.sixtySecondsLeftLabel(s);
+
+  @override
   String exploreSubjectLevel(String subject, int n) =>
       _words.format('exploreSubjectLevel', localeName, {
         'subject': subject,

@@ -1,5 +1,5 @@
 /// One section of Explore on a page of its own: a game picked from the
-/// quick games, played with the room a game needs.
+/// challenges, played with the room a game needs.
 ///
 /// The section is drawn by the same engine and for the same host as the
 /// page it was opened from, so it is the same block doing the same things —

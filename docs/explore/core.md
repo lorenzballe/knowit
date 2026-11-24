@@ -374,26 +374,57 @@ Fields: `title`, `subtitle` (none by default: the panel says what it is).
 {"id": "your-day", "block": "your-day", "gap": 4}
 ```
 
-### `quick-games`
+### `quick-games` — the challenges
 
-Four games as four colourful tiles, two by two: Sixty seconds, Spot the false
-one, True or false and Which is bigger, each called by the game's own name in
-the reader's language. A tap opens the game on a page of its own, drawn by the
-same block as its shelf (`sixty`, `spot-false`, `true-false` without the spot
-under it, `bets-bigger`) for the same host, so a round played there is the
-day's round and an answer is recorded as any answer is; its cards are noted
-under the section's id and the game's (`quick-games-sixty`). The Sixty seconds
-tile says the reader's record, the most right in one round, kept for good
-("Your record 6/8"; "Set your record" before the first round). A game with
-nothing to play today has no tile; with none, there is no section.
+Explore's games, called Challenges ("Sfide"): tiles four to a page, two by
+two, the pages side by side, a swipe from one to the next and dots under them
+that say how many pages there are and which is showing (a tap on a dot goes to
+its page; to a screen reader they are the pages' control, adjusted up and
+down). First the four games the section always had — Sixty seconds, Spot the
+false one, True or false and Which is bigger — then the games of bets that are
+a whole game on a page of their own: Closer, closer; Orders of magnitude; Bet
+a range; Place your bet; Your number. Not among them: the slip and Bet a
+friend, which play nothing; Today's three, which opens Explore and whose three
+cards and crowd belong to its own section; and the bet of the day, Today's
+three with one card.
 
-Fields: `title`, `subtitle`, `games` (one to four of `sixty`, `spot-false`,
-`true-false`, `bets-bigger`, in the order shown; all four by default).
+Every tile is one size on every page, at any text size (the largest any
+game's words need, up to half as large again as the type is set): the game's
+colour from the subjects' wheel, a picture drawn for the game
+(`lib/widgets/explore/challenge_art.dart`, flat colours and a line of ink, as
+the drawn cards are), the game's own name in the reader's language — never
+broken in the middle of a word — and over the name on Sixty seconds the
+reader's record, the most right in one round, kept for good ("Your record
+6/8"; "Set your record" before the first round). A page not full keeps its
+empty places, drawn faintly.
+
+Sixty seconds is played on a screen of its own
+(`lib/widgets/explore/sixty_game.dart`): its tile grows into the whole screen
+in the game's colour, and back, and the round is played there in three
+moments — what it is (the name, the stopwatch, the rules, the record, Play),
+the round (the claim on a deck of the eight, False and True, or a swipe, the
+stopwatch become the clock, how far along), how it went (the score, a new
+record or the one standing, the eight as squares, the next challenge, the
+eight claims again, each a tap from its card, Play again, and the score to
+send, as squares, never the answers). Every other game opens on a page of its
+own, drawn by the same block as its shelf (`spot-false`, `true-false` without
+the spot under it, `bets-*` with their tiles one under another) for the same
+host. Either way a round played there is the day's round, a bet the day's bet
+and an answer recorded as any answer is; its cards are noted under the
+section's id and the game's (`quick-games-sixty`). A game with nothing to play
+today has no tile; with none, there is no section.
+
+Fields: `title`, `subtitle` (Challenges and "A minute or two each. Pick one
+and play." by default, in the reader's language), `games` (any of `sixty`,
+`spot-false`, `true-false`, `bets-bigger`, `bets-closer`, `bets-magnitude`,
+`bets-range`, `bets-stake`, `bets-number`, each once, in the order shown; all
+of them by default).
 
 ```json
 {"id": "quick-games", "block": "quick-games",
- "title": {"en": "Quick games", "it": "Giochi veloci"},
- "games": ["sixty", "spot-false", "true-false", "bets-bigger"]}
+ "title": {"en": "Challenges", "it": "Sfide"},
+ "games": ["sixty", "spot-false", "true-false", "bets-bigger",
+           "bets-closer", "bets-magnitude", "bets-range", "bets-stake"]}
 ```
 
 ### `subject-levels`

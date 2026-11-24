@@ -1,30 +1,53 @@
-/// Quick games: four of Explore's games as four colourful tiles, two by
-/// two — Sixty seconds, Spot the false one, True or false, and Which is
-/// bigger — each opening its game on a page of its own.
+/// Challenges (the `quick-games` block, by the name the document and the
+/// numbers have always known it): Explore's games as tiles, four to a page,
+/// two by two — Sixty seconds, Spot the false one, True or false and Which
+/// is bigger first, then the games of bets that are a game on their own —
+/// with the pages side by side, a swipe from one to the next, and dots that
+/// say how many there are (lib/widgets/explore/challenges.dart).
 ///
 /// The games were shelves far down the page, each as tall as a screen, and
 /// a reader who wanted a minute's play had to know where to scroll. A tile
-/// says what there is to play in a glance, and the game it opens is the
-/// same block it always was, drawn by the engine for the same host
-/// ([ExploreHost.openSection]), so a round played there is the round of the
-/// day, kept and counted as it always was. Sixty seconds says the reader's
-/// record on its tile: the most right in one round, kept for good
-/// (`AppState.sixtyBest`), where the round itself lasts only the day.
+/// says what there is to play in a glance. Each tile is its game's colour
+/// and picture; Sixty seconds says the reader's record on its tile, the
+/// most right in one round, kept for good (`AppState.sixtyBest`), where the
+/// round itself lasts only the day.
 ///
-/// A game with nothing to play today — not eight claims for the round, no
-/// pair of figures to compare — has no tile; with none, there is no
+/// Sixty seconds is played on a screen of its own: its tile grows into the
+/// whole screen (lib/widgets/explore/sixty_game.dart). Every other game
+/// opens on a page of its own, drawn by its own block for the same host
+/// ([ExploreHost.openSection]). Either way it is the game's own reckoning
+/// that is played — the day's round, the day's bets, the record — kept and
+/// counted as it always was, under the section's id and the game's
+/// (`quick-games-sixty`).
+///
+/// Of the games of bets (docs/explore/bets.md), these are here because each
+/// is a whole game on a page of its own: Closer, closer; Orders of
+/// magnitude; Bet a range; Place your bet; Your number. Not here: the slip
+/// and Bet a friend, which play nothing; Today's three, which opens Explore
+/// and whose three cards and crowd belong to its own section; and the bet
+/// of the day, which is Today's three again with one card.
+///
+/// A game with nothing to play today has no tile; with none, there is no
 /// section.
 library;
 
 import 'package:flutter/material.dart';
 
-import '../../../data/topics.dart' show inkOn;
 import '../../../l10n/l10n.dart';
-import '../../../theme.dart';
+import '../../../models/pill.dart';
+import '../../../widgets/explore/challenge_art.dart';
+import '../../../widgets/explore/challenges.dart';
+import '../../../widgets/explore/sixty_game.dart';
 import '../../explore_block.dart';
 import '../bets/bigger.dart';
+import '../bets/closer.dart';
+import '../bets/magnitude.dart';
+import '../bets/number.dart';
+import '../bets/range.dart';
+import '../bets/stake.dart';
 import 'layout.dart';
 import 'shelf_blocks.dart';
+import 'shelves.dart';
 
 /// One game a tile can open: what it is called, how it looks, and the
 /// section that draws it.
@@ -34,7 +57,7 @@ class QuickGame {
     required this.key,
     required this.block,
     required this.colour,
-    required this.icon,
+    required this.art,
     this.extra = const {},
   });
 
@@ -44,9 +67,12 @@ class QuickGame {
   /// The block that draws the game.
   final ExploreBlock block;
 
-  /// The tile's ground, from the subjects' wheel.
+  /// The tile's ground, from the subjects' wheel: one the drawn cards' ink
+  /// reads on.
   final Color colour;
-  final IconData icon;
+
+  /// The tile's picture.
+  final ChallengeArt art;
 
   /// What the game's section says beyond its id and block.
   final Map<String, Object?> extra;
@@ -56,6 +82,11 @@ class QuickGame {
     'sixty' => l.sixtyTitle,
     'spot-false' => l.spotTitle,
     'true-false' => l.themeTrueOrFalse,
+    'bets-closer' => l.betsCloserTitle,
+    'bets-magnitude' => l.betsMagnitudeTitle,
+    'bets-range' => l.betsRangeTitle,
+    'bets-stake' => l.betsStakeTitle,
+    'bets-number' => l.betsNumberTitle,
     _ => l.betsBiggerTitle,
   };
 
@@ -68,38 +99,75 @@ class QuickGame {
   );
 }
 
-/// The games, in the order a section that names none shows them. True or
-/// false is played without the game of spotting the false one under it,
-/// which has a tile of its own.
+/// The games, in the order a section that names none shows them: the four
+/// the first page always had, then the games of bets. True or false is
+/// played without the game of spotting the false one under it, which has a
+/// tile of its own; a game of bets on its page has its tiles one under
+/// another (`size` `l`), the width of the page.
 const List<QuickGame> kQuickGames = [
   QuickGame(
     key: 'sixty',
     block: SixtyBlock(),
     colour: Color(0xFFFFE600),
-    icon: Icons.timer_outlined,
+    art: ChallengeArt.sixty,
   ),
   QuickGame(
     key: 'spot-false',
     block: SpotFalseBlock(),
     colour: Color(0xFFFF3D7F),
-    icon: Icons.manage_search_rounded,
+    art: ChallengeArt.spot,
   ),
   QuickGame(
     key: 'true-false',
     block: TrueFalseBlock(),
     colour: Color(0xFF00E5A0),
-    icon: Icons.rule_rounded,
+    art: ChallengeArt.trueFalse,
     extra: {'spot': false},
   ),
   QuickGame(
     key: 'bets-bigger',
     block: BiggerBlock(),
     colour: Color(0xFF4C6FFF),
-    icon: Icons.swap_vert_rounded,
+    art: ChallengeArt.bigger,
+  ),
+  QuickGame(
+    key: 'bets-closer',
+    block: CloserBlock(),
+    colour: Color(0xFFFF7A1A),
+    art: ChallengeArt.closer,
+    extra: {'size': 'l'},
+  ),
+  QuickGame(
+    key: 'bets-magnitude',
+    block: MagnitudeBlock(),
+    colour: Color(0xFF9B5CFF),
+    art: ChallengeArt.magnitude,
+    extra: {'size': 'l'},
+  ),
+  QuickGame(
+    key: 'bets-range',
+    block: RangeBlock(),
+    colour: Color(0xFF00D9D9),
+    art: ChallengeArt.range,
+    extra: {'size': 'l'},
+  ),
+  QuickGame(
+    key: 'bets-stake',
+    block: StakeBlock(),
+    colour: Color(0xFFA6FF00),
+    art: ChallengeArt.stake,
+    extra: {'size': 'l'},
+  ),
+  QuickGame(
+    key: 'bets-number',
+    block: NumberBlock(),
+    colour: Color(0xFFE040FB),
+    art: ChallengeArt.number,
+    extra: {'size': 'l'},
   ),
 ];
 
-/// The games [section] names in `games`, in its order, or all four.
+/// The games [section] names in `games`, in its order, or all of them.
 List<QuickGame> gamesOf(ExploreSection section) {
   final Object? named = section.json['games'];
   if (named is! List) return kQuickGames;
@@ -108,6 +176,9 @@ List<QuickGame> gamesOf(ExploreSection section) {
       ...kQuickGames.where((g) => g.key == key),
   ];
 }
+
+/// What a game's tile flies from, and its screen back to.
+Object challengeHeroOf(ExploreSection inner) => 'challenge-${inner.id}';
 
 /// The block: see the library's own words.
 class QuickGamesBlock extends ExploreBlock with SectionLayout {
@@ -137,169 +208,86 @@ class QuickGamesBlock extends ExploreBlock with SectionLayout {
     if (games.isEmpty) return null;
     final l = context.l10n;
     final int best = host.app.sixtyBest;
-    Widget tile((QuickGame, ExploreSection) entry) {
-      final (QuickGame game, ExploreSection inner) = entry;
-      return GameTile(
-        key: ValueKey('quick-game-${game.key}'),
-        title: game.title(l),
-        colour: game.colour,
-        icon: game.icon,
-        note: game.key == 'sixty'
-            ? (best > 0 ? l.exploreSixtyRecord(best, 8) : l.exploreSixtyFirst)
-            : null,
-        onTap: () => host.openSection(inner),
+    ChallengeLook lookOf(QuickGame game) => ChallengeLook(
+      title: game.title(l),
+      colour: game.colour,
+      art: game.art,
+      note: game.key == 'sixty'
+          ? (best > 0 ? l.exploreSixtyRecord(best, 8) : l.exploreSixtyFirst)
+          : null,
+    );
+    final List<ChallengeTileSpec> tiles = [];
+    for (int i = 0; i < games.length; i++) {
+      final (QuickGame game, ExploreSection inner) = games[i];
+      final ChallengeLook look = lookOf(game);
+      if (game.key != 'sixty') {
+        tiles.add(
+          ChallengeTileSpec(
+            id: game.key,
+            look: look,
+            onTap: () => host.openSection(inner),
+          ),
+        );
+        continue;
+      }
+      // Sixty seconds, on the whole screen; the challenge after it offered
+      // when the round is over.
+      final (QuickGame, ExploreSection)? next = games.length > 1
+          ? games[(i + 1) % games.length]
+          : null;
+      tiles.add(
+        ChallengeTileSpec(
+          id: game.key,
+          look: look,
+          heroTag: challengeHeroOf(inner),
+          onTap: () => _playSixty(
+            context,
+            host,
+            inner,
+            look,
+            next: next == null ? null : (lookOf(next.$1), next.$2),
+          ),
+        ),
       );
     }
 
     return SectionFrame(
-      title: section.title(host.language),
-      line: section.subtitle(host.language),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            for (int i = 0; i < games.length; i += 2) ...[
-              if (i > 0) const SizedBox(height: 10),
-              IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(child: tile(games[i])),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: i + 1 < games.length
-                          ? tile(games[i + 1])
-                          : const SizedBox.shrink(),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
+      title: section.title(host.language) ?? l.challengesTitle,
+      line: section.subtitle(host.language) ?? l.challengesLine,
+      child: ChallengePager(id: section.id, tiles: tiles),
     );
   }
-}
 
-/// One game's tile: its colour, its mark, its name, and a note over the
-/// name where the game has one to say.
-class GameTile extends StatelessWidget {
-  const GameTile({
-    super.key,
-    required this.title,
-    required this.colour,
-    required this.icon,
-    required this.onTap,
-    this.note,
-  });
-
-  final String title;
-  final Color colour;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  /// A line over the name: the record, on Sixty seconds.
-  final String? note;
-
-  @override
-  Widget build(BuildContext context) {
-    final Color ink = inkOn(colour);
-    return Semantics(
-      button: true,
-      label: note == null ? title : '$title, $note',
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 116),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    colour,
-                    Color.alphaBlend(
-                      Colors.black.withValues(alpha: 0.16),
-                      colour,
-                    ),
-                  ],
-                ),
-              ),
-              child: Stack(
-                children: [
-                  // The mark again, large and faint, off the corner: the
-                  // tile is the game's colour first and its words second.
-                  Positioned(
-                    right: -18,
-                    bottom: -22,
-                    child: Icon(
-                      icon,
-                      size: 96,
-                      color: ink.withValues(alpha: 0.1),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(13, 12, 12, 13),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 32,
-                          height: 32,
-                          decoration: BoxDecoration(
-                            color: ink.withValues(alpha: 0.13),
-                            shape: BoxShape.circle,
-                          ),
-                          alignment: Alignment.center,
-                          child: Icon(icon, size: 18, color: ink),
-                        ),
-                        const SizedBox(height: 14),
-                        // The note over the name, as a line of its own: a
-                        // pill in the corner broke in two on most phones.
-                        // The names of a row stay level at its foot.
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (note != null) ...[
-                              Text(
-                                note!,
-                                key: const ValueKey('game-note'),
-                                style: AppText.body(
-                                  size: 11.5,
-                                  weight: FontWeight.w700,
-                                  height: 1.2,
-                                  color: ink.withValues(alpha: 0.78),
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                            ],
-                            Text(
-                              title,
-                              style: AppText.display(
-                                size: 18,
-                                weight: FontWeight.w600,
-                                height: 1.08,
-                                spacing: -0.3,
-                                color: ink,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+  /// Opens Sixty seconds on its own screen, out of its tile, playing the
+  /// day's round exactly as its shelf does: the same eight claims, the
+  /// record kept by the app, a card opened as from any shelf.
+  static void _playSixty(
+    BuildContext context,
+    ExploreHost host,
+    ExploreSection inner,
+    ChallengeLook look, {
+    (ChallengeLook, ExploreSection)? next,
+  }) {
+    final List<Pill> pills = ExploreShelves.of(host).mix.sixty;
+    if (pills.length != 8) {
+      host.openSection(inner);
+      return;
+    }
+    host.openScreen(
+      inner,
+      sixtyGameRoute(
+        SixtyGame(
+          look: look,
+          heroTag: challengeHeroOf(inner),
+          pills: pills,
+          best: () => host.app.sixtyBest,
+          onFinished: host.app.noteSixtyRound,
+          onOpen: (shelf, pill) => host.open(inner, shelf, pill),
+          onShown: (pill) => host.seen(inner, pill),
+          next: next?.$1,
+          onNext: next == null ? null : () => host.openSection(next.$2),
         ),
+        calm: MediaQuery.disableAnimationsOf(context),
       ),
     );
   }

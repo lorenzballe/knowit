@@ -5047,6 +5047,61 @@ class AppLocalizationsKo extends AppLocalizations {
   String get exploreGameNone => '지금은 할 수 있는 게임이 없어요. 내일 다시 오세요.';
 
   @override
+  String get challengesTitle => '챌린지';
+
+  @override
+  String get challengesLine => '하나에 1~2분. 골라서 플레이하세요.';
+
+  @override
+  String challengesPage(int n, int of) {
+    return '$of페이지 중 $n페이지';
+  }
+
+  @override
+  String get gamePlay => '시작';
+
+  @override
+  String get sixtyRules => '주장 8개, 참일까 거짓일까. 시간은 1분, 직감을 믿으세요.';
+
+  @override
+  String get sixtyNewRecord => '새 기록!';
+
+  @override
+  String get sixtyReview => '주장 8개';
+
+  @override
+  String get gameRight => '정답';
+
+  @override
+  String get gameWrong => '오답';
+
+  @override
+  String get gameUnanswered => '미응답';
+
+  @override
+  String get gameNext => '다음 챌린지';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · 60초 · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$of개 중 $n개 정답 · $s초';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: '$s초 남음',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, 레벨 $n';
   }

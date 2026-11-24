@@ -34,6 +34,9 @@ enum ShareRef {
   /// Today's three: the day's score, a square a card, never the answers.
   three('share_three'),
 
+  /// Sixty seconds: the round's score, a square a claim, never the answers.
+  sixty('share_sixty'),
+
   /// The line of the day (lib/data/day_lines.dart), with where it was
   /// written.
   line('share_line');

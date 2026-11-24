@@ -5033,6 +5033,61 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exploreGameNone => '现在这里没有可玩的。明天再来。';
 
   @override
+  String get challengesTitle => '挑战';
+
+  @override
+  String get challengesLine => '每个只要一两分钟。选一个开始玩。';
+
+  @override
+  String challengesPage(int n, int of) {
+    return '第 $n 页，共 $of 页';
+  }
+
+  @override
+  String get gamePlay => '开始';
+
+  @override
+  String get sixtyRules => '八条说法，是真是假？你有一分钟，凭直觉作答。';
+
+  @override
+  String get sixtyNewRecord => '新纪录！';
+
+  @override
+  String get sixtyReview => '八条说法';
+
+  @override
+  String get gameRight => '答对了';
+
+  @override
+  String get gameWrong => '答错了';
+
+  @override
+  String get gameUnanswered => '未作答';
+
+  @override
+  String get gameNext => '下一个挑战';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · 六十秒 · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$of 道答对 $n 道 · $s 秒';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: '还剩 $s 秒',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject，等级 $n';
   }

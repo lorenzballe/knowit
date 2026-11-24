@@ -5029,6 +5029,61 @@ class AppLocalizationsJa extends AppLocalizations {
   String get exploreGameNone => '今は遊べるものがありません。また明日。';
 
   @override
+  String get challengesTitle => 'チャレンジ';
+
+  @override
+  String get challengesLine => 'どれも1〜2分。選んで遊ぼう。';
+
+  @override
+  String challengesPage(int n, int of) {
+    return '$ofページ中$nページ目';
+  }
+
+  @override
+  String get gamePlay => 'スタート';
+
+  @override
+  String get sixtyRules => '8つの主張、正しいか間違いか。持ち時間は1分、直感で答えよう。';
+
+  @override
+  String get sixtyNewRecord => '自己ベスト更新！';
+
+  @override
+  String get sixtyReview => '8つの主張';
+
+  @override
+  String get gameRight => '正解';
+
+  @override
+  String get gameWrong => '不正解';
+
+  @override
+  String get gameUnanswered => '未回答';
+
+  @override
+  String get gameNext => '次のチャレンジ';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · 60秒 · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$of問中$n問正解 · $s秒';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: '残り$s秒',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject、レベル$n';
   }

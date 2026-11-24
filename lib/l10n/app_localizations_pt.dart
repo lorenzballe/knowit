@@ -5270,6 +5270,63 @@ class AppLocalizationsPt extends AppLocalizations {
       'Agora não há nada para jogar aqui. Volta amanhã.';
 
   @override
+  String get challengesTitle => 'Desafios';
+
+  @override
+  String get challengesLine => 'Um ou dois minutos cada. Escolhe um e joga.';
+
+  @override
+  String challengesPage(int n, int of) {
+    return 'Página $n de $of';
+  }
+
+  @override
+  String get gamePlay => 'Jogar';
+
+  @override
+  String get sixtyRules =>
+      'Oito afirmações, verdadeiras ou falsas. Tens um minuto: confia no instinto.';
+
+  @override
+  String get sixtyNewRecord => 'Novo recorde!';
+
+  @override
+  String get sixtyReview => 'As oito afirmações';
+
+  @override
+  String get gameRight => 'Certo';
+
+  @override
+  String get gameWrong => 'Errado';
+
+  @override
+  String get gameUnanswered => 'Sem resposta';
+
+  @override
+  String get gameNext => 'Próximo desafio';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · Sessenta segundos · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$n de $of certas · $s s';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: 'Faltam $s segundos',
+      one: 'Falta 1 segundo',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, nível $n';
   }

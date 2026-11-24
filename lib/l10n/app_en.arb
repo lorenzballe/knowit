@@ -5619,6 +5619,91 @@
  "@exploreGameNone": {
   "description": "Explore: a game opened on a page of its own, when it has nothing to play right now."
  },
+ "challengesTitle": "Challenges",
+ "@challengesTitle": {
+  "description": "Explore: the name of the section of games — Sixty seconds, Spot the false one and the others, four to a page — when the remote document gives it none. Short: a section's title."
+ },
+ "challengesLine": "A minute or two each. Pick one and play.",
+ "@challengesLine": {
+  "description": "Explore, the challenges: the line under the section's name, when the remote document gives it none."
+ },
+ "challengesPage": "Page {n} of {of}",
+ "@challengesPage": {
+  "description": "Explore, the challenges: the dots under the pages of games, as a screen reader says them — the page showing and how many there are.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "gamePlay": "Play",
+ "@gamePlay": {
+  "description": "A game opened on the whole screen from Explore's challenges: the large button that starts it. One short word."
+ },
+ "sixtyRules": "Eight claims, true or false. You have one minute: go with your gut.",
+ "@sixtyRules": {
+  "description": "Sixty seconds on the whole screen, before the round: the rules in a line, under the game's name."
+ },
+ "sixtyNewRecord": "New record!",
+ "@sixtyNewRecord": {
+  "description": "Sixty seconds on the whole screen, at the end of a round: the round beat the reader's record."
+ },
+ "sixtyReview": "The eight claims",
+ "@sixtyReview": {
+  "description": "Sixty seconds on the whole screen, at the end of a round: over the round's eight claims again, each with whether the reader got it right. Shown in capitals."
+ },
+ "gameRight": "Right",
+ "@gameRight": {
+  "description": "A game played on the whole screen: an answer just given was right — said by a screen reader as it is given, and beside a claim at the end. Not the word for 'true': in Sixty seconds a claim is true or false, and an answer right or wrong."
+ },
+ "gameWrong": "Wrong",
+ "@gameWrong": {
+  "description": "A game played on the whole screen: an answer just given was wrong. Not the word for 'false' (see gameRight)."
+ },
+ "gameUnanswered": "No answer",
+ "@gameUnanswered": {
+  "description": "Sixty seconds, at the end of a round: a claim the time ran out on before the reader answered it, as a screen reader says it."
+ },
+ "gameNext": "Next challenge",
+ "@gameNext": {
+  "description": "At the end of a game played on the whole screen: over the name of the next game of Explore's challenges, which a tap opens. Shown in capitals."
+ },
+ "sixtyShareHead": "Astute · Sixty seconds · {date}",
+ "@sixtyShareHead": {
+  "description": "First line of the message a round of Sixty seconds is sent in: the app, the game's name, and the day.",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "sixtyShareScore": "{n} of {of} right · {s} s",
+ "@sixtyShareScore": {
+  "description": "Second line of the message a round of Sixty seconds is sent in: how many of the claims were right, and in how many seconds.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   },
+   "s": {
+    "type": "int"
+   }
+  }
+ },
+ "sixtySecondsLeftLabel": "{s, plural, =1{1 second left} other{{s} seconds left}}",
+ "@sixtySecondsLeftLabel": {
+  "description": "Sixty seconds on the whole screen, during the round: the clock, as a screen reader says it.",
+  "placeholders": {
+   "s": {
+    "type": "int"
+   }
+  }
+ },
  "exploreSubjectLevel": "{subject}, level {n}",
  "@exploreSubjectLevel": {
   "description": "Explore, the subjects with their levels: one subject's ring, said to a screen reader. The level is 1 to 10.",

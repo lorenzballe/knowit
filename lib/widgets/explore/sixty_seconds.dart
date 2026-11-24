@@ -9,6 +9,107 @@ import '../../analytics.dart';
 import 'parts.dart';
 import '../card_edge.dart';
 
+/// A round of Sixty seconds, kept and counted the same way wherever it is
+/// played — on its shelf ([SixtySeconds]) or on a screen of its own
+/// (lib/widgets/explore/sixty_game.dart): the answers given, in order, how
+/// long the round took, the day's round kept as it ended (`sixty` in
+/// [ExplorePlay]), and the events that say it was started and finished.
+class SixtyRound {
+  SixtyRound(this.pills);
+
+  /// How long a round lasts.
+  static const int seconds = 60;
+
+  /// The claims, in the order they are asked.
+  final List<Pill> pills;
+
+  /// The answers given, in order: true for "true". Null before a round.
+  List<bool>? answers;
+
+  /// How long the round took, once it is over.
+  double? took;
+
+  bool get running => answers != null && took == null;
+  bool get over => answers != null && took != null;
+
+  /// The round played earlier today, as it ended, when it was these very
+  /// claims: true when there was one.
+  bool restore() {
+    final Object? kept = ExplorePlay.instance['sixty'];
+    if (kept is! Map || kept['a'] is! List || kept['ids'] is! List) {
+      return false;
+    }
+    final ids = (kept['ids'] as List).cast<Object?>();
+    if (ids.length != pills.length) return false;
+    for (int i = 0; i < ids.length; i++) {
+      if (ids[i] != pills[i].id) return false;
+    }
+    answers = [for (final a in kept['a'] as List) a == true];
+    took = (kept['s'] as num?)?.toDouble() ?? seconds.toDouble();
+    return true;
+  }
+
+  /// A new round, from the first claim.
+  void start() {
+    answers = [];
+    took = null;
+    Analytics.capture('explore sixty started');
+  }
+
+  /// [sayTrue] said of the claim in front of the reader. True when it was
+  /// the last one, and the round is to end.
+  bool answer(bool sayTrue) {
+    final List<bool>? given = answers;
+    if (given == null || took != null) return false;
+    given.add(sayTrue);
+    return given.length >= pills.length;
+  }
+
+  /// The round over after [took] seconds: kept as the day's round, and
+  /// said. How many were right.
+  int finish(double took) {
+    this.took = took;
+    final int right = this.right;
+    ExplorePlay.instance.put('sixty', {
+      'ids': [for (final p in pills) p.id],
+      'a': [...?answers],
+      's': took,
+    });
+    Analytics.capture('explore sixty finished', {
+      'right': right,
+      'answered': answers?.length ?? 0,
+      'seconds': took.round(),
+    });
+    return right;
+  }
+
+  /// Whether the claim at [i] was said right; null when it was not
+  /// answered before the time ran out.
+  bool? rightAt(int i) {
+    final List<bool> given = answers ?? const [];
+    if (i >= given.length || i >= pills.length) return null;
+    return given[i] == trueOrFalseAnswer(pills[i]);
+  }
+
+  /// How many were said right.
+  int get right {
+    int n = 0;
+    for (int i = 0; i < pills.length; i++) {
+      if (rightAt(i) == true) n++;
+    }
+    return n;
+  }
+
+  /// Whether every claim was answered before the time ran out.
+  bool get allAnswered => (answers?.length ?? 0) >= pills.length;
+
+  /// The claims missed: said wrong, or not said at all.
+  List<int> get misses => [
+    for (int i = 0; i < pills.length; i++)
+      if (rightAt(i) != true) i,
+  ];
+}
+
 /// Sixty seconds — artboard 140d's round.
 ///
 /// Eight claims, true or false, against a minute: gut, not deliberation,
@@ -43,39 +144,27 @@ class SixtySeconds extends StatefulWidget {
 
 class _SixtySecondsState extends State<SixtySeconds>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  static const int _seconds = 60;
+  static const int _seconds = SixtyRound.seconds;
 
+  /// The round's minute: a minute whatever the phone says of motion. A
+  /// controller left to the platform runs twenty times as fast where motion
+  /// is reduced, and the round was over in three seconds.
   late final AnimationController _clock = AnimationController(
     vsync: this,
     duration: const Duration(seconds: _seconds),
+    animationBehavior: AnimationBehavior.preserve,
   )..addStatusListener(_ticked);
 
-  /// The answers given this round, in order: true for "true".
-  List<bool>? _answers;
+  /// The round: what was answered, and how long it took. A round played
+  /// earlier today is shown as it ended.
+  late final SixtyRound _game = SixtyRound(widget.pills)..restore();
 
-  /// How long the round took, once it is over.
-  double? _took;
-
-  bool get _running => _answers != null && _took == null;
+  List<bool>? get _answers => _game.answers;
+  double? get _took => _game.took;
+  bool get _running => _game.running;
 
   @override
   bool get wantKeepAlive => _running;
-
-  @override
-  void initState() {
-    super.initState();
-    // A round played earlier today is shown as it ended.
-    final Object? kept = ExplorePlay.instance['sixty'];
-    if (kept is Map && kept['a'] is List && kept['ids'] is List) {
-      final ids = (kept['ids'] as List).cast<Object?>();
-      if (ids.length == widget.pills.length &&
-          [for (int i = 0; i < ids.length; i++) ids[i] == widget.pills[i].id]
-              .every((same) => same)) {
-        _answers = [for (final a in kept['a'] as List) a == true];
-        _took = (kept['s'] as num?)?.toDouble() ?? _seconds.toDouble();
-      }
-    }
-  }
 
   @override
   void dispose() {
@@ -88,48 +177,28 @@ class _SixtySecondsState extends State<SixtySeconds>
   }
 
   void _start() {
-    setState(() {
-      _answers = [];
-      _took = null;
-    });
+    setState(_game.start);
     updateKeepAlive();
     _clock.forward(from: 0);
-    Analytics.capture('explore sixty started');
   }
 
   void _answer(bool sayTrue) {
     if (!_running) return;
-    setState(() => _answers!.add(sayTrue));
-    if (_answers!.length >= widget.pills.length) _finish();
+    late final bool last;
+    setState(() => last = _game.answer(sayTrue));
+    if (last) _finish();
   }
 
   void _finish() {
     _clock.stop();
     final double took = _clock.value * _seconds;
-    setState(() => _took = took);
+    late final int right;
+    setState(() => right = _game.finish(took));
     updateKeepAlive();
-    final int right = _right;
-    ExplorePlay.instance.put('sixty', {
-      'ids': [for (final p in widget.pills) p.id],
-      'a': _answers,
-      's': took,
-    });
-    Analytics.capture('explore sixty finished', {
-      'right': right,
-      'answered': _answers!.length,
-      'seconds': took.round(),
-    });
     widget.onFinished?.call(right);
   }
 
-  int get _right {
-    int n = 0;
-    final answers = _answers ?? const <bool>[];
-    for (int i = 0; i < answers.length && i < widget.pills.length; i++) {
-      if (answers[i] == trueOrFalseAnswer(widget.pills[i])) n++;
-    }
-    return n;
-  }
+  int get _right => _game.right;
 
   @override
   Widget build(BuildContext context) {

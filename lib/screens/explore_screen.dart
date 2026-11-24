@@ -456,6 +456,19 @@ class ExploreScreenState extends State<ExploreScreen>
     );
   }
 
+  /// A screen a section draws for itself — Sixty seconds on the whole
+  /// screen, out of its tile — counted and said as a page a section opens
+  /// is, under the same names, so the numbers of the two stay one series.
+  @override
+  void openScreen(ExploreSection section, Route<void> route) {
+    _sight.opened();
+    Analytics.capture('explore section opened', {
+      'shelf': section.id,
+      'block': section.block,
+    });
+    Navigator.of(context).push(route);
+  }
+
   /// Something done in a section that nothing else records — a reaction, a
   /// bet, a stance — said as one event for every block, named by what the
   /// block calls it.

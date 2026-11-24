@@ -5174,6 +5174,62 @@ class AppLocalizationsTr extends AppLocalizations {
       'Şu an burada oynanacak bir şey yok. Yarın tekrar gel.';
 
   @override
+  String get challengesTitle => 'Meydan okumalar';
+
+  @override
+  String get challengesLine => 'Her biri bir iki dakika. Birini seç ve oyna.';
+
+  @override
+  String challengesPage(int n, int of) {
+    return 'Sayfa $n/$of';
+  }
+
+  @override
+  String get gamePlay => 'Oyna';
+
+  @override
+  String get sixtyRules =>
+      'Sekiz iddia: doğru mu, yanlış mı? Bir dakikan var, içgüdülerine güven.';
+
+  @override
+  String get sixtyNewRecord => 'Yeni rekor!';
+
+  @override
+  String get sixtyReview => 'Sekiz iddia';
+
+  @override
+  String get gameRight => 'Bildin';
+
+  @override
+  String get gameWrong => 'Bilemedin';
+
+  @override
+  String get gameUnanswered => 'Cevapsız';
+
+  @override
+  String get gameNext => 'Sıradaki meydan okuma';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · Altmış saniye · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$of iddiadan $n doğru · $s sn';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: '$s saniye kaldı',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, seviye $n';
   }

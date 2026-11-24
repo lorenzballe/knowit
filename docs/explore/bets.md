@@ -8,6 +8,12 @@ far off you were. Every piece of it is here as a block of the `bets` family
 which the server places on Explore as a section of `remote/explore.json`
 (docs/REMOTE.md, `explore`).
 
+Six of the blocks are also games among Explore's challenges (`quick-games`,
+docs/explore/core.md): Which is bigger, Closer, closer, Orders of magnitude,
+Bet a range, Place your bet and Your number, each a tile that opens the block
+on a page of its own as a section `quick-games-<block>`, dealt, laid and
+counted as any section of bets is.
+
 A bet is not a game beside the cards: it **is** the card's answer, given on
 the shelf. So it can only be laid on a card whose answer is a number, it is
 judged by the card's own test and nothing else, and it is recorded the way

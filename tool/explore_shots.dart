@@ -6,7 +6,8 @@
 //   flutter test tool/explore_shots.dart --update-goldens
 //
 // A camera, not a check, so it lives outside test/ like the other shots.
-// The pictures land in tool/shots/explore/.
+// The pictures land in tool/shots/explore/; the challenges' (the last
+// group) in the gallery, or wherever CHALLENGES_DIR says.
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -16,6 +17,7 @@ import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:astuto/data/explore_mix.dart' show trueOrFalseAnswer;
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/main.dart';
@@ -478,4 +480,118 @@ void main() {
     await settle(tester);
     await shoot(tester, 'play-surprise');
   });
+
+  // The challenges, on three phones at night and on paper: the section as
+  // Explore shows it, page by page; then Sixty seconds opened out of its
+  // tile — the flight caught early, what it is, the round in play, the
+  // record cheered, how it went and the eight claims again. Into the
+  // gallery, which is not kept, or into CHALLENGES_DIR:
+  //
+  //   flutter test tool/explore_shots.dart --plain-name "challenges" \
+  //     --update-goldens --dart-define=CHALLENGES_DIR=/somewhere/else
+  const String challengesDir = String.fromEnvironment(
+    'CHALLENGES_DIR',
+    defaultValue: 'shots/gallery/challenges/$label',
+  );
+  // Each phone with the room its status bar and its home bar take.
+  const Map<String, (Size, EdgeInsets)> challengePhones = {
+    '360x740': (Size(360, 740), EdgeInsets.only(top: 24, bottom: 16)),
+    '390x844': (Size(390, 844), EdgeInsets.only(top: 47, bottom: 34)),
+    '430x932': (Size(430, 932), EdgeInsets.only(top: 59, bottom: 34)),
+  };
+  for (final MapEntry<String, (Size, EdgeInsets)> phone
+      in challengePhones.entries) {
+    for (final bool paper in [false, true]) {
+      final String name = '${phone.key}-${paper ? 'light' : 'dark'}';
+      testWidgets('challenges: $name', (tester) async {
+        Future<void> take(String shot) => expectLater(
+          find.byType(MaterialApp).first,
+          matchesGoldenFile('$challengesDir/$name-$shot.png'),
+        );
+        final (Size logical, EdgeInsets safe) = phone.value;
+        size(logical, 3);
+        tester.view.padding = FakeViewPadding(
+          top: safe.top * 3,
+          bottom: safe.bottom * 3,
+        );
+        tester.view.viewPadding = FakeViewPadding(
+          top: safe.top * 3,
+          bottom: safe.bottom * 3,
+        );
+        addTearDown(tester.view.resetPadding);
+        addTearDown(tester.view.resetViewPadding);
+        // ignore: invalid_use_of_visible_for_testing_member
+        SharedPreferences.setMockInitialValues({
+          'knowit.onboarded': true,
+          if (paper) 'knowit.theme': 'light',
+          'knowit.sixtyBest': 5,
+        });
+        await tester.pumpWidget(const AstutoApp());
+        await settle(tester);
+        await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+        await settle(tester);
+        await reach(tester, 'challenge-sixty', above: 150);
+        await take('challenges');
+        // The second page and the third, by a swipe each, and back by the
+        // first dot.
+        final Finder sixty = find.byKey(const ValueKey('challenge-sixty'));
+        await tester.drag(sixty, Offset(-logical.width * 0.7, 0));
+        await settle(tester);
+        await take('challenges-2');
+        await tester.drag(
+          find.byKey(const ValueKey('challenge-bets-closer')),
+          Offset(-logical.width * 0.7, 0),
+        );
+        await settle(tester);
+        await take('challenges-3');
+        await tester.tap(find.byKey(const ValueKey('challenge-dot-0')));
+        await settle(tester);
+        // Sixty seconds, out of its tile.
+        await tester.tap(sixty);
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 90));
+        await take('sixty-flight');
+        await settle(tester);
+        await take('sixty-intro');
+        await tester.tap(find.byKey(const ValueKey('sixty-play')));
+        await settle(tester);
+        // Said right or wrong, as the camera asks: the claim in front is
+        // the last one keyed on the deck.
+        Future<void> say({required bool right}) async {
+          final Finder claims = find.byWidgetPredicate(
+            (w) =>
+                w.key is ValueKey<String> &&
+                (w.key! as ValueKey<String>).value.startsWith('sixty-claim-'),
+          );
+          final String id =
+              (tester.widget(claims.last).key! as ValueKey<String>).value
+                  .substring('sixty-claim-'.length);
+          final bool truth = trueOrFalseAnswer(PillBank.byId(id)!);
+          await tester.tap(
+            find.byKey(ValueKey(truth == right ? 'sixty-true' : 'sixty-false')),
+          );
+          await tester.pump(const Duration(milliseconds: 400));
+        }
+
+        await say(right: true);
+        await say(right: false);
+        await tester.pump(const Duration(seconds: 3));
+        await take('sixty-play');
+        for (int i = 0; i < 6; i++) {
+          await say(right: i != 2);
+        }
+        // The record beaten, cheered as the score lands.
+        await tester.pump(const Duration(milliseconds: 260));
+        await take('sixty-cheer');
+        await settle(tester);
+        await take('sixty-result');
+        await tester.drag(
+          find.byKey(const ValueKey('sixty-end')),
+          Offset(0, -logical.height * 0.5),
+        );
+        await settle(tester);
+        await take('sixty-result-review');
+      });
+    }
+  }
 }

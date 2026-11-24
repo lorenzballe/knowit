@@ -7362,6 +7362,90 @@ abstract class AppLocalizations {
   /// **'Nothing to play here right now. Come back tomorrow.'**
   String get exploreGameNone;
 
+  /// Explore: the name of the section of games — Sixty seconds, Spot the false one and the others, four to a page — when the remote document gives it none. Short: a section's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenges'**
+  String get challengesTitle;
+
+  /// Explore, the challenges: the line under the section's name, when the remote document gives it none.
+  ///
+  /// In en, this message translates to:
+  /// **'A minute or two each. Pick one and play.'**
+  String get challengesLine;
+
+  /// Explore, the challenges: the dots under the pages of games, as a screen reader says them — the page showing and how many there are.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {n} of {of}'**
+  String challengesPage(int n, int of);
+
+  /// A game opened on the whole screen from Explore's challenges: the large button that starts it. One short word.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get gamePlay;
+
+  /// Sixty seconds on the whole screen, before the round: the rules in a line, under the game's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Eight claims, true or false. You have one minute: go with your gut.'**
+  String get sixtyRules;
+
+  /// Sixty seconds on the whole screen, at the end of a round: the round beat the reader's record.
+  ///
+  /// In en, this message translates to:
+  /// **'New record!'**
+  String get sixtyNewRecord;
+
+  /// Sixty seconds on the whole screen, at the end of a round: over the round's eight claims again, each with whether the reader got it right. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The eight claims'**
+  String get sixtyReview;
+
+  /// A game played on the whole screen: an answer just given was right — said by a screen reader as it is given, and beside a claim at the end. Not the word for 'true': in Sixty seconds a claim is true or false, and an answer right or wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get gameRight;
+
+  /// A game played on the whole screen: an answer just given was wrong. Not the word for 'false' (see gameRight).
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong'**
+  String get gameWrong;
+
+  /// Sixty seconds, at the end of a round: a claim the time ran out on before the reader answered it, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'No answer'**
+  String get gameUnanswered;
+
+  /// At the end of a game played on the whole screen: over the name of the next game of Explore's challenges, which a tap opens. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Next challenge'**
+  String get gameNext;
+
+  /// First line of the message a round of Sixty seconds is sent in: the app, the game's name, and the day.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute · Sixty seconds · {date}'**
+  String sixtyShareHead(String date);
+
+  /// Second line of the message a round of Sixty seconds is sent in: how many of the claims were right, and in how many seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} right · {s} s'**
+  String sixtyShareScore(int n, int of, int s);
+
+  /// Sixty seconds on the whole screen, during the round: the clock, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'{s, plural, =1{1 second left} other{{s} seconds left}}'**
+  String sixtySecondsLeftLabel(int s);
+
   /// Explore, the subjects with their levels: one subject's ring, said to a screen reader. The level is 1 to 10.
   ///
   /// In en, this message translates to:
