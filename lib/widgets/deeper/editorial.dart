@@ -37,7 +37,7 @@ enum DeeperStyle {
 
 /// The way the parts are set: a prototype switch, moved by the screenshot
 /// tool (tool/deeper_shots.dart, DEEPER_STYLE) and by nothing in the app.
-DeeperStyle deeperStyle = DeeperStyle.column;
+DeeperStyle deeperStyle = DeeperStyle.magazine;
 
 /// Whether the parts are set in one of the editorial ways.
 bool get deeperEditorial => deeperStyle != DeeperStyle.playful;
