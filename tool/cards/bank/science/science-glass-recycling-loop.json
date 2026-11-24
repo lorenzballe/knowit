@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive loop starting with 1 kg of old glass. Drag right to see how much is left after each melt, showing a kilogram of waste glass becoming a kilogram of new glass.",
+    "label": "A long glass furnace with eight glowing mouths, one per melt; at the start a green bottle holding 1 kg of old glass, and over each melt the faint outline of a full bottle. The reader drags across to stand a bottle over each melt as tall as the glass they think is left, then says how sure, and sees a kilogram of waste glass become a kilogram of new glass.",
     "graded": false
   },
   "source": "Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)",

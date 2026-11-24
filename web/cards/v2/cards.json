@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611240914,
- "built": "2026-11-24T09:14:13Z",
+ "version": 202611240933,
+ "built": "2026-11-24T09:33:14Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -198832,12 +198832,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive guess-the-heat page: a steel rail is made a little hotter. The reader drags the hot rail's column up to guess how much more heat it radiates, then reads the reveal.",
-    "page": "pages/science-fourth-power-glow.html?v=6766f16498e6",
-    "bytes": 14258,
+    "label": "Two glowing steel rails, cherry red and bright orange, each on a plinth rising from a floor marked absolute zero, the hot one only a little higher. Over the warm rail rises a column of heat marked 1×; the reader drags the hot rail's column of heat up to guess how much more heat it radiates, then says how sure.",
+    "page": "pages/science-fourth-power-glow.html?v=6d35f650b273",
+    "bytes": 21179,
     "thumbs": {
-     "front": "thumbs/science-fourth-power-glow-front.webp?v=a498902a329b",
-     "back": "thumbs/science-fourth-power-glow-back.webp?v=a498902a329b"
+     "front": "thumbs/science-fourth-power-glow-front.webp?v=2d8e9b386312",
+     "back": "thumbs/science-fourth-power-glow-back.webp?v=2d8e9b386312"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -199089,12 +199089,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Ocean-wave card asking when wind waves reach their maximum size. Tap to let the wind blow one gust at a time. The page explains that waves stop growing when energy lost to breaking equals the energy the wind adds.",
-    "page": "pages/science-fully-developed-sea.html?v=2a7a8241b914",
-    "bytes": 10166,
+    "label": "The open sea drawn in section, a small sailboat on it. Each tap lets a gust of wind blow: the waves grow, their crests break into foam and eddies, and the arrow of energy breaking out widens until it matches the wind's. The page asks when wind waves reach their maximum size.",
+    "page": "pages/science-fully-developed-sea.html?v=4e2434909ec8",
+    "bytes": 17825,
     "thumbs": {
-     "front": "thumbs/science-fully-developed-sea-front.webp?v=8b7e9e2702b6",
-     "back": "thumbs/science-fully-developed-sea-back.webp?v=8b7e9e2702b6"
+     "front": "thumbs/science-fully-developed-sea-front.webp?v=b12dbd633e20",
+     "back": "thumbs/science-fully-developed-sea-back.webp?v=b12dbd633e20"
     }
    },
    "source": "Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)",
@@ -199718,13 +199718,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive loop starting with 1 kg of old glass. Drag right to see how much is left after each melt, showing a kilogram of waste glass becoming a kilogram of new glass.",
+    "label": "A long glass furnace with eight glowing mouths, one per melt; at the start a green bottle holding 1 kg of old glass, and over each melt the faint outline of a full bottle. The reader drags across to stand a bottle over each melt as tall as the glass they think is left, then says how sure, and sees a kilogram of waste glass become a kilogram of new glass.",
     "graded": false,
-    "page": "pages/science-glass-recycling-loop.html?v=7cf931701695",
-    "bytes": 9021,
+    "page": "pages/science-glass-recycling-loop.html?v=d9f356a31d2f",
+    "bytes": 12624,
     "thumbs": {
-     "front": "thumbs/science-glass-recycling-loop-front.webp?v=2c4b0ec9e2d1",
-     "back": "thumbs/science-glass-recycling-loop-back.webp?v=2c4b0ec9e2d1"
+     "front": "thumbs/science-glass-recycling-loop-front.webp?v=d328363476c6",
+     "back": "thumbs/science-glass-recycling-loop-back.webp?v=d328363476c6"
     }
    },
    "source": "Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)",
@@ -201686,13 +201686,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A dot grid and a slider asking how many Sumatra earthquakes, a magnitude 9.1 quake from 2004, the dinosaur-killing asteroid impact released in energy. Each dot is one Sumatra quake.",
+    "label": "The dinosaur-killing asteroid diving at the sea on a burning trail, a dinosaur on the beach. A slider guesses how many 2004 Sumatra earthquakes (magnitude 9.1) the impact's energy equals, from 10 to 100,000: one dot on the horizon is one Sumatra quake, and the guess is a dome holding that many dots.",
     "graded": false,
-    "page": "pages/science-impact-vs-sumatra.html?v=6c94f3fb1ad4",
-    "bytes": 8593,
+    "page": "pages/science-impact-vs-sumatra.html?v=054020b2843c",
+    "bytes": 19367,
     "thumbs": {
-     "front": "thumbs/science-impact-vs-sumatra-front.webp?v=702fc35ca293",
-     "back": "thumbs/science-impact-vs-sumatra-back.webp?v=702fc35ca293"
+     "front": "thumbs/science-impact-vs-sumatra-front.webp?v=1b98f1de3475",
+     "back": "thumbs/science-impact-vs-sumatra-back.webp?v=1b98f1de3475"
     }
    },
    "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
