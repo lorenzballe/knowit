@@ -1,17 +1,27 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-first-plastic-plant -->
+<!-- Look: a recycling mill drawn big and flat, with ink outlines, in green country: a long brick hall under a
+     sawtooth roof of glass, its chimney, its wide door open, the three chasing arrows of recycling painted on its
+     front. In the yard before it stand the three materials, big: an aluminium can, a green glass bottle, a blue
+     plastic bottle.
+     Interaction: tap each material. The can and the glass bottle say why they were recycled first: wartime, they
+     were scarce. The plastic bottle flies in through the mill's door: the mill's name goes up over it, bales of
+     pressed plastic stack up by the door, and where the bottle stood a sprout comes up: nature, plastic harms it.
+     Layout: drawn again at the size it has whenever its room changes: in a tall box the materials stand in a row
+     in the yard under the mill; in a short one they stand in a column beside it, their reasons next to them. -->
 <title>The first plastic recycling plant</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0}
-#pic{display:block;width:100%;flex:1;min-height:0;overflow:visible;touch-action:manipulation}
+#pic{display:block;width:100%;flex:1;min-height:0;touch-action:manipulation}
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);overflow-wrap:anywhere}
 #why .body{font:500 max(1.8cqh,12.5px)/1.3 var(--body);overflow-wrap:anywhere}
 /* The smallest card: the answer set a touch tighter, so the drawing keeps the room for the plant. */
 @container (max-height:540px){#why{gap:.5cqh}#why .body{line-height:1.26}}
+.answered .q{font-size:max(2.6cqh,15px)}
 [data-m]{cursor:pointer}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Tap · history">
@@ -19,11 +29,11 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FIRST PLANT</span></div>
     <h2 class="q">What was the world’s first plastic recycling centre?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" aria-label="Aluminium, glass and plastic, and why each was recycled"></svg>
+      <svg id="pic" role="img" aria-label="A brick recycling mill under a sawtooth roof, in green country, the recycling arrows on its front. In the yard before it: an aluminium can, a green glass bottle and a blue plastic bottle. Tap each to see why we started recycling it."></svg>
     </div>
     <p class="say" id="say">Tap each material to see why we started recycling it.</p>
     <div id="why" class="gone">
-      <p class="big">The Plastic Waste Recycling Mill</p>
+      <p class="big">A mill in Pennsylvania, 1972</p>
       <p class="body">Aluminium and glass were already reused in wartime, because they were scarce. Plastic needed another reason: we realised it can badly damage the environment. So it got a plant of its own, and this mill was the world’s first.</p>
     </div>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Plastic recycling began to protect nature, not to make up for scarcity.</div>
@@ -32,180 +42,307 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const done = {al:false, gl:false, pl:false};
-let ended = false, G = null, busy = false;
-const M = {
-  al:{fill:'#b9c2cc', l1:'WARTIME', l2:'it was scarce'},
-  gl:{fill:'#2e9a62', l1:'WARTIME', l2:'it was scarce'},
-  pl:{fill:'#6cc6f2', l1:'NATURE', l2:'it harms it'}
-};
-const st = (s) => ({style:s});
+const done = {al: false, gl: false, pl: false};
+let ended = false, busy = false, G = null;
+// How far the plastic's arrival has come: the name over the door, the bales, the sprout (0 to 1 each).
+const st = {sign: 0, bales: 0, sprout: 0};
+// Why each was recycled: the word, and the reason under it.
+const M = {al: ['Wartime', 'it was scarce'], gl: ['Wartime', 'it was scarce'], pl: ['Nature', 'it harms it']};
+// The same in a few words, where there is room for one line only.
+const SHORT = {al: 'Scarce in war', gl: 'Scarce in war', pl: 'Harms nature'};
+// One ink; the sky, the hills and the trees; the yard; the mill's brick, its roof and the glass in it, its dark
+// door, the board with its name; the can's aluminium and red band, the glass bottle's green, the plastic's blue;
+// the bales of pressed plastic; the sprout's green.
+const INK = '#10100c', SKY = '#D8ECF7', HILL = '#86C979', HILL2 = '#69B565', TREE = '#3E9A4C', YARD = '#E7DDC7', BRICK = '#C65B3F',
+  BRICK2 = '#A9472F', ROOF = '#44464E', GLASS = '#A9DBF2', DOOR = '#2B2C32', BOARD = '#FFF6DF', AL = '#BCC5CE', AL2 = '#E4E9EE', BAND = '#D6453D',
+  GL = '#2E9A62', GL2 = '#F3E7C4', PL = '#7DCCF2', PL2 = '#1F6FD1', WHITE = '#ffffff', BALE = '#9AD5F2', SPROUT = '#3FA34D';
+const FONT = 'Figtree, system-ui, sans-serif', HAND = 'Caveat, cursive';
+const NAME = 'Conshohocken, 1972';
+const svg = Kit.$('pic'), card = Kit.$('card');
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const f1 = n => (Math.round(n * 10) / 10).toString();
+const mk = Kit.mk;
 
-function shape(m, cx, cy, s, parent){
-  const g = Kit.mk('g', {}, parent);
-  const ink = 'stroke:var(--k);stroke-width:' + Math.max(1.5, s*.025) + ';stroke-linejoin:round';
-  if (m === 'al'){
-    Kit.mk('rect', {x:cx-s*.24, y:cy-s*.4, width:s*.48, height:s*.8, rx:s*.07, style:'fill:'+M.al.fill+';'+ink}, g);
-    Kit.mk('ellipse', {cx, cy:cy-s*.4, rx:s*.24, ry:s*.07, style:'fill:#dfe4ea;'+ink}, g);
-    Kit.mk('rect', {x:cx-s*.24, y:cy-s*.1, width:s*.48, height:s*.22, style:'fill:#d6453d;'+ink}, g);
+function words(p, x, y, s, o = {}) {
+  const e = mk('text', {x: f1(x), y: f1(y), 'font-family': o.font || FONT, 'font-size': f1(o.size || G.fs), 'font-weight': o.weight || 700, 'text-anchor': o.anchor || 'middle', fill: o.fill || INK}, p);
+  e.textContent = s;
+  if (o.max) for (let z = o.size || G.fs; e.getComputedTextLength() > o.max && z > (o.min || 10.5); ) { z -= .5; e.setAttribute('font-size', f1(z)); }
+  return e;
+}
+const ink = w => ({fill: 'none', stroke: INK, 'stroke-width': f1(w), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
+const solid = (fill, w) => Object.assign(ink(w == null ? G.k : w), {fill});
+
+// The three materials, standing on (cx, base), s their height: a can, a glass bottle, a plastic bottle.
+function shape(m, cx, base, s, parent) {
+  const g = mk('g', {}, parent), k = Math.max(1.3, Math.min(G.k, s * .03));
+  const at = fill => solid(fill, k);
+  const cy = base - s / 2;
+  if (m === 'al') {
+    const w = s * .5, h = s * .8, top = base - h;
+    mk('path', Object.assign({d: `M${f1(cx - w / 2)},${f1(top + s * .06)}V${f1(base - s * .04)}Q${f1(cx - w / 2)},${f1(base)} ${f1(cx - w / 2 + s * .05)},${f1(base)}H${f1(cx + w / 2 - s * .05)}Q${f1(cx + w / 2)},${f1(base)} ${f1(cx + w / 2)},${f1(base - s * .04)}V${f1(top + s * .06)}Z`}, at(AL)), g);
+    mk('rect', Object.assign({x: f1(cx - w / 2), y: f1(top + h * .36), width: f1(w), height: f1(h * .3)}, at(BAND)), g);
+    mk('rect', {x: f1(cx - w * .32), y: f1(top + s * .12), width: f1(w * .12), height: f1(h * .7), rx: f1(w * .05), fill: WHITE, opacity: .55}, g);
+    mk('ellipse', Object.assign({cx: f1(cx), cy: f1(top + s * .06), rx: f1(w / 2), ry: f1(s * .07)}, at(AL2)), g);
+    mk('ellipse', Object.assign({cx: f1(cx + w * .08), cy: f1(top + s * .055), rx: f1(w * .16), ry: f1(s * .025)}, at(AL)), g);
   } else {
-    const nw = m==='gl' ? s*.07 : s*.08, bw = m==='gl' ? s*.22 : s*.24, top = cy-s*.46, sh = cy-s*.18, bot = cy+s*.44;
-    const d = `M${cx-nw},${top} L${cx+nw},${top} L${cx+nw},${sh-s*.08} Q${cx+bw},${sh-s*.02} ${cx+bw},${sh+s*.12} L${cx+bw},${bot-s*.05} Q${cx+bw},${bot} ${cx+bw-s*.05},${bot} L${cx-bw+s*.05},${bot} Q${cx-bw},${bot} ${cx-bw},${bot-s*.05} L${cx-bw},${sh+s*.12} Q${cx-bw},${sh-s*.02} ${cx-nw},${sh-s*.08} Z`;
-    Kit.mk('path', {d, style:'fill:'+M[m].fill+';'+ink}, g);
-    if (m==='pl'){
-      Kit.mk('rect', {x:cx-nw*1.3, y:top-s*.08, width:nw*2.6, height:s*.1, rx:s*.02, style:'fill:#1f6fd1;'+ink}, g);
-      Kit.mk('rect', {x:cx-bw, y:cy+s*.02, width:bw*2, height:s*.16, style:'fill:#fff;'+ink}, g);
+    const glass = m === 'gl', nw = s * (glass ? .07 : .085), bw = s * (glass ? .2 : .24), top = base - s * (glass ? .94 : .9), sh = top + s * (glass ? .3 : .22), r = s * .05;
+    const d = `M${f1(cx - nw)},${f1(top)}H${f1(cx + nw)}V${f1(sh - s * .08)}Q${f1(cx + bw)},${f1(sh - s * .02)} ${f1(cx + bw)},${f1(sh + s * .12)}V${f1(base - r)}Q${f1(cx + bw)},${f1(base)} ${f1(cx + bw - r)},${f1(base)}H${f1(cx - bw + r)}Q${f1(cx - bw)},${f1(base)} ${f1(cx - bw)},${f1(base - r)}V${f1(sh + s * .12)}Q${f1(cx - bw)},${f1(sh - s * .02)} ${f1(cx - nw)},${f1(sh - s * .08)}Z`;
+    mk('path', Object.assign({d}, at(glass ? GL : PL)), g);
+    if (glass) {
+      mk('rect', Object.assign({x: f1(cx - bw), y: f1(base - s * .42), width: f1(bw * 2), height: f1(s * .2)}, at(GL2)), g);
+      mk('rect', Object.assign({x: f1(cx - nw * 1.15), y: f1(top - s * .02), width: f1(nw * 2.3), height: f1(s * .05), rx: f1(s * .015)}, at(GL)), g);
     } else {
-      Kit.mk('rect', {x:cx-bw, y:cy+s*.04, width:bw*2, height:s*.14, style:'fill:#f3e7c4;'+ink}, g);
+      mk('rect', Object.assign({x: f1(cx - nw * 1.3), y: f1(top - s * .08), width: f1(nw * 2.6), height: f1(s * .1), rx: f1(s * .02)}, at(PL2)), g);
+      mk('rect', Object.assign({x: f1(cx - bw), y: f1(base - s * .44), width: f1(bw * 2), height: f1(s * .17)}, at(WHITE)), g);
+      // the ridges of a plastic bottle's waist
+      mk('path', {d: `M${f1(cx - bw)},${f1(base - s * .17)}H${f1(cx + bw)}`, stroke: INK, 'stroke-width': f1(k * .7), opacity: .5}, g);
     }
+    mk('rect', {x: f1(cx - bw * .62), y: f1(sh + s * .1), width: f1(bw * .22), height: f1(s * .4), rx: f1(bw * .1), fill: WHITE, opacity: glass ? .35 : .55}, g);
   }
   return g;
 }
 
-function draw(){
-  const svg = Kit.$('pic'); svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(12, Math.min(f*.85, W/26));
-  // how wide a line is, in the drawing's own fonts
-  const wide = (txt, font) => { const t = Kit.mk('text', {style:font}, svg); t.textContent = txt; const w = t.getComputedTextLength(); t.remove(); return w; };
-  // Everything stays inside the drawing's own box. Under the row of materials the plant needs at least
-  // plantMin: a box left short once the answer is in drops each material's second caption line (the answer
-  // right under the drawing says it) and, only if it must, draws the materials a little smaller.
-  const plantMin = fs*3.4;
-  const capsOf = s => { const rowY = s*.58 + 2, cap1 = rowY + s*.56 + fs*1.25; return {rowY, cap1, cap2: cap1 + fs*1.35}; };
-  const roomOf = (s, two) => { const c = capsOf(s); return H - 1 - ((two ? c.cap2 : c.cap1) + fs*.75); };
-  let s = Math.min(W*.22, H*.2), two = roomOf(s, true) >= plantMin;
-  while (!two && roomOf(s, false) < plantMin && s > fs*1.4) s -= 1;
-  const {rowY, cap1, cap2} = capsOf(s), capB = two ? cap2 : cap1;
-  const cols = {al:W/6, gl:W/2, pl:W*5/6};
-  G = {W, H, fs, s, rowY, cols};
-
-  for (const m of ['al','gl','pl']){
-    const g = Kit.mk('g', {'data-m':m, id:'it-'+m}, svg);
-    Kit.mk('rect', {x:cols[m]-W/6+3, y:2, width:W/3-6, height:capB+fs*.5, rx:fs*.8,
-      style: done[m] ? 'fill:none' : 'fill:color-mix(in srgb,var(--k) 7%,transparent);stroke:color-mix(in srgb,var(--k) 30%,transparent);stroke-width:1.5;stroke-dasharray:4 4'}, g);
-    const sh = shape(m, cols[m], rowY, s, g); sh.id = 'sh-'+m;
-    if (m==='pl' && done.pl) sh.setAttribute('opacity', .18);
-    const c = Kit.mk('g', {id:'cap-'+m, opacity: done[m] ? 1 : 0}, g);
-    const t1 = Kit.mk('text', {x:cols[m], y:cap1, 'text-anchor':'middle', style:`font:800 ${fs}px var(--body);fill:var(--k);letter-spacing:.06em`}, c); t1.textContent = M[m].l1;
-    if (two){ const t2 = Kit.mk('text', {x:cols[m], y:cap2, 'text-anchor':'middle', style:`font:500 ${fs}px var(--body);fill:var(--k)`}, c); t2.textContent = M[m].l2; }
-    if (!done[m]){
-      const q = Kit.mk('text', {x:cols[m], y:cap1 + fs*.6, 'text-anchor':'middle', style:`font:700 ${fs}px var(--body);fill:var(--muted)`}, g); q.textContent = 'tap';
-    }
-  }
-
-  // The plant, from under the captions to the foot of the box. Its banner is as wide as its words need and
-  // its name board goes up only where the building has room for it (the answer under the drawing names it).
-  const top = capB + fs*.75, bottom = H - 1, fh = Math.max(fs*2, bottom - top);
-  const BAN = 'FIRST PLASTIC RECYCLING PLANT', NAME = 'Plastic Waste Recycling Mill';
-  const nfs = Math.max(12, Math.min(fs*1.05, W*.92/(28*.6))), nW = wide(NAME, `font:800 ${nfs}px var(--body)`);
-  const bh = Math.max(Math.min(fs*2.1, fh*.3), Math.min(fs*1.5, fh*.45)), by = top + bh + Math.min(fs*.5, fh*.05);
-  const rh = Math.min(fh*.16, fs*2.2, (bottom-by)*.3), bodyY = by + rh;
-  const signH = nfs*1.9, sign = bottom - bodyY >= signH + fs*.8;
-  const fw = Math.min(W*.92, Math.max(fh*1.7, W*.6, sign ? nW + nfs*1.4 + 8 : 0)), x0 = (W - fw)/2;
-  let bfs = Math.max(12, Math.min(fs*.95, fw/(29*.68)));
-  let bW = wide(BAN, `font:900 ${bfs}px var(--body);letter-spacing:.04em`);
-  if (bW + fs*2.4 > W - 2){ bfs = Math.max(10, bfs*(W - 2 - fs*2.4)/bW); bW = wide(BAN, `font:900 ${bfs}px var(--body);letter-spacing:.04em`); }
-  const banW = Math.min(W - 2, Math.max(fw + fs*1.2, bW + fs*2.4)), bx0 = (W - banW)/2, bx1 = bx0 + banW;
-  G.door = {x: W/2, y: bottom - (bottom-bodyY)*.22};
-  const ghost = Kit.mk('g', {id:'ghost', opacity: done.pl ? 0 : 1}, svg);
-  Kit.mk('rect', {x:x0, y:by, width:fw, height:Math.max(0, bottom-by), rx:fs*.4, style:'fill:none;stroke:color-mix(in srgb,var(--k) 30%,transparent);stroke-width:2;stroke-dasharray:6 6'}, ghost);
-  const gq = Kit.mk('text', {x:W/2, y:(by+bottom)/2 + fs*.6, 'text-anchor':'middle', style:`font:800 ${fs*2.4}px var(--display);fill:color-mix(in srgb,var(--k) 35%,transparent)`}, ghost); gq.textContent = '?';
-
-  const P = Kit.mk('g', {id:'plant', opacity: done.pl ? 1 : 0}, svg);
-  // chimney + smoke (it rises behind the banner, no higher than just over it)
-  const chx = x0 + fw*.12, chw = fw*.08;
-  G.rise = Math.max(0, Math.min(fs*2.2, by - rh*.8 - top + fs*.4));
-  Kit.mk('rect', {x:chx, y:by - rh*.6, width:chw, height:rh*1.7, style:'fill:var(--k)'}, P);
-  for (let i = 0; i < 3; i++){
-    Kit.mk('circle', {class:'smoke', cx:chx+chw/2, cy:by - rh*.8, r:Math.min(chw*.45, fs*.5), style:'fill:color-mix(in srgb,var(--k) 25%,transparent)'}, P);
-  }
-  // sawtooth roof
-  const n = 4, tw = fw/n; let d = `M${x0},${bodyY}`;
-  for (let i = 0; i < n; i++) d += ` L${x0+i*tw},${by} L${x0+(i+1)*tw},${bodyY}`;
-  d += ' Z';
-  Kit.mk('path', {d, style:'fill:var(--k)'}, P);
-  for (let i = 0; i < n; i++) Kit.mk('path', {d:`M${x0+i*tw+tw*.12},${by+rh*.2} L${x0+i*tw+tw*.12},${bodyY-2} L${x0+i*tw+tw*.6},${bodyY-2} Z`, style:'fill:#7fd0f5'}, P);
-  // body
-  Kit.mk('rect', {x:x0, y:bodyY, width:fw, height:Math.max(0, bottom-bodyY), style:'fill:color-mix(in srgb,var(--k) 88%,var(--c))'}, P);
-  let dh = (bottom-bodyY)*.55;
-  if (sign){
-    const signW = Math.min(fw - 8, Math.max(fw*.9, nW + nfs*1.4)), signY = bodyY + Math.min((bottom-bodyY)*.14, (bottom-bodyY-signH)/2);
-    Kit.mk('rect', {x:W/2-signW/2, y:signY, width:signW, height:signH, rx:nfs*.3, style:'fill:var(--c)'}, P);
-    const nt = Kit.mk('text', {x:W/2, y:signY + signH*.66, 'text-anchor':'middle', style:`font:800 ${nfs}px var(--body);fill:var(--k)`}, P); nt.textContent = NAME;
-    dh = Math.min((bottom-bodyY)*.42, bottom - (signY+signH) - 4);
-  }
-  const dw = Math.max(dh*.7, fw*.12);
-  if (dh > 6) Kit.mk('rect', {x:W/2-dw/2, y:bottom-dh, width:dw, height:dh, rx:dw*.12, style:'fill:#6cc6f2'}, P);
-  // banner
-  const B = Kit.mk('g', {id:'banner'}, P), nk = fs*.6;
-  Kit.mk('path', {d:`M${bx0},${top} L${bx1},${top} L${bx1-nk},${top+bh/2} L${bx1},${top+bh} L${bx0},${top+bh} L${bx0+nk},${top+bh/2} Z`, style:'fill:#e8b923;stroke:var(--k);stroke-width:2'}, B);
-  const bt = Kit.mk('text', {x:W/2, y:top + bh/2 + bfs*.36, 'text-anchor':'middle', style:`font:900 ${bfs}px var(--body);fill:#1a1a1a;letter-spacing:.04em`}, B); bt.textContent = BAN;
-
-  if (done.pl && !Kit.calm) smoke();
+// A sprout, where the plastic bottle stood: two leaves on a stem, grown by t.
+function sprout(p, cx, base, s, t) {
+  if (t <= 0) return;
+  const g = mk('g', {}, p), h = s * .55 * t, k = Math.max(1.3, Math.min(G.k, s * .03));
+  mk('ellipse', {cx: f1(cx), cy: f1(base), rx: f1(s * .2), ry: f1(s * .04), fill: '#8B6B4A', opacity: .55}, g);
+  mk('path', Object.assign({d: `M${f1(cx)},${f1(base)}C${f1(cx - s * .03)},${f1(base - h * .5)} ${f1(cx + s * .03)},${f1(base - h * .75)} ${f1(cx)},${f1(base - h)}`}, ink(k * 1.3)), g);
+  const leaf = (dir, y, len) => mk('path', Object.assign({d: `M${f1(cx)},${f1(y)}C${f1(cx + dir * len * .3)},${f1(y - len * .55)} ${f1(cx + dir * len)},${f1(y - len * .45)} ${f1(cx + dir * len * 1.05)},${f1(y - len * .2)}C${f1(cx + dir * len * .7)},${f1(y + len * .1)} ${f1(cx + dir * len * .25)},${f1(y + len * .08)} ${f1(cx)},${f1(y)}Z`}, solid(SPROUT, k)), g);
+  leaf(-1, base - h * .62, s * .26 * t);
+  leaf(1, base - h * .9, s * .3 * t);
 }
 
-function smoke(){
-  gsap.killTweensOf('.smoke');
-  document.querySelectorAll('.smoke').forEach((c, i) => {
-    gsap.fromTo(c, {y:0, x:0, opacity:.9, scale:.6, transformOrigin:'50% 50%'},
-      {y:-G.rise, x:G.fs*.8, opacity:0, scale:1.6, duration:2.4, repeat:-1, delay:i*.8, ease:'sine.out'});
+// The mill: the brick hall from x0 to x1 on its base, h tall with its roof; chimney, door, windows, the recycling
+// arrows; once the plastic is in, its name over the door and bales stacked beside it.
+function mill(p, x0, x1, base, h) {
+  const k = G.k, w = x1 - x0, wallTop = base - h * .6, peak = wallTop - h * .17;
+  const g = mk('g', {}, p);
+  // the chimney behind the roof
+  const cw = Math.max(8, w * .07), cx = x0 + w * .14;
+  mk('rect', Object.assign({x: f1(cx), y: f1(base - h), width: f1(cw), height: f1(h * .5)}, solid(BRICK2)), g);
+  mk('rect', Object.assign({x: f1(cx - cw * .15), y: f1(base - h), width: f1(cw * 1.3), height: f1(Math.max(3, h * .05))}, solid(ROOF)), g);
+  // the sawtooth roof: each tooth a slope of roof and an upright of glass
+  const n = Math.max(3, Math.round(w / Math.max(42, h * .5))), tw = w / n;
+  for (let i = 0; i < n; i++) {
+    const a = x0 + i * tw, b = a + tw;
+    mk('path', Object.assign({d: `M${f1(a)},${f1(wallTop)}L${f1(b)},${f1(peak)}V${f1(wallTop)}Z`}, solid(ROOF)), g);
+    mk('path', Object.assign({d: `M${f1(b - tw * .03)},${f1(peak + (wallTop - peak) * .18)}V${f1(wallTop - 1)}L${f1(b - tw * .5)},${f1(wallTop - 1)}Z`}, solid(GLASS, k * .7)), g);
+  }
+  // the hall
+  mk('rect', Object.assign({x: f1(x0), y: f1(wallTop), width: f1(w), height: f1(base - wallTop)}, solid(BRICK)), g);
+  // a course of brick lines, faint
+  let bd = '';
+  for (let y = wallTop + (base - wallTop) * .2; y < base - 2; y += (base - wallTop) * .2) bd += `M${f1(x0 + 2)},${f1(y)}H${f1(x1 - 2)}`;
+  mk('path', {d: bd, stroke: INK, 'stroke-width': f1(k * .5), opacity: .14}, g);
+  // the door, open, dark inside, the roller door rolled up into its top
+  const dw = w * .22, dh = (base - wallTop) * .58, dx = x0 + w * .5 - dw / 2;
+  G.door = {x: dx + dw / 2, y: base - dh * .45, w: dw, h: dh};
+  mk('rect', Object.assign({x: f1(dx), y: f1(base - dh), width: f1(dw), height: f1(dh)}, solid(DOOR)), g);
+  mk('rect', Object.assign({x: f1(dx), y: f1(base - dh), width: f1(dw), height: f1(dh * .16)}, solid('#8A8F98', k * .7)), g);
+  // windows either side of the door, high on the wall
+  const wy = wallTop + (base - wallTop) * .14, wh = (base - wallTop) * .2;
+  [[x0 + w * .06, dx - w * .05], [dx + dw + w * .05, x1 - w * .06]].forEach(([a, b]) => {
+    const nw = Math.max(1, Math.floor((b - a) / Math.max(14, wh * 1.3)));
+    const ww = (b - a) / nw;
+    for (let i = 0; i < nw; i++) {
+      mk('rect', Object.assign({x: f1(a + i * ww + ww * .12), y: f1(wy), width: f1(ww * .76), height: f1(wh), rx: 1}, solid(GLASS, k * .7)), g);
+      mk('path', {d: `M${f1(a + i * ww + ww * .5)},${f1(wy)}V${f1(wy + wh)}`, stroke: INK, 'stroke-width': f1(k * .55)}, g);
+    }
+  });
+  // the three chasing arrows of recycling, painted white on the wall right of the door
+  const er = Math.min((base - wallTop) * .2, (x1 - dx - dw) * .26), ex = dx + dw + (x1 - dx - dw) * .5, ey = base - (base - wallTop) * .3;
+  if (er > 6) arrows(g, ex, ey, er);
+  // the bales of pressed plastic, stacked left of the door
+  G.balesAt = {x: dx - w * .03, base, s: Math.min(dh * .5, (dx - x0) * .34)};
+  G.baleG = mk('g', {}, g);
+  bales();
+  // the name, on a board over the door
+  G.signAt = {x: x0 + w / 2, y: wallTop + (base - wallTop) * .08, w: w * .9, h: Math.min((base - wallTop) * .3, G.fs * 1.8)};
+  G.signG = mk('g', {}, g);
+  sign();
+  mk('rect', Object.assign({x: f1(x0), y: f1(wallTop), width: f1(w), height: f1(base - wallTop)}, ink(k)), g);
+  return g;
+}
+// Three arrows chasing each other round a triangle, white with an ink rim.
+function arrows(p, cx, cy, r) {
+  const g = mk('g', {}, p), k = Math.max(1.2, G.k * .7);
+  mk('circle', Object.assign({cx: f1(cx), cy: f1(cy), r: f1(r)}, solid(SPROUT, k)), g);
+  const pt = a => [cx + Math.cos(a) * r * .62, cy + Math.sin(a) * r * .62];
+  for (let i = 0; i < 3; i++) {
+    const a0 = -Math.PI / 2 + i * 2 * Math.PI / 3 + .32, a1 = a0 + 2 * Math.PI / 3 - .64;
+    const [x0, y0] = pt(a0), [x1, y1] = pt(a1), ang = Math.atan2(y1 - y0, x1 - x0), hl = r * .32;
+    mk('path', {d: `M${f1(x0)},${f1(y0)}L${f1(x1 - Math.cos(ang) * hl * .5)},${f1(y1 - Math.sin(ang) * hl * .5)}`, stroke: WHITE, 'stroke-width': f1(r * .17), 'stroke-linecap': 'round'}, g);
+    mk('path', {d: `M${f1(x1)},${f1(y1)}L${f1(x1 - Math.cos(ang - .5) * hl)},${f1(y1 - Math.sin(ang - .5) * hl)}L${f1(x1 - Math.cos(ang + .5) * hl)},${f1(y1 - Math.sin(ang + .5) * hl)}Z`, fill: WHITE}, g);
+  }
+}
+function bales() {
+  if (!G || !G.baleG) return;
+  G.baleG.innerHTML = '';
+  const {x, base, s} = G.balesAt, t = st.bales, k = Math.max(1.2, G.k * .8);
+  if (t <= 0 || s < 6) return;
+  // three bales: two on the ground, one on top, each a cube of crushed bottles bound by two straps
+  [[-1.05, 0], [-2.1, 0], [-1.58, 1]].forEach(([dx, row], i) => {
+    const u = clamp(t * 3 - i, 0, 1); if (u <= 0) return;
+    const bx = x + dx * s, by = base - (row + 1) * s * u - row * s * (1 - u);
+    const g = mk('g', {opacity: f1(u)}, G.baleG);
+    mk('rect', Object.assign({x: f1(bx), y: f1(by), width: f1(s), height: f1(s * u), rx: f1(s * .06)}, solid(BALE, k)), g);
+    if (u > .9) {
+      let d = '';
+      for (let j = 0; j < 3; j++) d += `M${f1(bx + s * .14)},${f1(by + s * (.25 + j * .25))}l${f1(s * .22)},${f1(-s * .07)}l${f1(s * .2)},${f1(s * .06)}l${f1(s * .3)},${f1(-s * .05)}`;
+      mk('path', {d, fill: 'none', stroke: PL2, 'stroke-width': f1(k * .8), 'stroke-linecap': 'round', opacity: .8}, g);
+      mk('path', {d: `M${f1(bx + s * .3)},${f1(by)}V${f1(by + s)}M${f1(bx + s * .7)},${f1(by)}V${f1(by + s)}`, stroke: INK, 'stroke-width': f1(k)}, g);
+    }
   });
 }
-
-function finish(){
-  if (ended || !(done.al && done.gl && done.pl)) return;
-  ended = true;
-  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  Kit.haptic('success');
-  requestAnimationFrame(() => { draw(); });
+function sign() {
+  if (!G || !G.signG) return;
+  G.signG.innerHTML = '';
+  const t = st.sign; if (t <= 0) return;
+  const {x, y, w, h} = G.signAt, g = mk('g', {opacity: f1(Math.min(1, t * 1.5)), transform: `translate(0,${f1(-(1 - t) * h)})`}, G.signG);
+  const board = mk('rect', Object.assign({x: f1(x - w / 2), y: f1(y), width: f1(w), height: f1(h), rx: f1(h * .18)}, solid(BOARD)), g);
+  // the name on one line, or on two where the board is narrow
+  const one = words(g, x, y + h / 2 + G.fs * .36, NAME, {weight: 800, size: Math.min(G.fs * 1.05, h * .62), max: w - G.fs, min: 10.5});
+  if (one.getComputedTextLength() > w - G.fs * .6) {
+    one.remove();
+    const s2 = Math.min(G.fs, h * .4);
+    board.setAttribute('height', f1(Math.max(h, s2 * 2.5))); board.setAttribute('y', f1(y - Math.max(0, s2 * 2.5 - h) / 2));
+    words(g, x, y + h / 2 - s2 * .18, 'Plastic Waste', {weight: 800, size: s2, max: w - G.fs * .6, min: 10});
+    words(g, x, y + h / 2 + s2 * .95, 'Recycling Mill', {weight: 800, size: s2, max: w - G.fs * .6, min: 10});
+  }
 }
 
-Kit.$('pic').addEventListener('click', e => {
-  const g = e.target.closest('[data-m]'); if (!g || busy) return;
-  const m = g.dataset.m; if (done[m]) return;
-  done[m] = true; Kit.haptic('light');
-  if (m !== 'pl'){
+function draw() {
+  const {W, H} = Kit.fitSvg(svg);
+  if (W < 40 || H < 40) return;
+  gsap.killTweensOf(svg.querySelectorAll('*'));
+  // A redraw in the middle of the plastic's flight finishes it.
+  if (busy) { busy = false; done.pl = true; Object.assign(st, {sign: 1, bales: 1, sprout: 1}); setTimeout(finish, 0); }
+  gsap.killTweensOf(st);
+  if (done.pl) Object.assign(st, {sign: 1, bales: 1, sprout: 1});
+  svg.innerHTML = '';
+  const k = clamp(W * .0075, 1.6, 2.6), fs = clamp(Math.min(W * .04, H / 10), 10.5, 13.5), pad = Math.max(7, fs * .65), R = clamp(W * .035, 8, 14);
+  // The mill over the yard and the materials in a row in front of it, their reasons under them: in two lines, or in
+  // one where the box is short. In the shortest box the materials stand in the yard beside the mill, and their reasons
+  // give way to the answer right under the drawing.
+  const tall = H >= W * .42;
+  G = {W, H, k, fs, pad, tall, items: {}};
+  const clip = mk('clipPath', {id: 'plate'}, mk('defs', {}, svg));
+  mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), rx: f1(R)}, clip);
+  const scene = mk('g', {'clip-path': 'url(#plate)'}, svg);
+  mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), fill: SKY}, scene);
+
+  let mx0, mx1, mBase, mH, yardTop;
+  if (tall) {
+    let two = true, capRoom = fs * 2.95, base = H - pad * .7 - capRoom, s = Math.min(W * .32, (base - pad) * (H > 260 ? .42 : .36));
+    if (s < 44) { two = false; capRoom = fs * 1.75; base = H - pad * .7 - capRoom; s = Math.min(W * .32, (base - pad) * .36); }
+    mBase = Math.round(base - s - Math.max(pad, fs * .8));
+    mH = Math.min(mBase - pad * .6, W * .56);
+    const mw = Math.min(W - pad * 2, mH * 2.05);
+    mx0 = (W - mw) / 2; mx1 = mx0 + mw;
+    yardTop = mBase;
+    ['al', 'gl', 'pl'].forEach((m, i) => { G.items[m] = {cx: W * (i * 2 + 1) / 6, base, s, capX: W * (i * 2 + 1) / 6, capY: base + fs * 1.25, two, caps: true, colW: W / 3 - 6}; });
+  } else {
+    const s = Math.min(H * .52, W * .15), step = s * .72;
+    yardTop = H - pad * .6 - s * .3;
+    ['al', 'gl', 'pl'].forEach((m, i) => { G.items[m] = {cx: pad + s * .36 + i * step, base: H - pad * .9, s, caps: false}; });
+    mBase = yardTop + Math.min(s * .12, pad);
+    mx0 = pad * 1.6 + s * .72 + 2 * step; mx1 = W - pad * .8;
+    mH = Math.min(mBase - pad * .6, (mx1 - mx0) / 1.7);
+  }
+  G.mill = {mx0, mx1, mBase, mH};
+
+  // The country: two hills, a few trees, the yard.
+  const hy = mBase - mH * .42;
+  mk('path', Object.assign({d: `M-5,${f1(hy + mH * .12)}C${f1(W * .2)},${f1(hy - mH * .2)} ${f1(W * .45)},${f1(hy - mH * .05)} ${f1(W * .62)},${f1(hy + mH * .05)}C${f1(W * .8)},${f1(hy - mH * .25)} ${f1(W * .95)},${f1(hy - mH * .12)} ${f1(W + 5)},${f1(hy)}V${f1(mBase + 2)}H-5Z`}, solid(HILL)), scene);
+  mk('path', Object.assign({d: `M-5,${f1(hy + mH * .3)}C${f1(W * .25)},${f1(hy + mH * .1)} ${f1(W * .55)},${f1(hy + mH * .32)} ${f1(W + 5)},${f1(hy + mH * .2)}V${f1(mBase + 2)}H-5Z`}, solid(HILL2)), scene);
+  const tr = Math.max(4, mH * .09);
+  [[mx0 - tr * 1.6, 1], [mx1 + tr * 1.5, .85], [mx1 + tr * 3.6, .7]].forEach(([x, f]) => {
+    // (in the shortest box the materials stand left of the mill, where the first tree would be)
+    if (x < tr || x > W - tr || (!tall && x < mx0)) return;
+    mk('path', Object.assign({d: `M${f1(x)},${f1(mBase)}V${f1(mBase - tr * 1.6 * f)}`}, ink(G.k)), scene);
+    mk('circle', Object.assign({cx: f1(x), cy: f1(mBase - tr * 2.2 * f), r: f1(tr * f)}, solid(TREE)), scene);
+  });
+  mk('rect', Object.assign({x: -5, y: f1(yardTop), width: f1(W + 10), height: f1(H - yardTop + 5)}, solid(YARD)), scene);
+  mill(scene, mx0, mx1, mBase, mH);
+  mk('rect', Object.assign({x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(H - k), rx: f1(R - k / 2)}, ink(k)), svg);
+
+  // The materials, each its own target to tap, and the reason it was recycled once tapped.
+  for (const m of ['al', 'gl', 'pl']) {
+    const it = G.items[m], g = mk('g', {'data-m': m, id: 'it-' + m}, svg);
+    const hw = it.s * .4;
+    mk('rect', {x: f1(it.cx - hw), y: f1(it.base - it.s - 4), width: f1(hw * 2), height: f1(it.s + (it.caps ? G.fs * 2.4 : 4) + 4), fill: '#000', 'fill-opacity': 0}, g);
+    mk('ellipse', {cx: f1(it.cx), cy: f1(it.base), rx: f1(it.s * .28), ry: f1(Math.max(1.5, it.s * .035)), fill: INK, opacity: .14}, g);
+    if (m === 'pl' && done.pl) sprout(g, it.cx, it.base, it.s, st.sprout);
+    else { const sh = shape(m, it.cx, it.base, it.s, g); sh.id = 'sh-' + m; }
+    const c = mk('g', {id: 'cap-' + m, opacity: done[m] ? 1 : 0}, g);
+    if (!it.caps) continue;
+    const w = it.colW;
+    if (it.two) {
+      words(c, it.capX, it.capY, M[m][0], {weight: 800, max: w});
+      words(c, it.capX, it.capY + fs * 1.3, M[m][1], {weight: 600, max: w});
+    } else words(c, it.capX, it.capY, SHORT[m], {weight: 700, max: w, min: 10});
+    if (!done[m]) words(g, it.capX, it.capY + (it.two ? fs * .55 : 0), 'tap', {font: HAND, size: Math.max(14, fs * 1.3), fill: 'rgba(16,16,12,.62)'});
+  }
+}
+
+function finish() {
+  if (ended || !(done.al && done.gl && done.pl) || busy) return;
+  ended = true;
+  Kit.hide('say'); card.classList.add('answered'); Kit.show('why'); Kit.show('keep');
+  svg.setAttribute('aria-label', 'The mill, its town and year over the door: Conshohocken, Pennsylvania, 1972, bales of pressed plastic stacked beside it. The can and the glass bottle: wartime, they were scarce. Where the plastic bottle stood, a sprout: nature, plastic harms it.');
+  Kit.haptic('success');
+  requestAnimationFrame(() => draw());
+}
+
+svg.addEventListener('click', e => {
+  const t = e.target.closest('[data-m]'); if (!t || busy || !G) return;
+  const m = t.dataset.m; if (done[m]) return;
+  Kit.haptic('light');
+  if (m !== 'pl') {
+    done[m] = true;
     draw();
-    if (!Kit.calm){
-      gsap.from('#sh-'+m, {scale:1.25, rotation:-8, transformOrigin:'50% 50%', duration:.6, ease:'elastic.out(1,.45)'});
-      gsap.from('#cap-'+m, {opacity:0, y:8, duration:.4, ease:'power3.out'});
+    if (!Kit.calm) {
+      gsap.from('#sh-' + m, {scale: 1.2, rotation: -8, transformOrigin: '50% 100%', duration: .6, ease: 'elastic.out(1,.45)'});
+      gsap.from('#cap-' + m, {opacity: 0, y: 8, duration: .4, ease: 'power3.out'});
     }
     finish();
     return;
   }
-  // plastic: fly into the first plant
+  // The plastic bottle flies in through the mill's door; the name goes up, the bales stack, a sprout comes up.
+  if (Kit.calm) { done.pl = true; draw(); finish(); return; }
   busy = true;
-  draw();
-  const svg = Kit.$('pic');
-  if (Kit.calm){ busy = false; finish(); return; }
-  gsap.set('#plant', {opacity:0}); gsap.set('#ghost', {opacity:1});
-  const fly = shape('pl', G.cols.pl, G.rowY, G.s, svg);
-  const tl = gsap.timeline({onComplete(){ fly.remove(); busy = false; finish(); }});
-  tl.from('#cap-pl', {opacity:0, y:8, duration:.4})
-    .to(fly, {x:G.door.x - G.cols.pl, y:G.door.y - G.rowY, scale:.35, transformOrigin:'50% 50%', rotation:200, duration:.8, ease:'power2.in'}, .1)
-    .to('#ghost', {opacity:0, duration:.3}, .55)
-    .fromTo('#plant', {opacity:0, y:G.fs*1.5}, {opacity:1, y:0, duration:.5, ease:'back.out(1.6)'}, .6)
-    .to(fly, {opacity:0, duration:.2}, .85)
-    .from('#banner', {scaleX:0, transformOrigin:'50% 50%', duration:.45, ease:'back.out(1.8)'}, 1);
-  smoke();
+  const it = G.items.pl, d = G.door;
+  const fly = Kit.$('sh-pl');
+  gsap.set(Kit.$('cap-pl'), {opacity: 1});
+  const dx = d.x - it.cx, dy = (d.y + d.h * .1) - (it.base - it.s / 2), arc = {t: 0};
+  gsap.timeline({onComplete() { busy = false; done.pl = true; draw(); finish(); }})
+    .from('#cap-pl', {opacity: 0, y: 8, duration: .35})
+    .to(arc, {t: 1, duration: .85, ease: 'power2.in', onUpdate() {
+      const t = arc.t, x = dx * t, y = dy * t - Math.sin(Math.PI * t) * G.fs * 4, s = 1 - .72 * t;
+      fly.setAttribute('transform', `translate(${f1(it.cx + x)},${f1(it.base - it.s / 2 + y)}) rotate(${f1(220 * t)}) scale(${f1(s)}) translate(${f1(-it.cx)},${f1(-(it.base - it.s / 2))})`);
+      fly.setAttribute('opacity', f1(t < .85 ? 1 : (1 - t) / .15));
+    }}, .05)
+    .to(st, {sign: 1, duration: .55, ease: 'back.out(1.6)', onUpdate: sign}, .85)
+    .to(st, {bales: 1, duration: .7, ease: 'power2.out', onUpdate: bales}, 1.0);
 });
 
-Kit.onShow.card = () => { if (!busy) draw(); };
+Kit.onShow.card = () => draw();
 Kit.onEnter.card = () => {
-  if (Kit.calm) return;
-  gsap.from(['#it-al','#it-gl','#it-pl'], {opacity:0, y:12, stagger:.1, duration:.45, ease:'power3.out'});
-  gsap.from('#ghost', {opacity:0, duration:.6, delay:.3});
+  if (Kit.calm || !G) return;
+  gsap.from(['#it-al', '#it-gl', '#it-pl'], {opacity: 0, y: 12, stagger: .1, duration: .45, ease: 'power3.out', clearProps: 'opacity,transform'});
 };
 Kit.play.card = async () => {
   const wait = ms => new Promise(r => setTimeout(r, ms));
-  for (const m of ['al','gl','pl']){
-    const el = Kit.$('it-'+m);
-    if (el) el.dispatchEvent(new MouseEvent('click', {bubbles:true}));
-    await wait(m === 'pl' ? 1800 : 300);
+  for (const m of ['al', 'gl', 'pl']) {
+    const el = Kit.$('it-' + m);
+    if (el) el.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await wait(m === 'pl' ? 2000 : 300);
   }
   await wait(400);
 };
+// Drawn again, at the size it now has, whenever its room changes: the answer coming in takes some of it.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) draw(); }).observe(svg); }
 Kit.single();
 </script>
 </html>

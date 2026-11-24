@@ -7,7 +7,7 @@
   "difficulty": "medium",
   "principle": "none",
   "question": "After the early-2000s gadget boom, what did a kilo of coltan cost?",
-  "answer": "When electronic devices boomed in the early 2000s, the price of coltan, which is essential for smartphones and other electronics, shot up twelvefold. A kilo cost €15 before the boom and €180 after it. The card asks readers to drag a dot up to their guess of the price.",
+  "answer": "When electronic devices boomed in the early 2000s, the price of coltan, which is essential for smartphones and other electronics, shot up twelvefold. A kilo cost €15 before the boom and €180 after it.",
   "move": "The gadget boom made coltan 12× pricier: €15 to €180 per kilo.",
   "keywords": [
     "coltan",
@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive chart asking the reader to guess the early-2000s price of a kilo of coltan. A vertical axis runs from €15 up to €180, and the reader drags a dot up to their guess.",
+    "label": "A coltan mine in red ground, a miner digging in a tunnel under it; on the surface a kilo of coltan, its price of €15 as a small pile of euro notes, and a big smartphone. The reader drags the pile up to guess the early-2000s price of a kilo, then sees the real pile: twelve bundles of €15, €180.",
     "graded": false
   },
   "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",

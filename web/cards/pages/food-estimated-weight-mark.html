@@ -1,5 +1,10 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: food-estimated-weight-mark -->
+<!-- The picture: the pack itself, big. A box of penne, a window onto the pasta, its label printed 500 g ℮, standing
+     on a kitchen scale whose display reads "? g", the ℮ named with a thin line. Answered, the same packs, sixty of
+     them, come off the scale one by one and pile up on a shelf by what each weighs, from 15 g under the label to
+     15 g over: a few just under 500 g, most on it or just above. Flat colours, ink outlines; drawn again at its real
+     size whenever its room changes. The sixty weights are illustrative, within ±15 g and above the label on average. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -20,81 +25,163 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">THE ℮ MARK</span></div>
     <h2 class="q">A pack says 500 g ℮. Is it likelier to weigh less or more?</h2>
     <div class="stagebox" id="stage">
-      <div id="plotbox"><svg id="plot"></svg></div>
+      <div id="plotbox"><svg id="plot" role="img" aria-label="A box of penne labelled 500 g ℮ standing on a kitchen scale whose display reads question mark grams."></svg></div>
       <div id="opts">
-        <button class="opt" data-i="0">Less than 500 g</button>
-        <button class="opt" data-i="1">500 g or a bit more</button>
+        <button class="opt" data-i="0">Less than 500&nbsp;g</button>
+        <button class="opt" data-i="1">500&nbsp;g or a bit more</button>
         <button class="opt" data-i="2">Equal odds</button>
       </div>
-      <div id="why" class="gone"><p class="big">500 g or a bit more</p><p class="body">℮ means “estimated”: one pack may be off by up to 15 g either way. But on average the content must never be below the label. So the packs pile up on the label or just above it.</p></div>
+      <div id="why" class="gone"><p class="big">500 g or a bit more</p><p class="body">℮ means “estimated”: one pack may weigh up to 15&nbsp;g less than the label. But on average the content must never be below the label. So the packs pile up on the label or just above it.</p></div>
     </div>
     <div id="sure"></div>
     <p class="say" id="say">Pick one, say how sure you are, then watch 60 packs get weighed.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>℮ allows ±15 g, but on average you get at least what’s printed.</div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>℮ lets a pack be up to 15&nbsp;g short, but on average you get at least what’s printed.</div>
     <div class="foot"><span class="src">Source · Geopop, “Avete mai notato questo simbolo di fianco al peso dei prodotti confezionati? #alimenti #scienze” (YouTube, 2024).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
 const RIGHT = 1;
-let pick = -1;
+let pick = -1, weighed = false;
 // 60 illustrative packs: within ±15 g, average above the label.
 const S = [];
 for (let i = 0; i < 60; i++) { let v = 505 + 3.5 * Kit.gauss(); v = Math.max(485.5, Math.min(514.5, v)); S.push(v); }
 const binOf = v => Math.floor((v - 484) / 2);
 const maxc = (() => { const c = {}; let m = 1; S.forEach(v => { const b = binOf(v); c[b] = (c[b] || 0) + 1; m = Math.max(m, c[b]); }); return m; })();
 const st = {n: 0};
-let shown = 0;
+// One ink; the box blue with a cream window onto golden penne; its label white; the scale cream with a dark display;
+// the counter and the shelf wood.
+const INK = '#10100c', BLUE = ['#2F62DA', '#2149AE', '#5D89EE'], CREAM = '#FFF4DA', PASTA = ['#F6C453', '#D99A2B'], WHITE = '#FFFFFF', WOOD = '#F3CF8B';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const f1 = n => (Math.round(n * 10) / 10).toString();
 
-function T(svg, x, y, s, fs, anchor, w) {
-  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'middle', 'font-size': fs, style: `fill:var(--k);font-family:var(--body);font-weight:${w || 700}`}, svg);
+function T(p, x, y, s, fs, a = {}) {
+  const t = Kit.mk('text', Object.assign({x: f1(x), y: f1(y), 'text-anchor': 'middle', 'font-size': f1(fs), 'font-family': FONT, 'font-weight': 800, fill: INK}, a), p);
   t.textContent = s; return t;
 }
+const box = (p, x, y, w, h, r, a) => Kit.mk('rect', Object.assign({x: f1(x), y: f1(y), width: f1(w), height: f1(h), rx: f1(r)}, a), p);
+// The ℮: the bar across, the bowl over the top and round to the lower right, as printed beside a weight.
+function emark(p, cx, cy, r, color) {
+  const a = 40 * Math.PI / 180;
+  Kit.mk('path', {d: `M${f1(cx - r)},${f1(cy)} H${f1(cx + r)} A${f1(r)},${f1(r)} 0 1 0 ${f1(cx + r * Math.cos(a))},${f1(cy + r * Math.sin(a))}`, fill: 'none', stroke: color, 'stroke-width': f1(r * .34), 'stroke-linecap': 'butt'}, p);
+}
+// The box of penne, its front face's top left at (x, y): the window onto the pasta, its name, the label 500 g ℮.
+function pack(p, x, y, w, h, k, id) {
+  const dx = w * .3, dd = w * .22, ink = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  Kit.mk('path', Object.assign({d: `M${f1(x + w)},${f1(y)} L${f1(x + w + dx)},${f1(y - dd)} V${f1(y + h - dd)} L${f1(x + w)},${f1(y + h)} Z`, fill: BLUE[1]}, ink), p);
+  Kit.mk('path', Object.assign({d: `M${f1(x)},${f1(y)} L${f1(x + dx)},${f1(y - dd)} H${f1(x + w + dx)} L${f1(x + w)},${f1(y)} Z`, fill: BLUE[2]}, ink), p);
+  box(p, x, y, w, h, 0, Object.assign({fill: BLUE[0]}, ink));
+  // its name, over the window
+  const ns = w * .19;
+  T(p, x + w / 2, y + h * .06 + ns * .9, 'PENNE', ns, {'font-family': SERIF, 'font-weight': 800, fill: CREAM, 'letter-spacing': f1(ns * .06)});
+  // the window and the pasta in it
+  const wx = x + w * .13, wy = y + h * .25, ww = w * .74, wh = h * .4, wr = w * .09;
+  const clip = Kit.mk('clipPath', {id}, Kit.mk('defs', {}, p));
+  box(clip, wx, wy, ww, wh, wr, {});
+  box(p, wx, wy, ww, wh, wr, {fill: CREAM});
+  const g = Kit.mk('g', {'clip-path': `url(#${id})`}, p), pl = ww * .4, pd = pl * .32;
+  [[.12, .2, -32], [.5, .12, 28], [.86, .28, -24], [.3, .55, 34], [.7, .6, -30], [.1, .9, 20], [.5, .95, -18], [.92, .82, 30], [.3, 1.2, 0]].forEach(([u, v, a], i) => {
+    const cx = wx + u * ww, cy = wy + v * wh * .85, q = Kit.mk('g', {transform: `rotate(${a} ${f1(cx)} ${f1(cy)})`}, g);
+    Kit.mk('path', {d: `M${f1(cx - pl / 2)},${f1(cy + pd / 2)} L${f1(cx - pl / 2 + pd * .6)},${f1(cy - pd / 2)} H${f1(cx + pl / 2)} L${f1(cx + pl / 2 - pd * .6)},${f1(cy + pd / 2)} Z`, fill: PASTA[0], stroke: INK, 'stroke-width': f1(Math.max(1, k * .5)), 'stroke-linejoin': 'round'}, q);
+    Kit.mk('ellipse', {cx: f1(cx + pl / 2 - pd * .3), cy: f1(cy), rx: f1(pd * .2), ry: f1(pd * .4), transform: `rotate(28 ${f1(cx + pl / 2 - pd * .3)} ${f1(cy)})`, fill: PASTA[1], stroke: INK, 'stroke-width': 1}, q);
+    if (pl > 14) for (const t of [.3, .55]) Kit.mk('path', {d: `M${f1(cx - pl / 2 + pl * t)},${f1(cy - pd * .28)} H${f1(cx - pl / 2 + pl * (t + .22))}`, stroke: PASTA[1], 'stroke-width': 1.1, 'stroke-linecap': 'round'}, q);
+  });
+  box(p, wx, wy, ww, wh, wr, Object.assign({fill: 'none'}, ink));
+  // the label: 500 g and the ℮ beside it
+  const lx = x + w * .08, ly = y + h * .705, lw = w * .84, lh = h * .215;
+  box(p, lx, ly, lw, lh, Math.min(4, lh * .2), Object.assign({fill: WHITE}, ink, {'stroke-width': f1(k * .7)}));
+  const fs = Math.min(lh * .62, lw * .25), mid = lx + lw * .5, t = T(p, mid, ly + lh * .5 + fs * .36, '500 g', fs, {'font-weight': 800});
+  let tw; try { tw = t.getComputedTextLength(); } catch (_) { tw = fs * 2.6; }
+  const er = fs * .36, ex = mid + tw / 2 + er * 1.75;
+  t.setAttribute('x', f1(mid - er * 1.4));
+  emark(p, ex - er * 1.4, ly + lh * .5 + fs * .36 - er * 1.02, er, INK);
+  return {ex: ex - er * 1.4, ey: ly + lh * .5 + fs * .36 - er * 1.02, er, gy: (wy + wh + ly) / 2};
+}
+// The kitchen scale, its platform's top at y: a cream body, its feet, the display reading "? g".
+function scale(p, cx, y, w, h, k) {
+  const ink = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  Kit.mk('path', Object.assign({d: `M${f1(cx - w * .46)},${f1(y + h * .18)} L${f1(cx - w * .5)},${f1(y + h)} H${f1(cx + w * .5)} L${f1(cx + w * .46)},${f1(y + h * .18)} Z`, fill: CREAM}, ink), p);
+  box(p, cx - w * .52, y, w * 1.04, h * .2, h * .08, Object.assign({fill: '#E9E2D2'}, ink));
+  const dw = w * .3, dh = h * .52, dx = cx + w * .06, dy = y + h * .33;
+  box(p, dx, dy, dw, dh, dh * .2, Object.assign({fill: '#2B2B33'}, ink));
+  T(p, dx + dw / 2, dy + dh / 2 + Math.max(9.5, dh * .62) * .36, '? g', Math.max(9.5, dh * .62), {fill: '#9BE28F', 'font-weight': 800});
+  Kit.mk('circle', Object.assign({cx: f1(cx - w * .28), cy: f1(dy + dh / 2), r: f1(dh * .26), fill: '#E9E2D2'}, ink, {'stroke-width': f1(k * .7)}), p);
+}
+
+// A little pack on the shelf: blue with its window for one at or over the label, white for one under it.
+function mini(p, x, y, w, h, light, op) {
+  const a = Kit.mk('g', op < 1 ? {opacity: f1(op)} : {}, p);
+  box(a, x, y, w, h, Math.min(2.5, h * .2), {fill: light ? WHITE : BLUE[0], stroke: INK, 'stroke-width': 1.3});
+  if (h >= 6 && w >= 10) box(a, x + w * .22, y + h * .26, w * .56, h * .4, Math.min(2, h * .15), {fill: light ? '#DDE6FA' : CREAM});
+}
+
 function draw() {
   const svg = Kit.$('plot'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(12, Math.min(f * .8, H * .07));
-  const x0 = fs * .6, x1 = W - fs * .6;
-  const top = fs * 2.4, axisY = H - fs * 2.2, plotH = axisY - top;
-  const bw = (x1 - x0) / 16, xOf = v => x0 + (v - 484) / 32 * (x1 - x0), xn = xOf(500);
-  // lighter side, shaded
-  Kit.mk('rect', {x: x0, y: top, width: xn - x0, height: plotH, style: 'fill:color-mix(in srgb,var(--k) 7%,transparent)'}, svg);
-  const ph = Math.min(plotH / maxc, bw * .8);
-  const c = {};
+  if (W < 60 || H < 50) return;
+  const k = clamp(Math.min(W, H) * .011, 2, 3), fs = clamp(Math.min(f * .85, H * .075), 11.5, 14);
+  if (!weighed) {
+    // The pack on the scale, on the kitchen counter, as big as the room lets it be.
+    const ch = clamp(H * .06, 7, 14), cy = H - ch;
+    box(svg, 1.5, cy, W - 3, ch - 1.5, Math.min(4, ch / 3), {fill: WOOD, stroke: INK, 'stroke-width': 2.2});
+    const sh = clamp(H * .16, 27, 46), top = Math.max(6, H * .06);
+    // its height, with the box's top seen from above (a depth of .22 of its width) inside the room too
+    const bh = Math.min((cy - sh - top - 2) / (1 + .7 * .22), (W * .46) / .7), bw = bh * .7, dd = bw * .22;
+    const sw = clamp(bw * 1.9, bw * 1.5, W * .66), cx = W * .56;
+    scale(svg, cx, cy - sh, sw, sh, k);
+    const e = pack(svg, cx - (bw + bw * .3) / 2, cy - sh - bh + 1, bw, bh, k, 'pk-win');
+    // The ℮, ringed, named from the left by a thin line that runs above the label's words.
+    const left = cx - (bw + bw * .3) / 2, gy = e.gy, rr = e.er * 1.42;
+    Kit.mk('circle', {cx: f1(e.ex), cy: f1(e.ey), r: f1(rr), fill: 'none', stroke: INK, 'stroke-width': 1.8}, svg);
+    T(svg, left - fs * .75, gy + fs * .36, 'the ℮ mark', fs, {'text-anchor': 'end'});
+    Kit.mk('path', {d: `M${f1(left - fs * .2)},${f1(gy)} H${f1(e.ex)} V${f1(e.ey - rr)}`, fill: 'none', stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, svg);
+    return;
+  }
+  // Weighed: the packs piled on a shelf by what each weighs.
+  const x0 = fs * .6, x1 = W - fs * .6, top = fs * 2.3, board = clamp(H * .045, 5, 9), sy = H - fs * 1.9 - board;
+  const plotH = sy - top, bw = (x1 - x0) / 16, xOf = v => x0 + (v - 484) / 32 * (x1 - x0), xn = xOf(500);
+  Kit.mk('rect', {x: f1(x0), y: f1(top), width: f1(xn - x0), height: f1(plotH), fill: INK, opacity: .055}, svg);
+  const ph = Math.min(plotH / maxc, bw * .62), pw = bw * .8;
+  const shown = Math.floor(st.n), frac = st.n - shown, c = {};
   let low = 0, high = 0;
-  for (let i = 0; i < shown; i++) {
-    const v = S[i], b = binOf(v); c[b] = (c[b] || 0) + 1;
-    const lighter = v < 500; lighter ? low++ : high++;
-    Kit.mk('rect', {x: x0 + b * bw + bw * .12, y: axisY - c[b] * ph + ph * .09, width: bw * .76, height: ph * .82, rx: Math.min(4, ph * .2),
-      style: lighter ? 'fill:none;stroke:var(--k);stroke-width:2' : 'fill:var(--k)'}, svg);
+  for (let i = 0; i < Math.min(60, shown + 1); i++) {
+    const v = S[i], b = binOf(v), lighter = v < 500;
+    const n = (c[b] = (c[b] || 0) + 1), last = i === shown;
+    if (last && (shown >= 60 || frac < .05)) break;
+    if (!last) lighter ? low++ : high++;
+    const drop = last ? (1 - frac) * ph * 2 : 0;
+    mini(svg, x0 + b * bw + (bw - pw) / 2, sy - n * ph + ph * .08 - drop, pw, ph * .84, lighter, last ? frac : 1);
   }
-  // axis and the label line
-  Kit.mk('line', {x1: x0, x2: x1, y1: axisY, y2: axisY, style: 'stroke:var(--k);stroke-width:2.5'}, svg);
-  Kit.mk('line', {x1: xn, x2: xn, y1: top - fs * .3, y2: axisY + fs * .3, style: 'stroke:var(--k);stroke-width:2;stroke-dasharray:5 4'}, svg);
-  [485, 515].forEach(v => Kit.mk('line', {x1: xOf(v), x2: xOf(v), y1: axisY, y2: axisY + fs * .4, style: 'stroke:var(--k);stroke-width:2'}, svg));
-  const ly = axisY + fs * 1.5;
-  T(svg, x0, ly, '−15 g', fs, 'start', 600);
-  T(svg, xn, ly, '500 g', fs, 'middle', 800);
-  T(svg, x1, ly, '+15 g', fs, 'end', 600);
-  if (shown === 0) {
-    T(svg, x0, fs * 1.2, '← lighter', fs, 'start');
-    T(svg, x1, fs * 1.2, 'heavier →', fs, 'end');
-    T(svg, (x0 + x1) / 2, top + plotH * .5, '60 packs labelled 500 g ℮', fs, 'middle', 600).setAttribute('style', 'fill:var(--muted);font-family:var(--body);font-weight:600');
-  } else {
-    T(svg, x0, fs * 1.2, `◻ lighter: ${low}`, fs, 'start');
-    T(svg, x1, fs * 1.2, `label or more: ${high} ■`, fs, 'end');
-  }
+  // The shelf, the label line, the marks under it.
+  box(svg, 1.5, sy, W - 3, board, Math.min(3, board / 3), {fill: WOOD, stroke: INK, 'stroke-width': 2});
+  Kit.mk('line', {x1: f1(xn), x2: f1(xn), y1: f1(top - fs * .2), y2: f1(sy), stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '5 4'}, svg);
+  const ly = sy + board + fs * 1.25;
+  T(svg, x0, ly, '−15 g', fs, {'text-anchor': 'start', 'font-weight': 600});
+  T(svg, xn, ly, '500 g', fs, {'font-weight': 800});
+  T(svg, x1, ly, '+15 g', fs, {'text-anchor': 'end', 'font-weight': 600});
+  // What the shelf holds: the lighter ones, and those on the label or over it, each with a pack for its key.
+  const kh = fs * .78, kw = kh * 1.35, ky = fs * 1.15;
+  mini(svg, x0, ky - kh * .85, kw, kh, true, 1);
+  T(svg, x0 + kw + fs * .4, ky, `lighter: ${low}`, fs, {'text-anchor': 'start'});
+  const r = T(svg, x1 - kw - fs * .4, ky, `label or more: ${high}`, fs, {'text-anchor': 'end'});
+  mini(svg, x1 - kw, ky - kh * .85, kw, kh, false, 1);
 }
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent.replace(/ /g, ' ');
   Kit.answer({choice: said, correct: ok, sure: pct});
+  // The verdict already names the answer when it was picked: the heading need not say it again, and the picture
+  // keeps the room.
+  if (ok) Kit.$('why').querySelector('.big')?.remove();
   Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
   sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
   Kit.show('keep');
-  draw();
-  if (Kit.calm) { st.n = 60; shown = 60; draw(); Kit.haptic('success'); return; }
-  gsap.to(st, {n: 60, duration: 2.2, ease: 'none', onUpdate: () => { const n = Math.floor(st.n); if (n !== shown) { shown = n; draw(); } }, onComplete: () => { shown = 60; draw(); Kit.haptic('success'); }});
+  weighed = true;
+  Kit.$('plot').setAttribute('aria-label', 'Sixty packs labelled 500 g ℮, weighed and piled on a shelf by weight from 15 g under to 15 g over: a few just under 500 g, most on it or just above.');
+  if (Kit.calm) { st.n = 60; draw(); Kit.haptic('success'); return; }
+  st.n = 0; draw();
+  gsap.to(st, {n: 60, duration: 2.4, ease: 'none', onUpdate: draw, onComplete: () => { st.n = 60; draw(); Kit.haptic('success'); }});
 });
 Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
@@ -102,7 +189,9 @@ Kit.$('opts').addEventListener('click', e => {
 });
 Kit.onShow.card = () => draw();
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
-Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2800)); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2900)); };
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+{ let seen = ''; const el = Kit.$('plotbox'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) draw(); }).observe(el); }
 Kit.single();
 </script>
 </html>

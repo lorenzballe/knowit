@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611231809,
- "built": "2026-11-23T18:09:16Z",
+ "version": 202611240906,
+ "built": "2026-11-24T09:06:59Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -26675,7 +26675,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "medium",
    "principle": "none",
    "question": "After the early-2000s gadget boom, what did a kilo of coltan cost?",
-   "answer": "When electronic devices boomed in the early 2000s, the price of coltan, which is essential for smartphones and other electronics, shot up twelvefold. A kilo cost €15 before the boom and €180 after it. The card asks readers to drag a dot up to their guess of the price.",
+   "answer": "When electronic devices boomed in the early 2000s, the price of coltan, which is essential for smartphones and other electronics, shot up twelvefold. A kilo cost €15 before the boom and €180 after it.",
    "move": "The gadget boom made coltan 12× pricier: €15 to €180 per kilo.",
    "keywords": [
     "coltan",
@@ -26696,13 +26696,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive chart asking the reader to guess the early-2000s price of a kilo of coltan. A vertical axis runs from €15 up to €180, and the reader drags a dot up to their guess.",
+    "label": "A coltan mine in red ground, a miner digging in a tunnel under it; on the surface a kilo of coltan, its price of €15 as a small pile of euro notes, and a big smartphone. The reader drags the pile up to guess the early-2000s price of a kilo, then sees the real pile: twelve bundles of €15, €180.",
     "graded": false,
-    "page": "pages/economics-coltan-price-spike.html?v=c8134737c5d1",
-    "bytes": 9104,
+    "page": "pages/economics-coltan-price-spike.html?v=e626877d541f",
+    "bytes": 21435,
     "thumbs": {
-     "front": "thumbs/economics-coltan-price-spike-front.webp?v=d9273d1898bb",
-     "back": "thumbs/economics-coltan-price-spike-back.webp?v=d9273d1898bb"
+     "front": "thumbs/economics-coltan-price-spike-front.webp?v=40bd2998a6b3",
+     "back": "thumbs/economics-coltan-price-spike-back.webp?v=40bd2998a6b3"
     }
    },
    "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",
@@ -31299,12 +31299,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page with a slider that traps ships in the Gulf one by one. It asks what the roughly 1,000 stuck ships are worth, and shows the idle fleet's value of over $25 billion and the share carrying oil or gas.",
-    "page": "pages/economics-gulf-idle-fleet.html?v=5ae601f30d70",
-    "bytes": 6003,
+    "label": "The Gulf crowded with ships at anchor, a big oil tanker in front and row after row to the horizon, about 1,000 in all. A slider counts them one by one, each coming into its colours as the idle fleet's value adds up to over $25 billion, half of the ships carrying oil or gas.",
+    "page": "pages/economics-gulf-idle-fleet.html?v=433f495883c0",
+    "bytes": 19398,
     "thumbs": {
-     "front": "thumbs/economics-gulf-idle-fleet-front.webp?v=8d5b6491ca84",
-     "back": "thumbs/economics-gulf-idle-fleet-back.webp?v=8d5b6491ca84"
+     "front": "thumbs/economics-gulf-idle-fleet-front.webp?v=ae2db81344e4",
+     "back": "thumbs/economics-gulf-idle-fleet-back.webp?v=ae2db81344e4"
     }
    },
    "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
@@ -43142,8 +43142,8 @@ const String kEmbeddedBank = r'''
    "difficulty": "medium",
    "principle": "sampling",
    "question": "A pack says 500 g ℮. Is it likelier to weigh less or more?",
-   "answer": "The ℮ mark means the weight is an estimate, so one pack may be off by up to 15 g either way. But on average the content must never be below the label. So the packs pile up on the printed weight or just above it, and 500 g or a bit more is the likelier outcome.",
-   "move": "℮ allows ±15 g, but on average you get at least what’s printed.",
+   "answer": "The ℮ mark means the weight is an estimate, so one pack may weigh up to 15 g less than the label. But on average the content must never be below the label. So the packs pile up on the printed weight or just above it, and 500 g or a bit more is the likelier outcome.",
+   "move": "℮ lets a pack be up to 15 g short, but on average you get at least what’s printed.",
    "keywords": [
     "packaged food",
     "net weight",
@@ -43164,12 +43164,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A pack labelled 500 g ℮. Is it likelier to weigh less than 500 g, 500 g or a bit more, or are the odds equal? Choose one, rate your confidence, then watch 60 packs get weighed.",
-    "page": "pages/food-estimated-weight-mark.html?v=2d602dab7d88",
-    "bytes": 6572,
+    "label": "A box of penne labelled 500 g ℮ standing on a kitchen scale whose display reads '? g'. Is it likelier to weigh less than 500 g, 500 g or a bit more, or are the odds equal? Choose one, rate your confidence, then watch 60 packs get weighed and pile up on a shelf by weight.",
+    "page": "pages/food-estimated-weight-mark.html?v=a656c7e70458",
+    "bytes": 14993,
     "thumbs": {
-     "front": "thumbs/food-estimated-weight-mark-front.webp?v=c15feded79c9",
-     "back": "thumbs/food-estimated-weight-mark-back.webp?v=c15feded79c9"
+     "front": "thumbs/food-estimated-weight-mark-front.webp?v=f06e95d36405",
+     "back": "thumbs/food-estimated-weight-mark-back.webp?v=f06e95d36405"
     }
    },
    "source": "Geopop, “Avete mai notato questo simbolo di fianco al peso dei prodotti confezionati? #alimenti #scienze” (YouTube, 2024)",
@@ -55103,13 +55103,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A slider scale in years for guessing how long the camp director's prison sentence was for embezzling government subsidies. The reader drags a marker to their estimate, and the page reveals the sentence was 2.5 years.",
+    "label": "A prison yard: a high wall with barbed wire, a steel gate and a path of 25 paving stones, one for each year. The camp's director, grey-haired, in a suit, a briefcase stuffed with banknotes in his hand, stands on it; the reader drags him to their guess of his sentence. Then the gate opens: he walks out after 2.5 years.",
     "graded": false,
-    "page": "pages/history-directors-light-sentence.html?v=6fd8f352a759",
-    "bytes": 10412,
+    "page": "pages/history-directors-light-sentence.html?v=834d4c5db4d4",
+    "bytes": 25986,
     "thumbs": {
-     "front": "thumbs/history-directors-light-sentence-front.webp?v=75e892bad773",
-     "back": "thumbs/history-directors-light-sentence-back.webp?v=75e892bad773"
+     "front": "thumbs/history-directors-light-sentence-front.webp?v=66bd4cb22d29",
+     "back": "thumbs/history-directors-light-sentence-back.webp?v=66bd4cb22d29"
     }
    },
    "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
@@ -55470,7 +55470,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "What was the world’s first plastic recycling centre?",
-   "answer": "The world's first plastic recycling centre was the Plastic Waste Recycling Mill. Aluminium and glass were reused in wartime because they were scarce, but plastic needed another reason: it was realised that it can badly damage the environment. So it got a plant of its own, and this mill was the world's first.",
+   "answer": "The world's first plastic recycling centre was a mill opened in 1972 in Conshohocken, Pennsylvania. Aluminium and glass were reused in wartime because they were scarce, but plastic needed another reason: it was realised that it can badly damage the environment. So it got a plant of its own, and this mill was the world's first.",
    "move": "Plastic recycling began to protect nature, not to make up for scarcity.",
    "keywords": [
     "plastic",
@@ -55492,12 +55492,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Question asks what the world's first plastic recycling centre was. Tap each material (plastic, aluminium, glass) to see why it was recycled. Shows a historic photo of the Plastic Waste Recycling Mill with a banner reading First Plastic Recycling Plant.",
-    "page": "pages/history-first-plastic-plant.html?v=9bb92205837b",
-    "bytes": 12670,
+    "label": "A brick recycling mill under a sawtooth roof in green country, the recycling arrows on its front; in its yard an aluminium can, a green glass bottle and a blue plastic bottle. Tap each to see why it was recycled: can and glass, scarce in wartime; the plastic flies into the mill, its town and year go up, Conshohocken, 1972, and a sprout grows where it stood.",
+    "page": "pages/history-first-plastic-plant.html?v=f4ddf9372886",
+    "bytes": 23920,
     "thumbs": {
-     "front": "thumbs/history-first-plastic-plant-front.webp?v=861e6c5b6dbb",
-     "back": "thumbs/history-first-plastic-plant-back.webp?v=861e6c5b6dbb"
+     "front": "thumbs/history-first-plastic-plant-front.webp?v=ca4246bbce35",
+     "back": "thumbs/history-first-plastic-plant-back.webp?v=ca4246bbce35"
     }
    },
    "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
@@ -58465,12 +58465,12 @@ const String kEmbeddedBank = r'''
    "difficulty": "medium",
    "principle": "availability",
    "question": "What was Jack Foley's job before he made sounds for films?",
-   "answer": "Jack Foley, born in New York in 1891, started out as a cartographer, a mapmaker. He fell for cinema, which stayed silent until 1927, when Warner Bros released a film with sound. Someone then had to make every noise, so he became the father of film sound effects.",
-   "move": "The father of film sound effects began as a mapmaker.",
+   "answer": "Jack Foley, born in New York in 1891, started out as a clerk on the New York docks. He fell for cinema, which stayed silent until 1927, when Warner Bros released a film with sound. Someone then had to make every noise, so he became the father of film sound effects.",
+   "move": "The father of film sound effects began as a clerk on the docks.",
    "keywords": [
     "jack foley",
     "film sound effects",
-    "cartography",
+    "new york docks",
     "silent cinema",
     "warner bros"
    ],
@@ -58487,12 +58487,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Multiple-choice question asking what Jack Foley's job was before he made sounds for films. Four options: Butcher, Cartographer, Drummer, Stage magician. The reader picks one.",
-    "page": "pages/history-jack-foley-maps.html?v=62cdbe86c15f",
-    "bytes": 8080,
+    "label": "A sound stage: Jack Foley snaps a stalk of celery under a hanging microphone while a silent film plays on the screen behind him. Four options: Butcher, Dock clerk, Drummer, Stage magician. Once answered, the film on the screen becomes his first job: the New York docks.",
+    "page": "pages/history-jack-foley-maps.html?v=93bbfcb41a93",
+    "bytes": 26076,
     "thumbs": {
-     "front": "thumbs/history-jack-foley-maps-front.webp?v=45fb0693fa5f",
-     "back": "thumbs/history-jack-foley-maps-back.webp?v=45fb0693fa5f"
+     "front": "thumbs/history-jack-foley-maps-front.webp?v=7943ac052015",
+     "back": "thumbs/history-jack-foley-maps-back.webp?v=7943ac052015"
     }
    },
    "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
@@ -58768,7 +58768,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "Who actually invented the Condorcet voting method first?",
-   "answer": "Ramon Llull, a monk, found the method 450 years before Condorcet while studying how church leaders were chosen. His book, Ars eleccionis, was lost, so his idea made no impact and the method took Condorcet's name. The book was only found again in 2001.",
+   "answer": "Ramon Llull, a philosopher from Majorca, found the method almost 500 years before Condorcet while studying how church leaders were chosen. His book, Ars eleccionis, was lost, so his idea made no impact and the method took Condorcet's name. The book was only found again in 2001.",
    "move": "The name on an idea is not always the first person who had it.",
    "keywords": [
     "ramon llull",
@@ -58789,12 +58789,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Timeline from the 14th-century monk Ramon Llull to today, with a draggable dot, Condorcet's 18th-century mark, and a lost-book icon appearing in 2001. It asks who first invented the Condorcet voting method.",
-    "page": "pages/history-llull-before-condorcet.html?v=1bc3899757ef",
-    "bytes": 9623,
+    "label": "A timeline along the floor of a hall, from the 1200s to today. On it stand Ramon Llull, bearded, in a long robe, holding his red book; Condorcet, in a white wig and a blue coat; and a library bookcase in 2001. Dragging runs the centuries: the book is lost, the method takes Condorcet's name, and in 2001 the book is found again.",
+    "page": "pages/history-llull-before-condorcet.html?v=1ac561d9fab1",
+    "bytes": 26301,
     "thumbs": {
-     "front": "thumbs/history-llull-before-condorcet-front.webp?v=5529a9016b56",
-     "back": "thumbs/history-llull-before-condorcet-back.webp?v=5529a9016b56"
+     "front": "thumbs/history-llull-before-condorcet-front.webp?v=57e108ad49ce",
+     "back": "thumbs/history-llull-before-condorcet-back.webp?v=57e108ad49ce"
     }
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
@@ -75707,12 +75707,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive chart of blood alcohol over time after one 8.6% beer, with a dashed line the reader drags up or down to set a point. The reader is asked where their own blood alcohol is 2 hours 55 minutes after the drink.",
-    "page": "pages/human_body-one-beer-curve.html?v=4de0388f1ad3",
-    "bytes": 14830,
+    "label": "A drinker drawn as a glass, graduated from 0 to 0.6 g/L, sitting at a table beside a bottle of 8.6% beer and a full glass of it. The reader drags the level of alcohol in the drinker up or down to guess their own blood alcohol 2 hours 55 minutes after that one beer.",
+    "page": "pages/human_body-one-beer-curve.html?v=678e41f3c443",
+    "bytes": 25271,
     "thumbs": {
-     "front": "thumbs/human_body-one-beer-curve-front.webp?v=14b73f0e2dfd",
-     "back": "thumbs/human_body-one-beer-curve-back.webp?v=14b73f0e2dfd"
+     "front": "thumbs/human_body-one-beer-curve-front.webp?v=d0dc304a89d3",
+     "back": "thumbs/human_body-one-beer-curve-back.webp?v=d0dc304a89d3"
     }
    },
    "source": "Geopop, “Abbiamo bevuto una birra da 8,6% e fatto l'alcol test con un etilometro professionale ogni 10 minuti” (YouTube, 2023)",
@@ -275239,7 +275239,8 @@ const String kEmbeddedBank = r'''
   "481": "thinking-z21",
   "482": "thinking-6",
   "483": "thinking-book-the-demon-haunted-world-4",
-  "484": "thinking-z14"
+  "484": "thinking-z14",
+  "485": "thinking-7"
  },
  "commons": {
   "1": [
@@ -280081,6 +280082,16 @@ const String kEmbeddedBank = r'''
    "food-local-or-not-2",
    "science-sardinia-corsica-door",
    "maths-three-adic-squares"
+  ],
+  "485": [
+   "psychology-empathy-2",
+   "technology-closed-loop-geothermal",
+   "history-hydrogen-wall",
+   "science-why-things-fall-2",
+   "pop_culture-hype-and-money-2",
+   "thinking-two-four-seven",
+   "human_body-anti-ageing-claims-1",
+   "medicine-when-not-to-take-them-3"
   ]
  }
 }

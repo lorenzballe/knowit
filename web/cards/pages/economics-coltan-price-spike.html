@@ -1,5 +1,11 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: economics-coltan-price-spike -->
+<!-- The picture: a slice of red Congolese ground with a hand-dug shaft and a tunnel where a miner digs out coltan; on
+     the surface a kilo of the ore, its price beside it as a pile of euro notes in bundles of €15 (the price before the
+     boom), and a smartphone standing over them, the gadget the boom was for. The reader drags the pile up to a guess
+     (a €5 note at a time) and says how sure; then the real pile is stacked again bundle by bundle, twelve of them, to
+     €180, the guess a dashed line across it. Flat colours, thick ink outlines; drawn again at its real size whenever
+     its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -7,116 +13,254 @@
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
 #plot{flex:1;min-height:0;position:relative}
-#g{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:ns-resize;overflow:visible}
+#g{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
-.ax{font-family:var(--mono);fill:var(--muted)}
-.lb{font-family:var(--body);font-weight:700;fill:var(--k)}
+#g .hint{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(-5px)}}
+.kit-calm #g .hint{animation:none}
 </style>
 <article class="card" id="card" data-topic="economics" data-kind="Drag a guess · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PRICE SHOCK</span></div>
     <h2 class="q">After the early-2000s gadget boom, what did a kilo of coltan cost?</h2>
     <div class="stagebox" id="stage">
-      <div id="plot"><svg id="g"></svg></div>
+      <div id="plot"><svg id="g" role="img" aria-label="A coltan mine in red ground: a miner digs in a tunnel under the surface. On top lie a kilo of coltan, its price of €15 as a small pile of euro notes, and a big smartphone. Drag the pile up to your guess."></svg></div>
       <div id="why" class="gone"><p class="big">€15 → €180 a kilo</p><p class="body">Coltan is essential for smartphones and other electronics. When electronic devices boomed in the early 2000s, its price shot up twelvefold.</p></div>
     </div>
     <div id="sure"></div>
-    <p class="say" id="say">It cost €15 a kilo. Drag the dot up to your guess.</p>
+    <p class="say" id="say">It cost €15 a kilo. Drag the pile up to your guess.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The gadget boom made coltan 12× pricier: €15 to €180 per kilo.</div>
     <div class="foot"><span class="src">Source · Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const REAL = 180, YMAX = 240;
+const REAL = 180, YMAX = 240, NOTE_EUR = 5, BUNDLE = 3;          // a €5 note; three of them, €15, a bundle
+// One ink for every outline; a pale sky; the red earth of the mine in three bands and its dark hole; the ore nearly
+// black with grey glints; the money green, its bundles held by a cream strap; the phone black with a blue screen.
+const INK = '#10100c', SKY = '#FFF6D2', EARTH = ['#DE7646', '#C65F37', '#A5492A'], HOLE = '#4A2414', WOOD = '#E9C17A';
+const ORE = ['#2F2B36', '#5C5566', '#B9B3C6'], NOTE = ['#A8DDB1', '#71B484', '#3F8456', '#D2F0D7'], STRAP = '#FFF6DC';
+const SCREEN = '#3C8BE6', APP = '#FFF6DC', SKIN = '#7A4428', SHIRT = '#FFF6DC';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const f1 = n => (Math.round(n * 10) / 10).toString();
 let g = 15, moved = false, locked = false, revealed = false, geo = null;
+const S = {real: 0};      // notes in the real pile, once it is shown
+
+function text(p, x, y, s, size, a = {}) {
+  const t = Kit.mk('text', Object.assign({x: f1(x), y: f1(y), 'font-size': f1(size), 'font-family': FONT, 'font-weight': 800, fill: INK, 'text-anchor': 'middle'}, a), p);
+  t.textContent = s; return t;
+}
+const width = t => { try { return t.getComputedTextLength(); } catch (_) { return t.textContent.length * parseFloat(t.getAttribute('font-size')) * .55; } };
+// A stroke with an ink edge: the ink drawn wider underneath, the colour on top.
+function limb(p, d, color, w, k) {
+  Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': f1(w + 2 * k), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p);
+  Kit.mk('path', {d, fill: 'none', stroke: color, 'stroke-width': f1(w), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p);
+}
+// A lump of ore, its foot on y: dark, two lighter facets, three glints.
+function lump(p, cx, y, w, h, k, small) {
+  const P = (u, v) => `${f1(cx + u * w)},${f1(y - v * h)}`;
+  const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  Kit.mk('path', Object.assign({d: `M${P(-.5, 0)} L${P(-.47, .42)} L${P(-.27, .8)} L${P(-.02, 1)} L${P(.27, .87)} L${P(.46, .56)} L${P(.5, .14)} L${P(.43, 0)} Z`, fill: ORE[0]}, at), p);
+  if (small) return;
+  Kit.mk('path', {d: `M${P(-.4, .42)} L${P(-.24, .72)} L${P(-.03, .88)} L${P(.06, .55)} L${P(-.16, .34)} Z`, fill: ORE[1]}, p);
+  Kit.mk('path', {d: `M${P(.12, .78)} L${P(.3, .7)} L${P(.4, .5)} L${P(.22, .44)} Z`, fill: ORE[1]}, p);
+  [[-.2, .6, .07], [.25, .62, .055], [.02, .3, .05]].forEach(([u, v, s]) => {
+    const r = s * w;
+    Kit.mk('path', {d: `M${f1(cx + u * w)},${f1(y - v * h - r)} L${f1(cx + u * w + r * .6)},${f1(y - v * h)} L${f1(cx + u * w)},${f1(y - v * h + r)} L${f1(cx + u * w - r * .6)},${f1(y - v * h)} Z`, fill: ORE[2]}, p);
+  });
+}
+
+// The slice of ground: three bands of red earth, the shaft with its ladder and the tunnel, a miner digging at its
+// end where the seam of coltan runs, a few stones of it in the rock.
+function ground(p, W, H, gy, k, gH) {
+  Kit.mk('rect', {x: -2, y: f1(gy), width: f1(W + 4), height: f1(gH + 2), fill: EARTH[0]}, p);
+  const band = (y, c) => Kit.mk('path', {d: `M-2,${f1(y)} C${f1(W * .3)},${f1(y - 4)} ${f1(W * .6)},${f1(y + 4)} ${f1(W + 2)},${f1(y - 1)} V${f1(H + 2)} H-2 Z`, fill: c, stroke: INK, 'stroke-width': 1.4, 'stroke-opacity': .3}, p);
+  band(gy + gH * .38, EARTH[1]); band(gy + gH * .72, EARTH[2]);
+  const sx = W * .045, sw = clamp(W * .072, 12, 26);
+  const ty = gy + gH * .44, th = Math.max(9, gH * .38), tx = W * .5;
+  // The seam of coltan the tunnel follows: dark stones round its end, a few more in the deep rock.
+  const stones = [[tx + th * .25, ty + th * .2, .2], [tx + th * .55, ty + th * .62, .17], [tx + th * .15, ty + th * .9, .15], [tx - th * .1, ty - th * .18, .14], [W * .64, gy + gH * .82, .12], [W * .86, gy + gH * .6, .13], [W * .73, gy + gH * .3, .1], [W * .3, gy + gH * .9, .11]];
+  for (const [x, y, s] of stones) { const r = Math.max(2.5, th * s); lump(p, x, y + r * .5, r * 2, r * 1.3, Math.max(1, k * .55), true); }
+  if (gH < 30) return;
+  Kit.mk('path', {d: `M${f1(sx)},${f1(gy)} V${f1(ty + th)} H${f1(tx - th / 2)} A${f1(th / 2)},${f1(th / 2)} 0 0 0 ${f1(tx - th / 2)},${f1(ty)} H${f1(sx + sw)} V${f1(gy)} Z`, fill: HOLE, stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linejoin': 'round'}, p);
+  // The ladder, standing out of the shaft's mouth.
+  const r1 = sx + sw * .26, r2 = sx + sw * .74, top = gy - Math.min(sw * .9, gH * .4), lw = Math.max(1.6, sw * .13);
+  limb(p, `M${f1(r1)},${f1(top)} V${f1(ty + th - 1)} M${f1(r2)},${f1(top)} V${f1(ty + th - 1)}`, WOOD, lw, .8);
+  let rungs = '';
+  for (let y = top + sw * .35; y < ty + th - 2; y += Math.max(5, sw * .42)) rungs += `M${f1(r1)},${f1(y)} H${f1(r2)} `;
+  limb(p, rungs, WOOD, lw * .8, .6);
+  if (th >= 15) miner(p, W * .34, ty + th, th * .9, Math.max(.8, k * .45));
+}
+// A miner kneeling in the tunnel, facing its end, a pick raised.
+function miner(p, x, floor, tall, k) {
+  const u = tall / 10, at = {stroke: INK, 'stroke-width': f1(k * 1.4), 'stroke-linejoin': 'round'};
+  limb(p, `M${f1(x - .4 * u)},${f1(floor - 3.2 * u)} L${f1(x + 2.1 * u)},${f1(floor - 1.2 * u)} L${f1(x + .4 * u)},${f1(floor - .45 * u)}`, '#3a3a46', 1.3 * u, k);
+  limb(p, `M${f1(x - .6 * u)},${f1(floor - 3 * u)} L${f1(x - 2.4 * u)},${f1(floor - .45 * u)}`, '#3a3a46', 1.3 * u, k);
+  Kit.mk('path', Object.assign({d: `M${f1(x - 1.4 * u)},${f1(floor - 2.6 * u)} L${f1(x - .5 * u)},${f1(floor - 6.6 * u)} Q${f1(x + .9 * u)},${f1(floor - 7.4 * u)} ${f1(x + 1.7 * u)},${f1(floor - 6.2 * u)} L${f1(x + 1 * u)},${f1(floor - 2.6 * u)} Z`, fill: SHIRT}, at), p);
+  // The pick: its handle from the hands up past the head, its iron curved at the top.
+  limb(p, `M${f1(x + 1.4 * u)},${f1(floor - 4.4 * u)} L${f1(x + 3.4 * u)},${f1(floor - 8.6 * u)}`, WOOD, .7 * u, k * .8);
+  limb(p, `M${f1(x + 2.1 * u)},${f1(floor - 9.1 * u)} Q${f1(x + 3.8 * u)},${f1(floor - 9.4 * u)} ${f1(x + 5 * u)},${f1(floor - 7.9 * u)}`, '#8d8a97', .6 * u, k * .8);
+  limb(p, `M${f1(x + 1.2 * u)},${f1(floor - 6.2 * u)} L${f1(x + 1.9 * u)},${f1(floor - 4.6 * u)}`, SKIN, .9 * u, k);
+  Kit.mk('circle', Object.assign({cx: f1(x + 1.15 * u), cy: f1(floor - 8.15 * u), r: f1(1.3 * u), fill: SKIN}, at), p);
+}
+// A smartphone standing on the ground: black, its screen lit, a grid of apps and a dock, from its foot up.
+function phone(p, x, foot, w, h, k) {
+  const r = w * .17, b = w * .065;
+  Kit.mk('rect', {x: f1(x), y: f1(foot - h), width: f1(w), height: f1(h), rx: f1(r), fill: INK}, p);
+  const sx = x + b, sw = w - 2 * b, top = foot - h + b, sh = h - 2 * b;
+  Kit.mk('rect', {x: f1(sx), y: f1(top), width: f1(sw), height: f1(sh), rx: f1(r - b * .6), fill: SCREEN}, p);
+  const gap = sw * .1, s = (sw - 4 * gap) / 3, ar = s * .26, at = {fill: APP, stroke: INK, 'stroke-width': f1(Math.max(1.2, k * .55))};
+  // the dock, its band, and the home bar
+  const dockY = foot - b - s * .55 - gap * 1.3 - s;
+  Kit.mk('rect', {x: f1(sx + gap * .5), y: f1(dockY - gap * .45), width: f1(sw - gap), height: f1(s + gap * .9), rx: f1(ar * 1.4), fill: '#fff', opacity: .28}, p);
+  for (let c = 0; c < 3; c++) Kit.mk('rect', Object.assign({x: f1(sx + gap + c * (s + gap)), y: f1(dockY), width: f1(s), height: f1(s), rx: f1(ar)}, at), p);
+  Kit.mk('rect', {x: f1(x + w * .34), y: f1(foot - b - s * .32), width: f1(w * .32), height: f1(Math.max(2, s * .11)), rx: f1(s * .06), fill: APP}, p);
+  for (let y = dockY - gap * 1.6 - s; y > top + s * .55; y -= s + gap * 1.15)
+    for (let c = 0; c < 3; c++) Kit.mk('rect', Object.assign({x: f1(sx + gap + c * (s + gap)), y: f1(y), width: f1(s), height: f1(s), rx: f1(ar)}, at), p);
+  Kit.mk('rect', {x: f1(x + w * .36), y: f1(foot - h + b + s * .2), width: f1(w * .28), height: f1(Math.max(4, s * .3)), rx: f1(s * .15), fill: INK}, p);
+  Kit.mk('rect', {x: f1(x), y: f1(foot - h), width: f1(w), height: f1(h), rx: f1(r), fill: 'none', stroke: INK, 'stroke-width': f1(k)}, p);
+}
+// A pile of notes standing on y, seen a little from above: its front, its side, its top; a line between notes, an
+// ink line and a strap round each bundle of three.
+function pile(p, L, n, k) {
+  const {px, pw, dx, dd, gy, t} = L, h = n * t, top = gy - h;
+  const side = `M${f1(px + pw)},${f1(top)} L${f1(px + pw + dx)},${f1(top - dd)} L${f1(px + pw + dx)},${f1(gy - dd)} L${f1(px + pw)},${f1(gy)} Z`;
+  const lid = `M${f1(px)},${f1(top)} L${f1(px + pw)},${f1(top)} L${f1(px + pw + dx)},${f1(top - dd)} L${f1(px + dx)},${f1(top - dd)} Z`;
+  Kit.mk('rect', {x: f1(px), y: f1(top), width: f1(pw), height: f1(h), fill: NOTE[0]}, p);
+  Kit.mk('path', {d: side, fill: NOTE[1]}, p);
+  const sx = px + pw * .41, sw = pw * .18, full = Math.floor(n / BUNDLE);
+  if (BUNDLE * t >= 6) for (let j = 0; j < full; j++) Kit.mk('rect', {x: f1(sx), y: f1(gy - (j + 1) * BUNDLE * t), width: f1(sw), height: f1(BUNDLE * t), fill: STRAP}, p);
+  for (let i = 1; i < n; i++) {
+    const y = gy - i * t, b = i % BUNDLE === 0;
+    if (!b && t < 3.2) continue;
+    Kit.mk('path', {d: `M${f1(px)},${f1(y)} H${f1(px + pw)} L${f1(px + pw + dx)},${f1(y - dd)}`, fill: 'none', stroke: b ? INK : NOTE[2], 'stroke-width': b ? Math.max(1.2, Math.min(2, t * .45)) : 1, opacity: b ? .9 : .55}, p);
+  }
+  Kit.mk('path', {d: lid, fill: NOTE[3]}, p);
+  if (n % BUNDLE === 0 && BUNDLE * t >= 6) Kit.mk('path', {d: `M${f1(sx)},${f1(top)} L${f1(sx + sw)},${f1(top)} L${f1(sx + sw + dx)},${f1(top - dd)} L${f1(sx + dx)},${f1(top - dd)} Z`, fill: STRAP}, p);
+  else Kit.mk('ellipse', {cx: f1(px + pw * .5 + dx * .5), cy: f1(top - dd * .5), rx: f1(pw * .15), ry: f1(dd * .24), fill: NOTE[1]}, p);
+  const ink = {fill: 'none', stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  Kit.mk('rect', Object.assign({x: f1(px), y: f1(top), width: f1(pw), height: f1(h)}, ink), p);
+  Kit.mk('path', Object.assign({d: side}, ink), p);
+  Kit.mk('path', Object.assign({d: lid}, ink), p);
+  return top - dd;
+}
+
+function draw() {
+  const svg = Kit.$('g');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (W < 60 || H < 50) { geo = null; return; }
+  const k = clamp(Math.min(W, H) * .011, 2, 3);
+  const fs = clamp(f * .92, 11.5, 14), fb = clamp(f * 1.6, 17, 27);
+  const R = Math.min(16, W * .05);
+  const gH = clamp(H * .27, 22, 90), gy = H - gH;
+  // Where the sky is short (the answer in, on a small phone), the price stands beside the pile, not over it, and the
+  // ore, the pile and the phone take a little less of the width.
+  const side = gy < 130;
+  const pw = side ? clamp(W * .16, 36, 64) : clamp(W * .19, 40, 78), dx = pw * .26, dd = pw * .2, px = side ? W * .3 : W * .4;
+  const top = side ? dd + 8 : fb * 1.2 + fs * 1.2 + 12 + dd;     // the highest a pile may reach
+  // The scale: €240 at the top while the reader guesses; the larger of the answer and the guess once it is shown.
+  const span = revealed ? Math.max(REAL, g) * 1.02 : YMAX;
+  const ppe = (gy - top) / span, t = NOTE_EUR * ppe;
+  const L = {px, pw, dx, dd, gy, t};
+  geo = {gy, ppe};
+
+  const defs = Kit.mk('defs', {}, svg);
+  Kit.mk('rect', {x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(H - k), rx: f1(R)}, Kit.mk('clipPath', {id: 'cl-frame'}, defs));
+  const world = Kit.mk('g', {'clip-path': 'url(#cl-frame)'}, svg);
+  Kit.mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), fill: SKY}, world);
+
+  // The phone, standing at the right, as tall as the sky lets it be.
+  const phW = side ? clamp(W * .19, 44, 80) : clamp(W * .24, 54, 100), phX = W - W * .035 - phW;
+  phone(world, phX, gy + k * .4, phW, phW * 2.05, k);
+  ground(world, W, H, gy, k, gH);
+  Kit.mk('path', {d: `M-2,${f1(gy)} H${f1(W + 2)}`, stroke: INK, 'stroke-width': f1(k), fill: 'none'}, world);
+  // The kilo of coltan, on the ground beside the shaft.
+  const lw = side ? clamp(W * .15, 30, 60) : clamp(W * .19, 38, 76), lh = lw * .64, lx = side ? W * .17 : W * .235;
+  lump(world, lx, gy + k * .3, lw, lh, k);
+
+  // The pile: the reader's guess, or, once answered, the real one stacked to €180 with the guess across it.
+  const lab = Kit.mk('g', {}, svg);
+  let crest, price, sub;
+  if (!revealed) {
+    crest = pile(world, L, g / NOTE_EUR, k);
+    price = '€' + g; sub = moved || locked ? 'your guess' : 'a kilo';
+  } else {
+    const n = Math.max(BUNDLE, S.real), gTop = gy - g / NOTE_EUR * t;
+    crest = pile(world, L, n, k);
+    // The guess: the pile's outline where it stood, dashed, if higher; a dashed line across the pile at its level.
+    const dash = {fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '5 4', 'stroke-linejoin': 'round'};
+    if (g / NOTE_EUR > n) Kit.mk('path', Object.assign({d: `M${f1(px)},${f1(gy - n * t)} V${f1(gTop)} H${f1(px + pw)} L${f1(px + pw + dx)},${f1(gTop - dd)} H${f1(px + dx)} L${f1(px)},${f1(gTop)} M${f1(px + pw)},${f1(gTop)} V${f1(gy - n * t)} M${f1(px + pw + dx)},${f1(gTop - dd)} V${f1(gy - n * t - dd)}`, opacity: .7}, dash), world);
+    const yourLabel = text(lab, px - fs * .5, gTop - 6, 'you €' + g, fs, {'text-anchor': 'end', 'font-weight': 700});
+    const lwid = width(yourLabel), lumpTop = gy - lh, lumpRight = lx + lw * .5;
+    // Where the guess is as low as the lump of ore, its name goes over the ore, the dashed line stopping short of it.
+    const low = gTop - 6 + fs * .3 > lumpTop - 2 && px - fs * .5 - lwid < lumpRight + 4;
+    const lineX = low ? lumpRight + 6 : px - fs * .5 - lwid;
+    Kit.mk('path', Object.assign({d: `M${f1(lineX)},${f1(gTop)} H${f1(px + pw)} L${f1(px + pw + dx)},${f1(gTop - dd)}`}, dash), world);
+    if (low) {
+      const ly = Math.max(fs + 3, lumpTop - 9);
+      yourLabel.setAttribute('x', f1(lx)); yourLabel.setAttribute('y', f1(ly)); yourLabel.setAttribute('text-anchor', 'middle');
+      Kit.mk('path', {d: `M${f1(lx + lwid * .5 + 3)},${f1(ly - fs * .3)} L${f1(lineX)},${f1(gTop)}`, stroke: INK, 'stroke-width': 1.3, fill: 'none'}, world);
+    }
+    price = '€' + n * NOTE_EUR; sub = `${n / BUNDLE} × €15`;
+  }
+  // The price and what it is: over the pile, or beside its top where the sky is short.
+  let pT;
+  if (!side) {
+    const cx = px + (pw + dx) / 2, sb = crest - 6;
+    pT = text(lab, cx, sb - fs * 1.1 - fb * .27, price, fb, {'font-family': SERIF, 'font-weight': 800});
+    text(lab, cx, sb, sub, fs, {'font-weight': 700});
+  } else {
+    const x = px + pw + dx + fs * .55, block = fb * 1.1 + fs * 1.3, y0 = clamp(crest - fb * .2, 3, gy - block - 4);
+    pT = text(lab, x, y0 + fb * .8, price, fb, {'font-family': SERIF, 'font-weight': 800, 'text-anchor': 'start'});
+    text(lab, x, y0 + fb * 1.1 + fs * 1.02, sub, fs, {'font-weight': 700, 'text-anchor': 'start'});
+  }
+  // The ore's name, until the answer, over the ore.
+  if (!revealed) text(lab, lx, gy - lh - fs * .55, '1 kg of coltan', fs);
+  // Until the reader moves it, two chevrons over the price say the pile goes up.
+  if (!moved && !locked) {
+    const bb = pT.getBBox(), cx = bb.x + bb.width / 2, a = fs * .42, hy = side ? crest - 6 : bb.y - 5;
+    const hx = side ? px + (pw + dx) / 2 : cx;
+    if (hy - 2 * a > 2) Kit.mk('path', {class: 'hint', d: `M${f1(hx - a)},${f1(hy)} L${f1(hx)},${f1(hy - a)} L${f1(hx + a)},${f1(hy)} M${f1(hx - a)},${f1(hy - a * .9)} L${f1(hx)},${f1(hy - a * 1.9)} L${f1(hx + a)},${f1(hy - a * .9)}`, fill: 'none', stroke: INK, 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, lab);
+  }
+  Kit.mk('rect', {x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(H - k), rx: f1(R), fill: 'none', stroke: INK, 'stroke-width': f1(k)}, svg);
+  svg.appendChild(lab);
+  geo.price = pT;
+}
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   locked = true;
   const ok = Math.abs(g - REAL) <= 30;
   Kit.answer({choice: '€' + g, correct: ok, sure: pct});
+  // The picture names the price, the twelve bundles and the guess: the explanation need not say it again, and the
+  // picture keeps the room.
+  Kit.$('why').querySelector('.big')?.remove();
   Kit.hide('say'); Kit.show('why');
-  revealed = true;
-  draw(); animateReveal();
   sure.grade(ok, pct, `You said €${g}, ${ok ? 'close enough' : 'off'}`);
   Kit.show('keep');
   Kit.haptic('success');
+  Kit.$('g').setAttribute('aria-label', `The real pile: twelve bundles of €15, €180 a kilo, beside the kilo of coltan; your guess of €${g} a dashed line across it.`);
+  reveal();
 });
-
-function draw() {
-  const svg = Kit.$('g');
-  while (svg.firstChild) svg.removeChild(svg.firstChild);
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f * .85, 12);
-  const padL = Math.max(fs * 3.2, W * .13), padR = Math.max(fs * 5, W * .2), padT = fs * 1.2, padB = fs * 2.2;
-  const plotW = W - padL - padR, plotH = H - padT - padB;
-  const y = v => padT + (1 - v / YMAX) * plotH;
-  const xA = padL + plotW * .04, xM = padL + plotW * .5, xR = xM + plotW * .14, x1 = W - padR;
-  geo = {y, xA, xM, xR, x1, padT, plotH, fs};
-
-  for (const v of [0, 60, 120, 180, 240]) {
-    Kit.mk('line', {x1: padL, x2: x1, y1: y(v), y2: y(v), stroke: 'var(--k)', 'stroke-opacity': v ? .1 : .35, 'stroke-width': 1}, svg);
-    const t = Kit.mk('text', {x: padL - fs * .4, y: y(v) + fs * .35, 'text-anchor': 'end', class: 'ax', 'font-size': fs}, svg);
-    t.textContent = '€' + v;
-  }
-  const xl = (x, s) => { const t = Kit.mk('text', {x, y: H - fs * .5, 'text-anchor': 'middle', class: 'ax', 'font-size': fs}, svg); t.textContent = s; };
-  xl(xA + plotW * .12, 'late 1990s'); xl(x1, 'early 2000s');
-
-  // known start
-  Kit.mk('path', {d: `M${xA},${y(15)}H${xM}`, stroke: 'var(--k)', 'stroke-width': Math.max(fs * .3, 4), 'stroke-linecap': 'round', fill: 'none'}, svg);
-  Kit.mk('circle', {cx: xA, cy: y(15), r: fs * .3, fill: 'var(--k)'}, svg);
-  const t15 = Kit.mk('text', {x: xA, y: y(15) - fs * .7, class: 'lb', 'font-size': fs}, svg); t15.textContent = '€15/kg';
-
-  // guess
-  Kit.mk('path', {id: 'gl', d: `M${xM},${y(15)}L${x1},${y(g)}`, stroke: 'var(--k)', 'stroke-opacity': .5, 'stroke-width': Math.max(fs * .2, 3), 'stroke-dasharray': `${fs * .5} ${fs * .4}`, fill: 'none'}, svg);
-  if (!locked) Kit.mk('circle', {id: 'ring', cx: x1, cy: y(g), r: fs * 1.1, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, 'stroke-opacity': .4}, svg);
-  Kit.mk('circle', {id: 'gh', cx: x1, cy: y(g), r: fs * .6, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': Math.max(fs * .2, 3)}, svg);
-  let gy = y(g) + fs * .35;
-  if (revealed && Math.abs(y(g) - y(REAL)) < fs * 1.5) gy = y(REAL) + fs * 1.9;
-  const gt = Kit.mk('text', {id: 'gt', x: x1 + fs * 1.1, y: gy, class: 'lb', 'font-size': fs, 'fill-opacity': .6}, svg);
-  gt.textContent = (moved || locked ? 'you €' : '€') + g;
-
-  if (revealed) {
-    const sw = Math.max(fs * .38, 5);
-    Kit.mk('path', {id: 'rl', d: `M${xM},${y(15)}L${xR},${y(REAL)}H${x1}`, stroke: 'var(--k)', 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none'}, svg);
-    for (let i = 2; i <= 11; i++) {
-      const v = 15 * i, px = xM + (xR - xM) * (v - 15) / (REAL - 15);
-      Kit.mk('circle', {class: 'tk', cx: px, cy: y(v), r: sw * .32, fill: 'var(--c)'}, svg);
-    }
-    Kit.mk('circle', {id: 'rd', cx: x1, cy: y(REAL), r: fs * .45, fill: 'var(--k)'}, svg);
-    const rt = Kit.mk('text', {id: 'rt', x: x1 + fs * 1.1, y: y(REAL) + fs * .45, class: 'lb', 'font-size': fs * 1.3}, svg);
-    rt.textContent = '€180';
-    const xt = Kit.mk('text', {id: 'xt', x: (xM + xR) / 2 - fs * .9, y: y(100), 'text-anchor': 'end', class: 'lb', 'font-size': fs * 1.6, style: 'font-family:var(--display)'}, svg);
-    xt.textContent = '×12';
-  }
-}
-
-function animateReveal() {
-  if (Kit.calm) return;
-  const rl = Kit.$('rl'); const L = rl.getTotalLength();
-  gsap.fromTo(rl, {strokeDasharray: L, strokeDashoffset: L}, {strokeDashoffset: 0, duration: 1.2, ease: 'power2.in'});
-  const n = {v: 15}, rt = Kit.$('rt');
-  gsap.to(n, {v: 180, duration: 1.2, ease: 'power2.in', onUpdate: () => rt.textContent = '€' + Math.round(n.v)});
-  gsap.from('.tk', {opacity: 0, duration: .2, stagger: .06, delay: .6});
-  gsap.from(['#rd', '#xt'], {opacity: 0, scale: .4, transformOrigin: 'center', duration: .4, delay: 1.2, ease: 'back.out(2)'});
+function reveal() {
+  revealed = true;
+  if (Kit.calm || typeof gsap === 'undefined') { S.real = REAL / NOTE_EUR; draw(); return; }
+  S.real = BUNDLE; draw();
+  gsap.to(S, {real: REAL / NOTE_EUR, duration: 1.5, delay: .2, ease: 'power1.in', snap: {real: BUNDLE}, onUpdate: draw, onComplete: () => Kit.haptic('light')});
 }
 
 function setFromEvent(e) {
-  if (!geo) return;
+  if (!geo || locked) return;
   const r = Kit.$('g').getBoundingClientRect();
-  const py = e.clientY - r.top;
-  let v = (1 - (py - geo.padT) / geo.plotH) * YMAX;
-  v = Math.max(5, Math.min(YMAX, Math.round(v / 5) * 5));
+  let v = (geo.gy - (e.clientY - r.top)) / geo.ppe;
+  v = clamp(Math.round(v / NOTE_EUR) * NOTE_EUR, NOTE_EUR, YMAX);
   if (v === g && moved) return;
   g = v;
   if (g !== 15 && !moved) { moved = true; sure.on(); }
-  const yy = geo.y(g);
-  Kit.$('gl').setAttribute('d', `M${geo.xM},${geo.y(15)}L${geo.x1},${yy}`);
-  Kit.$('gh').setAttribute('cy', yy);
-  const ring = Kit.$('ring'); if (ring) ring.setAttribute('cy', yy);
-  const gt = Kit.$('gt'); gt.setAttribute('y', yy + geo.fs * .35); gt.textContent = 'you €' + g;
+  draw();
   if (g % 30 === 0) Kit.haptic('selection');
 }
 let dragging = false;
@@ -128,23 +272,19 @@ svgEl.addEventListener('pointerup', stop); svgEl.addEventListener('pointercancel
 
 Kit.onShow.card = () => draw();
 Kit.onEnter.card = () => {
-  if (Kit.calm) return;
-  const ring = Kit.$('ring');
-  if (ring) gsap.fromTo(ring, {opacity: .9, scale: .6, transformOrigin: 'center', transformBox: 'fill-box'}, {opacity: 0, scale: 1.4, duration: 1.2, repeat: 3, ease: 'power1.out'});
+  if (Kit.calm || !geo || !geo.price) return;
+  gsap.from(geo.price, {opacity: 0, y: 6, duration: .5, ease: 'power2.out'});
 };
 Kit.play.card = async () => {
   const r = svgEl.getBoundingClientRect();
-  const cy = v => r.top + geo.padT + (1 - v / YMAX) * geo.plotH;
-  const cx = r.left + geo.x1;
-  const fire = (type, v) => svgEl.dispatchEvent(new PointerEvent(type, {clientX: cx, clientY: cy(v), bubbles: true, pointerId: 1}));
+  const fire = (type, v) => svgEl.dispatchEvent(new PointerEvent(type, {clientX: r.left + r.width * .5, clientY: r.top + geo.gy - v * geo.ppe, bubbles: true, pointerId: 1}));
   fire('pointerdown', 20); fire('pointermove', 70); fire('pointermove', 120); fire('pointerup', 120);
-  await new Promise(r => setTimeout(r, 100));
+  await new Promise(res => setTimeout(res, 100));
   Kit.$('sure').querySelector('[data-v="80"]').click();
-  await new Promise(r => setTimeout(r, 1800));
+  await new Promise(res => setTimeout(res, 2200));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('g'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+{ let seen = ''; const el = Kit.$('plot'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) draw(); }).observe(el); }
 Kit.single();
 </script>
 </html>

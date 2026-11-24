@@ -1,31 +1,41 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-llull-before-condorcet -->
+<!-- Look: a hall of time, flat, with ink outlines: along its floor runs the timeline, from the 1200s to today.
+     Standing on it, at their own centuries and big: Ramon Llull, bearded, in a cap and a long robe, his red book
+     on elections in his hands; Condorcet, in a white wig and a blue coat, a sheet of paper in his hand; and in 2001 a
+     library's bookcase with one gap on a shelf.
+     Interaction: drag along the timeline to run the centuries. Llull's book opens; then it falls from his hands and
+     is lost; 486 years after Llull the same method takes Condorcet's name, over his head; in 2001 the red book is
+     back, on the library's shelf, found again. Then the answer.
+     Layout: drawn again at the size it has whenever its room changes; in a short box the names over the heads give
+     way first. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
-#tl{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+#tl{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize}
 #cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);min-height:7.8cqh;margin:0;overflow-wrap:anywhere}
-#cap b{font-family:var(--mono);font-weight:700}
+#cap b{font-weight:800}
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.answered .q{font-size:max(2.6cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Drag · timeline">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">VOTING</span></div>
     <h2 class="q">Who actually invented the Condorcet voting method first?</h2>
     <div class="stagebox" id="stage">
-      <svg id="tl"></svg>
+      <svg id="tl" role="img" aria-label="A timeline from the 1200s to today along the floor of a hall. On it stand Ramon Llull, bearded, in a cap and a long robe, holding a red book; Condorcet, in a white wig and a blue coat, holding a sheet of paper; and a library bookcase in 2001 with one gap on a shelf. Drag along it to run the centuries."></svg>
       <p id="cap"></p>
       <div id="why" class="gone">
-        <p class="big">Ramon Llull, a monk, 450 years earlier</p>
+        <p class="big">Ramon Llull, almost 500 years earlier</p>
         <p class="body">Llull found it while studying how church leaders were chosen. His book, Ars eleccionis, was lost, so his idea made no impact and the method got Condorcet's name. The book was only found again in 2001.</p>
       </div>
     </div>
-    <p class="say" id="say">Drag the dot along the timeline, from the monk to today.</p>
+    <p class="say" id="say">Drag the dot along the timeline, from Llull to today.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The name on an idea is not always the first person who had it.</div>
     <div class="foot"><span class="src">Source · Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)</span></div>
   </div>
@@ -36,123 +46,280 @@ const Y0 = 1250, Y1 = 2010;
 let year = Y0, done = false, G = null, lastCap = '';
 const svg = Kit.$('tl');
 const cl = v => Math.max(0, Math.min(1, v));
+// One ink; the hall's wall and floor; Llull's robe, cap, beard and skin; Condorcet's coat, waistcoat, wig, breeches
+// and stockings; the bookcase's wood and its books in quiet colours; and one red, for Llull's book.
+const INK = '#10100c', WALL = '#EEE7D8', FLOOR = '#D2BC95', ROBE = '#76624D', ROBE2 = '#5C4B3A', CAP = '#3A2E27', BEARD = '#F4F1EA', SKIN = '#F2C29B',
+  COAT = '#2E4B8F', VEST = '#E9DCB8', WIG = '#F5F2EA', BREECH = '#D8C8A6', STOCK = '#ffffff', GOLD = '#E3B341', WOOD = '#A8733F', WOOD2 = '#7C5230',
+  PAPER = '#ffffff', RED = '#C8372A', BOOKS = ['#5E8C6A', '#3F6B9A', '#B89B5E', '#8E5B4A', '#6D6A8F', '#4F7F86', '#9C8A57'];
+const FONT = 'Figtree, system-ui, sans-serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const f1 = n => (Math.round(n * 10) / 10).toString();
+const mk = Kit.mk;
+const ink = w => ({fill: 'none', stroke: INK, 'stroke-width': f1(w), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
+const solid = (fill, w) => Object.assign(ink(w == null ? G.k : w), {fill});
+function words(p, x, y, s, o = {}) {
+  const e = mk('text', {x: f1(x), y: f1(y), 'font-family': o.font || FONT, 'font-size': f1(o.size || G.fs), 'font-weight': o.weight || 700, 'text-anchor': o.anchor || 'middle', fill: o.fill || INK}, p);
+  e.textContent = s;
+  if (o.max) for (let z = o.size || G.fs; e.getComputedTextLength() > o.max && z > (o.min || 10.5); ) { z -= .5; e.setAttribute('font-size', f1(z)); }
+  return e;
+}
+// A label centred on x, moved in so it stays inside the drawing.
+function inside(t, x) { const w = t.getComputedTextLength(); t.setAttribute('x', f1(clamp(x, w / 2 + G.pad * .5, G.W - w / 2 - G.pad * .5))); return w; }
 
-function bookShape(g, s, dashed){
-  const st = dashed ? 'fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:4 3' : 'fill:var(--k)';
-  Kit.mk('rect', {x:-s*0.6, y:-s*0.75, width:s*1.2, height:s*1.5, rx:s*0.12, style:st}, g);
-  const ln = dashed ? 'stroke:var(--k);stroke-width:1.5;stroke-dasharray:3 3' : 'stroke:var(--c);stroke-width:2';
-  Kit.mk('line', {x1:-s*0.38, y1:-s*0.75, x2:-s*0.38, y2:s*0.75, style:ln}, g);
-  Kit.mk('line', {x1:-s*0.18, y1:-s*0.35, x2:s*0.4, y2:-s*0.35, style:ln}, g);
-  Kit.mk('line', {x1:-s*0.18, y1:-s*0.1, x2:s*0.3, y2:-s*0.1, style:ln}, g);
+// Ramon Llull, standing on y, h tall: a long robe with wide sleeves and a cloth belt, a soft cap, a long white beard;
+// his hands held together at his chest, where his book is.
+function llull(p, x, y, h) {
+  const g = mk('g', {}, p), r = h / 7.4, k = Math.min(G.k, Math.max(1, r * .2)), at = c => solid(c, k);
+  const sh = y - 5.1 * r, hy = sh - 1.25 * r;
+  [-1, 1].forEach(s => mk('ellipse', Object.assign({cx: f1(x + s * .5 * r), cy: f1(y - .22 * r), rx: f1(.55 * r), ry: f1(.24 * r)}, at(CAP)), g));
+  mk('path', Object.assign({d: `M${f1(x - 1.25 * r)},${f1(sh + .2 * r)}Q${f1(x - 1.45 * r)},${f1(sh)} ${f1(x - .9 * r)},${f1(sh - .1 * r)}H${f1(x + .9 * r)}Q${f1(x + 1.45 * r)},${f1(sh)} ${f1(x + 1.25 * r)},${f1(sh + .2 * r)}L${f1(x + 1.7 * r)},${f1(y - .3 * r)}H${f1(x - 1.7 * r)}Z`}, at(ROBE)), g);
+  mk('path', {d: `M${f1(x)},${f1(sh + 2.9 * r)}V${f1(y - .4 * r)}`, stroke: INK, 'stroke-width': f1(k * .6), opacity: .4}, g);
+  mk('rect', Object.assign({x: f1(x - 1.42 * r), y: f1(sh + 2.55 * r), width: f1(2.84 * r), height: f1(.38 * r)}, at(ROBE2)), g);
+  // the hood, folded down round his shoulders
+  mk('path', Object.assign({d: `M${f1(x - 1.05 * r)},${f1(sh + .05 * r)}Q${f1(x)},${f1(sh + 1.05 * r)} ${f1(x + 1.05 * r)},${f1(sh + .05 * r)}Q${f1(x)},${f1(sh - .45 * r)} ${f1(x - 1.05 * r)},${f1(sh + .05 * r)}Z`}, at(ROBE2)), g);
+  // wide sleeves, down and in to the hands at his chest
+  [-1, 1].forEach(s => {
+    mk('path', Object.assign({d: `M${f1(x + s * 1.1 * r)},${f1(sh + .2 * r)}Q${f1(x + s * 1.95 * r)},${f1(sh + 1.3 * r)} ${f1(x + s * 1.55 * r)},${f1(sh + 2.35 * r)}L${f1(x + s * .55 * r)},${f1(sh + 2.15 * r)}L${f1(x + s * .75 * r)},${f1(sh + 1.55 * r)}Q${f1(x + s * 1.05 * r)},${f1(sh + 1.0 * r)} ${f1(x + s * .95 * r)},${f1(sh + .45 * r)}Z`}, at(ROBE)), g);
+    mk('circle', Object.assign({cx: f1(x + s * .55 * r), cy: f1(sh + 2.0 * r), r: f1(Math.max(2.2, .3 * r))}, at(SKIN)), g);
+  });
+  // head: face, the long beard, the soft cap and the white hair under it
+  mk('circle', Object.assign({cx: f1(x), cy: f1(hy), r: f1(r)}, at(SKIN)), g);
+  mk('path', Object.assign({d: `M${f1(x - .95 * r)},${f1(hy + .05 * r)}Q${f1(x - .9 * r)},${f1(hy + 1.3 * r)} ${f1(x)},${f1(hy + 2.35 * r)}Q${f1(x + .9 * r)},${f1(hy + 1.3 * r)} ${f1(x + .95 * r)},${f1(hy + .05 * r)}Q${f1(x + .6 * r)},${f1(hy + .55 * r)} ${f1(x)},${f1(hy + .42 * r)}Q${f1(x - .6 * r)},${f1(hy + .55 * r)} ${f1(x - .95 * r)},${f1(hy + .05 * r)}Z`}, at(BEARD)), g);
+  mk('path', {d: `M${f1(x - .3 * r)},${f1(hy + .72 * r)}Q${f1(x)},${f1(hy + .82 * r)} ${f1(x + .3 * r)},${f1(hy + .72 * r)}`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .7), 'stroke-linecap': 'round', opacity: .55}, g);
+  mk('path', Object.assign({d: `M${f1(x - 1.08 * r)},${f1(hy - .1 * r)}C${f1(x - 1.2 * r)},${f1(hy - 1.35 * r)} ${f1(x + 1.2 * r)},${f1(hy - 1.35 * r)} ${f1(x + 1.08 * r)},${f1(hy - .1 * r)}Q${f1(x)},${f1(hy - .5 * r)} ${f1(x - 1.08 * r)},${f1(hy - .1 * r)}Z`}, at(CAP)), g);
+  [-1, 1].forEach(s => {
+    mk('path', Object.assign({d: `M${f1(x + s * 1.0 * r)},${f1(hy - .15 * r)}q${f1(s * .12 * r)},${f1(.3 * r)} ${f1(-s * .02 * r)},${f1(.55 * r)}`}, ink(k * .8)), g);
+    mk('circle', {cx: f1(x + s * .35 * r), cy: f1(hy + .02 * r), r: f1(Math.max(.9, .09 * r)), fill: INK}, g);
+    mk('path', {d: `M${f1(x + s * .52 * r)},${f1(hy - .25 * r)}l${f1(-s * .3 * r)},${f1(-.04 * r)}`, stroke: INK, 'stroke-width': f1(k * .7), 'stroke-linecap': 'round'}, g);
+  });
+  return {g, hands: {x, y: sh + 1.95 * r}, headTop: hy - r * 1.05, r};
 }
 
-function draw(){
-  const {W, H, f} = Kit.fitSvg(svg);
-  svg.innerHTML = '';
-  const mL = W*0.1, mR = W*0.13;
-  const X = y => mL + (y - Y0)/(Y1 - Y0)*(W - mL - mR);
-  const lineY = H*0.6, s = Math.max(f*1.5, 18), bookY = lineY - Math.max(H*0.26, s*2.4);
-  const fs = Math.max(f, 13);
-  const T = (x, y, txt, extra = {}) => { const t = Kit.mk('text', Object.assign({x, y, 'text-anchor':'middle', style:`font:700 ${fs}px var(--body);fill:var(--k)`}, extra), svg); t.textContent = txt; return t; };
-
-  Kit.mk('line', {x1:X(Y0), y1:lineY, x2:X(Y1), y2:lineY, style:'stroke:var(--k);stroke-opacity:.22;stroke-width:4;stroke-linecap:round'}, svg);
-  const prog = Kit.mk('line', {x1:X(Y0), y1:lineY, x2:X(Y0), y2:lineY, style:'stroke:var(--k);stroke-width:5;stroke-linecap:round'}, svg);
-  [[1300,'1300s'],[1750,'1700s'],[2001,'2001']].forEach(([y, l]) => {
-    Kit.mk('line', {x1:X(y), y1:lineY-7, x2:X(y), y2:lineY+7, style:'stroke:var(--k);stroke-width:2'}, svg);
-    T(X(y), lineY + fs*1.9, l, {style:`font:700 ${fs}px var(--mono);fill:var(--k)`});
+// Condorcet, standing on y, h tall: breeches, white stockings and buckled shoes; a blue coat with long skirts over a
+// waistcoat, gold buttons; a white cravat; a powdered wig rolled over the ears; a sheet of paper in his hand.
+function condorcet(p, x, y, h) {
+  const g = mk('g', {}, p), r = h / 7.4, k = Math.min(G.k, Math.max(1, r * .2)), at = c => solid(c, k);
+  const sh = y - 5.1 * r, hy = sh - 1.25 * r, knee = y - 1.5 * r, hip = y - 2.7 * r;
+  mk('path', Object.assign({d: `M${f1(x - .85 * r)},${f1(y - .25 * r)}V${f1(knee)}H${f1(x - .1 * r)}V${f1(y - .25 * r)}Z M${f1(x + .1 * r)},${f1(y - .25 * r)}V${f1(knee)}H${f1(x + .85 * r)}V${f1(y - .25 * r)}Z`}, at(STOCK)), g);
+  mk('path', Object.assign({d: `M${f1(x - .95 * r)},${f1(knee + .1 * r)}V${f1(hip)}H${f1(x + .95 * r)}V${f1(knee + .1 * r)}H${f1(x + .05 * r)}V${f1(hip + .5 * r)}H${f1(x - .05 * r)}V${f1(knee + .1 * r)}Z`}, at(BREECH)), g);
+  [-1, 1].forEach(s => {
+    mk('ellipse', Object.assign({cx: f1(x + s * .5 * r), cy: f1(y - .22 * r), rx: f1(.56 * r), ry: f1(.23 * r)}, at(INK)), g);
+    mk('rect', {x: f1(x + s * .5 * r - .14 * r), y: f1(y - .36 * r), width: f1(.28 * r), height: f1(.16 * r), fill: GOLD}, g);
   });
-  const by = lineY + fs*3.3;
-  const brk = Kit.mk('g', {}, svg);
-  Kit.mk('path', {d:`M${X(1300)},${by-6} V${by} H${X(1750)} V${by-6}`, style:'fill:none;stroke:var(--k);stroke-width:2'}, brk);
-  const bt = Kit.mk('text', {x:(X(1300)+X(1750))/2, y:by + fs*1.4, 'text-anchor':'middle', style:`font:800 ${fs}px var(--body);fill:var(--k)`}, brk); bt.textContent = '450 years';
+  // the coat: shoulders to the skirts at the knee, open over the waistcoat
+  mk('path', Object.assign({d: `M${f1(x - 1.3 * r)},${f1(sh + .45 * r)}Q${f1(x - 1.3 * r)},${f1(sh)} ${f1(x - .8 * r)},${f1(sh)}H${f1(x + .8 * r)}Q${f1(x + 1.3 * r)},${f1(sh)} ${f1(x + 1.3 * r)},${f1(sh + .45 * r)}L${f1(x + 1.55 * r)},${f1(knee + .2 * r)}H${f1(x + .55 * r)}L${f1(x + .35 * r)},${f1(hip)}H${f1(x - .35 * r)}L${f1(x - .55 * r)},${f1(knee + .2 * r)}H${f1(x - 1.55 * r)}Z`}, at(COAT)), g);
+  mk('path', Object.assign({d: `M${f1(x - .5 * r)},${f1(sh + .1 * r)}H${f1(x + .5 * r)}L${f1(x + .45 * r)},${f1(hip + .15 * r)}L${f1(x)},${f1(hip + .35 * r)}L${f1(x - .45 * r)},${f1(hip + .15 * r)}Z`}, at(VEST)), g);
+  for (let i = 0; i < 4; i++) [-1, 1].forEach(s => mk('circle', {cx: f1(x + s * .62 * r), cy: f1(sh + (.75 + i * .5) * r), r: f1(Math.max(.8, .09 * r)), fill: GOLD, stroke: INK, 'stroke-width': f1(k * .4)}, g));
+  // the cravat
+  mk('path', Object.assign({d: `M${f1(x - .38 * r)},${f1(sh - .05 * r)}Q${f1(x)},${f1(sh + .35 * r)} ${f1(x + .38 * r)},${f1(sh - .05 * r)}L${f1(x + .22 * r)},${f1(sh + .95 * r)}Q${f1(x)},${f1(sh + 1.1 * r)} ${f1(x - .22 * r)},${f1(sh + .95 * r)}Z`}, at(PAPER)), g);
+  // arms in the coat's sleeves: one down his side, one bent to hold the paper out in front
+  const aw = Math.max(k * 1.6, r * .52), arm = (d, c) => { mk('path', Object.assign({}, ink(k), {d, 'stroke-width': f1(aw + 2 * k)}), g); mk('path', {d, fill: 'none', stroke: c, 'stroke-width': f1(aw), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g); };
+  arm(`M${f1(x - 1.05 * r)},${f1(sh + .45 * r)}L${f1(x - 1.6 * r)},${f1(hip + .1 * r)}`, COAT);
+  arm(`M${f1(x + 1.05 * r)},${f1(sh + .45 * r)}L${f1(x + 1.55 * r)},${f1(sh + 2.0 * r)}L${f1(x + 1.0 * r)},${f1(sh + 2.25 * r)}`, COAT);
+  mk('circle', Object.assign({cx: f1(x - 1.62 * r), cy: f1(hip + .25 * r), r: f1(Math.max(2.2, .3 * r))}, at(SKIN)), g);
+  // the paper, held up
+  const px = x + .35 * r, py = sh + 1.15 * r;
+  mk('rect', Object.assign({x: f1(px), y: f1(py), width: f1(1.25 * r), height: f1(1.6 * r), rx: 1, transform: `rotate(-6 ${f1(px)} ${f1(py)})`}, at(PAPER)), g);
+  let ld = '';
+  for (let i = 0; i < 4; i++) ld += `M${f1(px + .2 * r)},${f1(py + (.35 + i * .3) * r)}h${f1(.8 * r)}`;
+  mk('path', {d: ld, stroke: INK, 'stroke-width': f1(Math.max(.6, k * .45)), opacity: .5, transform: `rotate(-6 ${f1(px)} ${f1(py)})`}, g);
+  mk('circle', Object.assign({cx: f1(x + 1.0 * r), cy: f1(sh + 2.25 * r), r: f1(Math.max(2.2, .3 * r))}, at(SKIN)), g);
+  // head: face, wig over the top with a roll over each ear
+  mk('rect', Object.assign({x: f1(x - .28 * r), y: f1(sh - .45 * r), width: f1(.56 * r), height: f1(.5 * r)}, at(SKIN)), g);
+  mk('circle', Object.assign({cx: f1(x), cy: f1(hy), r: f1(r)}, at(SKIN)), g);
+  mk('path', Object.assign({d: `M${f1(x - 1.05 * r)},${f1(hy + .1 * r)}C${f1(x - 1.2 * r)},${f1(hy - 1.45 * r)} ${f1(x + 1.2 * r)},${f1(hy - 1.45 * r)} ${f1(x + 1.05 * r)},${f1(hy + .1 * r)}Q${f1(x + .55 * r)},${f1(hy - .55 * r)} ${f1(x)},${f1(hy - .55 * r)}Q${f1(x - .55 * r)},${f1(hy - .55 * r)} ${f1(x - 1.05 * r)},${f1(hy + .1 * r)}Z`}, at(WIG)), g);
+  [-1, 1].forEach(s => {
+    [0, .42].forEach(dy => mk('rect', Object.assign({x: f1(x + s * 1.05 * r - .35 * r), y: f1(hy - .05 * r + dy * r), width: f1(.7 * r), height: f1(.34 * r), rx: f1(.17 * r)}, at(WIG)), g));
+    mk('circle', {cx: f1(x + s * .33 * r), cy: f1(hy + .05 * r), r: f1(Math.max(.9, .09 * r)), fill: INK}, g);
+  });
+  mk('path', {d: `M${f1(x - .22 * r)},${f1(hy + .48 * r)}Q${f1(x)},${f1(hy + .62 * r)} ${f1(x + .22 * r)},${f1(hy + .48 * r)}`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .75), 'stroke-linecap': 'round'}, g);
+  return {g, headTop: hy - r * 1.1, r};
+}
 
-  const lFull = Kit.mk('g', {}, svg); bookShape(lFull, s, false);
-  const lGhost = Kit.mk('g', {}, svg); bookShape(lGhost, s, true);
-  const lLab = T(X(1300), bookY + s*0.75 + fs*1.5, 'Llull');
+// A library's bookcase in 2001, w wide, h tall, standing on y: four shelves of books, one gap on the second.
+function bookcase(p, x, y, w, h) {
+  const g = mk('g', {}, p), k = Math.min(G.k, Math.max(1, w * .03)), t = Math.max(3, w * .07);
+  mk('rect', Object.assign({x: f1(x - w / 2), y: f1(y - h), width: f1(w), height: f1(h)}, solid(WOOD, k)), g);
+  mk('rect', {x: f1(x - w / 2 + t), y: f1(y - h + t), width: f1(w - 2 * t), height: f1(h - 2 * t), fill: WOOD2}, g);
+  const n = 4, sh = (h - 2 * t) / n;
+  let slot = null, c = 0;
+  for (let i = 0; i < n; i++) {
+    const base = y - h + t + sh * (i + 1);
+    let bx = x - w / 2 + t + 1;
+    const end = x + w / 2 - t - 1;
+    let j = 0;
+    while (bx < end - 2) {
+      const bw = Math.min(end - bx, sh * (.16 + ((i * 7 + j * 3) % 5) * .035)), bh = sh * (.62 + ((i * 5 + j * 11) % 4) * .08);
+      if (i === 1 && j === 2) { slot = {x: bx, w: sh * .3, base, h: sh * .8}; bx += sh * .3 + 1; j++; continue; }
+      mk('rect', Object.assign({x: f1(bx), y: f1(base - bh), width: f1(Math.max(1, bw - 1)), height: f1(bh)}, solid(BOOKS[c++ % BOOKS.length], k * .6)), g);
+      bx += bw; j++;
+    }
+    mk('rect', Object.assign({x: f1(x - w / 2 + t * .6), y: f1(base - .5), width: f1(w - t * 1.2), height: f1(Math.max(2.5, t * .55))}, solid(WOOD, k * .8)), g);
+  }
+  mk('rect', Object.assign({x: f1(x - w / 2), y: f1(y - h), width: f1(w), height: f1(h)}, ink(k)), g);
+  return {g, slot, top: y - h};
+}
 
-  const cond = Kit.mk('g', {}, svg);
-  Kit.mk('circle', {cx:0, cy:-s*0.35, r:s*0.38, style:'fill:var(--k)'}, cond);
-  Kit.mk('path', {d:`M${-s*0.7},${s*0.75} Q${-s*0.7},${s*0.08} 0,${s*0.08} Q${s*0.7},${s*0.08} ${s*0.7},${s*0.75} Z`, style:'fill:var(--k)'}, cond);
-  const cLab = T(X(1750), bookY + s*0.75 + fs*1.5, 'Condorcet');
+// A book, closed or open (open from 0 to 1), its middle at (x, y), s its height.
+function book(p, x, y, s, open) {
+  const g = mk('g', {}, p), k = Math.min(G.k, Math.max(1, s * .08)), w = s * (.72 + .55 * open);
+  if (open < .5) {
+    mk('rect', Object.assign({x: f1(x - w / 2), y: f1(y - s / 2), width: f1(w), height: f1(s), rx: f1(s * .06)}, solid(RED, k)), g);
+    mk('path', {d: `M${f1(x - w / 2 + s * .14)},${f1(y - s / 2)}V${f1(y + s / 2)}`, stroke: INK, 'stroke-width': f1(k * .8)}, g);
+    mk('rect', {x: f1(x - w * .05), y: f1(y - s * .22), width: f1(w * .4), height: f1(s * .12), fill: GOLD}, g);
+  } else {
+    // open: two red covers, white pages, and on them the method: three candidates, each against each
+    mk('path', Object.assign({d: `M${f1(x)},${f1(y - s * .42)}L${f1(x - w / 2)},${f1(y - s / 2)}V${f1(y + s / 2)}L${f1(x)},${f1(y + s * .42)}L${f1(x + w / 2)},${f1(y + s / 2)}V${f1(y - s / 2)}Z`}, solid(RED, k)), g);
+    mk('path', Object.assign({d: `M${f1(x)},${f1(y - s * .36)}L${f1(x - w / 2 + s * .08)},${f1(y - s * .42)}V${f1(y + s * .42)}L${f1(x)},${f1(y + s * .36)}L${f1(x + w / 2 - s * .08)},${f1(y + s * .42)}V${f1(y - s * .42)}Z`}, solid(PAPER, k * .7)), g);
+    mk('path', {d: `M${f1(x)},${f1(y - s * .36)}V${f1(y + s * .36)}`, stroke: INK, 'stroke-width': f1(k * .7)}, g);
+    if (s > 14) {
+      const cx = x + w * .25, R = s * .2, pts = [0, 1, 2].map(i => [cx + Math.cos(-Math.PI / 2 + i * 2.094) * R, y + Math.sin(-Math.PI / 2 + i * 2.094) * R]);
+      mk('path', {d: `M${pts.map(q => q.map(f1).join(',')).join('L')}Z`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .6)}, g);
+      pts.forEach(q => mk('circle', {cx: f1(q[0]), cy: f1(q[1]), r: f1(Math.max(1, s * .055)), fill: RED}, g));
+      let ld = '';
+      for (let i = 0; i < 4; i++) ld += `M${f1(x - w / 2 + s * .18)},${f1(y - s * .22 + i * s * .14)}h${f1(w * .3)}`;
+      mk('path', {d: ld, stroke: INK, 'stroke-width': f1(Math.max(.5, k * .5)), opacity: .45}, g);
+    }
+  }
+  return g;
+}
 
-  const found = Kit.mk('g', {}, svg); bookShape(found, s, false);
-  const fLab = T(X(2001), bookY + s*0.75 + fs*1.5, 'Found');
+function draw() {
+  const {W, H} = Kit.fitSvg(svg);
+  if (W < 40 || H < 40) return;
+  svg.innerHTML = '';
+  const k = clamp(W * .0075, 1.6, 2.6), fs = clamp(Math.min(W * .04, H / 10), 10.5, 13.5), pad = Math.max(7, fs * .65), R = clamp(W * .035, 8, 14);
+  G = {W, H, k, fs, pad};
+  // From the bottom: the years under the timeline, the line along the floor's edge, the floor; the three on it, as tall
+  // as the hall allows, with their names over them where there is room.
+  const tickY = H - pad * .6, tlY = tickY - fs * 1.9, floorH = clamp(H * .07, 7, 22), floorTop = tlY - floorH;
+  const feet = floorTop + floorH * .45, names = feet - pad > fs * 8;
+  const fh = Math.min(feet - pad * .8 - (names ? fs * 1.6 : 0), W * .58);
+  const mL = Math.max(W * .1, fh * .25 + pad * .3), caseW = clamp(fh * .36, 26, 64), mR = Math.max(W * .12, caseW / 2 + pad * .6);
+  const X = y => mL + (y - Y0) / (Y1 - Y0) * (W - mL - mR);
+  Object.assign(G, {X, tlY, tickY, feet, fh, floorTop});
+  const clip = mk('clipPath', {id: 'hall'}, mk('defs', {}, svg));
+  mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), rx: f1(R)}, clip);
+  const scene = mk('g', {'clip-path': 'url(#hall)'}, svg);
+  mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), fill: WALL}, scene);
+  mk('rect', Object.assign({x: -5, y: f1(floorTop), width: f1(W + 10), height: f1(H - floorTop + 5)}, solid(FLOOR)), scene);
 
-  const handle = Kit.mk('g', {}, svg);
-  Kit.mk('circle', {r:Math.max(fs*0.95, 12), style:'fill:var(--c);stroke:var(--k);stroke-width:4'}, handle);
-  Kit.mk('circle', {r:Math.max(fs*0.35, 5), style:'fill:var(--k)'}, handle);
+  // The bookcase in 2001, Condorcet in the 1700s, Llull in the 1200s.
+  const lx = X(1280), cx = X(1750), bx = X(2001);
+  const bc = bookcase(scene, bx, feet, caseW, fh * .84);
+  G.slot = bc.slot;
+  G.found = {x: bx, y: bc.top + fh * .84 * .45, s: Math.min(caseW * .58, fh * .22)};
+  G.cond = condorcet(scene, cx, feet, fh);
+  G.ll = llull(scene, lx, feet, fh);
+  // Llull's book, the 1700s' name over Condorcet, the book found again in the bookcase: placed by update().
+  G.bookG = mk('g', {}, scene);
+  G.lbl = mk('g', {}, scene);
+  if (names) {
+    G.nL = words(G.lbl, lx, G.ll.headTop - fs * .5, 'Ramon Llull', {weight: 800}); inside(G.nL, lx);
+    G.nC = words(G.lbl, cx, G.cond.headTop - fs * .5, 'Condorcet', {weight: 800}); inside(G.nC, cx);
+    G.nM = words(G.lbl, cx, G.cond.headTop - fs * 1.75, 'the Condorcet method', {weight: 700, size: fs * .9}); inside(G.nM, cx);
+    G.nF = words(G.lbl, bx, bc.top - fs * .45, 'found again', {weight: 800, fill: RED}); inside(G.nF, bx);
+    // The name of the method rides over Condorcet's; where there is no room for it, his own label takes it, once the
+    // method is named after him. "found again" keeps clear of both, at the wider of his label's two words.
+    if (G.nM.getBBox().y < 2) { G.nM.remove(); G.nM = null; G.swap = true; }
+    const hit = (a, b) => { const A = a.getBBox(), B = b.getBBox(); return A.x < B.x + B.width + 4 && B.x < A.x + A.width + 4 && A.y < B.y + B.height && B.y < A.y + A.height; };
+    if (G.swap) { G.nC.textContent = 'the Condorcet method'; inside(G.nC, cx); }
+    if (hit(G.nF, G.nC) || (G.nM && hit(G.nF, G.nM))) G.nF.setAttribute('y', f1(Math.max(G.nC.getBBox().y + G.nC.getBBox().height + fs * .95, bc.top + fs * 1.1)));
+    if (G.swap) { G.nC.textContent = 'Condorcet'; inside(G.nC, cx); }
+  }
 
-  G = {X, lineY, bookY, H, s, prog, brk, lFull, lGhost, lLab, cond, cLab, found, fLab, handle};
+  // The timeline along the floor's edge: the years, the run so far, the span between the two men, the knob.
+  mk('rect', {x: 0, y: f1(tlY), width: f1(W), height: f1(H - tlY), fill: FLOOR}, scene);
+  mk('path', {d: `M${f1(X(Y0))},${f1(tlY)}H${f1(X(Y1))}`, stroke: INK, 'stroke-opacity': .25, 'stroke-width': f1(k * 1.8), 'stroke-linecap': 'round'}, scene);
+  G.run = mk('path', {stroke: INK, 'stroke-width': f1(k * 2.1), 'stroke-linecap': 'round'}, scene);
+  [[1280, '1200s'], [1750, '1700s'], [2001, '2001']].forEach(([y, t]) => {
+    mk('path', {d: `M${f1(X(y))},${f1(tlY - k * 2.5)}V${f1(tlY + k * 2.5)}`, stroke: INK, 'stroke-width': f1(k)}, scene);
+    words(scene, X(y), tickY, t, {weight: 800, size: fs * .95});
+  });
+  // 486 years between them, as a span with its arrows, under the line between their years
+  G.span = mk('g', {}, scene);
+  const sl = words(G.span, (lx + cx) / 2, tickY, '486 years', {weight: 700, size: fs * .9}), sw2 = sl.getComputedTextLength() / 2 + fs * .5;
+  const ay = tickY - fs * .32, a0 = lx + fs * 1.9, a1 = cx - fs * 1.9, ah = fs * .35;
+  if ((lx + cx) / 2 - sw2 - a0 > fs * .6) mk('path', {d: `M${f1((lx + cx) / 2 - sw2)},${f1(ay)}H${f1(a0)}M${f1(a0 + ah)},${f1(ay - ah)}L${f1(a0)},${f1(ay)}L${f1(a0 + ah)},${f1(ay + ah)}M${f1((lx + cx) / 2 + sw2)},${f1(ay)}H${f1(a1)}M${f1(a1 - ah)},${f1(ay - ah)}L${f1(a1)},${f1(ay)}L${f1(a1 - ah)},${f1(ay + ah)}`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.span);
+  G.knob = mk('g', {}, svg);
+  mk('circle', {r: f1(Math.max(fs * .85, 11)), fill: 'var(--c)', stroke: INK, 'stroke-width': f1(k * 1.5)}, G.knob);
+  mk('circle', {r: f1(Math.max(fs * .32, 4.5)), fill: INK}, G.knob);
+  mk('rect', Object.assign({x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(H - k), rx: f1(R - k / 2)}, ink(k)), svg);
   update();
 }
 
-function update(){
+// What the year shows: Llull's book in his hands, closed, then open; falling away, lost; the method taking Condorcet's
+// name; the book back in the library's gap in 2001.
+function update() {
   if (!G) return;
-  const {X, lineY, bookY, H, s} = G, xn = X(year);
-  G.prog.setAttribute('x2', xn);
-  G.handle.setAttribute('transform', `translate(${xn},${lineY})`);
-  const pL = cl((year - 1280)/20), lost = cl((year - 1450)/60);
-  G.lFull.setAttribute('transform', `translate(${X(1300)},${bookY}) scale(${0.6 + 0.4*pL})`);
-  G.lFull.style.opacity = pL*(1 - lost);
-  G.lGhost.setAttribute('transform', `translate(${X(1300)},${bookY})`);
-  G.lGhost.style.opacity = lost*0.55;
-  G.lLab.style.opacity = pL;
-  G.lLab.textContent = lost > 0.5 ? 'Llull · lost' : 'Llull';
-  const pC = cl((year - 1730)/30);
-  G.cond.setAttribute('transform', `translate(${X(1750)},${bookY}) scale(${0.6 + 0.4*pC})`);
-  G.cond.style.opacity = pC; G.cLab.style.opacity = pC; G.brk.style.opacity = pC;
-  const t = cl((year - 1970)/31);
-  const fx = X(1300) + (X(2001) - X(1300))*t, fy = bookY - Math.sin(Math.PI*t)*Math.min(H*0.18, bookY - s*1.1);
-  G.found.setAttribute('transform', `translate(${fx},${fy}) rotate(${(1 - t)*-12})`);
-  G.found.style.opacity = year >= 1970 ? 1 : 0;
-  G.fLab.style.opacity = cl((year - 1995)/6);
+  const {X, tlY, fs} = G, xn = X(year);
+  G.run.setAttribute('d', `M${f1(X(Y0))},${f1(tlY)}H${f1(xn)}`);
+  G.knob.setAttribute('transform', `translate(${f1(xn)},${f1(tlY)})`);
+  G.bookG.innerHTML = '';
+  const hand = G.ll.hands, s = G.ll.r * 1.25;
+  const open = cl((year - 1285) / 25), fall = cl((year - 1450) / 60), back = cl((year - 1975) / 26);
+  if (fall < 1) {
+    const b = book(G.bookG, hand.x, hand.y + fall * (G.feet - hand.y - s * .2), s, open * (1 - fall));
+    b.setAttribute('opacity', f1(1 - fall));
+  }
+  // found again: out of its gap on the shelf, open in front of the bookcase
+  if (back > 0 && G.found) {
+    const {x, y, s: fsz} = G.found, b = book(G.bookG, x, y + (1 - back) * fsz * .6, fsz, back);
+    b.setAttribute('opacity', f1(back));
+  }
+  const named = cl((year - 1730) / 30);
+  if (G.nM) G.nM.setAttribute('opacity', f1(named));
+  if (G.swap && G.nC) { const t = named > .5 ? 'the Condorcet method' : 'Condorcet'; if (G.nC.textContent !== t) { G.nC.textContent = t; inside(G.nC, G.X(1750)); } }
+  G.span.setAttribute('opacity', f1(named));
+  if (G.nF) G.nF.setAttribute('opacity', f1(cl((year - 1995) / 6)));
 
   let c;
-  if (year < 1285) c = '<b>1200s</b> · A monk, Ramon Llull, looks at how church leaders are chosen.';
-  else if (year < 1450) c = '<b>1300s</b> · Llull writes <i>Ars eleccionis</i>, the art of elections: the winner must beat each other candidate head to head.';
-  else if (year < 1730) c = '<b>Lost</b> · His book disappears. Llull\u2019s idea makes no impact.';
-  else if (year < 1970) c = '<b>1700s</b> · 450 years later, Condorcet proposes the same method. It gets his name.';
-  else if (year < 2001) c = '<b>Searching…</b> · Llull\u2019s book is still missing.';
+  if (year < 1285) c = '<b>1200s</b> · Ramon Llull, a philosopher from Majorca, looks at how church leaders are chosen.';
+  else if (year < 1450) c = '<b>Late 1200s</b> · Llull writes <i>Ars eleccionis</i>, the art of elections: the winner must beat each other candidate head to head.';
+  else if (year < 1730) c = '<b>Lost</b> · His book disappears. Llull’s idea makes no impact.';
+  else if (year < 1970) c = '<b>1700s</b> · 486 years later, Condorcet proposes the same method. It gets his name.';
+  else if (year < 2001) c = '<b>Searching…</b> · Llull’s book is still missing.';
   else c = '<b>2001</b> · <i>Ars eleccionis</i> is rediscovered.';
-  if (c !== lastCap){ Kit.$('cap').innerHTML = c; lastCap = c; Kit.haptic('selection'); }
+  if (c !== lastCap) { Kit.$('cap').innerHTML = c; lastCap = c; Kit.haptic('selection'); }
 
-  if (year >= 2001 && !done){
+  if (year >= 2001 && !done) {
     done = true; Kit.haptic('success');
-    setTimeout(() => { Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-      if (!Kit.calm) gsap.from('#why,#keep', {opacity:0, y:8, stagger:.1, duration:.4, ease:'power3.out'}); }, 500);
+    setTimeout(() => {
+      Kit.hide('cap'); Kit.hide('say'); Kit.$('card').classList.add('answered'); Kit.show('why'); Kit.show('keep');
+      svg.setAttribute('aria-label', 'In 2001 Llull’s red book is back on the library’s shelf, found again. Condorcet, 486 years after Llull, has the method named after him.');
+      if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+    }, 500);
   }
 }
 
-function setFromX(clientX){
+function setFromX(clientX) {
   if (!G) return;
-  const r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal;
-  const px = (clientX - r.left) * (vb.width / r.width);
-  const x0 = G.X(Y0), x1 = G.X(Y1);
-  year = Y0 + cl((px - x0)/(x1 - x0))*(Y1 - Y0);
+  const r = svg.getBoundingClientRect(), px = (clientX - r.left) * (G.W / r.width);
+  year = Y0 + cl((px - G.X(Y0)) / (G.X(Y1) - G.X(Y0))) * (Y1 - Y0);
   update();
 }
 let drag = false;
-svg.addEventListener('pointerdown', e => { drag = true; try{ svg.setPointerCapture(e.pointerId); }catch(_){} setFromX(e.clientX); });
+svg.addEventListener('pointerdown', e => { drag = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setFromX(e.clientX); });
 svg.addEventListener('pointermove', e => { if (drag) setFromX(e.clientX); });
-['pointerup','pointercancel'].forEach(n => svg.addEventListener(n, () => { drag = false; }));
+['pointerup', 'pointercancel'].forEach(n => svg.addEventListener(n, () => { drag = false; }));
 
 Kit.onShow.card = () => draw();
 Kit.onEnter.card = () => {
   if (Kit.calm || !G) return;
-  gsap.fromTo(G.handle.firstChild, {attr:{r:G.handle.firstChild.getAttribute('r')*1.6}}, {attr:{r:G.handle.firstChild.getAttribute('r')}, duration:.8, ease:'elastic.out(1,.4)', repeat:2, repeatDelay:.6});
+  const c = G.knob.firstChild, r0 = +c.getAttribute('r');
+  gsap.fromTo(c, {attr: {r: r0 * 1.5}}, {attr: {r: r0}, duration: .8, ease: 'elastic.out(1,.4)', repeat: 2, repeatDelay: .6});
 };
 Kit.play.card = async () => {
-  const r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal, k = r.width / vb.width;
-  const cx = y => r.left + G.X(y)*k, cy = r.top + G.lineY*(r.height / vb.height);
-  const ev = (n, x) => svg.dispatchEvent(new PointerEvent(n, {clientX:x, clientY:cy, pointerId:1, bubbles:true}));
+  const r = svg.getBoundingClientRect(), k = r.width / G.W;
+  const cx = y => r.left + G.X(y) * k, cy = r.top + G.tlY * (r.height / G.H);
+  const ev = (n, x) => svg.dispatchEvent(new PointerEvent(n, {clientX: x, clientY: cy, pointerId: 1, bubbles: true}));
   ev('pointerdown', cx(Y0));
-  for (let y = Y0; y <= Y1; y += 40){ ev('pointermove', cx(y)); await new Promise(r => setTimeout(r, 20)); }
+  for (let y = Y0; y <= Y1; y += 40) { ev('pointermove', cx(y)); await new Promise(r => setTimeout(r, 20)); }
   ev('pointermove', cx(Y1)); ev('pointerup', cx(Y1));
   await new Promise(r => setTimeout(r, 1000));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('tl'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again, at the size it now has, whenever its room changes: the answer coming in takes some of it.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) draw(); }).observe(svg); }
 Kit.single();
 </script>
 </html>

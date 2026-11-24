@@ -7,12 +7,12 @@
   "difficulty": "medium",
   "principle": "availability",
   "question": "What was Jack Foley's job before he made sounds for films?",
-  "answer": "Jack Foley, born in New York in 1891, started out as a cartographer, a mapmaker. He fell for cinema, which stayed silent until 1927, when Warner Bros released a film with sound. Someone then had to make every noise, so he became the father of film sound effects.",
-  "move": "The father of film sound effects began as a mapmaker.",
+  "answer": "Jack Foley, born in New York in 1891, started out as a clerk on the New York docks. He fell for cinema, which stayed silent until 1927, when Warner Bros released a film with sound. Someone then had to make every noise, so he became the father of film sound effects.",
+  "move": "The father of film sound effects began as a clerk on the docks.",
   "keywords": [
     "jack foley",
     "film sound effects",
-    "cartography",
+    "new york docks",
     "silent cinema",
     "warner bros"
   ],
@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Multiple-choice question asking what Jack Foley's job was before he made sounds for films. Four options: Butcher, Cartographer, Drummer, Stage magician. The reader picks one."
+    "label": "A sound stage: Jack Foley snaps a stalk of celery under a hanging microphone while a silent film plays on the screen behind him. Four options: Butcher, Dock clerk, Drummer, Stage magician. Once answered, the film on the screen becomes his first job: the New York docks."
   },
   "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=GDR2odTE7dM&t=3364s",
