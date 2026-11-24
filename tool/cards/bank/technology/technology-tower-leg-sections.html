@@ -1,157 +1,274 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: technology-tower-leg-sections -->
+<!-- Look: the Strait, flat and stylised, the card's blue as sky. On the far shore, against its hills, the tower: two
+     legs of stacked steel sections, half built, a climbing crane on top of each, the rest of the tower a pale outline
+     with its three crossbeams. In front, on the sea, a red barge brings the next section: a cream steel block, its
+     20 m measured on its face, a worker on deck for scale, a hook over it. Holding the button, the hook takes the
+     weight (0 to 1,200 t, the barge rising as it is unloaded) and lifts the block out of the picture; far away the
+     same block climbs the leg and drops into its place; the empty barge leaves and the next one comes in. Once the
+     answer is in, the button goes and the next section hangs on the hook, its 1,200 t on the tag, so the drawing
+     shows both numbers. Every part is drawn again, at its real size, whenever the room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;position:relative}
-#scene{width:100%;height:100%;display:block;touch-action:none}
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+#scene{width:100%;height:100%;display:block;flex:1;min-height:0}
 #hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;width:100%;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .12s}
 #hold.down{transform:scale(.97);opacity:.88}
 #hold:disabled{opacity:.45;cursor:default}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font-size:max(3cqh,18px)}
-#why .body{font-size:max(1.8cqh,12px)}
-.lab{font-family:var(--mono);font-weight:700;fill:var(--k)}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12.5px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Hold · simulate">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">BRIDGE TOWERS</span></div>
     <h2 class="q">How tall and how heavy is one section of a bridge tower leg?</h2>
-    <div class="stagebox" id="stage"><svg id="scene"></svg></div>
-    <button id="hold">Hold to lift a section</button>
+    <div class="stagebox" id="stage"><svg id="scene" role="img" aria-label="A bridge tower on the far shore of the Strait of Messina, its two steel legs half built from stacked sections, a climbing crane on each. In front, a barge brings the next section, 20 m tall, with a worker beside it for scale and a crane hook over it."></svg></div>
+    <button id="hold">Hold to lift section 21 of 44</button>
     <p class="say" id="say">Hold the button to lift a section onto the tower legs.</p>
-    <div id="why" class="gone"><p class="big">20 m · 1,200 t</p><p class="body">The tower legs of the Messina Strait bridge are stacked from 44 prefabricated sections. Each one is 20 meters tall and weighs 1,200 tons, so the crane lifts a whole block at a time.</p></div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One tower section: 20 m tall, 1,200 tons; 44 of them make the legs.</div>
+    <div id="why" class="gone"><p class="big">Up to 20 m · 1,200 t</p><p class="body">Each Messina Strait bridge tower stands on two legs, 44 prefabricated sections in all, each lifted whole by the crane.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One tower section: up to 20 m tall, 1,200 tons; 44 of them make the legs.</div>
     <div class="foot"><span class="src">Source · Geopop, “Come sarà il Ponte sullo stretto di Messina? La ricostruzione 3D dai progetti originali” (YouTube, 2023).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const TOTAL = 44, SEC = 20, HALFW = 6, LEGX = [0, 24], STAGEX = 60, WMIN = -8, WMAX = 66;
-const S = {k: 3, p: 0, n: 0};
-let D = null, E = {}, cur = null, holding = false, revealed = false;
 const svg = Kit.$('scene'), btn = Kit.$('hold');
+// One ink; cream steel, its slanted faces and flanges a shade darker; the sea; the far shore's sand and hills;
+// the concrete plinth; the barge red; the hook and its spreader yellow; the worker's orange vest.
+const INK = '#10100c', STEEL = '#fffbf0', SHADE = '#ece0c4', FLANGE = '#dccaa0', SEA = '#1957c2', SAND = '#f3cf86',
+  HILL = '#f0c987', HILL2 = '#dda55c', CONC = '#e8e2d2', HULL = '#e8452c', HOOK = '#ffc83d', VEST = '#ff8a1f', SKIN = '#f2c29b';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+// A tower stands on two legs of 22 sections each, 44 in all, of variable height up to 20 m: drawn from 20 m at
+// the foot to about 16 m at the top, about 399 m in all. Sections go to the two legs in turn.
+const PER = 22, TOTAL = 44, START = 20;
+const HS = Array.from({length: PER}, (_, i) => 20 - 3.7 * i / (PER - 1));
+const LV = [0]; HS.forEach((h, i) => LV.push(LV[i] + h));
+const TALL = LV[PER], BASE = 5;
+// A leg's 12 m face (its section is an octagon 20 by 12 m); the legs' axes 52 m apart, under the two pairs of main
+// cables they carry; three crossbeams.
+const LEG = 12, AXIS = 52, BEAMS = [[100, 9], [248, 8], [TALL - 2, 7]];
+const S = {n: START, p: 0};
+let G = null, cur = null, holding = false, revealed = false;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const ease = a => a < .5 ? 2 * a * a : 1 - Math.pow(-2 * a + 2, 2) / 2;
+const seg = (p, a, b) => clamp((p - a) / (b - a), 0, 1);
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const txt = (p, x, y, s, a) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': FONT, 'font-weight': 700}, a), p); e.textContent = s; return e; };
+// How high a leg stands (m) once k sections are placed in all.
+const legTop = (L, k) => LV[Math.floor((k + 1 - L) / 2)];
 
-const ease = a => a < .5 ? 2*a*a : 1 - Math.pow(-2*a + 2, 2)/2;
-const legTop = L => { let c = 0; for (let i = 0; i < S.n; i++) if (i % 2 === L) c++; return c * SEC; };
-function kTarget(n) {
-  const {W, H, f} = D, R = f * 5.5, groundY = H - f * 1.9;
-  const nextLevels = Math.ceil((Math.min(n, TOTAL - 1) + 1) / 2);
-  const top = nextLevels * SEC + 32;
-  const kH = (W - R - f) / (WMAX - WMIN), kV = (groundY - f * 2.2) / top, k0 = H * 0.2 / SEC;
-  return Math.min(kH, kV, k0);
+// Where everything goes, for the room the drawing has now.
+function lay() {
+  const r = Kit.fitSvg(svg), W = r.W, H = r.H, f = r.f;
+  if (W < 60 || H < 40) { G = null; svg.innerHTML = ''; return; }
+  const fs = clamp(f * .92, 12, 15);
+  const yH = Math.round(H * .79);                         // the far shore, on the horizon
+  const s = (yH - 4) / (BASE + TALL + 14);                // the far tower: px a metre, its crane's top in the picture
+  const yW = H - Math.max(4, H * .05);                    // the near barge's water line
+  const tag = fs * 2.1;                                   // room over the hook for its tag
+  // The near section: px a metre. Under it the barge's 2.6 m of side, over it 6.4 m of slings and hook.
+  const sN = Math.min((yW - tag - 6) / 29, W * .33 / LEG);
+  const xS = W * .64;
+  const xT0 = Math.max(W * .2, (AXIS / 2 + LEG / 2 + 20) * s + 6);
+  G = {W, H, f, fs, yH, s, yW, sN, xS, xT0};
+  render();
 }
-function build() {
-  svg.innerHTML = '';
-  const {f} = D;
-  E.jib = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': Math.max(2, f*.18), 'stroke-linecap': 'round'}, svg);
-  E.ground = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': Math.max(2, f*.16)}, svg);
-  E.pad = Kit.mk('rect', {fill: 'var(--k)', opacity: .18, rx: 3}, svg);
-  E.stack = Kit.mk('g', {}, svg);
-  E.blocks = [];
-  for (let i = 0; i < TOTAL; i++) E.blocks.push(Kit.mk('rect', {fill: 'var(--k)', opacity: .5, rx: 1.5}, E.stack));
-  E.cable = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': Math.max(1.5, f*.1)}, svg);
-  E.hook = Kit.mk('path', {fill: 'var(--k)'}, svg);
-  E.move = Kit.mk('rect', {fill: 'var(--k)', rx: 2}, svg);
-  E.stripe = Kit.mk('line', {stroke: 'var(--c)', 'stroke-width': Math.max(1.5, f*.12), opacity: .7}, svg);
-  E.br = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(1.5, f*.1)}, svg);
-  E.brT = Kit.mk('text', {class: 'lab', 'font-size': f*1.05, 'dominant-baseline': 'middle'}, svg); E.brT.textContent = '20 m';
-  E.tagR = Kit.mk('rect', {fill: 'var(--k)', rx: f*.35}, svg);
-  E.tagT = Kit.mk('text', {class: 'lab', 'font-size': f*1.05, 'dominant-baseline': 'middle', style: 'fill:var(--c)'}, svg);
-  E.count = Kit.mk('text', {class: 'lab', 'font-size': f*1.0, 'dominant-baseline': 'middle'}, svg);
-}
+
 function render() {
-  if (!D) return;
-  const {W, H, f} = D, R = f * 5.5, k = S.k, groundY = H - f * 1.9;
-  const ox = (W - R - (WMAX - WMIN) * k) / 2 - WMIN * k;
-  const sx = x => ox + x * k, sy = y => groundY - y * k;
-  E.jib.setAttribute('x1', sx(WMIN)); E.jib.setAttribute('x2', W - f*.4);
-  E.jib.setAttribute('y1', f*.3); E.jib.setAttribute('y2', f*.3);
-  E.ground.setAttribute('x1', 0); E.ground.setAttribute('x2', W);
-  E.ground.setAttribute('y1', groundY); E.ground.setAttribute('y2', groundY);
-  Object.entries({x: sx(STAGEX - HALFW - 3), y: groundY - Math.max(3, k*1.2), width: (HALFW*2 + 6)*k, height: Math.max(3, k*1.2)}).forEach(([a, v]) => E.pad.setAttribute(a, v));
-  const gap = Math.max(1, k * .6);
-  E.blocks.forEach((b, i) => {
-    if (i >= S.n) { b.setAttribute('display', 'none'); return; }
-    const L = i % 2, lv = Math.floor(i / 2);
-    b.setAttribute('display', '');
-    b.setAttribute('x', sx(LEGX[L] - HALFW)); b.setAttribute('y', sy(lv*SEC + SEC) + gap/2);
-    b.setAttribute('width', HALFW*2*k); b.setAttribute('height', SEC*k - gap);
-  });
-  E.count.setAttribute('x', f*.4); E.count.setAttribute('y', groundY + f*1.0);
-  E.count.textContent = `Sections placed  ${S.n} / ${TOTAL}`;
-  const moving = [E.cable, E.hook, E.move, E.stripe, E.br, E.brT, E.tagR, E.tagT];
-  if (S.n >= TOTAL) { moving.forEach(m => m.setAttribute('display', 'none')); return; }
-  moving.forEach(m => m.setAttribute('display', ''));
-  // where the section is, and what the crane feels
-  const L = S.n % 2, lv = Math.floor(S.n / 2), tx = LEGX[L], ty = lv * SEC;
-  const clear = Math.max(legTop(0), legTop(1), ty) + 8;
-  let x = STAGEX, y = 0, load = 0; const p = S.p;
-  if (p < .3) { const a = p/.3; load = 1200 * ease(Math.min(1, a/.8)); y = a > .8 ? (a - .8)/.2 * 2 : 0; }
-  else if (p < .6) { const a = ease((p - .3)/.3); load = 1200; y = 2 + (clear - 2) * a; }
-  else if (p < .82) { const a = ease((p - .6)/.22); load = 1200; y = clear; x = STAGEX + (tx - STAGEX) * a; }
-  else { const a = (p - .82)/.18; const e = ease(Math.min(1, a/.85)); x = tx; y = clear + (ty - clear) * e; load = a > .85 ? 1200 * (1 - (a - .85)/.15) : 1200; }
-  const bx = sx(x - HALFW), by = sy(y + SEC), bw = HALFW*2*k, bh = SEC*k - gap;
-  E.move.setAttribute('x', bx); E.move.setAttribute('y', by); E.move.setAttribute('width', bw); E.move.setAttribute('height', bh);
-  E.stripe.setAttribute('x1', bx + bw*.5); E.stripe.setAttribute('x2', bx + bw*.5);
-  E.stripe.setAttribute('y1', by + bh*.12); E.stripe.setAttribute('y2', by + bh*.88);
-  const cx = sx(x), hookY = by - Math.max(4, f*.5);
-  E.cable.setAttribute('x1', cx); E.cable.setAttribute('x2', cx); E.cable.setAttribute('y1', f*.3); E.cable.setAttribute('y2', hookY);
-  const hs = Math.max(4, f*.45);
-  E.hook.setAttribute('d', `M${cx - hs} ${hookY} L${cx + hs} ${hookY} L${cx} ${by} Z`);
-  const rx = bx + bw + f*.5, tick = f*.35;
-  E.br.setAttribute('d', `M${rx - tick} ${by} H${rx + tick} M${rx} ${by} V${by + bh} M${rx - tick} ${by + bh} H${rx + tick}`);
-  E.brT.setAttribute('x', rx + f*.6); E.brT.setAttribute('y', by + bh/2);
-  const txt = `${Math.round(load).toLocaleString('en')} t`;
-  E.tagT.textContent = txt;
-  const tw = f * .66 * txt.length + f*.8, th = f * 1.6;
-  let tagX = cx + f*.5; if (tagX + tw > W - 2) tagX = cx - f*.5 - tw;
-  const tagY = Math.max(f*.9, by - th - f*.6);
-  E.tagR.setAttribute('x', tagX); E.tagR.setAttribute('y', tagY); E.tagR.setAttribute('width', tw); E.tagR.setAttribute('height', th);
-  E.tagT.setAttribute('x', tagX + f*.4); E.tagT.setAttribute('y', tagY + th/2);
+  if (!G) return;
+  const {W, H} = G;
+  svg.innerHTML = '';
+  const cp = mk('clipPath', {id: 'tw-frame'}, mk('defs', {}, svg));
+  mk('rect', {x: 0, y: 0, width: W, height: H}, cp);
+  const g = mk('g', {'clip-path': 'url(#tw-frame)'}, svg);
+  far(g);
+  near(g);
 }
+
+// The tower on the far shore, at true scale.
+function far(g) {
+  const {W, H, yH, s} = G, p = S.p;
+  const X = m => G.xT0 + m * s, Y = m => yH - (BASE + m) * s;
+  const land = X(AXIS / 2 + LEG / 2 + 46);
+  // The hills behind the shore, the sea, the shore.
+  mk('path', {d: `M-4,${yH} V${yH - H * .07} Q${land * .3},${yH - H * .2} ${land * .62},${yH - H * .13} Q${land * .9},${yH - H * .07} ${land * 1.25},${yH} Z`, fill: HILL, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+  mk('path', {d: `M-4,${yH} V${yH - H * .1} Q${land * .16},${yH - H * .13} ${land * .38},${yH - H * .06} Q${land * .6},${yH - H * .01} ${land + 18},${yH} Z`, fill: HILL2, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+  mk('rect', {x: -4, y: yH, width: W + 8, height: H - yH + 4, fill: SEA}, g);
+  mk('path', {d: `M-4,${yH - 4} H${land - 8} L${land},${yH} H-4 Z`, fill: SAND}, g);
+  mk('path', {d: `M-4,${yH - 4} H${land - 8} L${land},${yH} H${W + 4}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+  // The place, named on the water under the far shore, left of where the barge rests: on one line, or on two.
+  const room = G.xS - (LEG / 2 + 6) * G.sN - G.fs, fs = G.fs;
+  for (const lines of [['Strait of Messina'], ['Strait of', 'Messina']]) {
+    const t = lines.map((l, i) => txt(g, fs * .5, yH + fs * (1.2 + 1.32 * i), l, {'font-size': fs, 'font-weight': 600, fill: '#ffffff'}));
+    if (Math.max(...t.map(e => e.getComputedTextLength())) <= room && yH + fs * (1.5 + 1.32 * (lines.length - 1)) < G.yW) break;
+    t.forEach(e => e.remove());
+  }
+  // The plinth the two legs stand on.
+  mk('rect', {x: X(-AXIS / 2 - LEG / 2 - 10), y: Y(0), width: (AXIS + LEG + 20) * s, height: BASE * s + 1, fill: CONC, stroke: INK, 'stroke-width': 1.6}, g);
+  const seated = S.n < TOTAL && p >= .85 ? 1 : 0, k = S.n + seated;
+  const legs = [-AXIS / 2, AXIS / 2], tops = [legTop(0, k), legTop(1, k)];
+  // What is still to come: a pale outline of the legs and the crossbeams.
+  const ghost = {fill: '#ffffff', 'fill-opacity': .28, stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1.2};
+  legs.forEach((c, L) => { if (tops[L] < TALL) mk('rect', Object.assign({x: X(c - LEG / 2), y: Y(TALL), width: LEG * s, height: (TALL - tops[L]) * s}, ghost), g); });
+  // The sections placed, one rectangle each, so the joints show.
+  for (let i = 0; i < k; i++) {
+    const L = i % 2, lv = i >> 1;
+    mk('rect', {x: X(legs[L] - LEG / 2), y: Y(LV[lv + 1]), width: LEG * s, height: HS[lv] * s, fill: STEEL, stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, g);
+  }
+  // Where the next section goes.
+  if (S.n < TOTAL && !seated) { const L = S.n % 2, lv = S.n >> 1; mk('rect', {x: X(legs[L] - LEG / 2), y: Y(LV[lv + 1]), width: LEG * s, height: HS[lv] * s, fill: 'none', stroke: HOOK, 'stroke-width': 2}, g); }
+  // Crossbeams: built once both legs stand past them.
+  BEAMS.forEach(([t, d]) => {
+    const done = tops[0] >= t && tops[1] >= t, x = X(-AXIS / 2 + LEG / 2), w = (AXIS - LEG) * s;
+    mk('rect', Object.assign({x, y: Y(t), width: w, height: d * s}, done ? {fill: STEEL, stroke: INK, 'stroke-width': 1.4} : ghost), g);
+  });
+  // A climbing crane on each leg still growing; the one whose turn it is carries the section.
+  const L = S.n % 2, lv = S.n >> 1, q = seg(p, .5, .85);
+  legs.forEach((c, j) => {
+    if (tops[j] >= TALL) return;
+    const out = j ? 1 : -1, top = tops[j], mx = c - out * (LEG / 2 + 1.5), mTop = top + 22;
+    let tip = c + out * (LEG / 2 + 9), hookY = mTop - 9, block = null;
+    if (j === L && S.n < TOTAL && p >= .5 && p < .85) {
+      // Up the outside of the leg, over its top, down into its place.
+      const climb = ease(seg(q, 0, .6)), slew = ease(seg(q, .6, .78)), drop = ease(seg(q, .78, 1));
+      const x = tip + (c - tip) * slew, b = (top + 6) * climb - 6 * drop;
+      tip = x; block = {x, b}; hookY = b + HS[lv];
+    }
+    mk('line', {x1: X(mx), x2: X(mx), y1: Y(top - 6), y2: Y(mTop), stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, g);
+    mk('line', {x1: X(mx - out * 7), x2: X(tip), y1: Y(mTop), y2: Y(mTop), stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, g);
+    mk('rect', {x: X(mx - out * 7) - 2.5, y: Y(mTop) - 1, width: 5, height: 4, fill: INK}, g);
+    mk('line', {x1: X(tip), x2: X(tip), y1: Y(mTop), y2: Y(hookY), stroke: INK, 'stroke-width': 1.2}, g);
+    if (block) mk('rect', {x: X(block.x - LEG / 2), y: Y(block.b + HS[lv]), width: LEG * s, height: HS[lv] * s, fill: STEEL, stroke: INK, 'stroke-width': 1.4}, g);
+    else mk('rect', {x: X(tip) - 1.5, y: Y(hookY), width: 3, height: 3, fill: INK}, g);
+  });
+}
+
+// The barge in front with the next section, the hook over it, until all 44 are placed.
+function near(g) {
+  const {W, H, yW, sN, xS} = G, p = S.p;
+  if (S.n < TOTAL) {
+    const x0 = xS - (LEG / 2 + 6) * sN, len = (LEG + 26) * sN;
+    const load = Math.round(120 * ease(seg(p, 0, .2))) * 10, lift = Math.pow(seg(p, .2, .5), 2);
+    // The barge whose section went up sails on, out to the left, as the next one comes in from the right.
+    if (p < .72) barge(g, -ease(seg(p, .5, .72)) * (x0 + len + 8), ease(seg(p, 0, .2)) * .7, p < .5 ? lift : null, load, p < .5 ? 1 : 0);
+    if (p >= .6 && S.n + 1 < TOTAL) barge(g, (1 - ease(seg(p, .6, .9))) * (W - x0 + 8), 0, 0, 0, seg(p, .86, 1));
+  }
+  mk('rect', {x: -4, y: yW, width: W + 8, height: H - yW + 4, fill: SEA}, g);
+}
+
+function barge(g, dx, riseM, lift, load, hooked) {
+  const {W, fs, yW, sN, xS} = G;
+  const fb = 2.6 * sN, deck = yW - fb - riseM * sN, cx = xS + dx, x0 = cx - (LEG / 2 + 6) * sN, xs = x0 + (LEG + 26) * sN;
+  if (x0 >= W + 3 || xs <= -3) return;
+  // The hull, a raked bow on the left and its stern, or running out of the picture; a rubbing strake along it.
+  const end = xs <= W + 3 ? `L${xs},${deck} L${xs - fb * .3},${yW + 4}` : `L${W + 3},${deck} L${W + 3},${yW + 4}`;
+  mk('path', {d: `M${x0},${deck} ${end} L${x0 + fb * .8},${yW + 4} Z`, fill: HULL, stroke: INK, 'stroke-width': 2.5, 'stroke-linejoin': 'round'}, g);
+  mk('line', {x1: x0 + fb * .3, x2: Math.min(xs - fb * .15, W + 3), y1: deck + fb * .38, y2: deck + fb * .38, stroke: INK, 'stroke-width': 1.6, opacity: .45}, g);
+  person(g, x0 + 2.8 * sN, deck, 1.8 * sN);
+  if (lift === null) return;
+  const w = LEG * sN, h = 20 * sN;
+  const rise = lift * (deck + 7 * sN + fs * 3), bx = cx - w / 2, by = deck - h - rise;
+  section(g, bx, by, w, h);
+  // The spreader over the section, its slings, and the hook coming down or hooked on.
+  const spY = by - 3.3 * sN, spH = Math.max(4, .6 * sN), spX = cx - w * .56, spW = w * 1.12, c = w * .16;
+  mk('path', {d: `M${bx + c},${by} L${spX + 3},${spY + spH} M${bx + w - c},${by} L${spX + spW - 3},${spY + spH}`, fill: 'none', stroke: INK, 'stroke-width': 1.8}, g);
+  mk('rect', {x: spX, y: spY, width: spW, height: spH, rx: 2, fill: HOOK, stroke: INK, 'stroke-width': 2}, g);
+  const hw = Math.max(10, w * .24), hh = Math.max(9, 1.5 * sN), hY0 = spY - 2.6 * sN - hh;
+  const hY = hY0 - (1 - ease(hooked)) * (hY0 + hh + 30);
+  if (hooked >= 1) mk('path', {d: `M${cx},${hY + hh} L${spX + 3},${spY} M${cx},${hY + hh} L${spX + spW - 3},${spY}`, fill: 'none', stroke: INK, 'stroke-width': 1.8}, g);
+  mk('line', {x1: cx, x2: cx, y1: 0, y2: hY, stroke: INK, 'stroke-width': 2}, g);
+  mk('rect', {x: cx - hw / 2, y: hY, width: hw, height: hh, rx: 3, fill: HOOK, stroke: INK, 'stroke-width': 2}, g);
+  if (hY + hh < -2) return;
+  // What the crane holds, on a tag beside the hook.
+  const t = txt(g, 0, 0, `${load.toLocaleString('en')} t`, {'font-size': fs, 'font-weight': 800, fill: getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#00A6FF'});
+  const tw = t.getComputedTextLength() + fs * 1.1, th = fs * 1.75;
+  let tx = cx + hw / 2 + fs * .45; if (tx + tw > W - 2) tx = cx - hw / 2 - fs * .45 - tw;
+  const ty = hY + hh / 2 - th / 2;
+  mk('rect', {x: tx, y: ty, width: tw, height: th, rx: th / 2, fill: INK}, g).after(t);
+  t.setAttribute('x', tx + fs * .55); t.setAttribute('y', ty + th / 2 + fs * .34);
+}
+
+// One section of a leg: steel plate, the octagon's slanted faces at its sides, a flange at each end, and its height.
+function section(g, x, y, w, h) {
+  const {fs} = G, c = w * .16, fl = Math.max(3, h * .045), at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'};
+  mk('rect', Object.assign({x, y, width: w, height: h, fill: STEEL}, at), g);
+  mk('rect', Object.assign({x, y, width: c, height: h, fill: SHADE}, at), g);
+  mk('rect', Object.assign({x: x + w - c, y, width: c, height: h, fill: SHADE}, at), g);
+  mk('rect', Object.assign({x, y, width: w, height: fl, fill: FLANGE}, at), g);
+  mk('rect', Object.assign({x, y: y + h - fl, width: w, height: fl, fill: FLANGE}, at), g);
+  mk('rect', {x, y, width: w, height: h, fill: 'none', stroke: INK, 'stroke-width': 2.5, 'stroke-linejoin': 'round'}, g);
+  // 20 m, measured down its face: a line with arrowheads, broken for the number.
+  const mx = x + w / 2, room = w - 2 * c - 6;
+  const label = txt(g, 0, 0, '20 m', {'font-size': Math.min(fs * 1.45, 24), 'font-weight': 800, 'font-family': SERIF});
+  let lw = label.getComputedTextLength();
+  if (lw > room) { label.setAttribute('font-size', Math.max(12, Math.min(fs * 1.45, 24) * room / lw)); lw = label.getComputedTextLength(); }
+  const size = +label.getAttribute('font-size'), ym = y + h / 2, gap = size * .85, a = Math.min(7, w * .08), t0 = y + fl + 2, t1 = y + h - fl - 2;
+  label.setAttribute('x', mx - lw / 2); label.setAttribute('y', ym + size * .35);
+  mk('path', {d: `M${mx},${t0} V${ym - gap} M${mx},${ym + gap} V${t1} M${mx - a * .8},${t0 + a} L${mx},${t0} L${mx + a * .8},${t0 + a} M${mx - a * .8},${t1 - a} L${mx},${t1} L${mx + a * .8},${t1 - a}`, fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+}
+
+// A worker in a hard hat and an orange vest, standing at (x, foot), `tall` px tall.
+function person(g, x, foot, tall) {
+  const u = tall / 10, at = {stroke: INK, 'stroke-width': Math.max(1.2, u * .45), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const y = d => foot - d * u;
+  mk('path', Object.assign({d: `M${x - 1.2 * u},${y(3.2)} L${x - 1.4 * u},${foot} M${x + 1.2 * u},${y(3.2)} L${x + 1.4 * u},${foot}`, fill: 'none'}, at), g);
+  mk('path', Object.assign({d: `M${x - 2.3 * u},${y(6.4)} L${x - 3.1 * u},${y(3.6)} M${x + 2.3 * u},${y(6.4)} L${x + 3.1 * u},${y(3.6)}`, fill: 'none'}, at), g);
+  mk('path', Object.assign({d: `M${x - 2.6 * u},${y(2.8)} L${x - 1.9 * u},${y(7)} Q${x},${y(7.8)} ${x + 1.9 * u},${y(7)} L${x + 2.6 * u},${y(2.8)} Z`, fill: VEST}, at), g);
+  mk('circle', Object.assign({cx: x, cy: y(8.6), r: 1.45 * u, fill: SKIN}, at), g);
+  mk('path', Object.assign({d: `M${x - 1.9 * u},${y(8.8)} Q${x},${y(11.4)} ${x + 1.9 * u},${y(8.8)} Z`, fill: '#ffffff'}, at), g);
+}
+
 function startSection() {
-  cur = gsap.to(S, {p: 1, duration: 2.4, ease: 'none', paused: true, onUpdate: render, onComplete: placed});
-  cur.timeScale(Math.min(1 + S.n * .3, 6));
+  cur = gsap.to(S, {p: 1, duration: 2.6, ease: 'none', paused: true, onUpdate: render, onComplete: placed});
+  cur.timeScale(Math.min(1 + (S.n - START) * .35, 6));
 }
 function placed() {
   S.n++; S.p = 0; cur = null; Kit.haptic('light');
-  gsap.to(S, {k: kTarget(S.n), duration: .6, ease: 'power2.out', onUpdate: render});
   render();
-  if (!revealed) { revealed = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }
-  if (S.n >= TOTAL) { btn.disabled = true; btn.textContent = 'All 44 sections placed'; btn.classList.remove('down'); return; }
-  btn.textContent = 'Hold to lift the next section';
-  if (holding) { startSection(); cur.play(); }
+  if (!revealed) {
+    // The story told: the button gives its room to the drawing, and the crane takes the next section's weight.
+    revealed = true; holding = false; btn.classList.remove('down');
+    Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    startSection();
+    if (Kit.calm) cur.progress(.2); else gsap.to(cur, {progress: .2, duration: .9, delay: .2, ease: 'power1.inOut'});
+    return;
+  }
 }
 function down(e) {
-  if (btn.disabled) return; if (e) e.preventDefault();
+  if (revealed) return; if (e) e.preventDefault();
   holding = true; btn.classList.add('down'); Kit.haptic('selection');
-  if (!cur) startSection(); cur.play();
+  if (!cur) startSection();
+  gsap.killTweensOf(cur);
+  cur.play();
 }
-function up() { holding = false; btn.classList.remove('down'); if (cur) cur.pause(); }
+function up() {
+  if (!holding) return;
+  holding = false; btn.classList.remove('down');
+  if (!cur) return;
+  cur.pause();
+  // Let go before the section leaves the deck, and the hook slackens: its weight is back on the barge.
+  if (S.p < .2) gsap.to(cur, {progress: 0, duration: .35, ease: 'power2.out'});
+}
 btn.addEventListener('pointerdown', down);
 ['pointerup', 'pointerleave', 'pointercancel'].forEach(t => btn.addEventListener(t, up));
 btn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !holding) down(e); });
 btn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') up(); });
 
-Kit.onShow.card = () => {
-  D = Kit.fitSvg(svg);
-  build();
-  S.k = kTarget(S.n);
-  render();
-};
-Kit.onEnter.card = () => { if (!Kit.calm && E.move) gsap.from([E.move, E.stripe, E.br, E.brT], {opacity: 0, y: -10, duration: .5, ease: 'power3.out'}); };
+Kit.onShow.card = () => lay();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
-  await new Promise(r => setTimeout(r, 3300));
+  await new Promise(r => setTimeout(r, 2750));
   btn.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
-  await new Promise(r => setTimeout(r, 700));
+  await new Promise(r => setTimeout(r, 1300));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Drawn again at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
 // Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('scene'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k === seen) return; const first = !seen; if (!first && b.height < 100) { svg.dataset.kept = '1'; return; } seen = k; if (!first) lay(); }).observe(svg); }
 Kit.single();
 </script>
 </html>

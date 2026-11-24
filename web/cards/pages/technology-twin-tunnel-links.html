@@ -1,5 +1,11 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: technology-twin-tunnel-links -->
+<!-- Look: a slice of the mountain seen from above, flat and stylised: grey-sand rock with a few seams, and cut
+     through it the two tubes of the base tunnel, each a concrete lining around one track, rails and sleepers. Three
+     cross-passages join them, a door at each end, 333 m apart, measured on the rock. A stopped train in the left
+     tube, a puff of smoke over it; the reader drags it along its tube, and the passage nearest it lights green,
+     the walk to it and through it dashed, the other tube marked safe. Under the slice, the walk in metres. Every
+     label sits on bare rock, off the outlines. Drawn again at its real size whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -9,130 +15,203 @@
 #tun{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
-.tube{fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:var(--k);stroke-width:2.5}
-.rail{stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:1.5;stroke-dasharray:6 6;fill:none}
-.rung{fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:var(--k);stroke-width:2}
-.rung.on{fill:var(--k)}
-.lab{fill:var(--k);font-family:var(--body);font-weight:700}
-.mut{fill:var(--k);opacity:.7;font-family:var(--body);font-weight:600}
-.ruler{stroke:var(--k);stroke-width:2;fill:none}
-.walk{stroke:var(--k);stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.train{fill:var(--k)}
-.win{fill:var(--c)}
-.big2{fill:var(--k);font-family:var(--display);font-weight:800}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Drag · explore">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">BASE TUNNEL</span></div>
     <h2 class="q">What's inside the Turin–Lyon base tunnel, and how often are its tubes linked?</h2>
     <div class="stagebox" id="stage">
-      <svg id="tun" aria-label="Top view of two parallel single-track tunnels joined by cross-passages"></svg>
+      <svg id="tun" role="img" aria-label="The base tunnel seen from above, cut through rock: two tubes, each with one track, joined by cross-passages 333 m apart. A stopped train in the left tube; drag it along to find the nearest way through to the other tube."></svg>
     </div>
     <p class="say" id="say">A train stops in trouble. Drag it along its tunnel and find the way out.</p>
-    <div id="why" class="gone"><p class="body">The tunnel is really two single-track tubes side by side, joined every 333 m by cross-passages. Wherever a train stops, the other tube is never more than about 170 m away: a safe exit, and a link for ventilation.</p></div>
+    <div id="why" class="gone"><p class="body">Wherever a train stops, the other tube is never more than about 170 m away: a safe exit, and a link for ventilation.</p></div>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Two tubes, one track each, linked every 333 m.</div>
     <div class="foot"><span class="src">Source · Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const SPAN = 1000, RUNGS = [167, 500, 833];
-let m = 620, travelled = 0, done = false, G = null, dash = null;
+// 1,000 m of the tunnel, with a cross-passage every 333 m; the train is 250 m long.
+const SPAN = 1000, RUNGS = [167, 500, 833], TRAIN = 250;
+let m = 620, travelled = 0, done = false, G = null, dash = null, laid = '';
 const svg = Kit.$('tun');
+// One ink; the rock and its seams; the tubes' concrete lining and their floor; the passage that is the way out, lit
+// green, its doors green; the train cream with a red nose, its smoke grey.
+const INK = '#10100c', ROCK = '#d9ccb0', SEAM = '#c8b893', LINING = '#b8b1a2', FLOOR = '#f4f0e6', SLEEPER = '#a39b8a',
+  LIT = '#c9f3d2', GREEN = '#22b363', SAFE = '#5ce08f', DOOR = '#8b8575', TRAINC = '#fffbf0', NOSE = '#e8452c', SMOKE = '#9aa0a8';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+const txt = (p, x, y, s, a) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': FONT, 'font-weight': 700}, a), p); e.textContent = s; return e; };
+// A label on the rock, ringed in the rock's colour so a seam never strikes it.
+const onRock = {stroke: ROCK, 'stroke-width': 4, 'stroke-linejoin': 'round', 'paint-order': 'stroke'};
+const y = mm => G.top + mm / SPAN * (G.bot - G.top);
 
-function y(mm){ return G.top + mm / SPAN * (G.bot - G.top); }
+// Where everything goes, for the room the drawing has now.
+function lay() {
+  const r = Kit.fitSvg(svg), W = r.W, H = r.H, f = r.f;
+  if (W < 60 || H < 60) { G = null; svg.innerHTML = ''; return; }
+  const fs = clamp(f * .9, 12, 14);
+  const rH = done ? fs * 2.1 : fs * 3.3;                  // under the slice: the walk, and the longest one there is
+  const fH = H - rH;                                      // the slice of rock
+  // The tubes are drawn wider than they are, to show what is inside; along the tunnel the metres are true. A low
+  // slice keeps them, and the passages, slimmer, so the 333 m between passages stay open rock.
+  const tw = clamp(Math.min(W * .15, fH * .17), 22, 54), xA = W * .37, xB = W * .69;
+  G = {W, H, f, fs, rH, fH, tw, xA, xB, top: 0, bot: fH, el: {}};
+  laid = `${Math.round(W)}x${Math.round(H)}`;
+  draw();
+}
 
-function draw(){
+function draw() {
+  if (!G) return;
+  const {W, H, fs, fH, tw, xA, xB} = G;
   svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const tw = Math.max(26, Math.min(W * .13, 56));
-  const xA = W * .44, xB = W * .74;
-  G = {W, H, f, tw, xA, xB, top: f * 3.2, bot: H - f * 3.6, el: {}};
-  // tube labels
-  [[xA, 'Tube 1'], [xB, 'Tube 2']].forEach(([x, t]) => {
-    Kit.mk('text', {x, y: f * 1.2, 'text-anchor': 'middle', class: 'lab', 'font-size': f}, svg).textContent = t;
-    Kit.mk('text', {x, y: f * 2.5, 'text-anchor': 'middle', class: 'mut', 'font-size': Math.max(12, f * .78)}, svg).textContent = 'one track';
+  const rr = Math.min(16, W * .05);
+  const cp = mk('clipPath', {id: 'tt-slice'}, mk('defs', {}));
+  mk('rect', {x: 0, y: 0, width: W, height: fH, rx: rr}, cp);
+  const g = mk('g', {'clip-path': 'url(#tt-slice)'});
+  // The rock, two seams running across it.
+  mk('rect', {x: 0, y: 0, width: W, height: fH, fill: ROCK}, g);
+  mk('path', {d: `M0,${fH * .18} L${W},${fH * .02} V${fH * .14} L0,${fH * .34} Z`, fill: SEAM}, g);
+  mk('path', {d: `M0,${fH * .66} L${W},${fH * .5} V${fH * .58} L0,${fH * .8} Z`, fill: SEAM}, g);
+  const lw = Math.max(3, tw * .12), ph = Math.min(tw * .56, fH * .085), pi = Math.min(lw * .8, ph * .22);
+  // The cross-passages: lining, floor, a door where each meets a tube.
+  G.el.pass = RUNGS.map(r => {
+    const yy = y(r);
+    mk('rect', {x: xA, y: yy - ph / 2, width: xB - xA, height: ph, fill: LINING}, g);
+    const fl = mk('rect', {x: xA, y: yy - ph / 2 + pi, width: xB - xA, height: ph - pi * 2, fill: FLOOR}, g);
+    return {fl, yy};
   });
-  // rungs (under tubes)
-  G.el.rungs = RUNGS.map(r => Kit.mk('rect', {x: xA, y: y(r) - tw * .22, width: xB - xA, height: tw * .44, class: 'rung'}, svg));
-  // tubes
+  // The tubes: lining, floor, one track each, rails on sleepers.
   [xA, xB].forEach(x => {
-    Kit.mk('rect', {x: x - tw / 2, y: G.top - tw * .3, width: tw, height: G.bot - G.top + tw * .6, rx: tw / 2, class: 'tube'}, svg);
-    Kit.mk('line', {x1: x, y1: G.top, x2: x, y2: G.bot, class: 'rail'}, svg);
+    mk('rect', {x: x - tw / 2, y: -4, width: tw, height: fH + 8, fill: LINING}, g);
+    mk('rect', {x: x - tw / 2 + lw, y: -4, width: tw - 2 * lw, height: fH + 8, fill: FLOOR}, g);
+    const gauge = tw * .17, step = Math.max(5, tw * .16);
+    let d = '';
+    for (let s = step / 2; s < fH; s += step) d += `M${(x - gauge * 1.6).toFixed(1)},${s.toFixed(1)} H${(x + gauge * 1.6).toFixed(1)} `;
+    mk('path', {d, stroke: SLEEPER, 'stroke-width': Math.max(1.5, step * .32), fill: 'none'}, g);
+    mk('path', {d: `M${x - gauge},-4 V${fH + 4} M${x + gauge},-4 V${fH + 4}`, stroke: INK, 'stroke-width': 1.5, fill: 'none'}, g);
   });
-  // cover the rung ends inside tubes so passages look open
-  // ruler on the left between two rungs
-  const rx = xA - tw / 2 - Math.max(10, W * .04), y1 = y(RUNGS[0]), y2 = y(RUNGS[1]);
-  Kit.mk('path', {d: `M${rx - 6},${y1}H${rx}V${y2}H${rx - 6}`, class: 'ruler'}, svg);
-  Kit.mk('text', {x: rx - 10, y: (y1 + y2) / 2 + f * .35, 'text-anchor': 'end', class: 'big2', 'font-size': f * 1.25}, svg).textContent = '333 m';
-  Kit.mk('text', {x: rx - 10, y: (y1 + y2) / 2 + f * 1.7, 'text-anchor': 'end', class: 'mut', 'font-size': Math.max(12, f * .78)}, svg).textContent = 'link to link';
-  // walk path
-  G.el.walk = Kit.mk('path', {class: 'walk', 'stroke-dasharray': '2 9'}, svg);
-  // train
-  const th = (G.bot - G.top) * .11, trw = tw * .56;
-  G.th = th;
-  G.el.train = Kit.mk('g', {}, svg);
-  Kit.mk('rect', {x: -trw / 2, y: -th / 2, width: trw, height: th, rx: trw * .4, class: 'train'}, G.el.train);
-  for (let i = 0; i < 3; i++) Kit.mk('rect', {x: -trw * .25, y: -th / 2 + th * (.15 + i * .26), width: trw * .5, height: th * .14, rx: 2, class: 'win'}, G.el.train);
-  // safe tag
-  G.el.safe = Kit.mk('text', {x: xB + tw / 2 + 8, class: 'lab', 'font-size': Math.max(12, f * .85)}, svg);
-  G.el.safe.textContent = 'safe';
-  // readout
-  G.el.read = Kit.mk('text', {x: W / 2, y: H - f * 1.9, 'text-anchor': 'middle', class: 'big2', 'font-size': f * 1.35}, svg);
-  G.el.sub = Kit.mk('text', {x: W / 2, y: H - f * .5, 'text-anchor': 'middle', class: 'mut', 'font-size': Math.max(12, f * .8)}, svg);
-  G.el.sub.textContent = 'longest possible walk: about 170 m';
+  // The floors meet where a passage opens into a tube, so the passage floors go over the tubes' linings.
+  G.el.pass.forEach(p => mk('rect', {x: xA + tw / 2 - lw - 1, y: p.yy - ph / 2 + pi, width: xB - xA - tw + 2 * lw + 2, height: ph - pi * 2, fill: FLOOR}, g));
+  G.el.floors = G.el.pass.map(p => mk('rect', {x: xA + tw / 2, y: p.yy - ph / 2 + pi, width: xB - xA - tw, height: ph - pi * 2, fill: FLOOR}, g));
+  // The outlines in ink: each tube's two walls, open where a passage leaves it; each passage's two walls.
+  const open = (x, side) => {
+    let d = '', from = -4;
+    if (side) RUNGS.forEach(r => { const yy = y(r); d += `M${x},${from.toFixed(1)} V${(yy - ph / 2).toFixed(1)} `; from = yy + ph / 2; });
+    return d + `M${x},${from.toFixed(1)} V${fH + 4}`;
+  };
+  mk('path', {d: open(xA - tw / 2, false) + ' ' + open(xA + tw / 2, true) + ' ' + open(xB - tw / 2, true) + ' ' + open(xB + tw / 2, false), stroke: INK, 'stroke-width': 2.5, fill: 'none'}, g);
+  G.el.pass.forEach(p => mk('path', {d: `M${xA + tw / 2},${p.yy - ph / 2} H${xB - tw / 2} M${xA + tw / 2},${p.yy + ph / 2} H${xB - tw / 2}`, stroke: INK, 'stroke-width': 2.5, fill: 'none'}, g));
+  // A door at each end of each passage.
+  G.el.doors = G.el.pass.map(p => [xA + tw / 2 + 1.5, xB - tw / 2 - 1.5].map(x => mk('line', {x1: x, x2: x, y1: p.yy - ph / 2 + 1.5, y2: p.yy + ph / 2 - 1.5, stroke: DOOR, 'stroke-width': Math.max(3, lw * .9), 'stroke-linecap': 'round'}, g)));
+  // The walk out, dashed; the train and its smoke over it.
+  G.el.walk = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': '2 7'}, g);
+  G.el.arrow = mk('path', {fill: INK}, g);
+  G.el.train = mk('g', {}, g);
+  const L = TRAIN / SPAN * fH, tw2 = Math.min(tw * .46, L * .4);
+  mk('path', {d: `M${-tw2 / 2},${-L / 2 + tw2 * .5} Q${-tw2 / 2},${-L / 2} 0,${-L / 2} Q${tw2 / 2},${-L / 2} ${tw2 / 2},${-L / 2 + tw2 * .5} V${L / 2 - tw2 * .9} Q${tw2 / 2},${L / 2} 0,${L / 2} Q${-tw2 / 2},${L / 2} ${-tw2 / 2},${L / 2 - tw2 * .9} Z`, fill: TRAINC, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, G.el.train);
+  mk('path', {d: `M${-tw2 / 2 + 1},${L / 2 - tw2 * .9} Q0,${L / 2 - tw2 * 1.25} ${tw2 / 2 - 1},${L / 2 - tw2 * .9} Q${tw2 / 2},${L / 2} 0,${L / 2} Q${-tw2 / 2},${L / 2} ${-tw2 / 2 + 1},${L / 2 - tw2 * .9} Z`, fill: NOSE, stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, G.el.train);
+  let joints = '';
+  for (let k = 1; k < 4; k++) { const jy = -L / 2 + L * k / 4; joints += `M${-tw2 / 2},${jy.toFixed(1)} H${tw2 / 2} `; }
+  mk('path', {d: joints + `M0,${-L / 2 + tw2 * .4} V${L / 2 - tw2 * 1.3}`, stroke: INK, 'stroke-width': 1.2, fill: 'none', opacity: .55}, G.el.train);
+  const sr = tw * .17, smoke = mk('g', {transform: `translate(${tw2 * .15},${-L * .22})`}, G.el.train);
+  [[-sr * .7, sr * .3, sr], [sr * .5, -sr * .2, sr * 1.15], [sr * .1, -sr * 1.25, sr * .8]].forEach(([cx, cy, r]) => mk('circle', {cx, cy, r, fill: SMOKE, stroke: INK, 'stroke-width': 1.5}, smoke));
+  // The rim of the slice.
+  mk('rect', {x: 1, y: 1, width: W - 2, height: fH - 2, rx: rr, fill: 'none', stroke: INK, 'stroke-width': 2.5});
+  labels();
+  // Under the slice: how far the walk is, and the longest it can be.
+  G.el.read = txt(svg, W / 2, fH + fs * 1.45, '', {'font-size': fs * 1.3, 'font-weight': 800, 'font-family': SERIF, 'text-anchor': 'middle'});
+  if (!done) txt(svg, W / 2, fH + fs * 2.85, 'longest possible walk: about 170 m', {'font-size': fs * .88, 'font-weight': 600, 'text-anchor': 'middle', opacity: .78});
   if (dash) dash.kill();
-  dash = Kit.calm ? null : gsap.to(G.el.walk, {attr: {'stroke-dashoffset': -22}, duration: .6, repeat: -1, ease: 'none'});
+  dash = Kit.calm ? null : gsap.to(G.el.walk, {attr: {'stroke-dashoffset': -18}, duration: .6, repeat: -1, ease: 'none'});
   setTrain(m, true);
 }
 
-function setTrain(v, quiet){
-  v = Math.max(50, Math.min(SPAN - 50, v));
+// The words on the rock: each tube's name over its track, the 333 m between two passages, and the safe side.
+function labels() {
+  const {fs, fH, tw, xA, xB} = G;
+  const two = (x, anchor, a, b) => {
+    txt(svg, x, fs * 1.25, a, Object.assign({'font-size': fs, 'font-weight': 800, 'text-anchor': anchor}, onRock));
+    txt(svg, x, fs * 2.45, b, Object.assign({'font-size': fs * .88, 'font-weight': 600, 'text-anchor': anchor}, onRock));
+  };
+  two(xA - tw / 2 - fs * .5, 'end', 'Tube 1', 'one track');
+  two(xB + tw / 2 + fs * .5, 'start', 'Tube 2', 'one track');
+  G.labelFoot = fs * 2.9;
+  // 333 m between the lower two passages, on the rock left of the first tube.
+  const rx = xA - tw / 2 - fs * .55, y1 = y(RUNGS[1]), y2 = y(RUNGS[2]), tk = fs * .4;
+  mk('path', {d: `M${rx - tk},${y1} H${rx} V${y2} H${rx - tk}`, stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linejoin': 'round'});
+  const mid = (y1 + y2) / 2;
+  txt(svg, rx - fs * .45, mid + fs * .1, '333 m', Object.assign({'font-size': fs * 1.25, 'font-weight': 800, 'font-family': SERIF, 'text-anchor': 'end'}, onRock));
+  txt(svg, rx - fs * .45, mid + fs * 1.3, 'link to link', Object.assign({'font-size': fs * .85, 'font-weight': 600, 'text-anchor': 'end'}, onRock));
+  // Safe, on the far side: a green tag and its leader, placed in setTrain.
+  G.el.safeLine = mk('path', {stroke: INK, 'stroke-width': 1.5, fill: 'none'});
+  G.el.safe = mk('g', {});
+  const t = txt(G.el.safe, 0, 0, 'safe', {'font-size': fs * .95, 'font-weight': 800});
+  const w = t.getComputedTextLength() + fs * 1.1, h = fs * 1.65;
+  mk('rect', {x: 0, y: -h / 2, width: w, height: h, rx: h / 2, fill: SAFE, stroke: INK, 'stroke-width': 1.8}, G.el.safe).after(t);
+  t.setAttribute('x', fs * .55); t.setAttribute('y', fs * .34);
+  G.safeW = w;
+}
+
+function setTrain(v, quiet) {
+  v = clamp(v, 50, SPAN - 50);
   if (!quiet) travelled += Math.abs(v - m);
   m = v;
   if (!G) return;
+  const {fs, tw, xA, xB, W} = G;
   let best = 0;
   RUNGS.forEach((r, i) => { if (Math.abs(r - m) < Math.abs(RUNGS[best] - m)) best = i; });
   const r = RUNGS[best], yt = y(m), yr = y(r);
-  G.el.train.setAttribute('transform', `translate(${G.xA},${yt})`);
-  G.el.rungs.forEach((e, i) => e.classList.toggle('on', i === best));
-  G.el.walk.setAttribute('d', `M${G.xA},${yt}V${yr}H${G.xB}`);
-  G.el.safe.setAttribute('y', yr + G.f * .35);
+  G.el.train.setAttribute('transform', `translate(${xA},${yt})`);
+  G.el.floors.forEach((e, i) => e.setAttribute('fill', i === best ? LIT : FLOOR));
+  G.el.doors.forEach((ds, i) => ds.forEach(d => d.setAttribute('stroke', i === best ? GREEN : DOOR)));
+  // From beside the train, along its tube to the passage, through it, out into the other tube.
+  const wx = xA + tw * .3, ex = xB - tw * .05, a = fs * .45;
+  G.el.walk.setAttribute('d', `M${wx},${yt} V${yr} H${ex - a}`);
+  G.el.arrow.setAttribute('d', `M${ex - a},${yr - a * .8} L${ex + a * .3},${yr} L${ex - a},${yr + a * .8} Z`);
+  // Safe beside the far tube, level with the passage, or under the tube's name where that is too high.
+  const sx = xB + tw / 2 + fs * .5, sy = Math.max(yr, G.labelFoot + fs * 1.15);
+  G.el.safe.setAttribute('transform', `translate(${Math.min(sx, W - G.safeW - 2)},${sy})`);
+  G.el.safeLine.setAttribute('d', sy - yr > 2 ? `M${sx + fs * .4},${sy - fs * .8} L${xB + tw / 2 - 2},${yr}` : '');
   G.el.read.textContent = `Walk to the other tube: ${Math.round(Math.abs(r - m))} m`;
   if (!done && travelled > 450) finish();
 }
 
-function finish(){
+function finish() {
   done = true; Kit.haptic('success');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  lay();
 }
 
-function toM(e){
+function toM(e) {
   const b = svg.getBoundingClientRect();
-  return (e.clientY - b.top - G.top) / (G.bot - G.top) * SPAN;
+  return ((e.clientY - b.top) * G.H / b.height - G.top) / (G.bot - G.top) * SPAN;
 }
 let drag = false;
-svg.addEventListener('pointerdown', e => { drag = true; svg.setPointerCapture?.(e.pointerId); Kit.haptic('light'); setTrain(toM(e)); });
+svg.addEventListener('pointerdown', e => { if (!G) return; drag = true; svg.setPointerCapture?.(e.pointerId); Kit.haptic('light'); setTrain(toM(e)); });
 svg.addEventListener('pointermove', e => { if (drag) setTrain(toM(e)); });
 svg.addEventListener('pointerup', () => drag = false);
 svg.addEventListener('pointercancel', () => drag = false);
 
-Kit.onShow.card = () => draw();
+Kit.onShow.card = () => lay();
 Kit.onEnter.card = () => {
   if (Kit.calm) return;
   const s = {v: m};
   gsap.fromTo(s, {v: 720}, {v: 620, duration: 1.2, ease: 'power2.inOut', onUpdate: () => setTrain(s.v, true)});
 };
 Kit.play.card = async () => {
-  const b = svg.getBoundingClientRect(), x = b.left + G.xA;
-  const at = mm => b.top + G.top + mm / SPAN * (G.bot - G.top);
+  const b = svg.getBoundingClientRect(), x = b.left + G.xA * b.width / G.W;
+  const at = mm => b.top + (G.top + mm / SPAN * (G.bot - G.top)) * b.height / G.H;
   const ev = (t, mm) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: at(mm), bubbles: true, pointerId: 1}));
   ev('pointerdown', 600);
-  for (let v = 600; v >= 300; v -= 25) { ev('pointermove', v); await new Promise(r => setTimeout(r, 16)); }
-  for (let v = 300; v <= 420; v += 20) { ev('pointermove', v); await new Promise(r => setTimeout(r, 16)); }
+  for (let v = 600; v >= 260; v -= 20) { ev('pointermove', v); await new Promise(r => setTimeout(r, 16)); }
+  for (let v = 260; v <= 420; v += 20) { ev('pointermove', v); await new Promise(r => setTimeout(r, 16)); }
   ev('pointerup', 420);
   await new Promise(r => setTimeout(r, 600));
 };
+// Drawn again at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+new ResizeObserver(() => { const b = svg.getBoundingClientRect(); if (G && `${Math.round(b.width)}x${Math.round(b.height)}` !== laid) lay(); }).observe(svg);
 Kit.single();
 </script>
 </html>

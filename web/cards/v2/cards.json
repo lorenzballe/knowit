@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611241056,
- "built": "2026-11-24T10:56:12Z",
+ "version": 202611241159,
+ "built": "2026-11-24T11:59:56Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -142180,12 +142180,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A balance scale comparing 6 tons of recycled glass on one side with 1 ton of CO₂ emissions saved on the other. The page asks how much CO₂ is avoided by recycling six tons of glass. Tap to recycle glass one ton at a time and watch the CO₂ avoided.",
-    "page": "pages/nature-glass-co2-savings.html?v=06368c980b25",
-    "bytes": 7208,
+    "label": "A glassworks: six crates of old bottles beside a brick furnace, and over its chimney a dark cloud of CO₂ in six puffs. Each tap recycles one ton: a crate goes into the furnace, a crate of new bottles comes out, and one puff clears, until six tons have kept one ton of CO₂ out of the air.",
+    "page": "pages/nature-glass-co2-savings.html?v=949eb84427b3",
+    "bytes": 14308,
     "thumbs": {
-     "front": "thumbs/nature-glass-co2-savings-front.webp?v=f50925364ec7",
-     "back": "thumbs/nature-glass-co2-savings-back.webp?v=f50925364ec7"
+     "front": "thumbs/nature-glass-co2-savings-front.webp?v=fb6efa5a3414",
+     "back": "thumbs/nature-glass-co2-savings-back.webp?v=fb6efa5a3414"
     }
    },
    "source": "Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)",
@@ -257019,8 +257019,8 @@
    "difficulty": "easy",
    "principle": "none",
    "question": "How tall and how heavy is one section of a bridge tower leg?",
-   "answer": "The tower legs of the Messina Strait bridge are stacked from 44 prefabricated sections. Each section is 20 meters tall and weighs 1,200 tons. The crane lifts a whole section at a time.",
-   "move": "One tower section: 20 m tall, 1,200 tons; 44 of them make the legs.",
+   "answer": "The two legs of each Messina Strait bridge tower are stacked from 44 prefabricated sections. Each section is up to 20 meters tall and weighs 1,200 tons. The crane lifts a whole section at a time.",
+   "move": "One tower section: up to 20 m tall, 1,200 tons; 44 of them make the legs.",
    "keywords": [
     "messina strait bridge",
     "tower legs",
@@ -257040,12 +257040,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page asking how tall and how heavy one section of a bridge tower leg is. A button, held down to lift a section onto the tower legs, is labelled with the figures 20 m and 1,200 t.",
-    "page": "pages/technology-tower-leg-sections.html?v=56b25e7ba0ec",
-    "bytes": 10440,
+    "label": "A bridge tower half built on the far shore of the Strait of Messina, its two legs stacked from steel sections, and in front a barge bringing the next section, 20 m tall, a worker beside it for scale. Holding a button makes the crane take its weight, 1,200 t, and lift it onto a leg.",
+    "page": "pages/technology-tower-leg-sections.html?v=b249a6c36866",
+    "bytes": 19796,
     "thumbs": {
-     "front": "thumbs/technology-tower-leg-sections-front.webp?v=69e9d13a1d34",
-     "back": "thumbs/technology-tower-leg-sections-back.webp?v=69e9d13a1d34"
+     "front": "thumbs/technology-tower-leg-sections-front.webp?v=e118f046a08a",
+     "back": "thumbs/technology-tower-leg-sections-back.webp?v=e118f046a08a"
     }
    },
    "source": "Geopop, “Come sarà il Ponte sullo stretto di Messina? La ricostruzione 3D dai progetti originali” (YouTube, 2023)",
@@ -257082,13 +257082,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Drag-a-bar estimation: a slider to guess how many times more lives might have been lost had the Twin Towers been weaker, plus a rating of how confident the reader is in the guess.",
+    "label": "The Twin Towers standing in a clear sky; beside them one block of people for the lives lost as it happened, and a dashed bar the reader drags up to guess how many times more weaker towers might have cost, then says how sure they are.",
     "graded": false,
-    "page": "pages/technology-towers-casualty-multiplier.html?v=7b50c0ed5dc2",
-    "bytes": 8256,
+    "page": "pages/technology-towers-casualty-multiplier.html?v=4c1f1a122cba",
+    "bytes": 14043,
     "thumbs": {
-     "front": "thumbs/technology-towers-casualty-multiplier-front.webp?v=5939f2189a57",
-     "back": "thumbs/technology-towers-casualty-multiplier-back.webp?v=5939f2189a57"
+     "front": "thumbs/technology-towers-casualty-multiplier-front.webp?v=503f95aa91b1",
+     "back": "thumbs/technology-towers-casualty-multiplier-back.webp?v=503f95aa91b1"
     }
    },
    "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
@@ -257942,12 +257942,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Drag a stopped train along a cross-section of the Turin–Lyon base tunnel to find the nearest way out. The page shows two single-track tubes linked by cross-passages every 333 m.",
-    "page": "pages/technology-twin-tunnel-links.html?v=39ab4d2a0b4c",
-    "bytes": 7530,
+    "label": "The Turin–Lyon base tunnel seen from above, cut through rock: two tubes with one track each, joined by cross-passages 333 m apart. The reader drags a stopped train, smoke over it, along its tube; the nearest passage lights green and the walk to the other tube shows in metres.",
+    "page": "pages/technology-twin-tunnel-links.html?v=2b2f5642d141",
+    "bytes": 15235,
     "thumbs": {
-     "front": "thumbs/technology-twin-tunnel-links-front.webp?v=05bd986777e7",
-     "back": "thumbs/technology-twin-tunnel-links-back.webp?v=05bd986777e7"
+     "front": "thumbs/technology-twin-tunnel-links-front.webp?v=9620075b1dc3",
+     "back": "thumbs/technology-twin-tunnel-links-back.webp?v=9620075b1dc3"
     }
    },
    "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
