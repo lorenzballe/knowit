@@ -48,6 +48,7 @@ void main() {
     store = MemoryThumbStore();
     fetched = [];
     CachedThumb.store = store;
+    CachedThumb.mayKeep = () => true;
     CachedThumb.download = (url) async {
       fetched.add(url);
       await Future<void>.delayed(const Duration(milliseconds: 5));
@@ -62,6 +63,16 @@ void main() {
     expect(await store.has(CachedThumb.nameOf(a)), isTrue);
     expect(await CachedThumb.bytesOf(a), [1, 2, 3]);
     expect(fetched, [a]);
+  });
+
+  test('from a site behind the bank in use, a picture is shown but not '
+      'kept: under a card\'s new name it may be the old picture', () async {
+    CachedThumb.mayKeep = () => false;
+    expect(await CachedThumb.bytesOf(a), [1, 2, 3]);
+    expect(await store.has(CachedThumb.nameOf(a)), isFalse);
+    // Asked for again, it is fetched again, not read from the phone.
+    expect(await CachedThumb.bytesOf(a), [1, 2, 3]);
+    expect(fetched, [a, a]);
   });
 
   test('asked for twice at once, it is fetched once', () async {

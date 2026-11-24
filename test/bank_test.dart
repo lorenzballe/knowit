@@ -397,6 +397,33 @@ void main() {
       expect(asked, [kBankVersionUrl, kBankUrl]);
     });
 
+    test('knows whether the site publishes the bank in use, and remembers '
+        'it: until it does, a card\'s pictures are not kept', () async {
+      SharedPreferences.setMockInitialValues({});
+      var prefs = await SharedPreferences.getInstance();
+      PillBank.siteVersionForTest = null;
+      PillBank.restore(prefs);
+      expect(PillBank.siteHasBank, isFalse, reason: 'not asked yet');
+
+      // An app built from a bank the site has not published yet.
+      PillBank.fetch = (url) async => url == kBankVersionUrl
+          ? '{"version": ${PillBank.version - 1}, "cards": 1}'
+          : null;
+      await PillBank.refresh(prefs);
+      expect(PillBank.siteHasBank, isFalse);
+
+      // The site catches up; the next start remembers it before asking.
+      PillBank.fetch = (url) async => url == kBankVersionUrl
+          ? '{"version": ${PillBank.version}, "cards": 1}'
+          : null;
+      await PillBank.refresh(prefs);
+      expect(PillBank.siteHasBank, isTrue);
+      PillBank.siteVersionForTest = null;
+      prefs = await SharedPreferences.getInstance();
+      PillBank.restore(prefs);
+      expect(PillBank.siteHasBank, isTrue);
+    });
+
     test('shrugs at no signal, a bad body, or a server that is down', () async {
       final prefs = await SharedPreferences.getInstance();
       PillBank.fetch = (url) async => null;

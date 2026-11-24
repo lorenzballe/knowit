@@ -13,6 +13,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:http/http.dart' as http;
 
+import '../../data/pill_bank.dart';
 import 'thumb_store.dart';
 
 /// A card's picture from its full address, kept on the phone once fetched.
@@ -25,6 +26,10 @@ class CachedThumb extends ImageProvider<CachedThumb> {
   /// Where the pictures are kept. Replaceable, so a test keeps them in
   /// memory.
   static ThumbStore store = thumbStoreOnThisPhone();
+
+  /// Whether a picture just fetched may be kept on the phone. Replaceable,
+  /// so a test decides.
+  static bool Function() mayKeep = () => PillBank.siteHasBank;
 
   /// How the bytes are fetched. Replaceable, so a test never touches the
   /// network.
@@ -62,6 +67,10 @@ class CachedThumb extends ImageProvider<CachedThumb> {
         // Nowhere to keep it (a test, a phone out of room): fetched as before.
       }
       final Uint8List bytes = await download(url);
+      // Kept only from a site that publishes the bank in use: from one
+      // behind it, the bytes under a card's new name can be its old picture
+      // (PillBank.siteHasBank). Shown now, asked for again next time.
+      if (!mayKeep()) return bytes;
       try {
         await store.write(name, bytes);
       } catch (_) {}
