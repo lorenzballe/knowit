@@ -15,6 +15,7 @@ import '../../l10n/l10n.dart';
 import '../../theme.dart';
 import '../chunky.dart' show chunkyEdge;
 import 'art.dart';
+import 'editorial.dart';
 import 'look.dart';
 
 /// Whether the reader asked for less motion.
@@ -90,6 +91,15 @@ class DeeperTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (deeperEditorial) {
+      return EdSection(
+        look: look,
+        title: title,
+        lead: lead,
+        badge: badge,
+        child: child,
+      );
+    }
     final Palette p = context.p;
     final bool roomy = MediaQuery.textScalerOf(context).scale(1) <= 1.35;
     // The detail that stands out is in the colour across the wheel, unless
@@ -184,17 +194,20 @@ class DeeperTile extends StatelessWidget {
 }
 
 /// The words of a part, large and easy to read.
-TextStyle deeperBody(BuildContext context) =>
-    AppText.body(size: 17, height: 1.5, color: context.p.ink);
+TextStyle deeperBody(BuildContext context) => deeperEditorial
+    ? edBody(context)
+    : AppText.body(size: 17, height: 1.5, color: context.p.ink);
 
 /// The idea said simply: set in the display face, as the card's own voice.
-TextStyle deeperSimply(BuildContext context) => AppText.display(
-  size: 20,
-  weight: FontWeight.w500,
-  height: 1.38,
-  spacing: -0.2,
-  color: context.p.ink,
-);
+TextStyle deeperSimply(BuildContext context) => deeperEditorial
+    ? edSimply(context)
+    : AppText.display(
+        size: 20,
+        weight: FontWeight.w500,
+        height: 1.38,
+        spacing: -0.2,
+        color: context.p.ink,
+      );
 
 /// The button that asks Claude: the part's colour on a darker edge, pressed
 /// down into it. While the answer comes, a light crosses it.
@@ -206,10 +219,14 @@ class DeeperAskButton extends StatefulWidget {
     required this.onPressed,
     this.locked = false,
     this.busy = false,
+    this.look,
   });
 
   final String label;
   final DeeperVivid vivid;
+
+  /// The sheet's look, for the editorial ways of setting it.
+  final DeeperLook? look;
 
   /// Null leaves it off: nothing written yet.
   final VoidCallback? onPressed;
@@ -229,6 +246,15 @@ class _DeeperAskButtonState extends State<DeeperAskButton> {
 
   @override
   Widget build(BuildContext context) {
+    if (deeperEditorial && widget.look != null) {
+      return EdAskButton(
+        look: widget.look!,
+        label: widget.label,
+        onPressed: widget.onPressed,
+        locked: widget.locked,
+        busy: widget.busy,
+      );
+    }
     final Palette p = context.p;
     final bool on = widget.onPressed != null && !widget.busy;
     final bool lit = on || widget.busy;
@@ -592,39 +618,74 @@ class DeeperReaderBubble extends StatelessWidget {
   final DeeperVivid vivid;
 
   @override
-  Widget build(BuildContext context) => Align(
-    alignment: AlignmentDirectional.centerEnd,
-    child: FractionallySizedBox(
-      widthFactor: 0.86,
-      alignment: AlignmentDirectional.centerEnd,
-      child: Align(
-        alignment: AlignmentDirectional.centerEnd,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: vivid.gradient,
-            borderRadius: const BorderRadiusDirectional.only(
-              topStart: Radius.circular(22),
-              topEnd: Radius.circular(22),
-              bottomStart: Radius.circular(22),
-              bottomEnd: Radius.circular(6),
-            ).resolve(Directionality.of(context)),
+  Widget build(BuildContext context) => deeperEditorial
+      ? _edReader(context)
+      : Align(
+          alignment: AlignmentDirectional.centerEnd,
+          child: FractionallySizedBox(
+            widthFactor: 0.86,
+            alignment: AlignmentDirectional.centerEnd,
+            child: Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: vivid.gradient,
+                  borderRadius: const BorderRadiusDirectional.only(
+                    topStart: Radius.circular(22),
+                    topEnd: Radius.circular(22),
+                    bottomStart: Radius.circular(22),
+                    bottomEnd: Radius.circular(6),
+                  ).resolve(Directionality.of(context)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 13),
+                  child: Text(
+                    text,
+                    style: AppText.body(
+                      size: 16,
+                      weight: FontWeight.w600,
+                      height: 1.42,
+                      color: vivid.ink,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 13),
-            child: Text(
-              text,
-              style: AppText.body(
-                size: 16,
-                weight: FontWeight.w600,
-                height: 1.42,
-                color: vivid.ink,
+        );
+
+  /// The reader's words, set editorially: a quiet box at the right.
+  Widget _edReader(BuildContext context) {
+    final Palette p = context.p;
+    return Align(
+      alignment: AlignmentDirectional.centerEnd,
+      child: FractionallySizedBox(
+        widthFactor: 0.86,
+        alignment: AlignmentDirectional.centerEnd,
+        child: Align(
+          alignment: AlignmentDirectional.centerEnd,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: p.ink.withValues(alpha: p.isDark ? 0.06 : 0.045),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 13),
+              child: Text(
+                text,
+                style: AppText.body(
+                  size: 15.5,
+                  weight: FontWeight.w500,
+                  height: 1.45,
+                  color: p.ink,
+                ),
               ),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 /// The answer, on the left, under the spark that marks it Claude's.
@@ -640,6 +701,24 @@ class DeeperAnswerBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (deeperEditorial) {
+      // Set editorially: the answer as the page's own words, under the
+      // reader's, with nothing round it.
+      return AnimatedSize(
+        duration: deeperStill(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 460),
+        curve: Curves.easeOutCubic,
+        alignment: AlignmentDirectional.topStart,
+        child: Padding(
+          padding: const EdgeInsetsDirectional.only(top: 4, end: 24),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: child,
+          ),
+        ),
+      );
+    }
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -725,6 +804,7 @@ class DeeperVersus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (deeperEditorial) return EdVersus(look: look, a: a, b: b);
     final (String, String)? other = b;
     if (other == null) {
       return _Half(
@@ -1120,29 +1200,31 @@ class DeeperPlusBadge extends StatelessWidget {
   const DeeperPlusBadge({super.key});
 
   @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(99),
-      gradient: LinearGradient(colors: plusHues(true)),
-    ),
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Icon(Icons.lock_rounded, size: 10, color: kInkDark),
-        const SizedBox(width: 4),
-        Text(
-          'ASTUTE+',
-          style: AppText.label(
-            size: 9.5,
-            weight: FontWeight.w800,
-            spacing: 1,
-            color: kInkDark,
+  Widget build(BuildContext context) => deeperEditorial
+      ? const EdPlusBadge()
+      : Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(99),
+            gradient: LinearGradient(colors: plusHues(true)),
           ),
-        ),
-      ],
-    ),
-  );
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.lock_rounded, size: 10, color: kInkDark),
+              const SizedBox(width: 4),
+              Text(
+                'ASTUTE+',
+                style: AppText.label(
+                  size: 9.5,
+                  weight: FontWeight.w800,
+                  spacing: 1,
+                  color: kInkDark,
+                ),
+              ),
+            ],
+          ),
+        );
 }
 
 /// The foot of the sheet: where the card's facts come from, and the way
@@ -1169,6 +1251,9 @@ class DeeperSource extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (deeperEditorial) {
+      return EdSource(look: look, source: source, kind: kind, open: open);
+    }
     final l = context.l10n;
     final Palette p = context.p;
     final DeeperTone tone = look.tone(DeeperPart.source);

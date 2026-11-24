@@ -259,6 +259,34 @@ class DeeperTone {
   /// A box to write in, inside the part.
   final Color field;
 
+  /// One tone for every part, in the editorial ways of setting them: the
+  /// subject's hue only as a quiet echo, the grounds left to the sheet.
+  factory DeeperTone.quiet(
+    double hue, {
+    required bool dark,
+    required bool pearl,
+  }) {
+    final double h = hue % 360;
+    final double c = pearl ? 0.025 : 0.085;
+    return DeeperTone(
+      hue: h,
+      vivid: DeeperVivid.of(h),
+      title: dark
+          ? Oklch(0.86, c * 0.8, h).toColour()
+          : Oklch(0.42, c, h).toColour(),
+      accent: dark
+          ? Oklch(0.80, c, h).toColour()
+          : Oklch(0.50, c * 1.15, h).toColour(),
+      wash: dark
+          ? Oklch(0.25, c * 0.25, h).toColour()
+          : Oklch(0.955, c * 0.15, h).toColour(),
+      tile: const Color(0x00000000),
+      edge: dark ? const Color(0x24FFFFFF) : const Color(0x1F000000),
+      shadow: const Color(0x00000000),
+      field: dark ? const Color(0x0DFFFFFF) : const Color(0xB3FFFFFF),
+    );
+  }
+
   factory DeeperTone.of(double hue, {required bool dark}) {
     final double h = hue % 360;
     return DeeperTone(
@@ -338,6 +366,29 @@ class DeeperLook {
   final DeeperVivid sideB;
 
   DeeperTone tone(DeeperPart part) => tones[part]!;
+
+  /// The subject's own hue, the one the parts turn from.
+  double get hue => tones[DeeperPart.simply]!.hue;
+
+  /// The same sheet for the editorial ways of setting the parts
+  /// (editorial.dart): the head as it is, every part in one quiet tone of
+  /// the subject's hue instead of a colour of its own.
+  DeeperLook get quiet => _quiet[(world.toARGB32(), dark)] ??= DeeperLook._(
+    dark: dark,
+    pearl: pearl,
+    world: world,
+    worldInk: worldInk,
+    glow: glow,
+    ground: ground,
+    tones: {
+      for (final DeeperPart part in DeeperPart.values)
+        part: DeeperTone.quiet(hue, dark: dark, pearl: pearl),
+    },
+    sideA: sideA,
+    sideB: sideB,
+  );
+
+  static final Map<(int, bool), DeeperLook> _quiet = {};
 
   /// Where each part sits on the wheel, from the subject's hue: a fan of
   /// neighbours, so the parts differ and still belong to the card.

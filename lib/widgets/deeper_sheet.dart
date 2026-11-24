@@ -22,6 +22,10 @@
 /// parts arrive one after another as the sheet opens, an answer is let down
 /// over its part as it comes, and nothing moves for a reader who asked for
 /// less motion (deeper/pieces.dart).
+///
+/// Being tried: three editorial ways of setting the parts under the same
+/// head, with no drawings and colour only as the head's echo (deeper/
+/// editorial.dart, [deeperStyle]); the column is the one shown for now.
 library;
 
 import 'dart:math' as math;
@@ -40,6 +44,7 @@ import '../sync/card_ask.dart';
 import '../theme.dart';
 import 'chunky.dart' show VerdictColours, chunkyEdge;
 import 'deeper/art.dart';
+import 'deeper/editorial.dart';
 import 'deeper/header.dart';
 import 'deeper/look.dart';
 import 'deeper/pieces.dart';
@@ -257,7 +262,10 @@ class _DeeperSheetState extends State<DeeperSheet>
     final Palette p = context.p;
     final bool ai = _aiOn;
     final bool plus = app.isPlus;
-    final DeeperLook look = DeeperLook.of(pill.color, dark: p.isDark);
+    final DeeperLook world = DeeperLook.of(pill.color, dark: p.isDark);
+    // The head is always the card's world; set editorially, the parts
+    // under it take one quiet tone of it.
+    final DeeperLook look = deeperEditorial ? world.quiet : world;
     final List<Widget Function(Animation<double> draw)> parts = [
       // The idea said simply: written, or asked for.
       if (pill.simply.isNotEmpty)
@@ -452,7 +460,7 @@ class _DeeperSheetState extends State<DeeperSheet>
                   DeeperHeader(
                     key: const ValueKey('deeper-head'),
                     pill: pill,
-                    look: look,
+                    look: world,
                     drift: _drift,
                     scroll: _scroll,
                     entrance: _entrance,
@@ -461,44 +469,80 @@ class _DeeperSheetState extends State<DeeperSheet>
                   ),
                   Transform.translate(
                     offset: const Offset(0, -_overlap),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          for (int i = 0; i < parts.length; i++) ...[
-                            if (i > 0) const SizedBox(height: 14),
-                            DeeperArrive(
-                              animation: _arrive(i),
-                              child: parts[i](_draw(i)),
-                            ),
-                          ],
-                          SizedBox(height: parts.isEmpty ? 8 : 34),
-                          DeeperArrive(
-                            animation: _arrive(parts.length),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 6,
-                              ),
-                              child: DeeperSource(
-                                key: const ValueKey('deeper-source'),
-                                look: look,
-                                source: pill.source,
-                                kind: sourceKindName(l, pill.sourceKind),
-                                draw: _draw(parts.length),
-                                open: _original.isEmpty ? null : _openSource,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Set editorially, nothing lies over the head's foot:
+                        // it is let go into the sheet's ground instead, and the
+                        // parts start below it.
+                        if (deeperEditorial)
+                          ExcludeSemantics(
+                            child: Container(
+                              height: _overlap + 8,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    look.ground.withValues(alpha: 0),
+                                    look.ground,
+                                  ],
+                                  stops: const [0, 0.75],
+                                ),
                               ),
                             ),
                           ),
-                          if (ai) ...[
-                            const SizedBox(height: 26),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 6),
-                              child: DeeperAiNote(),
-                            ),
-                          ],
-                        ],
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              for (int i = 0; i < parts.length; i++) ...[
+                                if (i > 0) SizedBox(height: deeperGap),
+                                DeeperArrive(
+                                  animation: _arrive(i),
+                                  child: EdFirst(
+                                    first: i == 0,
+                                    child: parts[i](_draw(i)),
+                                  ),
+                                ),
+                              ],
+                              SizedBox(
+                                height: parts.isEmpty
+                                    ? 8
+                                    : deeperEditorial
+                                    ? 44
+                                    : 34,
+                              ),
+                              DeeperArrive(
+                                animation: _arrive(parts.length),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                  ),
+                                  child: DeeperSource(
+                                    key: const ValueKey('deeper-source'),
+                                    look: look,
+                                    source: pill.source,
+                                    kind: sourceKindName(l, pill.sourceKind),
+                                    draw: _draw(parts.length),
+                                    open: _original.isEmpty
+                                        ? null
+                                        : _openSource,
+                                  ),
+                                ),
+                              ),
+                              if (ai) ...[
+                                const SizedBox(height: 26),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 6),
+                                  child: DeeperAiNote(),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -557,6 +601,7 @@ Object _phaseOf(bool busy, AskResult? result) => switch ((busy, result)) {
 /// while it comes.
 class _Asking extends StatelessWidget {
   const _Asking({
+    required this.look,
     required this.tone,
     required this.label,
     required this.locked,
@@ -564,6 +609,7 @@ class _Asking extends StatelessWidget {
     required this.onAsk,
   });
 
+  final DeeperLook look;
   final DeeperTone tone;
   final String label;
   final bool locked;
@@ -577,6 +623,7 @@ class _Asking extends StatelessWidget {
       Align(
         alignment: AlignmentDirectional.centerStart,
         child: DeeperAskButton(
+          look: look,
           label: label,
           vivid: tone.vivid,
           locked: locked,
@@ -650,6 +697,7 @@ class _AiPart extends StatelessWidget {
             onRetry: onAsk,
           ),
           _ => _Asking(
+            look: look,
             tone: tone,
             label: go,
             locked: locked,
@@ -743,6 +791,7 @@ class _QuizPartState extends State<_QuizPart> {
             onRetry: widget.onAsk,
           ),
           _ => _Asking(
+            look: widget.look,
             tone: tone,
             label: widget.go,
             locked: widget.locked,
@@ -771,13 +820,28 @@ class _QuizPartState extends State<_QuizPart> {
         DeeperUnfold(
           child: Text(
             quiz.question,
-            style: AppText.display(
-              size: 19.5,
-              weight: FontWeight.w600,
-              height: 1.3,
-              spacing: -0.2,
-              color: p.ink,
-            ),
+            style: switch (deeperStyle) {
+              DeeperStyle.playful => AppText.display(
+                size: 19.5,
+                weight: FontWeight.w600,
+                height: 1.3,
+                spacing: -0.2,
+                color: p.ink,
+              ),
+              DeeperStyle.magazine => AppText.display(
+                size: 20,
+                weight: FontWeight.w400,
+                height: 1.36,
+                spacing: -0.25,
+                color: p.ink,
+              ),
+              _ => AppText.body(
+                size: 17.5,
+                weight: FontWeight.w600,
+                height: 1.45,
+                color: p.ink,
+              ),
+            },
           ),
         ),
         const SizedBox(height: 16),
@@ -821,15 +885,15 @@ class _QuizPartState extends State<_QuizPart> {
             child: Row(
               children: [
                 Container(
-                  width: 30,
-                  height: 30,
+                  width: deeperEditorial ? 22 : 30,
+                  height: deeperEditorial ? 22 : 30,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: right ? verdict.rightLine : verdict.wrongLine,
                   ),
                   child: Icon(
                     right ? Icons.check_rounded : Icons.close_rounded,
-                    size: 19,
+                    size: deeperEditorial ? 14 : 19,
                     color: Colors.white,
                   ),
                 ),
@@ -838,11 +902,17 @@ class _QuizPartState extends State<_QuizPart> {
                   child: Text(
                     right ? l.deeperQuizRight : l.deeperQuizWrong,
                     key: const ValueKey('deeper-quiz-verdict'),
-                    style: AppText.display(
-                      size: 20,
-                      weight: FontWeight.w700,
-                      color: right ? verdict.rightInk : verdict.wrongInk,
-                    ),
+                    style: deeperEditorial
+                        ? AppText.body(
+                            size: 17,
+                            weight: FontWeight.w700,
+                            color: right ? verdict.rightInk : verdict.wrongInk,
+                          )
+                        : AppText.display(
+                            size: 20,
+                            weight: FontWeight.w700,
+                            color: right ? verdict.rightInk : verdict.wrongInk,
+                          ),
                   ),
                 ),
               ],
@@ -937,68 +1007,129 @@ class _QuizOptionState extends State<_QuizOption>
       _ => (tone.field, tone.edge, p.ink, tone.vivid.fill, tone.vivid.ink),
     };
     final bool pressed = _down && widget.onTap != null;
-    final Widget body = AnimatedContainer(
-      duration: const Duration(milliseconds: 220),
-      padding: EdgeInsets.only(top: pressed ? 4 : 0, bottom: pressed ? 0 : 4),
-      decoration: BoxDecoration(
-        color: chunkyEdge(line, p.isDark ? 0.08 : 0.1),
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        padding: const EdgeInsets.fromLTRB(12, 12, 16, 12),
-        decoration: BoxDecoration(
-          color: face,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: line, width: 1.6),
-        ),
-        child: Row(
-          children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 220),
-              width: 32,
-              height: 32,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(color: disc, shape: BoxShape.circle),
-              child: switch (widget.mark) {
-                _Mark.right => Icon(
-                  Icons.check_rounded,
-                  size: 19,
-                  color: letter,
+    final bool ed = deeperEditorial;
+    final Widget body = ed
+        ? AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            padding: const EdgeInsets.fromLTRB(14, 13, 16, 13),
+            decoration: BoxDecoration(
+              color: widget.mark == _Mark.open || widget.mark == _Mark.rest
+                  ? (pressed ? tone.field : null)
+                  : face,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: line),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 22,
+                  child: switch (widget.mark) {
+                    _Mark.right => Icon(
+                      Icons.check_rounded,
+                      size: 18,
+                      color: v.rightInk,
+                    ),
+                    _Mark.wrong => Icon(
+                      Icons.close_rounded,
+                      size: 18,
+                      color: v.wrongInk,
+                    ),
+                    _ => Text(
+                      widget.letter,
+                      textScaler: TextScaler.noScaling,
+                      style: AppText.body(
+                        size: 15,
+                        weight: FontWeight.w700,
+                        height: 1.35,
+                        color: tone.accent,
+                      ),
+                    ),
+                  },
                 ),
-                _Mark.wrong => Icon(
-                  Icons.close_rounded,
-                  size: 19,
-                  color: letter,
-                ),
-                _ => Text(
-                  widget.letter,
-                  textScaler: TextScaler.noScaling,
-                  style: AppText.display(
-                    size: 16,
-                    weight: FontWeight.w800,
-                    height: 1,
-                    color: letter,
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    widget.label,
+                    style: AppText.body(
+                      size: 15.5,
+                      weight: FontWeight.w500,
+                      height: 1.38,
+                      color: ink,
+                    ),
                   ),
                 ),
-              },
+              ],
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                widget.label,
-                style: AppText.body(
-                  size: 16,
-                  weight: FontWeight.w600,
-                  height: 1.32,
-                  color: ink,
-                ),
+          )
+        : AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            padding: EdgeInsets.only(
+              top: pressed ? 4 : 0,
+              bottom: pressed ? 0 : 4,
+            ),
+            decoration: BoxDecoration(
+              color: chunkyEdge(line, p.isDark ? 0.08 : 0.1),
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 220),
+              padding: const EdgeInsets.fromLTRB(12, 12, 16, 12),
+              decoration: BoxDecoration(
+                color: face,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: line, width: 1.6),
+              ),
+              child: Row(
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 220),
+                    width: 32,
+                    height: 32,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: disc,
+                      shape: BoxShape.circle,
+                    ),
+                    child: switch (widget.mark) {
+                      _Mark.right => Icon(
+                        Icons.check_rounded,
+                        size: 19,
+                        color: letter,
+                      ),
+                      _Mark.wrong => Icon(
+                        Icons.close_rounded,
+                        size: 19,
+                        color: letter,
+                      ),
+                      _ => Text(
+                        widget.letter,
+                        textScaler: TextScaler.noScaling,
+                        style: AppText.display(
+                          size: 16,
+                          weight: FontWeight.w800,
+                          height: 1,
+                          color: letter,
+                        ),
+                      ),
+                    },
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      widget.label,
+                      style: AppText.body(
+                        size: 16,
+                        weight: FontWeight.w600,
+                        height: 1.32,
+                        color: ink,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
     return Semantics(
       button: widget.onTap != null,
       child: GestureDetector(
@@ -1176,6 +1307,7 @@ class _WritePartState extends State<_WritePart> {
           Align(
             alignment: AlignmentDirectional.centerEnd,
             child: DeeperAskButton(
+              look: widget.look,
               label: widget.action,
               vivid: tone.vivid,
               locked: widget.locked,

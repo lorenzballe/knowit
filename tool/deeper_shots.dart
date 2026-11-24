@@ -17,6 +17,13 @@
 // A camera, not a check: it lives outside test/ so CI never runs it.
 // SHOTS (a folder) and LANG_SHOT (a language, Italian by default) move it;
 // PHONE (small, medium or large) and THEME (dark or light) narrow it.
+// DEEPER_STYLE (playful, column, panels or magazine) sets the parts the way
+// it names (deeper/editorial.dart); the `style` shots, two a phone and theme,
+// show the head with the idea said simply, then both sides and the everyday
+// example:
+//
+//   DEEPER_STYLE=magazine flutter test tool/deeper_shots.dart \
+//     --plain-name style --update-goldens
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
@@ -33,6 +40,7 @@ import 'package:astuto/models/pill.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/card_ask.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/deeper/editorial.dart';
 import 'package:astuto/widgets/deeper_sheet.dart';
 import 'package:astuto/widgets/subject_icon.dart';
 
@@ -167,6 +175,8 @@ void main() {
   final String lang = Platform.environment['LANG_SHOT'] ?? 'it';
   final String? onlyPhone = Platform.environment['PHONE'];
   final String? onlyTheme = Platform.environment['THEME'];
+  final String style = Platform.environment['DEEPER_STYLE'] ?? 'column';
+  deeperStyle = DeeperStyle.values.byName(style);
 
   // The card with all three written: the one bank card whose file holds
   // its simple version, why it matters and two views, an idea of a book.
@@ -283,6 +293,17 @@ void main() {
         await shoot(tester, 'written-3');
         await scrollTo(tester, const ValueKey('deeper-source'), at: 0.7);
         await shoot(tester, 'written-4');
+      });
+
+      testWidgets('style, $tag', (tester) async {
+        debugToolsOn = true;
+        addTearDown(() => debugToolsOn = false);
+        final app = await _app(plus: true);
+        await open(tester, app, written());
+        await raise(tester);
+        await shoot(tester, 'style-$style-1');
+        await scrollTo(tester, const ValueKey('deeper-views'));
+        await shoot(tester, 'style-$style-2');
       });
 
       testWidgets('entrance, $tag', (tester) async {

@@ -13,6 +13,7 @@ import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/card_ask.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/deeper/editorial.dart' show deeperEditorial;
 import 'package:astuto/widgets/deeper/look.dart';
 import 'package:astuto/widgets/deeper/pieces.dart' show splitView;
 import 'package:astuto/widgets/deeper_sheet.dart';
@@ -152,7 +153,7 @@ void main() {
     await _open(tester, await _app(plus: true), _card(full: false));
 
     // The part says what it is; its button, what it does.
-    expect(find.text('Explain it simply'), findsOneWidget);
+    expect(_name('Explain it simply'), findsOneWidget);
     await tester.tap(find.text('Explain it'));
     await tester.pumpAndSettle();
     expect(find.text('Answer for simple.'), findsOneWidget);
@@ -283,7 +284,8 @@ void main() {
     expect(find.text('it finds cases early.'), findsOneWidget);
     expect(find.text('Screen few'), findsOneWidget);
     expect(find.text('it saves false alarms.'), findsOneWidget);
-    expect(find.text('VS'), findsOneWidget);
+    // Set editorially, the views stand under their labels with no VS.
+    expect(find.text('VS'), deeperEditorial ? findsNothing : findsOneWidget);
   });
 
   test('a view is split into its label and its words; one with no label '
@@ -568,7 +570,7 @@ void main() {
       containsSemantics(isHeader: true),
     );
     expect(
-      tester.getSemantics(find.text('Why it matters')),
+      tester.getSemantics(_name('Why it matters')),
       containsSemantics(isHeader: true),
     );
     expect(
@@ -583,3 +585,8 @@ void main() {
     semantics.dispose();
   });
 }
+
+/// A part's name, as it is set: as written, or in small capitals.
+Finder _name(String name) => find.textContaining(
+  RegExp('^${RegExp.escape(name)}\$', caseSensitive: false),
+);
