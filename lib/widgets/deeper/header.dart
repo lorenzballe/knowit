@@ -29,7 +29,12 @@ class DeeperHeader extends StatelessWidget {
     required this.entrance,
     required this.still,
     required this.overlap,
+    this.paintGround = true,
   });
+
+  /// Whether the head paints its own colour; off where the sheet paints
+  /// head and body as one (app_style.dart, AppWhole).
+  final bool paintGround;
 
   final Pill pill;
   final DeeperLook look;
@@ -159,18 +164,19 @@ class DeeperHeader extends StatelessWidget {
     return ClipRect(
       child: Stack(
         children: [
-          Positioned.fill(
-            child: RepaintBoundary(
-              child: CustomPaint(
-                painter: _Glow(
-                  look: look,
-                  drift: drift,
-                  scroll: still ? null : scroll,
-                  foot: overlap,
+          if (paintGround)
+            Positioned.fill(
+              child: RepaintBoundary(
+                child: CustomPaint(
+                  painter: DeeperGlow(
+                    look: look,
+                    drift: drift,
+                    scroll: still ? null : scroll,
+                    foot: overlap,
+                  ),
                 ),
               ),
             ),
-          ),
           // The subject's mark, drawn large and faint past the head's edge:
           // the card's signature.
           Positioned(
@@ -279,18 +285,28 @@ class _Lag extends StatelessWidget {
 
 /// The head's ground: the card's colour, the lights drifting over it, a
 /// sheen across the top, and the foot deepening where the first part lies.
-class _Glow extends CustomPainter {
-  _Glow({
+class DeeperGlow extends CustomPainter {
+  DeeperGlow({
     required this.look,
     required this.drift,
     required this.scroll,
     required this.foot,
+    this.head,
+    this.whole = false,
   }) : super(repaint: Listenable.merge([drift, scroll]));
+
+  /// The head's height, when the painting is taller than the head: its
+  /// colour then runs on down below it, its lights placed in the head.
+  final double? head;
+
+  /// Painted as part of one whole: no foot of its own and no grain, both
+  /// left to the whole.
 
   final DeeperLook look;
   final Animation<double> drift;
   final ValueListenable<double>? scroll;
   final double foot;
+  final bool whole;
 
   /// Where each light rests, as parts of the head's width and height, how
   /// big it is against the width, and the turns it makes in one drift.
@@ -325,6 +341,7 @@ class _Glow extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Rect box = Offset.zero & size;
+    final double hh = head ?? size.height;
     final double v = drift.value;
     // Under way within a second, slowing to rest over the last two: the
     // lights are where they started at both ends, so a drift begun again
@@ -339,7 +356,7 @@ class _Glow extends CustomPainter {
       Paint()
         ..shader = ui.Gradient.linear(
           box.topLeft,
-          box.bottomRight,
+          Offset(size.width, hh),
           [look.glow[1], look.world, look.glow[3]],
           const [0, 0.5, 1],
         ),
@@ -353,18 +370,17 @@ class _Glow extends CustomPainter {
       // At night the colour deepens all the way into the black; on paper
       // only a little, and it is let go again before the foot, so the
       // colour lightens into the paper with no darker band on the way.
-      final double low = size.height - foot - 90;
+      final double low = hh - foot - 90;
       canvas.drawRect(
         box,
         Paint()
           ..shader = look.dark
-              ? ui.Gradient.linear(
-                  Offset(0, size.height * 0.35),
-                  Offset(0, size.height),
-                  [deep.withValues(alpha: 0), deep.withValues(alpha: 0.45)],
-                )
+              ? ui.Gradient.linear(Offset(0, hh * 0.35), Offset(0, hh), [
+                  deep.withValues(alpha: 0),
+                  deep.withValues(alpha: 0.45),
+                ])
               : ui.Gradient.linear(
-                  Offset(0, size.height * 0.3),
+                  Offset(0, hh * 0.3),
                   Offset(0, low),
                   [
                     deep.withValues(alpha: 0),
@@ -382,8 +398,7 @@ class _Glow extends CustomPainter {
       final double a = 2 * math.pi * v * turns + phase;
       final Offset centre = Offset(
         size.width * (x + _reachX * swing * (math.sin(a) - math.sin(phase))),
-        size.height * (y + _reachY * swing * (math.cos(a) - math.cos(phase))) +
-            lag,
+        hh * (y + _reachY * swing * (math.cos(a) - math.cos(phase))) + lag,
       );
       final double radius = size.width * r;
       final Color colour = look.glow[i];
@@ -420,7 +435,7 @@ class _Glow extends CustomPainter {
         Paint()
           ..shader = ui.Gradient.linear(
             Offset(size.width * (at - 0.25), 0),
-            Offset(size.width * (at + 0.25), size.height * 0.6),
+            Offset(size.width * (at + 0.25), hh * 0.6),
             [
               Colors.white.withValues(alpha: 0),
               Colors.white.withValues(alpha: 0.2),
@@ -437,13 +452,15 @@ class _Glow extends CustomPainter {
       Paint()
         ..shader = ui.Gradient.linear(
           box.topLeft,
-          Offset(size.width * 0.55, size.height * 0.7),
+          Offset(size.width * 0.55, hh * 0.7),
           [
             Colors.white.withValues(alpha: look.pearl ? 0.35 : 0.09),
             Colors.white.withValues(alpha: 0),
           ],
         ),
     );
+
+    if (whole) return;
 
     // A fine grain over it all, as in a printed colour: a few thousand
     // specks, lighter and darker, too small to see one by one.
@@ -557,7 +574,7 @@ class _Glow extends CustomPainter {
       }();
 
   @override
-  bool shouldRepaint(_Glow old) =>
+  bool shouldRepaint(DeeperGlow old) =>
       old.look != look ||
       old.drift != drift ||
       old.scroll != scroll ||
