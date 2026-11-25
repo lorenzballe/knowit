@@ -486,7 +486,38 @@ class _DeeperSheetState extends State<DeeperSheet>
                   Transform.translate(
                     offset: const Offset(0, -_overlap),
                     child: Stack(
+                      clipBehavior: Clip.none,
                       children: [
+                        // The head lags behind as the sheet scrolls, so its
+                        // foot slides under the parts: a long soft fall into
+                        // the bath above them keeps the two one light,
+                        // wherever the head has got to.
+                        if (bath != null)
+                          Positioned(
+                            top: -130,
+                            left: 0,
+                            right: 0,
+                            height: 131,
+                            child: IgnorePointer(
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      bath.withValues(alpha: 0),
+                                      bath.withValues(alpha: 0),
+                                      bath.withValues(alpha: 0.12),
+                                      bath.withValues(alpha: 0.38),
+                                      bath.withValues(alpha: 0.72),
+                                      bath,
+                                    ],
+                                    stops: const [0, 0.3, 0.48, 0.66, 0.84, 1],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         if (bath != null)
                           Positioned(
                             top: 0,
@@ -497,6 +528,7 @@ class _DeeperSheetState extends State<DeeperSheet>
                               bath: bath,
                               ground: look.ground,
                               depth: MediaQuery.sizeOf(context).height * 0.95,
+                              drift: _drift,
                             ),
                           ),
                         Column(
