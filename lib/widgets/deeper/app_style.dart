@@ -91,7 +91,13 @@ class AppBath extends StatelessWidget {
     required this.ground,
     required this.depth,
     this.drift,
+    this.lead = 0,
   });
+
+  /// How far above its own top the bath begins, clear there and coming in
+  /// over the head's foot: the head and the bath are then one painted
+  /// light, with no edge between two layers.
+  final double lead;
 
   /// The head's slow drift, which the bath's lights follow.
   final Animation<double>? drift;
@@ -104,15 +110,18 @@ class AppBath extends StatelessWidget {
   @override
   Widget build(BuildContext context) => IgnorePointer(
     child: SizedBox(
-      height: depth,
+      height: depth + lead,
       width: double.infinity,
-      child: CustomPaint(painter: _Bath(look, bath, ground, drift)),
+      child: CustomPaint(painter: _Bath(look, bath, ground, drift, lead)),
     ),
   );
 }
 
 class _Bath extends CustomPainter {
-  _Bath(this.look, this.bath, this.ground, this.drift) : super(repaint: drift);
+  _Bath(this.look, this.bath, this.ground, this.drift, this.lead)
+    : super(repaint: drift);
+
+  final double lead;
 
   final Animation<double>? drift;
 
@@ -188,6 +197,41 @@ class _Bath extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.clipRect(Offset.zero & size);
+    // The fall, from a little above where the lead-in ends, so the two
+    // overlap and no row between them is left half painted.
+    canvas.save();
+    canvas.translate(0, lead - 2);
+    _paintFall(canvas, Size(size.width, size.height - lead + 2));
+    canvas.restore();
+    if (lead <= 0) return;
+    // The lead-in: the bath coming in over the head's foot on an eased
+    // curve, opaque by the time the fall begins.
+    canvas.drawRect(
+      Rect.fromLTWH(0, 0, size.width, lead),
+      Paint()
+        ..shader = ui.Gradient.linear(Offset.zero, Offset(0, lead), [
+          for (final double t in _ease)
+            bath.withValues(alpha: t * t * (3 - 2 * t)),
+        ], _ease),
+    );
+  }
+
+  static const List<double> _ease = [
+    0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1,
+  ];
+
+  void _paintFall(Canvas canvas, Size size) {
     final Rect box = Offset.zero & size;
     // The pools reach past the bath's top; they stay in it, under the head.
     canvas.clipRect(box);
@@ -256,16 +300,14 @@ class _Bath extends CustomPainter {
     );
     // At its very top the bath is the plain shade the head falls into, so
     // the head runs on into it with no seam; the pools come in below.
-    const double seam = 110;
+    const double seam = 260;
     canvas.drawRect(
       Rect.fromLTWH(0, 0, size.width, seam),
       Paint()
-        ..shader = ui.Gradient.linear(
-          Offset.zero,
-          const Offset(0, seam),
-          [bath, bath.withValues(alpha: 0.6), bath.withValues(alpha: 0)],
-          const [0, 0.35, 1],
-        ),
+        ..shader = ui.Gradient.linear(Offset.zero, const Offset(0, seam), [
+          for (final double t in _ease)
+            bath.withValues(alpha: 1 - t * t * (3 - 2 * t)),
+        ], _ease),
     );
     // A grain finer than the eye can pick out, lighter and darker, so the
     // long fall never shows a step.

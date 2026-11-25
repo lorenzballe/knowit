@@ -488,42 +488,17 @@ class _DeeperSheetState extends State<DeeperSheet>
                     child: Stack(
                       clipBehavior: Clip.none,
                       children: [
-                        // The head lags behind as the sheet scrolls, so its
-                        // foot slides under the parts: a long soft fall into
-                        // the bath above them keeps the two one light,
-                        // wherever the head has got to.
                         if (bath != null)
+                          // The head ends in the bath's own colour; the bath
+                          // begins a little above the parts, clear, and comes
+                          // in over that end in the same painting as its
+                          // fall, so no two layers meet at an edge.
                           Positioned(
-                            top: -130,
-                            left: 0,
-                            right: 0,
-                            height: 131,
-                            child: IgnorePointer(
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      bath.withValues(alpha: 0),
-                                      bath.withValues(alpha: 0),
-                                      bath.withValues(alpha: 0.12),
-                                      bath.withValues(alpha: 0.38),
-                                      bath.withValues(alpha: 0.72),
-                                      bath,
-                                    ],
-                                    stops: const [0, 0.3, 0.48, 0.66, 0.84, 1],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        if (bath != null)
-                          Positioned(
-                            top: 0,
+                            top: -24,
                             left: 0,
                             right: 0,
                             child: AppBath(
+                              lead: 24,
                               look: world,
                               bath: bath,
                               ground: look.ground,
@@ -537,7 +512,7 @@ class _DeeperSheetState extends State<DeeperSheet>
                             // Set editorially, nothing lies over the head's foot:
                             // it is let go into the sheet's ground instead, and the
                             // parts start below it.
-                            if (deeperEditorial)
+                            if (deeperEditorial && bath == null)
                               ExcludeSemantics(
                                 child: Container(
                                   height: _overlap + 8,
@@ -556,6 +531,11 @@ class _DeeperSheetState extends State<DeeperSheet>
                                   ),
                                 ),
                               ),
+                            // Bathed, the bath and the fall above it are the
+                            // ground: only the room is kept, with nothing
+                            // painted on it that could leave an edge.
+                            if (bath != null)
+                              const SizedBox(height: _overlap + 8),
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 16,
