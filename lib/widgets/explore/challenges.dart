@@ -19,36 +19,31 @@ import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
 
+import '../../data/topics.dart' show inkOn;
 import '../../l10n/l10n.dart';
 import '../../theme.dart';
 import 'challenge_marks.dart';
 import 'parts.dart' show upper;
 
-/// A challenge's colour, from the subjects' wheel, kept calm: its tile a
-/// softened tone of it (a pastel on paper, a deep one at night), its
-/// screen a tint of the page, and a deep tone on paper and a lifted one at
-/// night for its mark, a fine rule and its primary button.
+/// A challenge's colour, from the subjects' wheel as the app's cards
+/// have theirs: its tile and its cards that colour, with the ink it
+/// carries; a deep tone on paper and a lifted one at night for anything of
+/// it set on the page itself.
 @immutable
 class ChallengeTone {
   const ChallengeTone(this.deep, this.lifted, this.vivid);
 
-  /// The colour as the wheel has it, never shown as it is: what the tile's
-  /// and the page's tones are taken from.
+  /// The colour itself: the tile's and the challenge's cards'.
   final Color vivid;
 
-  /// The tile's ground: the colour with its saturation taken down, light
-  /// on paper and deep at night.
-  Color tile(Palette p) {
-    final HSLColor c = HSLColor.fromColor(vivid);
-    return c
-        .withSaturation((c.saturation * (p.isDark ? 0.42 : 0.62)).clamp(0, 1))
-        .withLightness(p.isDark ? 0.2 : 0.86)
-        .toColor();
-  }
+  /// The ink the colour carries, black or white.
+  Color get ink => inkOn(vivid);
 
-  /// The screen's ground: the page, tinted with the tile.
-  Color page(Palette p) =>
-      Color.lerp(p.surface, tile(p), p.isDark ? 0.6 : 0.55)!;
+  /// The tile's ground.
+  Color tile(Palette p) => vivid;
+
+  /// The screen's ground: the app's own page.
+  Color page(Palette p) => p.surface;
 
   /// On the day's paper.
   final Color deep;
@@ -59,16 +54,13 @@ class ChallengeTone {
   /// The tone on [p].
   Color on(Palette p) => p.isDark ? lifted : deep;
 
-  /// The words on a button of the tone: as on the app's inverse buttons.
-  Color inkOn(Palette p) => p.onInverse;
 }
 
-/// The calm colours a verdict is told in: a green for right, a red for
-/// wrong, each a quiet tone of the page it is on.
+/// The colours a verdict is told in, the app's own: its green for right
+/// (the one a win is told in), its alert for wrong.
 Color challengeRight(Palette p) =>
-    p.isDark ? const Color(0xFF8CC6A6) : const Color(0xFF2E6A4D);
-Color challengeWrong(Palette p) =>
-    p.isDark ? const Color(0xFFE8988A) : const Color(0xFF9E3A2D);
+    p.isDark ? const Color(0xFF3BE07A) : const Color(0xFF128A43);
+Color challengeWrong(Palette p) => p.alert;
 
 /// The short rule in a challenge's tone over a small-caps label, as Go
 /// deeper's magazine sets its sections.
@@ -140,7 +132,7 @@ class ChallengeTileSpec {
 }
 
 /// The corners of a tile.
-const double kChallengeCorner = 14;
+const double kChallengeCorner = 20;
 
 /// The small capitals every challenge names its skill in, and its heads.
 TextStyle challengeSmallCaps(Color colour, [double size = 10.5]) =>
@@ -160,6 +152,7 @@ class ChallengeGround extends StatelessWidget {
   const ChallengeGround({
     super.key,
     required this.colour,
+    this.shade = false,
     this.radius = 0,
     this.border,
     this.foreground,
@@ -168,6 +161,10 @@ class ChallengeGround extends StatelessWidget {
   });
 
   final Color colour;
+
+  /// Whether it deepens a little to its corner, as the app's tiles do.
+  final bool shade;
+
   final double radius;
 
   /// The hairline round it, or none.
@@ -184,7 +181,17 @@ class ChallengeGround extends StatelessWidget {
     final Size? at = foregroundSize;
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: colour,
+        color: shade ? null : colour,
+        gradient: shade
+            ? LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  colour,
+                  Color.alphaBlend(Colors.black.withValues(alpha: 0.16), colour),
+                ],
+              )
+            : null,
         borderRadius: BorderRadius.circular(radius),
         border: line == null || line.a == 0
             ? null
@@ -245,6 +252,7 @@ Widget challengeFlight(
       final double t = animation.value;
       return ChallengeGround(
         colour: Color.lerp(tile.colour, screen.colour, t)!,
+        shade: tile.shade && t < 0.5,
         radius: lerpDouble(tile.radius, screen.radius, t)!,
         border: line.withValues(alpha: line.a * (1 - t).clamp(0.0, 1.0)),
         foreground: tile.foreground,
@@ -494,58 +502,57 @@ class ChallengeDots extends StatelessWidget {
   }
 }
 
-/// One challenge's tile: the skill it trains across its top, the name, what
-/// it asks, and at its foot the reader's own figure and the challenge's
-/// mark.
+/// One challenge's tile, in the app's own manner — the colour of its
+/// challenge, as a subject's card is its subject's, deepening a little to
+/// its corner; its mark large and faint off that corner; across its top
+/// its mark and the skill it trains in small capitals, as a card's head
+/// carries its subject; the name in the app's serif; what it asks; and at
+/// its foot the reader's own figure.
 class ChallengeTile extends StatefulWidget {
   const ChallengeTile({super.key, required this.spec});
 
   final ChallengeTileSpec spec;
 
   /// The words' room from the tile's edges.
-  static const EdgeInsets pad = EdgeInsets.fromLTRB(14, 14, 13, 13);
+  static const EdgeInsets pad = EdgeInsets.fromLTRB(14, 14, 13, 14);
 
-  /// The mark's side.
-  static const double markSide = 24;
+  /// The head's mark.
+  static const double markSide = 16;
 
-  /// Between the skill and the name, the name and its line, and the line
-  /// and the foot at the least.
-  static const double _afterSkill = 12;
+  static const double _afterHead = 22;
   static const double _afterTitle = 5;
-  static const double _beforeFoot = 14;
+  static const double _beforeFoot = 12;
 
-  /// The skill, the name and what it asks as the tile sets them, at [size].
-  static TextStyle skillStyle(Color ink, [double size = 10.5]) =>
-      challengeSmallCaps(ink, size);
-  static TextStyle titleStyle(Color ink, [double size = 19.5]) =>
-      AppText.display(
-        size: size,
-        weight: FontWeight.w500,
-        height: 1.12,
-        spacing: -0.012 * size,
-        color: ink,
-      );
-  static TextStyle lineStyle(Color ink, [double size = 12.5]) =>
-      AppText.body(size: size, height: 1.36, color: ink);
-
-  /// The figure's name, and the figure, in tabular figures.
-  static TextStyle figureLabelStyle(Color ink, [double size = 12]) =>
-      AppText.body(
-        size: size,
-        weight: FontWeight.w500,
-        height: 1.2,
-        color: ink,
-      );
-  static TextStyle figureStyle(Color ink) => AppText.body(
-    size: 13,
+  static TextStyle skillStyle(Color ink, [double size = 9.5]) => AppText.label(
+    size: size,
+    weight: FontWeight.w700,
+    spacing: 1.2,
+    height: 1.2,
+    color: ink,
+  );
+  static TextStyle titleStyle(Color ink, [double size = 20]) => AppText.display(
+    size: size,
     weight: FontWeight.w600,
+    height: 1.08,
+    spacing: -0.3,
+    color: ink,
+  );
+  static TextStyle lineStyle(Color ink, [double size = 12.5]) => AppText.body(
+    size: size,
+    weight: FontWeight.w500,
+    height: 1.3,
+    color: ink,
+  );
+  static TextStyle figureLabelStyle(Color ink, [double size = 11.5]) =>
+      AppText.body(size: size, weight: FontWeight.w700, height: 1.2, color: ink);
+  static TextStyle figureStyle(Color ink) => AppText.body(
+    size: 12.5,
+    weight: FontWeight.w800,
     height: 1.2,
     color: ink,
   ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]);
 
-  /// The reader's text size, as far as a tile of a grid of four follows
-  /// it: nearly half as large again, and no further, so four still fit a
-  /// page.
+  /// The reader's text size, as far as a tile of a grid of four follows it.
   static TextScaler scalerOf(BuildContext context) =>
       MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.45);
 
@@ -554,10 +561,9 @@ class ChallengeTile extends StatefulWidget {
   static bool showsLine(BuildContext context) =>
       MediaQuery.textScalerOf(context).scale(1) <= 1.3;
 
-  /// The size [text] is set at in [style] on a tile whose words are [inner]
-  /// wide: [size], or less where its longest word would not fit the line,
-  /// down to [least] — a word is never broken in the middle ("Sechzig
-  /// Sekunden", "KALIBRIERUNG").
+  /// The size [text] is set at in [style], [inner] wide: [size], or less
+  /// where its longest word would not fit the line — a word is never
+  /// broken in the middle ("Sechzig Sekunden").
   static double fitSize(
     BuildContext context,
     String text,
@@ -604,17 +610,16 @@ class ChallengeTile extends StatefulWidget {
       context,
       upper(context, look.skill),
       skillStyle,
-      inner,
-      size: 10.5,
+      inner - markSide - 7,
+      size: 9.5,
       least: 7,
     ),
-    fitSize(context, look.title, titleStyle, inner, size: 19.5, least: 12),
+    fitSize(context, look.title, titleStyle, inner, size: 20, least: 12),
     fitSize(context, look.line, lineStyle, inner, size: 12.5, least: 9),
   );
 
-  /// How tall every tile is, [width] wide, for [looks] to all fit: the
-  /// most lines any of them has of each part — so the tiles are one size
-  /// on every page, at any text size.
+  /// How tall every tile is, [width] wide, for [looks] to all fit — so
+  /// the tiles are one size on every page, at any text size.
   static double heightFor(
     BuildContext context,
     double width,
@@ -635,12 +640,16 @@ class ChallengeTile extends StatefulWidget {
       return h;
     }
 
-    double skill = 0, title = 0, line = 0, foot = markSide;
+    double head = markSide, title = 0, line = 0, foot = 0;
     for (final ChallengeLook look in looks) {
       final (double s, double t, double w) = sizesFor(context, look, inner);
-      skill = math.max(
-        skill,
-        measure(upper(context, look.skill), skillStyle(Colors.black, s), inner),
+      head = math.max(
+        head,
+        measure(
+          upper(context, look.skill),
+          skillStyle(Colors.black, s),
+          inner - markSide - 7,
+        ),
       );
       title = math.max(
         title,
@@ -663,12 +672,11 @@ class ChallengeTile extends StatefulWidget {
       }
     }
     return (pad.top +
-            skill +
-            _afterSkill +
+            head +
+            _afterHead +
             title +
             (line > 0 ? _afterTitle + line : 0) +
-            _beforeFoot +
-            foot +
+            (foot > 0 ? _beforeFoot + foot : 0) +
             pad.bottom)
         .ceilToDouble();
   }
@@ -688,111 +696,102 @@ class _ChallengeTileState extends State<ChallengeTile> {
   Widget build(BuildContext context) {
     final ChallengeTileSpec spec = widget.spec;
     final ChallengeLook look = spec.look;
-    final Palette p = context.p;
     final TextScaler scaler = ChallengeTile.scalerOf(context);
     final ChallengeFigure? figure = look.figure;
+    final Color ink = look.tone.ink;
     final Widget words = LayoutBuilder(
       builder: (context, box) {
         final double inner = box.maxWidth - ChallengeTile.pad.horizontal;
-        final (double skill, double title, double line) =
-            ChallengeTile.sizesFor(context, look, inner);
-        // The figure's name as large as its room beside the figure and
-        // the mark takes, never broken.
-        double figureLabel = 12;
-        if (figure != null) {
-          final TextPainter value = TextPainter(
-            text: TextSpan(
-              text: figure.value,
-              style: DefaultTextStyle.of(context).style
-                  .merge(ChallengeTile.figureStyle(p.ink)),
+        final (double skill, double title, double line) = ChallengeTile
+            .sizesFor(context, look, inner);
+        return Stack(
+          clipBehavior: Clip.hardEdge,
+          children: [
+            // The mark again, large and faint, off the corner: the tile is
+            // the challenge's colour first and its words second.
+            Positioned(
+              right: -14,
+              bottom: -14,
+              child: ChallengeMarkView(
+                mark: look.mark,
+                colour: ink.withValues(alpha: 0.13),
+                size: box.maxWidth * 0.52,
+              ),
             ),
-            textDirection: Directionality.of(context),
-            textScaler: scaler,
-            maxLines: 1,
-          )..layout();
-          figureLabel = ChallengeTile.fitSize(
-            context,
-            figure.label,
-            ChallengeTile.figureLabelStyle,
-            inner - ChallengeTile.markSide - 8 - 7 - value.width,
-            size: 12,
-            least: 8,
-          );
-          value.dispose();
-        }
-        return Padding(
-          padding: ChallengeTile.pad,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                upper(context, look.skill),
-                key: const ValueKey('challenge-skill'),
-                textScaler: scaler,
-                style: ChallengeTile.skillStyle(p.inkMuted, skill),
-              ),
-              const SizedBox(height: ChallengeTile._afterSkill),
-              Text(
-                look.title,
-                textScaler: scaler,
-                style: ChallengeTile.titleStyle(p.ink, title),
-              ),
-              if (ChallengeTile.showsLine(context)) ...[
-                const SizedBox(height: ChallengeTile._afterTitle),
-                Text(
-                  look.line,
-                  textScaler: scaler,
-                  style: ChallengeTile.lineStyle(p.inkMuted, line),
-                ),
-              ],
-              const Spacer(),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+            Padding(
+              padding: ChallengeTile.pad,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: figure == null
-                        ? const SizedBox.shrink()
-                        : Row(
-                            key: const ValueKey('challenge-figure'),
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  figure.label,
-                                  textScaler: scaler,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: ChallengeTile.figureLabelStyle(
-                                    p.inkMuted,
-                                    figureLabel,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 7),
-                              Text(
-                                figure.value,
-                                textScaler: scaler,
-                                style: ChallengeTile.figureStyle(p.ink),
-                              ),
-                            ],
+                  Row(
+                    children: [
+                      ChallengeMarkView(
+                        mark: look.mark,
+                        colour: ink,
+                        size: ChallengeTile.markSide,
+                      ),
+                      const SizedBox(width: 7),
+                      Expanded(
+                        child: Text(
+                          upper(context, look.skill),
+                          key: const ValueKey('challenge-skill'),
+                          textScaler: scaler,
+                          style: ChallengeTile.skillStyle(
+                            ink.withValues(alpha: 0.78),
+                            skill,
                           ),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 8),
-                  ChallengeMarkView(
-                    mark: look.mark,
-                    colour: look.tone.on(p),
-                    size: ChallengeTile.markSide,
+                  const SizedBox(height: ChallengeTile._afterHead),
+                  Text(
+                    look.title,
+                    textScaler: scaler,
+                    style: ChallengeTile.titleStyle(ink, title),
                   ),
+                  if (ChallengeTile.showsLine(context)) ...[
+                    const SizedBox(height: ChallengeTile._afterTitle),
+                    Text(
+                      look.line,
+                      textScaler: scaler,
+                      style: ChallengeTile.lineStyle(
+                        ink.withValues(alpha: 0.74),
+                        line,
+                      ),
+                    ),
+                  ],
+                  if (figure != null) ...[
+                    const Spacer(),
+                    Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '${figure.label}  ',
+                            style: ChallengeTile.figureLabelStyle(
+                              ink.withValues(alpha: 0.74),
+                            ),
+                          ),
+                          TextSpan(
+                            text: figure.value,
+                            style: ChallengeTile.figureStyle(ink),
+                          ),
+                        ],
+                      ),
+                      key: const ValueKey('challenge-figure'),
+                      textScaler: scaler,
+                    ),
+                  ],
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );
     final Widget ground = ChallengeGround(
-      colour: look.tone.tile(p),
+      colour: look.tone.vivid,
+      shade: true,
       radius: kChallengeCorner,
       foreground: words,
     );
@@ -813,10 +812,10 @@ class _ChallengeTileState extends State<ChallengeTile> {
         onTapUp: (_) => _press(false),
         onTapCancel: () => _press(false),
         onTap: spec.onTap,
-        child: AnimatedOpacity(
-          opacity: _down ? 0.72 : 1,
-          duration: calm ? Duration.zero : const Duration(milliseconds: 120),
-          curve: Curves.easeOut,
+        child: AnimatedScale(
+          scale: _down && !calm ? 0.97 : 1,
+          duration: const Duration(milliseconds: 140),
+          curve: Curves.easeOutCubic,
           child: spec.heroTag == null
               ? ground
               : Hero(

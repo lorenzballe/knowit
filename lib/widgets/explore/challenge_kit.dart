@@ -206,11 +206,12 @@ class GameClose extends StatelessWidget {
             dimension: 48,
             child: Center(
               child: Container(
-                width: 36,
-                height: 36,
+                width: 38,
+                height: 38,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: p.lineStrong),
+                  color: p.surfaceRaised,
+                  border: p.isDark ? null : Border.all(color: p.line),
                 ),
                 alignment: Alignment.center,
                 child: Icon(Icons.close_rounded, size: 18, color: p.ink),
@@ -257,11 +258,13 @@ class GameButton extends StatefulWidget {
     return GameButton(
       key: key,
       label: label,
-      face: tone.on(p),
-      ink: tone.inkOn(p),
-      border: tone.on(p),
+      face: p.inverse,
+      ink: p.onInverse,
+      border: p.inverse,
       onTap: onTap,
       height: height,
+      radius: 16,
+      size: 15.5,
       semantics: semantics,
     );
   }
@@ -274,7 +277,7 @@ class GameButton extends StatefulWidget {
     required VoidCallback? onTap,
     IconData? icon,
     double height = 56,
-    double size = 16,
+    double size = 15.5,
     String? semantics,
   }) {
     final Palette p = context.p;
@@ -282,11 +285,12 @@ class GameButton extends StatefulWidget {
       key: key,
       label: label,
       icon: icon,
-      face: Colors.transparent,
+      face: p.surfaceRaised,
       ink: p.ink,
-      border: p.lineStrong,
+      border: p.isDark ? p.surfaceRaised : p.line,
       onTap: onTap,
       height: height,
+      radius: 16,
       size: size,
       semantics: semantics,
     );
@@ -382,7 +386,7 @@ class _GameButtonState extends State<GameButton> {
                       maxLines: 1,
                       style: AppText.body(
                         size: widget.size,
-                        weight: FontWeight.w600,
+                        weight: FontWeight.w700,
                         height: 1,
                         spacing: 0.1,
                         color: widget.ink,
@@ -437,22 +441,138 @@ class GameChip extends StatelessWidget {
   );
 }
 
-/// The reader's figures, as a table: each a row between hairlines, what it
-/// is on the left and the figure on the right, in tabular figures.
-class ChallengeFigures extends StatelessWidget {
-  const ChallengeFigures({super.key, required this.rows});
+/// A challenge on a card of its colour, as a card of the day is on its
+/// subject's: deepening a little to its corner, its mark large and faint
+/// off that corner.
+class ChallengeCard extends StatelessWidget {
+  const ChallengeCard({
+    super.key,
+    required this.tone,
+    required this.mark,
+    required this.child,
+    this.padding = const EdgeInsets.fromLTRB(20, 18, 20, 22),
+    this.faint = true,
+  });
 
-  final List<ChallengeFigure> rows;
+  final ChallengeTone tone;
+  final ChallengeMark mark;
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+
+  /// Whether the mark lies large and faint in its corner.
+  final bool faint;
+
+  @override
+  Widget build(BuildContext context) => ClipRRect(
+    borderRadius: BorderRadius.circular(24),
+    child: DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            tone.vivid,
+            Color.alphaBlend(Colors.black.withValues(alpha: 0.14), tone.vivid),
+          ],
+        ),
+      ),
+      child: Stack(
+        children: [
+          if (faint)
+            Positioned(
+              right: -24,
+              bottom: -24,
+              child: ChallengeMarkView(
+                mark: mark,
+                colour: tone.ink.withValues(alpha: 0.1),
+                size: 170,
+              ),
+            ),
+          Padding(padding: padding, child: child),
+        ],
+      ),
+    ),
+  );
+}
+
+/// A challenge card's head, as a card's carries its subject: the mark and
+/// the skill it trains, in small capitals.
+class ChallengeCardHead extends StatelessWidget {
+  const ChallengeCardHead({super.key, required this.look, this.label});
+
+  final ChallengeLook look;
+
+  /// What the head says instead of the skill.
+  final String? label;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = look.tone.ink;
+    return Row(
+      children: [
+        ChallengeMarkView(mark: look.mark, colour: ink, size: 15),
+        const SizedBox(width: 7),
+        Flexible(
+          child: Text(
+            upper(context, label ?? look.skill),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppText.label(
+              size: 9.5,
+              weight: FontWeight.w700,
+              spacing: 1.2,
+              color: ink.withValues(alpha: 0.78),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// A card of the page's own, as Your journey sets its parts on.
+class ChallengePanel extends StatelessWidget {
+  const ChallengePanel({
+    super.key,
+    required this.child,
+    this.padding = const EdgeInsets.fromLTRB(18, 16, 18, 18),
+  });
+
+  final Widget child;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
-    final Widget rule = Container(height: 1, color: p.line);
-    return Column(
+    return Container(
+      padding: padding,
+      decoration: BoxDecoration(
+        color: p.surfaceRaised,
+        borderRadius: BorderRadius.circular(20),
+        border: p.isDark ? null : Border.all(color: p.line),
+      ),
+      child: child,
+    );
+  }
+}
+
+/// The reader's figures: each a row, what it is on the left and the
+/// figure on the right, on a card of the page's own — or [bare], inside
+/// one.
+class ChallengeFigures extends StatelessWidget {
+  const ChallengeFigures({super.key, required this.rows, this.bare = false});
+
+  final List<ChallengeFigure> rows;
+  final bool bare;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final Widget list = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        rule,
-        for (final ChallengeFigure row in rows) ...[
+        for (int i = 0; i < rows.length; i++) ...[
+          if (i > 0 || bare) Container(height: 1, color: p.line),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 11),
             child: Row(
@@ -461,35 +581,39 @@ class ChallengeFigures extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    row.label,
+                    rows[i].label,
                     style: AppText.body(
-                      size: 14.5,
+                      size: 14,
+                      weight: FontWeight.w600,
                       height: 1.3,
                       color: p.inkMuted,
                     ),
                   ),
                 ),
-                if (row.value.isNotEmpty) ...[
+                if (rows[i].value.isNotEmpty) ...[
                   const SizedBox(width: 16),
                   Text(
-                    row.value,
-                    style:
-                        AppText.body(
-                          size: 15.5,
-                          weight: FontWeight.w600,
-                          height: 1.3,
-                          color: p.ink,
-                        ).copyWith(
-                          fontFeatures: const [FontFeature.tabularFigures()],
-                        ),
+                    rows[i].value,
+                    style: AppText.body(
+                      size: 15,
+                      weight: FontWeight.w800,
+                      height: 1.3,
+                      color: p.ink,
+                    ).copyWith(
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
                   ),
                 ],
               ],
             ),
           ),
-          rule,
         ],
       ],
+    );
+    if (bare) return list;
+    return ChallengePanel(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 3),
+      child: list,
     );
   }
 }
@@ -537,7 +661,7 @@ class GameSegments extends StatelessWidget {
                     ? Duration.zero
                     : const Duration(milliseconds: 180),
                 curve: Curves.easeOut,
-                height: 3,
+                height: 4,
                 decoration: BoxDecoration(
                   color: switch (marks[i]) {
                     true => challengeRight(p),
@@ -702,8 +826,8 @@ class _VerdictPainter extends CustomPainter {
       old.right != right || old.colour != colour;
 }
 
-/// The challenge after this one, set as its tile is: the skill, the name,
-/// what it asks, its mark — a tap away.
+/// The challenge after this one, as its tile is: its colour, its head, its
+/// name and what it asks — a tap away.
 class GameNextCard extends StatelessWidget {
   const GameNextCard({
     super.key,
@@ -720,9 +844,10 @@ class GameNextCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final Palette p = context.p;
-    final TextScaler scaler = MediaQuery.textScalerOf(context)
-        .clamp(maxScaleFactor: 1.6);
+    final Color ink = look.tone.ink;
+    final TextScaler scaler = MediaQuery.textScalerOf(
+      context,
+    ).clamp(maxScaleFactor: 1.5);
     return Semantics(
       button: true,
       label: '${l.gameNext}: ${look.title}',
@@ -732,49 +857,52 @@ class GameNextCard extends StatelessWidget {
         key: ValueKey('$id-next'),
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(16, 15, 14, 16),
-          decoration: BoxDecoration(
-            color: look.tone.tile(p),
-            borderRadius: BorderRadius.circular(kChallengeCorner),
-          ),
+        child: ChallengeCard(
+          tone: look.tone,
+          mark: look.mark,
+          padding: const EdgeInsets.fromLTRB(18, 16, 16, 18),
           child: Row(
             children: [
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      upper(context, look.skill),
-                      textScaler: scaler,
-                      style: challengeSmallCaps(p.inkMuted),
-                    ),
-                    const SizedBox(height: 8),
+                    ChallengeCardHead(look: look),
+                    const SizedBox(height: 14),
                     Text(
                       look.title,
                       textScaler: scaler,
                       style: AppText.display(
-                        size: 21,
-                        weight: FontWeight.w500,
-                        height: 1.1,
-                        spacing: -0.25,
-                        color: p.ink,
+                        size: 22,
+                        weight: FontWeight.w600,
+                        height: 1.08,
+                        spacing: -0.4,
+                        color: ink,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       look.line,
                       textScaler: scaler,
-                      style: ChallengeTile.lineStyle(p.inkMuted),
+                      style: AppText.body(
+                        size: 13,
+                        weight: FontWeight.w500,
+                        height: 1.3,
+                        color: ink.withValues(alpha: 0.76),
+                      ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 14),
-              ChallengeMarkView(
-                mark: look.mark,
-                colour: look.tone.on(p),
-                size: 28,
+              const SizedBox(width: 12),
+              Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  color: ink.withValues(alpha: 0.14),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.arrow_forward_rounded, size: 20, color: ink),
               ),
             ],
           ),
@@ -809,10 +937,11 @@ class GameReviewItem {
   /// Right, wrong, or neither.
   final bool? mark;
 
-  /// What it is, on the right: "TRUE", "1962", "42%".
+  /// What it is, in a tag on the right: "TRUE", "1962", "42%".
   final String? tag;
 
-  /// Whether the tag is set in full ink, rather than the quieter one.
+  /// Whether the tag is set strongly, in the challenge's colour, rather
+  /// than quietly.
   final bool tagDark;
 
   /// A line under the words: what the reader said, by how much they were off.
@@ -822,45 +951,61 @@ class GameReviewItem {
   final VoidCallback? onTap;
 }
 
-/// The cards of a round again, as a list between hairlines: each as it
-/// went — its verdict in the margin in a calm colour, its words, what it
-/// is — a tap from its card.
+/// The cards of a round again, on a card of the page's own, as the shelf's
+/// round sets them: each its verdict, its words, what it is in a tag of
+/// the challenge's colour — a tap from its card.
 class GameReview extends StatelessWidget {
-  const GameReview({super.key, required this.items});
+  const GameReview({super.key, required this.items, this.tone});
 
   final List<GameReviewItem> items;
+
+  /// The challenge's colour, for the tags.
+  final ChallengeTone? tone;
 
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
-    final Widget rule = Container(height: 1, color: p.line);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        rule,
-        for (final GameReviewItem item in items) ...[
-          _row(context, p, item),
-          rule,
+    return ChallengePanel(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (int i = 0; i < items.length; i++) ...[
+            if (i > 0) Container(height: 1, color: p.line),
+            _row(context, p, items[i]),
+          ],
         ],
-      ],
+      ),
     );
   }
 
-  /// A tag longer than this goes under the words, not beside them: a
-  /// whole amount ("About 5% of the time") would leave the words a
-  /// column of one word a line.
+  /// A tag longer than this goes under the words, not beside them.
   static const int _tagBeside = 9;
 
-  Widget _tag(BuildContext context, Palette p, String tag, bool dark) => Text(
-    upper(context, tag),
-    style: AppText.label(
-      size: 11.5,
-      weight: FontWeight.w600,
-      spacing: 0.9,
-      height: 1.25,
-      color: dark ? p.ink : p.inkMuted,
-    ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
-  );
+  Widget _tag(BuildContext context, Palette p, String tag, bool strong) {
+    final ChallengeTone? t = tone;
+    final Color face = strong && t != null
+        ? t.vivid
+        : p.ink.withValues(alpha: 0.08);
+    final Color ink = strong && t != null ? t.ink : p.ink;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+      decoration: BoxDecoration(
+        color: face,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        upper(context, tag),
+        style: AppText.label(
+          size: 10,
+          weight: FontWeight.w800,
+          spacing: 0.8,
+          height: 1.1,
+          color: ink,
+        ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+      ),
+    );
+  }
 
   Widget _row(BuildContext context, Palette p, GameReviewItem item) {
     final bool? right = item.mark;
@@ -877,12 +1022,12 @@ class GameReview extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: item.onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 14),
+          padding: const EdgeInsets.symmetric(vertical: 13),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 2.5),
+                padding: const EdgeInsets.only(top: 2),
                 child: GameVerdictGlyph(
                   right: right,
                   colour: switch (right) {
@@ -890,9 +1035,10 @@ class GameReview extends StatelessWidget {
                     false => challengeWrong(p),
                     null => p.inkFaint,
                   },
+                  size: 15,
                 ),
               ),
-              const SizedBox(width: 14),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -902,8 +1048,9 @@ class GameReview extends StatelessWidget {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: AppText.body(
-                        size: 14.5,
-                        height: 1.38,
+                        size: 14,
+                        weight: FontWeight.w600,
+                        height: 1.32,
                         color: p.ink,
                       ),
                     ),
@@ -912,11 +1059,12 @@ class GameReview extends StatelessWidget {
                       _tag(context, p, said, item.tagDark),
                     ],
                     if (item.detail case final String detail) ...[
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 3),
                       Text(
                         detail,
                         style: AppText.body(
                           size: 12.5,
+                          weight: FontWeight.w500,
                           height: 1.3,
                           color: p.inkMuted,
                         ),
@@ -926,11 +1074,8 @@ class GameReview extends StatelessWidget {
                 ),
               ),
               if (tag != null) ...[
-                const SizedBox(width: 14),
-                Padding(
-                  padding: const EdgeInsets.only(top: 2.5),
-                  child: _tag(context, p, tag, item.tagDark),
-                ),
+                const SizedBox(width: 12),
+                _tag(context, p, tag, item.tagDark),
               ],
             ],
           ),

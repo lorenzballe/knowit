@@ -366,7 +366,8 @@ class _InOrderPlayState extends State<_InOrderPlay> {
       ),
       body: LayoutBuilder(
         builder: (context, box) {
-          final double h = box.maxHeight / n;
+          const double gap = 8;
+          final double h = (box.maxHeight - gap * (n - 1)) / n;
           return Stack(
             children: [
               for (final DatedLine d in shown)
@@ -379,28 +380,19 @@ class _InOrderPlayState extends State<_InOrderPlay> {
                     curve: Curves.easeOutCubic,
                     left: 0,
                     right: 0,
-                    top: slot * h,
+                    top: slot * (h + gap),
                     height: h,
                     child: _Moment(
                       line: d,
                       rank: pick < 0 ? null : pick + 1,
                       told: _told,
                       right: _told ? _game.rightAt(slot) : null,
+                      tone: kit.look.tone,
                       accent: kit.accent,
                       onTap: () => _tap(d),
                     ),
                   );
                 }(),
-              // The hairlines between the places, which stay where they
-              // are as the moments move.
-              for (int i = 0; i <= n; i++)
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  top: i < n ? i * h : box.maxHeight - 1,
-                  height: 1,
-                  child: IgnorePointer(child: ColoredBox(color: p.line)),
-                ),
             ],
           );
         },
@@ -426,6 +418,7 @@ class _Moment extends StatelessWidget {
     required this.rank,
     required this.told,
     required this.right,
+    required this.tone,
     required this.accent,
     required this.onTap,
   });
@@ -434,6 +427,7 @@ class _Moment extends StatelessWidget {
   final int? rank;
   final bool told;
   final bool? right;
+  final ChallengeTone tone;
   final Color accent;
   final VoidCallback onTap;
 
@@ -462,21 +456,30 @@ class _Moment extends StatelessWidget {
               ? Duration.zero
               : const Duration(milliseconds: 160),
           curve: Curves.easeOut,
-          color: on
-              ? accent.withValues(alpha: p.isDark ? 0.1 : 0.06)
-              : Colors.transparent,
-          padding: const EdgeInsets.fromLTRB(4, 10, 8, 10),
+          decoration: BoxDecoration(
+            color: p.surfaceRaised,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(
+              color: on
+                  ? tone.vivid
+                  : p.isDark
+                  ? p.surfaceRaised
+                  : p.line,
+              width: 2,
+            ),
+          ),
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
           child: Row(
             children: [
               SizedBox(
-                width: 58,
+                width: 62,
                 child: Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: _Place(
                     rank: r,
                     year: told ? line.year : null,
                     right: right,
-                    accent: accent,
+                    tone: tone,
                   ),
                 ),
               ),
@@ -505,13 +508,13 @@ class _Place extends StatelessWidget {
     required this.rank,
     required this.year,
     required this.right,
-    required this.accent,
+    required this.tone,
   });
 
   final int? rank;
   final int? year;
   final bool? right;
-  final Color accent;
+  final ChallengeTone tone;
 
   @override
   Widget build(BuildContext context) {
@@ -521,24 +524,33 @@ class _Place extends StatelessWidget {
     ).clamp(maxScaleFactor: 1.2);
     final int? y = year;
     if (y != null) {
-      return Text(
-        '$y',
-        textScaler: scaler,
-        style: AppText.body(
-          size: 14,
-          weight: FontWeight.w600,
-          height: 1,
-          color: right == true ? challengeRight(p) : challengeWrong(p),
-        ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+      final Color c = right == true ? challengeRight(p) : challengeWrong(p);
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+        decoration: BoxDecoration(
+          color: c.withValues(alpha: 0.16),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          '$y',
+          textScaler: scaler,
+          style: AppText.body(
+            size: 13.5,
+            weight: FontWeight.w800,
+            height: 1,
+            color: c,
+          ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+        ),
       );
     }
     final int? r = rank;
     return Container(
-      width: 28,
-      height: 28,
+      width: 32,
+      height: 32,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: r == null ? p.lineStrong : accent),
+        color: r == null ? null : tone.vivid,
+        border: r == null ? Border.all(color: p.lineStrong, width: 1.5) : null,
       ),
       alignment: Alignment.center,
       child: r == null
@@ -546,12 +558,12 @@ class _Place extends StatelessWidget {
           : Text(
               '$r',
               textScaler: scaler,
-              style: AppText.body(
-                size: 13.5,
-                weight: FontWeight.w600,
+              style: AppText.display(
+                size: 16,
+                weight: FontWeight.w700,
                 height: 1,
-                color: accent,
-              ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+                color: tone.ink,
+              ),
             ),
     );
   }
@@ -1432,13 +1444,13 @@ class MomentText extends StatelessWidget {
         spacing: -0.01 * size,
         color: colour,
       );
-      final TextStyle base = serif(FontWeight.w400, ink);
+      final TextStyle base = serif(FontWeight.w600, ink);
       return TextSpan(
         style: base,
         children: [
           TextSpan(text: line.before),
           if (shown)
-            TextSpan(text: '${line.year}', style: serif(FontWeight.w600, a))
+            TextSpan(text: '${line.year}', style: serif(FontWeight.w800, a))
           else
             TextSpan(
               text: '\u2002\u2002\u2002\u2002',

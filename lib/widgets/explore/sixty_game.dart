@@ -398,8 +398,24 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
     return GamePlayFrame(
       kit: kit,
       count: l.nOfM(math.min(at + 1, n), n),
-      rule: _SixtyClock(game: _game, kit: kit),
-      body: LayoutBuilder(builder: (context, box) => _claims(box.biggest)),
+      body: ChallengeCard(
+        tone: kit.look.tone,
+        mark: kit.look.mark,
+        faint: false,
+        padding: const EdgeInsets.fromLTRB(20, 18, 20, 22),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _SixtyClock(game: _game, kit: kit),
+            const SizedBox(height: 22),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, box) => _claims(box.biggest),
+              ),
+            ),
+          ],
+        ),
+      ),
       actions: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -492,7 +508,6 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
   /// and the answer the claim leans to as the finger moves it.
   Widget _claims(Size area) {
     final l = context.l10n;
-    final Palette p = widget.kit.palette;
     final int n = _pills.length;
     final int at = math.min(_game.round.answers?.length ?? 0, n);
     final double width = area.width;
@@ -522,6 +537,7 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
                     child: _SixtyClaim(
                       key: ValueKey('sixty-claim-${pill.id}'),
                       pill: pill,
+                      ink: widget.kit.look.tone.ink,
                     ),
                   ),
                 ),
@@ -539,7 +555,7 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
                     opacity: (lean.abs() * 3).clamp(0.0, 1.0),
                     child: Text(
                       upper(context, lean > 0 ? l.sayTrue : l.sayFalse),
-                      style: challengeSmallCaps(p.ink, 11.5),
+                      style: challengeSmallCaps(widget.kit.look.tone.ink, 11.5),
                     ),
                   ),
                 ),
@@ -557,7 +573,10 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
                   opacity: 1 - go,
                   child: Transform.translate(
                     offset: Offset(leaving.from + dir * 32 * go, 0),
-                    child: _SixtyClaim(pill: _pills[leaving.at]),
+                    child: _SixtyClaim(
+                      pill: _pills[leaving.at],
+                      ink: widget.kit.look.tone.ink,
+                    ),
                   ),
                 ),
               ),
@@ -581,7 +600,7 @@ class _SixtyClock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final Palette p = kit.palette;
+    final Color ink = kit.look.tone.ink;
     final TextScaler scaler = MediaQuery.textScalerOf(context);
     return AnimatedBuilder(
       animation: game.clock,
@@ -592,29 +611,29 @@ class _SixtyClock extends StatelessWidget {
           excludeSemantics: true,
           child: Row(
             children: [
-              Expanded(
-                child: SizedBox(
-                  height: 12,
-                  child: CustomPaint(
-                    painter: _ClockRule(
-                      left: game.left / SixtyRound.seconds,
-                      track: p.line,
-                      colour: kit.accent,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
               Text(
-                '$secs',
+                '$secs s',
                 key: const ValueKey('sixty-clock'),
                 textScaler: scaler.clamp(maxScaleFactor: 1.3),
                 style: AppText.body(
                   size: 13,
-                  weight: FontWeight.w600,
+                  weight: FontWeight.w800,
                   height: 1,
-                  color: p.ink,
+                  color: ink,
                 ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: SizedBox(
+                  height: 8,
+                  child: CustomPaint(
+                    painter: _ClockRule(
+                      left: game.left / SixtyRound.seconds,
+                      track: ink.withValues(alpha: 0.2),
+                      colour: ink,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -640,14 +659,15 @@ class _ClockRule extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final double y = size.height / 2;
-    canvas.drawRect(
-      Rect.fromLTWH(0, y - 0.5, size.width, 1),
+    final Radius r = const Radius.circular(2);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(Rect.fromLTWH(0, y - 2, size.width, 4), r),
       Paint()..color = track,
     );
     final double w = size.width * left.clamp(0.0, 1.0);
     if (w <= 0) return;
-    canvas.drawRect(
-      Rect.fromLTWH(0, y - 1, w, 2),
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(Rect.fromLTWH(0, y - 2, w, 4), r),
       Paint()..color = colour,
     );
   }
@@ -660,35 +680,34 @@ class _ClockRule extends CustomPainter {
 /// A claim of the round, set as a page is: its subject in small capitals,
 /// and the claim in the app's serif, as large as its room takes.
 class _SixtyClaim extends StatelessWidget {
-  const _SixtyClaim({super.key, required this.pill});
+  const _SixtyClaim({super.key, required this.pill, required this.ink});
 
   final Pill pill;
 
+  /// The card's ink.
+  final Color ink;
+
   @override
   Widget build(BuildContext context) {
-    final Palette p = context.p;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          upper(context, context.l10n.subjectOf(pill.topic)),
-          style: challengeSmallCaps(p.inkMuted),
-        ),
-        const SizedBox(height: 18),
+        CardHead(pill: pill, ink: ink, labelInk: ink.withValues(alpha: 0.72)),
+        const SizedBox(height: 16),
         Expanded(
           child: Semantics(
             liveRegion: true,
             child: ScaledText(
               text: claimOf(pill),
               min: 18,
-              max: 31,
+              max: 32,
               alignment: Alignment.topLeft,
               styleFor: (size) => AppText.display(
                 size: size,
-                weight: FontWeight.w400,
-                height: 1.24,
-                spacing: -0.012 * size,
-                color: p.ink,
+                weight: FontWeight.w600,
+                height: 1.14,
+                spacing: -0.025 * size,
+                color: ink,
               ),
             ),
           ),

@@ -293,8 +293,7 @@ void main() {
           'games': ['bets-bigger', 'sixty'],
         }),
       ]);
-      expect(find.text('Best'), findsOneWidget);
-      expect(find.text('6/8'), findsOneWidget);
+      expect(find.text('Best  6/8'), findsOneWidget);
       expect(find.byKey(const ValueKey('challenge-spot-false')), findsNothing);
       expect(
         tester
