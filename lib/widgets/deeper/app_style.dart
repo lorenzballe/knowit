@@ -12,11 +12,14 @@ import 'dart:math' as math;
 import 'dart:typed_data' show Float32List;
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show RenderProxyBox;
 import 'package:flutter/services.dart' show HapticFeedback;
 
 import '../../l10n/l10n.dart';
 import '../../theme.dart';
+import 'header.dart' show DeeperGlow;
 import 'look.dart';
 import 'pieces.dart' show deeperStill;
 
@@ -79,6 +82,198 @@ Color appBath(DeeperLook world, Palette p) {
       : Oklch(0.925, math.min(o.c * 0.3, 0.05), o.h).toColour();
 }
 
+/// Tells [height] how tall its child is, as it is laid out, so a painting
+/// behind it knows where it ends.
+class ReportHeight extends SingleChildRenderObjectWidget {
+  const ReportHeight({super.key, required this.height, super.child});
+
+  final ValueNotifier<double> height;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _ReportHeight(height);
+
+  @override
+  void updateRenderObject(BuildContext context, _ReportHeight render) =>
+      render.height = height;
+}
+
+class _ReportHeight extends RenderProxyBox {
+  _ReportHeight(this.height);
+
+  ValueNotifier<double> height;
+
+  @override
+  void performLayout() {
+    super.performLayout();
+    height.value = size.height;
+  }
+}
+
+/// Head and body as one painting, behind everything in the sheet: the
+/// card's colour with its drifting lights where the head is, falling on
+/// one eased curve into the bath's shade behind the first parts, then
+/// through the bath's mesh of light into the ground, under one grain. One
+/// painting has no edge between layers anywhere, at any scroll.
+class AppWhole extends CustomPainter {
+  AppWhole({
+    required this.look,
+    required this.bath,
+    required this.ground,
+    required this.drift,
+    required this.scroll,
+    required this.head,
+    required this.foot,
+    required this.depth,
+  }) : super(repaint: Listenable.merge([drift, scroll, head]));
+
+  final DeeperLook look;
+  final Color bath;
+  final Color ground;
+  final Animation<double> drift;
+  final ValueListenable<double>? scroll;
+  final ValueListenable<double> head;
+  final double foot;
+
+  /// How far the bath runs below the head before it is the ground.
+  final double depth;
+
+  static const List<double> _ten = [
+    0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1,
+  ];
+
+  static double _smooth(double t) => t * t * (3 - 2 * t);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double h = head.value;
+    if (h <= 0) return;
+    final double w = size.width;
+    // The colour lets go from just under the question and is the bath's
+    // shade a long way below the head's end, behind the first part.
+    final double m0 = h - 46;
+    final double m1 = h + 300;
+    final double f1 = m1 + depth;
+
+    // The head: its colour, its depth and its lights, painted on down past
+    // its end so nothing stops there.
+    DeeperGlow(
+      look: look,
+      drift: drift,
+      scroll: scroll,
+      foot: foot,
+      head: h,
+      whole: true,
+    ).paint(canvas, Size(w, m1 + 4));
+
+    // One gradient from the head's colour through the bath into the
+    // ground: the bath coming in over the head on an eased curve, then its
+    // fall, worked out in OKLCH, the colour let go before the light and
+    // its hue turning a little towards its deeper shade.
+    final double r = (m1 - m0) / (f1 - m0);
+    final Oklch a = Oklch.of(bath);
+    final Oklch b = Oklch.of(ground);
+    final List<Color> colours = [];
+    final List<double> stops = [];
+    for (final double t in _ten) {
+      colours.add(bath.withValues(alpha: _smooth(t)));
+      stops.add(r * t);
+    }
+    const int n = 16;
+    for (int i = 1; i <= n; i++) {
+      final double t = i / n;
+      final double e = _smooth(t);
+      colours.add(
+        Oklch(
+          a.l + (b.l - a.l) * e,
+          a.c * (1 - math.min(1, e * 1.15)),
+          (a.h - (look.dark ? 14 : 6) * e) % 360,
+        ).toColour(),
+      );
+      stops.add(r + (1 - r) * t);
+    }
+    canvas.drawRect(
+      Rect.fromLTRB(0, m0, w, f1),
+      Paint()
+        ..shader = ui.Gradient.linear(
+          Offset(0, m0),
+          Offset(0, f1),
+          colours,
+          stops,
+        ),
+    );
+
+    // The bath's mesh: three pools of nearby hues, far enough below the
+    // head that they rise into it only as the faintest light.
+    final double v = drift.value;
+    final List<Color> pools = _Bath._poolColoursFor(look);
+    const List<(double, double, double, double)> at = [
+      (0.15, 0.06, 0.95, 0.4),
+      (0.9, 0.3, 0.85, 2.1),
+      (0.2, 0.56, 0.8, 3.7),
+    ];
+    for (int i = 0; i < at.length; i++) {
+      final (double x, double y, double rr, double phase) = at[i];
+      final double turn = 2 * math.pi * v + phase;
+      final Offset c = Offset(
+        w * (x + 0.1 * (math.sin(turn) - math.sin(phase))),
+        m1 - 40 + depth * (y + 0.04 * (math.cos(turn) - math.cos(phase))),
+      );
+      final double radius = w * rr;
+      final double strength = (look.dark
+          ? const [0.45, 0.36, 0.26]
+          : const [0.55, 0.42, 0.3])[i];
+      canvas.drawCircle(
+        c,
+        radius,
+        Paint()
+          ..shader = ui.Gradient.radial(c, radius, [
+            for (final double t in _ten)
+              pools[i].withValues(
+                alpha: strength * math.exp(-4 * t * t) * (1 - t * t * t),
+              ),
+          ], _ten),
+      );
+    }
+
+    // One grain over all of it, the same everywhere, so no change of
+    // texture marks where the head was.
+    final Size grained = Size(w, f1);
+    canvas.drawRawPoints(
+      ui.PointMode.points,
+      _Bath._grain(grained, 0),
+      Paint()
+        ..color = Colors.white.withValues(alpha: look.dark ? 0.045 : 0.05)
+        ..strokeWidth = 0.6,
+    );
+    canvas.drawRawPoints(
+      ui.PointMode.points,
+      _Bath._grain(grained, 1),
+      Paint()
+        ..color = Colors.black.withValues(alpha: look.dark ? 0.06 : 0.03)
+        ..strokeWidth = 0.6,
+    );
+  }
+
+  @override
+  bool shouldRepaint(AppWhole old) =>
+      old.look != look ||
+      old.bath != bath ||
+      old.ground != ground ||
+      old.depth != depth ||
+      old.foot != foot;
+}
+
 /// The bath itself: the colour at the top, falling slowly into the ground
 /// by [depth] below through the colour's own deeper shade, the head's
 /// light still glowing faintly at its top, and a fine grain over it so the
@@ -137,7 +332,9 @@ class _Bath extends CustomPainter {
 
   /// Three hues near the subject's, as the head's own lights are, set
   /// deep at night and pale on paper so the cards' words keep reading.
-  List<Color> _poolColours() =>
+  List<Color> _poolColours() => _poolColoursFor(look);
+
+  static List<Color> _poolColoursFor(DeeperLook look) =>
       _pooled[(look.world.toARGB32(), look.dark)] ??= [
         for (final Color g in [look.glow[0], look.glow[2], look.glow[3]])
           () {
