@@ -447,7 +447,7 @@ class _Glow extends CustomPainter {
     // the ground: at night through its own deeper hue (a yellow through
     // amber, never olive), on paper through its own palest tint (never a
     // grey), and only then into the ground itself.
-    final double melt = foot + (look.dark ? 30 : 90);
+    final double melt = foot + (look.dark ? 80 : 90);
     final Color g = look.ground;
     final (Color near, Color far) = _fall(look);
     canvas.drawRect(
@@ -485,7 +485,11 @@ class _Glow extends CustomPainter {
         if (look.dark) {
           return (
             Oklch(o.l * 0.72, o.c * 0.95, h).toColour(),
-            Oklch(0.2, o.c * 0.45, h).toColour(),
+            Oklch(
+              math.max(0.2, Oklch.of(look.ground).l + 0.02),
+              o.c * 0.5,
+              h,
+            ).toColour(),
           );
         }
         final Oklch paper = Oklch.of(look.ground);

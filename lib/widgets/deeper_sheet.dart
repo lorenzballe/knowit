@@ -43,6 +43,7 @@ import '../state/app_state.dart';
 import '../sync/card_ask.dart';
 import '../theme.dart';
 import 'chunky.dart' show VerdictColours, chunkyEdge;
+import 'deeper/app_style.dart' show AppBath, appBath;
 import 'deeper/art.dart';
 import 'deeper/editorial.dart';
 import 'deeper/header.dart';
@@ -270,6 +271,11 @@ class _DeeperSheetState extends State<DeeperSheet>
         : deeperEditorial
         ? world.quiet
         : world;
+    // In the app's style the head's colour flows on down behind the
+    // cards, and the head falls into it rather than into the ground.
+    final Color? bath = deeperStyle == DeeperStyle.app
+        ? appBath(world, p)
+        : null;
     final List<Widget Function(Animation<double> draw)> parts = [
       // The idea said simply: written, or asked for.
       if (pill.simply.isNotEmpty)
@@ -466,7 +472,7 @@ class _DeeperSheetState extends State<DeeperSheet>
                     pill: pill,
                     // The head as it is; in the app's style it ends in
                     // the app's own ground.
-                    look: deeperStyle == DeeperStyle.app ? look : world,
+                    look: bath != null ? world.quietOn(bath) : world,
                     drift: _drift,
                     scroll: _scroll,
                     entrance: _entrance,
@@ -479,78 +485,102 @@ class _DeeperSheetState extends State<DeeperSheet>
                   ),
                   Transform.translate(
                     offset: const Offset(0, -_overlap),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: Stack(
                       children: [
-                        // Set editorially, nothing lies over the head's foot:
-                        // it is let go into the sheet's ground instead, and the
-                        // parts start below it.
-                        if (deeperEditorial)
-                          ExcludeSemantics(
-                            child: Container(
-                              height: _overlap + 8,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    look.ground.withValues(alpha: 0),
-                                    look.ground,
-                                  ],
-                                  stops: const [0, 0.75],
-                                ),
-                              ),
+                        if (bath != null)
+                          Positioned(
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            child: AppBath(
+                              bath: bath,
+                              ground: look.ground,
+                              depth: MediaQuery.sizeOf(context).height * 0.95,
                             ),
                           ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              for (int i = 0; i < parts.length; i++) ...[
-                                if (i > 0) SizedBox(height: deeperGap),
-                                DeeperArrive(
-                                  animation: _arrive(i),
-                                  child: EdFirst(
-                                    first: i == 0,
-                                    child: parts[i](_draw(i)),
-                                  ),
-                                ),
-                              ],
-                              SizedBox(
-                                height: parts.isEmpty
-                                    ? 8
-                                    : deeperEditorial
-                                    ? 44
-                                    : 34,
-                              ),
-                              DeeperArrive(
-                                animation: _arrive(parts.length),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                  ),
-                                  child: DeeperSource(
-                                    key: const ValueKey('deeper-source'),
-                                    look: look,
-                                    source: pill.source,
-                                    kind: sourceKindName(l, pill.sourceKind),
-                                    draw: _draw(parts.length),
-                                    open: _original.isEmpty
-                                        ? null
-                                        : _openSource,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            // Set editorially, nothing lies over the head's foot:
+                            // it is let go into the sheet's ground instead, and the
+                            // parts start below it.
+                            if (deeperEditorial)
+                              ExcludeSemantics(
+                                child: Container(
+                                  height: _overlap + 8,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        (bath ?? look.ground).withValues(
+                                          alpha: 0,
+                                        ),
+                                        bath ?? look.ground,
+                                      ],
+                                      stops: const [0, 0.75],
+                                    ),
                                   ),
                                 ),
                               ),
-                              if (ai) ...[
-                                const SizedBox(height: 26),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 6),
-                                  child: DeeperAiNote(),
-                                ),
-                              ],
-                            ],
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  for (int i = 0; i < parts.length; i++) ...[
+                                    if (i > 0) SizedBox(height: deeperGap),
+                                    DeeperArrive(
+                                      animation: _arrive(i),
+                                      child: EdFirst(
+                                        first: i == 0,
+                                        child: parts[i](_draw(i)),
+                                      ),
+                                    ),
+                                  ],
+                                  SizedBox(
+                                    height: parts.isEmpty
+                                        ? 8
+                                        : deeperEditorial
+                                        ? 44
+                                        : 34,
+                                  ),
+                                  DeeperArrive(
+                                    animation: _arrive(parts.length),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 6,
+                                      ),
+                                      child: DeeperSource(
+                                        key: const ValueKey('deeper-source'),
+                                        look: look,
+                                        source: pill.source,
+                                        kind: sourceKindName(
+                                          l,
+                                          pill.sourceKind,
+                                        ),
+                                        draw: _draw(parts.length),
+                                        open: _original.isEmpty
+                                            ? null
+                                            : _openSource,
+                                      ),
+                                    ),
+                                  ),
+                                  if (ai) ...[
+                                    const SizedBox(height: 26),
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 6,
+                                      ),
+                                      child: DeeperAiNote(),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

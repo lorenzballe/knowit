@@ -8,6 +8,8 @@
 /// and in the chips over the two views.
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
 
@@ -58,6 +60,64 @@ class AppInk {
 
   /// What sits inside a card: a box to write in, a bubble, a view.
   Color get inset => p.isDark ? const Color(0xFF1A1A1E) : p.surface;
+}
+
+/// The colour the sheet is bathed in under the head: the subject's own,
+/// deep at night and pale on paper, flowing down behind the cards and
+/// fading into the app's ground over most of the screen.
+Color appBath(DeeperLook world, Palette p) {
+  if (world.pearl) {
+    return p.isDark ? const Color(0xFF1C1C21) : const Color(0xFFECEAE4);
+  }
+  final Oklch o = Oklch.of(world.world);
+  // A yellow deepens through amber, never olive.
+  final double deepHue = (o.h > 80 && o.h < 125 ? o.h - 32 : o.h - 8) % 360;
+  return p.isDark
+      ? Oklch(0.31, math.min(o.c * 0.55, 0.11), deepHue).toColour()
+      : Oklch(0.925, math.min(o.c * 0.3, 0.05), o.h).toColour();
+}
+
+/// The bath itself: the colour at the top, falling slowly and evenly into
+/// the ground by [depth] below.
+class AppBath extends StatelessWidget {
+  const AppBath({
+    super.key,
+    required this.bath,
+    required this.ground,
+    required this.depth,
+  });
+
+  final Color bath;
+  final Color ground;
+  final double depth;
+
+  @override
+  Widget build(BuildContext context) {
+    Color at(double t) => Color.lerp(bath, ground, t)!;
+    return IgnorePointer(
+      child: SizedBox(
+        height: depth,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                bath,
+                at(0.08),
+                at(0.24),
+                at(0.46),
+                at(0.7),
+                at(0.89),
+                ground,
+              ],
+              stops: const [0, 0.14, 0.3, 0.48, 0.66, 0.84, 1],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 /// The words of a part, as the app sets its running text.
