@@ -23,6 +23,7 @@ import '../../theme.dart';
 import '../../utils/share_link.dart';
 import '../card_edge.dart' show colourContrast;
 import '../glass_round.dart';
+import 'challenge_marks.dart';
 import 'challenges.dart';
 import 'parts.dart' show upper;
 
@@ -472,14 +473,15 @@ class ChallengeFigures extends StatelessWidget {
                   const SizedBox(width: 16),
                   Text(
                     row.value,
-                    style: AppText.body(
-                      size: 15.5,
-                      weight: FontWeight.w600,
-                      height: 1.3,
-                      color: p.ink,
-                    ).copyWith(
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
+                    style:
+                        AppText.body(
+                          size: 15.5,
+                          weight: FontWeight.w600,
+                          height: 1.3,
+                          color: p.ink,
+                        ).copyWith(
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
                   ),
                 ],
               ],
@@ -676,18 +678,21 @@ class _VerdictPainter extends CustomPainter {
       ..strokeJoin = StrokeJoin.round
       ..isAntiAlias = true;
     final Path path = switch (right) {
-      true => Path()
-        ..moveTo(s * 0.12, s * 0.54)
-        ..lineTo(s * 0.4, s * 0.8)
-        ..lineTo(s * 0.88, s * 0.22),
-      false => Path()
-        ..moveTo(s * 0.2, s * 0.2)
-        ..lineTo(s * 0.8, s * 0.8)
-        ..moveTo(s * 0.8, s * 0.2)
-        ..lineTo(s * 0.2, s * 0.8),
-      null => Path()
-        ..moveTo(s * 0.22, s * 0.5)
-        ..lineTo(s * 0.78, s * 0.5),
+      true =>
+        Path()
+          ..moveTo(s * 0.12, s * 0.54)
+          ..lineTo(s * 0.4, s * 0.8)
+          ..lineTo(s * 0.88, s * 0.22),
+      false =>
+        Path()
+          ..moveTo(s * 0.2, s * 0.2)
+          ..lineTo(s * 0.8, s * 0.8)
+          ..moveTo(s * 0.8, s * 0.2)
+          ..lineTo(s * 0.2, s * 0.8),
+      null =>
+        Path()
+          ..moveTo(s * 0.22, s * 0.5)
+          ..lineTo(s * 0.78, s * 0.5),
     };
     canvas.drawPath(path, pen);
   }
@@ -716,9 +721,8 @@ class GameNextCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
-    final TextScaler scaler = MediaQuery.textScalerOf(
-      context,
-    ).clamp(maxScaleFactor: 1.6);
+    final TextScaler scaler = MediaQuery.textScalerOf(context)
+        .clamp(maxScaleFactor: 1.6);
     return Semantics(
       button: true,
       label: '${l.gameNext}: ${look.title}',
@@ -731,9 +735,8 @@ class GameNextCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.fromLTRB(16, 15, 14, 16),
           decoration: BoxDecoration(
-            color: p.surfaceRaised,
+            color: look.tone.tile(p),
             borderRadius: BorderRadius.circular(kChallengeCorner),
-            border: Border.all(color: p.line),
           ),
           child: Row(
             children: [
@@ -741,8 +744,6 @@ class GameNextCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ChallengeRule(colour: look.tone.on(p)),
-                    const SizedBox(height: 9),
                     Text(
                       upper(context, look.skill),
                       textScaler: scaler,
@@ -768,6 +769,12 @@ class GameNextCard extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+              const SizedBox(width: 14),
+              ChallengeMarkView(
+                mark: look.mark,
+                colour: look.tone.on(p),
+                size: 28,
               ),
             ],
           ),

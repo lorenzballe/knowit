@@ -24,12 +24,31 @@ import '../../theme.dart';
 import 'challenge_marks.dart';
 import 'parts.dart' show upper;
 
-/// A challenge's one colour: a deep tone of it on paper, and a lifted one
-/// at night, where a deep one would sink into the black. Used sparingly —
-/// its mark, a fine rule, its primary button.
+/// A challenge's colour, from the subjects' wheel, kept calm: its tile a
+/// softened tone of it (a pastel on paper, a deep one at night), its
+/// screen a tint of the page, and a deep tone on paper and a lifted one at
+/// night for its mark, a fine rule and its primary button.
 @immutable
 class ChallengeTone {
-  const ChallengeTone(this.deep, this.lifted);
+  const ChallengeTone(this.deep, this.lifted, this.vivid);
+
+  /// The colour as the wheel has it, never shown as it is: what the tile's
+  /// and the page's tones are taken from.
+  final Color vivid;
+
+  /// The tile's ground: the colour with its saturation taken down, light
+  /// on paper and deep at night.
+  Color tile(Palette p) {
+    final HSLColor c = HSLColor.fromColor(vivid);
+    return c
+        .withSaturation((c.saturation * (p.isDark ? 0.42 : 0.62)).clamp(0, 1))
+        .withLightness(p.isDark ? 0.2 : 0.86)
+        .toColor();
+  }
+
+  /// The screen's ground: the page, tinted with the tile.
+  Color page(Palette p) =>
+      Color.lerp(p.surface, tile(p), p.isDark ? 0.6 : 0.55)!;
 
   /// On the day's paper.
   final Color deep;
@@ -487,12 +506,11 @@ class ChallengeTile extends StatefulWidget {
   static const EdgeInsets pad = EdgeInsets.fromLTRB(14, 14, 13, 13);
 
   /// The mark's side.
-  static const double markSide = 20;
+  static const double markSide = 24;
 
   /// Between the skill and the name, the name and its line, and the line
   /// and the foot at the least.
   static const double _afterSkill = 12;
-  static const double _afterRule = 9;
   static const double _afterTitle = 5;
   static const double _beforeFoot = 14;
 
@@ -645,8 +663,6 @@ class ChallengeTile extends StatefulWidget {
       }
     }
     return (pad.top +
-            2 +
-            _afterRule +
             skill +
             _afterSkill +
             title +
@@ -678,8 +694,8 @@ class _ChallengeTileState extends State<ChallengeTile> {
     final Widget words = LayoutBuilder(
       builder: (context, box) {
         final double inner = box.maxWidth - ChallengeTile.pad.horizontal;
-        final (double skill, double title, double line) = ChallengeTile
-            .sizesFor(context, look, inner);
+        final (double skill, double title, double line) =
+            ChallengeTile.sizesFor(context, look, inner);
         // The figure's name as large as its room beside the figure and
         // the mark takes, never broken.
         double figureLabel = 12;
@@ -687,9 +703,8 @@ class _ChallengeTileState extends State<ChallengeTile> {
           final TextPainter value = TextPainter(
             text: TextSpan(
               text: figure.value,
-              style: DefaultTextStyle.of(
-                context,
-              ).style.merge(ChallengeTile.figureStyle(p.ink)),
+              style: DefaultTextStyle.of(context).style
+                  .merge(ChallengeTile.figureStyle(p.ink)),
             ),
             textDirection: Directionality.of(context),
             textScaler: scaler,
@@ -710,8 +725,6 @@ class _ChallengeTileState extends State<ChallengeTile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ChallengeRule(colour: look.tone.on(p)),
-              const SizedBox(height: ChallengeTile._afterRule),
               Text(
                 upper(context, look.skill),
                 key: const ValueKey('challenge-skill'),
@@ -765,6 +778,12 @@ class _ChallengeTileState extends State<ChallengeTile> {
                             ],
                           ),
                   ),
+                  const SizedBox(width: 8),
+                  ChallengeMarkView(
+                    mark: look.mark,
+                    colour: look.tone.on(p),
+                    size: ChallengeTile.markSide,
+                  ),
                 ],
               ),
             ],
@@ -773,8 +792,7 @@ class _ChallengeTileState extends State<ChallengeTile> {
       },
     );
     final Widget ground = ChallengeGround(
-      colour: p.surfaceRaised,
-      border: p.line,
+      colour: look.tone.tile(p),
       radius: kChallengeCorner,
       foreground: words,
     );

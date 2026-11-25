@@ -178,11 +178,11 @@ void main() {
     // No best yet: no figures to show.
     expect(find.byKey(const ValueKey('sixty-record')), findsNothing);
     expect(find.bySemanticsLabel('Begin'), findsOneWidget);
-    // The page is the app's own, the challenge's rule in its tone on it.
+    // The page is the app's own, tinted with the challenge's colour.
     final ChallengeGround ground = tester.widget(
       find.byKey(const ValueKey('sixty-ground')),
     );
-    expect(ground.colour, Palette.dark.surface);
+    expect(ground.colour, kQuickGames.first.tone.page(Palette.dark));
     expect(find.byType(ChallengeRule), findsWidgets);
 
     await tester.tap(find.byKey(const ValueKey('sixty-close')));

@@ -28,6 +28,7 @@ import 'package:flutter/services.dart';
 import '../../l10n/l10n.dart';
 import '../../theme.dart';
 import 'challenge_kit.dart';
+import 'challenge_marks.dart';
 import 'challenges.dart';
 import 'parts.dart' show upper;
 
@@ -80,8 +81,7 @@ class GameKit {
   Color get accent => look.tone.on(palette);
 
   /// [ms], or nothing for a reader who asked for less motion.
-  Duration motion(int ms) =>
-      calm ? Duration.zero : Duration(milliseconds: ms);
+  Duration motion(int ms) => calm ? Duration.zero : Duration(milliseconds: ms);
 }
 
 /// How a round went, as its last moment shows it.
@@ -343,7 +343,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                 flightShuttleBuilder: challengeFlight,
                 child: ChallengeGround(
                   key: ValueKey('$_id-ground'),
-                  colour: p.surface,
+                  colour: widget.look.tone.page(p),
                 ),
               ),
             ),
@@ -438,8 +438,13 @@ class _ChallengeScreenState extends State<ChallengeScreen>
     final Widget words = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ChallengeRule(colour: accent, width: 24),
-        const SizedBox(height: 14),
+        ChallengeMarkView(
+          mark: look.mark,
+          colour: accent,
+          size: 40,
+          time: _game.markTime(GameMoment.intro),
+        ),
+        const SizedBox(height: 22),
         Text(
           upper(context, look.skill),
           key: ValueKey('$_id-skill'),
@@ -460,7 +465,9 @@ class _ChallengeScreenState extends State<ChallengeScreen>
             ),
           ),
         ),
-        const SizedBox(height: 22),
+        const SizedBox(height: 18),
+        ChallengeRule(colour: accent, width: 24),
+        const SizedBox(height: 18),
         Text(
           _game.rules(l),
           key: ValueKey('$_id-rules'),
@@ -520,10 +527,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
         children: [
           ChallengeRule(colour: kit.accent),
           const SizedBox(height: 10),
-          Text(
-            upper(context, text),
-            style: challengeSmallCaps(p.ink, 11),
-          ),
+          Text(upper(context, text), style: challengeSmallCaps(p.ink, 11)),
         ],
       ),
     );
@@ -577,24 +581,12 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                   ),
                 ),
                 if (best != null) ...[
-                  const SizedBox(height: 14),
-                  Row(
+                  const SizedBox(height: 16),
+                  _PersonalBest(
                     key: ValueKey('$_id-best'),
-                    children: [
-                      Container(width: 18, height: 1.5, color: kit.accent),
-                      const SizedBox(width: 10),
-                      Flexible(
-                        child: Text(
-                          best,
-                          style: AppText.body(
-                            size: 14,
-                            weight: FontWeight.w600,
-                            height: 1.25,
-                            color: kit.accent,
-                          ),
-                        ),
-                      ),
-                    ],
+                    text: best,
+                    tone: kit.look.tone,
+                    calm: kit.calm,
                   ),
                 ],
                 const SizedBox(height: 26),
@@ -640,7 +632,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
         Container(
           padding: EdgeInsets.fromLTRB(24, 12, 24, room.foot),
           decoration: BoxDecoration(
-            color: p.surface,
+            color: kit.look.tone.page(p),
             border: Border(top: BorderSide(color: p.line)),
           ),
           child: Row(
@@ -672,6 +664,73 @@ class _ChallengeScreenState extends State<ChallengeScreen>
           ),
         ),
       ],
+    );
+  }
+}
+
+/// A round that beat the reader's best, said warmly but quietly: the
+/// words on a soft band of the challenge's tile, its mark beside them,
+/// coming in once.
+class _PersonalBest extends StatelessWidget {
+  const _PersonalBest({
+    super.key,
+    required this.text,
+    required this.tone,
+    required this.calm,
+  });
+
+  final String text;
+  final ChallengeTone tone;
+  final bool calm;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final Widget band = Container(
+      padding: const EdgeInsets.fromLTRB(12, 8, 14, 8),
+      decoration: BoxDecoration(
+        color: tone.tile(p),
+        borderRadius: BorderRadius.circular(99),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 7,
+            height: 7,
+            decoration: BoxDecoration(
+              color: tone.on(p),
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 9),
+          Flexible(
+            child: Text(
+              text,
+              style: AppText.body(
+                size: 14,
+                weight: FontWeight.w600,
+                height: 1.2,
+                color: p.ink,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (calm) return band;
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 420),
+      curve: Curves.easeOutCubic,
+      builder: (context, t, child) => Opacity(
+        opacity: t,
+        child: Transform.translate(
+          offset: Offset(0, 6 * (1 - t)),
+          child: child,
+        ),
+      ),
+      child: band,
     );
   }
 }
@@ -722,14 +781,19 @@ class ChallengeRunningHead extends StatelessWidget {
         height: room.head - room.top,
         child: Row(
           children: [
+            ChallengeMarkView(
+              mark: kit.look.mark,
+              colour: kit.accent,
+              size: 18,
+            ),
+            const SizedBox(width: 10),
             Expanded(
               child: Text(
                 upper(context, kit.look.title),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                textScaler: MediaQuery.textScalerOf(
-                  context,
-                ).clamp(maxScaleFactor: 1.4),
+                textScaler: MediaQuery.textScalerOf(context)
+                    .clamp(maxScaleFactor: 1.4),
                 style: challengeSmallCaps(p.inkMuted, 11),
               ),
             ),
@@ -738,9 +802,8 @@ class ChallengeRunningHead extends StatelessWidget {
               Text(
                 count,
                 key: ValueKey('${kit.id}-count'),
-                textScaler: MediaQuery.textScalerOf(
-                  context,
-                ).clamp(maxScaleFactor: 1.4),
+                textScaler: MediaQuery.textScalerOf(context)
+                    .clamp(maxScaleFactor: 1.4),
                 style: AppText.body(
                   size: 13,
                   weight: FontWeight.w600,
@@ -812,7 +875,9 @@ class GamePlayFrame extends StatelessWidget {
             Padding(padding: side, child: s),
           ],
           const SizedBox(height: 20),
-          Expanded(child: Padding(padding: side, child: body)),
+          Expanded(
+            child: Padding(padding: side, child: body),
+          ),
           if (actions case final Widget a) ...[
             const SizedBox(height: 16),
             Padding(padding: side, child: a),
