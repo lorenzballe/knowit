@@ -105,27 +105,44 @@ class AppSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppInk ink = AppInk.of(context, look);
     final Palette p = context.p;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: p.surfaceRaised,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: ink.edge),
+        border: Border.all(color: p.line),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 22),
+        padding: const EdgeInsets.fromLTRB(20, 18, 20, 22),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               children: [
+                // The one mark of the subject's colour on a part.
+                ExcludeSemantics(
+                  child: Container(
+                    width: 7,
+                    height: 7,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: look.pearl ? p.ink : look.world,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 9),
                 Flexible(
                   child: Semantics(
                     header: true,
                     child: Text(
                       title.toUpperCase(),
-                      style: appLabel(ink.accent),
+                      style: AppText.label(
+                        size: 11,
+                        weight: FontWeight.w600,
+                        spacing: 1.3,
+                        height: 1.3,
+                        color: p.inkMuted,
+                      ),
                     ),
                   ),
                 ),
@@ -221,9 +238,16 @@ class _AppView extends StatelessWidget {
           children: [
             if (chip != view.$1) ...[
               ExcludeSemantics(
-                child: AppChip(label: chip, colour: colour),
+                child: Text(
+                  chip.toUpperCase(),
+                  style: AppText.label(
+                    size: 10.5,
+                    spacing: 1.3,
+                    color: p.inkFaint,
+                  ),
+                ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
             ],
             Semantics(
               header: true,
