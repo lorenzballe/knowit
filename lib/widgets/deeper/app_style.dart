@@ -8,6 +8,10 @@
 /// and in the chips over the two views.
 library;
 
+import 'dart:math' as math;
+import 'dart:typed_data' show Float32List;
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
 
@@ -60,6 +64,156 @@ class AppInk {
   Color get inset => p.isDark ? const Color(0xFF1A1A1E) : p.surface;
 }
 
+/// The colour the sheet is bathed in under the head: the subject's own,
+/// deep at night and pale on paper, flowing down behind the cards and
+/// fading into the app's ground over most of the screen.
+Color appBath(DeeperLook world, Palette p) {
+  if (world.pearl) {
+    return p.isDark ? const Color(0xFF1C1C21) : const Color(0xFFECEAE4);
+  }
+  final Oklch o = Oklch.of(world.world);
+  // A yellow deepens through amber, never olive.
+  final double deepHue = (o.h > 80 && o.h < 125 ? o.h - 32 : o.h - 8) % 360;
+  return p.isDark
+      ? Oklch(0.31, math.min(o.c * 0.55, 0.11), deepHue).toColour()
+      : Oklch(0.925, math.min(o.c * 0.3, 0.05), o.h).toColour();
+}
+
+/// The bath itself: the colour at the top, falling slowly into the ground
+/// by [depth] below through the colour's own deeper shade, the head's
+/// light still glowing faintly at its top, and a fine grain over it so the
+/// long fall shows no steps.
+class AppBath extends StatelessWidget {
+  const AppBath({
+    super.key,
+    required this.look,
+    required this.bath,
+    required this.ground,
+    required this.depth,
+  });
+
+  final DeeperLook look;
+  final Color bath;
+  final Color ground;
+  final double depth;
+
+  @override
+  Widget build(BuildContext context) => IgnorePointer(
+    child: SizedBox(
+      height: depth,
+      width: double.infinity,
+      child: CustomPaint(painter: _Bath(look, bath, ground)),
+    ),
+  );
+}
+
+class _Bath extends CustomPainter {
+  _Bath(this.look, this.bath, this.ground);
+
+  final DeeperLook look;
+  final Color bath;
+  final Color ground;
+
+  static final Map<(int, int, bool), (List<Color>, List<double>)> _falls = {};
+
+  /// The fall, worked out in OKLCH so it stays clean all the way: the
+  /// lightness eased, the colour let go a little sooner than the light,
+  /// and the hue turned a few degrees towards its deeper shade on the way
+  /// down.
+  (List<Color>, List<double>) _fall() =>
+      _falls[(bath.toARGB32(), ground.toARGB32(), look.dark)] ??= () {
+        final Oklch a = Oklch.of(bath);
+        final Oklch b = Oklch.of(ground);
+        final List<Color> colours = [];
+        final List<double> stops = [];
+        const int n = 14;
+        for (int i = 0; i <= n; i++) {
+          final double t = i / n;
+          final double e = t * t * (3 - 2 * t);
+          final double ec = math.min(1, e * 1.15);
+          colours.add(
+            Oklch(
+              a.l + (b.l - a.l) * e,
+              a.c * (1 - ec),
+              (a.h - (look.dark ? 14 : 6) * e) % 360,
+            ).toColour(),
+          );
+          stops.add(t);
+        }
+        return (colours, stops);
+      }();
+
+  static final Map<(int, int, int), Float32List> _grains = {};
+
+  static Float32List _grain(Size size, int seed) =>
+      _grains[(size.width.round(), size.height.round(), seed)] ??= () {
+        final math.Random r = math.Random(41 + seed);
+        final int n = (size.width * size.height / 14).round();
+        final Float32List at = Float32List(n * 2);
+        for (int i = 0; i < n; i++) {
+          at[i * 2] = r.nextDouble() * size.width;
+          at[i * 2 + 1] = r.nextDouble() * size.height;
+        }
+        return at;
+      }();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Rect box = Offset.zero & size;
+    final (List<Color> colours, List<double> stops) = _fall();
+    canvas.drawRect(
+      box,
+      Paint()
+        ..shader = ui.Gradient.linear(
+          box.topCenter,
+          box.bottomCenter,
+          colours,
+          stops,
+        ),
+    );
+    // The head's light, carried on a little way down: a soft pool at the
+    // top, wider than the screen, so the head and the bath are one light.
+    final Offset centre = Offset(size.width * 0.3, 0);
+    final double radius = size.width * 1.1;
+    final Color glow = look.glow[1];
+    canvas.drawCircle(
+      centre,
+      radius,
+      Paint()
+        ..shader = ui.Gradient.radial(
+          centre,
+          radius,
+          [
+            glow.withValues(alpha: look.dark ? 0.14 : 0.22),
+            glow.withValues(alpha: look.dark ? 0.05 : 0.08),
+            glow.withValues(alpha: 0),
+          ],
+          const [0, 0.45, 1],
+        ),
+    );
+    // A grain finer than the eye can pick out, lighter and darker, so the
+    // long fall never shows a step.
+    canvas.drawRawPoints(
+      ui.PointMode.points,
+      _grain(size, 0),
+      Paint()
+        ..color = Colors.white.withValues(alpha: look.dark ? 0.04 : 0.05)
+        ..strokeWidth = 0.6,
+    );
+    canvas.drawRawPoints(
+      ui.PointMode.points,
+      _grain(size, 1),
+      Paint()
+        ..color = Colors.black.withValues(alpha: look.dark ? 0.06 : 0.025)
+        ..strokeWidth = 0.6,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_Bath old) =>
+      old.look != look || old.bath != bath || old.ground != ground;
+}
+
 /// The words of a part, as the app sets its running text.
 TextStyle appBody(BuildContext context) => AppText.body(
   size: 16,
@@ -108,9 +262,21 @@ class AppSection extends StatelessWidget {
     final Palette p = context.p;
     return DecoratedBox(
       decoration: BoxDecoration(
+        // Opaque, as the app's cards are, lifted off the light by a soft
+        // shadow; its words read as on any of the app's cards.
         color: p.surfaceRaised,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: p.line),
+        border: Border.all(
+          color: p.isDark ? const Color(0x14FFFFFF) : const Color(0x0F000000),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: p.isDark ? 0.32 : 0.06),
+            blurRadius: 28,
+            spreadRadius: -6,
+            offset: const Offset(0, 12),
+          ),
+        ],
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(22, 20, 22, 24),
