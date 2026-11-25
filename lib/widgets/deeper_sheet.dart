@@ -493,6 +493,7 @@ class _DeeperSheetState extends State<DeeperSheet>
                             left: 0,
                             right: 0,
                             child: AppBath(
+                              look: world,
                               bath: bath,
                               ground: look.ground,
                               depth: MediaQuery.sizeOf(context).height * 0.95,

@@ -363,7 +363,12 @@ void main() {
 
       // The head and the first part under it, for three subjects far apart
       // on the wheel: the light settled, the sheet drawn up.
-      for (final String subject in ['Technology', 'Economics', 'Psychology']) {
+      for (final String subject in [
+        'Technology',
+        'Economics',
+        'Psychology',
+        'Thinking',
+      ]) {
         testWidgets('head $subject, $tag', (tester) async {
           debugToolsOn = true;
           addTearDown(() => debugToolsOn = false);

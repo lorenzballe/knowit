@@ -428,15 +428,15 @@ class _Glow extends CustomPainter {
       ui.PointMode.points,
       _grain(size, 0),
       Paint()
-        ..color = Colors.white.withValues(alpha: look.pearl ? 0.05 : 0.045)
-        ..strokeWidth = 1,
+        ..color = Colors.white.withValues(alpha: look.pearl ? 0.06 : 0.06)
+        ..strokeWidth = 0.6,
     );
     canvas.drawRawPoints(
       ui.PointMode.points,
       _grain(size, 1),
       Paint()
-        ..color = Colors.black.withValues(alpha: look.pearl ? 0.035 : 0.06)
-        ..strokeWidth = 1,
+        ..color = Colors.black.withValues(alpha: look.pearl ? 0.05 : 0.07)
+        ..strokeWidth = 0.6,
     );
 
     // The foot, where the first part lies: let go into the sheet's own
@@ -524,7 +524,7 @@ class _Glow extends CustomPainter {
   static Float32List _grain(Size size, int seed) =>
       _grains[(size.width.round(), size.height.round(), seed)] ??= () {
         final math.Random r = math.Random(17 + seed);
-        final int n = (size.width * size.height / 70).round();
+        final int n = (size.width * size.height / 14).round();
         final Float32List at = Float32List(n * 2);
         for (int i = 0; i < n; i++) {
           at[i * 2] = r.nextDouble() * size.width;
