@@ -596,7 +596,7 @@ class _Half extends StatelessWidget {
     final bool done = picked != null;
     final bool big = done && side == bigger;
     final bool mine = picked == side;
-    final Color face = big ? kArtInk : kArtCream;
+    final Color face = big ? kArtInk : gameFace(context);
     final Color ink = big ? kArtCream : kArtInk;
     return Semantics(
       button: true,
@@ -619,7 +619,7 @@ class _Half extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: face,
                   borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: kArtInk, width: 3),
+                  border: gameBorder(context),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

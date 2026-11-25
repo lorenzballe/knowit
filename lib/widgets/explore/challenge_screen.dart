@@ -362,7 +362,10 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                     curve: Curves.easeOutCubic,
                     child: IgnorePointer(
                       ignoring: !_up,
-                      child: _moments(context, room, p),
+                      child: ChallengeToneScope(
+                        tone: widget.look.tone,
+                        child: _moments(context, room, p),
+                      ),
                     ),
                   ),
                 ),
@@ -439,37 +442,39 @@ class _ChallengeScreenState extends State<ChallengeScreen>
     final Widget card = ChallengeCard(
       tone: look.tone,
       mark: look.mark,
+      big: true,
+      padding: const EdgeInsets.fromLTRB(22, 20, 22, 26),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ChallengeCardHead(look: look, key: ValueKey('$_id-skill')),
-          const SizedBox(height: 40),
+          const Spacer(),
+          const SizedBox(height: 28),
           Semantics(
             header: true,
             child: Text(
               look.title,
               textScaler: scaler.clamp(maxScaleFactor: 1.3),
               style: AppText.display(
-                size: 38,
+                size: 46,
                 weight: FontWeight.w600,
-                height: 1.04,
-                spacing: -0.9,
+                height: 1.02,
+                spacing: -1.3,
                 color: ink,
               ),
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           Text(
             _game.rules(l),
             key: ValueKey('$_id-rules'),
             style: AppText.body(
-              size: 16,
+              size: 17,
               weight: FontWeight.w500,
               height: 1.42,
-              color: ink.withValues(alpha: 0.86),
+              color: ink.withValues(alpha: 0.88),
             ),
           ),
-          const SizedBox(height: 8),
         ],
       ),
     );
@@ -477,23 +482,36 @@ class _ChallengeScreenState extends State<ChallengeScreen>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ChallengeRunningHead(id: _id, title: look.title, room: room),
+        // The card takes the room the screen has, its name at its foot as
+        // a card of the day's; where the words are more than the room,
+        // they scroll.
         Expanded(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                card,
-                if (rows.isNotEmpty) ...[
-                  const SizedBox(height: 10),
-                  ChallengeFigures(key: ValueKey('$_id-record'), rows: rows),
-                ],
-              ],
+          child: LayoutBuilder(
+            builder: (context, box) => SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(16, 6, 16, 0),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: box.maxHeight - 6),
+                child: IntrinsicHeight(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(child: card),
+                      if (rows.isNotEmpty) ...[
+                        const SizedBox(height: 10),
+                        ChallengeFigures(
+                          key: ValueKey('$_id-record'),
+                          rows: rows,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(16, 8, 16, room.foot),
+          padding: EdgeInsets.fromLTRB(16, 12, 16, room.foot),
           child: GameButton.primary(
             key: ValueKey('$_id-play'),
             context: context,

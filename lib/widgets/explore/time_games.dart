@@ -487,7 +487,7 @@ class _Moment extends StatelessWidget {
                 child: MomentText(
                   line: line,
                   shown: told,
-                  max: 19,
+                  max: 23,
                   min: 13,
                   ink: p.ink,
                   accent: accent,
@@ -989,9 +989,9 @@ class _YearDialState extends State<YearDial>
         child: Container(
           height: 76,
           decoration: BoxDecoration(
-            color: kArtCream,
+            color: gameFace(context),
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: kArtInk, width: 3),
+            border: gameBorder(context),
           ),
           clipBehavior: Clip.antiAlias,
           child: CustomPaint(

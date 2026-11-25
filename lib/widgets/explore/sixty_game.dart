@@ -434,8 +434,8 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
                   key: const ValueKey('sixty-false'),
                   context: context,
                   label: l.sayFalse,
-                  height: 58,
-                  size: 16.5,
+                  height: 64,
+                  size: 17,
                   onTap: () => _say(false),
                 ),
               ),
@@ -445,8 +445,8 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
                   key: const ValueKey('sixty-true'),
                   context: context,
                   label: l.sayTrue,
-                  height: 58,
-                  size: 16.5,
+                  height: 64,
+                  size: 17,
                   onTap: () => _say(true),
                 ),
               ),
@@ -700,8 +700,8 @@ class _SixtyClaim extends StatelessWidget {
             child: ScaledText(
               text: claimOf(pill),
               min: 18,
-              max: 32,
-              alignment: Alignment.topLeft,
+              max: 40,
+              alignment: Alignment.bottomLeft,
               styleFor: (size) => AppText.display(
                 size: size,
                 weight: FontWeight.w600,
@@ -789,11 +789,24 @@ class ClaimCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Pill? p = pill;
-    final BoxDecoration face = BoxDecoration(
-      color: kArtCream,
-      borderRadius: BorderRadius.circular(28),
-      border: Border.all(color: kArtInk, width: 3),
-    );
+    // A card of the challenge's colour, as the app's cards are; the ones
+    // still to come a shade deeper, under it.
+    final ChallengeTone? tone = ChallengeToneScope.maybeOf(context);
+    final BoxDecoration face = tone == null
+        ? BoxDecoration(
+            color: kArtCream,
+            borderRadius: BorderRadius.circular(28),
+            border: Border.all(color: kArtInk, width: 3),
+          )
+        : BoxDecoration(
+            color: p == null
+                ? Color.alphaBlend(
+                    Colors.black.withValues(alpha: 0.28),
+                    tone.vivid,
+                  )
+                : tone.vivid,
+            borderRadius: BorderRadius.circular(24),
+          );
     if (p == null) return DecoratedBox(decoration: face);
     final bool? v = verdict;
     return Container(

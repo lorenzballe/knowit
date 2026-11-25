@@ -280,7 +280,7 @@ class _Claim extends StatelessWidget {
     final l = context.l10n;
     final bool truth = trueOrFalseAnswer(pill);
     final bool told = tell > 0;
-    final Color face = chosen ? kArtInk : kArtCream;
+    final Color face = chosen ? kArtInk : gameFace(context);
     final Color ink = chosen ? kArtCream : kArtInk;
     final double fade = told && truth && !mine ? 0.72 : 1;
     return Semantics(
@@ -308,7 +308,7 @@ class _Claim extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: face,
                     borderRadius: BorderRadius.circular(22),
-                    border: Border.all(color: kArtInk, width: 3),
+                    border: gameBorder(context),
                   ),
                   child: ScaledText(
                     text: claimOf(pill),

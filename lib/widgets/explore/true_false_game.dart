@@ -323,9 +323,9 @@ class _Told extends StatelessWidget {
     final bool truth = trueOrFalseAnswer(pill);
     return Container(
       decoration: BoxDecoration(
-        color: kArtCream,
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: kArtInk, width: 3),
+        color: gameFace(context),
+        borderRadius: BorderRadius.circular(24),
+        border: gameBorder(context),
       ),
       padding: const EdgeInsets.fromLTRB(22, 20, 22, 22),
       child: Column(

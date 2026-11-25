@@ -56,6 +56,24 @@ class ChallengeTone {
 
 }
 
+/// The challenge a screen is taken on, for whatever on it is drawn in the
+/// challenge's colour without being handed it: its cards.
+class ChallengeToneScope extends InheritedWidget {
+  const ChallengeToneScope({
+    super.key,
+    required this.tone,
+    required super.child,
+  });
+
+  final ChallengeTone tone;
+
+  static ChallengeTone? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<ChallengeToneScope>()?.tone;
+
+  @override
+  bool updateShouldNotify(ChallengeToneScope old) => old.tone != tone;
+}
+
 /// The colours a verdict is told in, the app's own: its green for right
 /// (the one a win is told in), its alert for wrong.
 Color challengeRight(Palette p) =>

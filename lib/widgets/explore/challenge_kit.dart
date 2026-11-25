@@ -146,8 +146,10 @@ Future<void> shareGame(
   }
 }
 
-/// A card of paper with a line of ink round it: what a claim, a figure or
-/// a moment is set on, in the challenges whose rounds are still on cards.
+/// What a claim, a figure or a moment is set on: a card of the
+/// challenge's colour, as the app's cards are of their subject's (on a
+/// screen with no challenge, a card of paper). Its words are the cards'
+/// ink, which every colour of the wheel carries.
 class GamePaper extends StatelessWidget {
   const GamePaper({
     super.key,
@@ -165,16 +167,48 @@ class GamePaper extends StatelessWidget {
   final double line;
 
   @override
-  Widget build(BuildContext context) => Container(
-    padding: padding,
-    decoration: BoxDecoration(
-      color: colour,
-      borderRadius: BorderRadius.circular(radius),
-      border: Border.all(color: kArtInk, width: line),
-    ),
-    child: child,
-  );
+  Widget build(BuildContext context) {
+    final ChallengeTone? tone = ChallengeToneScope.maybeOf(context);
+    if (tone == null) {
+      return Container(
+        padding: padding,
+        decoration: BoxDecoration(
+          color: colour,
+          borderRadius: BorderRadius.circular(radius),
+          border: Border.all(color: kArtInk, width: line),
+        ),
+        child: child,
+      );
+    }
+    return Container(
+      padding: padding,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            tone.vivid,
+            Color.alphaBlend(Colors.black.withValues(alpha: 0.14), tone.vivid),
+          ],
+        ),
+      ),
+      child: child,
+    );
+  }
 }
+
+/// The face of a card a round is set on: the challenge's colour, or the
+/// drawn cards' paper on a screen with no challenge.
+Color gameFace(BuildContext context) =>
+    ChallengeToneScope.maybeOf(context)?.vivid ?? kArtCream;
+
+/// The line of ink round such a card: none on a challenge's screen, where
+/// the cards are the app's own.
+Border? gameBorder(BuildContext context, {double width = 3}) =>
+    ChallengeToneScope.maybeOf(context) == null
+    ? Border.all(color: kArtInk, width: width)
+    : null;
 
 /// The way out, as the app's controls are drawn: Apple's own glass on iOS
 /// 26 and later, and elsewhere a hairline circle round a cross.
@@ -339,7 +373,13 @@ class _GameButtonState extends State<GameButton> {
     final Palette p = context.p;
     final bool calm = MediaQuery.disableAnimationsOf(context);
     final bool on = widget.onTap != null;
-    final Color face = widget.face;
+    // The drawn cards' paper and ink, as the challenges' rounds still ask
+    // for them: the app's raised button and its inverse one.
+    final (Color face, Color ink) = switch (widget.face) {
+      kArtCream => (p.surfaceRaised, p.ink),
+      kArtInk => (p.inverse, p.onInverse),
+      final Color f => (f, widget.ink),
+    };
     final Color line =
         widget.border ??
         (face.a < 1 || colourContrast(face, p.surface) < 1.6
@@ -367,7 +407,11 @@ class _GameButtonState extends State<GameButton> {
             decoration: BoxDecoration(
               color: face,
               borderRadius: BorderRadius.circular(widget.radius),
-              border: Border.all(color: line),
+              border: Border.all(
+                color: widget.face == kArtCream || widget.face == kArtInk
+                    ? face
+                    : line,
+              ),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 14),
             alignment: Alignment.center,
@@ -389,7 +433,7 @@ class _GameButtonState extends State<GameButton> {
                         weight: FontWeight.w700,
                         height: 1,
                         spacing: 0.1,
-                        color: widget.ink,
+                        color: ink,
                       ),
                     ),
                 ],
@@ -452,7 +496,12 @@ class ChallengeCard extends StatelessWidget {
     required this.child,
     this.padding = const EdgeInsets.fromLTRB(20, 18, 20, 22),
     this.faint = true,
+    this.big = false,
   });
+
+  /// Whether the faint mark is the card's size, for a card that is the
+  /// screen's.
+  final bool big;
 
   final ChallengeTone tone;
   final ChallengeMark mark;
@@ -480,12 +529,13 @@ class ChallengeCard extends StatelessWidget {
         children: [
           if (faint)
             Positioned(
-              right: -24,
-              bottom: -24,
+              right: big ? -40 : -24,
+              top: big ? 34 : null,
+              bottom: big ? null : -24,
               child: ChallengeMarkView(
                 mark: mark,
-                colour: tone.ink.withValues(alpha: 0.1),
-                size: 170,
+                colour: tone.ink.withValues(alpha: big ? 0.09 : 0.1),
+                size: big ? 260 : 170,
               ),
             ),
           Padding(padding: padding, child: child),
