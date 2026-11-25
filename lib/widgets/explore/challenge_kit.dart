@@ -554,15 +554,29 @@ class ChallengeCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          if (faint)
+          if (faint && !big)
             Positioned(
-              right: big ? -40 : -24,
-              top: big ? 34 : null,
-              bottom: big ? null : -24,
+              right: -24,
+              bottom: -24,
               child: ChallengeMarkView(
                 mark: mark,
-                colour: tone.ink.withValues(alpha: big ? 0.09 : 0.1),
-                size: big ? 260 : 170,
+                colour: tone.ink.withValues(alpha: 0.1),
+                size: 170,
+              ),
+            ),
+          // On a card that is the screen's, the mark large across its
+          // middle, between the name and the figures at its foot.
+          if (faint && big)
+            Positioned(
+              right: -46,
+              top: 120,
+              bottom: 40,
+              child: Center(
+                child: ChallengeMarkView(
+                  mark: mark,
+                  colour: tone.ink.withValues(alpha: 0.16),
+                  size: 300,
+                ),
               ),
             ),
           Padding(padding: padding, child: child),

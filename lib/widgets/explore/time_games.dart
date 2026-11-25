@@ -442,7 +442,7 @@ class _Moment extends StatelessWidget {
       selected: on,
       label: [
         if (told) '${line.year}.',
-        told ? line.text : line.gapped(l.timeGap),
+        line.statement,
         if (r != null) l.inOrderPlaced(r),
         if (right case final bool ok) ok ? l.gameRight : l.gameWrong,
       ].join(' '),
@@ -1437,30 +1437,25 @@ class MomentText extends StatelessWidget {
   TextSpan _span(double size, String gapLabel, [Color? scoped]) {
     final Color? a = accent ?? scoped;
     if (a != null) {
+      // On a challenge's screen the moment is said plainly, as what
+      // happened, its year kept back; once told, the year under it — save
+      // where the year is told beside it ([accent], In order's margin).
       TextStyle serif(FontWeight weight, Color colour) => AppText.display(
         size: size,
         weight: weight,
-        height: 1.26,
-        spacing: -0.01 * size,
+        height: 1.24,
+        spacing: -0.012 * size,
         color: colour,
       );
-      final TextStyle base = serif(FontWeight.w600, ink);
       return TextSpan(
-        style: base,
+        style: serif(FontWeight.w600, ink),
         children: [
-          TextSpan(text: line.before),
-          if (shown)
-            TextSpan(text: '${line.year}', style: serif(FontWeight.w800, a))
-          else
+          TextSpan(text: line.statement),
+          if (shown && accent == null)
             TextSpan(
-              text: '\u2002\u2002\u2002\u2002',
-              semanticsLabel: gapLabel,
-              style: base.copyWith(
-                decoration: TextDecoration.underline,
-                decorationColor: ink.withValues(alpha: 0.5),
-              ),
+              text: '\n${line.year}',
+              style: serif(FontWeight.w800, a),
             ),
-          TextSpan(text: line.after),
         ],
       );
     }
