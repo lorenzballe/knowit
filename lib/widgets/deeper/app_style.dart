@@ -63,7 +63,7 @@ class AppInk {
 /// The words of a part, as the app sets its running text.
 TextStyle appBody(BuildContext context) => AppText.body(
   size: 16,
-  height: 1.55,
+  height: 1.6,
   color: context.p.ink.withValues(alpha: context.p.isDark ? 0.9 : 0.88),
 );
 
@@ -113,7 +113,7 @@ class AppSection extends StatelessWidget {
         border: Border.all(color: p.line),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 18, 20, 22),
+        padding: const EdgeInsets.fromLTRB(22, 20, 22, 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -153,13 +153,13 @@ class AppSection extends StatelessWidget {
               ],
             ),
             if (lead case final String said) ...[
-              const SizedBox(height: 6),
+              const SizedBox(height: 8),
               Text(
                 said,
                 style: AppText.body(size: 14, height: 1.45, color: p.inkMuted),
               ),
             ],
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             child,
           ],
         ),
@@ -197,7 +197,7 @@ class AppVersus extends StatelessWidget {
           view: a,
         ),
         if (other != null) ...[
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           _AppView(
             ink: ink,
             chip: l.deeperSideB,
@@ -232,7 +232,7 @@ class _AppView extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+        padding: const EdgeInsets.fromLTRB(16, 15, 16, 17),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -255,8 +255,8 @@ class _AppView extends StatelessWidget {
                 view.$1,
                 style: AppText.body(
                   size: 16,
-                  weight: FontWeight.w700,
-                  height: 1.3,
+                  weight: FontWeight.w600,
+                  height: 1.32,
                   color: p.ink,
                 ),
               ),
@@ -266,7 +266,7 @@ class _AppView extends StatelessWidget {
               view.$2,
               style: AppText.body(
                 size: 15,
-                height: 1.5,
+                height: 1.55,
                 color: p.ink.withValues(alpha: p.isDark ? 0.82 : 0.8),
               ),
             ),

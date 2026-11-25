@@ -44,12 +44,13 @@ class DeeperArrive extends StatelessWidget {
     child: RepaintBoundary(child: child),
     builder: (context, child) {
       final double v = animation.value;
+      final bool calm = deeperStyle == DeeperStyle.app;
       return Opacity(
         opacity: v.clamp(0.0, 1.0),
         child: Transform.translate(
-          offset: Offset(0, distance * (1 - v)),
+          offset: Offset(0, (calm ? 14 : distance) * (1 - v)),
           child: Transform.scale(
-            scale: 0.965 + 0.035 * v,
+            scale: calm ? 1 : 0.965 + 0.035 * v,
             alignment: Alignment.topCenter,
             child: child,
           ),

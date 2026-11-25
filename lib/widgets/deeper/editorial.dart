@@ -50,7 +50,7 @@ bool get deeperEditorial => deeperStyle != DeeperStyle.playful;
 /// The room between one part and the next.
 double get deeperGap => switch (deeperStyle) {
   DeeperStyle.playful => 14,
-  DeeperStyle.app => 12,
+  DeeperStyle.app => 14,
   DeeperStyle.column => 34,
   DeeperStyle.panels => 12,
   DeeperStyle.magazine => 42,
