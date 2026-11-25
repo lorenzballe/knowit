@@ -265,7 +265,11 @@ class _DeeperSheetState extends State<DeeperSheet>
     final DeeperLook world = DeeperLook.of(pill.color, dark: p.isDark);
     // The head is always the card's world; set editorially, the parts
     // under it take one quiet tone of it.
-    final DeeperLook look = deeperEditorial ? world.quiet : world;
+    final DeeperLook look = deeperStyle == DeeperStyle.app
+        ? world.quietOn(p.surface)
+        : deeperEditorial
+        ? world.quiet
+        : world;
     final List<Widget Function(Animation<double> draw)> parts = [
       // The idea said simply: written, or asked for.
       if (pill.simply.isNotEmpty)
@@ -460,7 +464,9 @@ class _DeeperSheetState extends State<DeeperSheet>
                   DeeperHeader(
                     key: const ValueKey('deeper-head'),
                     pill: pill,
-                    look: world,
+                    // The head as it is; in the app's style it ends in
+                    // the app's own ground.
+                    look: deeperStyle == DeeperStyle.app ? look : world,
                     drift: _drift,
                     scroll: _scroll,
                     entrance: _entrance,
@@ -829,6 +835,13 @@ class _QuizPartState extends State<_QuizPart> {
                 spacing: -0.2,
                 color: p.ink,
               ),
+              DeeperStyle.app => AppText.display(
+                size: 19,
+                weight: FontWeight.w500,
+                height: 1.35,
+                spacing: -0.2,
+                color: p.ink,
+              ),
               DeeperStyle.magazine => AppText.display(
                 size: 20,
                 weight: FontWeight.w400,
@@ -1017,7 +1030,9 @@ class _QuizOptionState extends State<_QuizOption>
               color: widget.mark == _Mark.open || widget.mark == _Mark.rest
                   ? (pressed ? tone.field : null)
                   : face,
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: BorderRadius.circular(
+                deeperStyle == DeeperStyle.app ? 16 : 2,
+              ),
               border: Border.all(color: line),
             ),
             child: Row(
@@ -1224,9 +1239,16 @@ class _WritePartState extends State<_WritePart> {
     final bool talking =
         asked != null && (widget.busy || widget.result != null);
     final bool ed = deeperEditorial;
+    final bool inApp = deeperStyle == DeeperStyle.app;
     final OutlineInputBorder edge = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(ed ? 2 : 18),
-      borderSide: BorderSide(color: tone.edge),
+      borderRadius: BorderRadius.circular(
+        inApp
+            ? 16
+            : ed
+            ? 2
+            : 18,
+      ),
+      borderSide: BorderSide(color: inApp ? p.line : tone.edge),
     );
     return DeeperTile(
       tone: tone,
@@ -1298,8 +1320,10 @@ class _WritePartState extends State<_WritePart> {
               hintStyle: AppText.body(size: 16, color: p.inkFaint),
               counterText: '',
               isDense: true,
-              filled: !ed,
-              fillColor: tone.field,
+              filled: inApp || !ed,
+              fillColor: inApp
+                  ? (p.isDark ? const Color(0xFF1A1A1E) : p.surface)
+                  : tone.field,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 14,
@@ -1309,7 +1333,7 @@ class _WritePartState extends State<_WritePart> {
               disabledBorder: edge,
               focusedBorder: edge.copyWith(
                 borderSide: BorderSide(
-                  color: tone.accent,
+                  color: inApp ? p.lineStrong : tone.accent,
                   width: ed ? 1.2 : 1.8,
                 ),
               ),
@@ -1438,7 +1462,9 @@ class _Retry extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.fromLTRB(12, 8, 16, 8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(deeperEditorial ? 2 : 99),
+          borderRadius: BorderRadius.circular(
+            deeperEditorial && deeperStyle != DeeperStyle.app ? 2 : 99,
+          ),
           border: Border.all(
             color: deeperEditorial ? tone.edge : tone.accent,
             width: deeperEditorial ? 1 : 1.6,

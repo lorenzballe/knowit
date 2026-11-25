@@ -15,6 +15,7 @@ import '../../l10n/l10n.dart';
 import '../../theme.dart';
 import '../chunky.dart' show chunkyEdge;
 import 'art.dart';
+import 'app_style.dart';
 import 'editorial.dart';
 import 'look.dart';
 
@@ -618,7 +619,9 @@ class DeeperReaderBubble extends StatelessWidget {
   final DeeperVivid vivid;
 
   @override
-  Widget build(BuildContext context) => deeperEditorial
+  Widget build(BuildContext context) => deeperStyle == DeeperStyle.app
+      ? AppReaderBubble(text: text)
+      : deeperEditorial
       ? _edReader(context)
       : Align(
           alignment: AlignmentDirectional.centerEnd,

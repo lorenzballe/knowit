@@ -23,6 +23,7 @@ import 'package:flutter/services.dart' show HapticFeedback;
 
 import '../../l10n/l10n.dart';
 import '../../theme.dart';
+import 'app_style.dart';
 import 'look.dart';
 import 'pieces.dart' show deeperStill;
 
@@ -30,6 +31,10 @@ import 'pieces.dart' show deeperStill;
 enum DeeperStyle {
   /// Each part its own colour and drawing (pieces.dart, art.dart).
   playful,
+
+  /// The app's own language: its black (or paper) ground, its raised
+  /// rounded cards, its pill buttons and chips (app_style.dart).
+  app,
   column,
   panels,
   magazine,
@@ -37,7 +42,7 @@ enum DeeperStyle {
 
 /// The way the parts are set: a prototype switch, moved by the screenshot
 /// tool (tool/deeper_shots.dart, DEEPER_STYLE) and by nothing in the app.
-DeeperStyle deeperStyle = DeeperStyle.magazine;
+DeeperStyle deeperStyle = DeeperStyle.app;
 
 /// Whether the parts are set in one of the editorial ways.
 bool get deeperEditorial => deeperStyle != DeeperStyle.playful;
@@ -45,6 +50,7 @@ bool get deeperEditorial => deeperStyle != DeeperStyle.playful;
 /// The room between one part and the next.
 double get deeperGap => switch (deeperStyle) {
   DeeperStyle.playful => 14,
+  DeeperStyle.app => 12,
   DeeperStyle.column => 34,
   DeeperStyle.panels => 12,
   DeeperStyle.magazine => 42,
@@ -147,14 +153,17 @@ TextStyle edLabel(Color colour, {double size = 11.5}) => AppText.label(
 );
 
 /// The words of a part.
-TextStyle edBody(BuildContext context) => AppText.body(
-  size: 16.5,
-  height: 1.6,
-  color: context.p.ink.withValues(alpha: context.p.isDark ? 0.88 : 0.86),
-);
+TextStyle edBody(BuildContext context) => deeperStyle == DeeperStyle.app
+    ? appBody(context)
+    : AppText.body(
+        size: 16.5,
+        height: 1.6,
+        color: context.p.ink.withValues(alpha: context.p.isDark ? 0.88 : 0.86),
+      );
 
 /// The idea said simply, the lead of the page.
 TextStyle edSimply(BuildContext context) => switch (deeperStyle) {
+  DeeperStyle.app => appSimply(context),
   DeeperStyle.magazine => AppText.display(
     size: 23.5,
     weight: FontWeight.w400,
@@ -224,6 +233,15 @@ class EdSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (deeperStyle == DeeperStyle.app) {
+      return AppSection(
+        look: look,
+        title: title,
+        lead: lead,
+        badge: badge,
+        child: child,
+      );
+    }
     final EdInk ed = EdInk.of(context, look);
     final Widget name = Semantics(
       header: true,
@@ -327,6 +345,7 @@ class EdSection extends StatelessWidget {
         );
       case DeeperStyle.column:
       case DeeperStyle.playful:
+      case DeeperStyle.app:
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
@@ -425,6 +444,9 @@ class EdVersus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (deeperStyle == DeeperStyle.app) {
+      return AppVersus(look: look, a: a, b: b);
+    }
     final l = context.l10n;
     final EdInk ed = EdInk.of(context, look);
     final (String, String)? other = b;
@@ -501,6 +523,7 @@ class EdVersus extends StatelessWidget {
         );
       case DeeperStyle.column:
       case DeeperStyle.playful:
+      case DeeperStyle.app:
         return _stacked(first, second, ed);
     }
   }
@@ -549,6 +572,14 @@ class _EdAskButtonState extends State<EdAskButton> {
 
   @override
   Widget build(BuildContext context) {
+    if (deeperStyle == DeeperStyle.app) {
+      return AppAskButton(
+        label: widget.label,
+        onPressed: widget.onPressed,
+        locked: widget.locked,
+        busy: widget.busy,
+      );
+    }
     final Palette p = context.p;
     final EdInk ed = EdInk.of(context, widget.look);
     final bool on = widget.onPressed != null && !widget.busy;
@@ -738,6 +769,9 @@ class EdSource extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (deeperStyle == DeeperStyle.app) {
+      return AppSource(look: look, source: source, kind: kind, open: open);
+    }
     final l = context.l10n;
     final EdInk ed = EdInk.of(context, look);
     final String eyebrow = [
@@ -817,6 +851,7 @@ class EdPlusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (deeperStyle == DeeperStyle.app) return const AppPlusBadge();
     final Palette p = context.p;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),

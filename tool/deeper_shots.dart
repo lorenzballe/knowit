@@ -175,7 +175,7 @@ void main() {
   final String lang = Platform.environment['LANG_SHOT'] ?? 'it';
   final String? onlyPhone = Platform.environment['PHONE'];
   final String? onlyTheme = Platform.environment['THEME'];
-  final String style = Platform.environment['DEEPER_STYLE'] ?? 'magazine';
+  final String style = Platform.environment['DEEPER_STYLE'] ?? 'app';
   deeperStyle = DeeperStyle.values.byName(style);
 
   // The card with all three written: the one bank card whose file holds
