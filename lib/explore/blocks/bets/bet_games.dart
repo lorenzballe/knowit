@@ -27,9 +27,9 @@ import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
 import '../../../theme.dart';
 import '../../../utils/share_link.dart';
-import '../../../widgets/explore/challenge_art.dart';
 import '../../../widgets/explore/challenge_kit.dart';
 import '../../../widgets/explore/challenge_screen.dart';
+import '../../../widgets/explore/challenges.dart';
 import '../../../widgets/explore/parts.dart' show CardHead;
 import '../../../widgets/scaled_text.dart';
 import '../../explore_block.dart';
@@ -352,8 +352,7 @@ class _BetPlayState extends State<_BetPlay> {
   void _next() {
     final int? next = _game.next;
     if (next == null) {
-      final (int right, int of) = _game.score;
-      widget.kit.finish(cheer: right == of && of > 0);
+      widget.kit.finish();
       return;
     }
     HapticFeedback.selectionClick();
@@ -598,7 +597,7 @@ class _Half extends StatelessWidget {
     final bool done = picked != null;
     final bool big = done && side == bigger;
     final bool mine = picked == side;
-    final Color face = big ? kArtInk : kArtCream;
+    final Color face = big ? kArtInk : gameFace(context);
     final Color ink = big ? kArtCream : kArtInk;
     return Semantics(
       button: true,
@@ -621,7 +620,7 @@ class _Half extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: face,
                   borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: kArtInk, width: 3),
+                  border: gameBorder(context),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -935,7 +934,12 @@ class _Halving extends StatelessWidget {
               builder: (context, h, _) => SizedBox(
                 height: 40,
                 child: CustomPaint(
-                  painter: _HalvingPainter(lo: l, hi: h, answer: answer),
+                  painter: _HalvingPainter(
+                    lo: l,
+                    hi: h,
+                    answer: answer,
+                    rail: _Rail.of(context),
+                  ),
                 ),
               ),
             ),
@@ -956,8 +960,10 @@ class _HalvingPainter extends CustomPainter {
     required this.lo,
     required this.hi,
     required this.answer,
+    required this.rail,
   });
 
+  final _Rail rail;
   final double lo;
   final double hi;
   final double? answer;
@@ -965,12 +971,9 @@ class _HalvingPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final double w = size.width;
-    final Paint line = Paint()
-      ..color = kArtInk
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
+    final Paint line = this.rail.line;
     final RRect rail = RRect.fromLTRBR(0, 8, w, size.height - 8, const Radius.circular(12));
-    canvas.drawRRect(rail, Paint()..color = kArtCream);
+    canvas.drawRRect(rail, Paint()..color = this.rail.track);
     final double left = w * lo / 100;
     final double right = math.max(left + 8, w * hi / 100);
     final RRect band = RRect.fromLTRBR(
@@ -980,7 +983,7 @@ class _HalvingPainter extends CustomPainter {
       size.height - 8,
       const Radius.circular(12),
     );
-    canvas.drawRRect(band, Paint()..color = const Color(0xFFFFC83D));
+    canvas.drawRRect(band, Paint()..color = this.rail.band);
     canvas.drawRRect(band, line);
     canvas.drawRRect(rail, line);
     final double? a = answer;
@@ -988,7 +991,7 @@ class _HalvingPainter extends CustomPainter {
       final double x = (w * a / 100).clamp(5, w - 5);
       canvas.drawRRect(
         RRect.fromLTRBR(x - 5, 0, x + 5, size.height, const Radius.circular(5)),
-        Paint()..color = kGameRight,
+        Paint()..color = this.rail.right,
       );
       canvas.drawRRect(
         RRect.fromLTRBR(x - 5, 0, x + 5, size.height, const Radius.circular(5)),
@@ -1453,6 +1456,7 @@ class ShareTrack extends StatelessWidget {
                   value: value,
                   band: band,
                   answer: answer,
+                  rail: _Rail.of(context),
                 ),
               ),
             ),
@@ -1468,7 +1472,10 @@ class _TrackPainter extends CustomPainter {
     required this.value,
     required this.band,
     required this.answer,
+    required this.rail,
   });
+
+  final _Rail rail;
 
   final double value;
   final double band;
@@ -1480,10 +1487,7 @@ class _TrackPainter extends CustomPainter {
     final double w = size.width - pad * 2;
     double x(double v) => pad + w * v / 100;
     final double mid = size.height / 2;
-    final Paint line = Paint()
-      ..color = kArtInk
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
+    final Paint line = this.rail.line;
     final RRect rail = RRect.fromLTRBR(
       pad - 6,
       mid - 9,
@@ -1491,7 +1495,7 @@ class _TrackPainter extends CustomPainter {
       mid + 9,
       const Radius.circular(9),
     );
-    canvas.drawRRect(rail, Paint()..color = kArtCream);
+    canvas.drawRRect(rail, Paint()..color = this.rail.track);
     if (band > 0) {
       final RRect b = RRect.fromLTRBR(
         x(math.max(0, value - band)),
@@ -1500,7 +1504,7 @@ class _TrackPainter extends CustomPainter {
         mid + 15,
         const Radius.circular(10),
       );
-      canvas.drawRRect(b, Paint()..color = const Color(0xFFFFC83D));
+      canvas.drawRRect(b, Paint()..color = this.rail.band);
       canvas.drawRRect(b, line);
     }
     canvas.drawRRect(rail, line);
@@ -1513,12 +1517,12 @@ class _TrackPainter extends CustomPainter {
         mid + 24,
         const Radius.circular(5),
       );
-      canvas.drawRRect(mark, Paint()..color = kGameRight);
+      canvas.drawRRect(mark, Paint()..color = this.rail.right);
       canvas.drawRRect(mark, line);
     }
     final Offset thumb = Offset(x(value), mid);
-    canvas.drawCircle(thumb, 12, Paint()..color = kArtInk);
-    canvas.drawCircle(thumb, 7, Paint()..color = kArtCream);
+    canvas.drawCircle(thumb, 12, Paint()..color = this.rail.ink);
+    canvas.drawCircle(thumb, 6, Paint()..color = this.rail.knob);
   }
 
   @override
@@ -2038,6 +2042,7 @@ class _YouAndAnswer extends StatelessWidget {
           painter: _YouPainter(
             you: top == 0 ? 0 : you / top,
             answer: top == 0 ? 0 : answer / top,
+            rail: _Rail.of(context),
           ),
         ),
       ),
@@ -2046,7 +2051,13 @@ class _YouAndAnswer extends StatelessWidget {
 }
 
 class _YouPainter extends CustomPainter {
-  const _YouPainter({required this.you, required this.answer});
+  const _YouPainter({
+    required this.you,
+    required this.answer,
+    required this.rail,
+  });
+
+  final _Rail rail;
 
   final double you;
   final double answer;
@@ -2055,10 +2066,7 @@ class _YouPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final double w = size.width;
     final double mid = size.height / 2;
-    final Paint line = Paint()
-      ..color = kArtInk
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
+    final Paint line = this.rail.line;
     final RRect rail = RRect.fromLTRBR(
       0,
       mid - 6,
@@ -2066,11 +2074,11 @@ class _YouPainter extends CustomPainter {
       mid + 6,
       const Radius.circular(6),
     );
-    canvas.drawRRect(rail, Paint()..color = kArtCream);
+    canvas.drawRRect(rail, Paint()..color = this.rail.track);
     canvas.drawRRect(rail, line);
     for (final (double at, Color colour) in [
-      (answer, kGameRight),
-      (you, kArtInk),
+      (answer, this.rail.right),
+      (you, this.rail.ink),
     ]) {
       final double x = (w * at).clamp(5, w - 5);
       final RRect mark = RRect.fromLTRBR(
@@ -2087,6 +2095,58 @@ class _YouPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_YouPainter old) => old.you != you || old.answer != answer;
+}
+
+/// The colours a track is drawn in, on a challenge's screen as the app
+/// draws its own: the track a faint tone of the page's ink, the band the
+/// challenge's colour, the answer the app's green, the thumb in ink.
+@immutable
+class _Rail {
+  const _Rail({
+    required this.track,
+    required this.band,
+    required this.ink,
+    required this.knob,
+    required this.right,
+    required this.outline,
+  });
+
+  factory _Rail.of(BuildContext context) {
+    final Palette p = context.p;
+    final ChallengeTone? tone = ChallengeToneScope.maybeOf(context);
+    if (tone == null) {
+      return const _Rail(
+        track: kArtCream,
+        band: Color(0xFFFFC83D),
+        ink: kArtInk,
+        knob: kArtCream,
+        right: kGameRight,
+        outline: true,
+      );
+    }
+    return _Rail(
+      track: p.ink.withValues(alpha: 0.14),
+      band: tone.vivid,
+      ink: p.ink,
+      knob: p.surface,
+      right: challengeRight(p),
+      outline: false,
+    );
+  }
+
+  final Color track;
+  final Color band;
+  final Color ink;
+  final Color knob;
+  final Color right;
+
+  /// Whether shapes carry a line of ink round them, as on the drawn cards.
+  final bool outline;
+
+  Paint get line => Paint()
+    ..color = outline ? kArtInk : Colors.transparent
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 3;
 }
 
 /// A few words in a game's head, beside its picture.

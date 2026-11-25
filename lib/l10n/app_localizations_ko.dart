@@ -5036,21 +5036,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get exploreDayOpen => '오늘의 카드로 가기';
 
   @override
-  String exploreSixtyRecord(int n, int of) {
-    return '최고 기록 $n/$of';
-  }
-
-  @override
-  String get exploreSixtyFirst => '기록을 세워 보세요';
-
-  @override
   String get exploreGameNone => '지금은 할 수 있는 게임이 없어요. 내일 다시 오세요.';
 
   @override
   String get challengesTitle => '챌린지';
 
   @override
-  String get challengesLine => '하나에 1~2분. 골라서 플레이하세요.';
+  String get challengesLine => '판단과 추정을 위한 짧은 연습, 하나에 몇 분이면 됩니다.';
 
   @override
   String challengesPage(int n, int of) {
@@ -5058,13 +5050,11 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get gamePlay => '시작';
+  String get gamePlay => '시작하기';
 
   @override
-  String get sixtyRules => '주장 8개, 참일까 거짓일까. 시간은 1분, 직감을 믿으세요.';
-
-  @override
-  String get sixtyNewRecord => '새 기록!';
+  String get sixtyRules =>
+      '주장 8개를 1분 안에 참인지 거짓인지 판단합니다. 빠르게 판단하는 능력을 잽니다. 우리가 읽는 대부분은 그렇게 판단되니까요.';
 
   @override
   String get sixtyReview => '주장 8개';
@@ -5162,7 +5152,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get inOrderRules =>
-      '카드 속 네 가지 사건, 연도는 가려져 있어요. 일어난 순서대로, 가장 이른 것부터 탭하세요.';
+      '카드 속 네 가지 사건, 연도는 가려져 있어요. 일어난 순서대로 놓으세요. 시간 순서를 가늠하는 감각을 잽니다. 원인은 결과보다 먼저 오니, 모든 설명의 첫 시험이죠.';
 
   @override
   String get inOrderFirst => '가장 이른 것을 탭하세요';
@@ -5224,7 +5214,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String whatYearExact(int points) {
-    return '정확해요! +$points';
+    return '정확한 연도, +$points';
   }
 
   @override
@@ -5302,6 +5292,126 @@ class AppLocalizationsKo extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get sixtySkill => '직감';
+
+  @override
+  String get spotSkill => '분별력';
+
+  @override
+  String get tfSkill => '판단력';
+
+  @override
+  String get biggerSkill => '비교';
+
+  @override
+  String get closerSkill => '추정';
+
+  @override
+  String get magnitudeSkill => '규모 감각';
+
+  @override
+  String get rangeSkill => '보정';
+
+  @override
+  String get stakeSkill => '확신';
+
+  @override
+  String get numberSkill => '정밀성';
+
+  @override
+  String get inOrderSkill => '연대기';
+
+  @override
+  String get whatYearSkill => '연대 추정';
+
+  @override
+  String get beforeAfterSkill => '순서';
+
+  @override
+  String get sixtyAsks => '1분 동안 주장 8개.';
+
+  @override
+  String get spotAsks => '주장 4개, 그중 하나는 거짓.';
+
+  @override
+  String get tfAsks => '대부분이 틀리는 주장들.';
+
+  @override
+  String get biggerAsks => '두 숫자, 어느 쪽이 클까요?';
+
+  @override
+  String get closerAsks => '한 걸음씩 숫자에 다가가기.';
+
+  @override
+  String get magnitudeAsks => '알맞은 10의 거듭제곱 찾기.';
+
+  @override
+  String get rangeAsks => '딱 필요한 만큼 넓은 범위.';
+
+  @override
+  String get stakeAsks => '확신한 만큼 점수를 걸기.';
+
+  @override
+  String get numberAsks => '숫자 하나로 정하기.';
+
+  @override
+  String get inOrderAsks => '네 가지 사건, 이른 순서로.';
+
+  @override
+  String get whatYearAsks => '사건을 그 해에 놓기.';
+
+  @override
+  String get beforeAfterAsks => '앞 사건과 비교해 전인지 후인지.';
+
+  @override
+  String get challengeBest => '최고 기록';
+
+  @override
+  String get challengeToday => '오늘';
+
+  @override
+  String get challengeAccuracy => '정답률';
+
+  @override
+  String get challengeTime => '시간';
+
+  @override
+  String challengeSeconds(int s) {
+    return '$s초';
+  }
+
+  @override
+  String get challengePersonalBest => '개인 최고 기록';
+
+  @override
+  String challengeAboveChance(int n, int of) {
+    return '우연보다 높습니다. 무작위로 고르면 평균 $of개 중 $n개입니다.';
+  }
+
+  @override
+  String challengeAtChance(int n, int of) {
+    return '우연과 같은 수준입니다. 무작위로 고르면 평균 $of개 중 $n개입니다.';
+  }
+
+  @override
+  String challengeBelowChance(int n, int of) {
+    return '우연보다 낮습니다. 무작위로 고르면 평균 $of개 중 $n개입니다.';
+  }
+
+  @override
+  String sixtyUnanswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '시간이 다 되어 주장 $n개가 답하지 않은 채 남았습니다.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAgain => '한 번 더';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

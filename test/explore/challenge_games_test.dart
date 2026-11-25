@@ -555,7 +555,10 @@ void main() {
       expect(sent.single, contains('$points of 30 points'));
       expect(sent.single, contains('ref=share_challenges'));
       for (final DatedLine d in round) {
-        expect(sent.single, isNot(contains(d.before.trim())));
+        // The moment itself, never its words: a moment that opens on a
+        // word as short as "A" is not told by that word alone.
+        expect(sent.single, isNot(contains(d.text)));
+        expect(sent.single, isNot(contains(d.gapped(''))));
       }
       expect(said.of('explore what-year shared').single['points'], points);
     });

@@ -484,8 +484,8 @@ void main() {
 
   // The challenges, on three phones at night and on paper: the section as
   // Explore shows it, page by page; then Sixty seconds opened out of its
-  // tile — the flight caught early, what it is, the round in play, the
-  // record cheered, how it went and the eight claims again. Into the
+  // tile — the flight caught early, what it is, an answer just told, the
+  // round in play, how it went and the eight claims again. Into the
   // gallery, which is not kept, or into CHALLENGES_DIR:
   //
   //   flutter test tool/explore_shots.dart --plain-name "challenges" \
@@ -576,14 +576,13 @@ void main() {
 
         await say(right: true);
         await say(right: false);
+        // The answer just told, in its calm colour and its word.
+        await take('sixty-told');
         await tester.pump(const Duration(seconds: 3));
         await take('sixty-play');
         for (int i = 0; i < 6; i++) {
           await say(right: i != 2);
         }
-        // The record beaten, cheered as the score lands.
-        await tester.pump(const Duration(milliseconds: 260));
-        await take('sixty-cheer');
         await settle(tester);
         await take('sixty-result');
         await tester.drag(
@@ -773,6 +772,15 @@ void main() {
           await move(tester, id, 0);
           if (id == 'closer' || id == 'tf') await move(tester, id, 1);
           await take('play');
+          // In order, checked: the moments in their true order, their years
+          // told, before the report.
+          if (id == 'in-order') {
+            await tester.tap(find.byKey(const ValueKey('in-order-check')));
+            for (int f = 0; f < 7; f++) {
+              await tester.pump(const Duration(milliseconds: 90));
+            }
+            await take('told');
+          }
           // The rest of the round, to its end.
           for (int n = 1; n < 40; n++) {
             if (has(find.byKey(ValueKey('$id-score')))) break;

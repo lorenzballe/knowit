@@ -20,7 +20,6 @@ import '../../models/pill.dart';
 import '../../theme.dart';
 import '../../utils/share_link.dart';
 import '../scaled_text.dart';
-import 'challenge_art.dart';
 import 'challenge_kit.dart';
 import 'challenge_screen.dart';
 import 'parts.dart' show upper;
@@ -218,7 +217,7 @@ class _TrueFalsePlayState extends State<_TrueFalsePlay> {
   void _next() {
     final int? next = _game.next;
     if (next == null) {
-      widget.kit.finish(cheer: _game.right == _game.pills.length);
+      widget.kit.finish();
       return;
     }
     HapticFeedback.selectionClick();
@@ -324,9 +323,9 @@ class _Told extends StatelessWidget {
     final bool truth = trueOrFalseAnswer(pill);
     return Container(
       decoration: BoxDecoration(
-        color: kArtCream,
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: kArtInk, width: 3),
+        color: gameFace(context),
+        borderRadius: BorderRadius.circular(24),
+        border: gameBorder(context),
       ),
       padding: const EdgeInsets.fromLTRB(22, 20, 22, 22),
       child: Column(

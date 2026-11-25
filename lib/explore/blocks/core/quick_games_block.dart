@@ -8,14 +8,16 @@
 ///
 /// The games were shelves far down the page, each as tall as a screen, and
 /// a reader who wanted a minute's play had to know where to scroll. A tile
-/// says what there is to play in a glance. Each tile is its game's colour
-/// and picture; Sixty seconds says the reader's record on its tile, the
-/// most right in one round, kept for good (`AppState.sixtyBest`), where the
-/// round itself lasts only the day.
+/// says in a glance what each challenge is: the skill it trains, its name,
+/// what it asks, its mark in its own tone, and the reader's own figure where
+/// there is one — the best of Sixty seconds, the most right in one round,
+/// kept for good (`AppState.sixtyBest`), and today's score of a game of
+/// time once its round is over.
 ///
-/// Every game is played on a screen of its own: its tile grows into the
-/// whole screen (lib/widgets/explore/challenge_screen.dart), and at the end
-/// the next challenge is a tap away, flying out of its own tile in turn.
+/// Every challenge is taken on a screen of its own: its tile's panel grows
+/// into the page (lib/widgets/explore/challenge_screen.dart), and at the
+/// end the next challenge is a tap away, opening out of its own tile in
+/// turn.
 /// It is the game's own reckoning that is played there — the day's round,
 /// the day's bets, the record — kept and counted as it always was, under
 /// the section's id and the game's (`quick-games-sixty`).
@@ -42,8 +44,8 @@ import '../../../data/explore_mix.dart';
 import '../../../data/themed_shelves.dart';
 import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
-import '../../../widgets/explore/challenge_art.dart';
 import '../../../widgets/explore/challenge_kit.dart';
+import '../../../widgets/explore/challenge_marks.dart';
 import '../../../widgets/explore/challenge_screen.dart';
 import '../../../widgets/explore/challenges.dart';
 import '../../../widgets/explore/sixty_game.dart';
@@ -68,12 +70,11 @@ import 'shelves.dart';
 
 /// Makes a game's screen for [inner], its section under the challenges, or
 /// null when it has nothing to play.
-typedef ChallengeOf =
-    ChallengeGame? Function(
-      ExploreHost host,
-      ExploreSection inner,
-      String title,
-    );
+typedef ChallengeOf = ChallengeGame? Function(
+  ExploreHost host,
+  ExploreSection inner,
+  String title,
+);
 
 /// One game a tile can open: what it is called, how it looks, what draws it
 /// on a page of its own, and what plays it on a screen of its own.
@@ -81,8 +82,8 @@ typedef ChallengeOf =
 class QuickGame {
   const QuickGame({
     required this.key,
-    required this.colour,
-    required this.art,
+    required this.tone,
+    required this.mark,
     required this.play,
     this.block,
     this.extra = const {},
@@ -95,12 +96,12 @@ class QuickGame {
   /// that are shelves too; none for a game played only here.
   final ExploreBlock? block;
 
-  /// The tile's ground, from the subjects' wheel: one the drawn cards' ink
-  /// reads on.
-  final Color colour;
+  /// The challenge's one colour: its old colour on the subjects' wheel
+  /// taken down to a deep tone, lifted a little at night.
+  final ChallengeTone tone;
 
-  /// The tile's picture.
-  final ChallengeArt art;
+  /// Its mark.
+  final ChallengeMark mark;
 
   /// What the game's section says beyond its id and block.
   final Map<String, Object?> extra;
@@ -123,6 +124,63 @@ class QuickGame {
     'before-after' => l.beforeAfterTitle,
     _ => l.betsBiggerTitle,
   };
+
+  /// The skill it trains, in the reader's language.
+  String skill(AppLocalizations l) => switch (key) {
+    'sixty' => l.sixtySkill,
+    'spot-false' => l.spotSkill,
+    'true-false' => l.tfSkill,
+    'bets-closer' => l.closerSkill,
+    'bets-magnitude' => l.magnitudeSkill,
+    'bets-range' => l.rangeSkill,
+    'bets-stake' => l.stakeSkill,
+    'bets-number' => l.numberSkill,
+    'in-order' => l.inOrderSkill,
+    'what-year' => l.whatYearSkill,
+    'before-after' => l.beforeAfterSkill,
+    _ => l.biggerSkill,
+  };
+
+  /// What it asks, in a quiet line.
+  String asks(AppLocalizations l) => switch (key) {
+    'sixty' => l.sixtyAsks,
+    'spot-false' => l.spotAsks,
+    'true-false' => l.tfAsks,
+    'bets-closer' => l.closerAsks,
+    'bets-magnitude' => l.magnitudeAsks,
+    'bets-range' => l.rangeAsks,
+    'bets-stake' => l.stakeAsks,
+    'bets-number' => l.numberAsks,
+    'in-order' => l.inOrderAsks,
+    'what-year' => l.whatYearAsks,
+    'before-after' => l.beforeAfterAsks,
+    _ => l.biggerAsks,
+  };
+
+  /// The reader's own figure on its tile: the best of Sixty seconds, once
+  /// there is one; today's score of a game of time, once its round is over.
+  ChallengeFigure? figure(ExploreHost host, AppLocalizations l) {
+    if (key == 'sixty') {
+      final int best = host.app.sixtyBest;
+      return best > 0 ? (label: l.challengeBest, value: '$best/8') : null;
+    }
+    final TimeGame? time = _timeOf(key);
+    if (time == null) return null;
+    final TimeDeal deal = ExploreShelves.of(host).time;
+    void none(List<Pill> _, Pill _) {}
+    final TimeChallenge played = switch (time) {
+      TimeGame.order => InOrderChallenge(deal: deal, onOpen: none, title: ''),
+      TimeGame.year => WhatYearChallenge(deal: deal, onOpen: none, title: ''),
+      TimeGame.chain => BeforeAfterChallenge(
+        deal: deal,
+        onOpen: none,
+        title: '',
+      ),
+    };
+    final String? today = played.playable && played.over ? played.tally : null;
+    played.dispose();
+    return today == null ? null : (label: l.challengeToday, value: today);
+  }
 
   /// The section the game is drawn from, under [parent]'s id: what its
   /// cards are noted under, so the numbers say they were played from here.
@@ -160,88 +218,136 @@ const List<QuickGame> kQuickGames = [
   QuickGame(
     key: 'sixty',
     block: SixtyBlock(),
-    colour: Color(0xFFFFE600),
-    art: ChallengeArt.sixty,
+    tone: ChallengeTone(
+      Color(0xFF7A5D12),
+      Color(0xFFD2B064),
+      Color(0xFFFFE600),
+    ),
+    mark: ChallengeMark.sixty,
     play: _sixty,
   ),
   QuickGame(
     key: 'spot-false',
     block: SpotFalseBlock(),
-    colour: Color(0xFFFF3D7F),
-    art: ChallengeArt.spot,
+    tone: ChallengeTone(
+      Color(0xFF8A2846),
+      Color(0xFFE293AB),
+      Color(0xFFFF3D7F),
+    ),
+    mark: ChallengeMark.spot,
     play: _spot,
   ),
   QuickGame(
     key: 'true-false',
     block: TrueFalseBlock(),
-    colour: Color(0xFF00E5A0),
-    art: ChallengeArt.trueFalse,
+    tone: ChallengeTone(
+      Color(0xFF1E5C46),
+      Color(0xFF82C4A8),
+      Color(0xFF00E5A0),
+    ),
+    mark: ChallengeMark.trueFalse,
     extra: {'spot': false},
     play: _trueFalse,
   ),
   QuickGame(
     key: 'bets-bigger',
     block: BiggerBlock(),
-    colour: Color(0xFF4C6FFF),
-    art: ChallengeArt.bigger,
+    tone: ChallengeTone(
+      Color(0xFF2E4590),
+      Color(0xFFA2B1EA),
+      Color(0xFF4C6FFF),
+    ),
+    mark: ChallengeMark.bigger,
     play: _bigger,
   ),
   QuickGame(
     key: 'bets-closer',
     block: CloserBlock(),
-    colour: Color(0xFFFF7A1A),
-    art: ChallengeArt.closer,
+    tone: ChallengeTone(
+      Color(0xFF8C4018),
+      Color(0xFFE59E74),
+      Color(0xFFFF7A1A),
+    ),
+    mark: ChallengeMark.closer,
     extra: {'size': 'l'},
     play: _closer,
   ),
   QuickGame(
     key: 'bets-magnitude',
     block: MagnitudeBlock(),
-    colour: Color(0xFF9B5CFF),
-    art: ChallengeArt.magnitude,
+    tone: ChallengeTone(
+      Color(0xFF54378C),
+      Color(0xFFB9A2E6),
+      Color(0xFF9B5CFF),
+    ),
+    mark: ChallengeMark.magnitude,
     extra: {'size': 'l'},
     play: _magnitude,
   ),
   QuickGame(
     key: 'bets-range',
     block: RangeBlock(),
-    colour: Color(0xFF00D9D9),
-    art: ChallengeArt.range,
+    tone: ChallengeTone(
+      Color(0xFF115A61),
+      Color(0xFF7CC6CC),
+      Color(0xFF00D9D9),
+    ),
+    mark: ChallengeMark.range,
     extra: {'size': 'l'},
     play: _range,
   ),
   QuickGame(
     key: 'bets-stake',
     block: StakeBlock(),
-    colour: Color(0xFFA6FF00),
-    art: ChallengeArt.stake,
+    tone: ChallengeTone(
+      Color(0xFF4F5F17),
+      Color(0xFFB7C979),
+      Color(0xFFA6FF00),
+    ),
+    mark: ChallengeMark.stake,
     extra: {'size': 'l'},
     play: _stake,
   ),
   QuickGame(
     key: 'bets-number',
     block: NumberBlock(),
-    colour: Color(0xFFE040FB),
-    art: ChallengeArt.number,
+    tone: ChallengeTone(
+      Color(0xFF762C70),
+      Color(0xFFDB9AD5),
+      Color(0xFFE040FB),
+    ),
+    mark: ChallengeMark.number,
     extra: {'size': 'l'},
     play: _number,
   ),
   QuickGame(
     key: 'in-order',
-    colour: Color(0xFFFFB020),
-    art: ChallengeArt.order,
+    tone: ChallengeTone(
+      Color(0xFF7E4F10),
+      Color(0xFFE2B26E),
+      Color(0xFFFFB020),
+    ),
+    mark: ChallengeMark.order,
     play: _inOrder,
   ),
   QuickGame(
     key: 'what-year',
-    colour: Color(0xFF6FCBFF),
-    art: ChallengeArt.year,
+    tone: ChallengeTone(
+      Color(0xFF295877),
+      Color(0xFF94C4E3),
+      Color(0xFF6FCBFF),
+    ),
+    mark: ChallengeMark.year,
     play: _whatYear,
   ),
   QuickGame(
     key: 'before-after',
-    colour: Color(0xFFFF8A65),
-    art: ChallengeArt.chain,
+    tone: ChallengeTone(
+      Color(0xFF8B3526),
+      Color(0xFFE79F90),
+      Color(0xFFFF8A65),
+    ),
+    mark: ChallengeMark.chain,
     play: _beforeAfter,
   ),
 ];
@@ -317,12 +423,8 @@ ChallengeGame? _bigger(ExploreHost host, ExploreSection inner, String title) =>
       host,
       inner,
       const BiggerBlock(),
-      (shelf, cards) => BiggerChallenge(
-        host: host,
-        shelf: shelf,
-        cards: cards,
-        title: title,
-      ),
+      (shelf, cards) =>
+          BiggerChallenge(host: host, shelf: shelf, cards: cards, title: title),
       least: 2,
     );
 
@@ -331,12 +433,8 @@ ChallengeGame? _closer(ExploreHost host, ExploreSection inner, String title) =>
       host,
       inner,
       const CloserBlock(),
-      (shelf, cards) => CloserChallenge(
-        host: host,
-        shelf: shelf,
-        cards: cards,
-        title: title,
-      ),
+      (shelf, cards) =>
+          CloserChallenge(host: host, shelf: shelf, cards: cards, title: title),
     );
 
 ChallengeGame? _magnitude(
@@ -347,12 +445,8 @@ ChallengeGame? _magnitude(
   host,
   inner,
   const MagnitudeBlock(),
-  (shelf, cards) => MagnitudeChallenge(
-    host: host,
-    shelf: shelf,
-    cards: cards,
-    title: title,
-  ),
+  (shelf, cards) =>
+      MagnitudeChallenge(host: host, shelf: shelf, cards: cards, title: title),
 );
 
 ChallengeGame? _range(ExploreHost host, ExploreSection inner, String title) =>
@@ -360,12 +454,8 @@ ChallengeGame? _range(ExploreHost host, ExploreSection inner, String title) =>
       host,
       inner,
       const RangeBlock(),
-      (shelf, cards) => RangeChallenge(
-        host: host,
-        shelf: shelf,
-        cards: cards,
-        title: title,
-      ),
+      (shelf, cards) =>
+          RangeChallenge(host: host, shelf: shelf, cards: cards, title: title),
     );
 
 ChallengeGame? _stake(ExploreHost host, ExploreSection inner, String title) =>
@@ -373,12 +463,8 @@ ChallengeGame? _stake(ExploreHost host, ExploreSection inner, String title) =>
       host,
       inner,
       const StakeBlock(),
-      (shelf, cards) => StakeChallenge(
-        host: host,
-        shelf: shelf,
-        cards: cards,
-        title: title,
-      ),
+      (shelf, cards) =>
+          StakeChallenge(host: host, shelf: shelf, cards: cards, title: title),
     );
 
 ChallengeGame? _number(ExploreHost host, ExploreSection inner, String title) =>
@@ -386,12 +472,8 @@ ChallengeGame? _number(ExploreHost host, ExploreSection inner, String title) =>
       host,
       inner,
       const NumberBlock(),
-      (shelf, cards) => NumberChallenge(
-        host: host,
-        shelf: shelf,
-        cards: cards,
-        title: title,
-      ),
+      (shelf, cards) =>
+          NumberChallenge(host: host, shelf: shelf, cards: cards, title: title),
     );
 
 /// A game of time, on the day's moments.
@@ -490,14 +572,13 @@ class QuickGamesBlock extends ExploreBlock with SectionLayout {
     ];
     if (games.isEmpty) return null;
     final l = context.l10n;
-    final int best = host.app.sixtyBest;
     ChallengeLook lookOf(QuickGame game) => ChallengeLook(
       title: game.title(l),
-      colour: game.colour,
-      art: game.art,
-      note: game.key == 'sixty'
-          ? (best > 0 ? l.exploreSixtyRecord(best, 8) : l.exploreSixtyFirst)
-          : null,
+      skill: game.skill(l),
+      line: game.asks(l),
+      tone: game.tone,
+      mark: game.mark,
+      figure: game.figure(host, l),
     );
 
     // Opens the game at [i] on its screen, out of its tile, the challenge
@@ -530,7 +611,7 @@ class QuickGamesBlock extends ExploreBlock with SectionLayout {
                     Navigator.of(context).pop();
                     ChallengePager.reveal(section.id, games[j].$1.key);
                     Future<void>.delayed(
-                      calm ? Duration.zero : const Duration(milliseconds: 460),
+                      calm ? Duration.zero : const Duration(milliseconds: 320),
                       () => openAt(j),
                     );
                   }

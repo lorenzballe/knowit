@@ -390,32 +390,37 @@ three cards and crowd belong to its own section; and the bet of the day,
 Today's three with one card.
 
 Every tile is one size on every page, at any text size (the largest any
-game's words need, up to half as large again as the type is set): the game's
-colour from the subjects' wheel, a picture drawn for the game
-(`lib/widgets/explore/challenge_art.dart`, flat colours and a line of ink, as
-the drawn cards are), the game's own name in the reader's language — never
-broken in the middle of a word — and over the name on Sixty seconds the
-reader's record, the most right in one round, kept for good ("Your record
-6/8"; "Set your record" before the first round). A page not full keeps its
-empty places.
+challenge's words need, up to nearly half as large again; what it asks is
+left out above 1.3x). The look is Go deeper's magazine: the app's own
+surfaces, no pictures or icons, hairlines. A tile is set like an index
+entry on the raised surface: a short rule in the challenge's tone (a deep
+tone of its old colour, lifted a little at night), the skill it trains in
+small capitals ("Intuition", "Chronology"), the name in Fraunces, what it
+asks in a quiet line, and the reader's own figure in tabular figures — the
+best of Sixty seconds ("Best 6/8"), today's score of a game of time once
+its round is over. Never broken in the middle of a word. A page not full
+keeps its empty places.
 
-Every game is played on a screen of its own
-(`lib/widgets/explore/challenge_screen.dart`, one screen for all, the game its
-own): its tile grows into the whole screen in the game's colour, and back,
-and the game is played there in three moments — what it is (the name, the
-game's picture, the rules in a line, the record or how the game counts, Play
-— or Continue on a round begun), the round (the picture up in the head beside
-how far along, the bars of the round, and the game shaped to what it asks,
-with large targets and a click in the hand at every step, each answer told at
-once), how it went (the score, large; a new record or the one standing, or
-the points; the round as squares; the next challenge, which flies out of its
-own tile once this one has gone back into its; the cards again, each a tap
-from its card; Play again where the game plays again — Sixty seconds and the
-games of time — or when the next round comes; and the score to send, as
-squares, never the answers or the cards).
+Every challenge is taken on a screen of its own
+(`lib/widgets/explore/challenge_screen.dart`, one screen for all): the
+tile's panel grows into the page and back, calmly, and the challenge is
+taken there in three moments — what it is (the rule and the skill, the
+name, a sentence or two on what it measures and why it matters, the
+reader's figures between hairlines, Begin in the challenge's tone — or
+Continue on a round begun), the round (a running head in small capitals,
+a fine rule under it, the content set as a page, precise flat controls,
+each answer told by a calm colour and a word), and a short report (the
+score, accuracy and the time where it counts, a measured line read
+against chance, "Personal best" in words, the cards again, the next
+challenge, another round or when the next comes, and the score to send).
+No confetti, no exclamation marks; motion is fades and short slides of
+150 to 250 ms; haptics light and rare. Sixty seconds and In order are set
+this way in full; the other challenges' rounds still deal their cards of
+paper on the new page, until they are restyled.
 
-- Sixty seconds (`sixty_game.dart`): the claim on a deck of the eight, False
-  and True, or a swipe; the stopwatch become the clock.
+- Sixty seconds (`sixty_game.dart`): the claim set in Fraunces, False and
+  True, or a swipe; the minute a fine rule in its tone running down, the
+  eight as short rules over the answers.
 - Spot the false one (`spot_game.dart`): the four claims one under another, a
   tap and "That's the false one"; then each says what it is, the false one
   struck out, the pick stamped. One pick a day.
@@ -451,8 +456,8 @@ one never counts a card read. Cards are noted under the section's id and the
 game's (`quick-games-sixty`, `quick-games-in-order`). A game with nothing to
 play today has no tile; with none, there is no section.
 
-Fields: `title`, `subtitle` (Challenges and "A minute or two each. Pick one
-and play." by default, in the reader's language), `games` (any of `sixty`,
+Fields: `title`, `subtitle` (Challenges and "Short exercises in judgement
+and estimation, a few minutes each." by default, in the reader's language), `games` (any of `sixty`,
 `spot-false`, `true-false`, `bets-bigger`, `bets-closer`, `bets-magnitude`,
 `bets-range`, `bets-stake`, `bets-number`, `in-order`, `what-year`,
 `before-after`, each once, in the order shown; all of them by default).

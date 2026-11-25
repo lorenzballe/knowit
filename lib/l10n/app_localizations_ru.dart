@@ -5440,14 +5440,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exploreDayOpen => 'К сегодняшним карточкам';
 
   @override
-  String exploreSixtyRecord(int n, int of) {
-    return 'Твой рекорд $n/$of';
-  }
-
-  @override
-  String get exploreSixtyFirst => 'Поставь свой рекорд';
-
-  @override
   String get exploreGameNone =>
       'Сейчас здесь не во что играть. Возвращайся завтра.';
 
@@ -5455,7 +5447,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get challengesTitle => 'Испытания';
 
   @override
-  String get challengesLine => 'По минуте-другой на каждое. Выбери и играй.';
+  String get challengesLine =>
+      'Короткие упражнения на суждение и оценку, по несколько минут каждое.';
 
   @override
   String challengesPage(int n, int of) {
@@ -5463,14 +5456,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get gamePlay => 'Играть';
+  String get gamePlay => 'Начать';
 
   @override
   String get sixtyRules =>
-      'Восемь утверждений: правда или ложь? У тебя минута. Доверься чутью.';
-
-  @override
-  String get sixtyNewRecord => 'Новый рекорд!';
+      'Восемь утверждений, правда или ложь, за одну минуту. Испытание измеряет, насколько верно ты судишь в спешке, а именно так мы судим почти обо всём, что читаем.';
 
   @override
   String get sixtyReview => 'Восемь утверждений';
@@ -5582,7 +5572,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get inOrderRules =>
-      'Четыре события из карточек, у каждого скрыт год. Нажимай их в том порядке, в каком они произошли, начиная с самого раннего.';
+      'Четыре события из карточек, без года: расставь их в том порядке, в каком они произошли. Испытание измеряет чувство хронологии, первую проверку любого объяснения: причина идёт раньше следствия.';
 
   @override
   String get inOrderFirst => 'Нажми самое раннее';
@@ -5647,7 +5637,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String whatYearExact(int points) {
-    return 'Точно! +$points';
+    return 'Ровно тот год, +$points';
   }
 
   @override
@@ -5738,6 +5728,129 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get sixtySkill => 'Интуиция';
+
+  @override
+  String get spotSkill => 'Зоркость';
+
+  @override
+  String get tfSkill => 'Суждение';
+
+  @override
+  String get biggerSkill => 'Пропорция';
+
+  @override
+  String get closerSkill => 'Оценка';
+
+  @override
+  String get magnitudeSkill => 'Масштаб';
+
+  @override
+  String get rangeSkill => 'Калибровка';
+
+  @override
+  String get stakeSkill => 'Уверенность';
+
+  @override
+  String get numberSkill => 'Точность';
+
+  @override
+  String get inOrderSkill => 'Хронология';
+
+  @override
+  String get whatYearSkill => 'Датировка';
+
+  @override
+  String get beforeAfterSkill => 'Очерёдность';
+
+  @override
+  String get sixtyAsks => 'Восемь утверждений на время.';
+
+  @override
+  String get spotAsks => 'Четыре утверждения, одно из них ложное.';
+
+  @override
+  String get tfAsks => 'Утверждения, в которых ошибается почти каждый.';
+
+  @override
+  String get biggerAsks => 'Два числа. Какое больше?';
+
+  @override
+  String get closerAsks => 'Шаг за шагом ближе к числу.';
+
+  @override
+  String get magnitudeAsks => 'Найди нужную степень десяти.';
+
+  @override
+  String get rangeAsks => 'Диапазон ровно нужной ширины.';
+
+  @override
+  String get stakeAsks => 'Ставь очки по степени уверенности.';
+
+  @override
+  String get numberAsks => 'Остановись на одном числе.';
+
+  @override
+  String get inOrderAsks => 'Четыре события, от самого раннего.';
+
+  @override
+  String get whatYearAsks => 'Помести событие в его год.';
+
+  @override
+  String get beforeAfterAsks => 'Каждое событие против предыдущего.';
+
+  @override
+  String get challengeBest => 'Рекорд';
+
+  @override
+  String get challengeToday => 'Сегодня';
+
+  @override
+  String get challengeAccuracy => 'Доля верных';
+
+  @override
+  String get challengeTime => 'Время';
+
+  @override
+  String challengeSeconds(int s) {
+    return '$s с';
+  }
+
+  @override
+  String get challengePersonalBest => 'Личный рекорд';
+
+  @override
+  String challengeAboveChance(int n, int of) {
+    return 'Выше случайного: наугад в среднем выходит $n из $of.';
+  }
+
+  @override
+  String challengeAtChance(int n, int of) {
+    return 'На уровне случайного: наугад в среднем выходит $n из $of.';
+  }
+
+  @override
+  String challengeBelowChance(int n, int of) {
+    return 'Ниже случайного: наугад в среднем выходит $n из $of.';
+  }
+
+  @override
+  String sixtyUnanswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Время вышло, $n утверждения остались без ответа.',
+      many: 'Время вышло, $n утверждений осталось без ответа.',
+      few: 'Время вышло, $n утверждения остались без ответа.',
+      one: 'Время вышло, $n утверждение осталось без ответа.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAgain => 'Ещё раз';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

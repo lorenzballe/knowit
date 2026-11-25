@@ -5022,21 +5022,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exploreDayOpen => '前往今天的卡片';
 
   @override
-  String exploreSixtyRecord(int n, int of) {
-    return '最佳纪录 $n/$of';
-  }
-
-  @override
-  String get exploreSixtyFirst => '创造你的纪录';
-
-  @override
   String get exploreGameNone => '现在这里没有可玩的。明天再来。';
 
   @override
   String get challengesTitle => '挑战';
 
   @override
-  String get challengesLine => '每个只要一两分钟。选一个开始玩。';
+  String get challengesLine => '关于判断与估算的简短练习，每个只需几分钟。';
 
   @override
   String challengesPage(int n, int of) {
@@ -5047,10 +5039,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get gamePlay => '开始';
 
   @override
-  String get sixtyRules => '八条说法，是真是假？你有一分钟，凭直觉作答。';
-
-  @override
-  String get sixtyNewRecord => '新纪录！';
+  String get sixtyRules =>
+      '一分钟内判断八条说法的真假。它衡量你在匆忙中判断的准确程度，而我们读到的大多数内容，正是这样被判断的。';
 
   @override
   String get sixtyReview => '八条说法';
@@ -5147,7 +5137,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get inOrderTitle => '时间排序';
 
   @override
-  String get inOrderRules => '卡片里的四个时刻，年份都被隐去。按发生的先后点选，从最早的开始。';
+  String get inOrderRules =>
+      '卡片里的四个时刻，年份都被隐去，请按发生的先后排列。它衡量你的时间顺序感，这是一切解释的第一道检验：原因总在结果之前。';
 
   @override
   String get inOrderFirst => '点选最早的';
@@ -5208,7 +5199,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String whatYearExact(int points) {
-    return '完全正确！+$points';
+    return '年份完全正确，+$points';
   }
 
   @override
@@ -5286,6 +5277,126 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get sixtySkill => '直觉';
+
+  @override
+  String get spotSkill => '辨别';
+
+  @override
+  String get tfSkill => '判断';
+
+  @override
+  String get biggerSkill => '比例';
+
+  @override
+  String get closerSkill => '估算';
+
+  @override
+  String get magnitudeSkill => '量级';
+
+  @override
+  String get rangeSkill => '校准';
+
+  @override
+  String get stakeSkill => '把握';
+
+  @override
+  String get numberSkill => '精确';
+
+  @override
+  String get inOrderSkill => '时序';
+
+  @override
+  String get whatYearSkill => '断代';
+
+  @override
+  String get beforeAfterSkill => '先后';
+
+  @override
+  String get sixtyAsks => '一分钟，八条说法。';
+
+  @override
+  String get spotAsks => '四条说法，其中一条是假的。';
+
+  @override
+  String get tfAsks => '大多数人会答错的说法。';
+
+  @override
+  String get biggerAsks => '两个数字，哪个更大？';
+
+  @override
+  String get closerAsks => '一步步逼近一个数字。';
+
+  @override
+  String get magnitudeAsks => '找出正确的十的幂。';
+
+  @override
+  String get rangeAsks => '一个刚好够宽的区间。';
+
+  @override
+  String get stakeAsks => '按你的把握程度押分。';
+
+  @override
+  String get numberAsks => '认定一个数字。';
+
+  @override
+  String get inOrderAsks => '四个时刻，从最早的开始。';
+
+  @override
+  String get whatYearAsks => '把一个时刻放回它的年份。';
+
+  @override
+  String get beforeAfterAsks => '每个时刻与上一个相比。';
+
+  @override
+  String get challengeBest => '最佳';
+
+  @override
+  String get challengeToday => '今天';
+
+  @override
+  String get challengeAccuracy => '正确率';
+
+  @override
+  String get challengeTime => '用时';
+
+  @override
+  String challengeSeconds(int s) {
+    return '$s 秒';
+  }
+
+  @override
+  String get challengePersonalBest => '个人最佳';
+
+  @override
+  String challengeAboveChance(int n, int of) {
+    return '高于随机水平：纯靠猜测，平均$of个中对$n个。';
+  }
+
+  @override
+  String challengeAtChance(int n, int of) {
+    return '与随机水平持平：纯靠猜测，平均$of个中对$n个。';
+  }
+
+  @override
+  String challengeBelowChance(int n, int of) {
+    return '低于随机水平：纯靠猜测，平均$of个中对$n个。';
+  }
+
+  @override
+  String sixtyUnanswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '时间到了，还有 $n 条说法没有作答。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAgain => '再来一轮';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

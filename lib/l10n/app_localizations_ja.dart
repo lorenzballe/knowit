@@ -5018,21 +5018,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get exploreDayOpen => '今日のカードへ';
 
   @override
-  String exploreSixtyRecord(int n, int of) {
-    return '自己ベスト $n/$of';
-  }
-
-  @override
-  String get exploreSixtyFirst => '記録をつくろう';
-
-  @override
   String get exploreGameNone => '今は遊べるものがありません。また明日。';
 
   @override
   String get challengesTitle => 'チャレンジ';
 
   @override
-  String get challengesLine => 'どれも1〜2分。選んで遊ぼう。';
+  String get challengesLine => '判断と見積もりの短い練習。どれも数分で終わります。';
 
   @override
   String challengesPage(int n, int of) {
@@ -5040,13 +5032,11 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get gamePlay => 'スタート';
+  String get gamePlay => '始める';
 
   @override
-  String get sixtyRules => '8つの主張、正しいか間違いか。持ち時間は1分、直感で答えよう。';
-
-  @override
-  String get sixtyNewRecord => '自己ベスト更新！';
+  String get sixtyRules =>
+      '8つの主張を、1分で正しいか間違いか判断します。急いで判断する力を測ります。私たちが読むものの大半は、そうして判断されています。';
 
   @override
   String get sixtyReview => '8つの主張';
@@ -5135,7 +5125,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get spotOnce => '選べるのは1日1回';
 
   @override
-  String get spotGotIt => '間違いを見抜いた！';
+  String get spotGotIt => '間違いを見抜いた。';
 
   @override
   String get spotMissedIt => 'それではない。それは正しい。';
@@ -5147,7 +5137,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get inOrderTitle => '時代順';
 
   @override
-  String get inOrderRules => 'カードから4つの出来事。年は伏せてあります。起きた順に、古いものからタップしよう。';
+  String get inOrderRules =>
+      'カードから4つの出来事。年は伏せてあります。起きた順に並べてください。時系列の感覚を測ります。原因は結果より先に起こる、あらゆる説明の最初の試金石です。';
 
   @override
   String get inOrderFirst => 'いちばん古いものをタップ';
@@ -5172,7 +5163,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get inOrderPerfect => 'すべて正しい順番！';
+  String get inOrderPerfect => 'すべて正しい順番。';
 
   @override
   String get timeGap => '伏せられた年';
@@ -5189,7 +5180,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get whatYearPerfect => 'すべての年がぴったり！';
+  String get whatYearPerfect => 'すべての年がぴったり。';
 
   @override
   String whatYearOffInAll(int n) {
@@ -5208,7 +5199,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String whatYearExact(int points) {
-    return 'ぴったり！+$points';
+    return '年までぴったり。+$points';
   }
 
   @override
@@ -5275,7 +5266,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get beforeAfterStart => 'ここから始まり';
 
   @override
-  String get beforeAfterPerfect => 'ひとつも外さなかった！';
+  String get beforeAfterPerfect => 'ひとつも外さなかった。';
 
   @override
   String biggerPairsToday(int n) {
@@ -5286,6 +5277,126 @@ class AppLocalizationsJa extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get sixtySkill => '直感';
+
+  @override
+  String get spotSkill => '見極め';
+
+  @override
+  String get tfSkill => '判断';
+
+  @override
+  String get biggerSkill => '比較';
+
+  @override
+  String get closerSkill => '見積もり';
+
+  @override
+  String get magnitudeSkill => '桁感覚';
+
+  @override
+  String get rangeSkill => '較正';
+
+  @override
+  String get stakeSkill => '確信';
+
+  @override
+  String get numberSkill => '精度';
+
+  @override
+  String get inOrderSkill => '時系列';
+
+  @override
+  String get whatYearSkill => '年代推定';
+
+  @override
+  String get beforeAfterSkill => '前後関係';
+
+  @override
+  String get sixtyAsks => '1分間で8つの主張。';
+
+  @override
+  String get spotAsks => '4つの主張、1つだけが誤り。';
+
+  @override
+  String get tfAsks => '多くの人が間違える主張。';
+
+  @override
+  String get biggerAsks => '2つの数字。大きいのはどちら？';
+
+  @override
+  String get closerAsks => '一歩ずつ、数字に近づく。';
+
+  @override
+  String get magnitudeAsks => '正しい10の累乗を見つける。';
+
+  @override
+  String get rangeAsks => 'ちょうどよい幅の範囲を。';
+
+  @override
+  String get stakeAsks => '確信の度合いに応じて賭ける。';
+
+  @override
+  String get numberAsks => 'ひとつの数字に決める。';
+
+  @override
+  String get inOrderAsks => '4つの出来事を古い順に。';
+
+  @override
+  String get whatYearAsks => '出来事を、その年に置く。';
+
+  @override
+  String get beforeAfterAsks => '直前の出来事と比べて前か後か。';
+
+  @override
+  String get challengeBest => '自己ベスト';
+
+  @override
+  String get challengeToday => '今日';
+
+  @override
+  String get challengeAccuracy => '正答率';
+
+  @override
+  String get challengeTime => '時間';
+
+  @override
+  String challengeSeconds(int s) {
+    return '$s秒';
+  }
+
+  @override
+  String get challengePersonalBest => '自己ベスト';
+
+  @override
+  String challengeAboveChance(int n, int of) {
+    return '偶然を上回る結果です。当てずっぽうなら平均で$of中$n。';
+  }
+
+  @override
+  String challengeAtChance(int n, int of) {
+    return '偶然と同じ水準です。当てずっぽうなら平均で$of中$n。';
+  }
+
+  @override
+  String challengeBelowChance(int n, int of) {
+    return '偶然を下回る結果です。当てずっぽうなら平均で$of中$n。';
+  }
+
+  @override
+  String sixtyUnanswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '時間切れで、$nつの主張が未回答のままです。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAgain => 'もう一度';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

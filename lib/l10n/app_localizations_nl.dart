@@ -5260,14 +5260,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get exploreDayOpen => 'Naar de kaarten van vandaag';
 
   @override
-  String exploreSixtyRecord(int n, int of) {
-    return 'Je record $n/$of';
-  }
-
-  @override
-  String get exploreSixtyFirst => 'Zet je record neer';
-
-  @override
   String get exploreGameNone =>
       'Hier valt nu niets te spelen. Kom morgen terug.';
 
@@ -5276,7 +5268,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get challengesLine =>
-      'Een minuutje of twee per stuk. Kies er een en speel.';
+      'Korte oefeningen in oordeel en schatting, elk een paar minuten.';
 
   @override
   String challengesPage(int n, int of) {
@@ -5284,14 +5276,11 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get gamePlay => 'Spelen';
+  String get gamePlay => 'Beginnen';
 
   @override
   String get sixtyRules =>
-      'Acht beweringen, waar of niet waar. Je hebt één minuut: ga op je gevoel af.';
-
-  @override
-  String get sixtyNewRecord => 'Nieuw record!';
+      'Acht beweringen, waar of niet waar, in één minuut. Het meet hoe goed je onder tijdsdruk oordeelt, en zo beoordelen we het meeste wat we lezen.';
 
   @override
   String get sixtyReview => 'De acht beweringen';
@@ -5397,7 +5386,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get inOrderRules =>
-      'Vier momenten uit de kaarten, elk zonder jaartal. Tik ze aan in de volgorde waarin ze gebeurden, het vroegste eerst.';
+      'Vier momenten uit de kaarten, zonder jaartal, te zetten in de volgorde waarin ze gebeurden. Het meet je gevoel voor chronologie, de eerste toets van elke verklaring: een oorzaak komt vóór haar gevolg.';
 
   @override
   String get inOrderFirst => 'Tik het vroegste aan';
@@ -5460,7 +5449,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String whatYearExact(int points) {
-    return 'Precies! +$points';
+    return 'Precies het jaar, +$points';
   }
 
   @override
@@ -5543,6 +5532,127 @@ class AppLocalizationsNl extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get sixtySkill => 'Intuïtie';
+
+  @override
+  String get spotSkill => 'Onderscheid';
+
+  @override
+  String get tfSkill => 'Oordeel';
+
+  @override
+  String get biggerSkill => 'Verhouding';
+
+  @override
+  String get closerSkill => 'Schatting';
+
+  @override
+  String get magnitudeSkill => 'Schaal';
+
+  @override
+  String get rangeSkill => 'Kalibratie';
+
+  @override
+  String get stakeSkill => 'Overtuiging';
+
+  @override
+  String get numberSkill => 'Precisie';
+
+  @override
+  String get inOrderSkill => 'Chronologie';
+
+  @override
+  String get whatYearSkill => 'Datering';
+
+  @override
+  String get beforeAfterSkill => 'Volgorde';
+
+  @override
+  String get sixtyAsks => 'Acht beweringen tegen de klok.';
+
+  @override
+  String get spotAsks => 'Vier beweringen, één is niet waar.';
+
+  @override
+  String get tfAsks => 'Beweringen waarover bijna iedereen zich vergist.';
+
+  @override
+  String get biggerAsks => 'Twee getallen. Welk is groter?';
+
+  @override
+  String get closerAsks => 'Stap voor stap naar een getal toe.';
+
+  @override
+  String get magnitudeAsks => 'Vind de juiste macht van tien.';
+
+  @override
+  String get rangeAsks => 'Een bereik, net breed genoeg.';
+
+  @override
+  String get stakeAsks => 'Zet punten in naar je zekerheid.';
+
+  @override
+  String get numberAsks => 'Kies één enkel getal.';
+
+  @override
+  String get inOrderAsks => 'Vier momenten, het vroegste eerst.';
+
+  @override
+  String get whatYearAsks => 'Plaats een moment in zijn jaar.';
+
+  @override
+  String get beforeAfterAsks => 'Elk moment tegenover het vorige.';
+
+  @override
+  String get challengeBest => 'Record';
+
+  @override
+  String get challengeToday => 'Vandaag';
+
+  @override
+  String get challengeAccuracy => 'Trefzekerheid';
+
+  @override
+  String get challengeTime => 'Tijd';
+
+  @override
+  String challengeSeconds(int s) {
+    return '$s s';
+  }
+
+  @override
+  String get challengePersonalBest => 'Persoonlijk record';
+
+  @override
+  String challengeAboveChance(int n, int of) {
+    return 'Beter dan toeval: gokken levert gemiddeld $n van $of op.';
+  }
+
+  @override
+  String challengeAtChance(int n, int of) {
+    return 'Gelijk aan toeval: gokken levert gemiddeld $n van $of op.';
+  }
+
+  @override
+  String challengeBelowChance(int n, int of) {
+    return 'Slechter dan toeval: gokken levert gemiddeld $n van $of op.';
+  }
+
+  @override
+  String sixtyUnanswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'De tijd was op met $n beweringen onbeantwoord.',
+      one: 'De tijd was op met één bewering onbeantwoord.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAgain => 'Nog een ronde';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

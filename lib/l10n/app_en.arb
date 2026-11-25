@@ -5599,22 +5599,6 @@
  "@exploreDayOpen": {
   "description": "Explore, the panel of the reader's day: what a tap on it does, said to a screen reader."
  },
- "exploreSixtyRecord": "Your record {n}/{of}",
- "@exploreSixtyRecord": {
-  "description": "Explore, the quick games: on the Sixty seconds tile, the most claims the reader ever got right in one round, of eight.",
-  "placeholders": {
-   "n": {
-    "type": "int"
-   },
-   "of": {
-    "type": "int"
-   }
-  }
- },
- "exploreSixtyFirst": "Set your record",
- "@exploreSixtyFirst": {
-  "description": "Explore, the quick games: on the Sixty seconds tile, before the reader has played a round."
- },
  "exploreGameNone": "Nothing to play here right now. Come back tomorrow.",
  "@exploreGameNone": {
   "description": "Explore: a game opened on a page of its own, when it has nothing to play right now."
@@ -5623,9 +5607,9 @@
  "@challengesTitle": {
   "description": "Explore: the name of the section of games — Sixty seconds, Spot the false one and the others, four to a page — when the remote document gives it none. Short: a section's title."
  },
- "challengesLine": "A minute or two each. Pick one and play.",
+ "challengesLine": "Short exercises in judgement and estimation, a few minutes each.",
  "@challengesLine": {
-  "description": "Explore, the challenges: the line under the section's name, when the remote document gives it none."
+  "description": "Explore, the challenges: the line under the section's name, when the remote document gives it none. Serious and plain: what they are, how long they take."
  },
  "challengesPage": "Page {n} of {of}",
  "@challengesPage": {
@@ -5639,17 +5623,13 @@
    }
   }
  },
- "gamePlay": "Play",
+ "gamePlay": "Begin",
  "@gamePlay": {
-  "description": "A game opened on the whole screen from Explore's challenges: the large button that starts it. One short word."
+  "description": "A challenge opened on the whole screen from Explore's challenges: the button that begins it. One short word: Begin, never Play."
  },
- "sixtyRules": "Eight claims, true or false. You have one minute: go with your gut.",
+ "sixtyRules": "Eight claims, true or false, in one minute. It measures how well you judge at speed, the way most of what we read is judged.",
  "@sixtyRules": {
-  "description": "Sixty seconds on the whole screen, before the round: the rules in a line, under the game's name."
- },
- "sixtyNewRecord": "New record!",
- "@sixtyNewRecord": {
-  "description": "Sixty seconds on the whole screen, at the end of a round: the round beat the reader's record."
+  "description": "Sixty seconds on the whole screen, before the round, under its name: what it is and what it measures, and why that matters, in two sentences. Plain and serious."
  },
  "sixtyReview": "The eight claims",
  "@sixtyReview": {
@@ -5790,9 +5770,9 @@
  "@inOrderTitle": {
   "description": "Explore, the challenges: the name of the game of putting four moments from the cards in the order they happened. Short: a tile's name."
  },
- "inOrderRules": "Four moments from the cards, each missing its year. Tap them in the order they happened, earliest first.",
+ "inOrderRules": "Four moments from the cards, their years taken out, to put in the order they happened. It measures your sense of chronology, the first test of any explanation: a cause comes before its effect.",
  "@inOrderRules": {
-  "description": "In order, before playing: its rules, in a line."
+  "description": "In order, before the round, under its name: what it is and what it measures, and why that matters, in two sentences. Plain and serious."
  },
  "inOrderFirst": "Tap the earliest",
  "@inOrderFirst": {
@@ -5881,9 +5861,9 @@
    }
   }
  },
- "whatYearExact": "Spot on! +{points}",
+ "whatYearExact": "Exact year, +{points}",
  "@whatYearExact": {
-  "description": "What year?: a year dialled exactly, and the points it scored.",
+  "description": "What year?: a year dialled exactly, and the points it scored. Calm, no exclamation mark.",
   "placeholders": {
    "points": {
     "type": "int"
@@ -5980,6 +5960,180 @@
     "type": "int"
    }
   }
+ },
+ "sixtySkill": "Intuition",
+ "@sixtySkill": {
+  "description": "Explore, the challenges: in small capitals at the top of Sixty seconds (eight claims, true or false, in a minute)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "spotSkill": "Discernment",
+ "@spotSkill": {
+  "description": "Explore, the challenges: in small capitals at the top of Spot the false one (four claims, one false)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "tfSkill": "Judgement",
+ "@tfSkill": {
+  "description": "Explore, the challenges: in small capitals at the top of True or false (the claims most people get wrong)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "biggerSkill": "Proportion",
+ "@biggerSkill": {
+  "description": "Explore, the challenges: in small capitals at the top of Which is bigger? (two figures compared)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "closerSkill": "Estimation",
+ "@closerSkill": {
+  "description": "Explore, the challenges: in small capitals at the top of Closer, closer (a figure closed in on, more or less)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "magnitudeSkill": "Scale",
+ "@magnitudeSkill": {
+  "description": "Explore, the challenges: in small capitals at the top of Orders of magnitude (the power of ten of a figure)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "rangeSkill": "Calibration",
+ "@rangeSkill": {
+  "description": "Explore, the challenges: in small capitals at the top of Bet a range (an interval sure to hold the answer)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "stakeSkill": "Conviction",
+ "@stakeSkill": {
+  "description": "Explore, the challenges: in small capitals at the top of Place your bet (points staked on how sure)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "numberSkill": "Precision",
+ "@numberSkill": {
+  "description": "Explore, the challenges: in small capitals at the top of Your number (one figure, committed to)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "inOrderSkill": "Chronology",
+ "@inOrderSkill": {
+  "description": "Explore, the challenges: in small capitals at the top of In order (four moments put in the order they happened)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "whatYearSkill": "Dating",
+ "@whatYearSkill": {
+  "description": "Explore, the challenges: in small capitals at the top of What year? (the year of a moment, dialled in)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "beforeAfterSkill": "Sequence",
+ "@beforeAfterSkill": {
+  "description": "Explore, the challenges: in small capitals at the top of Before or after? (each moment against the one before)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width."
+ },
+ "sixtyAsks": "Eight claims against the clock.",
+ "@sixtyAsks": {
+  "description": "Explore, the challenges: on Sixty seconds's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "spotAsks": "Four claims, one of them false.",
+ "@spotAsks": {
+  "description": "Explore, the challenges: on Spot the false one's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "tfAsks": "Claims most people get wrong.",
+ "@tfAsks": {
+  "description": "Explore, the challenges: on True or false's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "biggerAsks": "Two figures. Which is larger?",
+ "@biggerAsks": {
+  "description": "Explore, the challenges: on Which is bigger?'s tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "closerAsks": "Close in on a figure, step by step.",
+ "@closerAsks": {
+  "description": "Explore, the challenges: on Closer, closer's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "magnitudeAsks": "Find the right power of ten.",
+ "@magnitudeAsks": {
+  "description": "Explore, the challenges: on Orders of magnitude's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "rangeAsks": "A range just wide enough.",
+ "@rangeAsks": {
+  "description": "Explore, the challenges: on Bet a range's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "stakeAsks": "Stake points on how sure you are.",
+ "@stakeAsks": {
+  "description": "Explore, the challenges: on Place your bet's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "numberAsks": "Commit to a single figure.",
+ "@numberAsks": {
+  "description": "Explore, the challenges: on Your number's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "inOrderAsks": "Four moments, earliest first.",
+ "@inOrderAsks": {
+  "description": "Explore, the challenges: on In order's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "whatYearAsks": "Place a moment in its year.",
+ "@whatYearAsks": {
+  "description": "Explore, the challenges: on What year?'s tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "beforeAfterAsks": "Each moment against the last.",
+ "@beforeAfterAsks": {
+  "description": "Explore, the challenges: on Before or after?'s tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more."
+ },
+ "challengeBest": "Best",
+ "@challengeBest": {
+  "description": "A challenge: the name of the reader's own best score, on its tile, before it and in its report beside the figure ('Best 6/8'). One short word."
+ },
+ "challengeToday": "Today",
+ "@challengeToday": {
+  "description": "A challenge's tile: the name of today's score, beside it ('Today 3/4'), once today's round is over. One short word."
+ },
+ "challengeAccuracy": "Accuracy",
+ "@challengeAccuracy": {
+  "description": "A challenge's report: the name of the share of answers given that were right, beside it as a percentage. Not the same word as numberSkill."
+ },
+ "challengeTime": "Time",
+ "@challengeTime": {
+  "description": "A challenge's report: the name of how long the round took, beside it in seconds."
+ },
+ "challengeSeconds": "{s} s",
+ "@challengeSeconds": {
+  "description": "A challenge's report: a number of seconds, short, in tabular figures ('41 s').",
+  "placeholders": {
+   "s": {
+    "type": "int"
+   }
+  }
+ },
+ "challengePersonalBest": "Personal best",
+ "@challengePersonalBest": {
+  "description": "A challenge's report: under the score, when the round beat the reader's best. Said plainly, as words, without an exclamation mark."
+ },
+ "challengeAboveChance": "Above chance: guessing alone averages {n} of {of}.",
+ "@challengeAboveChance": {
+  "description": "A challenge's report, the measured line reading the score: it is above what guessing alone gets, on average {n} right of {of}. Calm and factual, no exclamation mark.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "challengeAtChance": "Level with chance: guessing alone averages {n} of {of}.",
+ "@challengeAtChance": {
+  "description": "A challenge's report, the measured line reading the score: it is level with what guessing alone gets, on average {n} right of {of}. Calm and factual, no exclamation mark.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "challengeBelowChance": "Below chance: guessing alone averages {n} of {of}.",
+ "@challengeBelowChance": {
+  "description": "A challenge's report, the measured line reading the score: it is below what guessing alone gets, on average {n} right of {of}. Calm and factual, no exclamation mark.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "sixtyUnanswered": "{n, plural, =1{The time ran out with one claim unanswered.} other{The time ran out with {n} claims unanswered.}}",
+ "@sixtyUnanswered": {
+  "description": "Sixty seconds' report, the line reading the score when the minute ran out before every claim was answered: how many were left. Calm, no exclamation mark.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "challengeAgain": "Another round",
+ "@challengeAgain": {
+  "description": "A challenge's report, at its foot: the button that takes another round of the same challenge today. Not 'Play': a serious tool's words."
  },
  "exploreSubjectLevel": "{subject}, level {n}",
  "@exploreSubjectLevel": {

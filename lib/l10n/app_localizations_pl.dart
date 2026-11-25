@@ -5426,14 +5426,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get exploreDayOpen => 'Przejdź do dzisiejszych kart';
 
   @override
-  String exploreSixtyRecord(int n, int of) {
-    return 'Twój rekord $n/$of';
-  }
-
-  @override
-  String get exploreSixtyFirst => 'Ustanów swój rekord';
-
-  @override
   String get exploreGameNone => 'Na razie nie ma tu w co grać. Wróć jutro.';
 
   @override
@@ -5441,7 +5433,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get challengesLine =>
-      'Każde na minutę lub dwie. Wybierz jedno i graj.';
+      'Krótkie ćwiczenia z oceniania i szacowania, po kilka minut każde.';
 
   @override
   String challengesPage(int n, int of) {
@@ -5449,14 +5441,11 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get gamePlay => 'Graj';
+  String get gamePlay => 'Rozpocznij';
 
   @override
   String get sixtyRules =>
-      'Osiem twierdzeń: prawda czy fałsz? Masz minutę. Zaufaj intuicji.';
-
-  @override
-  String get sixtyNewRecord => 'Nowy rekord!';
+      'Osiem twierdzeń, prawda czy fałsz, w minutę. Mierzy, jak dobrze oceniasz w pośpiechu, a tak właśnie oceniamy większość tego, co czytamy.';
 
   @override
   String get sixtyReview => 'Osiem twierdzeń';
@@ -5568,7 +5557,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get inOrderRules =>
-      'Cztery chwile z kart, każda bez roku. Stuknij je w kolejności, w jakiej się wydarzyły, od najwcześniejszej.';
+      'Cztery chwile z kart, bez roku, do ułożenia w kolejności, w jakiej się wydarzyły. Mierzy wyczucie chronologii, pierwszy sprawdzian każdego wyjaśnienia: przyczyna poprzedza skutek.';
 
   @override
   String get inOrderFirst => 'Stuknij najwcześniejszą';
@@ -5633,7 +5622,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String whatYearExact(int points) {
-    return 'Dokładnie! +$points';
+    return 'Dokładnie ten rok, +$points';
   }
 
   @override
@@ -5724,6 +5713,129 @@ class AppLocalizationsPl extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get sixtySkill => 'Intuicja';
+
+  @override
+  String get spotSkill => 'Przenikliwość';
+
+  @override
+  String get tfSkill => 'Osąd';
+
+  @override
+  String get biggerSkill => 'Proporcja';
+
+  @override
+  String get closerSkill => 'Szacowanie';
+
+  @override
+  String get magnitudeSkill => 'Skala';
+
+  @override
+  String get rangeSkill => 'Kalibracja';
+
+  @override
+  String get stakeSkill => 'Przekonanie';
+
+  @override
+  String get numberSkill => 'Precyzja';
+
+  @override
+  String get inOrderSkill => 'Chronologia';
+
+  @override
+  String get whatYearSkill => 'Datowanie';
+
+  @override
+  String get beforeAfterSkill => 'Kolejność';
+
+  @override
+  String get sixtyAsks => 'Osiem twierdzeń na czas.';
+
+  @override
+  String get spotAsks => 'Cztery twierdzenia, jedno fałszywe.';
+
+  @override
+  String get tfAsks => 'Twierdzenia, w których myli się większość.';
+
+  @override
+  String get biggerAsks => 'Dwie liczby. Która jest większa?';
+
+  @override
+  String get closerAsks => 'Zbliż się do liczby krok po kroku.';
+
+  @override
+  String get magnitudeAsks => 'Znajdź właściwą potęgę dziesięciu.';
+
+  @override
+  String get rangeAsks => 'Przedział tak szeroki, jak trzeba.';
+
+  @override
+  String get stakeAsks => 'Postaw punkty według swojej pewności.';
+
+  @override
+  String get numberAsks => 'Zdecyduj się na jedną liczbę.';
+
+  @override
+  String get inOrderAsks => 'Cztery chwile, od najwcześniejszej.';
+
+  @override
+  String get whatYearAsks => 'Umieść chwilę w jej roku.';
+
+  @override
+  String get beforeAfterAsks => 'Każda chwila wobec poprzedniej.';
+
+  @override
+  String get challengeBest => 'Rekord';
+
+  @override
+  String get challengeToday => 'Dziś';
+
+  @override
+  String get challengeAccuracy => 'Trafność';
+
+  @override
+  String get challengeTime => 'Czas';
+
+  @override
+  String challengeSeconds(int s) {
+    return '$s s';
+  }
+
+  @override
+  String get challengePersonalBest => 'Rekord osobisty';
+
+  @override
+  String challengeAboveChance(int n, int of) {
+    return 'Powyżej przypadku: samo zgadywanie daje średnio $n z $of.';
+  }
+
+  @override
+  String challengeAtChance(int n, int of) {
+    return 'Na poziomie przypadku: samo zgadywanie daje średnio $n z $of.';
+  }
+
+  @override
+  String challengeBelowChance(int n, int of) {
+    return 'Poniżej przypadku: samo zgadywanie daje średnio $n z $of.';
+  }
+
+  @override
+  String sixtyUnanswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Czas minął, $n twierdzenia zostało bez odpowiedzi.',
+      many: 'Czas minął, $n twierdzeń zostało bez odpowiedzi.',
+      few: 'Czas minął, $n twierdzenia zostały bez odpowiedzi.',
+      one: 'Czas minął, jedno twierdzenie zostało bez odpowiedzi.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAgain => 'Jeszcze raz';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

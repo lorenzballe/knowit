@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "0cc57b87b14eca7e",
+ "hash": "8b4a99064565d082",
  "app": {
   "gate": null,
   "flags": {},
@@ -437,19 +437,19 @@ const String kEmbeddedRemote = r'''
      "zh": "挑战"
     },
     "subtitle": {
-     "en": "A minute or two each. Pick one and play.",
-     "it": "Un minuto o due ciascuna. Scegline una e gioca.",
-     "de": "Je ein, zwei Minuten. Such dir eine aus und spiel.",
-     "es": "Uno o dos minutos cada uno. Elige uno y juega.",
-     "fr": "Une minute ou deux chacun. Choisis-en un et joue.",
-     "ja": "どれも1〜2分。選んで遊ぼう。",
-     "ko": "하나에 1~2분. 골라서 플레이하세요.",
-     "nl": "Een minuutje of twee per stuk. Kies er een en speel.",
-     "pl": "Każde na minutę lub dwie. Wybierz jedno i graj.",
-     "pt": "Um ou dois minutos cada. Escolhe um e joga.",
-     "ru": "По минуте-другой на каждое. Выбери и играй.",
-     "tr": "Her biri bir iki dakika. Birini seç ve oyna.",
-     "zh": "每个只要一两分钟。选一个开始玩。"
+     "en": "Short exercises in judgement and estimation, a few minutes each.",
+     "it": "Brevi esercizi di giudizio e di stima, pochi minuti ciascuno.",
+     "de": "Kurze Übungen in Urteilskraft und Schätzung, je ein paar Minuten.",
+     "es": "Ejercicios breves de juicio y estimación, de unos minutos cada uno.",
+     "fr": "De courts exercices de jugement et d'estimation, de quelques minutes chacun.",
+     "ja": "判断と見積もりの短い練習。どれも数分で終わります。",
+     "ko": "판단과 추정을 위한 짧은 연습, 하나에 몇 분이면 됩니다.",
+     "nl": "Korte oefeningen in oordeel en schatting, elk een paar minuten.",
+     "pl": "Krótkie ćwiczenia z oceniania i szacowania, po kilka minut każde.",
+     "pt": "Exercícios breves de juízo e estimativa, de poucos minutos cada.",
+     "ru": "Короткие упражнения на суждение и оценку, по несколько минут каждое.",
+     "tr": "Muhakeme ve tahmin üzerine kısa alıştırmalar, her biri birkaç dakika.",
+     "zh": "关于判断与估算的简短练习，每个只需几分钟。"
     },
     "audience": {
      "any": [
