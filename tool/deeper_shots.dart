@@ -361,6 +361,26 @@ void main() {
         await shoot(tester, 'article-6');
       });
 
+      // The head and the first part under it, for three subjects far apart
+      // on the wheel: the light settled, the sheet drawn up.
+      for (final String subject in ['Technology', 'Economics', 'Psychology']) {
+        testWidgets('head $subject, $tag', (tester) async {
+          debugToolsOn = true;
+          addTearDown(() => debugToolsOn = false);
+          final app = await _app(plus: true);
+          final Pill pill = subject == 'Technology'
+              ? written()
+              : PillBank.cards.firstWhere(
+                  (p) => p.topic == subject && p.question.length < 90,
+                  orElse: () =>
+                      PillBank.cards.firstWhere((p) => p.topic == subject),
+                );
+          await open(tester, app, pill);
+          await raise(tester);
+          await shoot(tester, 'head-${subject.toLowerCase()}');
+        });
+      }
+
       testWidgets('entrance, $tag', (tester) async {
         debugToolsOn = false;
         final app = await _app(plus: true);

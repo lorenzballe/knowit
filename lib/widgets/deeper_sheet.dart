@@ -110,7 +110,7 @@ class _DeeperSheetState extends State<DeeperSheet>
   /// head is what the reader looks at, still while they read the parts.
   late final AnimationController _drift = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 16),
+    duration: const Duration(seconds: 22),
   );
 
   /// How far the sheet has scrolled, for the head to lag behind.
@@ -471,7 +471,11 @@ class _DeeperSheetState extends State<DeeperSheet>
                     scroll: _scroll,
                     entrance: _entrance,
                     still: deeperStill(context),
-                    overlap: _overlap,
+                    // In the app's style the head runs a little longer, for
+                    // its colour to fall slowly into the ground.
+                    overlap: deeperStyle == DeeperStyle.app
+                        ? _overlap + 34
+                        : _overlap,
                   ),
                   Transform.translate(
                     offset: const Offset(0, -_overlap),

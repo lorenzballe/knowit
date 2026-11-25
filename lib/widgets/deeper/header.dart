@@ -7,6 +7,7 @@
 library;
 
 import 'dart:math' as math;
+import 'dart:typed_data' show Float32List;
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart' show ValueListenable;
@@ -327,6 +328,37 @@ class _Glow extends CustomPainter {
         ),
     );
 
+    // Depth: the colour's own deeper shade pooled low in the head and in
+    // its far corner, as a dyed paper is darker where it is thick. Not on
+    // Thinking's paper, which is lit, not dyed.
+    if (!look.pearl) {
+      final Color deep = _deep(look.world);
+      // At night the colour deepens all the way into the black; on paper
+      // only a little, and it is let go again before the foot, so the
+      // colour lightens into the paper with no darker band on the way.
+      final double low = size.height - foot - 50;
+      canvas.drawRect(
+        box,
+        Paint()
+          ..shader = look.dark
+              ? ui.Gradient.linear(
+                  Offset(0, size.height * 0.35),
+                  Offset(0, size.height),
+                  [deep.withValues(alpha: 0), deep.withValues(alpha: 0.45)],
+                )
+              : ui.Gradient.linear(
+                  Offset(0, size.height * 0.3),
+                  Offset(0, low),
+                  [
+                    deep.withValues(alpha: 0),
+                    deep.withValues(alpha: 0.22),
+                    deep.withValues(alpha: 0),
+                  ],
+                  const [0, 0.7, 1],
+                ),
+      );
+    }
+
     for (int i = 0; i < _lights.length; i++) {
       final (double x, double y, double r, double turns, double phase) =
           _lights[i];
@@ -384,25 +416,81 @@ class _Glow extends CustomPainter {
           box.topLeft,
           Offset(size.width * 0.55, size.height * 0.7),
           [
-            Colors.white.withValues(alpha: look.pearl ? 0.35 : 0.16),
+            Colors.white.withValues(alpha: look.pearl ? 0.35 : 0.09),
             Colors.white.withValues(alpha: 0),
           ],
         ),
     );
 
+    // A fine grain over it all, as in a printed colour: a few thousand
+    // specks, lighter and darker, too small to see one by one.
+    canvas.drawRawPoints(
+      ui.PointMode.points,
+      _grain(size, 0),
+      Paint()
+        ..color = Colors.white.withValues(alpha: look.pearl ? 0.05 : 0.045)
+        ..strokeWidth = 1,
+    );
+    canvas.drawRawPoints(
+      ui.PointMode.points,
+      _grain(size, 1),
+      Paint()
+        ..color = Colors.black.withValues(alpha: look.pearl ? 0.035 : 0.06)
+        ..strokeWidth = 1,
+    );
+
     // The foot, where the first part lies: let go into the sheet's own
-    // ground below the words, so the head has no edge, only an end.
-    final double melt = foot + 20;
+    // ground below the words, on an eased curve so there is no line where
+    // the colour ends, only a slow fall into the ground.
+    final double melt = foot + (look.dark ? 20 : 50);
+    final Color g = look.ground;
     canvas.drawRect(
       Rect.fromLTRB(0, size.height - melt, size.width, size.height),
       Paint()
         ..shader = ui.Gradient.linear(
           Offset(0, size.height - melt),
           Offset(0, size.height),
-          [look.ground.withValues(alpha: 0), look.ground],
+          [
+            g.withValues(alpha: 0),
+            g.withValues(alpha: 0.06),
+            g.withValues(alpha: 0.2),
+            g.withValues(alpha: 0.42),
+            g.withValues(alpha: 0.68),
+            g.withValues(alpha: 0.88),
+            g,
+          ],
+          const [0, 0.17, 0.34, 0.5, 0.67, 0.84, 1],
         ),
     );
   }
+
+  static final Map<int, Color> _deeps = {};
+
+  /// The world's own colour, deeper and a little richer.
+  static Color _deep(Color world) => _deeps[world.toARGB32()] ??= () {
+    final Oklch o = Oklch.of(world);
+    // A light colour deepens less, or it turns muddy.
+    return Oklch(
+      (o.l - (o.l > 0.8 ? 0.1 : 0.16)).clamp(0.0, 1.0),
+      o.c * 1.08,
+      (o.h - 10) % 360,
+    ).toColour();
+  }();
+
+  static final Map<(int, int, int), Float32List> _grains = {};
+
+  /// The specks of one grain, the same every frame for a head's size.
+  static Float32List _grain(Size size, int seed) =>
+      _grains[(size.width.round(), size.height.round(), seed)] ??= () {
+        final math.Random r = math.Random(17 + seed);
+        final int n = (size.width * size.height / 70).round();
+        final Float32List at = Float32List(n * 2);
+        for (int i = 0; i < n; i++) {
+          at[i * 2] = r.nextDouble() * size.width;
+          at[i * 2 + 1] = r.nextDouble() * size.height;
+        }
+        return at;
+      }();
 
   @override
   bool shouldRepaint(_Glow old) =>
