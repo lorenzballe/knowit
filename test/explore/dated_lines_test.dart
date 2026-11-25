@@ -51,7 +51,8 @@ void main() {
             1990),
         ('Raiders of the Lost Ark was the biggest hit of 1981. Who turned it '
             'down?', 1981),
-        ('In Strasbourg in February 1349, what drove the killings?', 1349),
+        ('In Strasbourg in February 1349, mobs turned on the Jews. Why?',
+            1349),
         ('Greenspan warned of irrational exuberance in December 1996. '
             'Where was the index?', 1996),
         ('Chadwick\'s 1842 report said labourers died at 15. What does it '
@@ -64,6 +65,32 @@ void main() {
         expect(d!.year, year);
         expect(d.text, q);
         expect(d.gapped('____'), isNot(contains('$year')));
+        expect(d.statement, isNot(contains('$year')));
+      }
+    });
+
+    test('said as a plain statement of what happened, the year taken out; '
+        'a year asked about makes no moment', () {
+      for (final (String q, String said) in [
+        ('In 1990 McDonald\'s stopped frying in beef fat. What replaced it?',
+            'McDonald\'s stopped frying in beef fat.'),
+        ('Raiders of the Lost Ark was the biggest hit of 1981. Who turned it '
+            'down?', 'Raiders of the Lost Ark was the biggest hit.'),
+        ('Greenspan warned of irrational exuberance in December 1996. '
+            'Where was the index?', 'Greenspan warned of irrational exuberance.'),
+        ('A 2016 study put the number of galaxies at 2 trillion. What '
+            'next?', 'A study put the number of galaxies at 2 trillion.'),
+        ('In an 1878 court case, Whistler was asked to justify his fee. '
+            'What did he say?',
+            'In a court case, Whistler was asked to justify his fee.'),
+      ]) {
+        expect(datedLineOf(_read(q))?.statement, said, reason: q);
+      }
+      for (final String q in [
+        'In Strasbourg in February 1349, what drove the killings?',
+        'What did the 1936 survey find about diets?',
+      ]) {
+        expect(datedLineOf(_read(q)), isNull, reason: q);
       }
     });
 
@@ -105,7 +132,9 @@ void main() {
     });
 
     test('a year still to come is a plan, not a moment', () {
-      final Pill plan = _read('What will the mission find in 2029?');
+      final Pill plan = _read(
+        'The mission lands on the moon in 2029. What will it find?',
+      );
       expect(datedLineOf(plan), isNotNull);
       expect(datedLines([plan], latest: 2026), isEmpty);
     });
@@ -118,7 +147,9 @@ void main() {
     );
 
     test('the bank has moments for many days of rounds', () {
-      expect(lines.length, greaterThan(200));
+      // Only the moments that make a plain statement: fewer than the cards
+      // that name a year, and still months of rounds.
+      expect(lines.length, greaterThan(150));
     });
 
     test('the same for everybody on a day, others the next day', () {

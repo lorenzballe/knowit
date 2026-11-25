@@ -448,18 +448,17 @@ class _ChallengeScreenState extends State<ChallengeScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ChallengeCardHead(look: look, key: ValueKey('$_id-skill')),
-          const Spacer(),
-          const SizedBox(height: 28),
+          const SizedBox(height: 30),
           Semantics(
             header: true,
             child: Text(
               look.title,
               textScaler: scaler.clamp(maxScaleFactor: 1.3),
               style: AppText.display(
-                size: 46,
+                size: 44,
                 weight: FontWeight.w600,
                 height: 1.02,
-                spacing: -1.3,
+                spacing: -1.2,
                 color: ink,
               ),
             ),
@@ -475,6 +474,65 @@ class _ChallengeScreenState extends State<ChallengeScreen>
               color: ink.withValues(alpha: 0.88),
             ),
           ),
+          const Spacer(),
+          const SizedBox(height: 24),
+          // At the card's foot, the reader's own figures large, as a card's
+          // number is — or how the challenge counts.
+          if (rows.isNotEmpty)
+            Wrap(
+              key: ValueKey('$_id-record'),
+              spacing: 28,
+              runSpacing: 14,
+              children: [
+                for (final ChallengeFigure f in rows)
+                  f.value.isEmpty
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 7,
+                          ),
+                          decoration: BoxDecoration(
+                            color: ink.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(99),
+                          ),
+                          child: Text(
+                            f.label,
+                            style: AppText.body(
+                              size: 13.5,
+                              weight: FontWeight.w700,
+                              height: 1.2,
+                              color: ink,
+                            ),
+                          ),
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              f.label,
+                              style: AppText.label(
+                                size: 10.5,
+                                weight: FontWeight.w700,
+                                spacing: 1.2,
+                                color: ink.withValues(alpha: 0.72),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              f.value,
+                              style: AppText.display(
+                                size: 40,
+                                weight: FontWeight.w600,
+                                height: 1,
+                                spacing: -1,
+                                color: ink,
+                              ),
+                            ),
+                          ],
+                        ),
+              ],
+            ),
         ],
       ),
     );
@@ -496,13 +554,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Expanded(child: card),
-                      if (rows.isNotEmpty) ...[
-                        const SizedBox(height: 10),
-                        ChallengeFigures(
-                          key: ValueKey('$_id-record'),
-                          rows: rows,
-                        ),
-                      ],
                     ],
                   ),
                 ),

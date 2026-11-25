@@ -31,6 +31,7 @@ class DatedLine {
     required this.year,
     required this.before,
     required this.after,
+    required this.statement,
   });
 
   final Pill pill;
@@ -41,6 +42,11 @@ class DatedLine {
   /// The card's words before the year, and after it.
   final String before;
   final String after;
+
+  /// What happened, as a plain statement with its year taken out: what the
+  /// games of time show until the year is told ("Phineas Gage later held a
+  /// demanding job for years.").
+  final String statement;
 
   /// The moment, its year in place.
   String get text => '$before$year$after';
@@ -142,7 +148,80 @@ DatedLine? _read(Pill p) {
       _dateBefore.any((r) => r.hasMatch(before)) ||
       (_owner.hasMatch(before) && _thing.hasMatch(after));
   if (!dated) return null;
-  return DatedLine(pill: p, year: year, before: before, after: after);
+  final String? statement = statementOf(before, after);
+  if (statement == null) return null;
+  return DatedLine(
+    pill: p,
+    year: year,
+    before: before,
+    after: after,
+    statement: statement,
+  );
+}
+
+/// Where the year stands while a statement is made of the words round it.
+const String _mark = '\u0000';
+
+/// The moment as a plain statement, from the card's words [before] its
+/// year and [after] it: the sentence that names the year, when it says
+/// something rather than asks it, with the words that date it taken out —
+/// "In 1990 McDonald's stopped frying in beef fat." becomes "McDonald's
+/// stopped frying in beef fat." Null when the words make no clean
+/// statement: the year in a question, said in a way not taken out, or a
+/// sentence too short or too long to read at a glance.
+String? statementOf(String before, String after) {
+  final String words = '$before$_mark$after';
+  final List<String> sentences = words.split(
+    RegExp(r'(?<=[.?!])\s+(?=[A-Z0-9"“‘\u0000])'),
+  );
+  String? said;
+  for (final String one in sentences) {
+    if (one.contains(_mark)) said = one.trim();
+  }
+  if (said == null || !said.endsWith('.')) return null;
+  const String season =
+      r'(?:(?:early|late|mid-?|the spring of|the summer of|the autumn of|'
+      r'the fall of|the winter of|the year) )?';
+  final String month = '(?:(?:$_months) )?';
+  const String day = r'(?:\d{1,2},? )?';
+  String s = said
+      // "In 1990, …" at the head of the sentence.
+      .replaceFirst(
+        RegExp('^[Ii]n $season$month$day$_mark,? '),
+        '',
+      )
+      // "… in December 1996", "… of 1981", "… on 3 March 1979".
+      .replaceFirst(
+        RegExp(',? (?:in|of|on) $season$month$day$_mark'),
+        '',
+      )
+      // "… March 3, 1979" with nothing before it.
+      .replaceFirst(RegExp(' (?:$_months) (?:\\d{1,2},? )?$_mark'), '')
+      // "a 1965 study", "Chadwick's 1842 report".
+      .replaceFirst('$_mark ', '');
+  if (s.contains(_mark)) return null;
+  s = s
+      // "an 1878 court case" without its year: "a court case".
+      .replaceAllMapped(
+        RegExp(r'\b([Aa])n (?=[bcdfgjklmnpqrstvwxyz])'),
+        (m) => '${m[1]} ',
+      )
+      .replaceAll(RegExp(r'\s{2,}'), ' ')
+      .replaceAll(' ,', ',')
+      .replaceAll(',.', '.')
+      .trim();
+  if (s.length < 24 || s.length > 170) return null;
+  if (RegExp(r'^[a-z]').hasMatch(s)) {
+    s = s[0].toUpperCase() + s.substring(1);
+  }
+  // A statement left starting on a word that leans on what was taken out.
+  if (RegExp(r'^(?:,|and |but |or |when |that )', caseSensitive: false)
+          .hasMatch(s) ||
+      // A place left alone at the head, its "In" gone with the year.
+      RegExp(r'^[A-Z][a-z]+, ').hasMatch(s)) {
+    return null;
+  }
+  return s;
 }
 
 /// The moments among [bank] no later than [latest]: a year still to come
