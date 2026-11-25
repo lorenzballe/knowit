@@ -45,6 +45,19 @@ class ChallengeTone {
   /// The screen's ground: the app's own page.
   Color page(Palette p) => p.surface;
 
+  /// The colour the screen is bathed in at its top: deep at night, pale
+  /// on paper.
+  Color bath(Palette p) {
+    final HSLColor c = HSLColor.fromColor(vivid);
+    // A yellow deepens through amber, never olive.
+    final double hue = c.hue > 40 && c.hue < 75 ? c.hue - 16 : c.hue;
+    return c
+        .withHue(hue)
+        .withSaturation(c.saturation.clamp(0.0, p.isDark ? 0.62 : 0.7))
+        .withLightness(p.isDark ? 0.15 : 0.87)
+        .toColor();
+  }
+
   /// On the day's paper.
   final Color deep;
 
@@ -170,6 +183,7 @@ class ChallengeGround extends StatelessWidget {
   const ChallengeGround({
     super.key,
     required this.colour,
+    this.bath,
     this.shade = false,
     this.radius = 0,
     this.border,
@@ -182,6 +196,10 @@ class ChallengeGround extends StatelessWidget {
 
   /// Whether it deepens a little to its corner, as the app's tiles do.
   final bool shade;
+
+  /// The colour the page is bathed in at its top, fading into its ground
+  /// over most of the screen, as Go deeper's sheet is in its subject's.
+  final Color? bath;
 
   final double radius;
 
@@ -199,8 +217,15 @@ class ChallengeGround extends StatelessWidget {
     final Size? at = foregroundSize;
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: shade ? null : colour,
-        gradient: shade
+        color: shade || bath != null ? null : colour,
+        gradient: bath != null
+            ? LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [bath!, colour],
+                stops: const [0, 0.62],
+              )
+            : shade
             ? LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -548,7 +573,7 @@ class ChallengeTile extends StatefulWidget {
     height: 1.2,
     color: ink,
   );
-  static TextStyle titleStyle(Color ink, [double size = 20]) => AppText.display(
+  static TextStyle titleStyle(Color ink, [double size = 21]) => AppText.display(
     size: size,
     weight: FontWeight.w600,
     height: 1.08,
@@ -632,7 +657,7 @@ class ChallengeTile extends StatefulWidget {
       size: 9.5,
       least: 7,
     ),
-    fitSize(context, look.title, titleStyle, inner, size: 20, least: 12),
+    fitSize(context, look.title, titleStyle, inner, size: 21, least: 12),
     fitSize(context, look.line, lineStyle, inner, size: 12.5, least: 9),
   );
 

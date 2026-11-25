@@ -29,7 +29,7 @@ import '../../l10n/l10n.dart';
 import '../../theme.dart';
 import 'challenge_kit.dart';
 import 'challenges.dart';
-import 'parts.dart' show upper, winColor;
+import 'parts.dart' show winColor;
 
 /// The three moments of a challenge's screen.
 enum GameMoment { intro, play, result }
@@ -343,6 +343,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                 child: ChallengeGround(
                   key: ValueKey('$_id-ground'),
                   colour: widget.look.tone.page(p),
+                  bath: widget.look.tone.bath(p),
                 ),
               ),
             ),
@@ -488,7 +489,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
         Expanded(
           child: LayoutBuilder(
             builder: (context, box) => SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(16, 6, 16, 0),
+              padding: const EdgeInsets.fromLTRB(20, 6, 20, 0),
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: box.maxHeight - 6),
                 child: IntrinsicHeight(
@@ -511,7 +512,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(16, 12, 16, room.foot),
+          padding: EdgeInsets.fromLTRB(20, 14, 20, room.foot),
           child: GameButton.primary(
             key: ValueKey('$_id-play'),
             context: context,
@@ -535,22 +536,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
     final String? of = out.of;
     final String? best = out.best;
     final TextScaler scaler = MediaQuery.textScalerOf(context);
-    Widget heading(String text) => Semantics(
-      header: true,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 4),
-        child: Text(
-          text,
-          style: AppText.body(
-            size: 19,
-            weight: FontWeight.w700,
-            height: 1.15,
-            spacing: -0.45,
-            color: p.ink,
-          ),
-        ),
-      ),
-    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -562,7 +547,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
           child: LayoutBuilder(
             builder: (context, box) => SingleChildScrollView(
               key: ValueKey('$_id-end'),
-              padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
+              padding: const EdgeInsets.fromLTRB(20, 6, 20, 16),
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: box.maxHeight - 22),
                 child: IntrinsicHeight(
@@ -575,14 +560,9 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              upper(context, widget.look.skill),
-                              style: AppText.label(
-                                size: 10,
-                                weight: FontWeight.w700,
-                                spacing: 1.2,
-                                color: p.inkMuted,
-                              ),
+                            ChallengeDotLabel(
+                              text: widget.look.skill,
+                              colour: widget.look.tone.vivid,
                             ),
                             const SizedBox(height: 10),
                             Row(
@@ -671,21 +651,26 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                         ),
                       ),
                       if (out.review.isNotEmpty) ...[
-                        const SizedBox(height: 26),
-                        heading(out.reviewTitle ?? l.gameReview),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 14),
                         Expanded(
                           child: GameReview(
                             items: out.review,
                             tone: widget.look.tone,
+                            label: out.reviewTitle ?? l.gameReview,
                             spread: true,
                           ),
                         ),
                       ] else
                         const Spacer(),
                       if (next != null && widget.onNext != null) ...[
-                        const SizedBox(height: 26),
-                        heading(l.gameNext),
+                        const SizedBox(height: 22),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: ChallengeDotLabel(
+                            text: l.gameNext,
+                            colour: next.tone.vivid,
+                          ),
+                        ),
                         const SizedBox(height: 10),
                         GameNextCard(
                           id: _id,
@@ -701,8 +686,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
           ),
         ),
         Container(
-          padding: EdgeInsets.fromLTRB(16, 10, 16, room.foot),
-          color: p.surface,
+          padding: EdgeInsets.fromLTRB(20, 12, 20, room.foot),
           child: Row(
             children: [
               Expanded(
@@ -894,7 +878,7 @@ class GamePlayFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     final ChallengeRoom room = kit.room;
     final List<bool?>? marks = this.marks;
-    const EdgeInsets side = EdgeInsets.symmetric(horizontal: 16);
+    const EdgeInsets side = EdgeInsets.symmetric(horizontal: 20);
     return Padding(
       padding: EdgeInsets.only(bottom: room.foot),
       child: Column(
