@@ -390,6 +390,23 @@ class DeeperLook {
 
   static final Map<(int, bool), DeeperLook> _quiet = {};
 
+  /// The quiet look on the app's own ground: the head let go into the
+  /// black (or the paper) every other screen stands on.
+  DeeperLook quietOn(Color page) =>
+      _on[(world.toARGB32(), dark, page.toARGB32())] ??= DeeperLook._(
+        dark: dark,
+        pearl: pearl,
+        world: world,
+        worldInk: worldInk,
+        glow: glow,
+        ground: page,
+        tones: quiet.tones,
+        sideA: sideA,
+        sideB: sideB,
+      );
+
+  static final Map<(int, bool, int), DeeperLook> _on = {};
+
   /// Where each part sits on the wheel, from the subject's hue: a fan of
   /// neighbours, so the parts differ and still belong to the card.
   ///

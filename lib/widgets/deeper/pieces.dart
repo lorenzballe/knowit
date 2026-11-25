@@ -15,6 +15,7 @@ import '../../l10n/l10n.dart';
 import '../../theme.dart';
 import '../chunky.dart' show chunkyEdge;
 import 'art.dart';
+import 'app_style.dart';
 import 'editorial.dart';
 import 'look.dart';
 
@@ -43,12 +44,13 @@ class DeeperArrive extends StatelessWidget {
     child: RepaintBoundary(child: child),
     builder: (context, child) {
       final double v = animation.value;
+      final bool calm = deeperStyle == DeeperStyle.app;
       return Opacity(
         opacity: v.clamp(0.0, 1.0),
         child: Transform.translate(
-          offset: Offset(0, distance * (1 - v)),
+          offset: Offset(0, (calm ? 14 : distance) * (1 - v)),
           child: Transform.scale(
-            scale: 0.965 + 0.035 * v,
+            scale: calm ? 1 : 0.965 + 0.035 * v,
             alignment: Alignment.topCenter,
             child: child,
           ),
@@ -618,7 +620,9 @@ class DeeperReaderBubble extends StatelessWidget {
   final DeeperVivid vivid;
 
   @override
-  Widget build(BuildContext context) => deeperEditorial
+  Widget build(BuildContext context) => deeperStyle == DeeperStyle.app
+      ? AppReaderBubble(text: text)
+      : deeperEditorial
       ? _edReader(context)
       : Align(
           alignment: AlignmentDirectional.centerEnd,
@@ -654,35 +658,31 @@ class DeeperReaderBubble extends StatelessWidget {
           ),
         );
 
-  /// The reader's words, set editorially: a quiet box at the right.
+  /// The reader's words, set editorially: quoted, under a fine rule at
+  /// their side, as a page sets what somebody said.
   Widget _edReader(BuildContext context) {
     final Palette p = context.p;
-    return Align(
-      alignment: AlignmentDirectional.centerEnd,
-      child: FractionallySizedBox(
-        widthFactor: 0.86,
-        alignment: AlignmentDirectional.centerEnd,
-        child: Align(
-          alignment: AlignmentDirectional.centerEnd,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: p.ink.withValues(alpha: p.isDark ? 0.06 : 0.045),
-              borderRadius: BorderRadius.circular(14),
-            ),
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(width: 1.5, color: p.inkFaint),
+          const SizedBox(width: 14),
+          Expanded(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 13),
+              padding: const EdgeInsets.symmetric(vertical: 2),
               child: Text(
                 text,
                 style: AppText.body(
                   size: 15.5,
                   weight: FontWeight.w500,
-                  height: 1.45,
-                  color: p.ink,
+                  height: 1.5,
+                  color: p.ink.withValues(alpha: 0.72),
                 ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

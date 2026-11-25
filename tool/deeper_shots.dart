@@ -175,7 +175,7 @@ void main() {
   final String lang = Platform.environment['LANG_SHOT'] ?? 'it';
   final String? onlyPhone = Platform.environment['PHONE'];
   final String? onlyTheme = Platform.environment['THEME'];
-  final String style = Platform.environment['DEEPER_STYLE'] ?? 'column';
+  final String style = Platform.environment['DEEPER_STYLE'] ?? 'app';
   deeperStyle = DeeperStyle.values.byName(style);
 
   // The card with all three written: the one bank card whose file holds
@@ -304,6 +304,61 @@ void main() {
         await shoot(tester, 'style-$style-1');
         await scrollTo(tester, const ValueKey('deeper-views'));
         await shoot(tester, 'style-$style-2');
+      });
+
+      // The parts as an article: the lead, the debate, the buttons that
+      // ask waiting, one answer coming, then answered, and the reader's own
+      // idea looked at.
+      testWidgets('article, $tag', (tester) async {
+        debugToolsOn = true;
+        addTearDown(() => debugToolsOn = false);
+        final Completer<void> hold = Completer<void>();
+        CardAsk.call = (card, mode, {text = '', required language}) async {
+          if (mode == AskMode.example) await hold.future;
+          return _answer(mode, text);
+        };
+        addTearDown(() {
+          CardAsk.call = (c, m, {text = '', required language}) async =>
+              const AskNone(AskWhyNot.later);
+        });
+        final AppLocalizations l = await AppLocalizations.delegate.load(
+          Locale(lang),
+        );
+        final app = await _app(plus: true);
+        await open(tester, app, written());
+        await raise(tester);
+        await shoot(tester, 'article-1');
+        await scrollTo(tester, const ValueKey('deeper-views'));
+        await shoot(tester, 'article-2');
+        await scrollTo(tester, const ValueKey('deeper-example-ai'));
+        await shoot(tester, 'article-3');
+        await tester.tap(find.text(l.deeperExampleGo));
+        for (int i = 0; i < 17; i++) {
+          await tester.pump(_frame);
+        }
+        await shoot(tester, 'article-4');
+        hold.complete();
+        for (int i = 0; i < 30; i++) {
+          await tester.pump(_frame);
+        }
+        await scrollTo(tester, const ValueKey('deeper-example-ai'));
+        await shoot(tester, 'article-5');
+        await scrollTo(tester, const ValueKey('deeper-take'));
+        await tester.enterText(
+          find.descendant(
+            of: find.byKey(const ValueKey('deeper-take')),
+            matching: find.byType(TextField),
+          ),
+          'Secondo me il test sbaglia una volta su venti, quindi è quasi '
+          'sempre giusto.',
+        );
+        await tester.pump();
+        await tapText(tester, l.deeperAnalyse);
+        for (int i = 0; i < 20; i++) {
+          await tester.pump(_frame);
+        }
+        await scrollTo(tester, const ValueKey('deeper-take'));
+        await shoot(tester, 'article-6');
       });
 
       testWidgets('entrance, $tag', (tester) async {
