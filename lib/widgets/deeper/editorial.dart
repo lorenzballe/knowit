@@ -24,7 +24,7 @@ import 'package:flutter/services.dart' show HapticFeedback;
 import '../../l10n/l10n.dart';
 import '../../theme.dart';
 import 'look.dart';
-import 'pieces.dart' show DeeperSheen, deeperStill;
+import 'pieces.dart' show deeperStill;
 
 /// How Go deeper's parts are set.
 enum DeeperStyle {
@@ -47,7 +47,7 @@ double get deeperGap => switch (deeperStyle) {
   DeeperStyle.playful => 14,
   DeeperStyle.column => 34,
   DeeperStyle.panels => 12,
-  DeeperStyle.magazine => 44,
+  DeeperStyle.magazine => 42,
 };
 
 /// The few colours the editorial parts use: the page's inks, hairlines, and
@@ -156,10 +156,10 @@ TextStyle edBody(BuildContext context) => AppText.body(
 /// The idea said simply, the lead of the page.
 TextStyle edSimply(BuildContext context) => switch (deeperStyle) {
   DeeperStyle.magazine => AppText.display(
-    size: 24,
+    size: 23.5,
     weight: FontWeight.w400,
-    height: 1.34,
-    spacing: -0.35,
+    height: 1.36,
+    spacing: -0.3,
     color: context.p.ink,
   ),
   DeeperStyle.panels => AppText.body(
@@ -229,17 +229,17 @@ class EdSection extends StatelessWidget {
       header: true,
       child: Text(
         title.toUpperCase(),
-        style: edLabel(
-          deeperStyle == DeeperStyle.magazine ? ed.ink : ed.accent,
-        ),
+        style: deeperStyle == DeeperStyle.magazine
+            ? edLabel(ed.ink, size: 11).copyWith(letterSpacing: 2.1)
+            : edLabel(ed.accent),
       ),
     );
     final List<Widget> under = [
       if (lead case final String said) ...[
-        const SizedBox(height: 8),
+        const SizedBox(height: 7),
         Text(
           said,
-          style: AppText.body(size: 14.5, height: 1.5, color: ed.muted),
+          style: AppText.body(size: 14.5, height: 1.48, color: ed.muted),
         ),
       ],
       SizedBox(height: deeperStyle == DeeperStyle.magazine ? 18 : 16),
@@ -301,11 +301,25 @@ class EdSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: Container(width: 28, height: 2, color: ed.accent),
+              SizedBox(
+                height: 2,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 0.5,
+                      child: EdRule(colour: ed.rule),
+                    ),
+                    PositionedDirectional(
+                      start: 0,
+                      top: 0,
+                      child: Container(width: 24, height: 2, color: ed.accent),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 14),
               withBadge(name),
               ...under,
             ],
@@ -356,32 +370,37 @@ class _EdView extends StatelessWidget {
     children: [
       if (side != label) ...[
         ExcludeSemantics(
-          child: Text(
-            side.toUpperCase(),
-            style: edLabel(ed.accent, size: 10.5),
-          ),
+          child: Text(side.toUpperCase(), style: edLabel(ed.accent, size: 10)),
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: 8),
       ],
       Semantics(
         header: true,
         child: Text(
           label,
-          style: AppText.body(
-            size: compact ? 15.5 : 17,
-            weight: FontWeight.w700,
-            height: 1.3,
-            spacing: -0.1,
-            color: ed.ink,
-          ),
+          style: deeperStyle == DeeperStyle.magazine
+              ? AppText.display(
+                  size: compact ? 17.5 : 19,
+                  weight: FontWeight.w500,
+                  height: 1.24,
+                  spacing: -0.25,
+                  color: ed.ink,
+                )
+              : AppText.body(
+                  size: compact ? 15.5 : 17,
+                  weight: FontWeight.w700,
+                  height: 1.3,
+                  spacing: -0.1,
+                  color: ed.ink,
+                ),
         ),
       ),
-      SizedBox(height: compact ? 8 : 7),
+      SizedBox(height: compact ? 9 : 8),
       Text(
         text,
         style: AppText.body(
           size: compact ? 14.5 : 16,
-          height: compact ? 1.55 : 1.6,
+          height: compact ? 1.56 : 1.6,
           color: ed.text,
         ),
       ),
@@ -463,7 +482,7 @@ class EdVersus extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 13),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Container(width: 1, color: ed.rule),
                   ),
                   Expanded(
@@ -501,8 +520,10 @@ class EdVersus extends StatelessWidget {
   );
 }
 
-/// The button that asks Claude, set quietly: a hairline box in the column,
-/// a tinted one in the panels, an underlined line on the magazine's page.
+/// The button that asks Claude, set as a page sets a link it means: a
+/// hairline box with square corners, the words in Figtree and a fine arrow
+/// in the subject's colour. While the answer comes it says so, and a short
+/// stroke travels slowly along its foot; nothing bounces or shines.
 class EdAskButton extends StatefulWidget {
   const EdAskButton({
     super.key,
@@ -528,82 +549,85 @@ class _EdAskButtonState extends State<EdAskButton> {
 
   @override
   Widget build(BuildContext context) {
+    final Palette p = context.p;
     final EdInk ed = EdInk.of(context, widget.look);
     final bool on = widget.onPressed != null && !widget.busy;
-    final bool lit = on || widget.busy;
-    final Color ink = lit ? ed.ink : context.p.inkFaint;
+    final bool busy = widget.busy;
+    final Color ink = on
+        ? ed.ink
+        : busy
+        ? ed.muted
+        : p.inkFaint;
+    final bool still = deeperStill(context);
     final Widget words = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         if (widget.locked) ...[
-          Icon(Icons.lock_outline_rounded, size: 15, color: ed.muted),
-          const SizedBox(width: 7),
+          Icon(Icons.lock_outline_rounded, size: 14, color: ed.muted),
+          const SizedBox(width: 8),
         ],
         Flexible(
           child: AnimatedSwitcher(
-            duration: deeperStill(context)
-                ? Duration.zero
-                : const Duration(milliseconds: 220),
+            duration: still ? Duration.zero : const Duration(milliseconds: 260),
             child: Text(
-              widget.busy ? context.l10n.deeperBusy : widget.label,
-              key: ValueKey(widget.busy),
+              busy ? context.l10n.deeperBusy : widget.label,
+              key: ValueKey(busy),
               style: AppText.body(
-                size: 15,
+                size: 14.5,
                 weight: FontWeight.w600,
-                height: 1.25,
-                spacing: 0.1,
+                height: 1.3,
+                spacing: 0.15,
                 color: ink,
               ),
             ),
           ),
         ),
-        const SizedBox(width: 10),
-        ExcludeSemantics(
-          child: Text(
-            '→',
-            style: AppText.body(
-              size: 15,
-              weight: FontWeight.w500,
-              height: 1.25,
-              color: lit ? ed.accent : ink,
+        AnimatedOpacity(
+          duration: still ? Duration.zero : const Duration(milliseconds: 200),
+          opacity: busy ? 0 : 1,
+          child: Padding(
+            padding: const EdgeInsetsDirectional.only(start: 14),
+            child: ExcludeSemantics(
+              child: Text(
+                '→',
+                style: AppText.body(
+                  size: 15,
+                  height: 1.3,
+                  color: on ? ed.accent : ink,
+                ),
+              ),
             ),
           ),
         ),
       ],
     );
-    final Widget face = switch (deeperStyle) {
-      DeeperStyle.magazine => Container(
-        padding: const EdgeInsets.only(bottom: 5, top: 4),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: lit ? ed.accent : ed.rule, width: 1.5),
+    final Widget face = AnimatedContainer(
+      duration: const Duration(milliseconds: 140),
+      decoration: BoxDecoration(
+        color: _down && on ? ed.ink.withValues(alpha: 0.06) : null,
+        borderRadius: BorderRadius.circular(2),
+        border: Border.all(color: on ? ed.ruleStrong : ed.rule),
+      ),
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 12, 16, 12),
+            child: words,
           ),
-        ),
-        child: words,
+          if (busy)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: EdLoadingLine(colour: ed.accent, height: 2),
+            ),
+        ],
       ),
-      DeeperStyle.panels => Container(
-        padding: const EdgeInsets.fromLTRB(16, 11, 16, 11),
-        decoration: BoxDecoration(
-          color: lit
-              ? ed.accent.withValues(alpha: 0.14)
-              : ed.rule.withValues(alpha: 0.06),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: words,
-      ),
-      _ => Container(
-        padding: const EdgeInsets.fromLTRB(16, 11, 16, 11),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: lit ? ed.ruleStrong : ed.rule),
-        ),
-        child: words,
-      ),
-    };
+    );
     return Semantics(
       button: true,
       enabled: on,
-      liveRegion: widget.busy,
+      liveRegion: busy,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: on ? (_) => setState(() => _down = true) : null,
@@ -615,18 +639,85 @@ class _EdAskButtonState extends State<EdAskButton> {
                 widget.onPressed!();
               }
             : null,
-        child: AnimatedOpacity(
-          duration: const Duration(milliseconds: 90),
-          opacity: _down && on ? 0.55 : 1,
-          child: DeeperSheen(
-            active: widget.busy,
-            strength: context.p.isDark ? 0.22 : 0.6,
-            child: face,
-          ),
-        ),
+        child: face,
       ),
     );
   }
+}
+
+/// Something is on its way: a short stroke that crosses a hairline slowly,
+/// at an even pace, again and again. Still, at its start, for a reader who
+/// asked for less motion.
+class EdLoadingLine extends StatefulWidget {
+  const EdLoadingLine({super.key, required this.colour, this.height = 1});
+
+  final Color colour;
+  final double height;
+
+  @override
+  State<EdLoadingLine> createState() => _EdLoadingLineState();
+}
+
+class _EdLoadingLineState extends State<EdLoadingLine>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _run = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1900),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (deeperStill(context)) {
+      _run.stop();
+      _run.value = 0.3;
+    } else if (!_run.isAnimating) {
+      _run.repeat();
+    }
+  }
+
+  @override
+  void dispose() {
+    _run.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => ExcludeSemantics(
+    child: SizedBox(
+      height: widget.height,
+      width: double.infinity,
+      child: CustomPaint(painter: _Stroke(_run, widget.colour)),
+    ),
+  );
+}
+
+class _Stroke extends CustomPainter {
+  _Stroke(this.run, this.colour) : super(repaint: run);
+
+  final Animation<double> run;
+  final Color colour;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double part = size.width * 0.45;
+    final double x = -part + (size.width + part) * run.value;
+    final Rect r = Rect.fromLTWH(x, 0, part, size.height);
+    canvas.drawRect(
+      r,
+      Paint()
+        ..shader = LinearGradient(
+          colors: [
+            colour.withValues(alpha: 0),
+            colour,
+            colour.withValues(alpha: 0),
+          ],
+        ).createShader(r),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_Stroke old) => old.colour != colour;
 }
 
 /// The source at the foot, set editorially: a hairline, its name, and the

@@ -631,7 +631,8 @@ class _Asking extends StatelessWidget {
           onPressed: onAsk,
         ),
       ),
-      if (busy) ...[
+      // Set editorially, the button's own line says the answer is coming.
+      if (busy && !deeperEditorial) ...[
         const SizedBox(height: 20),
         RiseIn(distance: 8, child: DeeperSkeleton(tone: tone)),
       ],
@@ -1016,7 +1017,7 @@ class _QuizOptionState extends State<_QuizOption>
               color: widget.mark == _Mark.open || widget.mark == _Mark.rest
                   ? (pressed ? tone.field : null)
                   : face,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(2),
               border: Border.all(color: line),
             ),
             child: Row(
@@ -1222,8 +1223,9 @@ class _WritePartState extends State<_WritePart> {
     final String? asked = widget.asked;
     final bool talking =
         asked != null && (widget.busy || widget.result != null);
+    final bool ed = deeperEditorial;
     final OutlineInputBorder edge = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(ed ? 2 : 18),
       borderSide: BorderSide(color: tone.edge),
     );
     return DeeperTile(
@@ -1247,18 +1249,20 @@ class _WritePartState extends State<_WritePart> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         DeeperReaderBubble(text: asked, vivid: tone.vivid),
-                        const SizedBox(height: 12),
+                        SizedBox(height: ed ? 16 : 12),
                         DeeperAnswerBubble(
                           tone: tone,
                           child: switch ((widget.busy, widget.result)) {
                             (false, final AskAnswer answer) => DeeperUnfold(
                               child: Text(
                                 answer.text,
-                                style: AppText.body(
-                                  size: 16.5,
-                                  height: 1.5,
-                                  color: p.ink,
-                                ),
+                                style: ed
+                                    ? deeperBody(context)
+                                    : AppText.body(
+                                        size: 16.5,
+                                        height: 1.5,
+                                        color: p.ink,
+                                      ),
                               ),
                             ),
                             (false, final AskNone none) => _WhyNot(
@@ -1267,7 +1271,12 @@ class _WritePartState extends State<_WritePart> {
                               bare: true,
                               onRetry: () => widget.onAsk(asked),
                             ),
-                            _ => DeeperTyping(colour: tone.accent),
+                            // Set editorially, the button's line is the
+                            // only thing that moves while it comes.
+                            _ =>
+                              ed
+                                  ? const SizedBox(width: double.infinity)
+                                  : DeeperTyping(colour: tone.accent),
                           },
                         ),
                       ],
@@ -1289,7 +1298,7 @@ class _WritePartState extends State<_WritePart> {
               hintStyle: AppText.body(size: 16, color: p.inkFaint),
               counterText: '',
               isDense: true,
-              filled: true,
+              filled: !ed,
               fillColor: tone.field,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
@@ -1299,13 +1308,18 @@ class _WritePartState extends State<_WritePart> {
               enabledBorder: edge,
               disabledBorder: edge,
               focusedBorder: edge.copyWith(
-                borderSide: BorderSide(color: tone.accent, width: 1.8),
+                borderSide: BorderSide(
+                  color: tone.accent,
+                  width: ed ? 1.2 : 1.8,
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: ed ? 14 : 12),
           Align(
-            alignment: AlignmentDirectional.centerEnd,
+            alignment: ed
+                ? AlignmentDirectional.centerStart
+                : AlignmentDirectional.centerEnd,
             child: DeeperAskButton(
               look: widget.look,
               label: widget.action,
@@ -1393,7 +1407,7 @@ class _WhyNot extends StatelessWidget {
         ],
       ],
     );
-    if (bare) return said;
+    if (bare || deeperEditorial) return said;
     return Container(
       padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
       decoration: BoxDecoration(
@@ -1424,8 +1438,11 @@ class _Retry extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.fromLTRB(12, 8, 16, 8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(99),
-          border: Border.all(color: tone.accent, width: 1.6),
+          borderRadius: BorderRadius.circular(deeperEditorial ? 2 : 99),
+          border: Border.all(
+            color: deeperEditorial ? tone.edge : tone.accent,
+            width: deeperEditorial ? 1 : 1.6,
+          ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
