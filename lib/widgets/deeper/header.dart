@@ -301,6 +301,23 @@ class _Glow extends CustomPainter {
     (0.08, 0.98, 0.58, 2, 4.4),
   ];
 
+  /// The stops of a light's falloff, closer together where it bends.
+  static const List<double> _falloff = [
+    0,
+    0.08,
+    0.16,
+    0.24,
+    0.32,
+    0.4,
+    0.48,
+    0.56,
+    0.64,
+    0.72,
+    0.8,
+    0.88,
+    1,
+  ];
+
   /// How far the lights travel, as parts of the head's width and height.
   static const double _reachX = 0.3;
   static const double _reachY = 0.24;
@@ -377,12 +394,18 @@ class _Glow extends CustomPainter {
           ..shader = ui.Gradient.radial(
             centre,
             radius,
+            // A gaussian falloff over many stops: a light with no edge
+            // and no rings where its slope changes.
             [
-              colour.withValues(alpha: look.pearl ? 0.95 : 0.9),
-              colour.withValues(alpha: look.pearl ? 0.5 : 0.42),
-              colour.withValues(alpha: 0),
+              for (final double t in _falloff)
+                colour.withValues(
+                  alpha:
+                      (look.pearl ? 0.95 : 0.9) *
+                      math.exp(-4.2 * t * t) *
+                      (1 - t * t * t),
+                ),
             ],
-            const [0, 0.5, 1],
+            _falloff,
           ),
       );
     }

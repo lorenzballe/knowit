@@ -670,11 +670,16 @@ class _AppAskButtonState extends State<AppAskButton> {
     final Duration calm = still
         ? Duration.zero
         : const Duration(milliseconds: 280);
+    final bool dark = p.isDark;
+    // Asking, the pill is the app's reversed ink, a touch of depth from
+    // its top to its foot, a hairline of light round it and a soft shadow;
+    // waiting or off, it is frosted glass like the cards, its ink stepped
+    // back.
     final Color fill = on
         ? p.inverse
-        : p.isDark
-        ? const Color(0xFF1E1E22)
-        : const Color(0xFFEAE7E0);
+        : dark
+        ? Colors.white.withValues(alpha: 0.07)
+        : Colors.black.withValues(alpha: 0.045);
     final Color ink = on
         ? p.onInverse
         : busy
@@ -723,7 +728,37 @@ class _AppAskButtonState extends State<AppAskButton> {
             padding: const EdgeInsets.fromLTRB(18, 13, 22, 13),
             decoration: BoxDecoration(
               color: fill,
+              gradient: on
+                  ? LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.lerp(p.inverse, Colors.white, dark ? 0.35 : 0.1)!,
+                        Color.lerp(p.inverse, p.onInverse, dark ? 0.1 : 0.0)!,
+                      ],
+                    )
+                  : null,
               borderRadius: BorderRadius.circular(999),
+              border: Border.all(
+                color: on
+                    ? (dark ? const Color(0x66FFFFFF) : const Color(0x33FFFFFF))
+                    : (dark
+                          ? const Color(0x1AFFFFFF)
+                          : const Color(0x0F000000)),
+                width: 0.8,
+              ),
+              boxShadow: on
+                  ? [
+                      BoxShadow(
+                        color: Colors.black.withValues(
+                          alpha: dark ? 0.35 : 0.16,
+                        ),
+                        blurRadius: 14,
+                        spreadRadius: -4,
+                        offset: const Offset(0, 6),
+                      ),
+                    ]
+                  : null,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
