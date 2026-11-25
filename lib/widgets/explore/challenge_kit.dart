@@ -1005,9 +1005,17 @@ class GameReviewItem {
 /// round sets them: each its verdict, its words, what it is in a tag of
 /// the challenge's colour — a tap from its card.
 class GameReview extends StatelessWidget {
-  const GameReview({super.key, required this.items, this.tone});
+  const GameReview({
+    super.key,
+    required this.items,
+    this.tone,
+    this.spread = false,
+  });
 
   final List<GameReviewItem> items;
+
+  /// Whether the rows spread down a card taller than they need.
+  final bool spread;
 
   /// The challenge's colour, for the tags.
   final ChallengeTone? tone;
@@ -1019,11 +1027,19 @@ class GameReview extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: spread
+            ? MainAxisAlignment.spaceEvenly
+            : MainAxisAlignment.start,
         children: [
-          for (int i = 0; i < items.length; i++) ...[
-            if (i > 0) Container(height: 1, color: p.line),
-            _row(context, p, items[i]),
-          ],
+          for (int i = 0; i < items.length; i++)
+            DecoratedBox(
+              decoration: BoxDecoration(
+                border: i + 1 < items.length
+                    ? Border(bottom: BorderSide(color: p.line))
+                    : null,
+              ),
+              child: _row(context, p, items[i]),
+            ),
         ],
       ),
     );

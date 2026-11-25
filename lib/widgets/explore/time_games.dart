@@ -1434,8 +1434,8 @@ class MomentText extends StatelessWidget {
   /// The challenge's tone, for a moment set as a page is.
   final Color? accent;
 
-  TextSpan _span(double size, String gapLabel) {
-    final Color? a = accent;
+  TextSpan _span(double size, String gapLabel, [Color? scoped]) {
+    final Color? a = accent ?? scoped;
     if (a != null) {
       TextStyle serif(FontWeight weight, Color colour) => AppText.display(
         size: size,
@@ -1503,6 +1503,11 @@ class MomentText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String gap = context.l10n.timeGap;
+    // On a challenge's card of its colour, the year comes in the card's
+    // ink, never in a box of ink.
+    final Color? scoped = ChallengeToneScope.maybeOf(context) == null
+        ? null
+        : ink;
     final TextScaler scaler = MediaQuery.textScalerOf(context);
     final TextDirection direction = Directionality.of(context);
     final List<String> words = line.text.split(RegExp(r'\s+'));
@@ -1510,7 +1515,7 @@ class MomentText extends StatelessWidget {
       builder: (context, box) {
         bool fits(double size) {
           final TextPainter p = TextPainter(
-            text: _span(size, gap),
+            text: _span(size, gap, scoped),
             textDirection: direction,
             textScaler: scaler,
           )..layout(maxWidth: box.maxWidth);
@@ -1542,7 +1547,7 @@ class MomentText extends StatelessWidget {
           size -= 1;
         }
         final Widget text = Text.rich(
-          _span(size, gap),
+          _span(size, gap, scoped),
           key: ValueKey('moment-${line.pill.id}-${shown ? 'told' : 'gap'}'),
           textScaler: scaler,
         );
