@@ -1,6 +1,15 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-jack-foley-maps -->
-<title>Before the sounds, the maps</title>
+<!-- Look: a sound stage of the early talkies, flat, with ink outlines. Jack Foley stands big on the left in shirt
+     sleeves and a waistcoat, snapping a stalk of celery under a ribbon microphone that hangs from the ceiling; behind
+     him a silent film plays on the screen, in greys: a man in a bowler hat walking down a street.
+     Interaction: pick the job he had before he made sounds for films, then say how sure.
+     The answer: the film on the screen becomes the one of his first job: the New York docks, a steamship at the
+     pier, crates, a crane, a clerk with his ledger and Manhattan behind, with a title across its foot as in a
+     silent film.
+     Layout: drawn again at the size it has whenever its room changes; in a short box he stands at the left and the
+     screen takes the rest. -->
+<title>Before the sounds, the docks</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
@@ -15,122 +24,306 @@
 .opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3.4cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 .opt.right{box-shadow:inset 0 0 0 .4cqh var(--k)}
+.answered .q{font-size:max(2.6cqh,15px)}
+/* On the smallest card, once answered, the headline gives way to the drawing: the film's title and the line under
+   the answer already say it. */
+@container (max-height: 520px){.answered #why .big{display:none}}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FILM SOUND</span></div>
     <h2 class="q">What was Jack Foley's job before he made sounds for films?</h2>
     <div class="stagebox" id="stage">
-      <div id="pic"><svg id="svg"></svg></div>
+      <div id="pic"><svg id="svg" role="img" aria-label="A sound stage: Jack Foley in shirt sleeves and a waistcoat snaps a stalk of celery under a hanging microphone, while a silent film plays on the screen behind him."></svg></div>
       <div id="opts">
         <button class="opt" data-i="0">Butcher</button>
-        <button class="opt" data-i="1">Cartographer</button>
+        <button class="opt" data-i="1">Dock clerk</button>
         <button class="opt" data-i="2">Drummer</button>
         <button class="opt" data-i="3">Stage magician</button>
       </div>
       <div id="why" class="gone">
-        <p class="big">He drew maps.</p>
-        <p class="body">Jack Foley, born in New York in 1891, started out as a cartographer. He fell for the new world of cinema, which stayed silent until 1927, when Warner Bros brought out a film with sound. Then someone had to make every noise, like snapping celery for a breaking bone.</p>
+        <p class="big">He was a dock clerk.</p>
+        <p class="body">Jack Foley, born in New York in 1891, started out as a clerk on the New York docks. He fell for the new world of cinema, which stayed silent until 1927, when Warner Bros brought out a film with sound. Then someone had to make every noise, like snapping celery for a breaking bone.</p>
       </div>
     </div>
     <div id="sure"></div>
     <p class="say" id="say">Pick the job you think he had first.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The father of film sound effects began as a mapmaker.</div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The father of film sound effects began as a clerk on the docks.</div>
     <div class="foot"><span class="src">Source · Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
 const RIGHT = 1;
-let pick = -1;
-const st = {p: 0, dot: 0};
-let G = null;
-const CAPS = ['SILENT FILM', '1891 · NEW YORK · MAPS', '1927 · FILMS GET SOUND'];
+let pick = -1, revealed = false;
+(() => {
+  // One ink; the stage's wall and its wooden floor; Foley's skin, hair, shirt, waistcoat and trousers; the celery's
+  // greens; the microphone's metal; and the film's greys, from its light to its dark.
+  const INK = '#10100c', WALL = '#E9DFCB', BASE = '#BFAE90', FLOOR = '#C99A62', SKIN = '#F2C29B', HAIR = '#3B2A20', SHIRT = '#ffffff',
+    VEST = '#5B4A6E', TROUSERS = '#34343C', TIE = '#B8443A', CELERY = '#8CCB5E', CELERY2 = '#5FA845', METAL = '#9AA1A8', METAL2 = '#5F666E',
+    SCREEN = '#F4F2EC', F0 = '#E4E3DE', F1 = '#C4C3BE', F2 = '#9C9B96', F3 = '#6E6D69', F4 = '#3A3936';
+  const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+  const svg = Kit.$('svg');
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const f1 = n => (Math.round(n * 10) / 10).toString();
+  const mk = Kit.mk;
+  const ink = w => ({fill: 'none', stroke: INK, 'stroke-width': f1(w), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
+  const solid = (fill, w) => Object.assign(ink(w), {fill});
+  // How far the film on the screen has turned into the docks (0 the street, 1 the docks).
+  const st = {film: 0};
+  let G = null;
 
-function lerp(a, b, t){ return a + (b - a) * t; }
-function draw(){
-  if (!G) return;
-  const {W, H, lines, top, bot} = G, n = lines.length, p = st.p;
-  const a = Math.min(p, 1), b = Math.max(p - 1, 0);
-  const mid = (top + bot) / 2, gap = (bot - top) / (n - 1);
-  lines.forEach((el, i) => {
+  function words(p, x, y, s, o = {}) {
+    const e = mk('text', {x: f1(x), y: f1(y), 'font-family': o.font || FONT, 'font-size': f1(o.size || G.fs), 'font-weight': o.weight || 700, 'text-anchor': o.anchor || 'middle', fill: o.fill || INK}, p);
+    e.textContent = s;
+    if (o.max) for (let z = o.size || G.fs; e.getComputedTextLength() > o.max && z > (o.min || 10.5); ) { z -= .5; e.setAttribute('font-size', f1(z)); }
+    return e;
+  }
+
+  // Jack Foley, standing on y, h tall, x the middle of him: trousers and shoes, a white shirt with its sleeves rolled
+  // up, a waistcoat and tie, dark hair combed back; his hands in front of his chest snap a stalk of celery in two.
+  function foley(p, x, y, h) {
+    const g = mk('g', {}, p), r = h / 7.4, k = Math.min(G.k, Math.max(1, r * .2));
+    const at = fill => solid(fill, k);
+    const foot = y - .2 * r, hip = y - 2.7 * r, sh = y - 5.1 * r, hy = sh - 1.25 * r, sw = 1.38 * r, hw = 1.15 * r;
+    mk('path', Object.assign({d: `M${f1(x - .9 * r)},${f1(foot)}V${f1(hip)}H${f1(x - .05 * r)}V${f1(foot)}Z M${f1(x + .05 * r)},${f1(foot)}V${f1(hip)}H${f1(x + .9 * r)}V${f1(foot)}Z`}, at(TROUSERS)), g);
+    [-1, 1].forEach(s => mk('ellipse', Object.assign({cx: f1(x + s * .62 * r), cy: f1(foot), rx: f1(.66 * r), ry: f1(.25 * r)}, at(INK)), g));
+    // the shirt, and the waistcoat over it, open at the neck for the tie
+    mk('path', Object.assign({d: `M${f1(x - hw)},${f1(hip)}L${f1(x - sw)},${f1(sh + .45 * r)}Q${f1(x - sw)},${f1(sh)} ${f1(x - sw + .5 * r)},${f1(sh)}H${f1(x + sw - .5 * r)}Q${f1(x + sw)},${f1(sh)} ${f1(x + sw)},${f1(sh + .45 * r)}L${f1(x + hw)},${f1(hip)}Z`}, at(SHIRT)), g);
+    mk('path', Object.assign({d: `M${f1(x - hw * .98)},${f1(hip + .15 * r)}L${f1(x - sw * .92)},${f1(sh + .5 * r)}L${f1(x - .55 * r)},${f1(sh + .05 * r)}L${f1(x)},${f1(sh + 1.5 * r)}L${f1(x + .55 * r)},${f1(sh + .05 * r)}L${f1(x + sw * .92)},${f1(sh + .5 * r)}L${f1(x + hw * .98)},${f1(hip + .15 * r)}L${f1(x)},${f1(hip + .5 * r)}Z`}, at(VEST)), g);
+    mk('path', Object.assign({d: `M${f1(x - .16 * r)},${f1(sh + .1 * r)}H${f1(x + .16 * r)}L${f1(x + .22 * r)},${f1(sh + 1.05 * r)}L${f1(x)},${f1(sh + 1.3 * r)}L${f1(x - .22 * r)},${f1(sh + 1.05 * r)}Z`}, at(TIE)), g);
+    [1.85, 2.35].forEach(dy => mk('circle', {cx: f1(x), cy: f1(sh + dy * r), r: f1(Math.max(.8, .09 * r)), fill: INK}, g));
+    // the arms: upper arms in the shirt down the sides, forearms bare, bent in to the hands at the chest
+    const hand = [[x - .6 * r, sh + 1.55 * r], [x + .6 * r, sh + 1.45 * r]];
+    [-1, 1].forEach((s, i) => {
+      const shp = [x + s * (sw - .3 * r), sh + .45 * r], el = [x + s * (sw + .15 * r), sh + 2.05 * r], hd = hand[i];
+      const up = `M${f1(shp[0])},${f1(shp[1])}L${f1(el[0])},${f1(el[1])}`, fore = `M${f1(el[0])},${f1(el[1])}L${f1(hd[0])},${f1(hd[1])}`;
+      const aw = Math.max(k * 1.6, r * .5);
+      [[up, SHIRT, aw * 1.08], [fore, SKIN, aw * .86]].forEach(([d, c, w]) => {
+        mk('path', Object.assign({}, ink(k), {d, 'stroke-width': f1(w + 2 * k)}), g);
+        mk('path', {d, fill: 'none', stroke: c, 'stroke-width': f1(w), 'stroke-linecap': 'round'}, g);
+      });
+      // the rolled cuff at the elbow
+      mk('circle', Object.assign({cx: f1(el[0]), cy: f1(el[1]), r: f1(aw * .5)}, at(SHIRT)), g);
+    });
+    // the celery: a stalk snapped in two at the middle, both halves bent down from the break, its leaves at one end
+    const cy = (hand[0][1] + hand[1][1]) / 2 - .15 * r, cw = Math.max(3, r * .44);
+    const half = (dir, len, drop) => {
+      const x0 = x + dir * .07 * r, y0 = cy, x1 = x + dir * len, y1 = cy + drop, a = Math.atan2(y1 - y0, x1 - x0), nx = -Math.sin(a) * cw / 2, ny = Math.cos(a) * cw / 2;
+      mk('path', Object.assign({d: `M${f1(x0 + nx)},${f1(y0 + ny)}L${f1(x1 + nx)},${f1(y1 + ny)}Q${f1(x1 + dir * cw * .5)},${f1(y1)} ${f1(x1 - nx)},${f1(y1 - ny)}L${f1(x0 - nx)},${f1(y0 - ny)}Z`}, at(CELERY)), g);
+      // its ribs, and the strings torn at the break
+      mk('path', {d: `M${f1(x0 + nx * .2)},${f1(y0 + ny * .2)}L${f1(x1 + nx * .2)},${f1(y1 + ny * .2)}`, stroke: CELERY2, 'stroke-width': f1(Math.max(.8, cw * .16)), 'stroke-linecap': 'round'}, g);
+      mk('path', {d: `M${f1(x0)},${f1(y0 - ny * .5)}l${f1(-dir * cw * .35)},${f1(-cw * .25)}M${f1(x0)},${f1(y0 + ny * .3)}l${f1(-dir * cw * .4)},${f1(cw * .05)}`, stroke: CELERY2, 'stroke-width': f1(Math.max(.7, k * .6)), 'stroke-linecap': 'round'}, g);
+      return [x1, y1];
+    };
+    half(-1, 1.45 * r, .42 * r);
+    const [lx, ly] = half(1, 1.45 * r, .32 * r);
+    // a tuft of leaves on the far end of the right half
+    [[-28, .95], [8, 1.05], [42, .85]].forEach(([deg, f]) => {
+      const a = (deg - 10) * Math.PI / 180, L2 = r * .62 * f, ex = lx + Math.cos(a) * L2, ey = ly - Math.sin(a) * L2 * .9;
+      mk('path', Object.assign({d: `M${f1(lx)},${f1(ly)}Q${f1((lx + ex) / 2 + r * .12)},${f1((ly + ey) / 2 - r * .2)} ${f1(ex)},${f1(ey)}Q${f1((lx + ex) / 2 - r * .08)},${f1((ly + ey) / 2 + r * .14)} ${f1(lx)},${f1(ly)}Z`}, at(CELERY2)), g);
+    });
+    // the snap: three short strokes off the break
+    let sd = '';
+    [[-.55, -.8], [0, -1], [.55, -.8]].forEach(([dx, dy]) => { sd += `M${f1(x + dx * r * .32)},${f1(cy - cw * .7 + dy * r * .12)}l${f1(dx * r * .28)},${f1(dy * r * .3)}`; });
+    mk('path', Object.assign({d: sd}, ink(k * .9)), g);
+    // the hands, over the stalk
+    hand.forEach(([hx, hy2]) => mk('circle', Object.assign({cx: f1(hx), cy: f1(hy2), r: f1(Math.max(2.4, .32 * r))}, at(SKIN)), g));
+    // neck, head, ears, hair combed back with a side parting, brows, eyes on the work, a pleased mouth
+    mk('rect', Object.assign({x: f1(x - .3 * r), y: f1(sh - .45 * r), width: f1(.6 * r), height: f1(.55 * r)}, at(SKIN)), g);
+    [-1, 1].forEach(s => mk('ellipse', Object.assign({cx: f1(x + s * r), cy: f1(hy + .12 * r), rx: f1(.2 * r), ry: f1(.3 * r)}, at(SKIN)), g));
+    mk('circle', Object.assign({cx: f1(x), cy: f1(hy), r: f1(r)}, at(SKIN)), g);
+    mk('path', Object.assign({d: `M${f1(x - 1.02 * r)},${f1(hy + .05 * r)}C${f1(x - 1.12 * r)},${f1(hy - 1.35 * r)} ${f1(x + 1.12 * r)},${f1(hy - 1.35 * r)} ${f1(x + 1.02 * r)},${f1(hy + .05 * r)}C${f1(x + .9 * r)},${f1(hy - .4 * r)} ${f1(x + .35 * r)},${f1(hy - .62 * r)} ${f1(x - .25 * r)},${f1(hy - .55 * r)}C${f1(x - .6 * r)},${f1(hy - .5 * r)} ${f1(x - .9 * r)},${f1(hy - .3 * r)} ${f1(x - 1.02 * r)},${f1(hy + .05 * r)}Z`}, at(HAIR)), g);
+    mk('path', {d: `M${f1(x - .5 * r)},${f1(hy - .32 * r)}q${f1(.18 * r)},${f1(-.12 * r)} ${f1(.34 * r)},0M${f1(x + .16 * r)},${f1(hy - .32 * r)}q${f1(.18 * r)},${f1(-.12 * r)} ${f1(.34 * r)},0`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .75), 'stroke-linecap': 'round'}, g);
+    [-1, 1].forEach(s => mk('circle', {cx: f1(x + s * .33 * r), cy: f1(hy + .04 * r + .12 * r), r: f1(Math.max(.9, .1 * r)), fill: INK}, g));
+    mk('path', {d: `M${f1(x - .28 * r)},${f1(hy + .46 * r)}Q${f1(x)},${f1(hy + .72 * r)} ${f1(x + .28 * r)},${f1(hy + .46 * r)}`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linecap': 'round'}, g);
+    return {g, headTop: hy - r * 1.05, cy, r};
+  }
+
+  // A ribbon microphone of the early talkies hanging from its cable: a rounded body with a grille, in a yoke.
+  function microphone(p, x, y, h) {
+    const g = mk('g', {}, p), w = h * .56, k = Math.min(G.k, Math.max(1, h * .045));
+    mk('path', Object.assign({d: `M${f1(x)},-4V${f1(y - h * .62)}`}, ink(k)), g);
+    mk('path', Object.assign({d: `M${f1(x - w * .62)},${f1(y)}V${f1(y - h * .52)}H${f1(x + w * .62)}V${f1(y)}`}, ink(k * 1.3)), g);
+    mk('path', Object.assign({d: `M${f1(x)},${f1(y - h * .62)}V${f1(y - h * .52)}`}, ink(k * 1.3)), g);
+    mk('rect', Object.assign({x: f1(x - w / 2), y: f1(y - h * .45), width: f1(w), height: f1(h * .9), rx: f1(w * .45)}, solid(METAL, k)), g);
     let d = '';
-    for (let s = 0; s <= 60; s++){
-      const x = G.x0 + (G.x1 - G.x0) * s / 60, u = s / 60;
-      const flat = mid + (i - (n - 1) / 2) * 1.2;
-      const base = top + i * gap;
-      const map = base + gap * 0.9 * (Math.sin(u * 6.3 + i * 0.8) * 0.6 + Math.sin(u * 13 + i * 1.7) * 0.25);
-      const env = Math.sin(Math.PI * u) * (0.4 + 0.6 * Math.abs(Math.sin(u * 9)));
-      const wave = mid + (bot - top) * 0.42 * env * Math.sin(u * 46 + i * 0.5) * (1 - i / (n + 2));
-      const y = p <= 1 ? lerp(flat, map, a) : lerp(map, wave, b);
-      d += (s ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+    for (let i = 1; i < 7; i++) { const yy = y - h * .45 + h * .9 * i / 7, ins = Math.abs(i - 3.5) > 2.4 ? w * .16 : w * .1; d += `M${f1(x - w / 2 + ins)},${f1(yy)}H${f1(x + w / 2 - ins)}`; }
+    mk('path', {d, stroke: METAL2, 'stroke-width': f1(Math.max(.8, k * .7))}, g);
+    mk('rect', Object.assign({x: f1(x - w * .2), y: f1(y + h * .43), width: f1(w * .4), height: f1(h * .12), rx: 1}, solid(METAL2, k * .8)), g);
+    return g;
+  }
+
+  // The silent film playing on the screen: a street, a lamp, a man in a bowler hat walking with his cane.
+  function street(p, x0, y0, w, h) {
+    const g = mk('g', {}, p), gy = y0 + h * .8, k = Math.max(1, G.k * .55);
+    mk('rect', {x: f1(x0), y: f1(y0), width: f1(w), height: f1(h), fill: F0}, g);
+    mk('rect', {x: f1(x0), y: f1(y0 + h * .12), width: f1(w * .46), height: f1(gy - y0 - h * .12), fill: F1}, g);
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) mk('rect', {x: f1(x0 + w * (.06 + c * .135)), y: f1(y0 + h * (.2 + r * .18)), width: f1(w * .07), height: f1(h * .1), fill: F3}, g);
+    mk('rect', {x: f1(x0), y: f1(gy), width: f1(w), height: f1(y0 + h - gy), fill: F2}, g);
+    const lx = x0 + w * .82;
+    mk('path', {d: `M${f1(lx)},${f1(gy)}V${f1(y0 + h * .3)}`, stroke: F4, 'stroke-width': f1(Math.max(1.5, w * .018))}, g);
+    mk('path', {d: `M${f1(lx - w * .035)},${f1(y0 + h * .3)}h${f1(w * .07)}l${f1(-w * .012)},${f1(-h * .08)}h${f1(-w * .046)}Z`, fill: F4}, g);
+    // the walker, mid-stride
+    const mx = x0 + w * .62, u = h * .06;
+    const body = `M${f1(mx - u * .9)},${f1(gy - u * 6.2)}h${f1(u * 1.8)}l${f1(u * .2)},${f1(u * 3)}h${f1(-u * 2.2)}Z`;
+    mk('path', {d: body, fill: F4}, g);
+    mk('path', {d: `M${f1(mx - u * .4)},${f1(gy - u * 3.3)}L${f1(mx - u * 1.6)},${f1(gy)}M${f1(mx + u * .4)},${f1(gy - u * 3.3)}L${f1(mx + u * 1.3)},${f1(gy)}`, stroke: F4, 'stroke-width': f1(u * .8), 'stroke-linecap': 'round'}, g);
+    mk('circle', {cx: f1(mx), cy: f1(gy - u * 7), r: f1(u * .85), fill: F4}, g);
+    mk('path', {d: `M${f1(mx - u * 1.2)},${f1(gy - u * 7.5)}h${f1(u * 2.4)}M${f1(mx - u * .7)},${f1(gy - u * 7.5)}a${f1(u * .7)},${f1(u * .75)} 0 0 1 ${f1(u * 1.4)},0Z`, stroke: F4, 'stroke-width': f1(u * .35), fill: F4}, g);
+    mk('path', {d: `M${f1(mx + u * 1.1)},${f1(gy - u * 4)}L${f1(mx + u * 2)},${f1(gy)}`, stroke: F4, 'stroke-width': f1(Math.max(1, u * .3)), 'stroke-linecap': 'round'}, g);
+    return g;
+  }
+
+  // His first job, on the same screen: the New York docks, Manhattan behind, a steamship at the pier, crates and a
+  // crane on it, and a clerk with his ledger; across its foot a title, as in a silent film.
+  function docks(p, x0, y0, w, h) {
+    const g = mk('g', {}, p), wy = y0 + h * .58;
+    mk('rect', {x: f1(x0), y: f1(y0), width: f1(w), height: f1(h), fill: F0}, g);
+    // Manhattan on the far shore
+    [[.02, .12, .12], [.13, .08, .2], [.21, .1, .14], [.31, .06, .3], [.37, .09, .17], [.47, .11, .1], [.58, .07, .24], [.65, .1, .13], [.76, .12, .08], [.88, .1, .16]].forEach(([fx, fw, fh]) => {
+      mk('rect', {x: f1(x0 + w * fx), y: f1(wy - h * fh), width: f1(w * fw), height: f1(h * fh + 1), fill: F1}, g);
+    });
+    mk('path', {d: `M${f1(x0 + w * .345)},${f1(wy - h * .3)}l${f1(w * .015)},${f1(-h * .08)}l${f1(w * .015)},${f1(h * .08)}Z`, fill: F1}, g);
+    // the water
+    mk('rect', {x: f1(x0), y: f1(wy), width: f1(w), height: f1(y0 + h - wy), fill: F2}, g);
+    let wd = '';
+    for (let i = 0; i < 3; i++) { const yy = wy + (y0 + h - wy) * (.3 + i * .25); for (let x = x0 + w * (.04 + i * .07); x < x0 + w; x += w * .22) wd += `M${f1(x)},${f1(yy)}q${f1(w * .03)},${f1(-h * .02)} ${f1(w * .06)},0`; }
+    mk('path', {d: wd, fill: 'none', stroke: F1, 'stroke-width': f1(Math.max(1, h * .012)), 'stroke-linecap': 'round'}, g);
+    // the steamship, moored on the right
+    const sx = x0 + w * .5, sb = wy + h * .12, sl = w * .48;
+    mk('path', {d: `M${f1(sx)},${f1(sb - h * .14)}H${f1(sx + sl)}L${f1(sx + sl - w * .05)},${f1(sb)}H${f1(sx + w * .04)}Z`, fill: F4}, g);
+    mk('rect', {x: f1(sx + sl * .2), y: f1(sb - h * .25), width: f1(sl * .52), height: f1(h * .11), fill: F0}, g);
+    for (let i = 0; i < 5; i++) mk('circle', {cx: f1(sx + sl * (.27 + i * .1)), cy: f1(sb - h * .195), r: f1(Math.max(.8, h * .014)), fill: F3}, g);
+    mk('rect', {x: f1(sx + sl * .42), y: f1(sb - h * .42), width: f1(sl * .1), height: f1(h * .17), fill: F4}, g);
+    mk('rect', {x: f1(sx + sl * .42), y: f1(sb - h * .38), width: f1(sl * .1), height: f1(h * .035), fill: F1}, g);
+    // the pier on the left, its posts in the water
+    const py = wy - h * .02, pr = x0 + w * .5;
+    mk('rect', {x: f1(x0), y: f1(py), width: f1(pr - x0), height: f1(h * .06), fill: F3}, g);
+    for (let x = x0 + w * .05; x < pr; x += w * .09) mk('rect', {x: f1(x), y: f1(py + h * .06), width: f1(w * .018), height: f1(h * .12), fill: F3}, g);
+    // crates, and a crane over them
+    [[.1, 0], [.19, 0], [.145, 1]].forEach(([fx, row]) => mk('rect', {x: f1(x0 + w * fx), y: f1(py - h * .1 * (row + 1)), width: f1(w * .085), height: f1(h * .1), fill: F2, stroke: F4, 'stroke-width': f1(Math.max(.8, h * .01))}, g));
+    const cx = x0 + w * .05;
+    mk('path', {d: `M${f1(cx)},${f1(py)}V${f1(y0 + h * .1)}L${f1(cx + w * .2)},${f1(y0 + h * .17)}M${f1(cx)},${f1(y0 + h * .22)}L${f1(cx + w * .11)},${f1(y0 + h * .15)}M${f1(cx + w * .2)},${f1(y0 + h * .17)}V${f1(y0 + h * .24)}`, fill: 'none', stroke: F4, 'stroke-width': f1(Math.max(1.2, w * .012)), 'stroke-linecap': 'round'}, g);
+    mk('rect', {x: f1(cx + w * .175), y: f1(y0 + h * .24), width: f1(w * .05), height: f1(h * .05), fill: F3}, g);
+    // the clerk, in his cap, his ledger open in his hands
+    const kx = x0 + w * .38, u = h * .05;
+    mk('path', {d: `M${f1(kx - u * .9)},${f1(py - u * 5.6)}h${f1(u * 1.8)}l${f1(u * .15)},${f1(u * 3)}h${f1(-u * 2.1)}Z`, fill: F4}, g);
+    mk('path', {d: `M${f1(kx - u * .45)},${f1(py - u * 2.7)}V${f1(py)}M${f1(kx + u * .45)},${f1(py - u * 2.7)}V${f1(py)}`, stroke: F4, 'stroke-width': f1(u * .75)}, g);
+    mk('circle', {cx: f1(kx), cy: f1(py - u * 6.4), r: f1(u * .8), fill: F4}, g);
+    mk('path', {d: `M${f1(kx - u * .85)},${f1(py - u * 6.7)}h${f1(u * 1.9)}v${f1(-u * .45)}h${f1(-u * 1.9)}Z`, fill: F4}, g);
+    mk('rect', {x: f1(kx - u * 1.6), y: f1(py - u * 4.7), width: f1(u * 1.5), height: f1(u * 1.1), fill: F0, stroke: F4, 'stroke-width': f1(Math.max(.6, u * .15))}, g);
+    // the title across its foot, where the screen is big enough to carry it
+    if (h < G.fs * 4.2) return g;
+    const th = clamp(h * .19, G.fs * 1.5, G.fs * 2.1), ty = y0 + h - th;
+    const bar = mk('rect', {x: f1(x0), y: f1(ty), width: f1(w), height: f1(th), fill: F4}, g);
+    const t = words(g, x0 + w / 2, ty + th / 2 + G.fs * .34, 'His first job: the New York docks', {font: SERIF, weight: 700, fill: SCREEN, max: w - G.fs, min: 10});
+    if (t.getComputedTextLength() > w - G.fs * .6) t.textContent = 'His first job: the docks';
+    // and where even that does not fit, no title: the answer under the drawing says it
+    if (t.getComputedTextLength() > w - G.fs * .4) { t.remove(); bar.remove(); }
+    return g;
+  }
+
+  function draw() {
+    const {W, H} = Kit.fitSvg(svg);
+    if (W < 40 || H < 40) return;
+    gsap.killTweensOf(st);
+    if (revealed) st.film = 1;
+    svg.innerHTML = '';
+    const k = clamp(W * .0075, 1.6, 2.6), fs = clamp(Math.min(W * .04, H / 10), 10.5, 13.5), pad = Math.max(7, fs * .65), R = clamp(W * .035, 8, 14);
+    G = {W, H, k, fs, pad};
+    const clip = mk('clipPath', {id: 'plate'}, mk('defs', {}, svg));
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), rx: f1(R)}, clip);
+    const scene = mk('g', {'clip-path': 'url(#plate)'}, svg);
+    // A short box (the answer in, on a small phone): no room for his name (the question gives it), the floor lower,
+    // and he and the screen as tall as the box, side by side in its middle.
+    const short = H < W * .42;
+    // The stage: its wall, a skirting board, the wooden floor.
+    const floorY = H - (short ? Math.max(8, H * .12) : clamp(H * .17, 12, 44));
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), fill: WALL}, scene);
+    mk('rect', Object.assign({x: -5, y: f1(floorY - Math.max(4, H * .025)), width: f1(W + 10), height: f1(Math.max(4, H * .025))}, solid(BASE, k * .7)), scene);
+    mk('rect', Object.assign({x: -5, y: f1(floorY), width: f1(W + 10), height: f1(H - floorY + 5)}, solid(FLOOR)), scene);
+    let pd = '';
+    for (let i = 1; i < 3; i++) pd += `M0,${f1(floorY + (H - floorY) * i / 3)}H${f1(W)}`;
+    for (let x = W * .13; x < W; x += W * .27) pd += `M${f1(x)},${f1(floorY)}V${f1(floorY + (H - floorY) / 3)}M${f1(x + W * .12)},${f1(floorY + (H - floorY) / 3)}V${f1(floorY + (H - floorY) * 2 / 3)}`;
+    mk('path', {d: pd, stroke: INK, 'stroke-width': f1(k * .5), opacity: .22}, scene);
+
+    // Foley as tall as the stage lets him be, with room over his head for his name; the screen, a silent film's frame
+    // of 4 to 3, on the wall to his right; the microphone hangs between them over his hands.
+    const feet = H - pad * .9, top = short ? pad * .6 : pad * .6 + fs * 1.5, fh = Math.min(feet - top, W * .78), r = fh / 7.4;
+    let fx, sx0, sy0, sw, sh;
+    if (short) {
+      sh = floorY - pad * 2.1; sw = sh / .75;
+      const group = r * 2.1 + r * 3.9 + sw;
+      fx = Math.max(pad + r * 2.1, (W - group) / 2 + r * 2.1);
+      sx0 = Math.min(W - pad * 1.1 - sw, fx + r * 3.9); sy0 = pad * 1.2;
+    } else {
+      fx = Math.max(fh * .27 + pad * .4, W * .23);
+      const sx1 = W - pad * 1.1, sx0Min = fx + fh * .27 + pad * .8;
+      sh = Math.min(floorY - pad * 3.4, (sx1 - sx0Min) * .75); sw = sh / .75;
+      sx0 = sx1 - sw; sy0 = Math.max(pad * 1.7, (floorY - pad * .8 - sh) * .5);
     }
-    el.setAttribute('d', d);
+    G.screen = {sx0, sy0, sw, sh};
+    const scr = mk('clipPath', {id: 'scr'}, mk('defs', {}, svg));
+    mk('rect', {x: f1(sx0), y: f1(sy0), width: f1(sw), height: f1(sh)}, scr);
+    mk('rect', Object.assign({x: f1(sx0 - k * 2.2), y: f1(sy0 - k * 2.2), width: f1(sw + k * 4.4), height: f1(sh + k * 4.4), rx: 2}, solid(F4, k)), scene);
+    const film = mk('g', {'clip-path': 'url(#scr)'}, scene);
+    G.street = street(film, sx0, sy0, sw, sh);
+    G.docks = docks(film, sx0, sy0, sw, sh);
+    paintFilm();
+
+    const handsY = feet - .2 * r - 5.1 * r + 1.5 * r, micX = Math.min(fx + r * 2.15, sx0 - r * .75);
+    microphone(scene, micX, handsY - r * 1.6, r * 1.75);
+    const man = foley(scene, fx, feet, fh);
+    mk('rect', Object.assign({x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(H - k), rx: f1(R - k / 2)}, ink(k)), svg);
+    // His name over his head, clear of the microphone's cable.
+    if (!short) {
+      const name = words(svg, fx, man.headTop - fs * .45, 'Jack Foley', {weight: 800, max: Math.max(60, sx0 - pad), min: 10.5});
+      const lw = name.getComputedTextLength();
+      if (fx + lw / 2 + 5 > micX && fx - lw / 2 - 5 < micX) name.setAttribute('x', f1(Math.max(pad + lw / 2, micX - lw / 2 - 6)));
+    }
+  }
+
+  function paintFilm() {
+    if (!G || !G.docks) return;
+    G.docks.setAttribute('opacity', f1(st.film));
+    G.street.setAttribute('opacity', f1(1 - st.film));
+  }
+
+  // The answer: the silent film turns into the one of his first job.
+  function reveal() {
+    revealed = true;
+    if (Kit.calm) { st.film = 1; draw(); return; }
+    st.film = 0; draw();
+    gsap.to(st, {film: 1, duration: 1.2, delay: .35, ease: 'power2.inOut', onUpdate: paintFilm});
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    Kit.hide('opts'); Kit.hide('say'); Kit.$('card').classList.add('answered'); Kit.show('why');
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    Kit.show('keep');
+    Kit.haptic(ok ? 'success' : 'light');
+    svg.setAttribute('aria-label', 'On the screen behind Jack Foley the silent film turns into his first job: the New York docks, a steamship at the pier, crates and a crane, a clerk with his ledger, Manhattan behind.');
+    requestAnimationFrame(reveal);
   });
-  const ti = p < 0.5 ? 0 : p < 1.5 ? 1 : 2;
-  if (G.cap.textContent !== CAPS[ti]) G.cap.textContent = CAPS[ti];
-  G.dot.setAttribute('cx', lerp(G.t0, G.t1, st.dot));
-  G.celery.style.opacity = Math.max(0, p - 1.6) / 0.4;
-}
-
-Kit.onShow.card = () => {
-  const svg = Kit.$('svg'); svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f * 0.95, 12);
-  const pad = W * 0.04;
-  Kit.mk('rect', {x: 1, y: 1, width: W - 2, height: H - 2, rx: Math.min(W, H) * 0.06, style: 'fill:color-mix(in srgb,var(--k) 7%,transparent);stroke:color-mix(in srgb,var(--k) 25%,transparent);stroke-width:1.5'}, svg);
-  const cap = Kit.mk('text', {x: pad * 1.5, y: pad + fs, style: `font:800 ${fs}px var(--mono);fill:var(--k);letter-spacing:.06em`}, svg);
-  const tl = H - pad - fs * 0.6, top = pad + fs * 2.4, bot = tl - fs * 2.6;
-  const x0 = pad * 1.5, x1 = W - pad * 1.5;
-  const lines = [];
-  for (let i = 0; i < 6; i++) lines.push(Kit.mk('path', {fill: 'none', style: `stroke:var(--k);stroke-width:${Math.max(1.6, W / 220)};stroke-linecap:round;opacity:${1 - i * 0.11}`}, svg));
-  // celery stalk, top-right of the picture
-  const cel = Kit.mk('g', {style: 'opacity:0'}, svg);
-  const cx = x1 - fs * 1.2, cy = top - fs * 0.6, L = fs * 3.2;
-  Kit.mk('path', {d: `M${cx} ${cy}l${-L * 0.8} ${L * 0.5}`, style: `stroke:#3f8f3a;stroke-width:${fs * 0.55};stroke-linecap:round`}, cel);
-  Kit.mk('path', {d: `M${cx} ${cy}l${fs * .3} ${-fs * .6}M${cx} ${cy}l${fs * .7} ${-fs * .2}`, style: `stroke:#5fb34f;stroke-width:${fs * 0.3};stroke-linecap:round`}, cel);
-  const t0 = x0 + fs * 1.6, t1 = x1 - fs * 1.6;
-  Kit.mk('line', {x1: t0, y1: tl - fs * 1.2, x2: t1, y2: tl - fs * 1.2, style: 'stroke:var(--k);stroke-width:2;opacity:.45'}, svg);
-  [[t0, '1891'], [t1, '1927']].forEach(([x, s]) => {
-    Kit.mk('line', {x1: x, y1: tl - fs * 1.6, x2: x, y2: tl - fs * 0.8, style: 'stroke:var(--k);stroke-width:2'}, svg);
-    Kit.mk('text', {x, y: tl + fs * 0.35, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--mono);fill:var(--k)`}, svg).textContent = s;
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
   });
-  const dot = Kit.mk('circle', {cy: tl - fs * 1.2, r: fs * 0.38, style: 'fill:var(--k)'}, svg);
-  G = {W, H, lines, top, bot, x0, x1, cap, dot, t0, t1, celery: cel};
-  draw();
-};
-
-function reveal(){
-  const tl = gsap.timeline({onUpdate: draw});
-  if (Kit.calm){ st.p = 2; st.dot = 1; draw(); return; }
-  tl.to(st, {p: 1, duration: 1.1, ease: 'power2.inOut'})
-    .to({}, {duration: .7})
-    .to(st, {p: 2, dot: 1, duration: 1.3, ease: 'power2.inOut'});
-}
-
-const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
-  Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
-  Kit.show('keep');
-  Kit.haptic(ok ? 'success' : 'light');
-  reveal();
-});
-Kit.$('opts').addEventListener('click', e => {
-  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
-});
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
-Kit.play.card = async () => {
-  Kit.$('opts').children[1].click();
-  await new Promise(r => setTimeout(r, 100));
-  Kit.$('sure').querySelector('[data-v="80"]').click();
-  await new Promise(r => setTimeout(r, 3400));
-};
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('svg'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+  Kit.onShow.card = () => draw();
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out', clearProps: 'opacity,transform'}); };
+  Kit.play.card = async () => {
+    Kit.$('opts').children[1].click();
+    await new Promise(r => setTimeout(r, 100));
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await new Promise(r => setTimeout(r, 2400));
+  };
+  // Drawn again, at the size it now has, whenever its room changes: the answer coming in takes some of it.
+  let seen = '';
+  new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) draw(); }).observe(svg);
+})();
 Kit.single();
 </script>
 </html>

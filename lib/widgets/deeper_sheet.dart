@@ -8,14 +8,30 @@
 ///
 /// For Astute+, where the answers are switched on, Claude adds what the file
 /// does not: the card said simply or its two sides when the card has none
-/// written, the reader's own reasoning looked at, and a question of theirs
-/// answered (sync/card_ask.dart). On the free plan those are marked, and a
-/// tap opens the paywall.
+/// written, an everyday example, a test on a new case, the reader's own
+/// reasoning looked at, and a question of theirs answered (sync/
+/// card_ask.dart). On the free plan those are marked, and a tap opens the
+/// paywall.
+///
+/// The sheet is the card's world (deeper/look.dart): its head is the card's
+/// own colour, lit by lights that drift across it, with the card's question
+/// set large (deeper/header.dart); each part below wears a colour of its own
+/// from a set around the subject's, with a small drawing of its own
+/// (deeper/art.dart). The two views face each other in two contrasting
+/// halves; the reader's words and Claude's answers are a conversation. The
+/// parts arrive one after another as the sheet opens, an answer is let down
+/// over its part as it comes, and nothing moves for a reader who asked for
+/// less motion (deeper/pieces.dart).
+///
+/// Being tried: three editorial ways of setting the parts under the same
+/// head, with no drawings and colour only as the head's echo (deeper/
+/// editorial.dart, [deeperStyle]); the column is the one shown for now.
 library;
 
-import 'dart:ui' show ImageFilter;
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:url_launcher/url_launcher.dart';
 
 import '../analytics.dart';
@@ -26,7 +42,16 @@ import '../remote/knobs.dart';
 import '../state/app_state.dart';
 import '../sync/card_ask.dart';
 import '../theme.dart';
+import 'chunky.dart' show VerdictColours, chunkyEdge;
+import 'deeper/app_style.dart' show AppWhole, ReportHeight, appBath;
+import 'deeper/art.dart';
+import 'deeper/editorial.dart';
+import 'deeper/header.dart';
+import 'deeper/look.dart';
+import 'deeper/pieces.dart';
+import 'motion.dart' show PopIn, RiseIn;
 import 'premium.dart';
+import 'reveal_body.dart' show sourceKindName;
 
 /// Where a tap on a card's source goes: set once by the app (main.dart), so
 /// a card's back, a page's source and the detail screen all open the same
@@ -63,12 +88,44 @@ class DeeperSheet extends StatefulWidget {
   State<DeeperSheet> createState() => _DeeperSheetState();
 }
 
-class _DeeperSheetState extends State<DeeperSheet> {
+class _DeeperSheetState extends State<DeeperSheet>
+    with TickerProviderStateMixin {
   final Map<AskMode, AskResult?> _results = {};
   final Set<AskMode> _busy = {};
+
+  /// What the reader sent, for the parts they write into: shown as theirs
+  /// above the answer, and sent again on a retry.
+  final Map<AskMode, String> _words = {};
   final TextEditingController _take = TextEditingController();
   final TextEditingController _ask = TextEditingController();
   bool _said = false;
+
+  /// The sheet's arrival: the head's words, then the parts one after
+  /// another, each drawing its picture in as it lands.
+  late final AnimationController _entrance = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1500),
+  );
+
+  /// The head's lights, drifting once and coming to rest: alive while the
+  /// head is what the reader looks at, still while they read the parts.
+  late final AnimationController _drift = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 22),
+  );
+
+  /// How tall the head is, for the painting behind head and body.
+  final ValueNotifier<double> _headHeight = ValueNotifier<double>(0);
+
+  /// How far the sheet has scrolled, for the head to lag behind.
+  final ValueNotifier<double> _scroll = ValueNotifier<double>(0);
+
+  /// Whether the reader has read past the head since its lights last
+  /// drifted: coming back up to it sets them going again.
+  bool _away = false;
+
+  /// How far the first part lies over the head's foot.
+  static const double _overlap = 26;
 
   Pill get pill => widget.pill;
   AppState get app => widget.app;
@@ -78,6 +135,12 @@ class _DeeperSheetState extends State<DeeperSheet> {
     super.didChangeDependencies();
     if (_said) return;
     _said = true;
+    if (deeperStill(context)) {
+      _entrance.value = 1;
+    } else {
+      _entrance.forward();
+      _drift.forward();
+    }
     Analytics.capture('card deeper opened', {
       ...app.cardFacts(pill.id),
       'has_simply': pill.simply.isNotEmpty,
@@ -91,6 +154,10 @@ class _DeeperSheetState extends State<DeeperSheet> {
 
   @override
   void dispose() {
+    _entrance.dispose();
+    _drift.dispose();
+    _scroll.dispose();
+    _headHeight.dispose();
     _take.dispose();
     _ask.dispose();
     super.dispose();
@@ -105,7 +172,19 @@ class _DeeperSheetState extends State<DeeperSheet> {
       setState(() {
         _busy.add(mode);
         _results.remove(mode);
+        if (text.isNotEmpty) _words[mode] = text;
       });
+      // The words sent move out of the box and into the conversation; the
+      // box is left for the next ones.
+      final TextEditingController? box = switch (mode) {
+        AskMode.take => _take,
+        AskMode.ask => _ask,
+        _ => null,
+      };
+      if (box != null && text.isNotEmpty) {
+        if (box.text.trim() == text) box.clear();
+        FocusManager.instance.primaryFocus?.unfocus();
+      }
       final DateTime start = DateTime.now();
       // The words written stay on the phone's side of analytics: only how
       // many there were is said.
@@ -150,67 +229,145 @@ class _DeeperSheetState extends State<DeeperSheet> {
     await launchUrl(url, mode: LaunchMode.externalApplication);
   }
 
+  bool _onScroll(ScrollNotification n) {
+    if (n.depth != 0 || n.metrics.axis != Axis.vertical) return false;
+    final double at = n.metrics.pixels;
+    _scroll.value = at;
+    if (at > 280) {
+      _away = true;
+    } else if (_away && at < 60) {
+      _away = false;
+      if (!deeperStill(context) && !_drift.isAnimating) {
+        _drift.forward(from: 0);
+      }
+    }
+    return false;
+  }
+
+  /// When the part at [i] begins to arrive, as a part of the arrival.
+  static double _start(int i) => math.min(0.6, 0.16 + i * 0.075);
+
+  Animation<double> _arrive(int i) => _entrance.drive(
+    CurveTween(
+      curve: Interval(
+        _start(i),
+        math.min(1, _start(i) + 0.42),
+        curve: Curves.easeOutCubic,
+      ),
+    ),
+  );
+
+  Animation<double> _draw(int i) => _entrance.drive(
+    CurveTween(curve: Interval(_start(i) + 0.1, math.min(1, _start(i) + 0.66))),
+  );
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
     final bool ai = _aiOn;
     final bool plus = app.isPlus;
-    final List<Widget> parts = [
+    final DeeperLook world = DeeperLook.of(pill.color, dark: p.isDark);
+    // The head is always the card's world; set editorially, the parts
+    // under it take one quiet tone of it.
+    final DeeperLook look = deeperStyle == DeeperStyle.app
+        ? world.quietOn(p.surface)
+        : deeperEditorial
+        ? world.quiet
+        : world;
+    // In the app's style the head's colour flows on down behind the
+    // cards, and the head falls into it rather than into the ground.
+    final Color? bath = deeperStyle == DeeperStyle.app
+        ? appBath(world, p)
+        : null;
+    final List<Widget Function(Animation<double> draw)> parts = [
       // The idea said simply: written, or asked for.
       if (pill.simply.isNotEmpty)
-        _Part(
+        (draw) => DeeperTile(
           key: const ValueKey('deeper-simple'),
+          tone: look.tone(DeeperPart.simply),
+          art: DeeperArt.blocks,
+          look: look,
+          draw: draw,
           title: l.deeperSimple,
-          child: _Body(pill.simply),
+          child: Text(pill.simply, style: deeperSimply(context)),
         )
       else if (ai)
-        _AiPart(
+        (draw) => _AiPart(
           key: const ValueKey('deeper-simple-ai'),
+          look: look,
+          part: DeeperPart.simply,
+          art: DeeperArt.blocks,
+          draw: draw,
           title: l.deeperSimple,
+          lead: l.deeperSimpleLead,
+          go: l.deeperSimpleGo,
+          style: deeperSimply(context),
           locked: !plus,
           busy: _busy.contains(AskMode.simple),
           result: _results[AskMode.simple],
           onAsk: () => _askAi(AskMode.simple),
         ),
       if (pill.why.isNotEmpty)
-        _Part(
+        (draw) => DeeperTile(
           key: const ValueKey('deeper-why'),
+          tone: look.tone(DeeperPart.why),
+          art: DeeperArt.target,
+          look: look,
+          draw: draw,
           title: l.deeperWhy,
-          child: _Glass(
+          child: DeeperGlass(
             locked: !plus,
             onUnlock: () => _askUnlock('deeper why'),
-            child: _Body(pill.why),
+            child: Text(pill.why, style: deeperBody(context)),
           ),
         ),
       // The two views: written, a debate's other side, or asked for.
       if (pill.views.length == 2)
-        _Part(
+        (draw) => DeeperTile(
           key: const ValueKey('deeper-views'),
+          tone: look.tone(DeeperPart.sides),
+          art: DeeperArt.scale,
+          look: look,
+          draw: draw,
           title: l.deeperSides,
-          child: _Glass(
+          child: DeeperGlass(
             locked: !plus,
             onUnlock: () => _askUnlock('deeper views'),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _Body(pill.views[0]),
-                const SizedBox(height: 10),
-                _Body(pill.views[1]),
-              ],
+            child: DeeperVersus(
+              look: look,
+              a: splitView(pill.views[0], l.deeperSideA),
+              b: splitView(pill.views[1], l.deeperSideB),
+              progress: draw,
             ),
           ),
         )
       else if (pill.counterpoint.isNotEmpty)
-        _Part(
+        (draw) => DeeperTile(
           key: const ValueKey('deeper-counterpoint'),
+          tone: look.tone(DeeperPart.sides),
+          art: DeeperArt.scale,
+          look: look,
+          draw: draw,
           title: l.deeperSides,
-          child: _Body(pill.counterpoint),
+          child: DeeperVersus(
+            look: look,
+            a: (l.deeperSideB, pill.counterpoint),
+            b: null,
+            progress: draw,
+          ),
         )
       else if (ai)
-        _AiPart(
+        (draw) => _AiPart(
           key: const ValueKey('deeper-sides-ai'),
+          look: look,
+          part: DeeperPart.sides,
+          art: DeeperArt.scale,
+          draw: draw,
           title: l.deeperSides,
+          lead: l.deeperSidesLead,
+          go: l.deeperSidesGo,
+          style: deeperBody(context),
           locked: !plus,
           busy: _busy.contains(AskMode.sides),
           result: _results[AskMode.sides],
@@ -218,9 +375,16 @@ class _DeeperSheetState extends State<DeeperSheet> {
         ),
       // The idea where the reader will meet it: asked for.
       if (ai)
-        _AiPart(
+        (draw) => _AiPart(
           key: const ValueKey('deeper-example-ai'),
+          look: look,
+          part: DeeperPart.example,
+          art: DeeperArt.cup,
+          draw: draw,
           title: l.deeperExample,
+          lead: l.deeperExampleLead,
+          go: l.deeperExampleGo,
+          style: deeperBody(context),
           locked: !plus,
           busy: _busy.contains(AskMode.example),
           result: _results[AskMode.example],
@@ -229,9 +393,13 @@ class _DeeperSheetState extends State<DeeperSheet> {
       // The idea carried to a case the card does not mention: a question
       // to answer there and then, the best way to keep an idea.
       if (ai)
-        _QuizPart(
+        (draw) => _QuizPart(
           key: const ValueKey('deeper-quiz-ai'),
+          look: look,
+          draw: draw,
           title: l.deeperQuiz,
+          lead: l.deeperQuizLead,
+          go: l.deeperQuizGo,
           locked: !plus,
           busy: _busy.contains(AskMode.quiz),
           result: _results[AskMode.quiz],
@@ -243,118 +411,208 @@ class _DeeperSheetState extends State<DeeperSheet> {
           }),
         ),
       if (ai)
-        _WritePart(
+        (draw) => _WritePart(
           key: const ValueKey('deeper-take'),
+          look: look,
+          part: DeeperPart.take,
+          art: DeeperArt.lens,
+          draw: draw,
           title: l.deeperYourTake,
+          lead: l.deeperYourTakeLead,
           hint: l.deeperYourTakeHint,
           action: l.deeperAnalyse,
           controller: _take,
           locked: !plus,
           busy: _busy.contains(AskMode.take),
           result: _results[AskMode.take],
+          asked: _words[AskMode.take],
           onAsk: (text) => _askAi(AskMode.take, text: text),
         ),
       if (ai)
-        _WritePart(
+        (draw) => _WritePart(
           key: const ValueKey('deeper-ask'),
+          look: look,
+          part: DeeperPart.ask,
+          art: DeeperArt.chat,
+          draw: draw,
           title: l.deeperAsk,
+          lead: l.deeperAskLead,
           hint: l.deeperAskHint,
           action: l.deeperSend,
           controller: _ask,
           locked: !plus,
           busy: _busy.contains(AskMode.ask),
           result: _results[AskMode.ask],
+          asked: _words[AskMode.ask],
           onAsk: (text) => _askAi(AskMode.ask, text: text),
         ),
-      _Part(
-        key: const ValueKey('deeper-source'),
-        title: l.deeperSource,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _Body(pill.source),
-            if (_original.isNotEmpty) ...[
-              const SizedBox(height: 10),
-              TextButton.icon(
-                key: const ValueKey('deeper-open-source'),
-                onPressed: _openSource,
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  foregroundColor: p.link,
-                ),
-                icon: const Icon(Icons.open_in_new_rounded, size: 17),
-                label: Text(
-                  l.deeperOpenSource,
-                  style: AppText.body(size: 14.5, weight: FontWeight.w700),
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
     ];
+    const BorderRadius top = BorderRadius.vertical(top: Radius.circular(30));
     return DraggableScrollableSheet(
       expand: false,
       initialChildSize: 0.72,
       minChildSize: 0.4,
       maxChildSize: 0.95,
-      builder: (context, scroll) => Container(
-        decoration: BoxDecoration(
-          color: p.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-        ),
-        child: ListView(
-          controller: scroll,
-          padding: EdgeInsets.fromLTRB(
-            22,
-            14,
-            22,
-            MediaQuery.paddingOf(context).bottom +
-                MediaQuery.viewInsetsOf(context).bottom +
-                24,
+      builder: (context, scroll) => DecoratedBox(
+        decoration: BoxDecoration(color: look.ground, borderRadius: top),
+        child: ClipRRect(
+          borderRadius: top,
+          child: NotificationListener<ScrollNotification>(
+            onNotification: _onScroll,
+            child: SingleChildScrollView(
+              controller: scroll,
+              padding: EdgeInsets.only(
+                bottom:
+                    MediaQuery.paddingOf(context).bottom +
+                    MediaQuery.viewInsetsOf(context).bottom +
+                    34 -
+                    _overlap,
+              ),
+              child: Stack(
+                children: [
+                  // In the app's style head and body are one painting
+                  // behind everything, so there is no edge between them.
+                  if (bath != null)
+                    Positioned.fill(
+                      child: IgnorePointer(
+                        child: RepaintBoundary(
+                          child: CustomPaint(
+                            painter: AppWhole(
+                              look: world,
+                              bath: bath,
+                              ground: look.ground,
+                              drift: _drift,
+                              scroll: deeperStill(context) ? null : _scroll,
+                              head: _headHeight,
+                              foot: _overlap,
+                              depth: MediaQuery.sizeOf(context).height * 0.95,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ReportHeight(
+                        height: _headHeight,
+                        child: DeeperHeader(
+                          key: const ValueKey('deeper-head'),
+                          pill: pill,
+                          look: bath != null ? world.quietOn(bath) : world,
+                          drift: _drift,
+                          scroll: _scroll,
+                          entrance: _entrance,
+                          still: deeperStill(context),
+                          overlap: _overlap,
+                          paintGround: bath == null,
+                        ),
+                      ),
+                      Transform.translate(
+                        offset: const Offset(0, -_overlap),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                // Set editorially, nothing lies over the head's foot:
+                                // it is let go into the sheet's ground instead, and the
+                                // parts start below it.
+                                if (deeperEditorial && bath == null)
+                                  ExcludeSemantics(
+                                    child: Container(
+                                      height: _overlap + 8,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            (bath ?? look.ground).withValues(
+                                              alpha: 0,
+                                            ),
+                                            bath ?? look.ground,
+                                          ],
+                                          stops: const [0, 0.75],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      for (
+                                        int i = 0;
+                                        i < parts.length;
+                                        i++
+                                      ) ...[
+                                        if (i > 0) SizedBox(height: deeperGap),
+                                        DeeperArrive(
+                                          animation: _arrive(i),
+                                          child: EdFirst(
+                                            first: i == 0,
+                                            child: parts[i](_draw(i)),
+                                          ),
+                                        ),
+                                      ],
+                                      SizedBox(
+                                        height: parts.isEmpty
+                                            ? 8
+                                            : deeperEditorial
+                                            ? 44
+                                            : 34,
+                                      ),
+                                      DeeperArrive(
+                                        animation: _arrive(parts.length),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 6,
+                                          ),
+                                          child: DeeperSource(
+                                            key: const ValueKey(
+                                              'deeper-source',
+                                            ),
+                                            look: look,
+                                            source: pill.source,
+                                            kind: sourceKindName(
+                                              l,
+                                              pill.sourceKind,
+                                            ),
+                                            draw: _draw(parts.length),
+                                            open: _original.isEmpty
+                                                ? null
+                                                : _openSource,
+                                          ),
+                                        ),
+                                      ),
+                                      if (ai) ...[
+                                        const SizedBox(height: 26),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 6,
+                                          ),
+                                          child: DeeperAiNote(),
+                                        ),
+                                      ],
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-          children: [
-            Center(
-              child: Container(
-                width: 38,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: p.lineStrong,
-                  borderRadius: BorderRadius.circular(9),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              l.deeperTitle,
-              style: AppText.display(
-                size: 24,
-                weight: FontWeight.w600,
-                spacing: -0.6,
-                color: p.ink,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              pill.question,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.body(size: 14, height: 1.35, color: p.inkMuted),
-            ),
-            const SizedBox(height: 18),
-            for (final Widget part in parts) ...[
-              part,
-              const SizedBox(height: 12),
-            ],
-            if (ai)
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  l.deeperAiNote,
-                  style: AppText.body(size: 12, color: p.inkFaint),
-                ),
-              ),
-          ],
         ),
       ),
     );
@@ -365,132 +623,117 @@ class _DeeperSheetState extends State<DeeperSheet> {
   }, source: source);
 }
 
-/// A part of the sheet: what it is, then what it says.
-class _Part extends StatelessWidget {
-  const _Part({super.key, required this.title, required this.child});
+/// Grows a part to what it now holds, and fades what it held out before
+/// what it holds comes in: never a jump.
+class _Grow extends StatelessWidget {
+  const _Grow({required this.phase, required this.child});
 
-  final String title;
+  /// What the part is showing: a change of it fades one for the other.
+  final Object phase;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    final Palette p = context.p;
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
-      decoration: BoxDecoration(
-        color: p.ink.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            title.toUpperCase(),
-            style: AppText.body(
-              size: 11,
-              weight: FontWeight.w800,
-              spacing: 1.2,
-              color: p.ink.withValues(alpha: 0.5),
-            ),
-          ),
-          const SizedBox(height: 8),
-          child,
-        ],
+    final bool still = deeperStill(context);
+    return AnimatedSize(
+      duration: still ? Duration.zero : const Duration(milliseconds: 520),
+      curve: Curves.easeOutCubic,
+      alignment: Alignment.topCenter,
+      child: AnimatedSwitcher(
+        duration: still ? Duration.zero : const Duration(milliseconds: 420),
+        switchInCurve: const Interval(0.4, 1, curve: Curves.easeOut),
+        switchOutCurve: const Interval(0.6, 1, curve: Curves.easeIn),
+        layoutBuilder: (current, previous) => Stack(
+          alignment: Alignment.topCenter,
+          children: [...previous, ?current],
+        ),
+        child: KeyedSubtree(key: ValueKey(phase), child: child),
       ),
     );
   }
 }
 
-class _Body extends StatelessWidget {
-  const _Body(this.text);
+/// What a part asked of Claude is showing.
+Object _phaseOf(bool busy, AskResult? result) => switch ((busy, result)) {
+  (true, _) => 'ask',
+  (_, AskAnswer()) => 'answer',
+  (_, AskNone()) => 'none',
+  _ => 'ask',
+};
 
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Text(
-    text,
-    style: AppText.body(size: 15.5, height: 1.45, color: context.p.ink),
-  );
-}
-
-/// What Astute+ shows, behind frosted glass on the free plan, the way
-/// through on top of it.
-class _Glass extends StatelessWidget {
-  const _Glass({
+/// The button that asks, with the lines where the answer will be under it
+/// while it comes.
+class _Asking extends StatelessWidget {
+  const _Asking({
+    required this.look,
+    required this.tone,
+    required this.label,
     required this.locked,
-    required this.onUnlock,
-    required this.child,
+    required this.busy,
+    required this.onAsk,
   });
 
+  final DeeperLook look;
+  final DeeperTone tone;
+  final String label;
   final bool locked;
-  final VoidCallback onUnlock;
-  final Widget child;
+  final bool busy;
+  final VoidCallback onAsk;
 
   @override
-  Widget build(BuildContext context) {
-    if (!locked) return child;
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onUnlock,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          ExcludeSemantics(
-            child: ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-              child: child,
-            ),
-          ),
-          const _PlusChip(),
-        ],
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: DeeperAskButton(
+          look: look,
+          label: label,
+          vivid: tone.vivid,
+          locked: locked,
+          busy: busy,
+          onPressed: onAsk,
+        ),
       ),
-    );
-  }
-}
-
-class _PlusChip extends StatelessWidget {
-  const _PlusChip();
-
-  @override
-  Widget build(BuildContext context) {
-    final Palette p = context.p;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-      decoration: BoxDecoration(
-        color: p.inverse,
-        borderRadius: BorderRadius.circular(99),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.lock_rounded, size: 14, color: p.onInverse),
-          const SizedBox(width: 6),
-          Text(
-            context.l10n.deeperPlusOnly,
-            style: AppText.body(
-              size: 12.5,
-              weight: FontWeight.w700,
-              color: p.onInverse,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+      // Set editorially, the button's own line says the answer is coming.
+      if (busy && !deeperEditorial) ...[
+        const SizedBox(height: 20),
+        RiseIn(distance: 8, child: DeeperSkeleton(tone: tone)),
+      ],
+    ],
+  );
 }
 
 /// A part Claude writes on request: a button until asked, then the answer.
 class _AiPart extends StatelessWidget {
   const _AiPart({
     super.key,
+    required this.look,
+    required this.part,
+    required this.art,
+    required this.draw,
     required this.title,
+    required this.lead,
+    required this.go,
+    required this.style,
     required this.locked,
     required this.busy,
     required this.result,
     required this.onAsk,
   });
 
+  final DeeperLook look;
+  final DeeperPart part;
+  final DeeperArt art;
+  final Animation<double> draw;
   final String title;
+  final String lead;
+
+  /// What its button says: the asking, in a few words.
+  final String go;
+
+  /// The answer's words, in the part's own voice.
+  final TextStyle style;
   final bool locked;
   final bool busy;
   final AskResult? result;
@@ -498,14 +741,36 @@ class _AiPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Part(
+    final DeeperTone tone = look.tone(part);
+    return DeeperTile(
+      tone: tone,
+      art: art,
+      look: look,
+      draw: draw,
       title: title,
-      child: switch ((busy, result)) {
-        (true, _) => const _Busy(),
-        (_, final AskAnswer answer) => _Body(answer.text),
-        (_, final AskNone none) => _WhyNot(none, onRetry: onAsk),
-        _ => _AskButton(label: title, locked: locked, onPressed: onAsk),
-      },
+      lead: lead,
+      badge: locked ? const DeeperPlusBadge() : null,
+      child: _Grow(
+        phase: _phaseOf(busy, result),
+        child: switch ((busy, result)) {
+          (false, final AskAnswer answer) => DeeperUnfold(
+            child: Text(answer.text, style: style),
+          ),
+          (false, final AskNone none) => _WhyNot(
+            none,
+            tone: tone,
+            onRetry: onAsk,
+          ),
+          _ => _Asking(
+            look: look,
+            tone: tone,
+            label: go,
+            locked: locked,
+            busy: busy,
+            onAsk: onAsk,
+          ),
+        },
+      ),
     );
   }
 }
@@ -516,7 +781,11 @@ class _AiPart extends StatelessWidget {
 class _QuizPart extends StatefulWidget {
   const _QuizPart({
     super.key,
+    required this.look,
+    required this.draw,
     required this.title,
+    required this.lead,
+    required this.go,
     required this.locked,
     required this.busy,
     required this.result,
@@ -525,7 +794,13 @@ class _QuizPart extends StatefulWidget {
     required this.onAnswered,
   });
 
+  final DeeperLook look;
+  final Animation<double> draw;
   final String title;
+  final String lead;
+
+  /// What its button says.
+  final String go;
   final bool locked;
   final bool busy;
   final AskResult? result;
@@ -561,124 +836,407 @@ class _QuizPartState extends State<_QuizPart> {
   }
 
   @override
-  Widget build(BuildContext context) => _Part(
-    title: widget.title,
-    child: switch ((widget.busy, widget.result)) {
-      (true, _) => const _Busy(),
-      (_, final AskAnswer answer) => _quiz(context, answer.text),
-      (_, final AskNone none) => _WhyNot(none, onRetry: widget.onAsk),
-      _ => _AskButton(
-        label: widget.title,
-        locked: widget.locked,
-        onPressed: widget.onAsk,
+  Widget build(BuildContext context) {
+    final DeeperTone tone = widget.look.tone(DeeperPart.quiz);
+    return DeeperTile(
+      tone: tone,
+      art: DeeperArt.quiz,
+      look: widget.look,
+      draw: widget.draw,
+      title: widget.title,
+      lead: widget.lead,
+      badge: widget.locked ? const DeeperPlusBadge() : null,
+      child: _Grow(
+        phase: _phaseOf(widget.busy, widget.result),
+        child: switch ((widget.busy, widget.result)) {
+          (false, final AskAnswer answer) => _quiz(context, answer.text, tone),
+          (false, final AskNone none) => _WhyNot(
+            none,
+            tone: tone,
+            onRetry: widget.onAsk,
+          ),
+          _ => _Asking(
+            look: widget.look,
+            tone: tone,
+            label: widget.go,
+            locked: widget.locked,
+            busy: widget.busy,
+            onAsk: widget.onAsk,
+          ),
+        },
       ),
-    },
-  );
+    );
+  }
 
-  Widget _quiz(BuildContext context, String text) {
+  Widget _quiz(BuildContext context, String text, DeeperTone tone) {
     final CardQuiz? quiz = CardQuiz.parse(text);
-    if (quiz == null) return _Body(text);
+    if (quiz == null) {
+      return DeeperUnfold(child: Text(text, style: deeperBody(context)));
+    }
     final l = context.l10n;
     final Palette p = context.p;
+    final VerdictColours verdict = VerdictColours.of(context);
     final List<int> order = _orders[widget.seed % _orders.length];
     final int? chosen = _chosen;
     final bool? right = chosen == null ? null : order[chosen] == quiz.right;
-    final Color green = Theme.of(context).brightness == Brightness.dark
-        ? const Color(0xFF3BE07A)
-        : const Color(0xFF0E8A3E);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          quiz.question,
-          style: AppText.body(
-            size: 15.5,
-            weight: FontWeight.w700,
-            height: 1.35,
-            color: p.ink,
+        DeeperUnfold(
+          child: Text(
+            quiz.question,
+            style: switch (deeperStyle) {
+              DeeperStyle.playful => AppText.display(
+                size: 19.5,
+                weight: FontWeight.w600,
+                height: 1.3,
+                spacing: -0.2,
+                color: p.ink,
+              ),
+              DeeperStyle.app => AppText.display(
+                size: 19,
+                weight: FontWeight.w500,
+                height: 1.35,
+                spacing: -0.2,
+                color: p.ink,
+              ),
+              DeeperStyle.magazine => AppText.display(
+                size: 20,
+                weight: FontWeight.w400,
+                height: 1.36,
+                spacing: -0.25,
+                color: p.ink,
+              ),
+              _ => AppText.body(
+                size: 17.5,
+                weight: FontWeight.w600,
+                height: 1.45,
+                color: p.ink,
+              ),
+            },
           ),
         ),
-        const SizedBox(height: 12),
-        for (var i = 0; i < order.length; i++) ...[
-          if (i > 0) const SizedBox(height: 8),
-          _QuizOption(
-            key: ValueKey('deeper-quiz-option-$i'),
-            label: quiz.options[order[i]],
-            // Once answered: the right one green, a wrong pick red.
-            mark: chosen == null
-                ? null
-                : order[i] == quiz.right
-                ? green
-                : i == chosen
-                ? p.alert
-                : null,
-            onTap: chosen != null
-                ? null
-                : () {
-                    setState(() => _chosen = i);
-                    widget.onAnswered(order[i] == quiz.right);
-                  },
-          ),
-        ],
-        if (right != null) ...[
-          const SizedBox(height: 14),
-          Text(
-            right ? l.deeperQuizRight : l.deeperQuizWrong,
-            key: const ValueKey('deeper-quiz-verdict'),
-            style: AppText.body(
-              size: 15,
-              weight: FontWeight.w800,
-              color: right ? green : p.alert,
+        const SizedBox(height: 16),
+        for (var i = 0; i < order.length; i++)
+          RiseIn(
+            delay: Duration(milliseconds: 160 + 90 * i),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: _QuizOption(
+                key: ValueKey('deeper-quiz-option-$i'),
+                letter: 'ABC'[i],
+                label: quiz.options[order[i]],
+                tone: tone,
+                // Once answered: the right one green, a wrong pick red,
+                // the rest stepped back.
+                mark: chosen == null
+                    ? _Mark.open
+                    : order[i] == quiz.right
+                    ? _Mark.right
+                    : i == chosen
+                    ? _Mark.wrong
+                    : _Mark.rest,
+                onTap: chosen != null
+                    ? null
+                    : () {
+                        final bool hit = order[i] == quiz.right;
+                        if (hit) {
+                          HapticFeedback.lightImpact();
+                        } else {
+                          HapticFeedback.selectionClick();
+                        }
+                        setState(() => _chosen = i);
+                        widget.onAnswered(hit);
+                      },
+              ),
             ),
           ),
-          const SizedBox(height: 6),
-          _Body(quiz.why),
+        if (right != null) ...[
+          const SizedBox(height: 8),
+          PopIn(
+            child: Row(
+              children: [
+                Container(
+                  width: deeperEditorial ? 22 : 30,
+                  height: deeperEditorial ? 22 : 30,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: right ? verdict.rightLine : verdict.wrongLine,
+                  ),
+                  child: Icon(
+                    right ? Icons.check_rounded : Icons.close_rounded,
+                    size: deeperEditorial ? 14 : 19,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(width: 11),
+                Flexible(
+                  child: Text(
+                    right ? l.deeperQuizRight : l.deeperQuizWrong,
+                    key: const ValueKey('deeper-quiz-verdict'),
+                    style: deeperEditorial
+                        ? AppText.body(
+                            size: 17,
+                            weight: FontWeight.w700,
+                            color: right ? verdict.rightInk : verdict.wrongInk,
+                          )
+                        : AppText.display(
+                            size: 20,
+                            weight: FontWeight.w700,
+                            color: right ? verdict.rightInk : verdict.wrongInk,
+                          ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          DeeperUnfold(child: Text(quiz.why, style: deeperBody(context))),
         ],
       ],
     );
   }
 }
 
-class _QuizOption extends StatelessWidget {
+/// What an option is saying about itself.
+enum _Mark { open, right, wrong, rest }
+
+/// One of the three options: its letter on a disc, its words; once a pick
+/// is made, the right one green with a tick, a wrong pick red with a cross
+/// and a shake, the rest stepped back.
+class _QuizOption extends StatefulWidget {
   const _QuizOption({
     super.key,
+    required this.letter,
     required this.label,
+    required this.tone,
     required this.mark,
     required this.onTap,
   });
 
+  final String letter;
   final String label;
-  final Color? mark;
+  final DeeperTone tone;
+  final _Mark mark;
   final VoidCallback? onTap;
+
+  @override
+  State<_QuizOption> createState() => _QuizOptionState();
+}
+
+class _QuizOptionState extends State<_QuizOption>
+    with SingleTickerProviderStateMixin {
+  bool _down = false;
+
+  /// The shake of a wrong pick, or the swell of the right one.
+  late final AnimationController _jolt = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 460),
+  );
+
+  @override
+  void didUpdateWidget(covariant _QuizOption old) {
+    super.didUpdateWidget(old);
+    if (old.mark != widget.mark &&
+        (widget.mark == _Mark.wrong || widget.mark == _Mark.right) &&
+        !deeperStill(context)) {
+      _jolt.forward(from: 0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _jolt.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
-    final Color? m = mark;
+    final VerdictColours v = VerdictColours.of(context);
+    final DeeperTone tone = widget.tone;
+    final (
+      Color face,
+      Color line,
+      Color ink,
+      Color disc,
+      Color letter,
+    ) = switch (widget.mark) {
+      _Mark.right => (
+        v.rightFill,
+        v.rightLine,
+        v.rightInk,
+        v.rightLine,
+        Colors.white,
+      ),
+      _Mark.wrong => (
+        v.wrongFill,
+        v.wrongLine,
+        v.wrongInk,
+        v.wrongLine,
+        Colors.white,
+      ),
+      _ => (tone.field, tone.edge, p.ink, tone.vivid.fill, tone.vivid.ink),
+    };
+    final bool pressed = _down && widget.onTap != null;
+    final bool ed = deeperEditorial;
+    final Widget body = ed
+        ? AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            padding: const EdgeInsets.fromLTRB(14, 13, 16, 13),
+            decoration: BoxDecoration(
+              color: widget.mark == _Mark.open || widget.mark == _Mark.rest
+                  ? (pressed ? tone.field : null)
+                  : face,
+              borderRadius: BorderRadius.circular(
+                deeperStyle == DeeperStyle.app ? 16 : 2,
+              ),
+              border: Border.all(color: line),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 22,
+                  child: switch (widget.mark) {
+                    _Mark.right => Icon(
+                      Icons.check_rounded,
+                      size: 18,
+                      color: v.rightInk,
+                    ),
+                    _Mark.wrong => Icon(
+                      Icons.close_rounded,
+                      size: 18,
+                      color: v.wrongInk,
+                    ),
+                    _ => Text(
+                      widget.letter,
+                      textScaler: TextScaler.noScaling,
+                      style: AppText.body(
+                        size: 15,
+                        weight: FontWeight.w700,
+                        height: 1.35,
+                        color: tone.accent,
+                      ),
+                    ),
+                  },
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    widget.label,
+                    style: AppText.body(
+                      size: 15.5,
+                      weight: FontWeight.w500,
+                      height: 1.38,
+                      color: ink,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        : AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            padding: EdgeInsets.only(
+              top: pressed ? 4 : 0,
+              bottom: pressed ? 0 : 4,
+            ),
+            decoration: BoxDecoration(
+              color: chunkyEdge(line, p.isDark ? 0.08 : 0.1),
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 220),
+              padding: const EdgeInsets.fromLTRB(12, 12, 16, 12),
+              decoration: BoxDecoration(
+                color: face,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: line, width: 1.6),
+              ),
+              child: Row(
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 220),
+                    width: 32,
+                    height: 32,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: disc,
+                      shape: BoxShape.circle,
+                    ),
+                    child: switch (widget.mark) {
+                      _Mark.right => Icon(
+                        Icons.check_rounded,
+                        size: 19,
+                        color: letter,
+                      ),
+                      _Mark.wrong => Icon(
+                        Icons.close_rounded,
+                        size: 19,
+                        color: letter,
+                      ),
+                      _ => Text(
+                        widget.letter,
+                        textScaler: TextScaler.noScaling,
+                        style: AppText.display(
+                          size: 16,
+                          weight: FontWeight.w800,
+                          height: 1,
+                          color: letter,
+                        ),
+                      ),
+                    },
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      widget.label,
+                      style: AppText.body(
+                        size: 16,
+                        weight: FontWeight.w600,
+                        height: 1.32,
+                        color: ink,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
     return Semantics(
-      button: onTap != null,
+      button: widget.onTap != null,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          decoration: BoxDecoration(
-            color: m == null ? p.surfaceRaised : m.withValues(alpha: 0.14),
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: m ?? p.line,
-              width: m == null ? 1 : 1.6,
-            ),
-          ),
-          child: Text(
-            label,
-            style: AppText.body(
-              size: 14.5,
-              weight: FontWeight.w600,
-              height: 1.3,
-              color: p.ink,
-            ),
+        onTapDown: widget.onTap == null
+            ? null
+            : (_) => setState(() => _down = true),
+        onTapUp: widget.onTap == null
+            ? null
+            : (_) => setState(() => _down = false),
+        onTapCancel: widget.onTap == null
+            ? null
+            : () => setState(() => _down = false),
+        onTap: widget.onTap,
+        child: AnimatedOpacity(
+          duration: const Duration(milliseconds: 260),
+          opacity: widget.mark == _Mark.rest ? 0.5 : 1,
+          child: AnimatedBuilder(
+            animation: _jolt,
+            child: body,
+            builder: (context, child) {
+              final double t = _jolt.value;
+              if (widget.mark == _Mark.wrong) {
+                return Transform.translate(
+                  offset: Offset(8 * math.sin(t * math.pi * 6) * (1 - t), 0),
+                  child: child,
+                );
+              }
+              return Transform.scale(
+                scale: 1 + 0.035 * math.sin(t * math.pi),
+                child: child,
+              );
+            },
           ),
         ),
       ),
@@ -686,27 +1244,43 @@ class _QuizOption extends StatelessWidget {
   }
 }
 
-/// A part the reader writes into: their reasoning, or their question.
+/// A part the reader writes into, their reasoning or their question, as a
+/// conversation: what they sent on the right, the answer on the left, and
+/// the box for the next words under them.
 class _WritePart extends StatefulWidget {
   const _WritePart({
     super.key,
+    required this.look,
+    required this.part,
+    required this.art,
+    required this.draw,
     required this.title,
+    required this.lead,
     required this.hint,
     required this.action,
     required this.controller,
     required this.locked,
     required this.busy,
     required this.result,
+    required this.asked,
     required this.onAsk,
   });
 
+  final DeeperLook look;
+  final DeeperPart part;
+  final DeeperArt art;
+  final Animation<double> draw;
   final String title;
+  final String lead;
   final String hint;
   final String action;
   final TextEditingController controller;
   final bool locked;
   final bool busy;
   final AskResult? result;
+
+  /// The words last sent, once some are.
+  final String? asked;
   final ValueChanged<String> onAsk;
 
   @override
@@ -717,12 +1291,78 @@ class _WritePartState extends State<_WritePart> {
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
+    final DeeperTone tone = widget.look.tone(widget.part);
     final String text = widget.controller.text.trim();
-    return _Part(
+    final String? asked = widget.asked;
+    final bool talking =
+        asked != null && (widget.busy || widget.result != null);
+    final bool ed = deeperEditorial;
+    final bool inApp = deeperStyle == DeeperStyle.app;
+    final OutlineInputBorder edge = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(
+        inApp
+            ? 16
+            : ed
+            ? 2
+            : 18,
+      ),
+      borderSide: BorderSide(color: inApp ? p.line : tone.edge),
+    );
+    return DeeperTile(
+      tone: tone,
+      art: widget.art,
+      look: widget.look,
+      draw: widget.draw,
       title: widget.title,
+      lead: widget.lead,
+      badge: widget.locked ? const DeeperPlusBadge() : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          _Grow(
+            phase: talking,
+            child: !talking
+                ? const SizedBox(width: double.infinity)
+                : Padding(
+                    padding: const EdgeInsets.only(bottom: 18),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        DeeperReaderBubble(text: asked, vivid: tone.vivid),
+                        SizedBox(height: ed ? 16 : 12),
+                        DeeperAnswerBubble(
+                          tone: tone,
+                          child: switch ((widget.busy, widget.result)) {
+                            (false, final AskAnswer answer) => DeeperUnfold(
+                              child: Text(
+                                answer.text,
+                                style: ed
+                                    ? deeperBody(context)
+                                    : AppText.body(
+                                        size: 16.5,
+                                        height: 1.5,
+                                        color: p.ink,
+                                      ),
+                              ),
+                            ),
+                            (false, final AskNone none) => _WhyNot(
+                              none,
+                              tone: tone,
+                              bare: true,
+                              onRetry: () => widget.onAsk(asked),
+                            ),
+                            // Set editorially, the button's line is the
+                            // only thing that moves while it comes.
+                            _ =>
+                              ed
+                                  ? const SizedBox(width: double.infinity)
+                                  : DeeperTyping(colour: tone.accent),
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+          ),
           TextField(
             controller: widget.controller,
             maxLength: CardAsk.maxText,
@@ -731,118 +1371,72 @@ class _WritePartState extends State<_WritePart> {
             enabled: !widget.busy,
             onChanged: (_) => setState(() {}),
             textCapitalization: TextCapitalization.sentences,
-            style: AppText.body(size: 15, height: 1.35, color: p.ink),
+            cursorColor: tone.accent,
+            style: AppText.body(size: 16, height: 1.4, color: p.ink),
             decoration: InputDecoration(
               hintText: widget.hint,
-              hintStyle: AppText.body(size: 15, color: p.inkFaint),
+              hintStyle: AppText.body(size: 16, color: p.inkFaint),
               counterText: '',
               isDense: true,
+              filled: inApp || !ed,
+              fillColor: inApp
+                  ? (p.isDark ? const Color(0xFF1A1A1E) : p.surface)
+                  : tone.field,
               contentPadding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 12,
+                horizontal: 16,
+                vertical: 14,
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: p.line),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: p.line),
+              border: edge,
+              enabledBorder: edge,
+              disabledBorder: edge,
+              focusedBorder: edge.copyWith(
+                borderSide: BorderSide(
+                  color: inApp ? p.lineStrong : tone.accent,
+                  width: ed ? 1.2 : 1.8,
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 10),
-          if (widget.busy)
-            const _Busy()
-          else ...[
-            _AskButton(
+          SizedBox(height: ed ? 14 : 12),
+          Align(
+            alignment: ed
+                ? AlignmentDirectional.centerStart
+                : AlignmentDirectional.centerEnd,
+            child: DeeperAskButton(
+              look: widget.look,
               label: widget.action,
+              vivid: tone.vivid,
               locked: widget.locked,
+              busy: widget.busy,
               onPressed: text.length < 3 ? null : () => widget.onAsk(text),
             ),
-            if (widget.result case final AskAnswer answer) ...[
-              const SizedBox(height: 12),
-              _Body(answer.text),
-            ] else if (widget.result case final AskNone none) ...[
-              const SizedBox(height: 12),
-              _WhyNot(none, onRetry: () => widget.onAsk(text)),
-            ],
-          ],
+          ),
         ],
       ),
     );
   }
 }
 
-class _AskButton extends StatelessWidget {
-  const _AskButton({
-    required this.label,
-    required this.locked,
-    required this.onPressed,
+/// Why there is no answer, and, when it is worth it, the way to ask again.
+class _WhyNot extends StatelessWidget {
+  const _WhyNot(
+    this.none, {
+    required this.tone,
+    required this.onRetry,
+    this.bare = false,
   });
 
-  final String label;
-  final bool locked;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final Palette p = context.p;
-    return Align(
-      alignment: AlignmentDirectional.centerStart,
-      child: FilledButton.icon(
-        onPressed: onPressed,
-        style: FilledButton.styleFrom(
-          backgroundColor: p.inverse,
-          foregroundColor: p.onInverse,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
-          shape: const StadiumBorder(),
-        ),
-        icon: Icon(
-          locked ? Icons.lock_rounded : Icons.auto_awesome_rounded,
-          size: 16,
-        ),
-        label: Text(
-          label,
-          style: AppText.body(size: 14, weight: FontWeight.w700),
-        ),
-      ),
-    );
-  }
-}
-
-class _Busy extends StatelessWidget {
-  const _Busy();
-
-  @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      SizedBox(
-        width: 16,
-        height: 16,
-        child: CircularProgressIndicator(
-          strokeWidth: 2,
-          color: context.p.ink.withValues(alpha: 0.6),
-        ),
-      ),
-      const SizedBox(width: 10),
-      Text(
-        context.l10n.deeperBusy,
-        style: AppText.body(size: 14, color: context.p.inkMuted),
-      ),
-    ],
-  );
-}
-
-class _WhyNot extends StatelessWidget {
-  const _WhyNot(this.none, {required this.onRetry});
-
   final AskNone none;
+  final DeeperTone tone;
   final VoidCallback onRetry;
+
+  /// Inside a bubble that is already its ground.
+  final bool bare;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final Palette p = context.p;
     final AskWhyNot why = none.why;
     final String line = switch (why) {
       AskWhyNot.tomorrow => l.deeperTomorrow,
@@ -850,37 +1444,108 @@ class _WhyNot extends StatelessWidget {
       AskWhyNot.plus => l.deeperPlusOnly,
       AskWhyNot.later => l.deeperTryAgain,
     };
+    final IconData icon = switch (why) {
+      AskWhyNot.tomorrow => Icons.bedtime_rounded,
+      AskWhyNot.declined => Icons.do_not_disturb_on_rounded,
+      AskWhyNot.plus => Icons.lock_rounded,
+      AskWhyNot.later => Icons.cloud_off_rounded,
+    };
     final String? detail = debugToolsOn ? none.detail : null;
-    return Row(
+    final Widget said = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 1),
+              child: Icon(icon, size: 20, color: tone.accent),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
                 line,
-                style: AppText.body(size: 14, color: context.p.inkMuted),
+                style: AppText.body(size: 15.5, height: 1.4, color: p.ink),
               ),
-              // The server's own words, for the TestFlight installs only.
-              if (detail != null && detail.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    detail,
-                    key: const ValueKey('deeper-why-not-detail'),
-                    style: AppText.body(size: 11, color: context.p.inkFaint),
-                  ),
-                ),
-            ],
-          ),
+            ),
+          ],
         ),
-        if (why == AskWhyNot.later)
-          IconButton(
-            onPressed: onRetry,
-            icon: const Icon(Icons.refresh_rounded),
-            color: context.p.ink,
+        // The server's own words, for the TestFlight installs only.
+        if (detail != null && detail.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 6, left: 30),
+            child: Text(
+              detail,
+              key: const ValueKey('deeper-why-not-detail'),
+              style: AppText.body(size: 11, color: p.inkFaint),
+            ),
           ),
+        if (why == AskWhyNot.later) ...[
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.only(left: 30),
+            child: _Retry(tone: tone, onTap: onRetry),
+          ),
+        ],
       ],
     );
+    if (bare || deeperEditorial) return said;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+      decoration: BoxDecoration(
+        color: tone.field,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: tone.edge),
+      ),
+      child: said,
+    );
   }
+}
+
+class _Retry extends StatelessWidget {
+  const _Retry({required this.tone, required this.onTap});
+
+  final DeeperTone tone;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    child: GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        HapticFeedback.lightImpact();
+        onTap();
+      },
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(12, 8, 16, 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+            deeperEditorial && deeperStyle != DeeperStyle.app ? 2 : 99,
+          ),
+          border: Border.all(
+            color: deeperEditorial ? tone.edge : tone.accent,
+            width: deeperEditorial ? 1 : 1.6,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.refresh_rounded, size: 18, color: tone.accent),
+            const SizedBox(width: 6),
+            Flexible(
+              child: Text(
+                context.l10n.deeperRetry,
+                style: AppText.body(
+                  size: 14.5,
+                  weight: FontWeight.w700,
+                  color: tone.accent,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

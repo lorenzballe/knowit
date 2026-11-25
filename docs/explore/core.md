@@ -374,26 +374,99 @@ Fields: `title`, `subtitle` (none by default: the panel says what it is).
 {"id": "your-day", "block": "your-day", "gap": 4}
 ```
 
-### `quick-games`
+### `quick-games` — the challenges
 
-Four games as four colourful tiles, two by two: Sixty seconds, Spot the false
-one, True or false and Which is bigger, each called by the game's own name in
-the reader's language. A tap opens the game on a page of its own, drawn by the
-same block as its shelf (`sixty`, `spot-false`, `true-false` without the spot
-under it, `bets-bigger`) for the same host, so a round played there is the
-day's round and an answer is recorded as any answer is; its cards are noted
-under the section's id and the game's (`quick-games-sixty`). The Sixty seconds
-tile says the reader's record, the most right in one round, kept for good
-("Your record 6/8"; "Set your record" before the first round). A game with
-nothing to play today has no tile; with none, there is no section.
+Explore's games, called Challenges ("Sfide"): tiles four to a page, two by
+two, the pages side by side, a swipe from one to the next and dots under them
+that say how many pages there are and which is showing (a tap on a dot goes to
+its page; to a screen reader they are the pages' control, adjusted up and
+down). First the four games the section always had — Sixty seconds, Spot the
+false one, True or false and Which is bigger — then the games of bets that are
+a whole game on their own: Closer, closer; Orders of magnitude; Bet a range;
+Place your bet; Your number; then the three games of time: In order, What
+year? and Before or after?. Three full pages. Not among them: the slip and Bet
+a friend, which play nothing; Today's three, which opens Explore and whose
+three cards and crowd belong to its own section; and the bet of the day,
+Today's three with one card.
 
-Fields: `title`, `subtitle`, `games` (one to four of `sixty`, `spot-false`,
-`true-false`, `bets-bigger`, in the order shown; all four by default).
+Every tile is one size on every page, at any text size (the largest any
+challenge's words need, up to nearly half as large again; what it asks is
+left out above 1.3x). The look is Go deeper's magazine: the app's own
+surfaces, no pictures or icons, hairlines. A tile is set like an index
+entry on the raised surface: a short rule in the challenge's tone (a deep
+tone of its old colour, lifted a little at night), the skill it trains in
+small capitals ("Intuition", "Chronology"), the name in Fraunces, what it
+asks in a quiet line, and the reader's own figure in tabular figures — the
+best of Sixty seconds ("Best 6/8"), today's score of a game of time once
+its round is over. Never broken in the middle of a word. A page not full
+keeps its empty places.
+
+Every challenge is taken on a screen of its own
+(`lib/widgets/explore/challenge_screen.dart`, one screen for all): the
+tile's panel grows into the page and back, calmly, and the challenge is
+taken there in three moments — what it is (the rule and the skill, the
+name, a sentence or two on what it measures and why it matters, the
+reader's figures between hairlines, Begin in the challenge's tone — or
+Continue on a round begun), the round (a running head in small capitals,
+a fine rule under it, the content set as a page, precise flat controls,
+each answer told by a calm colour and a word), and a short report (the
+score, accuracy and the time where it counts, a measured line read
+against chance, "Personal best" in words, the cards again, the next
+challenge, another round or when the next comes, and the score to send).
+No confetti, no exclamation marks; motion is fades and short slides of
+150 to 250 ms; haptics light and rare. Sixty seconds and In order are set
+this way in full; the other challenges' rounds still deal their cards of
+paper on the new page, until they are restyled.
+
+- Sixty seconds (`sixty_game.dart`): the claim set in Fraunces, False and
+  True, or a swipe; the minute a fine rule in its tone running down, the
+  eight as short rules over the answers.
+- Spot the false one (`spot_game.dart`): the four claims one under another, a
+  tap and "That's the false one"; then each says what it is, the false one
+  struck out, the pick stamped. One pick a day.
+- True or false (`true_false_game.dart`): the shelf's claims on a deck, one at
+  a time, no clock; each told with the first lines of why.
+- The games of bets (`lib/explore/blocks/bets/bet_games.dart`): the cards the
+  shelf deals today, one at a time — two figures to tap, a track halving with
+  Less and More, a staircase, a track and its widths, the amounts and the
+  stakes, a counter and its steppers — then how sure, where the shelf asks it,
+  and the bet told on the card with the first lines of why. Closer, closer
+  scores every step.
+- The games of time (`time_games.dart`), on moments from the cards: cards
+  whose question names, once, the year something happened, the year a gap
+  until it is told (`lib/data/dated_lines.dart`). In order: four moments
+  tapped in the order they happened, then sliding into their true order,
+  years and all. What year?: three moments, each year dialled on a ruler of
+  the centuries, ten points for the year itself and fewer the further off,
+  as fair for the Middle Ages as for last decade. Before or after?: six
+  moments one after another, each before or after the one above it, whose
+  year is shown.
+
+It is each game's own reckoning that is played: the day's round of Sixty
+seconds and its record; the pick of Spot the false one, kept for the day and
+recorded as that card's answer, the other three counted read; the claims of
+True or false answered as the cards' own; every bet laid exactly as its tile
+lays it — the same function, the same drafts kept for the day, the same how
+sure — so a card half played on its shelf goes on on the screen where it was
+left. The games of time have a round a day that is the same for everybody
+(the same subject in view), each game other moments than the others, and
+play again with the day's next round; a round is kept for the day as it is
+played (`ExplorePlay`, `in-order`, `what-year`, `before-after`), and playing
+one never counts a card read. Cards are noted under the section's id and the
+game's (`quick-games-sixty`, `quick-games-in-order`). A game with nothing to
+play today has no tile; with none, there is no section.
+
+Fields: `title`, `subtitle` (Challenges and "Short exercises in judgement
+and estimation, a few minutes each." by default, in the reader's language), `games` (any of `sixty`,
+`spot-false`, `true-false`, `bets-bigger`, `bets-closer`, `bets-magnitude`,
+`bets-range`, `bets-stake`, `bets-number`, `in-order`, `what-year`,
+`before-after`, each once, in the order shown; all of them by default).
 
 ```json
 {"id": "quick-games", "block": "quick-games",
- "title": {"en": "Quick games", "it": "Giochi veloci"},
- "games": ["sixty", "spot-false", "true-false", "bets-bigger"]}
+ "title": {"en": "Challenges", "it": "Sfide"},
+ "games": ["sixty", "spot-false", "true-false", "bets-bigger",
+           "bets-closer", "bets-magnitude", "bets-range", "bets-stake"]}
 ```
 
 ### `subject-levels`

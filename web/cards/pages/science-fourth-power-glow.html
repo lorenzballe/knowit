@@ -1,11 +1,15 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-glow-fourth-power -->
 <!-- Thought to carry: before you trust that a small step makes a small difference, find the true zero and the exponent.
-     Front: two rail cross-sections on one temperature line that starts at absolute zero. The hot rail stands only a little
-     further from zero than the warm one. The warm rail wears a dashed 1× column of heat. The reader drags the hot rail's column up to a guess.
-     Back: the same line and rails. Each rail now carries its real column of heat, drawn with the brief's law (distance from
-     absolute zero, raised to the fourth power). The reader's guess stays as a dashed outline. No multiple is stated:
-     the brief gives no number, only "slight increases in temperature result in huge increases in power". -->
+     The picture: two pieces of steel rail, drawn big in section and glowing, the warm one cherry red, the hot one a
+     bright orange. Each stands on a plinth that rises from a floor marked absolute zero, as tall as the rail's
+     temperature counted from there: the hot rail's plinth only a little taller, the step marked "a little hotter".
+     Over each rail rises a column of its heat, flat oranges with an ink outline. Front: the warm rail's column is
+     the yardstick (1×); the reader drags the hot rail's column, dashed because it is a guess, up to how much more.
+     Back: the same rails, each with its real column of heat, drawn with the brief's law (distance from absolute
+     zero, raised to the fourth power); the guess stays as a dashed outline. No multiple is stated: the brief gives
+     no number, only "slight increases in temperature result in huge increases in power". Both faces are drawn
+     again at their real size whenever their room changes. -->
 <title>A little hotter, far more heat</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -25,6 +29,7 @@
 #pic{touch-action:none;cursor:ns-resize}
 
 .front .say{margin:.45em 0 0;min-height:0}
+.front .stagebox{margin-top:.6em}
 .front .sure{margin-top:.9em}
 .front .corner{flex:none;height:44px}
 #sure{color:color-mix(in srgb,var(--k) 70%,transparent)}
@@ -34,10 +39,13 @@
 #sure.armed [data-v]{color:var(--k);border-color:var(--k)}
 
 .back .big{font:800 max(3.2cqh,19px)/1.1 var(--display);margin:0}
+.back .stagebox{margin-top:.5em}
 .back .body{font:500 max(1.9cqh,13px)/1.32 var(--body);margin:.7em 0 0;overflow-wrap:anywhere}
 .back .keep{font-size:max(1.8cqh,12.5px)}
 .back .foot{padding-right:144px;min-height:44px;box-sizing:border-box}
 .back .foot .src{display:block}
+/* On a short card the picture says the headline itself ("far more heat" over the tall column): it takes its room. */
+.card.short .back .big{display:none}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Drag a guess · how sure">
   <div class="in">
@@ -46,13 +54,13 @@
       <section class="face front">
         <h2 class="q">Steel made a little hotter radiates how much more heat?</h2>
         <p class="say" id="say">Drag the hot rail's column up to your guess.</p>
-        <div class="stagebox"><svg id="pic" role="img" aria-label="Two steel rails in cross-section on a temperature line that starts at absolute zero. The hot rail stands only a little further from zero than the warm one. The warm rail carries a column of heat marked 1 times. You drag the hot rail's column up to your guess."></svg></div>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="Two glowing steel rails, each on a plinth rising from a floor marked absolute zero: a cherry-red one and a bright orange one whose plinth is only a little taller. Over the cherry rail rises a short column of heat, marked 1 times. You drag the hot rail's column of heat up to your guess."></svg></div>
         <div class="sure" id="sure"></div>
         <div class="corner" aria-hidden="true"></div>
       </section>
       <section class="face back" aria-hidden="true">
         <p class="big">Far more heat than the small step.</p>
-        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same two rails on the line from absolute zero, a small step apart. The warm rail carries a short column of heat. The hot rail's column rises far higher, beside the dashed outline of your guess."></svg></div>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same two rails on their plinths, a small step apart above absolute zero. The cherry rail gives off a short column of heat. The hot rail's column rises far higher, beside the dashed outline of your guess."></svg></div>
         <p class="body">Radiated power grows with the <b>fourth power</b> of absolute temperature, counted from absolute zero. The hot rail stands only a little further from zero, but that small step is multiplied by itself four times. Slight increases in temperature result in huge increases in power.</p>
         <div class="keep"><b>WHAT TO KEEP</b> Before trusting that a small step changes little, find the true zero and the exponent.</div>
         <div class="foot"><span class="src">Source · Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)</span></div>
@@ -72,77 +80,153 @@ const Turn = {
   // Its column of heat is drawn as RAT to the fourth power of the warm one's. No figure is printed.
   const RAT = 1.32, POW = Math.pow(RAT, 4);
   const FAR = 2;                                           // a guess this tall reads "far more", not "a little more"
-  const MAXG = 6, CHERRY = '#8f2316', BRIGHT = '#ffb02e';
+  const MAXG = 6;
+  // Flat colours, one meaning each: the plinths cream stone with a shaded side; the two rails glowing, cherry red
+  // and a little hotter bright orange, each with a lighter top; the heat a flat orange with a yellow core.
+  const INK = '#10100c', STONE = '#fffbf0', SIDE = '#e6dcc2';
+  const GLOW = [{face: '#c8341f', top: '#ec6a4c'}, {face: '#ffab2a', top: '#ffd978'}];
+  const HEAT = '#ff7a3c', CORE = '#ffc85a';
+  const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+  // A rail in section, 150 wide at the foot and 172 tall: the head, the web, the foot.
   const RAIL = 'M-30,0 Q-36,0 -36,6 L-36,44 L-10,58 L-8,135 Q-8,145 -20,150 L-75,160 L-75,172 L75,172 L75,160 L20,150 Q8,145 8,135 L10,58 L36,44 L36,6 Q36,0 30,0 Z';
   let g = 1, touched = false, answered = false, turned = false;
   let geo = null, els = {};
   const fmt = v => (Math.round(v * 2) / 2).toString().replace(/\.0$/, '') + '×';
-
-  const txt = (p, x, y, t, a = {}, size, w = 700, fam = 'var(--body)') => {
-    const e = Kit.mk('text', Object.assign({x, y, fill: 'currentColor', style: `font:${w} ${size}px/1 ${fam}`}, a), p);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const txt = (p, x, y, t, a = {}, size, w = 700, fam = FONT) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': fam, 'font-weight': w, 'font-size': size}, a), p);
     e.textContent = t; return e;
   };
-  const rail = (p, x, y, sc, fill) => Kit.mk('path', {d: RAIL, fill, stroke: 'currentColor', 'stroke-width': 1.6 / sc, 'stroke-linejoin': 'round', transform: `translate(${x},${y}) scale(${sc})`}, p);
-  const ghost = (p, a) => Kit.mk('rect', Object.assign({fill: 'currentColor', 'fill-opacity': .14, stroke: 'currentColor', 'stroke-width': 1.6, 'stroke-dasharray': '5 4'}, a), p);
+  const width = (p, t, size, w, fam) => { const e = txt(p, -999, -999, t, {}, size, w, fam); const n = e.getComputedTextLength() || t.length * size * .55; e.remove(); return n; };
 
-  // the shared ground: a line from absolute zero, two ticks a small step apart
-  function ground(s, W, B, L, x0, x1, fs) {
-    const gnd = Kit.mk('g', {}, s);
-    Kit.mk('line', {x1: L, x2: W - 2, y1: B + 1, y2: B + 1, stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round'}, gnd);
-    [L, x0, x1].forEach(x => Kit.mk('line', {x1: x, x2: x, y1: B + 1, y2: B + 6, stroke: 'currentColor', 'stroke-width': 1.6}, gnd));
-    const row = B + fs * 2.1, yb = B + fs * .85;
-    txt(gnd, L, row, 'absolute zero', {}, fs, 700);
-    Kit.mk('path', {d: `M${x0},${yb - 4} V${yb} H${x1} V${yb - 4}`, stroke: 'currentColor', 'stroke-width': 1.4, fill: 'none'}, gnd);
-    txt(gnd, (x0 + x1) / 2, row, 'a little hotter', {'text-anchor': 'middle'}, fs, 700);
-    return gnd;
+  // Where everything goes in a box W×H: the floor (absolute zero) along the foot, the two plinths as tall as each
+  // rail's temperature counted from it, a rail on each, and over the hot rail room for `most` times the warm rail's
+  // heat, `head` more above it. The rails as big as that leaves them, never so big the heat has no room.
+  function plan(W, H, most, head) {
+    const fs = clamp(Math.min(W / 23, H / 14), 12, 14);
+    const floor = H - fs * 1.5, cx = [W * .22, W * .76];
+    let k = 1, P = null;
+    for (let i = 0; i < 14; i++) {
+      const rw = Math.min(W * .3, H * .36 / 1.147) * k, rh = rw * 172 / 150;
+      const hw = Math.max(fs * 2.2, H * .1), hh = hw * RAT;
+      const base = floor - hh - rh;                         // the hot rail's top, where its heat starts
+      const u = (base - head - 2) / most;                    // the warm rail's heat, in pixels
+      P = {fs, floor, cx, rw, rh, hw, hh, base, warm: floor - hw - rh, u, sc: rw / 150, cw: Math.max(fs * 2.1, rw * .4), pw: rw * 1.16};
+      if (u >= Math.max(12, H * .058) || k < .7) break;
+      k *= .93;
+    }
+    return P;
   }
 
-  // ---------- the front: two rails on the line from zero, one column to drag ----------
+  // The floor, the plinths, the step between them, the rails: what both faces share.
+  function scene(s, P, W, H) {
+    const {fs, floor, cx, hw, hh, pw, sc, rh} = P, root = Kit.mk('g', {}, s);
+    [hw, hh].forEach((h, i) => {
+      const x = cx[i] - pw / 2, y = floor - h, p = Kit.mk('g', {class: 'rail'}, root);
+      Kit.mk('rect', {x, y, width: pw, height: h + 2, fill: STONE}, p);
+      Kit.mk('rect', {x: x + pw * .76, y, width: pw * .24, height: h + 2, fill: SIDE}, p);
+      Kit.mk('rect', {x, y, width: pw, height: h + 2, fill: 'none', stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, p);
+      // the rail on it, glowing: its face, its lighter top, its outline
+      const r = Kit.mk('g', {transform: `translate(${cx[i].toFixed(1)},${(y - rh).toFixed(1)}) scale(${sc.toFixed(4)})`}, p);
+      Kit.mk('path', {d: RAIL, fill: GLOW[i].face}, r);
+      Kit.mk('rect', {x: -29, y: 4, width: 58, height: 13, rx: 5, fill: GLOW[i].top}, r);
+      Kit.mk('path', {d: 'M-6,64 L-5,128', stroke: GLOW[i].top, 'stroke-width': 5, 'stroke-linecap': 'round', fill: 'none'}, r);
+      Kit.mk('path', {d: RAIL, fill: 'none', stroke: INK, 'stroke-width': 2.6 / sc, 'stroke-linejoin': 'round'}, r);
+    });
+    // The floor: absolute zero, where both plinths start.
+    Kit.mk('line', {x1: 1.5, x2: W - 1.5, y1: floor + 1, y2: floor + 1, stroke: INK, 'stroke-width': 3, 'stroke-linecap': 'round'}, root);
+    txt(root, 0, H - fs * .28, 'absolute zero', {}, fs, 700);
+    // The step: the warm plinth's top carried across, the little more the hot one rises, named over it.
+    const yw = floor - hw, yh = floor - hh, xa = cx[0] + pw / 2, xb = cx[1] - pw / 2, bx = xb - 5;
+    Kit.mk('line', {x1: xa + 3, x2: xb, y1: yw, y2: yw, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '4 4'}, root);
+    Kit.mk('path', {d: `M${bx - 4},${yh} H${bx} V${yw} H${bx - 4}`, fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, root);
+    const room = bx - 8 - (cx[0] + P.rw / 2) - 6, one = width(root, 'a little hotter', fs, 700);
+    const lines = one <= room ? ['a little hotter'] : ['a little', 'hotter'];
+    lines.forEach((t, i) => txt(root, bx - 8, yh - fs * .45 - (lines.length - 1 - i) * fs * 1.25, t, {'text-anchor': 'end'}, fs, 700));
+    return root;
+  }
+
+  // A column of heat over a rail: straight sides, a flat top with round corners; its height is the heat.
+  function column(x, base, w, h) {
+    if (h < .5) return '';
+    const r = Math.min(w * .28, h * .45), t = base - h, l = x - w / 2, rr = x + w / 2;
+    return `M${l.toFixed(1)},${base.toFixed(1)} V${(t + r).toFixed(1)} Q${l.toFixed(1)},${t.toFixed(1)} ${(l + r).toFixed(1)},${t.toFixed(1)} H${(rr - r).toFixed(1)} Q${rr.toFixed(1)},${t.toFixed(1)} ${rr.toFixed(1)},${(t + r).toFixed(1)} V${base.toFixed(1)} Z`;
+  }
+  // The heat, drawn: flat orange with yellow waves rising in it, a cream mark at each time the warm rail's heat (so
+  // it can be counted), an ink outline; the outline dashed when it is only a guess.
+  function heat(p, x, base, w, h, guess, u) {
+    const d = column(x, base, w, h);
+    if (!d) return;
+    Kit.mk('path', {d, fill: HEAT}, p);
+    const top = base - h + Math.min(w * .3, h * .35), sw = Math.max(2.5, w * .11), a = w * .05, lam = Math.max(18, w * 1.1);
+    if (base - top > sw) [-1, 0, 1].forEach(i => {
+      let s = '';
+      for (let y = base - sw * .6, j = 0; y >= top; y -= 2, j++) s += (j ? ' L' : 'M') + (x + i * w * .25 + a * Math.sin((base - y) / lam * 2 * Math.PI + i * 1.7)).toFixed(1) + ',' + y.toFixed(1);
+      Kit.mk('path', {d: s, fill: 'none', stroke: CORE, 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p);
+    });
+    for (let k = 1; u && k * u < h - 4; k++) Kit.mk('line', {x1: x - w / 2 + 2, x2: x + w / 2 - 2, y1: base - k * u, y2: base - k * u, stroke: STONE, 'stroke-width': 2.2}, p);
+    Kit.mk('path', Object.assign({d, fill: 'none', stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, guess ? {'stroke-dasharray': '6 4'} : {}), p);
+  }
+
+  // ---------- the front: two rails on their plinths, one column of heat to drag ----------
+  // The heat is drawn to one scale for both rails at every moment, but the scale gives way as the guess climbs: up to
+  // 3× it is as big as the room allows LOOK times the warm rail's heat; past that it shrinks, so 6× still fits.
+  const LOOK = 3.5;
+  const tall = (k, room) => k * room / Math.max(LOOK, k + .5);
+  const kOf = (y, room) => y <= tall(3, room) ? y * LOOK / room : .5 * y / Math.max(1e-3, room - y);
   function front() {
     const s = Kit.$('pic'); s.innerHTML = '';
-    const f = Kit.fitSvg(s), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, f.f));
-    const r = fs * .85, L = 2, B = H - fs * 2.6;
-    let sc = Math.max(.2, Math.min(H * .22 / 172, W * .22 / 150)), cw, x0, x1;
-    const place = () => { cw = Math.max(72 * sc, fs * 1.6); x1 = W - 2 - (cw / 2 + fs * .5 + fs * 2.8); x0 = L + (x1 - L) / RAT; };
-    place();
-    if (150 * sc > x1 - x0 - 10) { sc = (x1 - x0 - 10) / 150; place(); }
-    const rh = 172 * sc, top = B - rh, colTop = 2 * r + 12;
-    const u = Math.max(3, (top - 2 - colTop) / MAXG);
-    const xs = [x0, x1];
-    geo = {top, u, cw, xs, fs, r};
-
-    ground(s, W, B, L, x0, x1, fs);
-    [CHERRY, BRIGHT].forEach((c, i) => rail(Kit.mk('g', {class: 'rail'}, s), xs[i], top, sc, c));
-
-    // the warm rail's heat: the yardstick
-    const ref = Kit.mk('g', {class: 'col'}, s);
-    ghost(ref, {x: x0 - cw / 2, y: top - 2 - u, width: cw, height: u, rx: Math.min(3, u / 3)});
-    txt(ref, x0 - cw / 2 - fs * .45, top - 2 - u / 2 + fs * .35, '1×', {'text-anchor': 'end'}, fs, 800);
-    // the hot rail's heat: the reader's guess
+    const {W, H} = Kit.fitSvg(s);
+    if (W < 60 || H < 60) { geo = null; return; }
+    const r0 = clamp(Math.min(W, H) * .042, 10.5, 13);
+    const P = plan(W, H, MAXG / (MAXG + .5) * LOOK, r0 * 2 + 6), {fs, cx, cw} = P;
+    const room = P.u * LOOK;
+    scene(s, P, W, H);
+    // the warm rail's heat: the yardstick, drawn again at each new scale
+    els.warm = Kit.mk('g', {class: 'col'}, s);
+    // the hot rail's heat: the reader's guess, a knob on its top
     const gc = Kit.mk('g', {class: 'col'}, s);
-    els.col = ghost(gc, {x: x1 - cw / 2, width: cw, rx: Math.min(3, u / 3)});
+    els.col = Kit.mk('g', {}, gc);
     els.knob = Kit.mk('g', {}, gc);
-    Kit.mk('circle', {r, fill: 'currentColor'}, els.knob);
-    const c = fs * .3;
-    Kit.mk('path', {d: `M${-c},${-c * .3} l${c},${-c} l${c},${c} M${-c},${c * .3} l${c},${c} l${c},${-c}`, stroke: 'var(--c)', 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, els.knob);
-    els.val = txt(gc, x1 + cw / 2 + fs * .5, 0, '', {}, fs, 800);
+    Kit.mk('circle', {r: r0, fill: INK}, els.knob);
+    const c = r0 * .36;
+    Kit.mk('path', {d: `M${-c},${-c * .35} l${c},${-c} l${c},${c} M${-c},${c * .35} l${c},${c} l${c},${-c}`, stroke: 'var(--c)', 'stroke-width': 1.9, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, els.knob);
+    // the guess, in big type in the sky over the warm rail, where no heat ever climbs
+    // Stacked by their measured boxes: the caption, the number, what it counts.
+    const roof = P.warm - room / LOOK - fs * .8;
+    const big = clamp(Math.min((roof - fs * 2.6 - 6) / 1.3, W * .2), 20, 64);
+    const say = Kit.mk('g', {class: 'col'}, s);
+    const t1 = txt(say, 0, fs * .95, 'your guess', {}, fs, 700), b1 = t1.getBBox();
+    els.val = txt(say, -2, 0, '6', {}, big, 800, SERIF);
+    Kit.mk('tspan', {'font-family': FONT, 'font-size': (big * .62).toFixed(1), dx: (big * .03).toFixed(1)}, els.val).textContent = '×';
+    const bv = els.val.getBBox(), nb = b1.y + b1.height + 1 - bv.y;
+    els.val.setAttribute('y', nb.toFixed(1));
+    const t3 = txt(say, 0, 0, 'as much heat', {}, fs, 700), b3 = t3.getBBox();
+    t3.setAttribute('y', (nb + bv.y + bv.height + 1 - b3.y).toFixed(1));
+    geo = {base: P.base, warm: P.warm, room, x: cx, cw, fs, r: r0, big};
     setG(g);
   }
   function setG(v) {
     g = Math.max(1, Math.min(MAXG, Math.round(v * 2) / 2));
     if (!geo) return;
-    const {top, u, xs, fs, r} = geo, y = top - 2 - g * u;
-    els.col.setAttribute('y', y); els.col.setAttribute('height', g * u);
-    els.knob.setAttribute('transform', `translate(${xs[1]},${y - 8 - r})`);
-    els.val.setAttribute('y', y + Math.min(u / 2, fs) + fs * .35); els.val.textContent = fmt(g);
+    const {base, warm, room, x, cw, fs, r, big} = geo, u = tall(g, room) / g, y = base - g * u;
+    els.warm.innerHTML = '';
+    heat(els.warm, x[0], warm, cw, u, false, u);
+    txt(els.warm, x[0] - cw / 2 - fs * .4, warm - u / 2 + fs * .36, '1×', {'text-anchor': 'end'}, fs * 1.05, 800);
+    els.col.innerHTML = '';
+    heat(els.col, x[1], base, cw, g * u, true, u);
+    els.knob.setAttribute('transform', `translate(${x[1].toFixed(1)},${(y - r - 4).toFixed(1)})`);
+    els.val.textContent = fmt(g).slice(0, -1);
+    Kit.mk('tspan', {'font-family': FONT, 'font-size': (big * .62).toFixed(1), dx: (big * .03).toFixed(1)}, els.val).textContent = '×';
   }
   const pic = Kit.$('pic');
   let drag = false, off = 0;
-  const fromY = e => { const b = pic.getBoundingClientRect(); return (geo.top - 2 - (e.clientY - b.top - off)) / geo.u; };
+  const fromY = e => { const b = pic.getBoundingClientRect(); return kOf(geo.base - (e.clientY - b.top - off), geo.room); };
   pic.addEventListener('pointerdown', e => {
     if (answered || !geo) return; drag = true; pic.setPointerCapture(e.pointerId);
-    const b = pic.getBoundingClientRect(), px = e.clientX - b.left, dy = (e.clientY - b.top) - (geo.top - 2 - g * geo.u);
-    off = (Math.abs(px - geo.xs[1]) < geo.cw && dy > -(2 * geo.r + 14) && dy < 12) ? Math.min(0, dy) : 0;
+    // Caught by its knob or its top, the column keeps the finger where it took it; caught anywhere else, it jumps there.
+    const b = pic.getBoundingClientRect(), px = e.clientX - b.left, dy = (e.clientY - b.top) - (geo.base - tall(g, geo.room));
+    off = (Math.abs(px - geo.x[1]) < Math.max(geo.cw, geo.r * 2) && dy > -(2 * geo.r + 14) && dy < 12) ? Math.min(0, dy) : 0;
     touched = true; setG(fromY(e)); Kit.haptic('selection');
   });
   pic.addEventListener('pointermove', e => { if (!drag) return; const o = g; setG(fromY(e)); if (g !== o) Kit.haptic('selection'); });
@@ -161,53 +245,53 @@ const Turn = {
   // ---------- the back: the same rails, each with its real column of heat ----------
   function back(anim) {
     const s = Kit.$('pic2'); s.innerHTML = '';
-    const f = Kit.fitSvg(s), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, f.f));
-    const hs = Math.round(fs * 1.45), L = 2, B = H - fs * 2.6;
-    const meas = (t, size, w, fam) => { const e = txt(s, -999, -999, t, {}, size, w, fam); const n = e.getComputedTextLength() || t.length * size * .6; e.remove(); return n; };
-    const wHero = meas('far more', hs, 800, 'var(--display)');
-
-    let sc = Math.max(.18, Math.min(H * .22 / 172, W * .22 / 150)), cw, x0, x1;
-    const place = () => { cw = Math.max(72 * sc, fs * 1.6); x1 = W - 2 - Math.max(75 * sc + 2, cw / 2 + fs * .6 + wHero + 2); x0 = L + (x1 - L) / RAT; };
-    place();
-    if (150 * sc > x1 - x0 - 10) { sc = (x1 - x0 - 10) / 150; place(); }
-    const rh = 172 * sc, top = B - rh, base = top - 2;
-    const Tp = fs * 1.1, ymax = Math.max(POW + .3, g + .3);
-    const u = Math.max(2, (base - Tp) / ymax), rx = Math.min(3, u / 4);
-
-    const gnd = ground(s, W, B, L, x0, x1, fs);
-    const rails = Kit.mk('g', {}, s);
-    rail(rails, x0, top, sc, CHERRY);
-    rail(rails, x1, top, sc, BRIGHT);
-
+    const {W, H} = Kit.fitSvg(s);
+    if (W < 60 || H < 50) return;
+    const most = Math.max(POW, g), P = plan(W, H, most, 4), {fs, cx, cw, u, base} = P;
+    const hs = clamp(fs * 1.3, 15, 19);
+    const gnd = scene(s, P, W, H);
     // the warm rail: its heat
-    const one = Kit.mk('rect', {x: x0 - cw / 2, y: base - u, width: cw, height: u, rx, fill: CHERRY}, s);
-
-    // the hot rail: its heat, by the fourth power of its distance from zero
-    const hH = POW * u, yH = base - hH;
-    const hot = Kit.mk('rect', {x: x1 - cw / 2, y: yH, width: cw, height: hH, rx, fill: CHERRY}, s);
-
-    // the reader's guess, left as a dashed outline; its label kept clear of the warm rail's column
-    const yG = base - g * u, you = Kit.mk('g', {}, s);
-    Kit.mk('rect', {x: x1 - cw / 2 - 4, y: yG, width: cw + 8, height: g * u, rx: 3, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.6, 'stroke-dasharray': '5 4'}, you);
-    const ly = Math.max(fs * .9, Math.min(yG + fs * .35, base - u - fs * .6));
-    txt(you, x1 - cw / 2 - 10, ly, `you: ${fmt(g)}`, {'text-anchor': 'end'}, fs, 800);
-
-    // the one focal words, beside the tall column; lines spaced so their glyph boxes stay clear of each other
-    const hero = Kit.mk('g', {}, s), hx = x1 + cw / 2 + fs * .6, hy = Math.max(hs * .85, yH + hs * .8);
-    txt(hero, hx, hy, 'far more', {}, hs, 800, 'var(--display)');
-    txt(hero, hx, hy + hs * 1.4, 'heat', {}, hs, 800, 'var(--display)');
+    const one = Kit.mk('g', {}, s);
+    heat(one, cx[0], P.warm, cw, u, false, u);
+    txt(one, cx[0] - cw / 2 - fs * .4, P.warm - u / 2 + fs * .36, '1×', {'text-anchor': 'end'}, fs * 1.05, 800);
+    // the hot rail: its heat, by the fourth power of its distance from zero, grown from nothing on the turn
+    const hot = Kit.mk('g', {}, s), grow = {k: 1};
+    const paint = () => { hot.innerHTML = ''; heat(hot, cx[1], base, cw, POW * u * grow.k, false, u); };
+    paint();
+    // the reader's guess, left as a dashed line across the column at the height they gave it, named on its left
+    const you = Kit.mk('g', {}, s), yG = base - g * u;
+    Kit.mk('line', {x1: cx[1] - cw / 2 - 7, x2: cx[1] + cw / 2 + 7, y1: yG, y2: yG, stroke: INK, 'stroke-width': 2.4, 'stroke-dasharray': '5 4', 'stroke-linecap': 'round'}, you);
+    // the one focal words, on the left of the tall column, level with its top; the guess's name kept clear of them
+    const xr = cx[1] - cw / 2 - 10, yT = base - POW * u;
+    const hero = Kit.mk('g', {}, s);
+    const room = xr - (cx[0] + cw / 2 + 6), whole = width(s, 'far more heat', hs, 800, SERIF);
+    const heroLines = whole <= room ? ['far more heat'] : ['far more', 'heat'];
+    const hy = Math.max(hs * .85, yT + hs * .75);
+    heroLines.forEach((t, i) => txt(hero, xr, hy + i * hs * 1.22, t, {'text-anchor': 'end'}, hs, 800, SERIF));
+    const heroTop = hy - hs * .8, heroBot = hy + (heroLines.length - 1) * hs * 1.22 + hs * .25;
+    let ly = yG + fs * .36;
+    if (ly > heroTop - fs * .2 && ly - fs < heroBot + fs * .2) ly = yG > yT ? Math.max(ly, heroBot + fs * 1.05) : Math.min(ly, heroTop - fs * .35);
+    ly = Math.min(ly, base - fs * .3);
+    txt(you, xr - 4, ly, `you: ${fmt(g)}`, {'text-anchor': 'end'}, fs, 800);
 
     if (!anim || Kit.calm) return;
+    grow.k = 0; paint();
     gsap.timeline({delay: .35})
       .from(gnd, {opacity: 0, duration: .4, ease: 'power2.out'})
       .from(one, {opacity: 0, duration: .3}, '-=.1')
       .from(you, {opacity: 0, duration: .35, ease: 'power2.out'})
-      .from(hot, {attr: {y: base, height: 0}, duration: 1, ease: 'power3.in'}, '+=.15')
+      .to(grow, {k: 1, duration: 1, ease: 'power3.in', onUpdate: paint}, '+=.15')
       .from(hero, {opacity: 0, duration: .4, ease: 'power2.out'});
   }
   document.addEventListener('turned', () => { turned = true; back(true); });
 
-  Kit.onShow.card = () => { front(); if (turned) back(false); };
+  const short = () => Kit.$('card').classList.toggle('short', Kit.$('card').getBoundingClientRect().height < 540);
+  Kit.onShow.card = () => { short(); front(); if (turned) back(false); };
+  // Each face drawn again at the size it now has whenever its room changes: another phone, the verdict in place of how sure.
+  [['pic', () => !turned && front()], ['pic2', () => turned && back(false)]].forEach(([id, draw]) => {
+    let seen = ''; const el = Kit.$(id);
+    new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k === seen) return; const first = !seen; seen = k; if (!first) draw(); }).observe(el);
+  });
   Kit.onEnter.card = () => {
     if (Kit.calm) return;
     gsap.from('#pic .rail', {opacity: 0, y: 14, stagger: .12, duration: .5, ease: 'power3.out'});

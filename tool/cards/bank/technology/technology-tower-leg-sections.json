@@ -7,8 +7,8 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "How tall and how heavy is one section of a bridge tower leg?",
-  "answer": "The tower legs of the Messina Strait bridge are stacked from 44 prefabricated sections. Each section is 20 meters tall and weighs 1,200 tons. The crane lifts a whole section at a time.",
-  "move": "One tower section: 20 m tall, 1,200 tons; 44 of them make the legs.",
+  "answer": "The two legs of each Messina Strait bridge tower are stacked from 44 prefabricated sections. Each section is up to 20 meters tall and weighs 1,200 tons. The crane lifts a whole section at a time.",
+  "move": "One tower section: up to 20 m tall, 1,200 tons; 44 of them make the legs.",
   "keywords": [
     "messina strait bridge",
     "tower legs",
@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page asking how tall and how heavy one section of a bridge tower leg is. A button, held down to lift a section onto the tower legs, is labelled with the figures 20 m and 1,200 t."
+    "label": "A bridge tower half built on the far shore of the Strait of Messina, its two legs stacked from steel sections, and in front a barge bringing the next section, 20 m tall, a worker beside it for scale. Holding a button makes the crane take its weight, 1,200 t, and lift it onto a leg."
   },
   "source": "Geopop, “Come sarà il Ponte sullo stretto di Messina? La ricostruzione 3D dai progetti originali” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=hdLF8GyPO_o&t=363s",

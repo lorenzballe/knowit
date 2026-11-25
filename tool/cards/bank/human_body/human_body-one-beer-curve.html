@@ -1,9 +1,13 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: human_body-one-beer-curve -->
 <!-- Thought to carry: a careful measurement on one body describes that body. Someone else's curve is a sample of one, not a law for you.
-     Front: a clean blood-alcohol chart after one 8.6% beer, empty, with a dashed line at 2 h 55. The reader drags a hollow ring, "you", up or down that line to place their own level, then says how sure.
-     Back: the experimenter's curve draws in and lands on his 0.20 g/L, a solid dot. Then the same beer fans out into a slower and a faster body, beside the reader's ring.
-     The front shows no value, no curve and no verdict: only the axes and the moment, so the guess is the reader's own. -->
+     Front: the drinker, drawn as a glass, sitting at a table beside the beer: a bottle marked 8.6% and a tulip glass of
+     it. The drinker's body is graduated like a measuring glass, 0 to 0.6 g/L; the reader drags the level of alcohol in
+     it up or down to where they think their own would be 2 h 55 after that one beer, then says how sure. Empty until
+     the reader moves it: no value, no curve and no verdict, so the guess is the reader's own.
+     Back: the experimenter's curve draws in and lands on his 0.20 g/L, a solid dot. Then the same beer fans out into a
+     slower and a faster body, beside the reader's ring. Flat colours, ink outlines; each face drawn again at its real
+     size whenever its room changes. -->
 <title>One beer, whose curve?</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -22,19 +26,21 @@
 .kit-calm .turn>.face.face{transition:none}
 
 .stagebox{flex:1 1 auto;min-height:0;display:flex}
-.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:visible}
+.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block}
 #pic{touch-action:none;cursor:ns-resize}
 .face .say{padding-right:max(30cqw,124px)}
 .front .say{margin-bottom:max(6cqh,52px)}
+.front .q{margin-bottom:1.4cqh}
+.front .stagebox{margin-bottom:1.8cqh}
 .face .foot{padding-right:max(22cqw,100px)}
-.back .big{margin:0 0 1.2cqh;font-size:clamp(24px,7.6cqw,40px);line-height:1.04}
+.back .big{margin:0 0 1.2cqh;font-size:clamp(20px,6.6cqw,34px);line-height:1.06}
 .back .stagebox{margin:.4cqh 0 1cqh}
 .back .body{font-size:max(1.85cqh,13px);line-height:1.34;margin:0 0 1.2cqh}
 .back .keep{margin-bottom:1cqh}
 .q,.say,.body,.big,.keep,.src{overflow-wrap:break-word}
-.hint{animation:nudge 1.4s ease-in-out infinite}
-@keyframes nudge{50%{transform:translateY(-4px)}}
-.kit-calm .hint{animation:none}
+#pic .hint{animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(-5px)}}
+.kit-calm #pic .hint{animation:none}
 </style>
 <article class="card" id="card" data-topic="human_body" data-kind="Drag a guess · one body">
   <div class="in">
@@ -42,9 +48,9 @@
     <div class="turn">
       <section class="face front">
         <h2 class="q">After one 8.6% beer, where is your blood alcohol 2 h 55 later?</h2>
-        <div class="stagebox"><svg id="pic" role="img" aria-label="A blood alcohol chart from 0 to 3 hours after one beer, with a dashed line at 2 hours 55 minutes where you place your guess."></svg></div>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A drinker drawn as a glass, sitting at a table beside a bottle of 8.6% beer and a full glass of it. The drinker's body is marked from 0 to 0.6 grams per litre: drag the level of alcohol in it to where yours would be 2 hours 55 minutes later."></svg></div>
         <div id="sure"></div>
-        <p class="say" id="say">Drag up or down on the dashed line to put yourself there.</p>
+        <p class="say" id="say">Drag the level in the drinker up or down to put yourself there.</p>
       </section>
       <section class="face back" aria-hidden="true">
         <p class="big" id="ans">He read 0.20 g/L. Your body runs its own curve.</p>
@@ -71,13 +77,139 @@ const Turn = {
   // Only his end point (0.20 g/L at 2 h 55) is a reading from the video.
   const shape = b => t => Math.max(0, .48 * (1 - Math.exp(-t / 25)) - b * t);
   const HIM = shape(.0016), SLOW = shape(.0008), FAST = shape(.0026);
-  let G = {};
+  // One ink for every outline; the drinker clear as glass; the beer amber under its foam; the bottle brown with a cream
+  // label; the table wood. Words on the card are in the card's own ink.
+  const INK = '#10100c', CLEAR = '#FFF4F2', BEER = ['#F6B43C', '#FFD77E'], FOAM = '#FFFDF8', BOTTLE = ['#7A3D1C', '#A65A2C'], LABEL = '#FFF1D6', WOOD = '#E9A866', HAIR = '#3B2622';
+  const FONT = 'Figtree, system-ui, sans-serif';
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const f1 = n => (Math.round(n * 10) / 10).toString();
+  let G = {}, F = null;
 
   const ink = () => getComputedStyle(card).getPropertyValue('--k').trim() || '#fff';
   const paper = () => { const c = getComputedStyle(card).backgroundColor; return c && c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent' ? c : '#ff2d5a'; };
   const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: G.ink, 'font-size': G.fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p); e.textContent = t; return e; };
 
-  function frame(svg, beerLabel) {
+  // A tulip glass of beer standing on y: the foot, the stem, the bowl with the beer and its head of foam.
+  function tulip(p, cx, y, h, k) {
+    const bw = h * .46, top = y - h, bb = y - h * .4, at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+    Kit.mk('ellipse', Object.assign({cx: f1(cx), cy: f1(y - h * .03), rx: f1(bw * .42), ry: f1(h * .045), fill: CLEAR}, at), p);
+    Kit.mk('path', Object.assign({d: `M${f1(cx - bw * .07)},${f1(y - h * .06)} V${f1(bb)} H${f1(cx + bw * .07)} V${f1(y - h * .06)} Z`, fill: CLEAR}, at), p);
+    const bowl = `M${f1(cx - bw * .36)},${f1(top)} C${f1(cx - bw * .3)},${f1(top + h * .16)} ${f1(cx - bw * .62)},${f1(top + h * .3)} ${f1(cx - bw * .44)},${f1(bb - h * .06)} Q${f1(cx)},${f1(bb + h * .04)} ${f1(cx + bw * .44)},${f1(bb - h * .06)} C${f1(cx + bw * .62)},${f1(top + h * .3)} ${f1(cx + bw * .3)},${f1(top + h * .16)} ${f1(cx + bw * .36)},${f1(top)} Z`;
+    Kit.mk('path', {d: bowl, fill: BEER[0]}, p);
+    Kit.mk('path', {d: `M${f1(cx - bw * .33)},${f1(top + h * .13)} Q${f1(cx)},${f1(top + h * .17)} ${f1(cx + bw * .33)},${f1(top + h * .13)} L${f1(cx + bw * .36)},${f1(top)} H${f1(cx - bw * .36)} Z`, fill: FOAM}, p);
+    Kit.mk('path', {d: `M${f1(cx - bw * .42)},${f1(top + h * .02)} Q${f1(cx - bw * .32)},${f1(top - h * .1)} ${f1(cx - bw * .08)},${f1(top - h * .06)} Q${f1(cx + bw * .1)},${f1(top - h * .14)} ${f1(cx + bw * .3)},${f1(top - h * .05)} Q${f1(cx + bw * .46)},${f1(top - h * .04)} ${f1(cx + bw * .4)},${f1(top + h * .03)} Z`, fill: FOAM, stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linejoin': 'round'}, p);
+    Kit.mk('path', Object.assign({d: bowl, fill: 'none'}, at), p);
+    Kit.mk('path', {d: `M${f1(cx + bw * .2)},${f1(top + h * .22)} Q${f1(cx + bw * .3)},${f1(top + h * .32)} ${f1(cx + bw * .24)},${f1(bb - h * .12)}`, fill: 'none', stroke: '#fff', 'stroke-width': f1(Math.max(1.5, k * .8)), 'stroke-linecap': 'round', opacity: .7}, p);
+  }
+  // The bottle, brown, its label marked 8.6%, standing on y.
+  function bottle(p, cx, y, w, h, k) {
+    const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'}, nw = w * .38, sh = y - h * .6;
+    Kit.mk('path', Object.assign({d: `M${f1(cx - w / 2)},${f1(y - w * .12)} V${f1(sh)} C${f1(cx - w / 2)},${f1(sh - h * .1)} ${f1(cx - nw / 2)},${f1(sh - h * .12)} ${f1(cx - nw / 2)},${f1(sh - h * .2)} V${f1(y - h + h * .05)} H${f1(cx + nw / 2)} V${f1(sh - h * .2)} C${f1(cx + nw / 2)},${f1(sh - h * .12)} ${f1(cx + w / 2)},${f1(sh - h * .1)} ${f1(cx + w / 2)},${f1(sh)} V${f1(y - w * .12)} Q${f1(cx + w / 2)},${f1(y)} ${f1(cx + w * .38)},${f1(y)} H${f1(cx - w * .38)} Q${f1(cx - w / 2)},${f1(y)} ${f1(cx - w / 2)},${f1(y - w * .12)} Z`, fill: BOTTLE[0]}, at), p);
+    Kit.mk('rect', Object.assign({x: f1(cx - nw * .62), y: f1(y - h - h * .01), width: f1(nw * 1.24), height: f1(h * .07), rx: f1(nw * .15), fill: '#D9A441'}, at), p);
+    Kit.mk('path', {d: `M${f1(cx - w * .3)},${f1(sh + h * .02)} V${f1(y - h * .08)}`, stroke: BOTTLE[1], 'stroke-width': f1(Math.max(2, w * .1)), 'stroke-linecap': 'round'}, p);
+    const lh = h * .26, ly = y - h * .44;
+    Kit.mk('rect', Object.assign({x: f1(cx - w / 2), y: f1(ly), width: f1(w), height: f1(lh), fill: LABEL}, at, {'stroke-width': f1(k * .8)}), p);
+    const fs = Math.max(9.5, Math.min(lh * .42, w * .34));
+    const t = Kit.mk('text', {x: f1(cx), y: f1(ly + lh / 2 + fs * .36), 'text-anchor': 'middle', 'font-size': f1(fs), 'font-weight': 800, 'font-family': FONT, fill: INK}, p);
+    t.textContent = '8.6%';
+  }
+
+  // ---------- front ----------
+  // The drinker: a glass bust, its torso graduated 0 to 0.6 g/L from the table to the shoulders; the level of alcohol
+  // the reader sets fills it with beer's amber.
+  function drawFront() {
+    pic.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(pic);
+    if (W < 60 || H < 60) { F = null; return; }
+    const k = clamp(Math.min(W, H) * .011, 2, 3), fs = clamp(f * .9, 11.5, 14), white = ink();
+    const th = clamp(H * .065, 8, 15), yt = H - th, A = yt - fs * .35;
+    const tw = Math.min(W * .44, A * .8), hr = Math.min(tw * .26, A * .17), nk = hr * .32, Ht = A - 2 * hr - nk;
+    const fx = W * .5, ysh = yt - Ht, r = tw * .3, x0 = fx - tw / 2, x1 = fx + tw / 2;
+    const top0 = ysh + tw * .08, Y = v => yt - v / V_MAX * (yt - top0);
+    // the right edge of the torso at a height, round the shoulder's curve
+    const edge = y => y >= ysh + r ? x1 : x1 - r + Math.sqrt(Math.max(0, r * r - (ysh + r - y) ** 2));
+    F = {W, H, yt, top0, Y};
+    const torso = `M${f1(x0)},${f1(yt + 4)} V${f1(ysh + r)} Q${f1(x0)},${f1(ysh)} ${f1(x0 + r)},${f1(ysh)} H${f1(x1 - r)} Q${f1(x1)},${f1(ysh)} ${f1(x1)},${f1(ysh + r)} V${f1(yt + 4)} Z`;
+    const defs = Kit.mk('defs', {}, pic);
+    Kit.mk('path', {d: torso}, Kit.mk('clipPath', {id: 'ob-torso'}, defs));
+    const scene = Kit.mk('g', {}, pic);
+    const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+    // The beer, beside the drinker: the bottle behind, the glass in front.
+    // The glass stands clear of the drinker and of the bottle's label.
+    const bw = clamp(W * .095, 24, 36), bx = bw * .5 + 3;
+    const gh = Math.min(A * .36, (x0 - bx - bw * .5 - 6) / .5), gx = Math.max(bx + bw * .5 + gh * .25 + 1, x0 - 5 - gh * .25);
+    bottle(scene, bx, yt + 1, bw, Math.min(A * .56, bw * 4.6), k);
+    tulip(scene, gx, yt + 1, gh, k);
+    // The drinker: the neck and head, the torso, the level of alcohol in it.
+    const hx = fx, hy = ysh - nk - hr;
+    Kit.mk('rect', Object.assign({x: f1(fx - hr * .42), y: f1(ysh - nk - hr * .3), width: f1(hr * .84), height: f1(nk + hr * .3 + 2), fill: CLEAR}, at), scene);
+    Kit.mk('path', Object.assign({d: torso, fill: CLEAR}, at), scene);
+    const fill = Kit.mk('g', {'clip-path': 'url(#ob-torso)'}, scene);
+    if (S.g != null) {
+      const y = Y(S.g);
+      Kit.mk('rect', {x: f1(x0 - 2), y: f1(y), width: f1(tw + 4), height: f1(yt - y + 6), fill: BEER[0]}, fill);
+      Kit.mk('rect', {x: f1(x0 - 2), y: f1(y), width: f1(tw + 4), height: f1(Math.min(5, (yt - y) * .5)), fill: BEER[1]}, fill);
+      Kit.mk('path', {d: `M${f1(x0 - 2)},${f1(y)} H${f1(x1 + 2)}`, stroke: INK, 'stroke-width': f1(k * .8)}, fill);
+    }
+    // the graduations, every 0.1 g/L along the right side, numbered every 0.2
+    for (let i = 1; i <= 6; i++) {
+      const v = i / 10, y = Y(v), e = edge(y) - k * .5, len = i % 2 ? tw * .07 : tw * .13;
+      Kit.mk('path', {d: `M${f1(e - len)},${f1(y)} H${f1(e)}`, stroke: INK, 'stroke-width': f1(Math.max(1.4, k * .7)), 'stroke-linecap': 'round'}, scene);
+      // haloed in what lies behind it, so the level's line never cuts through a number
+      if (i % 2 === 0) Kit.mk('text', {x: f1(e - len - 4), y: f1(y + fs * .3), 'text-anchor': 'end', 'font-size': f1(Math.max(10, fs * .82)), 'font-weight': 800, 'font-family': FONT, fill: INK, stroke: S.g != null && v < S.g ? BEER[0] : CLEAR, 'stroke-width': 3.5, 'stroke-linejoin': 'round', 'paint-order': 'stroke'}, scene).textContent = v.toFixed(1);
+    }
+    Kit.mk('path', Object.assign({d: torso, fill: 'none'}, at), scene);
+    // the head: clear as the rest, a cap of hair, eyes, a smile, warm cheeks
+    Kit.mk('circle', Object.assign({cx: f1(hx), cy: f1(hy), r: f1(hr), fill: CLEAR}, at), scene);
+    Kit.mk('path', Object.assign({d: `M${f1(hx - hr * .98)},${f1(hy - hr * .08)} C${f1(hx - hr * 1.05)},${f1(hy - hr * 1.25)} ${f1(hx + hr * 1.05)},${f1(hy - hr * 1.25)} ${f1(hx + hr * .98)},${f1(hy - hr * .08)} C${f1(hx + hr * .6)},${f1(hy - hr * .5)} ${f1(hx - hr * .2)},${f1(hy - hr * .62)} ${f1(hx - hr * .98)},${f1(hy - hr * .08)} Z`, fill: HAIR}, at), scene);
+    for (const s of [-1, 1]) {
+      Kit.mk('circle', {cx: f1(hx + s * hr * .36), cy: f1(hy + hr * .1), r: f1(Math.max(1.8, hr * .09)), fill: INK}, scene);
+      Kit.mk('ellipse', {cx: f1(hx + s * hr * .55), cy: f1(hy + hr * .38), rx: f1(hr * .16), ry: f1(hr * .1), fill: '#FF8FA6', opacity: .8}, scene);
+    }
+    Kit.mk('path', {d: `M${f1(hx - hr * .24)},${f1(hy + hr * .42)} Q${f1(hx)},${f1(hy + hr * .62)} ${f1(hx + hr * .24)},${f1(hy + hr * .42)}`, fill: 'none', stroke: INK, 'stroke-width': f1(Math.max(1.6, k * .75)), 'stroke-linecap': 'round'}, scene);
+    // The table, in front of it all.
+    Kit.mk('rect', {x: 1.5, y: f1(yt), width: f1(W - 3), height: f1(th - 1.5), rx: f1(Math.min(5, th / 3)), fill: WOOD, stroke: INK, 'stroke-width': f1(k * .9)}, scene);
+    // The reader's level, named beside it; until it is set, an arrow on the drinker says it moves.
+    const lx = x1 + fs * 1.15;
+    if (S.g == null) {
+      const hint = Kit.mk('g', {class: 'hint'}, scene), y = (Y(0) + Y(V_MAX)) / 2, a = fs * .5, cx = fx - tw * .08;
+      Kit.mk('path', {d: `M${f1(cx)},${f1(y - fs * 1.6)} V${f1(y + fs * 1.6)} M${f1(cx - a)},${f1(y - fs * 1.6 + a)} L${f1(cx)},${f1(y - fs * 1.6)} L${f1(cx + a)},${f1(y - fs * 1.6 + a)} M${f1(cx - a)},${f1(y + fs * 1.6 - a)} L${f1(cx)},${f1(y + fs * 1.6)} L${f1(cx + a)},${f1(y + fs * 1.6 - a)}`, stroke: INK, 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
+    } else {
+      // a pointer at the level, against the drinker's side, and what it reads beside it
+      const y = Y(S.g), e = edge(y) + k * .5 + 2, a = fs * .5, by = clamp(y, fs * 1.4, yt - fs * 1.5);
+      Kit.mk('path', {d: `M${f1(e)},${f1(y)} L${f1(e + a * 1.2)},${f1(y - a * .75)} V${f1(y + a * .75)} Z`, fill: white, stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, scene);
+      Kit.mk('text', {x: f1(lx), y: f1(by - fs * .45), 'font-size': f1(fs), 'font-weight': 700, 'font-family': FONT, fill: white}, scene).textContent = 'you?';
+      Kit.mk('text', {x: f1(lx), y: f1(by + fs * 1.05), 'font-size': f1(fs * 1.1), 'font-weight': 800, 'font-family': FONT, fill: white}, scene).textContent = `${S.g.toFixed(2)} g/L`;
+    }
+    F.scene = scene;
+  }
+  const valueAt = e => {
+    const r = pic.getBoundingClientRect(), y = e.clientY - r.top;
+    return Math.round(Math.max(0, Math.min(V_MAX, (F.yt - y) / (F.yt - F.top0) * V_MAX)) * 100) / 100;
+  };
+  let drag = false;
+  function setGuess(v) {
+    const first = S.g == null;
+    S.g = v; drawFront();
+    if (first) { sure.on(); say.textContent = 'Keep dragging if you like. Then say how sure you are.'; Kit.haptic('selection'); }
+  }
+  pic.addEventListener('pointerdown', e => { if (S.locked || !F) return; drag = true; try { pic.setPointerCapture(e.pointerId); } catch (_) {} setGuess(valueAt(e)); });
+  pic.addEventListener('pointermove', e => { if (drag && !S.locked && F) setGuess(valueAt(e)); });
+  const end = () => { drag = false; };
+  pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (S.locked || S.g == null) return;
+    S.locked = true;
+    const ok = Math.abs(S.g - REAL) <= .05, said = `${S.g.toFixed(2)} g/L`;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'close to his' : 'not his'}`);
+    Kit.$('ans').textContent = ok ? 'Close to his 0.20 g/L. By luck: your body is not his.' : 'He read 0.20 g/L. Your body runs its own curve.';
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back ----------
+  function frame(svg) {
     svg.innerHTML = '';
     const f = Kit.fitSvg(svg), W = f.W, H = f.H;
     const fs = Math.max(12, Math.min(14, f.f || 13));
@@ -86,30 +218,28 @@ const Turn = {
       X: t => x0 + t / T_MAX * (x1 - x0),
       Y: v => y0 - v / V_MAX * (y0 - y1)};
     const g = Kit.mk('g', {}, svg);
-    Kit.mk('line', {x1: x0, x2: x1 + fs, y1: y0, y2: y0, stroke: G.ink, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g);
-    Kit.mk('line', {x1: x0, x2: x0, y1: y0, y2: y1 - fs * .3, stroke: G.ink, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g);
+    Kit.mk('line', {x1: x0, x2: x1 + fs, y1: y0, y2: y0, stroke: G.ink, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, g);
+    Kit.mk('line', {x1: x0, x2: x0, y1: y0, y2: y1 - fs * .3, stroke: G.ink, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, g);
     // Thin the axis ticks when the chart is short, so the numbers never touch.
     const ticks = (y0 - y1) / 3 >= fs * 1.4 ? [0, .2, .4, .6] : (y0 - y1) / 2 >= fs * 1.4 ? [0, .3, .6] : [0, .6];
     ticks.forEach(v => {
       const y = G.Y(v);
       if (v) Kit.mk('line', {x1: x0 - 5, x2: x0, y1: y, y2: y, stroke: G.ink, 'stroke-width': 1.5}, g);
-      txt(g, x0 - 8, y + fs * .35, v ? v.toFixed(1) : '0', {'text-anchor': 'end', 'font-weight': 600, opacity: .75});
+      txt(g, x0 - 8, y + fs * .35, v ? v.toFixed(1) : '0', {'text-anchor': 'end', 'font-weight': 600, opacity: .8});
     });
-    txt(g, x0 - 8, y1 - fs * 1.1, 'g/L', {'text-anchor': 'end', 'font-weight': 600, opacity: .75});
+    txt(g, x0 - 8, y1 - fs * 1.1, 'g/L', {'text-anchor': 'end', 'font-weight': 600, opacity: .8});
     [[0, '0'], [60, '1 h'], [120, '2 h']].forEach(([t, s]) => {
       const x = G.X(t);
       if (t) Kit.mk('line', {x1: x, x2: x, y1: y0, y2: y0 + 5, stroke: G.ink, 'stroke-width': 1.5}, g);
-      txt(g, x, y0 + fs * 1.45, s, {'text-anchor': 'middle', 'font-weight': 600, opacity: .75});
+      txt(g, x, y0 + fs * 1.45, s, {'text-anchor': 'middle', 'font-weight': 600, opacity: .8});
     });
     // The moment that matters.
     const xl = G.X(T_END);
     Kit.mk('line', {x1: xl, x2: xl, y1: y0, y2: y1 - fs * .3, stroke: G.ink, 'stroke-width': 1.5, 'stroke-dasharray': '5 5', opacity: .6}, g);
     txt(g, xl, y0 + fs * 1.45, '2 h 55', {'text-anchor': 'middle', 'font-weight': 800});
-    // The beer: a tall glass at time zero, flat and plain.
-    const gw = fs * 1.3, gh = fs * 2.1, gx = x0 + fs * 1.2, gy = y1 - fs * .8;
-    Kit.mk('path', {d: `M${gx},${gy} h${gw} l${-gw * .12},${gh} h${-gw * .76} z`, fill: '#f2b63a', stroke: G.ink, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
-    Kit.mk('path', {d: `M${gx - 1},${gy} q${gw * .25},${-fs * .55} ${gw * .5},${-fs * .2} q${gw * .3},${-fs * .45} ${gw * .5 + 2},${fs * .1} z`, fill: '#fff', stroke: G.ink, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, g);
-    if (beerLabel) txt(g, gx + gw + fs * .6, gy + gh * .62, 'one 8.6% beer', {'font-weight': 700});
+    // The beer: the same tulip glass at time zero.
+    const gh = Math.min(fs * 2.6, (y0 - y1) * .9);
+    if (gh >= fs * 1.4) tulip(g, x0 + fs * 1.5, y1 + gh * .92, gh, 1.8);
     return g;
   }
 
@@ -147,50 +277,12 @@ const Turn = {
     return Kit.mk('path', Object.assign({d, fill: 'none', stroke: G.ink, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, attrs), p);
   }
 
-  // ---------- front ----------
-  function drawFront() {
-    const g = frame(pic, true), xl = G.X(T_END);
-    if (S.g == null) {
-      const hint = Kit.mk('g', {class: 'hint'}, g), y = (G.y0 + G.y1) / 2, fs = G.fs;
-      Kit.mk('path', {d: `M${xl},${y - fs * 1.4} v${fs * 2.8} M${xl - 5},${y - fs * .8} l5,-6 l5,6 M${xl - 5},${y + fs * .8} l5,6 l5,-6`, stroke: G.ink, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
-    } else {
-      const y = G.Y(S.g);
-      head(g, xl, y, 'you');
-      labels(g, [{y, t: `you? ${S.g.toFixed(2)} g/L`, w: 800}]);
-    }
-  }
-  const valueAt = e => {
-    const r = pic.getBoundingClientRect(), y = e.clientY - r.top;
-    return Math.round(Math.max(0, Math.min(V_MAX, (G.y0 - y) / (G.y0 - G.y1) * V_MAX)) * 100) / 100;
-  };
-  let drag = false;
-  function setGuess(v) {
-    const first = S.g == null;
-    S.g = v; drawFront();
-    if (first) { sure.on(); say.textContent = 'Keep dragging if you like. Then say how sure you are.'; Kit.haptic('selection'); }
-  }
-  pic.addEventListener('pointerdown', e => { if (S.locked) return; drag = true; pic.setPointerCapture(e.pointerId); setGuess(valueAt(e)); });
-  pic.addEventListener('pointermove', e => { if (drag && !S.locked) setGuess(valueAt(e)); });
-  const end = () => { drag = false; };
-  pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
-
-  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-    if (S.locked || S.g == null) return;
-    S.locked = true;
-    const ok = Math.abs(S.g - REAL) <= .05, said = `${S.g.toFixed(2)} g/L`;
-    Kit.answer({choice: said, correct: ok, sure: pct});
-    sure.grade(ok, pct, `${said}, ${ok ? 'close to his' : 'not his'}`);
-    Kit.$('ans').textContent = ok ? 'Close to his 0.20 g/L. By luck: your body is not his.' : 'He read 0.20 g/L. Your body runs its own curve.';
-    setTimeout(() => Turn.over(), 700);
-  });
-
-  // ---------- back ----------
   function drawBack(animate) {
-    const g = frame(pic2, false), xl = G.X(T_END), fs = G.fs;
+    const g = frame(pic2), xl = G.X(T_END), fs = G.fs;
     const others = Kit.mk('g', {}, g), mine = Kit.mk('g', {}, g), top = Kit.mk('g', {}, g);
-    const slow = curvePath(others, SLOW, {'stroke-width': 2.2, opacity: .4});
-    const fast = curvePath(others, FAST, {'stroke-width': 2.2, opacity: .4});
-    const him = curvePath(mine, HIM, {'stroke-width': 3.4});
+    const slow = curvePath(others, SLOW, {'stroke-width': 2.4, opacity: .45});
+    const fast = curvePath(others, FAST, {'stroke-width': 2.4, opacity: .45});
+    const him = curvePath(mine, HIM, {'stroke-width': 3.8});
     const yHim = G.Y(REAL), ySlow = G.Y(SLOW(T_END)), yFast = G.Y(FAST(T_END));
     const hSlow = head(top, xl, ySlow, 'other', .45), hFast = head(top, xl, yFast, 'other', .45);
     const hHim = head(top, xl, yHim, 'him');
@@ -220,8 +312,20 @@ const Turn = {
   document.addEventListener('turned', () => { S.turned = true; S.backDrawn = true; requestAnimationFrame(() => drawBack(true)); });
 
   Kit.onShow.card = () => { drawFront(); if (S.turned) drawBack(false); };
-  new ResizeObserver(() => { if (G.fs) { drawFront(); if (S.turned) drawBack(false); } }).observe(Kit.$('pic'));
-  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic > g > *', {opacity: 0, y: 6, stagger: .03, duration: .4, ease: 'power3.out'}); };
+  // Each face drawn again, at the size it now has, whenever its box changes.
+  { const sizes = new Map();
+    new ResizeObserver(entries => {
+      for (const en of entries) {
+        const b = en.target.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`;
+        if (sizes.get(en.target) === key) continue;
+        const first = !sizes.has(en.target); sizes.set(en.target, key); if (first) continue;
+        if (en.target === pic && F) drawFront();
+        else if (en.target === pic2 && S.turned) drawBack(false);
+      }
+    }).observe(pic);
+  }
+  { let seen = ''; new ResizeObserver(() => { const b = pic2.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; seen = key; if (S.turned) drawBack(false); }).observe(pic2); }
+  Kit.onEnter.card = () => { if (!Kit.calm && F && F.scene) gsap.from(F.scene, {opacity: 0, y: 8, duration: .5, ease: 'power3.out'}); };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
     setGuess(.34);

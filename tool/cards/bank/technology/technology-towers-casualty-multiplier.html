@@ -1,5 +1,11 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: technology-towers-casualty-multiplier -->
+<!-- Look: sober, flat, the card's blue as the clear morning sky. On the left the Twin Towers as they stood, as tall
+     as the picture, in true proportion: each a pale prism, a lit face and a shaded one, the fine vertical stripes of
+     their steel facade, the North Tower's antenna running out of the top. On the right, on the same plaza, two bars
+     built of blocks of people, ink with the people cut out: one block for the lives lost as it happened, and the
+     reader's bar, dashed, dragged up to how many times more weaker towers might have cost. On the answer ten
+     blocks stack up beside the one, and the guess stays as a dashed line. Drawn again whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -8,19 +14,17 @@
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
 #pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
-#pic .bar{transform-box:fill-box;transform-origin:50% 100%}
+.answered .q{font-size:max(2.6cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Guess · drag the bar">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">ENGINEERING</span></div>
     <h2 class="q">How many times more lives might weaker towers have cost?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="Bar chart: lives lost as it happened, and a draggable bar for weaker towers"></svg>
+      <svg id="pic" role="img" aria-label="The Twin Towers standing in a clear sky. Beside them, one block of people for the lives lost as it happened, and a dashed bar to drag up to how many times more weaker towers might have cost."></svg>
       <div id="why" class="gone">
-        <p class="big">About 10 times more</p>
-        <p class="body">The Twin Towers fell, but they were very solid. Had they been weaker, the documentary estimates the loss of life might have been ten times greater. That is why civil engineers say the towers behaved excellently.</p>
+        <p class="body">The Twin Towers fell, but they were very solid: had they been weaker, the documentary estimates ten times the loss of life.</p>
       </div>
     </div>
     <div id="sure"></div>
@@ -33,60 +37,69 @@
 <script>
 const MAXG = 15, TRUTH = 10;
 const S = {g: 3, touched: false, done: false, anim: false};
-let G = null;
+let G = null, laid = '';
+const svg = Kit.$('pic');
+// One ink; the towers' lit face and shaded face, the stripes of their steel a shade darker on each, the bands of
+// their machine floors; the plaza's stone. The people are cut out of the ink in the card's own blue.
+const INK = '#10100c', LIT = '#eef1f4', SHADED = '#c3cdd7', STRIPE = '#cdd5dd', STRIPE2 = '#a8b4c0', BAND = '#aebac6', STONE = '#e8e2d2';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+const txt = (p, x, y, s, a) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': FONT, 'font-weight': 700}, a), p); e.textContent = s; return e; };
+const blue = () => getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#00A6FF';
 
-function draw(){
-  const svg = Kit.$('pic');
-  const {W, H, f} = Kit.fitSvg(svg);
+// Where everything goes, for the room the drawing has now.
+function lay() {
+  const r = Kit.fitSvg(svg), W = r.W, H = r.H, f = r.f;
+  if (W < 60 || H < 40) { G = null; svg.innerHTML = ''; return; }
+  const fs = clamp(f * .9, 12, 14);
+  const two = H >= 150;                                   // the bars' names on two lines, or one where the room is low
+  const base = H - (two ? fs * 2.75 : fs * 1.55) - 3;     // the plaza's top
+  const top = fs * 1.75;                                  // room over the tallest bar for its number
+  // The towers, in true proportion, roofs at 417 m and 415 m, the North Tower's antenna to 527 m: as tall as the picture.
+  const sT = (base - 3) / 527, side = 63.4 * sT;
+  const fw = side * .78, sw = side * .44, gap = side * .42;
+  const tx = Math.max(3, W * .03);
+  // The two bars, right of the towers: the reader's up to 15 times; on the answer the scale fits 10 and the guess.
+  const units = S.done ? Math.max(TRUTH, S.g) + .7 : MAXG;
+  const u = (base - top) / units;
+  // Between them room for the reader's guess to be named.
+  const right = tx + 2 * (fw + sw) + gap + fs, bw = clamp(W * .22, 34, 72);
+  const c2 = W - bw / 2 - 4, gb = clamp(c2 - bw * 1.5 - right, fs * 2.5, Math.max(fs * 4, 50)), c1 = c2 - bw - gb;
+  G = {W, H, f, fs, two, base, top, sT, fw, sw, gap, tx, u, bw, c1, c2};
+  laid = `${Math.round(W)}x${Math.round(H)}`;
+  draw();
+}
+
+function draw() {
+  if (!G) return;
+  const {W, H, fs, base, two, bw, c1, c2, u} = G;
   svg.innerHTML = '';
-  const fs = Math.max(f * .9, 12);
-  const top = fs * 2.4, base = H - fs * 2.2;
-  const u = Math.max((base - top) / MAXG, 0.5);
-  const bw = Math.min(W * .22, 96);
-  const c1 = W * .3, c2 = W * .68;
-  const x1 = c1 - bw / 2, x2 = c2 - bw / 2;
-  G = {W, H, base, u, rectH: 0};
-  const ink = 'var(--k)';
-  // faint grid of "×" steps on the right column
-  for (let i = 1; i <= MAXG; i++) {
-    Kit.mk('line', {x1: x2 - 4, x2: x2 + bw + 4, y1: base - i * u, y2: base - i * u,
-      stroke: ink, 'stroke-opacity': .08, 'stroke-width': 1}, svg);
-  }
-  // baseline
-  Kit.mk('line', {x1: W * .06, x2: W * .94, y1: base, y2: base, stroke: ink, 'stroke-width': Math.max(2, fs * .14), 'stroke-linecap': 'round'}, svg);
-  // actual bar = 1 unit
-  Kit.mk('rect', {class: 'bar', x: x1, y: base - u, width: bw, height: u, rx: 3, fill: ink}, svg);
-  const t1 = Kit.mk('text', {x: c1, y: base - u - fs * .5, 'text-anchor': 'middle', fill: ink,
-    style: `font:800 ${fs * 1.1}px var(--display)`}, svg); t1.textContent = '1×';
-  const l1 = Kit.mk('text', {x: c1, y: base + fs * 1.5, 'text-anchor': 'middle', fill: ink,
-    style: `font:700 ${fs}px var(--body)`}, svg); l1.textContent = 'What happened';
-  const l2 = Kit.mk('text', {x: c2, y: base + fs * 1.5, 'text-anchor': 'middle', fill: ink,
-    style: `font:700 ${fs}px var(--body)`}, svg); l2.textContent = 'Weaker towers';
-
+  // The plaza.
+  mk('rect', {x: -2, y: base, width: W + 4, height: fs * .45, fill: STONE});
+  mk('line', {x1: -2, x2: W + 2, y1: base, y2: base, stroke: INK, 'stroke-width': 2.5});
+  towers();
+  // What happened: one block of people.
+  block(c1 - bw / 2, base - u, bw, u, true);
+  const t1 = txt(svg, c1, base - u - fs * .5, '1×', {'font-size': fs * 1.25, 'font-weight': 800, 'font-family': SERIF, 'text-anchor': 'middle'});
+  names(c1, two ? ['What', 'happened'] : ['As it was']);
+  names(c2, two ? ['Weaker', 'towers'] : ['Weaker']);
   const gy = base - S.g * u;
   if (!S.done) {
-    // the reader's bar
-    Kit.mk('rect', {class: 'bar', x: x2, y: gy, width: bw, height: S.g * u, rx: 3,
-      fill: 'color-mix(in srgb, var(--k) 22%, transparent)', stroke: ink, 'stroke-width': 2, 'stroke-dasharray': '6 4'}, svg);
-    // grip
-    for (let k = -1; k <= 1; k++) Kit.mk('line', {x1: c2 - bw * .22, x2: c2 + bw * .22,
-      y1: gy + 7 + k * 4 + 4, y2: gy + 7 + k * 4 + 4, stroke: ink, 'stroke-width': 1.6, 'stroke-opacity': .6}, svg);
-    const tg = Kit.mk('text', {x: c2, y: gy - fs * .5, 'text-anchor': 'middle', fill: ink,
-      style: `font:800 ${fs * 1.1}px var(--display)`}, svg);
-    tg.textContent = S.touched ? `×${S.g}?` : `×${S.g}? drag`;
+    // The reader's bar: dashed blocks up to the guess, a grip on top.
+    for (let i = 0; i < S.g; i++) block(c2 - bw / 2, base - (i + 1) * u, bw, u, false).classList.add('guess');
+    for (let k = -1; k <= 1; k++) mk('line', {x1: c2 - bw * .2, x2: c2 + bw * .2, y1: gy - fs * .55 + k * 3.2, y2: gy - fs * .55 + k * 3.2, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'});
+    const t = txt(svg, c2, gy - fs * 1.2, S.touched ? `×${S.g}?` : `×${S.g}? drag`, {'font-size': fs * 1.1, 'font-weight': 800, 'font-family': SERIF, 'text-anchor': 'middle'});
+    t.setAttribute('x', Math.min(c2, W - 2 - t.getComputedTextLength() / 2));
   } else {
-    // ten blocks, each the size of what happened
+    // Ten blocks, each the size of what happened, and the guess as a dashed line.
     const blocks = [];
-    const gap = Math.min(3, u * .3);
-    for (let i = 0; i < TRUTH; i++) {
-      blocks.push(Kit.mk('rect', {x: x2, y: base - (i + 1) * u + gap / 2, width: bw, height: Math.max(0, u - gap), rx: 2, fill: ink}, svg));
-    }
-    const tt = Kit.mk('text', {x: c2, y: base - TRUTH * u - fs * .5, 'text-anchor': 'middle', fill: ink,
-      style: `font:800 ${fs * 1.2}px var(--display)`}, svg); tt.textContent = '≈10×';
-    // the reader's guess as a dashed mark
-    Kit.mk('line', {x1: x2 - 6, x2: x2 + bw + 6, y1: gy, y2: gy, stroke: ink, 'stroke-width': 2, 'stroke-dasharray': '4 4'}, svg);
-    const ty = Kit.mk('text', {x: x2 + bw + 9, y: gy + fs * .35, 'text-anchor': 'start', fill: ink,
-      style: `font:700 ${fs * .95}px var(--hand)`}, svg); ty.textContent = `you ×${S.g}`;
+    for (let i = 0; i < TRUTH; i++) blocks.push(block(c2 - bw / 2, base - (i + 1) * u, bw, u, true));
+    const tt = txt(svg, c2, base - TRUTH * u - fs * .5, '≈10×', {'font-size': fs * 1.3, 'font-weight': 800, 'font-family': SERIF, 'text-anchor': 'middle'});
+    mk('line', {x1: c2 - bw / 2 - 5, x2: c2 + bw / 2 + 5, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '5 4'});
+    // The guess named on the side the room is, away from the number on top.
+    const yt = Math.abs(S.g - TRUTH) < 1.2 ? gy + fs * 1.15 : gy + fs * .35;
+    txt(svg, c2 - bw / 2 - 6, Math.min(yt, base - 3), `you ×${S.g}`, {'font-size': fs * .92, 'font-weight': 700, 'text-anchor': 'end'});
     if (S.anim && !Kit.calm) {
       gsap.from(blocks, {opacity: 0, y: -u * 2, stagger: .09, duration: .35, ease: 'power2.out'});
       gsap.from(tt, {opacity: 0, delay: .9, duration: .4});
@@ -95,9 +108,65 @@ function draw(){
   }
 }
 
-function setFromY(clientY){
+// The bars' names under the plaza, on one line or two.
+function names(cx, lines) {
+  const {fs, base, two} = G;
+  lines.forEach((l, i) => txt(svg, cx, base + fs * (two ? 1.35 + 1.22 * i : 1.3), l, {'font-size': fs * .95, 'font-weight': 700, 'text-anchor': 'middle'}));
+}
+
+// A block of people: solid ink with the people cut out, or the reader's dashed outline with them faint.
+function block(x, y, w, h, solid) {
+  const g = mk('g', {});
+  const gap = Math.min(3, h * .16), bh = Math.max(1, h - gap), by = y + gap / 2;
+  mk('rect', solid ? {x, y: by, width: w, height: bh, rx: Math.min(4, bh * .3), fill: INK}
+    : {x, y: by, width: w, height: bh, rx: Math.min(4, bh * .3), fill: 'color-mix(in srgb, var(--k) 14%, transparent)', stroke: INK, 'stroke-width': 1.8, 'stroke-dasharray': '5 3'}, g);
+  // The people, heads and shoulders, where the block is tall enough to show them.
+  const ph = bh * .78;
+  if (ph >= 8) {
+    const n = Math.max(3, Math.floor(w / (ph * .92))), step = w / n, col = solid ? blue() : INK, op = solid ? 1 : .3;
+    for (let i = 0; i < n; i++) {
+      const px = x + step * (i + .5), foot = by + bh - (bh - ph) * .35, hr = ph * .17;
+      mk('circle', {cx: px, cy: foot - ph + hr, r: hr, fill: col, opacity: op}, g);
+      mk('path', {d: `M${px - ph * .27},${foot} V${foot - ph * .36} Q${px - ph * .27},${foot - ph * .58} ${px},${foot - ph * .58} Q${px + ph * .27},${foot - ph * .58} ${px + ph * .27},${foot - ph * .36} V${foot} Z`, fill: col, opacity: op}, g);
+    }
+  }
+  return g;
+}
+
+// The Twin Towers, standing: the North Tower with its antenna, the South Tower beside it.
+function towers() {
+  const {fs, base, sT, fw, sw, gap, tx} = G;
+  [[tx, 417, true], [tx + fw + sw + gap, 415, false]].forEach(([x, m, mast]) => {
+    const h = m * sT, y = base - h;
+    if (mast) {
+      // The antenna, 110 m over the roof, on its base.
+      const ax = x + (fw + sw) * .45, aw = Math.max(2.5, fw * .09), b = Math.max(4, 9 * sT);
+      mk('rect', {x: ax - aw / 2, y: y - 110 * sT, width: aw, height: 110 * sT - b + 1, fill: LIT, stroke: INK, 'stroke-width': 1.5});
+      mk('rect', {x: ax - aw * 2, y: y - b, width: aw * 4, height: b + 1, fill: SHADED, stroke: INK, 'stroke-width': 1.6});
+    }
+    mk('rect', {x, y, width: fw, height: h, fill: LIT});
+    mk('rect', {x: x + fw, y, width: sw, height: h, fill: SHADED});
+    // The steel: close vertical stripes, wider at the foot where the columns join in arches.
+    const foot = h * .07, n1 = Math.max(4, Math.round(fw / 3.6)), n2 = Math.max(2, Math.round(sw / 3.6));
+    let d1 = '', d2 = '';
+    for (let i = 1; i < n1; i++) { const sx = x + fw * i / n1; d1 += `M${sx.toFixed(1)},${(y + 2).toFixed(1)} V${(base - foot).toFixed(1)} `; }
+    for (let i = 1; i < n2; i++) { const sx = x + fw + sw * i / n2; d2 += `M${sx.toFixed(1)},${(y + 2).toFixed(1)} V${(base - foot).toFixed(1)} `; }
+    mk('path', {d: d1, stroke: STRIPE, 'stroke-width': 1, fill: 'none'});
+    mk('path', {d: d2, stroke: STRIPE2, 'stroke-width': 1, fill: 'none'});
+    // The machine floors, three thin bands; the arches at the foot.
+    for (const k of [.375, .68, .975]) mk('rect', {x, y: base - h * k, width: fw + sw, height: Math.max(1.5, h * .012), fill: BAND});
+    const na = Math.max(2, Math.round(fw / 9));
+    let arches = '';
+    for (let i = 0; i < na; i++) { const a = x + fw * i / na, b = x + fw * (i + 1) / na, r = (b - a) / 2; arches += `M${(a + 1.2).toFixed(1)},${base} V${(base - foot + r).toFixed(1)} Q${(a + 1.2).toFixed(1)},${(base - foot).toFixed(1)} ${((a + b) / 2).toFixed(1)},${(base - foot).toFixed(1)} Q${(b - 1.2).toFixed(1)},${(base - foot).toFixed(1)} ${(b - 1.2).toFixed(1)},${(base - foot + r).toFixed(1)} V${base} `; }
+    mk('path', {d: arches, stroke: STRIPE2, 'stroke-width': 1.2, fill: 'none'});
+    mk('line', {x1: x + fw, x2: x + fw, y1: y, y2: base, stroke: INK, 'stroke-width': 1.4});
+    mk('rect', {x, y, width: fw + sw, height: h, fill: 'none', stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round'});
+  });
+}
+
+function setFromY(clientY) {
   if (S.done || !G) return;
-  const svg = Kit.$('pic'), r = svg.getBoundingClientRect();
+  const r = svg.getBoundingClientRect();
   const y = (clientY - r.top) * (G.H / r.height);
   const g = Math.max(1, Math.min(MAXG, Math.round((G.base - y) / G.u)));
   if (g !== S.g || !S.touched) {
@@ -112,39 +181,36 @@ const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = Math.abs(S.g - TRUTH) <= 2;
   Kit.answer({choice: `${S.g}×`, correct: ok, sure: pct});
   S.done = true; S.anim = true;
+  Kit.$('card').classList.add('answered');
   Kit.hide('say'); Kit.show('why');
-  draw();
   sure.grade(ok, pct, `${S.g}×, ${ok ? 'right' : 'off'}`);
   Kit.show('keep');
+  // Drawn once everything has come in, at the room it leaves: ten blocks stacking.
+  lay();
+  Kit.$('pic').setAttribute('aria-label', 'The Twin Towers standing; beside them one block of people for the lives lost as it happened, and ten such blocks stacked for weaker towers, with your guess marked.');
   Kit.haptic('success');
 });
 
 let dragging = false;
-const pic = Kit.$('pic');
-pic.addEventListener('pointerdown', e => { dragging = true; try { pic.setPointerCapture(e.pointerId); } catch(_){} setFromY(e.clientY); });
-pic.addEventListener('pointermove', e => { if (dragging) setFromY(e.clientY); });
-pic.addEventListener('pointerup', () => { dragging = false; });
-pic.addEventListener('pointercancel', () => { dragging = false; });
+svg.addEventListener('pointerdown', e => { dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setFromY(e.clientY); });
+svg.addEventListener('pointermove', e => { if (dragging) setFromY(e.clientY); });
+svg.addEventListener('pointerup', () => { dragging = false; });
+svg.addEventListener('pointercancel', () => { dragging = false; });
 
-Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => {
-  if (Kit.calm) return;
-  gsap.from('#pic .bar', {scaleY: 0, stagger: .15, duration: .6, ease: 'power3.out'});
-};
+Kit.onShow.card = () => lay();
+Kit.onEnter.card = () => { if (!Kit.calm && !S.touched) gsap.from('#pic .guess', {scaleY: 0, transformOrigin: '50% 100%', stagger: .12, duration: .45, ease: 'back.out(2)'}); };
 Kit.play.card = async () => {
-  const r = pic.getBoundingClientRect();
-  const x = r.left + r.width * .68;
-  const y = r.top + r.height * .45;
-  pic.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
-  pic.dispatchEvent(new PointerEvent('pointermove', {clientX: x, clientY: y - 10, bubbles: true, pointerId: 1}));
-  pic.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y - 10, bubbles: true, pointerId: 1}));
+  const r = svg.getBoundingClientRect();
+  const x = r.left + G.c2 * r.width / G.W, at = g => r.top + (G.base - (g - .5) * G.u) * r.height / G.H;
+  svg.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: at(7), bubbles: true, pointerId: 1}));
+  svg.dispatchEvent(new PointerEvent('pointermove', {clientX: x, clientY: at(9), bubbles: true, pointerId: 1}));
+  svg.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: at(9), bubbles: true, pointerId: 1}));
   await new Promise(r => setTimeout(r, 120));
   Kit.$('sure').querySelector('[data-v="80"]').click();
   await new Promise(r => setTimeout(r, 1600));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+new ResizeObserver(() => { const b = svg.getBoundingClientRect(); if (G && `${Math.round(b.width)}x${Math.round(b.height)}` !== laid) lay(); }).observe(svg);
 Kit.single();
 </script>
 </html>

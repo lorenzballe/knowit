@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive guess-the-heat page: a steel rail is made a little hotter. The reader drags the hot rail's column up to guess how much more heat it radiates, then reads the reveal."
+    "label": "Two glowing steel rails, cherry red and bright orange, each on a plinth rising from a floor marked absolute zero, the hot one only a little higher. Over the warm rail rises a column of heat marked 1×; the reader drags the hot rail's column of heat up to guess how much more heat it radiates, then says how sure."
   },
   "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=879s",

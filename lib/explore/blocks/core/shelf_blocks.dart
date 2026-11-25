@@ -603,18 +603,29 @@ Widget _spot(
 ) => SpotTheFalseBlock(
   spot: spot,
   onOpen: _opener(host, section),
-  // The pick is the one answer given; the reveal tells all four, so all four
-  // count as read and the day never deals one whose answer was shown.
-  onCommit: (pill, response) async {
-    await host.commit(pill, response);
-    for (final Pill other in spot.cards) {
-      if (other.id != pill.id) await host.app.markReadElsewhere(other.id);
-    }
-  },
-  onShown: (p) => host is ExploreShelfHost
-      ? host.seenAs(section, 'spot-false', p)
-      : host.seen(section, p),
+  onCommit: spotCommitter(host, spot),
+  onShown: spotShower(host, section),
 );
+
+/// How a pick in the game of spotting the false one is recorded, on its
+/// shelf or on its own screen: the pick is the one answer given; the reveal
+/// tells all four, so all four count as read and the day never deals one
+/// whose answer was shown.
+void Function(Pill, String) spotCommitter(
+  ExploreHost host,
+  SpotTheFalse spot,
+) => (pill, response) async {
+  await host.commit(pill, response);
+  for (final Pill other in spot.cards) {
+    if (other.id != pill.id) await host.app.markReadElsewhere(other.id);
+  }
+};
+
+/// How a claim of the game is said to be shown on [section].
+ValueChanged<Pill> spotShower(ExploreHost host, ExploreSection section) =>
+    (p) => host is ExploreShelfHost
+        ? host.seenAs(section, 'spot-false', p)
+        : host.seen(section, p);
 
 /// True or false: decided before the card is turned, on the shelf itself,
 /// with the game of spotting the false one under the row (`spot`: false

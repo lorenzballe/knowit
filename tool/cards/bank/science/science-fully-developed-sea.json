@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Ocean-wave card asking when wind waves reach their maximum size. Tap to let the wind blow one gust at a time. The page explains that waves stop growing when energy lost to breaking equals the energy the wind adds."
+    "label": "The open sea drawn in section, a small sailboat on it. Each tap lets a gust of wind blow: the waves grow, their crests break into foam and eddies, and the arrow of energy breaking out widens until it matches the wind's. The page asks when wind waves reach their maximum size."
   },
   "source": "Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=pir_muTzYM8&t=760s",

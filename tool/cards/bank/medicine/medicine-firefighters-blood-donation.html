@@ -1,5 +1,12 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: medicine-firefighters-blood-donation -->
+<!-- The picture: the same firefighter twice, standing in full gear, helmet, coat and boots, drawn as a glass the PFAS
+     in their blood fills. On the left, today: full of it to the shoulders. On the right, a year later: empty, a
+     question mark in the chest. Between their helmets hang the year's eight blood bags, empty. The reader draws, from
+     the first firefighter's shoulder to the second, where the level goes. Then the bags fill one by one, and the PFAS
+     runs between the two as one lime level that steps down at every bag: 30% lower a year later, the second firefighter
+     filled to there, the reader's line laid over it. Flat colours, thick ink outlines, drawn again at its real size
+     whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -11,18 +18,25 @@
 #why .big{font:800 max(3cqh,17px)/1.1 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
 .say{overflow-wrap:anywhere}
+/* On a small card the answer needs room for the picture: the headline the picture already shows gives way, the
+   question steps down a size and the column closes up. */
+@container (max-height: 520px){
+  .answered #big{display:none}
+  .answered .q{font-size:max(3.1cqh,15px)}
+  .answered .in{gap:1.3cqh}
+}
 </style>
 <article class="card" id="card" data-topic="medicine" data-kind="Draw your guess">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PFAS</span></div>
     <h2 class="q">Firefighters donate blood often for a year. What happens to their PFAS?</h2>
     <div class="stagebox" id="stage">
-      <svg id="plot" aria-label="Draw your guess of PFAS levels over one year"></svg>
+      <svg id="plot" role="img" aria-label="The same firefighter twice, drawn as glass: today, full of PFAS to the shoulders; a year later, empty, with a question mark. Eight empty blood bags hang between them. Draw from the first to the second where the level goes."></svg>
     </div>
     <p class="say" id="say">Drag your finger from “Today” to “1 year” to draw your guess.</p>
     <div id="why" class="gone">
       <p class="big" id="big">Up to 30% lower in a year</p>
-      <p class="body">Their gear and foams are laced with PFAS. Each blood or plasma donation (red drops) physically carries some of the chemicals out of the body. In a 2022 study, frequent donors cut their levels by up to 30% within a year.</p>
+      <p class="body">Their gear and foams are laced with PFAS. Each blood or plasma donation (the bags) physically carries some of the chemicals out of the body. In a 2022 study, frequent donors cut their levels by up to 30% within a year.</p>
     </div>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Frequent blood or plasma donation lowered firefighters’ PFAS by up to 30% in a year.</div>
     <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
@@ -30,108 +44,193 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const N = 49, LO = .4, HI = 1.1;
+const N = 49, LO = 0, HI = 1.1;
 const DON = [3, 9, 15, 21, 27, 33, 39, 45];
 const FAC = Math.pow(.7, 1 / DON.length);
-const RED = '#7a0c18';
-const TINT = 'color-mix(in srgb, var(--k) 22%, var(--c))';
-const LINE = 'color-mix(in srgb, var(--k) 40%, var(--c))';
+// One ink for every outline. The firefighters clear as glass, the PFAS in them lime; yellow helmets, silver stripes,
+// black boots; the bags pale while empty, blood red once given. The reader's line in the card's own white.
+const INK = '#10100c', CLEAR = '#FFF4F2', PFAS = '#D8F23E', TOPS = '#EFFFA0', HELMET = '#FFD23F', SHIELD = '#FFFBF0',
+  STRIPE = '#E3E7EC', SKIN = '#F2C29B', BAG = '#FFE9E4', BLOOD = '#A3141C', WHITE = '#ffffff';
+const FONT = 'Figtree, system-ui, sans-serif';
+const mk = Kit.mk, clamp = (v, a, b) => Math.max(a, Math.min(b, v)), f1 = n => (Math.round(n * 10) / 10).toString();
 let g = new Array(N).fill(null); g[0] = 1;
 let last = 0, drawing = false, done = false, geo = null, guessPath = null, startDot = null;
 const svg = Kit.$('plot');
 
-function txt(s, x, y, fs, anchor, weight, parent, fill) {
-  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'start', fill: fill || 'var(--k)',
-    style: `font:${weight || 600} ${fs}px var(--body)`}, parent);
+function txt(p, x, y, s, size, a) {
+  const t = mk('text', Object.assign({x: f1(x), y: f1(y), 'font-family': FONT, 'font-size': f1(size), 'font-weight': 700, fill: WHITE}, a || {}), p);
   t.textContent = s; return t;
 }
 function guessD() {
   let d = '';
-  for (let i = 0; i < N; i++) if (g[i] != null) d += (d ? 'L' : 'M') + geo.X(i).toFixed(1) + ',' + geo.Y(g[i]).toFixed(1);
+  for (let i = 0; i < N; i++) if (g[i] != null) d += (d ? 'L' : 'M') + f1(geo.X(i)) + ',' + f1(geo.Y(g[i]));
   return d;
 }
-function realD() {
-  const {X, Y} = geo; let v = 1, d = `M${X(0)},${Y(1)}`;
-  DON.forEach(i => { d += `L${X(i)},${Y(v)}`; v *= FAC; d += `L${X(i)},${Y(v)}`; });
-  return d + `L${X(N - 1)},${Y(v)}`;
+// What the study found, as a line that steps down at every donation.
+function realPts() {
+  const {X, Y} = geo; let v = 1; const p = [[X(0), Y(1)]];
+  DON.forEach(i => { p.push([X(i), Y(v)]); v *= FAC; p.push([X(i), Y(v)]); });
+  p.push([X(N - 1), Y(v)]);
+  return p;
 }
-function dropPath(s) {
-  return `M0,${-s}C${s*.9},${-s*.05} ${s*.75},${s*.85} 0,${s*.85}C${-s*.75},${s*.85} ${-s*.9},${-s*.05} 0,${-s}Z`;
+
+// A firefighter standing, feet at (cx, yb), 100 units u tall: the coat and trousers one clear outline that `level`
+// fills (1 at the shoulders), helmet, face, silver stripes, boots. `mark` is written in the chest.
+function firefighter(p, cx, yb, u, k, id, level) {
+  const Y = n => yb - n * u, X = n => cx + n * u;
+  const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const body = `M${f1(X(-11))},${f1(Y(5))} L${f1(X(-12))},${f1(Y(40))} L${f1(X(-13.5))},${f1(Y(40))} L${f1(X(-13))},${f1(Y(76))} Q${f1(X(-13))},${f1(Y(80))} ${f1(X(-9))},${f1(Y(80))} L${f1(X(-3.2))},${f1(Y(80))} L${f1(X(-3.2))},${f1(Y(84))} L${f1(X(3.2))},${f1(Y(84))} L${f1(X(3.2))},${f1(Y(80))} L${f1(X(9))},${f1(Y(80))} Q${f1(X(13))},${f1(Y(80))} ${f1(X(13))},${f1(Y(76))} L${f1(X(13.5))},${f1(Y(40))} L${f1(X(12))},${f1(Y(40))} L${f1(X(11))},${f1(Y(5))} L${f1(X(1))},${f1(Y(5))} L${f1(X(1))},${f1(Y(35))} Q${f1(cx)},${f1(Y(37.5))} ${f1(X(-1))},${f1(Y(35))} L${f1(X(-1))},${f1(Y(5))} Z`;
+  const defs = mk('defs', {}, p);
+  mk('path', {d: body}, mk('clipPath', {id}, defs));
+  const fig = mk('g', {}, p);
+  mk('path', {d: body, fill: CLEAR}, fig);
+  // the PFAS in them, to its level
+  const fill = mk('g', {'clip-path': `url(#${id})`}, fig);
+  const lev = mk('rect', {x: f1(X(-15)), width: f1(30 * u), fill: PFAS}, fill);
+  const top = mk('rect', {x: f1(X(-15)), width: f1(30 * u), height: f1(Math.max(2, u * .9)), fill: TOPS}, fill);
+  const setLevel = v => {
+    const y = Y(80 * v), show = v != null && v > 0;
+    lev.setAttribute('y', f1(show ? y : yb)); lev.setAttribute('height', f1(show ? yb - y + 2 : 0));
+    top.setAttribute('y', f1(show ? y : yb)); top.setAttribute('opacity', show ? 1 : 0);
+  };
+  setLevel(level);
+  // silver stripes: round the hem of the coat, the cuffs, the shins
+  const stripe = d => mk('path', {d, fill: STRIPE, stroke: INK, 'stroke-width': f1(k * .55), 'stroke-linejoin': 'round'}, fig);
+  stripe(`M${f1(X(-13.45))},${f1(Y(42))} H${f1(X(13.45))} V${f1(Y(45))} H${f1(X(-13.4))} Z`);
+  for (const s of [-1, 1]) {
+    stripe(`M${f1(X(s * 9.7))},${f1(Y(50))} H${f1(X(s * 13.25))} V${f1(Y(53))} H${f1(X(s * 9.7))} Z`);
+    stripe(`M${f1(X(s * 1))},${f1(Y(15))} H${f1(X(s * 11.45))} V${f1(Y(18))} H${f1(X(s * 1))} Z`);
+  }
+  // the outline, the hem of the coat across it, the seams of the sleeves
+  mk('path', Object.assign({d: body, fill: 'none'}, at), fig);
+  mk('path', {d: `M${f1(X(-13.5))},${f1(Y(40))} Q${f1(cx)},${f1(Y(39))} ${f1(X(13.5))},${f1(Y(40))} M${f1(X(-9.6))},${f1(Y(77))} L${f1(X(-9.8))},${f1(Y(50))} M${f1(X(9.6))},${f1(Y(77))} L${f1(X(9.8))},${f1(Y(50))}`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .7), 'stroke-linecap': 'round'}, fig);
+  // boots
+  for (const s of [-1, 1]) mk('path', {d: `M${f1(X(s * 1))},${f1(Y(5.5))} H${f1(X(s * 11.2))} Q${f1(X(s * 12.6))},${f1(Y(5.5))} ${f1(X(s * 12.6))},${f1(Y(2))} V${f1(Y(0))} H${f1(X(s * 1))} Z`, fill: INK}, fig);
+  // the head, and the helmet over it
+  mk('circle', Object.assign({cx: f1(cx), cy: f1(Y(87.5)), r: f1(5.6 * u), fill: SKIN}, at), fig);
+  for (const s of [-1, 1]) mk('circle', {cx: f1(X(s * 2.1)), cy: f1(Y(87.6)), r: f1(Math.max(1.1, u * .62)), fill: INK}, fig);
+  mk('path', {d: `M${f1(X(-1.8))},${f1(Y(84.9))} Q${f1(cx)},${f1(Y(83.6))} ${f1(X(1.8))},${f1(Y(84.9))}`, fill: 'none', stroke: INK, 'stroke-width': f1(Math.max(1.1, k * .6)), 'stroke-linecap': 'round'}, fig);
+  mk('path', Object.assign({d: `M${f1(X(-7.2))},${f1(Y(90.5))} C${f1(X(-7.2))},${f1(Y(99.2))} ${f1(X(-3.6))},${f1(Y(100.6))} ${f1(cx)},${f1(Y(100.6))} C${f1(X(3.6))},${f1(Y(100.6))} ${f1(X(7.2))},${f1(Y(99.2))} ${f1(X(7.2))},${f1(Y(90.5))} Z`, fill: HELMET}, at), fig);
+  mk('ellipse', Object.assign({cx: f1(cx), cy: f1(Y(90.5)), rx: f1(10.4 * u), ry: f1(1.7 * u), fill: HELMET}, at), fig);
+  mk('rect', Object.assign({x: f1(X(-2.3)), y: f1(Y(98.2)), width: f1(4.6 * u), height: f1(5.6 * u), rx: f1(u), fill: SHIELD}, at, {'stroke-width': f1(k * .7)}), fig);
+  return {setLevel, Y};
+}
+
+// A blood bag hanging at (x, y) by its tab, w wide: the bag, a tube from its foot; the blood in it once it is given.
+function bag(p, x, y, w, k) {
+  const h = w * 1.36, at = {stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linejoin': 'round'};
+  const b = mk('g', {}, p);
+  mk('path', {d: `M${f1(x)},${f1(y - w * .2)} V${f1(y + w * .14)}`, stroke: INK, 'stroke-width': f1(k * .7)}, b);
+  mk('rect', Object.assign({x: f1(x - w / 2), y: f1(y + w * .12), width: f1(w), height: f1(h), rx: f1(w * .22), fill: BAG}, at), b);
+  // a blood drop on it while it waits
+  const sd = w * .2, scx = x, scy = y + w * .12 + h * .56;
+  mk('path', {d: `M${f1(scx)},${f1(scy - sd * 1.9)} C${f1(scx + sd * .55)},${f1(scy - sd * 1.15)} ${f1(scx + sd)},${f1(scy - sd * .6)} ${f1(scx + sd)},${f1(scy)} A${f1(sd)},${f1(sd)} 0 0 1 ${f1(scx - sd)},${f1(scy)} C${f1(scx - sd)},${f1(scy - sd * .6)} ${f1(scx - sd * .55)},${f1(scy - sd * 1.15)} ${f1(scx)},${f1(scy - sd * 1.9)} Z`, fill: BLOOD}, b);
+  const blood = mk('g', {opacity: 0}, b);
+  mk('rect', {x: f1(x - w / 2 + k * .4), y: f1(y + w * .12 + h * .2), width: f1(w - k * .8), height: f1(h * .8 - k * .4), rx: f1(w * .18), fill: BLOOD}, blood);
+  // the PFAS it took away
+  for (const [dx, dy] of [[-.2, .42], [.18, .58], [-.08, .8]]) mk('circle', {cx: f1(x + dx * w), cy: f1(y + w * .12 + dy * h), r: f1(Math.max(1.3, w * .09)), fill: PFAS}, blood);
+  mk('rect', Object.assign({x: f1(x - w / 2), y: f1(y + w * .12), width: f1(w), height: f1(h), rx: f1(w * .22), fill: 'none'}, at), b);
+  mk('path', {d: `M${f1(x)},${f1(y + w * .12 + h)} q${f1(w * .15)},${f1(w * .35)} ${f1(-w * .05)},${f1(w * .6)}`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .7), 'stroke-linecap': 'round'}, b);
+  return {blood, bottom: y + w * .12 + h + w * .6};
 }
 
 function render(anim) {
   svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f, 12);
-  const L = fs * 3.3, R = fs * 1.2, T = fs * 2.2, B = fs * 3.4;
-  const X = i => L + (W - L - R) * i / (N - 1);
-  const Y = v => T + (H - T - B) * (HI - v) / (HI - LO);
-  geo = {W, H, L, R, T, B, X, Y, fs};
-  const ink = 'var(--k)';
+  const {W, H} = Kit.fitSvg(svg);
+  geo = null;
+  if (W < 90 || H < 60) return;
+  const fs = clamp(Math.min(W * .04, H * .055), 10.5, 13), k = clamp(Math.min(W, H) * .011, 1.6, 3);
+  const cap = fs * 1.5, yb = H - cap - k;
+  // The two firefighters as tall as the room allows, at the two sides; the year runs between them.
+  const u = Math.min((yb - k * 1.5) / 101, W * .29 / 27);
+  const lx = k + 13.6 * u, rx = W - k - 13.6 * u;
+  const X0 = lx + 14 * u, X1 = rx - 14 * u;
+  const X = i => X0 + (X1 - X0) * i / (N - 1);
+  const Y = v => yb - v * 80 * u;
+  geo = {W, H, X, Y, X0, X1, yb, u, fs, k};
+  const ink = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
 
-  // title, with a plain drop: this is about what is in the blood
-  const tg = Kit.mk('g', {transform: `translate(${L + fs * .45},${fs * .78})`}, svg);
-  Kit.mk('path', {d: dropPath(fs * .55), fill: ink}, tg);
-  txt('PFAS in blood', L + fs * 1.3, fs * 1.2, fs, 'start', 800);
-
-  // a few level lines, quiet and solid
-  [1, .8, .6].forEach(v => {
-    Kit.mk('line', {x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: LINE,
-      'stroke-width': Math.max(1, fs * (v === 1 ? .1 : .06))}, svg);
-    txt(Math.round(v * 100) + '%', L - fs * .5, Y(v) + fs * .35, fs, 'end', 600);
-  });
-  // ground line and the one-year mark
-  Kit.mk('line', {x1: L, x2: W - R, y1: H - B, y2: H - B, stroke: ink, 'stroke-width': Math.max(1.5, fs * .14),
-    'stroke-linecap': 'round'}, svg);
-  Kit.mk('line', {x1: X(N - 1), x2: X(N - 1), y1: T, y2: H - B, stroke: LINE,
-    'stroke-width': Math.max(1, fs * .06)}, svg);
-  const ly = H - B + fs * 2.6;
-  txt('Today', L, ly, fs, 'start', 700);
-  txt('6 months', X(24), ly, fs, 'middle', 600);
-  txt('1 year', W - R, ly, fs, 'end', 700);
-
-  // what the study found: the level of PFAS left in the blood, as a flat shape
-  let area = null;
+  // What the study found: one lime level between the two, stepping down at every bag. Shown once the guess is in.
+  const real = done ? realPts() : null;
+  let reveal = null;
   if (done) {
-    area = Kit.mk('path', {d: realD() + `L${X(N - 1)},${H - B}L${X(0)},${H - B}Z`, fill: TINT}, svg);
+    const defs = mk('defs', {}, svg);
+    reveal = mk('rect', {x: f1(X0 - 2), y: 0, width: f1(anim && !Kit.calm ? 0 : X1 - X0 + 4), height: f1(H)}, mk('clipPath', {id: 'ff-run'}, defs));
+    const run = mk('g', {'clip-path': 'url(#ff-run)'}, svg);
+    const line = real.map((q, i) => (i ? 'L' : 'M') + f1(q[0]) + ',' + f1(q[1])).join(' ');
+    mk('path', {d: line + ` L${f1(X1)},${f1(yb)} L${f1(X0)},${f1(yb)} Z`, fill: PFAS}, run);
+    mk('path', {d: line, fill: 'none', stroke: INK, 'stroke-width': f1(k * 1.2), 'stroke-linejoin': 'round'}, run);
   }
+  // The floor they stand on.
+  mk('path', {d: `M${f1(k)},${f1(yb)} H${f1(W - k)}`, stroke: INK, 'stroke-width': f1(k), 'stroke-linecap': 'round'}, svg);
 
-  // guess
-  guessPath = Kit.mk('path', {d: guessD(), fill: 'none', stroke: ink, 'stroke-width': fs * .3,
-    'stroke-linecap': 'round', 'stroke-linejoin': 'round',
-    'stroke-dasharray': done ? `${fs*.5} ${fs*.45}` : ''}, svg);
-  startDot = Kit.mk('circle', {cx: X(0), cy: Y(1), r: fs * .55, fill: ink}, svg);
+  // The two of them: today, full to the shoulders; a year later, empty until the study fills it.
+  const endV = Math.pow(FAC, DON.length);
+  const L = firefighter(svg, lx, yb, u, k, 'ff-a', 1);
+  const R = firefighter(svg, rx, yb, u, k, 'ff-b', done ? endV : null);
+  const chest = fs * 1.05;
+  if (13 * u * 2 > fs * 3.2) {
+    txt(svg, lx, L.Y(80) + fs * 1.35, '100%', fs * .95, {'text-anchor': 'middle', 'font-weight': 800, fill: INK});
+    txt(svg, lx, L.Y(62), 'PFAS', chest, {'text-anchor': 'middle', 'font-weight': 800, fill: INK});
+  }
+  if (!done) txt(svg, rx, R.Y(58), '?', Math.min(22 * u, fs * 2.6), {'text-anchor': 'middle', 'font-weight': 800, fill: INK, 'font-family': 'Fraunces, Georgia, serif'});
+  txt(svg, lx, H - k - fs * .3, 'Today', fs, {'text-anchor': 'middle', 'font-weight': 800});
+  txt(svg, rx, H - k - fs * .3, '1 year', fs, {'text-anchor': 'middle', 'font-weight': 800});
 
+  // The year's eight bags, on a rail between the two helmets.
+  const sp = (X1 - X0) / 8, bw = Math.min(sp * .74, 9 * u, fs * 1.7), ry = yb - 100.5 * u + Math.max(2, u * .4);
+  mk('path', {d: `M${f1(X(DON[0]) - sp * .5)},${f1(ry)} H${f1(X(DON[7]) + sp * .5)}`, stroke: INK, 'stroke-width': f1(k), 'stroke-linecap': 'round'}, svg);
+  const bags = DON.map(i => bag(svg, X(i), ry, bw, k));
+  if (done) bags.forEach(b => b.blood.setAttribute('opacity', anim && !Kit.calm ? 0 : 1));
+
+  // A faint line where the level is today, and where to start drawing.
+  if (!done) mk('path', {d: `M${f1(X0)},${f1(Y(1))} H${f1(X1)}`, stroke: WHITE, 'stroke-width': f1(Math.max(1.2, k * .55)), 'stroke-dasharray': `${f1(k * .9)} ${f1(k * 2.4)}`, 'stroke-linecap': 'round', opacity: .7}, svg);
+
+  // The reader's line: white over an ink edge, dashed once the study is shown.
+  const gw = Math.max(3, k * 1.25), dash = done ? `${f1(gw * 1.6)} ${f1(gw * 1.4)}` : '';
+  const under = mk('path', {d: guessD(), fill: 'none', stroke: INK, 'stroke-width': f1(gw + k * 1.3), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': dash}, svg);
+  guessPath = mk('path', {d: guessD(), fill: 'none', stroke: WHITE, 'stroke-width': f1(gw), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': dash}, svg);
+  guessPath.under = under;
+  startDot = mk('circle', {cx: f1(X0), cy: f1(Y(1)), r: f1(fs * .5), fill: WHITE, stroke: INK, 'stroke-width': f1(k)}, svg);
   if (!done) return;
-  // real curve: a step down at every donation
-  const real = Kit.mk('path', {d: realD(), fill: 'none', stroke: RED, 'stroke-width': fs * .38,
-    'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
-  const drops = DON.map(i => {
-    const gD = Kit.mk('g', {transform: `translate(${X(i)},${H - B + fs * .95})`}, svg);
-    Kit.mk('path', {d: dropPath(fs * .6), fill: RED}, gD);
-    return gD;
-  });
-  const endV = Math.pow(FAC, DON.length), ge = g[N - 1];
-  const gPct = Math.round((1 - ge) * 100);
-  const sep = fs * 1.4, top = T + fs, bot = H - B - fs * .4;
-  let yr, yg;
-  if (ge >= endV) { yg = Y(ge) - fs * .6; yr = Y(endV) + fs * 1.4; }
-  else { yr = Y(endV) - fs * .6; yg = Y(ge) + fs * 1.4; }
-  yr = Math.min(bot, Math.max(top, yr)); yg = Math.min(bot, Math.max(top, yg));
-  if (Math.abs(yr - yg) < sep) {
-    const mid = (yr + yg) / 2, up = ge >= endV;
-    yg = mid + (up ? -sep / 2 : sep / 2); yr = mid + (up ? sep / 2 : -sep / 2);
-    if (Math.max(yg, yr) > bot) { const d = Math.max(yg, yr) - bot; yg -= d; yr -= d; }
-    if (Math.min(yg, yr) < top) { const d = top - Math.min(yg, yr); yg += d; yr += d; }
+
+  // Where the reader's line would leave the second firefighter, across their chest, and what each says.
+  const ge = g[N - 1], gPct = Math.round((1 - ge) * 100);
+  mk('path', {d: `M${f1(rx - 13 * u)},${f1(Y(ge))} H${f1(rx + 13 * u)}`, stroke: INK, 'stroke-width': f1(gw + k * 1.3), 'stroke-dasharray': dash, 'stroke-linecap': 'round'}, svg);
+  mk('path', {d: `M${f1(rx - 13 * u)},${f1(Y(ge))} H${f1(rx + 13 * u)}`, stroke: WHITE, 'stroke-width': f1(gw), 'stroke-dasharray': dash, 'stroke-linecap': 'round'}, svg);
+  const halo = {stroke: INK, 'stroke-width': f1(fs * .32), 'stroke-linejoin': 'round', 'paint-order': 'stroke'};
+  const labels = [], bagsEnd = Math.max(...bags.map(b => b.bottom)), xr = X1 - fs * .3;
+  // The study's figure in the chest it filled, where it fits: in the lime between the level and the hem, on whichever
+  // side of the reader's line leaves it more room.
+  const inChest = 26 * u > fs * 3.6 && (Y(endV) + fs * 1.4 < R.Y(45));
+  if (inChest) {
+    const a = Y(endV) + fs * 1.05, b = R.Y(45) - fs * .25, yl = Math.abs(Y(ge) - a + fs * .35) > Math.abs(Y(ge) - b + fs * .35) ? a : b;
+    labels.push(txt(svg, rx, Math.abs(Y(ge) - (yl - fs * .35)) < fs * .9 ? (yl === a ? b : a) : yl, '−30%', fs * 1.1, {'text-anchor': 'middle', 'font-weight': 800, fill: INK}));
   }
-  const lr = txt('Study: −30%', W - R - fs * .2, yr, fs, 'end', 800, svg, RED);
-  const lg = txt('You: ' + (gPct >= 0 ? '−' : '+') + Math.abs(gPct) + '%', W - R - fs * .2, yg, fs, 'end', 700);
+  // Labels in the year itself, right-aligned by the second firefighter: each at the first place offered where it
+  // touches neither line, the bags, nor a label already set.
+  const yAt = (pts, x) => { for (let i = 1; i < pts.length; i++) { const [xa, ya] = pts[i - 1], [xb, yz] = pts[i]; if (xb > xa && x >= xa && x <= xb) return ya + (yz - ya) * (x - xa) / (xb - xa); } return x < pts[0][0] ? pts[0][1] : pts[pts.length - 1][1]; };
+  const runs = (pts, xa, xb) => { const ys = [yAt(pts, xa), yAt(pts, xb), ...pts.filter(q => q[0] >= xa && q[0] <= xb).map(q => q[1])]; return [Math.min(...ys), Math.max(...ys)]; };
+  const G = g.map((v, i) => [X(i), Y(v)]), asc = fs * .74, desc = fs * .26, pad = gw * .5 + k + 2, taken = [];
+  const place = (t, offers) => {
+    let w = fs * 5; try { w = t.getComputedTextLength(); } catch (e) {}
+    const [gHi, gLo] = runs(G, xr - w - 2, xr + 2), [rHi, rLo] = runs(real, xr - w - 2, xr + 2);
+    const clear = y => y - asc > bagsEnd + 2 && y + desc < yb - k - 1 && [[gHi, gLo], [rHi, rLo]].every(([hi, lo]) => y + desc < hi - pad || y - asc > lo + pad) && taken.every(([p, q]) => y + desc < p - 2 || y - asc > q + 2);
+    const ys = offers({gHi, gLo, rHi, rLo}), y = ys.find(clear) ?? ys[ys.length - 1];
+    t.setAttribute('y', f1(y)); taken.push([y - asc, y + desc]); labels.push(t);
+  };
+  const deep = o => [0, 1.5, 3, 4.5].map(n => Math.max(o.gLo, o.rLo) + pad + asc + n * fs);
+  if (!inChest) place(txt(svg, xr, 0, 'Study: −30%', fs, {'text-anchor': 'end', 'font-weight': 800, fill: INK, stroke: PFAS, 'stroke-width': f1(fs * .3), 'stroke-linejoin': 'round', 'paint-order': 'stroke'}),
+    o => [o.rLo + pad + asc, ...deep(o)]);
+  place(txt(svg, xr, 0, 'You: ' + (gPct >= 0 ? '−' : '+') + Math.abs(gPct) + '%', fs, Object.assign({'text-anchor': 'end', 'font-weight': 800}, halo)),
+    o => [o.gHi - pad - desc, o.gLo + pad + asc, o.rHi - pad - desc, o.rLo + pad + asc, ...deep(o)]);
   if (anim && !Kit.calm) {
-    const len = real.getTotalLength();
-    gsap.from(area, {opacity: 0, duration: 1.8, ease: 'power1.inOut'});
-    gsap.fromTo(real, {strokeDasharray: len, strokeDashoffset: len}, {strokeDashoffset: 0, duration: 1.8, ease: 'power1.inOut'});
-    drops.forEach((d, k) => gsap.from(d, {opacity: 0, y: -fs, duration: .35, delay: .1 + 1.8 * DON[k] / (N - 1), ease: 'back.out(2)'}));
-    gsap.from([lr, lg], {opacity: 0, duration: .5, delay: 1.8, stagger: .15});
+    gsap.to(reveal, {attr: {width: X1 - X0 + 4}, duration: 1.9, ease: 'power1.inOut'});
+    bags.forEach((b, j) => gsap.to(b.blood, {attr: {opacity: 1}, duration: .3, delay: .15 + 1.9 * DON[j] / (N - 1), ease: 'power2.out'}));
+    gsap.from(labels, {opacity: 0, duration: .5, delay: 1.9, stagger: .15});
+    // the second firefighter fills as the year reaches them
+    const lv = {v: 0}; R.setLevel(0);
+    gsap.to(lv, {v: endV, duration: .6, delay: 1.7, ease: 'power2.out', onUpdate: () => R.setLevel(lv.v)});
   }
 }
 
@@ -140,10 +239,10 @@ function at(e) {
   return [(e.clientX - r.left) * geo.W / r.width, (e.clientY - r.top) * geo.H / r.height];
 }
 function handle(e) {
-  const [x, y] = at(e), {L, R, T, B, W, H} = geo;
-  let i = Math.round((x - L) / (W - L - R) * (N - 1));
+  const [x, y] = at(e), {X0, X1, yb, u} = geo;
+  let i = Math.round((x - X0) / (X1 - X0) * (N - 1));
   i = Math.max(1, Math.min(N - 1, i));
-  const v = Math.max(LO, Math.min(HI, HI - (y - T) / (H - T - B) * (HI - LO)));
+  const v = Math.max(LO, Math.min(HI, (yb - y) / (80 * u)));
   if (i > last) {
     const v0 = g[last];
     for (let j = last + 1; j <= i; j++) g[j] = v0 + (v - v0) * (j - last) / (i - last);
@@ -151,7 +250,8 @@ function handle(e) {
     g[i] = v; for (let j = i + 1; j < N; j++) g[j] = null;
   }
   last = i;
-  guessPath.setAttribute('d', guessD());
+  const d = guessD();
+  guessPath.setAttribute('d', d); guessPath.under.setAttribute('d', d);
 }
 svg.addEventListener('pointerdown', e => {
   if (done || !geo) return;
@@ -169,14 +269,16 @@ svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up)
 function finish() {
   for (let j = last + 1; j < N; j++) g[j] = g[last];
   done = true; Kit.haptic('success');
+  Kit.$('card').classList.add('answered');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  svg.setAttribute('aria-label', 'A year of donations: the bags fill one by one and the PFAS level steps down at each, from full today to 30% lower a year later; the reader\'s guess is drawn over it.');
   requestAnimationFrame(() => requestAnimationFrame(() => render(true)));
 }
 
 Kit.onShow.card = () => render(false);
 Kit.onEnter.card = () => {
   if (Kit.calm || done || !startDot) return;
-  gsap.fromTo(startDot, {attr: {r: geo.fs * .55}}, {attr: {r: geo.fs * .9}, duration: .6, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+  gsap.fromTo(startDot, {attr: {r: geo.fs * .5}}, {attr: {r: geo.fs * .85}, duration: .6, repeat: 3, yoyo: true, ease: 'sine.inOut'});
 };
 Kit.play.card = async () => {
   const r = svg.getBoundingClientRect();
@@ -187,6 +289,8 @@ Kit.play.card = async () => {
   fire('pointermove', N - 1, .9); fire('pointerup', N - 1, .9);
   await new Promise(r => setTimeout(r, 2600));
 };
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) render(false); }).observe(svg); }
 Kit.single();
 </script>
 </html>

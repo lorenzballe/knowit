@@ -74,6 +74,36 @@ double niceAbove(double v) {
   return 10 * p;
 }
 
+/// Locks [value] as [answer]'s number, [sure] how sure where the shelf
+/// asked, kept as the card's answer. What a tile and the challenge's
+/// screen both do.
+Future<void> layNumber(
+  ExploreHost host,
+  BetSection shelf,
+  BetAnswer answer, {
+  required double value,
+  int? sure,
+}) async {
+  final StepScale scale = StepScale.around(answer)!;
+  final String response = plainResponse(value);
+  await layBet(
+    host,
+    shelf.section,
+    Bet(
+      kind: 'number',
+      section: shelf.id,
+      pill: answer.pill.id,
+      said: response,
+      right: answer.accepts(response),
+      confidence: sure,
+      facts: {'places': scale.decimals, 'off': (value - answer.value).abs()},
+      at: DateTime.now().millisecondsSinceEpoch,
+    ),
+    pill: answer.pill,
+    response: response,
+  );
+}
+
 /// One number to set.
 class NumberTile extends StatelessWidget {
   const NumberTile({
@@ -125,25 +155,8 @@ class NumberTile extends StatelessWidget {
 
     String amount(double x) => unit.isEmpty ? say(x) : '${say(x)} $unit';
 
-    Future<void> lay(int? sure) async {
-      final String response = plainResponse(v);
-      await layBet(
-        host,
-        shelf.section,
-        Bet(
-          kind: 'number',
-          section: shelf.id,
-          pill: pill.id,
-          said: response,
-          right: answer.accepts(response),
-          confidence: sure,
-          facts: {'places': scale.decimals, 'off': (v - answer.value).abs()},
-          at: DateTime.now().millisecondsSinceEpoch,
-        ),
-        pill: pill,
-        response: response,
-      );
-    }
+    Future<void> lay(int? sure) =>
+        layNumber(host, shelf, answer, value: v, sure: sure);
 
     void lock() {
       BetFeel.lay();

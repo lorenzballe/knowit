@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "What was the world’s first plastic recycling centre?",
-  "answer": "The world's first plastic recycling centre was the Plastic Waste Recycling Mill. Aluminium and glass were reused in wartime because they were scarce, but plastic needed another reason: it was realised that it can badly damage the environment. So it got a plant of its own, and this mill was the world's first.",
+  "answer": "The world's first plastic recycling centre was a mill opened in 1972 in Conshohocken, Pennsylvania. Aluminium and glass were reused in wartime because they were scarce, but plastic needed another reason: it was realised that it can badly damage the environment. So it got a plant of its own, and this mill was the world's first.",
   "move": "Plastic recycling began to protect nature, not to make up for scarcity.",
   "keywords": [
     "plastic",
@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Question asks what the world's first plastic recycling centre was. Tap each material (plastic, aluminium, glass) to see why it was recycled. Shows a historic photo of the Plastic Waste Recycling Mill with a banner reading First Plastic Recycling Plant."
+    "label": "A brick recycling mill under a sawtooth roof in green country, the recycling arrows on its front; in its yard an aluminium can, a green glass bottle and a blue plastic bottle. Tap each to see why it was recycled: can and glass, scarce in wartime; the plastic flies into the mill, its town and year go up, Conshohocken, 1972, and a sprout grows where it stood."
   },
   "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=WALo6GLp_to&t=333s",

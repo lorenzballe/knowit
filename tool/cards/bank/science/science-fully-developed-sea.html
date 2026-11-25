@@ -1,5 +1,12 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-fully-developed-sea -->
+<!-- The picture: the open sea in section, drawn big. A slice of blue water with a thick ink surface and a deeper band
+     below, the card's own green as sky, a cloud, and a small sailboat riding the surface for scale. Each tap is a gust:
+     wind streaks cross the sky and a fat arrow, "wind in", pours into the waves at a steady width; the waves grow and
+     mix into many wavelengths, their crests start to break into white foam with eddies curling under them, and a
+     second arrow, "breaking out", carries energy down into the water, wider at every gust. When it is as wide as the
+     wind's, in = out and the waves stop growing: the dashed line of the last crest height is not passed again.
+     Flat colours, thick ink outlines; drawn again at its real size whenever its room changes. -->
 <title>Astute free card · When do waves stop growing?</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -9,30 +16,19 @@
 #pic{flex:1;min-height:0;width:100%;display:block;cursor:pointer;touch-action:manipulation}
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+/* On a short card the picture takes the headline's room once the answer is in: the body says the same, and "in = out" is drawn. */
+.card.short #why .big{display:none}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body)}
 #go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;align-self:stretch;overflow-wrap:anywhere}
 #go:active{transform:scale(.98)}
 .say{overflow-wrap:anywhere}
-.water{fill:var(--k);opacity:.92}
-.foam{fill:var(--c)}
-.eddy{fill:none;stroke:var(--c);stroke-width:1.4}
-.wind{stroke:var(--k);stroke-width:2;stroke-linecap:round;fill:none}
-.ghost{stroke:var(--k);stroke-width:1.4;stroke-dasharray:4 5;opacity:.45}
-.beam{stroke:var(--k);stroke-width:4;stroke-linecap:round}
-.str{stroke:var(--k);stroke-width:1.4;opacity:.7}
-.plate{stroke:var(--k);stroke-width:3;stroke-linecap:round}
-.post{stroke:var(--k);stroke-width:3;stroke-linecap:round}
-.inb{fill:var(--k)}
-.outb{fill:color-mix(in srgb,var(--k) 35%,transparent);stroke:var(--k);stroke-width:1.6;stroke-dasharray:3 3}
-.lab{fill:var(--k);font-family:var(--body);font-weight:800;letter-spacing:.06em}
-.eq{fill:var(--k);font-family:var(--display);font-weight:800}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Tap to build">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">OCEAN WAVES</span></div>
     <h2 class="q">When do wind waves reach their maximum size?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic"></svg>
+      <svg id="pic" role="img" aria-label="The open sea drawn in section, calm, with a small sailboat on it and a cloud in the sky. Each tap lets a gust of wind blow on it."></svg>
       <button id="go">Let the wind blow ›</button>
       <div id="why" class="gone">
         <p class="big">When breaking loses energy as fast as the wind adds it.</p>
@@ -64,107 +60,167 @@ const SAY = [
 let n = 0, done = false;
 const st = {a: 0, d: 0, mix: 0, wind: 0, prev: 0};
 let G = null, t0 = performance.now();
+// Flat colours, one meaning each: the sea blue, deeper blue below it, white foam, cream cloud and sail, the boat's red.
+const INK = '#10100c', SEA = '#2f7fe0', DEEP = '#2a6ad1', FOAM = '#fffbf0', CLOUD = '#f4f1e8', HULL = '#d8452f';
+const FONT = 'Figtree, system-ui, sans-serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const P = (x, y) => x.toFixed(1) + ',' + y.toFixed(1);
 
 function build() {
   const svg = Kit.$('pic'); svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const seaH = H * .55, mean = seaH * .64, Amax = seaH * .42;
-  const g = {W, H, f, seaH, mean, Amax};
-  g.winds = [0, 1, 2, 3].map(() => Kit.mk('line', {class: 'wind'}, svg));
-  g.ghost = Kit.mk('line', {class: 'ghost', x1: 0, x2: W}, svg);
-  g.water = Kit.mk('path', {class: 'water'}, svg);
-  g.foam = []; g.eddy = [];
-  for (let i = 0; i < 8; i++) {
-    g.foam.push(Kit.mk('ellipse', {class: 'foam'}, svg));
-    g.eddy.push(Kit.mk('circle', {class: 'eddy'}, svg));
-    g.eddy.push(Kit.mk('circle', {class: 'eddy'}, svg));
-  }
-  // balance
-  const low = H - seaH;
-  g.cx = W / 2; g.cy = seaH + low * .3; g.L = Math.min(W * .32, 170);
-  g.hh = low * .26; g.pw = Math.min(W * .2, 90);
-  g.labY = H - f * .35;
-  Kit.mk('line', {class: 'post', x1: g.cx, x2: g.cx, y1: g.cy, y2: g.labY - f * 1.6}, svg);
-  Kit.mk('line', {class: 'post', x1: g.cx - f * 1.4, x2: g.cx + f * 1.4, y1: g.labY - f * 1.6, y2: g.labY - f * 1.6}, svg);
-  g.beam = Kit.mk('line', {class: 'beam'}, svg);
-  Kit.mk('circle', {cx: g.cx, cy: g.cy, r: 5, class: 'inb'}, svg);
-  g.eq = Kit.mk('text', {class: 'eq', x: g.cx, y: g.cy - f * .9, 'text-anchor': 'middle', 'font-size': f * 1.05}, svg);
-  g.eq.textContent = 'IN = OUT';
-  g.side = [-1, 1].map(s => ({
-    s1: Kit.mk('line', {class: 'str'}, svg), s2: Kit.mk('line', {class: 'str'}, svg),
-    blk: Kit.mk('rect', {class: s < 0 ? 'inb' : 'outb', rx: 3}, svg),
-    plate: Kit.mk('line', {class: 'plate'}, svg)
-  }));
-  const fl = Math.max(12, f * .78);
-  [['WIND IN', -1], ['BREAKING OUT', 1]].forEach(([t, s]) => {
-    const el = Kit.mk('text', {class: 'lab', x: g.cx + s * g.L, y: g.labY, 'text-anchor': 'middle', 'font-size': fl}, svg);
-    el.textContent = t;
-  });
+  const {W, H} = Kit.fitSvg(svg);
+  if (W < 60 || H < 40) { G = null; return; }
+  const fs = clamp(Math.min(W / 24, H / 11), 11.5, 14);
+  const tall = H >= 150;
+  // The sea level a little under the middle; the biggest crests leave the sky its top, the deepest troughs leave water under them.
+  const mean = H * .5, Amax = Math.min(H * .2, W * .2), r = Math.min(16, W * .05);
+  const g = {W, H, fs, tall, mean, Amax, r};
+  const defs = Kit.mk('defs', {}, svg);
+  const clip = Kit.mk('clipPath', {id: 'sea-slice'}, defs);
+  Kit.mk('path', {d: `M0,-2 H${W} V${H - r} Q${W},${H} ${W - r},${H} H${r} Q0,${H} 0,${H - r} Z`}, clip);
+  const world = Kit.mk('g', {'clip-path': 'url(#sea-slice)'}, svg);
+  // A cloud, high on the left, drifting a little once the wind blows.
+  g.cloud = Kit.mk('g', {}, world);
+  const cr = clamp(Math.min(W * .05, (mean - Amax) * .22), 6, 18);
+  if (mean - Amax > cr * 3.2) [[0, 0, 1], [1.1, -.45, 1.25], [2.3, 0, .95], [1.15, .25, 1.05]].forEach(([dx, dy, k]) => Kit.mk('circle', {cx: dx * cr, cy: dy * cr, r: cr * k + 1.3, fill: INK}, g.cloud));
+  if (mean - Amax > cr * 3.2) [[0, 0, 1], [1.1, -.45, 1.25], [2.3, 0, .95], [1.15, .25, 1.05]].forEach(([dx, dy, k]) => Kit.mk('circle', {cx: dx * cr, cy: dy * cr, r: cr * k - 1.1, fill: CLOUD}, g.cloud));
+  g.cloudAt = [W * .42, Math.max(cr * 1.7, (mean - Amax) * .3)];
+  // Wind streaks, each ending in a curl.
+  g.winds = [0, 1, 2].map(() => Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, world));
+  // The highest crest so far, as a dashed line.
+  g.ghost = Kit.mk('line', {x1: 0, x2: W, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '5 5', opacity: 0}, world);
+  // The sea: the water under its surface, a deeper band, the surface line.
+  g.deep = Kit.mk('rect', {x: 0, y: mean + Amax * 1.15, width: W, height: H - mean - Amax * 1.15 + 1, fill: DEEP}, world);
+  g.water = Kit.mk('path', {fill: SEA}, world);
+  // A few marks of moving water, drifting with the waves, so the sea reads as sea.
+  g.marks = [[.14, .38], [.62, .3], [.36, .62], [.84, .58], [.1, .86], [.55, .88]].map(([u, v]) => ({u, v, el: Kit.mk('path', {fill: 'none', stroke: FOAM, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .45}, world)}));
+  g.eddy = []; for (let i = 0; i < 10; i++) g.eddy.push(Kit.mk('path', {fill: 'none', stroke: FOAM, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, world));
+  g.surf = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, world);
+  g.foam = []; for (let i = 0; i < 6; i++) g.foam.push(Kit.mk('path', {fill: FOAM, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, world));
+  g.spray = []; for (let i = 0; i < 12; i++) g.spray.push(Kit.mk('circle', {r: 0, fill: FOAM, stroke: INK, 'stroke-width': 1.4}, world));
+  // The boat, riding the surface in the middle.
+  const L = clamp(Math.min(W * .16, H * .24), 20, 56);
+  g.boat = Kit.mk('g', {}, world); boat(g.boat, L);
+  g.boatX = W * .52;
+  // The two flows of energy, drawn only where the picture is tall enough for them and their names.
+  g.inA = Kit.mk('path', {fill: FOAM, stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, svg);
+  g.outA = Kit.mk('path', {fill: FOAM, stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, svg);
+  const lab = (t, a) => { const e = Kit.mk('text', Object.assign({'font-family': FONT, 'font-weight': 800, 'font-size': fs, fill: INK, stroke: 'var(--c)', 'stroke-width': fs * .32, 'stroke-linejoin': 'round', 'paint-order': 'stroke'}, a), svg); e.textContent = t; return e; };
+  g.inL = lab('wind in', {});
+  g.outL = lab('breaking out', {'text-anchor': 'end', fill: FOAM, stroke: DEEP});
+  g.eq = lab('in = out', {'text-anchor': 'end', 'font-size': fs * 1.15});
   G = g; render();
+}
+
+// A small sailboat on its waterline at (0, 0): hull, mast, sail, a flag.
+function boat(p, L) {
+  const at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, h = L * .26;
+  Kit.mk('path', Object.assign({d: `M${-L / 2},${-h} L${L / 2},${-h} L${L * .36},${h * .35} L${-L * .38},${h * .35} Z`, fill: HULL}, at), p);
+  Kit.mk('path', Object.assign({d: `M${-L * .02},${-h} V${-L * .98}`, fill: 'none', 'stroke-linecap': 'round'}, at), p);
+  Kit.mk('path', Object.assign({d: `M${L * .04},${-L * .94} L${L * .04},${-h - L * .06} L${L * .42},${-h - L * .06} Z`, fill: FOAM}, at), p);
+  Kit.mk('path', Object.assign({d: `M${-L * .08},${-L * .86} L${-L * .08},${-h - L * .1} L${-L * .38},${-h - L * .1} Z`, fill: CLOUD}, at), p);
+  Kit.mk('path', Object.assign({d: `M${-L * .02},${-L * .98} l${-L * .16},${L * .05} l${L * .16},${L * .05} Z`, fill: HULL}, at), p);
+}
+
+// The surface's height at x: a long wave, sharper crested as it grows, with shorter ones mixed in.
+function surface(x, t) {
+  const {W, mean, Amax} = G, A = Amax * Math.max(.1, st.a), k1 = 2 * Math.PI / (W * .58), mix = st.mix, q = .12 + .22 * st.a;
+  const th = k1 * x - 1.6 * t;
+  let v = Math.cos(th) + q * Math.cos(2 * th) + mix * (.32 * Math.cos(2.3 * k1 * x - 2.5 * t + 1) + .2 * Math.cos(.6 * k1 * x - 1.1 * t + 2.2));
+  v /= 1 + q + mix * .52;
+  return mean - A * v;
 }
 
 function render() {
   if (!G) return;
   const g = G, t = Kit.calm ? 0 : (performance.now() - t0) / 1000;
-  const {W, seaH, mean, Amax} = g;
-  const A = Amax * st.a, mix = st.mix;
-  const k1 = 2 * Math.PI / (W * .55), norm = .7 + mix * .45;
-  const pts = [];
-  for (let x = -4; x <= W + 4; x += 4) {
-    let v = .7 * Math.sin(k1 * x - 1.6 * t)
-      + mix * (.28 * Math.sin(k1 * 2.3 * x - 2.5 * t + 1) + .17 * Math.sin(k1 * .6 * x - 1.1 * t + 2.2));
-    v /= norm;
-    v = v + .18 * v * Math.abs(v); // sharper crests
-    pts.push([x, mean - A * v / 1.18]);
-  }
-  let d = 'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L') + `L${W + 4} ${seaH}L-4 ${seaH}Z`;
-  g.water.setAttribute('d', d);
-  // crests: local tops of the surface
+  const {W, H, fs, mean, Amax, tall} = g;
+  const xs = []; for (let x = 0; x < W; x += 3) xs.push(x); xs.push(W);
+  const ys = xs.map(x => surface(x, t));
+  const line = xs.map((x, i) => (i ? 'L' : 'M') + P(x, ys[i])).join('');
+  g.water.setAttribute('d', line + `L${W},${H}L0,${H}Z`);
+  g.surf.setAttribute('d', line);
+  // The water's marks: under the deepest trough, drifting right, a double scallop each.
+  const low = mean + Amax * 1.05, m = Math.max(5, Math.min(W * .028, (H - low) * .1));
+  g.marks.forEach(k => {
+    const y = low + (H - low) * k.v, x = ((k.u * W + t * W * .03) % (W + m * 5)) - m * 2.5;
+    k.el.setAttribute('d', y < H - m && x > 2 && x + m * 4 < W - 2 ? `M${P(x, y)} q${m},${m * .8} ${m * 2},0 q${m},${m * .8} ${m * 2},0` : '');
+  });
+  // Crests: the local tops of the surface, high enough to break once the sea breaks.
   const crests = [];
-  for (let i = 1; i < pts.length - 1; i++)
-    if (pts[i][1] < pts[i - 1][1] && pts[i][1] <= pts[i + 1][1] && pts[i][1] < mean - A * .45) crests.push(pts[i]);
-  const br = Math.max(0, (st.d - .15) / .85);
+  for (let i = 1; i < xs.length - 1; i++) if (ys[i] < ys[i - 1] && ys[i] <= ys[i + 1] && mean - ys[i] > Amax * st.a * .45) crests.push([xs[i], ys[i]]);
+  const br = clamp((st.d - .1) / .9, 0, 1);
   g.foam.forEach((e, i) => {
     const c = crests[i];
-    if (!c || br <= 0) { e.setAttribute('opacity', 0); g.eddy[2 * i].setAttribute('opacity', 0); g.eddy[2 * i + 1].setAttribute('opacity', 0); return; }
-    e.setAttribute('cx', c[0] + 6); e.setAttribute('cy', c[1] + 2);
-    e.setAttribute('rx', 6 + 16 * br); e.setAttribute('ry', 2.5 + 3 * br); e.setAttribute('opacity', .95 * br);
-    [0, 1].forEach(j => {
-      const r = 3 + 5 * br * (1 + .4 * Math.sin(t * 3 + i + j));
-      const ed = g.eddy[2 * i + j];
-      ed.setAttribute('cx', c[0] - 4 + j * 14); ed.setAttribute('cy', c[1] + 10 + j * 8 + 4 * br);
-      ed.setAttribute('r', r); ed.setAttribute('opacity', .8 * br);
-    });
+    if (!c || br <= 0) { e.setAttribute('d', ''); return; }
+    // A cap of white foam spilling down the crest's front.
+    const fw = W * (.03 + .05 * br), th = Math.max(2.5, Amax * (.08 + .14 * br));
+    const top = [], bot = [];
+    for (let x = Math.max(1, c[0] - fw * .6); x <= Math.min(W - 1, c[0] + fw); x += 2) { const y = surface(x, t), k = 1 - Math.pow((x - c[0] - fw * .2) / (fw * .8), 2); top.push([x, y - 1]); bot.push([x, y + th * Math.max(0, k)]); }
+    if (top.length < 2) { e.setAttribute('d', ''); return; }
+    e.setAttribute('d', 'M' + top.map(p => P(p[0], p[1])).join('L') + 'L' + bot.reverse().map(p => P(p[0], p[1])).join('L') + 'Z');
   });
-  // wind streaks
+  // Spray thrown off the breaking crests.
+  g.spray.forEach((e, i) => {
+    const c = crests[i % Math.max(1, crests.length)], k = Math.floor(i / Math.max(1, crests.length));
+    if (!c || br <= .15 || k > 2) { e.setAttribute('r', 0); return; }
+    const ph = (t * .9 + i * .37) % 1, s = Amax * (.1 + .22 * br);
+    const sx = c[0] + W * .02 + k * s * .5 + ph * s * .6;
+    if (sx > W - 6) { e.setAttribute('r', 0); return; }
+    e.setAttribute('cx', sx.toFixed(1));
+    e.setAttribute('cy', (c[1] - s * (.4 + .5 * Math.sin(ph * Math.PI)) - k * 2).toFixed(1));
+    e.setAttribute('r', (Math.max(1.5, Amax * .035) * (1 - ph * .5) * (.6 + .4 * br)).toFixed(1));
+  });
+  // Eddies curling under the breaking crests: the energy leaving the wave.
+  g.eddy.forEach((e, i) => {
+    const c = crests[i >> 1];
+    if (!c || br <= .05) { e.setAttribute('d', ''); return; }
+    const j = i & 1, R = Amax * (.1 + .13 * br) * (j ? .75 : 1), cx = c[0] - W * .02 + j * W * .05, cy = c[1] + Amax * (.55 + .25 * j) + R;
+    if (cx - R < 2 || cx + R > W - 2) { e.setAttribute('d', ''); return; }
+    let d = '';
+    for (let a = 0; a <= Math.PI * 3.2; a += .3) { const rr = R * a / (Math.PI * 3.2), ang = a + t * 2 * (j ? -1 : 1); d += (a ? 'L' : 'M') + P(cx + rr * Math.cos(ang), cy + rr * Math.sin(ang)); }
+    e.setAttribute('d', d); e.setAttribute('opacity', (.9 * br).toFixed(2));
+  });
+  // The wind: streaks crossing the sky, each with a curl, only while it blows.
+  const sky = mean - Amax;
   g.winds.forEach((l, i) => {
-    const y = seaH * (.1 + .09 * i), len = W * .12, sp = W * (.35 + .1 * i);
-    const x = ((t * sp + i * W * .31) % (W + len)) - len;
-    l.setAttribute('x1', x); l.setAttribute('x2', x + len); l.setAttribute('y1', y); l.setAttribute('y2', y);
-    l.setAttribute('opacity', .55 * st.wind);
+    const y = sky * (.52 + .17 * i), len = W * (.2 + .04 * i), sp = W * (.3 + .07 * i);
+    const x = ((t * sp + i * W * .37) % (W + len * 1.6)) - len * 1.2, c = Math.min(len * .12, sky * .12);
+    const xa = Math.max(2, x), xb = Math.min(W - 2, x + len), curl = x + len + c * 1.2 < W - 2;
+    l.setAttribute('d', st.wind > .02 && xb - xa > 6 ? `M${P(xa, y)} L${P(xb, y)}` + (curl ? ` a${c},${c} 0 1 0 ${-c * .2},${-c * 1.6}` : '') : '');
+    l.setAttribute('opacity', (.85 * st.wind).toFixed(2));
   });
-  // ghost: last crest height
+  g.cloud.setAttribute('transform', `translate(${(g.cloudAt[0] + (Kit.calm ? 0 : Math.sin(t * .3) * W * .02) + st.wind * W * .06).toFixed(1)},${g.cloudAt[1].toFixed(1)})`);
+  // The last gust's highest crest, dashed.
   const gy = mean - Amax * st.prev;
   g.ghost.setAttribute('y1', gy); g.ghost.setAttribute('y2', gy);
-  g.ghost.setAttribute('opacity', st.prev > 0 ? .45 : 0);
-  // balance
-  const ang = -(st.wind - st.d) * 13 * Math.PI / 180;
-  const ca = Math.cos(ang), sa = Math.sin(ang);
-  const ends = [[g.cx - g.L * ca, g.cy - g.L * sa], [g.cx + g.L * ca, g.cy + g.L * sa]];
-  g.beam.setAttribute('x1', ends[0][0]); g.beam.setAttribute('y1', ends[0][1]);
-  g.beam.setAttribute('x2', ends[1][0]); g.beam.setAttribute('y2', ends[1][1]);
-  const amt = [st.wind, st.d];
-  g.side.forEach((s, i) => {
-    const [ex, ey] = ends[i], py = ey + g.hh, hw = g.pw / 2;
-    s.s1.setAttribute('x1', ex); s.s1.setAttribute('y1', ey); s.s1.setAttribute('x2', ex - hw); s.s1.setAttribute('y2', py);
-    s.s2.setAttribute('x1', ex); s.s2.setAttribute('y1', ey); s.s2.setAttribute('x2', ex + hw); s.s2.setAttribute('y2', py);
-    s.plate.setAttribute('x1', ex - hw); s.plate.setAttribute('x2', ex + hw); s.plate.setAttribute('y1', py); s.plate.setAttribute('y2', py);
-    const bh = g.hh * .6 * amt[i], bw = g.pw * .42;
-    s.blk.setAttribute('x', ex - bw / 2); s.blk.setAttribute('width', bw);
-    s.blk.setAttribute('y', py - 1.5 - bh); s.blk.setAttribute('height', Math.max(0, bh));
-    s.blk.setAttribute('opacity', amt[i] > .01 ? 1 : 0);
-  });
-  g.eq.setAttribute('opacity', st.wind > .5 && st.d > .97 ? 1 : 0);
+  g.ghost.setAttribute('opacity', st.prev > 0 ? .5 : 0);
+  // The boat, on the surface, leaning with it.
+  const bx = g.boatX, by = surface(bx, t), slope = (surface(bx + 4, t) - surface(bx - 4, t)) / 8;
+  g.boat.setAttribute('transform', `translate(${P(bx, by + 1)}) rotate(${(Math.atan(slope) * 180 / Math.PI).toFixed(1)})`);
+  // The two flows: the wind's into the waves, the breaking's out of them, as wide as how much each carries.
+  const T = clamp(Math.min(W, H) * .045, 6, 14), show = tall && st.wind > .02;
+  if (show) {
+    const tw = T * st.wind;
+    arrow(g.inA, W * .06, sky * .22, W * .28, sky - Amax * .05, tw);
+    g.inL.setAttribute('x', W * .06 + tw + 8); g.inL.setAttribute('y', Math.max(fs, sky * .22 + fs * .1)); g.inL.setAttribute('opacity', st.wind.toFixed(2)); g.inL.setAttribute('display', 'inline');
+    const ox = W * .86, oy0 = mean + Amax * .9, oy1 = H - Math.max(8, H * .03), ow = T * st.d;
+    arrow(g.outA, ox, oy0, ox, oy1, ow);
+    g.outL.setAttribute('x', ox - Math.max(T, 8) - 6); g.outL.setAttribute('y', (oy0 + oy1) / 2 + fs * .35); g.outL.setAttribute('display', st.d > .05 ? 'inline' : 'none');
+  } else { g.inA.setAttribute('d', ''); g.outA.setAttribute('d', ''); g.inL.setAttribute('display', 'none'); g.outL.setAttribute('display', 'none'); }
+  const even = st.wind > .5 && st.d > .97;
+  g.eq.setAttribute('x', W - 4); g.eq.setAttribute('y', Math.max(fs * 1.1, sky * .24 + fs * .3));
+  g.eq.setAttribute('display', even ? 'inline' : 'none');
+}
+
+// A fat arrow from (x0, y0) to (x1, y1), its shaft w wide.
+function arrow(el, x0, y0, x1, y1, w) {
+  if (w < .8) { el.setAttribute('d', ''); return; }
+  const L = Math.hypot(x1 - x0, y1 - y0), ux = (x1 - x0) / L, uy = (y1 - y0) / L, nx = -uy, ny = ux;
+  const hw = w / 2, head = Math.max(w * 1.9, 9), hl = Math.min(L * .45, head * 1.05), bx = x1 - ux * hl, by = y1 - uy * hl;
+  const pts = [[x0 + nx * hw, y0 + ny * hw], [bx + nx * hw, by + ny * hw], [bx + nx * head / 2 * 1.35, by + ny * head / 2 * 1.35], [x1, y1],
+    [bx - nx * head / 2 * 1.35, by - ny * head / 2 * 1.35], [bx - nx * hw, by - ny * hw], [x0 - nx * hw, y0 - ny * hw]];
+  el.setAttribute('d', 'M' + pts.map(p => P(p[0], p[1])).join('L') + 'Z');
 }
 
 function finish() {
@@ -184,14 +240,16 @@ function step() {
   Kit.$('go').textContent = n < LAST ? `Let the wind blow › (gust ${n + 1})` : 'Blow';
   const to = {a: tot[n] / TMAX, d: D[n], mix: n / LAST, wind: 1};
   if (Kit.calm) { Object.assign(st, to); render(); }
-  else gsap.to(st, {...to, duration: 1.1, ease: 'power2.out'});
+  else gsap.to(st, {...to, duration: 1.1, ease: 'power2.out', onUpdate: render});
   if (n === LAST) setTimeout(finish, Kit.calm ? 400 : 1300);
 }
 
 Kit.$('go').addEventListener('click', step);
 Kit.$('pic').addEventListener('click', step);
 
-Kit.onShow.card = () => build();
+Kit.onShow.card = () => { Kit.$('card').classList.toggle('short', Kit.$('card').getBoundingClientRect().height < 540); build(); };
+// Drawn again at the size it now has whenever its room changes: when the answer comes in, never shrunk whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k === seen) return; const first = !seen; seen = k; if (!first) build(); }).observe(el); }
 Kit.onEnter.card = () => {
   if (Kit.calm) return;
   gsap.ticker.add(render);

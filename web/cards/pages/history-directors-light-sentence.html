@@ -1,174 +1,382 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-directors-light-sentence -->
+<!-- Look: a prison seen from its yard, flat, with ink outlines: a cell block with barred windows behind a high
+     concrete wall topped with barbed wire, the steel gate on the left, and along the yard a path of 25 paving
+     stones, one for each year, numbered from the gate. On it stands the camp's director, grey-haired, glasses,
+     in a dark suit, a briefcase stuffed with banknotes in his hand.
+     Interaction: drag him along the path: the stones he passes are the years of the reader's guess. Then say how
+     sure.
+     The answer: the gate swings open; the stones of his real sentence turn red, two and a half of them, and he
+     stands at the open gate, walking out, while the reader's guess stays behind him, pale. Over the gate: out
+     after 2.5 years, for the money only.
+     Layout: drawn again at the size it has whenever its room changes; in a short box the cell block goes first,
+     then the second line over the gate. -->
 <title>Astute free card · The director's sentence</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
-#pic text{font-family:var(--body);fill:var(--k)}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize;user-select:none;-webkit-user-select:none}
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .body{margin:0;font:500 clamp(12px,2.15cqh,14px)/1.3 var(--body)}
 #why b{font-weight:800}
 .q,.say,.body,.keep{overflow-wrap:anywhere}
+.answered .q{font-size:max(2.6cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Guess a number · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">REAL SQUID GAME</span></div>
     <h2 class="q">The camp's director stole millions in subsidies. How long was his prison sentence?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" aria-label="A scale of prison years from 0 to 25"></svg>
+      <svg id="pic" role="img" aria-label="A prison yard: a high wall with barbed wire and a steel gate, and a path of 25 paving stones, one for each year, numbered from the gate. The camp's director, a grey-haired man in a suit with a briefcase full of banknotes, stands on it. Drag him to your guess."></svg>
       <div id="why" class="gone">
         <p class="body"><b>Only 2.5 years,</b> for embezzling millions of dollars in government subsidies. Well connected to the state's top officials, he never answered for the illegal confinement and the human rights violations.</p>
       </div>
     </div>
     <div id="sure"></div>
-    <p class="say" id="say">Drag the marker to your guess, in years.</p>
+    <p class="say" id="say">Drag the director along the path to your guess, in years.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>He was punished for the stolen money, never for the people locked up.</div>
     <div class="foot"><span class="src">Source · Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const MAX = 25, REAL = 2.5, RED = '#c8102e';
-let g = 12, moved = false, asked = false, done = false, dragging = false;
-let geo = null;
-const fmt = v => (Math.round(v * 2) / 2).toString();
+(() => {
+  const MAX = 25, REAL = 2.5;
+  // One ink; the sky, the concrete of the wall and the cell block, the steel of the gate, the yard and its stones;
+  // the director's suit, shirt, skin and grey hair, the leather of his case and the green of the banknotes; the
+  // light outside the gate; and one red, for the sentence he served.
+  const INK = '#10100c', SKY = '#D7E8F3', BLOCK = '#B3B6B8', WALL = '#CFC6B6', COPING = '#A99F8F', GATE = '#5C6773', YARD = '#E4D7BC',
+    STONE = '#F5EEDF', WORN = '#A69A86', OUT = '#FFF3CC', GRASS = '#8CC56C', SUIT = '#2F3B58', TROUSERS = '#263049', SHIRT = '#ffffff',
+    TIE = '#7E8EA6', SKIN = '#F2C29B', HAIR = '#D0CEC9', CASE = '#7B4B2B', CASH = '#8DC891', RED = '#C8372A';
+  const FONT = 'Figtree, system-ui, sans-serif', HAND = 'Caveat, cursive';
+  const svg = Kit.$('pic'), card = Kit.$('card');
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const f1 = n => (Math.round(n * 10) / 10).toString();
+  const mk = Kit.mk;
+  const fmt = v => (Math.round(v * 2) / 2).toString();
+  let g = 12, moved = false, asked = false, done = false, dragging = false;
+  // What has been drawn, at the size it has now; and how far the answer has come in (the gate, the red stones, him).
+  let L = null;
+  const st = {open: 0, red: 0, out: 0};
 
-const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  const ok = Math.abs(g - REAL) <= 1;
-  done = true;
-  Kit.answer({choice: fmt(g) + ' years', correct: ok, sure: pct});
-  Kit.hide('say');
-  draw(true);
-  Kit.show('why');
-  sure.grade(ok, pct, `${fmt(g)} years, ${ok ? 'right' : 'wrong'}`);
-  Kit.show('keep');
-  Kit.haptic('success');
-  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .45, delay: .5, ease: 'power3.out'});
-});
-
-function txt(svg, x, y, s, size, weight, anchor, fill) {
-  const t = Kit.mk('text', {x, y, 'font-size': size, 'font-weight': weight || 700, 'text-anchor': anchor || 'middle', 'dominant-baseline': 'middle'}, svg);
-  if (fill) t.setAttribute('style', 'fill:' + fill);
-  t.textContent = s; return t;
-}
-// A label centred on x, moved in so it never runs off either side.
-function clampX(t, x) {
-  let w = 0; try { w = t.getComputedTextLength(); } catch (_) {}
-  t.setAttribute('x', Math.max(w / 2 + 4, Math.min(geo.W - w / 2 - 4, x)));
-}
-
-function draw(animate) {
-  const svg = Kit.$('pic');
-  const {W, H} = Kit.fitSvg(svg);
-  svg.innerHTML = '';
-  // The rows, in units of the type size f, around the track: the title and the guess above it, the
-  // numbers under it and, once it is known, the real sentence. The type is set by the width, made
-  // smaller only when the box is short, and the title goes first when even that is not enough. The
-  // height left over is shared out between the rows: the scale is drawn at its real size in the tall
-  // box of the start and in the shorter one the answer leaves it.
-  // A short box packs the rows closer: the guess nearer the track, the sentence beside its note.
-  // While the reader is guessing, a tall box also shows the guess itself, large, under the title.
-  const up = t => t ? (done ? 4.6 : 9.2) : 2.75, down = t => done ? (t ? 5.3 : 3.85) : 2.3;
-  let title = true, f = Math.min(W / 20, 16, (H - 2) / (up(true) + down(true)));
-  if (f < 12.5) { title = false; f = Math.min(W / 20, 16, (H - 2) / (up(false) + down(false))); }
-  f = Math.max(10.5, f);
-  const slack = Math.max(0, H - (up(title) + down(title)) * f);
-  const sTop = done ? slack * (title ? .1 : .2) : slack / 2, sMid = done && title ? slack * .3 : 0, sLow = done ? slack * (title ? .4 : .5) : 0;
-  const pad = Math.max(f * 1.4, W * .07);
-  const x0 = pad, x1 = W - pad;
-  const y = sTop + up(title) * f + sMid;
-  geo = {W, H, f, x0, x1, y};
-  const X = v => x0 + (x1 - x0) * v / MAX;
-
-  if (title) txt(svg, W / 2, y - f * (done ? 4.05 : 8.6) - sMid, 'Years in prison', f * 1.05, 800);
-  if (title && !done) {
-    const big = Kit.mk('text', {x: W / 2, y: y - f * 4.3, 'text-anchor': 'middle', style: 'fill:var(--k)'}, svg);
-    const n = Kit.mk('tspan', {'font-family': 'var(--display)', 'font-weight': 800, 'font-size': f * 3.6}, big);
-    n.textContent = moved ? fmt(g) : '?';
-    const u = Kit.mk('tspan', {'font-family': 'var(--body)', 'font-weight': 800, 'font-size': f * 1.3, dx: f * .35}, big);
-    u.textContent = moved && fmt(g) === '1' ? 'year' : 'years';
+  // A word set at a size that fits its room: made smaller, down to a floor, never stretched.
+  function words(p, x, y, s, o = {}) {
+    const e = mk('text', {x: f1(x), y: f1(y), 'font-family': o.font || FONT, 'font-size': f1(o.size || L.fs), 'font-weight': o.weight || 700, 'text-anchor': o.anchor || 'middle', fill: o.fill || INK}, p);
+    e.textContent = s;
+    if (o.max) for (let z = o.size || L.fs; e.getComputedTextLength() > o.max && z > (o.min || 10.5); ) { z -= .5; e.setAttribute('font-size', f1(z)); }
+    return e;
+  }
+  // Keeps a label centred on x inside the drawing.
+  function inside(t, x) {
+    let w = 0; try { w = t.getComputedTextLength(); } catch (_) {}
+    t.setAttribute('x', f1(clamp(x, w / 2 + L.pad * .6, L.W - w / 2 - L.pad * .6)));
+    return w;
   }
 
-  // track
-  Kit.mk('line', {x1: x0, y1: y, x2: x1, y2: y, stroke: 'var(--k)', 'stroke-width': f * .5, 'stroke-linecap': 'round', opacity: .18}, svg);
-  for (let v = 0; v <= MAX; v += 1) {
-    const big = v % 5 === 0;
-    Kit.mk('line', {x1: X(v), y1: y + f * .45, x2: X(v), y2: y + f * (big ? 1 : .7), stroke: 'var(--k)', 'stroke-width': big ? 2 : 1, opacity: big ? .7 : .35}, svg);
-    if (big) txt(svg, X(v), y + f * 1.8, String(v), Math.max(10, f * .9), 600, 'middle');
+  // The director, standing with his feet on y, h tall, x the middle of him: legs in dark trousers, black shoes,
+  // the jacket over a white shirt and tie, grey hair, glasses, and in his near hand a briefcase stuffed with banknotes.
+  // look: -1 towards the gate, 1 along the path; hold: the side of the hand with the case (the near one, or the trailing).
+  function director(p, x, y, h, look, hold = look) {
+    const g0 = mk('g', {}, p), r = h / 7.4, k = Math.min(L.k, Math.max(1, r * .2));
+    const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+    const foot = y - .2 * r, hip = y - 2.7 * r, sh = y - 5.1 * r, hy = sh - 1.25 * r, sw = 1.4 * r, hw = 1.2 * r;
+    // legs and shoes
+    mk('path', Object.assign({d: `M${f1(x - .92 * r)},${f1(foot)}V${f1(hip)}H${f1(x - .05 * r)}V${f1(foot)}Z M${f1(x + .05 * r)},${f1(foot)}V${f1(hip)}H${f1(x + .92 * r)}V${f1(foot)}Z`, fill: TROUSERS}, at), g0);
+    [-1, 1].forEach(s => mk('ellipse', Object.assign({cx: f1(x + s * .6 * r + look * .12 * r), cy: f1(foot), rx: f1(.66 * r), ry: f1(.25 * r), fill: INK}, at), g0));
+    // the jacket, its hem a little below the hips
+    const hem = hip + .45 * r;
+    mk('path', Object.assign({d: `M${f1(x - hw - .1 * r)},${f1(hem)}L${f1(x - sw)},${f1(sh + .45 * r)}Q${f1(x - sw)},${f1(sh)} ${f1(x - sw + .5 * r)},${f1(sh)}H${f1(x + sw - .5 * r)}Q${f1(x + sw)},${f1(sh)} ${f1(x + sw)},${f1(sh + .45 * r)}L${f1(x + hw + .1 * r)},${f1(hem)}Z`, fill: SUIT}, at), g0);
+    // the shirt in the V of the lapels, the tie down it
+    mk('path', Object.assign({d: `M${f1(x - .62 * r)},${f1(sh)}L${f1(x)},${f1(sh + 1.55 * r)}L${f1(x + .62 * r)},${f1(sh)}Z`, fill: SHIRT}, at), g0);
+    mk('path', Object.assign({d: `M${f1(x - .17 * r)},${f1(sh + .12 * r)}H${f1(x + .17 * r)}L${f1(x + .24 * r)},${f1(sh + 1.15 * r)}L${f1(x)},${f1(sh + 1.45 * r)}L${f1(x - .24 * r)},${f1(sh + 1.15 * r)}Z`, fill: TIE}, at), g0);
+    // the jacket's buttons and the line where it closes
+    mk('path', {d: `M${f1(x)},${f1(sh + 1.55 * r)}V${f1(hem - .1 * r)}`, stroke: INK, 'stroke-width': f1(k * .6), opacity: .55}, g0);
+    // arms, sleeves of the jacket outlined in ink, down the sides; the near hand (on the side he looks) holds the case
+    const aw = Math.max(k * 1.6, r * .5), lx = x - hold * (sw + .25 * r), cx = x + hold * (sw + .3 * r);
+    [[x - hold * (sw - .28 * r), lx], [x + hold * (sw - .28 * r), cx]].forEach(([x0, x1]) => {
+      const d = `M${f1(x0)},${f1(sh + .45 * r)}L${f1(x1)},${f1(hip + .2 * r)}`;
+      mk('path', Object.assign({}, at, {d, fill: 'none', 'stroke-width': f1(aw + 2 * k)}), g0);
+      mk('path', {d, fill: 'none', stroke: SUIT, 'stroke-width': f1(aw), 'stroke-linecap': 'round'}, g0);
+    });
+    mk('circle', Object.assign({cx: f1(lx), cy: f1(hip + .3 * r), r: f1(Math.max(2.4, .3 * r)), fill: SKIN}, at), g0);
+    // the briefcase, banknotes sticking out of its top
+    const bw = 1.9 * r, bh = 1.35 * r, bx = cx + hold * .15 * r - bw / 2, by = hip + .55 * r;
+    [[-.5, -.42, -7], [.05, -.55, 5], [.45, -.38, 14]].forEach(([dx, dy, a]) => {
+      const nx = bx + bw / 2 + dx * bw * .7, ny = by + dy * bh;
+      mk('rect', Object.assign({x: f1(nx - .42 * r), y: f1(ny), width: f1(.84 * r), height: f1(.75 * r), rx: 1, fill: CASH, transform: `rotate(${a} ${f1(nx)} ${f1(ny + .4 * r)})`}, at, {'stroke-width': f1(k * .7)}), g0);
+    });
+    mk('path', Object.assign({d: `M${f1(cx - .35 * r)},${f1(by)}V${f1(by - .3 * r)}H${f1(cx + .35 * r)}V${f1(by)}`, fill: 'none'}, at), g0);
+    mk('rect', Object.assign({x: f1(bx), y: f1(by), width: f1(bw), height: f1(bh), rx: f1(.18 * r), fill: CASE}, at), g0);
+    mk('path', {d: `M${f1(bx)},${f1(by + bh * .38)}H${f1(bx + bw)}`, stroke: INK, 'stroke-width': f1(k * .7)}, g0);
+    mk('circle', Object.assign({cx: f1(cx), cy: f1(hip + .3 * r), r: f1(Math.max(2.4, .3 * r)), fill: SKIN}, at), g0);
+    // neck, head, grey hair (thin on top), the ear on the far side, glasses, nose and mouth
+    mk('rect', Object.assign({x: f1(x - .3 * r), y: f1(sh - .45 * r), width: f1(.6 * r), height: f1(.55 * r), fill: SKIN}, at), g0);
+    mk('circle', Object.assign({cx: f1(x), cy: f1(hy), r: f1(r), fill: SKIN}, at), g0);
+    mk('path', Object.assign({d: `M${f1(x - 1.03 * r)},${f1(hy + .2 * r)}C${f1(x - 1.15 * r)},${f1(hy - 1.25 * r)} ${f1(x + 1.15 * r)},${f1(hy - 1.25 * r)} ${f1(x + 1.03 * r)},${f1(hy + .2 * r)}C${f1(x + .85 * r)},${f1(hy - .3 * r)} ${f1(x + .45 * r)},${f1(hy - .5 * r)} ${f1(x + .1 * r)},${f1(hy - .52 * r)}C${f1(x - .35 * r)},${f1(hy - .5 * r)} ${f1(x - .8 * r)},${f1(hy - .35 * r)} ${f1(x - 1.03 * r)},${f1(hy + .2 * r)}Z`, fill: HAIR}, at), g0);
+    const ex = x + look * .2 * r, gr = .27 * r;
+    [-1, 1].forEach(s => {
+      // glasses where he is large enough to wear them; two eyes always
+      if (r >= 6) mk('circle', {cx: f1(ex + s * .4 * r), cy: f1(hy + .05 * r), r: f1(gr), fill: SHIRT, 'fill-opacity': .55, stroke: INK, 'stroke-width': f1(k * .75)}, g0);
+      mk('circle', {cx: f1(ex + s * .4 * r + look * .06 * r), cy: f1(hy + .07 * r), r: f1(Math.max(.8, .09 * r)), fill: INK}, g0);
+    });
+    if (r >= 6) mk('path', {d: `M${f1(ex - .4 * r + gr)},${f1(hy + .02 * r)}H${f1(ex + .4 * r - gr)}`, stroke: INK, 'stroke-width': f1(k * .75)}, g0);
+    // a straight, closed mouth
+    mk('path', {d: `M${f1(ex - .26 * r)},${f1(hy + .58 * r)}H${f1(ex + .26 * r)}`, stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linecap': 'round'}, g0);
+    return g0;
   }
 
-  // guess
-  const gc = 'var(--k)';
-  Kit.mk('line', {x1: x0, y1: y, x2: X(g), y2: y, stroke: gc, 'stroke-width': f * .5, 'stroke-linecap': 'round', opacity: done ? .35 : .85}, svg);
-  Kit.mk('line', {x1: X(g), y1: y - f * 1.5, x2: X(g), y2: y, stroke: gc, 'stroke-width': 2}, svg);
-  Kit.mk('circle', {cx: X(g), cy: y, r: f * .95, fill: 'var(--c)', stroke: gc, 'stroke-width': f * .28}, svg);
-  const gs = moved ? `your guess · ${fmt(g)} yrs` : 'drag me';
-  clampX(txt(svg, X(g), y - f * (title ? 2.4 : 2.2), gs, f, 800), X(g));
+  // The gate's leaf, swung open by t (0 shut, 1 open): it turns on its hinge on the left and narrows as it goes.
+  function leafD(t) {
+    const {gx0, gx1, gTop, yG} = L, w = (gx1 - gx0) * (1 - .74 * t), dy = (yG - gTop) * .07 * t;
+    return `M${f1(gx0)},${f1(gTop)}L${f1(gx0 + w)},${f1(gTop + dy)}L${f1(gx0 + w)},${f1(yG - dy * .4)}L${f1(gx0)},${f1(yG)}Z`;
+  }
+  function paintLeaf() {
+    if (!L) return;
+    const t = st.open, {gx0, gx1, gTop, yG} = L, w = (gx1 - gx0) * (1 - .74 * t);
+    L.leaf.setAttribute('d', leafD(t));
+    // its ribs, narrowing with it
+    let d = '';
+    for (let i = 1; i < 4; i++) { const x = gx0 + w * i / 4, dy = (yG - gTop) * .07 * t * i / 4; d += `M${f1(x)},${f1(gTop + dy + 3)}V${f1(yG - dy * .4 - 3)}`; }
+    const hy = gTop + (yG - gTop) * .52;
+    d += `M${f1(gx0)},${f1(hy)}H${f1(gx0 + w)}`;
+    L.ribs.setAttribute('d', d);
+  }
+  // The stones of the real sentence, red, as far as the answer has come (red runs 0 to 1).
+  function paintRed() {
+    if (!L) return;
+    L.reds.forEach((s, i) => { const part = clamp(REAL * st.red - i, 0, 1); s.setAttribute('width', f1(Math.max(0, part * L.sw - L.gap))); s.setAttribute('opacity', part > 0 ? 1 : 0); });
+  }
 
-  // real
-  if (done) {
-    const yR = y + f * (title ? 3.5 : 3.3) + sLow, lx = Math.max(x0 - f * .4, 4);
-    const bar = Kit.mk('line', {x1: x0, y1: y, x2: X(REAL), y2: y, stroke: RED, 'stroke-width': f * .7, 'stroke-linecap': 'round'}, svg);
-    const pin = Kit.mk('g', {}, svg);
-    Kit.mk('line', {x1: X(REAL), y1: y, x2: X(REAL), y2: yR - f * .75, stroke: RED, 'stroke-width': 2.5}, pin);
-    Kit.mk('circle', {cx: X(REAL), cy: y, r: f * .6, fill: RED}, pin);
-    const real = txt(svg, lx, yR, 'real sentence · 2.5 yrs', f * 1.05, 800, 'start', RED);
-    // Under it in a tall box; beside it, if there is room, in a short one.
-    if (title) txt(svg, lx, yR + f * 1.3, 'for the money only', f * .85, 600, 'start');
-    else {
-      const sub = txt(svg, W - 4, yR, 'for the money only', Math.max(10, f * .85), 600, 'end');
-      try { if (lx + real.getComputedTextLength() + f > W - 4 - sub.getComputedTextLength()) sub.remove(); } catch (_) {}
+  // keep: the answer is coming in, drawn as far as it has come (a redraw in between finishes it).
+  function draw(keep) {
+    const {W, H} = Kit.fitSvg(svg);
+    if (W < 40 || H < 40) return;
+    gsap.killTweensOf(svg.querySelectorAll('*'));
+    gsap.killTweensOf(st);
+    if (done && !keep) Object.assign(st, {open: 1, red: 1, out: 1});
+    svg.innerHTML = '';
+    const k = clamp(W * .0075, 1.6, 2.6), fs = clamp(Math.min(W * .04, H / 10.5), 10.5, 13.5), pad = Math.max(7, fs * .65), R = clamp(W * .035, 8, 14);
+    L = {W, H, k, fs, pad};
+    // From the bottom: the years under the path, the path of stones, a strip of yard; the wall and its gate; the barbed
+    // wire on it; over it, where there is room, the cell block; and the sky, with room for the answer's lines.
+    const numY = H - pad * .6 - fs * .2, sH = clamp(H * .055, 7, 12), p1 = numY - fs * 1.05, p0 = p1 - sH, feet = p0 + sH * .62;
+    const yG = p0 - clamp(H * .04, 4, 12);
+    const lines = done ? (H >= 165 ? 2 : 1) : 0;
+    const skyH = pad * .5 + (lines ? fs * (lines === 2 ? 2.6 : 1.4) + pad * .35 : fs * .5);
+    const capH = clamp(H * .02, 3, 6), cr = clamp(H * .022, 3.2, 6.5), wireH = cr * 1.9;
+    const room = yG - skyH - wireH - capH, blockH = room > 175 ? Math.min(room * .24, 72) : 0;
+    const yC = skyH + blockH + wireH, yW0 = yC + capH;
+    const wallH = yG - yW0, gTop = yW0 + wallH * .14;
+    const gx0 = pad * .7, gw = clamp(W * .15, 30, 64), gx1 = gx0 + gw;
+    const x0 = gx1 + Math.max(3, k * 2), x1 = W - pad * .6 - fs * .75, sw = (x1 - x0) / MAX, gap = Math.max(1.2, sw * .14);
+    // The director a little taller than the gate he stands in front of, or as tall as the yard leaves him under the sky
+    // and the words over his head.
+    // With the answer in a short box, the guess keeps no words over his ghost (the line under the drawing says it).
+    const over = !done || lines > 1;
+    const mh = Math.min((yG - gTop) * 1.16, feet - skyH - (over ? fs * 1.7 : fs * .3), W * .42);
+    L.over = over;
+    Object.assign(L, {numY, sH, p0, p1, feet, yG, yW0, gTop, gx0, gx1, x0, x1, sw, gap, mh, skyH, lines});
+    const X = v => x0 + (x1 - x0) * v / MAX;
+    L.X = X;
+    const ink = w => ({fill: 'none', stroke: INK, 'stroke-width': f1(w), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
+    const solid = (fill, w = k) => Object.assign(ink(w), {fill});
+
+    const clip = mk('clipPath', {id: 'plate'}, mk('defs', {}, svg));
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), rx: f1(R)}, clip);
+    const scene = mk('g', {'clip-path': 'url(#plate)'}, svg);
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), fill: SKY}, scene);
+
+    // The cell block behind the wall: a long building, a row of barred windows over the wire.
+    if (blockH) {
+      const bTop = skyH, bx0 = W * .3, bx1 = W + 10;
+      mk('rect', Object.assign({x: f1(bx0), y: f1(bTop), width: f1(bx1 - bx0), height: f1(yC - bTop + 2)}, solid(BLOCK)), scene);
+      mk('path', Object.assign({d: `M${f1(bx0 - 5)},${f1(bTop)}H${f1(bx1)}`}, ink(k * 1.7)), scene);
+      const wh = Math.min(blockH * .5, fs * 1.7), ww = wh * .6, step = ww * 2.4, n = Math.floor((bx1 - bx0 - ww) / step);
+      for (let i = 0; i < n; i++) {
+        const wx = bx0 + ww * 1.1 + i * step, wy = bTop + (blockH - wh) * .48;
+        mk('rect', Object.assign({x: f1(wx), y: f1(wy), width: f1(ww), height: f1(wh), rx: 1}, solid('#4A4F56', k * .7)), scene);
+        mk('path', {d: `M${f1(wx + ww / 3)},${f1(wy + 1)}V${f1(wy + wh - 1)}M${f1(wx + ww * 2 / 3)},${f1(wy + 1)}V${f1(wy + wh - 1)}`, stroke: BLOCK, 'stroke-width': f1(Math.max(1, k * .6))}, scene);
+      }
     }
-    if (animate && !Kit.calm) {
-      gsap.from(bar, {attr: {x2: x0}, duration: .8, ease: 'power3.out'});
-      gsap.from(pin, {opacity: 0, y: -f, duration: .5, delay: .4, ease: 'back.out(2)'});
+
+    // The wall: concrete panels, a coping on top, barbed wire coiled along it on its posts.
+    mk('rect', Object.assign({x: -5, y: f1(yW0), width: f1(W + 10), height: f1(yG - yW0 + 2)}, solid(WALL)), scene);
+    const pw = clamp(wallH * .62, 34, 70);
+    let jd = '';
+    for (let x = gx1 + pw; x < W - 4; x += pw) jd += `M${f1(x)},${f1(yW0 + 2)}V${f1(yG - 2)}`;
+    mk('path', {d: jd, stroke: INK, 'stroke-width': f1(k * .55), opacity: .18}, scene);
+    mk('rect', Object.assign({x: -5, y: f1(yC), width: f1(W + 10), height: f1(capH)}, solid(COPING)), scene);
+    let posts = '';
+    for (let x = gx1 + pw * .5; x < W; x += pw * 1.5) posts += `M${f1(x)},${f1(yC)}V${f1(yC - wireH * 1.05)}`;
+    mk('path', Object.assign({d: posts}, ink(k * .9)), scene);
+    const wy = yC - wireH * .5, ry = cr * .85;
+    let wire = '';
+    for (let x = -cr; x < W + cr * 2; x += cr * 1.45) wire += `M${f1(x + cr)},${f1(wy)}a${f1(cr)},${f1(ry)} 0 1 0 ${f1(-2 * cr)},0a${f1(cr)},${f1(ry)} 0 1 0 ${f1(2 * cr)},0`;
+    mk('path', Object.assign({d: wire, opacity: .85}, ink(Math.max(.9, k * .5))), scene);
+
+    // The gate: its frame in the wall, the light outside it, the steel leaf on its hinge.
+    mk('rect', Object.assign({x: f1(gx0 - k), y: f1(gTop - k * 1.5), width: f1(gx1 - gx0 + 2 * k), height: f1(yG - gTop + 1.5 * k)}, solid(COPING)), scene);
+    mk('rect', {x: f1(gx0), y: f1(gTop), width: f1(gx1 - gx0), height: f1(yG - gTop), fill: OUT}, scene);
+    mk('rect', {x: f1(gx0), y: f1(yG - (yG - gTop) * .16), width: f1(gx1 - gx0), height: f1((yG - gTop) * .16), fill: GRASS}, scene);
+    mk('path', {d: `M${f1(gx0)},${f1(yG - (yG - gTop) * .16)}H${f1(gx1)}`, stroke: INK, 'stroke-width': f1(k * .6)}, scene);
+    L.leaf = mk('path', Object.assign({}, solid(GATE)), scene);
+    L.ribs = mk('path', {fill: 'none', stroke: INK, 'stroke-width': f1(k * .7), opacity: .55}, scene);
+    mk('rect', Object.assign({x: f1(gx0), y: f1(gTop), width: f1(gx1 - gx0), height: f1(yG - gTop)}, ink(k)), scene);
+    paintLeaf();
+
+    // The yard, and the path along it: a stone for each year, from the gate.
+    mk('rect', Object.assign({x: -5, y: f1(yG), width: f1(W + 10), height: f1(H - yG + 5)}, solid(YARD)), scene);
+    for (let i = 0; i < MAX; i++) mk('rect', Object.assign({x: f1(X(i) + gap / 2), y: f1(p0), width: f1(sw - gap), height: f1(sH), rx: f1(Math.min(2.5, sw * .2))}, solid(STONE, k * .6)), scene);
+    // The years the reader has guessed: the stones the director has passed, worn darker.
+    L.worn = [];
+    for (let i = 0; i < MAX * 2; i++) L.worn.push(mk('rect', {x: f1(X(i / 2) + (i % 2 ? 0 : gap / 2)), y: f1(p0 + k * .3), width: f1(sw / 2 - gap / 2), height: f1(sH - k * .6), fill: WORN, opacity: 0}, scene));
+    // The years he served, red: two stones and half a third.
+    L.reds = [0, 1, 2].map(i => mk('rect', {x: f1(X(i) + gap / 2), y: f1(p0), width: 0, height: f1(sH), rx: f1(Math.min(2.5, sw * .2)), fill: RED, stroke: INK, 'stroke-width': f1(k * .6), opacity: 0}, scene));
+    paintRed();
+    // Every fifth year numbered under the path.
+    for (let v = 0; v <= MAX; v += 5) {
+      mk('path', {d: `M${f1(X(v))},${f1(p1 + 1)}V${f1(p1 + fs * .3)}`, stroke: INK, 'stroke-width': f1(k * .8)}, scene);
+      words(scene, X(v), numY, String(v), {size: fs * .95, weight: 800});
+    }
+    mk('rect', Object.assign({x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(H - k), rx: f1(R - k / 2)}, ink(k)), svg);
+
+    // The director: on the reader's guess; with the answer a pale ghost stays there and he stands at the open gate.
+    L.ghost = mk('g', {}, svg);
+    L.him = mk('g', {}, svg);
+    L.out = mk('g', {}, svg);
+    L.labels = mk('g', {}, svg);
+    place();
+    if (done) answerWords();
+  }
+
+  // The director, his guess and its words, where the reader has put him.
+  function place() {
+    if (!L) return;
+    const {X, feet, mh, fs, pad} = L;
+    L.him.innerHTML = ''; L.ghost.innerHTML = ''; L.out.innerHTML = '';
+    [...L.labels.querySelectorAll('.guess')].forEach(e => e.remove());
+    L.worn.forEach((s, i) => s.setAttribute('opacity', moved && i < g * 2 ? (done ? .45 : 1) : 0));
+    const at = done ? L.ghost : L.him;
+    director(at, X(g), feet, mh, 1);
+    if (done) {
+      // He walks from the reader's guess back to the gate, and out through it.
+      L.ghost.setAttribute('opacity', .3);
+      L.outX = L.gx0 + (L.gx1 - L.gx0) * .62;
+      director(L.out, L.outX, feet, mh, -1, 1);
+      walk();
+    }
+    // Over his head: the hint before the first drag, then the guess.
+    const top = feet - mh - fs * .55;
+    if (!moved && !done) {
+      const t = words(L.labels, X(g), top, '←  drag him  →', {font: HAND, size: Math.max(14, fs * 1.35), weight: 700});
+      t.classList.add('guess'); inside(t, X(g)); L.hint = t;
+    } else if (L.over) {
+      const t = words(L.labels, X(g), top, `${done ? 'your guess' : 'guess'} · ${fmt(g)} ${fmt(g) === '1' ? 'year' : 'years'}`, {weight: 800, max: L.W - 2 * pad});
+      t.classList.add('guess');
+      if (done) t.setAttribute('fill-opacity', .6);
+      inside(t, X(g));
+      L.guessT = t;
+      if (done) clearOfAnswer();
     }
   }
-}
 
-function valAt(e) {
-  const svg = Kit.$('pic'), r = svg.getBoundingClientRect();
-  const x = (e.clientX - r.left) * geo.W / r.width;
-  const v = (x - geo.x0) / (geo.x1 - geo.x0) * MAX;
-  return Math.max(0, Math.min(MAX, Math.round(v * 2) / 2));
-}
-const pic = Kit.$('pic');
-pic.addEventListener('pointerdown', e => {
-  if (done) return;
-  dragging = true; try { pic.setPointerCapture(e.pointerId); } catch (_) {}
-  g = valAt(e); moved = true; draw(); Kit.haptic('selection');
-});
-pic.addEventListener('pointermove', e => {
-  if (!dragging || done) return;
-  const v = valAt(e); if (v !== g) { g = v; if (g % 5 === 0) Kit.haptic('light'); draw(); }
-});
-const up = () => {
-  if (!dragging) return; dragging = false;
-  if (moved && !asked) { asked = true; sure.on(); Kit.$('say').textContent = 'Happy with it? Now say how sure you are.'; }
-};
-pic.addEventListener('pointerup', up);
-pic.addEventListener('pointercancel', up);
+  // Where he is on his way out (out runs 0 to 1): from the guess to the gate, fading in from the ghost.
+  function walk() {
+    if (!L || !L.outX) return;
+    const t = st.out;
+    L.out.setAttribute('transform', `translate(${f1((1 - t) * (L.X(g) - L.outX))},0)`);
+    L.out.setAttribute('opacity', f1(.3 + .7 * t));
+    if (L.head) L.head.setAttribute('opacity', f1(t));
+    if (L.sub) L.sub.setAttribute('opacity', f1(t));
+  }
+  // With the answer, over the gate: out after two and a half years, and, where there is room, why.
+  function answerWords() {
+    const {fs, pad, W, lines} = L;
+    L.head = words(L.labels, pad * .9, pad * .5 + fs * 1.08, 'Out after 2.5 years', {anchor: 'start', weight: 800, fill: RED, size: fs * 1.1, max: W - 2 * pad});
+    L.sub = lines > 1 ? words(L.labels, pad * .9, pad * .5 + fs * 2.3, 'for the money only', {anchor: 'start', weight: 700, size: fs * .95, max: W - 2 * pad}) : null;
+    walk();
+    clearOfAnswer();
+  }
+  // The guess's words keep clear of the answer's: moved along the row, or down onto the wall.
+  function clearOfAnswer() {
+    if (!L.head || !L.guessT) return;
+    const box = e => e ? e.getBBox() : null, a = [box(L.head), box(L.sub)].filter(Boolean), t = L.guessT;
+    const hit = () => { const b = t.getBBox(); return a.some(c => b.x < c.x + c.width + 6 && c.x < b.x + b.width + 6 && b.y < c.y + c.height && c.y < b.y + b.height); };
+    if (!hit()) return;
+    const right = Math.max(...a.map(c => c.x + c.width)) + 8, w = t.getComputedTextLength();
+    if (right + w < L.W - L.pad * .6) { t.setAttribute('x', f1(right + w / 2)); if (!hit()) return; }
+    t.setAttribute('y', f1(Math.max(...a.map(c => c.y + c.height)) + L.fs * .95));
+    inside(t, L.X(g));
+  }
 
-Kit.onShow.card = () => draw(false);
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
-Kit.play.card = async () => {
-  const r = pic.getBoundingClientRect(), cy = r.top + r.height * .52;
-  const at = v => r.left + (geo.x0 + (geo.x1 - geo.x0) * v / MAX) * r.width / geo.W;
-  const ev = (type, v) => pic.dispatchEvent(new PointerEvent(type, {clientX: at(v), clientY: cy, pointerId: 1, bubbles: true}));
-  ev('pointerdown', 12); ev('pointermove', 10); ev('pointermove', 8); ev('pointerup', 8);
-  await new Promise(r => setTimeout(r, 150));
-  Kit.$('sure').querySelector('[data-v="80"]').click();
-  await new Promise(r => setTimeout(r, 1400));
-};
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
-// This scale has a compact layout made for a short box (a small phone with the answer under it): there
-// it is still drawn again at its real size, never kept small from a larger drawing.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100 && b.height > 40) draw(false); seen = k; }).observe(el); }
+  // The answer: the gate swings open, two and a half stones turn red, and he stands at the gate, walking out.
+  function reveal() {
+    if (Kit.calm) { draw(); return; }
+    Object.assign(st, {open: 0, red: 0, out: 0});
+    draw(true);
+    gsap.timeline()
+      .to(st, {open: 1, duration: .9, ease: 'power2.inOut', onUpdate: paintLeaf})
+      .to(st, {red: 1, duration: .7, ease: 'power1.inOut', onUpdate: paintRed}, .35)
+      .to(st, {out: 1, duration: 1.1, ease: 'power2.inOut', onUpdate: walk}, .45)
+      .call(() => Kit.haptic('success'), null, 1.4);
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = Math.abs(g - REAL) <= 1;
+    done = true;
+    Kit.answer({choice: fmt(g) + ' years', correct: ok, sure: pct});
+    Kit.hide('say');
+    card.classList.add('answered');
+    Kit.show('why');
+    sure.grade(ok, pct, `${fmt(g)} years, ${ok ? 'right' : 'wrong'}`);
+    Kit.show('keep');
+    svg.setAttribute('aria-label', `The gate stands open: the director walks out after two and a half years, the stones of his sentence red. Your guess, ${fmt(g)} years, stays behind on the path. Out after 2.5 years, for the money only.`);
+    if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .45, delay: .5, ease: 'power3.out'});
+    requestAnimationFrame(reveal);
+  });
+
+  function valAt(e) {
+    const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * L.W / r.width;
+    return clamp(Math.round((x - L.x0) / (L.x1 - L.x0) * MAX * 2) / 2, 0, MAX);
+  }
+  svg.addEventListener('pointerdown', e => {
+    if (done || !L) return;
+    dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    if (L.hint) gsap.killTweensOf(L.hint);
+    g = valAt(e); moved = true; place(); Kit.haptic('selection');
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!dragging || done) return;
+    const v = valAt(e); if (v !== g) { g = v; if (g % 5 === 0) Kit.haptic('light'); place(); }
+  });
+  const up = () => {
+    if (!dragging) return; dragging = false;
+    if (moved && !asked) { asked = true; sure.on(); Kit.$('say').textContent = 'Happy with it? Now say how sure you are.'; }
+  };
+  svg.addEventListener('pointerup', up);
+  svg.addEventListener('pointercancel', up);
+
+  Kit.onShow.card = () => draw();
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !L || moved) return;
+    gsap.from(L.him, {opacity: 0, y: -L.fs, duration: .5, ease: 'back.out(2)'});
+    if (L.hint) gsap.fromTo(L.hint, {attr: {dx: -4}}, {attr: {dx: 4}, duration: .7, repeat: 5, yoyo: true, ease: 'sine.inOut'});
+  };
+  Kit.play.card = async () => {
+    const r = svg.getBoundingClientRect(), cy = r.top + r.height * .6;
+    const at = v => r.left + L.X(v) * r.width / L.W;
+    const ev = (type, v) => svg.dispatchEvent(new PointerEvent(type, {clientX: at(v), clientY: cy, pointerId: 1, bubbles: true}));
+    ev('pointerdown', 12); ev('pointermove', 10); ev('pointermove', 8); ev('pointerup', 8);
+    await new Promise(r => setTimeout(r, 150));
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await new Promise(r => setTimeout(r, 1800));
+  };
+  // Drawn again, at the size it now has, whenever its room changes: the answer coming in takes some of it.
+  let seen = '';
+  new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) draw(); }).observe(svg);
+})();
 Kit.single();
 </script>
 </html>

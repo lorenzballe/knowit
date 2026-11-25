@@ -222,7 +222,7 @@ class CoreBlocksTest(unittest.TestCase):
     def test_the_readers_own_blocks_work_out_their_own(self):
         self.assertEqual(problems(
             {"id": "d", "block": "your-day", "gap": 4},
-            {"id": "q", "block": "quick-games", "title": "Quick games", "games": ["sixty", "bets-bigger"]},
+            {"id": "q", "block": "quick-games", "title": "Challenges", "games": ["sixty", "bets-bigger", "bets-closer", "bets-stake", "in-order", "what-year", "before-after"]},
             {"id": "s", "block": "subject-levels", "title": "Your subjects", "limit": 12},
             {"id": "l", "block": "like-saved", "title": "More like what you saved", "limit": 6},
         ), [])
@@ -231,7 +231,8 @@ class CoreBlocksTest(unittest.TestCase):
             self.assertTrue(one(got, "deals its own cards and reads no `source`"), block)
         self.assertTrue(one(problems({"id": "d", "block": "your-day", "limit": 3}), "`limit` is not a field this block reads"))
         self.assertTrue(one(problems({"id": "q", "block": "quick-games", "games": ["chess"]}), "games has 'chess'"))
-        self.assertTrue(one(problems({"id": "q", "block": "quick-games", "games": []}), "`games` is a list of one to four"))
+        self.assertTrue(one(problems({"id": "q", "block": "quick-games", "games": []}), "`games` is a list of one or more"))
+        self.assertTrue(one(problems({"id": "q", "block": "quick-games", "games": ["three"]}), "games has 'three'"))
         self.assertTrue(one(problems({"id": "q", "block": "quick-games", "games": ["sixty", "sixty"]}), "games names one twice"))
         self.assertTrue(one(problems({"id": "s", "block": "subject-levels", "limit": 40}), "`limit` is at most 20"))
 

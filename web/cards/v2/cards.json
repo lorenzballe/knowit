@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611231809,
- "built": "2026-11-23T18:09:16Z",
+ "version": 202611241207,
+ "built": "2026-11-24T12:07:04Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -26669,7 +26669,7 @@
    "difficulty": "medium",
    "principle": "none",
    "question": "After the early-2000s gadget boom, what did a kilo of coltan cost?",
-   "answer": "When electronic devices boomed in the early 2000s, the price of coltan, which is essential for smartphones and other electronics, shot up twelvefold. A kilo cost €15 before the boom and €180 after it. The card asks readers to drag a dot up to their guess of the price.",
+   "answer": "When electronic devices boomed in the early 2000s, the price of coltan, which is essential for smartphones and other electronics, shot up twelvefold. A kilo cost €15 before the boom and €180 after it.",
    "move": "The gadget boom made coltan 12× pricier: €15 to €180 per kilo.",
    "keywords": [
     "coltan",
@@ -26690,13 +26690,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive chart asking the reader to guess the early-2000s price of a kilo of coltan. A vertical axis runs from €15 up to €180, and the reader drags a dot up to their guess.",
+    "label": "A coltan mine in red ground, a miner digging in a tunnel under it; on the surface a kilo of coltan, its price of €15 as a small pile of euro notes, and a big smartphone. The reader drags the pile up to guess the early-2000s price of a kilo, then sees the real pile: twelve bundles of €15, €180.",
     "graded": false,
-    "page": "pages/economics-coltan-price-spike.html?v=c8134737c5d1",
-    "bytes": 9104,
+    "page": "pages/economics-coltan-price-spike.html?v=e626877d541f",
+    "bytes": 21435,
     "thumbs": {
-     "front": "thumbs/economics-coltan-price-spike-front.webp?v=d9273d1898bb",
-     "back": "thumbs/economics-coltan-price-spike-back.webp?v=d9273d1898bb"
+     "front": "thumbs/economics-coltan-price-spike-front.webp?v=40bd2998a6b3",
+     "back": "thumbs/economics-coltan-price-spike-back.webp?v=40bd2998a6b3"
     }
    },
    "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",
@@ -31293,12 +31293,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page with a slider that traps ships in the Gulf one by one. It asks what the roughly 1,000 stuck ships are worth, and shows the idle fleet's value of over $25 billion and the share carrying oil or gas.",
-    "page": "pages/economics-gulf-idle-fleet.html?v=5ae601f30d70",
-    "bytes": 6003,
+    "label": "The Gulf crowded with ships at anchor, a big oil tanker in front and row after row to the horizon, about 1,000 in all. A slider counts them one by one, each coming into its colours as the idle fleet's value adds up to over $25 billion, half of the ships carrying oil or gas.",
+    "page": "pages/economics-gulf-idle-fleet.html?v=433f495883c0",
+    "bytes": 19398,
     "thumbs": {
-     "front": "thumbs/economics-gulf-idle-fleet-front.webp?v=8d5b6491ca84",
-     "back": "thumbs/economics-gulf-idle-fleet-back.webp?v=8d5b6491ca84"
+     "front": "thumbs/economics-gulf-idle-fleet-front.webp?v=ae2db81344e4",
+     "back": "thumbs/economics-gulf-idle-fleet-back.webp?v=ae2db81344e4"
     }
    },
    "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
@@ -43136,8 +43136,8 @@
    "difficulty": "medium",
    "principle": "sampling",
    "question": "A pack says 500 g ℮. Is it likelier to weigh less or more?",
-   "answer": "The ℮ mark means the weight is an estimate, so one pack may be off by up to 15 g either way. But on average the content must never be below the label. So the packs pile up on the printed weight or just above it, and 500 g or a bit more is the likelier outcome.",
-   "move": "℮ allows ±15 g, but on average you get at least what’s printed.",
+   "answer": "The ℮ mark means the weight is an estimate, so one pack may weigh up to 15 g less than the label. But on average the content must never be below the label. So the packs pile up on the printed weight or just above it, and 500 g or a bit more is the likelier outcome.",
+   "move": "℮ lets a pack be up to 15 g short, but on average you get at least what’s printed.",
    "keywords": [
     "packaged food",
     "net weight",
@@ -43158,12 +43158,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A pack labelled 500 g ℮. Is it likelier to weigh less than 500 g, 500 g or a bit more, or are the odds equal? Choose one, rate your confidence, then watch 60 packs get weighed.",
-    "page": "pages/food-estimated-weight-mark.html?v=2d602dab7d88",
-    "bytes": 6572,
+    "label": "A box of penne labelled 500 g ℮ standing on a kitchen scale whose display reads '? g'. Is it likelier to weigh less than 500 g, 500 g or a bit more, or are the odds equal? Choose one, rate your confidence, then watch 60 packs get weighed and pile up on a shelf by weight.",
+    "page": "pages/food-estimated-weight-mark.html?v=a656c7e70458",
+    "bytes": 14993,
     "thumbs": {
-     "front": "thumbs/food-estimated-weight-mark-front.webp?v=c15feded79c9",
-     "back": "thumbs/food-estimated-weight-mark-back.webp?v=c15feded79c9"
+     "front": "thumbs/food-estimated-weight-mark-front.webp?v=f06e95d36405",
+     "back": "thumbs/food-estimated-weight-mark-back.webp?v=f06e95d36405"
     }
    },
    "source": "Geopop, “Avete mai notato questo simbolo di fianco al peso dei prodotti confezionati? #alimenti #scienze” (YouTube, 2024)",
@@ -55097,13 +55097,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A slider scale in years for guessing how long the camp director's prison sentence was for embezzling government subsidies. The reader drags a marker to their estimate, and the page reveals the sentence was 2.5 years.",
+    "label": "A prison yard: a high wall with barbed wire, a steel gate and a path of 25 paving stones, one for each year. The camp's director, grey-haired, in a suit, a briefcase stuffed with banknotes in his hand, stands on it; the reader drags him to their guess of his sentence. Then the gate opens: he walks out after 2.5 years.",
     "graded": false,
-    "page": "pages/history-directors-light-sentence.html?v=6fd8f352a759",
-    "bytes": 10412,
+    "page": "pages/history-directors-light-sentence.html?v=834d4c5db4d4",
+    "bytes": 25986,
     "thumbs": {
-     "front": "thumbs/history-directors-light-sentence-front.webp?v=75e892bad773",
-     "back": "thumbs/history-directors-light-sentence-back.webp?v=75e892bad773"
+     "front": "thumbs/history-directors-light-sentence-front.webp?v=66bd4cb22d29",
+     "back": "thumbs/history-directors-light-sentence-back.webp?v=66bd4cb22d29"
     }
    },
    "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
@@ -55464,7 +55464,7 @@
    "difficulty": "easy",
    "principle": "none",
    "question": "What was the world’s first plastic recycling centre?",
-   "answer": "The world's first plastic recycling centre was the Plastic Waste Recycling Mill. Aluminium and glass were reused in wartime because they were scarce, but plastic needed another reason: it was realised that it can badly damage the environment. So it got a plant of its own, and this mill was the world's first.",
+   "answer": "The world's first plastic recycling centre was a mill opened in 1972 in Conshohocken, Pennsylvania. Aluminium and glass were reused in wartime because they were scarce, but plastic needed another reason: it was realised that it can badly damage the environment. So it got a plant of its own, and this mill was the world's first.",
    "move": "Plastic recycling began to protect nature, not to make up for scarcity.",
    "keywords": [
     "plastic",
@@ -55486,12 +55486,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Question asks what the world's first plastic recycling centre was. Tap each material (plastic, aluminium, glass) to see why it was recycled. Shows a historic photo of the Plastic Waste Recycling Mill with a banner reading First Plastic Recycling Plant.",
-    "page": "pages/history-first-plastic-plant.html?v=9bb92205837b",
-    "bytes": 12670,
+    "label": "A brick recycling mill under a sawtooth roof in green country, the recycling arrows on its front; in its yard an aluminium can, a green glass bottle and a blue plastic bottle. Tap each to see why it was recycled: can and glass, scarce in wartime; the plastic flies into the mill, its town and year go up, Conshohocken, 1972, and a sprout grows where it stood.",
+    "page": "pages/history-first-plastic-plant.html?v=f4ddf9372886",
+    "bytes": 23920,
     "thumbs": {
-     "front": "thumbs/history-first-plastic-plant-front.webp?v=861e6c5b6dbb",
-     "back": "thumbs/history-first-plastic-plant-back.webp?v=861e6c5b6dbb"
+     "front": "thumbs/history-first-plastic-plant-front.webp?v=ca4246bbce35",
+     "back": "thumbs/history-first-plastic-plant-back.webp?v=ca4246bbce35"
     }
    },
    "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
@@ -58459,12 +58459,12 @@
    "difficulty": "medium",
    "principle": "availability",
    "question": "What was Jack Foley's job before he made sounds for films?",
-   "answer": "Jack Foley, born in New York in 1891, started out as a cartographer, a mapmaker. He fell for cinema, which stayed silent until 1927, when Warner Bros released a film with sound. Someone then had to make every noise, so he became the father of film sound effects.",
-   "move": "The father of film sound effects began as a mapmaker.",
+   "answer": "Jack Foley, born in New York in 1891, started out as a clerk on the New York docks. He fell for cinema, which stayed silent until 1927, when Warner Bros released a film with sound. Someone then had to make every noise, so he became the father of film sound effects.",
+   "move": "The father of film sound effects began as a clerk on the docks.",
    "keywords": [
     "jack foley",
     "film sound effects",
-    "cartography",
+    "new york docks",
     "silent cinema",
     "warner bros"
    ],
@@ -58481,12 +58481,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Multiple-choice question asking what Jack Foley's job was before he made sounds for films. Four options: Butcher, Cartographer, Drummer, Stage magician. The reader picks one.",
-    "page": "pages/history-jack-foley-maps.html?v=62cdbe86c15f",
-    "bytes": 8080,
+    "label": "A sound stage: Jack Foley snaps a stalk of celery under a hanging microphone while a silent film plays on the screen behind him. Four options: Butcher, Dock clerk, Drummer, Stage magician. Once answered, the film on the screen becomes his first job: the New York docks.",
+    "page": "pages/history-jack-foley-maps.html?v=93bbfcb41a93",
+    "bytes": 26076,
     "thumbs": {
-     "front": "thumbs/history-jack-foley-maps-front.webp?v=45fb0693fa5f",
-     "back": "thumbs/history-jack-foley-maps-back.webp?v=45fb0693fa5f"
+     "front": "thumbs/history-jack-foley-maps-front.webp?v=7943ac052015",
+     "back": "thumbs/history-jack-foley-maps-back.webp?v=7943ac052015"
     }
    },
    "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
@@ -58762,7 +58762,7 @@
    "difficulty": "easy",
    "principle": "none",
    "question": "Who actually invented the Condorcet voting method first?",
-   "answer": "Ramon Llull, a monk, found the method 450 years before Condorcet while studying how church leaders were chosen. His book, Ars eleccionis, was lost, so his idea made no impact and the method took Condorcet's name. The book was only found again in 2001.",
+   "answer": "Ramon Llull, a philosopher from Majorca, found the method almost 500 years before Condorcet while studying how church leaders were chosen. His book, Ars eleccionis, was lost, so his idea made no impact and the method took Condorcet's name. The book was only found again in 2001.",
    "move": "The name on an idea is not always the first person who had it.",
    "keywords": [
     "ramon llull",
@@ -58783,12 +58783,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Timeline from the 14th-century monk Ramon Llull to today, with a draggable dot, Condorcet's 18th-century mark, and a lost-book icon appearing in 2001. It asks who first invented the Condorcet voting method.",
-    "page": "pages/history-llull-before-condorcet.html?v=1bc3899757ef",
-    "bytes": 9623,
+    "label": "A timeline along the floor of a hall, from the 1200s to today. On it stand Ramon Llull, bearded, in a long robe, holding his red book; Condorcet, in a white wig and a blue coat; and a library bookcase in 2001. Dragging runs the centuries: the book is lost, the method takes Condorcet's name, and in 2001 the book is found again.",
+    "page": "pages/history-llull-before-condorcet.html?v=1ac561d9fab1",
+    "bytes": 26301,
     "thumbs": {
-     "front": "thumbs/history-llull-before-condorcet-front.webp?v=5529a9016b56",
-     "back": "thumbs/history-llull-before-condorcet-back.webp?v=5529a9016b56"
+     "front": "thumbs/history-llull-before-condorcet-front.webp?v=57e108ad49ce",
+     "back": "thumbs/history-llull-before-condorcet-back.webp?v=57e108ad49ce"
     }
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
@@ -75701,12 +75701,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive chart of blood alcohol over time after one 8.6% beer, with a dashed line the reader drags up or down to set a point. The reader is asked where their own blood alcohol is 2 hours 55 minutes after the drink.",
-    "page": "pages/human_body-one-beer-curve.html?v=4de0388f1ad3",
-    "bytes": 14830,
+    "label": "A drinker drawn as a glass, graduated from 0 to 0.6 g/L, sitting at a table beside a bottle of 8.6% beer and a full glass of it. The reader drags the level of alcohol in the drinker up or down to guess their own blood alcohol 2 hours 55 minutes after that one beer.",
+    "page": "pages/human_body-one-beer-curve.html?v=678e41f3c443",
+    "bytes": 25271,
     "thumbs": {
-     "front": "thumbs/human_body-one-beer-curve-front.webp?v=14b73f0e2dfd",
-     "back": "thumbs/human_body-one-beer-curve-back.webp?v=14b73f0e2dfd"
+     "front": "thumbs/human_body-one-beer-curve-front.webp?v=d0dc304a89d3",
+     "back": "thumbs/human_body-one-beer-curve-back.webp?v=d0dc304a89d3"
     }
    },
    "source": "Geopop, “Abbiamo bevuto una birra da 8,6% e fatto l'alcol test con un etilometro professionale ogni 10 minuti” (YouTube, 2023)",
@@ -75948,12 +75948,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A blood level counter starts at 0 parts per billion beside a glass of tap water. Tapping keeps drinking water with 4 parts per trillion of PFOA, and blood rises toward 2 parts per billion. Asks how trace PFAS in tap water can lead to high blood levels.",
-    "page": "pages/human_body-pfas-builds-up.html?v=5271fa706a97",
-    "bytes": 6311,
+    "label": "A person drinking a glass of tap water, between two drops seen through a lens: the tap water's, with one speck of PFOA at 4 parts per trillion, and their blood's, still clear. Each tap is another glass: specks pile into the blood toward 500 to the water's one, 2 parts per billion. Asks how trace PFAS in tap water can lead to high blood levels.",
+    "page": "pages/human_body-pfas-builds-up.html?v=06e6cf83053a",
+    "bytes": 14961,
     "thumbs": {
-     "front": "thumbs/human_body-pfas-builds-up-front.webp?v=8e4c65af4122",
-     "back": "thumbs/human_body-pfas-builds-up-back.webp?v=8e4c65af4122"
+     "front": "thumbs/human_body-pfas-builds-up-front.webp?v=014ddfbb9a6d",
+     "back": "thumbs/human_body-pfas-builds-up-back.webp?v=014ddfbb9a6d"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -101701,12 +101701,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A card titled Guess the Peak asks how high the Collatz sequence for 27 climbs before descending. It gives the rules: odd numbers are tripled plus one, even numbers are halved. A draggable slider lets the reader guess the peak, and a Launch button reveals 9,232 m.",
-    "page": "pages/maths-collatz-peak.html?v=f1fc3fa38569",
-    "bytes": 14618,
+    "label": "It asks how high the Collatz sequence for 27 climbs: odd numbers tripled plus one, even ones halved. Everest stands at its real height beside a storm cloud, with 27 as a hailstone at its foot; the reader drags a dashed line to guess the peak in metres, and a Launch button tosses the hailstone up past Everest to 9,232 m and down to 1.",
+    "page": "pages/maths-collatz-peak.html?v=2e91feee1ac8",
+    "bytes": 19238,
     "thumbs": {
-     "front": "thumbs/maths-collatz-peak-front.webp?v=521f936d1cd6",
-     "back": "thumbs/maths-collatz-peak-back.webp?v=521f936d1cd6"
+     "front": "thumbs/maths-collatz-peak-front.webp?v=07c26b1106ec",
+     "back": "thumbs/maths-collatz-peak-back.webp?v=07c26b1106ec"
     }
    },
    "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
@@ -102328,8 +102328,8 @@
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did Fermat’s Last Theorem lead to inventing p‑adic numbers?",
-   "answer": "Fermat's \"marvelous proof\" of his theorem never turned up, and the old tools couldn't do it. The proof took 358 years. New numbers had to be invented, the p-adics, which also gave a systematic way to solve other problems in Diophantus' Arithmetica.",
+   "question": "How long did Fermat’s Last Theorem wait for its proof?",
+   "answer": "Fermat's \"marvelous proof\" of his theorem never turned up, and the old tools couldn't do it. The proof took 358 years. It needed numbers invented long after Fermat: the p-adics, first described by Kurt Hensel in 1897, which also give a systematic way to solve other problems in Diophantus' Arithmetica.",
    "move": "Some problems only fall when we invent new numbers.",
    "keywords": [
     "fermat",
@@ -102350,12 +102350,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A card asks how Fermat's Last Theorem led to p-adic numbers, with a flag to drag to your guess of how many years the proof took.",
-    "page": "pages/maths-fermat-padic-numbers.html?v=766bb3cef342",
-    "bytes": 8246,
+    "label": "A card asks how Fermat's Last Theorem led to p-adic numbers. Diophantus' Arithmetica lies open with Fermat's note in its margin, xⁿ + yⁿ = zⁿ, and the margin hangs below the book as a long strip of paper marked in years; the reader drags Fermat's quill down it to guess how many years the proof took.",
+    "page": "pages/maths-fermat-padic-numbers.html?v=0732a74ed7d7",
+    "bytes": 19734,
     "thumbs": {
-     "front": "thumbs/maths-fermat-padic-numbers-front.webp?v=3ed1b2f0a546",
-     "back": "thumbs/maths-fermat-padic-numbers-back.webp?v=3ed1b2f0a546"
+     "front": "thumbs/maths-fermat-padic-numbers-front.webp?v=5875b55d0d0c",
+     "back": "thumbs/maths-fermat-padic-numbers-back.webp?v=5875b55d0d0c"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -105226,13 +105226,13 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Question: how does the logistic map move from regular cycles to chaos as R rises? Shows cycles doubling 1, 2, 4, 8, 16 until chaos. Tap each growth rate R to sort it into settles-into-a-cycle or never-repeats, and tap again to switch sides.",
+    "label": "Question: how does the logistic map move from regular cycles to chaos as R rises? Two meadows show a population of rabbits year by year, one settling into a repeating cycle, one never repeating. Tap each growth rate R to sort it into one of them, and tap again to switch sides; the answer maps where the population ends up for every R, cycles doubling 1, 2, 4, 8 until chaos.",
     "graded": false,
-    "page": "pages/maths-period-doubling-chaos.html?v=b72ec6d13789",
-    "bytes": 9836,
+    "page": "pages/maths-period-doubling-chaos.html?v=1cf8dd433967",
+    "bytes": 17413,
     "thumbs": {
-     "front": "thumbs/maths-period-doubling-chaos-front.webp?v=6e17f0686c96",
-     "back": "thumbs/maths-period-doubling-chaos-back.webp?v=6e17f0686c96"
+     "front": "thumbs/maths-period-doubling-chaos-front.webp?v=9d8fa293d9e3",
+     "back": "thumbs/maths-period-doubling-chaos-back.webp?v=9d8fa293d9e3"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -107312,12 +107312,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A Mercator world map with a draggable outline of Wyoming, drawn at latitude 43°N. The reader drags Wyoming up the map toward the North Pole and watches its drawn size grow. The page asks what happens to Wyoming's size there and why.",
-    "page": "pages/maths-wyoming-mercator-pole.html?v=bc6b2e0ef749",
-    "bytes": 8622,
+    "label": "A Mercator map of North America and the Arctic with Wyoming in orange at 43°N, and a small globe beside it with the same Wyoming. The reader drags Wyoming up the map toward the North Pole and watches its drawn size grow while on the globe it stays the same size. The page asks what happens to Wyoming's size there and why.",
+    "page": "pages/maths-wyoming-mercator-pole.html?v=0a20ec402512",
+    "bytes": 25018,
     "thumbs": {
-     "front": "thumbs/maths-wyoming-mercator-pole-front.webp?v=17fd446457be",
-     "back": "thumbs/maths-wyoming-mercator-pole-back.webp?v=17fd446457be"
+     "front": "thumbs/maths-wyoming-mercator-pole-front.webp?v=f3fc93eeabbb",
+     "back": "thumbs/maths-wyoming-mercator-pole-back.webp?v=f3fc93eeabbb"
     }
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
@@ -111683,12 +111683,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Card titled Safe Dose asks how DuPont picked its safe C8 drinking-water limit. A tap-to-reveal panel shows scientists getting 0.6 ppb and rounding it up to 1 ppb, the lowest detectable level then, one drop in 50,000 litres.",
-    "page": "pages/medicine-dupont-safe-dose.html?v=d04cde91eb65",
-    "bytes": 9294,
+    "label": "A chemical plant on a river bank runs C8 into the water; on the near bank a 50,000-litre tank stands by a person for scale. A tall gauge of C8 in parts per billion marks the band from 1 ppb up as detectable then; its cursor reads the scientists' 0.6. Asks how DuPont picked its safe C8 limit: a tap rounds the cursor up to 1 ppb, a second lets one drop fall into the tank.",
+    "page": "pages/medicine-dupont-safe-dose.html?v=a63aad66762c",
+    "bytes": 22474,
     "thumbs": {
-     "front": "thumbs/medicine-dupont-safe-dose-front.webp?v=1d17dc50e659",
-     "back": "thumbs/medicine-dupont-safe-dose-back.webp?v=1d17dc50e659"
+     "front": "thumbs/medicine-dupont-safe-dose-front.webp?v=8927f2fec5fc",
+     "back": "thumbs/medicine-dupont-safe-dose-back.webp?v=8927f2fec5fc"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -112039,12 +112039,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A timeline bar from “Today” to “1 year” with a prompt to drag along it to draw a guess about how firefighters' PFAS levels change with frequent blood donation. Red drops mark donations that carry chemicals out of the body.",
-    "page": "pages/medicine-firefighters-blood-donation.html?v=c79f6e5910f0",
-    "bytes": 9321,
+    "label": "The same firefighter twice, drawn as glass in full gear: today, full of PFAS to the shoulders; a year later, empty, a question mark in the chest. Eight empty blood bags hang between their helmets. Drag from Today to 1 year to draw a guess of how their PFAS changes with frequent blood donation.",
+    "page": "pages/medicine-firefighters-blood-donation.html?v=73086fcb6059",
+    "bytes": 21359,
     "thumbs": {
-     "front": "thumbs/medicine-firefighters-blood-donation-front.webp?v=41d99aadec73",
-     "back": "thumbs/medicine-firefighters-blood-donation-back.webp?v=41d99aadec73"
+     "front": "thumbs/medicine-firefighters-blood-donation-front.webp?v=25850e577f25",
+     "back": "thumbs/medicine-firefighters-blood-donation-back.webp?v=25850e577f25"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -114571,12 +114571,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two dose sliders for cocaine and mescaline drive a chart of the brain's dopamine reward signal over time. Cocaine shows a sharp spike while mescaline stays nearly flat. The question asks why mescaline has low addiction potential.",
-    "page": "pages/medicine-mescaline-dopamine-reward.html?v=6a7065f2e493",
-    "bytes": 8210,
+    "label": "Two brains side by side over a coca plant and a peyote cactus, a dashed want-more line across both. Dose each drug and its brain's reward signal rises inside it: cocaine's spikes past the line, mescaline's barely lifts. The question asks why mescaline has low addiction potential.",
+    "page": "pages/medicine-mescaline-dopamine-reward.html?v=e75890915d2d",
+    "bytes": 19661,
     "thumbs": {
-     "front": "thumbs/medicine-mescaline-dopamine-reward-front.webp?v=cbae83cef4f7",
-     "back": "thumbs/medicine-mescaline-dopamine-reward-back.webp?v=cbae83cef4f7"
+     "front": "thumbs/medicine-mescaline-dopamine-reward-front.webp?v=08df16083b26",
+     "back": "thumbs/medicine-mescaline-dopamine-reward-back.webp?v=08df16083b26"
     }
    },
    "source": "Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025)",
@@ -142180,12 +142180,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A balance scale comparing 6 tons of recycled glass on one side with 1 ton of CO₂ emissions saved on the other. The page asks how much CO₂ is avoided by recycling six tons of glass. Tap to recycle glass one ton at a time and watch the CO₂ avoided.",
-    "page": "pages/nature-glass-co2-savings.html?v=06368c980b25",
-    "bytes": 7208,
+    "label": "A glassworks: six crates of old bottles beside a brick furnace, and over its chimney a dark cloud of CO₂ in six puffs. Each tap recycles one ton: a crate goes into the furnace, a crate of new bottles comes out, and one puff clears, until six tons have kept one ton of CO₂ out of the air.",
+    "page": "pages/nature-glass-co2-savings.html?v=949eb84427b3",
+    "bytes": 14308,
     "thumbs": {
-     "front": "thumbs/nature-glass-co2-savings-front.webp?v=f50925364ec7",
-     "back": "thumbs/nature-glass-co2-savings-back.webp?v=f50925364ec7"
+     "front": "thumbs/nature-glass-co2-savings-front.webp?v=fb6efa5a3414",
+     "back": "thumbs/nature-glass-co2-savings-back.webp?v=fb6efa5a3414"
     }
    },
    "source": "Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)",
@@ -191837,12 +191837,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A quiz card asking when big methane gas eruptions last rose in the Bermuda Triangle. Three options: in the last few years, about a century ago, or at least 15,000 years ago. The card asks the reader to pick one.",
-    "page": "pages/science-bermuda-gas-myth.html?v=a708d7153939",
-    "bytes": 7980,
+    "label": "The sea of the Bermuda Triangle drawn in section: a cargo ship on the surface and, under it, a column of methane bubbles rising from frozen methane in the seabed. The quiz asks when big methane gas eruptions last rose there: in the last few years, about a century ago, or at least 15,000 years ago. The reader picks one and says how sure.",
+    "page": "pages/science-bermuda-gas-myth.html?v=f10aef9b9810",
+    "bytes": 22897,
     "thumbs": {
-     "front": "thumbs/science-bermuda-gas-myth-front.webp?v=cb2488fc86ce",
-     "back": "thumbs/science-bermuda-gas-myth-back.webp?v=cb2488fc86ce"
+     "front": "thumbs/science-bermuda-gas-myth-front.webp?v=6b6981c3b4a2",
+     "back": "thumbs/science-bermuda-gas-myth-back.webp?v=6b6981c3b4a2"
     }
    },
    "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
@@ -192835,13 +192835,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A scale you drag to guess how many times per second the radioactive atoms in your body split the universe, followed by a prompt to rate how sure you are of your guess.",
+    "label": "A person drawn big, the radioactive atoms in their body as yellow dots, one of them decaying: their world splits there into a copy where the atom decayed and one where it did not. The reader drags along a scale from 1 to 100,000 splits a second to guess how often this happens, then rates how sure they are.",
     "graded": false,
-    "page": "pages/science-branching-body-decays.html?v=829a95266113",
-    "bytes": 8738,
+    "page": "pages/science-branching-body-decays.html?v=07c6e0acac1d",
+    "bytes": 16660,
     "thumbs": {
-     "front": "thumbs/science-branching-body-decays-front.webp?v=2572c6bf8b64",
-     "back": "thumbs/science-branching-body-decays-back.webp?v=2572c6bf8b64"
+     "front": "thumbs/science-branching-body-decays-front.webp?v=9689b2ef56d2",
+     "back": "thumbs/science-branching-body-decays-back.webp?v=9689b2ef56d2"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -193395,12 +193395,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page on a nuclear chain reaction where each split frees 2.5 neutrons. Readers draw a guess with a finger for how the count grows round by round, up to round 24.",
-    "page": "pages/science-chain-reaction.html?v=95cd0dd0f82f",
-    "bytes": 15930,
+    "label": "A bar of uranium-235 metal, the first nucleus splitting in its corner and throwing out its neutrons; its face is the chart of how many nuclei split in each of ten rounds, each split freeing 2.5 neutrons. Readers draw a guess on it with a finger, round by round; the real curve then grows over it, the metal under it glowing as its nuclei split.",
+    "page": "pages/science-chain-reaction.html?v=354676b11a1c",
+    "bytes": 21262,
     "thumbs": {
-     "front": "thumbs/science-chain-reaction-front.webp?v=64bb5be9a366",
-     "back": "thumbs/science-chain-reaction-back.webp?v=64bb5be9a366"
+     "front": "thumbs/science-chain-reaction-front.webp?v=bf1395230669",
+     "back": "thumbs/science-chain-reaction-back.webp?v=bf1395230669"
     }
    },
    "source": "Veritasium, “Why Einstein Thought Nuclear Weapons Were Impossible” (YouTube, 2018)",
@@ -197707,12 +197707,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "An interactive chart of fallout radiation decaying from 100 % at day 0 toward about 1 % by day 14. Drag across it to move forward day by day. The question asks what fraction of the initial radiation remains after about two weeks.",
-    "page": "pages/science-fallout-two-weeks.html?v=bd16919a3048",
-    "bytes": 8296,
+    "label": "A house over its cellar, a family sheltering in the cellar, the ground and roof outside dusted with 100 glowing specks of fallout. Drag across the picture to move forward day by day: the specks go out as the radiation falls from 100 % at day 0 toward about 1 % by day 14. The question asks what fraction of the initial radiation remains after about two weeks.",
+    "page": "pages/science-fallout-two-weeks.html?v=af75db593af6",
+    "bytes": 17815,
     "thumbs": {
-     "front": "thumbs/science-fallout-two-weeks-front.webp?v=d1e0e5126dc5",
-     "back": "thumbs/science-fallout-two-weeks-back.webp?v=d1e0e5126dc5"
+     "front": "thumbs/science-fallout-two-weeks-front.webp?v=8dddd7b688d4",
+     "back": "thumbs/science-fallout-two-weeks-back.webp?v=8dddd7b688d4"
     }
    },
    "source": "Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022)",
@@ -198832,12 +198832,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive guess-the-heat page: a steel rail is made a little hotter. The reader drags the hot rail's column up to guess how much more heat it radiates, then reads the reveal.",
-    "page": "pages/science-fourth-power-glow.html?v=6766f16498e6",
-    "bytes": 14258,
+    "label": "Two glowing steel rails, cherry red and bright orange, each on a plinth rising from a floor marked absolute zero, the hot one only a little higher. Over the warm rail rises a column of heat marked 1×; the reader drags the hot rail's column of heat up to guess how much more heat it radiates, then says how sure.",
+    "page": "pages/science-fourth-power-glow.html?v=6d35f650b273",
+    "bytes": 21179,
     "thumbs": {
-     "front": "thumbs/science-fourth-power-glow-front.webp?v=a498902a329b",
-     "back": "thumbs/science-fourth-power-glow-back.webp?v=a498902a329b"
+     "front": "thumbs/science-fourth-power-glow-front.webp?v=2d8e9b386312",
+     "back": "thumbs/science-fourth-power-glow-back.webp?v=2d8e9b386312"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -199089,12 +199089,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Ocean-wave card asking when wind waves reach their maximum size. Tap to let the wind blow one gust at a time. The page explains that waves stop growing when energy lost to breaking equals the energy the wind adds.",
-    "page": "pages/science-fully-developed-sea.html?v=2a7a8241b914",
-    "bytes": 10166,
+    "label": "The open sea drawn in section, a small sailboat on it. Each tap lets a gust of wind blow: the waves grow, their crests break into foam and eddies, and the arrow of energy breaking out widens until it matches the wind's. The page asks when wind waves reach their maximum size.",
+    "page": "pages/science-fully-developed-sea.html?v=4e2434909ec8",
+    "bytes": 17825,
     "thumbs": {
-     "front": "thumbs/science-fully-developed-sea-front.webp?v=8b7e9e2702b6",
-     "back": "thumbs/science-fully-developed-sea-back.webp?v=8b7e9e2702b6"
+     "front": "thumbs/science-fully-developed-sea-front.webp?v=b12dbd633e20",
+     "back": "thumbs/science-fully-developed-sea-back.webp?v=b12dbd633e20"
     }
    },
    "source": "Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)",
@@ -199718,13 +199718,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive loop starting with 1 kg of old glass. Drag right to see how much is left after each melt, showing a kilogram of waste glass becoming a kilogram of new glass.",
+    "label": "A long glass furnace with eight glowing mouths, one per melt; at the start a green bottle holding 1 kg of old glass, and over each melt the faint outline of a full bottle. The reader drags across to stand a bottle over each melt as tall as the glass they think is left, then says how sure, and sees a kilogram of waste glass become a kilogram of new glass.",
     "graded": false,
-    "page": "pages/science-glass-recycling-loop.html?v=7cf931701695",
-    "bytes": 9021,
+    "page": "pages/science-glass-recycling-loop.html?v=d9f356a31d2f",
+    "bytes": 12624,
     "thumbs": {
-     "front": "thumbs/science-glass-recycling-loop-front.webp?v=2c4b0ec9e2d1",
-     "back": "thumbs/science-glass-recycling-loop-back.webp?v=2c4b0ec9e2d1"
+     "front": "thumbs/science-glass-recycling-loop-front.webp?v=d328363476c6",
+     "back": "thumbs/science-glass-recycling-loop-back.webp?v=d328363476c6"
     }
    },
    "source": "Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)",
@@ -201686,13 +201686,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A dot grid and a slider asking how many Sumatra earthquakes, a magnitude 9.1 quake from 2004, the dinosaur-killing asteroid impact released in energy. Each dot is one Sumatra quake.",
+    "label": "The dinosaur-killing asteroid diving at the sea on a burning trail, a dinosaur on the beach. A slider guesses how many 2004 Sumatra earthquakes (magnitude 9.1) the impact's energy equals, from 10 to 100,000: one dot on the horizon is one Sumatra quake, and the guess is a dome holding that many dots.",
     "graded": false,
-    "page": "pages/science-impact-vs-sumatra.html?v=6c94f3fb1ad4",
-    "bytes": 8593,
+    "page": "pages/science-impact-vs-sumatra.html?v=054020b2843c",
+    "bytes": 19367,
     "thumbs": {
-     "front": "thumbs/science-impact-vs-sumatra-front.webp?v=702fc35ca293",
-     "back": "thumbs/science-impact-vs-sumatra-back.webp?v=702fc35ca293"
+     "front": "thumbs/science-impact-vs-sumatra-front.webp?v=1b98f1de3475",
+     "back": "thumbs/science-impact-vs-sumatra-back.webp?v=1b98f1de3475"
     }
    },
    "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
@@ -243654,8 +243654,8 @@
    "difficulty": "medium",
    "principle": "reflection",
    "question": "When the handle turns back, what does the pointer do first?",
-   "answer": "It waits, then follows. A hinge is a pin in a hole, with some give. When the motion reverses, the pointer waits before it follows, so it no longer matches the handle. That delay is backlash, the main cause of inaccuracy in traditional mechanisms.",
-   "move": "That delay is backlash, the main cause of inaccuracy in traditional mechanisms.",
+   "answer": "It waits, then follows. A hinge is a pin in a hole, with some give. When the motion reverses, the pointer waits before it follows, so it no longer matches the handle. That delay is backlash, a classic source of error in traditional mechanisms.",
+   "move": "That delay is backlash, a classic source of error in traditional mechanisms.",
    "keywords": [
     "backlash",
     "hinge",
@@ -243675,12 +243675,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Multiple-choice question: when a hinge's handle turns back, what does the pointer do first? Options: moves at once, waits then follows, or jumps past the hold point then lets go. Choices unlock after a first pass through the text.",
-    "page": "pages/technology-backlash-pin-hole.html?v=370b228fb017",
-    "bytes": 18012,
+    "label": "A hand holds a red handle whose pin sits in a hole in a pointer arm, with some give, shown big in a round zoom; the arm hangs from a pivot over a scale. Hold to push and let go to pull back, then pick what the pointer does first: moves at once, waits then follows, or jumps past; then say how sure you are.",
+    "page": "pages/technology-backlash-pin-hole.html?v=304c295911b9",
+    "bytes": 24142,
     "thumbs": {
-     "front": "thumbs/technology-backlash-pin-hole-front.webp?v=d81e84d6bc84",
-     "back": "thumbs/technology-backlash-pin-hole-back.webp?v=d81e84d6bc84"
+     "front": "thumbs/technology-backlash-pin-hole-front.webp?v=69bbef4ebea0",
+     "back": "thumbs/technology-backlash-pin-hole-back.webp?v=69bbef4ebea0"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -249134,12 +249134,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Blocks to drag up to show how hard a micromouse's fan pulls it to the floor, in mouse weights. Drag first, then choose Drag up to stack the fan's pull.",
-    "page": "pages/technology-five-times-downforce.html?v=e617deb1f6a9",
-    "bytes": 15483,
+    "label": "A micromouse, a small robot car with a fan on its back, sits on the black floor of its maze in front of a white wall with a red top. Drag up to stack blocks on its fan, each one the mouse's own weight, to guess how hard the fan pulls it to the floor, then say how sure you are.",
+    "page": "pages/technology-five-times-downforce.html?v=29e1083de17c",
+    "bytes": 17167,
     "thumbs": {
-     "front": "thumbs/technology-five-times-downforce-front.webp?v=9ae79647a9c7",
-     "back": "thumbs/technology-five-times-downforce-back.webp?v=9ae79647a9c7"
+     "front": "thumbs/technology-five-times-downforce-front.webp?v=13ee2aaaa325",
+     "back": "thumbs/technology-five-times-downforce-back.webp?v=13ee2aaaa325"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -249605,11 +249605,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "Split-screen slide with a slider to move forward a century on both sides, from today to +100 years. It asks how to think about the future of graphene. One side shows a person from 1919 holding a piece of plastic, the other a person from 2019 holding a graphene sheet.",
-    "page": "pages/technology-graphene-plastic-century.html?v=c91ba9b2c8e7",
-    "bytes": 9314,
+    "page": "pages/technology-graphene-plastic-century.html?v=ee188c00b490",
+    "bytes": 18972,
     "thumbs": {
-     "front": "thumbs/technology-graphene-plastic-century-front.webp?v=0ce382b283e5",
-     "back": "thumbs/technology-graphene-plastic-century-back.webp?v=0ce382b283e5"
+     "front": "thumbs/technology-graphene-plastic-century-front.webp?v=bd6715f823c4",
+     "back": "thumbs/technology-graphene-plastic-century-back.webp?v=bd6715f823c4"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -255770,13 +255770,13 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two steel furnaces race side by side: a modern mill makes fast, even steel, while the ancient tatara makes slow, uneven steel. The page asks why the best Japanese swords still need tatara steel.",
+    "label": "A modern steel mill and the ancient tatara furnace of Shimane, with its smiths in white, race to make steel: the mill turns out identical grey bars fast, the tatara slowly a pile of pieces of every shade, darker with more carbon. The page asks why the best Japanese swords still need tatara steel.",
     "graded": false,
-    "page": "pages/technology-tatara-steel-race.html?v=dc4ef090fe89",
-    "bytes": 7885,
+    "page": "pages/technology-tatara-steel-race.html?v=781513d24678",
+    "bytes": 22764,
     "thumbs": {
-     "front": "thumbs/technology-tatara-steel-race-front.webp?v=2d195c673ef5",
-     "back": "thumbs/technology-tatara-steel-race-back.webp?v=2d195c673ef5"
+     "front": "thumbs/technology-tatara-steel-race-front.webp?v=eed8a97686ec",
+     "back": "thumbs/technology-tatara-steel-race-back.webp?v=eed8a97686ec"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
@@ -257019,8 +257019,8 @@
    "difficulty": "easy",
    "principle": "none",
    "question": "How tall and how heavy is one section of a bridge tower leg?",
-   "answer": "The tower legs of the Messina Strait bridge are stacked from 44 prefabricated sections. Each section is 20 meters tall and weighs 1,200 tons. The crane lifts a whole section at a time.",
-   "move": "One tower section: 20 m tall, 1,200 tons; 44 of them make the legs.",
+   "answer": "The two legs of each Messina Strait bridge tower are stacked from 44 prefabricated sections. Each section is up to 20 meters tall and weighs 1,200 tons. The crane lifts a whole section at a time.",
+   "move": "One tower section: up to 20 m tall, 1,200 tons; 44 of them make the legs.",
    "keywords": [
     "messina strait bridge",
     "tower legs",
@@ -257040,12 +257040,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page asking how tall and how heavy one section of a bridge tower leg is. A button, held down to lift a section onto the tower legs, is labelled with the figures 20 m and 1,200 t.",
-    "page": "pages/technology-tower-leg-sections.html?v=56b25e7ba0ec",
-    "bytes": 10440,
+    "label": "A bridge tower half built on the far shore of the Strait of Messina, its two legs stacked from steel sections, and in front a barge bringing the next section, 20 m tall, a worker beside it for scale. Holding a button makes the crane take its weight, 1,200 t, and lift it onto a leg.",
+    "page": "pages/technology-tower-leg-sections.html?v=b249a6c36866",
+    "bytes": 19796,
     "thumbs": {
-     "front": "thumbs/technology-tower-leg-sections-front.webp?v=69e9d13a1d34",
-     "back": "thumbs/technology-tower-leg-sections-back.webp?v=69e9d13a1d34"
+     "front": "thumbs/technology-tower-leg-sections-front.webp?v=e118f046a08a",
+     "back": "thumbs/technology-tower-leg-sections-back.webp?v=e118f046a08a"
     }
    },
    "source": "Geopop, “Come sarà il Ponte sullo stretto di Messina? La ricostruzione 3D dai progetti originali” (YouTube, 2023)",
@@ -257082,13 +257082,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Drag-a-bar estimation: a slider to guess how many times more lives might have been lost had the Twin Towers been weaker, plus a rating of how confident the reader is in the guess.",
+    "label": "The Twin Towers standing in a clear sky; beside them one block of people for the lives lost as it happened, and a dashed bar the reader drags up to guess how many times more weaker towers might have cost, then says how sure they are.",
     "graded": false,
-    "page": "pages/technology-towers-casualty-multiplier.html?v=7b50c0ed5dc2",
-    "bytes": 8256,
+    "page": "pages/technology-towers-casualty-multiplier.html?v=4c1f1a122cba",
+    "bytes": 14043,
     "thumbs": {
-     "front": "thumbs/technology-towers-casualty-multiplier-front.webp?v=5939f2189a57",
-     "back": "thumbs/technology-towers-casualty-multiplier-back.webp?v=5939f2189a57"
+     "front": "thumbs/technology-towers-casualty-multiplier-front.webp?v=503f95aa91b1",
+     "back": "thumbs/technology-towers-casualty-multiplier-back.webp?v=503f95aa91b1"
     }
    },
    "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
@@ -257942,12 +257942,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Drag a stopped train along a cross-section of the Turin–Lyon base tunnel to find the nearest way out. The page shows two single-track tubes linked by cross-passages every 333 m.",
-    "page": "pages/technology-twin-tunnel-links.html?v=39ab4d2a0b4c",
-    "bytes": 7530,
+    "label": "The Turin–Lyon base tunnel seen from above, cut through rock: two tubes with one track each, joined by cross-passages 333 m apart. The reader drags a stopped train, smoke over it, along its tube; the nearest passage lights green and the walk to the other tube shows in metres.",
+    "page": "pages/technology-twin-tunnel-links.html?v=2b2f5642d141",
+    "bytes": 15235,
     "thumbs": {
-     "front": "thumbs/technology-twin-tunnel-links-front.webp?v=05bd986777e7",
-     "back": "thumbs/technology-twin-tunnel-links-back.webp?v=05bd986777e7"
+     "front": "thumbs/technology-twin-tunnel-links-front.webp?v=9620075b1dc3",
+     "back": "thumbs/technology-twin-tunnel-links-back.webp?v=9620075b1dc3"
     }
    },
    "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
@@ -275233,7 +275233,8 @@
   "481": "thinking-z21",
   "482": "thinking-6",
   "483": "thinking-book-the-demon-haunted-world-4",
-  "484": "thinking-z14"
+  "484": "thinking-z14",
+  "485": "thinking-7"
  },
  "commons": {
   "1": [
@@ -280075,6 +280076,16 @@
    "food-local-or-not-2",
    "science-sardinia-corsica-door",
    "maths-three-adic-squares"
+  ],
+  "485": [
+   "psychology-empathy-2",
+   "technology-closed-loop-geothermal",
+   "history-hydrogen-wall",
+   "science-why-things-fall-2",
+   "pop_culture-hype-and-money-2",
+   "thinking-two-four-seven",
+   "human_body-anti-ageing-claims-1",
+   "medicine-when-not-to-take-them-3"
   ]
  }
 }

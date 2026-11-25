@@ -7,6 +7,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../../models/pill.dart';
 import '../../../theme.dart';
 import '../../explore_block.dart';
 import 'answers.dart';
@@ -142,6 +143,51 @@ class CloserGame {
   }
 }
 
+/// The taps on [answer]'s card today, `M` for more and `L` for less: the
+/// bet's, once laid, or the game so far.
+String closerTaps(BetAnswer answer) {
+  final BetsDay day = BetsDay.instance;
+  final Bet? bet = day.betOn('closer', answer.pill.id);
+  final Object? kept = day.draft(BetsDay.draftKey('closer', answer.pill.id));
+  return bet?.said ?? (kept is String ? kept : '');
+}
+
+/// One step of more or less on [answer]'s card, after [taps]: kept for the
+/// day while the game goes on; at its last step laid as the bet, and the
+/// card counted read, its answer shown. What a tile and the challenge's
+/// screen both do, so a game counts the same wherever it is played.
+Future<CloserGame> stepCloser(
+  ExploreHost host,
+  BetSection shelf,
+  BetAnswer answer, {
+  required int steps,
+  required String taps,
+  required bool more,
+}) async {
+  final Pill pill = answer.pill;
+  final String next = '$taps${more ? 'M' : 'L'}';
+  final CloserGame after = CloserGame.of(next, answer.value, steps);
+  if (!after.done) {
+    BetsDay.instance.keepDraft(BetsDay.draftKey('closer', pill.id), next);
+    return after;
+  }
+  await layBet(
+    host,
+    shelf.section,
+    Bet(
+      kind: 'closer',
+      section: shelf.id,
+      pill: pill.id,
+      said: next,
+      right: after.right == after.taken,
+      facts: {'right': after.right, 'steps': after.taken},
+      at: DateTime.now().millisecondsSinceEpoch,
+    ),
+  );
+  revealCard(host, shelf.section, pill);
+  return after;
+}
+
 /// One share to close in on.
 class CloserTile extends StatelessWidget {
   const CloserTile({
@@ -171,36 +217,22 @@ class CloserTile extends StatelessWidget {
     final BetNumbers n = BetNumbers(
       Localizations.localeOf(context).languageCode,
     );
-    final String key = BetsDay.draftKey('closer', pill.id);
     final Bet? bet = day.betOn('closer', pill.id);
-    final Object? kept = day.draft(key);
-    final String taps = bet?.said ?? (kept is String ? kept : '');
+    final String taps = closerTaps(answer);
     final CloserGame game = CloserGame.of(taps, answer.value, steps);
     final bool done = bet != null || game.done;
     final String said = n.percent(answer.value);
 
     Future<void> tap(bool more) async {
       BetFeel.tick();
-      final String next = '$taps${more ? 'M' : 'L'}';
-      final CloserGame after = CloserGame.of(next, answer.value, steps);
-      if (!after.done) {
-        day.keepDraft(key, next);
-        return;
-      }
-      await layBet(
+      await stepCloser(
         host,
-        shelf.section,
-        Bet(
-          kind: 'closer',
-          section: shelf.id,
-          pill: pill.id,
-          said: next,
-          right: after.right == after.taken,
-          facts: {'right': after.right, 'steps': after.taken},
-          at: DateTime.now().millisecondsSinceEpoch,
-        ),
+        shelf,
+        answer,
+        steps: steps,
+        taps: taps,
+        more: more,
       );
-      revealCard(host, shelf.section, pill);
     }
 
     String message(CloserGame g) {

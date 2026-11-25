@@ -1,39 +1,48 @@
 <!doctype html>
 <!-- slug: technology-tatara-steel-race -->
+<!-- Look: two lanes drawn flat, thick ink outlines on the card's blue. Above, a modern steel mill: a cream hall under
+     a slate sawtooth roof, a brick chimney behind it; lit, its door glows, the chimney smokes and identical grey bars
+     stack up beside it, fast. Below, the tatara of Shimane: the long low clay furnace with its row of tuyeres and its
+     smiths in white, one feeding charcoal with a shovel, one tending it with an iron rod; lit, flames roar from its
+     top and, slowly, a pile of steel grows beside it, every piece its own shade (darker holds more carbon), a few with
+     rust-coloured specks. When the room left to the drawing is short and wide, the two steels sit side by side.
+     Drawn again at its real size whenever its room changes. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#stage{display:flex;flex-direction:column;gap:1.3cqh;flex:1;min-height:0}
 #picbox{flex:1;min-height:0;position:relative}
 #pic{position:absolute;inset:0;width:100%;height:100%;display:block}
-#ctl{display:flex;flex-direction:column;gap:1.1cqh}
-#opts{display:flex;flex-direction:column;gap:1.1cqh}
-#why{display:flex;flex-direction:column;gap:1cqh}
-.opt,#go{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+#ctl{display:flex;flex-direction:column;gap:1cqh}
+#opts{display:grid;grid-template-columns:1fr 1fr;gap:2cqw}
+.opt,#go{font:700 max(2cqh,13.5px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 3.4cqw;cursor:pointer;overflow-wrap:break-word}
 #go{text-align:center;background:var(--k);color:var(--c);box-shadow:none}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
-#why .big{font:800 max(3cqh,18px)/1.1 var(--display)}
-#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body)}
+#why .body{font:500 max(1.8cqh,12.5px)/1.32 var(--body);margin:0}
+/* Once the answer is in, the column closes up a little and gives the drawing the room. */
+.card.done .in{gap:1.5cqh}
+.card.done #stage{gap:1cqh}
+#why .body b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Race · pick one">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">ANCIENT STEEL</span></div>
     <h2 class="q">Why do the best Japanese swords still need tatara steel?</h2>
     <div class="stagebox" id="stage">
-      <div id="picbox"><svg id="pic"></svg></div>
+      <div id="picbox"><svg id="pic" role="img" aria-label="Above, a modern steel mill with a chimney beside a stack of identical steel bars. Below, the low clay tatara furnace of Shimane with two smiths in white, beside a pile of steel pieces of every shade."></svg></div>
       <div id="ctl">
         <button id="go">Light both fires</button>
         <div id="opts" class="gone">
           <button class="opt" data-i="0">Mill steel: fast and even</button>
           <button class="opt" data-i="1">Tatara steel: slow and uneven</button>
         </div>
-        <div id="why" class="gone"><p class="big">Tatara steel</p><p class="body">The mill wins the race, but every bit of its steel is the same. The tatara, lit one night a year in Shimane as it was 1300 years ago, gives a carbon spread and impurities that mass production can't copy.</p></div>
+        <div id="why" class="gone"><p class="body"><b>Tatara steel.</b> The mill wins the race, but every bit of its steel is the same. The tatara, lit one night a year in Shimane as it was 1300 years ago, gives a carbon spread and impurities that mass production can't copy.</p></div>
       </div>
     </div>
-    <div id="sure"></div>
+    <div id="sure" class="gone"></div>
     <p class="say" id="say">Race a modern mill against the ancient tatara furnace.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Faster and more uniform is not always better steel.</div>
     <div class="foot"><span class="src">Source · Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)</span></div>
@@ -41,47 +50,233 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const RIGHT = 1, COLS = 14, ROWS = 4, N = COLS * ROWS;
+const INK = '#10100c', STONE = '#fffbf0', SLATE = '#7d8a99', GLASS = '#bfe6ff', BRICK = '#d8644a', CONCRETE = '#d5dbe2',
+  CLAY = '#cf9161', CLAY2 = '#a7653f', EARTH = '#f3cf86', HOT = '#ff5a1f', SUN = '#ffc83d', STEEL = '#aab5c1',
+  SKIN = '#f2c29b', INDIGO = '#2c3a66', WOOD = '#a26a3c', RUST = '#e2762b';
+const RIGHT = 1, BARS = 8, ROOF = '#6b4a33';
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 let pick = -1;
-const tc = [], imp = [];
-for (let i = 0; i < N; i++) {
-  const c = Math.floor(i / ROWS), r = i % ROWS;
-  let v = .5 + .32 * Math.sin(c * .9 + r * 1.3) + .22 * Kit.gauss();
-  tc.push(Math.max(0, Math.min(1, v)));
-  imp.push(Kit.rnd() < .13);
-}
 const lanes = [
-  {name: 'Modern mill', p: 0, glow: 0, hot: '#ffffff', done: 'Done first. Every bit the same.'},
-  {name: 'Tatara furnace', p: 0, glow: 0, hot: '#ffa53d', done: 'Done last. Uneven carbon, its own impurities.'}
+  {name: 'Modern mill', p: 0, glow: 0, done: 'done first', short: 'Mill steel'},
+  {name: 'Tatara furnace', p: 0, glow: 0, done: 'done last', short: 'Tatara steel'}
 ];
-const hex = h => [1, 3, 5].map(k => parseInt(h.slice(k, k + 2), 16));
-const lo = hex('#f4f7fa'), hi = hex('#10100c');
-const mix = t => 'rgb(' + lo.map((a, k) => Math.round(a + (hi[k] - a) * t)).join(',') + ')';
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const pts = a => a.map(([x, y], i) => (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1)).join(' ');
+const ink = (w = 2.5) => ({stroke: INK, 'stroke-width': w, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
 
-function render() {
-  const svg = Kit.$('pic'); const {W, H, f} = Kit.fitSvg(svg); svg.innerHTML = '';
-  const fs = Math.max(13, f), fsub = Math.max(12, f * .85), gap = f * .7, pad = f * .8;
-  const lh = (H - gap) / 2;
-  lanes.forEach((L, li) => {
-    const y0 = li * (lh + gap);
-    Kit.mk('text', {x: pad, y: y0 + fs * 1.35, fill: '#10100c', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg).textContent = L.name;
-    const sy = y0 + fs * 2.0, sh = Math.max(10, lh - fs * 2.0 - fsub * 2.1);
-    const r = Math.max(6, Math.min(sh / 2, W * .075)), cx = pad + r, cy = sy + sh / 2;
-    const fl = L.glow * (L.glow > 0 && L.p < 1 ? .8 + .2 * Math.random() : 1);
-    Kit.mk('circle', {cx, cy, r: r * 1.5, fill: L.hot, opacity: .4 * fl}, svg);
-    Kit.mk('circle', {cx, cy, r, fill: L.glow > 0 ? L.hot : '#3b342e', opacity: L.glow > 0 ? .55 + .45 * fl : 1}, svg);
-    const sx = cx + r * 1.6 + pad * .4, sw = W - sx - pad;
-    const cw = sw / COLS, ch = sh / ROWS;
-    Kit.mk('rect', {x: sx, y: sy, width: sw, height: sh, rx: 3, fill: 'none', stroke: '#10100c', 'stroke-opacity': .55, 'stroke-width': 1.5}, svg);
-    const n = Math.floor(L.p * N + 1e-6);
-    for (let i = 0; i < n; i++) {
-      const c = Math.floor(i / ROWS), rr = i % ROWS, x = sx + c * cw, y = sy + rr * ch;
-      Kit.mk('rect', {x: x + .5, y: y + .5, width: cw - 1, height: ch - 1, fill: li ? mix(tc[i]) : '#6b7580'}, svg);
-      if (li && imp[i]) Kit.mk('circle', {cx: x + cw / 2, cy: y + ch / 2, r: Math.min(cw, ch) * .2, fill: '#e2762b'}, svg);
-    }
-    const sub = L.p >= 1 ? L.done : L.p > 0 ? 'making steel…' : 'cold';
-    Kit.mk('text', {x: pad, y: y0 + lh - fsub * .75, fill: '#10100c', 'font-size': fsub, 'font-family': 'var(--body)'}, svg).textContent = sub;
+// The tatara's steel: a pile of broken pieces, each with its own carbon (0 light, 1 dark) and, now and then, a speck
+// of what came in with the sand. Made once, from a fixed seed, so the pile is the same on every phone and every redraw.
+const PIECES = (() => {
+  let s = 20240619; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  return Array.from({length: 14}, (_, i) => {
+    const k = 6 + Math.floor(r() * 2), shape = [];
+    for (let j = 0; j < k; j++) shape.push([(j + r() * .5) / k * Math.PI * 2, .72 + r() * .38]);
+    const carbon = clamp(.5 + .42 * Math.sin(i * 1.7 + 2.3 * Math.floor(i / 5)) + .25 * (r() - .5), .04, .98);
+    return {shape, carbon, speck: r() < .3 ? [r() * .5 - .25, r() * .5 - .25] : null, tilt: r() * Math.PI};
   });
+})();
+const grey = c => { const v = Math.round(236 - c * 190); return `rgb(${v},${v},${Math.round(v * .97)})`; };
+
+const status = L => L.p >= 1 ? L.done : L.p > 0 ? 'making steel…' : 'cold';
+
+// ---------- the modern mill: a hall, a chimney, its door; lit, it glows and smokes ----------
+function mill(p, x0, w, gy, top, L, t) {
+  const hallW = w * .9, hallH = Math.min((gy - top) * .5, hallW * .5), hx = x0 + 2, hy = gy - hallH;
+  const toothH = Math.max(6, hallH * .32), cw = Math.max(9, w * .09), cx = hx + hallW * .16;
+  // the chimney, behind the hall, and its smoke while the mill runs
+  const ctop = top + Math.max(4, (gy - top) * .04);
+  if (L.glow > 0 && L.p < 1) {
+    const g = mk('g', {}, p), drift = (t * .35) % 1, sr = cw * .62;
+    [[.6, -.9, .8], [1.5, -1.9, 1], [2.6, -2.5, 1.18]].forEach(([dx, dy, k]) => mk('circle', Object.assign({cx: cx + cw / 2 + sr * dx * (1 + drift * .25), cy: ctop + sr * dy * (1 + drift * .2), r: sr * k, fill: STONE}, ink(2)), g));
+  }
+  mk('rect', Object.assign({x: cx, y: ctop, width: cw, height: gy - ctop, fill: BRICK}, ink()), p);
+  mk('rect', Object.assign({x: cx - cw * .12, y: ctop, width: cw * 1.24, height: Math.max(4, cw * .45), fill: BRICK}, ink()), p);
+  // the sawtooth roof, three teeth, each with its strip of glass
+  const n = 3, tw = hallW / n;
+  for (let k = 0; k < n; k++) {
+    const a = hx + k * tw;
+    mk('path', Object.assign({d: pts([[a, hy], [a, hy - toothH], [a + tw, hy]]) + ' Z', fill: SLATE}, ink()), p);
+    mk('path', {d: pts([[a + 2.5, hy - 2], [a + 2.5, hy - toothH + 4], [a + tw * .2, hy - toothH * .8 + 1], [a + tw * .2, hy - 2]]) + ' Z', fill: GLASS}, p);
+  }
+  mk('rect', Object.assign({x: hx, y: hy, width: hallW, height: hallH, fill: STONE}, ink()), p);
+  // its windows, and the door the steel comes out of
+  const dw = hallW * .3, dh = hallH * .66, dx = hx + hallW * .62, wy = hy + hallH * .22, ww = Math.max(5, hallW * .09), wh = Math.max(5, hallH * .22);
+  [.12, .34].forEach(f => mk('rect', Object.assign({x: hx + hallW * f, y: wy, width: ww * 1.3, height: wh, rx: 1.5, fill: GLASS}, ink(2)), p));
+  const arch = `M${dx},${gy} V${gy - dh + dw / 2} A${dw / 2},${dw / 2} 0 0 1 ${dx + dw},${gy - dh + dw / 2} V${gy} Z`;
+  const lit = L.glow > 0 && L.p < 1;
+  mk('path', Object.assign({d: arch, fill: lit ? HOT : '#3b342e'}, ink()), p);
+  if (lit) mk('rect', {x: dx + dw * .22, y: gy - dh * .55, width: dw * .56, height: dh * .55 - 1.5, rx: 2, fill: SUN}, p);
+}
+
+// ---------- the tatara: a long low furnace of clay, its tuyeres, its smiths ----------
+// A smith of the tatara, side on, facing right (dir 1) or left (-1), feet at (x, gy), h tall, in white with indigo
+// trousers and a white headband. tool: 'shovel' with charcoal on its blade, or 'rod'.
+function smith(p, x, gy, h, dir, reach, tool) {
+  const u = h / 10, g = mk('g', {transform: `translate(${x.toFixed(1)},${gy.toFixed(1)}) scale(${dir},1)`}, p), s = Math.max(1.8, Math.min(2.4, u * .42));
+  const at = (f, w = s) => Object.assign({fill: f}, ink(w));
+  // the tool first: held in both hands, reaching to (reach.x, reach.y) in the figure's own frame
+  const hx = 2.5 * u, hy = -6.1 * u, ex = reach[0], ey = reach[1];
+  const ang = Math.atan2(ey - hy, ex - hx), back = 1.6 * u;
+  const sx = hx - Math.cos(ang) * back, sy = hy - Math.sin(ang) * back;
+  mk('line', {x1: sx, y1: sy, x2: ex, y2: ey, stroke: INK, 'stroke-width': Math.max(4, u * .62), 'stroke-linecap': 'round'}, g);
+  mk('line', {x1: sx, y1: sy, x2: ex, y2: ey, stroke: tool === 'rod' ? '#59606b' : WOOD, 'stroke-width': Math.max(2, u * .62 - 2.6), 'stroke-linecap': 'round'}, g);
+  if (tool === 'shovel') {
+    const bl = 1.5 * u, c = Math.cos(ang), sn = Math.sin(ang);
+    const q = [[ex - sn * bl * .55, ey + c * bl * .55], [ex + c * bl - sn * bl * .45, ey + sn * bl + c * bl * .45], [ex + c * bl + sn * bl * .45, ey + sn * bl - c * bl * .45], [ex + sn * bl * .55, ey - c * bl * .55]];
+    mk('path', Object.assign({d: pts(q) + ' Z', fill: '#8f98a3'}, ink(s)), g);
+    // charcoal on the blade
+    [[.35, .42, .32], [.75, .4, .3], [.55, .82, .28]].forEach(([a, b, r]) => mk('circle', {cx: ex + c * bl * a + sn * u * b, cy: ey + sn * bl * a - c * u * b, r: u * r, fill: INK}, g));
+  }
+  // legs in wide indigo trousers, feet in dark tabi
+  mk('path', Object.assign({d: pts([[-1.15 * u, -4.9 * u], [1.15 * u, -4.9 * u], [1.75 * u, -.35 * u], [-1.6 * u, -.35 * u]]) + ' Z', fill: INDIGO}, ink(s)), g);
+  mk('path', Object.assign({d: `M${-1.75 * u},0 h${1.5 * u} v${-.55 * u} h${-1.5 * u} Z M${.35 * u},0 h${1.75 * u} v${-.55 * u} h${-1.75 * u} Z`, fill: INK}, ink(1.2)), g);
+  // the white jacket, belted
+  mk('path', Object.assign({d: `M${-1.25 * u},${-4.6 * u} L${-1.05 * u},${-7.6 * u} Q0,${-8.15 * u} ${1.1 * u},${-7.6 * u} L${1.35 * u},${-4.6 * u} Z`, fill: STONE}, ink(s)), g);
+  mk('rect', {x: -1.3 * u, y: -5.25 * u, width: 2.65 * u, height: .55 * u, fill: INK}, g);
+  // arms out to the tool
+  mk('path', {d: `M${.2 * u},${-7.35 * u} L${1.2 * u},${-5.9 * u} L${hx},${hy}`, fill: 'none', stroke: INK, 'stroke-width': Math.max(4.5, u * .95), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+  mk('path', {d: `M${.2 * u},${-7.35 * u} L${1.2 * u},${-5.9 * u} L${hx},${hy}`, fill: 'none', stroke: STONE, 'stroke-width': Math.max(2, u * .95 - 2.8), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+  mk('circle', Object.assign({cx: hx, cy: hy, r: u * .42}, at(SKIN, 1.5)), g);
+  // head, hair, headband
+  mk('circle', Object.assign({cx: .25 * u, cy: -8.85 * u, r: .95 * u}, at(SKIN)), g);
+  mk('path', {d: `M${-.72 * u},${-8.75 * u} A${.97 * u},${.97 * u} 0 0 1 ${1.15 * u},${-9.2 * u} L${-.4 * u},${-9.3 * u} Z`, fill: INK}, g);
+  mk('path', {d: `M${-.76 * u},${-9.1 * u} L${1.18 * u},${-9.32 * u}`, stroke: STONE, 'stroke-width': Math.max(2, u * .38), 'stroke-linecap': 'round'}, g);
+  mk('path', {d: `M${-.78 * u},${-9.1 * u} l${-.55 * u},${.5 * u} M${-.78 * u},${-9.1 * u} l${-.6 * u},${-.1 * u}`, stroke: STONE, 'stroke-width': Math.max(1.6, u * .26), 'stroke-linecap': 'round'}, g);
+  mk('circle', {cx: .85 * u, cy: -8.8 * u, r: Math.max(.8, u * .11), fill: INK}, g);
+}
+
+function flames(p, a, b, y, hgt, t) {
+  // tongues of fire along the open top, outer orange, inner yellow, swaying a little while they burn
+  const n = 5, w = (b - a) / n;
+  const path = (k) => {
+    let d = `M${a},${y}`;
+    for (let i = 0; i < n; i++) {
+      const x0 = a + i * w, hh = hgt * k * (.72 + .28 * Math.abs(Math.sin(i * 2.1 + t * 7 + (i % 2) * 1.3)));
+      d += ` Q${x0 + w * .1},${y - hh * .55} ${x0 + w * .5},${y - hh} Q${x0 + w * .9},${y - hh * .55} ${x0 + w},${y}`;
+    }
+    return d + ' Z';
+  };
+  mk('path', Object.assign({d: path(1), fill: HOT}, ink(2)), p);
+  mk('path', {d: path(.55), fill: SUN, transform: `translate(${(b - a) * .03},0)`}, p);
+}
+
+function tatara(p, x0, w, gy, top, L, t) {
+  const room = gy - top;
+  const sh = Math.min(room * .7, w * .46), smW = sh * .34;
+  const fx0 = x0 + smW * 1.25, fx1 = x0 + w - smW * 1.2;
+  const th = Math.min(room * .4, (fx1 - fx0) * .42), inset = th * .14;
+  const eave = gy - sh - Math.max(5, room * .05), lit = L.glow > 0;
+  // the hall the tatara stands in: its two posts and its great roof, over the smiths' heads
+  if (eave - top > 12) {
+    const rt = eave - Math.min(eave - top - 2, sh * .6);
+    [x0 + 2, x0 + w - 10].forEach(x => mk('rect', Object.assign({x, y: eave - 3, width: 6, height: gy - eave + 3, fill: WOOD}, ink(1.8)), p));
+    mk('path', Object.assign({d: pts([[x0 - 6, eave], [x0 + w * .22, rt], [x0 + w * .76, rt], [x0 + w - 1, eave]]) + ' Z', fill: ROOF}, ink()), p);
+    mk('path', Object.assign({d: pts([[x0 + w * .22 - 3, rt], [x0 + w * .76 + 3, rt]]), fill: 'none'}, ink(5)), p);
+    mk('rect', Object.assign({x: x0 - 6, y: eave - 4, width: w + 5, height: 5, fill: WOOD}, ink(1.8)), p);
+  }
+  if (lit) flames(p, fx0 + inset + 3, fx1 - inset - 3, gy - th + 2, Math.max(6, Math.min(th * 1.1, gy - th - eave - 6)), t);
+  // the furnace: clay walls, a darker hearth band, the top rim, the row of tuyeres along its side
+  mk('path', Object.assign({d: pts([[fx0, gy], [fx0 + inset, gy - th], [fx1 - inset, gy - th], [fx1, gy]]) + ' Z', fill: CLAY}, ink()), p);
+  mk('path', {d: pts([[fx0 + 1.5, gy - 1.2], [fx0 + inset * .3, gy - th * .3], [fx1 - inset * .3, gy - th * .3], [fx1 - 1.5, gy - 1.2]]) + ' Z', fill: CLAY2}, p);
+  mk('line', {x1: fx0 + inset * .3, x2: fx1 - inset * .3, y1: gy - th * .3, y2: gy - th * .3, stroke: INK, 'stroke-width': 1.5}, p);
+  mk('path', Object.assign({d: pts([[fx0 + inset - 1, gy - th], [fx1 - inset + 1, gy - th]]), fill: 'none'}, ink(4)), p);
+  const nT = Math.max(5, Math.round((fx1 - fx0) / (th * .36)));
+  for (let i = 0; i < nT; i++) {
+    const x = fx0 + inset + (i + .5) * (fx1 - fx0 - 2 * inset) / nT;
+    mk('circle', {cx: x, cy: gy - th * .58, r: Math.max(1.7, th * .06), fill: lit ? SUN : INK, stroke: INK, 'stroke-width': lit ? 1.2 : 0}, p);
+  }
+  // the smiths: one feeding charcoal with a shovel, one tending the fire with an iron rod
+  const xa = x0 + smW * .55, xb = fx1 + smW * .62;
+  smith(p, xa, gy, sh, 1, [fx0 + inset * 2 - xa, -(th + sh * .02)], 'shovel');
+  smith(p, xb, gy, sh * .97, -1, [xb - (fx1 - inset * 1.6), -th * .92], 'rod');
+}
+
+// ---------- what each furnace has made so far ----------
+// The mill's bars: all one size, one grey, stacked neat, in whichever arrangement lets them be biggest.
+function bars(p, x0, w, gy, top, L) {
+  const room = gy - top, AR = 2.3;
+  const [R, C, b0] = [[4, 2], [2, 4]].map(([r, c]) => [r, c, Math.min(room / (r * 1.1), w / (c * AR + (c - 1) * .3))]).sort((a, b) => b[2] - a[2])[0];
+  const bh = clamp(b0, 4, 24), bw = bh * AR, gap = bh * .3;
+  const n = Math.floor(L.p * BARS + 1e-6), left = x0 + Math.max(0, (w - C * bw - (C - 1) * gap) / 2);
+  for (let i = 0; i < n; i++) {
+    const c = i % C, r = Math.floor(i / C), x = left + c * (bw + gap), y = gy - (r + 1) * bh * 1.1;
+    mk('rect', Object.assign({x, y, width: bw, height: bh, rx: Math.min(3, bh * .2), fill: STEEL}, ink(2)), p);
+    mk('line', {x1: x + bh * .4, x2: x + bw - bh * .4, y1: y + bh * .32, y2: y + bh * .32, stroke: STONE, 'stroke-width': Math.max(1.4, bh * .14), 'stroke-linecap': 'round', opacity: .9}, p);
+  }
+}
+// The tatara's pieces: a heap, in whichever rows let the pieces be biggest.
+function pile(p, x0, w, gy, top, L) {
+  const room = gy - top;
+  const [rows, cr0] = [[5, 4, 3, 2], [6, 5, 3], [8, 6]].map(rs => [rs, Math.min(w / (rs[0] * 1.9 + .2), room / ((rs.length - 1) * 1.5 + 1.95))]).sort((a, b) => b[1] - a[1])[0];
+  const cr = clamp(cr0, 3, 18), n = Math.floor(L.p * PIECES.length + 1e-6), cx = x0 + w / 2;
+  let k = 0;
+  rows.forEach((m, row) => { for (let i = 0; i < m; i++, k++) {
+    if (k >= n) return;
+    const q = PIECES[k], x = cx + (i - (m - 1) / 2) * cr * 1.88 + (row % 2 ? cr * .1 : 0), y = gy - cr * .95 - row * cr * 1.5;
+    const d = pts(q.shape.map(([a, rr]) => [x + Math.cos(a + q.tilt) * cr * rr, y + Math.sin(a + q.tilt) * cr * rr * .86])) + ' Z';
+    mk('path', Object.assign({d, fill: grey(q.carbon)}, ink(Math.max(1.4, Math.min(2, cr * .16)))), p);
+    if (q.speck) mk('circle', {cx: x + q.speck[0] * cr, cy: y + q.speck[1] * cr, r: Math.max(1.5, cr * .17), fill: RUST, stroke: INK, 'stroke-width': 1}, p);
+  } });
+}
+
+// What each furnace is fed, waiting beside it until the fire takes it: a mound of black iron sand by the tatara,
+// a heap of rust-brown ore by the mill. It shrinks as the steel grows.
+const ORE = ['#9c4f2e', '#b8643a', '#87452a', '#a85a33', '#93492b', '#b05e36'];
+function heap(p, x0, w, gy, top, L, sand) {
+  const k = 1 - L.p; if (k < .04) return;
+  const room = gy - top, cx = x0 + w / 2;
+  if (sand) {
+    const bw = Math.min(w * .86, room * 2.4) * k, hh = Math.min(room * .62, bw * .4 / Math.max(k, .2)) * k;
+    mk('path', Object.assign({d: `M${cx - bw / 2},${gy} C${cx - bw * .26},${gy - hh * .08} ${cx - bw * .2},${gy - hh} ${cx},${gy - hh} C${cx + bw * .2},${gy - hh} ${cx + bw * .26},${gy - hh * .08} ${cx + bw / 2},${gy} Z`, fill: '#34302d'}, ink(2)), p);
+    return;
+  }
+  const cr = clamp(Math.min(w / 6.4, room / 4.4), 3, 16) * k;
+  [[-2, 0], [0, 0], [2, 0], [-1, 1], [1, 1], [0, 2]].forEach(([i, row], j) => {
+    const x = cx + i * cr * .98, y = gy - cr * .9 - row * cr * 1.45, q = PIECES[j];
+    mk('path', Object.assign({d: pts(q.shape.map(([a, rr]) => [x + Math.cos(a + q.tilt) * cr * rr, y + Math.sin(a + q.tilt) * cr * rr * .82])) + ' Z', fill: ORE[j]}, ink(Math.max(1.4, Math.min(2, cr * .16)))), p);
+  });
+}
+
+// A lane's name, fitted to its room, and how it is doing under it.
+function head(p, x, y, L, w, fs, fsub, withStatus) {
+  const t = mk('text', {x, y: y + fs * .95, 'font-size': fs, 'font-weight': 800, fill: INK, 'font-family': 'Figtree, sans-serif'}, p);
+  t.textContent = L.name;
+  const tw = t.getComputedTextLength(); if (tw > w) t.setAttribute('font-size', Math.max(12, fs * w / tw));
+  if (!withStatus) return y + fs * 1.25;
+  mk('text', {x, y: y + fs * .95 + fsub * 1.3, 'font-size': fsub, 'font-weight': 600, fill: INK, 'font-family': 'Figtree, sans-serif'}, p).textContent = status(L);
+  return y + fs * .95 + fsub * 1.65;
+}
+
+// ---------- the whole drawing, for the room it has now ----------
+function render() {
+  const svg = Kit.$('pic'), {W, H} = Kit.fitSvg(svg); svg.innerHTML = '';
+  if (W < 60 || H < 40) return;
+  const t = performance.now() / 1000;
+  const fs = clamp(W / 22, 12.5, 14.5), fsub = clamp(fs * .9, 12, 13);
+  if (H >= 150) {
+    // Two lanes, the mill above, the tatara below: each its scene on the left, its name and what it has made on the right.
+    const gap = Math.max(8, H * .035), h1 = Math.round((H - gap) * .42), split = W * .6;
+    [[0, h1, 0], [h1 + gap, H, 1]].forEach(([y0, y1, li]) => {
+      const L = lanes[li], g = mk('g', {}, svg), gy = y1 - 5;
+      mk('rect', {x: 0, y: gy, width: W, height: y1 - gy, fill: li ? EARTH : CONCRETE}, g);
+      mk('line', Object.assign({x1: 0, x2: W, y1: gy, y2: gy}, ink()), g);
+      if (li) tatara(g, 0, split, gy, y0, L, t); else mill(g, 0, split * .95, gy, y0, L, t);
+      const ox = split + 8, ow = W - ox - 1;
+      const hb = head(g, ox, y0, L, ow, fs, fsub, true);
+      heap(g, ox, ow, gy - 1, hb + 4, L, li === 1);
+      if (li) pile(g, ox, ow, gy - 1, hb + 4, L); else bars(g, ox, ow, gy - 1, hb + 4, L);
+    });
+  } else {
+    // Short and wide: the two steels side by side, each under its name.
+    const gap = Math.max(12, W * .06), cw = (W - gap) / 2, gy = H - 5;
+    mk('rect', {x: 0, y: gy, width: cw + gap / 2, height: 5, fill: CONCRETE}, svg);
+    mk('rect', {x: cw + gap / 2, y: gy, width: W - cw - gap / 2, height: 5, fill: EARTH}, svg);
+    mk('line', Object.assign({x1: 0, x2: W, y1: gy, y2: gy}, ink()), svg);
+    lanes.forEach((L, li) => {
+      const x0 = li * (cw + gap), g = mk('g', {}, svg), hb = head(g, x0, 0, L, cw, fs, fsub, false);
+      if (li) pile(g, x0, cw, gy - 1, hb + 3, L); else bars(g, x0, cw, gy - 1, hb + 3, L);
+    });
+  }
 }
 
 let raceDone = null;
@@ -90,7 +285,7 @@ function race() {
   raceDone = new Promise(res => {
     const end = () => {
       lanes[0].glow = 0; render();
-      Kit.$('say').textContent = 'Darker squares hold more carbon. Which steel makes the very best swords?';
+      Kit.$('say').textContent = 'Every bar from the mill is the same. Every tatara piece is its own: darker holds more carbon. Which steel makes the very best swords?';
       Kit.show('opts');
       if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'});
       res();
@@ -98,7 +293,7 @@ function race() {
     if (Kit.calm) { lanes.forEach(L => { L.p = 1; L.glow = 1; }); end(); return; }
     lanes.forEach(L => L.glow = 1);
     const tl = gsap.timeline({onComplete: end});
-    tl.to(lanes[0], {p: 1, duration: 1.1, ease: 'none', onUpdate: render, onComplete: () => { lanes[0].glow = 0; Kit.haptic('selection'); render(); }}, 0);
+    tl.to(lanes[0], {p: 1, duration: 1.1, ease: 'none', onUpdate: render, onComplete: () => { Kit.haptic('selection'); render(); }}, 0);
     tl.to(lanes[1], {p: 1, duration: 3.6, ease: 'power1.inOut', onUpdate: render}, 0);
   });
 }
@@ -107,13 +302,15 @@ Kit.$('go').addEventListener('click', race);
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
   Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.$('card').classList.add('done');
   Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  sure.grade(ok, pct, `${lanes[pick].short}, ${ok ? 'right' : 'wrong'}`);
   Kit.show('keep');
 });
 Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+  Kit.hide('say'); Kit.show('sure'); sure.on();
 });
 Kit.onShow.card = render;
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'}); };
@@ -123,9 +320,9 @@ Kit.play.card = async () => {
   Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100));
   Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 600));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again at the size it now has whenever its room changes: the lanes when there is height, the two steels side
+// by side when the answer leaves it short and wide.
+{ let seen = ''; const el = Kit.$('picbox'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen) { seen = k; render(); } }).observe(el); }
 Kit.single();
 </script>
 </html>

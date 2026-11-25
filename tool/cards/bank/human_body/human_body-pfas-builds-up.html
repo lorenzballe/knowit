@@ -2,6 +2,11 @@
 <!-- slug: human_body-pfas-builds-up -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute · PFAS build up</title>
+<!-- The picture: a person drinking a glass of tap water, and beside them two drops seen through a lens, the same size:
+     a drop of the tap water and a drop of their blood. One lime speck of PFOA is one speck at 4 parts per trillion: the
+     water's drop has one. Each tap is another glass: specks pile into the blood's drop, fewer each time as more leave,
+     until it holds 500 to the water's one, 2 parts per billion. Flat colours, thick ink outlines, drawn again at its
+     real size whenever its room changes. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
@@ -9,13 +14,12 @@
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
 #read{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;flex-wrap:wrap}
 #lvl{font:800 max(3.4cqh,20px)/1.1 var(--display);color:var(--k)}
-#ratio{font:700 max(1.9cqh,13px)/1.2 var(--mono);color:var(--k);opacity:.75}
+#ratio{font:800 max(2.1cqh,14px)/1.2 var(--body);color:var(--k)}
 #g{flex:1;min-height:0;width:100%;display:block}
 #btn{font:800 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;align-self:stretch}
 #btn:active{transform:scale(.98)}
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .body{font:600 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
-.lab{font-family:var(--mono);font-weight:700}
 </style>
 <article class="card" id="card" data-topic="human_body" data-kind="Tap to add">
   <div class="in">
@@ -23,7 +27,7 @@
     <h2 class="q">How can tap water with trace PFAS lead to high blood levels?</h2>
     <div class="stagebox" id="stage">
       <div id="read"><span id="lvl">Blood: 0 ppb</span><span id="ratio">0× the water</span></div>
-      <svg id="g"></svg>
+      <svg id="g" role="img" aria-label="A person drinking a glass of tap water. Beside them, through a lens, a drop of the water with one lime speck of PFOA in it, 4 parts per trillion, and a drop of their blood, still clear."></svg>
       <button id="btn">Keep drinking · 0/8</button>
       <div id="why" class="gone">
         <p class="body">PFAS build up in your body over time: every glass adds a little, and little leaves. So water with just 4 parts per trillion, plus other exposure, can keep your blood at 2 parts per billion: 500 times higher.</p>
@@ -40,70 +44,151 @@ const STEPS = 8, TOP = 2000, R = 0.6;          // levels in ppt; 2000 ppt = 2 pp
 const level = t => TOP * (1 - Math.pow(R, t));
 let n = 0, G = null, busy = false;
 const shown = {v: 0};
+// One ink for every outline. The person in a teal shirt and slate trousers; the glass pale, its water blue; the blood a
+// deep red; PFOA lime wherever it is.
+const INK = '#10100c', SKIN = '#F2C29B', HAIR = '#3B2622', SHIRT = '#2BB3A3', TROUSERS = '#3E5A78', GLASS = '#EAF4FF',
+  WATER = '#4F9BF2', BLOOD = '#A3141C', SPECK = '#D8F23E', WHITE = '#ffffff';
+const FONT = 'Figtree, system-ui, sans-serif';
+const mk = Kit.mk, clamp = (v, a, b) => Math.max(a, Math.min(b, v)), f1 = n => (Math.round(n * 10) / 10).toString();
+// How many specks a drop holds at a level: one for every 4 ppt, the water's own level.
+const specks = t => t >= STEPS ? 500 : Math.round(level(t) / 4);
+// Where the 500 specks lie in a drop, as fractions of its radius: spread evenly, in an order that fills it evenly too.
+const SPOTS = (() => {
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const p = [];
+  for (let i = 0; i < 500; i++) { const r = .9 * Math.sqrt((i + .5) / 500) + (rnd() - .5) * .02, a = i * 2.39996 + (rnd() - .5) * .3; p.push([r * Math.cos(a), r * Math.sin(a)]); }
+  for (let i = p.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [p[i], p[j]] = [p[j], p[i]]; }
+  return p;
+})();
 
 function fmt(v){ return v >= 1990 ? '≈ 2 ppb' : (v/1000).toFixed(2) + ' ppb'; }
 function setRead(v){
   Kit.$('lvl').textContent = 'Blood: ' + fmt(v);
   Kit.$('ratio').textContent = (n >= STEPS ? 500 : Math.round(v/4)) + '× the water';
 }
+function txt(p, x, y, s, size, a) {
+  const t = mk('text', Object.assign({x: f1(x), y: f1(y), 'font-family': FONT, 'font-size': f1(size), 'font-weight': 700, fill: WHITE}, a || {}), p);
+  t.textContent = s; return t;
+}
+
+// A person facing us, feet at (cx, yb), 100 units u tall, a glass of water raised to the mouth. Says where the glass's
+// water and the person's chest are, for the lens to look into.
+function person(p, cx, yb, u, k) {
+  const Y = n => yb - n * u, X = n => cx + n * u, P = (x, y) => f1(X(x)) + ',' + f1(Y(y));
+  const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const limb = (pts, w, fill) => { const d = 'M' + pts.map(q => P(q[0], q[1])).join(' L'); mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': f1(w * u + k * 2), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p); mk('path', {d, fill: 'none', stroke: fill, 'stroke-width': f1(w * u), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p); };
+  // the hanging arm, behind the body
+  limb([[11, 75], [13.4, 53]], 4.2, SKIN);
+  mk('circle', Object.assign({cx: f1(X(13.6)), cy: f1(Y(51)), r: f1(2.5 * u), fill: SKIN}, at), p);
+  limb([[10.6, 77], [12.2, 66]], 5.4, SHIRT);
+  // legs and shoes
+  mk('path', Object.assign({d: `M${P(-8.5, 46)} L${P(-7.4, 3)} H${f1(X(-1))} L${P(-.6, 37)} Q${P(0, 39)} ${P(.6, 37)} L${P(1, 3)} H${f1(X(7.4))} L${P(8.5, 46)} Z`, fill: TROUSERS}, at), p);
+  for (const s of [-1, 1]) mk('path', {d: `M${P(s * .8, 3.6)} H${f1(X(s * 7.8))} Q${P(s * 9.6, 3.6)} ${P(s * 9.6, 1)} V${f1(Y(0))} H${f1(X(s * .8))} Z`, fill: INK}, p);
+  // the shirt
+  mk('path', Object.assign({d: `M${P(-10, 43)} L${P(-11, 73)} Q${P(-11, 79.5)} ${P(-5.5, 80)} H${f1(X(5.5))} Q${P(11, 79.5)} ${P(11, 73)} L${P(10, 43)} Z`, fill: SHIRT}, at), p);
+  mk('path', {d: `M${P(-3.2, 80)} Q${P(0, 76.5)} ${P(3.2, 80)}`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .7)}, p);
+  // neck, head, hair, face
+  mk('rect', Object.assign({x: f1(X(-2.4)), y: f1(Y(84.5)), width: f1(4.8 * u), height: f1(5 * u), fill: SKIN}, at), p);
+  mk('circle', Object.assign({cx: f1(cx), cy: f1(Y(90.5)), r: f1(6.8 * u), fill: SKIN}, at), p);
+  mk('path', Object.assign({d: `M${P(-6.9, 90.5)} C${P(-7.4, 99.6)} ${P(7.4, 99.6)} ${P(6.9, 90.5)} C${P(4.5, 94.2)} ${P(-2, 95.5)} ${P(-6.9, 90.5)} Z`, fill: HAIR}, at), p);
+  for (const s of [-1, 1]) mk('circle', {cx: f1(X(s * 2.4)), cy: f1(Y(90.2)), r: f1(Math.max(1.1, .7 * u)), fill: INK}, p);
+  // the raised arm, the glass at the mouth, the hand round it
+  limb([[-10.8, 76], [-14.4, 64], [-8.4, 80.5]], 4.2, SKIN);
+  limb([[-10.6, 77], [-12.6, 69.5]], 5.4, SHIRT);
+  const gl = X(-12.6), gr = X(-4.2), gt = Y(93), gb = Y(80), inset = (gr - gl) * .1;
+  mk('path', Object.assign({d: `M${f1(gl)},${f1(gt)} L${f1(gl + inset)},${f1(gb)} H${f1(gr - inset)} L${f1(gr)},${f1(gt)} Z`, fill: GLASS}, at), p);
+  const wt = gt + (gb - gt) * .22, water = mk('path', {fill: WATER}, p);
+  const setWater = f => { const y = gb - (gb - wt) * f, li = inset * (y - gt) / (gb - gt); water.setAttribute('d', `M${f1(gl + li + k * .5)},${f1(y)} L${f1(gl + inset + k * .5)},${f1(gb - k * .5)} H${f1(gr - inset - k * .5)} L${f1(gr - li - k * .5)},${f1(y)} Z`); };
+  setWater(1);
+  mk('path', Object.assign({d: `M${f1(gl)},${f1(gt)} L${f1(gl + inset)},${f1(gb)} H${f1(gr - inset)} L${f1(gr)},${f1(gt)} Z`, fill: 'none'}, at), p);
+  mk('circle', Object.assign({cx: f1(X(-8.2)), cy: f1(Y(80.8)), r: f1(2.6 * u), fill: SKIN}, at), p);
+  return {glass: [(gl + gr) / 2, wt + (gb - wt) * .45], chest: [X(4.2), Y(68)], setWater, glassR: (gr - gl) * .22};
+}
+
+// The lens's cone, from a small circle (a) to a large one (b): the two outer tangents and the light between them.
+function cone(p, a, b, k) {
+  const [x1, y1, r1] = a, [x2, y2, r2] = b, d = Math.hypot(x2 - x1, y2 - y1), ph = Math.atan2(y2 - y1, x2 - x1), th = Math.acos(clamp((r1 - r2) / d, -1, 1));
+  const pt = (x, y, r, s) => [x + r * Math.cos(ph + s * th), y + r * Math.sin(ph + s * th)];
+  const [a1, a2, b1, b2] = [pt(x1, y1, r1, 1), pt(x1, y1, r1, -1), pt(x2, y2, r2, 1), pt(x2, y2, r2, -1)];
+  mk('path', {d: `M${f1(a1[0])},${f1(a1[1])} L${f1(b1[0])},${f1(b1[1])} L${f1(b2[0])},${f1(b2[1])} L${f1(a2[0])},${f1(a2[1])} Z`, fill: WHITE, opacity: .22}, p);
+  mk('path', {d: `M${f1(a1[0])},${f1(a1[1])} L${f1(b1[0])},${f1(b1[1])} M${f1(a2[0])},${f1(a2[1])} L${f1(b2[0])},${f1(b2[1])}`, stroke: INK, 'stroke-width': f1(Math.max(1.2, k * .55)), fill: 'none', 'stroke-linecap': 'round'}, p);
+}
+
+// A drop seen through the lens: a disc of its colour, its name on a pill across its top, its specks.
+function drop(p, cx, cy, r, fill, name, fs, k, W) {
+  mk('circle', {cx: f1(cx), cy: f1(cy), r: f1(r), fill, stroke: INK, 'stroke-width': f1(k * 1.1)}, p);
+  mk('path', {d: `M${f1(cx - r * .62)},${f1(cy - r * .42)} A${f1(r * .75)},${f1(r * .75)} 0 0 1 ${f1(cx - r * .1)},${f1(cy - r * .74)}`, fill: 'none', stroke: WHITE, 'stroke-width': f1(Math.max(1.5, k * .8)), 'stroke-linecap': 'round', opacity: .55}, p);
+  const dots = mk('g', {}, p);
+  const pill = mk('g', {}, p), ph = fs * 1.7, t = txt(pill, 0, 0, name, fs, {'font-weight': 800, 'text-anchor': 'middle'});
+  let w = fs * 6; try { w = t.getComputedTextLength(); } catch (e) {}
+  const pw = w + ph * .9, mx = clamp(cx, pw / 2 + k / 2, W - pw / 2 - k / 2);
+  mk('rect', {x: f1(mx - pw / 2), y: f1(cy - r - ph / 2), width: f1(pw), height: f1(ph), rx: f1(ph / 2), fill: INK}, pill);
+  t.setAttribute('x', f1(mx)); t.setAttribute('y', f1(cy - r + fs * .36)); pill.appendChild(t);
+  return {dots, cx, cy, r};
+}
 
 function draw(){
   const svg = Kit.$('g'); svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f, 12);
-  const L = W*0.04, Rr = W*0.96, T = fs*2.4, B = H - fs*2.2;
-  const xs = t => L + (Rr - L) * t / STEPS;
-  const ys = v => B - (B - T) * v / (TOP*1.08);
-  G = {svg, W, H, fs, L, Rr, T, B, xs, ys};
-  // axes
-  Kit.mk('line', {x1:L, y1:B, x2:Rr, y2:B, stroke:'var(--k)', 'stroke-width':Math.max(2,fs*.12), 'stroke-linecap':'round'}, svg);
-  // target line
-  Kit.mk('line', {x1:L, y1:ys(TOP), x2:Rr, y2:ys(TOP), stroke:'var(--k)', 'stroke-width':Math.max(1.5,fs*.09), 'stroke-dasharray':`${fs*.5} ${fs*.4}`, opacity:.55}, svg);
-  const tl = Kit.mk('text', {x:L, y:ys(TOP) - fs*.55, class:'lab', 'font-size':fs, fill:'var(--k)', opacity:.8}, svg);
-  tl.textContent = '2 ppb in blood';
-  // water level
-  Kit.mk('line', {x1:L, y1:B - Math.max(2,fs*.12), x2:Rr, y2:B - Math.max(2,fs*.12), stroke:'#2a7fff', 'stroke-width':Math.max(3,fs*.25), 'stroke-linecap':'round'}, svg);
-  const wl = Kit.mk('text', {x:Rr, y:B + fs*1.5, 'text-anchor':'end', class:'lab', 'font-size':fs, fill:'var(--k)'}, svg);
-  wl.textContent = 'water: 4 ppt';
-  const xl = Kit.mk('text', {x:L, y:B + fs*1.5, class:'lab', 'font-size':fs, fill:'var(--k)', opacity:.6}, svg);
-  xl.textContent = 'time →';
-  G.curve = Kit.mk('g', {}, svg);
-  Kit.mk('circle', {cx:xs(0), cy:ys(0), r:fs*.35, fill:'var(--k)'}, G.curve);
-  for (let i = 1; i <= n; i++) seg(i, false);
+  const {W, H} = Kit.fitSvg(svg);
+  G = null;
+  if (W < 100 || H < 60) return;
+  const fs = clamp(Math.min(W * .04, H * .065), 10.5, 13), k = clamp(Math.min(W, H) * .011, 1.6, 3);
+  // Left to right as the story goes: the water's drop by the glass, the person as tall as the picture, the blood's
+  // drop by the chest. The two drops the same size, as large as the person leaves them.
+  const ph = fs * .9 * 1.7, est = .33 * (H - k * 2);
+  const zr = Math.max(14, Math.min((W - est) / 4 - k * 2, (H - ph / 2 - k * 2) / 2, W * .2));
+  const u = Math.min((H - k * 2) / 100, (W - 4 * zr - k * 6) / 33), px = W / 2 + u, yb = H - k;
+  const lens = mk('g', {}, svg), fig = mk('g', {}, svg), marks = mk('g', {}, svg), drops = mk('g', {}, svg);
+  const P = person(fig, px, yb, u, k);
+  const zx1 = k + zr, z1 = k + ph / 2 + zr, zx2 = W - k - zr, z2 = H - k - zr;
+  // where the lens looks: a ring on the glass's water, a ring on the chest; its cones go behind the person
+  const sr = Math.max(4, 2.4 * u);
+  cone(lens, [P.glass[0], P.glass[1], sr], [zx1, z1, zr], k);
+  cone(lens, [P.chest[0], P.chest[1], sr], [zx2, z2, zr], k);
+  mk('circle', {cx: f1(P.glass[0]), cy: f1(P.glass[1]), r: f1(sr), fill: 'none', stroke: INK, 'stroke-width': f1(k * .9)}, marks);
+  mk('circle', {cx: f1(P.chest[0]), cy: f1(P.chest[1]), r: f1(sr), fill: BLOOD, stroke: INK, 'stroke-width': f1(k * .9)}, marks);
+  // the two drops: one speck in the water, ringed so it can be found; in the blood, as many as the glasses have left
+  const dw = drop(drops, zx1, z1, zr, WATER, 'tap water · 4 ppt', fs * .9, k, W);
+  const db = drop(drops, zx2, z2, zr, BLOOD, 'your blood', fs * .9, k, W);
+  const rs = Math.max(1.15, zr * .029), sx = zx1 + zr * .18, sy = z1 + zr * .22;
+  mk('circle', {cx: f1(sx), cy: f1(sy), r: f1(rs * 1.05), fill: SPECK}, dw.dots);
+  mk('circle', {cx: f1(sx), cy: f1(sy), r: f1(Math.max(5, rs * 3.6)), fill: 'none', stroke: INK, 'stroke-width': f1(Math.max(1.2, k * .5))}, dw.dots);
+  const dots = SPOTS.map(([a, c]) => mk('circle', {cx: f1(zx2 + a * zr), cy: f1(z2 + c * zr), r: f1(rs), fill: SPECK, opacity: 0}, db.dots));
+  G = {svg, W, H, fs, k, P, dots, rs, shownDots: 0};
+  showDots(specks(n), false);
 }
 
-function seg(i, anim){
-  const {xs, ys, fs} = G;
-  let d = '';
-  for (let k = 0; k <= 16; k++){ const t = i - 1 + k/16; d += (k ? 'L' : 'M') + xs(t).toFixed(1) + ' ' + ys(level(t)).toFixed(1); }
-  const p = Kit.mk('path', {d, fill:'none', stroke:'var(--k)', 'stroke-width':Math.max(3,fs*.3), 'stroke-linecap':'round', 'stroke-linejoin':'round'}, G.curve);
-  // the glass added this step: a little blue drop falling into the point
-  const c = Kit.mk('circle', {cx:xs(i), cy:ys(level(i)), r:fs*.42, fill:'var(--k)'}, G.curve);
-  if (anim && !Kit.calm){
-    const len = p.getTotalLength();
-    gsap.fromTo(p, {strokeDasharray:len, strokeDashoffset:len}, {strokeDashoffset:0, duration:.5, ease:'power2.out'});
-    gsap.from(c, {attr:{r:0}, duration:.3, delay:.45, ease:'back.out(3)'});
-    const drop = Kit.mk('circle', {cx:xs(i), cy:G.B, r:fs*.3, fill:'#2a7fff'}, G.svg);
-    gsap.to(drop, {attr:{cy:ys(level(i))}, opacity:0, duration:.55, ease:'power1.in', onComplete:() => drop.remove()});
-  }
+function showDots(m, anim) {
+  if (!G) return;
+  const fresh = [];
+  G.dots.forEach((d, i) => { const on = i < m; if (on && i >= G.shownDots) fresh.push(d); d.setAttribute('opacity', on ? 1 : 0); });
+  G.shownDots = m;
+  if (anim && !Kit.calm && fresh.length) gsap.fromTo(fresh, {attr: {r: 0}}, {attr: {r: G.rs}, duration: .3, ease: 'back.out(2)', stagger: {amount: .45, from: 'random'}});
 }
 
 function step(){
   if (busy || n >= STEPS) return;
   n++; busy = !Kit.calm;
   Kit.haptic('light');
-  seg(n, true);
   const target = level(n);
+  if (G && !Kit.calm) {
+    // a gulp: the glass empties, the specks arrive in the blood, the tap fills it again
+    const w = {f: 1}, P = G.P;
+    gsap.timeline().to(w, {f: .08, duration: .3, ease: 'power2.in', onUpdate: () => P.setWater(w.f)})
+      .add(() => showDots(specks(n), true))
+      .to(w, {f: 1, duration: .35, delay: .2, ease: 'power2.out', onUpdate: () => P.setWater(w.f)});
+  } else showDots(specks(n), false);
   if (Kit.calm){ shown.v = target; setRead(target); busy = false; }
-  else gsap.to(shown, {v:target, duration:.5, ease:'power2.out', onUpdate:() => setRead(shown.v), onComplete:() => { busy = false; setRead(target); }});
+  else gsap.to(shown, {v:target, duration:.42, delay: .2, ease:'power2.out', onUpdate:() => setRead(shown.v), onComplete:() => { busy = false; setRead(target); }});
   Kit.$('btn').textContent = `Keep drinking · ${n}/${STEPS}`;
   if (n >= STEPS){
     setTimeout(() => {
       setRead(target);
       Kit.hide('btn'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
       Kit.haptic('success');
+      Kit.$('g').setAttribute('aria-label', 'After eight glasses: the drop of tap water still holds one speck of PFOA; the drop of blood holds five hundred, 2 parts per billion.');
       requestAnimationFrame(draw);
-    }, Kit.calm ? 0 : 550);
+    }, Kit.calm ? 0 : 900);
   }
 }
 
@@ -111,9 +196,11 @@ Kit.$('btn').addEventListener('click', step);
 Kit.onShow.card = () => { draw(); setRead(level(n)); };
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#g', {opacity:0, y:10, duration:.5, ease:'power3.out'}); };
 Kit.play.card = async () => {
-  for (let i = 0; i < STEPS; i++){ Kit.$('btn').click(); await new Promise(r => setTimeout(r, 650)); }
-  await new Promise(r => setTimeout(r, 900));
+  for (let i = 0; i < STEPS; i++){ Kit.$('btn').click(); await new Promise(r => setTimeout(r, 750)); }
+  await new Promise(r => setTimeout(r, 1100));
 };
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+{ let seen = ''; const el = Kit.$('g'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) draw(); }).observe(el); }
 Kit.single();
 </script>
 </html>

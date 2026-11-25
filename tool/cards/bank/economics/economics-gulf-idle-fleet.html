@@ -1,29 +1,36 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: economics-gulf-idle-fleet -->
+<!-- The picture: the anchorage itself. A big oil tanker at anchor in front, its chain down into the water; behind it,
+     row after row to the hazy horizon and the low coast, the rest of the 1,000 ships, every one drawn: tankers and gas
+     carriers, container ships and bulk carriers, smaller as they lie farther off. At first they are dark shapes
+     against the light. The slider counts them from the nearest to the farthest: each one counted comes into its
+     colours (oil and gas dark with a red waterline, other cargo grey-blue with its containers) and the fleet's value
+     adds up in the sky, to over $25 billion. Flat colours, ink outlines; drawn again at its real size whenever its
+     room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#pic{flex:1;min-height:0;width:100%;display:block}
+#picbox{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block}
 #rng{width:100%;margin:0;height:max(4cqh,28px);accent-color:var(--k);cursor:pointer}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
-.ship{transition:opacity .25s}
 </style>
 <article class="card" id="card" data-topic="economics" data-kind="Build it · drag">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">CHOKEPOINT</span></div>
     <h2 class="q">What are the ~1,000 ships stuck in the Gulf worth?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="Ships stuck in the Gulf and their value"></svg>
+      <div id="picbox"><canvas id="pic" role="img" aria-label="The Gulf, crowded with ships at anchor: a big oil tanker in front with its anchor chain in the water, and behind it row after row of tankers, gas carriers, container ships and bulk carriers to the horizon, about 1,000 in all."></canvas></div>
       <input data-drag id="rng" type="range" min="0" max="1000" step="10" value="0" aria-label="Ships stuck">
       <div id="why" class="gone">
         <p class="body">Lloyd’s Market Association in London puts the idle fleet at over $25 billion. About half of these ships carry oil or gas: cargo that can’t reach buyers while it waits.</p>
       </div>
     </div>
-    <p class="say" id="say">Drag the slider to trap ships in the Gulf, one by one.</p>
+    <p class="say" id="say">Drag the slider to count the ships stuck in the Gulf, one by one.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>About 1,000 stuck ships: over $25 billion idle, half carrying oil and gas.</div>
     <div class="foot"><span class="src">Source · Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026).</span></div>
   </div>
@@ -31,84 +38,212 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const N = 1000;
-let n = 0, done = false, ships = [], big, sub, water;
-// Random filling order: which grid slot the r-th trapped ship takes.
-const order = Array.from({length: N}, (_, i) => i);
-for (let i = N - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+// One ink; a hazy sky and the low coast; the sea in four flat bands, lighter far off; the ships dark against the light
+// until counted, then oil and gas near-black with a red waterline and cream decks, other cargo grey-blue with its boxes.
+const INK = '#10100c', SKY = '#FFF0CB', LAND = '#E9C07E', SEA = ['#9CCBF2', '#6BAAEC', '#448EE0', '#2F76CF'], SIL = '#1F3D63';
+const HULL = '#29282F', OTHER = '#62738C', RED = '#D8462E', CREAM = '#FFF6DC', BOX = ['#E8572F', '#FFF6DC', '#7BC47F', '#E8572F', '#FFF6DC'];
+// Against the light the ships are dark shapes, paler the farther off they lie, as in the haze.
+const HAZE = [[31, 61, 99], [150, 182, 220]], sil = s => { const u = Math.pow(1 - Math.min(1, s / .9), 2.2), c = HAZE[0].map((v, i) => Math.round(v + (HAZE[1][i] - v) * u)); return `rgb(${c})`; };
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+let n = 0, done = false, geo = null, L = null;
+let seed = 5; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 
-function fmt(v){ return v.toLocaleString('en-US'); }
+function fmt(v) { return v.toLocaleString('en-US'); }
 
-function draw(){
-  const svg = Kit.$('pic');
-  while (svg.firstChild) svg.removeChild(svg.firstChild);
-  const {W, H, f} = Kit.fitSvg(svg);
-  const bf = Math.max(f * 2, 22), sf = Math.max(f * 0.95, 12);
-  big = Kit.mk('text', {x: W/2, y: bf * 1.05, 'text-anchor': 'middle', style: `font:800 ${bf}px var(--display);fill:var(--k)`}, svg);
-  sub = Kit.mk('text', {x: W/2, y: bf * 1.05 + sf * 1.6, 'text-anchor': 'middle', style: `font:600 ${sf}px var(--body);fill:var(--k);opacity:.75`}, svg);
-  const top = bf * 1.05 + sf * 2.6, legH = sf * 2.2, bottom = H - legH;
-  const gx = 2, gw = W - 4, gh = Math.max(bottom - top, 40);
-  // Invisible area holder (no box): the ships sit directly on the card.
-  water = Kit.mk('rect', {x: gx, y: top, width: gw, height: gh, style: 'fill:none;stroke:none'}, svg);
-  // Grid that fits 1000 slots inside the area.
-  const pad = 6, w = gw - pad*2, h = gh - pad*2;
-  let cell = Math.sqrt(w * h / N);
-  while (cell > 1 && Math.floor(w / cell) * Math.floor(h / cell) < N) cell *= 0.98;
-  const cols = Math.floor(w / cell), rows = Math.ceil(N / cols);
-  const ox = gx + pad + (w - cols * cell) / 2, oy = top + pad + (h - rows * cell) / 2;
-  const sw = cell * 0.8, sh = cell * 0.46;
-  ships = [];
-  for (let r = 0; r < N; r++) {
-    const s = order[r], c = s % cols, rw = Math.floor(s / cols);
-    const oil = r % 2 === 0;
-    ships.push(Kit.mk('rect', {class: 'ship', x: ox + c * cell + (cell - sw)/2, y: oy + rw * cell + (cell - sh)/2, width: sw, height: sh, rx: sh/2,
-      style: oil ? 'fill:var(--k)' : 'fill:color-mix(in srgb,var(--k) 38%,transparent)', opacity: 0}, svg));
+// Where everything goes for the room the picture has now: the sky with the count, the horizon, the hero tanker's
+// waterline, and the fleet, row after row from just behind the hero to the horizon. A ship at depth s (1 the hero,
+// 0 the horizon) is Lw·s long and floats at hy + (yH − hy)·s. Every ship is drawn: as many rows as the 1,000 need.
+function lay() {
+  const {W, H} = geo;
+  const f = Math.max(10, Math.min(H / 18, W / 22));
+  const bf = clamp(f * 2, 21, 40), sf = clamp(f * .92, 12, 15), k = clamp(Math.min(W, H) * .011, 2, 3);
+  const pad = Math.max(8, bf * .32), numY = pad + bf * .8, subY = numY + sf * 1.4;
+  const hy = Math.max(subY + sf * .75 + Math.max(5, H * .03), H * .27);
+  const yH = H - Math.max(6, H * .05), Lw = W * .84;
+  // Where the sea is short for its width (the answer in, on a small phone), the ships are drawn lower, never into the sky.
+  const hs = clamp((yH - hy) / (W * .9), .55, 1);
+  let ships;
+  // The near rows far apart, open water between them; from s = .2 on, the rows close up toward the horizon, where
+  // most of the fleet lies.
+  for (let sp = 1.05; ; sp *= .9) {
+    seed = 5;
+    // The hero, and the row just behind it, placed by hand: a container ship in the middle, a tanker and a bulk
+    // carrier cut by the edges.
+    const l0 = Lw * .6;
+    ships = [{s: 1, x: W * .1, oil: true, kind: 'tanker', tone: 0}, {s: .6, x: W * .27, oil: false, kind: 'box', tone: 11}, {s: .61, x: -l0 * .62, oil: true, kind: 'tanker', tone: 4}, {s: .59, x: W * .84, oil: false, kind: 'bulk', tone: 7}];
+    for (let s = .48; ships.length < N; s *= s > .2 ? .8 : .91) {
+      const len = Lw * s, gap = s > .2 ? 1.5 : sp;
+      if (len < 1.6 || (yH - hy) * s < .8) break;
+      for (let x = -len * (.15 + rnd() * .6); x < W && ships.length < N; x += len * gap * (.9 + rnd() * .35)) {
+        const i = ships.length, oil = i % 2 === 0;
+        ships.push({s: s * (1 + (rnd() - .5) * .05), x, oil, kind: i === 1 ? 'box' : oil ? (rnd() < .7 ? 'tanker' : 'lng') : (rnd() < .6 ? 'box' : 'bulk'), tone: Math.floor(rnd() * 97)});
+      }
+    }
+    if (ships.length >= N || sp < .3) break;
   }
-  // Legend
-  const ly = H - legH/2, k = sf * 1.1;
-  const g = Kit.mk('g', {}, svg);
-  Kit.mk('rect', {x: 0, y: ly - k*0.25, width: k*1.4, height: k*0.5, rx: k*0.25, style: 'fill:var(--k)'}, g);
-  Kit.mk('text', {x: k*1.8, y: ly, 'dominant-baseline': 'middle', style: `font:600 ${sf}px var(--body);fill:var(--k)`}, g).textContent = 'oil & gas';
-  const x2 = W/2;
-  Kit.mk('rect', {x: x2, y: ly - k*0.25, width: k*1.4, height: k*0.5, rx: k*0.25, style: 'fill:color-mix(in srgb,var(--k) 38%,transparent)'}, g);
-  Kit.mk('text', {x: x2 + k*1.8, y: ly, 'dominant-baseline': 'middle', style: `font:600 ${sf}px var(--body);fill:var(--k)`}, g).textContent = 'other cargo';
-  update(true);
+  L = {W, H, f, bf, sf, k, numY, subY, hy, yH, Lw, hs, ships};
 }
 
-function update(){
-  ships.forEach((s, r) => s.setAttribute('opacity', r < n ? 1 : 0));
+// One ship, its bow to the left, its waterline at y. Big ones in full, small ones simply, the farthest a dash.
+function ship(x, c, sh, lit) {
+  const {Lw, hy, yH, k} = L, len = Lw * sh.s, y = hy + (yH - hy) * sh.s, h = len * .085 * L.hs;
+  const SIL = sil(sh.s), hull = lit ? (sh.oil ? HULL : OTHER) : SIL, top = lit ? CREAM : SIL;
+  if (len < 7) { x.fillStyle = hull; x.fillRect(c, y - Math.max(1, h * 1.3), len, Math.max(1, h * 1.3)); x.fillRect(c + len * .78, y - Math.max(1.6, h * 2.6), Math.max(1, len * .14), Math.max(1.6, h * 1.4)); return; }
+  const ink = len >= 22, lw = ink ? Math.max(.9, Math.min(k * .8, len * .012)) : 0;
+  const deck = y - h * 1.15, poly = (pts, fill) => { x.beginPath(); pts.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); x.closePath(); x.fillStyle = fill; x.fill(); if (lw) { x.lineWidth = lw; x.strokeStyle = INK; x.stroke(); } };
+  const rect = (a, b, w, hh, fill) => poly([[a, b], [a + w, b], [a + w, b + hh], [a, b + hh]], fill);
+  // What stands on the deck, behind the hull's line: the bridge aft, and the cargo.
+  const bx = c + len * .8, bw = len * .12, bh = h * (sh.kind === 'box' ? 2.3 : 1.9);
+  if (sh.kind === 'box') {
+    const bays = Math.max(3, Math.min(9, Math.round(len / 14))), w = len * .66 / bays;
+    for (let b = 0; b < bays; b++) {
+      const tiers = 1 + ((sh.tone + b * 7) % 3), th = h * .58;
+      for (let t = 0; t < tiers; t++) rect(c + len * .1 + b * w, deck - (t + 1) * th, w, th, lit ? BOX[(sh.tone + b * 3 + t * 5) % BOX.length] : SIL);
+    }
+  } else if (sh.kind === 'lng') {
+    const domes = len > 30 ? 4 : 3, w = len * .62 / domes, r = Math.min(w * .48, h * 1.25);
+    for (let d = 0; d < domes; d++) { x.beginPath(); x.arc(c + len * .14 + w * (d + .5), deck, r, Math.PI, 0); x.closePath(); x.fillStyle = top; x.fill(); if (lw) { x.lineWidth = lw; x.strokeStyle = INK; x.stroke(); } }
+  } else if (sh.kind === 'bulk') {
+    const holds = len > 30 ? 5 : 3, w = len * .62 / holds;
+    for (let d = 0; d < holds; d++) rect(c + len * .12 + w * d + w * .12, deck - h * .5, w * .76, h * .5, lit ? '#7E9C76' : SIL);
+    if (ink) { x.strokeStyle = lit ? INK : SIL; x.lineWidth = Math.max(1, lw); for (let d = 1; d < holds; d++) { const cx = c + len * .12 + w * d; x.beginPath(); x.moveTo(cx, deck); x.lineTo(cx, deck - h * 1.9); x.lineTo(cx + w * .5, deck - h * 1.2); x.stroke(); } }
+  } else if (ink) {
+    // a tanker: the pipes along its deck, the manifold amidships, a mast at the bow
+    x.strokeStyle = lit ? INK : SIL; x.lineWidth = Math.max(1, lw * .9);
+    x.beginPath(); x.moveTo(c + len * .08, deck - h * .35); x.lineTo(bx, deck - h * .35); x.stroke();
+    rect(c + len * .46, deck - h * .8, len * .05, h * .8, lit ? RED : SIL);
+    x.beginPath(); x.moveTo(c + len * .07, deck); x.lineTo(c + len * .07, deck - h * 1.6); x.stroke();
+  }
+  rect(bx, deck - bh, bw, bh, top);
+  if (ink && lit) { x.fillStyle = INK; const ww = bw * .14; for (let i = 0; i < 3; i++) x.fillRect(bx + bw * .14 + i * bw * .28, deck - bh + bh * .18, ww, Math.max(1.2, bh * .12)); }
+  rect(bx + bw * .5, deck - bh - h * .9, bw * .32, h * .9, lit ? (sh.oil ? CREAM : '#E8572F') : SIL);
+  // The hull: a raked bow, the deck, the stern; a red waterline on the oil and gas ships.
+  poly([[c, y - h * .1], [c - len * .02, deck - h * .25], [c + len * .1, deck], [c + len, deck], [c + len * .985, y]], hull);
+  if (lit && sh.oil && len >= 12) { x.fillStyle = RED; x.fillRect(c + len * .012, y - h * .38, len * .97, h * .3); if (lw) { x.lineWidth = lw * .7; x.strokeStyle = INK; x.beginPath(); x.moveTo(c + len * .012, y - h * .38); x.lineTo(c + len * .98, y - h * .38); x.stroke(); } }
+}
+
+// The hero: the nearest tanker, drawn in full: the forecastle, the pipes along the deck and the manifold amidships,
+// the bridge aft and its funnel, the red waterline, and the anchor chain from the bow down into the water.
+function hero(x, sh, lit) {
+  const {Lw, hy, yH, k} = L, len = Lw * sh.s, y = hy + (yH - hy) * sh.s, h = len * .075 * L.hs, c = sh.x;
+  const SIL = sil(1), fill = v => lit ? v : SIL, lw = clamp(k * .95, 1.8, 2.6);
+  const poly = (pts, f) => { x.beginPath(); pts.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); x.closePath(); x.fillStyle = f; x.fill(); x.lineWidth = lw; x.strokeStyle = INK; x.stroke(); };
+  const rect = (a, b, w, hh, f) => poly([[a, b], [a + w, b], [a + w, b + hh], [a, b + hh]], f);
+  x.lineJoin = 'round'; x.lineCap = 'round';
+  const deck = y - h * 1.2, bx = c + len * .79, bw = len * .13, dk = h * .62;
+  // the bridge: four decks, the top one wider for the bridge wings; the funnel; the radar mast
+  rect(bx + bw * .62, deck - dk * 4 - h * 1.15, bw * .3, h * 1.15, fill(CREAM));
+  if (lit) { x.fillStyle = RED; x.fillRect(bx + bw * .62 + lw / 2, deck - dk * 4 - h * .85, bw * .3 - lw, h * .32); }
+  for (let d = 0; d < 4; d++) {
+    const wide = d === 3, x0 = wide ? bx - bw * .08 : bx + d * bw * .02, w = wide ? bw * 1.12 : bw - d * bw * .02;
+    rect(x0, deck - dk * (d + 1), w, dk, fill(CREAM));
+    if (lit) { x.fillStyle = INK; const n = wide ? 6 : 4, ww = w / (n * 2 + 1); for (let i = 0; i < n; i++) x.fillRect(x0 + ww * (1 + 2 * i), deck - dk * (d + 1) + dk * .28, ww, dk * .38); }
+  }
+  x.strokeStyle = INK; x.lineWidth = lw * .8;
+  x.beginPath(); x.moveTo(bx + bw * .3, deck - dk * 4); x.lineTo(bx + bw * .3, deck - dk * 4 - h * 1.3); x.moveTo(bx + bw * .18, deck - dk * 4 - h * .95); x.lineTo(bx + bw * .42, deck - dk * 4 - h * .95); x.stroke();
+  // the deck: the pipes, the manifold crane, a mast on the forecastle
+  x.strokeStyle = lit ? INK : SIL; x.lineWidth = Math.max(2, h * .16);
+  x.beginPath(); x.moveTo(c + len * .1, deck - h * .3); x.lineTo(bx - len * .01, deck - h * .3); x.stroke();
+  rect(c + len * .45, deck - h * .75, len * .045, h * .75, fill(RED));
+  x.strokeStyle = INK; x.lineWidth = lw * .8;
+  x.beginPath(); x.moveTo(c + len * .5, deck - h * .2); x.lineTo(c + len * .5, deck - h * 1.6); x.lineTo(c + len * .58, deck - h * 1.1); x.stroke();
+  x.beginPath(); x.moveTo(c + len * .045, deck - h * .3); x.lineTo(c + len * .045, deck - h * 1.9); x.stroke();
+  // the hull: the forecastle raised at the bow, the long deck, the stern
+  poly([[c + len * .01, y + 2], [c - len * .028, deck - h * .32], [c + len * .075, deck - h * .32], [c + len * .09, deck], [c + len * .985, deck], [c + len * .975, y + 2]], fill(HULL));
+  if (lit) { x.fillStyle = RED; x.fillRect(c + len * .005, y - h * .42, len * .972, h * .42 + 2); x.lineWidth = lw * .8; x.strokeStyle = INK; x.beginPath(); x.moveTo(c + len * .005, y - h * .42); x.lineTo(c + len * .975, y - h * .42); x.stroke(); }
+  // the water at its side, and the anchor chain from the hawse at the bow down into it
+  x.fillStyle = SEA[3]; x.fillRect(0, y + 1, geo.W, geo.H);
+  x.save(); x.lineCap = 'butt'; x.strokeStyle = INK; x.lineWidth = Math.max(3, k * 1.4); x.setLineDash([Math.max(4, h * .34), Math.max(2.6, h * .2)]);
+  x.beginPath(); x.moveTo(c + len * .03, deck + h * .3); x.quadraticCurveTo(c - len * .02, y, c - len * .075, geo.H + 4); x.stroke(); x.restore();
+  x.fillStyle = INK; x.beginPath(); x.arc(c + len * .03, deck + h * .3, Math.max(2.4, h * .2), 0, Math.PI * 2); x.fill();
+  x.strokeStyle = CREAM; x.lineWidth = Math.max(1.6, h * .12);
+  for (const [u, w] of [[.08, .1], [.34, .14], [.62, .09], [.9, .07]]) { x.beginPath(); x.moveTo(c + len * u, y + h * .5); x.lineTo(c + len * (u + w), y + h * .5); x.stroke(); }
+  return {len, y, h, deck, c, bx};
+}
+
+function box(x, X, Y, w, h, r) { r = Math.min(r, w / 2, h / 2); x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath(); }
+// A name over the picture, haloed in the sky's colour, with a thin line to what it names.
+function name(x, s, tx, ty, px, py) {
+  const {sf} = L;
+  x.font = `800 ${sf}px ${FONT}`; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+  x.strokeStyle = INK; x.lineWidth = 1.4; x.beginPath(); x.moveTo(tx, ty + sf * .3); x.lineTo(px, py); x.stroke();
+  x.fillStyle = INK; x.beginPath(); x.arc(px, py, 2.4, 0, Math.PI * 2); x.fill();
+  x.lineJoin = 'round'; x.strokeStyle = CREAM; x.lineWidth = sf * .42; x.strokeText(s, tx, ty); x.fillStyle = INK; x.fillText(s, tx, ty);
+}
+
+function draw() {
+  if (!geo || !L) return;
+  const {x, W, H} = geo, {k, bf, sf, numY, subY, hy, yH, Lw, ships} = L, R = Math.min(16, W * .05);
+  x.clearRect(0, 0, W, H);
+  x.save(); box(x, k / 2, k / 2, W - k, H - k, R); x.clip();
+  x.fillStyle = SKY; x.fillRect(0, 0, W, H);
+  // The coast, low on the horizon.
+  x.lineJoin = 'round';
+  x.beginPath(); x.moveTo(-2, hy); x.bezierCurveTo(W * .08, hy - H * .03, W * .16, hy - H * .045, W * .24, hy - H * .03); x.bezierCurveTo(W * .31, hy - H * .02, W * .36, hy - H * .028, W * .47, hy);
+  x.moveTo(W * .74, hy); x.bezierCurveTo(W * .82, hy - H * .022, W * .92, hy - H * .03, W + 2, hy - H * .018); x.lineTo(W + 2, hy);
+  x.fillStyle = LAND; x.fill(); x.strokeStyle = INK; x.lineWidth = 1.4; x.stroke();
+  // The sea, lighter far off.
+  [[0, 0], [.1, 1], [.32, 2], [.68, 3]].forEach(([s, i]) => { x.fillStyle = SEA[i]; x.fillRect(0, hy + (yH - hy) * s, W, H); });
+  x.strokeStyle = INK; x.lineWidth = 1.4; x.beginPath(); x.moveTo(0, hy); x.lineTo(W, hy); x.stroke();
+  // The ships, the farthest first: counted from the nearest, so the i-th is in colour once i < n.
+  for (let i = ships.length - 1; i >= 1; i--) ship(x, ships[i].x, ships[i], i < n);
+  const he = hero(x, ships[0], n > 0);
+  // Their names, once the first of each is counted, in the open water between the hero and the row behind it: the
+  // hero for oil and gas, a container ship of that row for other cargo. Where that water is too narrow, the hero's
+  // name is painted on its hull, if it can be read there; else the line in the sky says it.
+  const row0 = hy + (yH - hy) * .6, gapTop = row0 + 2, gapBot = he.deck - he.h * .5;
+  x.font = `800 ${sf}px ${FONT}`;
+  const wide = s => x.measureText(s).width;
+  // Two names, one over the other where the water allows: other cargo under its ship, oil and gas over the hero's deck.
+  const room = gapBot - gapTop, both = room > sf * 3.3;
+  if (n > 0) {
+    if (room > sf * 1.7) name(x, 'oil & gas', clamp(he.c + he.len * (both ? .24 : .14), wide('oil & gas') / 2 + 8, W * .5), gapBot - sf * .5, he.c + he.len * (both ? .24 : .14), he.deck - 2);
+    else if (he.h * .62 >= 10) { x.textAlign = 'left'; x.textBaseline = 'middle'; x.fillStyle = CREAM; x.font = `800 ${Math.min(sf, he.h * .62)}px ${FONT}`; x.fillText('oil & gas', he.c + he.len * .12, he.y - he.h * .78); }
+  }
+  if (n > 1 && room > sf * 1.7) {
+    const sh = ships[1], len = Lw * sh.s, cx = sh.x + len * .42, wy = hy + (yH - hy) * sh.s, w = wide('other cargo');
+    const tx = both ? clamp(cx, w / 2 + 8, W - w / 2 - 8) : Math.max(W * .62, he.c + he.len * .14 + wide('oil & gas') / 2 + w / 2 + sf * 1.5);
+    name(x, 'other cargo', Math.min(tx, W - w / 2 - 8), both ? gapTop + sf * 1.15 : gapBot - sf * .5, cx, wy - 1);
+  }
+  x.restore();
+  // The count, in the sky.
   const b = n / N * 25;
-  big.textContent = n >= N ? 'over $25 billion' : '$' + b.toFixed(1) + ' billion';
-  sub.textContent = n >= N ? '1,000 ships stuck · half oil & gas' : fmt(n) + ' ships stuck';
+  x.fillStyle = INK; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+  x.font = `800 ${bf}px ${SERIF}`; x.fillText(n >= N ? 'over $25 billion' : '$' + b.toFixed(1) + ' billion', W / 2, numY);
+  x.font = `600 ${sf}px ${FONT}`; x.globalAlpha = .8; x.fillText(n >= N ? '1,000 ships stuck · half oil & gas' : `${fmt(n)} of 1,000 ships counted`, W / 2, subY); x.globalAlpha = 1;
+  box(x, k / 2, k / 2, W - k, H - k, R); x.strokeStyle = INK; x.lineWidth = k; x.stroke();
 }
 
 let lastStep = 0;
 Kit.$('rng').addEventListener('input', e => {
   if (done) return;
   n = +e.target.value;
-  update();
+  draw();
   const step = Math.floor(n / 100);
   if (step !== lastStep) { lastStep = step; Kit.haptic('light'); }
   if (n >= N) finish();
 });
 
-function finish(){
+function finish() {
   done = true;
   Kit.$('rng').disabled = true;
   Kit.haptic('success');
   Kit.hide('say'); Kit.hide('rng'); Kit.show('why'); Kit.show('keep');
-  requestAnimationFrame(() => {
-    draw();
-    if (!Kit.calm) gsap.from(big, {opacity: 0, scale: .85, transformOrigin: '50% 50%', duration: .6, ease: 'back.out(2)'});
-  });
+  Kit.$('pic').setAttribute('aria-label', 'The Gulf crowded with about 1,000 ships at anchor, all counted: half oil and gas tankers, half other cargo. Over $25 billion idle.');
+  requestAnimationFrame(() => fit());
 }
 
-Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => { if (!Kit.calm && water) gsap.from(water, {opacity: 0, duration: .6, ease: 'power2.out'}); };
+const fit = () => { geo = Kit.fitCanvas(Kit.$('pic')); lay(); draw(); };
+Kit.onShow.card = fit;
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#rng', {opacity: 0, y: 8, duration: .5, ease: 'power2.out'}); };
 Kit.play.card = async () => {
   const r = Kit.$('rng');
   for (const v of [300, 600, 1000]) { r.value = v; r.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(res => setTimeout(res, 150)); }
   await new Promise(res => setTimeout(res, 800));
 };
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+{ let seen = ''; const el = Kit.$('picbox'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) fit(); }).observe(el); }
 Kit.single();
 </script>
 </html>

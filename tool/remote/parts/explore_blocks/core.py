@@ -323,9 +323,14 @@ def web(section: dict) -> list[str]:
     return problems
 
 
-# The games a quick-games tile can open, by the names `games` gives them
-# (lib/explore/blocks/core/quick_games_block.dart, kQuickGames).
-QUICK_GAMES = ("sixty", "spot-false", "true-false", "bets-bigger")
+# The games a tile of the challenges (the `quick-games` block) can open, by
+# the names `games` gives them (lib/explore/blocks/core/quick_games_block.dart,
+# kQuickGames).
+QUICK_GAMES = (
+    "sixty", "spot-false", "true-false", "bets-bigger",
+    "bets-closer", "bets-magnitude", "bets-range", "bets-stake", "bets-number",
+    "in-order", "what-year", "before-after",
+)
 
 
 def quick_games(section: dict) -> list[str]:
@@ -333,8 +338,8 @@ def quick_games(section: dict) -> list[str]:
     games = section.get("games")
     if games is None:
         return problems
-    if not isinstance(games, list) or not 1 <= len(games) <= 4:
-        return problems + [f"`games` is a list of one to four of {', '.join(QUICK_GAMES)}"]
+    if not isinstance(games, list) or not 1 <= len(games) <= len(QUICK_GAMES):
+        return problems + [f"`games` is a list of one or more of {', '.join(QUICK_GAMES)}"]
     for game in games:
         if game not in QUICK_GAMES:
             problems.append(f"games has {game!r}, which is not one of {', '.join(QUICK_GAMES)}")

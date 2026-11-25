@@ -6,7 +6,8 @@
 //   flutter test tool/explore_shots.dart --update-goldens
 //
 // A camera, not a check, so it lives outside test/ like the other shots.
-// The pictures land in tool/shots/explore/.
+// The pictures land in tool/shots/explore/; the challenges' (the last
+// group) in the gallery, or wherever CHALLENGES_DIR says.
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -16,8 +17,10 @@ import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:astuto/data/explore_mix.dart' show trueOrFalseAnswer;
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/explore/blocks/bets/bets_day.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/remote/remote.dart';
@@ -478,4 +481,324 @@ void main() {
     await settle(tester);
     await shoot(tester, 'play-surprise');
   });
+
+  // The challenges, on three phones at night and on paper: the section as
+  // Explore shows it, page by page; then Sixty seconds opened out of its
+  // tile — the flight caught early, what it is, an answer just told, the
+  // round in play, how it went and the eight claims again. Into the
+  // gallery, which is not kept, or into CHALLENGES_DIR:
+  //
+  //   flutter test tool/explore_shots.dart --plain-name "challenges" \
+  //     --update-goldens --dart-define=CHALLENGES_DIR=/somewhere/else
+  const String challengesDir = String.fromEnvironment(
+    'CHALLENGES_DIR',
+    defaultValue: 'shots/gallery/challenges/$label',
+  );
+  // Each phone with the room its status bar and its home bar take.
+  const Map<String, (Size, EdgeInsets)> challengePhones = {
+    '360x740': (Size(360, 740), EdgeInsets.only(top: 24, bottom: 16)),
+    '390x844': (Size(390, 844), EdgeInsets.only(top: 47, bottom: 34)),
+    '430x932': (Size(430, 932), EdgeInsets.only(top: 59, bottom: 34)),
+  };
+  for (final MapEntry<String, (Size, EdgeInsets)> phone
+      in challengePhones.entries) {
+    for (final bool paper in [false, true]) {
+      final String name = '${phone.key}-${paper ? 'light' : 'dark'}';
+      testWidgets('challenges: $name', (tester) async {
+        Future<void> take(String shot) => expectLater(
+          find.byType(MaterialApp).first,
+          matchesGoldenFile('$challengesDir/$name-$shot.png'),
+        );
+        final (Size logical, EdgeInsets safe) = phone.value;
+        size(logical, 3);
+        tester.view.padding = FakeViewPadding(
+          top: safe.top * 3,
+          bottom: safe.bottom * 3,
+        );
+        tester.view.viewPadding = FakeViewPadding(
+          top: safe.top * 3,
+          bottom: safe.bottom * 3,
+        );
+        addTearDown(tester.view.resetPadding);
+        addTearDown(tester.view.resetViewPadding);
+        // ignore: invalid_use_of_visible_for_testing_member
+        SharedPreferences.setMockInitialValues({
+          'knowit.onboarded': true,
+          if (paper) 'knowit.theme': 'light',
+          'knowit.sixtyBest': 5,
+        });
+        await tester.pumpWidget(const AstutoApp());
+        await settle(tester);
+        await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+        await settle(tester);
+        await reach(tester, 'challenge-sixty', above: 150);
+        await take('challenges');
+        // The second page and the third, by a swipe each, and back by the
+        // first dot.
+        final Finder sixty = find.byKey(const ValueKey('challenge-sixty'));
+        await tester.drag(sixty, Offset(-logical.width * 0.7, 0));
+        await settle(tester);
+        await take('challenges-2');
+        await tester.drag(
+          find.byKey(const ValueKey('challenge-bets-closer')),
+          Offset(-logical.width * 0.7, 0),
+        );
+        await settle(tester);
+        await take('challenges-3');
+        await tester.tap(find.byKey(const ValueKey('challenge-dot-0')));
+        await settle(tester);
+        // Sixty seconds, out of its tile.
+        await tester.tap(sixty);
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 90));
+        await take('sixty-flight');
+        await settle(tester);
+        await take('sixty-intro');
+        await tester.tap(find.byKey(const ValueKey('sixty-play')));
+        await settle(tester);
+        // Said right or wrong, as the camera asks: the claim in front is
+        // the last one keyed on the deck.
+        Future<void> say({required bool right}) async {
+          final Finder claims = find.byWidgetPredicate(
+            (w) =>
+                w.key is ValueKey<String> &&
+                (w.key! as ValueKey<String>).value.startsWith('sixty-claim-'),
+          );
+          final String id =
+              (tester.widget(claims.last).key! as ValueKey<String>).value
+                  .substring('sixty-claim-'.length);
+          final bool truth = trueOrFalseAnswer(PillBank.byId(id)!);
+          await tester.tap(
+            find.byKey(ValueKey(truth == right ? 'sixty-true' : 'sixty-false')),
+          );
+          await tester.pump(const Duration(milliseconds: 400));
+        }
+
+        await say(right: true);
+        await say(right: false);
+        // The answer just told, in its calm colour and its word.
+        await take('sixty-told');
+        await tester.pump(const Duration(seconds: 3));
+        await take('sixty-play');
+        for (int i = 0; i < 6; i++) {
+          await say(right: i != 2);
+        }
+        await settle(tester);
+        await take('sixty-result');
+        await tester.drag(
+          find.byKey(const ValueKey('sixty-end')),
+          Offset(0, -logical.height * 0.5),
+        );
+        await settle(tester);
+        await take('sixty-result-review');
+      });
+    }
+  }
+
+  // Every other challenge on its screen, on the same three phones at night
+  // and on paper: what it is, the round in play, and how it went — each
+  // game out of its own tile, played through as a reader plays it.
+  //
+  //   flutter test tool/explore_shots.dart --plain-name "challenge:" \
+  //     --update-goldens --dart-define=CHALLENGES_DIR=/somewhere/else
+  Finder prefixed(String prefix) => find.byWidgetPredicate(
+    (w) =>
+        w.key is ValueKey<String> &&
+        (w.key! as ValueKey<String>).value.startsWith(prefix),
+  );
+  Finder matching(RegExp pattern) => find.byWidgetPredicate(
+    (w) =>
+        w.key is ValueKey<String> &&
+        pattern.hasMatch((w.key! as ValueKey<String>).value),
+  );
+  bool has(Finder f) => f.evaluate().isNotEmpty;
+
+  // Each game by its tile, the prefix of its screen's keys, and the page
+  // of the challenges its tile is on.
+  final Map<String, (String, int)> games = {
+    'spot-false': ('spot', 0),
+    'true-false': ('tf', 0),
+    'bets-bigger': ('bigger', 0),
+    'bets-closer': ('closer', 1),
+    'bets-magnitude': ('magnitude', 1),
+    'bets-range': ('range', 1),
+    'bets-stake': ('stake', 1),
+    'bets-number': ('number', 2),
+    'in-order': ('in-order', 2),
+    'what-year': ('what-year', 2),
+    'before-after': ('before-after', 2),
+  };
+
+  /// One move of [id]'s round: a tap or two, as a reader makes them.
+  Future<void> move(WidgetTester tester, String id, int n) async {
+    Future<void> tap(Finder f, [int at = 0]) async {
+      if (!has(f)) return;
+      final int count = f.evaluate().length;
+      await tester.tap(f.at(at % count), warnIfMissed: false);
+      await tester.pump(const Duration(milliseconds: 160));
+    }
+
+    switch (id) {
+      case 'spot':
+        await tap(prefixed('spot-claim-'), 1);
+      case 'tf':
+        await tap(find.byKey(ValueKey(n.isEven ? 'tf-true' : 'tf-false')));
+      case 'bigger':
+        await tap(prefixed('bigger-half-'), n);
+      case 'closer':
+        await tap(prefixed(n.isEven ? 'closer-more-' : 'closer-less-'));
+      case 'magnitude':
+        await tap(matching(RegExp(r'^magnitude-(?!round-|seg-).+-\d$')), 2 + n);
+        await tap(find.byKey(const ValueKey('magnitude-sure-70')));
+      case 'range':
+        final Finder track = prefixed('range-track-');
+        if (has(track)) {
+          final Rect r = tester.getRect(track.first);
+          await tester.tapAt(
+            Offset(r.left + r.width * (0.3 + 0.2 * (n % 3)), r.center.dy),
+          );
+          await tester.pump(const Duration(milliseconds: 160));
+        }
+        await tap(matching(RegExp(r'^range-.+-w\d$')), n);
+        await tap(prefixed('range-bet-'));
+      case 'stake':
+        await tap(matching(RegExp(r'^stake-.+-o\d$')), n);
+        await tap(prefixed('stake-bet-'));
+        await tap(find.byKey(const ValueKey('stake-sure-80')));
+      case 'number':
+        await tap(matching(RegExp(r'^number-(?!round-|seg-).+-[0-9.]+$')), 2);
+        await tap(matching(RegExp(r'^number-(?!round-|seg-).+-[0-9.]+$')), 3);
+        await tap(prefixed('number-lock-'));
+        await tap(find.byKey(const ValueKey('number-sure-60')));
+      case 'in-order':
+        final List<String> moments = [
+          for (final Element e in prefixed('in-order-card-').evaluate())
+            (e.widget.key! as ValueKey<String>).value,
+        ];
+        for (final int i in const [2, 0, 3, 1]) {
+          if (i < moments.length) {
+            await tester.tap(
+              find.byKey(ValueKey(moments[i])),
+              warnIfMissed: false,
+            );
+            await tester.pump(const Duration(milliseconds: 160));
+          }
+        }
+      case 'what-year':
+        final Finder dial = find.byKey(const ValueKey('what-year-dial'));
+        if (has(dial)) {
+          await tester.drag(dial, Offset(n.isEven ? 230.0 : -150.0, 0));
+          await tester.pump(const Duration(milliseconds: 300));
+        }
+        await tap(find.byKey(const ValueKey('what-year-step-1')));
+        await tap(find.byKey(const ValueKey('what-year-lock')));
+      case 'before-after':
+        await tap(
+          find.byKey(
+            ValueKey(n.isEven ? 'before-after-after' : 'before-after-before'),
+          ),
+        );
+    }
+    for (int f = 0; f < 8; f++) {
+      await tester.pump(const Duration(milliseconds: 90));
+    }
+  }
+
+  /// The way on once a round is told, or the check that ends it.
+  Future<void> onward(WidgetTester tester, String id) async {
+    for (final String key in [
+      '$id-next-card',
+      '$id-next',
+      'spot-confirm',
+      'in-order-check',
+    ]) {
+      final Finder f = find.byKey(ValueKey(key));
+      if (has(f)) {
+        await tester.tap(f, warnIfMissed: false);
+        break;
+      }
+    }
+    for (int f = 0; f < 16; f++) {
+      await tester.pump(const Duration(milliseconds: 90));
+    }
+  }
+
+  for (final MapEntry<String, (Size, EdgeInsets)> phone
+      in challengePhones.entries) {
+    for (final bool paper in [false, true]) {
+      final String name = '${phone.key}-${paper ? 'light' : 'dark'}';
+      for (final MapEntry<String, (String, int)> game in games.entries) {
+        final (String id, int page) = game.value;
+        testWidgets('challenge: ${game.key} $name', (tester) async {
+          Future<void> take(String shot) => expectLater(
+            find.byType(MaterialApp).first,
+            matchesGoldenFile('$challengesDir/$name-$id-$shot.png'),
+          );
+          final (Size logical, EdgeInsets safe) = phone.value;
+          size(logical, 3);
+          tester.view.padding = FakeViewPadding(
+            top: safe.top * 3,
+            bottom: safe.bottom * 3,
+          );
+          tester.view.viewPadding = FakeViewPadding(
+            top: safe.top * 3,
+            bottom: safe.bottom * 3,
+          );
+          addTearDown(tester.view.resetPadding);
+          addTearDown(tester.view.resetViewPadding);
+          // ignore: invalid_use_of_visible_for_testing_member
+          BetsDay.resetForTest();
+          // ignore: invalid_use_of_visible_for_testing_member
+          SharedPreferences.setMockInitialValues({
+            'knowit.onboarded': true,
+            if (paper) 'knowit.theme': 'light',
+          });
+          await tester.pumpWidget(const AstutoApp());
+          await settle(tester);
+          await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+          await settle(tester);
+          await reach(tester, 'challenge-sixty', above: 150);
+          if (page > 0) {
+            await tester.tap(find.byKey(ValueKey('challenge-dot-$page')));
+            await settle(tester);
+          }
+          await tester.tap(find.byKey(ValueKey('challenge-${game.key}')));
+          await settle(tester);
+          await settle(tester);
+          await take('intro');
+          await tester.tap(find.byKey(ValueKey('$id-play')));
+          await settle(tester);
+          // The round in play, a move or two in.
+          await move(tester, id, 0);
+          if (id == 'closer' || id == 'tf') await move(tester, id, 1);
+          await take('play');
+          // In order, checked: the moments in their true order, their years
+          // told, before the report.
+          if (id == 'in-order') {
+            await tester.tap(find.byKey(const ValueKey('in-order-check')));
+            for (int f = 0; f < 7; f++) {
+              await tester.pump(const Duration(milliseconds: 90));
+            }
+            await take('told');
+          }
+          // The rest of the round, to its end.
+          for (int n = 1; n < 40; n++) {
+            if (has(find.byKey(ValueKey('$id-score')))) break;
+            await onward(tester, id);
+            if (has(find.byKey(ValueKey('$id-score')))) break;
+            await move(tester, id, n);
+          }
+          await settle(tester);
+          await settle(tester);
+          await take('result');
+          final Finder end = find.byKey(ValueKey('$id-end'));
+          if (has(end)) {
+            await tester.drag(end, Offset(0, -logical.height * 0.55));
+            await settle(tester);
+            await take('result-review');
+          }
+        });
+      }
+    }
+  }
 }

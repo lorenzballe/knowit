@@ -1,5 +1,11 @@
 <!doctype html>
 <!-- slug: science-glass-recycling-loop -->
+<!-- The picture: the chart drawn as the thing itself. Along the foot runs a long glass furnace, charcoal with an ink
+     outline, one glowing mouth for each of the eight melts, numbered. On it at the start stands a green glass bottle,
+     1 kg of old glass, with its paper label. The reader drags across: over each melt a bottle stands as tall as how
+     much glass they think is left (bottles of one width, so the glass is their height), a dashed line through their
+     tops. Answered, every bottle grows to its real kilogram, the guess stays as a dashed line, and the two are named.
+     Flat colours, thick ink outlines; drawn again at its real size whenever its room changes. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -19,7 +25,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">RECYCLING</span></div>
     <h2 class="q">Why can glass be recycled almost forever?</h2>
     <div class="stagebox" id="stage">
-      <div id="plotbox"><svg id="plot"></svg></div>
+      <div id="plotbox"><svg id="plot" role="img" aria-label="A long glass furnace with eight glowing mouths, one for each melt. At the start stands a green bottle: 1 kg of old glass. You drag across to stand a bottle over each melt, as tall as the glass you think is left."></svg></div>
       <div id="why" class="gone">
         <p class="big">1 kg in, 1 kg out. Every time.</p>
         <p class="body">Glass does not degrade when it melts. A kilogram of waste glass becomes a kilogram of new glass, so the yield is almost 100%, round after round.</p>
@@ -38,71 +44,99 @@ let guess = new Array(N + 1).fill(null); guess[0] = 1;
 let done = false, revealed = false, animateNext = false;
 let G = null; // geometry
 const svg = Kit.$('plot');
+// Flat colours, one meaning each: the glass a deep bottle green with a lighter shine, the old bottle's paper label,
+// the furnace charcoal, its mouths orange round a yellow glow.
+const INK = '#10100c', GLASS = '#1c7447', SHINE = '#63c993', PAPER = '#fffbf0', FURNACE = '#3b3633', MOUTH = '#ff7a3c', GLOW = '#ffc85a';
+const FONT = 'Figtree, system-ui, sans-serif';
+const real = i => 1 - i * .00125;                     // the glass left after i melts: almost all of it
+// How tall each bottle stands as the answer comes in: from the guess (0) to the real glass (1).
+const grow = {k: 0};
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const end = guess[N], ok = end >= 0.85;
   const said = `About ${end.toFixed(1)} kg left after ${N} melts`;
   Kit.answer({choice: said, correct: ok, sure: pct});
   Kit.hide('say'); Kit.show('why');
-  revealed = true; animateNext = !Kit.calm; draw();
+  revealed = true; animateNext = !Kit.calm; grow.k = Kit.calm ? 1 : 0; draw();
   sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'too low'}`);
   Kit.show('keep'); Kit.haptic('success');
 });
 
-function X(i){ return G.L + i * (G.W - G.L - G.R) / N; }
-function Y(kg){ return G.T + (MAXKG - kg) / MAXKG * (G.H - G.T - G.B); }
+function X(i){ return G.pad + G.slot * (i + .5); }
+function Y(kg){ return G.shelf - kg / G.top * (G.shelf - G.T); }
+
+// A bottle standing on (x, base), w wide and h tall: a body with round shoulders, a neck, a lip; its shine; and,
+// on the old one, a paper label.
+function outline(x, base, w, h) {
+  const r = Math.min(w * .2, h * .12), sh = base - h * .58, nk = base - h * .8, lip = base - h;
+  const nw = w * .36, lw = w * .46, L = x - w / 2, R = x + w / 2;
+  return `M${L},${base - r} V${sh} C${L},${nk + (sh - nk) * .25} ${x - nw / 2},${nk + (sh - nk) * .5} ${x - nw / 2},${nk} V${lip + h * .05} H${x - lw / 2} V${lip} H${x + lw / 2} V${lip + h * .05} H${x + nw / 2} V${nk} C${x + nw / 2},${nk + (sh - nk) * .5} ${R},${nk + (sh - nk) * .25} ${R},${sh} V${base - r} Q${R},${base} ${R - r},${base} H${L + r} Q${L},${base} ${L},${base - r} Z`;
+}
+function bottle(p, x, base, w, h, old, a = {}) {
+  if (h < 2) return;
+  const g = Kit.mk('g', a, p), r = Math.min(w * .2, h * .12), sh = base - h * .58, L = x - w / 2;
+  const d = outline(x, base, w, h);
+  Kit.mk('path', {d, fill: GLASS}, g);
+  Kit.mk('path', {d: `M${L + w * .22},${base - r - h * .04} V${sh + h * .02}`, stroke: SHINE, 'stroke-width': Math.max(2, w * .14), 'stroke-linecap': 'round', fill: 'none'}, g);
+  if (old) Kit.mk('rect', {x: L + 1, y: base - h * .42, width: w - 2, height: h * .2, fill: PAPER, stroke: INK, 'stroke-width': 1.6}, g);
+  Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+  return g;
+}
+
+// A label in the card's colour round its letters, so it reads over the glass.
+function label(p, x, y, t, a = {}) {
+  const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': FONT, 'font-weight': 800, 'font-size': G.fs, stroke: 'var(--c)', 'stroke-width': G.fs * .3, 'stroke-linejoin': 'round', 'paint-order': 'stroke'}, a), p);
+  e.textContent = t; return e;
+}
 
 function draw(){
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f * .9, 12);
+  const {W, H} = Kit.fitSvg(svg);
   svg.innerHTML = '';
-  // The left margin is as wide as the longest label needs, so none is cut at the edge.
-  const probe = Kit.mk('text', {y: -99, 'font-size': fs, 'font-family': 'var(--mono)'}, svg); probe.textContent = '0.5 kg';
-  G = {W, H, f: fs, L: Math.max(fs * 3.4, probe.getComputedTextLength() + fs * .5 + 2), R: fs * 1.2, T: fs * 1.2, B: fs * 3.4};
-  probe.remove();
-  const ink = 'var(--k)';
-  // grid
-  [0, .5, 1].forEach(kg => {
-    Kit.mk('line', {x1: G.L, x2: W - G.R, y1: Y(kg), y2: Y(kg), stroke: ink, 'stroke-opacity': kg === 0 ? .6 : .18, 'stroke-width': kg === 0 ? 2 : 1.2}, svg);
-    const t = Kit.mk('text', {x: G.L - fs * .5, y: Y(kg) + fs * .35, 'text-anchor': 'end', fill: ink, 'font-size': fs, 'font-family': 'var(--mono)', opacity: .75}, svg);
-    t.textContent = (kg === 0 ? '0' : kg) + ' kg';
-  });
-  for (let i = 0; i <= N; i++) {
-    const t = Kit.mk('text', {x: X(i), y: Y(0) + fs * 1.3, 'text-anchor': 'middle', fill: ink, 'font-size': fs, 'font-family': 'var(--mono)', opacity: .7}, svg);
-    t.textContent = i;
+  if (W < 60 || H < 40) { G = null; return; }
+  const fs = Math.max(12, Math.min(14, W / 24, H / 7));
+  // The furnace along the foot; the shelf it makes; over it the bottles, the guess's highest point setting the scale.
+  const F = Math.max(16, Math.min(H * .21, fs * 4.2)), pad = 2, slot = (W - 2 * pad) / (N + 1);
+  const most = revealed ? Math.max(1.02, ...guess.filter(v => v != null)) : MAXKG;
+  const T = revealed ? fs * 1.5 : fs * .6;
+  G = {W, H, fs, F, pad, slot, shelf: H - F, top: most, T};
+  const H1 = Y(0) - Y(1), bw = Math.min(slot * .86, Math.max(H1 / 3.4, slot * .55));
+  G.bw = bw;
+  // The furnace: a long charcoal body, a mouth glowing at each melt, numbered.
+  const fur = Kit.mk('g', {}, svg), fy = G.shelf, rr = Math.min(10, F * .3);
+  Kit.mk('path', {d: `M1.5,${fy} H${W - 1.5} V${H - rr - 1.5} Q${W - 1.5},${H - 1.5} ${W - rr - 1.5},${H - 1.5} H${rr + 1.5} Q1.5,${H - 1.5} 1.5,${H - rr - 1.5} Z`, fill: FURNACE, stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, fur);
+  const mw = Math.min(slot * .62, F * 1.1), mh = F * .62, my = H - (F - mh) / 2 - 1;
+  for (let i = 1; i <= N; i++) {
+    const x = X(i), m = Kit.mk('g', {}, fur);
+    Kit.mk('path', {d: `M${x - mw / 2},${my} V${my - mh + mw / 2} A${mw / 2},${mw / 2} 0 0 1 ${x + mw / 2},${my - mh + mw / 2} V${my} Z`, fill: MOUTH, stroke: INK, 'stroke-width': 1.6}, m);
+    Kit.mk('path', {d: `M${x - mw * .3},${my} Q${x - mw * .3},${my - mh * .55} ${x},${my - mh * .72} Q${x + mw * .3},${my - mh * .55} ${x + mw * .3},${my} Z`, fill: GLOW}, m);
+    const nf = Math.min(fs * .9, mh * .62);
+    if (nf >= 10) { const t = Kit.mk('text', {x, y: my - mh * .2, 'text-anchor': 'middle', fill: INK, 'font-family': FONT, 'font-weight': 800, 'font-size': nf}, m); t.textContent = i; }
   }
-  const xl = Kit.mk('text', {x: W - G.R, y: H - fs * .2, 'text-anchor': 'end', fill: ink, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, opacity: .8}, svg);
-  xl.textContent = 'melts →';
-  // start dot
-  Kit.mk('circle', {cx: X(0), cy: Y(1), r: fs * .45, fill: ink}, svg);
-  // guess
+  // The shelf the bottles stand on: the furnace's top. Over each melt, until the answer, the faint outline of the bottle
+  // it could make from the whole kilogram: the place to draw, behind the reader's own.
+  Kit.mk('line', {x1: 1.5, x2: W - 1.5, y1: fy, y2: fy, stroke: INK, 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+  if (!revealed) for (let i = 1; i <= N; i++) Kit.mk('path', {d: outline(X(i), fy - 1.5, bw, Y(0) - Y(1)), fill: PAPER, 'fill-opacity': .28, stroke: INK, 'stroke-opacity': .32, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, svg);
+
+  // The bottles: the old one at the start; over each melt, the guess, or growing to the real glass once answered.
+  const rows = Kit.mk('g', {}, svg), at = i => revealed ? guess[i] + (real(i) - guess[i]) * grow.k : guess[i];
+  for (let i = 0; i <= N; i++) if (guess[i] != null) bottle(rows, X(i), fy, bw, Y(0) - Y(Math.min(at(i), most)), i === 0, {class: i ? 'b' : 'old'});
+  // The guess: a dashed line through the bottles' tops.
   const pts = [];
   for (let i = 0; i <= N; i++) if (guess[i] != null) pts.push([X(i), Y(guess[i])]);
-  if (pts.length > 1) {
-    Kit.mk('path', {d: 'M' + pts.map(p => p.join(',')).join('L'), fill: 'none', stroke: ink, 'stroke-width': fs * .28, 'stroke-dasharray': `${fs*.6} ${fs*.45}`, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: revealed ? .45 : .9}, svg);
-  }
-  if (!done && pts.length < 2) {
-    const h = Kit.mk('text', {x: X(0) + fs * .9, y: Y(1) - fs * .7, fill: ink, 'font-size': fs, 'font-family': 'var(--hand)', opacity: .8}, svg);
-    h.textContent = 'start: 1 kg → drag';
+  const lineAt = Kit.mk('g', {}, svg);
+  if (pts.length > 1) Kit.mk('path', {d: 'M' + pts.map(p => p.map(v => v.toFixed(1)).join(',')).join('L'), fill: 'none', stroke: INK, 'stroke-width': 2.6, 'stroke-dasharray': '7 5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, lineAt);
+  // How much the old bottle holds, over it, while the guess is still to come; and, until the drawing starts, the way.
+  if (!revealed) {
+    label(svg, Math.max(X(0), fs * 1.3), Y(1) - fs * .45, '1 kg', {'text-anchor': 'middle'});
+    if (pts.length < 2) label(svg, X(0) + bw / 2 + fs * .7, Y(.62), 'drag across →', {'text-anchor': 'start', 'font-size': fs * 1.1});
   }
   if (revealed) {
-    const real = Kit.mk('path', {d: `M${X(0)},${Y(1)}L${X(N)},${Y(.99)}`, fill: 'none', stroke: ink, 'stroke-width': fs * .45, 'stroke-linecap': 'round'}, svg);
-    const dots = [];
-    for (let i = 1; i <= N; i++) dots.push(Kit.mk('circle', {cx: X(i), cy: Y(1 - i * .00125), r: fs * .38, fill: 'var(--c)', stroke: ink, 'stroke-width': fs * .2}, svg));
-    // labels, kept apart
-    const yr = Y(1) - fs * .9;
-    let yg = Y(guess[N]) + (guess[N] >= 1 ? -fs * .9 : fs * 1.4);
-    if (Math.abs(yg - yr) < fs * 1.4) yg = yr + fs * 2.4;
-    yg = Math.min(yg, Y(0) - fs * .4);
-    const lr = Kit.mk('text', {x: X(N), y: yr, 'text-anchor': 'end', fill: ink, 'font-size': fs * 1.05, 'font-family': 'var(--body)', 'font-weight': 800}, svg);
-    lr.textContent = 'real: ≈1 kg every melt';
-    const lg = Kit.mk('text', {x: X(N), y: yg, 'text-anchor': 'end', fill: ink, 'font-size': fs, 'font-family': 'var(--hand)', opacity: .7}, svg);
-    lg.textContent = 'your guess';
+    const lr = label(svg, W - 2, Math.max(fs * 1.05, Y(real(N)) - fs * .55), 'real: ≈1 kg every melt', {'text-anchor': 'end'});
+    const gy = Y(guess[N]), below = gy > Y(1) + fs;
+    const lg = label(svg, X(N) - bw / 2 - 4, below ? Math.min(gy + fs * 1.25, G.shelf - fs * .4) : gy - fs * .5, 'your guess', {'text-anchor': 'end', 'font-weight': 700});
     if (animateNext) {
       animateNext = false;
-      const len = real.getTotalLength();
-      gsap.fromTo(real, {attr: {'stroke-dasharray': len, 'stroke-dashoffset': len}}, {attr: {'stroke-dashoffset': 0}, duration: 1.4, ease: 'power2.inOut'});
-      gsap.from(dots, {attr: {r: 0}, duration: .35, stagger: .15, delay: .2, ease: 'back.out(3)'});
+      gsap.fromTo(grow, {k: 0}, {k: 1, duration: 1.4, ease: 'power2.inOut', onUpdate: draw});
       gsap.from([lr, lg], {opacity: 0, duration: .5, delay: 1.3});
     }
   }
@@ -112,13 +146,12 @@ let drawing = false, lastI = 0;
 function at(e){
   const r = svg.getBoundingClientRect();
   const x = e.clientX - r.left, y = e.clientY - r.top;
-  const fi = (x - G.L) / (W_() ) * N;
-  const i = Math.max(1, Math.min(N, Math.round(fi)));
-  const kg = Math.max(0, Math.min(MAXKG, MAXKG - (y - G.T) / (G.H - G.T - G.B) * MAXKG));
+  const i = Math.max(1, Math.min(N, Math.round((x - G.pad) / G.slot - .5)));
+  const kg = Math.max(0, Math.min(MAXKG, (G.shelf - y) / (G.shelf - G.T) * G.top));
   return {i, kg};
 }
-function W_(){ return G.W - G.L - G.R; }
 function put(e){
+  if (!G) return;
   const {i, kg} = at(e);
   if (i > lastI + 1) { // fill the gap smoothly
     const from = guess[lastI] ?? 1;
@@ -138,7 +171,7 @@ const up = () => {
   if (lastI >= N - 1) {
     for (let i = 1; i <= N; i++) if (guess[i] == null) guess[i] = guess[i - 1];
     done = true; draw(); Kit.haptic('selection'); sure.on();
-    Kit.$('say').textContent = 'Got your curve. How sure are you?';
+    Kit.$('say').textContent = 'Got your bottles. How sure are you?';
   } else {
     Kit.$('say').textContent = 'Keep going all the way to melt 8.';
   }
@@ -147,7 +180,7 @@ svg.addEventListener('pointerup', up);
 svg.addEventListener('pointercancel', up);
 
 Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#plot', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#plot .old', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   const r = svg.getBoundingClientRect();
   const ev = (type, i, kg) => svg.dispatchEvent(new PointerEvent(type, {bubbles: true, pointerId: 1, clientX: r.left + X(i), clientY: r.top + Y(kg), buttons: 1}));
@@ -158,9 +191,8 @@ Kit.play.card = async () => {
   Kit.$('sure').querySelector('[data-v="80"]').click();
   await new Promise(r => setTimeout(r, 1900));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('plot'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again at the size it now has whenever its room changes: when the answer takes room from it, never shrunk whole.
+{ let seen = ''; const el = Kit.$('plot'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k === seen) return; const first = !seen; seen = k; if (!first) draw(); }).observe(el); }
 Kit.single();
 </script>
 </html>

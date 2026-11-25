@@ -169,6 +169,28 @@ class PillBank {
   static const _kStored = 'knowit.bank.v2';
   static const _kStoredBefore = 'knowit.bank';
 
+  /// The version of the bank the site last said it publishes.
+  static const _kSiteVersion = 'knowit.bank.site';
+
+  static int? _siteVersion;
+
+  /// Whether the site is known to publish the bank in use, or a newer one.
+  ///
+  /// A card's pictures and pages are fetched from the site by names the
+  /// bank in use gives them. An app built from a bank the site does not
+  /// publish yet asks for a card's new picture and is handed the old one
+  /// under the new name; kept, it would stay on the phone after the site
+  /// caught up. So a picture is kept only while this holds
+  /// (lib/widgets/web/cached_thumb.dart), and until the site has answered
+  /// once, it does not.
+  static bool get siteHasBank =>
+      _siteVersion != null && _siteVersion! >= version;
+
+  static void _siteSays(int site, SharedPreferences prefs) {
+    _siteVersion = site;
+    prefs.setInt(_kSiteVersion, site).ignore();
+  }
+
   static BankBundle? _current;
   static Map<String, Pill>? _index;
   static List<Pill>? _dealable;
@@ -264,6 +286,10 @@ class PillBank {
   @visibleForTesting
   static void reset() => adopt(embedded);
 
+  /// What the site publishes, as a test sets it. Tests, and nothing else.
+  @visibleForTesting
+  static set siteVersionForTest(int? site) => _siteVersion = site;
+
   /// Adopts the bundle the last run downloaded, if it is newer than the
   /// one built in. Called once at start, before anything is dealt, and
   /// cheap when there is nothing stored.
@@ -271,6 +297,7 @@ class PillBank {
     // What a build from before downloaded is of no use to this one, and
     // can weigh megabytes.
     if (prefs.containsKey(_kStoredBefore)) prefs.remove(_kStoredBefore);
+    _siteVersion = prefs.getInt(_kSiteVersion);
     final stored = prefs.getString(_kStored);
     if (stored == null) return;
     try {
@@ -311,6 +338,7 @@ class PillBank {
         final Object? parsed = note == null ? null : jsonDecode(note);
         if (parsed is Map && parsed['version'] is int) {
           latest = parsed['version'] as int;
+          _siteSays(latest, prefs);
         }
       } catch (_) {}
       if (latest != null && latest <= version) {
@@ -323,6 +351,7 @@ class PillBank {
         return false;
       }
       final bundle = BankBundle.parse(body);
+      _siteSays(bundle.version, prefs);
       if (bundle.version <= version) {
         say('up to date', bundle);
         return false;

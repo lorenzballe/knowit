@@ -59,6 +59,40 @@ class MagnitudeBlock extends BetBlock {
   }
 }
 
+/// Lays the size picked at notch [at] of [answer]'s staircase as the
+/// card's answer, [sure] how sure where the shelf asked: what a tile and
+/// the challenge's screen both do.
+Future<void> layMagnitude(
+  ExploreHost host,
+  BetSection shelf,
+  BetAnswer answer, {
+  required int at,
+  int? sure,
+}) async {
+  final Notches notches = Notches.of(answer)!;
+  final String response = notches.responseAt(at);
+  await layBet(
+    host,
+    shelf.section,
+    Bet(
+      kind: 'magnitude',
+      section: shelf.id,
+      pill: answer.pill.id,
+      said: response,
+      right: answer.accepts(response),
+      confidence: sure,
+      facts: {
+        'at': at,
+        'value': notches.values[at],
+        'off': notches.offBy(at),
+      },
+      at: DateTime.now().millisecondsSinceEpoch,
+    ),
+    pill: answer.pill,
+    response: response,
+  );
+}
+
 /// One size to pick.
 class MagnitudeTile extends StatelessWidget {
   const MagnitudeTile({
@@ -126,29 +160,8 @@ class MagnitudeTile extends StatelessWidget {
         : (shortFits ? shortSize : 12);
     final TextStyle labelStyle = styleAt(labelSize);
 
-    Future<void> lay(int at, int? sure) async {
-      final String response = notches.responseAt(at);
-      await layBet(
-        host,
-        shelf.section,
-        Bet(
-          kind: 'magnitude',
-          section: shelf.id,
-          pill: pill.id,
-          said: response,
-          right: answer.accepts(response),
-          confidence: sure,
-          facts: {
-            'at': at,
-            'value': notches.values[at],
-            'off': notches.offBy(at),
-          },
-          at: DateTime.now().millisecondsSinceEpoch,
-        ),
-        pill: pill,
-        response: response,
-      );
-    }
+    Future<void> lay(int at, int? sure) =>
+        layMagnitude(host, shelf, answer, at: at, sure: sure);
 
     void pick(int at) {
       BetFeel.tick();

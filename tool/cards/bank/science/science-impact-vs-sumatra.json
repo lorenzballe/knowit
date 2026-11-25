@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A dot grid and a slider asking how many Sumatra earthquakes, a magnitude 9.1 quake from 2004, the dinosaur-killing asteroid impact released in energy. Each dot is one Sumatra quake.",
+    "label": "The dinosaur-killing asteroid diving at the sea on a burning trail, a dinosaur on the beach. A slider guesses how many 2004 Sumatra earthquakes (magnitude 9.1) the impact's energy equals, from 10 to 100,000: one dot on the horizon is one Sumatra quake, and the guess is a dome holding that many dots.",
     "graded": false
   },
   "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",

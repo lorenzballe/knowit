@@ -2,47 +2,40 @@
 <title>Astute free card</title>
 <!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
      The kit is linked as kit/...; nothing else may be linked, and nothing is fetched. -->
+<!-- The picture: 27 as a hailstone, the numbers of its sequence the heights it is tossed to, in metres. Everest stands
+     on the left at its real height, snow on its summit, and a storm cloud towers on the right. The hailstone waits at
+     the foot with 27 on its tag; the reader drags a dashed line to the height they think it will reach. Launched, the
+     rule runs step by step and the hailstone is thrown up and dropped, its trail drawn behind it, up into the cloud
+     past Everest's summit to 9,232 m, where a flag goes in, and down to 1 on the ground at step 111.
+     Flat colours, thick ink outlines; drawn again at its real size whenever its room changes. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <!-- Libraries: only what the card uses, from kit/vendor/. -->
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:1cqh}
-#rule{margin:0;font:600 max(1.8cqh,12px)/1.2 var(--mono);color:var(--muted);text-align:center}
-#rule b{color:var(--k);font-weight:800}
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
+#rule{margin:0;display:flex;justify-content:center;flex-wrap:wrap;gap:.8cqh 2.2cqw;flex:none}
+#rule span{display:inline-flex;align-items:center;gap:1.3cqw;font:600 max(1.8cqh,12.5px)/1 var(--body);color:var(--k);background:color-mix(in srgb,#10100c 24%,transparent);border-radius:99px;padding:.75cqh 3cqw .75cqh 2.2cqw;white-space:nowrap}
+#rule b{font-weight:800}
+#rule svg{width:max(1.6cqh,11px);height:max(1.6cqh,11px);flex:none}
 #plot{position:relative;flex:1;min-height:0;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
 #sv{position:absolute;inset:0;width:100%;height:100%;display:block}
 #why{display:flex;flex-direction:column;gap:.6cqh;flex:none}
-#why .big{margin:0;font-size:max(3.1cqh,18px);line-height:1.15}
-#why .body{margin:0}
+#why .big{margin:0;font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{margin:0;font:500 max(1.8cqh,12.5px)/1.32 var(--body)}
 #ctrl{flex:none;height:max(6.4cqh,48px);display:flex;align-items:center;justify-content:center}
 #ctrl .say{margin:0;text-align:center}
 #go{font:800 max(2.3cqh,15px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:999px;padding:0 8cqw;height:max(5.6cqh,44px);cursor:pointer}
-#sv .grid{stroke:color-mix(in srgb,var(--k) 13%,transparent);stroke-width:1}
-#sv .tick,#sv .axis{fill:var(--muted);font-family:var(--mono);font-weight:600}
-#sv .earth{fill:color-mix(in srgb,var(--k) 7%,transparent)}
-#sv .gnd{stroke:var(--k);stroke-width:2.4;stroke-linecap:round}
-#sv .mtn{fill:color-mix(in srgb,var(--k) 17%,transparent)}
-#sv .ln{fill:none;stroke:var(--k);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
-#sv .ev{fill:color-mix(in srgb,var(--k) 8%,transparent);stroke:color-mix(in srgb,var(--k) 32%,transparent);stroke-width:1.3;stroke-linejoin:round}
-#sv .evl{stroke:color-mix(in srgb,var(--k) 50%,transparent);stroke-width:1.3;stroke-dasharray:2 4}
-#sv .gs{stroke:var(--k);stroke-width:1.8;stroke-dasharray:7 6}
-#sv .lab,#sv .hand{fill:var(--k);paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round}
-#sv .lab{font-family:var(--body);font-weight:800}
-#sv .hand{font-family:var(--hand);font-weight:700}
-#sv .tagb,#sv .flag{fill:var(--k)}
-#sv .tagt{fill:var(--c);font-family:var(--mono);font-weight:700}
-#sv .dot{fill:var(--k);stroke:var(--c);stroke-width:2}
-#sv .pole{stroke:var(--k);stroke-width:2;stroke-linecap:round}
-#sv .chev{fill:none;stroke:var(--c);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* Answered, the question steps back a size and gives the picture its room. */
+.answered .q{font-size:max(2.5cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="maths" data-kind="Aim and launch">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE PEAK</span></div>
     <h2 class="q">How high does the Collatz sequence for 27 climb before descending?</h2>
     <div class="stagebox" id="stage">
-      <p id="rule"><b>if odd</b> ×3 + 1 &nbsp;·&nbsp; <b>if even</b> ÷ 2</p>
-      <div id="plot"><svg id="sv" aria-label="The path of 27 read as an altitude: it climbs to 9,232 m, above Everest, then falls to 1 at step 111."></svg></div>
+      <p id="rule"><span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 10.5V2M2.4 5.4L6 1.8l3.6 3.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><b>if odd</b> ×3 + 1</span><span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5V10M2.4 6.6L6 10.2l3.6-3.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><b>if even</b> ÷ 2</span></p>
+      <div id="plot"><svg id="sv" role="img" aria-label="Everest at its real height on the left, a storm cloud towering on the right, and 27 as a hailstone at the foot. You drag a dashed line to the height you think the sequence of 27 will reach, read as metres."></svg></div>
       <div id="why" class="gone"><p class="big" id="big">9,232 m</p><p class="body">An odd number is tripled plus one, then halved: it grows by about half. Land on odd numbers again and again and 27 climbs past Everest, until the halvings win and it falls to 1.</p></div>
     </div>
     <div id="ctrl"><p class="say" id="say">Drag to guess the peak, then launch.</p><button id="go" class="gone">Launch 27</button></div>
@@ -57,104 +50,150 @@ const SEQ = [27];
 while (SEQ[SEQ.length - 1] !== 1) { const n = SEQ[SEQ.length - 1]; SEQ.push(n % 2 ? 3 * n + 1 : n / 2); }
 const N = SEQ.length - 1, PEAK = Math.max(...SEQ), PI = SEQ.indexOf(PEAK);
 const PM = SEQ.map((v, i) => Math.max(...SEQ.slice(0, i + 1)));
-// Everest, drawn as a ghost behind (summit at step ES); only its name is written.
-const EV = 8849, ES = 30;
-const EVP = [[1,0],[6,1300],[10,2100],[13,3300],[16,3900],[19,5300],[22,5900],[25,7200],[27.5,7800],[ES,EV],[32.5,8100],[35,8400],[38,7500],[41,6900],[45,5400],[49,4500],[53,2800],[57,1700],[62,0]];
-const S = {guess: 400, touched: false, yMax: 1000, aimMax: 1000, p: 0, launched: false, peaked: false, done: false, flag: 0, ev: 0, bob: 0};
-const NS = 'http://www.w3.org/2000/svg', svg = Kit.$('sv'), plot = Kit.$('plot'), placed = [];
-const cl = (v, a, b) => Math.max(a, Math.min(b, v)), fmt = v => Math.round(v).toLocaleString('en-US');
-let F = null, GEO = null, G = null, tl = null, bobTw = null, drag = false, py = 0;
+// One ink for every outline; the mountain's rock, its shaded face and its snow; the storm cloud and its grey belly;
+// the ground; the hailstone's ice; the flag that marks the top, the one warm accent.
+const INK = '#10100c', ROCK = '#93a3b8', SHADE = '#70819a', SNOW = '#ffffff', CLOUD = '#ffffff', GREY = '#cfd9e5',
+  GROUND = '#0b7454', ICE = '#e4f3ff', FLAG = '#ff6a3d', WHITE = '#ffffff';
+const FONT = 'Figtree, system-ui, sans-serif';
+// Everest, in (fraction of the width, metres): a ridge up to its summit at 8,849 m and a shoulder beside it.
+const EV = 8849, ES = .295;
+const EVP = [[-.03,0],[.03,900],[.07,2100],[.11,3000],[.145,4300],[.18,5200],[.215,6400],[.245,7300],[.27,8000],[ES,EV],[.315,8450],[.34,8516],[.37,7700],[.405,6600],[.44,5300],[.48,3900],[.52,2600],[.565,1300],[.61,0]];
+// The storm cloud, in (fraction of the width, metres): a body on a flat base at 3,600 m, rising in a tower to an anvil
+// that spreads under the top of the sky; round puffs (each a width and a height) along its sides; a grey belly whose
+// top is puffed too. All of it in the same two units, so it holds together however tall or wide it is drawn.
+const BASE = 3600;
+const BODY = [[.55,BASE],[.53,4700],[.57,6000],[.61,7300],[.64,8500],[.56,9150],[.5,9550],[.53,10050],[.66,10250],[1,10200],[1,BASE]];
+const PUFFS = [[.56,4300,.045,700],[.575,5400,.05,800],[.61,6500,.055,850],[.645,7600,.055,800],[.68,8500,.05,600],[.72,9000,.06,520],[.6,9800,.07,420],[.8,9950,.09,380],[.95,9950,.08,380]];
+const BELLY = [[.58,4500,.05,420],[.69,4650,.06,460],[.81,4550,.06,440],[.93,4650,.06,460],[1.01,4550,.04,440]];
+const S = {guess: 2500, touched: false, yMax: 10600, aimMax: 10600, p: 0, launched: false, peaked: false, done: false, flag: 0, ev: 0, bob: 0};
+const svg = Kit.$('sv'), plot = Kit.$('plot'), placed = [];
+const cl = (v, a, b) => Math.max(a, Math.min(b, v)), fmt = v => Math.round(v).toLocaleString('en-US'), r1 = v => v.toFixed(1);
+let F = null, GEO = null, tl = null, bobTw = null, drag = false, py = 0;
 
-function el(tag, at, par) { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); par.appendChild(e); return e; }
-function tx(at, s, par) { const e = el('text', at, par); e.textContent = s; return e; }
+const mk = (tag, at, par) => Kit.mk(tag, at, par);
 function bb(e) { try { const b = e.getBBox(); return {x: b.x, y: b.y, w: b.width, h: b.height}; } catch (_) { return {x: 0, y: 0, w: 0, h: 0}; } }
 function hits(b, d) { return placed.some(q => b.x < q.x + q.w + d && b.x + b.w + d > q.x && b.y < q.y + q.h + d && b.y + b.h + d > q.y); }
-function nice(x) { const p = Math.pow(10, Math.floor(Math.log10(x))); return [1, 2, 2.5, 5, 10].map(m => m * p).find(v => v >= x); }
+// A label on an ink pill: its box, placed at the first of the spots (x, y: the pill's left and middle) that is free
+// and inside the picture.
+function pill(par, text, spots, fs, opacity = 1) {
+  const g = mk('g', {opacity}, par), h = Math.round(fs * 1.62), pad = fs * .62;
+  const r = mk('rect', {height: h, rx: h / 2, fill: INK}, g);
+  const t = mk('text', {'font-family': FONT, 'font-size': fs, 'font-weight': 800, fill: WHITE}, g);
+  t.textContent = text;
+  const w = t.getComputedTextLength() + 2 * pad;
+  let box = null;
+  for (const [x, y, anchor] of spots) {
+    const x0 = anchor === 'end' ? x - w : anchor === 'middle' ? x - w / 2 : x;
+    const b = {x: cl(x0, 2, F.W - 2 - w), y: cl(y - h / 2, 2, GEO.yG - h - 2), w, h};
+    if (!hits(b, 3)) { box = b; break; }
+    if (!box) box = b;
+  }
+  r.setAttribute('x', r1(box.x)); r.setAttribute('y', r1(box.y)); r.setAttribute('width', r1(w));
+  t.setAttribute('x', r1(box.x + pad)); t.setAttribute('y', r1(box.y + h / 2 + fs * .36));
+  placed.push(box);
+  return box;
+}
 
 function render() {
   if (!F) return;
   const W = F.W, H = F.H, f = F.f || 16;
-  const fs = cl(f * .78, 12, 17), Lf = cl(f * 1.1, 15, 24), tf = cl(f * .82, 12.5, 18), hf = cl(f * 1.02, 14, 22), pad = fs * .45;
-  const T = Math.max(Lf * 1.3, 22), B = Math.max(fs * 1.9, 24), x0 = 7, x1 = W - 7, yG = H - B, ph = Math.max(yG - T, 40);
-  let k = 0, t = 0, hv = SEQ[0];
+  const fs = cl(f * .74, 11.5, 14.5), k = cl(Math.min(W, H) * .009, 1.8, 2.6);
+  const B = cl(H * .07, 10, 20), T = fs * 1.35, yG = H - B, ph = Math.max(yG - T, 30);
+  let st = 0, t = 0, hv = SEQ[0];
   if (S.launched) {
-    k = Math.min(Math.floor(S.p), N); t = S.p - k;
-    hv = k < N ? SEQ[k] + (SEQ[k + 1] - SEQ[k]) * t : SEQ[N];
-    S.yMax = Math.max(S.aimMax, Math.max(PM[k], hv) * 1.15);   // the camera pulls back as it climbs
+    st = Math.min(Math.floor(S.p), N); t = S.p - st;
+    hv = st < N ? SEQ[st] + (SEQ[st + 1] - SEQ[st]) * t : SEQ[N];
+    S.yMax = Math.max(S.aimMax, Math.max(PM[st], hv) * 1.15);   // the camera pulls back if it climbs past the sky
   }
   GEO = {yG, ph};
-  const X = i => x0 + (x1 - x0) * i / N, Y = v => yG - v / S.yMax * ph, r1 = v => v.toFixed(1);
-  if (!G || !G.isConnected) G = el('g', {}, svg);
-  G.replaceChildren(); placed.length = 0;
-  const gT = el('g', {}, G);
-  el('rect', {x: 0, y: yG, width: W, height: H - yG, class: 'earth'}, G);
-  if (S.ev > 0) {
-    el('polygon', {points: EVP.map(([s, m]) => r1(X(s)) + ',' + r1(Y(m))).join(' '), class: 'ev', opacity: S.ev}, G);
-    el('line', {x1: X(ES), x2: W, y1: Y(EV), y2: Y(EV), class: 'evl', opacity: S.ev}, G);
-  }
-  const hx = S.launched ? X(k < N ? k + t : N) : X(0), hy = Y(S.launched ? hv : SEQ[0]);
+  const x0 = cl(fs * 1.3, 12, 22), x1 = W - x0;
+  const X = i => x0 + (x1 - x0) * i / N, Y = v => yG - v / S.yMax * ph, R = m => m / S.yMax * ph;
+  svg.replaceChildren(); placed.length = 0;
+  const defs = mk('defs', {}, svg);
+
+  // Everest: rock, the shaded face right of its ridge, snow above about 6,200 m, an ink outline.
+  const ev = EVP.map(([u, m]) => [u * W, Y(m)]);
+  const evD = 'M' + ev.map(p => r1(p[0]) + ',' + r1(p[1])).join('L') + 'Z';
+  mk('path', {d: evD}, mk('clipPath', {id: 'evc'}, defs));
+  const mtn = mk('g', {}, svg), inMtn = mk('g', {'clip-path': 'url(#evc)'}, mtn);
+  mk('path', {d: evD, fill: ROCK}, inMtn);
+  const ridge = [[ES, EV], [.312, 7000], [.335, 5200], [.362, 3200], [.39, 1200], [.41, 0]].map(([u, m]) => [u * W, Y(m)]);
+  const right = EVP.filter(([u]) => u > ES).map(([u, m]) => [u * W, Y(m)]).reverse();
+  mk('path', {d: 'M' + ridge.concat(right).map(p => r1(p[0]) + ',' + r1(p[1])).join('L') + 'Z', fill: SHADE}, inMtn);
+  const SL = 6200, teeth = 7, a = .19 * W, b = .425 * W, snow = [[a, Y(SL)]];
+  EVP.forEach(([u, m]) => { if (m > SL) snow.push([u * W, Y(m)]); });
+  snow.push([b, Y(SL)]);
+  for (let i = 1; i < teeth; i++) snow.push([b + (a - b) * i / teeth, Y(SL + (i % 2 ? -520 : 260))]);
+  mk('path', {d: 'M' + snow.map(p => r1(p[0]) + ',' + r1(p[1])).join('L') + 'Z', fill: SNOW, stroke: INK, 'stroke-width': k * .6, 'stroke-linejoin': 'round'}, inMtn);
+  mk('path', {d: evD, fill: 'none', stroke: INK, 'stroke-width': k, 'stroke-linejoin': 'round'}, mtn);
+
+  // The storm cloud: its body and puffs, drawn twice, outlined then filled, so one ink line runs round the whole; its
+  // belly in grey inside it.
+  const oval = (par, [u, m, ru, rm]) => mk('ellipse', {cx: r1(u * W), cy: r1(Y(m)), rx: r1(ru * W), ry: r1(R(rm))}, par);
+  const cloudShapes = par => {
+    mk('path', {d: 'M' + BODY.map(([u, m]) => r1(u >= 1 ? W + k * 2 : u * W) + ',' + r1(Y(m))).join('L') + 'Z'}, par);
+    PUFFS.forEach(p => oval(par, p));
+  };
+  const cloud = mk('g', {}, svg);
+  cloudShapes(mk('g', {fill: INK, stroke: INK, 'stroke-width': k * 2, 'stroke-linejoin': 'round'}, cloud));
+  cloudShapes(mk('g', {fill: CLOUD}, cloud));
+  cloudShapes(mk('clipPath', {id: 'clc'}, defs));
+  const belly = mk('g', {fill: GREY, 'clip-path': 'url(#clc)'}, cloud);
+  mk('rect', {x: r1(.4 * W), y: r1(Y(4600)), width: r1(.6 * W + 2), height: r1(Y(BASE) - Y(4600) + 2)}, belly);
+  BELLY.forEach(p => oval(belly, p));
+
+  // The ground.
+  mk('rect', {x: -2, y: r1(yG), width: W + 4, height: r1(H - yG + 2), fill: GROUND}, svg);
+  mk('line', {x1: 0, x2: W, y1: r1(yG), y2: r1(yG), stroke: INK, 'stroke-width': k * 1.2, 'stroke-linecap': 'round'}, svg);
+
+  // Once the hailstone has peaked, Everest's summit is carried across, to be seen under the flag.
+  if (S.ev > 0) mk('line', {x1: r1(ES * W), x2: r1(W - 2), y1: r1(Y(EV)), y2: r1(Y(EV)), stroke: INK, 'stroke-width': k * .75, 'stroke-dasharray': `${r1(k * 1.4)} ${r1(k * 2.4)}`, 'stroke-linecap': 'round', opacity: S.ev}, svg);
+
+  // The hailstone's trail, step by step: up when the number is odd, down when it is even.
+  const hx = S.launched ? X(st < N ? st + t : N) : X(0), hy = Y(S.launched ? hv : SEQ[0]);
   if (S.launched) {
     let d = '';
-    for (let i = 0; i <= k; i++) d += (i ? 'L' : 'M') + r1(X(i)) + ' ' + r1(Y(SEQ[i]));
-    if (k < N) d += 'L' + r1(hx) + ' ' + r1(hy);
-    el('path', {d: 'M' + r1(X(0)) + ' ' + r1(yG) + 'L' + d.slice(1) + 'L' + r1(hx) + ' ' + r1(yG) + 'Z', class: 'mtn'}, G);
-    el('path', {d, class: 'ln'}, G);
+    for (let i = 0; i <= st; i++) d += (i ? 'L' : 'M') + r1(X(i)) + ',' + r1(Y(SEQ[i]));
+    if (st < N) d += 'L' + r1(hx) + ',' + r1(hy);
+    mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': k * .95, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
   }
-  el('line', {x1: 0, x2: W, y1: yG, y2: yG, class: 'gnd'}, G);
-  // the reader's guess
+
+  // The reader's guess: a dashed line across, a handle to drag it by until the launch.
   const gy = Y(S.guess) + (S.touched ? 0 : S.bob * ph * .05);
-  el('line', {x1: 0, x2: W, y1: gy, y2: gy, class: 'gs', opacity: S.touched ? .9 : .5}, G);
+  mk('line', {x1: 0, x2: W, y1: r1(gy), y2: r1(gy), stroke: INK, 'stroke-width': k * .9, 'stroke-dasharray': `${r1(k * 3.4)} ${r1(k * 2.6)}`, 'stroke-linecap': 'round'}, svg);
   if (!S.launched) {
-    const hr = cl(f * .8, 11, 16), cx = W - hr - 3, cy = Math.min(gy, yG - hr - 1), c = hr * .38;
-    el('circle', {cx, cy, r: hr, class: 'tagb'}, G);
-    el('path', {d: `M${cx - c} ${cy - c * .4}L${cx} ${cy - c * 1.4}L${cx + c} ${cy - c * .4}M${cx - c} ${cy + c * .4}L${cx} ${cy + c * 1.4}L${cx + c} ${cy + c * .4}`, class: 'chev'}, G);
+    const hr = cl(fs * .95, 11, 15), cx = W - hr - k - 1, cy = cl(gy, hr + k, yG - hr - k), c = hr * .36;
+    mk('circle', {cx: r1(cx), cy: r1(cy), r: r1(hr), fill: WHITE, stroke: INK, 'stroke-width': k}, svg);
+    mk('path', {d: `M${r1(cx - c)},${r1(cy - c * .35)}L${r1(cx)},${r1(cy - c * 1.35)}L${r1(cx + c)},${r1(cy - c * .35)}M${r1(cx - c)},${r1(cy + c * .35)}L${r1(cx)},${r1(cy + c * 1.35)}L${r1(cx + c)},${r1(cy + c * .35)}`, fill: 'none', stroke: INK, 'stroke-width': k * .9, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    placed.push({x: cx - hr, y: cy - hr, w: hr * 2, h: hr * 2});
   }
-  // the summit flag
+
+  // The summit's flag, once the hailstone has got there.
+  const sr = cl(fs * .7, 8, 11);
   if (S.peaked) {
-    const px = X(PI), pk = Y(PEAK), s = S.flag, pole = fs * 1.5 * s;
-    el('line', {x1: px, x2: px, y1: pk, y2: pk - pole, class: 'pole'}, G);
-    el('path', {d: `M${px} ${pk - pole}L${px + fs * .95 * s} ${pk - pole + fs * .36 * s}L${px} ${pk - pole + fs * .72 * s}Z`, class: 'flag'}, G);
-    const l = tx({x: px + fs * 1.2, y: pk - fs * .85, 'font-size': Lf, class: 'lab', opacity: s}, '9,232 m', G);
-    let b = bb(l);
-    if (b.x + b.w > W - 2) { l.setAttribute('x', px - fs * .45); l.setAttribute('text-anchor', 'end'); b = bb(l); }
-    placed.push(b);
+    const px = X(PI), pk = Y(PEAK), s = S.flag, pole = fs * 1.7 * s;
+    mk('line', {x1: r1(px), x2: r1(px), y1: r1(pk), y2: r1(pk - pole), stroke: INK, 'stroke-width': k, 'stroke-linecap': 'round'}, svg);
+    if (s > .05) mk('path', {d: `M${r1(px)},${r1(pk - pole)}L${r1(px + fs * 1.05 * s)},${r1(pk - pole + fs * .38 * s)}L${r1(px)},${r1(pk - pole + fs * .76 * s)}Z`, fill: FLAG, stroke: INK, 'stroke-width': k * .7, 'stroke-linejoin': 'round'}, svg);
+    placed.push({x: px - 2, y: pk - pole - 2, w: fs * 1.1 * s + 4, h: pole + 4});
   }
-  if (S.ev > 0) placed.push(bb(tx({x: X(ES), y: Y(EV) - fs * .6, 'text-anchor': 'middle', 'font-size': cl(f * .86, 12.5, 18), class: 'lab', opacity: S.ev}, 'Everest', G)));
-  // the climber and its number
-  el('circle', {cx: hx, cy: hy, r: cl(f * .3, 4, 6), class: 'dot'}, G);
+  // The hailstone: ice with a shine, an ink rim.
+  const ball = mk('g', {}, svg), by = S.launched ? hy : yG - sr - k * .5;
+  mk('circle', {cx: r1(hx), cy: r1(by), r: r1(sr), fill: ICE, stroke: INK, 'stroke-width': k}, ball);
+  mk('circle', {cx: r1(hx - sr * .35), cy: r1(by - sr * .35), r: r1(sr * .3), fill: WHITE}, ball);
+  placed.push({x: hx - sr, y: by - sr, w: sr * 2, h: sr * 2});
+
+  // The labels: the summit's height, Everest's name, the guess, the number the hailstone carries.
+  if (S.peaked) pill(svg, '9,232 m', [[X(PI) + fs * 1.7, Y(PEAK) - fs * 1.15, 'start'], [X(PI) - fs * .5, Y(PEAK) - fs * 1.15, 'end'], [X(PI) + fs * 1.7, Y(PEAK) + fs * .6, 'start']], fs, S.flag);
+  pill(svg, 'Everest 8,849 m', [[ES * W, Y(EV) - fs * 1.35, 'middle'], [ES * W - fs * .6, Y(EV) + fs * .3, 'end'], [ES * W + fs * .6, Y(EV) + fs * .3, 'start']], fs);
+  const glab = S.touched ? `your guess: ${fmt(S.guess)} m` : 'drag to guess';
+  pill(svg, glab, [[W * .44, gy - fs * 1.35, 'start'], [W * .44, gy + fs * 1.35, 'start'], [W * .06, gy - fs * 1.35, 'start'], [W * .06, gy + fs * 1.35, 'start'], [W * .2, gy - fs * 2.9, 'start']], fs);
   if (!(S.launched && !S.done && S.p >= PI && S.p < PI + 1.4)) {
-    const g = el('g', {}, G), rc = el('rect', {class: 'tagb'}, g);
-    const tt = tx({'font-size': tf, class: 'tagt', 'text-anchor': 'middle'}, fmt(SEQ[S.launched ? Math.min(N, Math.round(S.p)) : 0]), g);
-    const w = bb(tt).w + tf, h = tf * 1.55;
-    let x = hx + tf * .45, y = hy - tf * .45 - h;
-    if (x + w > W - 2) x = hx - tf * .45 - w;
-    x = Math.max(2, x); if (y < 2) y = Math.min(hy + tf * .45, yG - h - 2);
-    rc.setAttribute('x', x); rc.setAttribute('y', y); rc.setAttribute('width', w); rc.setAttribute('height', h); rc.setAttribute('rx', h / 2);
-    tt.setAttribute('x', x + w / 2); tt.setAttribute('y', y + h / 2 + tf * .36);
-    placed.push({x, y, w, h});
-  }
-  const gl = tx({'font-size': hf, class: 'hand'}, S.touched ? `your guess: ${fmt(S.guess)} m` : 'drag to guess', G);
-  let best = null;
-  for (const [cx, cy] of [[W * .2, gy - hf * .4], [W * .2, gy + hf * 1.05], [W * .44, gy - hf * .4], [W * .44, gy + hf * 1.05]]) {
-    gl.setAttribute('x', cx); gl.setAttribute('y', cy);
-    const b = bb(gl);
-    if (b.y >= 1 && b.y + b.h <= yG - 1 && b.x + b.w <= W - 2 && !hits(b, pad)) { best = b; break; }
-  }
-  if (!best) { gl.setAttribute('x', W * .2); gl.setAttribute('y', Math.max(gy - hf * .4, hf)); best = bb(gl); }
-  placed.push(best);
-  placed.push(bb(tx({x: 2, y: yG + fs * 1.35, 'font-size': fs, class: 'axis'}, 'step 0', G)));
-  placed.push(bb(tx({x: W - 2, y: yG + fs * 1.35, 'font-size': fs, class: 'axis', 'text-anchor': 'end'}, 'step 111', G)));
-  // the altitude scale, minus any label that would touch another
-  const st = nice(S.yMax / 4.2);
-  for (let v = st; v <= S.yMax * 1.0001; v += st) {
-    const y = Y(v);
-    el('line', {x1: 0, x2: W, y1: y, y2: y, class: 'grid'}, gT);
-    const l = tx({x: 2, y: y - fs * .32, 'font-size': fs, class: 'tick'}, fmt(v) + ' m', gT), b = bb(l);
-    if (b.y < 0 || hits(b, pad)) l.remove(); else placed.push(b);
+    const v = fmt(SEQ[S.launched ? Math.min(N, Math.round(S.p)) : 0]);
+    pill(svg, v, [[hx + sr + 4, by - sr - fs * .55, 'start'], [hx - sr - 4, by - sr - fs * .55, 'end'], [hx + sr + 4, by + sr + fs * .9, 'start'], [hx - sr - 4, by + sr + fs * .9, 'end'], [hx + sr + 4, by, 'start'], [hx - sr - 4, by, 'end']], fs);
   }
 }
 
-function fit() { svg.removeAttribute('width'); svg.removeAttribute('height'); svg.style.width = svg.style.height = ''; F = Kit.fitSvg(svg); render(); }
+function fit() { F = Kit.fitSvg(svg); render(); }
 
 // Aim: drag sets the guess; holding near the top raises the sky.
 function frac() { const r = svg.getBoundingClientRect(); if (!GEO || !r.height) return 0; return cl((GEO.yG - (py - r.top) * F.H / r.height) / GEO.ph, 0, 1); }
@@ -174,7 +213,7 @@ gsap.ticker.add(() => {
   if (fr > .88 && S.yMax < 40000) { S.yMax = Math.min(40000, S.yMax * (1 + .045 * (fr - .88) / .12 * gsap.ticker.deltaRatio())); setGuess(); }
 });
 
-// Launch: the rule runs step by step and the camera pulls back as 27 climbs.
+// Launch: the rule runs step by step and the hailstone is thrown up and dropped.
 Kit.$('go').addEventListener('click', () => {
   if (S.launched || !S.touched) return;
   S.launched = true; drag = false; S.aimMax = S.yMax;
@@ -198,13 +237,14 @@ function finish() {
   Object.assign(S, {touched: true, launched: true, done: true, peaked: true, p: N, flag: 1, ev: 1, bob: 0});
   const r = PEAK / S.guess;
   Kit.$('big').textContent = '9,232 m, ' + (r >= 1.5 ? (r >= 10 ? Math.round(r) : Math.round(r * 10) / 10) + '× your guess' : r > .67 ? 'close to your guess' : 'below your guess');
+  Kit.$('card').classList.add('answered');
   Kit.hide('ctrl'); Kit.hide('rule'); Kit.show('why'); Kit.show('keep');
   render();
 }
 
-// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+// Draw at the card's real size here: called once the fonts are in, and again whenever its room changes.
 Kit.onShow.card = fit;
-if ('ResizeObserver' in window) new ResizeObserver(() => { if (F) fit(); }).observe(plot);
+{ let seen = ''; new ResizeObserver(() => { const b = plot.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; seen = key; if (F) fit(); }).observe(plot); }
 // Motion the reader should see starts here: the guess line bobs to invite a drag.
 Kit.onEnter.card = () => {
   if (Kit.calm || S.touched || bobTw) return;
@@ -214,11 +254,11 @@ Kit.onEnter.card = () => {
 const wait = ms => new Promise(r => setTimeout(r, ms));
 Kit.play.card = async () => {
   const r = plot.getBoundingClientRect(), o = {bubbles: true, cancelable: true, pointerId: 7, pointerType: 'touch', isPrimary: true, clientX: r.left + r.width * .5};
-  plot.dispatchEvent(new PointerEvent('pointerdown', {...o, clientY: r.top + r.height * .6}));
+  plot.dispatchEvent(new PointerEvent('pointerdown', {...o, clientY: r.top + r.height * .8}));
   await wait(80);
-  plot.dispatchEvent(new PointerEvent('pointermove', {...o, clientY: r.top + r.height * .5}));
+  plot.dispatchEvent(new PointerEvent('pointermove', {...o, clientY: r.top + r.height * .75}));
   await wait(80);
-  plot.dispatchEvent(new PointerEvent('pointerup', {...o, clientY: r.top + r.height * .5}));
+  plot.dispatchEvent(new PointerEvent('pointerup', {...o, clientY: r.top + r.height * .75}));
   await wait(150);
   Kit.$('go').click();
   await wait(300);

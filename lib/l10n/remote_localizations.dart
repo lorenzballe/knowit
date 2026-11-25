@@ -4981,17 +4981,373 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('exploreDayOpen') ?? _base.exploreDayOpen;
 
   @override
-  String exploreSixtyRecord(int n, int of) =>
-      _words.format('exploreSixtyRecord', localeName, {'n': n, 'of': of}) ??
-      _base.exploreSixtyRecord(n, of);
-
-  @override
-  String get exploreSixtyFirst =>
-      _words.text('exploreSixtyFirst') ?? _base.exploreSixtyFirst;
-
-  @override
   String get exploreGameNone =>
       _words.text('exploreGameNone') ?? _base.exploreGameNone;
+
+  @override
+  String get challengesTitle =>
+      _words.text('challengesTitle') ?? _base.challengesTitle;
+
+  @override
+  String get challengesLine =>
+      _words.text('challengesLine') ?? _base.challengesLine;
+
+  @override
+  String challengesPage(int n, int of) =>
+      _words.format('challengesPage', localeName, {'n': n, 'of': of}) ??
+      _base.challengesPage(n, of);
+
+  @override
+  String get gamePlay => _words.text('gamePlay') ?? _base.gamePlay;
+
+  @override
+  String get sixtyRules => _words.text('sixtyRules') ?? _base.sixtyRules;
+
+  @override
+  String get sixtyReview => _words.text('sixtyReview') ?? _base.sixtyReview;
+
+  @override
+  String get gameRight => _words.text('gameRight') ?? _base.gameRight;
+
+  @override
+  String get gameWrong => _words.text('gameWrong') ?? _base.gameWrong;
+
+  @override
+  String get gameUnanswered =>
+      _words.text('gameUnanswered') ?? _base.gameUnanswered;
+
+  @override
+  String get gameNext => _words.text('gameNext') ?? _base.gameNext;
+
+  @override
+  String sixtyShareHead(String date) =>
+      _words.format('sixtyShareHead', localeName, {'date': date}) ??
+      _base.sixtyShareHead(date);
+
+  @override
+  String sixtyShareScore(int n, int of, int s) =>
+      _words.format('sixtyShareScore', localeName, {
+        'n': n,
+        'of': of,
+        's': s,
+      }) ??
+      _base.sixtyShareScore(n, of, s);
+
+  @override
+  String sixtySecondsLeftLabel(int s) =>
+      _words.format('sixtySecondsLeftLabel', localeName, {'s': s}) ??
+      _base.sixtySecondsLeftLabel(s);
+
+  @override
+  String get gameReview => _words.text('gameReview') ?? _base.gameReview;
+
+  @override
+  String get gameTomorrow => _words.text('gameTomorrow') ?? _base.gameTomorrow;
+
+  @override
+  String get gameContinue => _words.text('gameContinue') ?? _base.gameContinue;
+
+  @override
+  String gameShareHead(String game, String date) =>
+      _words.format('gameShareHead', localeName, {
+        'game': game,
+        'date': date,
+      }) ??
+      _base.gameShareHead(game, date);
+
+  @override
+  String gameShareScore(int n, int of) =>
+      _words.format('gameShareScore', localeName, {'n': n, 'of': of}) ??
+      _base.gameShareScore(n, of);
+
+  @override
+  String gameCardsToday(int n) =>
+      _words.format('gameCardsToday', localeName, {'n': n}) ??
+      _base.gameCardsToday(n);
+
+  @override
+  String get gameAllRight => _words.text('gameAllRight') ?? _base.gameAllRight;
+
+  @override
+  String gamePoints(int n) =>
+      _words.format('gamePoints', localeName, {'n': n}) ?? _base.gamePoints(n);
+
+  @override
+  String get gameSeeResult =>
+      _words.text('gameSeeResult') ?? _base.gameSeeResult;
+
+  @override
+  String get gameNextCard => _words.text('gameNextCard') ?? _base.gameNextCard;
+
+  @override
+  String get spotOnce => _words.text('spotOnce') ?? _base.spotOnce;
+
+  @override
+  String get spotGotIt => _words.text('spotGotIt') ?? _base.spotGotIt;
+
+  @override
+  String get spotMissedIt => _words.text('spotMissedIt') ?? _base.spotMissedIt;
+
+  @override
+  String get tfRules => _words.text('tfRules') ?? _base.tfRules;
+
+  @override
+  String get inOrderTitle => _words.text('inOrderTitle') ?? _base.inOrderTitle;
+
+  @override
+  String get inOrderRules => _words.text('inOrderRules') ?? _base.inOrderRules;
+
+  @override
+  String get inOrderFirst => _words.text('inOrderFirst') ?? _base.inOrderFirst;
+
+  @override
+  String get inOrderNext => _words.text('inOrderNext') ?? _base.inOrderNext;
+
+  @override
+  String get inOrderReady => _words.text('inOrderReady') ?? _base.inOrderReady;
+
+  @override
+  String get inOrderCheck => _words.text('inOrderCheck') ?? _base.inOrderCheck;
+
+  @override
+  String inOrderPlaced(int n) =>
+      _words.format('inOrderPlaced', localeName, {'n': n}) ??
+      _base.inOrderPlaced(n);
+
+  @override
+  String inOrderYours(int n) =>
+      _words.format('inOrderYours', localeName, {'n': n}) ??
+      _base.inOrderYours(n);
+
+  @override
+  String get inOrderPerfect =>
+      _words.text('inOrderPerfect') ?? _base.inOrderPerfect;
+
+  @override
+  String get timeGap => _words.text('timeGap') ?? _base.timeGap;
+
+  @override
+  String get whatYearTitle =>
+      _words.text('whatYearTitle') ?? _base.whatYearTitle;
+
+  @override
+  String get whatYearRules =>
+      _words.text('whatYearRules') ?? _base.whatYearRules;
+
+  @override
+  String whatYearPoints(int n, int of) =>
+      _words.format('whatYearPoints', localeName, {'n': n, 'of': of}) ??
+      _base.whatYearPoints(n, of);
+
+  @override
+  String get whatYearPerfect =>
+      _words.text('whatYearPerfect') ?? _base.whatYearPerfect;
+
+  @override
+  String whatYearOffInAll(int n) =>
+      _words.format('whatYearOffInAll', localeName, {'n': n}) ??
+      _base.whatYearOffInAll(n);
+
+  @override
+  String whatYearSaid(String guess, int points) =>
+      _words.format('whatYearSaid', localeName, {
+        'guess': guess,
+        'points': points,
+      }) ??
+      _base.whatYearSaid(guess, points);
+
+  @override
+  String whatYearExact(int points) =>
+      _words.format('whatYearExact', localeName, {'points': points}) ??
+      _base.whatYearExact(points);
+
+  @override
+  String whatYearOff(int n) =>
+      _words.format('whatYearOff', localeName, {'n': n}) ??
+      _base.whatYearOff(n);
+
+  @override
+  String whatYearEarlier(int n) =>
+      _words.format('whatYearEarlier', localeName, {'n': n}) ??
+      _base.whatYearEarlier(n);
+
+  @override
+  String whatYearLater(int n) =>
+      _words.format('whatYearLater', localeName, {'n': n}) ??
+      _base.whatYearLater(n);
+
+  @override
+  String get whatYearDial => _words.text('whatYearDial') ?? _base.whatYearDial;
+
+  @override
+  String get beforeAfterTitle =>
+      _words.text('beforeAfterTitle') ?? _base.beforeAfterTitle;
+
+  @override
+  String get beforeAfterRules =>
+      _words.text('beforeAfterRules') ?? _base.beforeAfterRules;
+
+  @override
+  String get beforeAfterBefore =>
+      _words.text('beforeAfterBefore') ?? _base.beforeAfterBefore;
+
+  @override
+  String get beforeAfterAfter =>
+      _words.text('beforeAfterAfter') ?? _base.beforeAfterAfter;
+
+  @override
+  String beforeAfterAsk(String year) =>
+      _words.format('beforeAfterAsk', localeName, {'year': year}) ??
+      _base.beforeAfterAsk(year);
+
+  @override
+  String beforeAfterSaidBefore(String year) =>
+      _words.format('beforeAfterSaidBefore', localeName, {'year': year}) ??
+      _base.beforeAfterSaidBefore(year);
+
+  @override
+  String beforeAfterSaidAfter(String year) =>
+      _words.format('beforeAfterSaidAfter', localeName, {'year': year}) ??
+      _base.beforeAfterSaidAfter(year);
+
+  @override
+  String get beforeAfterStart =>
+      _words.text('beforeAfterStart') ?? _base.beforeAfterStart;
+
+  @override
+  String get beforeAfterPerfect =>
+      _words.text('beforeAfterPerfect') ?? _base.beforeAfterPerfect;
+
+  @override
+  String biggerPairsToday(int n) =>
+      _words.format('biggerPairsToday', localeName, {'n': n}) ??
+      _base.biggerPairsToday(n);
+
+  @override
+  String get sixtySkill => _words.text('sixtySkill') ?? _base.sixtySkill;
+
+  @override
+  String get spotSkill => _words.text('spotSkill') ?? _base.spotSkill;
+
+  @override
+  String get tfSkill => _words.text('tfSkill') ?? _base.tfSkill;
+
+  @override
+  String get biggerSkill => _words.text('biggerSkill') ?? _base.biggerSkill;
+
+  @override
+  String get closerSkill => _words.text('closerSkill') ?? _base.closerSkill;
+
+  @override
+  String get magnitudeSkill =>
+      _words.text('magnitudeSkill') ?? _base.magnitudeSkill;
+
+  @override
+  String get rangeSkill => _words.text('rangeSkill') ?? _base.rangeSkill;
+
+  @override
+  String get stakeSkill => _words.text('stakeSkill') ?? _base.stakeSkill;
+
+  @override
+  String get numberSkill => _words.text('numberSkill') ?? _base.numberSkill;
+
+  @override
+  String get inOrderSkill => _words.text('inOrderSkill') ?? _base.inOrderSkill;
+
+  @override
+  String get whatYearSkill =>
+      _words.text('whatYearSkill') ?? _base.whatYearSkill;
+
+  @override
+  String get beforeAfterSkill =>
+      _words.text('beforeAfterSkill') ?? _base.beforeAfterSkill;
+
+  @override
+  String get sixtyAsks => _words.text('sixtyAsks') ?? _base.sixtyAsks;
+
+  @override
+  String get spotAsks => _words.text('spotAsks') ?? _base.spotAsks;
+
+  @override
+  String get tfAsks => _words.text('tfAsks') ?? _base.tfAsks;
+
+  @override
+  String get biggerAsks => _words.text('biggerAsks') ?? _base.biggerAsks;
+
+  @override
+  String get closerAsks => _words.text('closerAsks') ?? _base.closerAsks;
+
+  @override
+  String get magnitudeAsks =>
+      _words.text('magnitudeAsks') ?? _base.magnitudeAsks;
+
+  @override
+  String get rangeAsks => _words.text('rangeAsks') ?? _base.rangeAsks;
+
+  @override
+  String get stakeAsks => _words.text('stakeAsks') ?? _base.stakeAsks;
+
+  @override
+  String get numberAsks => _words.text('numberAsks') ?? _base.numberAsks;
+
+  @override
+  String get inOrderAsks => _words.text('inOrderAsks') ?? _base.inOrderAsks;
+
+  @override
+  String get whatYearAsks => _words.text('whatYearAsks') ?? _base.whatYearAsks;
+
+  @override
+  String get beforeAfterAsks =>
+      _words.text('beforeAfterAsks') ?? _base.beforeAfterAsks;
+
+  @override
+  String get challengeBest =>
+      _words.text('challengeBest') ?? _base.challengeBest;
+
+  @override
+  String get challengeToday =>
+      _words.text('challengeToday') ?? _base.challengeToday;
+
+  @override
+  String get challengeAccuracy =>
+      _words.text('challengeAccuracy') ?? _base.challengeAccuracy;
+
+  @override
+  String get challengeTime =>
+      _words.text('challengeTime') ?? _base.challengeTime;
+
+  @override
+  String challengeSeconds(int s) =>
+      _words.format('challengeSeconds', localeName, {'s': s}) ??
+      _base.challengeSeconds(s);
+
+  @override
+  String get challengePersonalBest =>
+      _words.text('challengePersonalBest') ?? _base.challengePersonalBest;
+
+  @override
+  String challengeAboveChance(int n, int of) =>
+      _words.format('challengeAboveChance', localeName, {'n': n, 'of': of}) ??
+      _base.challengeAboveChance(n, of);
+
+  @override
+  String challengeAtChance(int n, int of) =>
+      _words.format('challengeAtChance', localeName, {'n': n, 'of': of}) ??
+      _base.challengeAtChance(n, of);
+
+  @override
+  String challengeBelowChance(int n, int of) =>
+      _words.format('challengeBelowChance', localeName, {'n': n, 'of': of}) ??
+      _base.challengeBelowChance(n, of);
+
+  @override
+  String sixtyUnanswered(int n) =>
+      _words.format('sixtyUnanswered', localeName, {'n': n}) ??
+      _base.sixtyUnanswered(n);
+
+  @override
+  String get challengeAgain =>
+      _words.text('challengeAgain') ?? _base.challengeAgain;
 
   @override
   String exploreSubjectLevel(String subject, int n) =>
@@ -5544,6 +5900,57 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get deeperPlusOnly =>
       _words.text('deeperPlusOnly') ?? _base.deeperPlusOnly;
+
+  @override
+  String get deeperSimpleLead =>
+      _words.text('deeperSimpleLead') ?? _base.deeperSimpleLead;
+
+  @override
+  String get deeperSidesLead =>
+      _words.text('deeperSidesLead') ?? _base.deeperSidesLead;
+
+  @override
+  String get deeperExampleLead =>
+      _words.text('deeperExampleLead') ?? _base.deeperExampleLead;
+
+  @override
+  String get deeperQuizLead =>
+      _words.text('deeperQuizLead') ?? _base.deeperQuizLead;
+
+  @override
+  String get deeperYourTakeLead =>
+      _words.text('deeperYourTakeLead') ?? _base.deeperYourTakeLead;
+
+  @override
+  String get deeperAskLead =>
+      _words.text('deeperAskLead') ?? _base.deeperAskLead;
+
+  @override
+  String get deeperSideA => _words.text('deeperSideA') ?? _base.deeperSideA;
+
+  @override
+  String get deeperSideB => _words.text('deeperSideB') ?? _base.deeperSideB;
+
+  @override
+  String get deeperVersus => _words.text('deeperVersus') ?? _base.deeperVersus;
+
+  @override
+  String get deeperRetry => _words.text('deeperRetry') ?? _base.deeperRetry;
+
+  @override
+  String get deeperSimpleGo =>
+      _words.text('deeperSimpleGo') ?? _base.deeperSimpleGo;
+
+  @override
+  String get deeperSidesGo =>
+      _words.text('deeperSidesGo') ?? _base.deeperSidesGo;
+
+  @override
+  String get deeperExampleGo =>
+      _words.text('deeperExampleGo') ?? _base.deeperExampleGo;
+
+  @override
+  String get deeperQuizGo => _words.text('deeperQuizGo') ?? _base.deeperQuizGo;
 
   @override
   String get bookOfTheWeek =>

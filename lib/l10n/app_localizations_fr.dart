@@ -5271,16 +5271,399 @@ class AppLocalizationsFr extends AppLocalizations {
   String get exploreDayOpen => 'Aller aux cartes du jour';
 
   @override
-  String exploreSixtyRecord(int n, int of) {
-    return 'Ton record $n/$of';
+  String get exploreGameNone =>
+      'Rien à jouer ici pour l\'instant. Reviens demain.';
+
+  @override
+  String get challengesTitle => 'Défis';
+
+  @override
+  String get challengesLine =>
+      'De courts exercices de jugement et d\'estimation, de quelques minutes chacun.';
+
+  @override
+  String challengesPage(int n, int of) {
+    return 'Page $n sur $of';
   }
 
   @override
-  String get exploreSixtyFirst => 'Établis ton record';
+  String get gamePlay => 'Commencer';
 
   @override
-  String get exploreGameNone =>
-      'Rien à jouer ici pour l\'instant. Reviens demain.';
+  String get sixtyRules =>
+      'Huit affirmations, vraies ou fausses, en une minute. Ce défi mesure la justesse de ton jugement quand le temps presse : c\'est ainsi que l\'on juge presque tout ce qu\'on lit.';
+
+  @override
+  String get sixtyReview => 'Les huit affirmations';
+
+  @override
+  String get gameRight => 'Bonne réponse';
+
+  @override
+  String get gameWrong => 'Mauvaise réponse';
+
+  @override
+  String get gameUnanswered => 'Pas de réponse';
+
+  @override
+  String get gameNext => 'Défi suivant';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · Soixante secondes · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$n sur $of justes · $s s';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: '$s secondes restantes',
+      one: '$s seconde restante',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameReview => 'Les cartes';
+
+  @override
+  String get gameTomorrow => 'Nouvelle manche demain';
+
+  @override
+  String get gameContinue => 'Continuer';
+
+  @override
+  String gameShareHead(String game, String date) {
+    return 'Astute · $game · $date';
+  }
+
+  @override
+  String gameShareScore(int n, int of) {
+    return '$n sur $of';
+  }
+
+  @override
+  String gameCardsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cartes aujourd\'hui',
+      one: '$n carte aujourd\'hui',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameAllRight => 'Tout juste.';
+
+  @override
+  String gamePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n points',
+      one: '$n point',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameSeeResult => 'Voir le résultat';
+
+  @override
+  String get gameNextCard => 'Suivant';
+
+  @override
+  String get spotOnce => 'Un choix par jour';
+
+  @override
+  String get spotGotIt => 'Tu as trouvé la fausse.';
+
+  @override
+  String get spotMissedIt => 'Pas celle-là : elle est vraie.';
+
+  @override
+  String get tfRules =>
+      'Dis vrai ou faux, puis découvre pourquoi. La plupart se trompent.';
+
+  @override
+  String get inOrderTitle => 'Dans l\'ordre';
+
+  @override
+  String get inOrderRules =>
+      'Quatre moments tirés des cartes, sans leur année, à remettre dans l\'ordre où ils se sont produits. Ce défi mesure ton sens de la chronologie, première épreuve de toute explication : une cause précède son effet.';
+
+  @override
+  String get inOrderFirst => 'Touche le plus ancien';
+
+  @override
+  String get inOrderNext => 'Maintenant le suivant';
+
+  @override
+  String get inOrderReady => 'Tout est placé. On vérifie ?';
+
+  @override
+  String get inOrderCheck => 'Vérifier l\'ordre';
+
+  @override
+  String inOrderPlaced(int n) {
+    return 'En position $n';
+  }
+
+  @override
+  String inOrderYours(int n) {
+    return 'Ta position : $n';
+  }
+
+  @override
+  String get inOrderPerfect => 'Tout est à sa place.';
+
+  @override
+  String get timeGap => 'une année manquante';
+
+  @override
+  String get whatYearTitle => 'Quelle année ?';
+
+  @override
+  String get whatYearRules =>
+      'Trois moments, chacun sans son année. Règle-la sur le cadran : plus tu es près, plus tu marques.';
+
+  @override
+  String whatYearPoints(int n, int of) {
+    return '$n points sur $of';
+  }
+
+  @override
+  String get whatYearPerfect => 'Toutes les années pile.';
+
+  @override
+  String whatYearOffInAll(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ans d\'écart au total',
+      one: '$n an d\'écart au total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearSaid(String guess, int points) {
+    return 'Tu as dit $guess · +$points';
+  }
+
+  @override
+  String whatYearExact(int points) {
+    return 'Année exacte, +$points';
+  }
+
+  @override
+  String whatYearOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ans d\'écart',
+      one: '$n an d\'écart',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearEarlier(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ans plus tôt',
+      one: '$n an plus tôt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearLater(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ans plus tard',
+      one: '$n an plus tard',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whatYearDial => 'Année';
+
+  @override
+  String get beforeAfterTitle => 'Avant ou après ?';
+
+  @override
+  String get beforeAfterRules =>
+      'Six moments, l\'un après l\'autre. Chacun s\'est-il produit avant ou après celui du dessus ?';
+
+  @override
+  String get beforeAfterBefore => 'Avant';
+
+  @override
+  String get beforeAfterAfter => 'Après';
+
+  @override
+  String beforeAfterAsk(String year) {
+    return 'Avant ou après $year ?';
+  }
+
+  @override
+  String beforeAfterSaidBefore(String year) {
+    return 'Tu as dit : avant $year';
+  }
+
+  @override
+  String beforeAfterSaidAfter(String year) {
+    return 'Tu as dit : après $year';
+  }
+
+  @override
+  String get beforeAfterStart => 'Le point de départ';
+
+  @override
+  String get beforeAfterPerfect => 'Pas une seule erreur.';
+
+  @override
+  String biggerPairsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n paires aujourd\'hui',
+      one: '$n paire aujourd\'hui',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixtySkill => 'Intuition';
+
+  @override
+  String get spotSkill => 'Discernement';
+
+  @override
+  String get tfSkill => 'Jugement';
+
+  @override
+  String get biggerSkill => 'Proportion';
+
+  @override
+  String get closerSkill => 'Estimation';
+
+  @override
+  String get magnitudeSkill => 'Échelle';
+
+  @override
+  String get rangeSkill => 'Calibration';
+
+  @override
+  String get stakeSkill => 'Conviction';
+
+  @override
+  String get numberSkill => 'Précision';
+
+  @override
+  String get inOrderSkill => 'Chronologie';
+
+  @override
+  String get whatYearSkill => 'Datation';
+
+  @override
+  String get beforeAfterSkill => 'Séquence';
+
+  @override
+  String get sixtyAsks => 'Huit affirmations contre la montre.';
+
+  @override
+  String get spotAsks => 'Quatre affirmations, dont une fausse.';
+
+  @override
+  String get tfAsks => 'Des affirmations où presque tous se trompent.';
+
+  @override
+  String get biggerAsks => 'Deux chiffres. Lequel est le plus grand ?';
+
+  @override
+  String get closerAsks => 'Approche-toi d’un chiffre, pas à pas.';
+
+  @override
+  String get magnitudeAsks => 'Trouve la bonne puissance de dix.';
+
+  @override
+  String get rangeAsks => 'Une fourchette juste assez large.';
+
+  @override
+  String get stakeAsks => 'Mise des points selon ta certitude.';
+
+  @override
+  String get numberAsks => 'Engage-toi sur un seul chiffre.';
+
+  @override
+  String get inOrderAsks => 'Quatre moments, du plus ancien.';
+
+  @override
+  String get whatYearAsks => 'Situe un moment dans son année.';
+
+  @override
+  String get beforeAfterAsks => 'Chaque moment face au précédent.';
+
+  @override
+  String get challengeBest => 'Record';
+
+  @override
+  String get challengeToday => 'Aujourd’hui';
+
+  @override
+  String get challengeAccuracy => 'Justesse';
+
+  @override
+  String get challengeTime => 'Temps';
+
+  @override
+  String challengeSeconds(int s) {
+    return '$s s';
+  }
+
+  @override
+  String get challengePersonalBest => 'Record personnel';
+
+  @override
+  String challengeAboveChance(int n, int of) {
+    return 'Au-dessus du hasard : en devinant, on en trouve en moyenne $n sur $of.';
+  }
+
+  @override
+  String challengeAtChance(int n, int of) {
+    return 'Au niveau du hasard : en devinant, on en trouve en moyenne $n sur $of.';
+  }
+
+  @override
+  String challengeBelowChance(int n, int of) {
+    return 'Sous le hasard : en devinant, on en trouve en moyenne $n sur $of.';
+  }
+
+  @override
+  String sixtyUnanswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Le temps s\'est écoulé avec $n affirmations sans réponse.',
+      one: 'Le temps s\'est écoulé avec une affirmation sans réponse.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAgain => 'Recommencer';
 
   @override
   String exploreSubjectLevel(String subject, int n) {
@@ -5853,6 +6236,54 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deeperPlusOnly => 'Avec Astute+';
+
+  @override
+  String get deeperSimpleLead =>
+      'L\'idée de la carte, comme tu l\'expliquerais à un enfant curieux de dix ans.';
+
+  @override
+  String get deeperSidesLead =>
+      'Les meilleurs arguments de chaque côté, et ce qui trancherait la question.';
+
+  @override
+  String get deeperExampleLead =>
+      'Un moment d\'une journée ordinaire où cette idée apparaît.';
+
+  @override
+  String get deeperQuizLead =>
+      'Un cas que la carte ne cite pas : une question, trois réponses.';
+
+  @override
+  String get deeperYourTakeLead =>
+      'Ce qui tient dans ton raisonnement, où il dérape, et une question pour le mettre à l\'épreuve.';
+
+  @override
+  String get deeperAskLead =>
+      'Tout ce que la carte t\'a donné envie de demander.';
+
+  @override
+  String get deeperSideA => 'Un côté';
+
+  @override
+  String get deeperSideB => 'L\'autre côté';
+
+  @override
+  String get deeperVersus => 'VS';
+
+  @override
+  String get deeperRetry => 'Réessayer';
+
+  @override
+  String get deeperSimpleGo => 'Explique-le-moi';
+
+  @override
+  String get deeperSidesGo => 'Montre-moi les deux côtés';
+
+  @override
+  String get deeperExampleGo => 'Donne-moi un exemple';
+
+  @override
+  String get deeperQuizGo => 'Teste-moi';
 
   @override
   String get bookOfTheWeek => 'Livre de la semaine';

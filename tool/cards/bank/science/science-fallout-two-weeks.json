@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "An interactive chart of fallout radiation decaying from 100 % at day 0 toward about 1 % by day 14. Drag across it to move forward day by day. The question asks what fraction of the initial radiation remains after about two weeks."
+    "label": "A house over its cellar, a family sheltering in the cellar, the ground and roof outside dusted with 100 glowing specks of fallout. Drag across the picture to move forward day by day: the specks go out as the radiation falls from 100 % at day 0 toward about 1 % by day 14. The question asks what fraction of the initial radiation remains after about two weeks."
   },
   "source": "Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=VNWX06NkitE&t=466s",

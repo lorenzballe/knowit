@@ -1,39 +1,34 @@
 <!doctype html>
 <!-- slug: technology-graphene-plastic-century -->
+<!-- Look: two framed scenes side by side, flat, thick ink outlines. Left, on warm sand: a man of 1919 in a flat cap
+     and waistcoat holds up a lump of brown plastic. Right, on pale blue: a woman of 2019 in an orange hoodie holds up
+     a flake of graphene, its honeycomb drawn in ink. The year sits over each. The slider runs both a century on: on the
+     left, one by one, the things plastic became pop up around him (a bottle, a duck, a toy brick, a phone, a
+     toothbrush, a bucket, sunglasses, a chair); on the right, in the same places, only question marks. People drawn
+     big, the eight things around them in a column each side when the scene is tall, in pairs when it is short. Drawn
+     again at its real size whenever its room changes. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;justify-content:center;gap:1cqh;flex:1;min-height:0}
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
 #pic{display:block;width:100%;flex:1;min-height:0}
-#ctl{display:flex;flex-direction:column;gap:.5cqh}
+#ctl{display:flex;flex-direction:column;gap:.4cqh}
 #t{width:100%;accent-color:var(--k);height:max(3.6cqh,26px);margin:0;cursor:pointer}
-#ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#ends{display:flex;justify-content:space-between;font:700 max(1.7cqh,12px)/1.2 var(--body)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
-.yrL{fill:var(--k);font-family:var(--display);font-weight:800;text-anchor:middle}
-.yrR{fill:var(--k);font-family:var(--display);font-weight:800;text-anchor:middle}
-.capL{fill:var(--k);font-family:var(--body);font-weight:700;text-anchor:middle}
-.capR{fill:var(--k);font-family:var(--body);font-weight:700;text-anchor:middle}
-.linkL{stroke:color-mix(in srgb,var(--k) 25%,transparent);stroke-width:1.2}
-.linkR{stroke:color-mix(in srgb,var(--k) 45%,transparent);stroke-width:1.2;stroke-dasharray:3 4}
-.slotL{fill:var(--c);stroke:var(--k);stroke-width:2}
-.slotR{fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:4 4}
-.ico{fill:none;stroke:var(--k);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.qm{fill:var(--k);font-family:var(--display);font-weight:800;text-anchor:middle;dominant-baseline:central}
-.blob{fill:var(--k)}
-.shine{fill:var(--c);opacity:.35}
-.hexo{fill:none;stroke:var(--k);stroke-width:2.5}
-.hexi{fill:none;stroke:var(--k);stroke-width:1.2;opacity:.85}
+#why .body{font:500 max(1.9cqh,13px)/1.32 var(--body);margin:0}
+/* Once the century has run, the column closes up a little and gives the drawing the room. */
+.card.done .in{gap:1.5cqh}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Slider · then and now">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SLIDE TIME</span></div>
     <h2 class="q">How should we think about the future of graphene?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" aria-label="Left: a piece of plastic in 1919. Right: a sheet of graphene in 2019."></svg>
+      <svg id="pic" role="img" aria-label="Left: a man of 1919 in a flat cap holds a lump of plastic. Right: a woman of 2019 in a hoodie holds a flake of graphene. Sliding a century on fills the left with things made of plastic, and the right with question marks."></svg>
       <div id="ctl">
         <input data-drag id="t" type="range" min="0" max="100" step="1" value="0" aria-label="Years that pass">
         <div id="ends"><span>today</span><span>+100 years</span></div>
@@ -49,88 +44,189 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const ICONS = [
-  "M-.3-.3h.6v1h-.6z M-.15-.3v-.35h.3v.35 M-.2-.7h.4",
-  "M-.8-.2h1.6v.7h-1.6z M-.55-.2v-.25h.3v.25 M.25-.2v-.25h.3v.25",
-  "M-.8-.4h1.6v.3h-1.6z M-.6-.1v.6 M-.3-.1v.6 M0-.1v.6 M.3-.1v.6 M.6-.1v.6",
-  "M-.4-.75h.8v1.5h-.8z M-.28-.6h.56v1.05h-.56z",
-  "M-.15 0a.3.3 0 1 1-.6 0a.3.3 0 1 1 .6 0 M.75 0a.3.3 0 1 1-.6 0a.3.3 0 1 1 .6 0 M-.15 0q.15-.15.3 0",
-  "M-.55-.25h1.1l-.15.85h-.8z M-.55-.25q.55-.75 1.1 0",
-  "M-.65.75l1.1-1.1l.25.25l-1.1 1.1z M-.65.75l-.15.15",
-  "M-.35-.8v1.6 M-.35.05h.75v.75"
-];
+const INK = '#10100c', STONE = '#fffbf0', SKIN = '#f2c29b', WARM = '#f6dba5', COOL = '#e4f3ff';
 const N = 8;
 let T = 0, done = false, S = null;
 const svg = Kit.$('pic'), range = Kit.$('t');
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const mk = (t, a, p) => Kit.mk(t, a, p);
+// An ink outline of width w, and a fill when one is given (a fill set beside it wins).
+const st = (f, w) => Object.assign(f == null ? {} : {fill: f}, {stroke: INK, 'stroke-width': w, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
 
-function draw(){
+// ---------- the things plastic became: each drawn in a box from -1 to 1, flat colours, ink outlines ----------
+const THINGS = [
+  // a bottle of water
+  (g, w) => { mk('path', Object.assign({d: 'M-.38 .95 L-.38 -.2 Q-.38 -.45 -.17 -.58 L-.17 -.72 L.17 -.72 L.17 -.58 Q.38 -.45 .38 -.2 L.38 .95 Z', fill: '#9fd8ff'}, st(null, w)), g);
+    mk('rect', Object.assign({x: -.22, y: -.95, width: .44, height: .25, rx: .05, fill: '#1957c2'}, st(null, w)), g);
+    mk('path', {d: 'M-.38 .15 L.38 .15 M-.38 .45 L.38 .45', stroke: INK, 'stroke-width': w * .7}, g); },
+  // a rubber duck
+  (g, w) => { mk('path', Object.assign({d: 'M-.85 .1 Q-.9 .8 -.1 .8 L.45 .8 Q.95 .75 .85 .15 Q.8 -.1 .5 -.05 Q.62 -.25 .55 -.45 Q.45 -.85 .05 -.82 Q-.4 -.78 -.38 -.35 Q-.36 -.12 -.2 -.02 Q-.55 -.1 -.85 .1 Z', fill: '#ffc83d'}, st(null, w)), g);
+    mk('path', Object.assign({d: 'M-.36 -.42 Q-.72 -.42 -.78 -.28 Q-.6 -.18 -.34 -.24 Z', fill: '#ff7a1a'}, st(null, w * .8)), g);
+    mk('circle', {cx: -.1, cy: -.5, r: .08, fill: INK}, g); },
+  // a toy brick
+  (g, w) => { [-.5, 0, .5].forEach(x => mk('rect', Object.assign({x: x - .16, y: -.5, width: .32, height: .22, rx: .04, fill: '#e4402f'}, st(null, w)), g));
+    mk('rect', Object.assign({x: -.85, y: -.3, width: 1.7, height: .9, rx: .06, fill: '#e4402f'}, st(null, w)), g); },
+  // a phone
+  (g, w) => { mk('rect', Object.assign({x: -.45, y: -.92, width: .9, height: 1.84, rx: .16, fill: '#3a3f47'}, st(null, w)), g);
+    mk('rect', {x: -.33, y: -.72, width: .66, height: 1.36, rx: .05, fill: '#6ec6ff'}, g); },
+  // a toothbrush
+  (g, w) => { mk('path', Object.assign({d: 'M-.92 .62 L.3 -.32 L.42 -.18 L-.8 .78 Z', fill: '#2fbf71'}, st(null, w)), g);
+    mk('path', Object.assign({d: 'M.22 -.36 L.62 -.72 L.86 -.44 L.46 -.08 Z', fill: STONE}, st(null, w)), g);
+    mk('path', {d: 'M.38 -.5 L.62 -.24 M.52 -.62 L.76 -.36', stroke: INK, 'stroke-width': w * .6}, g); },
+  // a bucket
+  (g, w) => { mk('path', {d: 'M-.62 -.3 Q0 -1.05 .62 -.3', fill: 'none', stroke: INK, 'stroke-width': w * 1.2}, g);
+    mk('path', Object.assign({d: 'M-.72 -.3 L.72 -.3 L.55 .85 L-.55 .85 Z', fill: '#2f7fe0'}, st(null, w)), g);
+    mk('path', {d: 'M-.68 0 L.68 0', stroke: INK, 'stroke-width': w * .7}, g); },
+  // sunglasses
+  (g, w) => { mk('path', {d: 'M-.15 -.12 Q0 -.25 .15 -.12', fill: 'none', stroke: INK, 'stroke-width': w}, g);
+    [-1, 1].forEach(sd => mk('path', Object.assign({d: `M${sd * .14} -.2 L${sd * .9} -.2 Q${sd * .9} .38 ${sd * .52} .38 Q${sd * .14} .38 ${sd * .14} -.2 Z`, fill: '#2d3138'}, st(null, w)), g));
+    mk('path', {d: 'M-.62 -.08 L-.45 -.12 M.38 -.08 L.55 -.12', stroke: '#8fd0ff', 'stroke-width': w * .9, 'stroke-linecap': 'round'}, g); },
+  // a garden chair
+  (g, w) => { mk('path', Object.assign({d: 'M-.5 -.9 L.42 -.9 Q.55 -.9 .52 -.75 L.42 -.05 L.62 -.05 L.66 .1 L-.62 .1 L-.58 -.05 L-.5 -.05 Z', fill: STONE}, st(null, w)), g);
+    mk('path', Object.assign({d: 'M-.58 .1 L-.66 .92 L-.46 .92 L-.38 .1 M.38 .1 L.46 .92 L.66 .92 L.58 .1', fill: STONE}, st(null, w)), g); }
+];
+
+// ---------- the people, front on: feet at (cx, gy), h tall; era 0 is 1919, era 1 is 2019 ----------
+function person(p, cx, gy, h, era) {
+  const u = h / 10, g = mk('g', {transform: `translate(${cx.toFixed(1)},${gy.toFixed(1)})`}, p), s = clamp(u * .3, 1.6, 2.4);
+  const old = era === 0, HOOD = '#ff5a1f';
+  const TROUSER = old ? '#8a7a66' : '#1957c2', TOP = old ? '#5b4636' : HOOD, SLEEVE = old ? STONE : HOOD, SHOE = old ? INK : STONE, HAIR = '#3b2a20';
+  // her hair falls behind her shoulders
+  if (!old) mk('path', Object.assign({d: `M${-1.02 * u},${-8.8 * u} Q${-1.15 * u},${-7.6 * u} ${-1.05 * u},${-6.9 * u} L${1.05 * u},${-6.9 * u} Q${1.15 * u},${-7.6 * u} ${1.02 * u},${-8.8 * u} Z`, fill: HAIR}, st(null, s)), g);
+  // legs, shoes
+  mk('path', Object.assign({d: `M${-1.02 * u},${-4.7 * u} L${-.06 * u},${-4.7 * u} L${-.16 * u},${-.5 * u} L${-.92 * u},${-.5 * u} Z M${.06 * u},${-4.7 * u} L${1.02 * u},${-4.7 * u} L${.92 * u},${-.5 * u} L${.16 * u},${-.5 * u} Z`, fill: TROUSER}, st(null, s)), g);
+  mk('path', Object.assign({d: `M${-1.22 * u},0 Q${-1.22 * u},${-.62 * u} ${-.62 * u},${-.62 * u} L${-.1 * u},${-.62 * u} L${-.1 * u},0 Z M${1.22 * u},0 Q${1.22 * u},${-.62 * u} ${.62 * u},${-.62 * u} L${.1 * u},${-.62 * u} L${.1 * u},0 Z`, fill: SHOE}, st(null, s)), g);
+  // the body
+  mk('path', Object.assign({d: `M${-1.12 * u},${-4.45 * u} L${-1.28 * u},${-7.15 * u} Q${-1.24 * u},${-7.72 * u} ${-.62 * u},${-7.8 * u} L${.62 * u},${-7.8 * u} Q${1.24 * u},${-7.72 * u} ${1.28 * u},${-7.15 * u} L${1.12 * u},${-4.45 * u} Z`, fill: TOP}, st(null, s)), g);
+  if (old) {
+    // his shirt between the sides of the waistcoat, its buttons
+    mk('path', Object.assign({d: `M${-.42 * u},${-7.8 * u} L0,${-6.75 * u} L${.42 * u},${-7.8 * u} Z`, fill: STONE}, st(null, s * .8)), g);
+    [-6.2, -5.5, -4.85].forEach(y => mk('circle', {cx: 0, cy: y * u, r: Math.max(.9, .11 * u), fill: '#e8c470'}, g));
+  } else {
+    // her hood lies behind the neck, its strings hang down
+    mk('path', Object.assign({d: `M${-.85 * u},${-7.78 * u} Q0,${-7.1 * u} ${.85 * u},${-7.78 * u} Q0,${-8.2 * u} ${-.85 * u},${-7.78 * u} Z`, fill: '#d8441a'}, st(null, s * .8)), g);
+    mk('path', {d: `M${-.25 * u},${-7.45 * u} L${-.3 * u},${-6.7 * u} M${.25 * u},${-7.45 * u} L${.3 * u},${-6.7 * u}`, stroke: STONE, 'stroke-width': Math.max(1.3, u * .1), 'stroke-linecap': 'round'}, g);
+  }
+  // arms, bent, the hands together in front of the chest
+  for (const sd of [-1, 1]) {
+    const d = `M${sd * 1.08 * u},${-7.35 * u} Q${sd * 1.78 * u},${-6.3 * u} ${sd * 1.42 * u},${-5.45 * u} L${sd * .52 * u},${-6.05 * u}`;
+    mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': u * .78 + 2 * s, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    mk('path', {d, fill: 'none', stroke: SLEEVE, 'stroke-width': u * .78, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+  }
+  // neck, head, face
+  mk('rect', Object.assign({x: -.27 * u, y: -8.2 * u, width: .54 * u, height: .55 * u, fill: SKIN}, st(null, s * .8)), g);
+  mk('circle', Object.assign({cx: 0, cy: -8.85 * u, r: .9 * u, fill: SKIN}, st(null, s)), g);
+  [-.3, .3].forEach(x => mk('circle', {cx: x * u, cy: -8.85 * u, r: Math.max(.9, .09 * u), fill: INK}, g));
+  if (!old) mk('path', {d: `M${-.22 * u},${-8.42 * u} Q0,${-8.26 * u} ${.22 * u},${-8.42 * u}`, fill: 'none', stroke: INK, 'stroke-width': Math.max(1.2, u * .09), 'stroke-linecap': 'round'}, g);
+  if (old) {
+    // his moustache, his flat cap
+    mk('path', {d: `M${-.34 * u},${-8.5 * u} Q0,${-8.3 * u} ${.34 * u},${-8.5 * u}`, fill: 'none', stroke: '#5b4636', 'stroke-width': Math.max(1.8, u * .17), 'stroke-linecap': 'round'}, g);
+    mk('path', Object.assign({d: `M${-.98 * u},${-9.05 * u} Q${-1.02 * u},${-10.05 * u} 0,${-10.05 * u} Q${1.1 * u},${-10.05 * u} ${1.05 * u},${-9.15 * u} Z`, fill: '#5d6470'}, st(null, s)), g);
+    mk('path', Object.assign({d: `M${-1.08 * u},${-9.05 * u} Q0,${-8.75 * u} ${1.22 * u},${-9.2 * u} Q${1.2 * u},${-9.42 * u} ${1 * u},${-9.4 * u} Q0,${-9.1 * u} ${-1.02 * u},${-9.3 * u} Z`, fill: '#41464f'}, st(null, s * .8)), g);
+  } else {
+    // her fringe
+    mk('path', Object.assign({d: `M${-.95 * u},${-8.75 * u} Q${-1.02 * u},${-9.85 * u} 0,${-9.85 * u} Q${1.02 * u},${-9.85 * u} ${.95 * u},${-8.75 * u} Q${.55 * u},${-9.45 * u} ${-.1 * u},${-9.3 * u} Q${-.55 * u},${-9.25 * u} ${-.95 * u},${-8.75 * u} Z`, fill: HAIR}, st(null, s)), g);
+  }
+  [-1, 1].forEach(sd => mk('circle', Object.assign({cx: sd * .5 * u, cy: -6.05 * u, r: .34 * u, fill: SKIN}, st(null, s * .8)), g));
+  return {x: cx, y: gy - 6.65 * u, u};
+}
+
+// What each holds up in both hands: a slab of early plastic, glossy and brown; a sheet of graphene, its honeycomb in ink.
+function lump(p, x, y, r, s) {
+  const w = r * 2.5, h = r * 1.25, x0 = x - w / 2, y0 = y - h * .62;
+  mk('rect', Object.assign({x: x0, y: y0, width: w, height: h, rx: h * .32, fill: '#8a3b12'}, st(null, s)), p);
+  mk('path', {d: `M${x0 + h * .35},${y0 + h * .3} L${x0 + w * .55},${y0 + h * .3}`, stroke: '#d89a5e', 'stroke-width': Math.max(1.6, h * .14), 'stroke-linecap': 'round'}, p);
+  mk('path', {d: `M${x0 + w * .66},${y0 + h * .3} L${x0 + w * .74},${y0 + h * .3}`, stroke: '#d89a5e', 'stroke-width': Math.max(1.6, h * .14), 'stroke-linecap': 'round'}, p);
+}
+function flake(p, x, y, r, s, id) {
+  const hex = (cx, cy, rr) => Array.from({length: 6}, (_, i) => { const a = (i * 60 + 30) * Math.PI / 180; return `${(cx + Math.cos(a) * rr).toFixed(2)},${(cy + Math.sin(a) * rr).toFixed(2)}`; }).join(' ');
+  // a thin sheet with ragged edges, wider than tall, held level
+  const w = r * 1.45, h = r * .82, cy = y - h * .15;
+  const out = [[-1, -.55], [-.55, -1], [.1, -.82], [.75, -1], [1, -.35], [.88, .5], [.35, 1], [-.3, .82], [-.9, .95], [-1.02, .2]].map(([a, b]) => [x + a * w, cy + b * h]);
+  const d = 'M' + out.map(q => q.map(v => v.toFixed(1)).join(',')).join(' L') + ' Z';
+  const cp = mk('clipPath', {id}, mk('defs', {}, p));
+  mk('path', {d}, cp);
+  mk('path', {d, fill: '#d3dce6'}, p);
+  const lat = mk('g', {'clip-path': `url(#${id})`}, p), a = Math.max(2.6, r / 3.4), hw = Math.sqrt(3) * a;
+  for (let row = -6; row <= 6; row++) for (let c = -7; c <= 7; c++) {
+    const hx = x + c * hw + (row & 1 ? hw / 2 : 0), hy = cy + row * a * 1.5;
+    if (Math.abs(hx - x) < w + hw && Math.abs(hy - cy) < h + a * 2) mk('polygon', {points: hex(hx, hy, a), fill: 'none', stroke: '#2b3440', 'stroke-width': Math.max(.9, s * .5)}, lat);
+  }
+  mk('path', Object.assign({d, fill: 'none'}, st(null, s)), p);
+}
+
+// ---------- the whole drawing, for the room it has now ----------
+function draw() {
   svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const gap = W * .03, pw = (W - gap) / 2;
-  const R = Math.min(pw * .33, H * .27), s = R * .3, cy = H * .52, objR = R * .48;
-  const yf = Math.max(f * 1.5, 16), cf = Math.max(f * .85, 12);
-  S = {L: [], R: [], yl: null, yr: null, objs: []};
+  const {W, H} = Kit.fitSvg(svg);
+  if (W < 80 || H < 60) { S = null; return; }
+  const gap = Math.max(8, W * .035), pw = (W - gap) / 2;
+  const capFs = clamp(pw / 11.5, 12, 13.5), capH = capFs * 1.55, ph = H - capH;
+  const yFs = clamp(Math.min(pw * .19, ph * .1), 15, 28), pad = Math.max(5, pw * .045);
+  S = {years: [], items: [[], []], people: []};
   [0, 1].forEach(side => {
-    const x0 = side ? pw + gap : 0, cx = x0 + pw / 2, K = side ? 'R' : 'L';
-    const yt = Kit.mk('text', {x: cx, y: Math.max(H * .1, yf), class: 'yr' + K, 'font-size': yf}, svg);
-    if (side) S.yr = yt; else S.yl = yt;
-    const cap = Kit.mk('text', {x: cx, y: H - Math.max(H * .035, 8), class: 'cap' + K, 'font-size': cf}, svg);
-    cap.textContent = side ? 'a sheet of graphene' : 'a piece of plastic';
-    for (let i = 0; i < N; i++) {
-      const a = (-90 + 22.5 + i * 45) * Math.PI / 180;
-      const x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R * .95;
-      const o = Kit.mk('g', {}, svg);
-      const ln = Kit.mk('line', {x1: cx + Math.cos(a) * objR, y1: cy + Math.sin(a) * objR, x2: x - Math.cos(a) * s, y2: y - Math.sin(a) * s, class: 'link' + K}, o);
-      const pos = Kit.mk('g', {transform: `translate(${x},${y})`}, o);
-      const g = Kit.mk('g', {}, pos);
-      Kit.mk('circle', {r: s, class: 'slot' + K}, g);
+    const x0 = side * (pw + gap), g = mk('g', {}, svg);
+    mk('rect', Object.assign({x: x0 + 1.25, y: 1.25, width: pw - 2.5, height: ph - 2.5, rx: Math.min(16, pw * .1), fill: side ? COOL : WARM}, st(null, 2.5)), g);
+    const yt = mk('text', {x: x0 + pw / 2, y: pad + yFs * .82, 'text-anchor': 'middle', 'font-size': yFs, 'font-weight': 800, fill: INK, 'font-family': 'Fraunces, serif'}, g);
+    S.years.push(yt);
+    mk('text', {x: x0 + pw / 2, y: H - capFs * .4, 'text-anchor': 'middle', 'font-size': capFs, 'font-weight': 700, fill: INK, 'font-family': 'Figtree, sans-serif'}, g).textContent = side ? 'a sheet of graphene' : 'a piece of plastic';
+    // the floor they stand on, and the person, as tall as the frame lets them be
+    const gy = ph - pad - 1, top = pad + yFs * 1.12 + 4, room = gy - top;
+    mk('line', {x1: x0 + 2.5, x2: x0 + pw - 2.5, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2}, g);
+    // Alone at first, they stand as tall as the frame allows; when the first things appear they step back to make room.
+    const hp = Math.min(room * .96, pw * 1.25), pwid = hp * .36, big = Math.max(1, Math.min(room * .95, pw * 1.6) / hp);
+    const pg = mk('g', {}, g), hand = person(pg, x0 + pw / 2, gy, hp, side);
+    const r = hand.u * 1.05, sw = Math.max(1.6, Math.min(2.4, hand.u * .3));
+    if (side) flake(pg, hand.x, hand.y, r, sw, 'flake' + Math.round(Math.random() * 1e6)); else lump(pg, hand.x, hand.y, r, sw);
+    S.people.push({g: pg, x: x0 + pw / 2, y: gy, big, k: null});
+    // the eight places around them: one column each side when tall, pairs when short
+    const sideW = (pw - pwid) / 2 - pad * .6;
+    const one = Math.min(sideW * .9, room / 4 * .86), two = Math.min(sideW / 2 * .92, room / 2 * .86);
+    const cols = two > one * 1.08 ? 2 : 1, d = Math.max(14, cols === 2 ? two : one), rows = 4 / cols;
+    const spots = [];
+    for (let k = 0; k < 4; k++) {
+      const c = k % cols, rr = Math.floor(k / cols), yy = top + (rr + .5) * room / rows;
+      [0, 1].forEach(lr => {
+        const base = lr ? x0 + pw - pad * .6 - sideW : x0 + pad * .6;
+        spots.push([base + (cols === 2 ? (lr ? 1 - c : c) * .5 + .25 : .5) * sideW, yy, lr]);
+      });
+    }
+    spots.forEach(([x, y], i) => {
+      const it = mk('g', {transform: `translate(${x.toFixed(1)},${y.toFixed(1)})`}, g), inner = mk('g', {}, it);
       if (side) {
-        const q = Kit.mk('text', {class: 'qm', 'font-size': Math.max(s * 1.1, 12), y: 1}, g); q.textContent = '?';
+        mk('circle', {r: d / 2, fill: STONE, stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '4 3.5'}, inner);
+        const q = mk('text', {'text-anchor': 'middle', y: d * .2, 'font-size': d * .6, 'font-weight': 800, fill: INK, 'font-family': 'Fraunces, serif'}, inner); q.textContent = '?';
       } else {
-        const sc = Kit.mk('g', {transform: `scale(${s * .62})`}, g);
-        Kit.mk('path', {d: ICONS[i], class: 'ico', 'vector-effect': 'non-scaling-stroke'}, sc);
+        mk('circle', Object.assign({r: d / 2, fill: STONE}, st(null, 2)), inner);
+        const ic = mk('g', {transform: `scale(${(d * .31).toFixed(2)})`}, inner);
+        THINGS[i](ic, 2 / (d * .31));
       }
-      S[K].push({g, ln});
-    }
-    const ob = Kit.mk('g', {transform: `translate(${cx},${cy})`}, svg);
-    const inner = Kit.mk('g', {}, ob);
-    if (!side) {
-      const pts = [], rs = [1, .86, .97, .8, 1.05, .9, .95, .84];
-      for (let i = 0; i < 8; i++) { const a = i / 8 * Math.PI * 2; pts.push([Math.cos(a) * objR * rs[i] * .9, Math.sin(a) * objR * rs[i] * .8]); }
-      let d = `M${(pts[0][0] + pts[1][0]) / 2},${(pts[0][1] + pts[1][1]) / 2}`;
-      for (let i = 1; i <= 8; i++) { const p = pts[i % 8], q = pts[(i + 1) % 8]; d += `Q${p[0]},${p[1]} ${(p[0] + q[0]) / 2},${(p[1] + q[1]) / 2}`; }
-      Kit.mk('path', {d: d + 'Z', class: 'blob'}, inner);
-      Kit.mk('ellipse', {cx: -objR * .3, cy: -objR * .3, rx: objR * .25, ry: objR * .12, transform: `rotate(-30 ${-objR * .3} ${-objR * .3})`, class: 'shine'}, inner);
-    } else {
-      const hex = r => Array.from({length: 6}, (_, i) => { const a = (i * 60 + 30) * Math.PI / 180; return `${Math.cos(a) * r},${Math.sin(a) * r}`; }).join(' ');
-      const cp = Kit.mk('clipPath', {id: 'gclip'}, svg);
-      Kit.mk('polygon', {points: hex(objR)}, cp);
-      const lat = Kit.mk('g', {'clip-path': 'url(#gclip)'}, inner);
-      const a = objR / 3.4, w = Math.sqrt(3) * a;
-      for (let r = -5; r <= 5; r++) for (let c = -5; c <= 5; c++) {
-        const x = c * w + (r & 1 ? w / 2 : 0), y = r * a * 1.5;
-        if (Math.hypot(x, y) < objR + a * 1.5) Kit.mk('polygon', {points: hex(a).split(' ').map(p => { const [u, v] = p.split(',').map(Number); return `${u + x},${v + y}`; }).join(' '), class: 'hexi'}, lat);
-      }
-      Kit.mk('polygon', {points: hex(objR), class: 'hexo'}, inner);
-    }
-    S.objs.push(inner);
+      S.items[side].push(inner);
+    });
   });
   update(false);
 }
 
-function update(anim){
+function update(anim) {
   if (!S) return;
-  S.yl.textContent = 1919 + T;
-  S.yr.textContent = 2019 + T;
+  S.years[0].textContent = 1919 + T;
+  S.years[1].textContent = 2019 + T;
   const n = Math.floor(T * N / 100 + 1e-6), d = anim && !Kit.calm ? .35 : 0;
-  ['L', 'R'].forEach(K => S[K].forEach((it, i) => {
+  S.people.forEach(P => {
+    const k = n ? 1 : P.big; if (k === P.k) return;
+    const from = P.k == null ? k : P.k; P.k = k;
+    const o = {k: from}, set = () => P.g.setAttribute('transform', `translate(${P.x.toFixed(1)},${P.y.toFixed(1)}) scale(${o.k.toFixed(4)}) translate(${(-P.x).toFixed(1)},${(-P.y).toFixed(1)})`);
+    gsap.killTweensOf(o); if (d) gsap.to(o, {k, duration: .45, ease: 'power2.inOut', onUpdate: set}); else { o.k = k; set(); }
+  });
+  S.items.forEach(list => list.forEach((it, i) => {
     const on = i < n;
-    gsap.to(it.g, {scale: on ? 1 : .2, opacity: on ? 1 : 0, transformOrigin: '50% 50%', duration: d, ease: on ? 'back.out(2)' : 'power2.in', overwrite: true});
-    gsap.to(it.ln, {opacity: on ? 1 : 0, duration: d, overwrite: true});
+    gsap.to(it, {scale: on ? 1 : .2, opacity: on ? 1 : 0, transformOrigin: '50% 50%', duration: d, ease: on ? 'back.out(2)' : 'power2.in', overwrite: true});
   }));
   if (T >= 100 && !done) {
     done = true;
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    // The century has run: the slider has done its work, and its room goes to the answer and the drawing.
+    Kit.$('card').classList.add('done');
+    Kit.hide('say'); Kit.hide('ctl'); Kit.show('why'); Kit.show('keep');
     Kit.haptic('success');
   }
 }
@@ -146,16 +242,14 @@ range.addEventListener('input', () => {
 Kit.onShow.card = () => { draw(); };
 Kit.onEnter.card = () => {
   if (Kit.calm || !S) return;
-  gsap.from(S.objs, {scale: .3, opacity: 0, transformOrigin: '50% 50%', stagger: .15, duration: .6, ease: 'back.out(1.8)'});
   gsap.fromTo('#t', {x: 0}, {x: 6, yoyo: true, repeat: 3, duration: .18, delay: .8, ease: 'sine.inOut'});
 };
 Kit.play.card = async () => {
   for (const v of [30, 60, 100]) { range.value = v; range.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 150)); }
   await new Promise(r => setTimeout(r, 700));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again at the size it now has whenever its room changes, its things shown as they stand, not popped in again.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen) { const first = !seen; seen = k; if (!first) draw(); } }).observe(el); }
 Kit.single();
 </script>
 </html>

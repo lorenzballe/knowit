@@ -1,36 +1,50 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: maths-period-doubling-chaos -->
 <title>Astute free card</title>
+<!-- The picture: the two sides the reader sorts into are two meadows, each with a population of rabbits counted year
+     by year, a white column for each year with a rabbit sitting on it. In one, a growth rate of 3.3: the rabbits climb,
+     then swing high, low, high, low, settled into a cycle. In the other, a growth rate of 4: they jump about and never
+     repeat. Neither rate is one of the six to sort. The reader taps each growth rate to send it to a meadow, then says
+     how sure; the meadows give way to the whole map: where the population ends up for every growth rate from 2.6 to
+     4, one line splitting into 2, 4, 8, then a cloud of chaos past 3.57, with a pill on each of the six rates saying
+     what it does and whether it was sorted right.
+     Flat colours, thick ink outlines; drawn again at its real size whenever its room changes. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1cqh}
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.2cqh}
 #plotbox{flex:1 1 0;min-height:8cqh;position:relative}
 #plot{position:absolute;inset:0;width:100%;height:100%;display:block}
-#sort{display:flex;flex-direction:column;gap:.8cqh;flex-shrink:0}
-#tray{display:flex;flex-wrap:wrap;gap:.7cqh 1.6cqw;justify-content:center;min-height:max(4.2cqh,28px);align-items:center}
-#tray:empty::after{content:"All sorted";font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted)}
-#bins{display:flex;gap:2.4cqw}
-.bin{flex:1;min-width:0;border-radius:1.6cqh;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);background:color-mix(in srgb,var(--k) 5%,transparent);padding:.8cqh 2.4cqw;min-height:max(8cqh,56px);display:flex;flex-wrap:wrap;gap:.6cqh 1.6cqw;align-content:flex-start}
-.bin h4{width:100%;margin:0 0 .3cqh;font:700 max(1.5cqh,11px)/1.2 var(--mono);letter-spacing:.04em;color:var(--k);overflow-wrap:anywhere}
-.chip{font:700 max(1.8cqh,12px)/1 var(--mono);color:var(--k);background:var(--c);border:0;box-shadow:inset 0 0 0 .22cqh var(--k);border-radius:99px;padding:.8cqh 2.2cqw;cursor:pointer;white-space:nowrap}
-.bin .chip{background:var(--k);color:var(--c);box-shadow:none}
+#sort{display:flex;flex-direction:column;gap:1.2cqh;flex:1 1 0;min-height:0}
+#tray{display:flex;flex-wrap:wrap;gap:.8cqh 1.8cqw;justify-content:center;align-items:center;flex:none}
+#bins{display:flex;gap:2.4cqw;flex:1 1 0;min-height:max(16cqh,90px)}
+.bin{position:relative;flex:1;min-width:0;border-radius:1.8cqh;overflow:hidden;background:#e4f5eb;box-shadow:inset 0 0 0 2px #10100c;padding:1cqh 2.2cqw;display:flex;flex-direction:column;gap:.8cqh}
+.bin .field{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.bin h4{position:relative;margin:0;font:800 max(1.75cqh,12.5px)/1.15 var(--body);color:#10100c;text-wrap:balance}
+.bin .chips{position:relative;display:flex;flex-wrap:wrap;gap:.6cqh 1.4cqw;min-height:max(3.6cqh,24px);align-content:flex-start}
+.chip{font:700 max(1.8cqh,12.5px)/1 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh var(--k);border-radius:99px;padding:.85cqh 2.6cqw;cursor:pointer;white-space:nowrap}
+.bin .chip{background:#10100c;color:#fff;box-shadow:none;padding:.7cqh 2cqw}
+.bin .chip .r{display:none}
 #why{display:flex;flex-direction:column;gap:.8cqh;flex-shrink:0}
 #why .big{font:800 max(2.3cqh,14px)/1.15 var(--display);margin:0;overflow-wrap:anywhere}
-#why .body{font:500 max(1.6cqh,11.5px)/1.3 var(--body);margin:0}
+#why .body{font:500 max(1.65cqh,11.5px)/1.3 var(--body);margin:0}
+/* Answered, the question steps back a size and gives the picture its room; on a short card the line of numbers goes
+   too, the map's pills say them. */
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:540px){.answered #why .big{display:none}}
 </style>
 <article class="card" id="card" data-topic="maths" data-kind="Sort · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">ROAD TO CHAOS</span></div>
     <h2 class="q">How does the logistic map transition from regular cycles to chaos as R increases?</h2>
     <div class="stagebox" id="stage">
-      <div id="plotbox"><canvas id="plot"></canvas></div>
+      <div id="plotbox" class="gone"><canvas id="plot" role="img" aria-label="Where the population ends up for every growth rate R from 2.6 to 4: one value, then 2, 4, 8, then chaos past 3.57, with a window of 3 at 3.83."></canvas></div>
       <div id="sort">
         <div id="tray"></div>
         <div id="bins">
-          <div class="bin" id="binC"><h4>SETTLES INTO A CYCLE</h4></div>
-          <div class="bin" id="binX"><h4>NEVER REPEATS</h4></div>
+          <div class="bin" id="binC"><svg class="field" aria-hidden="true"></svg><h4>Settles into a cycle</h4><div class="chips"></div></div>
+          <div class="bin" id="binX"><svg class="field" aria-hidden="true"></svg><h4>Never repeats</h4><div class="chips"></div></div>
         </div>
       </div>
       <div id="why" class="gone">
@@ -38,7 +52,7 @@
         <p class="body">Each time R crosses a critical value, the cycle splits in two, faster and faster. Past R ≈ 3.57 the population never settles at all. Yet order comes back in windows: at R = 3.83 there is a 3-year cycle.</p>
       </div>
     </div>
-    <div id="sure"></div>
+    <div id="sure" class="gone"></div>
     <p class="say" id="say">Tap each growth rate R to sort it. Tap again to switch sides.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Pushing R up doubles the cycle again and again until nothing repeats.</div>
     <div class="foot"><span class="src">Source · Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)</span></div>
@@ -47,21 +61,29 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const ITEMS = [
-  {r:2.9, cyc:true, lab:'1', row:0},
-  {r:3.2, cyc:true, lab:'2', row:0},
-  {r:3.5, cyc:true, lab:'4', row:0},
-  {r:3.7, cyc:false, lab:'chaos', row:1},
-  {r:3.83, cyc:true, lab:'3', row:0},
-  {r:3.9, cyc:false, lab:'chaos', row:2}
+  {r:2.9, cyc:true, lab:'1'},
+  {r:3.2, cyc:true, lab:'2'},
+  {r:3.5, cyc:true, lab:'4'},
+  {r:3.7, cyc:false, lab:'chaos'},
+  {r:3.83, cyc:true, lab:'3'},
+  {r:3.9, cyc:false, lab:'chaos'}
 ];
 const R0 = 2.6, R1 = 4.0;
+// One ink for every outline; the meadows' pale sky and their grass; the columns and rabbits white; the map cream, the
+// one wrong answer red.
+const INK = '#10100c', GRASS = '#5cc285', WHITE = '#ffffff', EAR = '#ffb4c2', CREAM = '#fff6df', RED = '#FF5A4E';
+const FONT = 'Figtree, system-ui, sans-serif';
 const tray = Kit.$('tray'), binC = Kit.$('binC'), binX = Kit.$('binX');
 let placed = 0, done = false, sureOn = false;
 const st = {p: 0}; let G = null;
+// The two meadows' populations, year by year, made by the rule itself: a rate of 3.3 settles into a swing of two;
+// a rate of 4 never repeats.
+const run = (r, x, burn, n) => { for (let i = 0; i < burn; i++) x = r * x * (1 - x); const v = [x]; for (let i = 1; i < n; i++) { x = r * x * (1 - x); v.push(x); } return v; };
+const YEARS = {binC: run(3.3, .2, 0, 8), binX: run(4, .55, 12, 8)};
 
 ITEMS.forEach((it, i) => {
   const b = document.createElement('button');
-  b.className = 'chip'; b.dataset.i = i; b.textContent = 'R = ' + it.r;
+  b.className = 'chip'; b.dataset.i = i; b.innerHTML = `<span class="r">R = </span>${it.r}`;
   it.where = 0; tray.appendChild(b);
 });
 
@@ -69,10 +91,13 @@ function moveChip(b){
   const it = ITEMS[+b.dataset.i];
   if (it.where === 0) placed++;
   it.where = it.where === 1 ? 2 : 1;
-  (it.where === 1 ? binC : binX).appendChild(b);
-  if (!Kit.calm) gsap.from(b, {scale: .7, opacity: 0, duration: .3, ease: 'back.out(2)'});
+  (it.where === 1 ? binC : binX).querySelector('.chips').appendChild(b);
+  // Its own fade, from nothing to whole each time: a second tap in the middle of the first never leaves it half seen.
+  if (!Kit.calm) { gsap.killTweensOf(b); gsap.fromTo(b, {scale: .7, opacity: 0}, {scale: 1, opacity: 1, duration: .3, ease: 'back.out(2)'}); }
   Kit.haptic('selection');
-  if (placed === ITEMS.length && !sureOn){ sureOn = true; sure.on(); Kit.$('say').textContent = 'Happy with it? Say how sure you are.'; }
+  // Every rate sorted: the empty tray gives its room back, and how sure comes in.
+  if (placed === ITEMS.length && !sureOn){ sureOn = true; Kit.hide('tray'); Kit.show('sure'); sure.on(); Kit.$('say').textContent = 'Happy with it? Say how sure you are.'; }
+  fields();
 }
 Kit.$('sort').addEventListener('click', e => {
   const b = e.target.closest('.chip'); if (!b || done) return; moveChip(b);
@@ -83,94 +108,153 @@ const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   let n = 0; ITEMS.forEach(it => { it.ok = (it.where === 1) === it.cyc; if (it.ok) n++; });
   const ok = n === ITEMS.length;
   Kit.answer({choice: ITEMS.map(it => it.r + ':' + (it.where === 1 ? 'cycle' : 'chaos')).join(' '), correct: ok, sure: pct});
-  Kit.hide('sort'); Kit.hide('say'); Kit.show('why');
+  Kit.$('card').classList.add('answered');
+  Kit.hide('sort'); Kit.hide('say'); Kit.show('plotbox'); Kit.show('why');
   sure.grade(ok, pct, `${n} of ${ITEMS.length} sorted right`);
   Kit.show('keep');
-  if (Kit.calm){ st.p = 1; render(); }
-  else { gsap.killTweensOf(st); gsap.to(st, {p: 1, duration: 2.6, ease: 'power1.inOut', onUpdate: render}); }
+  requestAnimationFrame(() => {
+    Kit.onShow.card();
+    if (Kit.calm){ st.p = 1; render(); }
+    else { gsap.killTweensOf(st); st.p = 0; gsap.to(st, {p: 1, duration: 2.6, ease: 'power1.inOut', onUpdate: render}); }
+  });
   Kit.haptic(ok ? 'success' : 'light');
 });
 
+// A rabbit sitting, facing right, its feet at (x, y), s tall.
+function rabbit(par, x, y, s, k){
+  const at = {fill: WHITE, stroke: INK, 'stroke-width': k, 'stroke-linejoin': 'round'};
+  const g = Kit.mk('g', {transform: `translate(${x.toFixed(1)},${y.toFixed(1)})`}, par);
+  Kit.mk('ellipse', Object.assign({cx: (s * .3).toFixed(1), cy: (-s * .98).toFixed(1), rx: (s * .085).toFixed(1), ry: (s * .24).toFixed(1), transform: `rotate(14 ${(s * .3).toFixed(1)} ${(-s * .98).toFixed(1)})`}, at), g);
+  Kit.mk('ellipse', Object.assign({cx: (-s * .32).toFixed(1), cy: (-s * .3).toFixed(1), rx: (s * .1).toFixed(1), ry: (s * .1).toFixed(1)}, at), g);
+  Kit.mk('ellipse', Object.assign({cx: (-s * .04).toFixed(1), cy: (-s * .3).toFixed(1), rx: (s * .33).toFixed(1), ry: (s * .3).toFixed(1)}, at), g);
+  Kit.mk('ellipse', Object.assign({cx: (s * .2).toFixed(1), cy: (-s * .96).toFixed(1), rx: (s * .085).toFixed(1), ry: (s * .25).toFixed(1), transform: `rotate(-6 ${(s * .2).toFixed(1)} ${(-s * .96).toFixed(1)})`}, at), g);
+  Kit.mk('circle', Object.assign({cx: (s * .24).toFixed(1), cy: (-s * .64).toFixed(1), r: (s * .19).toFixed(1)}, at), g);
+  Kit.mk('ellipse', {cx: (s * .2).toFixed(1), cy: (-s * .96).toFixed(1), rx: (s * .035).toFixed(1), ry: (s * .15).toFixed(1), fill: EAR, transform: `rotate(-6 ${(s * .2).toFixed(1)} ${(-s * .96).toFixed(1)})`}, g);
+  Kit.mk('circle', {cx: (s * .31).toFixed(1), cy: (-s * .67).toFixed(1), r: Math.max(.9, s * .035).toFixed(1), fill: INK}, g);
+}
+
+// A meadow: its grass along the foot, and above it the population each year, a white column with a rabbit on top,
+// under the meadow's name and the rates sorted into it.
+function field(bin){
+  const svg = bin.querySelector('.field');
+  svg.replaceChildren();
+  const {W, H} = Kit.fitSvg(svg);
+  const bb = bin.getBoundingClientRect(), cb = bin.querySelector('.chips').getBoundingClientRect();
+  const k = Math.max(1.2, Math.min(2, W * .011)), grass = Math.max(8, H * .1), gy = H - grass;
+  Kit.mk('rect', {x: 0, y: gy.toFixed(1), width: W, height: grass + 2, fill: GRASS}, svg);
+  Kit.mk('line', {x1: 0, x2: W, y1: gy.toFixed(1), y2: gy.toFixed(1), stroke: INK, 'stroke-width': k * 1.2}, svg);
+  const cf = Math.min(12, grass * .62, W / 11);
+  if (cf >= 9.5) Kit.mk('text', {x: (W - 6).toFixed(1), y: (gy + grass / 2 + cf * .36).toFixed(1), 'text-anchor': 'end', 'font-family': FONT, 'font-weight': 700, 'font-size': cf.toFixed(1), fill: INK}, svg).textContent = 'year after year →';
+  const vals = YEARS[bin.id], n = vals.length, pad = W * .07, slot = (W - 2 * pad) / n, cw = slot * .58;
+  const s = Math.min(slot * 1.05, 24), top = cb.bottom - bb.top + s * 1.25 + 4, room = gy - top;
+  if (room < 12) return;
+  vals.forEach((v, i) => {
+    const x = pad + slot * (i + .5), h = Math.max(3, v * room), y = gy - h;
+    Kit.mk('path', {d: `M${(x - cw / 2).toFixed(1)},${gy.toFixed(1)} V${(y + cw * .3).toFixed(1)} Q${(x - cw / 2).toFixed(1)},${y.toFixed(1)} ${x.toFixed(1)},${y.toFixed(1)} Q${(x + cw / 2).toFixed(1)},${y.toFixed(1)} ${(x + cw / 2).toFixed(1)},${(y + cw * .3).toFixed(1)} V${gy.toFixed(1)}`, fill: WHITE, stroke: INK, 'stroke-width': k, 'stroke-linejoin': 'round'}, svg);
+    rabbit(svg, x - s * .05, y + k * .2, s, k * .75);
+  });
+}
+function fields(){ if (!done) { field(binC); field(binX); } }
+
 function css(n){ return getComputedStyle(Kit.$('card')).getPropertyValue(n).trim(); }
 
-Kit.onShow.card = () => {
+// The map, worked out once for its size: for each column of pixels, a growth rate, run until it settles, then 140
+// years of where it goes.
+function map(){
+  if (Kit.$('plotbox').classList.contains('gone')) return;
   const cv = Kit.$('plot');
   const {x, W, H} = Kit.fitCanvas(cv);
-  const card = Kit.$('card');
-  const f = Math.max(12, card.clientHeight * 0.018);
-  const top = f * 5.2, bot = H - f * 2.2, L = 2, Rr = W - 2;
+  if (W < 40 || H < 40) { G = null; return; }
+  const f = Math.max(11, Math.min(13.5, W * .038)), ph = Math.round(f * 1.5), L = 2, Rr = W - 2;
+  // Where each rate's population climbs to at most: the pills of the first three sit in the empty sky over it.
+  ITEMS.forEach(it => { let v = .5; for (let q = 0; q < 2000; q++) v = it.r * v * (1 - v); let m = 0; for (let q = 0; q < 300; q++) { v = it.r * v * (1 - v); m = Math.max(m, v); } it.peak = m; });
+  // The pills of the crowded rates past 3.57, from the right: each hangs left of its own line, in the highest row
+  // where it fits, so no line runs through another's pill. With a tick each where there is room; on a short map a red
+  // pill alone marks a rate sorted wrong.
+  x.font = `800 ${f}px ${FONT}`;
+  const lay = marks => {
+    const rows = [];
+    ITEMS.slice().reverse().forEach(it => {
+      const w = x.measureText(it.lab + (marks || !it.ok ? (it.ok ? ' ✓' : ' ✗') : '')).width + f * 1.1, c = L + (Rr - L) * (it.r - R0) / (R1 - R0);
+      if (it.r < 3.6) { it.pill = {w, c, a: Math.min(Math.max(c - w / 2, L), Rr - w)}; return; }
+      const a = Math.max(L, Math.min(c + 4, Rr) - w);
+      let row = rows.findIndex(r => r.every(q => a + w < q.a - 3 || a > q.b + 3));
+      if (row < 0) { rows.push([]); row = rows.length - 1; }
+      rows[row].push({a, b: a + w}); it.pill = {a, w, row, c};
+    });
+    return rows.length;
+  };
+  let marks = true, nrows = lay(true);
+  if (H < 200 && nrows > 2) { marks = false; nrows = lay(false); }
+  const top = nrows * (ph + 3) + f * .5, bot = H - f * 1.75;
+  ITEMS.forEach(it => { if (it.r >= 3.6) it.pill.y = it.pill.row * (ph + 3); });
+  // The first three over their branches; one that would touch a crowded rate's pill steps under it, or over it.
+  const boxes = ITEMS.filter(it => it.r >= 3.6).map(it => it.pill), meets = (a, y) => boxes.find(q => a.a < q.a + q.w + 3 && a.a + a.w + 3 > q.a && y < q.y + ph + 3 && y + ph + 3 > q.y);
+  ITEMS.forEach(it => {
+    if (it.r >= 3.6) return;
+    const P = it.pill, want = Math.max(0, bot - it.peak * (bot - top) - ph - f * .55), q = meets(P, want);
+    P.y = !q ? want : [q.y + ph + 4, q.y - ph - 4].find(y => y >= 0 && y <= bot - ph && !meets(P, y)) ?? want;
+  });
   const s = cv.width / W;
   const off = document.createElement('canvas'); off.width = cv.width; off.height = cv.height;
   const o = off.getContext('2d'); o.scale(s, s);
-  o.fillStyle = css('--k') || '#111'; o.globalAlpha = .55;
-  const step = 1 / s;
+  o.fillStyle = CREAM;
+  const step = 1 / s, dot = 1.5;
   for (let px = L; px <= Rr; px += step){
     const r = R0 + (R1 - R0) * (px - L) / (Rr - L);
     let v = .5;
-    for (let k = 0; k < 400; k++) v = r * v * (1 - v);
-    for (let k = 0; k < 140; k++){ v = r * v * (1 - v); o.fillRect(px, bot - v * (bot - top), step, step * 1.2); }
+    for (let q = 0; q < 400; q++) v = r * v * (1 - v);
+    for (let q = 0; q < 140; q++){ v = r * v * (1 - v); o.fillRect(px, bot - v * (bot - top) - dot / 2, step, dot); }
   }
-  G = {x, W, H, f, top, bot, L, Rr, s, off, cv, body: css('--body') || 'sans-serif', k: css('--k') || '#111', muted: css('--muted') || '#777'};
-  if (!done && st.p === 0 && (Kit.calm || !Kit.entered)) st.p = (3.0 - R0) / (R1 - R0);
+  G = {x, W, H, f, ph, top, bot, L, Rr, s, off, cv, marks};
   render();
-};
+}
 const xr = r => G.L + (G.Rr - G.L) * (r - R0) / (R1 - R0);
+function pill(x, a, y, w, h, text, ok){
+  x.fillStyle = ok ? INK : RED;
+  x.beginPath(); x.roundRect(a, y, w, h, h / 2); x.fill();
+  x.fillStyle = ok ? WHITE : INK; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillText(text, a + w / 2, y + h / 2 + 1);
+}
 
 function render(){
   if (!G) return;
-  const {x, W, H, f, top, bot, L, Rr, s, off, cv, k, muted} = G;
+  const {x, W, H, f, ph, top, bot, L, Rr, s, off, cv, marks} = G;
   x.clearRect(0, 0, W, H);
-  // axis
-  x.globalAlpha = 1; x.strokeStyle = k; x.lineWidth = 1.5;
-  x.beginPath(); x.moveTo(L, bot + 2); x.lineTo(Rr, bot + 2); x.stroke();
-  // diagram up to progress
+  // The map, drawn left to right as the answer comes in.
   const pxEnd = L + (Rr - L) * st.p;
   x.save(); x.setTransform(1, 0, 0, 1, 0, 0);
   const sw = Math.max(1, Math.round(pxEnd * s));
   x.drawImage(off, 0, 0, sw, cv.height, 0, 0, sw, cv.height);
   x.restore();
-  x.font = `700 ${f}px ${G.body}`; x.textBaseline = 'top';
-  x.fillStyle = k;
-  x.textAlign = 'left'; x.fillText('R ' + R0, L, bot + f * .5);
-  x.textAlign = 'right'; x.fillText(R1.toFixed(1), Rr, bot + f * .5);
-  if (!done){
-    x.fillStyle = muted; x.textAlign = 'center'; x.textBaseline = 'middle';
-    x.font = `800 ${f * 3}px ${G.body}`;
-    const cx = (xr(3.0) + Rr) / 2;
-    if (st.p < .5) x.fillText('?', cx, (top + bot) / 2);
-    x.font = `600 ${f}px ${G.body}`;
-    x.fillText('population over the years', (L + Rr) / 2, f * 1.6);
-    return;
-  }
-  // chaos threshold
+  // The ground under it, with the rates written at its ends and where chaos begins.
+  x.strokeStyle = INK; x.lineWidth = 2.4; x.lineCap = 'round';
+  x.beginPath(); x.moveTo(L, bot + 3); x.lineTo(Rr, bot + 3); x.stroke();
+  x.font = `700 ${f}px ${FONT}`; x.textBaseline = 'top'; x.fillStyle = WHITE;
+  x.textAlign = 'left'; x.fillText('R ' + R0, L, bot + f * .55);
+  x.textAlign = 'right'; x.fillText(R1.toFixed(1), Rr, bot + f * .55);
   const c357 = xr(3.57);
   if (pxEnd >= c357){
-    x.setLineDash([4, 4]); x.strokeStyle = k; x.globalAlpha = .8;
-    x.beginPath(); x.moveTo(c357, top - f * .4); x.lineTo(c357, bot + 2); x.stroke();
-    x.setLineDash([]); x.globalAlpha = 1;
-    x.font = `700 ${f}px ${G.body}`; x.textAlign = 'center'; x.textBaseline = 'top'; x.fillStyle = k;
-    x.fillText('3.57', c357, bot + f * .5);
+    x.setLineDash([4, 4]); x.strokeStyle = INK; x.lineWidth = 1.6;
+    x.beginPath(); x.moveTo(c357, top - f * .2); x.lineTo(c357, bot + 3); x.stroke();
+    x.setLineDash([]);
+    x.textAlign = 'center'; x.fillStyle = WHITE; x.fillText('3.57', c357, bot + f * .55);
   }
-  // markers per item
+  // A pill on each of the six rates: what it does, and whether it was sorted right; a line down to the map.
+  x.font = `800 ${f}px ${FONT}`;
   ITEMS.forEach(it => {
-    const px = xr(it.r); if (px > pxEnd) return;
-    x.strokeStyle = it.ok ? k : '#d0342c'; x.lineWidth = 2; x.globalAlpha = .9;
-    const ly = f * .3 + it.row * f * 1.55;
-    x.beginPath(); x.moveTo(px, ly + f * 1.2); x.lineTo(px, bot); x.stroke();
-    x.globalAlpha = 1;
-    const txt = it.lab + (it.ok ? ' ✓' : ' ✗');
-    x.font = `800 ${f}px ${G.body}`;
-    const w = x.measureText(txt).width;
-    const cx = Math.min(Math.max(px, w / 2 + 2), W - w / 2 - 2);
-    x.fillStyle = it.ok ? k : '#d0342c'; x.textAlign = 'center'; x.textBaseline = 'top';
-    x.fillText(txt, cx, ly);
+    const P = it.pill; if (!P || P.c > pxEnd) return;
+    const y = P.y;
+    x.strokeStyle = it.ok ? INK : RED; x.lineWidth = 1.6;
+    x.beginPath(); x.moveTo(P.c, y + ph); x.lineTo(P.c, bot + 3); x.stroke();
+    pill(x, P.a, y, P.w, ph, it.lab + (marks || !it.ok ? (it.ok ? ' ✓' : ' ✗') : ''), it.ok);
   });
 }
 
+Kit.onShow.card = () => { fields(); map(); };
 Kit.onEnter.card = () => {
   if (Kit.calm) return;
   gsap.from('.chip', {opacity: 0, y: 10, stagger: .06, duration: .4, ease: 'power3.out'});
-  if (!done){ st.p = 0; gsap.to(st, {p: (3.0 - R0) / (R1 - R0), duration: 1, ease: 'power2.out', onUpdate: render}); }
 };
 Kit.play.card = async () => {
   const w = ms => new Promise(r => setTimeout(r, ms));
@@ -182,13 +266,8 @@ Kit.play.card = async () => {
   Kit.$('sure').querySelector('[data-v="80"]').click();
   await w(3000);
 };
-Kit.single();
-</script>
-</html>
-<script data-redraw>
-// Draw again when a drawing changes size: the answer coming in can take room from it, and a canvas
-// left as it was would be stretched by the browser.
-(() => {
+// Drawn again whenever a drawing's room changes: a meadow as the rates come into it, the map as the answer settles.
+{
   const seen = new WeakMap();
   const ro = new ResizeObserver(entries => {
     let moved = false;
@@ -197,10 +276,10 @@ Kit.single();
       if (was && (Math.abs(was[0] - r.width) > 1 || Math.abs(was[1] - r.height) > 1)) moved = true;
       seen.set(e.target, [r.width, r.height]);
     }
-    if (!moved) return;
-    const card = document.querySelector('.card');
-    requestAnimationFrame(() => { if (card && Kit.onShow[card.id]) Kit.onShow[card.id](); });
+    if (moved) requestAnimationFrame(() => { fields(); map(); });
   });
-  document.querySelectorAll('canvas').forEach(cv => ro.observe(cv));
-})();
+  [binC, binX, Kit.$('plot')].forEach(el => ro.observe(el));
+}
+Kit.single();
 </script>
+</html>

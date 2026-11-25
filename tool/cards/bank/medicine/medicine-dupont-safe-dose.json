@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Card titled Safe Dose asks how DuPont picked its safe C8 drinking-water limit. A tap-to-reveal panel shows scientists getting 0.6 ppb and rounding it up to 1 ppb, the lowest detectable level then, one drop in 50,000 litres."
+    "label": "A chemical plant on a river bank runs C8 into the water; on the near bank a 50,000-litre tank stands by a person for scale. A tall gauge of C8 in parts per billion marks the band from 1 ppb up as detectable then; its cursor reads the scientists' 0.6. Asks how DuPont picked its safe C8 limit: a tap rounds the cursor up to 1 ppb, a second lets one drop fall into the tank."
   },
   "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=1405s",

@@ -1,10 +1,13 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: technology-fan-downforce -->
 <!-- Thought to carry: a small fan can press a robot to the floor far harder than its own weight does.
-     Front: a small robot mouse on the floor. The reader drags up to stack blocks on it, each block one mouse-weight of fan pull.
-     Back: the same mouse twice, at the same scale. Fan off: one outlined block, its own weight. Fan on: five solid blocks, the fan's pull.
-     The reader's guess is a short level mark beside the five.
-     The front shows only the reader's own stack and its number. The true count, the "5×" and any verdict appear only after the turn. -->
+     Look: the micromouse big, side on, on the black floor of its maze in front of a white wall with a red top, drawn
+     flat with thick ink outlines: green board, black wheels, the fan's housing on its back and the skirt under it,
+     the air drawn in under it. Front: the reader drags up to stack yellow blocks on the fan, each one mouse-weight of
+     pull; the count stands big in the corner. Back: the same mouse twice at the same scale, fan off under one white
+     block (its weight), fan on under five yellow blocks (the fan's pull), the reader's guess a dashed level beside them.
+     The true count, the "5×" and any verdict appear only after the turn. Each face is drawn again at its real size
+     whenever its room changes. -->
 <title>Five times its weight</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -12,7 +15,7 @@
 <style>
 .turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
 .card .in{perspective:1600px}
-.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;gap:1.5cqh;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .turn>.back{transform:rotateY(180deg)}
 .turn.over{transform:rotateY(180deg)}
 .turn.over>.front{visibility:hidden;transition:visibility 0s .75s}
@@ -22,27 +25,11 @@
 .stagebox{display:flex;flex:1;min-height:0}
 #pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
 #pic{touch-action:none;cursor:ns-resize}
-.back .big{margin:0 0 1.2cqh}
-.back .body{margin:1.2cqh 0 1cqh}
-
-/* confidence chips: legible before and after the drag */
-#sure{opacity:1!important;color:var(--k)!important}
-#sure :is(span,b,p,div,label,small):not([data-v]){color:var(--k)!important}
-#sure [data-v]{opacity:1!important;color:var(--k)!important;background:transparent!important;border:2px solid var(--k)!important;box-shadow:none!important}
-#sure [data-v].pick{background:var(--k)!important;color:#fff!important}
-.first{margin:.6cqh 0 0;font:600 13px/1.3 var(--body);color:var(--k)}
-
-/* footer: full width, above the icon row, clear of it */
-.face .foot{display:block;padding:0 0 68px;margin-top:auto}
-.face .foot .src{display:block;max-width:none;font-size:13px;line-height:1.35;white-space:normal;overflow-wrap:normal}
-
-/* short phones: give the drawing its room back */
-@media (max-height:760px){
-  .back .big{font-size:36px!important;line-height:1.02!important}
-  .back .body{font-size:15px!important;line-height:1.38!important}
-  .back .keep{padding-top:12px!important;padding-bottom:12px!important}
-  .face .foot{padding-bottom:60px}
-}
+/* the front has no source under it: its last line keeps clear of the save and share in the corner */
+.front .say{margin-right:calc(var(--kit-corner-w, 0px) + 8px)}
+.back .big{font-size:max(4.6cqh,24px);line-height:1.04}
+.back .body{font-size:max(2.3cqh,13.5px);line-height:1.4}
+.back .foot{margin-top:auto}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Drag to guess · how sure">
   <div class="in">
@@ -50,11 +37,9 @@
     <div class="turn">
       <section class="face front">
         <h2 class="q">A micromouse's fan sucks it to the floor. How hard, in mouse weights?</h2>
-        <div class="stagebox"><svg id="pic" role="img" aria-label="A small robot mouse with a fan, on the floor. Drag up to stack blocks on it, each block one mouse weight."></svg></div>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A micromouse, a small robot car with a fan on its back, on the black floor of its maze. Drag up to stack blocks on it, each block one mouse weight."></svg></div>
         <div class="sure" id="sure"></div>
-        <p class="first" id="first">drag first, then choose</p>
         <p class="say" id="say"><b>Drag up</b> to stack the fan's pull. Each block is the mouse's own weight.</p>
-        <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
       </section>
       <section class="face back" aria-hidden="true">
         <p class="big">Five times its weight.</p>
@@ -75,97 +60,115 @@ const Turn = {
 };
 (() => {
   const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  const INK = '#10100c', STONE = '#fffbf0', WALL = '#f7f6f0', RED = '#e4402f', PCB = '#1f8f4e', HOUSING = '#3a3f47', HUB = '#aab5c1', BLOCK = '#ffc83d';
   const MAX = 8, TRUE = 5;
   let N = 0, touched = false, answered = false, turned = false;
-  let F = {};
-  let stackG = null, heroT = null, noteG = null, hintG = null;
+  let F = null, stackG = null, hintG = null, heroT = null;
 
-  const txt = (p, x, y, t, a = {}, st = '') => {
-    const e = Kit.mk('text', Object.assign({x, y}, a), p);
-    e.setAttribute('style', 'fill:var(--k);font-family:var(--body);font-weight:700;' + st);
-    e.textContent = t; return e;
-  };
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const ink = (w = 2.5) => ({stroke: INK, 'stroke-width': w, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
+  const txt = (p, x, y, t, fs, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-size': fs, 'font-weight': 700, fill: INK, 'font-family': 'Figtree, sans-serif'}, a), p); e.textContent = t; return e; };
+  // keeps a label inside the drawing's width
   const fit = (e, W) => {
     const w = e.getComputedTextLength(), an = e.getAttribute('text-anchor') || 'start', x = +e.getAttribute('x');
     const l = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
     const s = Math.max(2 - l, Math.min(0, W - 2 - (l + w))); if (s) e.setAttribute('x', x + s);
   };
-  const NONNEG = ['width', 'height', 'r', 'rx', 'ry'];
-  const shape = (tag, a, p, st) => {
-    const b = Object.assign({}, a);
-    for (const k of NONNEG) if (k in b) { const v = +b[k]; b[k] = isFinite(v) ? Math.max(0, v) : 0; }
-    const e = Kit.mk(tag, b, p); e.setAttribute('style', st); return e;
-  };
 
-  // The micromouse, side view: a low board, small wheels, a fan housing on top
-  // and its skirt below the board reaching the floor. With the fan on, air is drawn in under the board.
-  function mouse(p, cx, fy, w, sw, fan = true) {
-    w = Math.max(0, w);
-    const g = Kit.mk('g', {}, p);
-    const st = `fill:#fff;stroke:var(--k);stroke-width:${sw};stroke-linejoin:round`;
-    const r = w * .075, ay = fy - r, ph = Math.max(5, w * .036), py = ay - ph / 2, pb = py + ph;
-    const sTop = w * .12, sBot = w * .15;
-    shape('path', {d: `M${cx - sTop},${pb} L${cx - sBot},${fy - sw / 2} L${cx + sBot},${fy - sw / 2} L${cx + sTop},${pb} Z`}, g, st);
-    shape('rect', {x: cx - w / 2, y: py, width: w, height: ph, rx: Math.min(3, ph / 2)}, g, st);
-    const hw = w * .24, hh = w * .075, hy = py - hh;
-    shape('rect', {x: cx - hw / 2, y: hy, width: hw, height: hh + sw / 2, rx: 3}, g, st);
-    const mw2 = w * .07, mh = Math.max(3, w * .022);
-    shape('rect', {x: cx - mw2 / 2, y: hy - mh, width: mw2, height: mh + 1, rx: 1.5}, g, 'fill:var(--k)');
-    for (const s of [-1, 1]) {
-      shape('circle', {cx: cx + s * w * .31, cy: ay, r}, g, 'fill:var(--k)');
-      shape('circle', {cx: cx + s * w * .31, cy: ay, r: r * .38}, g, 'fill:#fff');
+  // The maze: its black floor and, on the front, behind the mouse a white wall with its red top, a post at each
+  // corner of a cell (a cell is 18 cm, the wall 5 cm high, the mouse about 10 cm long).
+  function maze(p, W, fy, fh, mw, wall) {
+    mk('rect', {x: -3, y: fy, width: W + 6, height: fh + 3, fill: INK}, p);
+    if (!wall) return fy;
+    const wallH = mw * .5, cap = Math.max(4, wallH * .1), cell = mw * 1.8, post = mw * .12;
+    mk('rect', Object.assign({x: -3, y: fy - wallH, width: W + 6, height: wallH, fill: WALL}, ink()), p);
+    for (let x = W * .5 - cell * 1.32; x < W + cell; x += cell) {
+      if (x + post < -2 || x > W + 2) continue;
+      mk('rect', Object.assign({x, y: fy - wallH, width: post, height: wallH, fill: '#ebe9e0'}, ink(2)), p);
     }
+    mk('rect', Object.assign({x: -3, y: fy - wallH - cap, width: W + 6, height: cap, fill: RED}, ink()), p);
+    return fy - wallH - cap;
+  }
+
+  // The micromouse, side on, facing right: wheels, the green board at axle height, the skirt under it, the fan's
+  // housing on its back with its name on it, a battery, the sensors at its nose. With the fan on, air is drawn in under it.
+  function mouse(p, cx, fy, w, fan, fs) {
+    const g = mk('g', {}, p), wr = w * .125, ay = fy - wr, pt = Math.max(4, w * .045), py = ay - pt * .2, sw = w > 140 ? 2.5 : 2;
+    // the skirt, sealing the space under the board
+    const sk = w * .2;
+    mk('path', Object.assign({d: `M${cx - sk},${py + pt} L${cx - sk * .86},${fy - 1.5} L${cx + sk * .86},${fy - 1.5} L${cx + sk},${py + pt} Z`, fill: '#5a606b'}, ink(sw)), g);
     if (fan) {
-      const yA = (pb + fy) / 2, aw = Math.max(1.6, sw * .7), h = Math.max(2.5, w * .014);
+      const yA = (py + pt + fy) / 2 + 1, h = Math.max(2.5, w * .016);
       for (const s of [-1, 1]) {
-        const x1 = cx + s * w * .228, x2 = cx + s * w * .168;
-        shape('path', {d: `M${x1},${yA} L${x2},${yA} M${x2 + s * h},${yA - h} L${x2},${yA} L${x2 + s * h},${yA + h}`}, g,
-          `fill:none;stroke:var(--k);stroke-width:${aw};stroke-linecap:round;stroke-linejoin:round`);
+        const x1 = cx + s * (sk + w * .085), x2 = cx + s * (sk + w * .02);
+        mk('path', {d: `M${x1},${yA} L${x2},${yA} M${x2 + s * h},${yA - h} L${x2},${yA} L${x2 + s * h},${yA + h}`, fill: 'none', stroke: INK, 'stroke-width': Math.max(1.8, sw * .8), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
       }
     }
-    return {g, top: hy - mh};
+    // the board, its sensors at the nose
+    mk('rect', Object.assign({x: cx - w / 2, y: py, width: w, height: pt, rx: Math.min(2, pt / 2), fill: PCB}, ink(sw)), g);
+    const nx = cx + w / 2 - w * .04;
+    mk('rect', Object.assign({x: nx - w * .035, y: py - w * .09, width: w * .05, height: w * .09 + 1, rx: 1.5, fill: PCB}, ink(sw * .8)), g);
+    [[-.07, -1], [-.035, 1]].forEach(([dy, k]) => mk('path', Object.assign({d: `M${nx + w * .015},${py + w * dy} l${w * .05},${-k * w * .012} l0,${w * .03} l${-w * .05},${k * w * .004} Z`, fill: RED}, ink(sw * .6)), g));
+    // a battery behind the fan, a chip in front of it
+    mk('rect', Object.assign({x: cx - w * .4, y: py - w * .06, width: w * .17, height: w * .06 + 1, rx: 2, fill: '#d5dbe2'}, ink(sw * .9)), g);
+    mk('rect', {x: cx - w * .37, y: py - w * .045, width: w * .04, height: w * .03, fill: RED}, g);
+    mk('rect', Object.assign({x: cx + w * .2, y: py - w * .035, width: w * .08, height: w * .035 + 1, rx: 1, fill: INK}, ink(sw * .6)), g);
+    // the fan's housing, its motor on top
+    const fw = w * .27, fhh = w * .1, fx = cx - fw / 2, fyT = py - fhh;
+    mk('path', Object.assign({d: `M${fx},${py} L${fx},${fyT + fhh * .25} Q${fx},${fyT} ${fx + fhh * .3},${fyT} L${fx + fw - fhh * .3},${fyT} Q${fx + fw},${fyT} ${fx + fw},${fyT + fhh * .25} L${fx + fw},${py} Z`, fill: HOUSING}, ink(sw)), g);
+    if (fs && fhh >= fs * 1.05 && fw >= fs * 2.2) txt(g, cx, fyT + fhh / 2 + fs * .36, 'fan', fs, {'text-anchor': 'middle', fill: STONE, 'font-weight': 800});
+    else mk('line', {x1: fx + fw * .15, x2: fx + fw * .85, y1: fyT + fhh * .45, y2: fyT + fhh * .45, stroke: '#7d8590', 'stroke-width': Math.max(1.4, fhh * .12), 'stroke-linecap': 'round'}, g);
+    const mw2 = fw * .3, mh = Math.max(3, fhh * .35);
+    mk('rect', Object.assign({x: cx - mw2 / 2, y: fyT - mh, width: mw2, height: mh + 1, rx: 1.5, fill: '#aab5c1'}, ink(sw * .8)), g);
+    // the wheels
+    for (const s of [-1, 1]) {
+      mk('circle', Object.assign({cx: cx + s * w * .31, cy: ay, r: wr, fill: INK}, ink(sw)), g);
+      mk('circle', Object.assign({cx: cx + s * w * .31, cy: ay, r: wr * .48, fill: HUB}, ink(sw * .7)), g);
+    }
+    return {top: fyT - mh, wr};
   }
-  const block = (p, cx, y, bw, bh, st) => shape('rect', {x: cx - bw / 2, y: y - bh + 1.5, width: bw, height: bh - 3, rx: Math.min(4, bh * .2)}, p, st);
-  const blockO = (p, cx, y, bw, bh, sw) => shape('rect', {x: cx - bw / 2 + sw / 2, y: y - bh + 1.5 + sw / 2, width: bw - sw, height: Math.max(1, bh - 3 - sw), rx: Math.min(4, bh * .2)}, p, `fill:none;stroke:var(--k);stroke-width:${sw}`);
+  const block = (p, cx, base, bw, bh, fill) => mk('rect', Object.assign({x: cx - bw / 2, y: base - bh + 1.25, width: bw, height: bh - 2.5, rx: Math.min(5, bh * .22), fill}, ink(2.2)), p);
 
-  // ---------- the front ----------
+  // ---------- the front: the mouse big in its maze, the reader's stack on its fan, the count big beside it ----------
   function drawFront() {
     svg.innerHTML = '';
-    const {W, H} = Kit.fitSvg(svg), fs = Math.max(12, Math.min(14, W / 26));
-    const cr = Kit.$('card').getBoundingClientRect(), sr = svg.getBoundingClientRect();
-    let fy = cr.top + cr.height * .6 - sr.top;
-    fy = Math.max(H * .5, Math.min(H - fs * .6, fy));
-    const mw = Math.max(0, Math.min(W * .46, 250, fy * .9)), sw = mw > 150 ? 3 : 2.2, cx = W * .48;
-    shape('line', {x1: 0, x2: W, y1: fy, y2: fy}, svg, 'stroke:var(--k);stroke-width:2;stroke-linecap:round');
-    const m = mouse(svg, cx, fy, mw, sw, true);
-    const bw = mw * .42, bh = Math.max(1, Math.min(bw * .42, (m.top - fs * .6) / (MAX + .3)));
-    F = {W, H, fs, cx, bw, bh, sw, top: m.top};
-    stackG = Kit.mk('g', {}, svg); noteG = Kit.mk('g', {}, svg); hintG = Kit.mk('g', {}, svg);
-    const hs = Math.max(1, Math.min(W * .13, H * .14, 60));
-    heroT = txt(svg, cx + bw / 2 + fs * 1.2, 0, '', {}, `font-family:var(--display);font-size:${hs}px;font-weight:800`);
-    F.hs = hs;
+    const {W, H} = Kit.fitSvg(svg);
+    if (W < 80 || H < 70) { F = null; return; }
+    const fs = clamp(W / 23, 12.5, 14);
+    // the mouse as long as the column allows, short enough to leave its stack of eight a fair thickness
+    const fh = clamp(H * .065, 10, 22), fy = H - fh;
+    const mw = Math.min(W * .9, (fy - 4) / .87), cx = W * .5;
+    const wallTop = maze(svg, W, fy, fh, mw, true);
+    const m = mouse(svg, cx, fy, mw, true, fs);
+    const bw = mw * .36, bh = clamp((m.top - 4) / (MAX + .25), 4, bw * .4);
+    // what one block stands for: a spare one resting on the wall at the left, named over it
+    const lw = Math.min(bw, cx - bw / 2 - 14), lh = bh * lw / bw, lf = fs * .92;
+    block(svg, 2 + lw / 2, wallTop + 1.25, lw, lh, BLOCK);
+    txt(svg, 2, wallTop - lh - lf * .5, 'its own weight', lf);
+    txt(svg, 2, wallTop - lh - lf * .5 - lf * 1.34, 'one block =', lf, {'font-weight': 600});
+    // the count, big, in the sky to the right of where the stack will rise
+    const sky = Math.max(fs * 2.4, wallTop), hs = clamp(Math.min(W * .24, sky * .62, (W - 10 - cx - bw / 2) / 1.45), 26, 88);
+    F = {W, H, fs, hs, cx, bw, bh, top: m.top, wallTop};
+    stackG = mk('g', {}, svg); hintG = mk('g', {}, svg);
+    heroT = txt(svg, W - 2, Math.min(hs * .8 + 2, wallTop - hs * .12), '', hs, {'text-anchor': 'end', 'font-weight': 800, 'font-family': 'Fraunces, serif'});
     paintStack(-1);
   }
   function paintStack(added) {
-    const {cx, bw, bh, top, fs, W, hs, sw} = F;
-    stackG.innerHTML = ''; noteG.innerHTML = ''; hintG.innerHTML = '';
+    if (!F) return;
+    const {cx, bw, bh, top, fs, W, wallTop} = F;
+    stackG.innerHTML = ''; hintG.innerHTML = '';
     gsap.killTweensOf(hintG); hintG.removeAttribute('transform');
     for (let i = 0; i < N; i++) {
-      const b = block(stackG, cx, top - i * bh, bw, bh, `fill:#fff;stroke:var(--k);stroke-width:${sw}`);
+      const b = block(stackG, cx, top - i * bh, bw, bh, BLOCK);
       if (i === added && !Kit.calm) gsap.from(b, {y: -bh * .8, opacity: 0, duration: .28, ease: 'power3.out'});
     }
     heroT.textContent = '×' + N;
-    heroT.setAttribute('y', Math.max(hs * .8, top - Math.max(N, 1) * bh + hs * .35));
-    if (N > 0) {
-      const ly = top - bh / 2, lx = cx - bw / 2 - fs * .9;
-      shape('line', {x1: lx, x2: cx - bw / 2 - 3, y1: ly, y2: ly}, noteG, 'stroke:var(--k);stroke-width:1.5');
-      const a = txt(noteG, lx - 5, ly - fs * .2, 'one block =', {'text-anchor': 'end', 'font-size': fs}, 'font-weight:600');
-      const b = txt(noteG, lx - 5, ly + fs * 1.1, 'its own weight', {'text-anchor': 'end', 'font-size': fs});
-      fit(a, W); fit(b, W);
-    } else if (!touched) {
-      const ay = top - fs * .6;
-      shape('path', {d: `M${cx},${ay} v-${fs * 2} m-6,7 l6,-7 l6,7`}, hintG, 'stroke:var(--k);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round');
-      const t = txt(hintG, cx - bw / 2 - 14, ay - fs * .9, 'drag up', {'text-anchor': 'end', 'font-size': fs});
+    if (N === 0 && !touched) {
+      // an arrow up from the fan through the room the stack will take, and the words by its tip
+      const ay = top - 5, end = Math.max(fs * .5 + 2, Math.min(wallTop - fs * .4, top - fs * 2.2, (top - 4) * .1 + 4));
+      mk('path', {d: `M${cx},${ay} V${end} M${cx - 7},${end + 8} L${cx},${end} L${cx + 7},${end + 8}`, stroke: INK, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hintG);
+      const t = txt(hintG, cx - 12, Math.max(fs, end + fs * .75), 'drag up', fs, {'text-anchor': 'end'});
       fit(t, W);
       if (!Kit.calm) gsap.to(hintG, {y: -5, duration: .7, yoyo: true, repeat: -1, ease: 'sine.inOut'});
     }
@@ -176,76 +179,60 @@ const Turn = {
     const prev = N; N = n; Kit.haptic('selection');
     paintStack(n > prev ? n - 1 : -1);
   }
-  const ready = () => { const f = Kit.$('first'); if (f) f.style.visibility = 'hidden'; sure.on(); };
   let drag = false;
   const nFrom = e => { const r = svg.getBoundingClientRect(); return Math.round((F.top - (e.clientY - r.top)) / F.bh + .15); };
-  svg.addEventListener('pointerdown', e => { if (answered) return; drag = true; svg.setPointerCapture(e.pointerId); if (!touched) touched = true; setN(nFrom(e)); paintStack(-1); });
-  svg.addEventListener('pointermove', e => { if (drag) setN(nFrom(e)); });
-  const up = () => { if (!drag) return; drag = false; ready(); };
+  svg.addEventListener('pointerdown', e => { if (answered || !F) return; drag = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} touched = true; setN(nFrom(e)); paintStack(-1); });
+  svg.addEventListener('pointermove', e => { if (drag && F) setN(nFrom(e)); });
+  const up = () => { if (!drag) return; drag = false; sure.on(); };
   svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
 
   const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
     if (answered) return; answered = true;
-    const chip = Kit.$('sure').querySelector(`[data-v="${pct}"]`); if (chip) chip.classList.add('pick');
     const ok = Math.abs(N - TRUE) <= 1;
     Kit.answer({choice: '×' + N, correct: ok, sure: pct});
     sure.grade(ok, pct, `×${N}, ${ok ? 'right' : 'wrong'}`);
     setTimeout(() => Turn.over(), 700);
   });
 
-  // ---------- the back: fan off and fan on, same scale ----------
+  // ---------- the back: fan off and fan on, the same mouse at the same scale ----------
   function drawBack(animate) {
     svg2.innerHTML = '';
-    const {W, H} = Kit.fitSvg(svg2), fs = Math.max(12, Math.min(13, W / 30));
-    const fy = H - 3;
-    const n = Math.max(TRUE, N);
-    const mw = Math.max(40, Math.min(W * .34, 220, H * 1.05)), sw = mw > 150 ? 3 : 2.2;
-    const c1 = W * .2, c2 = W * .66;
-    const floor = shape('line', {x1: 0, x2: W, y1: fy, y2: fy}, svg2, 'stroke:var(--k);stroke-width:2;stroke-linecap:round');
-    const g1 = Kit.mk('g', {}, svg2), g2 = Kit.mk('g', {}, svg2);
-    const m1 = mouse(g1, c1, fy, mw, sw, false), m2 = mouse(g2, c2, fy, mw, sw, true);
-    const top = m2.top, bw = mw * .42;
-    const bh = Math.max(4, Math.min(bw * .36, (top - fs * .6) / (n + .2)));
-
+    const {W, H} = Kit.fitSvg(svg2);
+    if (W < 80 || H < 60) return;
+    const fs = clamp(W / 26, 12, 13.5), n = Math.max(TRUE, N);
+    const fh = clamp(H * .07, 8, 18), fy = H - fh;
+    const c1 = W * .24, c2 = W * .67;
+    const mw = Math.min(W * .41, (fy - fs * 2) / (.44 + (n + .3) * .144));
+    const ground = mk('g', {}, svg2);
+    maze(ground, W, fy, fh, mw, false);
+    const g1 = mk('g', {}, svg2), g2 = mk('g', {}, svg2);
+    const m1 = mouse(g1, c1, fy, mw, false, 0), m2 = mouse(g2, c2, fy, mw, true, 0);
+    const bw = mw * .36, bh = clamp((m2.top - 4) / (n + .3), 4, bw * .95);
     // fan off: its own weight
-    blockO(g1, c1, m1.top, bw, bh, sw);
-    const own = txt(g1, c1, m1.top - bh - fs * .6, 'its weight', {'text-anchor': 'middle', 'font-size': fs});
+    block(g1, c1, m1.top, bw, bh, STONE);
+    const own = txt(g1, c1, m1.top - bh - fs * .5, 'its weight', fs, {'text-anchor': 'middle'});
     fit(own, W);
-
-    // fan on: five blocks of pull, same block size
+    // fan on: five blocks of pull, the same size
     const blocks = [];
-    for (let i = 0; i < TRUE; i++) blocks.push(block(g2, c2, top - i * bh, bw, bh, 'fill:var(--k)'));
-
-    // the number, and what it counts: the label's cap height plus the hero's descent keep them apart
-    const hs = Math.max(1, Math.min(56, W * .12, bh * 2.6));
-    const hx = c2 - bw / 2 - 10;
-    let yl = top - bh * .6, yh = yl - fs * 1.05 - hs * .3;
-    if (yh - hs * .8 < 0) { const d = hs * .8 - yh; yh += d; yl += d; }
-    const heroG = Kit.mk('g', {}, svg2);
-    const hero = txt(heroG, hx, yh, '5×', {'text-anchor': 'end'}, `font-family:var(--display);font-size:${hs}px;font-weight:800`);
-    const pull = txt(heroG, hx, yl, "fan's pull", {'text-anchor': 'end', 'font-size': fs});
+    for (let i = 0; i < TRUE; i++) blocks.push(block(g2, c2, m2.top - i * bh, bw, bh, BLOCK));
+    // the number and what it counts, to the left of the stack, above "its weight"
+    const hs = clamp(Math.min(54, W * .14, bh * 2.2), 20, 54), hx = c2 - bw / 2 - 8;
+    const ownTop = m1.top - bh - fs * 1.45;
+    let yl = Math.min(m2.top - TRUE * bh * .45, ownTop - 6), yh = yl - fs * 1.05 - hs * .27 - 3;
+    if (yh - hs * .75 < 0) { const d = hs * .75 - yh; yh += d; yl += d; }
+    const heroG = mk('g', {}, svg2);
+    const hero = txt(heroG, hx, yh, '5×', hs, {'text-anchor': 'end', 'font-weight': 800, 'font-family': 'Fraunces, serif'});
+    const pull = txt(heroG, hx, yl, "fan's pull", fs, {'text-anchor': 'end'});
     fit(hero, W); fit(pull, W);
-    // measured guard: if the real glyph boxes still touch, open the gap
-    try {
-      const hb = hero.getBBox(), pb = pull.getBBox();
-      const ov = hb.y + hb.height + 3 - pb.y;
-      if (ov > 0) {
-        const upRoom = Math.max(0, hb.y - 1), mv = Math.min(ov, upRoom);
-        hero.setAttribute('y', +hero.getAttribute('y') - mv);
-        if (ov - mv > 0) pull.setAttribute('y', +pull.getAttribute('y') + (ov - mv));
-      }
-    } catch (e) {}
-
-    // the reader's guess: a short level mark out to the right
-    const sx = c2 + bw / 2, gy = top - N * bh;
-    const guess = Kit.mk('g', {}, svg2);
-    shape('line', {x1: sx + 4, x2: sx + 22, y1: gy, y2: gy}, guess, 'stroke:var(--k);stroke-width:1.5;stroke-dasharray:4 3');
-    const gl = txt(guess, sx + 28, gy + fs * .35, 'you: ×' + N, {'font-size': fs}, 'font-weight:600');
+    // the reader's guess: a dashed level across the stack, its words to the right
+    const sx = c2 + bw / 2, gy = m2.top - N * bh;
+    const guess = mk('g', {}, svg2);
+    mk('line', {x1: c2 - bw / 2 - 3, x2: sx + 16, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2.2, 'stroke-dasharray': '5 3.5'}, guess);
+    const gl = txt(guess, sx + 20, gy + fs * .35, 'you: ×' + N, fs, {'font-weight': 600});
     fit(gl, W);
-
     if (!animate || Kit.calm) return;
     gsap.timeline()
-      .from([floor, g1, g2], {opacity: 0, y: 8, duration: .5, stagger: .06, ease: 'power2.out'})
+      .from([ground, g1, g2], {opacity: 0, y: 8, duration: .5, stagger: .06, ease: 'power2.out'})
       .from(blocks, {opacity: 0, y: -bh * 1.5, duration: .35, stagger: .14, ease: 'power3.out'}, '+=.15')
       .from(heroG, {opacity: 0, x: -10, duration: .45, ease: 'power2.out'}, '-=.1')
       .from(guess, {opacity: 0, duration: .45, ease: 'power2.out'}, '+=.2');
@@ -254,10 +241,14 @@ const Turn = {
 
   Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
   Kit.onEnter.card = () => {};
+  // Each face is drawn again at the size it now has whenever its room changes.
+  let s1 = '', s2 = '';
+  new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (s1 && k !== s1) drawFront(); s1 = k; }).observe(svg);
+  new ResizeObserver(() => { const b = svg2.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (s2 && k !== s2 && turned) drawBack(false); s2 = k; }).observe(svg2);
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
     touched = true;
-    setN(2); paintStack(-1); ready();
+    setN(2); paintStack(-1); sure.on();
     await wait(100);
     Kit.$('sure').querySelector('[data-v="80"]').click();
     await wait(Kit.calm ? 900 : 3400);

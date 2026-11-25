@@ -170,6 +170,35 @@ class BiggerBlock extends BetBlock {
   }
 }
 
+/// Picks the figure [j] of [a] and [b] (0 for [a]) as the bigger: laid as
+/// a bet on the pair, and both cards counted read, their answers shown.
+/// What a tile and the challenge's screen both do.
+Future<void> pickBigger(
+  ExploreHost host,
+  BetSection shelf,
+  BetAnswer a,
+  BetAnswer b,
+  int j,
+) async {
+  final int bigger = a.value > b.value ? 0 : 1;
+  await layBet(
+    host,
+    shelf.section,
+    Bet(
+      kind: 'bigger',
+      section: shelf.id,
+      pill: a.pill.id,
+      other: b.pill.id,
+      said: '$j',
+      right: j == bigger,
+      facts: {'a': a.value, 'b': b.value, 'gap': (a.value - b.value).abs()},
+      at: DateTime.now().millisecondsSinceEpoch,
+    ),
+  );
+  revealCard(host, shelf.section, a.pill);
+  revealCard(host, shelf.section, b.pill);
+}
+
 /// Two figures, and an "or" between them.
 class BiggerPair extends StatelessWidget {
   const BiggerPair({
@@ -232,22 +261,7 @@ class BiggerPair extends StatelessWidget {
 
     Future<void> pick(int j) async {
       BetFeel.lay();
-      await layBet(
-        host,
-        shelf.section,
-        Bet(
-          kind: 'bigger',
-          section: shelf.id,
-          pill: a.pill.id,
-          other: b.pill.id,
-          said: '$j',
-          right: j == bigger,
-          facts: {'a': a.value, 'b': b.value, 'gap': (a.value - b.value).abs()},
-          at: DateTime.now().millisecondsSinceEpoch,
-        ),
-      );
-      revealCard(host, shelf.section, a.pill);
-      revealCard(host, shelf.section, b.pill);
+      await pickBigger(host, shelf, a, b, j);
     }
 
     Widget half(int j, BetAnswer c) => _Figure(

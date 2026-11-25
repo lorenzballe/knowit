@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive chart of blood alcohol over time after one 8.6% beer, with a dashed line the reader drags up or down to set a point. The reader is asked where their own blood alcohol is 2 hours 55 minutes after the drink."
+    "label": "A drinker drawn as a glass, graduated from 0 to 0.6 g/L, sitting at a table beside a bottle of 8.6% beer and a full glass of it. The reader drags the level of alcohol in the drinker up or down to guess their own blood alcohol 2 hours 55 minutes after that one beer."
   },
   "source": "Geopop, “Abbiamo bevuto una birra da 8,6% e fatto l'alcol test con un etilometro professionale ogni 10 minuti” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=iEM_OvUoolY&t=294s",

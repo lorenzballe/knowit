@@ -7344,23 +7344,569 @@ abstract class AppLocalizations {
   /// **'Go to today\'s cards'**
   String get exploreDayOpen;
 
-  /// Explore, the quick games: on the Sixty seconds tile, the most claims the reader ever got right in one round, of eight.
-  ///
-  /// In en, this message translates to:
-  /// **'Your record {n}/{of}'**
-  String exploreSixtyRecord(int n, int of);
-
-  /// Explore, the quick games: on the Sixty seconds tile, before the reader has played a round.
-  ///
-  /// In en, this message translates to:
-  /// **'Set your record'**
-  String get exploreSixtyFirst;
-
   /// Explore: a game opened on a page of its own, when it has nothing to play right now.
   ///
   /// In en, this message translates to:
   /// **'Nothing to play here right now. Come back tomorrow.'**
   String get exploreGameNone;
+
+  /// Explore: the name of the section of games — Sixty seconds, Spot the false one and the others, four to a page — when the remote document gives it none. Short: a section's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenges'**
+  String get challengesTitle;
+
+  /// Explore, the challenges: the line under the section's name, when the remote document gives it none. Serious and plain: what they are, how long they take.
+  ///
+  /// In en, this message translates to:
+  /// **'Short exercises in judgement and estimation, a few minutes each.'**
+  String get challengesLine;
+
+  /// Explore, the challenges: the dots under the pages of games, as a screen reader says them — the page showing and how many there are.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {n} of {of}'**
+  String challengesPage(int n, int of);
+
+  /// A challenge opened on the whole screen from Explore's challenges: the button that begins it. One short word: Begin, never Play.
+  ///
+  /// In en, this message translates to:
+  /// **'Begin'**
+  String get gamePlay;
+
+  /// Sixty seconds on the whole screen, before the round, under its name: what it is and what it measures, and why that matters, in two sentences. Plain and serious.
+  ///
+  /// In en, this message translates to:
+  /// **'Eight claims, true or false, in one minute. It measures how well you judge at speed, the way most of what we read is judged.'**
+  String get sixtyRules;
+
+  /// Sixty seconds on the whole screen, at the end of a round: over the round's eight claims again, each with whether the reader got it right. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The eight claims'**
+  String get sixtyReview;
+
+  /// A game played on the whole screen: an answer just given was right — said by a screen reader as it is given, and beside a claim at the end. Not the word for 'true': in Sixty seconds a claim is true or false, and an answer right or wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get gameRight;
+
+  /// A game played on the whole screen: an answer just given was wrong. Not the word for 'false' (see gameRight).
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong'**
+  String get gameWrong;
+
+  /// Sixty seconds, at the end of a round: a claim the time ran out on before the reader answered it, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'No answer'**
+  String get gameUnanswered;
+
+  /// At the end of a game played on the whole screen: over the name of the next game of Explore's challenges, which a tap opens. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Next challenge'**
+  String get gameNext;
+
+  /// First line of the message a round of Sixty seconds is sent in: the app, the game's name, and the day.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute · Sixty seconds · {date}'**
+  String sixtyShareHead(String date);
+
+  /// Second line of the message a round of Sixty seconds is sent in: how many of the claims were right, and in how many seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} right · {s} s'**
+  String sixtyShareScore(int n, int of, int s);
+
+  /// Sixty seconds on the whole screen, during the round: the clock, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'{s, plural, =1{1 second left} other{{s} seconds left}}'**
+  String sixtySecondsLeftLabel(int s);
+
+  /// At the end of a challenge played on the whole screen: the heading over the round's cards again, each as it went. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The cards'**
+  String get gameReview;
+
+  /// At the end of a challenge whose answers are the cards' own, played once a day: where Play again would be, when the next round comes. Short, beside the Share button.
+  ///
+  /// In en, this message translates to:
+  /// **'New round tomorrow'**
+  String get gameTomorrow;
+
+  /// The first moment of a challenge on the whole screen: the big button, on a round already begun today.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get gameContinue;
+
+  /// First line of the message a challenge's score is sent in: the app, the game's name, and the day.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute · {game} · {date}'**
+  String gameShareHead(String game, String date);
+
+  /// Second line of the message a challenge's score is sent in: how many were right, of how many.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} right'**
+  String gameShareScore(int n, int of);
+
+  /// The first moment of a challenge on the whole screen, under its rules: how many cards today's round has.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 card today} other{{n} cards today}}'**
+  String gameCardsToday(int n);
+
+  /// At the end of a challenge: the line under the score when every card was right.
+  ///
+  /// In en, this message translates to:
+  /// **'Every one right.'**
+  String get gameAllRight;
+
+  /// A number of points in a challenge: won on the bets, or scored on the years. Shown after a plus or minus sign where it is a gain or a loss.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 point} other{{n} points}}'**
+  String gamePoints(int n);
+
+  /// A challenge on the whole screen, after its last card: the big button to the score.
+  ///
+  /// In en, this message translates to:
+  /// **'See how it went'**
+  String get gameSeeResult;
+
+  /// A challenge on the whole screen, after a card is told: the big button to the next card.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get gameNextCard;
+
+  /// Spot the false one on the whole screen, before playing: how often it can be played.
+  ///
+  /// In en, this message translates to:
+  /// **'One pick a day'**
+  String get spotOnce;
+
+  /// Spot the false one on the whole screen: the claim picked was the false one.
+  ///
+  /// In en, this message translates to:
+  /// **'You spotted the false one.'**
+  String get spotGotIt;
+
+  /// Spot the false one on the whole screen: the claim picked was true.
+  ///
+  /// In en, this message translates to:
+  /// **'Not that one: it\'s true.'**
+  String get spotMissedIt;
+
+  /// True or false on the whole screen: its rules, in a line, before playing.
+  ///
+  /// In en, this message translates to:
+  /// **'Say true or false, then see why. Most people get these wrong.'**
+  String get tfRules;
+
+  /// Explore, the challenges: the name of the game of putting four moments from the cards in the order they happened. Short: a tile's name.
+  ///
+  /// In en, this message translates to:
+  /// **'In order'**
+  String get inOrderTitle;
+
+  /// In order, before the round, under its name: what it is and what it measures, and why that matters, in two sentences. Plain and serious.
+  ///
+  /// In en, this message translates to:
+  /// **'Four moments from the cards, their years taken out, to put in the order they happened. It measures your sense of chronology, the first test of any explanation: a cause comes before its effect.'**
+  String get inOrderRules;
+
+  /// In order, while playing, before any moment is placed: what to tap first.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the earliest'**
+  String get inOrderFirst;
+
+  /// In order, while playing, once one or more moments are placed: what to tap next.
+  ///
+  /// In en, this message translates to:
+  /// **'Now the next one'**
+  String get inOrderNext;
+
+  /// In order, while playing, once every moment is placed: the order can be checked.
+  ///
+  /// In en, this message translates to:
+  /// **'All placed. Check it?'**
+  String get inOrderReady;
+
+  /// In order, while playing: the big button that checks the order the moments were put in.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the order'**
+  String get inOrderCheck;
+
+  /// In order, while playing: where a moment was put, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'In place {n}'**
+  String inOrderPlaced(int n);
+
+  /// In order, at the end, under a moment: the place the reader had put it in.
+  ///
+  /// In en, this message translates to:
+  /// **'Your place: {n}'**
+  String inOrderYours(int n);
+
+  /// In order, at the end: the line under the score when every moment was in its place.
+  ///
+  /// In en, this message translates to:
+  /// **'Every one in its place.'**
+  String get inOrderPerfect;
+
+  /// The games of time: the gap where a moment's year is hidden, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'a missing year'**
+  String get timeGap;
+
+  /// Explore, the challenges: the name of the game of guessing the year a moment from the cards happened. Short: a tile's name.
+  ///
+  /// In en, this message translates to:
+  /// **'What year?'**
+  String get whatYearTitle;
+
+  /// What year?, before playing: its rules, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Three moments, each missing its year. Dial it in: the closer, the more points.'**
+  String get whatYearRules;
+
+  /// What year?: the points scored, of the most there were, as a screen reader says the score and as the score is sent on.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} points'**
+  String whatYearPoints(int n, int of);
+
+  /// What year?, at the end: the line under the score when every year was exactly right.
+  ///
+  /// In en, this message translates to:
+  /// **'Every year exactly right.'**
+  String get whatYearPerfect;
+
+  /// What year?, at the end: the line under the score, how many years off the guesses were, all added up.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 year off in all} other{{n} years off in all}}'**
+  String whatYearOffInAll(int n);
+
+  /// What year?: under a moment once told, the year the reader dialled and the points it scored.
+  ///
+  /// In en, this message translates to:
+  /// **'You said {guess} · +{points}'**
+  String whatYearSaid(String guess, int points);
+
+  /// What year?: a year dialled exactly, and the points it scored. Calm, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Exact year, +{points}'**
+  String whatYearExact(int points);
+
+  /// What year?: how many years off a dialled year was.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 year off} other{{n} years off}}'**
+  String whatYearOff(int n);
+
+  /// What year?: a button that moves the dial back, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 year earlier} other{{n} years earlier}}'**
+  String whatYearEarlier(int n);
+
+  /// What year?: a button that moves the dial on, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 year later} other{{n} years later}}'**
+  String whatYearLater(int n);
+
+  /// What year?: the dial of the years, as a screen reader names it.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get whatYearDial;
+
+  /// Explore, the challenges: the name of the game of saying whether each moment from the cards happened before or after the one before it. Short: a tile's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Before or after?'**
+  String get beforeAfterTitle;
+
+  /// Before or after?, before playing: its rules, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Six moments, one after another. Did each happen before or after the one above it?'**
+  String get beforeAfterRules;
+
+  /// Before or after?: the button that says the moment happened before the one above it.
+  ///
+  /// In en, this message translates to:
+  /// **'Before'**
+  String get beforeAfterBefore;
+
+  /// Before or after?: the button that says the moment happened after the one above it.
+  ///
+  /// In en, this message translates to:
+  /// **'After'**
+  String get beforeAfterAfter;
+
+  /// Before or after?, while playing: the question beside the picture, with the year of the moment above.
+  ///
+  /// In en, this message translates to:
+  /// **'Before or after {year}?'**
+  String beforeAfterAsk(String year);
+
+  /// Before or after?, at the end, under a moment: the reader said it happened before the year of the one above it.
+  ///
+  /// In en, this message translates to:
+  /// **'You said: before {year}'**
+  String beforeAfterSaidBefore(String year);
+
+  /// Before or after?, at the end, under a moment: the reader said it happened after the year of the one above it.
+  ///
+  /// In en, this message translates to:
+  /// **'You said: after {year}'**
+  String beforeAfterSaidAfter(String year);
+
+  /// Before or after?, at the end, under the first moment: the one the chain began from, which was not asked.
+  ///
+  /// In en, this message translates to:
+  /// **'Where the chain began'**
+  String get beforeAfterStart;
+
+  /// Before or after?, at the end: the line under the score when every call was right.
+  ///
+  /// In en, this message translates to:
+  /// **'Not one out of place.'**
+  String get beforeAfterPerfect;
+
+  /// Which is bigger? on the whole screen, under its rules: how many pairs of figures today's round has.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 pair today} other{{n} pairs today}}'**
+  String biggerPairsToday(int n);
+
+  /// Explore, the challenges: in small capitals at the top of Sixty seconds (eight claims, true or false, in a minute)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Intuition'**
+  String get sixtySkill;
+
+  /// Explore, the challenges: in small capitals at the top of Spot the false one (four claims, one false)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Discernment'**
+  String get spotSkill;
+
+  /// Explore, the challenges: in small capitals at the top of True or false (the claims most people get wrong)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Judgement'**
+  String get tfSkill;
+
+  /// Explore, the challenges: in small capitals at the top of Which is bigger? (two figures compared)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Proportion'**
+  String get biggerSkill;
+
+  /// Explore, the challenges: in small capitals at the top of Closer, closer (a figure closed in on, more or less)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimation'**
+  String get closerSkill;
+
+  /// Explore, the challenges: in small capitals at the top of Orders of magnitude (the power of ten of a figure)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Scale'**
+  String get magnitudeSkill;
+
+  /// Explore, the challenges: in small capitals at the top of Bet a range (an interval sure to hold the answer)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibration'**
+  String get rangeSkill;
+
+  /// Explore, the challenges: in small capitals at the top of Place your bet (points staked on how sure)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Conviction'**
+  String get stakeSkill;
+
+  /// Explore, the challenges: in small capitals at the top of Your number (one figure, committed to)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Precision'**
+  String get numberSkill;
+
+  /// Explore, the challenges: in small capitals at the top of In order (four moments put in the order they happened)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Chronology'**
+  String get inOrderSkill;
+
+  /// Explore, the challenges: in small capitals at the top of What year? (the year of a moment, dialled in)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Dating'**
+  String get whatYearSkill;
+
+  /// Explore, the challenges: in small capitals at the top of Before or after? (each moment against the one before)'s tile and over its name on its screen, the skill it trains. One or two words, a noun, like the name of a subject: short enough for half a phone's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Sequence'**
+  String get beforeAfterSkill;
+
+  /// Explore, the challenges: on Sixty seconds's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'Eight claims against the clock.'**
+  String get sixtyAsks;
+
+  /// Explore, the challenges: on Spot the false one's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'Four claims, one of them false.'**
+  String get spotAsks;
+
+  /// Explore, the challenges: on True or false's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'Claims most people get wrong.'**
+  String get tfAsks;
+
+  /// Explore, the challenges: on Which is bigger?'s tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'Two figures. Which is larger?'**
+  String get biggerAsks;
+
+  /// Explore, the challenges: on Closer, closer's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'Close in on a figure, step by step.'**
+  String get closerAsks;
+
+  /// Explore, the challenges: on Orders of magnitude's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the right power of ten.'**
+  String get magnitudeAsks;
+
+  /// Explore, the challenges: on Bet a range's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'A range just wide enough.'**
+  String get rangeAsks;
+
+  /// Explore, the challenges: on Place your bet's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'Stake points on how sure you are.'**
+  String get stakeAsks;
+
+  /// Explore, the challenges: on Your number's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'Commit to a single figure.'**
+  String get numberAsks;
+
+  /// Explore, the challenges: on In order's tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'Four moments, earliest first.'**
+  String get inOrderAsks;
+
+  /// Explore, the challenges: on What year?'s tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'Place a moment in its year.'**
+  String get whatYearAsks;
+
+  /// Explore, the challenges: on Before or after?'s tile, under its name, what it asks, in one quiet line. A short sentence, no exclamation mark; it may take two lines on a small phone, never more.
+  ///
+  /// In en, this message translates to:
+  /// **'Each moment against the last.'**
+  String get beforeAfterAsks;
+
+  /// A challenge: the name of the reader's own best score, on its tile, before it and in its report beside the figure ('Best 6/8'). One short word.
+  ///
+  /// In en, this message translates to:
+  /// **'Best'**
+  String get challengeBest;
+
+  /// A challenge's tile: the name of today's score, beside it ('Today 3/4'), once today's round is over. One short word.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get challengeToday;
+
+  /// A challenge's report: the name of the share of answers given that were right, beside it as a percentage. Not the same word as numberSkill.
+  ///
+  /// In en, this message translates to:
+  /// **'Accuracy'**
+  String get challengeAccuracy;
+
+  /// A challenge's report: the name of how long the round took, beside it in seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get challengeTime;
+
+  /// A challenge's report: a number of seconds, short, in tabular figures ('41 s').
+  ///
+  /// In en, this message translates to:
+  /// **'{s} s'**
+  String challengeSeconds(int s);
+
+  /// A challenge's report: under the score, when the round beat the reader's best. Said plainly, as words, without an exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal best'**
+  String get challengePersonalBest;
+
+  /// A challenge's report, the measured line reading the score: it is above what guessing alone gets, on average {n} right of {of}. Calm and factual, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Above chance: guessing alone averages {n} of {of}.'**
+  String challengeAboveChance(int n, int of);
+
+  /// A challenge's report, the measured line reading the score: it is level with what guessing alone gets, on average {n} right of {of}. Calm and factual, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Level with chance: guessing alone averages {n} of {of}.'**
+  String challengeAtChance(int n, int of);
+
+  /// A challenge's report, the measured line reading the score: it is below what guessing alone gets, on average {n} right of {of}. Calm and factual, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Below chance: guessing alone averages {n} of {of}.'**
+  String challengeBelowChance(int n, int of);
+
+  /// Sixty seconds' report, the line reading the score when the minute ran out before every claim was answered: how many were left. Calm, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{The time ran out with one claim unanswered.} other{The time ran out with {n} claims unanswered.}}'**
+  String sixtyUnanswered(int n);
+
+  /// A challenge's report, at its foot: the button that takes another round of the same challenge today. Not 'Play': a serious tool's words.
+  ///
+  /// In en, this message translates to:
+  /// **'Another round'**
+  String get challengeAgain;
 
   /// Explore, the subjects with their levels: one subject's ring, said to a screen reader. The level is 1 to 10.
   ///
@@ -8189,6 +8735,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'With Astute+'**
   String get deeperPlusOnly;
+
+  /// Go deeper, Astute+: under the name of the part that asks Claude to explain the card simply, what it gives, before it is asked.
+  ///
+  /// In en, this message translates to:
+  /// **'The card\'s idea, the way you\'d tell a curious ten-year-old.'**
+  String get deeperSimpleLead;
+
+  /// Go deeper, Astute+: under the name of the part that asks Claude for both sides of the card's question, what it gives, before it is asked.
+  ///
+  /// In en, this message translates to:
+  /// **'The strongest case on each side, and what would settle it.'**
+  String get deeperSidesLead;
+
+  /// Go deeper, Astute+: under the name of the part that asks Claude for an everyday example of the card's idea, what it gives, before it is asked.
+  ///
+  /// In en, this message translates to:
+  /// **'A moment from an ordinary day where this idea shows up.'**
+  String get deeperExampleLead;
+
+  /// Go deeper, Astute+: under the name of the part that asks Claude for a new multiple-choice question on the card's idea, what it gives: one question, three answers to pick from.
+  ///
+  /// In en, this message translates to:
+  /// **'A case the card doesn\'t mention: one question, three answers.'**
+  String get deeperQuizLead;
+
+  /// Go deeper, Astute+: under the name of the part where the reader writes their own reasoning about the card, what Claude says back: what is strong in it, its weakest step, and a question that tests it.
+  ///
+  /// In en, this message translates to:
+  /// **'What holds in your reasoning, where it slips, and a question to test it.'**
+  String get deeperYourTakeLead;
+
+  /// Go deeper, Astute+: under the name of the part where the reader asks Claude their own question about the card.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything the card left you wondering about.'**
+  String get deeperAskLead;
+
+  /// Go deeper, the two views facing each other: the name over the first view when the card gives it no label of its own.
+  ///
+  /// In en, this message translates to:
+  /// **'One side'**
+  String get deeperSideA;
+
+  /// Go deeper, the two views facing each other: the name over the second view when the card gives it no label of its own, and over a debate card's other side.
+  ///
+  /// In en, this message translates to:
+  /// **'The other side'**
+  String get deeperSideB;
+
+  /// Go deeper: the short word on the disc between the two views facing each other, as on a poster for a match. Two or three letters; keep VS where it is understood.
+  ///
+  /// In en, this message translates to:
+  /// **'VS'**
+  String get deeperVersus;
+
+  /// Go deeper: the button under 'It didn't come through' that asks Claude again.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get deeperRetry;
+
+  /// Go deeper, Astute+: the button that asks Claude to explain the card simply, under the part's name 'Explain it simply'. Short: it sits on one line beside a spark.
+  ///
+  /// In en, this message translates to:
+  /// **'Explain it'**
+  String get deeperSimpleGo;
+
+  /// Go deeper, Astute+: the button that asks Claude for the strongest case on each side of the card's question, under the part's name 'Both sides'. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'Show me both sides'**
+  String get deeperSidesGo;
+
+  /// Go deeper, Astute+: the button that asks Claude for an everyday example of the card's idea, under the part's name 'An example from everyday life'. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'Give me an example'**
+  String get deeperExampleGo;
+
+  /// Go deeper, Astute+: the button that asks Claude for a new question on the card's idea, under the part's name 'Test me on a new case'. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'Test me'**
+  String get deeperQuizGo;
 
   /// Books in pills, the Explore row of books in a few cards: bookOfTheWeek
   ///

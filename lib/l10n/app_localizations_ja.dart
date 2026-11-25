@@ -5018,15 +5018,385 @@ class AppLocalizationsJa extends AppLocalizations {
   String get exploreDayOpen => '今日のカードへ';
 
   @override
-  String exploreSixtyRecord(int n, int of) {
-    return '自己ベスト $n/$of';
+  String get exploreGameNone => '今は遊べるものがありません。また明日。';
+
+  @override
+  String get challengesTitle => 'チャレンジ';
+
+  @override
+  String get challengesLine => '判断と見積もりの短い練習。どれも数分で終わります。';
+
+  @override
+  String challengesPage(int n, int of) {
+    return '$ofページ中$nページ目';
   }
 
   @override
-  String get exploreSixtyFirst => '記録をつくろう';
+  String get gamePlay => '始める';
 
   @override
-  String get exploreGameNone => '今は遊べるものがありません。また明日。';
+  String get sixtyRules =>
+      '8つの主張を、1分で正しいか間違いか判断します。急いで判断する力を測ります。私たちが読むものの大半は、そうして判断されています。';
+
+  @override
+  String get sixtyReview => '8つの主張';
+
+  @override
+  String get gameRight => '正解';
+
+  @override
+  String get gameWrong => '不正解';
+
+  @override
+  String get gameUnanswered => '未回答';
+
+  @override
+  String get gameNext => '次のチャレンジ';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · 60秒 · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$of問中$n問正解 · $s秒';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: '残り$s秒',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameReview => 'カード';
+
+  @override
+  String get gameTomorrow => '次のラウンドは明日';
+
+  @override
+  String get gameContinue => '続ける';
+
+  @override
+  String gameShareHead(String game, String date) {
+    return 'Astute · $game · $date';
+  }
+
+  @override
+  String gameShareScore(int n, int of) {
+    return '$of問中$n問正解';
+  }
+
+  @override
+  String gameCardsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今日は$n枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameAllRight => '全問正解。';
+
+  @override
+  String gamePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$nポイント',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameSeeResult => '結果を見る';
+
+  @override
+  String get gameNextCard => '次へ';
+
+  @override
+  String get spotOnce => '選べるのは1日1回';
+
+  @override
+  String get spotGotIt => '間違いを見抜いた。';
+
+  @override
+  String get spotMissedIt => 'それではない。それは正しい。';
+
+  @override
+  String get tfRules => '正しいか間違いかを答えて、理由を見よう。たいていの人が間違えます。';
+
+  @override
+  String get inOrderTitle => '時代順';
+
+  @override
+  String get inOrderRules =>
+      'カードから4つの出来事。年は伏せてあります。起きた順に並べてください。時系列の感覚を測ります。原因は結果より先に起こる、あらゆる説明の最初の試金石です。';
+
+  @override
+  String get inOrderFirst => 'いちばん古いものをタップ';
+
+  @override
+  String get inOrderNext => '次に古いものは？';
+
+  @override
+  String get inOrderReady => '全部並べたら確認しよう';
+
+  @override
+  String get inOrderCheck => '順番を確認';
+
+  @override
+  String inOrderPlaced(int n) {
+    return '$n番目';
+  }
+
+  @override
+  String inOrderYours(int n) {
+    return 'あなたの順番：$n';
+  }
+
+  @override
+  String get inOrderPerfect => 'すべて正しい順番。';
+
+  @override
+  String get timeGap => '伏せられた年';
+
+  @override
+  String get whatYearTitle => '何年？';
+
+  @override
+  String get whatYearRules => '年が伏せられた3つの出来事。ダイヤルで年を合わせよう。近いほど高得点。';
+
+  @override
+  String whatYearPoints(int n, int of) {
+    return '$of点中$n点';
+  }
+
+  @override
+  String get whatYearPerfect => 'すべての年がぴったり。';
+
+  @override
+  String whatYearOffInAll(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '合計$n年のずれ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearSaid(String guess, int points) {
+    return 'あなたの答え：$guess・+$points';
+  }
+
+  @override
+  String whatYearExact(int points) {
+    return '年までぴったり。+$points';
+  }
+
+  @override
+  String whatYearOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n年のずれ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearEarlier(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n年前へ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearLater(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n年後へ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whatYearDial => '年';
+
+  @override
+  String get beforeAfterTitle => '前か後か？';
+
+  @override
+  String get beforeAfterRules => '6つの出来事が順に出てきます。それぞれ上の出来事より前か後か？';
+
+  @override
+  String get beforeAfterBefore => '前';
+
+  @override
+  String get beforeAfterAfter => '後';
+
+  @override
+  String beforeAfterAsk(String year) {
+    return '$year年より前？後？';
+  }
+
+  @override
+  String beforeAfterSaidBefore(String year) {
+    return 'あなたの答え：$year年より前';
+  }
+
+  @override
+  String beforeAfterSaidAfter(String year) {
+    return 'あなたの答え：$year年より後';
+  }
+
+  @override
+  String get beforeAfterStart => 'ここから始まり';
+
+  @override
+  String get beforeAfterPerfect => 'ひとつも外さなかった。';
+
+  @override
+  String biggerPairsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今日は$n組',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixtySkill => '直感';
+
+  @override
+  String get spotSkill => '見極め';
+
+  @override
+  String get tfSkill => '判断';
+
+  @override
+  String get biggerSkill => '比較';
+
+  @override
+  String get closerSkill => '見積もり';
+
+  @override
+  String get magnitudeSkill => '桁感覚';
+
+  @override
+  String get rangeSkill => '較正';
+
+  @override
+  String get stakeSkill => '確信';
+
+  @override
+  String get numberSkill => '精度';
+
+  @override
+  String get inOrderSkill => '時系列';
+
+  @override
+  String get whatYearSkill => '年代推定';
+
+  @override
+  String get beforeAfterSkill => '前後関係';
+
+  @override
+  String get sixtyAsks => '1分間で8つの主張。';
+
+  @override
+  String get spotAsks => '4つの主張、1つだけが誤り。';
+
+  @override
+  String get tfAsks => '多くの人が間違える主張。';
+
+  @override
+  String get biggerAsks => '2つの数字。大きいのはどちら？';
+
+  @override
+  String get closerAsks => '一歩ずつ、数字に近づく。';
+
+  @override
+  String get magnitudeAsks => '正しい10の累乗を見つける。';
+
+  @override
+  String get rangeAsks => 'ちょうどよい幅の範囲を。';
+
+  @override
+  String get stakeAsks => '確信の度合いに応じて賭ける。';
+
+  @override
+  String get numberAsks => 'ひとつの数字に決める。';
+
+  @override
+  String get inOrderAsks => '4つの出来事を古い順に。';
+
+  @override
+  String get whatYearAsks => '出来事を、その年に置く。';
+
+  @override
+  String get beforeAfterAsks => '直前の出来事と比べて前か後か。';
+
+  @override
+  String get challengeBest => '自己ベスト';
+
+  @override
+  String get challengeToday => '今日';
+
+  @override
+  String get challengeAccuracy => '正答率';
+
+  @override
+  String get challengeTime => '時間';
+
+  @override
+  String challengeSeconds(int s) {
+    return '$s秒';
+  }
+
+  @override
+  String get challengePersonalBest => '自己ベスト';
+
+  @override
+  String challengeAboveChance(int n, int of) {
+    return '偶然を上回る結果です。当てずっぽうなら平均で$of中$n。';
+  }
+
+  @override
+  String challengeAtChance(int n, int of) {
+    return '偶然と同じ水準です。当てずっぽうなら平均で$of中$n。';
+  }
+
+  @override
+  String challengeBelowChance(int n, int of) {
+    return '偶然を下回る結果です。当てずっぽうなら平均で$of中$n。';
+  }
+
+  @override
+  String sixtyUnanswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '時間切れで、$nつの主張が未回答のままです。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAgain => 'もう一度';
 
   @override
   String exploreSubjectLevel(String subject, int n) {
@@ -5567,6 +5937,48 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get deeperPlusOnly => 'Astute+ で';
+
+  @override
+  String get deeperSimpleLead => 'このカードの考えを、好奇心いっぱいの10歳に話すように。';
+
+  @override
+  String get deeperSidesLead => 'それぞれの立場のいちばん強い言い分と、決め手になるもの。';
+
+  @override
+  String get deeperExampleLead => 'ふつうの一日の中で、この考えが顔を出す瞬間。';
+
+  @override
+  String get deeperQuizLead => 'カードにない場面で、問題がひとつ、答えが三つ。';
+
+  @override
+  String get deeperYourTakeLead => 'あなたの考えの筋が通っているところ、つまずくところ、そして確かめるための質問。';
+
+  @override
+  String get deeperAskLead => 'このカードで気になったことを、なんでも。';
+
+  @override
+  String get deeperSideA => '一方の立場';
+
+  @override
+  String get deeperSideB => 'もう一方の立場';
+
+  @override
+  String get deeperVersus => 'VS';
+
+  @override
+  String get deeperRetry => 'もう一度';
+
+  @override
+  String get deeperSimpleGo => '説明して';
+
+  @override
+  String get deeperSidesGo => '両方の立場を見せて';
+
+  @override
+  String get deeperExampleGo => '例を出して';
+
+  @override
+  String get deeperQuizGo => '試してみる';
 
   @override
   String get bookOfTheWeek => '今週の本';

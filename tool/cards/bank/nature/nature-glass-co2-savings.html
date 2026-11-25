@@ -1,5 +1,11 @@
 <!doctype html>
 <!-- slug: nature-glass-co2-savings -->
+<!-- Look: a glassworks yard, flat and stylised, in a frame with its own pale sky. On the left six crates of old
+     bottles, mixed greens and browns, one tonne each. In the middle the furnace, a brick dome with molten glass
+     glowing in its mouth, a hopper on its shoulder, a chimney; over the chimney a dark cloud of six puffs, one tonne
+     of CO2 in all. Each tap sends a crate of old bottles into the hopper, brings a crate of new bottles out of the
+     mouth into its place, and clears one puff to a dashed outline: one sixth of a tonne never emitted. Under the
+     frame, the tonnes recycled and the CO2 avoided. Drawn again at its real size whenever its room changes. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -10,7 +16,6 @@
 #pic{display:block;width:100%;flex:1;min-height:0}
 #ctl{display:flex;justify-content:center}
 #why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
 .go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 6cqw;cursor:pointer;touch-action:manipulation}
 .go:active{transform:scale(.97)}
@@ -20,10 +25,9 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">RECYCLING</span></div>
     <h2 class="q">How much CO₂ is avoided by recycling six tons of glass?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" aria-label="Recycled glass on the left, CO₂ avoided on the right"></svg>
+      <svg id="pic" role="img" aria-label="A glassworks: six crates of old bottles beside a brick furnace with glowing glass in its mouth, and over its chimney a dark cloud of six puffs, one ton of CO₂ in all. Each ton of old glass recycled clears one puff."></svg>
       <div id="ctl"><button class="go" id="go">Recycle 1 ton of glass</button></div>
       <div id="why" class="gone">
-        <p class="big">6 t of glass ≈ 1 t of CO₂ saved</p>
         <p class="body">Melting old glass replaces making new glass from raw sand, and that is far more carbon‑intensive. So every six tons recycled keep about one ton of CO₂ out of the air.</p>
       </div>
     </div>
@@ -34,76 +38,122 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-let n = 0, G = null;
-const ink = 'var(--k)', card = 'var(--c)';
+let n = 0, G = null, laid = '', glow = null;
+const svg = Kit.$('pic');
+// One ink; a pale sky and the yard's concrete; the crates' wood; old bottles in mixed greens, brown and clear, new
+// ones all one bright green; the furnace's brick and its glow, orange round a yellow core; the CO2 dark grey.
+const INK = '#10100c', SKY = '#e4f2fb', YARD = '#d9d2c3', WOOD = '#d9a15c', WOOD2 = '#b9813f', OLD = ['#2e7d4f', '#8a4b22', '#cfe6e2', '#5c8f3a'],
+  NEW = '#22b36a', GHOST = '#f3f9fd', BRICK = '#c65a3c', BRICK2 = '#a6462c', MOUTH = '#3a1f17', HOT = '#ff8a1f', CORE = '#ffd23f', STEEL = '#b9c2cb', CO2 = '#4a515c';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+const txt = (p, x, y, s, a) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': FONT, 'font-weight': 700}, a), p); e.textContent = s; return e; };
 const frac = k => k === 0 ? '0 t' : k === 6 ? '1 t' : `${k}/6 t`;
+// The cloud's six puffs, in units of its radius: three below, two over them, one on top. They clear from the top.
+const PUFFS = [[0, -1.35, .9], [-.85, -.45, 1], [.85, -.45, 1], [-1.7, .55, .95], [1.7, .55, .95], [0, .65, 1]];
+
+// Where everything goes, for the room the drawing has now.
+function lay() {
+  const r = Kit.fitSvg(svg), W = r.W, H = r.H, f = r.f;
+  if (W < 60 || H < 50) { G = null; svg.innerHTML = ''; return; }
+  const fs = clamp(f * .9, 12, 14);
+  const two = H >= 150, band = two ? fs * 3.5 : fs * 1.7;   // under the frame: the tonnes and the CO2, on two lines or one
+  const fH = H - band, y0 = fH - Math.max(8, fH * .065);     // the frame, and the yard's ground in it
+  // The crates: two columns of three, as big as the frame lets them be.
+  const cw = Math.min(W * .15, (y0 - fH * .3) / 3.4 / .62), ch = cw * .62, cx0 = Math.max(6, W * .03);
+  // The furnace: a brick dome right of the crates, its chimney rising from its back.
+  const fw = Math.min(W * .36, fH * .52), fh = fw * .64, xf = Math.max(cx0 + 2 * cw + 8 + fw * .62, W * .56);
+  const chW = fw * .17, chX = xf + fw * .14, chTop = Math.max(fH * .44, y0 - fh - fH * .2);
+  // The cloud over the chimney, as big as the sky over it allows.
+  const R = Math.min((chTop - fs * .5) / 3.6, (W - 8) / 5.4, fH * .13), ccy = chTop - R * 1.45, ccx = clamp(chX + chW / 2 + R * .3, R * 2.7 + 4, W - R * 2.7 - 4);
+  G = {W, H, f, fs, two, band, fH, y0, cw, ch, cx0, fw, fh, xf, chW, chX, chTop, R, ccx, ccy};
+  laid = `${Math.round(W)}x${Math.round(H)}`;
+  draw();
+}
+// Where crate i stands: 0 and 1 on the ground, then up; the top ones go to the furnace first.
+const slot = i => ({x: G.cx0 + (i % 2) * (G.cw + 6), y: G.y0 - (Math.floor(i / 2) + 1) * (G.ch + G.cw * .26)});
 
 function draw(prev) {
-  const svg = Kit.$('pic');
-  const {W, H, f: f0} = Kit.fitSvg(svg);
-  const f = Math.max(f0, 13);
+  if (!G) return;
+  const {W, H, fs, fH, y0, cw, ch, fw, fh, xf, chW, chX, chTop, R, ccx, ccy, two, band} = G;
   svg.innerHTML = '';
-  const yb = H - f * 3.4;               // ground line
-  const top = f * 0.6;
-  const avail = yb - top;
-  // left: stack of glass tons
-  const cx = W * 0.26;
-  const bw = Math.min(W * 0.36, H * 0.4);
-  const bh = Math.min(avail / 6.5, bw * 0.34);
-  Kit.mk('line', {x1: W * 0.04, x2: W * 0.96, y1: yb, y2: yb, style: `stroke:${ink};stroke-width:${Math.max(2, f * .14)};opacity:.35`}, svg);
-  // ghost slots
+  const rr = Math.min(16, W * .05);
+  const cp = mk('clipPath', {id: 'gl-frame'}, mk('defs', {}));
+  mk('rect', {x: 0, y: 0, width: W, height: fH, rx: rr}, cp);
+  const g = mk('g', {'clip-path': 'url(#gl-frame)'});
+  mk('rect', {x: 0, y: 0, width: W, height: fH, fill: SKY}, g);
+  mk('rect', {x: 0, y: y0, width: W, height: fH - y0, fill: YARD}, g);
+  mk('line', {x1: 0, x2: W, y1: y0, y2: y0, stroke: INK, 'stroke-width': 2.5}, g);
+  // The chimney behind the dome, and the cloud over it: filled puffs still to go, dashed ones avoided.
+  mk('rect', {x: chX, y: chTop, width: chW, height: y0 - chTop - fh * .3, fill: BRICK, stroke: INK, 'stroke-width': 2.2}, g);
+  mk('rect', {x: chX - chW * .14, y: chTop - chW * .3, width: chW * 1.28, height: chW * .38, fill: BRICK2, stroke: INK, 'stroke-width': 2.2}, g);
+  // Each puff's outline first, then every puff's fill over them, so only the cloud's own edge shows: solid round the
+  // CO2 still to go, dashed round the pale ghost of what was avoided.
+  const cleared = PUFFS.map((_, i) => i < n);
+  PUFFS.forEach(([dx, dy, k], i) => mk('circle', Object.assign({cx: ccx + dx * R, cy: ccy + dy * R, r: k * R, fill: 'none', stroke: INK}, cleared[i] ? {'stroke-width': 1.8, 'stroke-dasharray': '5 4', 'stroke-opacity': .6} : {'stroke-width': 2.2}), g));
+  PUFFS.forEach(([dx, dy, k], i) => { if (cleared[i]) mk('circle', {cx: ccx + dx * R, cy: ccy + dy * R, r: k * R - 1.2, fill: GHOST}, g); });
+  PUFFS.forEach(([dx, dy, k], i) => { if (!cleared[i]) mk('circle', {cx: ccx + dx * R, cy: ccy + dy * R, r: k * R - 1.2, fill: CO2}, g); });
+  const co2 = txt(g, ccx, ccy + R * .52, 'CO₂', {'font-size': Math.min(R * .78, fs * 2.2), 'font-weight': 800, 'font-family': SERIF, 'text-anchor': 'middle', fill: cleared[5] ? INK : '#ffffff'});
+  // The furnace: a brick dome, its courses, the hopper on its shoulder, the molten glass glowing in its mouth.
+  const dome = `M${xf - fw / 2},${y0} V${y0 - fh * .45} Q${xf - fw / 2},${y0 - fh} ${xf},${y0 - fh} Q${xf + fw / 2},${y0 - fh} ${xf + fw / 2},${y0 - fh * .45} V${y0} Z`;
+  const hx = xf - fw * .36, hy = y0 - fh * .86, hw = fw * .3;
+  mk('path', {d: `M${hx - hw / 2},${hy - hw * .55} L${hx + hw / 2},${hy - hw * .55} L${hx + hw * .16},${hy + hw * .2} L${hx - hw * .16},${hy + hw * .2} Z`, fill: STEEL, stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, g);
+  mk('path', {d: dome, fill: BRICK, stroke: INK, 'stroke-width': 2.5, 'stroke-linejoin': 'round'}, g);
+  const cp2 = mk('clipPath', {id: 'gl-dome'}, g.ownerSVGElement.querySelector('defs'));
+  mk('path', {d: dome}, cp2);
+  let courses = '';
+  for (let k = 1; k < 6; k++) { const yy = y0 - fh * k / 6; courses += `M${xf - fw / 2},${yy.toFixed(1)} H${xf + fw / 2} `; }
+  for (let k = 0; k < 6; k++) for (let j = 0; j < 5; j++) { const xx = xf - fw / 2 + fw * (j + (k % 2 ? .5 : 0)) / 4.5, yy = y0 - fh * k / 6; courses += `M${xx.toFixed(1)},${yy.toFixed(1)} V${(yy - fh / 6).toFixed(1)} `; }
+  mk('path', {d: courses, stroke: BRICK2, 'stroke-width': 1.3, fill: 'none', 'clip-path': 'url(#gl-dome)'}, g);
+  const mw = fw * .42, mh = fh * .5, mx = xf + fw * .02;
+  mk('path', {d: `M${mx - mw / 2},${y0} V${y0 - mh * .55} Q${mx - mw / 2},${y0 - mh} ${mx},${y0 - mh} Q${mx + mw / 2},${y0 - mh} ${mx + mw / 2},${y0 - mh * .55} V${y0} Z`, fill: MOUTH, stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, g);
+  glow = mk('g', {}, g);
+  mk('ellipse', {cx: mx, cy: y0 - mh * .18, rx: mw * .44, ry: mh * .22, fill: HOT}, glow);
+  mk('ellipse', {cx: mx, cy: y0 - mh * .16, rx: mw * .24, ry: mh * .11, fill: CORE}, glow);
+  // The crates: old bottles still to go, new ones in the places of those gone.
+  let fresh = null;
   for (let i = 0; i < 6; i++) {
-    const y = yb - (i + 1) * bh * 1.06;
-    Kit.mk('rect', {x: cx - bw / 2, y, width: bw, height: bh, rx: bh * .22, style: `fill:none;stroke:${ink};stroke-width:1.5;stroke-dasharray:4 4;opacity:.25`}, svg);
+    const s = slot(i), isNew = i >= 6 - n;
+    const c = crate(g, s.x, s.y, cw, ch, isNew, i);
+    if (isNew && prev !== undefined && i === 5 - prev) fresh = c;
   }
-  let newBlock = null;
-  const bf = Math.min(f, bh * .55);
-  for (let i = 0; i < n; i++) {
-    const y = yb - (i + 1) * bh * 1.06;
-    const g = Kit.mk('g', {}, svg);
-    Kit.mk('rect', {x: cx - bw / 2, y, width: bw, height: bh, rx: bh * .22, style: 'fill:#2e9c68;stroke:#14563a;stroke-width:2'}, g);
-    Kit.mk('rect', {x: cx - bw / 2 + bh * .25, y: y + bh * .18, width: bw * .35, height: bh * .16, rx: bh * .08, style: 'fill:#bff0d6;opacity:.7'}, g);
-    if (bf >= 12) {
-      const t = Kit.mk('text', {x: cx, y: y + bh * .68, 'text-anchor': 'middle', style: `font:700 ${bf}px var(--body);fill:#fff`}, g);
-      t.textContent = 'glass 1 t';
-    }
-    if (i === n - 1 && prev !== undefined && prev < n) newBlock = g;
+  mk('rect', {x: 1, y: 1, width: W - 2, height: fH - 2, rx: rr, fill: 'none', stroke: INK, 'stroke-width': 2.5});
+  // Under the frame: the tonnes recycled under the crates, the CO2 avoided under the cloud's side.
+  const vy = two ? fH + fs * 2.95 : fH + fs * 1.3;
+  if (two) { txt(svg, 2, fH + fs * 1.05, 'Glass recycled', {'font-size': fs * .9, 'font-weight': 600, opacity: .8}); txt(svg, W - 2, fH + fs * 1.05, 'CO₂ avoided', {'font-size': fs * .9, 'font-weight': 600, opacity: .8, 'text-anchor': 'end'}); }
+  txt(svg, 2, vy, two ? `${n} t` : `Glass recycled ${n} t`, {'font-size': two ? fs * 1.35 : fs, 'font-weight': 800, 'font-family': two ? SERIF : FONT});
+  txt(svg, W - 2, vy, two ? `≈ ${frac(n)}` : `CO₂ avoided ≈ ${frac(n)}`, {'font-size': two ? fs * 1.35 : fs, 'font-weight': 800, 'font-family': two ? SERIF : FONT, 'text-anchor': 'end'});
+  // A tap: the crate of old bottles into the hopper, a crate of new ones out of the mouth, one puff gone.
+  if (prev !== undefined && prev < n && !Kit.calm) {
+    const s = slot(5 - prev), fly = crate(g, s.x, s.y, cw, ch, false, 5 - prev);
+    const tx = hx - s.x - cw / 2, ty = hy - hw * .7 - s.y - ch;
+    gsap.timeline()
+      .to(fly, {x: tx * .55, y: ty - fh * .25, duration: .28, ease: 'power2.out'})
+      .to(fly, {x: tx, y: ty, rotation: 70, transformOrigin: '50% 50%', duration: .22, ease: 'power1.in'})
+      .to(fly, {opacity: 0, duration: .12}, '-=.06');
+    gsap.fromTo(glow, {scale: 1}, {scale: 1.35, transformOrigin: '50% 100%', duration: .2, delay: .5, yoyo: true, repeat: 1});
+    if (fresh) gsap.from(fresh, {x: mx - s.x - cw / 2, y: y0 - ch - s.y, scale: .4, transformOrigin: '50% 100%', opacity: 0, duration: .45, delay: .62, ease: 'back.out(1.6)'});
+    const [dx, dy, k] = PUFFS[prev], ghost = mk('circle', {cx: ccx + dx * R, cy: ccy + dy * R, r: k * R, fill: CO2, stroke: INK, 'stroke-width': 2.2}, g);
+    gsap.to(ghost, {attr: {r: k * R * 1.25}, opacity: 0, duration: .5, delay: .55, ease: 'power1.out', onComplete: () => ghost.remove()});
+    if (prev === 5) gsap.from(co2, {opacity: 0, duration: .4, delay: .9});
   }
-  const l1 = Kit.mk('text', {x: cx, y: yb + f * 1.4, 'text-anchor': 'middle', style: `font:600 ${f}px var(--body);fill:${ink};opacity:.75`}, svg);
-  l1.textContent = 'Glass recycled';
-  const v1 = Kit.mk('text', {x: cx, y: yb + f * 2.9, 'text-anchor': 'middle', style: `font:800 ${f * 1.25}px var(--display);fill:${ink}`}, svg);
-  v1.textContent = `${n} t`;
+}
 
-  // right: one-ton CO2 bubble that fills up
-  const cx2 = W * 0.74;
-  const R = Math.min(W * 0.21, avail * 0.46);
-  const cy = yb - R - f * 0.3;
-  const clip = Kit.mk('clipPath', {id: 'bub'}, Kit.mk('defs', {}, svg));
-  Kit.mk('circle', {cx: cx2, cy, r: R}, clip);
-  Kit.mk('circle', {cx: cx2, cy, r: R, style: `fill:${ink};opacity:.06`}, svg);
-  const h = 2 * R * n / 6, hp = 2 * R * (prev || 0) / 6;
-  const fill = Kit.mk('rect', {x: cx2 - R, y: cy + R - h, width: 2 * R, height: h, 'clip-path': 'url(#bub)', style: 'fill:#3a3f4a'}, svg);
-  for (let i = 1; i < 6; i++) {
-    const y = cy + R - 2 * R * i / 6;
-    Kit.mk('line', {x1: cx2 - R, x2: cx2 + R, y1: y, y2: y, 'clip-path': 'url(#bub)', style: `stroke:${card};stroke-width:1;opacity:.35`}, svg);
-  }
-  Kit.mk('circle', {cx: cx2, cy, r: R, style: `fill:none;stroke:${ink};stroke-width:${Math.max(2, f * .16)};stroke-dasharray:${n === 6 ? 'none' : '6 5'}`}, svg);
-  const co = Kit.mk('text', {x: cx2, y: cy + f * .45, 'text-anchor': 'middle', style: `font:800 ${Math.min(R * .55, f * 2.2)}px var(--display);fill:${n >= 3 ? '#fff' : ink};opacity:${n >= 3 ? 1 : .45}`}, svg);
-  co.textContent = 'CO₂';
-  const l2 = Kit.mk('text', {x: cx2, y: yb + f * 1.4, 'text-anchor': 'middle', style: `font:600 ${f}px var(--body);fill:${ink};opacity:.75`}, svg);
-  l2.textContent = 'CO₂ avoided';
-  const v2 = Kit.mk('text', {x: cx2, y: yb + f * 2.9, 'text-anchor': 'middle', style: `font:800 ${f * 1.25}px var(--display);fill:${ink}`}, svg);
-  v2.textContent = n === 6 ? '≈ 1 t' : `≈ ${frac(n)}`;
-
-  // arrow between
-  const ax = W * 0.5, ay = cy;
-  Kit.mk('path', {d: `M${ax - W * .05},${ay} L${ax + W * .04},${ay} M${ax + W * .015},${ay - f * .6} L${ax + W * .045},${ay} L${ax + W * .015},${ay + f * .6}`, style: `fill:none;stroke:${ink};stroke-width:${Math.max(2, f * .16)};stroke-linecap:round;stroke-linejoin:round;opacity:.6`}, svg);
-
-  if (prev !== undefined && prev !== n && !Kit.calm) {
-    if (newBlock) gsap.from(newBlock, {y: -H * 0.35, opacity: 0, duration: .5, ease: 'bounce.out'});
-    gsap.fromTo(fill, {attr: {y: cy + R - hp, height: hp}}, {attr: {y: cy + R - h, height: h}, duration: .7, delay: .25, ease: 'power2.out'});
-    if (n === 6) gsap.from([v2, co], {scale: 1.3, transformOrigin: '50% 50%', duration: .5, delay: .8, ease: 'back.out(3)'});
-  }
+// A crate of bottles, one tonne: their necks over its rim, old ones mixed and one broken, new ones all alike.
+function crate(g, x, y, w, h, fresh, seed) {
+  const c = mk('g', {}, g), nh = w * .3;
+  [.17, .39, .61, .83].forEach((at, j) => {
+    const bx = x + w * at, bw = w * .13, tilt = fresh ? 0 : ((seed * 7 + j * 5) % 5 - 2) * 4, col = fresh ? NEW : OLD[(seed + j) % 4];
+    const neck = mk('g', {transform: `rotate(${tilt} ${bx} ${y + 2})`}, c);
+    const broken = !fresh && (seed + j) % 7 === 3;
+    const top = y - nh;
+    mk('path', {d: broken ? `M${bx - bw / 2},${y + 2} V${top + nh * .35} L${bx - bw * .15},${top + nh * .15} L${bx + bw * .1},${top + nh * .4} L${bx + bw / 2},${top + nh * .2} V${y + 2} Z`
+      : `M${bx - bw / 2},${y + 2} V${top + bw * .3} Q${bx - bw / 2},${top} ${bx},${top} Q${bx + bw / 2},${top} ${bx + bw / 2},${top + bw * .3} V${y + 2} Z`, fill: col, stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, neck);
+    if (fresh) mk('line', {x1: bx - bw * .15, x2: bx - bw * .15, y1: top + bw * .5, y2: y - 1, stroke: '#ffffff', 'stroke-width': Math.max(1, bw * .22), 'stroke-linecap': 'round', opacity: .85}, neck);
+  });
+  mk('rect', {x, y, width: w, height: h, rx: 2, fill: WOOD, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, c);
+  mk('path', {d: `M${x + 2},${y + h * .36} H${x + w - 2} M${x + 2},${y + h * .68} H${x + w - 2}`, stroke: WOOD2, 'stroke-width': 1.6}, c);
+  return c;
 }
 
 Kit.$('go').addEventListener('click', () => {
@@ -111,17 +161,21 @@ Kit.$('go').addEventListener('click', () => {
   const prev = n; n++;
   Kit.haptic(n === 6 ? 'success' : 'light');
   draw(prev);
-  if (n === 6) {
-    setTimeout(() => { Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.onShow.card(); }, 900);
-  }
+  if (n === 6) setTimeout(() => {
+    // The story told: the button and the prompt give their room to the drawing.
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    lay();
+  }, 900);
 });
 
-Kit.onShow.card = () => draw();
+Kit.onShow.card = () => lay();
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   for (let i = 0; i < 6; i++) { Kit.$('go').click(); await new Promise(r => setTimeout(r, 150)); }
   await new Promise(r => setTimeout(r, 1300));
 };
+// Drawn again at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+new ResizeObserver(() => { const b = svg.getBoundingClientRect(); if (G && `${Math.round(b.width)}x${Math.round(b.height)}` !== laid) lay(); }).observe(svg);
 Kit.single();
 </script>
 </html>

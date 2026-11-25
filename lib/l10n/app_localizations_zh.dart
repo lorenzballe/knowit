@@ -5022,15 +5022,381 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exploreDayOpen => '前往今天的卡片';
 
   @override
-  String exploreSixtyRecord(int n, int of) {
-    return '最佳纪录 $n/$of';
+  String get exploreGameNone => '现在这里没有可玩的。明天再来。';
+
+  @override
+  String get challengesTitle => '挑战';
+
+  @override
+  String get challengesLine => '关于判断与估算的简短练习，每个只需几分钟。';
+
+  @override
+  String challengesPage(int n, int of) {
+    return '第 $n 页，共 $of 页';
   }
 
   @override
-  String get exploreSixtyFirst => '创造你的纪录';
+  String get gamePlay => '开始';
 
   @override
-  String get exploreGameNone => '现在这里没有可玩的。明天再来。';
+  String get sixtyRules =>
+      '一分钟内判断八条说法的真假。它衡量你在匆忙中判断的准确程度，而我们读到的大多数内容，正是这样被判断的。';
+
+  @override
+  String get sixtyReview => '八条说法';
+
+  @override
+  String get gameRight => '答对了';
+
+  @override
+  String get gameWrong => '答错了';
+
+  @override
+  String get gameUnanswered => '未作答';
+
+  @override
+  String get gameNext => '下一个挑战';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · 六十秒 · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$of 道答对 $n 道 · $s 秒';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: '还剩 $s 秒',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameReview => '卡片';
+
+  @override
+  String get gameTomorrow => '明天有新一轮';
+
+  @override
+  String get gameContinue => '继续';
+
+  @override
+  String gameShareHead(String game, String date) {
+    return 'Astute · $game · $date';
+  }
+
+  @override
+  String gameShareScore(int n, int of) {
+    return '$of 个中答对 $n 个';
+  }
+
+  @override
+  String gameCardsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天 $n 张',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameAllRight => '全部答对。';
+
+  @override
+  String gamePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 分');
+    return '$_temp0';
+  }
+
+  @override
+  String get gameSeeResult => '查看结果';
+
+  @override
+  String get gameNextCard => '下一张';
+
+  @override
+  String get spotOnce => '每天只能选一次';
+
+  @override
+  String get spotGotIt => '你找出了假的那条。';
+
+  @override
+  String get spotMissedIt => '不是那条：它是真的。';
+
+  @override
+  String get tfRules => '判断真假，再看原因。大多数人都会答错。';
+
+  @override
+  String get inOrderTitle => '时间排序';
+
+  @override
+  String get inOrderRules =>
+      '卡片里的四个时刻，年份都被隐去，请按发生的先后排列。它衡量你的时间顺序感，这是一切解释的第一道检验：原因总在结果之前。';
+
+  @override
+  String get inOrderFirst => '点选最早的';
+
+  @override
+  String get inOrderNext => '接着点下一个';
+
+  @override
+  String get inOrderReady => '都排好了，检查一下？';
+
+  @override
+  String get inOrderCheck => '检查顺序';
+
+  @override
+  String inOrderPlaced(int n) {
+    return '第 $n 个';
+  }
+
+  @override
+  String inOrderYours(int n) {
+    return '你排在：第 $n';
+  }
+
+  @override
+  String get inOrderPerfect => '全部排对了。';
+
+  @override
+  String get timeGap => '缺失的年份';
+
+  @override
+  String get whatYearTitle => '哪一年？';
+
+  @override
+  String get whatYearRules => '三个时刻，年份都被隐去。转动刻度猜年份：越接近，得分越高。';
+
+  @override
+  String whatYearPoints(int n, int of) {
+    return '$of 分中得 $n 分';
+  }
+
+  @override
+  String get whatYearPerfect => '每个年份都完全正确。';
+
+  @override
+  String whatYearOffInAll(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '总共差了 $n 年',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearSaid(String guess, int points) {
+    return '你的答案：$guess · +$points';
+  }
+
+  @override
+  String whatYearExact(int points) {
+    return '年份完全正确，+$points';
+  }
+
+  @override
+  String whatYearOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '差了 $n 年',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearEarlier(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '往前 $n 年',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearLater(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '往后 $n 年',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whatYearDial => '年份';
+
+  @override
+  String get beforeAfterTitle => '之前还是之后？';
+
+  @override
+  String get beforeAfterRules => '六个时刻依次出现。每一个发生在上面那个之前还是之后？';
+
+  @override
+  String get beforeAfterBefore => '之前';
+
+  @override
+  String get beforeAfterAfter => '之后';
+
+  @override
+  String beforeAfterAsk(String year) {
+    return '在 $year 年之前还是之后？';
+  }
+
+  @override
+  String beforeAfterSaidBefore(String year) {
+    return '你的答案：$year 年之前';
+  }
+
+  @override
+  String beforeAfterSaidAfter(String year) {
+    return '你的答案：$year 年之后';
+  }
+
+  @override
+  String get beforeAfterStart => '从这里开始';
+
+  @override
+  String get beforeAfterPerfect => '一个都没错。';
+
+  @override
+  String biggerPairsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天 $n 组',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixtySkill => '直觉';
+
+  @override
+  String get spotSkill => '辨别';
+
+  @override
+  String get tfSkill => '判断';
+
+  @override
+  String get biggerSkill => '比例';
+
+  @override
+  String get closerSkill => '估算';
+
+  @override
+  String get magnitudeSkill => '量级';
+
+  @override
+  String get rangeSkill => '校准';
+
+  @override
+  String get stakeSkill => '把握';
+
+  @override
+  String get numberSkill => '精确';
+
+  @override
+  String get inOrderSkill => '时序';
+
+  @override
+  String get whatYearSkill => '断代';
+
+  @override
+  String get beforeAfterSkill => '先后';
+
+  @override
+  String get sixtyAsks => '一分钟，八条说法。';
+
+  @override
+  String get spotAsks => '四条说法，其中一条是假的。';
+
+  @override
+  String get tfAsks => '大多数人会答错的说法。';
+
+  @override
+  String get biggerAsks => '两个数字，哪个更大？';
+
+  @override
+  String get closerAsks => '一步步逼近一个数字。';
+
+  @override
+  String get magnitudeAsks => '找出正确的十的幂。';
+
+  @override
+  String get rangeAsks => '一个刚好够宽的区间。';
+
+  @override
+  String get stakeAsks => '按你的把握程度押分。';
+
+  @override
+  String get numberAsks => '认定一个数字。';
+
+  @override
+  String get inOrderAsks => '四个时刻，从最早的开始。';
+
+  @override
+  String get whatYearAsks => '把一个时刻放回它的年份。';
+
+  @override
+  String get beforeAfterAsks => '每个时刻与上一个相比。';
+
+  @override
+  String get challengeBest => '最佳';
+
+  @override
+  String get challengeToday => '今天';
+
+  @override
+  String get challengeAccuracy => '正确率';
+
+  @override
+  String get challengeTime => '用时';
+
+  @override
+  String challengeSeconds(int s) {
+    return '$s 秒';
+  }
+
+  @override
+  String get challengePersonalBest => '个人最佳';
+
+  @override
+  String challengeAboveChance(int n, int of) {
+    return '高于随机水平：纯靠猜测，平均$of个中对$n个。';
+  }
+
+  @override
+  String challengeAtChance(int n, int of) {
+    return '与随机水平持平：纯靠猜测，平均$of个中对$n个。';
+  }
+
+  @override
+  String challengeBelowChance(int n, int of) {
+    return '低于随机水平：纯靠猜测，平均$of个中对$n个。';
+  }
+
+  @override
+  String sixtyUnanswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '时间到了，还有 $n 条说法没有作答。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAgain => '再来一轮';
 
   @override
   String exploreSubjectLevel(String subject, int n) {
@@ -5568,6 +5934,48 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get deeperPlusOnly => '使用 Astute+';
+
+  @override
+  String get deeperSimpleLead => '把这张卡片的道理，讲给一个好奇的十岁孩子听。';
+
+  @override
+  String get deeperSidesLead => '双方最有力的理由，以及什么能让争论有定论。';
+
+  @override
+  String get deeperExampleLead => '平常一天里，这个道理冒出来的某个瞬间。';
+
+  @override
+  String get deeperQuizLead => '一个卡片没提到的情境：一道题，三个选项。';
+
+  @override
+  String get deeperYourTakeLead => '你的推理哪里站得住、哪里有漏洞，再给一个检验它的问题。';
+
+  @override
+  String get deeperAskLead => '这张卡片让你好奇的任何问题。';
+
+  @override
+  String get deeperSideA => '一方';
+
+  @override
+  String get deeperSideB => '另一方';
+
+  @override
+  String get deeperVersus => 'VS';
+
+  @override
+  String get deeperRetry => '重试';
+
+  @override
+  String get deeperSimpleGo => '讲给我听';
+
+  @override
+  String get deeperSidesGo => '看看正反两面';
+
+  @override
+  String get deeperExampleGo => '举个例子';
+
+  @override
+  String get deeperQuizGo => '考考我';
 
   @override
   String get bookOfTheWeek => '本周之书';

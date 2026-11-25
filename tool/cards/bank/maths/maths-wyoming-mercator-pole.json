@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A Mercator world map with a draggable outline of Wyoming, drawn at latitude 43°N. The reader drags Wyoming up the map toward the North Pole and watches its drawn size grow. The page asks what happens to Wyoming's size there and why."
+    "label": "A Mercator map of North America and the Arctic with Wyoming in orange at 43°N, and a small globe beside it with the same Wyoming. The reader drags Wyoming up the map toward the North Pole and watches its drawn size grow while on the globe it stays the same size. The page asks what happens to Wyoming's size there and why."
   },
   "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=cKRRHQStYH0&t=55s",

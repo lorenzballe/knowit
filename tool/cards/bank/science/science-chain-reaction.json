@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page on a nuclear chain reaction where each split frees 2.5 neutrons. Readers draw a guess with a finger for how the count grows round by round, up to round 24."
+    "label": "A bar of uranium-235 metal, the first nucleus splitting in its corner and throwing out its neutrons; its face is the chart of how many nuclei split in each of ten rounds, each split freeing 2.5 neutrons. Readers draw a guess on it with a finger, round by round; the real curve then grows over it, the metal under it glowing as its nuclei split."
   },
   "source": "Veritasium, “Why Einstein Thought Nuclear Weapons Were Impossible” (YouTube, 2018)",
   "reference": "https://www.youtube.com/watch?v=HD3k1hgbUXQ",

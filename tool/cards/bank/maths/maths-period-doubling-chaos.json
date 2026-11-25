@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Question: how does the logistic map move from regular cycles to chaos as R rises? Shows cycles doubling 1, 2, 4, 8, 16 until chaos. Tap each growth rate R to sort it into settles-into-a-cycle or never-repeats, and tap again to switch sides.",
+    "label": "Question: how does the logistic map move from regular cycles to chaos as R rises? Two meadows show a population of rabbits year by year, one settling into a repeating cycle, one never repeating. Tap each growth rate R to sort it into one of them, and tap again to switch sides; the answer maps where the population ends up for every R, cycles doubling 1, 2, 4, 8 until chaos.",
     "graded": false
   },
   "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",

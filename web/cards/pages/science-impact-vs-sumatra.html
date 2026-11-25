@@ -1,21 +1,28 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-impact-vs-sumatra -->
+<!-- The picture: the impact, drawn big. The card's green as sky, the sea along the foot, a low coast on the left with a
+     small sauropod on it, and the asteroid diving at the sea from the upper right on a long burning trail. Energy is
+     drawn as fireball domes on the horizon, measured in dots: one dot, a tiny dome ringed far off on the right, is the
+     2004 Sumatra quake; the reader's guess is a dashed dome holding that many dots by volume, growing as they slide.
+     Answered, the asteroid falls in and the real dome blooms as the count runs to 50,000 dots, flat orange round a
+     yellow core with a scalloped ink edge, the guess left dashed inside it and the quake still one speck. Drawn again
+     at its real size whenever its room changes; the number rides over the sky, so the picture keeps the room. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
-#read{display:flex;justify-content:space-between;align-items:flex-end;gap:3cqw}
-#num{font:800 max(4.6cqh,26px)/1 var(--display);color:var(--k);white-space:nowrap}
-#lab{font:600 max(1.7cqh,12px)/1.25 var(--body);color:var(--muted);text-align:right}
-#legend{font:600 max(1.6cqh,12px)/1.25 var(--body);color:var(--k);display:flex;align-items:center;gap:2cqw}
-#legend i{display:inline-block;width:max(1.2cqh,9px);height:max(1.2cqh,9px);border-radius:50%;box-shadow:0 0 0 .3cqh var(--k);flex:none}
 #box{flex:1;min-height:0;position:relative}
-#cv{position:absolute;inset:0;width:100%;height:100%}
-#ctl{display:flex;flex-direction:column;gap:.6cqh}
-#ctl .ends{display:flex;justify-content:space-between;font:600 max(1.5cqh,12px)/1.2 var(--mono);color:var(--muted)}
-#rng{-webkit-appearance:none;appearance:none;width:100%;height:max(4.4cqh,30px);background:transparent;margin:0;touch-action:none}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#read{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:flex-start;gap:.3cqh;pointer-events:none;text-shadow:2px 0 0 var(--c),-2px 0 0 var(--c),0 2px 0 var(--c),0 -2px 0 var(--c),1.5px 1.5px 0 var(--c),-1.5px -1.5px 0 var(--c),1.5px -1.5px 0 var(--c),-1.5px 1.5px 0 var(--c)}
+#read.end{left:auto;right:0;align-items:flex-end;text-align:right}
+#num{font:800 max(4.6cqh,26px)/1 var(--display);color:var(--k);white-space:nowrap}
+#lab{font:700 max(1.7cqh,12px)/1.25 var(--body);color:var(--k)}
+.card.short #read.end #lab{display:none}
+#ctl{display:flex;align-items:center;gap:2.4cqw}
+#ctl .end{font:700 max(1.6cqh,12px)/1 var(--body);color:var(--k);white-space:nowrap}
+#rng{-webkit-appearance:none;appearance:none;flex:1;min-width:0;width:auto;height:max(4.4cqh,30px);background:transparent;margin:0;touch-action:none}
 #rng::-webkit-slider-runnable-track{height:max(.8cqh,6px);border-radius:9px;background:color-mix(in srgb,var(--k) 20%,transparent)}
 #rng::-moz-range-track{height:max(.8cqh,6px);border-radius:9px;background:color-mix(in srgb,var(--k) 20%,transparent)}
 #rng::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;background:var(--k);margin-top:calc(max(.8cqh,6px)/2 - max(3.6cqh,26px)/2);border:0}
@@ -28,12 +35,14 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DEEP IMPACT</span></div>
     <h2 class="q">How much more energy did the impact release than the 2004 Sumatra earthquake?</h2>
     <div class="stagebox" id="stage">
-      <div id="read"><span id="num">×100</span><span id="lab">your guess:<br>100 Sumatra quakes</span></div>
-      <div id="legend"><i></i><span>1 dot = the 2004 Sumatra quake, magnitude 9.1</span></div>
-      <div id="box"><canvas id="cv"></canvas></div>
+      <div id="box">
+        <svg id="cv" role="img" aria-label="The asteroid diving at the sea on a burning trail, a small dinosaur on the coast. On the horizon a tiny ringed dot is the 2004 Sumatra quake, magnitude 9.1; your guess is a dashed dome holding that many dots."></svg>
+        <div id="read"><span id="num">×100</span><span id="lab">your guess:<br>100 Sumatra quakes</span></div>
+      </div>
       <div id="ctl">
+        <span class="end">×10</span>
         <input data-drag id="rng" type="range" min="0" max="1000" value="250" aria-label="Your guess">
-        <div class="ends"><span>×10</span><span>×100,000</span></div>
+        <span class="end">×100,000</span>
       </div>
       <div id="why" class="gone"><p class="body">The asteroid released an estimated 50,000 times the energy of the Sumatra quake, itself one of the strongest ever measured. It shook the whole planet for weeks.</p></div>
     </div>
@@ -49,8 +58,16 @@ const TRUE_N = 50000, CAP = 100000;
 const fmt = n => Math.round(n).toLocaleString('en-US');
 const nice = v => { const p = Math.pow(10, Math.floor(Math.log10(v)) - 1); return Math.round(v / p) * p; };
 let guess = 100, touched = false, revealed = false, shown = 0, G = null;
+// How far the asteroid has fallen: 0 high in the sky, 1 at the sea.
+const st = {hit: 0};
 const rng = Kit.$('rng');
 const fromSlider = () => nice(Math.pow(10, 1 + 4 * (+rng.value / 1000)));
+// Flat colours, one meaning each: the sea blue, the coast sand, the asteroid's rock with darker craters, its trail and
+// the fireballs orange round yellow, the dinosaur a dull green, white for the names in the sea.
+const INK = '#10100c', SEA = '#2f7fe0', SAND = '#f4d38e', ROCK = '#8a7b78', CRATER = '#6c605d', HOT = '#ff7a3c', GLOW = '#ffc85a', DINO = '#6f9a62', FOAM = '#fffbf0';
+const FONT = 'Figtree, system-ui, sans-serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const P = (x, y) => x.toFixed(1) + ',' + y.toFixed(1);
 
 function setRead() {
   if (!revealed) {
@@ -58,96 +75,198 @@ function setRead() {
     Kit.$('lab').innerHTML = 'your guess:<br>' + fmt(guess) + ' Sumatra quakes';
   } else {
     Kit.$('num').textContent = '×' + fmt(shown);
-    Kit.$('lab').innerHTML = 'the impact<br>you guessed ×' + fmt(guess);
+    Kit.$('lab').textContent = 'the impact';
   }
 }
 
-function layout() {
-  const c = Kit.fitCanvas(Kit.$('cv'));
-  const {W, H} = c;
-  let s = Math.sqrt(W * H / CAP), cols, rows;
-  for (let i = 0; i < 60; i++) {
-    cols = Math.max(1, Math.floor(W / s)); rows = Math.ceil(CAP / cols);
-    if (rows * s <= H) break;
-    s *= 0.98;
+// A dome of energy on the horizon at (x, y): `n` dots' worth by volume, each dot a dome of radius rho. Sampled, and
+// held inside the picture's sides, so it is cut cleanly where it runs off; scalloped like a fireball when asked.
+function dome(x, y, R, W, scallops) {
+  if (R < .6) return '';
+  const pts = [], k = scallops ? Math.max(5, Math.round(R / 10)) : 0, b = scallops ? Math.max(1.2, R * .05) : 0;
+  for (let i = 0; i <= 90; i++) {
+    const a = Math.PI - Math.PI * i / 90, r = R + b * Math.abs(Math.sin(k * a));
+    pts.push([clamp(x + r * Math.cos(a), .5, W - .5), y - r * Math.sin(a)]);
   }
-  const cs = getComputedStyle(Kit.$('card'));
-  G = {x: c.x, W, H, s, cols, rows, ox: (W - cols * s) / 2, oy: (H - rows * s) / 2,
-       k: cs.getPropertyValue('--k').trim() || '#111', c: cs.getPropertyValue('--c').trim() || '#fff',
-       body: cs.getPropertyValue('--body').trim() || 'sans-serif'};
+  return 'M' + pts.map(p => P(p[0], p[1])).join('L') + 'Z';
 }
 
-function fillN(n) {
-  const {x, s, cols, ox, oy} = G;
-  n = Math.min(CAP, Math.max(0, n));
-  const full = Math.floor(n / cols), rem = n - full * cols;
-  if (full) x.fillRect(ox, oy, cols * s, full * s);
-  if (rem) x.fillRect(ox, oy + full * s, rem * s, s);
+// A small sauropod standing on (x, y), h tall, facing right: an ink silhouette under a flat fill, so only its outer edge is drawn.
+function dino(p, x, y, h) {
+  const s = (u, v) => P(x + u * h, y + v * h);
+  const parts = [
+    {t: 'ellipse', a: {cx: x, cy: y - h * .46, rx: h * .52, ry: h * .25}},
+    {t: 'path', a: {d: `M${s(.28, -.58)} L${s(.62, -.98)} L${s(.74, -1.06)} L${s(.86, -1.02)} L${s(.84, -.95)} L${s(.7, -.92)} L${s(.44, -.44)} Z`}},
+    {t: 'path', a: {d: `M${s(-.42, -.56)} Q${s(-.8, -.5)} ${s(-1.05, -.22)} Q${s(-.7, -.34)} ${s(-.42, -.36)} Z`}},
+    ...[-.32, -.12, .14, .32].map(u => ({t: 'rect', a: {x: x + (u - .055) * h, y: y - h * .36, width: h * .11, height: h * .36, rx: h * .03}}))
+  ];
+  const w = Math.max(1.6, h * .07);
+  parts.forEach(q => Kit.mk(q.t, Object.assign({fill: INK, stroke: INK, 'stroke-width': w * 2, 'stroke-linejoin': 'round'}, q.a), p));
+  parts.forEach(q => Kit.mk(q.t, Object.assign({fill: DINO}, q.a), p));
+  Kit.mk('circle', {cx: x + .8 * h, cy: y - 1.01 * h, r: Math.max(.8, h * .025), fill: INK}, p);
 }
 
-function draw() {
+function build() {
+  const svg = Kit.$('cv'); svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  if (W < 60 || H < 40) { G = null; return; }
+  const fs = clamp(Math.min(W / 24, H / 8), 11.5, 14);
+  // Where the number rides over the sky, measured, so nothing drawn hides under it.
+  const num = Kit.$('num'), was = num.textContent;
+  if (revealed) num.textContent = '×' + fmt(TRUE_N);
+  const sb = svg.getBoundingClientRect(), rb = Kit.$('read').getBoundingClientRect();
+  num.textContent = was;
+  const over = {l: rb.left - sb.left, r: rb.right - sb.left, b: rb.bottom - sb.top};
+  // A deep band of sea along the foot; over the horizon room for the real fireball, 50,000 dots, as big as the picture allows.
+  const seaH = clamp(H * .28, fs * 1.35, 76), Hz = H - seaH, Ix = W * .38;
+  // Answered, the number rides at the top right: the fireball grows only as far as stays clear of it.
+  const clear = revealed ? Math.hypot(Math.max(0, Hz - over.b - 6), Math.max(0, over.l - Ix)) : Infinity;
+  const R50 = Math.max(8, Math.min(W * .4, Hz - 3, clear)), rho = R50 / Math.cbrt(TRUE_N);
+  const r = Math.min(14, W * .045);
+  const g = {svg, W, H, fs, Hz, Ix, R50, rho};
+  const defs = Kit.mk('defs', {}, svg), clip = Kit.mk('clipPath', {id: 'impact-slice'}, defs);
+  Kit.mk('path', {d: `M0,0 H${W} V${H - r} Q${W},${H} ${W - r},${H} H${r} Q0,${H} 0,${H - r} Z`}, clip);
+  const world = Kit.mk('g', {'clip-path': 'url(#impact-slice)'}, svg);
+  // The sea: its water under a gently waving surface, the surface an ink line from the beach out.
+  const amp = Math.min(2.4, seaH * .05), lam = Math.max(26, W * .09), wave = x => Hz + amp * Math.sin(x / lam * 2 * Math.PI);
+  const beach = W * .25, foot = W * .36;
+  let surf = ''; for (let x = 0; x <= W; x += 3) surf += (x ? 'L' : 'M') + P(x, wave(x));
+  Kit.mk('path', {d: surf + `L${W},${H}L0,${H}Z`, fill: SEA}, world);
+  let line = ''; for (let x = beach; x <= W; x += 3) line += (x > beach ? 'L' : 'M') + P(x, wave(x));
+  Kit.mk('path', {d: line, fill: 'none', stroke: INK, 'stroke-width': 2.6, 'stroke-linejoin': 'round'}, world);
+  // The beach on the left: sand above the water, its slope running on down under it.
+  const bh = clamp(Hz * .07, 4, 14);
+  Kit.mk('path', {d: `M-2,${Hz - bh} H${beach * .62} Q${beach * .92},${Hz - bh} ${beach},${wave(beach)} L${foot},${H + 2} H-2 Z`, fill: SAND, stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, world);
+  // On the beach a sauropod looking up at the sky, as big as the room under the number lets it be.
+  const dh = Math.min(clamp(Hz * .36, 0, 64), (Hz - bh - over.b - 6) / 1.08);
+  if (dh >= 13) dino(Kit.mk('g', {}, world), Math.max(beach * .42, dh + 2), Hz - bh + 1, dh);
+  const ny = H - seaH * .2, my = Hz + Math.max(7, seaH * .17);
+  // The energies: the real fireball under the guess, the guess dashed.
+  g.real = Kit.mk('path', {fill: HOT, stroke: INK, 'stroke-width': 2.6, 'stroke-linejoin': 'round'}, world);
+  g.core = Kit.mk('path', {fill: GLOW}, world);
+  g.guess = Kit.mk('path', {fill: FOAM, 'fill-opacity': .45, stroke: INK, 'stroke-width': 2.2, 'stroke-dasharray': '6 4', 'stroke-linejoin': 'round'}, world);
+  // One dot: the 2004 Sumatra quake, far off on the right, ringed so it can be found, named in the sea under it.
+  const sx = W - Math.max(12, fs * 1.1);
+  g.sx = sx;
+  Kit.mk('path', {d: dome(sx, Hz, Math.max(1.3, rho), W), fill: HOT, stroke: INK, 'stroke-width': .8}, world);
+  const ring = Math.max(fs * .75, rho + 5);
+  Kit.mk('circle', {cx: sx, cy: Hz - Math.max(1.3, rho) * .4, r: ring, fill: 'none', stroke: INK, 'stroke-width': 1.8}, svg);
+  // Its name, low in the sea: the whole of it on one line where it fits, on two where the sea is deep enough, else
+  // a little smaller, else shorter; never under 11px.
+  const names = ['1 dot = the 2004 Sumatra quake, magnitude 9.1', '1 dot = the 2004 Sumatra quake', '1 dot = one Sumatra quake'];
+  const nx = sx - ring - 5, size = Math.max(11, Math.min(fs, seaH * .62));
+  // Each line kept in the water: right of where the beach's slope is at the line's foot.
+  const slopeAt = y => beach + (foot - beach) * clamp((y - Hz) / (H - Hz), 0, 1);
+  const room = (y, z) => nx - slopeAt(y + z * .3) - 6;
+  const name = Kit.mk('text', {x: nx, y: ny, 'text-anchor': 'end', fill: FOAM, 'font-family': FONT, 'font-weight': 700, 'font-size': size}, svg);
+  const wide = (t, z) => { name.setAttribute('font-size', z.toFixed(1)); name.textContent = t; return name.getComputedTextLength(); };
+  const two = [['1 dot = the 2004 Sumatra', ny - size * 1.2], ['quake, magnitude 9.1', ny]];
+  if (wide(names[0], size) <= room(ny, size)) name.textContent = names[0];
+  else if (seaH >= size * 2.9 && two.every(([t, y]) => wide(t, size) <= room(y, size))) {
+    name.setAttribute('font-size', size.toFixed(1)); name.textContent = '';
+    two.forEach(([t, y]) => { const s = Kit.mk('tspan', {x: nx, y: y.toFixed(1)}, name); s.textContent = t; });
+  } else {
+    for (const [t, k] of [[names[0], .88], [names[1], 1], [names[2], 1], [names[2], .9]]) {
+      const z = Math.max(11, size * k);
+      if (wide(t, z) <= room(ny, z)) break;
+    }
+  }
+  // A few marks of moving water, in the sea wherever its name is not.
+  const nb = name.getBBox(), m = Math.max(4, Math.min(W * .022, seaH * .09));
+  [.46, .62, .8].forEach(u => {
+    const x = u * W;
+    if (my + m > H - 4 || (x + m * 4 > nb.x - 3 && x < nb.x + nb.width + 3 && my + m * .8 > nb.y - 3 && my - 2 < nb.y + nb.height + 3)) return;
+    world.insertBefore(Kit.mk('path', {d: `M${P(x, my)} q${m},${m * .8} ${m * 2},0 q${m},${m * .8} ${m * 2},0`, fill: 'none', stroke: FOAM, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .5}), g.real);
+  });
+  // The asteroid, big, diving across the sky at the sea: on its way down from the top corner, its burning trail
+  // running back up to it; never under the number.
+  const ra = clamp(Math.min(W * .15, Hz * .26), 8, 46), S = [W - 6, 6];
+  let f = .45, A;
+  for (; f < .8; f += .03) { A = [S[0] + (Ix - S[0]) * f, S[1] + (Hz - S[1]) * f]; if (A[0] - ra > over.r + 6 || A[1] - ra > over.b + 6) break; }
+  g.ra = ra; g.from = A;
+  g.rock = Kit.mk('g', {}, world);
+  // The guess's name, shown once the answer is in.
+  g.you = Kit.mk('text', {'font-family': FONT, 'font-weight': 800, 'font-size': fs, fill: INK, stroke: 'var(--c)', 'stroke-width': fs * .3, 'stroke-linejoin': 'round', 'paint-order': 'stroke', 'text-anchor': 'middle', display: 'none'}, svg);
+  g.you.textContent = 'your guess';
+  G = g; render();
+}
+
+// The asteroid at (x, y), falling toward (tx, ty): a lumpy rock with craters, a tapering trail of fire behind it that
+// stops at the picture's edge.
+function asteroid(p, x, y, tx, ty, ra, W, H) {
+  p.innerHTML = '';
+  const L = Math.hypot(tx - x, ty - y) || 1, ux = (tx - x) / L, uy = (ty - y) / L, nx = -uy, ny = ux;
+  // how far back the trail can run before it leaves the picture
+  let len = Math.min(W, H) * .9;
+  for (const [d, lim] of [[-ux, ux > 0 ? x : W - x], [-uy, uy > 0 ? y : H - y]]) if (Math.abs(d) > 1e-3) len = Math.min(len, (lim - 2) / Math.abs(d));
+  len = Math.max(ra * 1.5, len);
+  const trail = (w, l) => `M${P(x + nx * w, y + ny * w)} Q${P(x - ux * l * .45 + nx * w * .9, y - uy * l * .45 + ny * w * .9)} ${P(x - ux * l, y - uy * l)} Q${P(x - ux * l * .45 - nx * w * .9, y - uy * l * .45 - ny * w * .9)} ${P(x - nx * w, y - ny * w)} Z`;
+  Kit.mk('path', {d: trail(ra * 1.05, len), fill: HOT, stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, p);
+  Kit.mk('path', {d: trail(ra * .6, len * .62), fill: GLOW}, p);
+  const lump = [1, .86, 1.04, .9, 1.06, .84, .98, .92].map((k, i) => { const a = i / 8 * Math.PI * 2 + .3; return [x + Math.cos(a) * ra * k, y + Math.sin(a) * ra * k]; });
+  Kit.mk('path', {d: 'M' + lump.map(q => P(q[0], q[1])).join('L') + 'Z', fill: ROCK, stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, p);
+  [[-.3, -.2, .26], [.32, .18, .2], [-.05, .42, .15]].forEach(([u, v, k]) => Kit.mk('circle', {cx: x + u * ra, cy: y + v * ra, r: ra * k, fill: CRATER, stroke: INK, 'stroke-width': 1.4}, p));
+}
+
+function render() {
   if (!G) return;
-  const {x, W, H, s, cols, rows, ox, oy, k, c} = G;
-  x.clearRect(0, 0, W, H);
-  // no backdrop: just two faint rules marking the extent of the 100,000 cells
-  x.globalAlpha = .3; x.strokeStyle = k; x.lineWidth = 1; x.setLineDash([2, 4]);
-  x.beginPath();
-  x.moveTo(ox, oy + .5); x.lineTo(ox + cols * s, oy + .5);
-  x.moveTo(ox, oy + rows * s - .5); x.lineTo(ox + cols * s, oy + rows * s - .5);
-  x.stroke(); x.setLineDash([]);
-  x.fillStyle = k;
-  if (!revealed) { x.globalAlpha = .5; fillN(guess); }
-  else {
-    x.globalAlpha = 1; fillN(shown);
-    // the guess as a dashed line
-    const gy = oy + Math.min(rows, guess / cols) * s;
-    x.setLineDash([6, 5]); x.lineWidth = 2; x.strokeStyle = k; x.globalAlpha = .9;
-    x.beginPath(); x.moveTo(ox, gy); x.lineTo(ox + cols * s, gy); x.stroke(); x.setLineDash([]);
-    const f = Math.max(12, H * .055), t = 'your guess';
-    x.font = `700 ${f}px ${G.body}`;
-    const tw = x.measureText(t).width, px = ox + cols * s - tw - 14;
-    let py = gy + 4; if (py + f * 1.5 > oy + rows * s) py = gy - f * 1.5 - 4;
-    x.globalAlpha = 1; x.fillStyle = c; x.fillRect(px - 6, py, tw + 12, f * 1.5);
-    x.fillStyle = k; x.textBaseline = 'middle'; x.fillText(t, px, py + f * .75);
-  }
-  // ring around the single Sumatra dot
-  const r = Math.max(7, s * 4), cx = ox + s / 2, cy = oy + s / 2;
-  x.globalAlpha = 1;
-  x.lineWidth = 5; x.strokeStyle = c; x.beginPath(); x.arc(cx + r * .6, cy + r * .6, r, 0, 7); x.stroke();
-  x.lineWidth = 2; x.strokeStyle = k; x.beginPath(); x.arc(cx + r * .6, cy + r * .6, r, 0, 7); x.stroke();
-  x.fillStyle = c; x.fillRect(ox, oy, Math.max(s, 2), Math.max(s, 2));
-  x.fillStyle = k; x.fillRect(ox, oy, Math.max(s, 2), Math.max(s, 2));
+  const g = G, {W, H, Hz, Ix, rho, fs} = g;
+  // the asteroid, until it reaches the sea
+  if (st.hit < 1) {
+    const x = g.from[0] + (Ix - g.from[0]) * st.hit, y = g.from[1] + (Hz - g.from[1]) * st.hit;
+    asteroid(g.rock, x, y, Ix, Hz, g.ra * (1 - .35 * st.hit), W, H);
+  } else g.rock.innerHTML = '';
+  // the real fireball, as many dots as have been counted
+  const Rr = revealed ? rho * Math.cbrt(Math.max(0, shown)) : 0;
+  g.real.setAttribute('d', dome(Ix, Hz, Rr, W, true));
+  g.core.setAttribute('d', Rr > 6 ? dome(Ix, Hz, Rr * .6, W, true) : '');
+  // the guess: that many dots, dashed
+  const Rg = rho * Math.cbrt(guess);
+  g.guess.setAttribute('d', dome(Ix, Hz, Rg, W));
+  g.guess.setAttribute('fill-opacity', revealed ? 0 : .45);
+  if (revealed && shown >= TRUE_N * .999 && Rg > fs * .8) {
+    const inside = Rg > fs * 3, y = inside ? Hz - Rg + fs * 1.45 : Math.max(fs * 1.1, Hz - Rg - fs * .45);
+    g.you.setAttribute('x', Ix.toFixed(1)); g.you.setAttribute('y', y.toFixed(1));
+    // haloed in what lies under it: the fireball, or the sky over it
+    g.you.setAttribute('stroke', y - fs * .8 > Hz - Rr ? (inside && Rg < Rr * .6 ? GLOW : HOT) : 'var(--c)');
+    g.you.setAttribute('display', 'inline');
+  } else g.you.setAttribute('display', 'none');
 }
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = guess >= 20000 && guess <= 125000;
   Kit.answer({choice: '×' + fmt(guess), correct: ok, sure: pct});
   rng.disabled = true; revealed = true; shown = 0; setRead();
+  Kit.$('read').classList.add('end');
   Kit.hide('ctl'); Kit.hide('say'); Kit.show('why');
-  requestAnimationFrame(() => { layout(); draw(); });
+  requestAnimationFrame(() => { build(); });
   sure.grade(ok, pct, `×${fmt(guess)}, ${ok ? 'right' : 'off'}: it was ×50,000`);
   Kit.show('keep'); Kit.haptic('success');
   const o = {n: 0};
-  if (Kit.calm) { shown = TRUE_N; setRead(); draw(); return; }
-  gsap.to(o, {n: TRUE_N, duration: 2.2, ease: 'power2.inOut', onUpdate: () => { shown = o.n; setRead(); draw(); },
-    onComplete: () => {
-      shown = TRUE_N; setRead(); draw();
-      gsap.fromTo('#box', {x: -4}, {x: 4, duration: .045, repeat: 15, yoyo: true, ease: 'none', onComplete: () => gsap.set('#box', {x: 0})});
-    }});
+  if (Kit.calm) { st.hit = 1; shown = TRUE_N; setRead(); render(); return; }
+  gsap.timeline()
+    .to(st, {hit: 1, duration: .45, ease: 'power2.in', onUpdate: render})
+    .to(o, {n: TRUE_N, duration: 2.2, ease: 'power2.inOut', onUpdate: () => { shown = o.n; setRead(); render(); },
+      onComplete: () => {
+        shown = TRUE_N; setRead(); render();
+        gsap.fromTo('#box', {x: -4}, {x: 4, duration: .045, repeat: 15, yoyo: true, ease: 'none', onComplete: () => gsap.set('#box', {x: 0})});
+      }});
 });
 
 rng.addEventListener('input', () => {
   if (revealed) return;
-  guess = fromSlider(); setRead(); draw();
+  guess = fromSlider(); setRead(); render();
   if (!touched) { touched = true; Kit.haptic('selection'); sure.on(); }
 });
 
-Kit.onShow.card = () => { layout(); draw(); };
+Kit.onShow.card = () => { Kit.$('card').classList.toggle('short', Kit.$('card').getBoundingClientRect().height < 540); build(); };
+// Drawn again at the size it now has whenever its room changes: when the answer takes the slider's room and more.
+{ let seen = ''; const el = Kit.$('cv'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k === seen) return; const first = !seen; seen = k; if (!first) build(); }).observe(el); }
 Kit.onEnter.card = () => {
   if (Kit.calm) return;
   const o = {n: 1};
   gsap.from('#ctl', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
-  gsap.to(o, {n: guess, duration: .9, ease: 'power2.out', onUpdate: () => { if (!touched && !revealed) { const g = guess; guess = Math.round(o.n); draw(); guess = g; } }, onComplete: draw});
+  gsap.to(o, {n: guess, duration: .9, ease: 'power2.out', onUpdate: () => { if (!touched && !revealed) { const g = guess; guess = Math.max(1, Math.round(o.n)); render(); guess = g; } }, onComplete: render});
 };
 Kit.play.card = async () => {
   rng.value = 900; rng.dispatchEvent(new Event('input', {bubbles: true}));
