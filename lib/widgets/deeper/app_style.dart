@@ -90,7 +90,11 @@ class AppBath extends StatelessWidget {
     required this.bath,
     required this.ground,
     required this.depth,
+    this.drift,
   });
+
+  /// The head's slow drift, which the bath's lights follow.
+  final Animation<double>? drift;
 
   final DeeperLook look;
   final Color bath;
@@ -102,13 +106,38 @@ class AppBath extends StatelessWidget {
     child: SizedBox(
       height: depth,
       width: double.infinity,
-      child: CustomPaint(painter: _Bath(look, bath, ground)),
+      child: CustomPaint(painter: _Bath(look, bath, ground, drift)),
     ),
   );
 }
 
 class _Bath extends CustomPainter {
-  _Bath(this.look, this.bath, this.ground);
+  _Bath(this.look, this.bath, this.ground, this.drift) : super(repaint: drift);
+
+  final Animation<double>? drift;
+
+  /// The bath's lights: where each rests (across, and down the bath), its
+  /// size against the width, and where in its slow circle it starts.
+  static const List<(double, double, double, double)> _pools = [
+    (0.12, 0.06, 0.95, 0.4),
+    (0.92, 0.26, 0.85, 2.1),
+    (0.18, 0.5, 0.8, 3.7),
+  ];
+
+  static final Map<(int, bool), List<Color>> _pooled = {};
+
+  /// Three hues near the subject's, as the head's own lights are, set
+  /// deep at night and pale on paper so the cards' words keep reading.
+  List<Color> _poolColours() =>
+      _pooled[(look.world.toARGB32(), look.dark)] ??= [
+        for (final Color g in [look.glow[0], look.glow[2], look.glow[3]])
+          () {
+            final Oklch o = Oklch.of(g);
+            return look.dark
+                ? Oklch(0.42, math.min(o.c * 0.75, 0.13), o.h).toColour()
+                : Oklch(0.9, math.min(o.c * 0.5, 0.08), o.h).toColour();
+          }(),
+      ];
 
   final DeeperLook look;
   final Color bath;
@@ -160,6 +189,8 @@ class _Bath extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Rect box = Offset.zero & size;
+    // The pools reach past the bath's top; they stay in it, under the head.
+    canvas.clipRect(box);
     final (List<Color> colours, List<double> stops) = _fall();
     canvas.drawRect(
       box,
@@ -171,6 +202,38 @@ class _Bath extends CustomPainter {
           stops,
         ),
     );
+    // A mesh of light: three pools of nearby hues, softly overlapping,
+    // drifting slowly in small circles with the head's own lights.
+    final double v = drift?.value ?? 0;
+    final List<Color> pools = _poolColours();
+    for (int i = 0; i < _pools.length; i++) {
+      final (double x, double y, double r, double phase) = _pools[i];
+      final double a = 2 * math.pi * v + phase;
+      final Offset c = Offset(
+        size.width * (x + 0.1 * (math.sin(a) - math.sin(phase))),
+        size.height * (y + 0.04 * (math.cos(a) - math.cos(phase))),
+      );
+      final double radius = size.width * r;
+      final double strength =
+          (look.dark ? const [0.5, 0.38, 0.26] : const [0.6, 0.45, 0.3])[i] *
+          (1 - y * 0.6);
+      canvas.drawCircle(
+        c,
+        radius,
+        Paint()
+          ..shader = ui.Gradient.radial(
+            c,
+            radius,
+            [
+              pools[i].withValues(alpha: strength),
+              pools[i].withValues(alpha: strength * 0.45),
+              pools[i].withValues(alpha: 0),
+            ],
+            const [0, 0.5, 1],
+          ),
+      );
+    }
+
     // The head's light, carried on a little way down: a soft pool at the
     // top, wider than the screen, so the head and the bath are one light.
     final Offset centre = Offset(size.width * 0.3, 0);
@@ -189,6 +252,19 @@ class _Bath extends CustomPainter {
             glow.withValues(alpha: 0),
           ],
           const [0, 0.45, 1],
+        ),
+    );
+    // At its very top the bath is the plain shade the head falls into, so
+    // the head runs on into it with no seam; the pools come in below.
+    const double seam = 110;
+    canvas.drawRect(
+      Rect.fromLTWH(0, 0, size.width, seam),
+      Paint()
+        ..shader = ui.Gradient.linear(
+          Offset.zero,
+          const Offset(0, seam),
+          [bath, bath.withValues(alpha: 0.6), bath.withValues(alpha: 0)],
+          const [0, 0.35, 1],
         ),
     );
     // A grain finer than the eye can pick out, lighter and darker, so the
@@ -211,7 +287,10 @@ class _Bath extends CustomPainter {
 
   @override
   bool shouldRepaint(_Bath old) =>
-      old.look != look || old.bath != bath || old.ground != ground;
+      old.look != look ||
+      old.bath != bath ||
+      old.ground != ground ||
+      old.drift != drift;
 }
 
 /// The words of a part, as the app sets its running text.
@@ -260,75 +339,135 @@ class AppSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
+    final bool dark = p.isDark;
+    const BorderRadius round = BorderRadius.all(Radius.circular(22));
+    // A card of frosted glass over the light: the colour beneath shows
+    // through, blurred, under a fill dense enough for the words to read as
+    // on any of the app's cards; a hairline of light along its top edge,
+    // and two soft shadows, one near and one far, lifting it off.
     return DecoratedBox(
       decoration: BoxDecoration(
-        // Opaque, as the app's cards are, lifted off the light by a soft
-        // shadow; its words read as on any of the app's cards.
-        color: p.surfaceRaised,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(
-          color: p.isDark ? const Color(0x14FFFFFF) : const Color(0x0F000000),
-        ),
+        borderRadius: round,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: p.isDark ? 0.32 : 0.06),
-            blurRadius: 28,
-            spreadRadius: -6,
-            offset: const Offset(0, 12),
+            color: Colors.black.withValues(alpha: dark ? 0.22 : 0.04),
+            blurRadius: 3,
+            offset: const Offset(0, 1),
+          ),
+          BoxShadow(
+            color: Colors.black.withValues(alpha: dark ? 0.24 : 0.05),
+            blurRadius: 34,
+            spreadRadius: -10,
+            offset: const Offset(0, 16),
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(22, 20, 22, 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                // The one mark of the subject's colour on a part.
-                ExcludeSemantics(
-                  child: Container(
-                    width: 7,
-                    height: 7,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: look.pearl ? p.ink : look.world,
-                    ),
-                  ),
+      child: ClipRRect(
+        borderRadius: round,
+        child: BackdropFilter(
+          filter: ui.ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: round,
+              color: dark
+                  ? const Color(0xFF121215).withValues(alpha: 0.84)
+                  : Colors.white.withValues(alpha: 0.86),
+            ),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: round,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white.withValues(alpha: dark ? 0.035 : 0.25),
+                    Colors.white.withValues(alpha: 0),
+                  ],
+                  stops: const [0, 0.4],
                 ),
-                const SizedBox(width: 9),
-                Flexible(
-                  child: Semantics(
-                    header: true,
-                    child: Text(
-                      title.toUpperCase(),
-                      style: AppText.label(
-                        size: 11,
-                        weight: FontWeight.w600,
-                        spacing: 1.3,
-                        height: 1.3,
-                        color: p.inkMuted,
+                border: Border.all(
+                  color: dark
+                      ? const Color(0x12FFFFFF)
+                      : const Color(0x0D000000),
+                ),
+              ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    left: 24,
+                    right: 24,
+                    child: Container(
+                      height: 1,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.white.withValues(alpha: 0),
+                            Colors.white.withValues(alpha: dark ? 0.16 : 0.9),
+                            Colors.white.withValues(alpha: 0),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                if (badge case final Widget b) ...[
-                  const SizedBox(width: 10),
-                  b,
+                  _body(p),
                 ],
-              ],
-            ),
-            if (lead case final String said) ...[
-              const SizedBox(height: 8),
-              Text(
-                said,
-                style: AppText.body(size: 14, height: 1.45, color: p.inkMuted),
               ),
-            ],
-            const SizedBox(height: 16),
-            child,
-          ],
+            ),
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget _body(Palette p) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(22, 20, 22, 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              // The one mark of the subject's colour on a part.
+              ExcludeSemantics(
+                child: Container(
+                  width: 7,
+                  height: 7,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: look.pearl ? p.ink : look.world,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 9),
+              Flexible(
+                child: Semantics(
+                  header: true,
+                  child: Text(
+                    title.toUpperCase(),
+                    style: AppText.label(
+                      size: 11,
+                      weight: FontWeight.w600,
+                      spacing: 1.3,
+                      height: 1.3,
+                      color: p.inkMuted,
+                    ),
+                  ),
+                ),
+              ),
+              if (badge case final Widget b) ...[const SizedBox(width: 10), b],
+            ],
+          ),
+          if (lead case final String said) ...[
+            const SizedBox(height: 8),
+            Text(
+              said,
+              style: AppText.body(size: 14, height: 1.45, color: p.inkMuted),
+            ),
+          ],
+          const SizedBox(height: 16),
+          child,
+        ],
       ),
     );
   }
