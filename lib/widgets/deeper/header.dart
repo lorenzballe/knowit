@@ -336,7 +336,7 @@ class _Glow extends CustomPainter {
       // At night the colour deepens all the way into the black; on paper
       // only a little, and it is let go again before the foot, so the
       // colour lightens into the paper with no darker band on the way.
-      final double low = size.height - foot - 50;
+      final double low = size.height - foot - 90;
       canvas.drawRect(
         box,
         Paint()
@@ -442,8 +442,14 @@ class _Glow extends CustomPainter {
     // The foot, where the first part lies: let go into the sheet's own
     // ground below the words, on an eased curve so there is no line where
     // the colour ends, only a slow fall into the ground.
-    final double melt = foot + (look.dark ? 20 : 50);
+    //
+    // The fall goes through the colour's own shades, not a mix of it with
+    // the ground: at night through its own deeper hue (a yellow through
+    // amber, never olive), on paper through its own palest tint (never a
+    // grey), and only then into the ground itself.
+    final double melt = foot + (look.dark ? 30 : 90);
     final Color g = look.ground;
+    final (Color near, Color far) = _fall(look);
     canvas.drawRect(
       Rect.fromLTRB(0, size.height - melt, size.width, size.height),
       Paint()
@@ -451,18 +457,49 @@ class _Glow extends CustomPainter {
           Offset(0, size.height - melt),
           Offset(0, size.height),
           [
-            g.withValues(alpha: 0),
-            g.withValues(alpha: 0.06),
-            g.withValues(alpha: 0.2),
-            g.withValues(alpha: 0.42),
-            g.withValues(alpha: 0.68),
-            g.withValues(alpha: 0.88),
+            near.withValues(alpha: 0),
+            near.withValues(alpha: 0.14),
+            near.withValues(alpha: 0.42),
+            far.withValues(alpha: 0.7),
+            far.withValues(alpha: 0.9),
+            Color.alphaBlend(far.withValues(alpha: 0.25), g),
             g,
           ],
-          const [0, 0.17, 0.34, 0.5, 0.67, 0.84, 1],
+          const [0, 0.16, 0.34, 0.52, 0.68, 0.84, 1],
         ),
     );
   }
+
+  static final Map<(int, bool, int), (Color, Color)> _falls = {};
+
+  /// The two shades the foot falls through, from the colour to the ground.
+  static (Color, Color) _fall(DeeperLook look) =>
+      _falls[(
+        look.world.toARGB32(),
+        look.dark,
+        look.ground.toARGB32(),
+      )] ??= () {
+        final Oklch o = Oklch.of(look.world);
+        if (look.pearl) return (look.ground, look.ground);
+        final double h = _richHue(o.h);
+        if (look.dark) {
+          return (
+            Oklch(o.l * 0.72, o.c * 0.95, h).toColour(),
+            Oklch(0.2, o.c * 0.45, h).toColour(),
+          );
+        }
+        final Oklch paper = Oklch.of(look.ground);
+        return (
+          Oklch(0.86, o.c * 0.55, o.h).toColour(),
+          Oklch(paper.l, math.min(o.c * 0.18, 0.04), o.h).toColour(),
+        );
+      }();
+
+  /// The hue a colour deepens towards: a yellow turns to amber as it
+  /// darkens, as gold does, instead of to olive; the rest stay near their
+  /// own.
+  static double _richHue(double h) =>
+      (h > 80 && h < 125 ? h - 32 : h - 10) % 360;
 
   static final Map<int, Color> _deeps = {};
 
@@ -473,7 +510,7 @@ class _Glow extends CustomPainter {
     return Oklch(
       (o.l - (o.l > 0.8 ? 0.1 : 0.16)).clamp(0.0, 1.0),
       o.c * 1.08,
-      (o.h - 10) % 360,
+      _richHue(o.h),
     ).toColour();
   }();
 
