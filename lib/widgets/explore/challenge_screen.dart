@@ -343,7 +343,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                 child: ChallengeGround(
                   key: ValueKey('$_id-ground'),
                   colour: widget.look.tone.page(p),
-                  bath: widget.look.tone.bath(p),
                 ),
               ),
             ),
@@ -556,112 +555,112 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                     children: [
                       // The score, as Your journey sets the reader's: on a card of
                       // the page's own, large, what it is beside it.
-                      ChallengePanel(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ChallengeDotLabel(
-                              text: widget.look.skill,
-                              colour: widget.look.tone.vivid,
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Semantics(
-                                  container: true,
-                                  label: out.label,
-                                  excludeSemantics: true,
-                                  child: Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: out.score,
-                                          style: AppText.display(
-                                            size: out.score.length > 3
-                                                ? 54
-                                                : 64,
-                                            weight: FontWeight.w600,
-                                            height: 1,
-                                            spacing: -2,
-                                            color: p.ink,
-                                          ),
-                                        ),
-                                        if (of != null)
+                      Expanded(
+                        child: ChallengePanel(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ChallengeDotLabel(
+                                text: widget.look.skill,
+                                colour: widget.look.tone.vivid,
+                              ),
+                              const SizedBox(height: 14),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Semantics(
+                                    container: true,
+                                    label: out.label,
+                                    excludeSemantics: true,
+                                    child: Text.rich(
+                                      TextSpan(
+                                        children: [
                                           TextSpan(
-                                            text: ' / $of',
+                                            text: out.score,
                                             style: AppText.display(
-                                              size: 26,
+                                              size: out.score.length > 3
+                                                  ? 72
+                                                  : 96,
                                               weight: FontWeight.w600,
                                               height: 1,
-                                              spacing: -0.4,
-                                              color: p.inkMuted,
+                                              spacing: -2,
+                                              color: p.ink,
                                             ),
                                           ),
-                                      ],
-                                    ),
-                                    key: ValueKey('$_id-score'),
-                                    textScaler: scaler.clamp(
-                                      maxScaleFactor: 1.2,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                if (best != null)
-                                  Expanded(
-                                    child: Align(
-                                      alignment: AlignmentDirectional.bottomEnd,
-                                      child: _PersonalBest(
-                                        key: ValueKey('$_id-best'),
-                                        text: best,
-                                        calm: kit.calm,
+                                          if (of != null)
+                                            TextSpan(
+                                              text: ' / $of',
+                                              style: AppText.display(
+                                                size: 34,
+                                                weight: FontWeight.w600,
+                                                height: 1,
+                                                spacing: -0.5,
+                                                color: p.inkMuted,
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                      key: ValueKey('$_id-score'),
+                                      textScaler: scaler.clamp(
+                                        maxScaleFactor: 1.2,
                                       ),
                                     ),
                                   ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              out.line,
-                              key: ValueKey('$_id-line'),
-                              style: AppText.body(
-                                size: 14.5,
-                                weight: FontWeight.w600,
-                                height: 1.35,
-                                color: p.ink.withValues(alpha: 0.82),
+                                  const SizedBox(width: 12),
+                                  if (best != null)
+                                    Expanded(
+                                      child: Align(
+                                        alignment:
+                                            AlignmentDirectional.bottomEnd,
+                                        child: _PersonalBest(
+                                          key: ValueKey('$_id-best'),
+                                          text: best,
+                                          calm: kit.calm,
+                                        ),
+                                      ),
+                                    ),
+                                ],
                               ),
-                            ),
-                            if (out.figures.isNotEmpty) ...[
-                              const SizedBox(height: 14),
-                              ChallengeFigures(rows: out.figures, bare: true),
-                            ],
-                            if (out.chips.isNotEmpty) ...[
-                              const SizedBox(height: 14),
-                              Wrap(
-                                spacing: 16,
-                                runSpacing: 8,
-                                children: out.chips,
-                              ),
-                            ],
-                            if (out.board case final Widget board) ...[
+                              const Spacer(),
                               const SizedBox(height: 16),
-                              board,
+                              Text(
+                                out.line,
+                                key: ValueKey('$_id-line'),
+                                style: AppText.body(
+                                  size: 14.5,
+                                  weight: FontWeight.w600,
+                                  height: 1.35,
+                                  color: p.ink.withValues(alpha: 0.82),
+                                ),
+                              ),
+                              if (out.figures.isNotEmpty) ...[
+                                const SizedBox(height: 14),
+                                ChallengeFigures(rows: out.figures, bare: true),
+                              ],
+                              if (out.chips.isNotEmpty) ...[
+                                const SizedBox(height: 14),
+                                Wrap(
+                                  spacing: 16,
+                                  runSpacing: 8,
+                                  children: out.chips,
+                                ),
+                              ],
+                              if (out.board case final Widget board) ...[
+                                const SizedBox(height: 16),
+                                board,
+                              ],
                             ],
-                          ],
+                          ),
                         ),
                       ),
                       if (out.review.isNotEmpty) ...[
                         const SizedBox(height: 14),
-                        Expanded(
-                          child: GameReview(
-                            items: out.review,
-                            tone: widget.look.tone,
-                            label: out.reviewTitle ?? l.gameReview,
-                            spread: true,
-                          ),
+                        GameReview(
+                          items: out.review,
+                          tone: widget.look.tone,
+                          label: out.reviewTitle ?? l.gameReview,
                         ),
-                      ] else
-                        const Spacer(),
+                      ],
                       if (next != null && widget.onNext != null) ...[
                         const SizedBox(height: 22),
                         Padding(

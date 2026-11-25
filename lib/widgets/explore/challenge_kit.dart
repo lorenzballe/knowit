@@ -416,9 +416,7 @@ class _GameButtonState extends State<GameButton> {
             height: widget.height,
             decoration: BoxDecoration(
               color: face,
-              borderRadius: BorderRadius.circular(
-                legacy ? 999 : widget.radius,
-              ),
+              borderRadius: BorderRadius.circular(legacy ? 999 : widget.radius),
               border: Border.all(
                 color: widget.face == kArtCream
                     ? (p.isDark
@@ -628,66 +626,37 @@ class ChallengePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
-    final bool dark = p.isDark;
-    final ChallengeTone? tone = ChallengeToneScope.maybeOf(context);
-    const BorderRadius round = BorderRadius.all(Radius.circular(22));
     final String? name = label;
-    return DecoratedBox(
+    return Container(
+      padding: padding,
       decoration: BoxDecoration(
-        borderRadius: round,
-        color: dark ? const Color(0xFF141417) : Colors.white,
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color.alphaBlend(
-              Colors.white.withValues(alpha: dark ? 0.035 : 0),
-              dark ? const Color(0xFF141417) : Colors.white,
+        color: p.surfaceRaised,
+        borderRadius: BorderRadius.circular(20),
+        border: p.isDark ? null : Border.all(color: p.line),
+      ),
+      child: name == null
+          ? child
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ChallengeDotLabel(text: name, colour: p.ink),
+                const SizedBox(height: 10),
+                Flexible(child: child),
+              ],
             ),
-            dark ? const Color(0xFF121215) : Colors.white,
-          ],
-          stops: const [0, 0.4],
-        ),
-        border: Border.all(
-          color: dark ? const Color(0x12FFFFFF) : const Color(0x0D000000),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: dark ? 0.22 : 0.04),
-            blurRadius: 3,
-            offset: const Offset(0, 1),
-          ),
-          BoxShadow(
-            color: Colors.black.withValues(alpha: dark ? 0.24 : 0.06),
-            blurRadius: 34,
-            spreadRadius: -10,
-            offset: const Offset(0, 16),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: padding,
-        child: name == null
-            ? child
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ChallengeDotLabel(
-                    text: name,
-                    colour: tone?.vivid ?? p.ink,
-                  ),
-                  const SizedBox(height: 12),
-                  Flexible(child: child),
-                ],
-              ),
-      ),
     );
   }
 }
 
-/// A part's name, as Go deeper's: a dot of colour and small capitals.
+/// A card's name in small capitals, as the app's cards carry theirs.
+/// [colour] is kept for the callers; the label is the page's muted ink.
 class ChallengeDotLabel extends StatelessWidget {
-  const ChallengeDotLabel({super.key, required this.text, required this.colour});
+  const ChallengeDotLabel({
+    super.key,
+    required this.text,
+    required this.colour,
+  });
 
   final String text;
   final Color colour;
@@ -695,21 +664,15 @@ class ChallengeDotLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
     children: [
-      Container(
-        width: 7,
-        height: 7,
-        decoration: BoxDecoration(shape: BoxShape.circle, color: colour),
-      ),
-      const SizedBox(width: 9),
       Flexible(
         child: Text(
           upper(context, text),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppText.label(
-            size: 11,
-            weight: FontWeight.w600,
-            spacing: 1.3,
+            size: 10.5,
+            weight: FontWeight.w700,
+            spacing: 1.2,
             height: 1.3,
             color: context.p.inkMuted,
           ),
@@ -757,14 +720,15 @@ class ChallengeFigures extends StatelessWidget {
                   const SizedBox(width: 16),
                   Text(
                     rows[i].value,
-                    style: AppText.body(
-                      size: 15,
-                      weight: FontWeight.w800,
-                      height: 1.3,
-                      color: p.ink,
-                    ).copyWith(
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
+                    style:
+                        AppText.body(
+                          size: 15,
+                          weight: FontWeight.w800,
+                          height: 1.3,
+                          color: p.ink,
+                        ).copyWith(
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
                   ),
                 ],
               ],
@@ -1008,9 +972,8 @@ class GameNextCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Color ink = look.tone.ink;
-    final TextScaler scaler = MediaQuery.textScalerOf(
-      context,
-    ).clamp(maxScaleFactor: 1.5);
+    final TextScaler scaler = MediaQuery.textScalerOf(context)
+        .clamp(maxScaleFactor: 1.5);
     return Semantics(
       button: true,
       label: '${l.gameNext}: ${look.title}',
