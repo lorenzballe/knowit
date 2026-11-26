@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A sorting game titled 'Three inventions, millions of deaths'. Three inventions (leaded gas, CFC Freon, and a pulley bed lift) must be sorted into two sides: harmed millions (the whole world) or killed only him (its inventor). Tap a card to sort it.",
+    "label": "The whole world as a globe on one side, the inventor in his bed on the other, and his three inventions one at a time: a leaded-gas pump, a Freon fridge, a pulley bed lift. The reader taps who each one harmed. On the answer the globe takes a grey ring of lead and a torn ozone ring, and the lift's ropes close red round the man.",
     "graded": false
   },
   "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",

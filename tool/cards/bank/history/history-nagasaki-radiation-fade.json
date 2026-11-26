@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A bar chart shows radiation falling over the first 24 hours after the Nagasaki bomb. A draggable bar asks how much had already gone after 24 hours.",
+    "label": "Nagasaki's valley between green hills, the bomb's burst drawn high in the air above it, and the radiation it left behind as 20 yellow hazard marks over the city, each 5% of it. The reader drags a strip to say how much was gone after 24 hours, and marks vanish as they drag; then the real day passes and 16 of the 20 go: 80%.",
     "graded": false
   },
   "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",

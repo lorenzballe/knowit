@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A draggable Enigma wiring diagram showing three machines linked in a loop of letters R, E, T, R. The reader drags the guessed weather report until no letter sits on itself, so only the correct setting closes the loop back to R."
+    "label": "A weather station radios the same report every morning. Below, the intercepted message as eleven lit Enigma lamps, and the guess WETTER, German for weather, as six keys on a strip the reader slides. Where a key sits under its own letter its wire breaks red; in the one place that fits, the letter pairs close Turing's loop, R to E to T and back to R."
   },
   "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=JsBZOcqZerk&t=1574s",
