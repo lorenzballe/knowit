@@ -1576,43 +1576,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get threeDone => 'Три вопроса дня · готово';
 
   @override
-  String threeDay(int n) {
-    return 'День $n';
-  }
-
-  @override
-  String get threeOf300 => 'из 300';
-
-  @override
-  String threeCloser(int pct) {
-    return 'Ближе, чем $pct% сегодняшних читателей.';
-  }
-
-  @override
-  String threeFirst(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Среди первых $n игроков сегодня.',
-      one: 'Первый игрок сегодня.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String threeReaders(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Сегодня сыграли $n читателя.',
-      many: 'Сегодня сыграли $n читателей.',
-      few: 'Сегодня сыграли $n читателя.',
-      one: 'Сегодня сыграл $n читатель.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get threeYou => 'Ты';
 
   @override
@@ -2007,19 +1970,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String threeStreak(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n дня',
-      many: '$n дней',
-      few: '$n дня',
-      one: '1 день',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get threeSend => 'Отправить';
 
   @override
@@ -2031,18 +1981,123 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String threeShareHead(String date) {
-    return 'Astute · Три вопроса дня · $date';
-  }
-
-  @override
-  String threeShareScore(int score, int day) {
-    return '$score из 300 · день $day';
-  }
-
-  @override
   String threeRowSaid(String said, String truth) {
     return 'Твой ответ: $said. Верно: $truth.';
+  }
+
+  @override
+  String get fiveTitle => 'Пять вопросов дня';
+
+  @override
+  String get fiveSame => 'Сегодня у всех одни и те же пять. Около двух минут.';
+
+  @override
+  String get fiveDone => 'Пять вопросов дня · готово';
+
+  @override
+  String dailyOf(int max) {
+    return 'из $max';
+  }
+
+  @override
+  String dailyPickRight(String answer) {
+    return 'Верно: $answer.';
+  }
+
+  @override
+  String dailyPickWrong(String answer) {
+    return 'Не совсем: верно $answer.';
+  }
+
+  @override
+  String dailyBetter(int pct, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Лучше, чем $pct% из $n сегодняшних игроков.',
+      many: 'Лучше, чем $pct% из $n сегодняшних игроков.',
+      few: 'Лучше, чем $pct% из $n сегодняшних игроков.',
+      one: 'Лучше, чем $pct% из $n сегодняшнего игрока.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyPlayers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Сегодня пока сыграли $n игрока.',
+      many: 'Сегодня пока сыграли $n игроков.',
+      few: 'Сегодня пока сыграли $n игрока.',
+      one: 'Сегодня пока сыграл $n игрок.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Среди первых $n игроков сегодня: пока слишком мало для сравнения.',
+      one: 'Первый игрок сегодня: пока слишком мало игроков для сравнения.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dailyCounting => 'Считаем сегодняшних игроков…';
+
+  @override
+  String dailyAverage(int right, int total, String avg) {
+    return 'Верно: $right из $total. На этих вопросах читатели в среднем отвечают верно на $avg.';
+  }
+
+  @override
+  String get dailyUncounted =>
+      'Сейчас не получается посчитать сегодняшних игроков.';
+
+  @override
+  String get dailyEach => 'Вопрос за вопросом';
+
+  @override
+  String dailyItemRight(int pct) {
+    return '$pct% сегодняшних игроков ответили верно';
+  }
+
+  @override
+  String dailyItemGuess(String guess) {
+    return 'Средняя оценка сегодня: $guess';
+  }
+
+  @override
+  String get dailyItemFew => 'Пока слишком мало ответов для сравнения';
+
+  @override
+  String fiveYesterday(int score) {
+    return 'Вчерашние пять: $score из 500.';
+  }
+
+  @override
+  String fiveShareHead(String date) {
+    return 'Astute · Пять вопросов дня · $date';
+  }
+
+  @override
+  String threeShareHeadIn(String subject, String date) {
+    return 'Astute · Три вопроса дня · $subject · $date';
+  }
+
+  @override
+  String dailyShareScore(int score, int max, int day) {
+    return '$score из $max · день $day';
+  }
+
+  @override
+  String dailyShareScoreAlone(int score, int max) {
+    return '$score из $max';
   }
 
   @override

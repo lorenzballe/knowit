@@ -166,7 +166,12 @@ void main() {
       });
 
       testWidgets('$name is left out with nothing to bet on', (tester) async {
-        final BetsTestHost host = await start(tester);
+        // The day's challenge deals its cards from the whole bank, picks of
+        // words among them, not from what the page hands it: it is left out
+        // only on a page it has no subject for (test/explore/three_test.dart).
+        final BetsTestHost host = name == 'three'
+            ? BetsTestHost((await start(tester)).app, subject: 'Nowhere')
+            : await start(tester);
         host.cards[name] = [
           for (final Pill p in PillBank.cards)
             if (BetAnswer.of(p) == null) p,

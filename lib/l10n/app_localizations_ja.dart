@@ -1451,40 +1451,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get threeDone => '今日の3問 · 完了';
 
   @override
-  String threeDay(int n) {
-    return '$n日目';
-  }
-
-  @override
-  String get threeOf300 => '/ 300';
-
-  @override
-  String threeCloser(int pct) {
-    return '今日の読者の$pct%より正解に近い。';
-  }
-
-  @override
-  String threeFirst(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '今日の最初の$n人のひとり。',
-      one: '今日いちばん乗り。',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String threeReaders(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '今日は$n人が挑戦しました。',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get threeYou => 'あなた';
 
   @override
@@ -1850,11 +1816,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String threeStreak(int n) {
-    return '$n日';
-  }
-
-  @override
   String get threeSend => '送る';
 
   @override
@@ -1866,18 +1827,115 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String threeShareHead(String date) {
-    return 'Astute · 今日の3問 · $date';
-  }
-
-  @override
-  String threeShareScore(int score, int day) {
-    return '$score / 300 · $day日目';
-  }
-
-  @override
   String threeRowSaid(String said, String truth) {
     return 'あなた: $said · 正解: $truth';
+  }
+
+  @override
+  String get fiveTitle => '今日の5問';
+
+  @override
+  String get fiveSame => '今日はみんな同じ5問。約2分。';
+
+  @override
+  String get fiveDone => '今日の5問 · 完了';
+
+  @override
+  String dailyOf(int max) {
+    return '/ $max';
+  }
+
+  @override
+  String dailyPickRight(String answer) {
+    return '正解：$answer';
+  }
+
+  @override
+  String dailyPickWrong(String answer) {
+    return '惜しい。正解は$answer';
+  }
+
+  @override
+  String dailyBetter(int pct, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今日の$n人のうち$pct%を上回りました。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyPlayers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今日はここまでに$n人が挑戦しました。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今日の最初の$n人のひとり。比べるにはまだ人数が足りません。',
+      one: '今日いちばん乗り。比べるにはまだ人数が足りません。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dailyCounting => '今日の挑戦者を集計しています…';
+
+  @override
+  String dailyAverage(int right, int total, String avg) {
+    return '$total問中$right問正解。この問題での読者の平均は$avg問です。';
+  }
+
+  @override
+  String get dailyUncounted => '今は今日の挑戦者を集計できません。';
+
+  @override
+  String get dailyEach => '1問ずつ';
+
+  @override
+  String dailyItemRight(int pct) {
+    return '今日の挑戦者の$pct%が正解';
+  }
+
+  @override
+  String dailyItemGuess(String guess) {
+    return '今日の平均予想：$guess';
+  }
+
+  @override
+  String get dailyItemFew => '比べるにはまだ回答が少なすぎます';
+
+  @override
+  String fiveYesterday(int score) {
+    return '昨日の5問: $score / 500';
+  }
+
+  @override
+  String fiveShareHead(String date) {
+    return 'Astute · 今日の5問 · $date';
+  }
+
+  @override
+  String threeShareHeadIn(String subject, String date) {
+    return 'Astute · 今日の3問 · $subject · $date';
+  }
+
+  @override
+  String dailyShareScore(int score, int max, int day) {
+    return '$score / $max · $day日目';
+  }
+
+  @override
+  String dailyShareScoreAlone(int score, int max) {
+    return '$score / $max';
   }
 
   @override

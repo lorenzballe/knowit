@@ -1490,40 +1490,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get threeDone => 'Bugünün üçlüsü · tamam';
 
   @override
-  String threeDay(int n) {
-    return '$n. gün';
-  }
-
-  @override
-  String get threeOf300 => '/ 300';
-
-  @override
-  String threeCloser(int pct) {
-    return 'Yakınlıkta bugünkü okurların yüzde $pct kadarını geçtin.';
-  }
-
-  @override
-  String threeFirst(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Bugün ilk oynayan $n kişiden birisin.',
-      one: 'Bugün ilk oynayan sensin.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String threeReaders(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Bugün $n okur oynadı.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get threeYou => 'Sen';
 
   @override
@@ -1897,11 +1863,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String threeStreak(int n) {
-    return '$n gün';
-  }
-
-  @override
   String get threeSend => 'Gönder';
 
   @override
@@ -1913,18 +1874,116 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String threeShareHead(String date) {
-    return 'Astute · Bugünün üçlüsü · $date';
-  }
-
-  @override
-  String threeShareScore(int score, int day) {
-    return '$score / 300 · $day. gün';
-  }
-
-  @override
   String threeRowSaid(String said, String truth) {
     return 'Senin: $said. Doğrusu: $truth.';
+  }
+
+  @override
+  String get fiveTitle => 'Bugünün beşlisi';
+
+  @override
+  String get fiveSame => 'Bugün herkese aynı beş soru. Yaklaşık iki dakika.';
+
+  @override
+  String get fiveDone => 'Bugünün beşlisi · tamam';
+
+  @override
+  String dailyOf(int max) {
+    return '/ $max';
+  }
+
+  @override
+  String dailyPickRight(String answer) {
+    return 'Doğru: $answer.';
+  }
+
+  @override
+  String dailyPickWrong(String answer) {
+    return 'Tam değil: doğrusu $answer.';
+  }
+
+  @override
+  String dailyBetter(int pct, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bugünkü $n oyuncunun %$pct kadarından daha iyi.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyPlayers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bugün şimdiye kadar $n oyuncu oynadı.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Bugün ilk oynayan $n kişiden birisin: karşılaştırmak için henüz çok az oyuncu var.',
+      one: 'Bugün ilk oynayan sensin: karşılaştırmak için henüz çok az oyuncu var.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dailyCounting => 'Bugünün oyuncuları sayılıyor…';
+
+  @override
+  String dailyAverage(int right, int total, String avg) {
+    return '$total sorudan $right tanesini bildin. Okurlar bu sorularda ortalama $avg tane biliyor.';
+  }
+
+  @override
+  String get dailyUncounted => 'Bugünün oyuncuları şu an sayılamıyor.';
+
+  @override
+  String get dailyEach => 'Soru soru';
+
+  @override
+  String dailyItemRight(int pct) {
+    return 'Bugünkü oyuncuların %$pct kadarı doğru bildi';
+  }
+
+  @override
+  String dailyItemGuess(String guess) {
+    return 'Bugünün ortalama tahmini: $guess';
+  }
+
+  @override
+  String get dailyItemFew => 'Karşılaştırmak için henüz çok az yanıt var';
+
+  @override
+  String fiveYesterday(int score) {
+    return 'Dünün beşlisi: $score / 500.';
+  }
+
+  @override
+  String fiveShareHead(String date) {
+    return 'Astute · Bugünün beşlisi · $date';
+  }
+
+  @override
+  String threeShareHeadIn(String subject, String date) {
+    return 'Astute · Bugünün üçlüsü · $subject · $date';
+  }
+
+  @override
+  String dailyShareScore(int score, int max, int day) {
+    return '$score / $max · $day. gün';
+  }
+
+  @override
+  String dailyShareScoreAlone(int score, int max) {
+    return '$score / $max';
   }
 
   @override

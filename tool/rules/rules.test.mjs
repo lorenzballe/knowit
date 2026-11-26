@@ -162,6 +162,26 @@ await check('a report is a card, a reason from the list and a short note', async
   await assertFails(me.doc('readers/alice/reports/Science%201').set(report({ card: 'Science%201' })));
 });
 
+await check('the day\'s games: counts every signed-in phone reads and no phone writes', async () => {
+  const key = `daily/${today}~five~art-1,history-1,maths-1,science-1,space-1`;
+  await env.withSecurityRulesDisabled((ctx) => ctx.firestore().doc(key).set({ players: 3, scores: { '27': 3 }, items: {} }));
+  await assertSucceeds(reader().doc(key).get());
+  await assertFails(stranger().doc(key).get());
+  await assertFails(reader().doc(key).set({ players: inc(1), scores: { '50': inc(1) } }, { merge: true }));
+  await assertFails(reader().doc(key).update({ players: 4 }));
+  await assertFails(reader().doc(key).delete());
+  await assertFails(reader().doc(`daily/${today}~three~art-1,art-2,art-3`).set({ players: 1 }));
+});
+
+await check('the marks of the games a reader played are the server\'s alone, even to their reader', async () => {
+  const mark = `readers/anon-reader/daily/${today}~five`;
+  await assertFails(reader().doc(mark).set({ at: 1 }));
+  await env.withSecurityRulesDisabled((ctx) => ctx.firestore().doc(mark).set({ at: 1 }));
+  await assertFails(reader().doc(mark).get());
+  await assertFails(reader().doc(mark).delete());
+  await assertFails(reader().collection('readers/anon-reader/daily').get());
+});
+
 await check('the rest of the rules still stand', async () => {
   await assertSucceeds(env.authenticatedContext('alice').firestore().doc('readers/alice').set({ a: 1 }));
   await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice').get());
