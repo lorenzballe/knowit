@@ -6104,11 +6104,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get bookRecommendedBy => '추천한 사람';
 
   @override
-  String bookPickPhoto(String credit) {
-    return '사진: $credit';
-  }
-
-  @override
   String get bookFreeThisWeek => '이번 주 무료';
 
   @override
@@ -6139,5 +6134,36 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String bookRetold(String title, String author) {
     return '$author의 『$title』에 담긴 아이디어를 Astute의 말로 풀었어요. 책 전체는 서점에서 만나 보세요.';
+  }
+
+  @override
+  String get foundersTitle => '창업자들이 읽는 책';
+
+  @override
+  String founderBookCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '책 $n권',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get founderTheirBooks => '추천한 책';
+
+  @override
+  String founderAbout(String name) {
+    return '$name이(가) 공개적으로 추천한 책들로, 인용한 말과 그 말을 한 곳을 함께 담았습니다. $name은(는) Astute와 아무 관련이 없습니다.';
+  }
+
+  @override
+  String founderPhoto(String author, String licence) {
+    return '사진: $author, $licence, Wikimedia Commons, 잘라 냄';
+  }
+
+  @override
+  String founderAlso(String names) {
+    return '함께 추천한 사람: $names';
   }
 }

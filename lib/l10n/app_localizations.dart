@@ -8982,12 +8982,6 @@ abstract class AppLocalizations {
   /// **'Recommended by'**
   String get bookRecommendedBy;
 
-  /// Books in pills, a book's own page: under a person who recommended the book, who took their photo and its licence, as the licence asks (e.g. 'Nick, CC BY 2.0')
-  ///
-  /// In en, this message translates to:
-  /// **'Photo: {credit}'**
-  String bookPickPhoto(String credit);
-
   /// Books in pills, a book's own page: bookFreeThisWeek
   ///
   /// In en, this message translates to:
@@ -9041,6 +9035,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The ideas of {title} by {author}, retold in Astute\'s own words. To read the whole book, find it at your bookshop.'**
   String bookRetold(String title, String author);
+
+  /// What founders read, Explore's row of the people who built well-known companies, each opening the books they recommended in public: the row's name when the remote document gives none.
+  ///
+  /// In en, this message translates to:
+  /// **'What founders read'**
+  String get foundersTitle;
+
+  /// What founders read: how many of a person's recommended books are in the app as books in pills, on their tile.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 book} other{{n} books}}'**
+  String founderBookCount(int n);
+
+  /// What founders read, a person's own page: the label over the books they recommended in public. Without a pronoun where the language allows it.
+  ///
+  /// In en, this message translates to:
+  /// **'The books they recommended'**
+  String get founderTheirBooks;
+
+  /// What founders read, at the foot of a person's own page: that these are books {name} (a famous founder or investor, e.g. 'Bill Gates') recommended in public, quoted, each with its source, and that {name} has no connection with the app, so nothing reads as an endorsement. Quiet and plain; use the name, not a pronoun, where the language would need a gender.
+  ///
+  /// In en, this message translates to:
+  /// **'These are books {name} recommended in public, in the words quoted, each with where it was said. {name} has no connection with Astute.'**
+  String founderAbout(String name);
+
+  /// What founders read: the credit under a person's photo, as its licence asks: who took it ({author}, e.g. 'Nick'), its licence ({licence}, e.g. 'CC BY 2.0' or 'Public domain', not translated), where it is from, and that it was cropped.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo: {author}, {licence}, Wikimedia Commons, cropped'**
+  String founderPhoto(String author, String licence);
+
+  /// What founders read, on a subject's page: under a book's quote, the other people who recommended the same book ({names}, e.g. 'Mark Zuckerberg, Naval Ravikant').
+  ///
+  /// In en, this message translates to:
+  /// **'Also recommended by {names}'**
+  String founderAlso(String names);
 }
 
 class _AppLocalizationsDelegate

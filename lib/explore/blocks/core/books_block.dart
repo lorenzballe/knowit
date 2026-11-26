@@ -2,18 +2,22 @@
 ///
 /// A book is the cards of the bank that name it (`book` on the card, see
 /// [PillBook]): four to eight ideas in the book's own order, each a card in
-/// the app's words, with the book named on its source. The row shows each
-/// book's own cover (the edition its ISBN names, published beside the
-/// cards; one drawn in the subject's colour while it comes or where it will
-/// not), its title and author, and how many of its ideas the reader has
-/// read. A book's page says why it is worth the minutes: the prize, the
-/// copies sold, the bestseller list.
+/// the app's words, with the book named on its source. The section sets the
+/// book of the week apart at its head, its cover large on a ground of its
+/// subject's colour, with why it is worth the minutes and how long they
+/// are; the other books follow in a row, each with its own cover (the
+/// edition its ISBN names, published beside the cards; one drawn in the
+/// subject's colour while it comes or where it will not), its title and
+/// author, and how many of its ideas the reader has read. A book's page says
+/// why it is worth the minutes: the prize, the copies sold, the bestseller
+/// list; and who recommended it, of the people on What founders read
+/// (founders_block.dart).
 ///
 /// The way in is a path's: on the free plan a book's first [kBookFree]
 /// ideas, then the card that offers the rest. One book a week is whole for
-/// everybody, the same for every reader: the book of the week, first in the
-/// row, marked as such. A book read whole is a reason to come back for the
-/// next one; a book stopped at two of five, a reason to see the plans.
+/// everybody, the same for every reader: the book of the week, set apart at
+/// the head of the section. A book read whole is a reason to come back for
+/// the next one; a book stopped at two of five, a reason to see the plans.
 library;
 
 export '../../../data/books.dart';
@@ -23,7 +27,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../../analytics.dart';
-import '../../../data/book_picks.dart';
+import '../../../data/founders.dart';
 import '../../../data/books.dart';
 import '../../../data/pill_bank.dart';
 import '../../../l10n/l10n.dart';
@@ -36,6 +40,7 @@ import '../../../widgets/premium.dart';
 import '../../../widgets/ui.dart' show BackCircle;
 import '../../../widgets/web/card_thumb.dart';
 import '../../explore_block.dart';
+import 'founders_block.dart' show FounderFace, FounderPhotoCredit;
 import 'layout.dart';
 
 /// The block: see the library's own words.
@@ -59,6 +64,16 @@ class BooksBlock extends ExploreBlock with SectionLayout {
     );
     if (books.isEmpty) return null;
     final String? weekly = bookOfTheWeek(PillBank.live, app.today);
+    // The week's book at the head when it is among them (on a subject's
+    // page it may not be), the others in a row under it.
+    final CardBook? week = books.where((b) => b.id == weekly).firstOrNull;
+    final List<CardBook> rest = [
+      for (final CardBook b in books)
+        if (b.id != weekly) b,
+    ];
+    int readOf(CardBook b) =>
+        b.cards.where((p) => app.seenIds.contains(p.id)).length;
+    const double width = _BookTile.rowWidth;
     return SectionFrame(
       title: section.title(host.language),
       line: section.subtitle(host.language),
@@ -78,21 +93,200 @@ class BooksBlock extends ExploreBlock with SectionLayout {
               ),
             )
           : null,
-      child: SizedBox(
-        height: _BookTile.height,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          itemCount: books.length,
-          separatorBuilder: (_, _) => const SizedBox(width: 12),
-          itemBuilder: (context, i) => _BookTile(
-            book: books[i],
-            read: books[i].cards
-                .where((p) => app.seenIds.contains(p.id))
-                .length,
-            weekly: books[i].id == weekly,
-            locked: !app.isPlus && books[i].id != weekly,
-            onTap: () => openBookPage(context, app, books[i], weekly: weekly),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (week != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: WeekBook(
+                book: week,
+                read: readOf(week),
+                free: !app.isPlus,
+                onTap: () => openBookPage(context, app, week, weekly: weekly),
+              ),
+            ),
+          if (week != null && rest.isNotEmpty) const SizedBox(height: 16),
+          if (rest.isNotEmpty)
+            SizedBox(
+              height: _BookTile.heightOf(context, rest, width),
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                itemCount: rest.length,
+                separatorBuilder: (_, _) => const SizedBox(width: 12),
+                itemBuilder: (context, i) => _BookTile(
+                  book: rest[i],
+                  width: width,
+                  read: readOf(rest[i]),
+                  weekly: false,
+                  locked: !app.isPlus,
+                  onTap: () =>
+                      openBookPage(context, app, rest[i], weekly: weekly),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The book of the week at the head of the books: its cover large, on a
+/// ground of its subject's colour; what it is, why it is worth the minutes,
+/// how many they are, and how far the reader is. Whole for everybody this
+/// week, which a reader on the free plan is told.
+class WeekBook extends StatelessWidget {
+  const WeekBook({
+    super.key,
+    required this.book,
+    required this.read,
+    required this.free,
+    required this.onTap,
+  });
+
+  final CardBook book;
+  final int read;
+
+  /// Whether to say it is free this week: on the free plan.
+  final bool free;
+  final VoidCallback onTap;
+
+  static const double cover = 112;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Palette p = context.p;
+    final Color hue = book.first.color;
+    final Color ground = Color.alphaBlend(
+      hue.withValues(alpha: p.isDark ? 0.17 : 0.22),
+      p.surfaceRaised,
+    );
+    // The eyebrow in the subject's colour at night, where every hue reads
+    // on the dark tint; on paper, in ink.
+    final Color eyebrow = p.isDark ? hue : p.ink.withValues(alpha: 0.62);
+    final String meta =
+        '${l.bookIdeas(book.cards.length)} · '
+        '${l.bookMinutes(bookMinutes(book))}';
+    return Semantics(
+      button: true,
+      label: [
+        l.bookOfTheWeek,
+        book.book.title,
+        book.book.author,
+        if (free) l.bookFreeThisWeek,
+        meta,
+      ].join(', '),
+      excludeSemantics: true,
+      child: GestureDetector(
+        key: ValueKey('book-week-${book.id}'),
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+          decoration: BoxDecoration(
+            color: ground,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      BookCover(book: book, width: cover),
+                      if (read >= book.cards.length)
+                        const Positioned(
+                          right: 6,
+                          top: 6,
+                          child: BookStateBadge(done: true),
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: cover * 1.5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l.bookOfTheWeek.toUpperCase(),
+                          style: AppText.label(
+                            size: 10.5,
+                            weight: FontWeight.w800,
+                            spacing: 1.2,
+                            height: 1.25,
+                            color: eyebrow,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          book.book.title,
+                          style: AppText.display(
+                            size: 22,
+                            weight: FontWeight.w600,
+                            height: 1.08,
+                            spacing: -0.5,
+                            color: p.ink,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          book.book.author,
+                          style: AppText.body(
+                            size: 13.5,
+                            height: 1.25,
+                            color: p.inkMuted,
+                          ),
+                        ),
+                        const Spacer(),
+                        if (book.book.badge.isNotEmpty) ...[
+                          const SizedBox(height: 10),
+                          Text(
+                            book.book.badge,
+                            style: AppText.body(
+                              size: 12.5,
+                              height: 1.3,
+                              color: p.ink.withValues(alpha: 0.72),
+                            ),
+                          ),
+                        ],
+                        const SizedBox(height: 10),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 6,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            if (free)
+                              _Chip(
+                                text: l.bookFreeThisWeek,
+                                ground: p.inverse,
+                                ink: p.onInverse,
+                              ),
+                            Text(
+                              meta,
+                              style: AppText.body(
+                                size: 12.5,
+                                weight: FontWeight.w700,
+                                color: p.ink.withValues(alpha: 0.6),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        BookProgress(of: book.cards.length, read: read),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -100,70 +294,27 @@ class BooksBlock extends ExploreBlock with SectionLayout {
   }
 }
 
-/// The founders' shelf: the books in pills that the people who built the
-/// companies everyone knows have recommended (lib/data/book_picks.dart),
-/// each under the names of who recommended it; a book's page says where
-/// they said it. The same books as the row of every book, in the same turn,
-/// the same way in: a lens on the library, not another one.
-class FounderBooksBlock extends ExploreBlock with SectionLayout {
-  const FounderBooksBlock();
-
-  /// Fewer books than this and the shelf is not drawn: a row of one or two
-  /// is no collection. A subject's page is content with two.
-  static const int fewest = 3, fewestOnASubject = 2;
-
-  @override
-  String get name => 'founder-books';
-
-  @override
-  Widget? build(
-    BuildContext context,
-    ExploreHost host,
-    ExploreSection section,
-  ) {
-    final AppState app = host.app;
-    final List<CardBook> books = [
-      for (final CardBook b in booksOf(
-        PillBank.live,
-        today: app.today,
-        subject: host.subject,
-      ))
-        if (picksOf(b.id).isNotEmpty) b,
-    ];
-    if (books.length < (host.subject == null ? fewest : fewestOnASubject)) {
-      return null;
-    }
-    final String? weekly = bookOfTheWeek(PillBank.live, app.today);
-    return SectionFrame(
-      title: section.title(host.language),
-      line: section.subtitle(host.language),
-      child: SizedBox(
-        height: _FounderTile.height,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          itemCount: books.length,
-          separatorBuilder: (_, _) => const SizedBox(width: 14),
-          itemBuilder: (context, i) => _FounderTile(
-            key: ValueKey('founder-book-${books[i].id}'),
-            book: books[i],
-            picks: picksOf(books[i].id),
-            read: books[i].cards
-                .where((p) => app.seenIds.contains(p.id))
-                .length,
-            locked: !app.isPlus && books[i].id != weekly,
-            onTap: () => openBookPage(
-              context,
-              app,
-              books[i],
-              weekly: weekly,
-              from: 'founders',
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+/// The height [text] takes set in [style] (over the page's own) at most
+/// [width] wide, at the reader's text size: what a tile must hold to show
+/// it whole, never cut short.
+double wordsHeight(
+  BuildContext context,
+  String text,
+  TextStyle style,
+  double width,
+) {
+  final TextPainter painter = TextPainter(
+    text: TextSpan(
+      text: text,
+      style: DefaultTextStyle.of(context).style.merge(style),
+    ),
+    textDirection: Directionality.of(context),
+    textScaler: MediaQuery.textScalerOf(context),
+    locale: Localizations.maybeLocaleOf(context),
+  )..layout(maxWidth: width);
+  final double height = painter.height;
+  painter.dispose();
+  return height;
 }
 
 /// Opens [book] at full size, an idea at a time, counted as read as they
@@ -197,7 +348,7 @@ Future<void> openBook(
 }
 
 /// Where a book's cover is published: beside the cards, by the book's id
-/// (web/cards/covers/<id>.jpg, the edition its `isbn` names).
+/// (`web/cards/covers/<id>.jpg`, the edition its `isbn` names).
 Uri bookCoverUrl(PillBook book) => CardThumb.urlOf('covers/${book.id}.jpg');
 
 /// A book's cover: the edition's own, fetched like a card's picture, and
@@ -305,6 +456,22 @@ class _DrawnCover extends StatelessWidget {
                   return most;
                 }
 
+                // How tall the whole title stands at [size].
+                double tall(double size) {
+                  final TextPainter painter = TextPainter(
+                    text: TextSpan(
+                      text: book.book.title,
+                      style: DefaultTextStyle.of(context).style
+                          .merge(style(size)),
+                    ),
+                    textDirection: Directionality.of(context),
+                    textScaler: scaler,
+                  )..layout(maxWidth: box.maxWidth);
+                  final double height = painter.height;
+                  painter.dispose();
+                  return height;
+                }
+
                 double size = 17 * k;
                 // Down a step at a time, measured again at each, since the
                 // face's optical size changes its widths with its size.
@@ -313,10 +480,17 @@ class _DrawnCover extends StatelessWidget {
                     widest(size) > box.maxWidth * 0.98) {
                   size -= 0.5 * k;
                 }
+                // And on down, to a floor, until the whole title stands on
+                // the cover: a title is never cut short.
+                while (size > 7 * k &&
+                    box.maxWidth.isFinite &&
+                    box.maxHeight.isFinite &&
+                    tall(size) > box.maxHeight) {
+                  size -= 0.5 * k;
+                }
                 return Text(
                   book.book.title,
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
+                  overflow: TextOverflow.clip,
                   style: style(size),
                 );
               },
@@ -324,8 +498,6 @@ class _DrawnCover extends StatelessWidget {
           ),
           Text(
             book.book.author,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
             style: AppText.body(
               size: 10.5 * k,
               weight: FontWeight.w600,
@@ -338,112 +510,17 @@ class _DrawnCover extends StatelessWidget {
   }
 }
 
-/// A book in the row: its cover, the book of the week marked, its title and
-/// author under it, and how far the reader has read. The week's book says
-/// so under its cover, never over the publisher's title.
-/// The names under a book on the founders' shelf: the first who picked it,
-/// and how many more.
-String founderNames(List<BookPick> picks) => picks.isEmpty
-    ? ''
-    : picks.length == 1
-    ? picks.first.who
-    : '${picks.first.who} +${picks.length - 1}';
-
-/// A book on the founders' shelf: its cover, and on its corner the faces of
-/// who recommended it, a face being what makes a scrolling reader stop;
-/// under it their names and the book's title, and how much of it is read.
-class _FounderTile extends StatelessWidget {
-  const _FounderTile({
-    super.key,
-    required this.book,
-    required this.picks,
-    required this.read,
-    required this.locked,
-    required this.onTap,
-  });
-
-  static const double width = 124, face = 40;
-
-  /// The cover, the faces hanging below its edge, the names, the title and
-  /// the dashes.
-  static const double height = 186 + 26 + 19 + 18 + 7 + 3 + 4;
-
-  final CardBook book;
-  final List<BookPick> picks;
-  final int read;
-  final bool locked;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final Palette p = context.p;
-    final bool done = read >= book.cards.length;
-    return Semantics(
-      button: true,
-      label: '${book.book.title}, ${picks.map((k) => k.who).join(', ')}',
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: SizedBox(
-          width: width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  BookCover(book: book, width: width),
-                  if (done || locked)
-                    Positioned(right: 6, top: 6, child: _Badge(done: done)),
-                  Positioned(
-                    left: 8,
-                    bottom: -face / 2,
-                    child: ExcludeSemantics(
-                      child: FounderFaces(
-                        who: [for (final BookPick k in picks) k.who],
-                        size: face,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: face / 2 + 8),
-              Text(
-                founderNames(picks),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.body(
-                  size: 13,
-                  weight: FontWeight.w800,
-                  height: 1.3,
-                  color: p.ink,
-                ),
-              ),
-              Text(
-                book.book.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.body(size: 12.5, height: 1.3, color: p.inkMuted),
-              ),
-              const SizedBox(height: 7),
-              _Progress(of: book.cards.length, read: read),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// A book read whole, or one for Astute+, on its cover's corner.
-class _Badge extends StatelessWidget {
-  const _Badge({required this.done});
+/// A book read whole (a tick), or one for Astute+ (a lock), on its cover's
+/// corner; [small] on a cover a row of a page holds.
+class BookStateBadge extends StatelessWidget {
+  const BookStateBadge({super.key, required this.done, this.small = false});
 
   final bool done;
+  final bool small;
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: EdgeInsets.all(done ? 3 : 5),
+    padding: EdgeInsets.all(done ? (small ? 2 : 3) : (small ? 4 : 5)),
     decoration: BoxDecoration(
       color: done
           ? const Color(0xFF22C55E)
@@ -452,110 +529,76 @@ class _Badge extends StatelessWidget {
     ),
     child: Icon(
       done ? Icons.check_rounded : Icons.lock_rounded,
-      size: done ? 14 : 12,
+      size: done ? (small ? 12 : 14) : (small ? 10 : 12),
       color: Colors.white,
     ),
   );
 }
 
-/// The faces of [who], overlapping, the first in front.
-class FounderFaces extends StatelessWidget {
-  const FounderFaces({super.key, required this.who, required this.size});
-
-  final List<String> who;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    final List<String> shown = who.take(3).toList();
-    final double step = size * 0.62;
-    return SizedBox(
-      width: size + step * (shown.length - 1),
-      height: size,
-      child: Stack(
-        children: [
-          for (int i = shown.length - 1; i >= 0; i--)
-            Positioned(
-              left: step * i,
-              child: FounderFace(who: shown[i], size: size),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-/// One person's face (lib/data/book_picks.dart, [founderPhotos]) in a ring
-/// of the page's colour; their initials while it comes or where it will
-/// not.
-class FounderFace extends StatelessWidget {
-  const FounderFace({super.key, required this.who, required this.size});
-
-  final String who;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    final Palette p = context.p;
-    final FounderPhoto? photo = founderPhotos[who];
-    final Widget initials = ColoredBox(
-      color: Color.alphaBlend(p.ink.withValues(alpha: 0.14), p.surface),
-      child: Center(
-        child: Text(
-          [
-            for (final String w in who.split(' '))
-              if (w.isNotEmpty) w[0],
-          ].take(2).join(),
-          style: AppText.body(
-            size: size * 0.36,
-            weight: FontWeight.w800,
-            color: p.ink.withValues(alpha: 0.8),
-          ),
-        ),
-      ),
-    );
-    return Container(
-      width: size,
-      height: size,
-      padding: EdgeInsets.all(size * 0.06),
-      decoration: BoxDecoration(color: p.surface, shape: BoxShape.circle),
-      child: ClipOval(
-        child: photo == null
-            ? initials
-            : Image(
-                image: CardThumb.image(
-                  CardThumb.urlOf('people/${photo.slug}.jpg'),
-                ),
-                fit: BoxFit.cover,
-                gaplessPlayback: true,
-                frameBuilder: (context, child, frame, synchronous) =>
-                    frame == null && !synchronous ? initials : child,
-                errorBuilder: (context, error, stack) => initials,
-              ),
-      ),
-    );
-  }
-}
-
+/// A book in the row: its cover, its title and author under it, and how far
+/// the reader has read. In the library the week's book says so under its
+/// cover, never over the publisher's title.
 class _BookTile extends StatelessWidget {
   const _BookTile({
-    super.key,
     required this.book,
     required this.read,
     required this.weekly,
     required this.locked,
     required this.onTap,
     this.width = rowWidth,
-    this.over,
+    this.line = false,
   });
 
-  /// The tile's width in the row, and the row's height for it.
-  static const double rowWidth = 124;
-  static const double height = 186 + 10 + 26 + 36 + 18 + 12;
+  /// The tile's width in the row.
+  static const double rowWidth = 116;
 
-  /// The height a tile [width] wide needs: its cover, the week's line, two
-  /// lines of title, the author, and the dashes.
-  static double heightFor(double width) => width * 1.5 + 10 + 26 + 36 + 18 + 12;
+  static TextStyle _lineStyle(Palette p) => AppText.body(
+    size: 10,
+    weight: FontWeight.w800,
+    height: 1.25,
+    spacing: 0.7,
+    color: p.ink.withValues(alpha: 0.62),
+  );
+
+  static TextStyle _titleStyle(Palette p) => AppText.body(
+    size: 13.5,
+    weight: FontWeight.w700,
+    height: 1.25,
+    color: p.ink,
+  );
+
+  static TextStyle _authorStyle(Palette p) =>
+      AppText.body(size: 12, height: 1.3, color: p.inkMuted);
+
+  /// How tall the tallest of [books] stands as a tile [width] wide, at the
+  /// reader's text size: its cover, its title and its author whole, however
+  /// many lines they take, and the dashes; the week's line over the title
+  /// of [marked].
+  static double heightOf(
+    BuildContext context,
+    Iterable<CardBook> books,
+    double width, {
+    String? marked,
+  }) {
+    final Palette p = context.p;
+    final String week = context.l10n.bookFreeThisWeek.toUpperCase();
+    double most = width * 1.5;
+    for (final CardBook b in books) {
+      most = math.max(
+        most,
+        width * 1.5 +
+            10 +
+            (b.id == marked
+                ? wordsHeight(context, week, _lineStyle(p), width) + 2
+                : 0) +
+            wordsHeight(context, b.book.title, _titleStyle(p), width) +
+            wordsHeight(context, b.book.author, _authorStyle(p), width) +
+            7 +
+            3,
+      );
+    }
+    return (most + 2).ceilToDouble();
+  }
 
   final CardBook book;
   final int read;
@@ -564,18 +607,21 @@ class _BookTile extends StatelessWidget {
   final VoidCallback onTap;
   final double width;
 
-  /// The line over the title in place of the week's, as on the founders'
-  /// shelf: who recommended the book.
-  final String? over;
+  /// Whether the tile may carry the week's line (the library's do).
+  final bool line;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
-    final String? line = over ?? (weekly ? l.bookFreeThisWeek : null);
+    final bool marked = line && weekly;
     return Semantics(
       button: true,
-      label: [book.book.title, book.book.author, ?over].join(', '),
+      label: [
+        book.book.title,
+        book.book.author,
+        if (marked) l.bookFreeThisWeek,
+      ].join(', '),
       child: GestureDetector(
         key: ValueKey('book-${book.id}'),
         behavior: HitTestBehavior.opaque,
@@ -583,6 +629,7 @@ class _BookTile extends StatelessWidget {
         child: SizedBox(
           width: width,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(
@@ -595,76 +642,33 @@ class _BookTile extends StatelessWidget {
                     Positioned(
                       right: 6,
                       top: 6,
-                      child: Container(
+                      child: BookStateBadge(
                         key: ValueKey('book-read-${book.id}'),
-                        padding: const EdgeInsets.all(3),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF22C55E),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.check_rounded,
-                          size: 14,
-                          color: Colors.white,
-                        ),
+                        done: true,
                       ),
                     )
                   else if (locked)
-                    Positioned(
+                    const Positioned(
                       right: 6,
                       top: 6,
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.55),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.lock_rounded,
-                          size: 12,
-                          color: Colors.white,
-                        ),
-                      ),
+                      child: BookStateBadge(done: false),
                     ),
                 ],
               ),
               const SizedBox(height: 10),
-              if (line != null)
+              if (marked)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 2),
                   child: Text(
-                    line.toUpperCase(),
-                    key: ValueKey(over != null ? 'book-over' : 'book-weekly'),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.body(
-                      size: 10,
-                      weight: FontWeight.w800,
-                      height: 1.25,
-                      spacing: 0.7,
-                      color: p.ink.withValues(alpha: 0.62),
-                    ),
+                    l.bookFreeThisWeek.toUpperCase(),
+                    key: const ValueKey('book-weekly'),
+                    style: _lineStyle(p),
                   ),
                 ),
-              Text(
-                book.book.title,
-                maxLines: line != null ? 1 : 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.body(
-                  size: 13.5,
-                  weight: FontWeight.w700,
-                  height: 1.25,
-                  color: p.ink,
-                ),
-              ),
-              Text(
-                book.book.author,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.body(size: 12, color: p.inkMuted),
-              ),
+              Text(book.book.title, style: _titleStyle(p)),
+              Text(book.book.author, style: _authorStyle(p)),
               const SizedBox(height: 7),
-              _Progress(of: book.cards.length, read: read),
+              BookProgress(of: book.cards.length, read: read),
             ],
           ),
         ),
@@ -674,8 +678,8 @@ class _BookTile extends StatelessWidget {
 }
 
 /// A dash for each idea, filled for the ones read.
-class _Progress extends StatelessWidget {
-  const _Progress({required this.of, required this.read});
+class BookProgress extends StatelessWidget {
+  const BookProgress({super.key, required this.of, required this.read});
 
   final int of;
   final int read;
@@ -882,7 +886,7 @@ class BookScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              if (picksOf(book.id) case final List<BookPick> picks
+              if (picksOf(book.id) case final List<(Founder, BookPick)> picks
                   when picks.isNotEmpty) ...[
                 const SizedBox(height: 28),
                 Text(
@@ -895,8 +899,12 @@ class BookScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                for (final BookPick pick in picks)
-                  _PickRow(key: ValueKey('book-pick-${pick.who}'), pick: pick),
+                for (final (Founder who, BookPick pick) in picks)
+                  _PickRow(
+                    key: ValueKey('book-pick-${who.id}'),
+                    founder: who,
+                    pick: pick,
+                  ),
               ],
               const SizedBox(height: 28),
               Text(
@@ -931,18 +939,18 @@ class BookScreen extends StatelessWidget {
   }
 }
 
-/// One person's recommendation on a book's page: who, what they built,
-/// their words, and where they said them, a tap away.
+/// One person's recommendation on a book's page: their face (the initials of
+/// their name while there is no photo), who, what they built, their words,
+/// and where they said them, a tap away; and who took the photo.
 class _PickRow extends StatelessWidget {
-  const _PickRow({super.key, required this.pick});
+  const _PickRow({super.key, required this.founder, required this.pick});
 
+  final Founder founder;
   final BookPick pick;
 
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
-    final String where = '${pick.where}, ${pick.year}';
-    final FounderPhoto? photo = founderPhotos[pick.who];
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Material(
@@ -951,7 +959,11 @@ class _PickRow extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: () {
-            Analytics.capture('book pick source', {'who': pick.who});
+            Analytics.capture('book pick source', {
+              'who': founder.name,
+              'book': pick.book,
+              'from': 'book',
+            });
             openLink(pick.url);
           },
           child: Padding(
@@ -959,14 +971,14 @@ class _PickRow extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ExcludeSemantics(child: FounderFace(who: pick.who, size: 50)),
+                FounderFace(founder: founder, size: 46),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        pick.who,
+                        founder.name,
                         style: AppText.body(
                           size: 15.5,
                           weight: FontWeight.w700,
@@ -974,7 +986,7 @@ class _PickRow extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        pick.role,
+                        founder.role,
                         style: AppText.body(size: 13, color: p.inkMuted),
                       ),
                       if (pick.said.isNotEmpty) ...[
@@ -990,35 +1002,20 @@ class _PickRow extends StatelessWidget {
                         ),
                       ],
                       const SizedBox(height: 9),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              where,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppText.body(
-                                size: 12.5,
-                                weight: FontWeight.w600,
-                                color: p.inkMuted,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Icon(
-                            Icons.north_east_rounded,
-                            size: 14,
-                            color: p.inkMuted,
-                          ),
-                        ],
+                      // The arrow held to the last word by a space that
+                      // does not break, never on a line of its own.
+                      Text(
+                        '${pick.source}\u00A0↗',
+                        style: AppText.body(
+                          size: 12.5,
+                          weight: FontWeight.w600,
+                          color: p.inkMuted,
+                        ),
                       ),
                       // Who took the photo, as its licence asks.
-                      if (photo != null) ...[
-                        const SizedBox(height: 5),
-                        Text(
-                          context.l10n.bookPickPhoto(photo.credit),
-                          style: AppText.body(size: 10.5, color: p.inkFaint),
-                        ),
+                      if (founder.photo != null) ...[
+                        const SizedBox(height: 3),
+                        FounderPhotoCredit(founder: founder),
                       ],
                     ],
                   ),
@@ -1075,8 +1072,6 @@ class _IdeaRow extends StatelessWidget {
             Expanded(
               child: Text(
                 question,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
                 style: AppText.body(
                   size: 15,
                   weight: FontWeight.w600,
@@ -1156,8 +1151,6 @@ class BookMore extends StatelessWidget {
               Expanded(
                 child: Text(
                   '${book.book.title} · ${book.book.author}'.toUpperCase(),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                   style: AppText.label(
                     size: 11,
                     weight: FontWeight.w700,
@@ -1306,8 +1299,6 @@ class _BookDoneState extends State<BookDone> {
               Expanded(
                 child: Text(
                   '${book.book.title} · ${book.book.author}'.toUpperCase(),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                   style: AppText.label(
                     size: 11,
                     weight: FontWeight.w700,
@@ -1373,8 +1364,6 @@ class _BookDoneState extends State<BookDone> {
             const SizedBox(height: 6),
             Text(
               '${next.book.title} · ${next.book.author}',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
               style: AppText.display(
                 size: 20,
                 weight: FontWeight.w600,
@@ -1465,7 +1454,8 @@ class LibraryScreen extends StatelessWidget {
               final int across = box.maxWidth >= 600 ? 4 : 3;
               final double width =
                   (box.maxWidth - side * 2 - gap * (across - 1)) / across;
-              return GridView.builder(
+              final int rows = (books.length + across - 1) ~/ across;
+              return ListView.builder(
                 key: const ValueKey('books-library'),
                 padding: EdgeInsets.fromLTRB(
                   side,
@@ -1473,23 +1463,38 @@ class LibraryScreen extends StatelessWidget {
                   side,
                   MediaQuery.paddingOf(context).bottom + 24,
                 ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: across,
-                  crossAxisSpacing: gap,
-                  mainAxisSpacing: 6,
-                  childAspectRatio: width / _BookTile.heightFor(width),
-                ),
-                itemCount: books.length,
-                itemBuilder: (context, i) => _BookTile(
-                  book: books[i],
-                  width: width,
-                  read: books[i].cards
-                      .where((c) => app.seenIds.contains(c.id))
-                      .length,
-                  weekly: books[i].id == weekly,
-                  locked: !app.isPlus && books[i].id != weekly,
-                  onTap: () =>
-                      openBookPage(context, app, books[i], weekly: weekly),
+                itemCount: rows,
+                itemBuilder: (context, r) => Padding(
+                  padding: const EdgeInsets.only(bottom: 14),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (int c = 0; c < across; c++) ...[
+                        if (c > 0) const SizedBox(width: gap),
+                        if (r * across + c < books.length)
+                          _BookTile(
+                            book: books[r * across + c],
+                            width: width,
+                            line: true,
+                            read: books[r * across + c].cards
+                                .where((p) => app.seenIds.contains(p.id))
+                                .length,
+                            weekly: books[r * across + c].id == weekly,
+                            locked:
+                                !app.isPlus &&
+                                books[r * across + c].id != weekly,
+                            onTap: () => openBookPage(
+                              context,
+                              app,
+                              books[r * across + c],
+                              weekly: weekly,
+                            ),
+                          )
+                        else
+                          SizedBox(width: width),
+                      ],
+                    ],
+                  ),
                 ),
               );
             },

@@ -6086,11 +6086,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get bookRecommendedBy => 'この本をすすめた人';
 
   @override
-  String bookPickPhoto(String credit) {
-    return '写真：$credit';
-  }
-
-  @override
   String get bookFreeThisWeek => '今週は無料';
 
   @override
@@ -6121,5 +6116,32 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String bookRetold(String title, String author) {
     return '$author『$title』のアイデアを、Astute の言葉で紹介しています。本の全文は書店でどうぞ。';
+  }
+
+  @override
+  String get foundersTitle => '創業者が読む本';
+
+  @override
+  String founderBookCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n冊');
+    return '$_temp0';
+  }
+
+  @override
+  String get founderTheirBooks => 'すすめた本';
+
+  @override
+  String founderAbout(String name) {
+    return 'これらは$nameが公の場ですすめた本で、引用した言葉と語られた場所を添えています。$nameは Astute とは関係ありません。';
+  }
+
+  @override
+  String founderPhoto(String author, String licence) {
+    return '写真：$author、$licence、Wikimedia Commons、トリミング';
+  }
+
+  @override
+  String founderAlso(String names) {
+    return 'ほかにすすめた人：$names';
   }
 }

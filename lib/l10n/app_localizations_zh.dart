@@ -6083,11 +6083,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get bookRecommendedBy => '推荐者';
 
   @override
-  String bookPickPhoto(String credit) {
-    return '照片：$credit';
-  }
-
-  @override
   String get bookFreeThisWeek => '本周免费';
 
   @override
@@ -6118,5 +6113,36 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String bookRetold(String title, String author) {
     return '$author《$title》中的观点，由 Astute 用自己的话讲述。完整的书请到书店寻找。';
+  }
+
+  @override
+  String get foundersTitle => '创始人读什么';
+
+  @override
+  String founderBookCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 本书',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get founderTheirBooks => '推荐过的书';
+
+  @override
+  String founderAbout(String name) {
+    return '这些是$name公开推荐过的书，附有原话和说话的出处。$name与 Astute 没有任何关系。';
+  }
+
+  @override
+  String founderPhoto(String author, String licence) {
+    return '照片：$author，$licence，Wikimedia Commons，已裁剪';
+  }
+
+  @override
+  String founderAlso(String names) {
+    return '其他推荐者：$names';
   }
 }
