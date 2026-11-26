@@ -250,8 +250,8 @@ void main() {
 
         await tester.tap(find.text('Typhoid'));
         await tester.pump();
-        expect(find.text('LOCK IT IN'), findsOneWidget);
-        await tester.tap(find.text('LOCK IT IN'));
+        expect(find.text('Lock it in'), findsOneWidget);
+        await tester.tap(find.text('Lock it in'));
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
 
@@ -259,7 +259,7 @@ void main() {
         expect(digits(tester), '000');
         expect(find.text('YOU'), findsOneWidget);
         expect(find.textContaining('Speed decides'), findsOneWidget);
-        expect(find.text('LOCK IT IN'), findsNothing);
+        expect(find.text('Lock it in'), findsNothing);
         // The decisive clue is at the front.
         expect(
           find.text('Many die within a day of the first cramp.'),
@@ -289,7 +289,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Cholera'));
       await tester.pump();
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
       expect(digits(tester), '075');
@@ -304,10 +304,10 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Plague'));
       await tester.pump();
-      expect(find.text('LOCK IT IN'), findsOneWidget);
+      expect(find.text('Lock it in'), findsOneWidget);
       await tester.tap(find.text('Plague'));
       await tester.pump();
-      expect(find.text('LOCK IT IN'), findsNothing);
+      expect(find.text('Lock it in'), findsNothing);
     });
 
     testWidgets('with animations off, the verdict is there on the next frame', (
@@ -319,7 +319,7 @@ void main() {
       expect(tester.hasRunningAnimations, isFalse);
       await tester.tap(find.text('Cholera'));
       await tester.pump();
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pump();
       expect(digits(tester), '100');
       expect(find.textContaining('Speed decides'), findsOneWidget);
@@ -344,7 +344,7 @@ void main() {
       expect(digits(tester), '075');
       tester.semantics.tap(find.semantics.byLabel('Smallpox'));
       await tester.pumpAndSettle();
-      tester.semantics.tap(find.semantics.byLabel('LOCK IT IN'));
+      tester.semantics.tap(find.semantics.byLabel('Lock it in'));
       await tester.pumpAndSettle();
       expect(
         tester.getSemantics(find.bySemanticsLabel('Cholera')),
@@ -411,7 +411,7 @@ void main() {
       await tester.tap(find.textContaining('violent diarrhoea'));
       await tester.pumpAndSettle();
       expect(advanced, 0);
-      expect(find.text('LOCK IT IN'), findsOneWidget);
+      expect(find.text('Lock it in'), findsOneWidget);
       expect(find.text('Cholera.'), findsNothing);
     });
   });
@@ -491,7 +491,7 @@ void main() {
             find.byKey(key),
             matchesGoldenFile('../../tool/shots/cards/$id-$phoneName-1.png'),
           );
-          await tester.tap(find.text('LOCK IT IN'));
+          await tester.tap(find.text('Lock it in'));
           await tester.pump(const Duration(milliseconds: 1300));
           await expectLater(
             find.byKey(key),

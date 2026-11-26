@@ -957,7 +957,9 @@ class MagnitudeChallenge extends BetChallenge {
         ? l.betsMagnitudeRight
         : l.betsMagnitudeOff(o);
     final int? s = bet.confidence;
-    return s == null ? verdict : _both(context, verdict, l.betsYouWereSure(s));
+    return s == null
+        ? verdict
+        : _both(context, verdict, l.elided(l.betsYouWereSure(s)));
   }
 
   @override
@@ -1446,7 +1448,9 @@ class StakeChallenge extends BetChallenge {
     final int stake = (bet.facts['stake'] as num?)?.toInt() ?? 0;
     final String verdict = bet.right ? l.stakeWon(stake) : l.stakeLost(stake);
     final int? s = bet.confidence;
-    return s == null ? verdict : _both(context, verdict, l.betsYouWereSure(s));
+    return s == null
+        ? verdict
+        : _both(context, verdict, l.elided(l.betsYouWereSure(s)));
   }
 
   @override
@@ -1690,7 +1694,9 @@ class NumberChallenge extends BetChallenge {
         ? l.betsCloseEnough(_amount(context, i, off))
         : l.betsOffBy(_amount(context, i, off));
     final int? s = bet.confidence;
-    return s == null ? verdict : _both(context, verdict, l.betsYouWereSure(s));
+    return s == null
+        ? verdict
+        : _both(context, verdict, l.elided(l.betsYouWereSure(s)));
   }
 
   Future<void> _lay(BuildContext context, GameKit kit, int i, int? sure) async {

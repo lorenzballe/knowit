@@ -158,7 +158,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String nothingForYet(String query) {
-    return '\"$query\"에 해당하는 카드가 아직 없어요.';
+    return '‘$query’에 해당하는 카드가 아직 없어요.';
   }
 
   @override
@@ -218,7 +218,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String nothingForTryTopic(String query) {
-    return '\"$query\"에 해당하는 것이 없어요. 주제로 찾아보세요.';
+    return '‘$query’에 해당하는 것이 없어요. 주제로 찾아보세요.';
   }
 
   @override
@@ -368,7 +368,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String stepGap(int gap, int target) {
-    return '확신 오차 $gap포인트 — $target이면 충분';
+    return '확신 오차 $gap포인트 — $target포인트면 충분';
   }
 
   @override
@@ -1836,11 +1836,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return '내 답 $said · 정답 $truth';
-  }
-
-  @override
   String get fiveTitle => '오늘의 5문제';
 
   @override
@@ -1856,12 +1851,17 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String dailyPickRight(String answer) {
-    return '맞혔어요: $answer';
+    return '정답: $answer';
   }
 
   @override
   String dailyPickWrong(String answer) {
     return '아쉬워요. 정답: $answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return '내 답: $answer';
   }
 
   @override
@@ -2099,7 +2099,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String chargedTodayRenews(String price, String suffix) {
-    return '오늘 $price$suffix가 청구되고, 해지할 때까지 자동으로 갱신돼요';
+    return '오늘 청구 금액: $price$suffix. 해지할 때까지 자동으로 갱신돼요';
   }
 
   @override
@@ -2224,21 +2224,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tapToReveal => '탭하여 보기';
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return '내 답 $given · 정답 $answer, $band까지 인정';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return '내 답 $given · 정답 $answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · 확신 $pct%라고 답함';
-  }
-
-  @override
   String get verdictRight => '정답이에요.';
 
   @override
@@ -2249,7 +2234,27 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String verdictSure(int pct) {
-    return '$pct% 확신했어요.';
+    return '$pct% 확신했어요.';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return '내 답: $given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return '내 답: $given (확신 $pct%)';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return '정답: $answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return '정답: $answer ($low~$high까지 인정)';
   }
 
   @override
@@ -2997,6 +3002,21 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get sceneLockIn => '확정';
+
+  @override
+  String get placeItDrag => '자를 따라 끌어 보세요.';
+
+  @override
+  String get placeItHappy => '이대로 할까요?';
+
+  @override
+  String get placeItEstimate => '내 추정치';
+
+  @override
+  String get placeItNotSet => '아직 없음';
+
+  @override
+  String get placeItLock => '내 추정치 확정';
 
   @override
   String get sceneYou => '나';
@@ -4304,7 +4324,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String purposeThinLine(int percent, String subject) {
-    return '$subject는 $percent%만 읽었어요. 가장 적어요';
+    return '$subject 분야는 $percent%만 읽었어요. 가장 적어요';
   }
 
   @override
@@ -4699,7 +4719,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get betsNumberLine => '정하고, 고정하고, 얼마나 빗나갔는지 보세요';
 
   @override
-  String get betsLock => '고정';
+  String get betsLock => '확정';
 
   @override
   String get betsSpotOn => '정확해요.';
@@ -4837,7 +4857,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get betsDayTitle => '오늘의 베팅';
 
   @override
-  String get betsDayLine => '추측을 고정하고, 얼마나 빗나갔는지 보세요';
+  String get betsDayLine => '추측을 확정하고, 얼마나 빗나갔는지 보세요';
 
   @override
   String get betsDayTag => '오늘의 베팅';
@@ -4846,7 +4866,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get betsDayTagSame => '오늘의 베팅 · 모두에게 같은 문제';
 
   @override
-  String get betsLockIn => '고정하기';
+  String get betsLockIn => '확정';
 
   @override
   String betsItIs(String said) {
@@ -6382,6 +6402,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get newsBehind => '뉴스의 이면';
 
   @override
+  String get newsMeansForYou => '나에게 어떤 의미인가';
+
+  @override
+  String get newsMeans => '어떤 의미인가';
+
+  @override
+  String get newsHappenedBefore => '전에도 있었던 일';
+
+  @override
   String get newsSources => '출처';
 
   @override
@@ -6535,6 +6564,35 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get founderTheirBooks => '추천한 책';
+
+  @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': '마이크로소프트 공동 창업자',
+      'warren_buffett': '버크셔 해서웨이를 키운 투자자',
+      'mark_zuckerberg': '페이스북 창업자',
+      'charlie_munger': '버크셔 해서웨이에서 워런 버핏의 동업자',
+      'marc_andreessen': '넷스케이프와 앤드리슨 호로위츠 공동 창업자',
+      'tobi_lutke': '쇼피파이 창업자',
+      'naval_ravikant': '엔젤리스트 공동 창업자',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes, 여름 추천 도서',
+      'berkshire_meeting': '버크셔 해서웨이 연례 주주총회',
+      'berkshire_letter': '버크셔 해서웨이 주주들에게 보낸 편지',
+      'year_of_books': '페이스북의 ‘A Year of Books’',
+      'publisher_praise': '출판사에 보낸 추천사',
+      'ferriss_five': 'The Tim Ferriss Show, 지금까지 읽은 최고의 책 다섯 권 중 하나로',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
 
   @override
   String founderAbout(String name) {

@@ -242,7 +242,7 @@ void main() {
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
 
-        await tester.tap(find.text('LOCK IT IN'));
+        await tester.tap(find.text('Lock it in'));
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
 
@@ -252,7 +252,7 @@ void main() {
           expect(besideOf(tester, lefts[i]), rights[i]);
         }
         expect(find.text('2 OF 4'), findsOneWidget);
-        expect(find.text('LOCK IT IN'), findsNothing);
+        expect(find.text('Lock it in'), findsNothing);
         expect(find.text('The first number becomes the ruler.'), findsOne);
 
         // Any rung, tapped, gives its own note.
@@ -281,24 +281,24 @@ void main() {
       await join('Sunk cost', rights[0]);
       await join('Availability', rights[2]);
       // Three of four: the lock does nothing yet.
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
-      expect(find.text('LOCK IT IN'), findsOneWidget);
+      expect(find.text('Lock it in'), findsOneWidget);
 
       // Planning fallacy takes the flight; availability lets go of it.
       await join('Planning fallacy', rights[2]);
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
-      expect(find.text('LOCK IT IN'), findsOneWidget);
+      expect(find.text('Lock it in'), findsOneWidget);
 
       // Tapping a linked item takes its line off and picks it up.
       await tester.tap(find.text('Anchoring'));
       await tester.tap(find.text(rights[3]));
       await tester.pumpAndSettle();
       await join('Availability', rights[1]);
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
-      expect(find.text('LOCK IT IN'), findsNothing);
+      expect(find.text('Lock it in'), findsNothing);
       expect(find.text('0 OF 4'), findsOneWidget);
     });
 
@@ -320,9 +320,9 @@ void main() {
       await tester.tap(find.text(rights[3]));
       await tester.pumpAndSettle();
       // Anchoring is still free, so the lock still waits.
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
-      expect(find.text('LOCK IT IN'), findsOneWidget);
+      expect(find.text('Lock it in'), findsOneWidget);
     });
 
     testWidgets('a light ink on a dark ground plays the same', (tester) async {
@@ -341,7 +341,7 @@ void main() {
         await tester.tap(find.text(rights[i]));
       }
       await tester.pumpAndSettle();
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
       expect(find.text('4 OF 4'), findsOneWidget);
@@ -359,7 +359,7 @@ void main() {
         await tester.tap(find.text(rights[(i + 1) % 4]));
         await tester.pump();
       }
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pump();
       expect(find.text('0 OF 4'), findsOneWidget);
       for (var i = 0; i < 4; i++) {
@@ -439,10 +439,10 @@ void main() {
         isSemantics(value: rights[0]),
       );
       expect(
-        tester.getSemantics(find.bySemanticsLabel('LOCK IT IN')),
+        tester.getSemantics(find.bySemanticsLabel('Lock it in')),
         isSemantics(isButton: true, hasTapAction: true),
       );
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
       expect(
         tester.getSemantics(find.bySemanticsLabel(RegExp('^Anchoring: '))),
@@ -512,7 +512,7 @@ void main() {
       // A tap among the items does not turn the card over.
       await tester.tap(find.text('Sunk cost'));
       await tester.pumpAndSettle();
-      expect(find.text('LOCK IT IN'), findsOneWidget);
+      expect(find.text('Lock it in'), findsOneWidget);
     });
   });
 
@@ -612,7 +612,7 @@ void _photographs() {
           await tester.pumpAndSettle();
           await shoot('full');
 
-          await tester.tap(find.text('LOCK IT IN'));
+          await tester.tap(find.text('Lock it in'));
           for (final ms in [500, 450]) {
             await tester.pump(Duration(milliseconds: ms));
             await shoot('reveal-$ms');

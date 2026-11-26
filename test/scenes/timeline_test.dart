@@ -276,7 +276,7 @@ void main() {
 
         expect(find.text('0 of 4'), findsOneWidget);
         // Locking before everything is placed does nothing.
-        await tester.tap(find.text('LOCK IT IN'));
+        await tester.tap(find.text('Lock it in'));
         await tester.pump();
         expect(find.text('0 of 4'), findsOneWidget);
 
@@ -288,7 +288,7 @@ void main() {
         await _shoot(tester, '$phone-placed');
 
         await tester.pump(const Duration(milliseconds: 300));
-        await tester.tap(find.text('LOCK IT IN'));
+        await tester.tap(find.text('Lock it in'));
         await tester.pump();
         // Mid-reveal: the first truths are sliding, nothing overflows.
         await tester.pump(const Duration(milliseconds: 500));
@@ -347,7 +347,7 @@ void main() {
         for (var i = 0; i < s.events.length; i++) {
           await _place(tester, s.events[i].label, at[i]);
         }
-        await tester.tap(find.text('LOCK IT IN'));
+        await tester.tap(find.text('Lock it in'));
         await tester.pumpAndSettle();
         await _shoot(tester, '$name-end');
         expect(find.text('66 million'), findsOneWidget);
@@ -367,7 +367,7 @@ void main() {
       for (final e in s.events) {
         await _place(tester, e.label, 0.5);
       }
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pump();
       await tester.pump();
       expect(find.text('30 BC'), findsOneWidget);
@@ -389,7 +389,7 @@ void main() {
         await tester.pump();
       }
       expect(find.text('4 of 4'), findsOneWidget);
-      tester.semantics.tap(find.semantics.byLabel('LOCK IT IN'));
+      tester.semantics.tap(find.semantics.byLabel('Lock it in'));
       await tester.pumpAndSettle();
       final node = tester.getSemantics(find.bySemanticsLabel('Cleopatra dies'));
       expect(node.getSemanticsData().value, startsWith('30 BC'));

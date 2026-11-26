@@ -78,6 +78,21 @@ class DeckViewerScreen extends StatefulWidget {
 class _DeckViewerScreenState extends State<DeckViewerScreen> {
   late int _index = widget.initialIndex;
 
+  /// The cards marked as back again: of a deck to answer, those the reader
+  /// had read or answered before the viewer opened. Cards that came due
+  /// all were; a book's ideas, opened to be answered too, are new until
+  /// they have been read, and its first idea is never "again" the first
+  /// time. Taken once, so a card read here does not turn "again" while it
+  /// is still on the table.
+  late final Set<String> _again = widget.answering
+      ? {
+          for (final Pill p in widget.deck)
+            if (widget.app.seenIds.contains(p.id) ||
+                widget.app.answerFor(p.id) != null)
+              p.id,
+        }
+      : const {};
+
   /// Past the last card: the card that says the deck is done is on top.
   bool get _atEnd => _index >= widget.deck.length;
 
@@ -302,9 +317,7 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                             onAgain: () => setState(() => _index = 0),
                           )
                         : null,
-                    reviewIds: widget.answering
-                        ? {for (final p in widget.deck) p.id}
-                        : const {},
+                    reviewIds: _again,
                     answering: widget.answering,
                     answerFor: widget.app.answerFor,
                     onReact: widget.app.react,

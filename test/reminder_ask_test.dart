@@ -1070,7 +1070,7 @@ void main() {
       // they are still on screen — as it does under a purchase.
       await tester.tap(find.byKey(const ValueKey('tab-Profile')));
       await _settle(tester);
-      await tester.tap(find.text('SEE THE PLANS'));
+      await tester.tap(find.text('See the plans'));
       await _settle(tester);
       expect(find.byType(PaywallScreen), findsOneWidget);
       store.holdForTest(

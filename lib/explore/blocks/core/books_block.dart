@@ -40,7 +40,7 @@ import '../../../widgets/premium.dart';
 import '../../../widgets/ui.dart' show BackCircle;
 import '../../../widgets/web/card_thumb.dart';
 import '../../explore_block.dart';
-import 'founders_block.dart' show FounderFace, FounderPhotoCredit;
+import 'founders_block.dart' show FounderFace, FounderPhotoCredit, FounderWords;
 import 'layout.dart';
 
 /// The block: see the library's own words.
@@ -986,7 +986,7 @@ class _PickRow extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        founder.role,
+                        context.l10n.roleOf(founder),
                         style: AppText.body(size: 13, color: p.inkMuted),
                       ),
                       if (pick.said.isNotEmpty) ...[
@@ -1005,7 +1005,7 @@ class _PickRow extends StatelessWidget {
                       // The arrow held to the last word by a space that
                       // does not break, never on a line of its own.
                       Text(
-                        '${pick.source}\u00A0↗',
+                        '${context.l10n.sourceOf(pick)}\u00A0↗',
                         style: AppText.body(
                           size: 12.5,
                           weight: FontWeight.w600,

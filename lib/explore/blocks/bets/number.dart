@@ -261,7 +261,7 @@ class NumberTile extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           BetVerdict(
-            s == null ? verdict : '$verdict ${l.betsYouWereSure(s)}',
+            s == null ? verdict : '$verdict ${l.elided(l.betsYouWereSure(s))}',
             key: ValueKey('bets-number-said-${pill.id}'),
             ink: ink,
           ),

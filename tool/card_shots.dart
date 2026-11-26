@@ -172,7 +172,7 @@ void main() {
           );
           await settle();
           await shoot('placed');
-          await tester.tap(find.text('LOCK IT IN'));
+          await tester.tap(find.text('Lock it in'));
           await settle();
         } else if (pill.challenge is PickOne || pill.challenge is TakeASide) {
           final options = switch (pill.challenge) {

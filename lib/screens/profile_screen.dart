@@ -1181,10 +1181,12 @@ class _Row extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  context.l10n.rightPercentOf(
-                    bucket.actual.round(),
-                    bucket.right,
-                    bucket.count,
+                  context.l10n.elided(
+                    context.l10n.rightPercentOf(
+                      bucket.actual.round(),
+                      bucket.right,
+                      bucket.count,
+                    ),
                   ),
                   style: AppText.body(
                     size: 12.5,

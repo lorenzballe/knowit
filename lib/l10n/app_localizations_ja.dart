@@ -1832,11 +1832,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return 'あなた: $said · 正解: $truth';
-  }
-
-  @override
   String get fiveTitle => '今日の5問';
 
   @override
@@ -1857,7 +1852,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String dailyPickWrong(String answer) {
-    return '惜しい。正解は$answer';
+    return '惜しい。正解：$answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return 'あなたの答え：$answer';
   }
 
   @override
@@ -2219,21 +2219,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tapToReveal => 'タップで表示';
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return 'あなたの答え$given · 正解は$answer、$bandは正解扱い';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return 'あなたの答え$given · 正解は$answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · 自信$pct%と答えた';
-  }
-
-  @override
   String get verdictRight => '正解。';
 
   @override
@@ -2245,6 +2230,26 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String verdictSure(int pct) {
     return '自信は$pct%でした。';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return 'あなたの答え：$given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return 'あなたの答え：$given（自信$pct%）';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return '正解：$answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return '正解：$answer（$low〜$highなら正解）';
   }
 
   @override
@@ -2986,6 +2991,21 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get sceneLockIn => '決定';
+
+  @override
+  String get placeItDrag => '目盛りに沿ってドラッグ。';
+
+  @override
+  String get placeItHappy => 'これでいい？';
+
+  @override
+  String get placeItEstimate => 'あなたの見積もり';
+
+  @override
+  String get placeItNotSet => '未設定';
+
+  @override
+  String get placeItLock => '見積もりを確定';
 
   @override
   String get sceneYou => 'あなた';
@@ -6361,6 +6381,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get newsBehind => 'ニュースの背景';
 
   @override
+  String get newsMeansForYou => 'あなたにとっての意味';
+
+  @override
+  String get newsMeans => 'その意味';
+
+  @override
+  String get newsHappenedBefore => '前にもあった';
+
+  @override
   String get newsSources => '情報源';
 
   @override
@@ -6510,6 +6539,35 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get founderTheirBooks => 'すすめた本';
+
+  @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': 'マイクロソフトの共同創業者',
+      'warren_buffett': 'バークシャー・ハサウェイを築いた投資家',
+      'mark_zuckerberg': 'Facebookの創業者',
+      'charlie_munger': 'バークシャー・ハサウェイでのウォーレン・バフェットのパートナー',
+      'marc_andreessen': 'ネットスケープとアンドリーセン・ホロウィッツの共同創業者',
+      'tobi_lutke': 'Shopifyの創業者',
+      'naval_ravikant': 'AngelListの共同創業者',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes、夏の読書リスト',
+      'berkshire_meeting': 'バークシャー・ハサウェイの年次株主総会',
+      'berkshire_letter': 'バークシャー・ハサウェイの株主への手紙',
+      'year_of_books': 'Facebookの「A Year of Books」',
+      'publisher_praise': '出版社に寄せた推薦の言葉',
+      'ferriss_five': 'The Tim Ferriss Show、これまで読んだ最高の5冊のひとつとして',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
 
   @override
   String founderAbout(String name) {

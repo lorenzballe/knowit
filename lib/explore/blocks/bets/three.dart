@@ -509,11 +509,13 @@ class _DailyStep extends StatelessWidget {
 
     final List<Widget> foot;
     if (laid) {
+      // The card's words quoted inside the app's own, never run on into
+      // them.
       final String said = switch (pill.challenge) {
         PickOne(:final correctOption) =>
           bet!.right
-              ? l.dailyPickRight(correctOption)
-              : l.dailyPickWrong(correctOption),
+              ? l.dailyPickRight(l.quoted(correctOption))
+              : l.dailyPickWrong(l.quoted(correctOption)),
         _ =>
           '${l.betsItIs(n.percent(share?.value ?? 0))} '
               '${l.threeYouSaid(n.percent(guess))}',
@@ -1298,7 +1300,7 @@ class _Standing extends StatelessWidget {
     final String said;
     if (at != null && players >= kThreeCrowdFloor) {
       said = at.beaten >= 50
-          ? l.dailyBetter(at.beaten, players)
+          ? l.elided(l.dailyBetter(at.beaten, players))
           : l.dailyPlayers(players);
     } else if (players > 0) {
       said = l.dailyFirst(players);
@@ -1504,22 +1506,23 @@ class _DailyRow extends StatelessWidget {
   final BetNumbers numbers;
   final VoidCallback onTap;
 
-  /// What the reader said, against the answer.
+  /// What the reader said, against the answer: the right answer, and
+  /// above it on a line of its own the reader's, when it was another. A
+  /// card's words are quoted, so they never run on into the app's.
   String _said(AppLocalizations l) {
     switch (pill.challenge) {
       case PickOne(:final options, :final correctOption):
-        if (bet.right) return l.dailyPickRight(correctOption);
+        final String right = l.dailyPickRight(l.quoted(correctOption));
+        if (bet.right) return right;
         final int? i = int.tryParse(bet.said);
         final String given = i != null && i >= 0 && i < options.length
             ? options[i]
             : bet.said;
-        return l.youSaidItIs(given, correctOption);
+        return '${l.dailyYourPick(l.quoted(given))}\n$right';
       default:
         final BetAnswer? a = answerOf(pill);
-        return l.threeRowSaid(
-          numbers.percent(double.tryParse(bet.said) ?? 0),
-          numbers.percent(a?.value ?? 0),
-        );
+        return '${l.dailyYourPick(numbers.percent(double.tryParse(bet.said) ?? 0))}'
+            '\n${l.dailyPickRight(numbers.percent(a?.value ?? 0))}';
     }
   }
 
@@ -1534,14 +1537,14 @@ class _DailyRow extends StatelessWidget {
         return (text: l.dailyItemGuess(numbers.percent(guess)), share: null);
       }
       return (
-        text: l.dailyItemRight((today.rightShare * 100).round()),
+        text: l.elided(l.dailyItemRight((today.rightShare * 100).round())),
         share: today.rightShare,
       );
     }
     final double? wrong = Served.instance.lastExplore?.wrongShare(pill.id);
     if (wrong != null) {
       return (
-        text: l.crowdGotRight(((1 - wrong) * 100).round()),
+        text: l.elided(l.crowdGotRight(((1 - wrong) * 100).round())),
         share: 1 - wrong,
       );
     }

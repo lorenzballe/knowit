@@ -42,7 +42,7 @@ void main() {
       tester,
     ) async {
       await openShelf(tester, shelf);
-      await tester.tap(find.text("BACK TO TODAY'S FIVE"));
+      await tester.tap(find.text("Back to today's five"));
       await settle(tester);
 
       expect(find.byType(SavedScreen), findsNothing);

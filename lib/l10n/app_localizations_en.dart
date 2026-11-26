@@ -158,7 +158,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String nothingForYet(String query) {
-    return 'Nothing for \"$query\" yet.';
+    return 'Nothing for “$query” yet.';
   }
 
   @override
@@ -218,7 +218,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String nothingForTryTopic(String query) {
-    return 'Nothing for \"$query\". Try a topic instead.';
+    return 'Nothing for “$query”. Try a topic instead.';
   }
 
   @override
@@ -242,7 +242,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get keepTheOnesYoullUse => 'Keep the ones you\'ll actually use';
 
   @override
-  String get backToTodaysFive => 'BACK TO TODAY\'S FIVE';
+  String get backToTodaysFive => 'Back to today\'s five';
 
   @override
   String get archive => 'Archive';
@@ -314,7 +314,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String youSaidPercentSure(int n) {
-    return 'You said $n% sure';
+    return 'You said $n% sure';
   }
 
   @override
@@ -773,7 +773,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get shareMyRecord => 'SHARE MY RECORD';
+  String get shareMyRecord => 'Share my record';
 
   @override
   String lastCallsAgainstFirst(int n) {
@@ -844,7 +844,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get seeThePlans => 'SEE THE PLANS';
+  String get seeThePlans => 'See the plans';
 
   @override
   String get recordStartsToday => 'Your record starts today.';
@@ -1898,11 +1898,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return 'You said $said. It is $truth.';
-  }
-
-  @override
   String get fiveTitle => 'Today\'s five';
 
   @override
@@ -1918,12 +1913,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String dailyPickRight(String answer) {
-    return 'Right: $answer.';
+    return 'Right: $answer';
   }
 
   @override
   String dailyPickWrong(String answer) {
-    return 'Not quite: it is $answer.';
+    return 'Not quite. Right: $answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return 'Yours: $answer';
   }
 
   @override
@@ -2296,21 +2296,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tapToReveal => 'Tap to reveal';
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return 'You said $given · it is $answer, and $band counted';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return 'You said $given · it is $answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · you said $pct% sure';
-  }
-
-  @override
   String get verdictRight => 'Right.';
 
   @override
@@ -2321,7 +2306,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String verdictSure(int pct) {
-    return 'You were $pct% sure.';
+    return 'You were $pct% sure.';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return 'You said $given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return 'You said $given, $pct% sure';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return 'Right: $answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return 'Right: $answer ($low to $high counted)';
   }
 
   @override
@@ -3094,7 +3099,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get revealShowWorking => 'Show the working';
 
   @override
-  String get sceneLockIn => 'LOCK IT IN';
+  String get sceneLockIn => 'Lock it in';
+
+  @override
+  String get placeItDrag => 'Drag along the ruler.';
+
+  @override
+  String get placeItHappy => 'Happy with that?';
+
+  @override
+  String get placeItEstimate => 'Your estimate';
+
+  @override
+  String get placeItNotSet => 'not set';
+
+  @override
+  String get placeItLock => 'Lock in my estimate';
 
   @override
   String get sceneYou => 'YOU';
@@ -3395,7 +3415,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String journeyMinAWeek(int now, int was) {
-    return '$now min a week, from $was';
+    return '$now min a week, from $was min';
   }
 
   @override
@@ -6612,6 +6632,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newsBehind => 'Behind the news';
 
   @override
+  String get newsMeansForYou => 'What it means for you';
+
+  @override
+  String get newsMeans => 'What it means';
+
+  @override
+  String get newsHappenedBefore => 'It happened before';
+
+  @override
   String get newsSources => 'Sources';
 
   @override
@@ -6775,6 +6804,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get founderTheirBooks => 'The books they recommended';
+
+  @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': 'Co-founder of Microsoft',
+      'warren_buffett': 'The investor who built Berkshire Hathaway',
+      'mark_zuckerberg': 'Founder of Facebook',
+      'charlie_munger': 'Warren Buffett’s partner at Berkshire Hathaway',
+      'marc_andreessen': 'Co-founder of Netscape and Andreessen Horowitz',
+      'tobi_lutke': 'Founder of Shopify',
+      'naval_ravikant': 'Co-founder of AngelList',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes, his books for the summer',
+      'berkshire_meeting': 'Berkshire Hathaway’s annual meeting',
+      'berkshire_letter': 'his letter to Berkshire Hathaway’s shareholders',
+      'year_of_books': 'A Year of Books, on Facebook',
+      'publisher_praise': 'his praise for the book, at its publisher',
+      'ferriss_five':
+          'The Tim Ferriss Show, among the five best books he has read',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
 
   @override
   String founderAbout(String name) {

@@ -259,7 +259,7 @@ class DayTile extends StatelessWidget {
           if (s != null) ...[
             const SizedBox(height: 6),
             Text(
-              l.betsYouWereSure(s),
+              l.elided(l.betsYouWereSure(s)),
               style: AppText.body(
                 size: 13,
                 weight: FontWeight.w600,

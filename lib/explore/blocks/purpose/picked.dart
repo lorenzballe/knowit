@@ -294,7 +294,8 @@ class ThinSubjectBlock extends ExploreBlock {
       PurposeShelf(
         title: section.title(lang) ?? l.purposeThinTitle(subject),
         line:
-            section.subtitle(lang) ?? l.purposeThinLine(thin.percent, subject),
+            section.subtitle(lang) ??
+            l.elided(l.purposeThinLine(thin.percent, subject)),
         under: _ShareBar(share: thin.share, colour: colour),
         child: SideRow(
           height: size.height + 4,

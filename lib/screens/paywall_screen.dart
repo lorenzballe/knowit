@@ -202,12 +202,11 @@ enum PaywallVariant {
       // a match, and only past that is the reader over or under.
       (:final int sure, :final int right, :final double gap)
           when gap.abs().round() <= 5 =>
-        l.paywallRecordEven(sure, right),
+        l.elided(l.paywallRecordEven(sure, right)),
       (:final int sure, :final int right, :final double gap) when gap > 0 =>
-        l.paywallRecordOver(sure, right),
-      (:final int sure, :final int right, gap: _) => l.paywallRecordUnder(
-        sure,
-        right,
+        l.elided(l.paywallRecordOver(sure, right)),
+      (:final int sure, :final int right, gap: _) => l.elided(
+        l.paywallRecordUnder(sure, right),
       ),
       null => l.paywallRecordLine,
     },
@@ -353,12 +352,16 @@ Future<void> showPurchaseSuccess(
         planName: l.successPlanName(
           bought == Plan.year ? l.planYearly : l.planMonthly,
         ),
-        planLine: end != null
-            ? l.successFreeUntil(end, price, suffix)
-            : l.successRenewsLine(day(renew), price, suffix),
-        foot: end != null
-            ? l.successFootFirstCharge(end)
-            : l.successFootRenews(day(renew)),
+        planLine: l.elided(
+          end != null
+              ? l.successFreeUntil(end, price, suffix)
+              : l.successRenewsLine(day(renew), price, suffix),
+        ),
+        foot: l.elided(
+          end != null
+              ? l.successFootFirstCharge(end)
+              : l.successFootRenews(day(renew)),
+        ),
         onReceipt: () => openLink(
           iOS ? kAppStoreSubscriptionsUrl : kGooglePlaySubscriptionsUrl,
         ),

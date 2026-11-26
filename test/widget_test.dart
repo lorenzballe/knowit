@@ -2362,7 +2362,7 @@ void main() {
 
     await _openProfile(tester);
     // The one offer on the profile, under the record.
-    await tester.tap(find.text('SEE THE PLANS'));
+    await tester.tap(find.text('See the plans'));
     await _settle(tester);
 
     // Everything Astute+ is, each with its line. Each has to exist before
@@ -2396,7 +2396,7 @@ void main() {
 
     await _openProfile(tester);
     // The one offer on the profile, under the record.
-    await tester.tap(find.text('SEE THE PLANS'));
+    await tester.tap(find.text('See the plans'));
     await _settle(tester);
 
     // Yearly leads and is preselected, so the call to action opens on it:
@@ -2428,7 +2428,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
     await _openProfile(tester);
-    await tester.tap(find.text('SEE THE PLANS'));
+    await tester.tap(find.text('See the plans'));
     await _settle(tester);
 
     // Apple refuses a subscription without both beside it (3.1.2): the
@@ -2463,7 +2463,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
     await _openProfile(tester);
-    await tester.tap(find.text('SEE THE PLANS'));
+    await tester.tap(find.text('See the plans'));
     await _settle(tester);
 
     // The whole line is one text, for a screen reader and for a finder; the
@@ -3553,7 +3553,7 @@ void main() {
 
     // One offer, under the record; the second box that used to sell the
     // same thing lower down is gone.
-    expect(find.text('SEE THE PLANS'), findsOneWidget);
+    expect(find.text('See the plans'), findsOneWidget);
 
     // Then what is the reader's own, the account and how the app works,
     // with the debug tools still last. The top's own heading is whichever
@@ -4616,8 +4616,9 @@ void main() {
 
       expect(given[pick.id]?.response, '${challenge.correct}');
       expect(given[pick.id]?.confidence, 80);
-      // The verdict, set large, runs into how sure.
-      expect(find.text('Right.  You were 80% sure.'), findsOneWidget);
+      // The verdict, set large, runs into how sure, the number held to its
+      // word.
+      expect(find.text('Right.  You were 80%\u00A0sure.'), findsOneWidget);
       expect(find.text('WHAT TO KEEP'), findsOneWidget);
     });
 
@@ -4632,10 +4633,12 @@ void main() {
       await tester.tap(find.text('50%'));
       await tester.pumpAndSettle();
 
+      // What was picked and what is right, the card's words quoted, how
+      // sure said once.
       expect(
         find.textContaining(
-          'You said ${challenge.options[wrong]} · '
-          'it is ${challenge.correctOption}',
+          'You said “${challenge.options[wrong]}”, 50%\u00A0sure\u00A0· '
+          'Right: “${challenge.correctOption}”',
         ),
         findsOneWidget,
       );
@@ -4682,7 +4685,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.textContaining('it is ${challenge.answerLabel}'),
+        find.textContaining('Right: ${challenge.answerLabel}'),
         findsOneWidget,
       );
     });
@@ -4720,7 +4723,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('60%'));
       await tester.pumpAndSettle();
