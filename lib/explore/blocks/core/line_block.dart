@@ -8,8 +8,23 @@ import '../../../l10n/l10n.dart';
 import '../../../legal.dart' show openLink;
 import '../../../theme.dart';
 import '../../../utils/share_link.dart';
+import '../../../widgets/glow_outline.dart';
 import '../../explore_block.dart';
 import 'layout.dart';
+
+/// The outline the line wears (widgets/glow_outline.dart): a sheen that
+/// travels slowly round a white hairline. The other two looks are `breath`
+/// and `spectrum`; a build given `--dart-define=LINE_OUTLINE=breath` wears
+/// another without a change here.
+const String _outline = String.fromEnvironment(
+  'LINE_OUTLINE',
+  defaultValue: 'sheen',
+);
+const GlowOutlineStyle kLineOutline = _outline == 'breath'
+    ? GlowOutlineStyle.breath
+    : _outline == 'spectrum'
+    ? GlowOutlineStyle.spectrum
+    : GlowOutlineStyle.sheen;
 
 /// The line of the day (lib/data/day_lines.dart): one sentence worth
 /// keeping, the same for every reader, under who wrote it and where, which
@@ -118,89 +133,97 @@ class DayLineCard extends StatelessWidget {
         : n <= 240
         ? 18.5
         : 17;
-    return Container(
-      key: const ValueKey('day-line'),
-      decoration: BoxDecoration(
-        color: p.ink.withValues(alpha: 0.045),
-        borderRadius: BorderRadius.circular(22),
-      ),
-      padding: const EdgeInsets.fromLTRB(20, 18, 8, 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 12),
-            child: Text(
-              '“${line.text}”',
-              style: AppText.display(
-                size: size,
-                weight: FontWeight.w500,
-                height: 1.3,
-                spacing: -0.2,
-                color: p.ink,
+    // The one card on the page with a light round it: a line worth
+    // keeping should not look like the shelves around it.
+    return GlowOutline(
+      style: kLineOutline,
+      radius: 22,
+      child: Container(
+        key: const ValueKey('day-line'),
+        decoration: BoxDecoration(
+          color: p.ink.withValues(alpha: 0.045),
+          borderRadius: BorderRadius.circular(22),
+        ),
+        // A little more room than a card without an edge needs, so the
+        // words stand clear of the light round them.
+        padding: const EdgeInsets.fromLTRB(20, 20, 8, 14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: Text(
+                '“${line.text}”',
+                style: AppText.display(
+                  size: size,
+                  weight: FontWeight.w500,
+                  height: 1.3,
+                  spacing: -0.2,
+                  color: p.ink,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 14),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Expanded(
-                child: Semantics(
-                  link: true,
-                  child: InkWell(
-                    key: const ValueKey('day-line-source'),
-                    borderRadius: BorderRadius.circular(10),
-                    onTap: () {
-                      Analytics.capture('line source opened', {
-                        'author': line.author,
-                      });
-                      openLink(line.url);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            line.author,
-                            style: AppText.body(
-                              size: 14.5,
-                              weight: FontWeight.w700,
-                              color: p.ink,
+            const SizedBox(height: 14),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Semantics(
+                    link: true,
+                    child: InkWell(
+                      key: const ValueKey('day-line-source'),
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        Analytics.capture('line source opened', {
+                          'author': line.author,
+                        });
+                        openLink(line.url);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              line.author,
+                              style: AppText.body(
+                                size: 14.5,
+                                weight: FontWeight.w700,
+                                color: p.ink,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 1),
-                          // The arrow held to the last word by a space that
-                          // does not break, never on a line of its own.
-                          Text(
-                            '${whereOf(line)}\u00A0↗',
-                            style: AppText.body(
-                              size: 12.5,
-                              weight: FontWeight.w600,
-                              height: 1.35,
-                              color: p.inkMuted,
+                            const SizedBox(height: 1),
+                            // The arrow held to the last word by a space that
+                            // does not break, never on a line of its own.
+                            Text(
+                              '${whereOf(line)}\u00A0↗',
+                              style: AppText.body(
+                                size: 12.5,
+                                weight: FontWeight.w600,
+                                height: 1.35,
+                                color: p.inkMuted,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              IconButton(
-                key: const ValueKey('day-line-share'),
-                tooltip: l.share,
-                onPressed: () => _send(context),
-                icon: Icon(
-                  Icons.ios_share_rounded,
-                  size: 20,
-                  color: p.ink.withValues(alpha: 0.7),
+                IconButton(
+                  key: const ValueKey('day-line-share'),
+                  tooltip: l.share,
+                  onPressed: () => _send(context),
+                  icon: Icon(
+                    Icons.ios_share_rounded,
+                    size: 20,
+                    color: p.ink.withValues(alpha: 0.7),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
