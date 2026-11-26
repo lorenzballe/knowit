@@ -596,9 +596,12 @@ class _DeeperSheetState extends State<DeeperSheet>
                                               // Being tried: reporting the
                                               // card under the source it
                                               // would be checked against
-                                              // (source_foot.dart).
+                                              // (source_foot.dart), with A
+                                              // and with D.
                                               if (sourceFoot ==
-                                                  SourceFoot.line) ...[
+                                                      SourceFoot.line ||
+                                                  sourceFoot ==
+                                                      SourceFoot.links) ...[
                                                 const SizedBox(height: 10),
                                                 Padding(
                                                   padding:

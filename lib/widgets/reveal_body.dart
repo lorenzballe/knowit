@@ -267,7 +267,9 @@ abstract final class _Type {
 /// it ([_Fit.foot]).
 enum _FootForm {
   /// Go deeper and the source with the card's whole width, Why this card on
-  /// the row beside the save and share under them.
+  /// the row beside the save and share under them; or, as [SourceFoot.pill]
+  /// and [SourceFoot.links] set it, the two doors with the card's whole
+  /// width and the source on that row.
   rows,
 
   /// Short of room: no row for Why this card alone. It follows the source
@@ -336,9 +338,16 @@ class _Foot extends StatelessWidget {
 
   /// The way this back sets the foot: the one being tried, but for the
   /// pill, which gives way to the words as a line sets them on a back short
-  /// of room ([tight]), a pill taking the room of a line and a half.
-  static SourceFoot wayOn({required bool tight}) =>
-      tight && sourceFoot == SourceFoot.pill ? SourceFoot.line : sourceFoot;
+  /// of room ([tight]), a pill taking the room of a line and a half; and for
+  /// D's two lines on a card with no Why this card beside Go deeper ([why]
+  /// false), which give way to the line the same way, a line of their own
+  /// taking a line more than the source alone.
+  static SourceFoot wayOn({required bool tight, bool why = true}) =>
+      switch (sourceFoot) {
+        SourceFoot.pill when tight => SourceFoot.line,
+        SourceFoot.links when tight && !why => SourceFoot.line,
+        final SourceFoot way => way,
+      };
 
   /// Whether a foot given [onWhy] carries the way to Why this card: not
   /// where the way being tried says why on the card's front instead
@@ -364,16 +373,25 @@ class _Foot extends StatelessWidget {
   /// Between the two doors, where they stand alone.
   static const double doorsGap = 10;
 
+  /// Between Go deeper and Why this card on the line they share
+  /// ([SourceFoot.links]): wide enough that they read as two, and Go
+  /// deeper's to be pressed.
+  static const double linksGap = 16;
+
   /// Round the words inside a pill.
   static const EdgeInsets pillPad = EdgeInsets.fromLTRB(10, 4, 9, 4.5);
 
   /// Go deeper's name, a little firmer than the source: the same size on a
-  /// line, a size up on a line of its own, and inside the pill.
+  /// line, a size up on a line of its own, and inside the pill. On a line
+  /// it shares with Why this card, a size up as on a line of its own; on a
+  /// back short of room, where it gives way to the forms a line takes, at
+  /// the source's size as there.
   static TextStyle lead(Color ink, double size, {bool tight = false}) =>
       AppText.body(
         size: switch (sourceFoot) {
           SourceFoot.line || SourceFoot.pill => tight ? size : size + 1,
           SourceFoot.stack => tight ? size + 1.5 : size + 2.5,
+          SourceFoot.links => tight ? size : size + 2.5,
         },
         weight: FontWeight.w700,
         height: 1.3,
@@ -381,14 +399,43 @@ class _Foot extends StatelessWidget {
       );
 
   /// Why this card's name: a door as Go deeper is, a step quieter; on a
-  /// back short of room, at Go deeper's size.
+  /// back short of room, at Go deeper's size. Beside Go deeper on its line
+  /// ([SourceFoot.links]), at its size and in a regular weight, plain as a
+  /// link, and quieter still.
   static TextStyle why(Color ink, double size, {bool tight = false}) =>
-      AppText.body(
-        size: tight ? size : size + 1,
-        weight: FontWeight.w600,
-        height: 1.3,
-        color: ink.withValues(alpha: 0.8),
-      );
+      sourceFoot == SourceFoot.links
+      ? AppText.body(
+          size: tight ? size : size + 2.5,
+          weight: FontWeight.w500,
+          height: 1.3,
+          color: ink.withValues(alpha: 0.72),
+        )
+      : AppText.body(
+          size: tight ? size : size + 1,
+          weight: FontWeight.w600,
+          height: 1.3,
+          color: ink.withValues(alpha: 0.8),
+        );
+
+  /// Go deeper and Why this card on the line they share
+  /// ([SourceFoot.links]): each door with the room above its words, Go
+  /// deeper with the gap after it, so a thumb finds each; Why this card
+  /// under Go deeper on a card too narrow for the two.
+  static List<Size> linkSizes(
+    _Measure m,
+    AppLocalizations l,
+    Color ink,
+    double size,
+    double above, {
+    bool tight = false,
+  }) {
+    final Size go = m.spanSize(leadSpan(l, ink, size, tight: tight));
+    final Size answer = m.spanSize(whySpan(l, ink, size, tight: tight));
+    return [
+      Size(go.width + linksGap, go.height + above),
+      Size(answer.width, answer.height + above),
+    ];
+  }
 
   /// The source after it, as quiet as the source always was.
   static TextStyle from(Color ink, double size) => AppText.body(
@@ -548,7 +595,7 @@ class _Foot extends StatelessWidget {
   }) {
     final AppLocalizations l = m.l10n;
     final double room = width - corner;
-    final SourceFoot way = wayOn(tight: tight);
+    final SourceFoot way = wayOn(tight: tight, why: why);
     if (why && form != _FootForm.rows && way != SourceFoot.stack) {
       final InlineSpan go = leadSpan(l, ink, size, tight: tight);
       final InlineSpan answer = whySpan(l, ink, size, tight: tight);
@@ -593,12 +640,21 @@ class _Foot extends StatelessWidget {
           ], width) +
           rowFor(m.height(origin, from(ink, size), room));
     }
+    if (why && way == SourceFoot.links) {
+      return wrapHeight(
+            linkSizes(m, l, ink, size, above, tight: tight),
+            width,
+            0,
+            0,
+          ) +
+          rowFor(m.height(origin, from(ink, size), room));
+    }
     final double words = switch (way) {
       SourceFoot.line => m.spanHeight(
         lineSpan(l, ink, size, origin, tight: tight),
         room,
       ),
-      SourceFoot.stack =>
+      SourceFoot.stack || SourceFoot.links =>
         m.spanHeight(leadSpan(l, ink, size, tight: tight), room) +
             stackGap +
             m.height(origin, from(ink, size), room),
@@ -712,7 +768,7 @@ class _Foot extends StatelessWidget {
     final String deeper = l.deeperFootLabel(origin);
     final VoidCallback? onWhy = carries(this.onWhy) ? this.onWhy : null;
     final Key whyKey = ValueKey('card-why-${pill.id}');
-    final SourceFoot way = wayOn(tight: tight);
+    final SourceFoot way = wayOn(tight: tight, why: onWhy != null);
 
     if (onWhy != null && form != _FootForm.rows) {
       final InlineSpan go = leadSpan(l, ink, size, tight: tight);
@@ -835,11 +891,51 @@ class _Foot extends StatelessWidget {
         ],
       );
     }
+    if (onWhy != null && way == SourceFoot.links) {
+      // The two doors in words on one line, as heightFor counts them
+      // (linkSizes); the source under them, beside the save and share.
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.end,
+            children: [
+              _press(
+                deeper,
+                onTap,
+                Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    top: above,
+                    end: linksGap,
+                  ),
+                  child: Text.rich(leadSpan(l, ink, size, tight: tight)),
+                ),
+              ),
+              _press(
+                l.whyTitle,
+                onWhy,
+                KeyedSubtree(
+                  key: whyKey,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: above),
+                    child: Text.rich(whySpan(l, ink, size, tight: tight)),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // The source under them is Go deeper's too, and read out with it.
+          _row(Text(origin, style: from(ink, size)), onTap: onTap),
+        ],
+      );
+    }
     final Widget words = switch (way) {
       SourceFoot.line => Text.rich(
         lineSpan(l, ink, size, origin, tight: tight),
       ),
-      SourceFoot.stack => Column(
+      // Without Why this card, the two lines a line of its own sets.
+      SourceFoot.stack || SourceFoot.links => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
