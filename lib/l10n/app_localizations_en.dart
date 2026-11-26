@@ -5723,7 +5723,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareDayHeadline => 'Today\'s five';
 
   @override
-  String get shareFormatPost => 'Post';
+  String get shareFormatCover => 'Cover';
+
+  @override
+  String get shareFormatList => 'List';
 
   @override
   String get shareFormatStory => 'Story';

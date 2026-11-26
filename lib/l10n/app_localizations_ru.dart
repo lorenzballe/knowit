@@ -5967,7 +5967,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get shareDayHeadline => 'Пять карточек дня';
 
   @override
-  String get shareFormatPost => 'Пост';
+  String get shareFormatCover => 'Обложка';
+
+  @override
+  String get shareFormatList => 'Список';
 
   @override
   String get shareFormatStory => 'История';

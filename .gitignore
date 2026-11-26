@@ -70,3 +70,5 @@ tool/shots/paywall/
 tool/shots/purchase/
 # Explore on a phone, top to bottom (tool/explore_tour_shots.dart): looked at, not kept
 tool/shots/explore-tour/
+# The day as a picture, in each of its layouts (tool/share_day_shots.dart): looked at, not kept
+tool/shots/shareday/

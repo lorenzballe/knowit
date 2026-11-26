@@ -5770,7 +5770,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get shareDayHeadline => 'Die fünf von heute';
 
   @override
-  String get shareFormatPost => 'Beitrag';
+  String get shareFormatCover => 'Cover';
+
+  @override
+  String get shareFormatList => 'Liste';
 
   @override
   String get shareFormatStory => 'Story';

@@ -5506,7 +5506,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get shareDayHeadline => '今天的五张';
 
   @override
-  String get shareFormatPost => '帖子';
+  String get shareFormatCover => '封面';
+
+  @override
+  String get shareFormatList => '列表';
 
   @override
   String get shareFormatStory => '快拍';

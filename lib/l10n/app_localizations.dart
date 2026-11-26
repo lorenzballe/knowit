@@ -8094,13 +8094,19 @@ abstract class AppLocalizations {
   /// **'Today\'s five'**
   String get shareDayHeadline;
 
-  /// The sheet that sends the day as a picture: the shape for a chat or a feed, four by five.
+  /// The sheet that sends the day as a picture: the shape with one card large, its drawing beside its question, over the other four in a list. Four by five, like a magazine's cover.
   ///
   /// In en, this message translates to:
-  /// **'Post'**
-  String get shareFormatPost;
+  /// **'Cover'**
+  String get shareFormatCover;
 
-  /// The sheet that sends the day as a picture: the tall shape for a story, nine by sixteen.
+  /// The sheet that sends the day as a picture: the shape with the five cards alike in a list, each its drawing and its question. Four by five.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get shareFormatList;
+
+  /// The sheet that sends the day as a picture: the tall shape for a story, nine by sixteen, with one card large over the other four.
   ///
   /// In en, this message translates to:
   /// **'Story'**

@@ -6304,13 +6304,17 @@
  "@shareDayHeadline": {
   "description": "The picture of the day sent to a friend: its headline, over the five cards' questions."
  },
- "shareFormatPost": "Post",
- "@shareFormatPost": {
-  "description": "The sheet that sends the day as a picture: the shape for a chat or a feed, four by five."
+ "shareFormatCover": "Cover",
+ "@shareFormatCover": {
+  "description": "The sheet that sends the day as a picture: the shape with one card large, its drawing beside its question, over the other four in a list. Four by five, like a magazine's cover."
+ },
+ "shareFormatList": "List",
+ "@shareFormatList": {
+  "description": "The sheet that sends the day as a picture: the shape with the five cards alike in a list, each its drawing and its question. Four by five."
  },
  "shareFormatStory": "Story",
  "@shareFormatStory": {
-  "description": "The sheet that sends the day as a picture: the tall shape for a story, nine by sixteen."
+  "description": "The sheet that sends the day as a picture: the tall shape for a story, nine by sixteen, with one card large over the other four."
  },
  "crowdGotRight": "{n}% of readers got it right",
  "@crowdGotRight": {

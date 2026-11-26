@@ -5506,7 +5506,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get shareDayHeadline => '今日の5枚';
 
   @override
-  String get shareFormatPost => '投稿';
+  String get shareFormatCover => '表紙';
+
+  @override
+  String get shareFormatList => 'リスト';
 
   @override
   String get shareFormatStory => 'ストーリー';

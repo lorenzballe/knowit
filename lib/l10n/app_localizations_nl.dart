@@ -5769,7 +5769,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get shareDayHeadline => 'De vijf van vandaag';
 
   @override
-  String get shareFormatPost => 'Bericht';
+  String get shareFormatCover => 'Omslag';
+
+  @override
+  String get shareFormatList => 'Lijst';
 
   @override
   String get shareFormatStory => 'Verhaal';

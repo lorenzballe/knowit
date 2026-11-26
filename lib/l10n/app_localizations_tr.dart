@@ -5662,7 +5662,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get shareDayHeadline => 'Bugünün beşi';
 
   @override
-  String get shareFormatPost => 'Gönderi';
+  String get shareFormatCover => 'Kapak';
+
+  @override
+  String get shareFormatList => 'Liste';
 
   @override
   String get shareFormatStory => 'Hikâye';

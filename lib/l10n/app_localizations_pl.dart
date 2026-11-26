@@ -5952,7 +5952,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get shareDayHeadline => 'Dzisiejsza piątka';
 
   @override
-  String get shareFormatPost => 'Post';
+  String get shareFormatCover => 'Okładka';
+
+  @override
+  String get shareFormatList => 'Lista';
 
   @override
   String get shareFormatStory => 'Relacja';
