@@ -1228,6 +1228,11 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return 'Verdiepen. Bron: $source';
+  }
+
+  @override
   String get sourceKindPaper => 'Studie';
 
   @override

@@ -279,6 +279,7 @@
   "dayStreakCaps": "JOURS DE SÉRIE",
   "sourceLabel": "Source · {source}",
   "sourceLabelKind": "{kind} · {source}",
+  "deeperFootLabel": "Approfondir. Source : {source}",
   "sourceKindPaper": "Étude",
   "sourceKindBook": "Livre",
   "sourceKindInstitution": "Institution",

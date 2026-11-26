@@ -279,6 +279,7 @@
   "dayStreakCaps": "日連続",
   "sourceLabel": "出典 · {source}",
   "sourceLabelKind": "{kind}・{source}",
+  "deeperFootLabel": "もっと深く。出典：{source}",
   "sourceKindPaper": "研究",
   "sourceKindBook": "書籍",
   "sourceKindInstitution": "機関",

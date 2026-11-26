@@ -279,6 +279,7 @@
   "dayStreakCaps": "DÍAS DE RACHA",
   "sourceLabel": "Fuente · {source}",
   "sourceLabelKind": "{kind} · {source}",
+  "deeperFootLabel": "Profundiza. Fuente: {source}",
   "sourceKindPaper": "Estudio",
   "sourceKindBook": "Libro",
   "sourceKindInstitution": "Institución",

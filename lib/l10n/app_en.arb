@@ -1162,6 +1162,15 @@
    }
   }
  },
+ "deeperFootLabel": "Go deeper. Source: {source}",
+ "@deeperFootLabel": {
+  "description": "What a screen reader says for the foot of a card's back, which opens Go deeper: the sheet's name, then the card's source, with the word Source that the card itself leaves out.",
+  "placeholders": {
+   "source": {
+    "type": "String"
+   }
+  }
+ },
  "sourceKindPaper": "Study",
  "@sourceKindPaper": {
   "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."

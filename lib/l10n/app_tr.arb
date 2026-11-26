@@ -279,6 +279,7 @@
   "dayStreakCaps": "GÜNLÜK SERİ",
   "sourceLabel": "Kaynak · {source}",
   "sourceLabelKind": "{kind} · {source}",
+  "deeperFootLabel": "Derinleş. Kaynak: {source}",
   "sourceKindPaper": "Araştırma",
   "sourceKindBook": "Kitap",
   "sourceKindInstitution": "Kurum",

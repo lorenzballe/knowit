@@ -1190,6 +1190,11 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return '더 깊이. 출처: $source';
+  }
+
+  @override
   String get sourceKindPaper => '연구';
 
   @override

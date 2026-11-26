@@ -279,6 +279,7 @@
   "dayStreakCaps": "일 연속",
   "sourceLabel": "출처 · {source}",
   "sourceLabelKind": "{kind} · {source}",
+  "deeperFootLabel": "더 깊이. 출처: {source}",
   "sourceKindPaper": "연구",
   "sourceKindBook": "책",
   "sourceKindInstitution": "기관",

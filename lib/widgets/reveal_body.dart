@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
@@ -14,6 +13,7 @@ import 'deeper_sheet.dart';
 import 'diagram_view.dart';
 import 'motion.dart';
 import 'report_sheet.dart';
+import 'source_foot.dart';
 import '../l10n/app_localizations.dart';
 
 /// Everything a card says once it is turned over: the reasoning, the trap,
@@ -244,9 +244,6 @@ abstract final class _Type {
     color: ink,
   );
 
-  static TextStyle source(Color ink, double size) =>
-      AppText.body(size: size, height: 1.35, color: ink.withValues(alpha: 0.6));
-
   /// Where a card pays off: the source's size, a voice firmer than it.
   static TextStyle useful(Color ink, double size) => AppText.body(
     size: size,
@@ -265,80 +262,382 @@ abstract final class _Type {
   );
 }
 
-/// The report as a flag at the end of the card's source line: tap it to say
-/// the card is wrong; once this phone has reported it, a quiet tick instead.
-class _ReportFlag extends StatefulWidget {
-  final Pill pill;
-  final Color ink;
-  final double size;
-  const _ReportFlag({
+/// The foot a card's back ends on: Go deeper, and where the card's facts
+/// come from after it, set the way [sourceFoot] says (source_foot.dart); and,
+/// on a card of the day, the way to Why this card beside it (why_sheet.dart).
+///
+/// Go deeper's part opens it, the room above its words included, so it is a
+/// target a thumb finds without the foot taking a line more for it. Where
+/// the foot carries Why this card too, its last row is the one the save and
+/// share stand in, tall enough to reach past them: what goes above that row
+/// has the card's whole width.
+class _Foot extends StatelessWidget {
+  const _Foot({
+    super.key,
     required this.pill,
-    required this.ink,
+    required this.origin,
     required this.size,
+    required this.above,
+    required this.corner,
+    required this.onTap,
+    this.onWhy,
+    this.tight = false,
   });
 
-  @override
-  State<_ReportFlag> createState() => _ReportFlagState();
-}
+  final Pill pill;
 
-class _ReportFlagState extends State<_ReportFlag> {
-  @override
-  void initState() {
-    super.initState();
-    Reports.instance.load();
+  /// Where the facts come from: the source as the card says it, after its
+  /// kind where the card names one ("Study · Johnson, Science, 2019").
+  final String origin;
+
+  /// The source's size on this back ([_Fit.source]); the lead's is set
+  /// from it.
+  final double size;
+
+  /// The room above the words, which is the foot's to be pressed.
+  final double above;
+
+  /// The room the save and share take at the foot's right.
+  final double corner;
+  final VoidCallback onTap;
+
+  /// Opens Why this card; null where there is none to open, on a card that
+  /// is not one of the day's.
+  final VoidCallback? onWhy;
+
+  /// Whether the back is short of room ([_Fit.tight]): Go deeper's name is
+  /// then set at the source's own size, firmer only in weight, so the foot
+  /// takes no more lines than the source alone did.
+  final bool tight;
+
+  /// Whether a foot given [onWhy] carries the way to Why this card: not
+  /// where the way being tried says why on the card's front instead
+  /// ([SourceFoot.stack]).
+  static bool carries(VoidCallback? onWhy) =>
+      onWhy != null && sourceFoot != SourceFoot.stack;
+
+  /// The row beside the save and share: as tall as reaches past them (their
+  /// marks stand 21 points into the face, the room kept round them 9 more),
+  /// its words lifted onto the line their marks sit on.
+  static const double row = 32;
+  static const double rowLift = 3;
+  static double rowFor(double words) =>
+      words + rowLift > row ? words + rowLift : row;
+
+  /// Between the lead and the source under it.
+  static const double stackGap = 2;
+
+  /// Between the pill and what is beside it, or under it.
+  static const double pillGap = 8;
+  static const double pillRunGap = 4;
+
+  /// Round the words inside a pill.
+  static const EdgeInsets pillPad = EdgeInsets.fromLTRB(10, 4, 9, 4.5);
+
+  /// Go deeper's name, a little firmer than the source: the same size on a
+  /// line, a size up on a line of its own, and inside the pill.
+  static TextStyle lead(Color ink, double size, {bool tight = false}) =>
+      AppText.body(
+        size: switch (sourceFoot) {
+          SourceFoot.line || SourceFoot.pill => tight ? size : size + 1,
+          SourceFoot.stack => tight ? size + 1.5 : size + 2.5,
+        },
+        weight: FontWeight.w700,
+        height: 1.3,
+        color: ink.withValues(alpha: 0.94),
+      );
+
+  /// Why this card's name: a door as Go deeper is, a step quieter.
+  static TextStyle why(Color ink, double size) => AppText.body(
+    size: size + 1,
+    weight: FontWeight.w600,
+    height: 1.3,
+    color: ink.withValues(alpha: 0.8),
+  );
+
+  /// The source after it, as quiet as the source always was.
+  static TextStyle from(Color ink, double size) => AppText.body(
+    size: size,
+    weight: FontWeight.w500,
+    height: 1.35,
+    color: ink.withValues(alpha: 0.6),
+  );
+
+  /// [name] with its chevron, which is kept on its line.
+  static InlineSpan door(String name, TextStyle style) => TextSpan(
+    children: [
+      TextSpan(text: name, style: style),
+      TextSpan(
+        text: ' ›',
+        style: style.copyWith(fontWeight: FontWeight.w800),
+      ),
+    ],
+  );
+
+  static InlineSpan leadSpan(
+    AppLocalizations l,
+    Color ink,
+    double size, {
+    bool tight = false,
+  }) => door(l.deeperTitle, lead(ink, size, tight: tight));
+
+  static InlineSpan whySpan(AppLocalizations l, Color ink, double size) =>
+      door(l.whyTitle, why(ink, size));
+
+  /// The lead and the source run together, on a line.
+  static InlineSpan lineSpan(
+    AppLocalizations l,
+    Color ink,
+    double size,
+    String origin, {
+    bool tight = false,
+  }) => TextSpan(
+    children: [
+      leadSpan(l, ink, size, tight: tight),
+      TextSpan(text: '  $origin', style: from(ink, size)),
+    ],
+  );
+
+  /// Two pills, side by side where they fit and one over the other where
+  /// they do not, as a [Wrap] sets them.
+  static double pillsHeight(_Measure m, List<InlineSpan> spans, double width) {
+    double line = 0, height = 0, total = 0;
+    for (final InlineSpan s in spans) {
+      final Size words = m.spanSize(s);
+      final double w = words.width + pillPad.horizontal;
+      final double h = words.height + pillPad.vertical;
+      if (line > 0 && line + pillGap + w > width) {
+        total += height + pillRunGap;
+        line = w;
+        height = h;
+      } else {
+        line += (line > 0 ? pillGap : 0) + w;
+        height = h > height ? h : height;
+      }
+    }
+    return total + height;
   }
 
-  Future<void> _open() async {
-    final bool? sent = await showReportSheet(context, widget.pill);
-    if (sent != true || !mounted) return;
-    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-      SnackBar(
-        content: Text(context.l10n.reportSentToast),
-        duration: const Duration(seconds: 2),
+  /// The room the foot takes on a back [width] wide, the room [above] its
+  /// words included.
+  static double heightFor(
+    _Measure m,
+    Color ink,
+    double size,
+    String origin,
+    double width,
+    double corner,
+    double above, {
+    required bool why,
+    bool tight = false,
+  }) {
+    final AppLocalizations l = m.l10n;
+    final double room = width - corner;
+    if (why && sourceFoot == SourceFoot.line) {
+      return above +
+          m.spanHeight(lineSpan(l, ink, size, origin, tight: tight), width) +
+          rowFor(m.spanHeight(whySpan(l, ink, size), room));
+    }
+    if (why && sourceFoot == SourceFoot.pill) {
+      return above +
+          pillsHeight(m, [
+            leadSpan(l, ink, size, tight: tight),
+            whySpan(l, ink, size),
+          ], width) +
+          rowFor(m.height(origin, from(ink, size), room));
+    }
+    final double words = switch (sourceFoot) {
+      SourceFoot.line => m.spanHeight(
+        lineSpan(l, ink, size, origin, tight: tight),
+        room,
       ),
+      SourceFoot.stack =>
+        m.spanHeight(leadSpan(l, ink, size, tight: tight), room) +
+            stackGap +
+            m.height(origin, from(ink, size), room),
+      SourceFoot.pill => () {
+        final Size pill = m.spanSize(leadSpan(l, ink, size, tight: tight));
+        final double pillW = pill.width + pillPad.horizontal;
+        final double pillH = pill.height + pillPad.vertical;
+        final Size one = m.size(origin, from(ink, size));
+        // Beside the pill where it fits whole, under it where it does not.
+        return pillW + pillGap + one.width <= room
+            ? (pillH > one.height ? pillH : one.height)
+            : pillH + pillRunGap + m.height(origin, from(ink, size), room);
+      }(),
+    };
+    return above + words;
+  }
+
+  /// A part of the foot that opens something, read out as [label].
+  static Widget _press(String label, VoidCallback onTap, Widget child) =>
+      Semantics(
+        button: true,
+        label: label,
+        excludeSemantics: true,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          child: child,
+        ),
+      );
+
+  /// The row beside the save and share, [words] on the line their marks
+  /// sit on; the whole row, short of the corner, is pressed.
+  Widget _row(Widget words, {required VoidCallback onTap, String? label}) {
+    final Widget box = GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: row),
+        child: Align(
+          alignment: AlignmentDirectional.bottomStart,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: rowLift),
+            child: words,
+          ),
+        ),
+      ),
+    );
+    return Padding(
+      padding: EdgeInsetsDirectional.only(end: corner),
+      child: label == null
+          ? ExcludeSemantics(child: box)
+          : Semantics(
+              button: true,
+              label: label,
+              excludeSemantics: true,
+              child: box,
+            ),
+    );
+  }
+
+  /// A pill: filled with the card's wash for Go deeper, outlined for Why
+  /// this card. The outline is drawn over the pill, so it takes no room and
+  /// the pill is the size [heightFor] counts.
+  Widget _pill(InlineSpan words, {required bool filled}) {
+    final Color ink = pill.ink;
+    final BorderRadius round = BorderRadius.circular(99);
+    return Container(
+      padding: pillPad,
+      decoration: filled
+          ? BoxDecoration(
+              color: ink.withValues(alpha: 0.11),
+              borderRadius: round,
+            )
+          : null,
+      foregroundDecoration: filled
+          ? null
+          : BoxDecoration(
+              border: Border.all(color: ink.withValues(alpha: 0.3)),
+              borderRadius: round,
+            ),
+      child: Text.rich(words),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final String id = widget.pill.id;
-    return ListenableBuilder(
-      listenable: Reports.instance,
-      builder: (context, _) {
-        final bool done = Reports.instance.has(id);
-        // No taller than the line it sits in, so it never deepens it.
-        final Widget mark = SizedBox(
-          height: widget.size * 1.2,
-          child: Icon(
-            done ? Icons.check_rounded : Icons.outlined_flag_rounded,
-            size: widget.size,
-            color: widget.ink.withValues(alpha: done ? 0.45 : 0.6),
-          ),
-        );
-        if (done) {
-          return Semantics(
-            label: context.l10n.reportedThanks,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 6),
-              child: mark,
-            ),
-          );
-        }
-        // The visible flag is small; the target around it is not.
-        return Semantics(
-          button: true,
-          label: context.l10n.reportProblem,
-          child: GestureDetector(
-            key: ValueKey('report-$id'),
-            behavior: HitTestBehavior.opaque,
-            onTap: _open,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
-              child: mark,
+    final AppLocalizations l = context.l10n;
+    final Color ink = pill.ink;
+    // Read out as what it does and then what it names: the word Source,
+    // gone from the card, is said to a reader who cannot see the type.
+    final String deeper = l.deeperFootLabel(origin);
+    final VoidCallback? onWhy = carries(this.onWhy) ? this.onWhy : null;
+
+    if (onWhy != null && sourceFoot == SourceFoot.line) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _press(
+            deeper,
+            onTap,
+            Padding(
+              padding: EdgeInsets.only(top: above),
+              child: Text.rich(lineSpan(l, ink, size, origin, tight: tight)),
             ),
           ),
-        );
-      },
+          _row(
+            Text.rich(
+              key: ValueKey('card-why-${pill.id}'),
+              whySpan(l, ink, size),
+            ),
+            onTap: onWhy,
+            label: l.whyTitle,
+          ),
+        ],
+      );
+    }
+    if (onWhy != null && sourceFoot == SourceFoot.pill) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: above),
+            child: Wrap(
+              spacing: pillGap,
+              runSpacing: pillRunGap,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                _press(
+                  deeper,
+                  onTap,
+                  _pill(leadSpan(l, ink, size, tight: tight), filled: true),
+                ),
+                _press(
+                  l.whyTitle,
+                  onWhy,
+                  KeyedSubtree(
+                    key: ValueKey('card-why-${pill.id}'),
+                    child: _pill(whySpan(l, ink, size), filled: false),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // The source under them is Go deeper's too, and read out with it.
+          _row(Text(origin, style: from(ink, size)), onTap: onTap),
+        ],
+      );
+    }
+    final Widget words = switch (sourceFoot) {
+      SourceFoot.line => Text.rich(
+        lineSpan(l, ink, size, origin, tight: tight),
+      ),
+      SourceFoot.stack => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text.rich(leadSpan(l, ink, size, tight: tight)),
+          const SizedBox(height: stackGap),
+          Text(origin, style: from(ink, size)),
+        ],
+      ),
+      SourceFoot.pill => Wrap(
+        spacing: pillGap,
+        runSpacing: pillRunGap,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          _pill(leadSpan(l, ink, size, tight: tight), filled: true),
+          Text(origin, style: from(ink, size)),
+        ],
+      ),
+    };
+    return Padding(
+      padding: EdgeInsetsDirectional.only(end: corner),
+      child: _press(
+        deeper,
+        onTap,
+        Padding(
+          padding: EdgeInsets.only(top: above),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: words,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -762,6 +1061,19 @@ class _Measure {
     p.dispose();
     return s;
   }
+
+  /// How wide and tall [span] sets on one line.
+  Size spanSize(InlineSpan span) {
+    final p = TextPainter(
+      text: TextSpan(style: _base.style, children: [span]),
+      textDirection: _direction,
+      textScaler: scaler,
+      textHeightBehavior: _base.textHeightBehavior,
+    )..layout();
+    final s = p.size;
+    p.dispose();
+    return s;
+  }
 }
 
 /// The sizes one back of a card is set at.
@@ -887,6 +1199,10 @@ class CardReveal extends StatefulWidget {
   /// The scene, on a card that asked first and plays it with the answer.
   final Widget Function(double height)? scene;
 
+  /// Opens Why this card (why_sheet.dart), from the foot beside Go deeper;
+  /// null on a card that is not one of the day's, which has none.
+  final VoidCallback? onWhy;
+
   const CardReveal({
     super.key,
     required this.pill,
@@ -898,6 +1214,7 @@ class CardReveal extends StatefulWidget {
     this.leastLeadHeight,
     this.cornerRoom = 0,
     this.scene,
+    this.onWhy,
   });
 
   /// The answer's band. At most a fifteenth of the measure — about forty
@@ -924,17 +1241,10 @@ class CardReveal extends StatefulWidget {
 enum _Aside { none, scene, picture, working, simply, counter }
 
 class _CardRevealState extends State<CardReveal> {
-  /// A tap on the source: Go deeper (deeper_sheet.dart).
-  late final TapGestureRecognizer _sourceTap = TapGestureRecognizer()
-    ..onTap = () {
-      CardRead.of(context)?.opened('deeper');
-      GoDeeper.open?.call(context, widget.pill);
-    };
-
-  @override
-  void dispose() {
-    _sourceTap.dispose();
-    super.dispose();
+  /// A tap on the foot: Go deeper (deeper_sheet.dart).
+  void _deeper() {
+    CardRead.of(context)?.opened('deeper');
+    GoDeeper.open?.call(context, widget.pill);
   }
 
   /// What is open in the answer's place. A retelling or the other side's
@@ -1307,45 +1617,45 @@ class _CardRevealState extends State<CardReveal> {
         ),
       );
     }
-    gap(10);
-    // What kind of source it is, where the card says: a study, a book, an
-    // institution, the data itself. A reader weighs "Study · Nature" and
-    // "Book · Kahneman" differently, and should be able to.
-    final String? kind = sourceKindName(l10n, pill.sourceKind);
-    final source = kind == null
-        ? l10n.sourceLabel(pill.sourceShort)
+    // The foot: Go deeper, and where the facts come from after it, with no
+    // word Source before them (source_foot.dart). What kind of source it is
+    // stays, where the card says: a study, a book, an institution, the data
+    // itself. A reader weighs "Study · Nature" and "Book · Kahneman"
+    // differently, and should be able to. The flag that reported the card
+    // used to ride at the end of this line; it is off the card's face now,
+    // in Go deeper or the share sheet, which a drawn card reaches too. On a
+    // card of the day, Why this card is beside Go deeper here.
+    // At the tightest, the kind gives way, so Go deeper's name costs the
+    // back no line the source alone did not take.
+    final String? kind = f.tightest
+        ? null
+        : sourceKindName(l10n, pill.sourceKind);
+    final String origin = kind == null
+        ? pill.sourceShort
         : l10n.sourceLabelKind(kind, pill.sourceShort);
-    final sourceStyle = _Type.source(ink, f.source);
-    // The flag to report the card rides at the end of the source it would be
-    // checked against, so it costs the card no line of its own. Measured as a
-    // short unbreakable word, so it wraps where the flag would.
     out.add(
       _Block(
-        m.height('$source\u00A0WW', sourceStyle, width - widget.cornerRoom),
-        Padding(
-          padding: EdgeInsets.only(right: widget.cornerRoom),
-          child: Text.rich(
-            TextSpan(
-              children: [
-                // The source, a door to Go deeper: underlined in dots, so it
-                // reads as one without taking a line of the card.
-                TextSpan(
-                  text: source,
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    decorationStyle: TextDecorationStyle.dotted,
-                    decorationColor: ink.withValues(alpha: 0.35),
-                  ),
-                  recognizer: _sourceTap,
-                ),
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.middle,
-                  child: _ReportFlag(pill: pill, ink: ink, size: f.source),
-                ),
-              ],
-            ),
-            style: sourceStyle,
-          ),
+        _Foot.heightFor(
+          m,
+          ink,
+          f.source,
+          origin,
+          width,
+          widget.cornerRoom,
+          10 * g,
+          why: _Foot.carries(widget.onWhy),
+          tight: f.tight,
+        ),
+        _Foot(
+          key: ValueKey('card-foot-${pill.id}'),
+          pill: pill,
+          origin: origin,
+          size: f.source,
+          above: 10 * g,
+          corner: widget.cornerRoom,
+          onTap: _deeper,
+          onWhy: widget.onWhy,
+          tight: f.tight,
         ),
       ),
     );

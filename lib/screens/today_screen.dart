@@ -331,16 +331,28 @@ class _TodayScreenState extends State<TodayScreen> {
               // One word for one thing: a card for the reader's goal that
               // carries the mark of a skill they picked says so by the mark
               // alone, not by the mark and a line saying it again.
+              // Most cards have no line now; every one reaches the sheet all
+              // the same, from its back's foot or, with the foot being tried
+              // that says it on the front, from a line there (cardNote).
               notes: {
                 for (final MapEntry<String, CardWhy> e in whys.entries)
-                  if (e.value.kind != WhyKind.goal ||
-                      skillMarkOf(e.value.pill, app.skills) == null)
-                    if (whyLine(context.l10n, e.value) case final String line)
-                      e.key: line,
+                  if (cardNote(
+                        context.l10n,
+                        e.value,
+                        marked: skillMarkOf(e.value.pill, app.skills) != null,
+                      )
+                      case (final String line, _))
+                    e.key: line,
               },
               noteIcons: {
                 for (final MapEntry<String, CardWhy> e in whys.entries)
-                  e.key: whyIcon(e.value.kind),
+                  e.key:
+                      cardNote(
+                        context.l10n,
+                        e.value,
+                        marked: skillMarkOf(e.value.pill, app.skills) != null,
+                      )?.$2 ??
+                      whyIcon(e.value.kind),
               },
               onNote: (pill) => showWhySheet(
                 context,

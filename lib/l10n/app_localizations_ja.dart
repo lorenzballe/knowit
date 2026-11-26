@@ -1186,6 +1186,11 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return 'もっと深く。出典：$source';
+  }
+
+  @override
   String get sourceKindPaper => '研究';
 
   @override

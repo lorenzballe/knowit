@@ -1179,6 +1179,11 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return '深入了解。来源：$source';
+  }
+
+  @override
   String get sourceKindPaper => '研究';
 
   @override
