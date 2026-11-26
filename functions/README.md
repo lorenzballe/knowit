@@ -157,6 +157,13 @@ inside the free quota for invocations and a few dollars a month for
 Firestore; at a hundred thousand, a few hundred. Nothing here reads the
 whole reader base except the hourly `presence` query, which is one query.
 
+The AI (the morning's news, the questions about a card, the coach's notes)
+has one budget for all of it, set in `src/limits.ts`: $90 a month and $3 a
+day. Every call holds back the most it could cost before it is made and is
+counted after, in `ai/spend-{month}` and `ai/spend-{day}`; once either is
+spent, the news keeps the paper it has and the rest say "not available
+right now" until the day or the month turns.
+
 ## What it does not do yet
 
 - **Learn from everyone.** The profile is the reader's own doing. "Readers

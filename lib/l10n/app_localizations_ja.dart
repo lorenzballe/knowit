@@ -5933,6 +5933,52 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deeperTryAgain => '届きませんでした。少ししてからもう一度。';
 
   @override
+  String get deeperUnavailable => '今はご利用いただけません。後でもう一度お試しください。';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n媒体');
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n時間前',
+      zero: 'たった今',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n日前',
+      one: '昨日',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => '国際';
+
+  @override
+  String get newsKeyPoints => '要点';
+
+  @override
+  String get newsBehind => 'ニュースの背景';
+
+  @override
+  String get newsSources => '情報源';
+
+  @override
+  String get newsMadeFrom => 'Astuteがこれらの記事をもとに書き、記事と照らし合わせて確かめました。';
+
+  @override
   String get deeperDeclined => 'これには答えられません。';
 
   @override

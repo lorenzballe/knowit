@@ -6097,6 +6097,59 @@ class AppLocalizationsTr extends AppLocalizations {
   String get deeperTryAgain => 'Ulaşmadı. Birazdan tekrar dene.';
 
   @override
+  String get deeperUnavailable =>
+      'Şu anda kullanılamıyor. Daha sonra tekrar dene.';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n yayın',
+      one: '1 yayın',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n sa önce',
+      zero: 'Az önce',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n gün önce',
+      one: 'Dün',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => 'Dünya';
+
+  @override
+  String get newsKeyPoints => 'Öne çıkanlar';
+
+  @override
+  String get newsBehind => 'Haberin ardında';
+
+  @override
+  String get newsSources => 'Kaynaklar';
+
+  @override
+  String get newsMadeFrom =>
+      'Astute bu haberlerden yazdı ve onlarla karşılaştırarak doğruladı.';
+
+  @override
   String get deeperDeclined => 'Buna yanıt veremiyor.';
 
   @override

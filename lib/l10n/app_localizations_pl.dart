@@ -6413,6 +6413,62 @@ class AppLocalizationsPl extends AppLocalizations {
   String get deeperTryAgain => 'Nie dotarło. Spróbuj za chwilę.';
 
   @override
+  String get deeperUnavailable => 'W tej chwili niedostępne. Spróbuj później.';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n redakcji',
+      many: '$n redakcji',
+      few: '$n redakcje',
+      one: '1 redakcja',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n godz. temu',
+      zero: 'Przed chwilą',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dnia temu',
+      many: '$n dni temu',
+      few: '$n dni temu',
+      one: 'Wczoraj',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => 'Świat';
+
+  @override
+  String get newsKeyPoints => 'Najważniejsze';
+
+  @override
+  String get newsBehind => 'Co stoi za tą wiadomością';
+
+  @override
+  String get newsSources => 'Źródła';
+
+  @override
+  String get newsMadeFrom =>
+      'Napisane przez Astute na podstawie tych artykułów i z nimi sprawdzone.';
+
+  @override
   String get deeperDeclined => 'Na to nie może odpowiedzieć.';
 
   @override

@@ -1,8 +1,26 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { MAX_TEXT, MODEL, MONTH_BUDGET_USD, SHARED, SYSTEM, buildRequest, cacheKey, cardText, costOf, quizText, readAsk, readQuiz } from './ask.js';
+import type Anthropic from '@anthropic-ai/sdk';
+
+import {
+  ASK_MAX_TOKENS,
+  MAX_TEXT,
+  MODEL,
+  SHARED,
+  SYSTEM,
+  answer,
+  askWorst,
+  buildRequest,
+  cacheKey,
+  cardText,
+  costOf,
+  quizText,
+  readAsk,
+  readQuiz,
+} from './ask.js';
 import type { Card } from './bank.js';
+import { DAY_BUDGET_USD, MONTH_BUDGET_USD } from './budget.js';
 
 const card: Card = {
   id: 'thinking-base-rate',
@@ -69,13 +87,13 @@ test('a kept answer is found by its card, ask and language, and lost when the ca
   assert.notEqual(cacheKey({ ...card, answer: 'Edited.' }, ask), key);
 });
 
-test('an answer costs what its tokens cost, and the month stops near three euros', () => {
+test('an answer costs what its tokens cost, and the shared budget leaves room for many in a day', () => {
   // A typical answer: about 800 tokens in, 400 out.
   const one = costOf({ input_tokens: 800, output_tokens: 400 });
   assert.ok(Math.abs(one - 0.00028) < 1e-9);
-  assert.ok(MONTH_BUDGET_USD <= 3.5);
-  // About eleven thousand such answers fit in the month.
-  assert.ok(MONTH_BUDGET_USD / one > 10000);
+  // Ten thousand such answers fit in one day's ceiling, and ten times that in the month.
+  assert.ok(DAY_BUDGET_USD / one > 10000);
+  assert.ok(MONTH_BUDGET_USD / one > 100000);
   assert.equal(costOf({}), 0);
 });
 
@@ -106,4 +124,44 @@ test('a quiz is a question the phone can play: three options, the right one name
   // A quiz is asked alike by everyone, so it is kept.
   assert.ok(SHARED.includes('quiz'));
   assert.equal(readAsk({ card: 'thinking-base-rate', mode: 'quiz', lang: 'it' })?.mode, 'quiz');
+});
+
+/** A client that answers with [text] and stops for [stop], and keeps what it was asked. */
+function fakeClient(text: string, stop = 'end_turn') {
+  const asked: Array<Record<string, unknown>> = [];
+  const usage = { input_tokens: 900, output_tokens: 300, cache_creation_input_tokens: null, cache_read_input_tokens: null };
+  const client = {
+    messages: {
+      create: async (params: Record<string, unknown>) => {
+        asked.push(params);
+        return { content: [{ type: 'text', text }], stop_reason: stop, usage };
+      },
+    },
+  } as unknown as Anthropic;
+  return { client, asked, usage };
+}
+
+test('an answer is asked of the cheapest model at its lowest effort, without thinking, short; '
+  + 'what it used comes back for the day\'s budget', async () => {
+  const ask = readAsk({ card: card.id, mode: 'simple', lang: 'it' })!;
+  const { client, asked, usage } = fakeClient('Quasi mai: la malattia e rara.');
+  const out = await answer(client, card, ask);
+  assert.deepEqual(out, { text: 'Quasi mai: la malattia e rara.', cost: costOf(usage), usage });
+  assert.equal(asked.length, 1);
+  assert.equal(asked[0].model, MODEL);
+  assert.equal(asked[0].max_tokens, ASK_MAX_TOKENS);
+  assert.deepEqual(asked[0].thinking, { type: 'disabled' });
+  assert.deepEqual(asked[0].output_config, { effort: 'low' });
+  // Room for 120 words in any of the app's languages, and not much more.
+  assert.ok(ASK_MAX_TOKENS >= 500 && ASK_MAX_TOKENS <= 1000);
+  // The most it can cost covers what it did cost.
+  assert.ok(askWorst(card, ask) >= out.cost);
+});
+
+test('an answer cut off at the cap is not given, so it is never kept for every reader after', async () => {
+  const ask = readAsk({ card: card.id, mode: 'sides', lang: 'en' })!;
+  const { client } = fakeClient('The strongest case for is that', 'max_tokens');
+  const out = await answer(client, card, ask);
+  assert.ok('none' in out);
+  assert.equal(out.none, 'empty');
 });

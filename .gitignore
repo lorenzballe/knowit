@@ -70,3 +70,5 @@ tool/shots/paywall/
 tool/shots/purchase/
 # Explore on a phone, top to bottom (tool/explore_tour_shots.dart): looked at, not kept
 tool/shots/explore-tour/
+# Explore's latest news with a morning's paper (tool/news_shots.dart): looked at, not kept
+tool/shots/news/

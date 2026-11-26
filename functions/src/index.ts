@@ -29,6 +29,11 @@
 //   Claude (ask.ts): the card said simply, its two sides, the reader's own
 //   reasoning looked at, or their question answered; so many a day.
 //
+// Every call to the model (the news, the questions, the coach's notes) is
+// held to one budget, so much a month and so much a day (limits.ts), counted
+// in ai/spend-{month} and ai/spend-{day} (budget.ts): once either is spent,
+// nothing asks the model until it turns.
+//
 // The rules (firestore.rules) let no phone write a day, a profile or
 // Explore: what the server dealt is what the server dealt.
 
@@ -42,11 +47,12 @@ import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { onDocumentDeleted } from 'firebase-functions/v2/firestore';
 import { logger } from 'firebase-functions';
 
-import { ALL_PER_DAY, MODEL, MONTH_BUDGET_USD, PER_DAY, SHARED, answer as answerAsk, cacheKey, readAsk } from './ask.js';
+import { ALL_PER_DAY, MODEL, PER_DAY, SHARED, answer as answerAsk, askWorst, cacheKey, readAsk } from './ask.js';
 import { Bank, currentBank, dateKey, parseDate } from './bank.js';
-import { coachNote, readCoach } from './coach.js';
+import { BudgetSpent, firestoreLedger, spendDay, withinBudget, type Usage } from './budget.js';
+import { coachNote, coachWorst, readCoach } from './coach.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
-import { NEWS_LATEST_DAYS, NEWS_MODEL, NEWS_MONTH_BUDGET_USD, askModel, fetchText, makePaper } from './news.js';
+import { NEWS_LATEST_DAYS, NEWS_MODEL, askModel, fetchText, makePaper } from './news.js';
 import { search as searchBank } from './search.js';
 import { ACTIVE_DAYS, askableDate, datesToPrepare, forgetReader, pruneReader, readPlace, readReader, serveDay, serveExplore } from './serve.js';
 import { currentWithheld, runScorecard, withheld } from './scorecard.js';
@@ -95,6 +101,22 @@ export const dealDay = onCall({ enforceAppCheck: false }, async (request) => {
 /** The key the answers are asked with, kept in Secret Manager. */
 const anthropicKey = defineSecret('ANTHROPIC_API_KEY');
 
+/** What the AI may spend: one budget, so much a month and a day (limits.ts),
+ * for every call to the model, the news, the questions and the coach's notes. */
+const ledger = firestoreLedger(db);
+
+/** [call] asked within the budget, if the day and the month have room for
+ * [worst], the most the call can cost; null, and nothing asked, when not. */
+async function budgeted<T extends { usage: Usage | null }>(what: string, worst: number, call: () => Promise<T>): Promise<T | null> {
+  try {
+    return await withinBudget(ledger, spendDay(Date.now()), worst, what, call);
+  } catch (e) {
+    if (!(e instanceof BudgetSpent)) throw e;
+    logger.warn("the AI's budget is spent", { what, day: e.day });
+    return null;
+  }
+}
+
 export const askCard = onCall(
   { enforceAppCheck: false, secrets: [anthropicKey], maxInstances: 5, timeoutSeconds: 90 },
   async (request) => {
@@ -121,11 +143,8 @@ export const askCard = onCall(
     const day = today(Date.now());
     const mine = db.collection('readers').doc(uid).collection('ai').doc(day);
     const everyone = db.collection('ai').doc(day);
-    // The month's spend, kept beside the days: past the budget, no model.
-    const month = db.collection('ai').doc(`month-${day.slice(0, 7)}`);
     const allowed = await db.runTransaction(async (t) => {
-      const [m, e, spent] = await Promise.all([t.get(mine), t.get(everyone), t.get(month)]);
-      if ((spent.get('usd') ?? 0) >= MONTH_BUDGET_USD) return false;
+      const [m, e] = await Promise.all([t.get(mine), t.get(everyone)]);
       if ((m.get('n') ?? 0) >= PER_DAY || (e.get('n') ?? 0) >= ALL_PER_DAY) return false;
       t.set(mine, { n: FieldValue.increment(1) }, { merge: true });
       t.set(everyone, { n: FieldValue.increment(1) }, { merge: true });
@@ -133,8 +152,18 @@ export const askCard = onCall(
     });
     if (!allowed) throw new HttpsError('resource-exhausted', 'Enough for today.');
     try {
-      const out = await answerAsk(new Anthropic({ apiKey: anthropicKey.value() }), card, ask);
-      await month.set({ usd: FieldValue.increment(out.cost), n: FieldValue.increment(1) }, { merge: true });
+      const out = await budgeted('ask', askWorst(card, ask), () =>
+        answerAsk(new Anthropic({ apiKey: anthropicKey.value() }), card, ask),
+      );
+      if (!out) {
+        // Not the reader's doing: the question is given back, and the phone
+        // says the answers are not available right now.
+        await Promise.all([
+          mine.set({ n: FieldValue.increment(-1) }, { merge: true }),
+          everyone.set({ n: FieldValue.increment(-1) }, { merge: true }),
+        ]);
+        return { none: 'unavailable' };
+      }
       logger.info('asked', { card: ask.card, mode: ask.mode, lang: ask.lang, answered: 'text' in out, cost: out.cost });
       if (kept && 'text' in out) {
         await kept.set({ text: out.text, model: MODEL, at: FieldValue.serverTimestamp() });
@@ -165,10 +194,8 @@ export const coachWeek = onCall(
     const day = today(Date.now());
     const mine = db.collection('readers').doc(uid).collection('ai').doc(day);
     const everyone = db.collection('ai').doc(day);
-    const month = db.collection('ai').doc(`month-${day.slice(0, 7)}`);
     const allowed = await db.runTransaction(async (t) => {
-      const [m, e, spent] = await Promise.all([t.get(mine), t.get(everyone), t.get(month)]);
-      if ((spent.get('usd') ?? 0) >= MONTH_BUDGET_USD) return false;
+      const [m, e] = await Promise.all([t.get(mine), t.get(everyone)]);
       if ((m.get('n') ?? 0) >= PER_DAY || (e.get('n') ?? 0) >= ALL_PER_DAY) return false;
       t.set(mine, { n: FieldValue.increment(1) }, { merge: true });
       t.set(everyone, { n: FieldValue.increment(1) }, { merge: true });
@@ -176,8 +203,15 @@ export const coachWeek = onCall(
     });
     if (!allowed) throw new HttpsError('resource-exhausted', 'Enough for today.');
     try {
-      const out = await coachNote(new Anthropic({ apiKey: anthropicKey.value() }), ask);
-      await month.set({ usd: FieldValue.increment(out.cost), n: FieldValue.increment(1) }, { merge: true });
+      const out = await budgeted('coach', coachWorst(ask), () => coachNote(new Anthropic({ apiKey: anthropicKey.value() }), ask));
+      if (!out) {
+        // As with a question: the note is given back, not available right now.
+        await Promise.all([
+          mine.set({ n: FieldValue.increment(-1) }, { merge: true }),
+          everyone.set({ n: FieldValue.increment(-1) }, { merge: true }),
+        ]);
+        return { none: 'unavailable' };
+      }
       logger.info('coached', { week: ask.week, lang: ask.lang, answered: 'text' in out, cost: out.cost });
       if ('text' in out) {
         await kept.set({ text: out.text, model: MODEL, at: FieldValue.serverTimestamp() });
@@ -222,20 +256,25 @@ export const newsMorning = onSchedule(
     const before = await paper.get();
     const made = before.get('cards');
     if ((Array.isArray(made) && made.length > 0) || (before.get('tries') ?? 0) >= 3) return;
-    const month = db.collection('ai').doc(`news-${day.slice(0, 7)}`);
-    if (((await month.get()).get('usd') ?? 0) >= NEWS_MONTH_BUDGET_USD) {
-      logger.warn('news: the month is spent', { day });
-      return;
-    }
     await paper.set({ date: day, tries: FieldValue.increment(1) }, { merge: true });
     try {
-      const out = await makePaper(askModel(new Anthropic({ apiKey: anthropicKey.value() })), fetchText, now, day);
-      await month.set({ usd: FieldValue.increment(out.cost), n: FieldValue.increment(1) }, { merge: true });
+      const client = new Anthropic({ apiKey: anthropicKey.value() });
+      const out = await makePaper(askModel(client, { ledger, day: spendDay(now) }), fetchText, now, day);
       await paper.set(
-        { cards: out.cards, model: NEWS_MODEL, cost: FieldValue.increment(out.cost), log: out.log, at: FieldValue.serverTimestamp() },
+        {
+          cards: out.cards,
+          model: NEWS_MODEL,
+          cost: FieldValue.increment(out.cost),
+          log: out.log,
+          at: FieldValue.serverTimestamp(),
+          // A morning the AI's budget stopped before any story is not
+          // counted: the phones keep yesterday's paper, and the next hour
+          // tries again.
+          ...(out.spent && out.cards.length === 0 ? { tries: FieldValue.increment(-1) } : {}),
+        },
         { merge: true },
       );
-      logger.info('news', { day, cards: out.cards.length, cost: out.cost, log: out.log });
+      logger.info('news', { day, cards: out.cards.length, cost: out.cost, spent: out.spent, log: out.log });
     } catch (e) {
       // A key the API turns away spends nothing and says nothing about the
       // day: the hour is not counted, so a key put right makes the day's
@@ -249,11 +288,12 @@ export const newsMorning = onSchedule(
   },
 );
 
-/** The latest news, for the phone: the stories of the last two weeks'
- * papers, the newest paper first, each story once, in the bank's own shape,
- * with the day of the newest paper that has any. Explore shows them all as
- * its latest news, each subject's page its own; a build that knows only the
- * morning's paper keeps showing the cards still dealt. Open to every reader. */
+/** The latest news, for the phone: the stories of the last week's papers,
+ * the newest paper first, each story once, in the bank's own shape, with the
+ * day of the newest paper that has any. Explore shows the newest paper's
+ * front page as its latest news, each subject's page its own stories; a build
+ * that knows only the morning's paper keeps showing the cards still dealt.
+ * Open to every reader. */
 export const newsToday = onCall({ enforceAppCheck: false, maxInstances: 10, memory: '256MiB' }, async () => {
   const recent = await db.collection('news').orderBy('date', 'desc').limit(NEWS_LATEST_DAYS).get();
   let date: string | null = null;

@@ -6168,6 +6168,60 @@ class AppLocalizationsEn extends AppLocalizations {
       'It didn\'t come through. Try again in a moment.';
 
   @override
+  String get deeperUnavailable =>
+      'Not available right now. Please try again later.';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n outlets',
+      one: '1 outlet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '${n}h ago',
+      one: '1h ago',
+      zero: 'Just now',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n days ago',
+      one: 'Yesterday',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => 'World';
+
+  @override
+  String get newsKeyPoints => 'Key points';
+
+  @override
+  String get newsBehind => 'Behind the news';
+
+  @override
+  String get newsSources => 'Sources';
+
+  @override
+  String get newsMadeFrom =>
+      'Written by Astute from these reports, and checked against them.';
+
+  @override
   String get deeperDeclined => 'That\'s one it can\'t answer.';
 
   @override

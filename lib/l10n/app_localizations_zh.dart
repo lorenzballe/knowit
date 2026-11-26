@@ -5930,6 +5930,56 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deeperTryAgain => '没有送达。请稍后再试。';
 
   @override
+  String get deeperUnavailable => '暂时无法使用。请稍后再试。';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n家媒体',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n小时前',
+      zero: '刚刚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n天前',
+      one: '昨天',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => '国际';
+
+  @override
+  String get newsKeyPoints => '要点';
+
+  @override
+  String get newsBehind => '新闻背后';
+
+  @override
+  String get newsSources => '来源';
+
+  @override
+  String get newsMadeFrom => '由 Astute 根据这些报道撰写，并与报道逐一核对。';
+
+  @override
   String get deeperDeclined => '这个问题无法回答。';
 
   @override
