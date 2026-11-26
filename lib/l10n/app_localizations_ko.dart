@@ -1455,40 +1455,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get threeDone => '오늘의 3문제 · 완료';
 
   @override
-  String threeDay(int n) {
-    return '$n일째';
-  }
-
-  @override
-  String get threeOf300 => '/ 300';
-
-  @override
-  String threeCloser(int pct) {
-    return '오늘 독자의 $pct%보다 정답에 가까워요.';
-  }
-
-  @override
-  String threeFirst(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '오늘 처음 푼 $n명 중 한 명이에요.',
-      one: '오늘 첫 번째로 풀었어요.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String threeReaders(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '오늘 $n명이 참여했어요.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get threeYou => '나';
 
   @override
@@ -1854,11 +1820,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String threeStreak(int n) {
-    return '$n일';
-  }
-
-  @override
   String get threeSend => '보내기';
 
   @override
@@ -1870,18 +1831,115 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String threeShareHead(String date) {
-    return 'Astute · 오늘의 3문제 · $date';
-  }
-
-  @override
-  String threeShareScore(int score, int day) {
-    return '$score / 300 · $day일째';
-  }
-
-  @override
   String threeRowSaid(String said, String truth) {
     return '내 답 $said · 정답 $truth';
+  }
+
+  @override
+  String get fiveTitle => '오늘의 5문제';
+
+  @override
+  String get fiveSame => '오늘은 모두 같은 5문제. 약 2분.';
+
+  @override
+  String get fiveDone => '오늘의 5문제 · 완료';
+
+  @override
+  String dailyOf(int max) {
+    return '/ $max';
+  }
+
+  @override
+  String dailyPickRight(String answer) {
+    return '맞혔어요: $answer';
+  }
+
+  @override
+  String dailyPickWrong(String answer) {
+    return '아쉬워요. 정답: $answer';
+  }
+
+  @override
+  String dailyBetter(int pct, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 참여한 $n명 중 $pct%보다 잘했어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyPlayers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 지금까지 $n명이 참여했어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 처음 푼 $n명 중 한 명이에요. 아직 비교하기엔 인원이 적어요.',
+      one: '오늘 첫 번째로 풀었어요. 아직 비교하기엔 인원이 적어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dailyCounting => '오늘 참여자를 세는 중…';
+
+  @override
+  String dailyAverage(int right, int total, String avg) {
+    return '$total문제 중 $right문제를 맞혔어요. 이 문제들에서 독자는 평균 $avg문제를 맞혀요.';
+  }
+
+  @override
+  String get dailyUncounted => '지금은 오늘 참여자를 셀 수 없어요.';
+
+  @override
+  String get dailyEach => '문제별로';
+
+  @override
+  String dailyItemRight(int pct) {
+    return '오늘 참여자의 $pct%가 맞혔어요';
+  }
+
+  @override
+  String dailyItemGuess(String guess) {
+    return '오늘의 평균 추정: $guess';
+  }
+
+  @override
+  String get dailyItemFew => '아직 비교할 만큼 답이 모이지 않았어요';
+
+  @override
+  String fiveYesterday(int score) {
+    return '어제의 5문제: $score / 500.';
+  }
+
+  @override
+  String fiveShareHead(String date) {
+    return 'Astute · 오늘의 5문제 · $date';
+  }
+
+  @override
+  String threeShareHeadIn(String subject, String date) {
+    return 'Astute · 오늘의 3문제 · $subject · $date';
+  }
+
+  @override
+  String dailyShareScore(int score, int max, int day) {
+    return '$score / $max · $day일째';
+  }
+
+  @override
+  String dailyShareScoreAlone(int score, int max) {
+    return '$score / $max';
   }
 
   @override
@@ -6267,6 +6325,56 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get deeperTryAgain => '전달되지 않았어요. 잠시 후 다시 시도하세요.';
+
+  @override
+  String get deeperUnavailable => '지금은 이용할 수 없어요. 나중에 다시 시도하세요.';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n개 매체',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n시간 전',
+      zero: '방금',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일 전',
+      one: '어제',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => '국제';
+
+  @override
+  String get newsKeyPoints => '핵심';
+
+  @override
+  String get newsBehind => '뉴스의 이면';
+
+  @override
+  String get newsSources => '출처';
+
+  @override
+  String get newsMadeFrom => 'Astute가 이 기사들을 바탕으로 쓰고, 기사와 대조해 확인했어요.';
 
   @override
   String get deeperDeclined => '이건 답할 수 없어요.';

@@ -2124,7 +2124,7 @@ abstract class AppLocalizations {
   /// **'NEW'**
   String get perkNew;
 
-  /// Today's three: three shares to estimate, the same for everyone that day. A name, short.
+  /// Today's three: three questions of one subject at the top of its page in Explore, the same for everyone that day. A name, short.
   ///
   /// In en, this message translates to:
   /// **'Today\'s three'**
@@ -2136,73 +2136,43 @@ abstract class AppLocalizations {
   /// **'{n} of {total}'**
   String threeStep(int n, int total);
 
-  /// Under the Lock in button of today's three.
+  /// Under the Lock in button of a subject's three.
   ///
   /// In en, this message translates to:
   /// **'The same three for everyone today. About a minute.'**
   String get threeSame;
 
-  /// After a guess is locked in, after 'It is 9%.': what the reader said.
+  /// After a share is locked in, after 'It is 9%.': what the reader said.
   ///
   /// In en, this message translates to:
   /// **'You said {guess}.'**
   String threeYouSaid(String guess);
 
-  /// Points a guess won, out of 100.
+  /// Points an answer won, out of 100.
   ///
   /// In en, this message translates to:
   /// **'{n, plural, =0{No points} =1{+1 point} other{+{n} points}}'**
   String threePoints(int n);
 
-  /// Button: on to the next of today's three.
+  /// Button: on to the next question.
   ///
   /// In en, this message translates to:
   /// **'Next'**
   String get threeNext;
 
-  /// Button after the third guess: the day's score.
+  /// Button after the last question: the day's score.
   ///
   /// In en, this message translates to:
   /// **'See your score'**
   String get threeSeeScore;
 
-  /// Head of the result card of today's three.
+  /// Head of the result card of a subject's three.
   ///
   /// In en, this message translates to:
   /// **'Today\'s three · done'**
   String get threeDone;
 
-  /// Days in a row today's three was played, on the result card.
-  ///
-  /// In en, this message translates to:
-  /// **'Day {n}'**
-  String threeDay(int n);
-
-  /// Beside the day's score in large figures: '200 of 300'.
-  ///
-  /// In en, this message translates to:
-  /// **'of 300'**
-  String get threeOf300;
-
-  /// Where the day's score stands among the readers who played today.
-  ///
-  /// In en, this message translates to:
-  /// **'Closer than {pct}% of today\'s readers.'**
-  String threeCloser(int pct);
-
-  /// When fewer than five readers have played today.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{The first to play today.} other{One of the first {n} to play today.}}'**
-  String threeFirst(int n);
-
-  /// On the result of today's three, when the score is in the lower half of today's readers: how many played.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 reader played today.} other{{n} readers played today.}}'**
-  String threeReaders(int n);
-
-  /// Under the bar of today's readers by score that holds the reader's own score. One short word.
+  /// Under the bar of today's players by score that holds the reader's own score. One short word.
   ///
   /// In en, this message translates to:
   /// **'You'**
@@ -2622,47 +2592,155 @@ abstract class AppLocalizations {
   /// **'{move, select, baseRate{How accurate a test is, is not how likely you are} survivorship{The data you have is the data that survived} regression{Extremes drift back on their own} confirmation{Looking for a yes is not a test} anchoring{The first number said moves every number after} sampling{Who ended up in the sample decides what it can say} confounding{Something else may be causing both} counterfactual{A change means nothing without a control} multipleComparisons{Test enough things and one will pass} availability{Easy to picture is not the same as common} sunkCost{Spent is spent; only what is left can be decided} conjunction{Detail makes a story likelier and less probable} conditional{What you were told changes the odds} independence{Chance has no memory} coincidence{Rare things are common when there are many tries} exponential{Nobody has intuition for doubling} reflection{The answer that arrives first is the one to check} simpson{A whole can lean the way no part of it does} estimation{Break the unanswerable into things you can guess} computation{A problem you can actually finish} other{Reasoning}}'**
   String moveLine(String move);
 
-  /// Days in a row today's three was played, beside this week's seven days: short, it shares a line with them.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 day} other{{n} days}}'**
-  String threeStreak(int n);
-
   /// Button: send the day's score to someone.
   ///
   /// In en, this message translates to:
   /// **'Send it'**
   String get threeSend;
 
-  /// Button: open the three cards, where each answer is explained.
+  /// Button: open the cards, where each answer is explained.
   ///
   /// In en, this message translates to:
   /// **'See the why'**
   String get threeWhy;
 
-  /// Under the result: yesterday's score.
+  /// Under the result of a subject's three: yesterday's score.
   ///
   /// In en, this message translates to:
   /// **'Yesterday\'s three: {score} of 300.'**
   String threeYesterday(int score);
 
-  /// First line of the message the score is sent in.
-  ///
-  /// In en, this message translates to:
-  /// **'Astute · Today\'s three · {date}'**
-  String threeShareHead(String date);
-
-  /// Second line of the message: the score and the days in a row.
-  ///
-  /// In en, this message translates to:
-  /// **'{score} of 300 · day {day}'**
-  String threeShareScore(int score, int day);
-
-  /// On the result, under each of the three: the guess and the answer.
+  /// On the result, under a question answered with a share: the guess and the answer.
   ///
   /// In en, this message translates to:
   /// **'You said {said}. It is {truth}.'**
   String threeRowSaid(String said, String truth);
+
+  /// Today's five: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s five'**
+  String get fiveTitle;
+
+  /// Under the Lock in button of today's five.
+  ///
+  /// In en, this message translates to:
+  /// **'The same five for everyone today. About two minutes.'**
+  String get fiveSame;
+
+  /// Head of the result card of today's five.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s five · done'**
+  String get fiveDone;
+
+  /// Beside the day's score in large figures: '380 of 500'.
+  ///
+  /// In en, this message translates to:
+  /// **'of {max}'**
+  String dailyOf(int max);
+
+  /// After a pick is locked in, when it is right: the right answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Right: {answer}.'**
+  String dailyPickRight(String answer);
+
+  /// After a pick is locked in, when it is wrong: the right answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Not quite: it is {answer}.'**
+  String dailyPickWrong(String answer);
+
+  /// On the result of today's five or three: where the score stands among today's players, when it is in the upper half. Always five players or more.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, other{Better than {pct}% of today\'s {n} players.}}'**
+  String dailyBetter(int pct, int n);
+
+  /// On the result of today's five or three, when the score is in the lower half of today's players: how many have played so far.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 player today so far.} other{{n} players today so far.}}'**
+  String dailyPlayers(int n);
+
+  /// On the result, when fewer than five players have played today: too few to set the score among.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{The first to play today: too few players yet to compare.} other{One of the first {n} to play today: too few players yet to compare.}}'**
+  String dailyFirst(int n);
+
+  /// On the result, while the play is on its way to be counted.
+  ///
+  /// In en, this message translates to:
+  /// **'Counting today\'s players…'**
+  String get dailyCounting;
+
+  /// On the result, when today's players cannot be counted but the server has said how often readers get each of these cards right: the reader's right answers, and the average over all readers. avg has one decimal: '2.6'.
+  ///
+  /// In en, this message translates to:
+  /// **'You got {right} of {total} right. On these, readers get {avg} right on average.'**
+  String dailyAverage(int right, int total, String avg);
+
+  /// On the result, when today's players cannot be counted: offline, or the server not reachable.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s players can\'t be counted right now.'**
+  String get dailyUncounted;
+
+  /// Small heading over the questions on the result, each with how everybody did.
+  ///
+  /// In en, this message translates to:
+  /// **'Question by question'**
+  String get dailyEach;
+
+  /// Under one question on the result: the share of today's players who got it right.
+  ///
+  /// In en, this message translates to:
+  /// **'{pct}% of today\'s players got it right'**
+  String dailyItemRight(int pct);
+
+  /// Under a question answered with a share on the result: the average of today's players' guesses.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s average guess: {guess}'**
+  String dailyItemGuess(String guess);
+
+  /// Under one question on the result, when too few have answered it to compare.
+  ///
+  /// In en, this message translates to:
+  /// **'Too few answers yet to compare'**
+  String get dailyItemFew;
+
+  /// Under the result: yesterday's score of today's five.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday\'s five: {score} of 500.'**
+  String fiveYesterday(int score);
+
+  /// First line of the message today's five is sent in.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute · Today\'s five · {date}'**
+  String fiveShareHead(String date);
+
+  /// First line of the message a subject's three is sent in.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute · Today\'s three · {subject} · {date}'**
+  String threeShareHeadIn(String subject, String date);
+
+  /// Second line of the message: the score, the most it could be, and the days in a row.
+  ///
+  /// In en, this message translates to:
+  /// **'{score} of {max} · day {day}'**
+  String dailyShareScore(int score, int max, int day);
+
+  /// Second line of the message for a subject's three: the score and the most it could be.
+  ///
+  /// In en, this message translates to:
+  /// **'{score} of {max}'**
+  String dailyShareScoreAlone(int score, int max);
 
   /// Headline of the screen where the reader picks the skills they want to learn (Profile).
   ///
@@ -9083,6 +9161,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'It didn\'t come through. Try again in a moment.'**
   String get deeperTryAgain;
+
+  /// Go deeper and the coach's note: what is said when the AI's spending for the day or the month is spent (functions/src/limits.ts), so nothing can be asked until it turns. Polite and calm; no blame, no retry button.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available right now. Please try again later.'**
+  String get deeperUnavailable;
+
+  /// Explore's latest news: how many outlets report a story, over its headline and on its page (set in small capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 outlet} other{{n} outlets}}'**
+  String newsOutlets(int n);
+
+  /// Explore's latest news: how long ago a story's newest report came out, in hours, beside it (set in small capitals). 0 is under an hour.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Just now} =1{1h ago} other{{n}h ago}}'**
+  String newsHoursAgo(int n);
+
+  /// Explore's latest news: how long ago a story's newest report came out, in days, from one day on (set in small capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Yesterday} other{{n} days ago}}'**
+  String newsDaysAgo(int n);
+
+  /// Explore's latest news: where a story no subject fits is filed (politics, diplomacy, a conflict, a disaster), over its headline in small capitals, as a subject's name is.
+  ///
+  /// In en, this message translates to:
+  /// **'World'**
+  String get newsWorld;
+
+  /// A story of Explore's latest news, on its page: the heading over the three or four points to know (set in small capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'Key points'**
+  String get newsKeyPoints;
+
+  /// A story of Explore's latest news, on its page: the heading over the question the story raises and its answer, the reasoning behind the news (set in small capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'Behind the news'**
+  String get newsBehind;
+
+  /// A story of Explore's latest news, on its page: the heading over the list of reports it was made from, each opened in the browser (set in small capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get newsSources;
+
+  /// A story of Explore's latest news, at the foot of its page: how it was made. Plain and quiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Written by Astute from these reports, and checked against them.'**
+  String get newsMadeFrom;
 
   /// Go deeper, the sheet a tap on a card's source opens: deeperDeclined
   ///

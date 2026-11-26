@@ -14,6 +14,7 @@ import '../analytics.dart';
 import '../data/card_pages.dart';
 import '../data/card_json.dart';
 import '../data/daily.dart';
+import '../data/first_days.dart';
 import '../data/genres.dart';
 import '../data/local_cards.dart';
 import '../data/books.dart';
@@ -633,6 +634,12 @@ class AppState extends ChangeNotifier {
     pillsRead = _prefs.getInt(_kPillsRead) ?? 0;
 
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
+    // A reader not yet through the first run is new, and opens on the cards
+    // chosen for a first impression; one who was through it before this
+    // was kept is dealt as they always were.
+    final bool? opening = _prefs.getBool(_kFirstDays);
+    firstDays = opening ?? !onboarded;
+    if (opening == null) await _prefs.setBool(_kFirstDays, firstDays);
     topicWeights = _decodeWeights(_prefs.getString(_kTopicWeights));
     // One goal was all a build before kept, under a key of its own.
     goals = _keptGoals(
@@ -944,26 +951,69 @@ class AppState extends ChangeNotifier {
   /// mix as they set it and nothing else. On both, the first three days
   /// lean to the top of the mix, and a reader who has said where they live
   /// gets a card about it when one is left (docs/PLACES.md §5).
+  ///
+  /// A new reader's first three days open on the cards chosen for a first
+  /// impression instead ([dealOpening], lib/data/first_days.dart), their own
+  /// subjects first, the day's shape the same.
   Deal _deal(
     DateTime date, {
     required Set<String> exclude,
     required List<Pill> reviews,
     required int own,
-  }) => dealDay(
-    date: date,
-    topics: pickedTopics,
-    weights: profile.weightsOn(dayNumberOf(date), leanedWeights),
-    mix: topicWeights,
-    levels: dealtLevels,
-    taste: isPlus ? profile.tasteWith(taste) : profile.lean,
-    genresOff: genresOff,
-    strandsOff: strandsOff,
-    exclude: exclude,
-    reviews: isPlus ? reviews : const [],
-    own: own,
-    home: place,
-    day: dayNumberOf(date),
-  );
+  }) {
+    final int day = dayNumberOf(date);
+    final Map<String, double> weights = profile.weightsOn(day, leanedWeights);
+    final Map<String, double> lean = isPlus
+        ? profile.tasteWith(taste)
+        : profile.lean;
+    final List<Pill> due = isPlus ? reviews : const [];
+    if (firstDays && day < kOpeningDays) {
+      final Deal? opening = dealOpening(
+        date: date,
+        topics: pickedTopics,
+        claimed: profile.claimed,
+        mix: topicWeights,
+        weights: weights,
+        levels: dealtLevels,
+        taste: lean,
+        genresOff: genresOff,
+        strandsOff: strandsOff,
+        exclude: exclude,
+        reviews: due,
+        own: own,
+        home: place,
+      );
+      if (opening != null) return opening;
+    }
+    return dealDay(
+      date: date,
+      topics: pickedTopics,
+      weights: weights,
+      mix: topicWeights,
+      levels: dealtLevels,
+      taste: lean,
+      genresOff: genresOff,
+      strandsOff: strandsOff,
+      exclude: exclude,
+      reviews: due,
+      own: own,
+      home: place,
+      day: day,
+    );
+  }
+
+  /// Whether this phone's reader started on a build with the opening
+  /// (lib/data/first_days.dart): a reader whose first run was here. A
+  /// reader who was past the first run before it existed is dealt as
+  /// they always were.
+  bool firstDays = false;
+
+  static const _kFirstDays = 'knowit.firstDays';
+
+  /// Whether [date] is one of the reader's first days, which open on the
+  /// cards chosen for them: dealt on the phone, whatever the server holds,
+  /// because the server deals a first day as it deals any other.
+  bool opensOn(DateTime date) => firstDays && dayNumberOf(date) < kOpeningDays;
 
   /// Deals a fresh day and records it, so a restart resumes the same deck.
   ///
@@ -978,8 +1028,11 @@ class AppState extends ChangeNotifier {
     // what they said. It is usually on the phone already — asked for the
     // evening before, or dealt by the nightly pass and read from the
     // store's own cache — and the wait for it is bounded. Failing that, the
-    // phone deals as it always did, from the same calendar.
-    final ServedDay? served = await Served.instance.dayFor(today);
+    // phone deals as it always did, from the same calendar. A new reader's
+    // first days are the phone's: they open on the cards chosen for them.
+    final ServedDay? served = opensOn(today)
+        ? null
+        : await Served.instance.dayFor(today);
     final Set<String> dealtReviews;
     // A served day with a card about a place the reader does not live in —
     // a server older than the cards about places, or a place changed since
@@ -1025,6 +1078,22 @@ class AppState extends ChangeNotifier {
     await _prefs.setStringList(_kOwnIds, ownIdsToday.toList());
     await _noteDealt(today, todaysDeck);
     msToDeal = dealing.elapsedMilliseconds;
+    // A reader still in the first run has not reached their day, and it is
+    // dealt again from what they answer: it is said when they get there
+    // (completeOnboarding), once, as the day they are shown.
+    if (!onboarded) {
+      _dayUnsaid = true;
+      return;
+    }
+    _sayDayStarted();
+  }
+
+  /// True while a day dealt during the first run waits to be said.
+  bool _dayUnsaid = false;
+
+  /// Says the day that was just dealt, and its first card up.
+  void _sayDayStarted() {
+    _dayUnsaid = false;
     Analytics.capture('day started', {
       'cards': todaysDeck.length,
       // Who dealt it: the server, the server's copy on the phone, or the
@@ -2094,7 +2163,7 @@ class AppState extends ChangeNotifier {
   List<Pill> get tomorrowsDeck {
     final tomorrow = DateTime(today.year, today.month, today.day + 1);
     final ServedDay? kept = _servedTomorrow;
-    if (kept != null) return kept.cards;
+    if (kept != null && !opensOn(tomorrow)) return kept.cards;
     return _deal(
       tomorrow,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
@@ -2139,7 +2208,9 @@ class AppState extends ChangeNotifier {
   /// fetches the pages of its first free cards, so the morning's first card
   /// comes up drawn.
   Future<void> _askTomorrow() async {
-    if (_askingTomorrow) return;
+    // A first day's tomorrow is the opening's, dealt on the phone: there is
+    // nothing to ask for.
+    if (_askingTomorrow || opensOn(dayShift(today, 1))) return;
     _askingTomorrow = true;
     try {
       await Trace.instance.flush();
@@ -2437,7 +2508,47 @@ class AppState extends ChangeNotifier {
       'topics': pickedTopics.length,
       ...profile.facts,
     });
+    await _dealFirstMorningAgain();
+    if (_dayUnsaid) _sayDayStarted();
     notifyListeners();
+  }
+
+  /// The first morning, dealt again now that the reader has said what they
+  /// want. It was dealt when the app opened, before the first run asked
+  /// anything, so every new reader of a date met the same five whatever
+  /// they chose. Only a day not begun is dealt again, and only on the
+  /// phone: a first day is the opening's (lib/data/first_days.dart).
+  Future<void> _dealFirstMorningAgain() async {
+    if (!opensOn(today) || todayIndex > 0) return;
+    if (todaysDeck.any(
+      (p) => seenIds.contains(p.id) || answers.containsKey(p.id),
+    )) {
+      return;
+    }
+    final Stopwatch dealing = Stopwatch()..start();
+    final List<Pill> reviews = dueReviews;
+    final Deal deal = _deal(
+      today,
+      exclude: seenIds,
+      reviews: reviews,
+      own: ownCardsToday,
+    );
+    final Set<String> dealtReviews = reviews.map((p) => p.id).toSet();
+    todaysDeck = deal.cards;
+    ownIdsToday = deal.own;
+    reviewIdsToday = {
+      for (final p in todaysDeck)
+        if (dealtReviews.contains(p.id) || answers.containsKey(p.id)) p.id,
+    };
+    dealtBy = 'phone';
+    await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
+    await _prefs.setString(
+      _kDeckCards,
+      jsonEncode([for (final p in todaysDeck) cardToJson(p)]),
+    );
+    await _prefs.setStringList(_kOwnIds, ownIdsToday.toList());
+    await _noteDealt(today, todaysDeck);
+    msToDeal = dealing.elapsedMilliseconds;
   }
 
   static ThemeMode _decodeTheme(String? raw) => switch (raw) {
@@ -3492,6 +3603,9 @@ class AppState extends ChangeNotifier {
     genresOff = {};
     strandsOff = {};
     deckHistory = {};
+    // Whoever reads here next starts as a new reader does.
+    firstDays = true;
+    await _prefs.setBool(_kFirstDays, true);
     await _startNewDay();
     notifyListeners();
   }

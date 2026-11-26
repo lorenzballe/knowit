@@ -526,6 +526,7 @@ class _CoachState extends State<_Coach> {
                     AskWhyNot.tomorrow => l.deeperTomorrow,
                     AskWhyNot.declined => l.deeperDeclined,
                     AskWhyNot.plus => l.deeperPlusOnly,
+                    AskWhyNot.unavailable => l.deeperUnavailable,
                     AskWhyNot.later => l.deeperTryAgain,
                   }, style: line),
                   if (debugToolsOn && (none.detail ?? '').isNotEmpty)

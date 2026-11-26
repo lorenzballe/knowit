@@ -75,3 +75,7 @@ jobs:
         working-directory: functions
       - run: npx firebase emulators:exec --only firestore --project astuto-scorecard-test "node --test ../../functions/lib/scorecard.emulator.test.js"
         working-directory: tool/rules
+      # The day's games counted (functions/src/daily.ts): a play once, every
+      # reader into the same counts, the marks pruned.
+      - run: npx firebase emulators:exec --only firestore --project astuto-daily-test "node --test ../../functions/lib/daily.emulator.test.js"
+        working-directory: tool/rules

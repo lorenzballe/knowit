@@ -1433,27 +1433,6 @@ class RemoteLocalizations extends AppLocalizations {
   String get threeDone => _words.text('threeDone') ?? _base.threeDone;
 
   @override
-  String threeDay(int n) =>
-      _words.format('threeDay', localeName, {'n': n}) ?? _base.threeDay(n);
-
-  @override
-  String get threeOf300 => _words.text('threeOf300') ?? _base.threeOf300;
-
-  @override
-  String threeCloser(int pct) =>
-      _words.format('threeCloser', localeName, {'pct': pct}) ??
-      _base.threeCloser(pct);
-
-  @override
-  String threeFirst(int n) =>
-      _words.format('threeFirst', localeName, {'n': n}) ?? _base.threeFirst(n);
-
-  @override
-  String threeReaders(int n) =>
-      _words.format('threeReaders', localeName, {'n': n}) ??
-      _base.threeReaders(n);
-
-  @override
   String get threeYou => _words.text('threeYou') ?? _base.threeYou;
 
   @override
@@ -1732,11 +1711,6 @@ class RemoteLocalizations extends AppLocalizations {
       _base.moveLine(move);
 
   @override
-  String threeStreak(int n) =>
-      _words.format('threeStreak', localeName, {'n': n}) ??
-      _base.threeStreak(n);
-
-  @override
   String get threeSend => _words.text('threeSend') ?? _base.threeSend;
 
   @override
@@ -1748,25 +1722,117 @@ class RemoteLocalizations extends AppLocalizations {
       _base.threeYesterday(score);
 
   @override
-  String threeShareHead(String date) =>
-      _words.format('threeShareHead', localeName, {'date': date}) ??
-      _base.threeShareHead(date);
-
-  @override
-  String threeShareScore(int score, int day) =>
-      _words.format('threeShareScore', localeName, {
-        'score': score,
-        'day': day,
-      }) ??
-      _base.threeShareScore(score, day);
-
-  @override
   String threeRowSaid(String said, String truth) =>
       _words.format('threeRowSaid', localeName, {
         'said': said,
         'truth': truth,
       }) ??
       _base.threeRowSaid(said, truth);
+
+  @override
+  String get fiveTitle => _words.text('fiveTitle') ?? _base.fiveTitle;
+
+  @override
+  String get fiveSame => _words.text('fiveSame') ?? _base.fiveSame;
+
+  @override
+  String get fiveDone => _words.text('fiveDone') ?? _base.fiveDone;
+
+  @override
+  String dailyOf(int max) =>
+      _words.format('dailyOf', localeName, {'max': max}) ?? _base.dailyOf(max);
+
+  @override
+  String dailyPickRight(String answer) =>
+      _words.format('dailyPickRight', localeName, {'answer': answer}) ??
+      _base.dailyPickRight(answer);
+
+  @override
+  String dailyPickWrong(String answer) =>
+      _words.format('dailyPickWrong', localeName, {'answer': answer}) ??
+      _base.dailyPickWrong(answer);
+
+  @override
+  String dailyBetter(int pct, int n) =>
+      _words.format('dailyBetter', localeName, {'pct': pct, 'n': n}) ??
+      _base.dailyBetter(pct, n);
+
+  @override
+  String dailyPlayers(int n) =>
+      _words.format('dailyPlayers', localeName, {'n': n}) ??
+      _base.dailyPlayers(n);
+
+  @override
+  String dailyFirst(int n) =>
+      _words.format('dailyFirst', localeName, {'n': n}) ?? _base.dailyFirst(n);
+
+  @override
+  String get dailyCounting =>
+      _words.text('dailyCounting') ?? _base.dailyCounting;
+
+  @override
+  String dailyAverage(int right, int total, String avg) =>
+      _words.format('dailyAverage', localeName, {
+        'right': right,
+        'total': total,
+        'avg': avg,
+      }) ??
+      _base.dailyAverage(right, total, avg);
+
+  @override
+  String get dailyUncounted =>
+      _words.text('dailyUncounted') ?? _base.dailyUncounted;
+
+  @override
+  String get dailyEach => _words.text('dailyEach') ?? _base.dailyEach;
+
+  @override
+  String dailyItemRight(int pct) =>
+      _words.format('dailyItemRight', localeName, {'pct': pct}) ??
+      _base.dailyItemRight(pct);
+
+  @override
+  String dailyItemGuess(String guess) =>
+      _words.format('dailyItemGuess', localeName, {'guess': guess}) ??
+      _base.dailyItemGuess(guess);
+
+  @override
+  String get dailyItemFew => _words.text('dailyItemFew') ?? _base.dailyItemFew;
+
+  @override
+  String fiveYesterday(int score) =>
+      _words.format('fiveYesterday', localeName, {'score': score}) ??
+      _base.fiveYesterday(score);
+
+  @override
+  String fiveShareHead(String date) =>
+      _words.format('fiveShareHead', localeName, {'date': date}) ??
+      _base.fiveShareHead(date);
+
+  @override
+  String threeShareHeadIn(String subject, String date) =>
+      _words.format('threeShareHeadIn', localeName, {
+        'subject': subject,
+        'date': date,
+      }) ??
+      _base.threeShareHeadIn(subject, date);
+
+  @override
+  String dailyShareScore(int score, int max, int day) =>
+      _words.format('dailyShareScore', localeName, {
+        'score': score,
+        'max': max,
+        'day': day,
+      }) ??
+      _base.dailyShareScore(score, max, day);
+
+  @override
+  String dailyShareScoreAlone(int score, int max) =>
+      _words.format('dailyShareScoreAlone', localeName, {
+        'score': score,
+        'max': max,
+      }) ??
+      _base.dailyShareScoreAlone(score, max);
 
   @override
   String get skillsTitle => _words.text('skillsTitle') ?? _base.skillsTitle;
@@ -6175,6 +6241,41 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get deeperTryAgain =>
       _words.text('deeperTryAgain') ?? _base.deeperTryAgain;
+
+  @override
+  String get deeperUnavailable =>
+      _words.text('deeperUnavailable') ?? _base.deeperUnavailable;
+
+  @override
+  String newsOutlets(int n) =>
+      _words.format('newsOutlets', localeName, {'n': n}) ??
+      _base.newsOutlets(n);
+
+  @override
+  String newsHoursAgo(int n) =>
+      _words.format('newsHoursAgo', localeName, {'n': n}) ??
+      _base.newsHoursAgo(n);
+
+  @override
+  String newsDaysAgo(int n) =>
+      _words.format('newsDaysAgo', localeName, {'n': n}) ??
+      _base.newsDaysAgo(n);
+
+  @override
+  String get newsWorld => _words.text('newsWorld') ?? _base.newsWorld;
+
+  @override
+  String get newsKeyPoints =>
+      _words.text('newsKeyPoints') ?? _base.newsKeyPoints;
+
+  @override
+  String get newsBehind => _words.text('newsBehind') ?? _base.newsBehind;
+
+  @override
+  String get newsSources => _words.text('newsSources') ?? _base.newsSources;
+
+  @override
+  String get newsMadeFrom => _words.text('newsMadeFrom') ?? _base.newsMadeFrom;
 
   @override
   String get deeperDeclined =>

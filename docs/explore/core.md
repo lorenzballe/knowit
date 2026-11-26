@@ -407,9 +407,9 @@ false one, True or false and Which is bigger — then the games of bets that are
 a whole game on their own: Closer, closer; Orders of magnitude; Bet a range;
 Place your bet; Your number; then the three games of time: In order, What
 year? and Before or after?. Three full pages. Not among them: the slip and Bet
-a friend, which play nothing; Today's three, which opens Explore and whose
-three cards and crowd belong to its own section; and the bet of the day,
-Today's three with one card.
+a friend, which play nothing; Today's five and each subject's three, which
+open Explore and the subjects' pages and whose cards and crowd belong to
+their own section; and the bet of the day, one share set on the track.
 
 Every tile is one size on every page, at any text size (the largest any
 challenge's words need, up to nearly half as large again; what it asks is

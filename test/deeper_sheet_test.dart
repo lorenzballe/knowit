@@ -266,6 +266,12 @@ void main() {
       CardAsk.read({'none': 'declined'}),
       isA<AskNone>().having((n) => n.why, 'why', AskWhyNot.declined),
     );
+    // What the AI may spend is spent (functions/src/limits.ts): not available
+    // right now, said politely, with nothing to try again.
+    expect(
+      CardAsk.read({'none': 'unavailable'}),
+      isA<AskNone>().having((n) => n.why, 'why', AskWhyNot.unavailable),
+    );
     expect(
       CardAsk.read('nonsense'),
       isA<AskNone>().having((n) => n.why, 'why', AskWhyNot.later),

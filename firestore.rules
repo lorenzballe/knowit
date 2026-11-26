@@ -3,7 +3,8 @@ rules_version = '2';
 // Astute stores one document per reader, with what they did and what was
 // dealt them under it, one board per reader that a friend may look at, a
 // count per card per day of how many readers held on to it, the same count
-// kept for good, and Explore as the server assembled it. The policy: you may read and write your own, anyone signed in
+// kept for good, Explore as the server assembled it, and the day's games as
+// it counted them. The policy: you may read and write your own, anyone signed in
 // may read a board or a day's counts and add one to a count, and nothing
 // else exists.
 //
@@ -93,6 +94,14 @@ service cloud.firestore {
       match /explore/{doc} {
         allow read: if isOwner(uid);
         allow write: if false;
+      }
+
+      // The marks the server keeps of the day's games the reader played
+      // (functions/src/daily.ts), named by day and game: all that stops a
+      // play being counted twice. The phone neither reads nor writes them;
+      // a mark it could take away would be a play it could count again.
+      match /daily/{game} {
+        allow read, write: if false;
       }
 
       // What the reader said is wrong with a card: one document per card,
@@ -202,7 +211,18 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    // Today's three, across readers: one document per day the app files it,
+    // The day's games across readers, Today's five and each subject's
+    // three (functions/src/daily.ts): one document per day, game and set of
+    // cards, with how many played, how many came to each score and how each
+    // card went, and nothing about who. Counted only by the server, which
+    // judges every answer itself; read by every signed-in phone.
+    match /daily/{key} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // Today's three as builds before the five counted it, which some phones
+    // still are: one document per day the app files it,
     // one count per score in tens of points, nothing about who. A reader
     // adds one, once a day: a mark under their own id in the day's readers,
     // which cannot be there already and is never changed, read or taken

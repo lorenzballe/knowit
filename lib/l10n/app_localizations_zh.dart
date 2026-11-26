@@ -1442,40 +1442,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get threeDone => '今日三题 · 完成';
 
   @override
-  String threeDay(int n) {
-    return '第 $n 天';
-  }
-
-  @override
-  String get threeOf300 => '/ 300';
-
-  @override
-  String threeCloser(int pct) {
-    return '比今天 $pct% 的读者更接近。';
-  }
-
-  @override
-  String threeFirst(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '你是今天最早的 $n 位玩家之一。',
-      one: '你是今天第一个玩的。',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String threeReaders(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '今天有 $n 位读者参与。',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get threeYou => '你';
 
   @override
@@ -1844,11 +1810,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String threeStreak(int n) {
-    return '$n 天';
-  }
-
-  @override
   String get threeSend => '发送';
 
   @override
@@ -1860,18 +1821,115 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String threeShareHead(String date) {
-    return 'Astute · 今日三题 · $date';
-  }
-
-  @override
-  String threeShareScore(int score, int day) {
-    return '$score / 300 · 第 $day 天';
-  }
-
-  @override
   String threeRowSaid(String said, String truth) {
     return '你猜 $said，答案 $truth。';
+  }
+
+  @override
+  String get fiveTitle => '今日五题';
+
+  @override
+  String get fiveSame => '今天大家都是同样五题，约两分钟。';
+
+  @override
+  String get fiveDone => '今日五题 · 完成';
+
+  @override
+  String dailyOf(int max) {
+    return '/ $max';
+  }
+
+  @override
+  String dailyPickRight(String answer) {
+    return '答对了：$answer。';
+  }
+
+  @override
+  String dailyPickWrong(String answer) {
+    return '差一点，答案是$answer。';
+  }
+
+  @override
+  String dailyBetter(int pct, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '比今天 $n 位玩家中的 $pct% 更好。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyPlayers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天目前有 $n 位玩家。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '你是今天最早的 $n 位玩家之一：人数还太少，无法比较。',
+      one: '你是今天第一个玩的：人数还太少，无法比较。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dailyCounting => '正在统计今天的玩家…';
+
+  @override
+  String dailyAverage(int right, int total, String avg) {
+    return '$total 题中你答对了 $right 题。这几题读者平均答对 $avg 题。';
+  }
+
+  @override
+  String get dailyUncounted => '现在无法统计今天的玩家。';
+
+  @override
+  String get dailyEach => '逐题来看';
+
+  @override
+  String dailyItemRight(int pct) {
+    return '今天 $pct% 的玩家答对了';
+  }
+
+  @override
+  String dailyItemGuess(String guess) {
+    return '今天的平均估计：$guess';
+  }
+
+  @override
+  String get dailyItemFew => '回答还太少，无法比较';
+
+  @override
+  String fiveYesterday(int score) {
+    return '昨天的五题：$score / 500。';
+  }
+
+  @override
+  String fiveShareHead(String date) {
+    return 'Astute · 今日五题 · $date';
+  }
+
+  @override
+  String threeShareHeadIn(String subject, String date) {
+    return 'Astute · 今日三题 · $subject · $date';
+  }
+
+  @override
+  String dailyShareScore(int score, int max, int day) {
+    return '$score / $max · 第 $day 天';
+  }
+
+  @override
+  String dailyShareScoreAlone(int score, int max) {
+    return '$score / $max';
   }
 
   @override
@@ -6240,6 +6298,56 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get deeperTryAgain => '没有送达。请稍后再试。';
+
+  @override
+  String get deeperUnavailable => '暂时无法使用。请稍后再试。';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n家媒体',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n小时前',
+      zero: '刚刚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n天前',
+      one: '昨天',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => '国际';
+
+  @override
+  String get newsKeyPoints => '要点';
+
+  @override
+  String get newsBehind => '新闻背后';
+
+  @override
+  String get newsSources => '来源';
+
+  @override
+  String get newsMadeFrom => '由 Astute 根据这些报道撰写，并与报道逐一核对。';
 
   @override
   String get deeperDeclined => '这个问题无法回答。';

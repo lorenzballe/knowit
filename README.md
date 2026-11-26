@@ -854,6 +854,22 @@ it was a second free thing, and two free things read as one too many: the
 one way to try all five is now the trial, and the free day is the same
 from the first morning, so what Astute+ adds is there to see from the start.
 
+**The opening.** A new reader's first three days open on cards chosen by
+hand for a first impression (`lib/data/first_days.dart`): a question that
+stops you in two seconds, a big drawing on both sides, a real source,
+nothing dark. Fifteen are the three days of a reader who leaned nowhere,
+five a day, read in their order; for a reader who held some subjects above
+the rest, the best of those come first, and a subject turned off never
+comes. The day keeps its shape — three to read, two that ask, the two
+questions the reader's own on the free plan, a review on Astute+, the card
+about home — and what the opening cannot fill, the reader's own dealer
+fills, never with a card marked dark or for adults. The first morning was
+dealt when the app opened, before the first run had asked anything, so
+every new reader of a date met the same five; it is dealt again when the
+first run ends. The opening is the phone's, whatever the server holds.
+Readers who were past the first run before it existed are dealt as they
+always were.
+
 On the free plan two of the five are the reader's own —
 dealt from the mix, from the subjects and strands they kept on, at the
 level the onboarding was read to start them at (see *Reading the
