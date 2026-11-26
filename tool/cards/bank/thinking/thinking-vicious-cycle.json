@@ -26,8 +26,8 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A loop of two arrows labeled Confidence in Wrong Idea and Less Learning. A slider moves a student around the loop; each round, the student feels surer of the wrong idea and less of the correct explanation gets in."
+    "touch": "taps",
+    "label": "A student in profile, sure that humans lived with dinosaurs, stamped TRUE, faces a screen playing a clear video of the right answer. Each tap plays it again: blue specks of the explanation fly at the head, some settle in the brain, the rest bounce off a red shell of certainty that thickens each round while the TRUE stamp grows."
   },
   "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
   "reference": "https://www.youtube.com/watch?v=eVtCO84MDj8&t=398s",

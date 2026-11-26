@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A molecular strand is shown next to a copper ion. The reader drags the copper ion into the ring to watch the strand wrap into a trefoil knot. The page asks when the first synthetic knotted molecule was created."
+    "label": "A big molecular model swaying in 3D: two threads of atoms wound around two copper ions, their ends still open. The reader taps to join the ends into one loop, then to wash the copper out: the loop stays tied as a trefoil knot, and a finger can turn it. Asks when the first synthetic knotted molecule was created."
   },
   "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=1467s",

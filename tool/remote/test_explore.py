@@ -158,6 +158,12 @@ class CoreBlocksTest(unittest.TestCase):
         got = problems({"id": "a", "block": "mood", "title": "Your minutes"})
         self.assertTrue(one(got, "`title` is not a field this block reads"))
 
+    def test_the_charts_that_mislead_take_a_look_they_have(self):
+        for look in core.UNMASK_LOOKS:
+            self.assertEqual(problems({"id": "a", "block": "unmask", "look": look}), [])
+        got = problems({"id": "a", "block": "unmask", "look": "unmasked"})
+        self.assertTrue(one(got, "`look` is how the charts show their trick"))
+
     def test_a_misspelt_field_is_caught(self):
         got = problems({"id": "a", "block": "carousel", "sise": "xl", "source": {"shelf": "today"}})
         self.assertTrue(one(got, "`sise` is not a field this block reads"))

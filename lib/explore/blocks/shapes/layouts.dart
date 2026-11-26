@@ -466,7 +466,15 @@ class TwoRowsBlock extends ShapeBlock {
 /// Two columns of cards, tall and short in turn and out of step, so the
 /// shelf reads as a page rather than a grid: a month of one subject (131e),
 /// and with the mark signature its mark drawn large behind the tall ones
-/// (132b). The tall places take the longest questions.
+/// (132b).
+///
+/// Each card stands as tall as its question set whole at the top of its
+/// type, never less than two lines of it, so a long question takes more of
+/// the page and a short one less, and no card is left half empty under a
+/// question that ends halfway down it. The cards are split between the two
+/// columns so the columns come out as nearly level as they can, and are
+/// made level by what the shorter one lacks, shared among its cards; in
+/// each column the longer questions take the tall places.
 class MasonryBlock extends ShapeBlock {
   const MasonryBlock();
 
@@ -483,117 +491,245 @@ class MasonryBlock extends ShapeBlock {
     fewest: 4,
   );
 
-  static const Map<String, (double, double, double, double, EdgeInsets)>
-  _sizes = {
-    's': (200, 134, 10.5, 15, EdgeInsets.all(13)),
-    'm': (226, 150, 11, 17, EdgeInsets.all(14)),
-    'l': (250, 170, 11.5, 17.5, EdgeInsets.all(15)),
+  /// The question's type and the tile's margin, at each size.
+  static const Map<String, (double, double, EdgeInsets)> _sizes = {
+    's': (10.5, 15, EdgeInsets.all(13)),
+    'm': (11, 17, EdgeInsets.all(14)),
+    'l': (11.5, 17.5, EdgeInsets.all(15)),
   };
+
+  /// Between two cards, across and down.
+  static const double _gap = 10;
 
   @override
   Widget lay(BuildContext context, ExploreHost host, ShapeDeal deal) {
-    final (double high, double low, double min, double max, EdgeInsets pad) =
+    final (double min, double max, EdgeInsets pad) =
         _sizes[sizeOf(deal.section)]!;
     final bool mark = signatureOf(deal.section) == 'mark';
-    // An even number, laid two at a time: the left column starts tall and
-    // the right one short, and each column then turns about.
-    final List<Pill> dealt = deal.cards
+    // An even number, two columns of as many cards each.
+    final List<Pill> cards = deal.cards
         .take(deal.cards.length - deal.cards.length % 2)
         .toList();
-    final List<Pill> cards = _longestTall(dealt);
     final TileLook look = TileLook(
       outline: const RoundOutline(19),
       padding: pad,
       min: min,
       max: max,
     );
-    Widget card(Pill p, bool isTall, double tall, double short) => SizedBox(
-      height: isTall ? tall : short,
-      child: _tile(
-        host,
-        deal,
-        cards,
-        p,
-        ShapeTile(
-          pill: p,
-          look: look,
-          read: host.isRead(p),
-          behind: mark && isTall ? MarkBehind(pill: p, angle: -12) : null,
-        ),
-      ),
-    );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: LayoutBuilder(
         builder: (context, box) {
-          // The canvas's heights, or taller where a question needs it; the
-          // tall places stay as much taller than the short ones as they
-          // were drawn, so the columns stay out of step.
-          final double width = (box.maxWidth - 10) / 2;
-          double short = low;
-          double tall = high;
-          for (int i = 0; i < cards.length; i++) {
-            final double need = tileHeightFor(
-              context,
-              cards[i],
-              look,
-              width: width,
-              read: host.isRead(cards[i]),
-            );
-            if (_isTall(i)) {
-              tall = math.max(tall, need);
-            } else {
-              short = math.max(short, need);
-            }
-          }
-          tall = math.max(tall, short + high - low);
+          final double width = (box.maxWidth - _gap) / 2;
+          final List<double> stands = [
+            for (final Pill p in cards)
+              math.max(
+                tileHeightFor(
+                  context,
+                  p,
+                  look,
+                  width: width,
+                  read: host.isRead(p),
+                  atTop: true,
+                ),
+                tileLeastFor(
+                  context,
+                  p,
+                  look,
+                  width: width,
+                  read: host.isRead(p),
+                ),
+              ),
+          ];
+          final MasonryLaid laid = MasonryLaid.of(stands, gap: _gap);
+          // The order a reader meets them, top to bottom and then left to
+          // right: the order a swipe from one opened card to the next
+          // takes.
+          final List<Pill> met = [for (final int i in laid.met) cards[i]];
           Widget column(int side) => Expanded(
             child: Column(
               children: [
-                for (int i = side; i < cards.length; i += 2) ...[
-                  if (i > side) const SizedBox(height: 10),
-                  card(cards[i], _isTall(i), tall, short),
+                for (int r = 0; r < laid.columns[side].length; r++) ...[
+                  if (r > 0) const SizedBox(height: _gap),
+                  _card(
+                    host,
+                    deal,
+                    met,
+                    cards[laid.columns[side][r]],
+                    look,
+                    height: laid.heights[laid.columns[side][r]],
+                    tall: laid.tall[laid.columns[side][r]],
+                    mark: mark,
+                  ),
                 ],
               ],
             ),
           );
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [column(0), const SizedBox(width: 10), column(1)],
+            children: [
+              column(0),
+              const SizedBox(width: _gap),
+              column(1),
+            ],
           );
         },
       ),
     );
   }
 
-  /// Whether the card at [i] of the laid-out order sits in a tall place:
-  /// the left column (even places) is tall then short, the right short then
-  /// tall.
-  static bool _isTall(int i) {
-    final int row = i ~/ 2;
-    return i.isEven ? row.isEven : row.isOdd;
-  }
+  Widget _card(
+    ExploreHost host,
+    ShapeDeal deal,
+    List<Pill> shelf,
+    Pill p,
+    TileLook look, {
+    required double height,
+    required bool tall,
+    required bool mark,
+  }) => SizedBox(
+    height: height,
+    child: _tile(
+      host,
+      deal,
+      shelf,
+      p,
+      ShapeTile(
+        pill: p,
+        look: look,
+        read: host.isRead(p),
+        behind: mark && tall ? MarkBehind(pill: p, angle: -12) : null,
+      ),
+    ),
+  );
+}
 
-  /// The cards in their places, the longest questions in the tall ones and
-  /// each lot in the order it was dealt.
-  static List<Pill> _longestTall(List<Pill> cards) {
-    final int tallCount = [
-      for (int i = 0; i < cards.length; i++)
-        if (_isTall(i)) i,
-    ].length;
-    final List<Pill> byLength = [...cards]
-      ..sort((a, b) => b.question.length.compareTo(a.question.length));
-    final Set<Pill> long = byLength.take(tallCount).toSet();
-    final Iterator<Pill> tallOnes = cards.where(long.contains).iterator;
-    final Iterator<Pill> shortOnes = cards
-        .where((p) => !long.contains(p))
-        .iterator;
-    return [
-      for (int i = 0; i < cards.length; i++)
-        if (_isTall(i))
-          (tallOnes..moveNext()).current
-        else
-          (shortOnes..moveNext()).current,
+/// A masonry's cards in its two columns: which card stands where, how tall,
+/// and which stand in its tall places.
+@immutable
+class MasonryLaid {
+  const MasonryLaid._(this.columns, this.heights, this.tall, this.met);
+
+  /// The cards of each column, top to bottom, by their place in the deal:
+  /// the left column, then the right.
+  final List<List<int>> columns;
+
+  /// How tall each card stands, by its place in the deal.
+  final List<double> heights;
+
+  /// Whether each card stands in a tall place, by its place in the deal.
+  final List<bool> tall;
+
+  /// The cards in the order a reader meets them: top to bottom, then left
+  /// to right.
+  final List<int> met;
+
+  /// Cards that stand [stands] tall (as tall as their questions, an even
+  /// number of them), [gap] apart, in two columns of as many each.
+  ///
+  /// The first card dealt opens the left column; the rest are split so the
+  /// two columns come out the closest to level, the first such split in
+  /// the order dealt when two come out alike. The shorter column is then
+  /// made level, what it lacks shared among its cards. In each column the
+  /// longer cards take the tall places, which the left column starts with
+  /// and the right one ends with, out of step; each lot keeps the order it
+  /// was dealt in.
+  factory MasonryLaid.of(List<double> stands, {required double gap}) {
+    final int n = stands.length;
+    final int half = n ~/ 2;
+    List<int>? left;
+    double closest = double.infinity;
+    // Every set of the cards after the first to stand beside it.
+    void choose(int from, List<int> chosen) {
+      if (chosen.length == half) {
+        final Set<int> inLeft = chosen.toSet();
+        double l = 0, r = 0;
+        for (int i = 0; i < n; i++) {
+          if (inLeft.contains(i)) {
+            l += stands[i];
+          } else {
+            r += stands[i];
+          }
+        }
+        if ((l - r).abs() < closest - 0.01) {
+          closest = (l - r).abs();
+          left = List.of(chosen);
+        }
+        return;
+      }
+      for (int i = from; i < n; i++) {
+        choose(i + 1, [...chosen, i]);
+      }
+    }
+
+    if (half > 0) choose(1, [0]);
+    final List<int> leftIds = left ?? const [];
+    final Set<int> inLeft = leftIds.toSet();
+    final List<int> rightIds = [
+      for (int i = 0; i < n; i++)
+        if (!inLeft.contains(i)) i,
     ];
+
+    // In turn: the left column's tall places are its first, third…; the
+    // right column's its second, fourth…
+    final List<bool> tall = List<bool>.filled(n, false);
+    List<int> inTurn(List<int> ids, bool startsTall) {
+      final int tallPlaces = startsTall
+          ? (ids.length + 1) ~/ 2
+          : ids.length ~/ 2;
+      final List<int> byStand = [...ids]
+        ..sort((a, b) {
+          final int by = stands[b].compareTo(stands[a]);
+          return by != 0 ? by : a.compareTo(b);
+        });
+      final Set<int> high = byStand.take(tallPlaces).toSet();
+      for (final int i in high) {
+        tall[i] = true;
+      }
+      final Iterator<int> highs = ids.where(high.contains).iterator;
+      final Iterator<int> lows = ids.where((i) => !high.contains(i)).iterator;
+      return [
+        for (int r = 0; r < ids.length; r++)
+          if (r.isEven == startsTall)
+            (highs..moveNext()).current
+          else
+            (lows..moveNext()).current,
+      ];
+    }
+
+    final List<List<int>> columns = [
+      inTurn(leftIds, true),
+      inTurn(rightIds, false),
+    ];
+    final List<double> heights = List.of(stands);
+    final List<double> sums = [
+      for (final List<int> c in columns)
+        c.fold<double>(0, (s, i) => s + stands[i]),
+    ];
+    final double level = sums.fold<double>(0, (a, b) => math.max(a, b));
+    for (int c = 0; c < columns.length; c++) {
+      if (columns[c].isEmpty) continue;
+      final double share = (level - sums[c]) / columns[c].length;
+      for (final int i in columns[c]) {
+        heights[i] = stands[i] + share;
+      }
+    }
+
+    final List<double> tops = List<double>.filled(n, 0);
+    for (final List<int> c in columns) {
+      double top = 0;
+      for (final int i in c) {
+        tops[i] = top;
+        top += heights[i] + gap;
+      }
+    }
+    final List<int> met = [for (final List<int> c in columns) ...c]
+      ..sort((a, b) {
+        final int byTop = tops[a].compareTo(tops[b]);
+        if (byTop != 0) return byTop;
+        if (inLeft.contains(a) == inLeft.contains(b)) return a.compareTo(b);
+        return inLeft.contains(a) ? -1 : 1;
+      });
+    return MasonryLaid._(columns, heights, tall, met);
   }
 }

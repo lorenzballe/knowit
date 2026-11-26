@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two electron pictures that merge into one shared, interconnected web when tapped. The question asks why measuring one entangled electron instantly affects the other, light-years away."
+    "label": "Wave functions as clouds of dots: electrons A and B, each in its own cloud. A tap: they meet, the clouds become one, and they fly apart with that one cloud stretched light-years between them. A tap on A measures it: the whole cloud collapses at once, A is up and B down in that instant, while light from A is still on its way. Asks why measuring one entangled electron affects the other."
   },
   "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
   "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=413s",

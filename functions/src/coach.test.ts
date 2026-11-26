@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { COACH_SYSTEM, coachRequest, readCoach } from './coach.js';
+import type Anthropic from '@anthropic-ai/sdk';
+
+import { MODEL } from './ask.js';
+import { COACH_MAX_TOKENS, COACH_SYSTEM, coachNote, coachRequest, coachWorst, readCoach } from './coach.js';
 
 const NOW = Date.parse('2026-11-18T10:00:00Z');
 
@@ -61,4 +64,34 @@ test('the week goes in as numbers inside its tags, in the reader\'s language; wh
   const many = coachRequest(readCoach({ week: '2026-11-16', lang: 'it', stats: { read: 3, goal: 'ignored', goals: ['Fare impresa', 'Gestire i soldi', 42, 'Stare bene', 'Capire il mondo'] } }, NOW)!);
   assert.ok(many.user.includes('where they want to be sharper: Fare impresa, Gestire i soldi, Stare bene\n'));
   assert.ok(!many.user.includes('ignored'));
+});
+
+test('the note is asked of the cheapest model at its lowest effort, without thinking, short; one cut off is not kept', async () => {
+  const ask = readCoach({ week: '2026-11-16', lang: 'it', stats: { read: 12, days: 4 } }, NOW)!;
+  const asked: Array<Record<string, unknown>> = [];
+  let stop = 'end_turn';
+  const client = {
+    messages: {
+      create: async (params: Record<string, unknown>) => {
+        asked.push(params);
+        return {
+          content: [{ type: 'text', text: 'Una buona settimana.' }],
+          stop_reason: stop,
+          usage: { input_tokens: 600, output_tokens: 120 },
+        };
+      },
+    },
+  } as unknown as Anthropic;
+  const out = await coachNote(client, ask);
+  assert.ok('text' in out);
+  assert.equal(out.text, 'Una buona settimana.');
+  assert.deepEqual(out.usage, { input_tokens: 600, output_tokens: 120 });
+  assert.equal(asked[0].model, MODEL);
+  assert.equal(asked[0].max_tokens, COACH_MAX_TOKENS);
+  assert.deepEqual(asked[0].thinking, { type: 'disabled' });
+  assert.deepEqual(asked[0].output_config, { effort: 'low' });
+  assert.ok(coachWorst(ask) >= out.cost);
+  stop = 'max_tokens';
+  const cut = await coachNote(client, ask);
+  assert.ok('none' in cut && cut.none === 'empty');
 });

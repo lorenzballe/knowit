@@ -62,8 +62,8 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String dayRead(int n, String word) {
-    return '$n. gün · $word okundu';
+  String dayTitle(int n) {
+    return '$n. gün';
   }
 
   @override
@@ -96,12 +96,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Yarının beşlisi $when sonra açılıyor';
+    return 'Yarının beşlisi · $when sonra';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Yarının beşlisi $topic ile başlıyor, $when sonra';
+    return 'Yarın: $topic · $when sonra';
   }
 
   @override
@@ -388,6 +388,71 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String scoreLevel(String id) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'curiosity': 'Merak',
+      'observation': 'Gözlem',
+      'method': 'Yöntem',
+      'judgement': 'Muhakeme',
+      'insight': 'Kavrayış',
+      'discernment': 'Basiret',
+      'acumen': 'Feraset',
+      'other': '$id',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get levelUpTitle => 'Yeni seviye';
+
+  @override
+  String levelUpGain(String skill, String n) {
+    return 'Bu haftaki en büyük artışın: $skill, $n';
+  }
+
+  @override
+  String levelUpAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Şimdiye kadar $n yanıt.',
+      one: 'Şimdiye kadar 1 yanıt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelLabel => 'Seviye';
+
+  @override
+  String levelPointsTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$level için $n puan',
+      one: '$level için 1 puan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String levelAnswersTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$level için $n yanıt',
+      one: '$level için 1 yanıt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelTop => 'En yüksek seviye';
+
+  @override
+  String get levelShareTitle => 'Seviyeni paylaş';
+
+  @override
   String get signOutQuestion => 'Çıkış yapılsın mı?';
 
   @override
@@ -449,6 +514,46 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get yourRecord => 'Sicilin';
+
+  @override
+  String get profileTodayFive => 'Bugünün beşi';
+
+  @override
+  String profileTodayOf(int read, int of) {
+    return '$of karttan $read';
+  }
+
+  @override
+  String profileTodayToRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n okunacak',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileJourneyScores => 'Tüm puanların, hafta hafta';
+
+  @override
+  String profileInARowLabel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'gün üst üste',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileWeekTitle => 'Son 7 gün';
+
+  @override
+  String profileWeekPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: 'puan');
+    return '$_temp0';
+  }
 
   @override
   String get appearance => 'Görünüm';
@@ -1216,6 +1321,11 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return 'Derinleş. Kaynak: $source';
+  }
+
+  @override
   String get sourceKindPaper => 'Araştırma';
 
   @override
@@ -1383,40 +1493,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get threeDone => 'Bugünün üçlüsü · tamam';
-
-  @override
-  String threeDay(int n) {
-    return '$n. gün';
-  }
-
-  @override
-  String get threeOf300 => '/ 300';
-
-  @override
-  String threeCloser(int pct) {
-    return 'Yakınlıkta bugünkü okurların yüzde $pct kadarını geçtin.';
-  }
-
-  @override
-  String threeFirst(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Bugün ilk oynayan $n kişiden birisin.',
-      one: 'Bugün ilk oynayan sensin.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String threeReaders(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Bugün $n okur oynadı.',
-    );
-    return '$_temp0';
-  }
 
   @override
   String get threeYou => 'Sen';
@@ -1792,11 +1868,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String threeStreak(int n) {
-    return '$n gün';
-  }
-
-  @override
   String get threeSend => 'Gönder';
 
   @override
@@ -1808,18 +1879,116 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String threeShareHead(String date) {
-    return 'Astute · Bugünün üçlüsü · $date';
-  }
-
-  @override
-  String threeShareScore(int score, int day) {
-    return '$score / 300 · $day. gün';
-  }
-
-  @override
   String threeRowSaid(String said, String truth) {
     return 'Senin: $said. Doğrusu: $truth.';
+  }
+
+  @override
+  String get fiveTitle => 'Bugünün beşlisi';
+
+  @override
+  String get fiveSame => 'Bugün herkese aynı beş soru. Yaklaşık iki dakika.';
+
+  @override
+  String get fiveDone => 'Bugünün beşlisi · tamam';
+
+  @override
+  String dailyOf(int max) {
+    return '/ $max';
+  }
+
+  @override
+  String dailyPickRight(String answer) {
+    return 'Doğru: $answer.';
+  }
+
+  @override
+  String dailyPickWrong(String answer) {
+    return 'Tam değil: doğrusu $answer.';
+  }
+
+  @override
+  String dailyBetter(int pct, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bugünkü $n oyuncunun %$pct kadarından daha iyi.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyPlayers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bugün şimdiye kadar $n oyuncu oynadı.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Bugün ilk oynayan $n kişiden birisin: karşılaştırmak için henüz çok az oyuncu var.',
+      one: 'Bugün ilk oynayan sensin: karşılaştırmak için henüz çok az oyuncu var.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dailyCounting => 'Bugünün oyuncuları sayılıyor…';
+
+  @override
+  String dailyAverage(int right, int total, String avg) {
+    return '$total sorudan $right tanesini bildin. Okurlar bu sorularda ortalama $avg tane biliyor.';
+  }
+
+  @override
+  String get dailyUncounted => 'Bugünün oyuncuları şu an sayılamıyor.';
+
+  @override
+  String get dailyEach => 'Soru soru';
+
+  @override
+  String dailyItemRight(int pct) {
+    return 'Bugünkü oyuncuların %$pct kadarı doğru bildi';
+  }
+
+  @override
+  String dailyItemGuess(String guess) {
+    return 'Bugünün ortalama tahmini: $guess';
+  }
+
+  @override
+  String get dailyItemFew => 'Karşılaştırmak için henüz çok az yanıt var';
+
+  @override
+  String fiveYesterday(int score) {
+    return 'Dünün beşlisi: $score / 500.';
+  }
+
+  @override
+  String fiveShareHead(String date) {
+    return 'Astute · Bugünün beşlisi · $date';
+  }
+
+  @override
+  String threeShareHeadIn(String subject, String date) {
+    return 'Astute · Bugünün üçlüsü · $subject · $date';
+  }
+
+  @override
+  String dailyShareScore(int score, int max, int day) {
+    return '$score / $max · $day. gün';
+  }
+
+  @override
+  String dailyShareScoreAlone(int score, int max) {
+    return '$score / $max';
   }
 
   @override
@@ -1882,19 +2051,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Beşte beş.',
-      '6': 'Altıda altı.',
-      'other': '$n/$n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Bugün çalıştırdıkların';
-
-  @override
   String get scoreTitle => 'Astute puanı';
 
   @override
@@ -1904,11 +2060,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get scoreStart => 'İlk cevabınla başlar.';
-
-  @override
-  String scoreToday(String n) {
-    return 'bugün $n';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2422,6 +2573,23 @@ class AppLocalizationsTr extends AppLocalizations {
   String get yourJourney => 'Yolculuğun';
 
   @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days gün önceki ziyaretinden beri',
+      one: 'Dünkü ziyaretinden beri',
+      zero: 'Bugünkü son ziyaretinden beri',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return 'son ziyaretinden beri $n';
+  }
+
+  @override
   String get thePath => 'Yol';
 
   @override
@@ -2610,8 +2778,11 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'Listede henüz bir şey yok. Beğendiğin, sakladığın ya da anlattığın her kart sayılır.';
+  String get topPicksTitle => 'Vaktine değer';
+
+  @override
+  String get topPicksLine =>
+      'Okurların listesi dolana kadar Astute\'un seçtikleri';
 
   @override
   String get readMark => 'Okundu';
@@ -3908,6 +4079,59 @@ class AppLocalizationsTr extends AppLocalizations {
   String get unmaskWindow => 'Serinin tamamını göster';
 
   @override
+  String get unmaskMisleadTitle => 'Yanıltan grafikler';
+
+  @override
+  String get unmaskMisleadLine => 'Sayılar doğru. Hile çizimde.';
+
+  @override
+  String get unmaskAsk => 'Bu grafik yanıltıyor. Nasıl, görebiliyor musun?';
+
+  @override
+  String get unmaskShowTrick => 'Hileyi göster';
+
+  @override
+  String get unmaskHideTrick => 'Hileyi gizle';
+
+  @override
+  String get unmaskOriginal => 'Orijinal';
+
+  @override
+  String get unmaskCorrected => 'Düzeltilmiş';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'Eksen sıfırdan değil, $from değerinden başlıyor.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'Eksen yalnızca $low ile $high arasında; küçük bir değişim dev gibi görünüyor.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'Eksen $low ile $high arasında; gerçek bir değişim düz görünüyor.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Yalnızca $shown gösteriliyor, oysa veriler $all dönemini kapsıyor.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Adil bir ölçü yerine ham toplamları karşılaştırıyor.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'Eksen ters çevrilmiş, bu yüzden artış düşüş gibi görünüyor.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'Eksen ters çevrilmiş, bu yüzden düşüş artış gibi görünüyor.';
+
+  @override
   String get whatIfTrue => 'Ya doğruysa?';
 
   @override
@@ -4680,22 +4904,22 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String betsCloserYesMore(String v) {
-    return 'Doğru: $v değerinden fazla.';
+    return 'Bildin: $v değerinden fazla.';
   }
 
   @override
   String betsCloserYesLess(String v) {
-    return 'Doğru: $v değerinden az.';
+    return 'Bildin: $v değerinden az.';
   }
 
   @override
   String betsCloserNoMore(String v) {
-    return 'Hayır: $v değerinden fazla.';
+    return 'Bilemedin: $v değerinden fazla.';
   }
 
   @override
   String betsCloserNoLess(String v) {
-    return 'Hayır: $v değerinden az.';
+    return 'Bilemedin: $v değerinden az.';
   }
 
   @override
@@ -5278,7 +5502,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tfRules =>
-      'Doğru mu yanlış mı söyle, sonra nedenini gör. Çoğu kişi yanılıyor.';
+      'Çoğu kişinin yanıldığı iddialar. Doğru mu yanlış mı söyle, sonra nedenini oku. Muhakemeni ölçer: doğru olanı yalnızca apaçık görünenden ayırmayı.';
 
   @override
   String get inOrderTitle => 'Sırayla';
@@ -5288,13 +5512,13 @@ class AppLocalizationsTr extends AppLocalizations {
       'Kartlardan dört an, yılları gizli; onları oluş sırasına diz. Kronoloji duygunu ölçer; her açıklamanın ilk sınavı budur: neden, sonucundan önce gelir.';
 
   @override
-  String get inOrderFirst => 'En eskisine dokun';
+  String get inOrderFirst => 'İlk gelen ana dokun.';
 
   @override
-  String get inOrderNext => 'Şimdi sıradaki';
+  String get inOrderNext => 'Şimdi ondan sonra geleni.';
 
   @override
-  String get inOrderReady => 'Hepsi yerleşti. Kontrol edelim mi?';
+  String get inOrderReady => 'Hepsi yerleşti.';
 
   @override
   String get inOrderCheck => 'Sırayı kontrol et';
@@ -5320,7 +5544,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get whatYearRules =>
-      'Üç an, her birinin yılı gizli. Yılı kadranla bul: ne kadar yakınsan o kadar puan.';
+      'Üç an, yılları gizli. Her birinin yılını ayarla: ne kadar yakınsan o kadar puan, ona kadar. Olayların ne zaman olduğuna dair sezgini ölçer.';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5335,19 +5559,19 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Toplamda $n yıl saptın',
+      other: 'Toplamda $n yıl saptın.',
     );
     return '$_temp0';
   }
 
   @override
   String whatYearSaid(String guess, int points) {
-    return 'Senin cevabın: $guess · +$points';
-  }
-
-  @override
-  String whatYearExact(int points) {
-    return 'Yılı tam bildin, +$points';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: 'Senin cevabın: $guess · $points puan',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5388,7 +5612,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get beforeAfterRules =>
-      'Altı an, art arda. Her biri üstündekinden önce mi oldu, sonra mı?';
+      'Altı an, art arda. Her birinin üstündekinden önce mi sonra mı olduğunu söyle. Sıralama duygunu ölçer.';
 
   @override
   String get beforeAfterBefore => 'Önce';
@@ -5548,6 +5772,168 @@ class AppLocalizationsTr extends AppLocalizations {
   String get challengeAgain => 'Bir daha';
 
   @override
+  String get spotRules =>
+      'Dört iddia: üçü doğru, biri yanlış. Yanlış olanı bul. Sağlam bir iddiayı yalnızca doğru gibi görünenden ne kadar iyi ayırdığını ölçer.';
+
+  @override
+  String get spotAsk => 'Yanlış olduğunu düşündüğün iddiaya dokun.';
+
+  @override
+  String get biggerRules =>
+      'İki sayı, her biri bir kartın sorusunun cevabı. Daha büyük olduğunu düşündüğüne dokun. Orantı duygunu ölçer.';
+
+  @override
+  String get biggerAsk => 'Cevabı daha büyük olan karta dokun.';
+
+  @override
+  String biggerRight(String big, String small) {
+    return 'Bildin: $big, $small değerinden büyük.';
+  }
+
+  @override
+  String biggerWrong(String big, String small) {
+    return 'Bilemedin: $big, $small değerinden büyük.';
+  }
+
+  @override
+  String get closerRules =>
+      'Bir orana adım adım yaklaş: her seferinde, kalan aralığın ortasından fazla mı az mı olduğunu söyle. Tahmin yeteneğini ölçer.';
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) {
+    return 'Cevap $said: $steps adımın $right tanesi doğru.';
+  }
+
+  @override
+  String closerExactSteps(String said, int right, int steps) {
+    return 'Cevap tam olarak $said: $steps adımın $right tanesi doğru.';
+  }
+
+  @override
+  String closerStepsRight(int right, int steps) {
+    return '$steps adımın $right tanesi doğru.';
+  }
+
+  @override
+  String get magnitudeRules =>
+      'On mu, bin mi, bir milyon mu? Cevaba en yakın on kuvvetini seç. Ölçek duygunu ölçer; bu, kesin rakamlardan daha önemlidir.';
+
+  @override
+  String get rangeRules =>
+      'Tahminini belirle, sonra çevresine bir aralık koy: aralık ne kadar darsa, cevap içine düşerse o kadar çok kazandırır. Kalibrasyonunu ölçer: ne kadar bildiğini bilmeyi.';
+
+  @override
+  String rangeOption(int w, int pts) {
+    return '±$w · $pts kazandırır';
+  }
+
+  @override
+  String rangeIn(String said, int pts) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: 'Cevap $said: aralığının içinde, +$pts puan.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rangeOut(String said) {
+    return 'Cevap $said: aralığının dışında.';
+  }
+
+  @override
+  String stakeRules(int points) {
+    return 'Bir cevap seç ve günlük $points puanından ona puan yatır: doğruysa bahsin ikiye katlanır, yanlışsa kaybolur. Kararlılığını ölçer: bildiğine, yalnızca bildiğine oynamayı.';
+  }
+
+  @override
+  String stakeWon(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bildin: $n puan kazandın.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stakeLost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bilemedin: $n puan kaybettin.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get numberRules =>
+      'Düğmelerle tek bir sayı ayarla ve kilitle. Kesinliğini ölçer: tek bir sayıya bağlanman gerektiğinde ne kadar yaklaşabildiğini.';
+
+  @override
+  String tfRightIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Bildin: doğru.',
+      'other': 'Bildin: yanlış.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String tfWrongIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Bilemedin: doğru.',
+      'other': 'Bilemedin: yanlış.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String inOrderTold(int n, int of) {
+    return '$of andan $n tanesi doğru yerde.';
+  }
+
+  @override
+  String get whatYearYours => 'Senin yılın';
+
+  @override
+  String get whatYearExactly => 'Tam yılı';
+
+  @override
+  String beforeAfterRight(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Bildin: $year yılıydı, $above öncesi.',
+      'other': 'Bildin: $year yılıydı, $above sonrası.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Bilemedin: $year yılıydı, $above öncesi.',
+      'other': 'Bilemedin: $year yılıydı, $above sonrası.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAnswer => 'Cevap';
+
+  @override
+  String get challengeYouSaid => 'Senin cevabın';
+
+  @override
+  String get challengePoints => 'Puan';
+
+  @override
+  String get challengeThisRound => 'Bu tur';
+
+  @override
+  String get challengeLeftToday => 'Bugün kalan';
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, seviye $n';
   }
@@ -5563,6 +5949,9 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get todaySeeAgainHint =>
       'Bugünün kartları yeniden, tam boyutta, ilkinden başlayarak';
+
+  @override
+  String get yourFiveFromToday => 'Bugünkü beş kartın';
 
   @override
   String get tuneTitle => 'Karışımını ayarla';
@@ -5589,6 +5978,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tuneSave => 'Kaydet';
 
   @override
+  String get tuneHoldHint =>
+      'İçindeki küçük konuları açmak için bir türe basılı tut';
+
+  @override
   String get shareDayTitle => 'Gününü paylaş';
 
   @override
@@ -5606,7 +5999,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get shareDayHeadline => 'Bugünün beşi';
 
   @override
-  String get shareFormatPost => 'Gönderi';
+  String get shareFormatCover => 'Kapak';
+
+  @override
+  String get shareFormatList => 'Liste';
 
   @override
   String get shareFormatStory => 'Hikâye';
@@ -5814,9 +6210,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Alışkanlıkların';
-
-  @override
-  String get journeyChapterMemory => 'Aklında kalanlar';
 
   @override
   String get journeyChapterCoach => 'Koçun';
@@ -6097,6 +6490,59 @@ class AppLocalizationsTr extends AppLocalizations {
   String get deeperTryAgain => 'Ulaşmadı. Birazdan tekrar dene.';
 
   @override
+  String get deeperUnavailable =>
+      'Şu anda kullanılamıyor. Daha sonra tekrar dene.';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n yayın',
+      one: '1 yayın',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n sa önce',
+      zero: 'Az önce',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n gün önce',
+      one: 'Dün',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => 'Dünya';
+
+  @override
+  String get newsKeyPoints => 'Öne çıkanlar';
+
+  @override
+  String get newsBehind => 'Haberin ardında';
+
+  @override
+  String get newsSources => 'Kaynaklar';
+
+  @override
+  String get newsMadeFrom =>
+      'Astute bu haberlerden yazdı ve onlarla karşılaştırarak doğruladı.';
+
+  @override
   String get deeperDeclined => 'Buna yanıt veremiyor.';
 
   @override
@@ -6200,11 +6646,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get bookRecommendedBy => 'Önerenler';
 
   @override
-  String bookPickPhoto(String credit) {
-    return 'Fotoğraf: $credit';
-  }
-
-  @override
   String get bookFreeThisWeek => 'Bu hafta ücretsiz';
 
   @override
@@ -6236,4 +6677,82 @@ class AppLocalizationsTr extends AppLocalizations {
   String bookRetold(String title, String author) {
     return '$author imzalı $title kitabının fikirleri, Astute\'un kendi sözleriyle. Kitabın tamamı için kitapçına bak.';
   }
+
+  @override
+  String get foundersTitle => 'Kurucular ne okuyor';
+
+  @override
+  String founderBookCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kitap',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get founderTheirBooks => 'Önerdiği kitaplar';
+
+  @override
+  String founderAbout(String name) {
+    return 'Bunlar $name adlı kişinin herkesin önünde önerdiği kitaplar; alıntılanan sözler ve söylendiği yerle birlikte. $name ile Astute arasında hiçbir bağ yok.';
+  }
+
+  @override
+  String founderPhoto(String author, String licence) {
+    return 'Fotoğraf: $author, $licence, Wikimedia Commons, kırpıldı';
+  }
+
+  @override
+  String founderAlso(String names) {
+    return 'Ayrıca önerenler: $names';
+  }
+
+  @override
+  String get firstCardTitle => 'İlk kartın';
+
+  @override
+  String get firstCardSwipeOn => 'Devam etmek için kaydır';
+
+  @override
+  String get trialOfferTitle => 'Astute+’ın tamamını dene.';
+
+  @override
+  String get trialOfferMark => 'Astute+';
+
+  @override
+  String get trialOfferLine => 'Bugünün beş kartı her durumda seni bekliyor.';
+
+  @override
+  String get trialStepToday => 'Bugün';
+
+  @override
+  String get trialStepTodayLine =>
+      'Astute+’ın tamamı açılır. Hiçbir şey ödemezsin.';
+
+  @override
+  String trialStepDay(int day) {
+    return '$day. gün';
+  }
+
+  @override
+  String trialStepReminderLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Sana bir bildirim göndeririz: $days gün kaldı.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialStepChargeLine =>
+      'Her yıl yenilenir. En az 24 saat önce iptal edersen hiçbir şey ödemezsin.';
+
+  @override
+  String get trialOfferStart => 'Ücretsiz denemeyi başlat';
+
+  @override
+  String get trialOfferFree => 'Ücretsiz devam et';
 }

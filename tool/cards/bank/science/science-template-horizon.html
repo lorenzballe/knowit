@@ -1,171 +1,240 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-template-horizon -->
 <title>Astute free card: the template horizon</title>
+<!-- A hill cut open, its rock in layers bowed like a bowl. Drawn one layer at a time, each from its own
+     clues, the section comes out patchy: layers swell, thin and break off, the red sandstone among them.
+     The reader draws the key layer first, one line through its three red dots (two outcrops and the
+     bottom of a borehole): the template horizon. Their line settles on it, and every other layer is
+     built out from it, the same thickness all along, so the layers stay continuous and consistent
+     (Geopop's course on drawing geological cross-sections: draw the template horizon first, then the
+     rest from it). -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#sec{flex:1;min-height:0;width:100%;display:block}
-#ctrl{display:flex;flex-direction:column;gap:.8cqh}
-#scrub{width:100%;accent-color:var(--k);height:max(3.6cqh,24px);margin:0;cursor:pointer}
-#steps{display:flex;justify-content:space-between;font:700 max(1.5cqh,12px)/1.2 var(--mono);color:var(--muted)}
-#steps span.on{color:var(--k)}
-#cap{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);min-height:2.6em;margin:0;overflow-wrap:anywhere}
-#why{display:flex;flex-direction:column;gap:.6cqh}
-#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0}
-.lab{font-family:var(--body);font-weight:800}
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#sec{display:block;width:100%;flex:1;min-height:0;touch-action:none;cursor:crosshair;user-select:none;-webkit-user-select:none}
+#why{font:500 max(1.9cqh,12.5px)/1.34 var(--body);margin:0}
+@container (max-height:520px){#why{display:none}}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Scrub · step by step">
+<article class="card" id="card" data-topic="science" data-kind="Draw it · one line">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
     <h2 class="q">What is a ‘template horizon’ in drawing a geological cross-section?</h2>
     <div class="stagebox" id="stage">
-      <svg id="sec" aria-label="A geological cross-section built step by step"></svg>
-      <div id="ctrl">
-        <input data-drag id="scrub" type="range" min="0" max="400" value="0" step="1" aria-label="Step through the construction">
-        <div id="steps"><span class="on">START</span><span>1</span><span>2</span><span>3</span><span>4</span></div>
-      </div>
-      <p id="cap">A blank section: only the ground surface is known.</p>
-      <div id="why" class="gone">
-        <p class="body">The template horizon is a key layer, like a particular sandstone or limestone, found more or less across the whole section.</p>
-        <p class="body">You draw it first. Every other horizon is then built from it, so the layers stay continuous and consistent.</p>
-      </div>
+      <svg id="sec" data-drag role="img" aria-label="A hill cut open into a cross-section, its rock in layers bowed like a bowl. Drawn one layer at a time, the layers swell, thin and break off, the red sandstone too. Three red dots mark where the red layer is known: two outcrops and the bottom of a borehole."></svg>
     </div>
-    <p class="say" id="say">Drag the slider to build the section, step by step.</p>
+    <p class="say" id="say">Drawn layer by layer, it comes out patchy. Draw the key layer first: one line through the three red dots.</p>
+    <p class="body gone" id="why">The template horizon is a key layer, like a particular sandstone, found across most of the section. Drawn first, it guides every other horizon, so the layers stay continuous and consistent.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Draw one key layer first, and let it guide all the rest.</div>
     <div class="foot"><span class="src">Source · Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const CAPS = [
-  'A blank section: only the ground surface is known.',
-  'Step 1 · Split the section into domains, one per formation, in simple colours.',
-  'Step 2 · Put on all the data you have: where layers reach the surface, and how they dip.',
-  'Step 3 · Draw the template horizon: the key layer, present across most of the section. It goes first.',
-  'Step 4 · Now draw every other horizon, guided by the template.'
-];
-const FILLS = ['#e9d3a3', '#d98f5f', '#f0c35a', '#8fb3c8', '#a9c38c'];
-const TPL = 1; // index of the template horizon
-let G = null, done = false, lastStep = -1;
-const svg = Kit.$('sec');
-const clamp = v => Math.max(0, Math.min(1, v));
+const INK = '#10100c', RED = '#d9483b', GRASS = '#2fae5f', LEAF = '#1d8a4a';
+// The rocks, youngest at the top: three over the red sandstone, three under it.
+const ROCK = ['#f8e7b5', '#efcb83', '#bfc98d', '#e9b679', RED, '#c79a7b', '#a8836d', '#8a6a5c'];
+const OFF = [-3, -2, -1, 0, 1, 2, 3];               // the horizons, in layers from the template
+const T0 = 3;                                       // the template horizon among them: the red layer's top
+const KEY = 4;                                      // the red layer, under it
+const N = 120;
+// Each horizon's share of the way from patchy (0) to built (1).
+const mix = Object.fromEntries(OFF.map((_, h) => [h, 0]));
+let G = null, drawn = false, built = false, stroke = [], drawing = false;
 
-Kit.onShow.card = () => {
-  const {W, H, f} = Kit.fitSvg(svg);
+// The ground line, and the template horizon a bowl under the hill, its rim at the surface on both flanks.
+const hill = u => .2 - .13 * Math.exp(-(((u - .55) / .25) ** 2));
+const topY = u => hill(u) + .012 * Math.sin(u * 19);
+const tplY = u => hill(u) + .41 * (1 - ((u - .5) / .43) ** 2);
+// Where each horizon strays, drawn on its own: a wave of its own, in layers, around its true place.
+const stray = (h, u) => .62 * Math.sin(6.283 * (u * [1.6, 2.1, 1.4, 0, 1.8, 1.3, 2.3][h] + [.15, .62, .3, 0, .48, .85, .05][h])) + .22 * Math.sin(6.283 * (u * 3.4 + h * .41));
+
+function build() {
+  const svg = Kit.$('sec');
   svg.innerHTML = '';
-  const top = x => H * .2 + H * .045 * Math.sin(x / W * 5 + 1) + H * .02 * Math.sin(x / W * 13);
-  const A = H * .11;
-  const hy = (i, x) => H * (.33 + .14 * i) + A * Math.sin(x / W * Math.PI * 2 + .6);
-  const xs = []; for (let x = 0; x <= W + .1; x += Math.max(2, W / 160)) xs.push(Math.min(x, W));
-  const line = fn => xs.map((x, j) => (j ? 'L' : 'M') + x.toFixed(1) + ',' + fn(x).toFixed(1)).join('');
-  const N = 4;
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12.5, Math.min(15, f * .92));
+  const sky = Math.max(fs * 2.6, H * .1);           // room over the hill for its trees and the rig
+  const hs = H - sky;                               // the section's height, under the sky
+  const X = u => u * W, Ysurf = u => sky + topY(u) * hs, Ytpl = u => sky + tplY(u) * hs;
+  const lt = hs * .1;                               // one layer's thickness, built
+  const us = Array.from({length: N}, (_, i) => i / (N - 1));
+  const surf = us.map(u => [X(u), Ysurf(u)]);
+  const line = pts => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('');
+  const r = Math.min(16, W * .045);
 
-  const defs = Kit.mk('defs', {}, svg);
-  const cp = Kit.mk('clipPath', {id: 'ground'}, defs);
-  Kit.mk('path', {d: line(top) + `L${W},${H}L0,${H}Z`}, cp);
+  // Where the template horizon reaches the surface: its two outcrops.
+  const diff = us.map(u => Ytpl(u) - Ysurf(u)), cross = [];
+  for (let i = 1; i < N; i++) if ((diff[i - 1] < 0) !== (diff[i] < 0)) cross.push(us[i - 1] + diff[i - 1] / (diff[i - 1] - diff[i]) * (us[i] - us[i - 1]));
+  const uA = cross[0] ?? .07, uB = cross[cross.length - 1] ?? .93, uH = .72;
+  const pts = [[X(uA), Ysurf(uA)], [X(uH), Ytpl(uH)], [X(uB), Ysurf(uB)]];
 
-  // ground (blank)
-  Kit.mk('path', {d: line(top) + `L${W},${H}L0,${H}Z`, fill: 'color-mix(in srgb,var(--k) 7%,transparent)'}, svg);
-  // domains
-  const dom = Kit.mk('g', {'clip-path': 'url(#ground)', opacity: 0}, svg);
-  for (let k = 0; k <= N; k++) {
-    const upper = k === 0 ? (x => 0) : (x => hy(k - 1, x));
-    const lower = k === N ? (x => H) : (x => hy(k, x));
-    const d = line(upper) + xs.slice().reverse().map(x => 'L' + x.toFixed(1) + ',' + lower(x).toFixed(1)).join('') + 'Z';
-    Kit.mk('path', {d, fill: FILLS[k]}, dom);
-  }
-  // other horizons
-  const others = [];
-  const hg = Kit.mk('g', {'clip-path': 'url(#ground)'}, svg);
-  for (let i = 0; i < N; i++) {
-    if (i === TPL) continue;
-    const p = Kit.mk('path', {d: line(x => hy(i, x)), fill: 'none', stroke: '#1d1a17', 'stroke-width': Math.max(2, H * .006), 'stroke-linecap': 'round'}, hg);
-    others.push(p);
-  }
-  // template horizon
-  const tpl = Kit.mk('path', {d: line(x => hy(TPL, x)), fill: 'none', stroke: '#c8281e', 'stroke-width': Math.max(4.5, H * .014), 'stroke-linecap': 'round'}, hg);
-  // topography
-  Kit.mk('path', {d: line(top), fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2.5, H * .008), 'stroke-linejoin': 'round'}, svg);
-  // data: outcrops with dip ticks
-  const data = Kit.mk('g', {opacity: 0}, svg);
-  const dots = [];
-  for (let i = 0; i < N; i++) {
-    for (let j = 1; j < xs.length; j++) {
-      const a = hy(i, xs[j - 1]) - top(xs[j - 1]), b = hy(i, xs[j]) - top(xs[j]);
-      if (a * b < 0) {
-        const x = xs[j - 1] + (xs[j] - xs[j - 1]) * a / (a - b), y = top(x);
-        if (x < W * .04 || x > W * .96) continue;
-        const s = (hy(i, x + 1) - hy(i, x - 1)) / 2, L = H * .06, n = Math.hypot(1, s);
-        const g = Kit.mk('g', {}, data);
-        Kit.mk('line', {x1: x, y1: y, x2: x + L / n * (s > 0 ? 1 : -1) * 1, y2: y + Math.abs(L * s / n), stroke: 'var(--k)', 'stroke-width': Math.max(2.5, H * .008), 'stroke-linecap': 'round'}, g);
-        Kit.mk('circle', {cx: x, cy: y, r: Math.max(4, H * .013), fill: 'var(--k)'}, g);
-        dots.push(g);
-      }
-    }
-  }
-  // labels
-  const fs = Math.max(13, f);
-  const topLab = Kit.mk('text', {x: W * .03, y: Math.max(fs, top(W * .03) - fs * .7), class: 'lab', 'font-size': fs, fill: 'var(--k)'}, svg);
-  topLab.textContent = 'Ground surface';
-  const lx = W * .5;
-  const ly = hy(TPL, lx) + fs * 1.5;
-  const tlab = Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'middle', class: 'lab', 'font-size': fs * 1.05, fill: '#fff', stroke: '#c8281e', 'stroke-width': fs * .45, 'paint-order': 'stroke', 'stroke-linejoin': 'round', opacity: 0}, svg);
-  tlab.textContent = 'TEMPLATE HORIZON';
+  // Every horizon twice: built, the same distance from the template all along; and patchy, drawn one
+  // at a time, each straying on its own, the template too between its three known points. Where one
+  // would cross its neighbour it stops at it: that layer thins to nothing there.
+  const wander = u => (u - uA) * (u - uH) * (u - uB) / .085 * lt;
+  const clean = OFF.map(k => us.map(u => Ytpl(u) + k * lt));
+  const rough = OFF.map(() => us.map(() => 0));
+  us.forEach((u, j) => {
+    rough[T0][j] = Ytpl(u) + wander(u);
+    for (let h = T0 + 1; h < OFF.length; h++) rough[h][j] = Math.max(rough[h - 1][j], clean[h][j] + lt * stray(h, u));
+    for (let h = T0 - 1; h >= 0; h--) rough[h][j] = Math.min(rough[h + 1][j], clean[h][j] + lt * stray(h, u));
+  });
 
-  const tl = tpl.getTotalLength();
-  tpl.setAttribute('stroke-dasharray', tl); 
-  const ol = others.map(p => { const l = p.getTotalLength(); p.setAttribute('stroke-dasharray', l); return l; });
-  G = {dom, data, dots, tpl, tl, others, ol, tlab};
-  render(+Kit.$('scrub').value);
-};
+  const g = Kit.mk('g', {}, svg);
+  const defs = Kit.mk('defs', {}, g);
+  const clip = Kit.mk('clipPath', {id: 'ground'}, defs);
+  Kit.mk('path', {d: line(surf) + ` L${W},${H - r} Q${W},${H} ${W - r},${H} H${r} Q0,${H} 0,${H - r} Z`}, clip);
+  const ground = Kit.mk('g', {'clip-path': 'url(#ground)'}, g);
+  const bands = ROCK.map(c => Kit.mk('path', {fill: c}, ground));
+  const seams = OFF.map(() => Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.5, opacity: .5, 'stroke-linejoin': 'round'}, ground));
 
-function render(v) {
-  if (!G) return;
-  const s = v / 100;
-  G.dom.setAttribute('opacity', (clamp(s) * .9).toFixed(3));
-  const d = clamp(s - 1);
-  G.data.setAttribute('opacity', d > 0 ? 1 : 0);
-  G.dots.forEach((g, i) => g.setAttribute('opacity', clamp(d * G.dots.length - i * .8).toFixed(3)));
-  const t = clamp((s - 2) * 1.15);
-  G.tpl.setAttribute('stroke-dashoffset', (G.tl * (1 - t)).toFixed(1));
-  G.tlab.setAttribute('opacity', clamp((s - 2.6) * 3).toFixed(3));
-  const o = clamp(s - 3);
-  G.others.forEach((p, i) => p.setAttribute('stroke-dashoffset', (G.ol[i] * (1 - clamp(o * 1.6 - i * .3))).toFixed(1)));
+  // The borehole: its core in the colours it went through, down past the red sandstone.
+  const bx = X(uH), by0 = Ysurf(uH), by1 = Ytpl(uH) + lt * 1.6, bw = Math.max(7, W * .022);
+  const core = Kit.mk('g', {}, ground);
+  for (let i = 0; i < ROCK.length; i++) {
+    const a = Math.max(by0, i === 0 ? -1e9 : Ytpl(uH) + OFF[i - 1] * lt), b = Math.min(by1, i === OFF.length ? 1e9 : Ytpl(uH) + OFF[i] * lt);
+    if (b > a) Kit.mk('rect', {x: bx - bw / 2, y: a, width: bw, height: b - a, fill: ROCK[i]}, core);
+  }
+  Kit.mk('rect', {x: bx - bw / 2, y: by0, width: bw, height: by1 - by0, fill: 'none', stroke: INK, 'stroke-width': 2}, core);
 
-  const step = Math.min(4, Math.floor(s + .02));
-  if (step !== lastStep) {
-    lastStep = step;
-    Kit.$('cap').textContent = CAPS[step];
-    [...Kit.$('steps').children].forEach((e, i) => e.classList.toggle('on', i <= step));
-    Kit.haptic('selection');
-  }
-  if (v >= 395 && !done) {
-    done = true; Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-    if (!Kit.calm) gsap.from('#why .body', {opacity: 0, y: 8, stagger: .12, duration: .4, ease: 'power3.out'});
-  } else if (v < 380 && done) {
-    done = false; Kit.show('cap'); Kit.show('say'); Kit.hide('why'); Kit.hide('keep');
-  }
+  const ink = Kit.mk('path', {d: '', fill: 'none', stroke: RED, 'stroke-width': Math.max(5, fs * .42), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+
+  // The ground line and the hill's rim, over the rock.
+  Kit.mk('path', {d: line(surf), fill: 'none', stroke: GRASS, 'stroke-width': Math.max(5, fs * .38), 'stroke-linejoin': 'round'}, g);
+  Kit.mk('path', {d: line(surf.map(([x, y]) => [x, y - Math.max(2.5, fs * .19)])), fill: 'none', stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, g);
+  Kit.mk('path', {d: `M0,${surf[0][1] - 2} V${H - r} Q0,${H} ${r},${H} H${W - r} Q${W},${H} ${W},${H - r} V${surf[N - 1][1] - 2}`, fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, g);
+
+  // On the hill: trees, the drilling rig over its borehole, the geologist by the first outcrop.
+  const land = Kit.mk('g', {}, g);
+  const th = Math.min(sky * .9, hs * .2);
+  [[.27, .9], [.37, 1], [.47, .85], [.86, .8]].forEach(([u, k]) => tree(land, X(u), Ysurf(u) - 2, th * k));
+  rig(land, bx, by0 - 2, th * 1.15);
+  person(land, X(uA) + Math.max(fs * 1.3, W * .05), Ysurf(uA + .045) - 1, th * .78);
+
+  // The three red dots, where the reader's line has to pass.
+  const dots = Kit.mk('g', {opacity: drawn ? 0 : 1}, g);
+  const rd = Math.max(5.5, fs * .45);
+  pts.forEach(([x, y]) => Kit.mk('circle', {cx: x, cy: y, r: rd, fill: RED, stroke: INK, 'stroke-width': 2.2}, dots));
+
+  // The words, once it is built, left of the borehole: the template horizon in its red layer, the rest over it.
+  const words = Kit.mk('g', {opacity: built ? 1 : 0}, g);
+  const lu = .37, lx = X(lu);
+  pill(words, lx, Ytpl(lu) + lt * .5 + fs * .36, '1 · Template horizon', fs, RED, '#fff');
+  pill(words, lx, Ytpl(lu) - lt * 1.5 + fs * .36, '2 · The rest, from it', fs, '#fff8e6', INK);
+
+  G = {svg, W, H, f, fs, us, X, Ytpl, Ysurf, uA, uB, uH, pts, lt, clean, rough, bands, seams, ink, dots, words, line, bold: Math.max(3.2, fs * .26)};
+  paint();
 }
-Kit.$('scrub').addEventListener('input', e => render(+e.target.value));
 
+// The layers as they stand: each horizon its share of the way from patchy to built.
+function paint() {
+  if (!G) return;
+  const {us, X, clean, rough, bands, seams, line, H} = G;
+  const hz = OFF.map((k, h) => us.map((u, j) => [X(u), rough[h][j] + (clean[h][j] - rough[h][j]) * mix[h]]));
+  for (let i = 0; i < bands.length; i++) {
+    const upper = i === 0 ? us.map(u => [X(u), -2]) : hz[i - 1];
+    const lower = i === OFF.length ? us.map(u => [X(u), H + 2]) : hz[i];
+    bands[i].setAttribute('d', line(upper) + lower.slice().reverse().map(p => `L${p[0].toFixed(1)},${p[1].toFixed(1)}`).join('') + 'Z');
+  }
+  hz.forEach((p, h) => seams[h].setAttribute('d', line(p)));
+  // The template horizon, once built, is the one line drawn in full ink.
+  seams[T0].setAttribute('stroke-width', (1.5 + (G.bold - 1.5) * mix[T0]).toFixed(2));
+  seams[T0].setAttribute('opacity', (.5 + .5 * mix[T0]).toFixed(2));
+}
+
+// A label in a pill, centred at x, its words' baseline at y.
+function pill(g, x, y, text, size, fill, color) {
+  const t = Kit.mk('text', {x, y, 'text-anchor': 'middle', 'font-size': size, 'font-weight': 800, fill: color, 'font-family': 'Figtree, sans-serif'}, g);
+  t.textContent = text;
+  let w = text.length * size * .52; try { w = t.getComputedTextLength(); } catch (_) {}
+  const px = size * .6, h = size * 1.55;
+  g.insertBefore(Kit.mk('rect', {x: x - w / 2 - px, y: y - size * 1.08, width: w + 2 * px, height: h, rx: h / 2, fill, stroke: INK, 'stroke-width': 2}, g), t);
+}
+function tree(g, x, y, h) {
+  const at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'};
+  Kit.mk('rect', Object.assign({x: x - h * .06, y: y - h * .45, width: h * .12, height: h * .45, fill: '#9a6a43'}, at), g);
+  Kit.mk('circle', Object.assign({cx: x, cy: y - h * .66, r: h * .3, fill: LEAF}, at), g);
+}
+// A drilling rig: a tower of two legs and braces, a lamp at its top.
+function rig(g, x, y, h) {
+  const at = {stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', fill: 'none'};
+  const w = h * .42;
+  Kit.mk('path', Object.assign({d: `M${x - w / 2},${y} L${x - w * .1},${y - h} L${x + w * .1},${y - h} L${x + w / 2},${y} M${x - w * .38},${y - h * .3} L${x + w * .2},${y - h * .62} M${x + w * .38},${y - h * .3} L${x - w * .2},${y - h * .62}`}, at), g);
+  Kit.mk('rect', {x: x - w * .14, y: y - h * 1.08, width: w * .28, height: h * .1, fill: '#ffd23d', stroke: INK, 'stroke-width': 2}, g);
+}
+// The geologist: a small figure in a hat, a hammer raised.
+function person(g, x, y, h) {
+  const u = h / 10, at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  Kit.mk('path', Object.assign({d: `M${x - u},${y - 3.4 * u} L${x - 1.3 * u},${y} M${x + u},${y - 3.4 * u} L${x + 1.3 * u},${y}`, fill: 'none', 'stroke-width': 2.4}, at), g);
+  Kit.mk('path', Object.assign({d: `M${x + 1.6 * u},${y - 6.5 * u} L${x + 3.2 * u},${y - 8.4 * u}`, fill: 'none', 'stroke-width': 2.4}, at), g);
+  Kit.mk('path', Object.assign({d: `M${x + 2.4 * u},${y - 9.2 * u} L${x + 4.2 * u},${y - 7.8 * u}`, fill: 'none', 'stroke-width': 3.2}, at), g);
+  Kit.mk('path', Object.assign({d: `M${x - 2.4 * u},${y - 3 * u} L${x - 1.8 * u},${y - 7 * u} Q${x},${y - 7.8 * u} ${x + 1.8 * u},${y - 7 * u} L${x + 2.4 * u},${y - 3 * u} Z`, fill: '#ff8a3d'}, at), g);
+  Kit.mk('circle', Object.assign({cx: x, cy: y - 8.7 * u, r: 1.4 * u, fill: '#f2c29b'}, at), g);
+  Kit.mk('path', Object.assign({d: `M${x - 2.2 * u},${y - 9.4 * u} H${x + 2.2 * u} M${x - 1.3 * u},${y - 9.4 * u} Q${x},${y - 11.6 * u} ${x + 1.3 * u},${y - 9.4 * u} Z`, fill: '#ffd23d'}, at), g);
+}
+
+// The reader's line, as they draw it.
+function show(p) { G.ink.setAttribute('d', p.length > 1 ? G.line(p) : ''); }
+// Their line settles on the template horizon; then the layers are built out from it, nearest first.
+function settle() {
+  drawn = true;
+  const {us, X, Ytpl, uA, uB} = G;
+  const xs = us.filter(u => u >= uA - .01 && u <= uB + .01);
+  const theirs = xs.map(u => { const x = X(u); let best = null, d = Infinity; for (const p of stroke) { const dd = Math.abs(p[0] - x); if (dd < d) { d = dd; best = p; } } return best && d < G.W * .06 ? best[1] : Ytpl(u); });
+  const o = {t: 0};
+  const step = () => show(xs.map((u, i) => [X(u), theirs[i] + (Ytpl(u) - theirs[i]) * o.t]));
+  Kit.haptic('success');
+  if (Kit.calm) { o.t = 1; step(); grow(); return; }
+  gsap.to(o, {t: 1, duration: .5, ease: 'power2.inOut', onUpdate: step, onComplete: grow});
+}
+function grow() {
+  built = true;
+  const answer = () => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); };
+  if (Kit.calm) { OFF.forEach((_, h) => { mix[h] = 1; }); paint(); show([]); G.dots.setAttribute('opacity', 0); G.words.setAttribute('opacity', 1); answer(); return; }
+  const tl = gsap.timeline({onUpdate: paint, onComplete: answer});
+  tl.to(G.dots, {attr: {opacity: 0}, duration: .25});
+  // The template first, under the reader's line; then outward, a pair of horizons at a time.
+  const rings = [[T0], [T0 - 1, T0 + 1], [T0 - 2, T0 + 2], [T0 - 3, T0 + 3]];
+  rings.forEach((hs, n) => hs.forEach(h => { if (h >= 0 && h < OFF.length) tl.to(mix, {[h]: 1, duration: .45, ease: 'power2.inOut'}, .05 + n * .28); }));
+  tl.set(G.ink, {attr: {d: ''}}, .4);
+  tl.to(G.words, {attr: {opacity: 1}, duration: .35}, '>');
+  tl.to({}, {duration: .45});
+}
+
+const sec = Kit.$('sec');
+const local = e => { const b = sec.getBoundingClientRect(); return [(e.clientX - b.left) / b.width * G.W, (e.clientY - b.top) / b.height * G.H]; };
+sec.addEventListener('pointerdown', e => { if (drawn || !G) return; drawing = true; stroke = [local(e)]; gsap.killTweensOf(G.ink); G.ink.setAttribute('opacity', 1); try { sec.setPointerCapture(e.pointerId); } catch (_) {} show(stroke); Kit.haptic('selection'); });
+sec.addEventListener('pointermove', e => { if (!drawing) return; const p = local(e), q = stroke[stroke.length - 1]; if (Math.hypot(p[0] - q[0], p[1] - q[1]) > 2) { stroke.push(p); show(stroke); } });
+['pointerup', 'pointercancel'].forEach(n => sec.addEventListener(n, () => {
+  if (!drawing) return; drawing = false;
+  // A line across most of the way, passing by at least two of the dots, is taken; a dab is wiped.
+  const xs = stroke.map(p => p[0]), span = Math.max(...xs) - Math.min(...xs);
+  const near = G.pts.filter(([x, y]) => stroke.some(p => Math.hypot(p[0] - x, p[1] - y) < Math.max(G.H * .12, 26))).length;
+  if (span > (G.X(G.uB) - G.X(G.uA)) * .55 && near >= 2) settle();
+  else {
+    Kit.$('say').textContent = 'One stroke through all three red dots: the two outcrops and the bottom of the borehole.';
+    if (Kit.calm) show([]); else gsap.to(G.ink, {attr: {opacity: 0}, duration: .35, onComplete: () => { show([]); G.ink.setAttribute('opacity', 1); }});
+  }
+}));
+
+Kit.onShow.card = () => build();
+let seen = '';
+new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; if (drawn && !built) return; build(); if (built) G.ink.setAttribute('d', ''); } }).observe(Kit.$('stage'));
 Kit.onEnter.card = () => {
-  if (Kit.calm) return;
-  gsap.from('#sec', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'});
-  const o = {v: 0};
-  gsap.to(o, {v: 30, duration: .5, delay: .6, yoyo: true, repeat: 1, ease: 'power2.inOut',
-    onUpdate: () => { if (+Kit.$('scrub').value <= 30) { Kit.$('scrub').value = Math.round(o.v); render(o.v); } }});
+  if (Kit.calm || !G || drawn) return;
+  gsap.fromTo(G.dots.querySelectorAll('circle'), {attr: {r: G.fs * .45}}, {attr: {r: G.fs * .68}, duration: .4, repeat: 3, yoyo: true, stagger: .12, ease: 'sine.inOut'});
 };
-
 Kit.play.card = async () => {
-  const r = Kit.$('scrub');
-  for (let v = 0; v <= 400; v += 20) { r.value = v; r.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(z => setTimeout(z, 30)); }
-  await new Promise(z => setTimeout(z, 600));
+  const b = sec.getBoundingClientRect(), sx = b.width / G.W, sy = b.height / G.H;
+  const path = G.us.filter(u => u >= G.uA && u <= G.uB).map(u => [G.X(u) * sx + b.left, (G.Ytpl(u) + 4) * sy + b.top]);
+  const ev = (type, [x, y]) => sec.dispatchEvent(new PointerEvent(type, {bubbles: true, clientX: x, clientY: y, pointerId: 1}));
+  ev('pointerdown', path[0]);
+  for (let i = 1; i < path.length; i += 3) { ev('pointermove', path[i]); await new Promise(r => setTimeout(r, 8)); }
+  ev('pointermove', path[path.length - 1]); ev('pointerup', path[path.length - 1]);
+  await new Promise(r => setTimeout(r, 2600));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('sec'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

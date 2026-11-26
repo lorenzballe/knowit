@@ -300,6 +300,38 @@ def _share_set(card: dict, a: dict) -> bool:
     return a["share"] and not a["pick"]
 
 
+def _is_book(raw) -> bool:
+    """Whether the card is part of a book, as PillBook.fromJson reads one."""
+    if not isinstance(raw, dict):
+        return False
+    part = raw.get("part")
+    return (all(isinstance(raw.get(k), str) for k in ("id", "title", "author"))
+            and _is_whole(raw.get("year")) and _is_whole(part) and part >= 1)
+
+
+def _is_whole(v) -> bool:
+    return isinstance(v, int) and not isinstance(v, bool)
+
+
+def daily_kind(card: dict) -> Optional[str]:
+    """How Today's five and each subject's three play [card]
+    (dailyKindOf in daily_deal.dart): "pick", a pick of two or three
+    options, words or numbers; "share", a share from 0 to 100% the card has
+    typed or estimated; None for a card they never deal (a mature card, a
+    page, a place, a part of a book, anything else)."""
+    if (card.get("mature") is True or card.get("web") is not None
+            or card.get("place") is not None or _is_book(card.get("book"))):
+        return None
+    kind = card.get("kind", "read")
+    if kind == "pickOne":
+        options = card.get("options")
+        return "pick" if isinstance(options, list) and 2 <= len(options) <= 3 else None
+    if kind in ("number", "estimate"):
+        a = answer_of(card)
+        return "share" if a is not None and a["share"] and not a["pick"] else None
+    return None
+
+
 FITS: dict[str, tuple[Callable[[dict, dict], bool], str]] = {
     "bets-range": (_share_set, "a share from 0 to 100% the card has typed or estimated"),
     "bets-slip": (lambda c, a: True, "an answer that is a number"),
@@ -316,7 +348,10 @@ FITS: dict[str, tuple[Callable[[dict, dict], bool], str]] = {
         "an estimate a power of ten counts right, or a pick of odds",
     ),
     "bets-day": (_share_set, "a share from 0 to 100% the card has typed or estimated"),
-    "three": (_share_set, "a share from 0 to 100% the card has typed or estimated"),
+    "three": (
+        lambda c, a: daily_kind(c) is not None,
+        "a pick of two or three options, or a share from 0 to 100% the card has typed or estimated",
+    ),
 }
 
 
@@ -359,6 +394,11 @@ def _check_card(block: str, cid, where: str) -> list[str]:
         return [f"{where}: no card {cid!r} in the bank"]
     if card.get("disabled"):
         return [f"{where}: card {cid!r} is retired"]
+    if block == "three":
+        # Today's games play a pick of words as well as of numbers.
+        if daily_kind(card) is None:
+            return [f"{where}: card {cid!r} is not one {block} plays: it takes {FITS[block][1]}"]
+        return []
     if answer_of(card) is None:
         return [f"{where}: card {cid!r} has no number for an answer to bet on"]
     if not fits(block, card):

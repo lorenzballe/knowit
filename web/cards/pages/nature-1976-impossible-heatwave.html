@@ -1,167 +1,198 @@
 <!doctype html>
 <!-- slug: nature-1976-impossible-heatwave -->
+<!-- The picture: a summer machine. A hopper drops summers as balls through a board of pegs into a row of bins, cooler on
+     the left, hotter on the right; the last bins, red, hold summers as hot as this heatwave. At the start the 1976
+     climate has already dropped its 30 summers: a pile on the left, and nothing reaches the red bins, nothing comes
+     close. The reader adds 50 years of trapped heat: the hopper slides to the right, the old pile fades to outlines, and
+     the same 30 summers fall again, each one pushed hotter by the same step. Now some land in the red: the impossible
+     has become part of the normal pile. An illustration, not data. Drawn again at its real size whenever its room
+     changes. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The 1976 impossibility</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
-#plot{flex:1;min-height:0;width:100%;display:block}
-#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;align-self:stretch}
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#go{font:800 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.6cqh 4cqw;cursor:pointer;align-self:stretch}
+#go:active{transform:scale(.98)}
 #go:disabled{opacity:.45;cursor:default}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
-#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
-.foot .src{display:block;padding-right:100px;overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+.say{overflow-wrap:anywhere}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Race · two worlds">
+<article class="card" id="card" data-topic="nature" data-kind="Drop the summers · two climates">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">HEATWAVES</span></div>
     <h2 class="q">How much more likely is this heatwave today than 50 years ago?</h2>
     <div class="stagebox" id="stage">
-      <svg id="plot" aria-label="Fifty summers in 1976 against fifty summers today"></svg>
-      <button id="go">Live 50 summers in each world</button>
+      <svg id="pic" role="img" aria-label="A summer machine: a hopper drops summers as balls through pegs into bins from cooler to hotter. The 1976 climate's 30 summers lie piled on the left; none reaches the red bins, as hot as this heatwave."></svg>
+      <button id="go">Add 50 years of trapped heat</button>
       <div id="why" class="gone">
         <p class="big">From impossible to normal</p>
-        <p class="body">In 1976 a summer this hot lay beyond anything the climate could produce. Since then greenhouse gases have trapped an enormous amount of energy, pushing every summer hotter, so the same extreme now sits inside the normal range.</p>
+        <p class="body">Since 1976 greenhouse gases have trapped an enormous amount of energy, pushing every summer hotter.</p>
       </div>
     </div>
-    <p class="say" id="say">Press play: each dot is one summer. Red dots are as hot as this heatwave.</p>
+    <p class="say" id="say">Each ball is one summer of the 1976 climate. None got as hot as this heatwave.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Warming moves yesterday’s impossible extreme into today’s normal summer.</div>
     <div class="foot"><span class="src">Source · Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const RED = '#e3342b';
-const LINE = 0.78, N = 50, BINS = 26;
-const WORLDS = [
-  {name: '1976', mu: 0.36, sd: 0.085},
-  {name: 'Today', mu: 0.73, sd: 0.085}
-];
-// Precompute the summers: one seeded draw per year, per world (an illustration, not data).
-WORLDS.forEach(w => {
-  const counts = new Array(BINS).fill(0);
-  w.s = [];
-  for (let i = 0; i < N; i++) {
-    let v = w.mu + w.sd * Kit.gauss();
-    v = Math.min(0.99, Math.max(0.01, v));
-    const b = Math.min(BINS - 1, Math.floor(v * BINS));
-    w.s.push({v, b, k: counts[b]++, hot: v >= LINE});
-  }
-  w.max = Math.max(...counts);
-});
-const MAXSTACK = Math.max(9, ...WORLDS.map(w => w.max));
-let n = 0, done = false, running = false, G = null;
-const svg = Kit.$('plot');
+// Flat colours with one meaning each: the summers cream, the ones as hot as this heatwave red, the machine in ink on a
+// board a shade darker than the card, the bins of summers as hot as this heatwave a light red.
+const INK = '#10100c', BALL = '#fff8ea', HOT = '#e3342b', WARM = '#ff9d8f', BOARD = '#00bd49';
+const N = 30, R = 6, BINS = 11, HOTBIN = 8, HOP = [3, 6];
+// The summers: each one's bounces off the pegs, drawn once. The same 30 fall in both climates, so each summer of 1976
+// has a twin today, pushed hotter by the same step: only where the hopper stands has changed.
+const seeded = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const PATHS = (() => { const r = seeded(83); return Array.from({length: N}, () => Array.from({length: R}, () => r() < .5 ? 1 : -1)); })();
+const WORLDS = HOP.map(h => { const cnt = Array(BINS).fill(0); const balls = PATHS.map(steps => { const bin = h + steps.reduce((a, b) => a + b, 0) / 2; return {steps, bin, slot: cnt[bin]++}; }); return {h, balls, cnt}; });
+const ROWS = Math.ceil(Math.max(...WORLDS.flatMap(w => w.cnt)) / 2);
+// how far each of today's summers has fallen, by its number (an object, so GSAP tweens it as one target)
+const st = {hop: HOP[0], shift: 0, ghost: 0, p: Object.fromEntries(WORLDS[1].balls.map((_, i) => [i, 0]))};
+let G = null, phase = 'before', running = false;
+const svg = Kit.$('pic');
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const box = el => { try { return el.getBBox(); } catch (_) { return {x: 0, y: 0, width: 0, height: 0}; } };
 
-function geo() {
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(12, Math.min(f, H / 14));
-  const pad = fs * 0.6, pw = W - 2 * pad;
-  const room = H - fs * 7.6, axis = room >= 60;
-  const lh = Math.max(10, (axis ? room : H - fs * 6) / 2);
-  const t1 = fs * 3.5, b1 = t1 + lh, t2 = b1 + fs * 2.4, b2 = t2 + lh;
-  const bw = pw / BINS;
-  const r = Math.max(1.5, Math.min(bw * 0.44, lh / (2 * MAXSTACK)));
-  return {W, H, fs, pad, pw, lh, axis, lanes: [{top: t1, base: b1, ly: fs * 2.9}, {top: t2, base: b2, ly: b1 + fs * 1.8}], bw, r, lx: pad + LINE * pw};
-}
-
-function txt(p, x, y, s, fs, anchor, style) {
-  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'start', style: `font:${style || 600} ${fs}px var(--body);fill:var(--k)`}, p);
-  t.textContent = s; return t;
-}
-
-function dotXY(g, s, lane) {
-  return {cx: g.pad + (s.b + 0.5) * g.bw, cy: lane.base - g.r - s.k * 2 * g.r};
-}
-
-function addDot(wi, i, anim) {
-  const g = G, w = WORLDS[wi], s = w.s[i], lane = g.lanes[wi];
-  const {cx, cy} = dotXY(g, s, lane);
-  const c = Kit.mk('circle', {cx, cy, r: g.r * 0.9, style: `fill:${s.hot ? RED : 'var(--k)'};opacity:${s.hot ? 1 : .55}`}, g.dots);
-  if (anim && !Kit.calm) gsap.from(c, {attr: {cy: lane.top}, opacity: 0, duration: .35, ease: 'power2.in'});
-}
-
-function counter(wi) {
-  const hot = WORLDS[wi].s.slice(0, n).filter(s => s.hot).length;
-  G.cnt[wi].textContent = `${hot} as hot`;
-  G.cnt[wi].style.fill = hot ? RED : 'var(--k)';
-}
-
-function curves(anim) {
-  const g = G;
-  WORLDS.forEach((w, wi) => {
-    const lane = g.lanes[wi];
-    const pdf = v => Math.exp(-0.5 * ((v - w.mu) / w.sd) ** 2) / (w.sd * Math.sqrt(2 * Math.PI));
-    const hOf = v => Math.min(g.lh, N * (1 / BINS) * pdf(v) * 2 * g.r);
-    let d = '', tail = `M${g.lx},${lane.base}`;
-    for (let i = 0; i <= 120; i++) {
-      const v = i / 120, x = g.pad + v * g.pw, y = lane.base - hOf(v);
-      d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
-      if (v >= LINE) tail += `L${x.toFixed(1)},${y.toFixed(1)}`;
-    }
-    tail += `L${g.pad + g.pw},${lane.base}Z`;
-    const ta = Kit.mk('path', {d: tail, style: `fill:${RED};opacity:.22`}, g.curv);
-    const p = Kit.mk('path', {d, style: 'fill:none;stroke:var(--k);stroke-width:2;stroke-linejoin:round'}, g.curv);
-    if (anim && !Kit.calm) {
-      const L = p.getTotalLength();
-      gsap.fromTo(p, {strokeDasharray: L, strokeDashoffset: L}, {strokeDashoffset: 0, duration: 1, ease: 'power2.out'});
-      gsap.from(ta, {opacity: 0, duration: .6, delay: .6});
-    }
-  });
-}
-
-function draw() {
-  const g = geo(); G = g;
+function build() {
   svg.innerHTML = '';
-  // the heatwave line, one segment per world
-  txt(svg, g.lx, g.fs * 1.2, 'this heatwave', g.fs * .9, 'middle', 700).style.fill = RED;
-  g.lanes.forEach((lane, wi) => {
-    Kit.mk('rect', {x: g.lx, y: lane.top, width: g.pad + g.pw - g.lx, height: lane.base - lane.top, style: `fill:${RED};opacity:.07`}, svg);
-    Kit.mk('line', {x1: g.lx, x2: g.lx, y1: wi ? lane.top : g.fs * 1.6, y2: lane.base, style: `stroke:${RED};stroke-width:2.5;stroke-dasharray:6 4`}, svg);
-    Kit.mk('line', {x1: g.pad, x2: g.pad + g.pw, y1: lane.base, y2: lane.base, style: 'stroke:var(--k);stroke-width:2;opacity:.6'}, svg);
-    txt(svg, g.pad, lane.ly, WORLDS[wi].name === '1976' ? '1976 · 50 years ago' : 'Today', g.fs, 'start', 800);
-  });
-  g.cnt = g.lanes.map(lane => txt(svg, g.pad + g.pw, lane.ly, '', g.fs, 'end', 800));
-  if (g.axis) {
-    txt(svg, g.pad, g.H - g.fs * .3, '← cooler summer', g.fs * .85, 'start', 500).style.opacity = .7;
-    txt(svg, g.pad + g.pw, g.H - g.fs * .3, 'hotter summer →', g.fs * .85, 'end', 500).style.opacity = .7;
+  const {W, H} = Kit.fitSvg(svg);
+  const fs = Math.max(12.5, Math.min(14.5, W / 24));
+  const bw = (W - 8) / BINS, X = u => 4 + (u + .5) * bw;          // a position in bins, to x
+  const axisH = fs * 1.75, floorY = H - axisH;
+  // The machine (its hopper, its triangle of pegs) sits over the bins when there is room; in a short box the two
+  // piles stand alone, each named over itself.
+  const lab = fs * 1.45, hopH = Math.max(13, Math.min(bw * .95, H * .09));
+  // the summers a little smaller if that is what lets the machine in; its rows of pegs never closer than a summer
+  let rb = bw * .22, machine = false, binTop = 0, pegTop = 0, rowH = 0;
+  for (const k of [.22, .2]) {
+    rb = bw * k; binTop = floorY - (ROWS * 2 * rb + 8); pegTop = lab + hopH + 6 + rb;
+    rowH = Math.min(bw * 1.5, (binTop - rb * 2.6 - pegTop) / (R - 1));
+    if (rowH >= 2.05 * rb) { machine = true; break; }
   }
-  g.curv = Kit.mk('g', {}, svg);
-  g.dots = Kit.mk('g', {}, svg);
-  for (let i = 0; i < n; i++) { addDot(0, i, false); addDot(1, i, false); }
-  counter(0); counter(1);
-  if (done) curves(false);
+  if (!machine) { rb = bw * .22; binTop = floorY - (ROWS * 2 * rb + 8); rowH = 0; }
+  const pr = Math.max(2.2, Math.min(bw * .1, 3.4));
+  G = {W, H, fs, bw, X, rb, floorY, binTop, pegTop, rowH, pr, machine, lab, hopH};
+  const root = mk('g', {}, svg);
+
+  // The board: a frame round the machine and its bins (round the two named piles, when the machine has no room).
+  const top = machine ? lab - 2 : 1.5;
+  mk('rect', {x: 1.5, y: Math.max(1.5, top), width: W - 3, height: floorY - Math.max(1.5, top) + 1, rx: 12, fill: BOARD, stroke: INK, 'stroke-width': 2.5}, root);
+  // the bins that summers as hot as this heatwave fall into
+  mk('rect', {x: 4 + HOTBIN * bw, y: binTop, width: (BINS - HOTBIN) * bw, height: floorY - binTop, fill: WARM}, root);
+  for (let b = 1; b < BINS; b++) mk('line', {x1: 4 + b * bw, x2: 4 + b * bw, y1: binTop, y2: floorY, stroke: INK, 'stroke-width': b === HOTBIN ? 2.6 : 1.4}, root);
+  mk('line', {x1: 1.5, x2: W - 1.5, y1: floorY, y2: floorY, stroke: INK, 'stroke-width': 3}, root);
+  // the two ends of the row of bins
+  const a1 = mk('text', {x: 2, y: H - fs * .42, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
+  a1.textContent = '← cooler summers';
+  const a2 = mk('text', {x: W - 2, y: H - fs * .42, 'text-anchor': 'end', fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, root);
+  a2.textContent = 'as hot as this heatwave';
+  if (box(a1).x + box(a1).width > box(a2).x - 8) { a1.textContent = '← cooler'; if (box(a1).x + box(a1).width > box(a2).x - 8) a2.textContent = 'this heatwave'; }
+  // its marker: a red bar under the red bins
+  mk('rect', {x: 4 + HOTBIN * bw, y: floorY + 3, width: (BINS - HOTBIN) * bw, height: 4, fill: HOT}, root);
+
+  G.mach = mk('g', {}, root);
+  G.balls = mk('g', {}, root);
+  G.names = mk('g', {}, root);
+  render();
 }
 
+// Where a summer is, at a point along its fall: out of the hopper, a bounce at each row of pegs, into its bin, onto the pile.
+function at(world, ball, p, hop) {
+  const {X, rb, pegTop, rowH, pr, binTop, floorY, bw, lab, hopH, machine} = G;
+  const pts = [[X(hop), lab + hopH]];
+  let u = hop;
+  for (let r = 0; r < R; r++) { pts.push([X(u), machine ? pegTop + r * rowH - pr - rb : binTop - rb]); u += ball.steps[r] / 2; }
+  pts.push([X(u), binTop - rb]);
+  const col = ball.slot % 2, row = Math.floor(ball.slot / 2);
+  pts.push([X(ball.bin) + (col ? .25 : -.25) * bw * .98, floorY - rb - 1.5 - row * 2 * rb]);
+  if (p >= pts.length - 1) return pts[pts.length - 1];
+  const i = Math.floor(p), f = p - i, [x0, y0] = pts[i], [x1, y1] = pts[i + 1];
+  const hop2 = i > 0 && i <= R ? Math.sin(f * Math.PI) * rowH * .3 : 0;
+  return [x0 + (x1 - x0) * f, y0 + (y1 - y0) * (i <= R ? f : f * f) - hop2];
+}
+
+function render() {
+  if (!G) return;
+  const {X, rb, bw, lab, hopH, fs, machine, pegTop, rowH, pr, binTop} = G;
+  G.balls.innerHTML = ''; G.mach.innerHTML = ''; G.names.innerHTML = '';
+  const END = R + 2;
+  // 1976's summers on their pile; outlines once the heat is added
+  WORLDS[0].balls.forEach(b => {
+    const [x, y] = at(WORLDS[0], b, END, HOP[0]);
+    mk('circle', {cx: x, cy: y, r: rb, fill: BALL, 'fill-opacity': 1 - st.ghost, stroke: INK, 'stroke-width': 1.5, 'stroke-opacity': 1 - st.ghost * .5, 'stroke-dasharray': st.ghost > .5 ? '2.5 2' : ''}, G.balls);
+  });
+  // today's: falling, or landed; the ones as hot as this heatwave red
+  if (phase !== 'before') WORLDS[1].balls.forEach((b, i) => {
+    const p = st.p[i]; if (p <= 0) return;
+    const [x, y] = at(WORLDS[1], b, p, st.hop), hot = p >= END - .02 && b.bin >= HOTBIN;
+    mk('circle', {cx: x, cy: y, r: rb, fill: hot ? HOT : BALL, stroke: INK, 'stroke-width': 1.6}, G.balls);
+  });
+  const name = (x, y, txt, op, size = fs * 1.12) => { const t = mk('text', {x, y, 'text-anchor': 'middle', fill: INK, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': size, opacity: op}, G.names); t.textContent = txt; return t; };
+  if (machine) {
+    // The machine: the hopper and, under it, its triangle of pegs. Adding the heat slides both to the right.
+    const hx = X(st.hop), w = bw * 1.15, ty = lab + hopH;
+    const funnel = (x, faded) => mk('path', {d: `M${x - w},${lab + 3} L${x + w},${lab + 3} L${x + bw * .3},${ty} L${x - bw * .3},${ty} Z`, fill: faded ? 'none' : INK, stroke: INK, 'stroke-width': 2, 'stroke-dasharray': faded ? '4 3' : '', 'stroke-linejoin': 'round', opacity: faded ? .5 : 1}, G.mach);
+    for (let r = 0; r < R; r++) for (let j = 0; j <= r; j++) mk('circle', {cx: X(st.hop + j - r / 2), cy: pegTop + r * rowH, r: pr, fill: INK}, G.mach);
+    if (st.shift > 0) {
+      funnel(X(HOP[0]), true);
+      const x0 = X(HOP[0]) + w + 5, x1 = hx - w - 7, y = lab + hopH * .5;
+      if (x1 > x0 + 8) {
+        mk('line', {x1: x0, x2: x1, y1: y, y2: y, stroke: HOT, 'stroke-width': 3.2, 'stroke-linecap': 'round'}, G.mach);
+        mk('path', {d: `M${x1 + 7},${y} L${x1 - 2},${y - 6} L${x1 - 2},${y + 6} Z`, fill: HOT}, G.mach);
+      }
+      name(X(HOP[0]), lab - fs * .38, '1976', .5);
+    }
+    funnel(hx, false);
+    // summers waiting in the hopper until they fall
+    if (phase !== 'after') for (let k = 0; k < 3; k++) mk('circle', {cx: hx + (k - 1) * rb * 2.1, cy: lab + 3 - rb * .2, r: rb * .9, fill: BALL, stroke: INK, 'stroke-width': 1.4}, G.mach);
+    name(hx, lab - fs * .38, st.shift > .5 ? 'today' : '1976', 1);
+  } else {
+    // No room for the machine: each pile named large over itself, and the push from one to the other drawn red.
+    const room = binTop - 4, size = Math.max(fs, Math.min(fs * 1.7, room * .42)), y = Math.min(binTop - 6, 4 + room * .5 + size * .36);
+    const xa = X(HOP[0]), xb = X(HOP[1] + 1);
+    if (room < size * 1.25 + 4) return;            // too short even for the names: the piles speak alone
+    const ta = name(xa, y, '1976', st.shift > 0 ? .55 : 1, size);
+    if (st.shift > 0) {
+      const tb = name(xb, y, 'today', 1, size);
+      const a = box(ta), b = box(tb), x0 = a.x + a.width + 8, x1 = b.x - 12, ay = y - size * .32;
+      if (x1 > x0 + 10) {
+        mk('line', {x1: x0, x2: x1, y1: ay, y2: ay, stroke: HOT, 'stroke-width': 3.2, 'stroke-linecap': 'round'}, G.names);
+        mk('path', {d: `M${x1 + 8},${ay} L${x1 - 1},${ay - 6} L${x1 - 1},${ay + 6} Z`, fill: HOT}, G.names);
+      }
+    }
+  }
+}
+
+function run() {
+  if (running || phase !== 'before') return;
+  running = true; phase = 'during';
+  const go = Kit.$('go'); go.disabled = true; Kit.haptic('light');
+  Kit.$('say').textContent = 'The same 30 summers again, after 50 years of trapped heat.';
+  const END = R + 2;
+  if (Kit.calm) { st.hop = HOP[1]; st.shift = 1; st.ghost = 1; for (const k in st.p) st.p[k] = END; render(); finish(); return; }
+  const tl = gsap.timeline({onUpdate: render, onComplete: finish});
+  tl.to(st, {hop: HOP[1], shift: 1, duration: .9, ease: 'power2.inOut'}, 0);
+  tl.to(st, {ghost: 1, duration: .6, ease: 'power1.out'}, .3);
+  WORLDS[1].balls.forEach((b, i) => tl.to(st.p, {[i]: END, duration: .95, ease: 'none', onComplete: () => { if (b.bin >= HOTBIN) Kit.haptic('selection'); }}, 1 + i * .075));
+}
 function finish() {
-  done = true; running = false;
-  curves(true);
+  running = false; phase = 'after';
   Kit.haptic('success');
   Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
 }
 
-function run(step) {
-  if (running || done) return;
-  running = true; Kit.$('go').disabled = true; Kit.haptic('light');
-  const dt = Kit.calm ? 0 : step;
-  const tl = gsap.timeline();
-  for (let i = 0; i < N; i++) tl.call(() => {
-    addDot(0, n, true); addDot(1, n, true); n++; counter(0); counter(1);
-    if (WORLDS[1].s[n - 1].hot || WORLDS[0].s[n - 1].hot) Kit.haptic('selection');
-  }, [], i * dt);
-  tl.call(finish, [], N * dt + .4);
-}
-
-Kit.$('go').addEventListener('click', () => run(0.08));
-Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#plot', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
-Kit.play.card = async () => { run(0.02); await new Promise(r => setTimeout(r, N * 20 + 1800)); };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('plot'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+Kit.$('go').addEventListener('click', run);
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.balls.childNodes, {attr: {cy: G.lab}, opacity: 0, duration: .7, stagger: .02, ease: 'power2.in'}); };
+Kit.play.card = async () => { Kit.$('go').click(); await new Promise(r => setTimeout(r, Kit.calm ? 300 : 4600)); };
+// Drawn again at the size it now has whenever its room changes: when the answer comes in, never shrunk whole.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; build(); } }).observe(svg); }
 Kit.single();
 </script>
 </html>

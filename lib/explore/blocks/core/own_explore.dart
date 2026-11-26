@@ -3,9 +3,10 @@
 /// so `explore: null` is that Explore to the pixel. It opens on its cover,
 /// the day's cards in a mosaic; then, as the strategic Explore laid it, the
 /// reader's day, the day's challenge, the set they are filling, the challenges,
-/// their subjects' levels and more like what they saved; it keeps four of
-/// the shelves Explore always had, and ends on the feed. The other shelves
-/// are still blocks a document can place.
+/// their subjects' levels, more like what they saved, the paths, the books
+/// and what the founders read; it keeps four of the shelves Explore always
+/// had, and ends on the feed. The other shelves are still blocks a document
+/// can place.
 ///
 /// remote/examples/explore-today.json is the same list as a document; a
 /// test keeps the two the same.
@@ -166,6 +167,79 @@ const List<Map<String, Object?>> kOwnExploreJson = [
       'ru': 'Одна тема — от самой лёгкой карточки до самой трудной.',
       'tr': 'Tek bir konu, en kolay karttan en zoruna.',
       'zh': '一个主题，从最简单的卡片到最难的。',
+    },
+  },
+  // Books in pills: the book of the week set apart, its cover large, the
+  // others in a row under it; two ideas of each free, the week's whole.
+  {
+    'id': 'books',
+    'block': 'books',
+    'title': {
+      'en': 'Books in pills',
+      'it': 'Libri in pillole',
+      'de': 'Bücher in Häppchen',
+      'es': 'Libros en píldoras',
+      'fr': 'Livres en pilules',
+      'ja': '本をひとくちで',
+      'ko': '한입 책',
+      'nl': 'Boeken in hapjes',
+      'pl': 'Książki w pigułce',
+      'pt': 'Livros em pílulas',
+      'ru': 'Книги в двух словах',
+      'tr': 'Kapsül kitaplar',
+      'zh': '一口读书',
+    },
+    'subtitle': {
+      'en': 'The big ideas of bestsellers, five cards a book, a few minutes in all.',
+      'it': 'Le grandi idee dei bestseller, cinque carte a libro, pochi minuti in tutto.',
+      'de': 'Die großen Ideen von Bestsellern, fünf Karten pro Buch, ein paar Minuten insgesamt.',
+      'es': 'Las grandes ideas de los bestsellers, cinco tarjetas por libro, unos minutos en total.',
+      'fr': 'Les grandes idées des best-sellers, cinq cartes par livre, quelques minutes en tout.',
+      'ja': 'ベストセラーの大事なアイデアを、1冊5枚のカードで。全部で数分。',
+      'ko': '베스트셀러의 핵심 아이디어를 책 한 권에 카드 다섯 장으로. 다 합쳐 몇 분.',
+      'nl': 'De grote ideeën van bestsellers, vijf kaarten per boek, een paar minuten in totaal.',
+      'pl': 'Najważniejsze idee bestsellerów, pięć kart na książkę, kilka minut w sumie.',
+      'pt': 'As grandes ideias dos bestsellers, cinco cartas por livro, poucos minutos ao todo.',
+      'ru': 'Главные идеи бестселлеров, пять карточек на книгу, несколько минут на всё.',
+      'tr': 'Çok satan kitapların büyük fikirleri, kitap başına beş kart, toplamda birkaç dakika.',
+      'zh': '畅销书的核心观点，每本五张卡片，总共几分钟。',
+    },
+  },
+  // What founders read: the people who built the companies everyone
+  // knows, each opening the books they recommended in public, and where
+  // they said it.
+  {
+    'id': 'founders',
+    'block': 'founders',
+    'title': {
+      'en': 'What founders read',
+      'it': 'Cosa leggono i fondatori',
+      'de': 'Was Gründer lesen',
+      'es': 'Lo que leen los fundadores',
+      'fr': 'Ce que lisent les fondateurs',
+      'pt': 'O que leem os fundadores',
+      'nl': 'Wat oprichters lezen',
+      'pl': 'Co czytają założyciele',
+      'ru': 'Что читают основатели',
+      'tr': 'Kurucular ne okuyor',
+      'ja': '創業者が読む本',
+      'ko': '창업자들이 읽는 책',
+      'zh': '创始人读什么',
+    },
+    'subtitle': {
+      'en': 'The books they recommended in public, in their own words, and where they said it.',
+      'it': 'I libri che hanno consigliato in pubblico, con le loro parole e dove l’hanno detto.',
+      'de': 'Die Bücher, die sie öffentlich empfohlen haben, in ihren eigenen Worten, und wo sie es sagten.',
+      'es': 'Los libros que recomendaron en público, con sus propias palabras, y dónde lo dijeron.',
+      'fr': 'Les livres qu’ils ont recommandés en public, avec leurs propres mots, et où ils l’ont dit.',
+      'pt': 'Os livros que recomendaram em público, com as suas palavras, e onde o disseram.',
+      'nl': 'De boeken die ze in het openbaar aanraadden, in hun eigen woorden, en waar ze dat zeiden.',
+      'pl': 'Książki, które publicznie polecili, ich własnymi słowami, i miejsce, gdzie to powiedzieli.',
+      'ru': 'Книги, которые они советовали публично, их собственными словами, и где это было сказано.',
+      'tr': 'Herkesin önünde önerdikleri kitaplar, kendi sözleriyle ve bunu nerede söyledikleriyle.',
+      'ja': '公の場ですすめた本を、本人の言葉と、それを語った場所とともに。',
+      'ko': '공개적으로 추천한 책을, 그들의 말과 그 말을 한 곳과 함께.',
+      'zh': '他们公开推荐过的书，附上原话和说话的出处。',
     },
   },
   // The shelves that stay: the readers' top list, where the reader lives,

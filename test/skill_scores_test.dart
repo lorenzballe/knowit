@@ -37,27 +37,69 @@ void main() {
   Judgement said(Pill p, bool right, {int ago = 0}) =>
       Judgement(null, correct: right, pillId: p.id, on: daysAgo(ago));
 
-  test('every score starts at the same place, and no answer moves it', () {
+  test('every score starts at nothing for a new reader, and no answer '
+      'moves it', () {
     final ScoreBook book = scoresOf(const [], today: today);
-    expect(book.overall.now, kScoreStart);
+    expect(book.overall.now, 0);
     expect(book.overall.week, 0);
+    expect(book.overall.days, everyElement(0));
     for (final Skill s in Skill.values) {
-      expect(book.of(s).now, kScoreStart);
+      expect(book.of(s).now, 0);
     }
+    expect(SkillScore.start.now, 0);
   });
 
   test('right raises it, wrong lowers it; a hard card right raises it most, '
       'a card back for another go counts half', () {
     int after(List<Judgement> js) => scoresOf(js, today: today).overall.now;
     final int right = after([said(medium, true)]);
-    final int wrong = after([said(medium, false)]);
-    expect(right, greaterThan(kScoreStart));
-    expect(wrong, lessThan(kScoreStart));
+    expect(right, greaterThan(0));
+    // A wrong answer takes away what a right one gave, and no more.
+    final int wrong = after([said(medium, true), said(hard, false)]);
+    expect(wrong, lessThan(right));
+    expect(wrong, greaterThanOrEqualTo(0));
     expect(after([said(hard, true)]), greaterThan(right));
     final int twice = after([said(medium, true), said(medium, true)]);
     final int two = after([said(medium, true), said(hard, true)]);
-    expect(twice - right, lessThan(right - kScoreStart));
+    expect(twice - right, lessThan(right));
     expect(two, greaterThan(twice));
+  });
+
+  test('a few cards in, a score is a few dozen, not a thousand', () {
+    final List<Pill> five = PillBank.cards
+        .where((p) => p.isGraded && p.difficulty == Difficulty.medium)
+        .take(5)
+        .toList();
+    final int now = scoresOf([
+      for (final Pill p in five) said(p, true),
+    ], today: today).overall.now;
+    expect(now, inInclusiveRange(30, 90));
+  });
+
+  test('never below nothing: a wrong answer at nothing costs nothing shown, '
+      'and the next right one counts from there, as much as the rating '
+      'underneath moves', () {
+    final List<Pill> misses = PillBank.cards
+        .where((p) => p.isGraded && p.id != medium.id)
+        .take(4)
+        .toList();
+    expect(misses, hasLength(4));
+    final List<Judgement> wrongs = [for (final Pill p in misses) said(p, false)];
+    final ScoreBook low = scoresOf(wrongs, today: today);
+    expect(low.overall.now, 0);
+    expect(low.overall.days, everyElement(0));
+    final ScoreBook back = scoresOf([
+      ...wrongs,
+      said(medium, true),
+    ], today: today);
+    // From nothing, by what the answer moved the rating: more than the
+    // same answer moves a reader at the start, who stands higher.
+    expect(back.overall.now, greaterThan(0));
+    expect(
+      back.overall.now,
+      greaterThan(scoresOf([said(medium, true)], today: today).overall.now),
+    );
+    expect(back.overall.today, back.overall.now);
   });
 
   test('a skill moves with the cards that train it: most with its own, '
@@ -66,8 +108,8 @@ void main() {
     final ScoreBook subject = scoresOf([
       said(moneyBySubjectOnly, true),
     ], today: today);
-    final int byOwn = own.of(Skill.money).now - kScoreStart;
-    final int bySubject = subject.of(Skill.money).now - kScoreStart;
+    final int byOwn = own.of(Skill.money).now;
+    final int bySubject = subject.of(Skill.money).now;
     expect(byOwn, greaterThan(0));
     expect(bySubject, greaterThan(0));
     expect(bySubject, lessThan(byOwn));
@@ -104,7 +146,7 @@ void main() {
     final List<Judgement> run = [for (final Pill p in hards) said(p, true)];
     final int half = scoresOf(run.sublist(0, 200), today: today).overall.now;
     final int all = scoresOf(run, today: today).overall.now;
-    expect(half, greaterThan(1500));
+    expect(half, greaterThan(500));
     expect(all, greaterThan(half));
   });
 }

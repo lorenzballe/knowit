@@ -179,11 +179,17 @@ void main() {
       await pumpChallenges(tester, host);
       await open(tester, 'spot-false');
       expect(host.screens.single.id, 'quick-games-spot-false');
-      expect(find.text('Four claims. Three are true, one is false.'),
-          findsOneWidget);
+      expect(
+        find.text(
+          'Four claims: three are true and one is false. Find the false '
+          'one. It measures how well you tell a sound claim from one that '
+          'only sounds right.',
+        ),
+        findsOneWidget,
+      );
       expect(find.text('One pick a day'), findsOneWidget);
       await play(tester, 'spot');
-      expect(find.text('Tap the one you think is false'), findsOneWidget);
+      expect(find.text('Tap the claim you think is false.'), findsOneWidget);
       // Nothing picked: nothing to confirm.
       await tester.tap(find.byKey(const ValueKey('spot-confirm')));
       await tester.pump();
@@ -222,7 +228,8 @@ void main() {
       final List<Pill> claims = ExploreShelves.of(host).mix.trueFalse!.pills;
       await pumpChallenges(tester, host);
       await open(tester, 'true-false');
-      expect(find.text('${claims.length} cards today'), findsOneWidget);
+      // The day's claims listed under the rules, a row each.
+      expect(find.byKey(const ValueKey('tf-today')), findsOneWidget);
       await play(tester, 'tf');
       final Pill first = claims.first;
       await tester.tap(
@@ -258,7 +265,7 @@ void main() {
       final CoreHost host = CoreHost(await readyApp());
       await pumpChallenges(tester, host);
       await open(tester, 'bets-bigger');
-      expect(find.textContaining('pairs today'), findsOneWidget);
+      expect(find.byKey(const ValueKey('bigger-today')), findsOneWidget);
       await play(tester, 'bigger');
       final String a = idAfter(tester, 'bigger-half-');
       await tester.tap(prefixed('bigger-half-').first);
@@ -469,7 +476,7 @@ void main() {
       expect(host.screens.single.block, 'in-order');
       await play(tester, 'in-order');
       expect(said.of('explore in-order started').single, {'round': 0});
-      expect(find.text('Tap the earliest'), findsOneWidget);
+      expect(find.text('Tap the moment that came first.'), findsOneWidget);
       final List<DatedLine> truth = [...round]
         ..sort((a, b) => a.year.compareTo(b.year));
       // The year is not on the screen until the order is checked.
@@ -480,7 +487,7 @@ void main() {
         await tester.tap(find.byKey(ValueKey('in-order-card-${d.pill.id}')));
         await tester.pump();
       }
-      expect(find.text('All placed. Check it?'), findsOneWidget);
+      expect(find.text('All placed.'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('in-order-check')));
       await frames(tester, 3);
       expect(ExplorePlay.instance['in-order'], {

@@ -92,6 +92,25 @@ class ScaledText extends StatelessWidget {
     return longest;
   }
 
+  /// The size [text] is set at [width] wide when its box gives it all the
+  /// height it asks for: [max], or as large as lets its longest word keep
+  /// to its line — found as the widget finds it, so a box made as tall as
+  /// the text stands at this size holds it whole at this size.
+  static double sizeFor(
+    String text, {
+    required TextStyle Function(double size) styleFor,
+    required double min,
+    required double max,
+    required double width,
+    required TextScaler scaler,
+    required TextDirection direction,
+  }) => ScaledText(
+    text: text,
+    styleFor: styleFor,
+    min: min,
+    max: max,
+  )._fit(width, double.maxFinite, scaler, direction);
+
   /// Largest size that still fits, to within a tenth of a point.
   ///
   /// Between [min] and [max] as sizes the reader sees: [max] grows with

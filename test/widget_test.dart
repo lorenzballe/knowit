@@ -52,6 +52,7 @@ import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/place_it.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/premium.dart';
+import 'package:astuto/widgets/profile_top.dart';
 import 'package:astuto/widgets/ui.dart';
 
 import 'shelves_explore.dart';
@@ -531,12 +532,22 @@ void main() {
 
     // A shelf says what it holds and why it is a shelf. The rows are a
     // question from every subject; what readers kept is the top list's,
-    // which is not there while there are no counts to read: a list with
-    // nothing on it is no shelf.
+    // which is not there while there are no counts to read. Astute's own
+    // picks stand in its place, and say so: nothing is made up to fill it.
     expect(find.text("Today's shelf"), findsOneWidget);
     expect(find.text('The same for everyone, and only today'), findsOneWidget);
     expect(find.text('Top of the week'), findsNothing);
-    expect(find.byKey(const ValueKey('top-empty')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('top-picks'), skipOffstage: false),
+      findsOneWidget,
+    );
+    expect(
+      find.text(
+        "Picked by Astute while the readers' list fills up",
+        skipOffstage: false,
+      ),
+      findsOneWidget,
+    );
     // Further down, a question from every subject.
     final Finder asking = find.text(
       'A question from every subject',
@@ -658,19 +669,36 @@ void main() {
     expect(find.text("Today's shelf"), findsNothing);
   });
 
-  testWidgets("Explore's top list: numbered cards, the week or the month, "
-      'narrowed by the subject row', (tester) async {
+  testWidgets("Explore's top list: real readers' cards, numbered, the week or "
+      'the month, narrowed by the subject row', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     final DateTime now = DateTime.now();
     String ago(int days) => tallyDay(now.subtract(Duration(days: days)));
-    final Pill econ = PillBank.cards.firstWhere((p) => p.topic == 'Economics');
+    final List<Pill> econs = PillBank.cards
+        .where((p) => p.topic == 'Economics')
+        .take(5)
+        .toList();
+    final Pill econ = econs.first;
     final Pill econToo = PillBank.cards.lastWhere(
       (p) => p.topic == 'Economics',
     );
-    final Pill other = PillBank.cards.firstWhere((p) => p.topic != 'Economics');
+    final String otherTopic = PillBank.cards
+        .firstWhere((p) => p.topic != 'Economics')
+        .topic;
+    final List<Pill> others = PillBank.cards
+        .where((p) => p.topic == otherTopic)
+        .take(5)
+        .toList();
+    final Pill other = others.first;
+    // Real readers enough for a list (five cards, three readers each): five
+    // of one subject, the first held by nine; five of Economics, the first
+    // by five and the rest by four.
     final Tallies tallies = Tallies(
       storeOverride: MemoryTallyStore({
-        ago(Tallies.closedAfter): {other.id: 9, econ.id: 4},
+        ago(Tallies.closedAfter): {
+          for (final Pill p in others) p.id: p == other ? 9 : 3,
+          for (final Pill p in econs) p.id: p == econ ? 5 : 4,
+        },
         ago(Tallies.closedAfter + 12): {econToo.id: 30},
       }),
     );
@@ -683,20 +711,21 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
 
-    // The week: nine readers, then four, in that order, each card on its
+    // The week: nine readers, then five, in that order, each card on its
     // number. The card from twelve days ago is the month's, not the week's.
     expect(find.text('Top of the week'), findsOneWidget);
     expect(
       find.text('Most liked, saved and said in the last 7 days'),
       findsOneWidget,
     );
+    expect(find.byKey(const ValueKey('top-picks')), findsNothing);
     final Finder first = find.byKey(ValueKey('top-${other.id}'));
     final Finder second = find.byKey(ValueKey('top-${econ.id}'));
     expect(first, findsOneWidget);
     expect(second, findsOneWidget);
     expect(tester.getCenter(first).dx, lessThan(tester.getCenter(second).dx));
-    // The order is the counts'; the cards print no count, since most of one
-    // is the launch crowd until real readers outnumber it.
+    // The order is the counts'; the cards print no count: the list kept the
+    // look it had when a launch crowd lay under it.
     expect(find.text('9 readers'), findsNothing);
     expect(find.byKey(ValueKey('top-${econToo.id}')), findsNothing);
 
@@ -719,8 +748,8 @@ void main() {
     expect(find.byKey(ValueKey('top-${other.id}')), findsNothing);
     expect(find.byKey(ValueKey('top-${econ.id}')), findsOneWidget);
 
-    // A subject nobody has counted yet has no top list: an empty ranking on
-    // a subject's page read as something broken.
+    // A subject nobody has counted yet has no top list of its own: Astute's
+    // picks of that subject stand in its place, said to be Astute's.
     final String quiet = kMixSubjects
         .map((s) => s.name)
         .firstWhere((name) => name != 'Economics' && name != other.topic);
@@ -751,8 +780,12 @@ void main() {
     await _settle(tester);
     await tester.tap(find.byKey(ValueKey('subject-$quiet-off')));
     await _settle(tester);
-    expect(find.byKey(const ValueKey('top-empty')), findsNothing);
     expect(find.text('Top in $quiet'), findsNothing);
+    expect(find.byKey(const ValueKey('top-readers')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('top-picks'), skipOffstage: false),
+      findsOneWidget,
+    );
   });
 
   group("The phone's language", () {
@@ -875,15 +908,23 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      // The journey button on the profile is the paywall on the free plan,
-      // and says so with a lock before it is pressed.
+      // The way into the journey, under the score, is the paywall on the
+      // free plan, and says Astute+ before it is pressed — no lock: the
+      // score above it is the reader's, whole.
       await _openProfile(tester);
       final Finder button = find.byKey(const ValueKey('profile-journey'));
       await tester.scrollUntilVisible(button, 200, scrollable: _profileList);
       await _settle(tester);
       expect(
-        find.descendant(of: button, matching: find.byType(PlusLock)),
+        find.descendant(
+          of: button,
+          matching: find.byKey(const ValueKey('profile-journey-plus')),
+        ),
         findsOneWidget,
+      );
+      expect(
+        find.descendant(of: button, matching: find.byType(PlusLock)),
+        findsNothing,
       );
       // The level is the journey's: the profile no longer shows it.
       expect(find.text('Day one'), findsNothing);
@@ -2145,7 +2186,7 @@ void main() {
       const Offset(-300, 0),
     );
     await _settle(tester);
-    expect(find.text('YOUR RECORD'), findsOneWidget);
+    expect(find.byKey(const ValueKey('profile-score')), findsOneWidget);
     expect(
       tester
           .widget<Semantics>(find.byKey(const ValueKey('tab-Profile')))
@@ -2228,7 +2269,7 @@ void main() {
 
     // ...and the header, which wants nothing, hands it to the page.
     await tester.dragFrom(
-      tester.getCenter(find.textContaining('five read')),
+      tester.getCenter(find.text('Day 1')),
       const Offset(-300, 0),
     );
     await _settle(tester);
@@ -2497,7 +2538,7 @@ void main() {
     // set — the shelf, straight away.
     expect(find.byKey(const ValueKey('magic-card')), findsNothing);
     expect(find.byType(PillCardStack), findsNothing);
-    expect(find.text('Day 1 · five read'), findsOneWidget);
+    expect(find.text('Day 1'), findsOneWidget);
   });
 
   testWidgets('the free day marks the cards that are the reader\'s own', (
@@ -2557,21 +2598,33 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
+    final Rect today = tester.getRect(_todayTitle);
     await _finishDay(tester);
 
-    // The header says where the day got to, with the shelf's buttons on
-    // its row — no eyebrow saying "five" again under it — and the first
+    // The header says which day this is, where Today's own name stood, so
+    // the day ending changes the word and not the screen; "See again" and
+    // the day's share at the end of its row. Not "five read", which the
+    // shelf says, nor an eyebrow saying "five" again under it. The first
     // card is at the front, face up, with its line to bring it up with.
-    expect(find.text('Day 1 · five read'), findsOneWidget);
+    expect(find.text('Day 1'), findsOneWidget);
     expect(_todayTitle, findsNothing);
+    expect(find.textContaining('five read'), findsNothing);
     expect(find.text('Hold a card you like'), findsOneWidget);
     expect(find.text("TODAY'S FIVE"), findsNothing);
-    final Rect line = tester.getRect(find.text('Day 1 · five read'));
+    final Rect line = tester.getRect(find.text('Day 1'));
+    expect(line.left, closeTo(today.left, 0.5));
+    expect(line.center.dy, closeTo(today.center.dy, 1.5));
+    final Rect share = tester.getRect(
+      find.byKey(const ValueKey('shelf-share-day')),
+    );
+    expect(share.center.dy, closeTo(line.center.dy, 1.5));
+    expect(share.left, greaterThan(line.right));
     final Rect again = tester.getRect(
       find.byKey(const ValueKey('shelf-see-again')),
     );
-    expect(again.top, lessThan(line.bottom + 20));
+    expect(again.center.dy, closeTo(line.center.dy, 1.5));
     expect(again.left, greaterThan(line.right));
+    expect(again.right, lessThanOrEqualTo(share.left));
     _expectAtFront(tester, 1);
 
     // Each card by its question, as it came in the deck, with the line to
@@ -2656,7 +2709,7 @@ void main() {
           await _settle(tester);
         }
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
-        expect(find.text('Day 1 · five read'), findsNothing);
+        expect(find.text('Day 1'), findsNothing);
 
         // The fifth thrown: the offer is the card on top, with every bar lit
         // and no shelf yet. Nothing times out; nothing says skip.
@@ -2672,13 +2725,13 @@ void main() {
         expect(find.byKey(const ValueKey('week-reward')), findsNothing);
         await tester.pump(const Duration(seconds: 6));
         await _settle(tester);
-        expect(find.text('Day 1 · five read'), findsNothing);
+        expect(find.text('Day 1'), findsNothing);
 
         // Thrown like any other card: the shelf.
         await _swipeCardAway(tester);
         await _settle(tester);
         expect(find.byType(PillCardStack), findsNothing);
-        expect(find.text('Day 1 · five read'), findsOneWidget);
+        expect(find.text('Day 1'), findsOneWidget);
       },
     );
 
@@ -2699,7 +2752,7 @@ void main() {
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
         await _swipeCardAway(tester);
         await _settle(tester);
-        expect(find.text('Day 1 · five read'), findsOneWidget);
+        expect(find.text('Day 1'), findsOneWidget);
       },
     );
 
@@ -2721,7 +2774,7 @@ void main() {
       await _swipeCardAway(tester);
       await _settle(tester);
       expect(find.byType(PillCardStack), findsNothing);
-      expect(find.text('Day 1 · five read'), findsOneWidget);
+      expect(find.text('Day 1'), findsOneWidget);
     });
 
     testWidgets(
@@ -2736,7 +2789,7 @@ void main() {
         await tester.pumpWidget(const AstutoApp());
         await _settle(tester);
         expect(find.byKey(const ValueKey('magic-card')), findsNothing);
-        expect(find.text('Day 1 · five read'), findsOneWidget);
+        expect(find.text('Day 1'), findsOneWidget);
       },
     );
   });
@@ -3084,13 +3137,24 @@ void main() {
       await app.init();
       final lead = app.tomorrowsDeck.first;
       expect(
-        find.textContaining("Tomorrow's five start with ${lead.topic}, in"),
+        find.textContaining('Tomorrow: ${lead.topic} · in'),
         findsOneWidget,
       );
+      // On one line: it ran onto a second on the owner's phone and took
+      // the shelf's room.
+      final Finder line = find.descendant(
+        of: find.byKey(const ValueKey('shelf-tomorrow')),
+        matching: find.byType(Text),
+      );
+      final Text text = tester.widget<Text>(line);
+      expect(text.maxLines, 1);
+      expect(tester.getSize(line).height, lessThan(24));
     });
 
-    testWidgets('finishing the day with skills picked raises what its cards '
-        'trained in them, over the shelf; Done puts it away', (tester) async {
+    testWidgets('finishing the day with skills picked raises nothing over the '
+        'shelf: the scores the day moved count up in the journey instead', (
+      tester,
+    ) async {
       SharedPreferences.setMockInitialValues({
         ..._installed(plus: true),
         // Between them they are trained by nearly every subject.
@@ -3100,24 +3164,14 @@ void main() {
       await _settle(tester);
       await finish(tester);
       await _settle(tester);
-      expect(find.byKey(const ValueKey('day-training')), findsOneWidget);
+      await _settle(tester);
       expect(find.byType(TodayDoneView), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('day-training-done')));
-      await _settle(tester);
-      expect(find.byKey(const ValueKey('day-training')), findsNothing);
+      expect(find.byType(BottomSheet), findsNothing);
+      expect(find.text('Five for five.'), findsNothing);
+      expect(find.byKey(const ValueKey('training-score')), findsNothing);
+      // The day's own close stays: which day it was heads the shelf.
+      expect(find.text('Day 1'), findsOneWidget);
       expect(tester.takeException(), isNull);
-    });
-
-    testWidgets('with no skill picked, nothing rises over the finished day', (
-      tester,
-    ) async {
-      SharedPreferences.setMockInitialValues(_installed(plus: true));
-      await tester.pumpWidget(const AstutoApp());
-      await _settle(tester);
-      await finish(tester);
-      await _settle(tester);
-      await _settle(tester);
-      expect(find.byKey(const ValueKey('day-training')), findsNothing);
     });
 
     testWidgets('the way on is the journey, and it opens on the numbers', (
@@ -3409,7 +3463,7 @@ void main() {
       // the word Today and the streak beside it.
       expect(find.text('5 days'), findsOneWidget);
       await finish(tester);
-      expect(find.text('Day 6 · five read'), findsOneWidget);
+      expect(find.text('Day 6'), findsOneWidget);
     });
   });
 
@@ -3502,9 +3556,15 @@ void main() {
     expect(find.text('SEE THE PLANS'), findsOneWidget);
 
     // Then what is the reader's own, the account and how the app works,
-    // with the debug tools still last.
-    final order = await _sectionOrder(tester, const [
-      'YOUR RECORD',
+    // with the debug tools still last. The top's own heading is whichever
+    // of the three the free plan opens on (lib/widgets/profile_top.dart).
+    final String top = switch (profileTopFor(plus: false)) {
+      ProfileTop.score => 'ASTUTE SCORE',
+      ProfileTop.week => 'LAST 7 DAYS',
+      ProfileTop.board => 'YOUR RECORD',
+    };
+    final order = await _sectionOrder(tester, [
+      top,
       'APPEARANCE',
       'YOUR TOPICS',
       'DAILY NUDGE',
@@ -3513,8 +3573,8 @@ void main() {
       'ABOUT',
       'DEBUG',
     ]);
-    expect(order, const [
-      'YOUR RECORD',
+    expect(order, [
+      top,
       'APPEARANCE',
       'YOUR TOPICS',
       'DAILY NUDGE',
@@ -3817,7 +3877,7 @@ void main() {
       // Under the shelf, and no longer inside a scrolling page — the
       // closing screen is one screenful, and its last line is about
       // tomorrow rather than about the clock.
-      expect(find.textContaining("Tomorrow's five start with"), findsOneWidget);
+      expect(find.textContaining('Tomorrow: '), findsOneWidget);
     });
   });
 
@@ -6060,9 +6120,9 @@ void main() {
       await _settle(tester);
       await _finishDay(tester);
 
-      // The shelf opens on the first card, with the day's line over it and
+      // The shelf opens on the first card, with the day's name over it and
       // nothing about the week in the way.
-      expect(find.textContaining('five read'), findsOneWidget);
+      expect(find.text('Day 7'), findsOneWidget);
       expect(find.byKey(const ValueKey('week-reward')), findsNothing);
 
       // The last card on the shelf is the offer, and it says it there.

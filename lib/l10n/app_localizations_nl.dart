@@ -62,8 +62,8 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String dayRead(int n, String word) {
-    return 'Dag $n · $word gelezen';
+  String dayTitle(int n) {
+    return 'Dag $n';
   }
 
   @override
@@ -96,12 +96,12 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'De vijf van morgen gaan open over $when';
+    return 'De vijf van morgen · over $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Morgen beginnen de vijf met $topic, over $when';
+    return 'Morgen: $topic · over $when';
   }
 
   @override
@@ -389,6 +389,71 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String scoreLevel(String id) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'curiosity': 'Nieuwsgierigheid',
+      'observation': 'Oplettendheid',
+      'method': 'Methode',
+      'judgement': 'Oordeel',
+      'insight': 'Inzicht',
+      'discernment': 'Helderheid',
+      'acumen': 'Scherpzinnigheid',
+      'other': '$id',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get levelUpTitle => 'Nieuw niveau';
+
+  @override
+  String levelUpGain(String skill, String n) {
+    return 'Je grootste groei deze week: $skill, $n';
+  }
+
+  @override
+  String levelUpAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n antwoorden tot nu toe.',
+      one: 'Eén antwoord tot nu toe.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelLabel => 'Niveau';
+
+  @override
+  String levelPointsTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Nog $n punten tot $level',
+      one: 'Nog 1 punt tot $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String levelAnswersTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Nog $n antwoorden tot $level',
+      one: 'Nog 1 antwoord tot $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelTop => 'Het hoogste niveau';
+
+  @override
+  String get levelShareTitle => 'Deel je niveau';
+
+  @override
   String get signOutQuestion => 'Uitloggen?';
 
   @override
@@ -453,6 +518,53 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get yourRecord => 'Je staat van dienst';
+
+  @override
+  String get profileTodayFive => 'De vijf van vandaag';
+
+  @override
+  String profileTodayOf(int read, int of) {
+    return '$read van $of';
+  }
+
+  @override
+  String profileTodayToRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n te lezen',
+      one: '1 te lezen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileJourneyScores => 'Al je scores, week na week';
+
+  @override
+  String profileInARowLabel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'dagen op rij',
+      one: 'dag op rij',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileWeekTitle => 'Laatste 7 dagen';
+
+  @override
+  String profileWeekPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'punten',
+      one: 'punt',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get appearance => 'Uiterlijk';
@@ -1228,6 +1340,11 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return 'Verdiepen. Bron: $source';
+  }
+
+  @override
   String get sourceKindPaper => 'Studie';
 
   @override
@@ -1398,41 +1515,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get threeDone => 'De drie van vandaag · klaar';
-
-  @override
-  String threeDay(int n) {
-    return 'Dag $n';
-  }
-
-  @override
-  String get threeOf300 => 'van 300';
-
-  @override
-  String threeCloser(int pct) {
-    return 'Dichterbij dan $pct% van de lezers van vandaag.';
-  }
-
-  @override
-  String threeFirst(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Een van de eerste $n vandaag.',
-      one: 'De eerste die vandaag speelt.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String threeReaders(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n lezers speelden vandaag.',
-      one: '1 lezer speelde vandaag.',
-    );
-    return '$_temp0';
-  }
 
   @override
   String get threeYou => 'Jij';
@@ -1816,17 +1898,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String threeStreak(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n dagen',
-      one: '1 dag',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get threeSend => 'Versturen';
 
   @override
@@ -1838,18 +1909,118 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String threeShareHead(String date) {
-    return 'Astute · De drie van vandaag · $date';
-  }
-
-  @override
-  String threeShareScore(int score, int day) {
-    return '$score van 300 · dag $day';
-  }
-
-  @override
   String threeRowSaid(String said, String truth) {
     return 'Jij zei $said. Het is $truth.';
+  }
+
+  @override
+  String get fiveTitle => 'De vijf van vandaag';
+
+  @override
+  String get fiveSame =>
+      'Vandaag voor iedereen dezelfde vijf. Ongeveer twee minuten.';
+
+  @override
+  String get fiveDone => 'De vijf van vandaag · klaar';
+
+  @override
+  String dailyOf(int max) {
+    return 'van $max';
+  }
+
+  @override
+  String dailyPickRight(String answer) {
+    return 'Goed: $answer.';
+  }
+
+  @override
+  String dailyPickWrong(String answer) {
+    return 'Niet helemaal: het is $answer.';
+  }
+
+  @override
+  String dailyBetter(int pct, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Beter dan $pct% van de $n spelers van vandaag.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyPlayers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Tot nu toe $n spelers vandaag.',
+      one: 'Tot nu toe 1 speler vandaag.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Een van de eerste $n vandaag: nog te weinig om te vergelijken.',
+      one: 'De eerste die vandaag speelt: nog te weinig om te vergelijken.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dailyCounting => 'De spelers van vandaag worden geteld…';
+
+  @override
+  String dailyAverage(int right, int total, String avg) {
+    return 'Je had er $right van de $total goed. Bij deze hebben lezers er gemiddeld $avg goed.';
+  }
+
+  @override
+  String get dailyUncounted =>
+      'De spelers van vandaag kunnen nu niet worden geteld.';
+
+  @override
+  String get dailyEach => 'Vraag voor vraag';
+
+  @override
+  String dailyItemRight(int pct) {
+    return '$pct% van de spelers van vandaag had het goed';
+  }
+
+  @override
+  String dailyItemGuess(String guess) {
+    return 'Gemiddelde schatting vandaag: $guess';
+  }
+
+  @override
+  String get dailyItemFew => 'Nog te weinig antwoorden om te vergelijken';
+
+  @override
+  String fiveYesterday(int score) {
+    return 'De vijf van gisteren: $score van 500.';
+  }
+
+  @override
+  String fiveShareHead(String date) {
+    return 'Astute · De vijf van vandaag · $date';
+  }
+
+  @override
+  String threeShareHeadIn(String subject, String date) {
+    return 'Astute · De drie van vandaag · $subject · $date';
+  }
+
+  @override
+  String dailyShareScore(int score, int max, int day) {
+    return '$score van $max · dag $day';
+  }
+
+  @override
+  String dailyShareScoreAlone(int score, int max) {
+    return '$score van $max';
   }
 
   @override
@@ -1912,19 +2083,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Vijf van de vijf.',
-      '6': 'Zes van de zes.',
-      'other': '$n van de $n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Vandaag heb je getraind';
-
-  @override
   String get scoreTitle => 'Astute-score';
 
   @override
@@ -1934,11 +2092,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get scoreStart => 'Je eerste antwoord zet hem in gang.';
-
-  @override
-  String scoreToday(String n) {
-    return '$n vandaag';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2453,6 +2606,23 @@ class AppLocalizationsNl extends AppLocalizations {
   String get yourJourney => 'Je reis';
 
   @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Sinds je laatste bezoek, $days dagen geleden',
+      one: 'Sinds je laatste bezoek, gisteren',
+      zero: 'Sinds je laatste bezoek, eerder vandaag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '$n sinds je laatste bezoek';
+  }
+
+  @override
   String get thePath => 'Het pad';
 
   @override
@@ -2643,8 +2813,11 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'Nog niets op de lijst. Elke kaart die je liket, bewaart of vertelt telt mee.';
+  String get topPicksTitle => 'Je tijd waard';
+
+  @override
+  String get topPicksLine =>
+      'Uitgekozen door Astute zolang de lijst van lezers nog groeit';
 
   @override
   String get readMark => 'Gelezen';
@@ -3978,6 +4151,60 @@ class AppLocalizationsNl extends AppLocalizations {
   String get unmaskWindow => 'Toon de hele reeks';
 
   @override
+  String get unmaskMisleadTitle => 'Grafieken die misleiden';
+
+  @override
+  String get unmaskMisleadLine =>
+      'De cijfers kloppen. De truc zit in de tekening.';
+
+  @override
+  String get unmaskAsk => 'Deze grafiek misleidt. Zie je hoe?';
+
+  @override
+  String get unmaskShowTrick => 'Toon de truc';
+
+  @override
+  String get unmaskHideTrick => 'Verberg de truc';
+
+  @override
+  String get unmaskOriginal => 'Origineel';
+
+  @override
+  String get unmaskCorrected => 'Gecorrigeerd';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'De as begint bij $from, niet bij nul.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'De as loopt maar van $low tot $high, dus een kleine verandering lijkt enorm.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'De as loopt van $low tot $high, dus een echte verandering lijkt vlak.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Je ziet alleen $shown, maar de cijfers beslaan $all.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Hij vergelijkt kale totalen, geen eerlijke maat.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'De as staat op zijn kop, dus een stijging lijkt een daling.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'De as staat op zijn kop, dus een daling lijkt een stijging.';
+
+  @override
   String get whatIfTrue => 'Wat als het waar is?';
 
   @override
@@ -4773,12 +5000,12 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String betsCloserNoMore(String v) {
-    return 'Nee: het is meer dan $v.';
+    return 'Fout: het is meer dan $v.';
   }
 
   @override
   String betsCloserNoLess(String v) {
-    return 'Nee: het is minder dan $v.';
+    return 'Fout: het is minder dan $v.';
   }
 
   @override
@@ -5379,7 +5606,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tfRules =>
-      'Zeg waar of onwaar en zie dan waarom. De meeste mensen zitten ernaast.';
+      'Beweringen waar de meeste mensen naast zitten. Zeg waar of niet waar en lees dan waarom. Het meet je oordeel: onderscheiden wat klopt van wat alleen voor de hand lijkt te liggen.';
 
   @override
   String get inOrderTitle => 'Op volgorde';
@@ -5389,13 +5616,13 @@ class AppLocalizationsNl extends AppLocalizations {
       'Vier momenten uit de kaarten, zonder jaartal, te zetten in de volgorde waarin ze gebeurden. Het meet je gevoel voor chronologie, de eerste toets van elke verklaring: een oorzaak komt vóór haar gevolg.';
 
   @override
-  String get inOrderFirst => 'Tik het vroegste aan';
+  String get inOrderFirst => 'Tik op het moment dat het eerst kwam.';
 
   @override
-  String get inOrderNext => 'Nu de volgende';
+  String get inOrderNext => 'Nu het moment dat daarna kwam.';
 
   @override
-  String get inOrderReady => 'Alles geplaatst. Nakijken?';
+  String get inOrderReady => 'Alles geplaatst.';
 
   @override
   String get inOrderCheck => 'Volgorde nakijken';
@@ -5421,7 +5648,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get whatYearRules =>
-      'Drie momenten, elk zonder jaartal. Draai het in: hoe dichterbij, hoe meer punten.';
+      'Drie momenten, zonder jaartal. Stel van elk het jaar in: hoe dichterbij, hoe meer punten, tot tien. Het meet je gevoel voor wanneer dingen gebeurden.';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5436,20 +5663,21 @@ class AppLocalizationsNl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'In totaal $n jaar ernaast',
-      one: 'In totaal 1 jaar ernaast',
+      other: 'In totaal $n jaar ernaast.',
+      one: 'In totaal 1 jaar ernaast.',
     );
     return '$_temp0';
   }
 
   @override
   String whatYearSaid(String guess, int points) {
-    return 'Jij zei $guess · +$points';
-  }
-
-  @override
-  String whatYearExact(int points) {
-    return 'Precies het jaar, +$points';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: 'Jij zei $guess · $points punten',
+      one: 'Jij zei $guess · 1 punt',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5493,7 +5721,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get beforeAfterRules =>
-      'Zes momenten, na elkaar. Gebeurde elk ervan voor of na het moment erboven?';
+      'Zes momenten, na elkaar. Zeg of elk vóór of na het moment erboven gebeurde. Het meet je gevoel voor volgorde.';
 
   @override
   String get beforeAfterBefore => 'Ervoor';
@@ -5655,6 +5883,171 @@ class AppLocalizationsNl extends AppLocalizations {
   String get challengeAgain => 'Nog een ronde';
 
   @override
+  String get spotRules =>
+      'Vier beweringen: drie zijn waar en één is niet waar. Vind de onware. Het meet hoe goed je een gefundeerde bewering onderscheidt van een die alleen maar goed klinkt.';
+
+  @override
+  String get spotAsk => 'Tik op de bewering die volgens jou niet waar is.';
+
+  @override
+  String get biggerRules =>
+      'Twee getallen, elk het antwoord op de vraag van een kaart. Tik op de kaart waarvan je denkt dat het antwoord groter is. Het meet je gevoel voor verhoudingen.';
+
+  @override
+  String get biggerAsk => 'Tik op de kaart met het grotere antwoord.';
+
+  @override
+  String biggerRight(String big, String small) {
+    return 'Goed: $big is meer dan $small.';
+  }
+
+  @override
+  String biggerWrong(String big, String small) {
+    return 'Fout: $big is meer dan $small.';
+  }
+
+  @override
+  String get closerRules =>
+      'Kom stap voor stap dichter bij een percentage: zeg elke keer of het boven of onder het midden ligt van wat overblijft. Het meet je schattingsvermogen.';
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) {
+    return 'Het is $said: $right van de $steps stappen goed.';
+  }
+
+  @override
+  String closerExactSteps(String said, int right, int steps) {
+    return 'Het is precies $said: $right van de $steps stappen goed.';
+  }
+
+  @override
+  String closerStepsRight(int right, int steps) {
+    return '$right van de $steps stappen goed.';
+  }
+
+  @override
+  String get magnitudeRules =>
+      'Tien, duizend of een miljoen? Kies de macht van tien die het dichtst bij het antwoord ligt. Het meet je gevoel voor schaal, dat meer telt dan de precieze cijfers.';
+
+  @override
+  String get rangeRules =>
+      'Zet je schatting en dan een bereik eromheen: hoe smaller, hoe meer het oplevert als het antwoord erin valt. Het meet je kalibratie: weten hoeveel je weet.';
+
+  @override
+  String rangeOption(int w, int pts) {
+    return '±$w · levert $pts';
+  }
+
+  @override
+  String rangeIn(String said, int pts) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: 'Het is $said: binnen je bereik, +$pts punten.',
+      one: 'Het is $said: binnen je bereik, +1 punt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rangeOut(String said) {
+    return 'Het is $said: buiten je bereik.';
+  }
+
+  @override
+  String stakeRules(int points) {
+    return 'Kies een antwoord en zet er punten op in, van $points per dag: goed, dan verdubbelt je inzet; fout, dan ben je hem kwijt. Het meet je overtuiging: inzetten op wat je weet, en alleen daarop.';
+  }
+
+  @override
+  String stakeWon(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Goed: je wint $n punten.',
+      one: 'Goed: je wint 1 punt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stakeLost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Fout: je verliest $n punten.',
+      one: 'Fout: je verliest 1 punt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get numberRules =>
+      'Stel met de knoppen één getal in en zet het vast. Het meet je precisie: hoe dichtbij je komt als je je op één getal moet vastleggen.';
+
+  @override
+  String tfRightIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Goed: het is waar.',
+      'other': 'Goed: het is niet waar.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String tfWrongIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Fout: het is waar.',
+      'other': 'Fout: het is niet waar.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String inOrderTold(int n, int of) {
+    return '$n van de $of op de goede plek.';
+  }
+
+  @override
+  String get whatYearYours => 'Jouw jaar';
+
+  @override
+  String get whatYearExactly => 'Precies het jaar';
+
+  @override
+  String beforeAfterRight(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Goed: het was $year, vóór $above.',
+      'other': 'Goed: het was $year, na $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Fout: het was $year, vóór $above.',
+      'other': 'Fout: het was $year, na $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAnswer => 'Antwoord';
+
+  @override
+  String get challengeYouSaid => 'Jij zei';
+
+  @override
+  String get challengePoints => 'Punten';
+
+  @override
+  String get challengeThisRound => 'Deze ronde';
+
+  @override
+  String get challengeLeftToday => 'Over vandaag';
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, niveau $n';
   }
@@ -5670,6 +6063,9 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get todaySeeAgainHint =>
       'De kaarten van vandaag opnieuw, op volle grootte, vanaf de eerste';
+
+  @override
+  String get yourFiveFromToday => 'Jouw vijf van vandaag';
 
   @override
   String get tuneTitle => 'Stel je mix af';
@@ -5695,6 +6091,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get tuneSave => 'Opslaan';
 
   @override
+  String get tuneHoldHint =>
+      'Houd een genre vast om de kleinere onderwerpen erin te openen';
+
+  @override
   String get shareDayTitle => 'Deel je dag';
 
   @override
@@ -5712,7 +6112,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get shareDayHeadline => 'De vijf van vandaag';
 
   @override
-  String get shareFormatPost => 'Bericht';
+  String get shareFormatCover => 'Omslag';
+
+  @override
+  String get shareFormatList => 'Lijst';
 
   @override
   String get shareFormatStory => 'Verhaal';
@@ -5923,9 +6326,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Je gewoontes';
-
-  @override
-  String get journeyChapterMemory => 'Wat je bijblijft';
 
   @override
   String get journeyChapterCoach => 'Je coach';
@@ -6215,6 +6615,59 @@ class AppLocalizationsNl extends AppLocalizations {
   String get deeperTryAgain => 'Het kwam niet door. Probeer het zo opnieuw.';
 
   @override
+  String get deeperUnavailable =>
+      'Nu even niet beschikbaar. Probeer het later opnieuw.';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n media',
+      one: '1 medium',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n u geleden',
+      zero: 'Zojuist',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dagen geleden',
+      one: 'Gisteren',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => 'Wereld';
+
+  @override
+  String get newsKeyPoints => 'De kern';
+
+  @override
+  String get newsBehind => 'Achter het nieuws';
+
+  @override
+  String get newsSources => 'Bronnen';
+
+  @override
+  String get newsMadeFrom =>
+      'Door Astute geschreven uit deze berichten, en eraan getoetst.';
+
+  @override
   String get deeperDeclined => 'Hierop kan ze geen antwoord geven.';
 
   @override
@@ -6321,11 +6774,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get bookRecommendedBy => 'Aanbevolen door';
 
   @override
-  String bookPickPhoto(String credit) {
-    return 'Foto: $credit';
-  }
-
-  @override
   String get bookFreeThisWeek => 'Gratis deze week';
 
   @override
@@ -6357,4 +6805,84 @@ class AppLocalizationsNl extends AppLocalizations {
   String bookRetold(String title, String author) {
     return 'De ideeën uit $title van $author, in Astutes eigen woorden. Het hele boek vind je in de boekhandel.';
   }
+
+  @override
+  String get foundersTitle => 'Wat oprichters lezen';
+
+  @override
+  String founderBookCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n boeken',
+      one: '1 boek',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get founderTheirBooks => 'Aanbevolen boeken';
+
+  @override
+  String founderAbout(String name) {
+    return 'Dit zijn boeken die $name in het openbaar aanraadde, met de geciteerde woorden en waar ze werden gezegd. $name heeft geen enkele band met Astute.';
+  }
+
+  @override
+  String founderPhoto(String author, String licence) {
+    return 'Foto: $author, $licence, Wikimedia Commons, bijgesneden';
+  }
+
+  @override
+  String founderAlso(String names) {
+    return 'Ook aanbevolen door $names';
+  }
+
+  @override
+  String get firstCardTitle => 'Je eerste kaart';
+
+  @override
+  String get firstCardSwipeOn => 'Veeg om verder te gaan';
+
+  @override
+  String get trialOfferTitle => 'Probeer heel Astute+.';
+
+  @override
+  String get trialOfferMark => 'Astute+.';
+
+  @override
+  String get trialOfferLine =>
+      'De vijf kaarten van vandaag wachten hoe dan ook op je.';
+
+  @override
+  String get trialStepToday => 'Vandaag';
+
+  @override
+  String get trialStepTodayLine => 'Heel Astute+ gaat open. Je betaalt niets.';
+
+  @override
+  String trialStepDay(int day) {
+    return 'Dag $day';
+  }
+
+  @override
+  String trialStepReminderLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'We sturen je een melding: nog $days dagen.',
+      one: 'We sturen je een melding: nog 1 dag.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialStepChargeLine =>
+      'Wordt elk jaar verlengd. Zeg minstens 24 uur van tevoren op en je betaalt niets.';
+
+  @override
+  String get trialOfferStart => 'Start de proefperiode';
+
+  @override
+  String get trialOfferFree => 'Gratis doorgaan';
 }

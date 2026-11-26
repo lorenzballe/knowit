@@ -1,213 +1,302 @@
 <!doctype html>
 <!-- slug: history-three-deadly-inventions -->
-<!-- Look: a page from an illustrated history book. Each invention is drawn flat in the card's ink on warm paper; the one part that did the harm is picked out in a single brick red (the lead-laden fuel, the cord that strangled him).
-     Interaction: tap each of one man's three inventions to sort it into HARMED MILLIONS or KILLED ONLY HIM. Every move is a Flip glide, and the red detail jolts and resettles.
-     Wow: on the reveal, wrong tiles shudder. Everything Flips into the true grouping, the tray collapses, tiles turn into labelled entries, and a flat red wash spreads across the millions while a small ink-tint one settles under him. -->
+<!-- The picture: the whole world as a big globe on one side, the inventor in his bed on the other, and between them, one
+     at a time, his three inventions drawn large: a leaded-petrol pump, a Freon fridge with its round motor on top, a bed
+     lift of ropes and pulleys. The reader taps who each one harmed; it flies there and waits as a small badge (a tap on
+     a badge moves it across). On the answer, wrong ones jump across, the globe takes its harms (a grey ring of lead in
+     the air, a hole torn in the ozone layer over the pole) and the lift's ropes close round the man, drawn red.
+     Drawn again at its real size whenever its room changes. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Three inventions, millions of deaths</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0}
-#world{--red:#a8261b;--paper:color-mix(in srgb,#fff 80%,var(--c));--tint:color-mix(in srgb,var(--k) 22%,var(--c));position:relative;flex:1;min-height:0;overflow:hidden;display:grid;grid-template-rows:1fr .9fr 1fr;grid-template-columns:minmax(0,1fr);padding:1.2cqh 3cqw 1.4cqh;gap:.9cqh}
-#world.done{grid-template-rows:1.35fr 1fr;gap:.7cqh;padding:1cqh 3cqw 1.1cqh}
-#world.done #tray{display:none}
-#bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
-.zone{position:relative;display:flex;flex-direction:column;min-height:0;min-width:0;z-index:1}
-.zh{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:1.6cqw;row-gap:0;font:800 max(2cqh,13px)/1.15 var(--body);letter-spacing:0;margin:0 2.6cqw .5cqh 2.6cqw}
-.zh .zt{white-space:nowrap;display:inline-block;text-transform:lowercase}
-.zh .zt::first-letter{text-transform:uppercase}
-.zh small{font:500 max(2cqh,13px)/1.15 var(--body);letter-spacing:0;opacity:.75;white-space:nowrap}
-.done .zh small{display:none}
-.done .zh{margin-bottom:.35cqh}
-#mil .zh{color:var(--red)}
-#him .zh{color:var(--k)}
-#tray .zh{color:var(--k);opacity:.8}
-.zb{flex:1;min-height:0;display:flex;gap:2.4cqw;justify-content:center;align-items:stretch;padding:.6cqh 1.5cqw;border-radius:1.6cqh;border:.25cqh dashed color-mix(in srgb,var(--k) 40%,var(--c))}
-#mil .zb{border-color:color-mix(in srgb,var(--red) 70%,var(--c))}
-#him .zb{border-color:color-mix(in srgb,var(--k) 60%,var(--c))}
-#tray .zb{border-style:dotted}
-.done .zb{padding:.4cqh 1.2cqw;gap:2cqw}
-.tile{flex:0 1 31%;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3cqh;border:0;background:var(--paper);border-radius:1.4cqh;padding:.6cqh 1.2cqw;cursor:pointer;color:var(--k);box-shadow:inset 0 0 0 .22cqh var(--k);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.tile svg{flex:1;min-height:0;width:100%;overflow:visible}
-.tile .tx{display:flex;flex-direction:column;align-items:center;gap:.2cqh;min-width:0;max-width:100%}
-.tile .nm{font:700 max(1.55cqh,12px)/1.15 var(--body);text-align:center;overflow-wrap:break-word}
-.tile .hm{display:none;font:600 max(1.45cqh,12px)/1.18 var(--body);text-align:left;color:var(--red)}
-.done .tile{flex:1 1 0;flex-direction:row;justify-content:flex-start;gap:1.8cqw;padding:.35cqh 2cqw}
-.done #him .tile{flex:0 1 76%}
-.done .tile svg{flex:0 0 auto;width:max(26px,4.8cqh);height:auto;align-self:center}
-.done .tile .tx{align-items:flex-start;flex:1}
-.done .tile .nm{text-align:left}
-.done .tile .hm{display:block}
-.done #him .tile .hm{color:var(--k)}
-.tile .ink{fill:var(--k)}
-.tile .pap{fill:var(--paper)}
-.tile .tnt{fill:var(--tint)}
-.tile .red{fill:var(--red)}
-.tile .sk{stroke:var(--k)}
-.tile .stn{stroke:color-mix(in srgb,var(--k) 55%,var(--paper))}
-.tile .sred{stroke:var(--red)}
-.tile .lbl{font:800 12px var(--body);fill:var(--k)}
-.locked .tile{cursor:default}
+#pic{flex:1;min-height:0;width:100%;display:block;user-select:none;-webkit-user-select:none}
+#pic [data-tap]{cursor:pointer}
+.say{overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Sort into two groups · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SORT THEM</span></div>
     <h2 class="q">One man's three inventions turned deadly. Which harmed millions, and which only him?</h2>
     <div class="stagebox" id="stage">
-      <div id="world" role="group" aria-label="Three inventions to sort: leaded gas, Freon, a pulley bed lift">
-        <svg id="bg" aria-hidden="true"></svg>
-        <div class="zone" id="mil"><div class="zh"><span class="zt">HARMED MILLIONS</span><small>the whole world</small></div><div class="zb" id="milB"></div></div>
-        <div class="zone" id="tray"><div class="zh" id="trayH"><span class="zt">UNSORTED</span><small>tap one</small></div><div class="zb" id="trayB">
-          <button class="tile" data-k="lead"><svg viewBox="0 0 100 100" aria-hidden="true">
-            <g class="tP"><rect class="pap sk" x="20" y="16" width="40" height="68" rx="5" stroke-width="4"/><rect class="ink" x="14" y="84" width="52" height="8" rx="2"/><rect class="tnt sk" x="27" y="23" width="26" height="18" rx="3" stroke-width="3"/></g>
-            <g class="pP"><text class="lbl" x="40" y="37" text-anchor="middle">Pb</text><path class="sk" d="M60 32h6c10 0 12 8 12 18v24c0 6-8 6-8 0" fill="none" stroke-width="4" stroke-linecap="round"/><rect class="ink" x="65" y="20" width="15" height="10" rx="2"/><path class="red" d="M40 51c-5 7-8 11-8 14.5a8 8 0 0 0 16 0c0-3.5-3-7.5-8-14.5z"/></g>
-          </svg><span class="tx"><span class="nm">Leaded gas</span><span class="hm">Lead in the air: lower IQ, more crime</span></span></button>
-          <button class="tile" data-k="freon"><svg viewBox="0 0 100 100" aria-hidden="true">
-            <g class="tP"><rect class="pap sk" x="26" y="8" width="48" height="82" rx="7" stroke-width="4"/><line class="sk" x1="26" y1="36" x2="74" y2="36" stroke-width="4"/><rect class="ink" x="30" y="90" width="8" height="5"/><rect class="ink" x="62" y="90" width="8" height="5"/></g>
-            <g class="pP"><text class="lbl" x="45" y="27" text-anchor="middle">CFC</text><rect class="ink" x="63" y="15" width="4.5" height="15" rx="2"/><rect class="ink" x="63" y="43" width="4.5" height="22" rx="2"/><g class="stn" stroke-width="3.5" stroke-linecap="round"><line x1="45" y1="50" x2="45" y2="76"/><line x1="34" y1="56" x2="56" y2="70"/><line x1="34" y1="70" x2="56" y2="56"/></g></g>
-          </svg><span class="tx"><span class="nm">Freon</span><span class="hm">Tore a hole in the ozone layer</span></span></button>
-          <button class="tile" data-k="lift"><svg viewBox="0 0 100 100" aria-hidden="true">
-            <g class="tP"><rect class="ink" x="8" y="6" width="84" height="8" rx="2"/><line class="sk" x1="62" y1="14" x2="62" y2="20" stroke-width="4"/><circle class="pap sk" cx="62" cy="28" r="9" stroke-width="4"/><rect class="tnt sk" x="16" y="64" width="22" height="16" rx="3" stroke-width="4"/><line class="sk" x1="20" y1="80" x2="17" y2="94" stroke-width="4" stroke-linecap="round"/><line class="sk" x1="34" y1="80" x2="37" y2="94" stroke-width="4" stroke-linecap="round"/><rect class="ink" x="46" y="82" width="48" height="7" rx="2"/><line class="sk" x1="50" y1="89" x2="50" y2="96" stroke-width="4"/><line class="sk" x1="90" y1="89" x2="90" y2="96" stroke-width="4"/></g>
-            <g class="pP"><path class="sred" d="M27 64 53 28a9 9 0 0 1 18 0v34" fill="none" stroke-width="3.5" stroke-linejoin="round"/><ellipse class="sred" cx="71" cy="68" rx="8" ry="6" fill="none" stroke-width="3.5"/><line class="sred" x1="27" y1="72" x2="11" y2="84" stroke-width="4" stroke-linecap="round"/><circle class="red" cx="11" cy="84" r="4"/></g>
-          </svg><span class="tx"><span class="nm">Pulley bed lift</span><span class="hm">Tangled and strangled him</span></span></button>
-        </div></div>
-        <div class="zone" id="him"><div class="zh"><span class="zt">KILLED ONLY HIM</span><small>its inventor</small></div><div class="zb" id="himB"></div></div>
-      </div>
+      <svg id="pic" role="img" aria-label="The whole world as a globe on the left, the inventor in his bed on the right, and between them his three inventions one at a time: leaded gas, Freon, a pulley bed lift. Tap the globe or the man to say who each one harmed."></svg>
     </div>
     <div id="sure"></div>
-    <p class="say" id="say">Tap an invention to sort it. <b>Tap again to switch sides.</b></p>
+    <p class="say" id="say">Who did it harm? <b>Tap the world or the man.</b></p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A clever fix can work perfectly and still harm the whole world for decades.</div>
     <div class="foot"><span class="src">Source · Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-(() => {
-  gsap.registerPlugin(Flip);
-  const world = Kit.$('world'), bg = Kit.$('bg'), say = Kit.$('say');
-  const tiles = [...world.querySelectorAll('.tile')];
-  const T = k => tiles.find(t => t.dataset.k === k);
-  const NAME = {lead: 'Leaded gas', freon: 'Freon', lift: 'Pulley bed lift'};
-  const TRUE = {lead: 'mil', freon: 'mil', lift: 'him'};
-  const place = {lead: 'tray', freon: 'tray', lift: 'tray'};
-  let locked = false, asked = false, flip = null, done = false, W = 0, H = 0, blooming = false;
-  const REST = {x: 0, y: 0};
-  tiles.forEach(t => gsap.set(t.querySelector('.pP'), REST));
+// Flat colours with one meaning each: a blue and green globe; the harm red (the rope, the words); lead's haze grey;
+// the ozone layer a pale blue ring; wood, cream and a teal blanket for the bed; the pump petrol red.
+const INK = '#10100c', RED = '#b3261e', SEA = '#2f7fe0', LAND = '#3fa35a', HAZE = '#6e6a66', OZONE = '#bfe3ff', CREAM = '#fff8ea',
+  WOOD = '#9a6236', SKIN = '#f1c9a3', HAIR = '#3a2c25', BLANKET = '#2a8f86', PUMP = '#d8452f';
+const KEYS = ['lead', 'freon', 'lift'];
+const NAME = {lead: 'Leaded gas', freon: 'Freon', lift: 'Pulley bed lift'};
+const TRUE = {lead: 'world', freon: 'world', lift: 'him'};
+const place = {lead: null, freon: null, lift: null};
+const st = {haze: 0, hole: 0, rope: 0};
+let locked = false, done = false, asked = false, G = null, busy = false;
+const svg = Kit.$('pic'), say = Kit.$('say');
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const box = el => { try { return el.getBBox(); } catch (_) { return {x: 0, y: 0, width: 0, height: 0}; } };
+const cur = () => KEYS.find(k => !place[k]);
 
-  // Behind the zones: one flat wash per group, clipped to its box, that spreads out on the reveal.
-  function drawBg() {
-    bg.innerHTML = '';
-    const f = Kit.fitSvg(bg); W = f.W; H = f.H;
-    const wr = world.getBoundingClientRect();
-    const rel = id => { const r = Kit.$(id + 'B').getBoundingClientRect(); return {x: r.left - wr.left, y: r.top - wr.top, w: r.width, h: r.height}; };
-    const m = rel('mil'), h = rel('him');
-    const defs = Kit.mk('defs', {}, bg);
-    const clip = (id, r) => { const c = Kit.mk('clipPath', {id}, defs); Kit.mk('rect', {x: r.x, y: r.y, width: r.w, height: r.h, rx: 10}, c); };
-    clip('cM', m); clip('cH', h);
-    const fr = Math.hypot(m.w, m.h) * .52, hr = Math.hypot(h.w, h.h) * .52;
-    const fl = [Kit.mk('circle', {cx: m.x + m.w / 2, cy: m.y + m.h / 2, r: done ? fr : 0, 'clip-path': 'url(#cM)', style: 'fill:color-mix(in srgb,var(--red) 28%,var(--c))'}, bg)];
-    const ht = [Kit.mk('circle', {cx: h.x + h.w / 2, cy: h.y + h.h / 2, r: done ? hr : 0, 'clip-path': 'url(#cH)', style: 'fill:color-mix(in srgb,var(--k) 12%,var(--c))'}, bg)];
-    return {fl, fr, ht, hr};
+// ---------- the drawings, each fitted to a centre and a height s ----------
+function pump(g, cx, cy, s) {
+  const w = Math.max(1.6, s * .035);
+  mk('path', {d: `M${cx + s * .18},${cy - s * .06} C${cx + s * .4},${cy - s * .08} ${cx + s * .38},${cy + s * .28} ${cx + s * .3},${cy + s * .3}`, fill: 'none', stroke: INK, 'stroke-width': w * 1.5, 'stroke-linecap': 'round'}, g);
+  mk('rect', {x: cx + s * .24, y: cy + s * .26, width: s * .12, height: s * .07, rx: s * .02, fill: INK}, g);
+  mk('rect', {x: cx - s * .24, y: cy - s * .22, width: s * .42, height: s * .64, rx: s * .06, fill: PUMP, stroke: INK, 'stroke-width': w}, g);
+  mk('rect', {x: cx - s * .16, y: cy - s * .13, width: s * .26, height: s * .17, rx: s * .03, fill: CREAM, stroke: INK, 'stroke-width': w * .8}, g);
+  mk('rect', {x: cx - s * .3, y: cy + s * .42, width: s * .54, height: s * .08, rx: s * .02, fill: INK}, g);
+  mk('circle', {cx: cx - s * .03, cy: cy - s * .34, r: s * .13, fill: CREAM, stroke: INK, 'stroke-width': w}, g);
+  mk('rect', {x: cx - s * .08, y: cy - s * .24, width: s * .1, height: s * .04, fill: INK}, g);
+}
+function fridge(g, cx, cy, s) {
+  const w = Math.max(1.6, s * .035);
+  mk('rect', {x: cx - s * .21, y: cy - s * .2, width: s * .42, height: s * .62, rx: s * .06, fill: CREAM, stroke: INK, 'stroke-width': w}, g);
+  mk('rect', {x: cx + s * .11, y: cy - s * .08, width: s * .045, height: s * .18, rx: s * .02, fill: INK}, g);
+  mk('rect', {x: cx - s * .17, y: cy + s * .42, width: s * .06, height: s * .08, fill: INK}, g);
+  mk('rect', {x: cx + s * .11, y: cy + s * .42, width: s * .06, height: s * .08, fill: INK}, g);
+  // the round motor on top, ringed with its cooling coil
+  mk('rect', {x: cx - s * .15, y: cy - s * .44, width: s * .3, height: s * .22, rx: s * .06, fill: CREAM, stroke: INK, 'stroke-width': w}, g);
+  for (let i = 1; i <= 3; i++) mk('line', {x1: cx - s * .15, x2: cx + s * .15, y1: cy - s * .44 + i * s * .055, y2: cy - s * .44 + i * s * .055, stroke: INK, 'stroke-width': w * .75}, g);
+}
+// The bed lift: a frame over a bed, two pulleys on its bar, ropes down to a sling over the mattress.
+function lift(g, cx, cy, s) {
+  const w = Math.max(1.6, s * .035);
+  // the bed under it
+  mk('rect', {x: cx - s * .4, y: cy + s * .2, width: s * .8, height: s * .1, rx: s * .02, fill: CREAM, stroke: INK, 'stroke-width': w}, g);
+  mk('rect', {x: cx - s * .42, y: cy + s * .3, width: s * .84, height: s * .06, fill: WOOD, stroke: INK, 'stroke-width': w * .8}, g);
+  for (const lx of [-.36, .32]) mk('rect', {x: cx + s * lx, y: cy + s * .36, width: s * .04, height: s * .12, fill: INK}, g);
+  mk('path', {d: `M${cx - s * .46},${cy + s * .48} V${cy - s * .42} H${cx + s * .46} V${cy + s * .48}`, fill: 'none', stroke: WOOD, 'stroke-width': w * 2.2, 'stroke-linejoin': 'round'}, g);
+  mk('path', {d: `M${cx - s * .46},${cy + s * .48} V${cy - s * .42} H${cx + s * .46} V${cy + s * .48}`, fill: 'none', stroke: INK, 'stroke-width': w * .7, 'stroke-linejoin': 'round', opacity: .5}, g);
+  for (const px of [-.12, .16]) {
+    mk('line', {x1: cx + s * px, x2: cx + s * px, y1: cy - s * .36, y2: cy + s * .06, stroke: INK, 'stroke-width': w}, g);
+    mk('circle', {cx: cx + s * px, cy: cy - s * .35, r: s * .07, fill: CREAM, stroke: INK, 'stroke-width': w}, g);
+  }
+  mk('path', {d: `M${cx - s * .18},${cy + s * .04} Q${cx + s * .02},${cy + s * .2} ${cx + s * .22},${cy + s * .04}`, fill: 'none', stroke: INK, 'stroke-width': w * 1.6, 'stroke-linecap': 'round'}, g);
+}
+const DRAW = {lead: pump, freon: fridge, lift};
+
+function globe(g, cx, cy, r) {
+  const id = 'gc' + Math.round(r);
+  const cp = mk('clipPath', {id}, mk('defs', {}, g));
+  mk('circle', {cx, cy, r}, cp);
+  mk('circle', {cx, cy, r, fill: SEA}, g);
+  const land = mk('g', {'clip-path': `url(#${id})`}, g);
+  // three continents, drawn flat
+  const blob = (pts) => mk('path', {d: 'M' + pts.map(([x, y]) => `${(cx + x * r).toFixed(1)},${(cy + y * r).toFixed(1)}`).join(' L') + ' Z', fill: LAND, stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, land);
+  blob([[-.75, -.55], [-.35, -.78], [-.05, -.6], [-.15, -.3], [-.35, -.18], [-.42, .1], [-.6, .05], [-.82, -.2]]);
+  blob([[-.3, .2], [-.05, .12], [.05, .4], [-.12, .78], [-.3, .55]]);
+  blob([[.2, -.75], [.62, -.62], [.85, -.25], [.7, .05], [.45, -.05], [.3, .25], [.12, -.1], [.25, -.4]]);
+  blob([[.45, .45], [.72, .4], [.68, .66], [.45, .62]]);
+  mk('circle', {cx, cy, r, fill: 'none', stroke: INK, 'stroke-width': 2.5}, g);
+}
+function bed(g, x, y, w, h) {
+  const k = INK, sw = 2;
+  const floor = y + h;
+  mk('rect', {x, y: y + h * .28, width: w * .07, height: h * .72, rx: w * .02, fill: WOOD, stroke: k, 'stroke-width': sw}, g);
+  mk('rect', {x: x + w * .93, y: y + h * .52, width: w * .07, height: h * .48, rx: w * .02, fill: WOOD, stroke: k, 'stroke-width': sw}, g);
+  mk('rect', {x: x + w * .07, y: y + h * .7, width: w * .86, height: h * .11, fill: WOOD, stroke: k, 'stroke-width': sw}, g);
+  mk('rect', {x: x + w * .07, y: y + h * .58, width: w * .86, height: h * .13, rx: h * .03, fill: CREAM, stroke: k, 'stroke-width': sw}, g);
+  mk('line', {x1: x + w * .12, x2: x + w * .12, y1: y + h * .81, y2: floor, stroke: k, 'stroke-width': sw * 1.6}, g);
+  mk('line', {x1: x + w * .88, x2: x + w * .88, y1: y + h * .81, y2: floor, stroke: k, 'stroke-width': sw * 1.6}, g);
+  mk('ellipse', {cx: x + w * .19, cy: y + h * .55, rx: w * .11, ry: h * .07, fill: '#ffffff', stroke: k, 'stroke-width': sw}, g);
+  // him: head on the pillow, glasses, the rest under a teal blanket
+  const hr = Math.min(w * .085, h * .13), hx = x + w * .22, hy = y + h * .47;
+  mk('path', {d: `M${x + w * .28},${y + h * .6} C${x + w * .3},${y + h * .43} ${x + w * .5},${y + h * .42} ${x + w * .62},${y + h * .47} S${x + w * .86},${y + h * .5} ${x + w * .9},${y + h * .6} Z`, fill: BLANKET, stroke: k, 'stroke-width': sw, 'stroke-linejoin': 'round'}, g);
+  mk('circle', {cx: hx, cy: hy, r: hr, fill: SKIN, stroke: k, 'stroke-width': sw}, g);
+  mk('path', {d: `M${hx - hr * .95},${hy - hr * .1} C${hx - hr},${hy - hr * 1.2} ${hx + hr * .9},${hy - hr * 1.25} ${hx + hr * .98},${hy - hr * .2} C${hx + hr * .4},${hy - hr * .55} ${hx - hr * .4},${hy - hr * .55} ${hx - hr * .95},${hy - hr * .1} Z`, fill: HAIR, stroke: k, 'stroke-width': sw * .7}, g);
+  for (const d of [-.38, .38]) mk('circle', {cx: hx + d * hr, cy: hy + hr * .12, r: hr * .3, fill: 'none', stroke: k, 'stroke-width': Math.max(1.2, sw * .7)}, g);
+  return {hx, hy, hr};
+}
+// The lift over the bed, and its ropes: hanging free, or (k) closed round his neck.
+function bedLift(g, x, y, w, h, head, k) {
+  const top = y + h * .02, sw = Math.max(2, w * .016);
+  mk('path', {d: `M${x + w * .04},${y + h} V${top} H${x + w * .97} V${y + h}`, fill: 'none', stroke: WOOD, 'stroke-width': sw * 2.4, 'stroke-linejoin': 'round'}, g);
+  mk('path', {d: `M${x + w * .04},${y + h} V${top} H${x + w * .97} V${y + h}`, fill: 'none', stroke: INK, 'stroke-width': 1.2, 'stroke-linejoin': 'round', opacity: .5}, g);
+  const p1 = x + w * .3, p2 = x + w * .55, pr = Math.max(4, w * .03);
+  const rope = k > 0 ? RED : INK, rw = Math.max(1.8, w * .014) * (k > 0 ? 1.5 : 1);
+  // the ropes: from each pulley down to the sling round his shoulders, and (on the answer) a loop round his neck
+  const nx = head.hx + head.hr * .2, ny = head.hy + head.hr * 1.1;
+  const a = mk('path', {d: `M${p1},${top + pr} L${nx},${ny - head.hr * .2}`, fill: 'none', stroke: rope, 'stroke-width': rw, 'stroke-linecap': 'round'}, g);
+  const b = mk('path', {d: `M${p2},${top + pr} L${x + w * .5},${y + h * .5}`, fill: 'none', stroke: rope, 'stroke-width': rw, 'stroke-linecap': 'round'}, g);
+  if (k > 0) {
+    const loop = mk('ellipse', {cx: nx, cy: ny, rx: head.hr * 1.05, ry: head.hr * .45, fill: 'none', stroke: RED, 'stroke-width': rw}, g);
+    const L = 2 * Math.PI * head.hr;
+    loop.setAttribute('stroke-dasharray', `${(L * k).toFixed(1)} ${L.toFixed(1)}`);
+    mk('path', {d: `M${x + w * .5},${y + h * .5} Q${x + w * .4},${y + h * .62} ${nx + head.hr},${ny}`, fill: 'none', stroke: RED, 'stroke-width': rw, 'stroke-linecap': 'round', opacity: Math.min(1, k * 1.5)}, g);
+  }
+  for (const px of [p1, p2]) mk('circle', {cx: px, cy: top + pr, r: pr, fill: CREAM, stroke: INK, 'stroke-width': 1.6}, g);
+  return [a, b];
+}
+
+// ---------- layout and drawing ----------
+function build() {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  const fs = Math.max(13, Math.min(15, W / 21));
+  const all = !cur();
+  // A band across the top: the invention in hand (and the sorted ones as badges each side), or, once all are
+  // sorted, the names of the two sides; the world and the man fill the rest.
+  const topH = done ? fs * 5.45 : Math.max(fs * 3.6, H * .41);
+  const lab = done ? 0 : fs * 1.7;
+  const y0 = topH, gh = H - topH - lab;
+  const root = mk('g', {}, svg);
+  // the world: on the answer it keeps to its own half, rings and all, so it never runs into the bed
+  // (the world's side is the wider one on the answer: millions against one man)
+  const colW = W * .56;
+  const r = done ? Math.max(20, Math.min((colW / 2 - 3) / 1.3, (gh / 2 - 3) / 1.3)) : Math.max(24, Math.min(W * .23, gh * .5 - 3));
+  const gx = done ? colW / 2 : Math.max(r + 6, W * .25), gyc = y0 + gh / 2;
+  const world = mk('g', {'data-tap': '', 'data-side': 'world'}, root);
+  mk('rect', {x: 0, y: y0 - 4, width: W * .48, height: gh + lab + 4, fill: 'transparent'}, world);
+  if (done) {
+    // Lead in the air: a grey ring wrapped round the world. The ozone layer: a pale ring, torn open over the pole.
+    const hr = r * 1.1, hw = r * .16, C = 2 * Math.PI * hr;
+    mk('circle', {cx: gx, cy: gyc, r: hr, fill: 'none', stroke: HAZE, 'stroke-width': hw, 'stroke-dasharray': `${(C * st.haze).toFixed(1)} ${C.toFixed(1)}`, transform: `rotate(-90 ${gx} ${gyc})`, opacity: .85}, world);
+    const or = r * 1.22, gapA = 1.05 * st.hole, C2 = 2 * Math.PI * or, ow = Math.max(4, r * .09);
+    const arc = {cx: gx, cy: gyc, r: or, fill: 'none', 'stroke-dasharray': `${(C2 * (1 - gapA / (2 * Math.PI))).toFixed(1)} ${C2.toFixed(1)}`, transform: `rotate(${(90 + gapA / 2 * 180 / Math.PI).toFixed(1)} ${gx} ${gyc})`};
+    mk('circle', Object.assign({stroke: INK, 'stroke-width': ow + 3}, arc), world);
+    mk('circle', Object.assign({stroke: OZONE, 'stroke-width': ow}, arc), world);
+  }
+  globe(world, gx, gyc, r);
+  // the man
+  const bw = done ? Math.min(W * .41, gh * 1.45) : Math.min(W * .5, gh * 1.45), bh = Math.min(gh, bw * .78), bx = W - bw - 2, by = y0 + (gh - bh) / 2;
+  const him = mk('g', {'data-tap': '', 'data-side': 'him'}, root);
+  mk('rect', {x: W * .5, y: y0 - 4, width: W * .5, height: gh + lab + 4, fill: 'transparent'}, him);
+  const head = bed(him, bx, by, bw, bh);
+  const liftThere = place.lift === 'him' || done;
+  if (liftThere) bedLift(him, bx, by, bw, bh, head, done ? st.rope : 0);
+
+  // labels under the two sides, while sorting
+  if (!done) {
+    const t1 = mk('text', {x: gx, y: H - fs * .45, 'text-anchor': 'middle', fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, root);
+    t1.textContent = 'the whole world';
+    const t2 = mk('text', {x: bx + bw / 2, y: H - fs * .45, 'text-anchor': 'middle', fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, root);
+    t2.textContent = 'only him';
   }
 
-  function bloom() {
-    const b = drawBg();
+  // the top band
+  const bs = Math.min(topH * .62, W * .13), badges = {world: [], him: []};
+  if (!done) {
+    // sorted inventions wait as badges on their side; a tap moves one across
+    const sides = {world: KEYS.filter(k => place[k] === 'world'), him: KEYS.filter(k => place[k] === 'him' && !(k === 'lift'))};
+    sides.world.forEach((k, i) => badges.world.push(badge(root, k, 4 + bs * .55 + i * (bs * 1.05), topH * .5, bs)));
+    sides.him.forEach((k, i) => badges.him.push(badge(root, k, W - 4 - bs * .55 - i * (bs * 1.05), topH * .5, bs)));
+    if (place.lift === 'him') { const h = mk('g', {'data-tap': '', 'data-key': 'lift'}, root); mk('rect', {x: bx, y: by, width: bw, height: bh * .45, fill: 'transparent'}, h); }
+    const k = cur();
+    if (k) {
+      // the invention in hand, large, with its name
+      const s = Math.min((topH - fs * 2) / .95, W * .34);
+      const g = mk('g', {id: 'hand'}, root);
+      DRAW[k](g, W / 2, s * .47 + 2, s);
+      const nm = mk('text', {x: W / 2, y: topH - fs * .55, 'text-anchor': 'middle', fill: INK, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 1.15}, g);
+      nm.textContent = NAME[k];
+      G = {hand: g, s};
+    }
+  } else {
+    // the answer: each side named with what it did
+    const L = mk('g', {}, root), R = mk('g', {}, root);
+    const lines = (g, x, anchor, rows) => rows.forEach(([txt, col, wt], i) => { const t = mk('text', {x, y: fs * 1.05 + i * fs * 1.28, 'text-anchor': anchor, fill: col, 'font-family': 'var(--body)', 'font-weight': wt, 'font-size': fs}, g); t.textContent = txt; });
+    lines(L, 2, 'start', [['Harmed millions', RED, 800], ['lead in the air:', INK, 600], ['lower IQ, more crime', INK, 600], ['a hole in the ozone', INK, 600]]);
+    lines(R, W - 2, 'end', [['Killed only him', RED, 800], ['strangled by', INK, 600], ['its ropes', INK, 600]]);
+    // the two inventions that went round the world, standing at its foot either side of the torn pole
+    // (too small to read on a small phone, they stay out: the words beside the world name them)
+    const s2 = Math.min(r * .66, gh * .4), fy = Math.min(gyc + r * .3, y0 + gh - s2 * .52);
+    if (s2 >= 26) {
+      const pg = mk('g', {}, root); pump(pg, Math.max(s2 * .32, gx - r * 1.02), fy, s2);
+      const fg = mk('g', {}, root); fridge(fg, gx + r * 1.06, fy, s2);
+    }
+    L.style.opacity = R.style.opacity = st.rope > .2 ? 1 : 0;
+    G = {L, R};
+  }
+  G = Object.assign(G || {}, {W, H, gx, gyc, r, bx, by, bw, bh, badges, topH, bs});
+  // taps
+  root.querySelectorAll('[data-side]').forEach(el => el.addEventListener('click', () => pick(el.dataset.side)));
+  root.querySelectorAll('[data-key]').forEach(el => el.addEventListener('click', e => { e.stopPropagation(); swap(el.dataset.key); }));
+}
+function badge(root, k, cx, cy, s) {
+  const g = mk('g', {'data-tap': '', 'data-key': k}, root);
+  mk('circle', {cx, cy, r: s * .56, fill: CREAM, stroke: INK, 'stroke-width': 2}, g);
+  DRAW[k](g, cx, cy + s * .02, s * .78);
+  return g;
+}
+
+// ---------- what the reader does ----------
+function pick(side) {
+  if (locked || busy) return;
+  const k = cur(); if (!k) return;
+  place[k] = side; Kit.haptic('selection');
+  const hand = G.hand;
+  const go = () => { busy = false; build(); if (!Kit.calm && G.hand) gsap.from(G.hand, {opacity: 0, scale: .7, transformOrigin: '50% 50%', duration: .4, ease: 'back.out(1.8)'}); after(); };
+  if (Kit.calm || !hand) return go();
+  busy = true;
+  const tx = side === 'world' ? G.gx - G.W / 2 : (G.bx + G.bw / 2) - G.W / 2, ty = (side === 'world' ? G.gyc : G.by + G.bh / 2) - G.topH / 2;
+  gsap.to(hand, {x: tx, y: ty, scale: .35, transformOrigin: '50% 50%', opacity: .2, duration: .42, ease: 'power2.in', onComplete: go});
+}
+function swap(k) {
+  if (locked || busy || !place[k]) return;
+  place[k] = place[k] === 'world' ? 'him' : 'world'; Kit.haptic('selection'); build();
+}
+function after() {
+  if (!cur() && !asked) {
+    asked = true; sure.on();
+    say.innerHTML = 'Happy with that? Tap a badge to move it, <b>then say how sure you are.</b>';
+  }
+}
+
+function reveal() {
+  locked = true;
+  const wrong = KEYS.filter(k => place[k] !== TRUE[k]);
+  const go = () => {
+    done = true;
+    Object.assign(st, Kit.calm ? {haze: 1, hole: 1, rope: 1} : {haze: 0, hole: 0, rope: 0});
+    build();
     if (Kit.calm) return;
-    blooming = true;
-    gsap.fromTo(b.fl, {attr: {r: 0}}, {attr: {r: b.fr}, duration: 1.2, ease: 'expo.out'});
-    gsap.fromTo(b.ht, {attr: {r: 0}}, {attr: {r: b.hr}, duration: .9, delay: .35, ease: 'power3.out', onComplete: () => { blooming = false; }});
-  }
-
-  function move(tile, zone) {
-    if (flip) flip.progress(1);
-    gsap.killTweensOf(tile); gsap.set(tile, {scale: 1});
-    const state = Flip.getState(tiles);
-    Kit.$(zone + 'B').appendChild(tile);
-    if (Kit.calm) return;
-    flip = Flip.from(state, {duration: .6, ease: 'power3.inOut', absolute: true});
-    gsap.fromTo(tile.querySelector('.pP'), {x: 8, y: -6}, {x: REST.x, y: REST.y, duration: .9, ease: 'elastic.out(1,.45)', delay: .25});
-  }
-
-  tiles.forEach(t => {
-    t.addEventListener('pointerdown', () => { if (!locked && !Kit.calm) gsap.to(t, {scale: .93, duration: .08, ease: 'power2.out'}); });
-    const up = () => { if (!Kit.calm && !locked) gsap.to(t, {scale: 1, duration: .35, ease: 'back.out(3)'}); };
-    t.addEventListener('pointerleave', up); t.addEventListener('pointercancel', up);
-    t.addEventListener('click', () => {
-      if (locked) return;
-      const k = t.dataset.k, nxt = place[k] === 'mil' ? 'him' : 'mil';
-      place[k] = nxt; Kit.haptic('selection'); move(t, nxt);
-      if (!Object.values(place).includes('tray') && !asked) {
-        asked = true; sure.on();
-        Kit.$('trayH').innerHTML = '<span class="zt">ALL SORTED</span><small>switch any you like</small>';
-        say.innerHTML = 'Happy with your sort? <b>Say how sure you are.</b>';
-      }
-    });
-  });
-
-  function reveal() {
-    locked = true; world.classList.add('locked');
-    const wrong = tiles.filter(t => place[t.dataset.k] !== TRUE[t.dataset.k]);
-    const go = () => {
-      if (flip) flip.progress(1);
-      gsap.set(tiles, {scale: 1, x: 0});
-      const state = Flip.getState(['#mil', '#him', ...tiles]);
-      world.classList.add('done'); done = true;
-      ['lead', 'freon'].forEach(k => Kit.$('milB').appendChild(T(k)));
-      Kit.$('himB').appendChild(T('lift'));
-      if (Kit.calm) { drawBg(); return; }
-      Flip.from(state, {duration: .95, ease: 'back.inOut(1.3)', absolute: tiles, nested: true, stagger: .06,
-        onComplete: () => {
-          bloom();
-          gsap.from('#mil .zh', {scale: 1.3, transformOrigin: 'left center', duration: .7, ease: 'back.out(2.2)'});
-          gsap.from('.hm', {opacity: 0, y: 6, stagger: .12, duration: .5, ease: 'power3.out'});
-          tiles.forEach((t, i) => gsap.fromTo(t.querySelector('.pP'), {x: -9, y: 7}, {x: REST.x, y: REST.y, duration: 1.2, delay: i * .1, ease: 'elastic.out(1.1,.35)'}));
-          Kit.haptic('success');
-        }});
-    };
-    if (Kit.calm || !wrong.length) return go();
-    gsap.to(wrong, {x: '+=6', duration: .05, repeat: 7, yoyo: true, ease: 'sine.inOut', onComplete: () => { gsap.set(wrong, {x: 0}); go(); }});
-  }
-
-  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-    const ok = Object.keys(TRUE).every(k => place[k] === TRUE[k]);
-    const list = z => Object.keys(place).filter(k => place[k] === z).map(k => NAME[k]).join(', ') || 'none';
-    const said = `Millions: ${list('mil')} · Only him: ${list('him')}`;
-    Kit.answer({choice: said, correct: ok, sure: pct});
-    // The tiles now carry the story; the stage gets the room the prose used to take.
-    say.innerHTML = ''; say.style.display = 'none';
-    sure.grade(ok, pct, ok ? 'All three sorted right' : 'Not quite: see the true sort');
-    Kit.show('keep');
-    reveal();
-  });
-
-  let lastW = 0, lastH = 0, raf = 0;
-  new ResizeObserver(() => {
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => {
-      const r = world.getBoundingClientRect();
-      if (blooming || (Math.abs(r.width - lastW) < 1 && Math.abs(r.height - lastH) < 1)) return;
-      lastW = r.width; lastH = r.height; drawBg();
-    });
-  }).observe(world);
-
-  Kit.onShow.card = () => { drawBg(); };
-  Kit.onEnter.card = () => {
-    if (Kit.calm) return;
-    gsap.from('.zh', {x: -18, opacity: 0, stagger: .08, duration: .6, ease: 'power3.out'});
-    gsap.from(tiles, {y: -40, opacity: 0, rotation: i => [-7, 5, -4][i], stagger: .1, duration: .8, ease: 'back.out(1.7)', delay: .15});
-    tiles.forEach((t, i) => gsap.fromTo(t.querySelector('.pP'), {x: 12, y: -9}, {x: REST.x, y: REST.y, duration: 1.3, delay: .35 + i * .1, ease: 'elastic.out(1,.4)'}));
+    const tl = gsap.timeline({onUpdate: build});
+    tl.to(st, {haze: 1, duration: 1.1, ease: 'power2.inOut'}, .1);
+    tl.to(st, {hole: 1, duration: .8, ease: 'power2.out'}, .7);
+    tl.to(st, {rope: 1, duration: .9, ease: 'power2.inOut'}, 1.1);
+    Kit.haptic('success');
   };
-  Kit.play.card = async () => {
-    const wait = ms => new Promise(r => setTimeout(r, ms));
-    for (const k of ['lead', 'freon', 'lift', 'lift']) { T(k).click(); await wait(Kit.calm ? 40 : 120); }
-    await wait(Kit.calm ? 60 : 700);
-    Kit.$('sure').querySelector('[data-v="80"]').click();
-    await wait(Kit.calm ? 200 : 2600);
-  };
-})();
+  if (Kit.calm || !wrong.length) return go();
+  const els = [...svg.querySelectorAll('[data-key]')].filter(e => wrong.includes(e.dataset.key));
+  if (!els.length) return go();
+  gsap.to(els, {x: '+=5', duration: .05, repeat: 7, yoyo: true, ease: 'sine.inOut', onComplete: go});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = KEYS.every(k => place[k] === TRUE[k]);
+  const list = z => KEYS.filter(k => place[k] === z).map(k => NAME[k]).join(', ') || 'none';
+  Kit.answer({choice: `Millions: ${list('world')} · Only him: ${list('him')}`, correct: ok, sure: pct});
+  // The sort now carries the story; the picture gets the room the line used to take.
+  Kit.hide('say');
+  sure.grade(ok, pct, ok ? 'All three sorted right' : 'Not quite: see the true sort');
+  Kit.show('keep');
+  reveal();
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G || !G.hand) return;
+  gsap.from(G.hand, {y: -14, opacity: 0, rotation: -6, transformOrigin: '50% 50%', duration: .7, ease: 'back.out(1.7)', delay: .15});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (const side of ['world', 'world', 'him']) { svg.querySelector(`[data-side="${side}"]`).dispatchEvent(new MouseEvent('click', {bubbles: true})); await wait(Kit.calm ? 60 : 650); }
+  await wait(Kit.calm ? 60 : 300);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(Kit.calm ? 200 : 2600);
+};
+// Drawn again at the size it now has whenever its room changes: when the answer comes in, never shrunk whole.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; if (!busy) build(); } }).observe(svg); }
 Kit.single();
 </script>
 </html>

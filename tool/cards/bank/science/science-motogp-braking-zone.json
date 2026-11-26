@@ -7,8 +7,8 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "How many metres does a MotoGP bike need from 350 to 100 km/h?",
-  "answer": "From 350 to 100 km/h takes only about 200 m of road. Rossi grabs the brakes about 200 m from the corner, so losing 250 km/h in that short stretch means the squeeze must be exact.",
-  "move": "From 350 to 100 km/h takes only about 200 m of road.",
+  "answer": "From 350 to 100 km/h takes about 300 m of road, five seconds on the brakes: at Mugello's first corner Brembo measures 288 m from over 350 to 90 km/h. Losing 250 km/h in that short stretch means the squeeze must be exact.",
+  "move": "From 350 to 100 km/h takes about 300 m of road: five seconds on the brakes.",
   "keywords": [
     "motogp",
     "valentino rossi",
@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A speed-versus-distance graph of a MotoGP bike braking from 350 km/h toward a corner 420 m away, with red dashes showing Valentino Rossi's braking point. Asks how many metres the bike needs to slow from 350 to 100 km/h."
+    "label": "The rider's view down a MotoGP straight, drawn flat in perspective: braking boards at 300, 200 and 100 m before a right-hand corner, the bike and rider from behind, the speed in big numbers. The reader taps Start, then holds Brake: the rider sits up and the bike slows the way Brembo measures. Asks how many metres a MotoGP bike needs from 350 to 100 km/h."
   },
   "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=9AvpiROfyUM&t=129s",

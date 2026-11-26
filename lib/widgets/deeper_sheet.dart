@@ -52,6 +52,7 @@ import 'deeper/pieces.dart';
 import 'motion.dart' show PopIn, RiseIn;
 import 'premium.dart';
 import 'reveal_body.dart' show sourceKindName;
+import 'source_foot.dart';
 
 /// Where a tap on a card's source goes: set once by the app (main.dart), so
 /// a card's back, a page's source and the detail screen all open the same
@@ -65,7 +66,7 @@ abstract final class GoDeeper {
 /// in, once it is turned on.
 bool cardAiOn(AppState app, String language) =>
     debugToolsOn ||
-    Flags.on('cardAi', app.remoteContext(language), fallback: false);
+    AppState.kCardAiFlag.on(app.remoteContext(language));
 
 /// Opens Go deeper on [pill].
 Future<void> showDeeperSheet(BuildContext context, AppState app, Pill pill) {
@@ -573,20 +574,49 @@ class _DeeperSheetState extends State<DeeperSheet>
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 6,
                                           ),
-                                          child: DeeperSource(
-                                            key: const ValueKey(
-                                              'deeper-source',
-                                            ),
-                                            look: look,
-                                            source: pill.source,
-                                            kind: sourceKindName(
-                                              l,
-                                              pill.sourceKind,
-                                            ),
-                                            draw: _draw(parts.length),
-                                            open: _original.isEmpty
-                                                ? null
-                                                : _openSource,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              DeeperSource(
+                                                key: const ValueKey(
+                                                  'deeper-source',
+                                                ),
+                                                look: look,
+                                                source: pill.source,
+                                                kind: sourceKindName(
+                                                  l,
+                                                  pill.sourceKind,
+                                                ),
+                                                draw: _draw(parts.length),
+                                                open: _original.isEmpty
+                                                    ? null
+                                                    : _openSource,
+                                              ),
+                                              // Being tried: reporting the
+                                              // card under the source it
+                                              // would be checked against
+                                              // (source_foot.dart), with A
+                                              // and with D.
+                                              if (sourceFoot ==
+                                                      SourceFoot.line ||
+                                                  sourceFoot ==
+                                                      SourceFoot.links) ...[
+                                                const SizedBox(height: 10),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional.only(
+                                                        start: 4,
+                                                      ),
+                                                  child: ReportLine(
+                                                    key: const ValueKey(
+                                                      'deeper-report',
+                                                    ),
+                                                    pill: pill,
+                                                  ),
+                                                ),
+                                              ],
+                                            ],
                                           ),
                                         ),
                                       ),
@@ -1442,12 +1472,14 @@ class _WhyNot extends StatelessWidget {
       AskWhyNot.tomorrow => l.deeperTomorrow,
       AskWhyNot.declined => l.deeperDeclined,
       AskWhyNot.plus => l.deeperPlusOnly,
+      AskWhyNot.unavailable => l.deeperUnavailable,
       AskWhyNot.later => l.deeperTryAgain,
     };
     final IconData icon = switch (why) {
       AskWhyNot.tomorrow => Icons.bedtime_rounded,
       AskWhyNot.declined => Icons.do_not_disturb_on_rounded,
       AskWhyNot.plus => Icons.lock_rounded,
+      AskWhyNot.unavailable => Icons.schedule_rounded,
       AskWhyNot.later => Icons.cloud_off_rounded,
     };
     final String? detail = debugToolsOn ? none.detail : null;

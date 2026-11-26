@@ -19,6 +19,14 @@
 //
 // Its photographs carry the app's corners and the save and share, to be looked at as a reader would.
 // With BARE=1 they are the page alone, as the app's own camera wants them to set inside its frame.
+//
+// A free card is told the foot a card of the day has, as the app tells it (lib/widgets/pill_card_stack.dart):
+// FOOT is the way the app's build sends (lib/widgets/source_foot.dart: line, stack, pill or links; line where
+// none is named), and LANG_SHOT the reader's language (English where none is named), whose words the app sends
+// with it: Go deeper's and Why this card's names, and the subject's (lib/l10n/app_<lang>.arb). With WHY=0 it is
+// a card that is not one of the day's, with no Why this card to open, as on Explore.
+//
+//   FOOT=links LANG_SHOT=it node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html [out-dir]
 const path = require('path'), fs = require('fs');
 let pw; try { pw = require('playwright'); } catch { pw = require('/opt/node22/lib/node_modules/playwright'); }
 const file = path.resolve(process.argv[2]); const out = path.resolve(process.argv[3] || path.join(path.dirname(file), 'check'));
@@ -155,6 +163,11 @@ async function single() {
   const graded = meta.kind ? ['pickOne', 'number', 'estimate'].includes(meta.kind) || (meta.kind === 'page' && web.graded !== false) : true;
   const name = path.basename(file, '.html');
   const bridge = fs.readFileSync(path.join(KIT, 'astute-bridge.js'), 'utf8');
+  // The reader's words, as the app has them: its strings in their language, English where it has none.
+  const lang = process.env.LANG_SHOT || 'en', foot = process.env.FOOT || 'line', day = process.env.WHY !== '0';
+  const arb = l => path.join(__dirname, '../../lib/l10n', `app_${l}.arb`);
+  const words = JSON.parse(fs.readFileSync(fs.existsSync(arb(lang)) ? arb(lang) : arb('en'), 'utf8'));
+  const subjectName = (String(words.subjectName || '').match(new RegExp(`(?:^|\\s)${topic}\\{([^}]*)\\}`)) || [])[1];
   const ORIGIN = 'https://card.astute/';
   const browser = await pw.chromium.launch({executablePath});
   let problems = 0;
@@ -164,8 +177,15 @@ async function single() {
     const page = await browser.newPage({viewport: {width: vp.width, height: vp.height}, deviceScaleFactor: 2});
     const heard = [], errors = [], asked = [];
     await page.exposeFunction('__astuteHeard', text => heard.push(JSON.parse(text)));
-    const env = {mode: 'app', theme: opts.theme || 'dark', lang: 'en', calm: !!opts.calm, sound: false, touch: web.touch || 'taps', platform: 'ios', shown: true,
-      size: {w: vp.width, h: vp.height}, safe: {top: 0, right: 0, bottom: 0, left: 0}, corner: CORNER, subject: {key: topic}};
+    // The foot as a card of the day has it in the app (lib/widgets/pill_card_stack.dart): Go deeper's name before
+    // the source, and Why this card beside it, in the reader's words. With stack the app says why on the front of
+    // every card of the day instead, the line under the head: the sheet's own name, as on a card dealt at its
+    // reader's level (lib/widgets/why_sheet.dart, cardNote).
+    const env = {mode: 'app', theme: opts.theme || 'dark', lang, calm: !!opts.calm, sound: false, touch: web.touch || 'taps', platform: 'ios', shown: true,
+      size: {w: vp.width, h: vp.height}, safe: {top: 0, right: 0, bottom: 0, left: 0}, corner: CORNER,
+      subject: subjectName ? {key: topic, name: subjectName} : {key: topic},
+      note: foot === 'stack' && day ? words.whyTitle : null,
+      foot, deeper: words.deeperTitle, why: day ? words.whyTitle : null};
     await page.addInitScript(([e, b]) => { window.ASTUTE_ENV = e; window.ASTUTE_SEND = t => window.__astuteHeard(t); (0, eval)(b); }, [env, bridge]);
     page.on('pageerror', e => errors.push(e.message));
     page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });

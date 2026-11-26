@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Four copies of three orbiting stars, released at rest with starting errors of 1,000,000 km, 1,000 km and 1 km. The page asks how much longer each copy can be predicted, with options a million times, a thousand times, ten times, or less than twice.",
+    "label": "Three suns of 3, 4 and 5 solar masses at rest on a triangle, in four copies laid over each other: one exact, three nudged 1,000,000 km, 1,000 km and 1 km. The reader bets how much longer the 1 km copy stays in step than the 1,000,000 km one, then watches them move while a ruler fills: the copies part in about years 5.3, 7.3 and 9.6.",
     "graded": false
   },
   "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",

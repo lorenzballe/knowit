@@ -4,12 +4,13 @@
 /// Place your bet and Your number.
 ///
 /// A screen plays the cards its shelf deals today ([BetBlock.deal]), one at
-/// a time, each the whole screen: the card's question on its card of
-/// paper, and under it the game shaped to what it asks — two figures to
-/// tap, a track halving, a staircase, a track and its widths, the amounts
-/// and the stakes, a counter and its steppers — with large targets and a
-/// click in the hand at every step. Once laid, the bet is told on the card
-/// itself, with the first lines of why, and the next card is a tap away.
+/// a time: the card's question on its subject's card, as the app's cards
+/// are everywhere, set as large as the card takes; and under it, on the
+/// page, the game shaped to what it asks — two cards to choose between, a
+/// track halving, a row of sizes, a track and its widths, the amounts and
+/// the stakes, a number and its steppers — in the app's own controls. Once
+/// laid, the bet is told on the card, with why, and the next card is a tap
+/// away.
 ///
 /// Every bet is laid exactly as its tile lays it — the same function
 /// ([pickBigger], [stepCloser], [layMagnitude], [layRange], [layStake],
@@ -30,8 +31,6 @@ import '../../../utils/share_link.dart';
 import '../../../widgets/explore/challenge_kit.dart';
 import '../../../widgets/explore/challenge_screen.dart';
 import '../../../widgets/explore/challenges.dart';
-import '../../../widgets/explore/parts.dart' show CardHead;
-import '../../../widgets/scaled_text.dart';
 import '../../explore_block.dart';
 import 'answers.dart';
 import 'bets_day.dart';
@@ -98,17 +97,21 @@ abstract class BetChallenge extends ChallengeGame {
   /// The buttons at the foot while round [i] is played, if any.
   Widget? actions(BuildContext context, GameKit kit, int i) => null;
 
-  /// What the head says beside the picture while round [i] is played.
+  /// What the round says over its card while round [i] is played.
   Widget? status(BuildContext context, GameKit kit, int i) => null;
 
   /// What the round came to besides how many came in: the points.
-  List<Widget> chips(BuildContext context, GameKit kit) => const [];
+  List<ChallengeFigure> roundFigures(BuildContext context) => const [];
 
   /// The score: how many came in, of how many.
   (int, int) get score => (
     [for (int i = 0; i < count; i++) rightAt(i)].where((r) => r == true).length,
     count,
   );
+
+  /// The report's line, reading the score.
+  String scoreLine(AppLocalizations l, int right, int of) =>
+      right == of ? l.gameAllRight : l.betsScoreSentence(right, of);
 
   List<bool?> get marks => [for (int i = 0; i < count; i++) rightAt(i)];
 
@@ -137,8 +140,10 @@ abstract class BetChallenge extends ChallengeGame {
       : l.gamePlay;
 
   @override
-  (IconData, String)? note(AppLocalizations l) =>
-      (Icons.today_rounded, l.gameCardsToday(count));
+  List<List<Pill>> get today => [for (int i = 0; i < count; i++) pillsAt(i)];
+
+  @override
+  List<bool?> get todayMarks => marks;
 
   @override
   void start() {}
@@ -201,8 +206,8 @@ abstract class BetChallenge extends ChallengeGame {
       score: '$right',
       of: '$of',
       label: l.nOfM(right, of),
-      line: right == of ? l.gameAllRight : l.betsScoreSentence(right, of),
-      chips: chips(context, kit),
+      line: scoreLine(l, right, of),
+      figures: roundFigures(context),
       board: GameSquares(marks: board),
       review: review(context),
     );
@@ -225,104 +230,24 @@ abstract class BetChallenge extends ChallengeGame {
     );
   }
 
-  /// The card of round [i]: its subject, and its question — or once told,
-  /// the question smaller, what the bet came to, and the first lines of
-  /// why.
+  /// The card of round [i], its subject's card: its question, set as large
+  /// as the card takes — or once told, the question smaller, what the bet
+  /// came to, and why.
   Widget card(BuildContext context, int i, {String? told}) {
     final Pill p = cards[i].pill;
-    return GamePaper(
+    return SubjectCard(
       key: ValueKey('$id-card-${p.id}'),
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          CardHead(
-            pill: p,
-            ink: kArtInk,
-            labelInk: kArtInk.withValues(alpha: 0.62),
-          ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: told == null
-                ? ScaledText(
-                    text: p.question,
-                    min: 15,
-                    max: 28,
-                    alignment: Alignment.centerLeft,
-                    styleFor: (size) => AppText.display(
-                      size: size,
-                      weight: FontWeight.w600,
-                      height: 1.14,
-                      spacing: -0.02 * size,
-                      color: kArtInk,
-                    ),
-                  )
-                : _Told(question: p.question, verdict: told, why: p.answer),
-          ),
-        ],
-      ),
+      pill: p,
+      child: told == null
+          ? SubjectWords(text: p.question, ink: p.ink)
+          : SubjectTold(
+              pill: p,
+              question: p.question,
+              verdict: told,
+              why: p.answer,
+            ),
     );
   }
-}
-
-/// A bet told on its card: the question, smaller; what it came to; and the
-/// first lines of why. It scrolls where it must.
-class _Told extends StatelessWidget {
-  const _Told({
-    required this.question,
-    required this.verdict,
-    required this.why,
-  });
-
-  final String question;
-  final String verdict;
-  final String why;
-
-  @override
-  Widget build(BuildContext context) => Align(
-    // In the middle of its card where it has room; scrolled where not.
-    alignment: AlignmentDirectional.centerStart,
-    child: SingleChildScrollView(
-      child: Semantics(
-        liveRegion: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              question,
-              style: AppText.body(
-                size: 14.5,
-                weight: FontWeight.w600,
-                height: 1.3,
-                color: kArtInk.withValues(alpha: 0.7),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              verdict,
-              style: AppText.display(
-                size: 23,
-                weight: FontWeight.w700,
-                height: 1.18,
-                spacing: -0.4,
-                color: kArtInk,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              firstLines(why),
-              style: AppText.body(
-                size: 15.5,
-                weight: FontWeight.w500,
-                height: 1.4,
-                color: kArtInk.withValues(alpha: 0.86),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
 }
 
 /// The round of a game of bets: the head, the bars of the round, the card
@@ -391,18 +316,21 @@ class _BetPlayState extends State<_BetPlay> {
         ),
       ),
       actions: settled
-          ? GameButton(
+          ? GameButton.primary(
               key: ValueKey('${_game.id}-next-card'),
               label: _game.next == null ? l.gameSeeResult : l.gameNextCard,
-              icon: Icons.arrow_forward_rounded,
-              face: kArtInk,
-              ink: kArtCream,
-              height: 72,
               onTap: _next,
             )
           : _game.actions(context, kit, _at),
     );
   }
+}
+
+/// Two sentences, one after the other, as the reader's language joins
+/// them: with a space, or with none after a full stop of its own.
+String _both(BuildContext context, String a, String b) {
+  final String language = Localizations.localeOf(context).languageCode;
+  return language == 'ja' || language == 'zh' ? '$a$b' : '$a $b';
 }
 
 /// Says what a bet came to, and feels it: a light click for one that came
@@ -414,8 +342,8 @@ void _told(GameKit kit, bool won, String verdict) {
 
 // ── Which is bigger? ─────────────────────────────────────────────────────
 
-/// Which is bigger?: two figures, hidden, one over the other; a tap on the
-/// one that is bigger.
+/// Which is bigger?: two cards, each the question to a figure, one over the
+/// other; a tap on the one whose answer is bigger.
 class BiggerChallenge extends BetChallenge {
   BiggerChallenge({
     required super.host,
@@ -442,7 +370,7 @@ class BiggerChallenge extends BetChallenge {
   bool? rightAt(int i) => _bet(i)?.right;
 
   @override
-  String rules(AppLocalizations l) => l.betsBiggerLine;
+  String rules(AppLocalizations l) => l.biggerRules;
 
   @override
   String tagAt(BuildContext context, int i) => '';
@@ -450,21 +378,24 @@ class BiggerChallenge extends BetChallenge {
   @override
   String? verdictAt(BuildContext context, int i) => null;
 
-  @override
-  (IconData, String)? note(AppLocalizations l) =>
-      (Icons.today_rounded, l.biggerPairsToday(count));
+  /// What the pick at [i] came to, in a sentence: right or wrong, the
+  /// bigger figure and the smaller.
+  String _said(BuildContext context, int i, bool right) {
+    final l = context.l10n;
+    final BetNumbers n = numbers(context);
+    final BetAnswer a = cards[i * 2], b = cards[i * 2 + 1];
+    final String big = n.percent(math.max(a.value, b.value));
+    final String small = n.percent(math.min(a.value, b.value));
+    return right ? l.biggerRight(big, small) : l.biggerWrong(big, small);
+  }
 
   @override
   Widget? status(BuildContext context, GameKit kit, int i) {
-    final l = context.l10n;
     final bool? right = rightAt(i);
-    return _HeadWords(
-      switch (right) {
-        null => l.betsTapIfBigger,
-        true => l.gameRight,
-        false => l.gameWrong,
-      },
-      kit: kit,
+    return GameStatus(
+      right == null ? context.l10n.biggerAsk : _said(context, i, right),
+      key: const ValueKey('bigger-status'),
+      verdict: right,
     );
   }
 
@@ -481,12 +412,7 @@ class BiggerChallenge extends BetChallenge {
       if (_bet(i) != null) return;
       BetFeel.lay();
       await pickBigger(host, shelf, a, b, j);
-      _told(
-        kit,
-        j == bigger,
-        '${j == bigger ? l.gameRight : l.gameWrong}. '
-        '${n.percent(a.value)}, ${n.percent(b.value)}.',
-      );
+      if (context.mounted) _told(kit, j == bigger, _said(context, i, j == bigger));
     }
 
     Widget half(int j, BetAnswer c) => _Half(
@@ -499,38 +425,25 @@ class BiggerChallenge extends BetChallenge {
       onTap: picked == null ? () => pick(j) : () => open(c.pill),
     );
 
-    return Stack(
-      alignment: Alignment.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(child: half(0, a)),
-            const SizedBox(height: 12),
-            Expanded(child: half(1, b)),
-          ],
-        ),
-        IgnorePointer(
-          child: Container(
-            width: 48,
-            height: 48,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: kit.ground,
-              shape: BoxShape.circle,
-              border: Border.all(color: kArtInk, width: 3),
-            ),
+        Expanded(child: half(0, a)),
+        SizedBox(
+          height: 34,
+          child: Center(
             child: Text(
               l.betsOr,
               style: AppText.display(
-                size: 17,
-                weight: FontWeight.w800,
+                size: 16,
+                weight: FontWeight.w500,
                 height: 1,
-                color: kArtInk,
+                color: context.p.inkMuted,
               ),
             ),
           ),
         ),
+        Expanded(child: half(1, b)),
       ],
     );
   }
@@ -571,8 +484,9 @@ class BiggerChallenge extends BetChallenge {
   }
 }
 
-/// One of the two figures: what it is the answer to, the figure hidden
-/// until the pick, and what the pick made of it.
+/// One of the two cards: the question its figure answers, and once the
+/// pick is made, the figure itself, the bigger one named at its head and
+/// the one picked ringed.
 class _Half extends StatelessWidget {
   const _Half({
     super.key,
@@ -594,82 +508,56 @@ class _Half extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final Pill pill = answer.pill;
     final bool done = picked != null;
     final bool big = done && side == bigger;
     final bool mine = picked == side;
-    final Color face = big ? kArtInk : gameFace(context);
-    final Color ink = big ? kArtCream : kArtInk;
     return Semantics(
       button: true,
       label: done
-          ? '${answer.pill.question} $figure. '
+          ? '${pill.question} $figure. '
                 '${big ? l.betsBigger : ''} ${mine ? l.betsYourPick : ''}'
-          : '${answer.pill.question} ${l.betsTapIfBigger}',
+          : '${pill.question} ${l.biggerAsk}',
       excludeSemantics: true,
       onTap: onTap,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Positioned.fill(
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 220),
-                padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
-                decoration: BoxDecoration(
-                  color: face,
-                  borderRadius: BorderRadius.circular(24),
-                  border: gameBorder(context),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: ScaledText(
-                        text: answer.pill.question,
-                        min: 13,
-                        max: 22,
-                        alignment: Alignment.centerLeft,
-                        styleFor: (size) => AppText.display(
-                          size: size,
-                          weight: FontWeight.w600,
-                          height: 1.14,
-                          spacing: -0.02 * size,
-                          color: ink,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    SizedBox(
-                      width: 96,
-                      child: Center(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            done ? figure : '?',
-                            style: AppText.display(
-                              size: 40,
-                              weight: FontWeight.w700,
-                              height: 1,
-                              spacing: -1.2,
-                              color: ink,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+        child: SubjectCard(
+          pill: pill,
+          picked: mine,
+          trailing: big ? SubjectTag(pill: pill, text: l.betsBigger) : null,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SubjectWords(
+                  text: pill.question,
+                  ink: pill.ink,
+                  min: 13,
+                  max: 26,
+                  alignment: Alignment.topLeft,
                 ),
               ),
-            ),
-            if (done && mine)
-              Positioned(
-                right: -6,
-                top: -10,
-                child: GameStamp(right: side == bigger, size: 46),
-              ),
-          ],
+              if (done) ...[
+                const SizedBox(height: 8),
+                Text(
+                  figure,
+                  maxLines: 1,
+                  textScaler: MediaQuery.textScalerOf(
+                    context,
+                  ).clamp(maxScaleFactor: 1.2),
+                  style: AppText.display(
+                    size: 40,
+                    weight: FontWeight.w600,
+                    height: 1,
+                    spacing: -1.2,
+                    color: pill.ink,
+                  ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );
@@ -716,6 +604,10 @@ class CloserChallenge extends BetChallenge {
     return (right, taken);
   }
 
+  @override
+  String scoreLine(AppLocalizations l, int right, int of) =>
+      l.closerStepsRight(right, of);
+
   /// One square a step: each said right or not.
   @override
   List<bool?> get board => [
@@ -729,7 +621,7 @@ class CloserChallenge extends BetChallenge {
   ];
 
   @override
-  String rules(AppLocalizations l) => l.betsCloserLine('$steps');
+  String rules(AppLocalizations l) => l.closerRules;
 
   @override
   String tagAt(BuildContext context, int i) =>
@@ -740,20 +632,23 @@ class CloserChallenge extends BetChallenge {
     final Bet? bet = _bet(i);
     if (bet == null) return null;
     final CloserGame g = _gameAt(i);
-    return context.l10n.betsScore(g.right, g.taken);
+    return context.l10n.closerStepsRight(g.right, g.taken);
   }
 
+  /// What the game at [i] has come to: once over, the share and the steps
+  /// said right; before, what the last step was — right or wrong, and on
+  /// which side of its line the share lies.
   String _message(BuildContext context, int i, CloserGame g) {
     final l = context.l10n;
     final BetNumbers n = numbers(context);
     final String said = n.percent(cards[i].value);
     if (g.done) {
       return g.exact
-          ? '${l.betsCloserExact(said)} ${l.betsScoreSentence(g.right, g.taken)}'
-          : l.betsCloserDone(said, g.right, g.taken);
+          ? l.closerExactSteps(said, g.right, g.taken)
+          : l.closerDoneSteps(said, g.right, g.taken);
     }
     final last = g.last;
-    if (last == null) return l.betsCloserStart('$steps');
+    if (last == null) return '';
     final (bool more, bool truthMore, double at) = last;
     final String v = n.percent(at);
     return more == truthMore
@@ -768,6 +663,7 @@ class CloserChallenge extends BetChallenge {
     final CloserGame g = _gameAt(i);
     final bool done = _bet(i) != null || g.done;
     final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final last = g.last;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -783,7 +679,43 @@ class CloserChallenge extends BetChallenge {
           calm: kit.calm,
         ),
         if (!done) ...[
-          const SizedBox(height: 14),
+          // The step just taken, told — then the one to take, asked.
+          if (last != null) ...[
+            const SizedBox(height: 12),
+            Row(
+              key: ValueKey('closer-said-${cards[i].pill.id}'),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: scaler.scale(3)),
+                  child: GameVerdictGlyph(
+                    right: last.$1 == last.$2,
+                    colour: last.$1 == last.$2
+                        ? challengeRight(kit.palette)
+                        : challengeWrong(kit.palette),
+                    size: scaler.scale(13),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Semantics(
+                    liveRegion: true,
+                    child: Text(
+                      _message(context, i, g),
+                      textScaler: scaler.clamp(maxScaleFactor: 1.5),
+                      style: AppText.body(
+                        size: 14.5,
+                        weight: FontWeight.w600,
+                        height: 1.3,
+                        color: kit.palette.inkMuted,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+          const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
@@ -795,43 +727,17 @@ class CloserChallenge extends BetChallenge {
                   textScaler: scaler.clamp(maxScaleFactor: 1.5),
                   style: AppText.display(
                     size: 24,
-                    weight: FontWeight.w700,
+                    weight: FontWeight.w600,
                     height: 1.12,
                     spacing: -0.5,
                     color: kit.ink,
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
-              Text(
-                l.betsStepOf(math.min(g.taken + 1, steps), steps),
-                textScaler: scaler.clamp(maxScaleFactor: 1.5),
-                style: AppText.body(
-                  size: 13,
-                  weight: FontWeight.w800,
-                  height: 1.2,
-                  color: kit.ink,
-                ),
-              ),
+              const SizedBox(width: 10),
+              GameLabel(l.betsStepOf(math.min(g.taken + 1, steps), steps)),
             ],
           ),
-          if (g.last != null) ...[
-            const SizedBox(height: 6),
-            Semantics(
-              liveRegion: true,
-              child: Text(
-                _message(context, i, g),
-                key: ValueKey('closer-said-${cards[i].pill.id}'),
-                textScaler: scaler.clamp(maxScaleFactor: 1.5),
-                style: AppText.body(
-                  size: 15,
-                  weight: FontWeight.w700,
-                  height: 1.3,
-                  color: kit.ink.withValues(alpha: 0.86),
-                ),
-              ),
-            ),
-          ],
         ],
       ],
     );
@@ -864,25 +770,21 @@ class CloserChallenge extends BetChallenge {
     return Row(
       children: [
         Expanded(
-          child: GameButton(
+          child: GameButton.plain(
             key: ValueKey('closer-less-${cards[i].pill.id}'),
             label: l.betsLess,
-            icon: Icons.arrow_downward_rounded,
-            face: kArtCream,
-            ink: kArtInk,
-            height: 76,
+            height: 64,
+            size: 17,
             onTap: () => step(false),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: GameButton(
+          child: GameButton.plain(
             key: ValueKey('closer-more-${cards[i].pill.id}'),
             label: l.betsMore,
-            icon: Icons.arrow_upward_rounded,
-            face: kArtInk,
-            ink: kArtCream,
-            height: 76,
+            height: 64,
+            size: 17,
             onTap: () => step(true),
           ),
         ),
@@ -891,9 +793,9 @@ class CloserChallenge extends BetChallenge {
   }
 }
 
-/// The track a game of more or less is played on, large: the rail, the
-/// stretch the answer is still in, gliding as it halves, and at the end
-/// the answer itself.
+/// The track a game of more or less is played on: the rail, the stretch
+/// the answer is still in, gliding as it halves, and at the end the answer
+/// itself.
 class _Halving extends StatelessWidget {
   const _Halving({
     required this.lo,
@@ -913,10 +815,10 @@ class _Halving extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextStyle tick = AppText.body(
       size: 12,
-      weight: FontWeight.w800,
+      weight: FontWeight.w700,
       height: 1,
-      color: kArtInk,
-    );
+      color: context.p.inkMuted,
+    ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]);
     return ExcludeSemantics(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -932,7 +834,7 @@ class _Halving extends StatelessWidget {
                   : const Duration(milliseconds: 420),
               curve: Curves.easeOutCubic,
               builder: (context, h, _) => SizedBox(
-                height: 40,
+                height: 28,
                 child: CustomPaint(
                   painter: _HalvingPainter(
                     lo: l,
@@ -971,31 +873,27 @@ class _HalvingPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final double w = size.width;
-    final Paint line = this.rail.line;
-    final RRect rail = RRect.fromLTRBR(0, 8, w, size.height - 8, const Radius.circular(12));
-    canvas.drawRRect(rail, Paint()..color = this.rail.track);
+    final double mid = size.height / 2;
+    final RRect track = RRect.fromLTRBR(
+      0,
+      mid - 5,
+      w,
+      mid + 5,
+      const Radius.circular(5),
+    );
+    canvas.drawRRect(track, Paint()..color = rail.track);
     final double left = w * lo / 100;
     final double right = math.max(left + 8, w * hi / 100);
-    final RRect band = RRect.fromLTRBR(
-      left,
-      8,
-      right,
-      size.height - 8,
-      const Radius.circular(12),
+    canvas.drawRRect(
+      RRect.fromLTRBR(left, mid - 5, right, mid + 5, const Radius.circular(5)),
+      Paint()..color = rail.band,
     );
-    canvas.drawRRect(band, Paint()..color = this.rail.band);
-    canvas.drawRRect(band, line);
-    canvas.drawRRect(rail, line);
     final double? a = answer;
     if (a != null) {
-      final double x = (w * a / 100).clamp(5, w - 5);
+      final double x = (w * a / 100).clamp(3, w - 3);
       canvas.drawRRect(
-        RRect.fromLTRBR(x - 5, 0, x + 5, size.height, const Radius.circular(5)),
-        Paint()..color = this.rail.right,
-      );
-      canvas.drawRRect(
-        RRect.fromLTRBR(x - 5, 0, x + 5, size.height, const Radius.circular(5)),
-        line..strokeWidth = 2.4,
+        RRect.fromLTRBR(x - 3, 0, x + 3, size.height, const Radius.circular(3)),
+        Paint()..color = rail.right,
       );
     }
   }
@@ -1007,7 +905,7 @@ class _HalvingPainter extends CustomPainter {
 
 // ── Orders of magnitude ──────────────────────────────────────────────────
 
-/// Orders of magnitude: a size picked from a staircase of powers of ten.
+/// Orders of magnitude: a size picked from a row of powers of ten.
 class MagnitudeChallenge extends BetChallenge {
   MagnitudeChallenge({
     required super.host,
@@ -1041,7 +939,7 @@ class MagnitudeChallenge extends BetChallenge {
   }
 
   @override
-  String rules(AppLocalizations l) => l.betsMagnitudeLine;
+  String rules(AppLocalizations l) => l.magnitudeRules;
 
   @override
   String tagAt(BuildContext context, int i) {
@@ -1059,7 +957,7 @@ class MagnitudeChallenge extends BetChallenge {
         ? l.betsMagnitudeRight
         : l.betsMagnitudeOff(o);
     final int? s = bet.confidence;
-    return s == null ? verdict : '$verdict ${l.betsYouWereSure(s)}';
+    return s == null ? verdict : _both(context, verdict, l.betsYouWereSure(s));
   }
 
   @override
@@ -1095,41 +993,6 @@ class MagnitudeChallenge extends BetChallenge {
       }
     }
 
-    final Widget stairs = Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        for (int j = 0; j < count; j++) ...[
-          if (j > 0) const SizedBox(width: 6),
-          Expanded(
-            child: GameButton(
-              key: ValueKey('magnitude-${answer.pill.id}-$j'),
-              label: answer.odds
-                  ? n.plain(notches.values[j], decimals: 0)
-                  : n.compact(notches.values[j]),
-              semantics: answer.odds
-                  ? l.betsOneIn(n.plain(notches.values[j], decimals: 0))
-                  : '${n.plain(notches.values[j], decimals: 3)} ${answer.unit}',
-              selected: j == picked,
-              face: laid
-                  ? (j == notches.right
-                        ? kGameRight
-                        : j == picked
-                        ? kGameWrong
-                        : kArtCream)
-                  : j == picked
-                  ? kArtInk
-                  : kArtCream,
-              ink: !laid && j == picked ? kArtCream : kArtInk,
-              height: 56.0 + (count > 4 ? 12 : 20) * j,
-              size: 15,
-              radius: 14,
-              fade: !laid && !(pending && j == picked),
-              onTap: open && j != picked ? () => pick(j) : null,
-            ),
-          ),
-        ],
-      ],
-    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -1144,28 +1007,41 @@ class MagnitudeChallenge extends BetChallenge {
                 : null,
           ),
         ),
-        const SizedBox(height: 12),
-        Text(
-          answer.odds ? l.betsOneInLabel : answer.unit,
-          textScaler: MediaQuery.textScalerOf(
-            context,
-          ).clamp(maxScaleFactor: 1.5),
-          style: AppText.body(
-            size: 14,
-            weight: FontWeight.w800,
-            height: 1.2,
-            color: kit.ink,
-          ),
-        ),
+        const SizedBox(height: 14),
+        GameLabel(answer.odds ? l.betsOneInLabel : answer.unit),
         const SizedBox(height: 8),
-        stairs,
+        Row(
+          children: [
+            for (int j = 0; j < count; j++) ...[
+              if (j > 0) const SizedBox(width: 6),
+              Expanded(
+                child: GameOption(
+                  key: ValueKey('magnitude-${answer.pill.id}-$j'),
+                  label: answer.odds
+                      ? n.plain(notches.values[j], decimals: 0)
+                      : n.compact(notches.values[j]),
+                  semantics: answer.odds
+                      ? l.betsOneIn(n.plain(notches.values[j], decimals: 0))
+                      : '${n.plain(notches.values[j], decimals: 3)} '
+                            '${answer.unit}',
+                  selected: !laid && j == picked,
+                  verdict: laid
+                      ? (j == notches.right
+                            ? true
+                            : j == picked
+                            ? false
+                            : null)
+                      : null,
+                  onTap: open && j != picked ? () => pick(j) : null,
+                  fade: laid || elsewhereAt(i),
+                ),
+              ),
+            ],
+          ],
+        ),
         if (pending) ...[
-          const SizedBox(height: 14),
-          GameSure(
-            id: 'magnitude',
-            ink: kit.ink,
-            onPick: (s) => lay(picked, s),
-          ),
+          const SizedBox(height: 16),
+          GameSure(id: 'magnitude', onPick: (s) => lay(picked, s)),
         ],
       ],
     );
@@ -1212,7 +1088,7 @@ class RangeChallenge extends BetChallenge {
   ].fold(0, (a, b) => a + b);
 
   @override
-  String rules(AppLocalizations l) => l.betsRangeLine;
+  String rules(AppLocalizations l) => l.rangeRules;
 
   @override
   String tagAt(BuildContext context, int i) =>
@@ -1225,20 +1101,20 @@ class RangeChallenge extends BetChallenge {
     if (bet == null) return null;
     final String said = numbers(context).percent(cards[i].value);
     return bet.facts['hit'] == true
-        ? l.betsInRange((bet.facts['pays'] as num?)?.toInt() ?? 0, said)
-        : l.betsMissedRange(said);
+        ? l.rangeIn(said, (bet.facts['pays'] as num?)?.toInt() ?? 0)
+        : l.rangeOut(said);
   }
 
   @override
-  List<Widget> chips(BuildContext context, GameKit kit) => [
-    GameChip(
-      key: const ValueKey('range-won'),
-      icon: Icons.stars_rounded,
-      label: '+${context.l10n.gamePoints(won)}',
-      ink: kit.ink,
-      ground: kit.ground,
-    ),
-  ];
+  List<ChallengeFigure> roundFigures(BuildContext context) {
+    final l = context.l10n;
+    return [
+      (
+        label: l.challengeThisRound,
+        value: won > 0 ? '+${l.gamePoints(won)}' : l.gamePoints(0),
+      ),
+    ];
+  }
 
   (double, int) _drafted(int i) {
     final Bet? bet = _bet(i);
@@ -1291,7 +1167,7 @@ class RangeChallenge extends BetChallenge {
                 : null,
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 14),
         Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
@@ -1302,11 +1178,11 @@ class RangeChallenge extends BetChallenge {
               textScaler: scaler.clamp(maxScaleFactor: 1.2),
               style: AppText.display(
                 size: 40,
-                weight: FontWeight.w700,
+                weight: FontWeight.w600,
                 height: 1,
-                spacing: -1.4,
+                spacing: -1.2,
                 color: kit.ink,
-              ),
+              ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
             ),
             const SizedBox(width: 10),
             Expanded(
@@ -1316,15 +1192,15 @@ class RangeChallenge extends BetChallenge {
                 textScaler: scaler.clamp(maxScaleFactor: 1.5),
                 style: AppText.body(
                   size: 15,
-                  weight: FontWeight.w800,
+                  weight: FontWeight.w700,
                   height: 1.1,
-                  color: kit.ink,
-                ),
+                  color: kit.palette.inkMuted,
+                ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
         ShareTrack(
           key: ValueKey('range-track-${cards[i].pill.id}'),
           value: guess,
@@ -1334,22 +1210,18 @@ class RangeChallenge extends BetChallenge {
           answer: laid ? cards[i].value : null,
           onChanged: open ? (v) => _keep(i, g: v) : null,
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         Row(
           children: [
             for (int j = 0; j < widths.length; j++) ...[
               if (j > 0) const SizedBox(width: 8),
               Expanded(
-                child: GameButton(
+                child: GameOption(
                   key: ValueKey('range-${cards[i].pill.id}-w$j'),
-                  label: l.betsRangeWidth(widths[j].half, widths[j].pays),
+                  label: l.rangeOption(widths[j].half, widths[j].pays),
                   selected: j == at,
-                  face: j == at ? kArtInk : kArtCream,
-                  ink: j == at ? kArtCream : kArtInk,
-                  height: 50,
+                  height: 48,
                   size: 14,
-                  radius: 14,
-                  fade: j != at,
                   onTap: open && j != at
                       ? () {
                           BetFeel.tick();
@@ -1368,13 +1240,9 @@ class RangeChallenge extends BetChallenge {
   @override
   Widget? actions(BuildContext context, GameKit kit, int i) {
     final l = context.l10n;
-    return GameButton(
+    return GameButton.primary(
       key: ValueKey('range-bet-${cards[i].pill.id}'),
       label: l.betsBet,
-      icon: Icons.check_rounded,
-      face: kArtInk,
-      ink: kArtCream,
-      height: 72,
       onTap: () async {
         if (_bet(i) != null) return;
         BetFeel.lay();
@@ -1395,9 +1263,9 @@ class RangeChallenge extends BetChallenge {
   }
 }
 
-/// A share set on a track from nought to a hundred, large: the rail, a
-/// band either side of the thumb, the thumb, and once the bet is laid the
-/// answer. It snaps to whole points and clicks at every tenth.
+/// A share set on a track from nought to a hundred: the rail, a band either
+/// side of the thumb, the thumb, and once the bet is laid the answer. It
+/// snaps to whole points and clicks at every tenth.
 class ShareTrack extends StatelessWidget {
   const ShareTrack({
     super.key,
@@ -1449,7 +1317,7 @@ class ShareTrack extends StatelessWidget {
                 ? (d) => _set(at(d.localPosition))
                 : null,
             child: SizedBox(
-              height: 60,
+              height: 52,
               width: double.infinity,
               child: CustomPaint(
                 painter: _TrackPainter(
@@ -1487,42 +1355,32 @@ class _TrackPainter extends CustomPainter {
     final double w = size.width - pad * 2;
     double x(double v) => pad + w * v / 100;
     final double mid = size.height / 2;
-    final Paint line = this.rail.line;
-    final RRect rail = RRect.fromLTRBR(
-      pad - 6,
-      mid - 9,
-      pad + w + 6,
-      mid + 9,
-      const Radius.circular(9),
+    canvas.drawRRect(
+      RRect.fromLTRBR(pad - 6, mid - 4, pad + w + 6, mid + 4, const Radius.circular(4)),
+      Paint()..color = rail.track,
     );
-    canvas.drawRRect(rail, Paint()..color = this.rail.track);
     if (band > 0) {
-      final RRect b = RRect.fromLTRBR(
-        x(math.max(0, value - band)),
-        mid - 15,
-        x(math.min(100, value + band)),
-        mid + 15,
-        const Radius.circular(10),
+      canvas.drawRRect(
+        RRect.fromLTRBR(
+          x(math.max(0, value - band)),
+          mid - 4,
+          x(math.min(100, value + band)),
+          mid + 4,
+          const Radius.circular(4),
+        ),
+        Paint()..color = rail.band,
       );
-      canvas.drawRRect(b, Paint()..color = this.rail.band);
-      canvas.drawRRect(b, line);
     }
-    canvas.drawRRect(rail, line);
     final double? a = answer;
     if (a != null) {
-      final RRect mark = RRect.fromLTRBR(
-        x(a) - 5,
-        mid - 24,
-        x(a) + 5,
-        mid + 24,
-        const Radius.circular(5),
+      canvas.drawRRect(
+        RRect.fromLTRBR(x(a) - 3, mid - 16, x(a) + 3, mid + 16, const Radius.circular(3)),
+        Paint()..color = rail.right,
       );
-      canvas.drawRRect(mark, Paint()..color = this.rail.right);
-      canvas.drawRRect(mark, line);
     }
     final Offset thumb = Offset(x(value), mid);
-    canvas.drawCircle(thumb, 12, Paint()..color = this.rail.ink);
-    canvas.drawCircle(thumb, 6, Paint()..color = this.rail.knob);
+    canvas.drawCircle(thumb, 12, Paint()..color = rail.ink);
+    canvas.drawCircle(thumb, 5, Paint()..color = rail.knob);
   }
 
   @override
@@ -1564,16 +1422,15 @@ class StakeChallenge extends BetChallenge {
   ].fold(0, (a, b) => a + b);
 
   @override
-  String rules(AppLocalizations l) => l.betsStakeLine(BetsDay.dailyPoints);
+  String rules(AppLocalizations l) => l.stakeRules(BetsDay.dailyPoints);
 
   @override
   (IconData, String)? note(AppLocalizations l) =>
       (Icons.toll_rounded, l.betsWalletSays(BetsDay.instance.points));
 
   @override
-  Widget? status(BuildContext context, GameKit kit, int i) => _HeadWords(
+  Widget? status(BuildContext context, GameKit kit, int i) => GameStatus(
     context.l10n.betsWalletSays(BetsDay.instance.points),
-    kit: kit,
     key: const ValueKey('stake-wallet'),
   );
 
@@ -1587,28 +1444,22 @@ class StakeChallenge extends BetChallenge {
     final Bet? bet = _bet(i);
     if (bet == null) return null;
     final int stake = (bet.facts['stake'] as num?)?.toInt() ?? 0;
-    final String verdict = bet.right ? l.betsWin(stake) : l.betsLose(stake);
+    final String verdict = bet.right ? l.stakeWon(stake) : l.stakeLost(stake);
     final int? s = bet.confidence;
-    return s == null ? verdict : '$verdict ${l.betsYouWereSure(s)}';
+    return s == null ? verdict : _both(context, verdict, l.betsYouWereSure(s));
   }
 
   @override
-  List<Widget> chips(BuildContext context, GameKit kit) {
+  List<ChallengeFigure> roundFigures(BuildContext context) {
     final l = context.l10n;
     return [
-      GameChip(
-        key: const ValueKey('stake-net'),
-        icon: Icons.stars_rounded,
-        label: '${net > 0 ? '+' : net < 0 ? '−' : ''}${l.gamePoints(net.abs())}',
-        ink: kit.ink,
-        ground: kit.ground,
+      (
+        label: l.challengeThisRound,
+        value: '${net > 0 ? '+' : net < 0 ? '−' : ''}${l.gamePoints(net.abs())}',
       ),
-      GameChip(
-        key: const ValueKey('stake-left'),
-        icon: Icons.toll_rounded,
-        label: l.betsWalletSays(BetsDay.instance.points),
-        ink: kit.ink,
-        ground: kit.ground,
+      (
+        label: l.challengeLeftToday,
+        value: l.gamePoints(BetsDay.instance.points),
       ),
     ];
   }
@@ -1682,27 +1533,23 @@ class StakeChallenge extends BetChallenge {
                 : null,
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 14),
         for (int j = 0; j < options.length; j++) ...[
           if (j > 0) const SizedBox(height: 8),
-          GameButton(
+          GameOption(
             key: ValueKey('stake-${answer.pill.id}-o$j'),
             label: options[j],
-            selected: j == picked,
-            face: laid
+            selected: !laid && j == picked,
+            verdict: laid
                 ? (j == answer.correct
-                      ? kGameRight
+                      ? true
                       : j == picked
-                      ? kGameWrong
-                      : kArtCream)
-                : j == picked
-                ? kArtInk
-                : kArtCream,
-            ink: !laid && j == picked ? kArtCream : kArtInk,
+                      ? false
+                      : null)
+                : null,
             height: 50,
-            size: 16,
-            radius: 14,
-            fade: !laid && j != picked,
+            size: 15.5,
+            fade: laid || elsewhereAt(i),
             onTap: open && j != picked
                 ? () {
                     BetFeel.tick();
@@ -1711,42 +1558,24 @@ class StakeChallenge extends BetChallenge {
                 : null,
           ),
         ],
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         if (_pending(i))
-          GameSure(
-            id: 'stake',
-            ink: kit.ink,
-            onPick: (s) => _lay(context, kit, i, s),
-          )
+          GameSure(id: 'stake', onPick: (s) => _lay(context, kit, i, s))
         else if (!laid)
           Row(
             children: [
-              Text(
-                l.betsStakeLabel,
-                textScaler: MediaQuery.textScalerOf(
-                  context,
-                ).clamp(maxScaleFactor: 1.4),
-                style: AppText.body(
-                  size: 15,
-                  weight: FontWeight.w800,
-                  height: 1,
-                  color: kit.ink,
-                ),
-              ),
-              const SizedBox(width: 12),
+              GameLabel(l.betsStakeLabel),
+              const SizedBox(width: 14),
               for (int j = 0; j < stakes.length; j++) ...[
                 if (j > 0) const SizedBox(width: 8),
                 Expanded(
-                  child: GameButton(
+                  child: GameOption(
                     key: ValueKey('stake-${answer.pill.id}-k$j'),
                     label: '${stakes[j]}',
+                    semantics: l.gamePoints(stakes[j]),
                     selected: j == k,
-                    face: j == k ? kArtInk : kArtCream,
-                    ink: j == k ? kArtCream : kArtInk,
-                    height: 48,
-                    size: 17,
-                    radius: 24,
-                    fade: j != k,
+                    height: 46,
+                    size: 16,
                     onTap: open && stakes[j] <= wallet && j != k
                         ? () {
                             BetFeel.tick();
@@ -1769,17 +1598,13 @@ class StakeChallenge extends BetChallenge {
     final int? picked = _picked(i);
     final int stake = stakes[_stakeAt(i)];
     final bool can = picked != null && stake <= BetsDay.instance.points;
-    return GameButton(
+    return GameButton.primary(
       key: ValueKey('stake-bet-${cards[i].pill.id}'),
       label: can
           ? l.betsBetN(stake)
           : picked == null
           ? l.betsPickFirst
           : l.betsNotEnough,
-      icon: can ? Icons.check_rounded : null,
-      face: kArtInk,
-      ink: kArtCream,
-      height: 72,
       onTap: can
           ? () {
               BetFeel.lay();
@@ -1846,7 +1671,7 @@ class NumberChallenge extends BetChallenge {
   }
 
   @override
-  String rules(AppLocalizations l) => l.betsNumberLine;
+  String rules(AppLocalizations l) => l.numberRules;
 
   @override
   String tagAt(BuildContext context, int i) =>
@@ -1865,7 +1690,7 @@ class NumberChallenge extends BetChallenge {
         ? l.betsCloseEnough(_amount(context, i, off))
         : l.betsOffBy(_amount(context, i, off));
     final int? s = bet.confidence;
-    return s == null ? verdict : '$verdict ${l.betsYouWereSure(s)}';
+    return s == null ? verdict : _both(context, verdict, l.betsYouWereSure(s));
   }
 
   Future<void> _lay(BuildContext context, GameKit kit, int i, int? sure) async {
@@ -1905,82 +1730,93 @@ class NumberChallenge extends BetChallenge {
                 : null,
           ),
         ),
-        const SizedBox(height: 12),
-        Semantics(
-          liveRegion: open,
-          label: l.betsNumberTitle,
-          value: _amount(context, i, v),
-          excludeSemantics: true,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              Flexible(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: AlignmentDirectional.centerStart,
-                  child: Text(
-                    n.plain(v, decimals: scale.decimals),
-                    key: ValueKey('number-value-${answer.pill.id}'),
-                    maxLines: 1,
-                    textScaler: MediaQuery.textScalerOf(
-                      context,
-                    ).clamp(maxScaleFactor: 1.2),
-                    style: AppText.display(
-                      size: 56,
-                      weight: FontWeight.w700,
-                      height: 1,
-                      spacing: -2,
-                      color: kit.ink,
-                    ),
-                  ),
-                ),
+        const SizedBox(height: 14),
+        if (laid)
+          // Told: the number set against the answer, side by side.
+          GameFigureRow(
+            key: ValueKey('number-told-${answer.pill.id}'),
+            figures: [
+              (
+                label: l.challengeYouSaid,
+                value: n.plain(v, decimals: scale.decimals),
+                unit: answer.unit,
+                answer: false,
               ),
-              if (answer.unit.isNotEmpty) ...[
-                const SizedBox(width: 8),
+              (
+                label: l.challengeAnswer,
+                value: n.plain(answer.value, decimals: scale.decimals),
+                unit: answer.unit,
+                answer: true,
+              ),
+            ],
+          )
+        else
+          Semantics(
+            liveRegion: open,
+            label: l.betsNumberTitle,
+            value: _amount(context, i, v),
+            excludeSemantics: true,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
                 Flexible(
-                  child: Text(
-                    answer.unit,
-                    maxLines: 2,
-                    style: AppText.body(
-                      size: 16,
-                      weight: FontWeight.w700,
-                      height: 1.15,
-                      color: kit.ink,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      n.plain(v, decimals: scale.decimals),
+                      key: ValueKey('number-value-${answer.pill.id}'),
+                      maxLines: 1,
+                      textScaler: MediaQuery.textScalerOf(
+                        context,
+                      ).clamp(maxScaleFactor: 1.2),
+                      style: AppText.display(
+                        size: 52,
+                        weight: FontWeight.w600,
+                        height: 1,
+                        spacing: -1.6,
+                        color: kit.ink,
+                      ).copyWith(
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
                     ),
                   ),
                 ),
+                if (answer.unit.isNotEmpty) ...[
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: Text(
+                      answer.unit,
+                      maxLines: 2,
+                      style: AppText.body(
+                        size: 16,
+                        weight: FontWeight.w600,
+                        height: 1.15,
+                        color: kit.palette.inkMuted,
+                      ),
+                    ),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
-        ),
-        if (laid) ...[
-          const SizedBox(height: 10),
-          _YouAndAnswer(you: v, answer: answer.value),
-        ],
-        const SizedBox(height: 12),
+        const SizedBox(height: 14),
         if (_pending(i))
-          GameSure(
-            id: 'number',
-            ink: kit.ink,
-            onPick: (s) => _lay(context, kit, i, s),
-          )
+          GameSure(id: 'number', onPick: (s) => _lay(context, kit, i, s))
         else if (!laid)
           Row(
             children: [
               for (int j = 0; j < steps.length; j++) ...[
                 if (j > 0) const SizedBox(width: 8),
                 Expanded(
-                  child: GameButton(
+                  child: GameOption(
                     key: ValueKey('number-${answer.pill.id}-${steps[j]}'),
                     label:
                         '${steps[j] < 0 ? '−' : '+'}'
                         '${n.plain(steps[j].abs(), decimals: scale.decimals)}',
-                    face: kArtCream,
-                    ink: kArtInk,
-                    height: 56,
+                    height: 52,
                     size: 16,
-                    radius: 16,
                     onTap: open && (steps[j] > 0 || v > 0)
                         ? () {
                             BetFeel.tick();
@@ -2002,13 +1838,9 @@ class NumberChallenge extends BetChallenge {
   Widget? actions(BuildContext context, GameKit kit, int i) {
     if (_pending(i)) return null;
     final l = context.l10n;
-    return GameButton(
+    return GameButton.primary(
       key: ValueKey('number-lock-${cards[i].pill.id}'),
-      label: l.betsLock,
-      icon: Icons.lock_rounded,
-      face: kArtInk,
-      ink: kArtCream,
-      height: 72,
+      label: l.betsLockIn,
       onTap: () {
         BetFeel.lay();
         if (shelf.asksSure) {
@@ -2024,82 +1856,9 @@ class NumberChallenge extends BetChallenge {
   }
 }
 
-/// The number set against the answer, on one scale from nought: where the
-/// reader's stands, and where the card's does.
-class _YouAndAnswer extends StatelessWidget {
-  const _YouAndAnswer({required this.you, required this.answer});
-
-  final double you;
-  final double answer;
-
-  @override
-  Widget build(BuildContext context) {
-    final double top = niceAbove(math.max(you, answer) / 0.8);
-    return ExcludeSemantics(
-      child: SizedBox(
-        height: 30,
-        child: CustomPaint(
-          painter: _YouPainter(
-            you: top == 0 ? 0 : you / top,
-            answer: top == 0 ? 0 : answer / top,
-            rail: _Rail.of(context),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _YouPainter extends CustomPainter {
-  const _YouPainter({
-    required this.you,
-    required this.answer,
-    required this.rail,
-  });
-
-  final _Rail rail;
-
-  final double you;
-  final double answer;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final double w = size.width;
-    final double mid = size.height / 2;
-    final Paint line = this.rail.line;
-    final RRect rail = RRect.fromLTRBR(
-      0,
-      mid - 6,
-      w,
-      mid + 6,
-      const Radius.circular(6),
-    );
-    canvas.drawRRect(rail, Paint()..color = this.rail.track);
-    canvas.drawRRect(rail, line);
-    for (final (double at, Color colour) in [
-      (answer, this.rail.right),
-      (you, this.rail.ink),
-    ]) {
-      final double x = (w * at).clamp(5, w - 5);
-      final RRect mark = RRect.fromLTRBR(
-        x - 5,
-        0,
-        x + 5,
-        size.height,
-        const Radius.circular(5),
-      );
-      canvas.drawRRect(mark, Paint()..color = colour);
-      canvas.drawRRect(mark, line..strokeWidth = 2.4);
-    }
-  }
-
-  @override
-  bool shouldRepaint(_YouPainter old) => old.you != you || old.answer != answer;
-}
-
-/// The colours a track is drawn in, on a challenge's screen as the app
-/// draws its own: the track a faint tone of the page's ink, the band the
-/// challenge's colour, the answer the app's green, the thumb in ink.
+/// The colours a track is drawn in, the page's own: the track a faint tone
+/// of its ink, the stretch or band a stronger one, the thumb in ink, and
+/// the answer the calm green.
 @immutable
 class _Rail {
   const _Rail({
@@ -2108,29 +1867,16 @@ class _Rail {
     required this.ink,
     required this.knob,
     required this.right,
-    required this.outline,
   });
 
   factory _Rail.of(BuildContext context) {
     final Palette p = context.p;
-    final ChallengeTone? tone = ChallengeToneScope.maybeOf(context);
-    if (tone == null) {
-      return const _Rail(
-        track: kArtCream,
-        band: Color(0xFFFFC83D),
-        ink: kArtInk,
-        knob: kArtCream,
-        right: kGameRight,
-        outline: true,
-      );
-    }
     return _Rail(
-      track: p.ink.withValues(alpha: 0.14),
-      band: tone.vivid,
+      track: p.ink.withValues(alpha: 0.12),
+      band: p.ink.withValues(alpha: 0.42),
       ink: p.ink,
       knob: p.surface,
       right: challengeRight(p),
-      outline: false,
     );
   }
 
@@ -2139,35 +1885,4 @@ class _Rail {
   final Color ink;
   final Color knob;
   final Color right;
-
-  /// Whether shapes carry a line of ink round them, as on the drawn cards.
-  final bool outline;
-
-  Paint get line => Paint()
-    ..color = outline ? kArtInk : Colors.transparent
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = 3;
-}
-
-/// A few words in a game's head, beside its picture.
-class _HeadWords extends StatelessWidget {
-  const _HeadWords(this.text, {super.key, required this.kit});
-
-  final String text;
-  final GameKit kit;
-
-  @override
-  Widget build(BuildContext context) => Text(
-    text,
-    maxLines: 2,
-    overflow: TextOverflow.ellipsis,
-    textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.3),
-    style: AppText.display(
-      size: 16,
-      weight: FontWeight.w700,
-      height: 1.12,
-      spacing: -0.2,
-      color: kit.ink,
-    ),
-  );
 }

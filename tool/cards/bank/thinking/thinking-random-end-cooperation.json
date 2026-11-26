@@ -5,7 +5,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why does not knowing when a game ends keep players cooperating?",
-  "answer": "With a known last round, betraying in that round is safe, and the same logic slides back to round 1. With a random end, averaging 200 rounds, any round might be followed by another, so players keep cooperating because they might still need each other.",
+  "answer": "With a known last round, betraying in that round is safe, and the same logic slides back to round 1. With a random end, typically about 200 rounds, any round might be followed by another, so players keep cooperating because they might still need each other.",
   "move": "When the end is uncertain, the future keeps people cooperating.",
   "keywords": [
     "game theory",
@@ -27,7 +27,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Interactive card titled 'Why does not knowing when a game ends keep players cooperating?' with a tap-to-reason prompt. Tapping reasons backward from a known last round. A counter shows 0 of 10."
+    "label": "Two rows of dominoes, one a round, green while both players cooperate. Above, a game whose last round everyone knows, round 8; below, a game with a random end, its row running on past the edge. Pushing over the known last round knocks every round back to round 1, all red. In the random game there is no last domino to push, and they stay standing."
   },
   "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=781s",

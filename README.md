@@ -22,9 +22,9 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   with the app's Today screen laid out in the app's own points rather than
   pictured — and four hard cards from the bank around it, today's question,
   the day's row, the two cream sheets laid on the night paper (calibration,
-  the science), the cards that flip, the subjects going by both ways, the
-  app's five screens in a row, the widgets, friends, the plans, the
-  questions and the last word. `site/assets/main.js` adds what moves: the
+  the science), the cards that flip, Explore and Your journey, the subjects
+  going by both ways, the app's screens in a row, the widgets, the plans,
+  the questions and the last word. `site/assets/main.js` adds what moves: the
   menu, the nav that floats and frosts and its progress line in the three
   lights' colours, things that come into view as they are reached, numbers
   that count up, a light that follows the pointer across a card, the phone
@@ -37,14 +37,21 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   the cards that flip, the plan picker and the questions. Today's question
   is shown live from `/widget/days.json`, the file the widget reads, with
   the edition in the first screen's kicker and the time to the next one. It
-  presents Astute on the App Store, with Apple's own badge, and says Android
-  is coming: no page links to Google Play until the listing is live. An
-  iPhone's Download goes straight to the App Store, an Android phone's to
-  `/get`, which says the app is not there yet, and a computer's to a code to
-  scan with the phone, which opens `/get` and from there the App Store. It
-  reads fully without JavaScript, and without motion for anyone who has
-  asked their system for less. The screens in `site/assets/` are
-  `tool/shots/` at 840×1826, as WebP.
+  presents Astute on Google Play and on the App Store, each with the store's
+  own badge. The Play listing is live; the App Store's is made but not live
+  yet, so until `APP_STORE_OPEN` in `tool/site/chrome.py` says it is (one
+  line to change at launch) Apple's badge keeps its link but is marked
+  "Coming soon", every line that says where the app is says "Free on
+  Android · coming to iPhone", and no Download button leads to the store's
+  empty page. An Android phone's Download goes to Google Play, a computer's
+  to a code to scan with the phone, and an iPhone's, like the code, to
+  `/get`: from there an Android phone goes on to Google Play, and an iPhone,
+  until the listing is live, stays on a page that says the app is on its
+  way. It reads fully without JavaScript, and without motion for anyone who
+  has asked their system for less. The phone pictures in `site/assets/` are
+  taken by `tool/site_shots.dart`, the app on an iPhone 16 Pro at night in
+  English with cards from the bank, and made WebP at 840×1826 by
+  `tool/site/shots.py`; nothing on them is made up about other readers.
 - **What the site measures**: the pages read and the store buttons pressed,
   `$pageview` and `store clicked` (`store`, `page`, `ref`), into the same
   PostHog project as the app, from `site/assets/main.js`. Nothing is kept on
@@ -122,6 +129,31 @@ nothing running.
 All of it defers to the reduce-motion setting: whoever asked for less gets
 the finished state.
 
+One move is the shell's: the profile's Today tile opens Today out of itself
+(`widgets/tab_zoom.dart`). Today is two tabs from the profile, so a slide
+would drag Explore across the screen, and the cut it replaced read as the app
+jumping. The profile is pictured for half a second while the tile grows into
+the screen with Today inside it, its contents gone before Today's arrive, and
+the bar's light travels to Today with it. With less motion asked for it is a
+dissolve of a fifth of a second, which moves nothing; tapping another tab
+lands it at once.
+
+The long pages reached from the others (Your journey, Tune your mix, a
+subject's home, an area, a path, a news story) keep their way back as
+Instagram keeps its own (`widgets/quick_return.dart`). It is part of the
+page: going down, it goes up and away with the page, point for point, with
+the small line beside it where there is one, and the page is all content;
+going back up even a little, it comes straight back over the page, softly,
+with the page's colour laid behind it and fading out under it, as iOS 26
+fades a page under its bar, so it never sits on the words; at the top it
+stands where it always stood, with nothing behind it. What has to stay, Save at the foot of
+Tune your mix and a path's way on, stays. With less motion asked for nothing
+slides: it fades out where it stands and back in. With a screen reader on it
+stays put. It reads only the page's own scrolling and takes no touch, so the
+swipe back from the edge of the screen works whatever it is doing; and it is
+never laid inside the list, where Apple's own glass button, a native view on
+iOS 26, is drawn away from its place.
+
 ## One palette
 
 The app used to paint Today dark and the other tabs on paper, which meant it
@@ -144,8 +176,9 @@ repaints at once, and the status bar follows it.
 genres under it, which is where the onboarding ends), Today with
 the card stack and, once the five are done, the shelf, Explore (shelves of
 cards nobody dealt you, with a search over the whole pool), Saved with its
-empty state, Profile (record, appearance, topics, how well you know
-yourself, the button into the journey, daily nudge), the come-back screen
+empty state, Profile (the Astute score with the way into the journey under
+it, the week that goes back to Today's five, appearance, topics, how well you
+know yourself, daily nudge), the come-back screen
 after a lapsed streak, and the disclosure page on how pills are written.
 
 **Astute+** — three things, all delivered, and everything else the same on
@@ -199,6 +232,30 @@ Apple's licence on an iPhone, the site's own on Android — and the privacy
 policy are on screen either way. Only a debug build, which has no store to
 ask, shows the plans as sold (`Subscription.previewWithoutStore`). A free
 trial ends on "Free trial started.", not on a purchase.
+
+**The first run's trial, a prototype behind a switch.** Most trials in this
+category start on the day of the install, and Astute never offers one in
+the first run. Behind the server's switch `trial.firstRun`
+(`AppState.kFirstRunTrialFlag`, off as built; docs/REMOTE.md) the first run
+ends otherwise. After the genres the reader plays one real card, the
+opening's best for them (`AppState.firstRunCard`, lib/data/first_days.dart),
+read outside the day as a card opened in Explore is. Then one calm screen
+offers the year's free days (`TrialOfferScreen`, lib/screens/trial_offer.dart,
+drawn with the paywall's own pieces): today everything opens and nothing is
+paid; on day 12 a notification, promised only where the phone can show one
+(`AppState.kTrialWarningDays`, the warning that already exists); on day 14
+the year starts at the store's own price, the largest figure on the screen,
+renewing until cancelled, and nothing charged to a trial cancelled 24 hours
+before. Under the headline, the five, the assistant and every path and book;
+at the foot, "Start the free trial" and "Continue for free" as two buttons
+of one size, and restore, the terms and the privacy policy. After it, the
+day's five, dealt as on any first day, without the card already played. It
+is never put during the five, never twice in a day (`knowit.trialOfferedOn`,
+kept across a sign-out), never to a reader who already has Astute+ (asked
+before the card, after it, and while the offer is up), and never without the
+store's own year with free days for this reader (`trialOfferDue`): no price
+written into the app stands in. `tool/trial_day_shots.dart` photographs it
+with a stand-in store at the owner's prices.
 
 ## Today, done
 
@@ -313,13 +370,15 @@ level, in `PathScreen`. The rung dates are written the moment a rung is
 cleared (`rungDates`, in the snapshot, earliest date winning in a merge)
 and never moved.
 
-Once the day is done, its header is the shelf's first row: a dot in the
-front card's colour, "Day 6 · five read" and, small under it, what has been
-liked; at the far end the shelf's two buttons, See again and the day sent.
-It used to be a line of its own over an eyebrow ("TODAY'S FIVE") that said
-the five again, with a band of air between the two; one row gives the card
-that room. The line gives a point or two before See again gives up its
-word for its mark alone.
+Once the day is done, its header is the shelf's first row: "Day 6", where
+Today's own name stood while the five were read, and, small under it, what
+has been liked; at the far end a small pill, ▶ See again, and the day sent.
+See again opens the five at full size in the viewer, always from the first
+card whichever one the shelf has at its front, exactly as Explore's "Your
+five from today" does (`openTodaysFive`). The day's name gives a point or
+two before See again gives up its word for its mark alone. The developer
+tools can take the row away to set the bigger card beside it on a phone:
+then See again and the day sent stand at the two ends of the row of dots.
 
 ## Explore, and the archive
 
@@ -359,10 +418,12 @@ one they missed, never a list of old news.
 
 **Loved since the start** sits under the top list: the cards readers held
 on to most over all time — the counts kept for good at `totals/{shard}`
-(the part of a card's id before its first dash), plus the launch crowd's
-average since the first of September 2026 — minus what the reader has
-read. It is not closed day by day like the top list: it is a shelf for
-finding what you missed, not a ranking to quote.
+(the part of a card's id before its first dash), real readers' and
+nothing else — minus what the reader has read. It is not closed day by day
+like the top list: it is a shelf for finding what you missed, not a
+ranking to quote. It keeps to the top list's two numbers (below), judged on
+the list for everybody before the reader's own reading is taken out of it,
+and until they are met there is no such shelf.
 
 **The top of the week and of the month** sit under today's shelf: the cards
 readers liked, saved and said most in the last 7 or 30 days, with a Week /
@@ -371,8 +432,8 @@ other shelf ("Top in Economics"). It is the one ranking that came back,
 because it is the one with something true to rank by. It is numbered — a
 top that does not say which is first is not one — but the cards stay cards,
 each standing over the edge of its number, cut out of it by a ring of the
-page's colour, the number fading down behind it; each says how many readers
-kept it.
+page's colour, the number fading down behind it. How many readers kept a
+card orders the list and is not printed on it.
 
 How it counts (`lib/sync/tally.dart`): the first time a reader likes, saves
 or says a card, their phone adds one to that card's count for the day, at
@@ -380,13 +441,10 @@ or says a card, their phone adds one to that card's count for the day, at
 Once per card per phone, ever, so a count is a count of readers, and
 liking, unliking and liking again is not a way up the list. Explore reads
 the last 30 days, at most every ten minutes; days older than three are
-settled and read once, then kept on the phone. Without the launch crowd
-below, until the counts have been read — or where they cannot be, offline,
-on the web preview, or before the rules are published — nothing is ranked: the shelf shows its first three
-places numbered and empty, the first saying what puts a card there, at the
-list's own height so nothing jumps when the cards arrive. A first version
-hid the shelf until the counts were read, and so on every phone where they
-could not be it was a feature nobody could find.
+settled and read once, then kept on the phone. Until the counts have been
+read — or where they cannot be, offline, on the web preview, or before the
+rules are published — nothing is ranked, and Astute's picks stand in the
+list's place (below).
 
 **One list, fixed for the day.** The list counts closed days only: the
 rules take a count for a day until two days after it began, so from
@@ -397,16 +455,49 @@ would shift under the reader all day, and differently on each phone, since
 a phone sees its own like at once and everybody else's only on its next
 reading. Two days of lag is the price, and a top of the week can pay it.
 
-**The launch crowd.** A top list opened as three empty places, on every
-phone, for the weeks before anybody had held on to anything — so for now
-it is seeded (`TopSeed`, installed in `main.dart`). About one card in seven
-is given a believable daily following, heavy-tailed the way real lists are
-and turning over month by month, tilted to what readers keep (a question
-over a fact, a debate over both, the hard ones); the real counts are added
-on top and rank above it as they come. It is the same list on every phone,
-because it is computed from the card ids and the day. It is a stand-in and
-says nothing true about readers: construct `Tallies.instance` without a seed
-to retire it once the real counts can carry the list alone.
+**Real readers only, and Astute's picks until there are enough.** For its
+first weeks the list was seeded: a launch crowd, a believable following
+made up from the card ids and the day, laid under the real counts so the
+list was never empty. A list that says it is what readers liked most
+cannot be partly invented — an app about not being fooled least of all,
+and presenting made-up popularity as real is an unfair practice under EU
+consumer law — so the crowd is gone, on the phone and on the server alike:
+every list counts real readers and nothing else, and only cards dealt to
+everybody (never a card about a place, a retired one, or one idea of a
+book, which is read whole from its own row).
+
+A list is shown once real readers make one worth showing: at least **five
+cards, each held by at least three readers** in its window, the cards
+fewer readers held left off it (`Tallies.listCards` and
+`Tallies.listReaders` on the phone, `LIST_CARDS` and `LIST_READERS` on the
+server, one rule, `worthShowing`, on both). Three because a count is of
+readers, and fewer is one person's taste or a household's; five because a
+top of one or two is not a top. A subject's list is held to the same
+numbers on its own. When only the month has a list, the shelf is the
+month's, with no switch to an empty week.
+
+Until then the shelf is **Worth your time**, *Picked by Astute while the
+readers' list fills up*: the cards that ask the most, one subject after
+another, the same for everybody and turning over with the week
+(`ExploreShelves.picked`, from `pickedPills`), less what the reader has
+read. It stands in the same frame and the same row, at the same height,
+with the switch's room kept in its head, so nothing moves when the real
+list takes its place. It carries no numbers — a number says which card
+readers put first, and on these no reader put any card anywhere — and it
+always says its own name, whatever title a section gives the readers'
+list. Before the crowd the list was three numbered, empty places, and
+before that it was hidden until the counts were read: one looked broken,
+the other was a feature nobody could find. The picks are neither, and say
+what they are.
+
+The server's Explore (`explore/latest`) says `readersOnly: true` beside its
+lists. A build that knows the field takes the server's lists only from a
+document that says so, and otherwise ranks the phone's own counts, so a
+seeded list is never shown whichever reaches the reader first, the build or
+the server. An older build reads the same lists as before, in the same
+shape: empty while they are thin, so it leaves the shelf out (or, older
+still, shows its empty places and the line that says what puts a card
+there), and the real list once there is one.
 
 `firestore.rules` holds every write to one card, plus one, on a day that is
 today on some clock, and lets nothing be taken back. **The rules have to be
@@ -749,8 +840,12 @@ how it got through — the critic passing it first time, the quote found on
 the page by a program, a fact that will not change — and the doubtful ones,
 with one in ten of the rest, leave the bank for `tool/cards/review/`, listed
 in an issue with **Publish** and **Drop** under each; a tick does the rest.
-Readers can say a card is wrong (*Report a problem*, under every card's
-source); the server adds up every day how each card does — right and wrong
+Readers can say a card is wrong (*Report a problem*, off the card's face
+and in the app's own sheets, so a drawn card has it too: under the source
+in Go deeper, in the share sheet or in Go deeper's head, the four ways
+being tried in `lib/widgets/source_foot.dart` with the card's foot, which
+leads with Go deeper and brings Why this card back to every card of the
+day); the server adds up every day how each card does — right and wrong
 and how surely, the options picked, likes, throws, reports — flags a card
 far easier or harder than its label, or whose marked answer the crowd
 overwhelmingly rejects, and takes a card three readers say is untrue out of
@@ -843,6 +938,22 @@ five the reader's own with no card asked for. Beside Astute+'s free trial
 it was a second free thing, and two free things read as one too many: the
 one way to try all five is now the trial, and the free day is the same
 from the first morning, so what Astute+ adds is there to see from the start.
+
+**The opening.** A new reader's first three days open on cards chosen by
+hand for a first impression (`lib/data/first_days.dart`): a question that
+stops you in two seconds, a big drawing on both sides, a real source,
+nothing dark. Fifteen are the three days of a reader who leaned nowhere,
+five a day, read in their order; for a reader who held some subjects above
+the rest, the best of those come first, and a subject turned off never
+comes. The day keeps its shape — three to read, two that ask, the two
+questions the reader's own on the free plan, a review on Astute+, the card
+about home — and what the opening cannot fill, the reader's own dealer
+fills, never with a card marked dark or for adults. The first morning was
+dealt when the app opened, before the first run had asked anything, so
+every new reader of a date met the same five; it is dealt again when the
+first run ends. The opening is the phone's, whatever the server holds.
+Readers who were past the first run before it existed are dealt as they
+always were.
 
 On the free plan two of the five are the reader's own —
 dealt from the mix, from the subjects and strands they kept on, at the
@@ -1443,7 +1554,13 @@ store through RevenueCat rather than from a bool the app wrote to itself.
 and restart, toggle the plan, and a readout of what the app knows about
 itself: whether Firebase started and why not, the account id, the last auth
 error, whether the store answered, and whether PostHog is sending, opted out
-or not running at all. It is needed in release builds, because TestFlight
+or not running at all. At its head are two looks to try on the phone itself
+(`lib/state/debug_looks.dart`): *Today, day read: no top row*, the finished
+day without the row over its card, so the card is bigger; and *Profile top*,
+Auto (A free · C Astute+), A, B or C. Each shows at once and is kept on the
+phone, through the wipe too; a build without the tools never reads them, so
+a look kept by a TestFlight build is nothing to the App Store build
+installed over it. It is needed in release builds, because TestFlight
 builds are release builds, and the build testers get is the very binary then
 submitted to the App Store. So an iPhone decides at launch (`readDebugTools`
 in `lib/debug_flags.dart`, from `main()`): it asks `AppDelegate.swift` on
@@ -1606,10 +1723,17 @@ you know), *Holding* (it is still there weeks later), *Sharp*. Any five
 cards at all carry somebody up it. The journey shows the rung, one bar
 held to whichever requirement is furthest behind, and the single next
 step — telling somebody four things at once is telling them nothing.
-The profile keeps only how well you know yourself, and a button into the
-journey with the Astute+ lock on it for the free plan: the level, the moves
-you keep missing, whether the gap is closing and the week in questions are
-all the journey's.
+On the free plan the profile opens on the Astute score, read as the journey
+reads it, with its week and its month, and under it the way into the journey,
+"All your scores, week by week" — marked Astute+ but never locked: the score
+above it is already the reader's own. On Astute+ it opens on the board: the
+score, the days in a row and the cards read side by side, the days in a row
+lit while they run, the number in the streak's orange with its flame
+(`widgets/profile_top.dart`, `profileTopFor`, where the third top is kept for
+comparison).
+Lower down it keeps how well you know yourself: the level, the moves you keep
+missing, whether the gap is closing and the week in questions are all the
+journey's.
 
 **Weeks kept.** Five days out of seven keeps a week, and the record counts
 the weeks in a row. The daily streak is the sharper number and the crueller

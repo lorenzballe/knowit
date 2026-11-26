@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Chart of light reflected by stacked thin-layer mirrors, with a draggable guess. Text: one pair of layers reflects 0.4% of chip-making light. Asks what 50 pairs reflect. Reader drags on the chart to guess.",
+    "label": "A mirror drawn big in section: 50 pairs of thin layers on glass. Light comes down onto it as a wave; one pair sends back 0.4%, a faint ripple, into a tall meter of light back. The reader drags the meter to guess what 50 pairs reflect and says how sure; the mirror then builds pair by pair and the echo grows to about 70%, not the 20% of plain adding.",
     "graded": false
   },
   "source": "Veritasium, “The Closest Thing We Have to Alien Technology” (YouTube, 2025)",

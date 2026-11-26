@@ -70,3 +70,13 @@ tool/shots/paywall/
 tool/shots/purchase/
 # Explore on a phone, top to bottom (tool/explore_tour_shots.dart): looked at, not kept
 tool/shots/explore-tour/
+# The day as a picture, in each of its layouts (tool/share_day_shots.dart): looked at, not kept
+tool/shots/shareday/
+# A video card opened on phones over its film (tool/video_shots.dart): looked at, not kept
+tool/shots/video/
+# Explore's latest news with a morning's paper (tool/news_shots.dart): looked at, not kept
+tool/shots/news/
+# A subject's grid and the mix fine-tuned (tool/gridmix_shots.dart): looked at, not kept
+tool/shots/gridmix/
+# The site's pictures of the app, at the site's sizes (tool/site_shots.dart): copied to site/assets by tool/site/shots.py, not kept here
+tool/shots/site/

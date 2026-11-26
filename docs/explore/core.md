@@ -374,6 +374,29 @@ Fields: `title`, `subtitle` (none by default: the panel says what it is).
 {"id": "your-day", "block": "your-day", "gap": 4}
 ```
 
+### `your-five`
+
+"Your five from today" ("Le tue cinque di oggi"): once the day's five are
+read, a small row — the five in small, each a card in its own colour, the
+name, their subjects — and a tap opens them again at full size, the way they
+first came, always from the first card: not the one at the front of Today's
+shelf, nor the one the last re-read stopped on (the owner's rule; the
+`your-day` panel's "See again" opens them the same way, and so does "See
+again" over Today's shelf, from the same function, `openTodaysFive`).
+Subjects that do not fit the line are counted ("+2"), never cut in the
+middle of a name. Explore is where a reader goes once the day is read, so
+the way back to the cards themselves is here too. The reader's own
+cards, never the day's challenge that is the same for everyone, which opens
+Explore above it. Not drawn before the five are read, nor while Explore is
+narrowed to a subject. A build older than it passes over it.
+
+Fields: `title` (in place of the name), `subtitle` (in place of the
+subjects).
+
+```json
+{"id": "your-five", "block": "your-five", "gap": 12}
+```
+
 ### `quick-games` — the challenges
 
 Explore's games, called Challenges ("Sfide"): tiles four to a page, two by
@@ -385,9 +408,9 @@ false one, True or false and Which is bigger — then the games of bets that are
 a whole game on their own: Closer, closer; Orders of magnitude; Bet a range;
 Place your bet; Your number; then the three games of time: In order, What
 year? and Before or after?. Three full pages. Not among them: the slip and Bet
-a friend, which play nothing; Today's three, which opens Explore and whose
-three cards and crowd belong to its own section; and the bet of the day,
-Today's three with one card.
+a friend, which play nothing; Today's five and each subject's three, which
+open Explore and the subjects' pages and whose cards and crowd belong to
+their own section; and the bet of the day, one share set on the track.
 
 Every tile is one size on every page, at any text size (the largest any
 challenge's words need, up to nearly half as large again; what it asks is
@@ -570,22 +593,67 @@ Fields: `title`, `subtitle`, `limit` (paths shown, 8 by default).
  "title": {"en": "Ten-card paths", "it": "Percorsi da 10 carte"}}
 ```
 
-### `founder-books`
+### `books`
 
-The books in pills that the people who built the companies everyone knows
-recommended in public (lib/data/book_picks.dart): a row like the books'
-own, in the same weekly turn and with the same way in, each tile under the
-names of who recommended it. A book's own page says each pick: who, what
-they built, their words quoted exactly, and where they said it, which a tap
-opens. Every pick is checked against that page; a pick nobody can check is
-left out. Fewer than three such books (two on a subject's page), no
-section.
+Books in pills: a book's big ideas, four to eight cards in the book's own
+order (`book` on a card, lib/data/books.dart). The book of the week, the
+same for every reader, is set apart at the head: its cover large on a
+ground of its subject's colour, its title and author, why it is worth the
+minutes (the prize, the copies sold, the bestseller list), how many ideas
+in how many minutes, how far the reader is, and on the free plan that it
+is free this week. The other books follow in a row, each its cover, title,
+author and a dash for each idea, the ones read filled, a tick on one read
+whole and a lock on one for Astute+. "See all" opens every book at once in
+a grid. A tap opens the book's own page: its ideas in order, who
+recommended it of the people on `founders`, and the way in (the first two
+ideas free, the week's book whole). The row turns once a week; narrowed to
+a subject it shows that subject's books, the week's set apart only when it
+is one of them. With no whole book, no section.
 
 Fields: `title`, `subtitle`.
 
 ```json
-{"id": "founder-books", "block": "founder-books",
- "title": {"en": "What the founders read", "it": "Cosa leggono i grandi imprenditori"}}
+{"id": "books", "block": "books",
+ "title": {"en": "Books in pills", "it": "Libri in pillole"}}
+```
+
+### `founders`
+
+What founders read: the people who built the companies everyone knows, and
+the investors who built Berkshire Hathaway (lib/data/founders.dart), with
+the books in pills they recommended in public.
+
+On Explore for every subject, a row of the people, each a tile with their
+face, how many of the books they recommended are in pills, their name, what
+they built, and a dash for each book, filled for the ones read whole. A tap
+opens their page: the face, name and what they built, how many books and
+ideas, then those books, each its cover, title and author, their words
+about it quoted exactly, where and when they said it (a tap opens that
+page, so anyone can check), how far the reader is, and a tap anywhere else
+opens the book's own page. At its foot, that these are books the person
+recommended in public and that they have no connection with Astute, and
+who took the photo, under what licence, from Wikimedia Commons, cropped (a
+tap opens the photo's page). Fewer than three people, no row.
+
+On a subject's page, where a person would have a book or two, the books of
+that subject the people recommended instead, one list and not by person:
+each book with its cover, the words of who recommended it, their face and
+name beside where they said it, and the others who recommended it too.
+None, no section.
+
+The faces are photos free to use from Wikimedia Commons (CC0, public
+domain, CC BY or CC BY-SA), cropped square and kept small in the app
+(assets/founders/, with CREDITS.md beside them); without one, the initials
+of the name stand in. A pick is listed while its book is in the bank and
+passed over while it is not, and so is a person with none. Names, roles and
+titles are never cut short: a tile is as tall as its words need. With no
+`title`, it is called "What founders read" in the reader's language.
+
+Fields: `title`, `subtitle`.
+
+```json
+{"id": "founders", "block": "founders",
+ "title": {"en": "What founders read", "it": "Cosa leggono i fondatori"}}
 ```
 
 ### `line-of-day`
@@ -622,8 +690,8 @@ that are the names their shelves have always been measured under.
 | `nothing-here` | "Nothing in Cinema yet", when today's shelf and the question from every subject have nothing for the reader. Not a shelf; no gap of its own | — |
 | `offline` | "You are offline", while Explore is the copy kept from the last time the phone had signal. Not a shelf; no gap of its own | — |
 | `today` | Today's shelf, the same for everyone and only today, at the big tile | `title`, `subtitle`, `limit` (8) |
-| `top` | The readers' top of the week or of the month, each card on its number, empty places until there are counts | `title`, `subtitle` |
-| `loved` | Loved since the start, not read yet | `title`, `subtitle` |
+| `top` | The readers' top of the week or of the month, each card on its number: real readers' counts only, shown from five cards held by three readers each. Until then Astute's picks stand in its place, "Worth your time · Picked by Astute while the readers' list fills up", in the same row at the same height, without the numbers. `title` and `subtitle` name the readers' list and are never put over the picks | `title`, `subtitle` |
+| `loved` | Loved since the start, not read yet: real readers' counts for good, held to the top list's numbers, and no shelf until they are met | `title`, `subtitle` |
 | `asking` | A question from every subject, as rows | `title`, `subtitle`, `limit` (6) |
 | `mine` | The reader's own subject: the one they pushed up, or read most of | `title`, `subtitle` |
 | `where-you-live` | The cards about the reader's place, or the tile that offers to switch it on | `title`, `subtitle` |
@@ -638,7 +706,7 @@ that are the names their shelves have always been measured under.
 | `came-back` | The cards that came back, to answer again | `title`, `subtitle` |
 | `move-sampling`, `move-compared` | The two questions to ask of a number | `title`, `subtitle` |
 | `work` | Work it out: every way to play a number, with the points left | `title`, `subtitle` |
-| `unmask` | Unmask the chart | `title`, `subtitle` |
+| `unmask` | Charts that mislead: "This chart misleads. Can you see how?", then the trick said and the same numbers drawn fairly | `title`, `subtitle`, `look`: `before-after` (the default: the original and the corrected chart one over the other, each named), `in-place` (the chart turns fair where it stands, with a switch back to the original) or `current` (the first version, "Unmask the chart") |
 | `how-sure` | How sure am I, and why (its own frame) | — |
 | `what-if` | What if it's true | `title`, `subtitle` |
 | `series` | A few cards that only make the point together | `title`, `subtitle` |

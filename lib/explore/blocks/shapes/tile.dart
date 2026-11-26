@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import '../../../models/pill.dart';
 import '../../../theme.dart';
 import '../../../widgets/explore/parts.dart';
+import '../../../widgets/scaled_text.dart';
 import '../../../widgets/subject_icon.dart';
 import 'look.dart';
 import 'outlines.dart';
@@ -126,32 +127,41 @@ class FigureText extends StatelessWidget {
 
 /// How tall [text] stands set by [look] [width] wide at its smallest, as the
 /// reader sees it: the question of a tile that has the least room for it.
+/// [atTop], at the top of its type instead: the question of a tile made as
+/// tall as its question.
 ///
 /// Measured as the app's own fitting sets it (ScaledText): at the reader's
-/// text size, at the smallest size the reader will see, and in their
-/// direction.
+/// text size, at the smallest size the reader will see (or the largest the
+/// longest word leaves it), and in their direction.
 double questionHeight(
   BuildContext context,
   String text,
   TileLook look,
-  double width,
-) {
+  double width, {
+  bool atTop = false,
+}) {
   final TextScaler scaler = MediaQuery.textScalerOf(context);
-  final double least = math.min(
-    look.min,
-    look.min * look.min / scaler.scale(look.min),
+  final TextDirection direction = Directionality.of(context);
+  TextStyle style(double size) => AppText.display(
+    size: size,
+    weight: FontWeight.w600,
+    height: look.lineHeight,
+    spacing: look.tracking * size,
   );
+  final double size = atTop
+      ? ScaledText.sizeFor(
+          text,
+          styleFor: style,
+          min: look.min,
+          max: look.max,
+          width: math.max(0, width),
+          scaler: scaler,
+          direction: direction,
+        )
+      : math.min(look.min, look.min * look.min / scaler.scale(look.min));
   final TextPainter painter = TextPainter(
-    text: TextSpan(
-      text: text,
-      style: AppText.display(
-        size: least,
-        weight: FontWeight.w600,
-        height: look.lineHeight,
-        spacing: look.tracking * least,
-      ),
-    ),
-    textDirection: Directionality.of(context),
+    text: TextSpan(text: text, style: style(size)),
+    textDirection: direction,
     textScaler: scaler,
   )..layout(maxWidth: math.max(0, width));
   final double height = painter.height;
@@ -165,8 +175,30 @@ double questionHeight(
 /// a card it is dealt grows to it, all its tiles alike.
 ///
 /// [read] and [figure] are what the tile shows beside the question: the
-/// tick of a card read, the figure of a number.
+/// tick of a card read, the figure of a number. [atTop], the height for its
+/// question set whole at the top of its type: a tile as tall as its
+/// question and no taller, as a masonry stands its cards.
 double tileHeightFor(
+  BuildContext context,
+  Pill pill,
+  TileLook look, {
+  required double width,
+  bool read = false,
+  bool figure = false,
+  bool atTop = false,
+}) {
+  final double inner = width - look.padding.horizontal;
+  // A pixel over, for the fractions a paragraph is laid out in.
+  return look.padding.vertical +
+      _above(context, pill, look, inner, read: read, figure: figure) +
+      questionHeight(context, pill.question, look, inner, atTop: atTop) +
+      1;
+}
+
+/// The least a tile [width] wide, cut and set by [look], stands for [pill]
+/// when it is as tall as its question: two lines of it at the top of its
+/// type, so a question of one line is a card and not a strip.
+double tileLeastFor(
   BuildContext context,
   Pill pill,
   TileLook look, {
@@ -175,9 +207,24 @@ double tileHeightFor(
   bool figure = false,
 }) {
   final double inner = width - look.padding.horizontal;
+  return look.padding.vertical +
+      _above(context, pill, look, inner, read: read, figure: figure) +
+      questionHeight(context, 'Ag\nAg', look, inner, atTop: true) +
+      1;
+}
+
+/// What a tile sets above its question: its head and the room under it.
+double _above(
+  BuildContext context,
+  Pill pill,
+  TileLook look,
+  double inner, {
+  required bool read,
+  required bool figure,
+}) {
   // The mark and the tick, on the tiles that centre them.
   const double marks = 15;
-  final double above = switch (look.words) {
+  return switch (look.words) {
     TileWords.top || TileWords.middle =>
       ShapeHead.heightFor(
             context,
@@ -192,11 +239,6 @@ double tileHeightFor(
       marks + look.gap + (figure ? look.figureSize * 0.95 + 8 : 0),
     TileWords.figureTop => look.figureSize * 0.86 + look.gap,
   };
-  // A pixel over, for the fractions a paragraph is laid out in.
-  return look.padding.vertical +
-      above +
-      questionHeight(context, pill.question, look, inner) +
-      1;
 }
 
 /// One card, cut and set by [look], with [art] painted and [behind] laid

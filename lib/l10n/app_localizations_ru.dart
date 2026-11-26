@@ -64,8 +64,8 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String dayRead(int n, String word) {
-    return 'День $n · прочитано $word';
+  String dayTitle(int n) {
+    return 'День $n';
   }
 
   @override
@@ -98,12 +98,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Завтрашняя пятёрка откроется через $when';
+    return 'Завтрашняя пятёрка · через $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Завтрашняя пятёрка начнётся с темы «$topic», через $when';
+    return 'Завтра: $topic · через $when';
   }
 
   @override
@@ -406,6 +406,77 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String scoreLevel(String id) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'curiosity': 'Любознательность',
+      'observation': 'Наблюдательность',
+      'method': 'Метод',
+      'judgement': 'Здравомыслие',
+      'insight': 'Понимание',
+      'discernment': 'Зоркость',
+      'acumen': 'Проницательность',
+      'other': '$id',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get levelUpTitle => 'Новый уровень';
+
+  @override
+  String levelUpGain(String skill, String n) {
+    return 'Самый большой рост за неделю: $skill, $n';
+  }
+
+  @override
+  String levelUpAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Пока $n ответа.',
+      many: 'Пока $n ответов.',
+      few: 'Пока $n ответа.',
+      one: 'Пока $n ответ.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelLabel => 'Уровень';
+
+  @override
+  String levelPointsTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n очка до уровня «$level»',
+      many: '$n очков до уровня «$level»',
+      few: '$n очка до уровня «$level»',
+      one: '$n очко до уровня «$level»',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String levelAnswersTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ответа до уровня «$level»',
+      many: '$n ответов до уровня «$level»',
+      few: '$n ответа до уровня «$level»',
+      one: '$n ответ до уровня «$level»',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelTop => 'Высший уровень';
+
+  @override
+  String get levelShareTitle => 'Поделиться уровнем';
+
+  @override
   String get signOutQuestion => 'Выйти?';
 
   @override
@@ -468,6 +539,59 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get yourRecord => 'Твоя история';
+
+  @override
+  String get profileTodayFive => 'Пять на сегодня';
+
+  @override
+  String profileTodayOf(int read, int of) {
+    return '$read из $of';
+  }
+
+  @override
+  String profileTodayToRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ещё $n',
+      many: 'ещё $n',
+      few: 'ещё $n',
+      one: 'ещё $n',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileJourneyScores => 'Все твои рейтинги, неделя за неделей';
+
+  @override
+  String profileInARowLabel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'дня подряд',
+      many: 'дней подряд',
+      few: 'дня подряд',
+      one: 'день подряд',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileWeekTitle => 'Последние 7 дней';
+
+  @override
+  String profileWeekPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'очка',
+      many: 'очков',
+      few: 'очка',
+      one: 'очко',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get appearance => 'Оформление';
@@ -1271,6 +1395,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return 'Глубже. Источник: $source';
+  }
+
+  @override
   String get sourceKindPaper => 'Исследование';
 
   @override
@@ -1450,43 +1579,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get threeDone => 'Три вопроса дня · готово';
-
-  @override
-  String threeDay(int n) {
-    return 'День $n';
-  }
-
-  @override
-  String get threeOf300 => 'из 300';
-
-  @override
-  String threeCloser(int pct) {
-    return 'Ближе, чем $pct% сегодняшних читателей.';
-  }
-
-  @override
-  String threeFirst(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Среди первых $n игроков сегодня.',
-      one: 'Первый игрок сегодня.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String threeReaders(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Сегодня сыграли $n читателя.',
-      many: 'Сегодня сыграли $n читателей.',
-      few: 'Сегодня сыграли $n читателя.',
-      one: 'Сегодня сыграл $n читатель.',
-    );
-    return '$_temp0';
-  }
 
   @override
   String get threeYou => 'Ты';
@@ -1883,19 +1975,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String threeStreak(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n дня',
-      many: '$n дней',
-      few: '$n дня',
-      one: '1 день',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get threeSend => 'Отправить';
 
   @override
@@ -1907,18 +1986,123 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String threeShareHead(String date) {
-    return 'Astute · Три вопроса дня · $date';
-  }
-
-  @override
-  String threeShareScore(int score, int day) {
-    return '$score из 300 · день $day';
-  }
-
-  @override
   String threeRowSaid(String said, String truth) {
     return 'Твой ответ: $said. Верно: $truth.';
+  }
+
+  @override
+  String get fiveTitle => 'Пять вопросов дня';
+
+  @override
+  String get fiveSame => 'Сегодня у всех одни и те же пять. Около двух минут.';
+
+  @override
+  String get fiveDone => 'Пять вопросов дня · готово';
+
+  @override
+  String dailyOf(int max) {
+    return 'из $max';
+  }
+
+  @override
+  String dailyPickRight(String answer) {
+    return 'Верно: $answer.';
+  }
+
+  @override
+  String dailyPickWrong(String answer) {
+    return 'Не совсем: верно $answer.';
+  }
+
+  @override
+  String dailyBetter(int pct, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Лучше, чем $pct% из $n сегодняшних игроков.',
+      many: 'Лучше, чем $pct% из $n сегодняшних игроков.',
+      few: 'Лучше, чем $pct% из $n сегодняшних игроков.',
+      one: 'Лучше, чем $pct% из $n сегодняшнего игрока.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyPlayers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Сегодня пока сыграли $n игрока.',
+      many: 'Сегодня пока сыграли $n игроков.',
+      few: 'Сегодня пока сыграли $n игрока.',
+      one: 'Сегодня пока сыграл $n игрок.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Среди первых $n игроков сегодня: пока слишком мало для сравнения.',
+      one: 'Первый игрок сегодня: пока слишком мало игроков для сравнения.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dailyCounting => 'Считаем сегодняшних игроков…';
+
+  @override
+  String dailyAverage(int right, int total, String avg) {
+    return 'Верно: $right из $total. На этих вопросах читатели в среднем отвечают верно на $avg.';
+  }
+
+  @override
+  String get dailyUncounted =>
+      'Сейчас не получается посчитать сегодняшних игроков.';
+
+  @override
+  String get dailyEach => 'Вопрос за вопросом';
+
+  @override
+  String dailyItemRight(int pct) {
+    return '$pct% сегодняшних игроков ответили верно';
+  }
+
+  @override
+  String dailyItemGuess(String guess) {
+    return 'Средняя оценка сегодня: $guess';
+  }
+
+  @override
+  String get dailyItemFew => 'Пока слишком мало ответов для сравнения';
+
+  @override
+  String fiveYesterday(int score) {
+    return 'Вчерашние пять: $score из 500.';
+  }
+
+  @override
+  String fiveShareHead(String date) {
+    return 'Astute · Пять вопросов дня · $date';
+  }
+
+  @override
+  String threeShareHeadIn(String subject, String date) {
+    return 'Astute · Три вопроса дня · $subject · $date';
+  }
+
+  @override
+  String dailyShareScore(int score, int max, int day) {
+    return '$score из $max · день $day';
+  }
+
+  @override
+  String dailyShareScoreAlone(int score, int max) {
+    return '$score из $max';
   }
 
   @override
@@ -1983,19 +2167,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Пять из пяти.',
-      '6': 'Шесть из шести.',
-      'other': '$n из $n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Сегодня ты тренировал';
-
-  @override
   String get scoreTitle => 'Рейтинг Astute';
 
   @override
@@ -2005,11 +2176,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get scoreStart => 'Он начнётся с твоего первого ответа.';
-
-  @override
-  String scoreToday(String n) {
-    return '$n сегодня';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2533,6 +2699,25 @@ class AppLocalizationsRu extends AppLocalizations {
   String get yourJourney => 'Ваш путь';
 
   @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'С прошлого визита, $days дня назад',
+      many: 'С прошлого визита, $days дней назад',
+      few: 'С прошлого визита, $days дня назад',
+      one: 'С прошлого визита, $days день назад',
+      zero: 'С прошлого визита, сегодня',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '$n с прошлого визита';
+  }
+
+  @override
   String get thePath => 'Дорога';
 
   @override
@@ -2726,8 +2911,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'В списке пока пусто. Считается каждая карточка, которую лайкнули, сохранили или рассказали.';
+  String get topPicksTitle => 'Стоит потратить время';
+
+  @override
+  String get topPicksLine =>
+      'Выбирает Astute, пока заполняется список читателей';
 
   @override
   String get readMark => 'Прочитано';
@@ -4129,6 +4317,60 @@ class AppLocalizationsRu extends AppLocalizations {
   String get unmaskWindow => 'Показать весь ряд';
 
   @override
+  String get unmaskMisleadTitle => 'Графики, которые вводят в заблуждение';
+
+  @override
+  String get unmaskMisleadLine =>
+      'Цифры верные. Подвох — в том, как они нарисованы.';
+
+  @override
+  String get unmaskAsk => 'Этот график вводит в заблуждение. Видите, как?';
+
+  @override
+  String get unmaskShowTrick => 'Показать подвох';
+
+  @override
+  String get unmaskHideTrick => 'Скрыть подвох';
+
+  @override
+  String get unmaskOriginal => 'Оригинал';
+
+  @override
+  String get unmaskCorrected => 'Исправлено';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'Ось начинается с $from, а не с нуля.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'Ось идёт лишь от $low до $high, и небольшое изменение кажется огромным.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'Ось идёт от $low до $high, и реальное изменение кажется плоским.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Показан только отрезок $shown, хотя данные охватывают $all.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Сравниваются голые итоги, а не честная мера.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'Ось перевёрнута, и рост выглядит как падение.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'Ось перевёрнута, и падение выглядит как рост.';
+
+  @override
   String get whatIfTrue => 'А если это правда?';
 
   @override
@@ -4943,12 +5185,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String betsCloserNoMore(String v) {
-    return 'Нет: больше $v.';
+    return 'Неверно: больше $v.';
   }
 
   @override
   String betsCloserNoLess(String v) {
-    return 'Нет: меньше $v.';
+    return 'Неверно: меньше $v.';
   }
 
   @override
@@ -5565,7 +5807,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tfRules =>
-      'Скажи «правда» или «ложь», а потом узнай почему. Большинство ошибается.';
+      'Утверждения, в которых ошибается большинство. Скажи «правда» или «ложь», а потом прочитай почему. Испытание измеряет суждение: умение отличить то, что верно, от того, что лишь кажется очевидным.';
 
   @override
   String get inOrderTitle => 'По порядку';
@@ -5575,13 +5817,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'Четыре события из карточек, без года: расставь их в том порядке, в каком они произошли. Испытание измеряет чувство хронологии, первую проверку любого объяснения: причина идёт раньше следствия.';
 
   @override
-  String get inOrderFirst => 'Нажми самое раннее';
+  String get inOrderFirst => 'Нажми событие, которое было первым.';
 
   @override
-  String get inOrderNext => 'Теперь следующее';
+  String get inOrderNext => 'Теперь то, что было следующим.';
 
   @override
-  String get inOrderReady => 'Всё расставлено. Проверим?';
+  String get inOrderReady => 'Всё расставлено.';
 
   @override
   String get inOrderCheck => 'Проверить порядок';
@@ -5607,7 +5849,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get whatYearRules =>
-      'Три события, у каждого скрыт год. Выставь его на шкале: чем ближе, тем больше очков.';
+      'Три события, без года. Выставь год каждого: чем ближе, тем больше очков, до десяти. Испытание измеряет чувство того, когда что произошло.';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5622,22 +5864,25 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'В сумме ошибка на $n года',
-      many: 'В сумме ошибка на $n лет',
-      few: 'В сумме ошибка на $n года',
-      one: 'В сумме ошибка на $n год',
+      other: 'В сумме ошибка на $n года.',
+      many: 'В сумме ошибка на $n лет.',
+      few: 'В сумме ошибка на $n года.',
+      one: 'В сумме ошибка на $n год.',
     );
     return '$_temp0';
   }
 
   @override
   String whatYearSaid(String guess, int points) {
-    return 'Твой ответ: $guess · +$points';
-  }
-
-  @override
-  String whatYearExact(int points) {
-    return 'Ровно тот год, +$points';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: 'Твой ответ: $guess · $points очка',
+      many: 'Твой ответ: $guess · $points очков',
+      few: 'Твой ответ: $guess · $points очка',
+      one: 'Твой ответ: $guess · $points очко',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5687,7 +5932,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get beforeAfterRules =>
-      'Шесть событий, одно за другим. Каждое случилось раньше или позже того, что выше?';
+      'Шесть событий, одно за другим. Скажи, случилось ли каждое раньше или позже того, что выше. Испытание измеряет чувство последовательности.';
 
   @override
   String get beforeAfterBefore => 'Раньше';
@@ -5853,6 +6098,177 @@ class AppLocalizationsRu extends AppLocalizations {
   String get challengeAgain => 'Ещё раз';
 
   @override
+  String get spotRules =>
+      'Четыре утверждения: три верны, одно ложно. Найди ложное. Испытание измеряет, насколько хорошо ты отличаешь обоснованное утверждение от того, что лишь звучит убедительно.';
+
+  @override
+  String get spotAsk => 'Нажми на утверждение, которое считаешь ложным.';
+
+  @override
+  String get biggerRules =>
+      'Два числа, каждое — ответ на вопрос карточки. Нажми на то, которое, по-твоему, больше. Испытание измеряет чувство пропорции.';
+
+  @override
+  String get biggerAsk => 'Нажми на карточку с большим ответом.';
+
+  @override
+  String biggerRight(String big, String small) {
+    return 'Верно: $big больше, чем $small.';
+  }
+
+  @override
+  String biggerWrong(String big, String small) {
+    return 'Неверно: $big больше, чем $small.';
+  }
+
+  @override
+  String get closerRules =>
+      'Приближайся к доле шаг за шагом: каждый раз говори, больше она или меньше середины оставшегося промежутка. Испытание измеряет умение оценивать.';
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) {
+    return 'Это $said: верно $right из $steps шагов.';
+  }
+
+  @override
+  String closerExactSteps(String said, int right, int steps) {
+    return 'Это ровно $said: верно $right из $steps шагов.';
+  }
+
+  @override
+  String closerStepsRight(int right, int steps) {
+    return 'Верно $right из $steps шагов.';
+  }
+
+  @override
+  String get magnitudeRules =>
+      'Десять, тысяча или миллион? Выбери степень десяти, ближайшую к ответу. Испытание измеряет чувство масштаба, которое важнее точных цифр.';
+
+  @override
+  String get rangeRules =>
+      'Задай свою оценку, а затем диапазон вокруг неё: чем он уже, тем больше приносит, если ответ попадёт внутрь. Испытание измеряет калибровку: знание того, сколько ты знаешь.';
+
+  @override
+  String rangeOption(int w, int pts) {
+    return '±$w · даёт $pts';
+  }
+
+  @override
+  String rangeIn(String said, int pts) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: 'Это $said: в твоём диапазоне, +$pts очка.',
+      many: 'Это $said: в твоём диапазоне, +$pts очков.',
+      few: 'Это $said: в твоём диапазоне, +$pts очка.',
+      one: 'Это $said: в твоём диапазоне, +$pts очко.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rangeOut(String said) {
+    return 'Это $said: вне твоего диапазона.';
+  }
+
+  @override
+  String stakeRules(int points) {
+    return 'Выбери ответ и поставь на него очки из своих $points в день: если прав, ставка удваивается; если нет, сгорает. Испытание измеряет убеждённость: ставить на то, что знаешь, и только на это.';
+  }
+
+  @override
+  String stakeWon(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Верно: ты выигрываешь $n очка.',
+      many: 'Верно: ты выигрываешь $n очков.',
+      few: 'Верно: ты выигрываешь $n очка.',
+      one: 'Верно: ты выигрываешь $n очко.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stakeLost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Неверно: ты теряешь $n очка.',
+      many: 'Неверно: ты теряешь $n очков.',
+      few: 'Неверно: ты теряешь $n очка.',
+      one: 'Неверно: ты теряешь $n очко.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get numberRules =>
+      'Задай кнопками одно число и зафиксируй его. Испытание измеряет точность: насколько близко ты подходишь, когда нужно остановиться на одном числе.';
+
+  @override
+  String tfRightIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Верно: это правда.',
+      'other': 'Верно: это ложь.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String tfWrongIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Неверно: это правда.',
+      'other': 'Неверно: это ложь.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String inOrderTold(int n, int of) {
+    return '$n из $of на своём месте.';
+  }
+
+  @override
+  String get whatYearYours => 'Твой год';
+
+  @override
+  String get whatYearExactly => 'Точный год';
+
+  @override
+  String beforeAfterRight(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Верно: это был $year год, до $above.',
+      'other': 'Верно: это был $year год, после $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Неверно: это был $year год, до $above.',
+      'other': 'Неверно: это был $year год, после $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAnswer => 'Ответ';
+
+  @override
+  String get challengeYouSaid => 'Твой ответ';
+
+  @override
+  String get challengePoints => 'Очки';
+
+  @override
+  String get challengeThisRound => 'Этот раунд';
+
+  @override
+  String get challengeLeftToday => 'Осталось на сегодня';
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, уровень $n';
   }
@@ -5868,6 +6284,9 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get todaySeeAgainHint =>
       'Сегодняшние карточки снова, во весь экран, с первой';
+
+  @override
+  String get yourFiveFromToday => 'Твои пять карточек за сегодня';
 
   @override
   String get tuneTitle => 'Настрой свой микс';
@@ -5893,6 +6312,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tuneSave => 'Сохранить';
 
   @override
+  String get tuneHoldHint => 'Задержи палец на жанре, и откроются темы внутри';
+
+  @override
   String get shareDayTitle => 'Поделись своим днём';
 
   @override
@@ -5910,7 +6332,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get shareDayHeadline => 'Пять карточек дня';
 
   @override
-  String get shareFormatPost => 'Пост';
+  String get shareFormatCover => 'Обложка';
+
+  @override
+  String get shareFormatList => 'Список';
 
   @override
   String get shareFormatStory => 'История';
@@ -6121,9 +6546,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Твои привычки';
-
-  @override
-  String get journeyChapterMemory => 'Что остаётся с тобой';
 
   @override
   String get journeyChapterCoach => 'Твой коуч';
@@ -6435,6 +6857,62 @@ class AppLocalizationsRu extends AppLocalizations {
   String get deeperTryAgain => 'Не дошло. Попробуй через минуту.';
 
   @override
+  String get deeperUnavailable => 'Сейчас недоступно. Попробуй позже.';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n издания',
+      many: '$n изданий',
+      few: '$n издания',
+      one: '$n издание',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ч назад',
+      zero: 'Только что',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n дня назад',
+      many: '$n дней назад',
+      few: '$n дня назад',
+      one: 'Вчера',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => 'Мир';
+
+  @override
+  String get newsKeyPoints => 'Главное';
+
+  @override
+  String get newsBehind => 'За новостью';
+
+  @override
+  String get newsSources => 'Источники';
+
+  @override
+  String get newsMadeFrom =>
+      'Написано Astute по этим материалам и сверено с ними.';
+
+  @override
   String get deeperDeclined => 'На это ИИ ответить не может.';
 
   @override
@@ -6544,11 +7022,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get bookRecommendedBy => 'Рекомендуют';
 
   @override
-  String bookPickPhoto(String credit) {
-    return 'Фото: $credit';
-  }
-
-  @override
   String get bookFreeThisWeek => 'Бесплатно на этой неделе';
 
   @override
@@ -6580,4 +7053,89 @@ class AppLocalizationsRu extends AppLocalizations {
   String bookRetold(String title, String author) {
     return 'Идеи книги «$title» ($author), пересказанные словами Astute. Всю книгу ищи в книжном.';
   }
+
+  @override
+  String get foundersTitle => 'Что читают основатели';
+
+  @override
+  String founderBookCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n книги',
+      many: '$n книг',
+      few: '$n книги',
+      one: '$n книга',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get founderTheirBooks => 'Рекомендованные книги';
+
+  @override
+  String founderAbout(String name) {
+    return 'Это книги, рекомендованные публично, в приведённых словах и с указанием, где это было сказано. $name не имеет никакого отношения к Astute.';
+  }
+
+  @override
+  String founderPhoto(String author, String licence) {
+    return 'Фото: $author, $licence, Wikimedia Commons, кадрировано';
+  }
+
+  @override
+  String founderAlso(String names) {
+    return 'Также рекомендуют: $names';
+  }
+
+  @override
+  String get firstCardTitle => 'Твоя первая карточка';
+
+  @override
+  String get firstCardSwipeOn => 'Листай дальше';
+
+  @override
+  String get trialOfferTitle => 'Попробуй весь Astute+.';
+
+  @override
+  String get trialOfferMark => 'Astute+.';
+
+  @override
+  String get trialOfferLine =>
+      'Пять сегодняшних карточек ждут тебя в любом случае.';
+
+  @override
+  String get trialStepToday => 'Сегодня';
+
+  @override
+  String get trialStepTodayLine =>
+      'Открывается весь Astute+. Ты ничего не платишь.';
+
+  @override
+  String trialStepDay(int day) {
+    return 'День $day';
+  }
+
+  @override
+  String trialStepReminderLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Мы пришлём тебе уведомление: осталось $days дня.',
+      many: 'Мы пришлём тебе уведомление: осталось $days дней.',
+      few: 'Мы пришлём тебе уведомление: осталось $days дня.',
+      one: 'Мы пришлём тебе уведомление: остался 1 день.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialStepChargeLine =>
+      'Продлевается каждый год. Отмени хотя бы за 24 часа — и ничего не заплатишь.';
+
+  @override
+  String get trialOfferStart => 'Начать пробный период';
+
+  @override
+  String get trialOfferFree => 'Продолжить бесплатно';
 }

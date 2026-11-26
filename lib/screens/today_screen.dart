@@ -19,7 +19,7 @@ import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/skill_mark.dart';
 import '../widgets/skill_score.dart' show todayMoveOf;
-import '../widgets/training.dart';
+import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
@@ -74,12 +74,19 @@ class _TodayScreenState extends State<TodayScreen> {
   /// app onto a day already done goes straight to the shelf — and only on
   /// the free plan, where there is something to offer: all five cards,
   /// the reader's own. It leaves the way every card leaves: thrown.
+  ///
+  /// No sheet of scores rises over the finished day. One of every score the
+  /// day's cards moved used to, and the owner did not want the day's close
+  /// to be a table of numbers: the day closes on its own shelf, and the
+  /// scores count up where he goes to see them, in Your journey, from
+  /// where he last saw them (lib/screens/journey_screen.dart).
   bool _magic = false;
 
-  /// Whether the sheet of what the day trained is still to rise: set when
-  /// the day is finished here, in this session, and spent the first time
-  /// the shelf is up (lib/widgets/training.dart).
-  bool _trainingDue = false;
+  /// Whether a level the day's answers reached is still to be told: set
+  /// when the day is finished here, in this session, and spent the first
+  /// time the shelf is up. The one thing that rises over the finished day,
+  /// and only when there is a level to tell.
+  bool _levelDue = false;
 
   /// The day whose pictures were last fetched ahead, by its cards.
   String? _warmed;
@@ -119,21 +126,19 @@ class _TodayScreenState extends State<TodayScreen> {
       HapticFeedback.heavyImpact();
     });
     if (!widget.app.isPlus) _magic = true;
-    _trainingDue = true;
+    _levelDue = true;
   }
 
-  /// Once the shelf has landed, the sheet of what the day's cards trained in
-  /// the skills the reader picked; nothing when they picked none, or the day
-  /// trained none of them. Pushed over the tabs, so the shell's own asks at
-  /// the finished day (the reminder, the account, the place) wait for it.
-  void _riseTraining() {
-    _trainingDue = false;
+  /// Once the shelf has landed, the day at rest: a level its answers
+  /// reached rises over it, once (lib/widgets/level_up.dart). Pushed over
+  /// the tabs, so the shell's own asks at the finished day (the reminder,
+  /// the account, the place) wait for it.
+  void _riseLevel() {
+    _levelDue = false;
     Future<void>.delayed(const Duration(milliseconds: 650), () {
       if (!mounted || !widget.app.todayCompleted || _magic) return;
       if (!(ModalRoute.of(context)?.isCurrent ?? true)) return;
-      final List<DayTraining> items = dayTrainingOf(widget.app);
-      if (items.isEmpty) return;
-      showDayTraining(context, widget.app, items);
+      showLevelUpIfDue(context, widget.app);
     });
   }
 
@@ -214,7 +219,7 @@ class _TodayScreenState extends State<TodayScreen> {
     // the shelf comes up when it, too, has been thrown.
     final bool onTable = !done || _magic;
     _tellShell(onTable);
-    if (!onTable && _trainingDue) _riseTraining();
+    if (!onTable && _levelDue) _riseLevel();
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 420),
       switchInCurve: Curves.easeOutCubic,
@@ -331,16 +336,28 @@ class _TodayScreenState extends State<TodayScreen> {
               // One word for one thing: a card for the reader's goal that
               // carries the mark of a skill they picked says so by the mark
               // alone, not by the mark and a line saying it again.
+              // Most cards have no line now; every one reaches the sheet all
+              // the same, from its back's foot or, with the foot being tried
+              // that says it on the front, from a line there (cardNote).
               notes: {
                 for (final MapEntry<String, CardWhy> e in whys.entries)
-                  if (e.value.kind != WhyKind.goal ||
-                      skillMarkOf(e.value.pill, app.skills) == null)
-                    if (whyLine(context.l10n, e.value) case final String line)
-                      e.key: line,
+                  if (cardNote(
+                        context.l10n,
+                        e.value,
+                        marked: skillMarkOf(e.value.pill, app.skills) != null,
+                      )
+                      case (final String line, _))
+                    e.key: line,
               },
               noteIcons: {
                 for (final MapEntry<String, CardWhy> e in whys.entries)
-                  e.key: whyIcon(e.value.kind),
+                  e.key:
+                      cardNote(
+                        context.l10n,
+                        e.value,
+                        marked: skillMarkOf(e.value.pill, app.skills) != null,
+                      )?.$2 ??
+                      whyIcon(e.value.kind),
               },
               onNote: (pill) => showWhySheet(
                 context,
@@ -402,13 +419,10 @@ class _TodayScreenState extends State<TodayScreen> {
                 app: app,
                 at: at,
                 onPick: (k) => setState(() => _shelfAt = k),
-                // Which day this was, and what it made, on the shelf's own
-                // first row.
+                // Which day this is, on the shelf's own first row: that
+                // the five were read is what the shelf under it shows.
                 heading: (
-                  line: context.l10n.dayRead(
-                    app.dayNumber,
-                    context.l10n.countWord('${app.todaysDeck.length}'),
-                  ),
+                  line: context.l10n.dayTitle(app.dayNumber),
                   aside: _shelfAside(context, app),
                 ),
               ),

@@ -9,6 +9,7 @@ import 'package:astuto/data/pills_repository.dart' show dateKey;
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/remote/remote.dart';
 import 'package:astuto/screens/archive_screen.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
@@ -312,11 +313,11 @@ void main() {
       expect(send, findsOneWidget);
       expect(find.bySemanticsLabel('Share day'), findsOneWidget);
 
-      // A mark at the end of the shelf's heading — the day's line and the
+      // A mark at the end of the shelf's heading — the day's name and the
       // aside under it — on its row, not a button of its own beside the
       // journey: the journey has the row to itself and the shelf keeps its
       // room.
-      final Finder heading = find.textContaining('five read');
+      final Finder heading = find.text('Day 1');
       final Finder aside = find.byKey(const ValueKey('shelf-aside'));
       final double middle = tester.getCenter(send).dy;
       expect(middle, greaterThan(tester.getRect(heading).top));
@@ -407,39 +408,129 @@ void main() {
       expect(find.byType(DayPicture), findsNothing);
     });
 
-    testWidgets('beside it, the five again at full size, as they came', (
-      tester,
-    ) async {
+    testWidgets('beside it, See again: the five again at full size, as they '
+        'came, always from the first card, wherever the reader was; and the '
+        'same from Explore', (tester) async {
       final said = _listen();
+      // Explore as the document lays it: the reader's own five near its
+      // top.
+      Remote.adopt(
+        const RemoteConfig(
+          hash: 'your-five',
+          schema: kRemoteSchema,
+          parts: {
+            'explore': {
+              'sections': [
+                {'id': 'your-five', 'block': 'your-five'},
+              ],
+            },
+          },
+        ),
+      );
+      addTearDown(Remote.reset);
       SharedPreferences.setMockInitialValues(_free());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
-      final Finder again = find.byKey(const ValueKey('shelf-see-again'));
-      expect(again, findsNothing);
       await _finishDay(tester);
+
+      // A small pill on the day's row, just before the share's mark: the
+      // owner wanted it back over the shelf.
+      final Finder again = find.byKey(const ValueKey('shelf-see-again'));
+      final Finder send = find.byKey(const ValueKey('shelf-share-day'));
       expect(again, findsOneWidget);
-      // Named for everyone; its word is on the line wherever the line has
-      // room for it beside the day's, and its mark alone where it has not.
       expect(find.bySemanticsLabel('See again'), findsOneWidget);
+      expect(
+        find.descendant(of: again, matching: find.text('See again')),
+        findsOneWidget,
+      );
+      expect(tester.getCenter(again).dy, closeTo(tester.getCenter(send).dy, 1));
+      expect(
+        tester.getRect(again).right,
+        lessThanOrEqualTo(tester.getRect(send).left),
+      );
+      expect(
+        tester.getRect(again).left,
+        greaterThan(tester.getRect(find.text('Day 1')).right),
+      );
 
       final AppState app = tester
           .widget<TodayDoneView>(find.byType(TodayDoneView))
           .app;
+      // The reader has the third card at the front of the shelf.
+      final Finder third = find.descendant(
+        of: find.byType(TodayDoneView),
+        matching: find.bySemanticsLabel('Card 3 of 5'),
+      );
+      await tester.tap(third);
+      await _settle(tester);
+      expect(tester.getSemantics(third), isSemantics(isSelected: true));
+
+      Finder inViewer(Finder what) =>
+          find.descendant(of: find.byType(DeckViewerScreen), matching: what);
+      int onTop() => tester
+          .widget<PillCardStack>(inViewer(find.byType(PillCardStack)))
+          .index;
+
+      // The cards themselves, the way a tap on the widget opens them: the
+      // day's five under Today, from the first, not from the card the
+      // shelf has at its front.
+      void expectFromTheFirst() {
+        expect(find.byType(DeckViewerScreen), findsOneWidget);
+        final DeckViewerScreen viewer = tester.widget(
+          find.byType(DeckViewerScreen),
+        );
+        expect(viewer.title, 'Today');
+        expect(
+          viewer.deck.map((p) => p.id),
+          orderedEquals(app.todaysDeck.map((p) => p.id)),
+        );
+        expect(viewer.initialIndex, 0);
+        // Read back, not answered again.
+        expect(viewer.answering, isFalse);
+        expect(onTop(), 0);
+        expect(inViewer(find.text('1/5')), findsOneWidget);
+      }
+
       await tester.tap(again);
       await _settle(tester);
-      // The cards themselves, the way a tap on the widget opens them: the
-      // day's five from the first, under Today.
-      expect(find.byType(DeckViewerScreen), findsOneWidget);
-      final DeckViewerScreen viewer = tester.widget(
-        find.byType(DeckViewerScreen),
-      );
-      expect(viewer.title, 'Today');
-      expect(
-        viewer.deck.map((p) => p.id),
-        orderedEquals(app.todaysDeck.map((p) => p.id)),
-      );
-      expect(viewer.initialIndex, 0);
+      expectFromTheFirst();
       expect(said.of('today seen again').single['from'], 'today');
+
+      // Left on the second card, the next time starts from the first too.
+      await _swipeCardAway(tester);
+      expect(onTop(), 1);
+      expect(inViewer(find.text('2/5')), findsOneWidget);
+      await tester.tap(inViewer(find.bySemanticsLabel('Close')).first);
+      await _settle(tester);
+      expect(find.byType(DeckViewerScreen), findsNothing);
+      await tester.tap(again);
+      await _settle(tester);
+      expectFromTheFirst();
+      await tester.tap(inViewer(find.bySemanticsLabel('Close')).first);
+      await _settle(tester);
+
+      // Explore's row opens them the same way, from the same viewer.
+      await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('your-five')));
+      await _settle(tester);
+      expectFromTheFirst();
+      expect(said.of('today seen again').map((e) => e['from']), [
+        'today',
+        'today',
+        'explore',
+      ]);
+
+      // Left on the second card, the next time starts from the first too.
+      await _swipeCardAway(tester);
+      expect(onTop(), 1);
+      expect(inViewer(find.text('2/5')), findsOneWidget);
+      await tester.tap(inViewer(find.bySemanticsLabel('Close')).first);
+      await _settle(tester);
+      expect(find.byType(DeckViewerScreen), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('your-five')));
+      await _settle(tester);
+      expectFromTheFirst();
     });
   });
 

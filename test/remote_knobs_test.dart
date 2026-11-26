@@ -51,6 +51,8 @@ final List<Object> _declared = [
   AppState.kAccountOfferFlag,
   AppState.kPlaceAskFlag,
   AppState.kReviewAskFlag,
+  AppState.kFirstRunTrialFlag,
+  AppState.kCardAiFlag,
   AppState.kPushAskGapKnob,
   AppState.kPushDeferralsKnob,
   kReminderTimesKnob,

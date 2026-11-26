@@ -22,6 +22,7 @@ import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/widgets/explore/parts.dart' show ReadMark;
+import 'package:astuto/widgets/scaled_text.dart';
 
 import 'shapes_harness.dart';
 
@@ -568,25 +569,88 @@ void main() {
       ]);
     });
 
-    testWidgets('a masonry puts the longest questions in the tall places', (
-      tester,
-    ) async {
-      final ShapeBlock masonry = shapeNamed('shape-masonry');
-      final List<Pill> cards = lengths(masonry, 4);
-      await pumpShape(tester, masonry, json: _aimed(masonry), cards: cards);
-      final List<Pill> byLength = [...cards]
-        ..sort((a, b) => b.question.length.compareTo(a.question.length));
-      double height(Pill p) => tester.getSize(_card(p.id)).height;
-      final double shortestTall = math.min(
-        height(byLength[0]),
-        height(byLength[1]),
-      );
-      final double tallestShort = math.max(
-        height(byLength[2]),
-        height(byLength[3]),
-      );
-      expect(shortestTall, greaterThan(tallestShort));
-    });
+    for (final int n in [4, 8]) {
+      testWidgets('a masonry of $n stands each card as tall as its question, '
+          'the longer in the tall places, the two columns level', (
+        tester,
+      ) async {
+        final ShapeBlock masonry = shapeNamed('shape-masonry');
+        final List<Pill> cards = lengths(masonry, n);
+        await pumpShape(
+          tester,
+          masonry,
+          json: _aimed(masonry, {'limit': n}),
+          cards: cards,
+        );
+        expect(tester.takeException(), isNull);
+        final List<Rect> boxes = [
+          for (final Pill p in cards) tester.getRect(_card(p.id)),
+        ];
+        final double middle =
+            boxes.map((r) => r.center.dx).reduce((a, b) => a + b) / n;
+        final List<List<Rect>> columns = [
+          [...boxes.where((r) => r.center.dx < middle)],
+          [...boxes.where((r) => r.center.dx >= middle)],
+        ];
+        // As many in each column, level at the foot, out of step.
+        expect(columns[0], hasLength(n ~/ 2));
+        expect(columns[1], hasLength(n ~/ 2));
+        double foot(List<Rect> c) => c.map((r) => r.bottom).reduce(math.max);
+        expect(foot(columns[0]), closeTo(foot(columns[1]), 0.5));
+        for (final List<Rect> c in columns) {
+          c.sort((a, b) => a.top.compareTo(b.top));
+        }
+        // The left column starts on a tall place, the right one on a short
+        // one: the longer question of each pair stands taller.
+        for (int r = 0; r + 1 < n ~/ 2; r += 2) {
+          expect(
+            columns[0][r].height,
+            greaterThanOrEqualTo(columns[0][r + 1].height),
+          );
+          expect(
+            columns[1][r + 1].height,
+            greaterThanOrEqualTo(columns[1][r].height),
+          );
+        }
+        // Every question set whole at the top of its type, so its card is
+        // as tall as it, with no more than a sliver to spare under it.
+        for (final Element e in find.byType(ScaledText).evaluate()) {
+          final ScaledText text = e.widget as ScaledText;
+          final Finder at = find.byElementPredicate((x) => x == e);
+          final RichText set = tester.widget<RichText>(
+            find.descendant(of: at, matching: find.byType(RichText)).first,
+          );
+          expect(
+            (set.text as TextSpan).style!.fontSize,
+            closeTo(text.max, 0.05),
+            reason: text.text,
+          );
+          final double room = tester.getSize(at).height;
+          final double used = tester
+              .getSize(
+                find.descendant(of: at, matching: find.byType(RichText)).first,
+              )
+              .height;
+          final double tile = tester
+              .getSize(
+                find
+                    .ancestor(
+                      of: at,
+                      matching: find.byWidgetPredicate(
+                        (w) =>
+                            w.key is ValueKey<String> &&
+                            (w.key! as ValueKey<String>).value.startsWith(
+                              'explore-',
+                            ),
+                      ),
+                    )
+                    .first,
+              )
+              .height;
+          expect(room - used, lessThan(tile * 0.3), reason: text.text);
+        }
+      });
+    }
   });
 
   group('what the section says', () {

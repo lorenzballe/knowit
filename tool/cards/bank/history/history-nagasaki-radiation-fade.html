@@ -1,160 +1,246 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-nagasaki-radiation-fade -->
+<!-- The picture: Nagasaki's valley between green hills, the bay on its open side, the bomb's burst drawn high in the air
+     over it with a dashed drop to the ground, and the radiation it left behind counted out as 20 yellow hazard marks over
+     the city, each one 5% of it. The reader drags the strip at the foot to say how much was gone after a day, and marks
+     vanish as they drag. Then the real day passes: 16 of the 20 go. Drawn again at its real size whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#chart{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
-.ttl{font-family:var(--body);font-weight:700;fill:var(--k)}
-.tick{font-family:var(--mono);fill:var(--k);opacity:.6}
-.outline{fill:none;stroke:var(--k);stroke-width:2.5}
-.gfill{fill:color-mix(in srgb,var(--k) 16%,transparent)}
-.gline{stroke:var(--k);stroke-width:2.5;stroke-dasharray:7 5}
-.glab{font-family:var(--hand);font-weight:700;fill:var(--k)}
-.rfill{fill:var(--k)}
-.rlab{font-family:var(--display);font-weight:800;fill:var(--c)}
-.left{font-family:var(--body);font-weight:700;fill:var(--k)}
-.hint{font-family:var(--hand);fill:var(--k);opacity:.7}
-.grid{stroke:var(--k);stroke-opacity:.15;stroke-width:1}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize;user-select:none;-webkit-user-select:none}
+#pic.done{cursor:default;touch-action:manipulation}
+#why .body{font:500 max(1.9cqh,12.5px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Drag · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">NUCLEAR AFTERMATH</span></div>
     <h2 class="q">How long did the radiation linger in Nagasaki?</h2>
     <div class="stagebox" id="stage">
-      <svg id="chart"></svg>
+      <svg id="pic" data-drag role="img" aria-label="Nagasaki's valley between green hills, the bomb's burst high in the air above it, and the radiation it left behind drawn as 20 yellow hazard marks over the city, each one 5% of it. A strip at the foot sets how much of it was gone after 24 hours."></svg>
       <div id="why" class="gone">
-        <p class="body">The bomb burst high in the air, held only a modest amount of nuclear material, and its isotopes were short-lived. A reactor like Chernobyl holds tonnes of uranium.</p>
-        <p class="body">So 80% of the residual radiation was spent in the first day, and within a month both cities were near normal.</p>
+        <p class="body">It burst high in the air, held only a modest amount of nuclear material, and its isotopes were short-lived. Within a month both cities were near normal. Chernobyl’s reactor held tonnes of uranium.</p>
       </div>
     </div>
     <div id="sure"></div>
-    <p class="say" id="say">Drag the bar: how much was already gone after 24 hours?</p>
+    <p class="say" id="say">Each mark is 5% of the radiation the bomb left behind. Drag the strip: how much was gone after 24 hours?</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An air burst with little, short-lived fuel fades in days, not decades.</div>
     <div class="foot"><span class="src">Source · Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const REAL = 80;
-let guess = null, locked = false, revealed = false;
-const st = {real: 0};
-let G = {};
-const svgNS = 'http://www.w3.org/2000/svg';
+// Flat colours, each with one meaning: green hills, the blue bay, cream walls under dark roofs, the burst cream with a
+// yellow heart, and the radiation left behind yellow with the ink trefoil of the hazard sign.
+const INK = '#10100c', HILL = '#2f7a4d', HILL2 = '#5aa56d', WALL = '#fff4dc', ROOF = '#3a3440', SEA = '#2f7fe0', HAZ = '#ffe14a', CREAM = '#fffbf0';
+const REAL = 80, N = 20, STEP = 100 / N;
+const st = {gone: 0};
+let guess = null, locked = false, revealed = false, dragging = false, G = null;
+const svg = Kit.$('pic');
 
-function draw() {
-  const svg = Kit.$('chart');
-  const {W, H, f: f0} = Kit.fitSvg(svg);
-  const f = Math.max(f0, 12);
-  svg.innerHTML = '';
-  const top = f * 2.6, bot = H - f * 2.2;
-  const bw = Math.min(W * 0.34, 180), bx = W * 0.5 - bw * 0.7;
-  G = {f, top, bot, bx, bw, W, H, bh: bot - top};
-  const t = Kit.mk('text', {x: W / 2, y: f * 1.3, 'text-anchor': 'middle', class: 'ttl'}, svg);
-  t.style.fontSize = (f * 1.05) + 'px'; t.textContent = 'Residual radiation already spent';
-  const b = Kit.mk('text', {x: bx + bw / 2, y: bot + f * 1.6, 'text-anchor': 'middle', class: 'ttl'}, svg);
-  b.style.fontSize = f + 'px'; b.textContent = 'after 24 hours';
-  for (let v = 0; v <= 100; v += 25) {
-    const y = bot - G.bh * v / 100;
-    Kit.mk('line', {x1: bx, x2: bx + bw, y1: y, y2: y, class: 'grid'}, svg);
-    const k = Kit.mk('text', {x: bx - f * 0.6, y: y + f * 0.35, 'text-anchor': 'end', class: 'tick'}, svg);
-    k.style.fontSize = (f * 0.85) + 'px'; k.textContent = v + '%';
+// A seeded random source of its own, so the marks fall in the same places at every size and on every phone.
+const seeded = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+// The order the marks go in: a shuffle fixed once.
+const ORDER = (() => { const r = seeded(11), a = [...Array(N).keys()]; for (let i = N - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; })();
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const pts = p => p.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' ');
+function spline(p, n = 8) {
+  const out = [];
+  for (let i = 0; i < p.length - 1; i++) {
+    const a = p[Math.max(0, i - 1)], b = p[i], c = p[i + 1], d = p[Math.min(p.length - 1, i + 2)];
+    for (let k = 0; k < n; k++) { const t = k / n, t2 = t * t, t3 = t2 * t, f = (w, x, y, z) => .5 * (2 * x + (y - w) * t + (2 * w - 5 * x + 4 * y - z) * t2 + (3 * x - w - 3 * y + z) * t3); out.push([f(a[0], b[0], c[0], d[0]), f(a[1], b[1], c[1], d[1])]); }
   }
-  G.gfill = Kit.mk('rect', {x: bx, width: bw, class: 'gfill'}, svg);
-  G.rfill = Kit.mk('rect', {x: bx, width: bw, class: 'rfill'}, svg);
-  Kit.mk('rect', {x: bx, y: top, width: bw, height: G.bh, rx: 3, class: 'outline'}, svg);
-  G.rlab = Kit.mk('text', {x: bx + bw / 2, 'text-anchor': 'middle', class: 'rlab'}, svg);
-  G.rlab.style.fontSize = (f * 1.5) + 'px';
-  G.rsub = Kit.mk('text', {x: bx + bw / 2, 'text-anchor': 'middle', class: 'rlab'}, svg);
-  G.rsub.style.fontSize = (f * 0.85) + 'px';
-  G.left = Kit.mk('text', {x: bx + bw / 2, 'text-anchor': 'middle', class: 'left'}, svg);
-  G.left.style.fontSize = (f * 0.9) + 'px';
-  G.gline = Kit.mk('line', {x1: bx - f * 0.3, x2: bx + bw + f * 0.5, class: 'gline'}, svg);
-  G.glab = Kit.mk('text', {x: bx + bw + f * 0.8, class: 'glab'}, svg);
-  G.glab.style.fontSize = (f * 1.25) + 'px';
-  G.hint = Kit.mk('text', {x: bx + bw / 2, y: top + G.bh / 2, 'text-anchor': 'middle', class: 'hint'}, svg);
-  G.hint.style.fontSize = (f * 1.3) + 'px';
-  G.hint.textContent = '↕ drag';
-  update();
+  out.push(p[p.length - 1]); return out;
+}
+// The hazard sign's three blades, for a mark of radius 1.
+const BLADES = (() => { let d = ''; for (const a0 of [-90, 30, 150]) { const a = (a0 - 30) * Math.PI / 180, b = (a0 + 30) * Math.PI / 180, ro = .8, ri = .3, c = Math.cos, s = Math.sin, f = v => v.toFixed(3); d += `M${f(ri * c(a))},${f(ri * s(a))} L${f(ro * c(a))},${f(ro * s(a))} A${ro},${ro} 0 0 1 ${f(ro * c(b))},${f(ro * s(b))} L${f(ri * c(b))},${f(ri * s(b))} A${ri},${ri} 0 0 0 ${f(ri * c(a))},${f(ri * s(a))} Z `; } return d; })();
+const box = el => { try { return el.getBBox(); } catch (_) { return {x: 0, y: 0, width: 0, height: 0}; } };
+
+function build() {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  const fs = Math.max(12.5, Math.min(14.5, W / 23));
+  // The strip the reader drags sits at the foot until the answer is in; then the picture takes its room.
+  const sb = locked ? 0 : Math.max(42, fs * 3.2);
+  const land = H - sb;
+  // A short box puts the number beside the picture; a tall one puts it in the sky over the left hills.
+  const side = land < 150;
+  const big = side ? Math.max(28, Math.min(land * .36, W * .12)) : Math.max(34, Math.min(land * .17, W * .16, 58));
+  const root = mk('g', {}, svg);
+
+  // The number first, measured, so the picture keeps clear of it.
+  const num = mk('text', {x: 2, y: 0, fill: INK, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': big}, root);
+  num.textContent = '100%';
+  const nb0 = box(num);
+  const sub = mk('text', {x: 2, y: 0, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
+  sub.textContent = side ? 'gone in a day' : 'gone after 24 hours';
+  const sb0 = box(sub);
+  const blockW = Math.max(nb0.width, sb0.width) + 4, blockH = nb0.height + sb0.height * .95;
+  const ny = side ? Math.max(4, (land - blockH) / 2) - nb0.y : 2 - nb0.y;
+  num.setAttribute('y', ny.toFixed(1));
+  sub.setAttribute('y', (ny + nb0.y + nb0.height - sb0.y + 1).toFixed(1));
+
+  const px = side ? Math.min(W * .4, blockW + 10) : 0, pw = W - px;
+  const X = u => px + u * pw;
+  const Gy = land - Math.max(7, land * .09);
+  const top = side ? 4 : 4;
+  const L = Gy - top;
+  const back = mk('g', {}, root);
+  root.insertBefore(back, num);
+  // The land: a band of ground, two hills each side of the valley, the bay on the open side.
+  mk('rect', {x: px, y: Gy, width: pw, height: land - Gy + 1, fill: HILL}, back);
+  const hillL = side ? .62 : Math.min(.5, (L - blockH - 8) / L);
+  const hill = (p, fill) => mk('path', {d: pts(spline(p)) + 'Z', fill, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, back);
+  hill([[X(0), Gy], [X(0), Gy - hillL * .95 * L], [X(.1), Gy - hillL * L], [X(.22), Gy - hillL * .62 * L], [X(.36), Gy - .12 * L], [X(.42), Gy]], HILL2);
+  hill([[X(.56), Gy], [X(.66), Gy - .34 * L], [X(.8), Gy - .66 * L], [X(.92), Gy - .58 * L], [X(1), Gy - .62 * L], [X(1), Gy]], HILL2);
+  hill([[X(0), Gy], [X(0), Gy - hillL * .55 * L], [X(.12), Gy - hillL * .6 * L], [X(.25), Gy - .16 * L], [X(.31), Gy]], HILL);
+  hill([[X(.68), Gy], [X(.77), Gy - .26 * L], [X(.88), Gy - .33 * L], [X(.95), Gy - .14 * L], [X(.985), Gy]], HILL);
+  mk('path', {d: `M${X(.83)},${Gy} Q${X(.9)},${Gy + (land - Gy) * .95} ${X(1)},${Gy + (land - Gy) * .25} L${X(1)},${Gy} Z`, fill: SEA, stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, back);
+  // The city on the valley floor: low houses under dark roofs.
+  const hx = X(.56), hw = Math.max(9, Math.min(pw * .045, 17));
+  const R = seeded(5);
+  for (let x = X(.24); x < X(.82) - hw; x += hw * 1.22) {
+    const h = hw * (.75 + R() * .75);
+    mk('rect', {x, y: Gy - h, width: hw, height: h, fill: WALL, stroke: INK, 'stroke-width': 1.5}, back);
+    mk('path', {d: `M${x - hw * .2},${Gy - h} L${x + hw * .16},${Gy - h - hw * .45} L${x + hw * .84},${Gy - h - hw * .45} L${x + hw * 1.2},${Gy - h} Z`, fill: ROOF, stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, back);
+  }
+  mk('line', {x1: px, x2: px + pw, y1: Gy, y2: Gy, stroke: INK, 'stroke-width': 2}, back);
+
+  // The burst, high in the air over the valley, and its drop to the ground.
+  const rb = Math.max(9, Math.min(pw * .065, L * .1, 20));
+  const by = top + rb * 1.25;
+  mk('line', {x1: hx, x2: hx, y1: by + rb * 1.15, y2: Gy - 2, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '4 4'}, back);
+  const star = [];
+  for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2, r = i % 2 ? rb * .7 : rb * 1.12; star.push([hx + r * Math.cos(a), by + r * Math.sin(a)]); }
+  mk('path', {d: pts(star) + 'Z', fill: CREAM, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, back);
+  mk('circle', {cx: hx, cy: by, r: rb * .42, fill: HAZ, stroke: INK, 'stroke-width': 1.5}, back);
+  // Its name, beside it, where there is room.
+  const keepOut = [];
+  if (!side) keepOut.push({x: 0, y: 0, w: blockW + 6, h: blockH + 6});
+  const blab = mk('g', {}, root);
+  const t1 = mk('text', {x: 0, y: 0, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, blab);
+  t1.textContent = 'the burst,';
+  const t2 = mk('text', {x: 0, y: 0, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, blab);
+  t2.textContent = 'high in the air';
+  const lw = Math.max(box(t1).width, box(t2).width), lx = hx + rb * 1.45;
+  if (lx + lw <= W - 1 && L > fs * 7) {
+    // One line under the other, measured, so the two never touch whatever the font's own line box.
+    const h1 = box(t1);
+    t1.setAttribute('x', lx.toFixed(1)); t1.setAttribute('y', (by - fs * .35).toFixed(1));
+    t2.setAttribute('x', lx.toFixed(1)); t2.setAttribute('y', (by - fs * .35 + h1.height + 2).toFixed(1));
+    keepOut.push({x: lx - 4, y: by - fs * 1.4, w: lw + 8, h: h1.height * 2 + 6});
+  } else blab.remove();
+
+  // The radiation left behind: 20 marks in a dome over the city, clear of the burst and the words.
+  const rx = Math.min(pw * .44, (Gy - by) * 1.4), ry = Gy - by - rb * 1.5;
+  const rm = Math.max(7, Math.min(Math.sqrt(Math.PI / 2 * rx * ry / N) * .36, 14, ry * .2));
+  const rr = seeded(23), spots = [];
+  const clear = (x, y) => keepOut.every(k => x < k.x - rm || x > k.x + k.w + rm || y < k.y - rm || y > k.y + k.h + rm);
+  for (let tries = 0, gap = rm * 2.9; spots.length < N && tries < 30000; tries++) {
+    if (tries % 3000 === 2999) gap *= .92;
+    const a = rr() * Math.PI, d = Math.sqrt(rr());
+    const x = hx + Math.cos(a) * d * rx, y = Gy - rm * 1.15 - Math.sin(a) * d * (ry - rm * 1.2);
+    if (x < px + rm + 2 || x > W - rm - 2 || !clear(x, y)) continue;
+    if (spots.every(s => (s[0] - x) ** 2 + (s[1] - y) ** 2 > gap * gap)) spots.push([x, y]);
+  }
+  const marks = mk('g', {}, root);
+  const M = spots.map(([x, y]) => {
+    const g = mk('g', {transform: `translate(${x.toFixed(1)} ${y.toFixed(1)})`}, marks);
+    mk('circle', {r: rm, fill: HAZ, stroke: INK, 'stroke-width': Math.max(1.4, rm * .17)}, g);
+    mk('path', {d: BLADES, fill: INK, transform: `scale(${rm.toFixed(2)})`}, g);
+    mk('circle', {r: rm * .17, fill: INK}, g);
+    return g;
+  });
+
+  // The strip the reader drags: from none gone to all gone.
+  G = {W, H, M, num};
+  if (!locked) {
+    const strip = mk('g', {}, root);
+    const ty = land + sb * .52;
+    const l0 = mk('text', {x: 0, y: ty + fs * .36, fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, strip);
+    l0.textContent = '0%';
+    const l1 = mk('text', {x: W, y: ty + fs * .36, 'text-anchor': 'end', fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, strip);
+    l1.textContent = '100%';
+    const tr = Math.max(13, Math.min(sb * .32, 16));
+    const tx0 = box(l0).width + tr + 8, tx1 = W - box(l1).width - tr - 8;
+    mk('line', {x1: tx0, x2: tx1, y1: ty, y2: ty, stroke: INK, 'stroke-width': 7, 'stroke-linecap': 'round', opacity: .2}, strip);
+    const fill = mk('line', {x1: tx0, x2: tx0, y1: ty, y2: ty, stroke: INK, 'stroke-width': 7, 'stroke-linecap': 'round'}, strip);
+    const thumb = mk('g', {}, strip);
+    mk('circle', {r: tr, fill: INK}, thumb);
+    mk('circle', {r: tr - 3.5, fill: 'none', stroke: HAZ, 'stroke-width': 2}, thumb);
+    mk('path', {d: `M${-tr * .22},${-tr * .32} V${tr * .32} M${tr * .22},${-tr * .32} V${tr * .32}`, stroke: CREAM, 'stroke-width': 2, 'stroke-linecap': 'round'}, thumb);
+    Object.assign(G, {tx0, tx1, ty, fill, thumb});
+  }
+  render();
 }
 
-function update() {
-  if (!G.gfill) return;
-  const {bot, bh, f, top} = G;
-  const gv = guess == null ? 0 : guess;
-  const gy = bot - bh * gv / 100;
-  G.gfill.setAttribute('y', gy); G.gfill.setAttribute('height', bot - gy);
-  const show = guess != null;
-  G.gline.style.display = show ? '' : 'none';
-  G.glab.style.display = show ? '' : 'none';
-  G.hint.style.display = show ? 'none' : '';
-  G.gline.setAttribute('y1', gy); G.gline.setAttribute('y2', gy);
-  G.glab.setAttribute('y', Math.max(top + f, Math.min(bot, gy + f * 0.4)));
-  G.glab.textContent = 'you: ' + gv + '%';
-  const rv = st.real, ry = bot - bh * rv / 100;
-  G.rfill.setAttribute('y', ry); G.rfill.setAttribute('height', bot - ry);
-  const on = revealed && rv > 30;
-  G.rlab.style.display = on ? '' : 'none'; G.rsub.style.display = on ? '' : 'none';
-  G.rlab.setAttribute('y', ry + f * 2); G.rlab.textContent = Math.round(rv) + '%';
-  G.rsub.setAttribute('y', ry + f * 3.3); G.rsub.textContent = 'gone';
-  const lv = revealed && rv >= REAL - 0.5;
-  G.left.style.display = lv ? '' : 'none';
-  G.left.setAttribute('y', top + (ry - top) / 2 + f * 0.35);
-  G.left.textContent = '20% left';
+function render() {
+  if (!G || !G.M) return;
+  const n = Math.round(st.gone / STEP);
+  G.M.forEach(m => m.style.display = '');
+  for (let i = 0; i < n && i < G.M.length; i++) G.M[ORDER[i] % G.M.length].style.display = 'none';
+  G.num.textContent = revealed ? Math.round(st.gone / STEP) * STEP + '%' : guess == null ? '?%' : guess + '%';
+  if (G.thumb) {
+    const x = G.tx0 + (G.tx1 - G.tx0) * (guess ?? 0) / 100;
+    G.thumb.setAttribute('transform', `translate(${x.toFixed(1)} ${G.ty.toFixed(1)})`);
+    G.fill.setAttribute('x2', x.toFixed(1));
+  }
 }
 
 function setFrom(e) {
-  if (locked) return;
-  const svg = Kit.$('chart'), r = svg.getBoundingClientRect();
-  const y = (e.clientY - r.top) * G.H / r.height;
-  let v = (G.bot - y) / G.bh * 100;
-  v = Math.max(0, Math.min(100, Math.round(v / 5) * 5));
-  if (v !== guess) { guess = v; Kit.haptic('selection'); update(); }
+  if (locked || !G.thumb) return;
+  const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * G.W / r.width;
+  const v = Math.max(0, Math.min(100, Math.round((x - G.tx0) / (G.tx1 - G.tx0) * N) * STEP));
+  if (v !== guess) { guess = v; st.gone = v; Kit.haptic('selection'); render(); }
 }
-let dragging = false;
-const chart = Kit.$('chart');
-chart.addEventListener('pointerdown', e => { if (locked) return; dragging = true; try { chart.setPointerCapture(e.pointerId); } catch (_) {} setFrom(e); });
-chart.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
+svg.addEventListener('pointerdown', e => { if (locked) return; dragging = true; gsap.killTweensOf(G.thumb || {}); try { svg.setPointerCapture(e.pointerId); } catch (_) {} setFrom(e); });
+svg.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
 const end = () => { if (!dragging) return; dragging = false; if (guess != null) sure.on(); };
-chart.addEventListener('pointerup', end);
-chart.addEventListener('pointercancel', end);
+svg.addEventListener('pointerup', end);
+svg.addEventListener('pointercancel', end);
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  locked = true;
+  if (locked) return;
+  locked = true; revealed = true;
   const ok = Math.abs(guess - REAL) <= 10;
   Kit.answer({choice: guess + '%', correct: ok, sure: pct});
+  svg.classList.add('done'); svg.setAttribute('data-drag', 'off');
   Kit.hide('say');
-  revealed = true;
-  if (Kit.calm) { st.real = REAL; update(); }
-  else gsap.to(st, {real: REAL, duration: 1.4, ease: 'power3.out', onUpdate: update});
+  // The day passes: the marks go until 16 of the 20, 80%, are gone.
+  st.gone = guess;
+  build();
+  if (Kit.calm) { st.gone = REAL; render(); }
+  else gsap.to(st, {gone: REAL, duration: 1.6, ease: 'power2.inOut', onUpdate: render});
   Kit.show('why');
   sure.grade(ok, pct, `You said ${guess}%; it was 80%`);
   Kit.show('keep');
   Kit.haptic('success');
 });
 
-Kit.onShow.card = () => draw();
+Kit.onShow.card = () => build();
 Kit.onEnter.card = () => {
-  if (Kit.calm || !G.hint) return;
-  gsap.fromTo(G.hint, {y: -6}, {y: 6, duration: .8, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+  if (Kit.calm || !G || !G.thumb || guess != null) return;
+  const nudge = {d: 0};
+  gsap.to(nudge, {d: 1, duration: .5, repeat: 3, yoyo: true, ease: 'sine.inOut', delay: .4, onUpdate: () => {
+    if (guess != null || !G.thumb) return;
+    G.thumb.setAttribute('transform', `translate(${(G.tx0 + nudge.d * 22).toFixed(1)} ${G.ty.toFixed(1)})`);
+  }});
 };
 Kit.play.card = async () => {
-  const r = chart.getBoundingClientRect();
-  const yAt = v => r.top + (G.bot - G.bh * v / 100) * r.height / G.H;
-  const x = r.left + r.width / 2;
-  const ev = (type, v) => chart.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: yAt(v), pointerId: 1, bubbles: true}));
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = svg.getBoundingClientRect(), y = r.top + G.ty * r.height / G.H;
+  const xAt = v => r.left + (G.tx0 + (G.tx1 - G.tx0) * v / 100) * r.width / G.W;
+  const ev = (type, v) => svg.dispatchEvent(new PointerEvent(type, {clientX: xAt(v), clientY: y, pointerId: 1, bubbles: true}));
   ev('pointerdown', 20); ev('pointermove', 30); ev('pointermove', 40); ev('pointerup', 40);
-  await new Promise(r => setTimeout(r, 150));
+  await wait(150);
   Kit.$('sure').querySelector('[data-v="80"]').click();
-  await new Promise(r => setTimeout(r, 1700));
+  await wait(1900);
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('chart'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again at the size it now has whenever its room changes: when the answer comes in, never shrunk whole.
+{ let seenSize = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seenSize && G) { seenSize = k; build(); } }).observe(svg); }
 Kit.single();
 </script>
 </html>

@@ -1,106 +1,202 @@
 <!doctype html>
 <!-- slug: thinking-vicious-cycle -->
+<!-- The picture: a student in profile, facing a screen that plays a clear video of the right answer. Over the student's
+     head, the wrong idea, "Humans lived with dinosaurs", stamped TRUE. The video's explanation flies at the head as a
+     stream of blue specks; in front of the face stands a red shell of certainty. Each time the reader plays the video,
+     some specks get in and settle in the head, the rest bounce off the shell; then the student feels surer: the stamp
+     grows and the shell thickens, so next time even fewer get in. Three rounds of the loop. Drawn on a canvas at its
+     real size, again whenever its room changes. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The vicious cycle</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{flex:1;min-height:0;display:flex;flex-direction:column}
-#sv{width:100%;flex:1;min-height:0;display:block}
-#sv text{font-family:var(--body);fill:var(--k)}
-#scrub{width:100%;height:max(4cqh,28px);accent-color:var(--k);margin:0;cursor:pointer;touch-action:none}
-#why{display:flex;flex-direction:column;gap:.8cqh}
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
+#cv{width:100%;flex:1;min-height:0;display:block}
+#go{font:800 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.6cqh 4cqw;cursor:pointer;align-self:stretch}
+#go:active{transform:scale(.98)}
+#go:disabled{opacity:.45;cursor:default}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
 .say{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="thinking" data-kind="Scrub · the loop">
+<article class="card" id="card" data-topic="thinking" data-kind="Play the loop · three rounds">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">MISCONCEPTIONS</span></div>
     <h2 class="q">What is the 'vicious cycle' in science education?</h2>
-    <div class="stagebox" id="stage"><svg id="sv"></svg></div>
-    <input data-drag type="range" id="scrub" min="0" max="100" value="0" step="0.5" aria-label="Go round the loop">
-    <p class="say" id="say">Drag the slider to send the student round the loop.</p>
-    <div id="why" class="gone"><p class="body">Each time round, the student feels surer of the wrong idea. The surer they feel, the less of the correct explanation gets in, so the next round starts even surer.</p></div>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="A student in profile faces a screen playing a clear video of the right answer. Over the student's head, the wrong idea, humans lived with dinosaurs, stamped TRUE. In front of the face, a red shell of certainty that the video's explanation must get through."></canvas>
+      <button id="go">Play the video</button>
+      <div id="why" class="gone"><p class="body">Each time round the loop, the student feels surer of the wrong idea, and the surer they feel, the less of the correct explanation gets in.</p></div>
+    </div>
+    <p class="say" id="say">The student is sure humans lived with dinosaurs. Play them a clear video of the right answer.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Confidence in a wrong idea blocks the right one, so tackle the misconception first.</div>
     <div class="foot"><span class="src">Source · Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const sv = Kit.$('sv'), scrub = Kit.$('scrub');
-const S = {v: 0};
-let G = null, done = false, lastPhase = '';
-const ROUNDS = 3;
+// Flat colours with one meaning each: the right explanation blue, the wrong idea and its shell of certainty red,
+// the student in skin and hair, their mind pale pink, the screen dark.
+const INK = '#10100c', BLUE = '#2f6fd6', RED = '#c62828', SKIN = '#f1c9a3', HAIR = '#3b2418', SCREEN = '#22232a', WHITE = '#ffffff', MIND = '#fbd3da', SWEATER = '#5f8f74';
+const ROUNDS = 3, PER = 26;
+// An illustration of the loop, not a measurement: how much of each showing gets through, and how sure the student
+// is before round 1 and after each round (the shell's thickness, the stamp's size).
+const PASS = [.5, .26, .1], SURE = [0, 1, 2, 3];
+const seeded = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+// Every speck of every round, drawn once: when it leaves the screen, where it meets the shell, whether it gets in,
+// where it settles in the head (in head radii from its centre) or which way it bounces.
+const SPECKS = (() => { const r = seeded(29); return PASS.map(p => Array.from({length: PER}, (_, i) => ({
+  t0: i / PER * .55 + r() * .04, y0: r() * 2 - 1, a: Math.PI * (.82 + r() * .36), in: r() < p,
+  sx: -.35 + r() * .6, sy: -.5 + r() * .45, bounce: (r() - .5) * 1.6, sp: .85 + r() * .3}))); })();
+const st = {round: 0, t: 1, sure: 0};
+const settled = [];
+let G = null, running = false;
+const cv = Kit.$('cv');
+
+function geo() {
+  const {x, W, H} = Kit.fitCanvas(cv);
+  const fs = Math.max(12.5, Math.min(14.5, W / 22));
+  // From the top: the wrong idea and its stamp (room kept for the stamp at its biggest); under it the head, big, facing
+  // left, the shoulders running off the foot; the screen on the left at eye level.
+  // In a short box (a small phone once the answer is in) the screen has done its work and goes: the idea and its stamp
+  // take the left, the head the right.
+  const compact = H < 150;
+  const blockMax = compact ? 0 : fs * 1.5 + fs * 3.3 * 1.2 + 8;
+  const hr = compact ? Math.max(20, Math.min(W * .17, H * .4)) : Math.max(20, Math.min(W * .2, (H - blockMax) / 2.55));
+  const hx = W - hr * 1.2, hy = compact ? H - hr * 1.05 : Math.min(H - hr * 1.1, blockMax + hr * 1.25);
+  const shell = hr * 1.5;
+  const sw = Math.max(64, Math.min(W * .36, hx - shell - 26)), sh = sw * .64;
+  const sx = 2, sy = Math.max(2, Math.min(hy - hr * .2 - sh / 2, H - sh * 1.25 - fs * 1.6));
+  return {x, W, H, fs, hr, hx, hy, sx, sy, sw, sh, shell, blockMax, compact};
+}
+
+// Where the n-th speck that got in settles: a tidy spiral in the head, growing as more get in.
+const BRAIN = {x: .2, y: -.42, rx: .52, ry: .38};
+const nest = n => { const a = n * 2.39996, r = .074 * Math.sqrt(n + .6); return {x: BRAIN.x + r * Math.cos(a), y: BRAIN.y + r * Math.sin(a) * .72}; };
 
 function draw() {
-  while (sv.firstChild) sv.removeChild(sv.firstChild);
-  const {W, H, f} = Kit.fitSvg(sv);
-  const cx = W / 2, cy = H / 2;
-  const r = Math.max(f * 5, Math.min(W * 0.36, H / 2 - f * 3.4));
-  const pt = a => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
-  const defs = Kit.mk('defs', {}, sv);
-  const m = Kit.mk('marker', {id: 'ah', viewBox: '0 0 10 10', refX: 6, refY: 5, markerWidth: 3.2, markerHeight: 3.2, orient: 'auto-start-reverse', markerUnits: 'strokeWidth'}, defs);
-  Kit.mk('path', {d: 'M0,0 L10,5 L0,10 z', fill: 'var(--k)'}, m);
-  const g = 0.22;
-  const arc = (a0, a1) => { const [x0, y0] = pt(a0), [x1, y1] = pt(a1); return `M${x0},${y0} A${r},${r} 0 0 1 ${x1},${y1}`; };
-  const top = Kit.mk('path', {d: arc(Math.PI + g, 2 * Math.PI - g), fill: 'none', stroke: 'var(--k)', 'stroke-linecap': 'round', 'marker-end': 'url(#ah)'}, sv);
-  const bot = Kit.mk('path', {d: arc(g, Math.PI - g), fill: 'none', stroke: 'var(--k)', 'stroke-linecap': 'round', 'marker-end': 'url(#ah)'}, sv);
-  const tl = Kit.mk('text', {x: cx, y: cy - r - f * 1.2, 'text-anchor': 'middle', 'font-size': f * 1.05, 'font-weight': 800}, sv);
-  tl.textContent = 'Confidence in wrong idea';
-  const bl = Kit.mk('text', {x: cx, y: cy + r + f * 2.0, 'text-anchor': 'middle', 'font-size': f * 1.05, 'font-weight': 800}, sv);
-  bl.textContent = 'Less learning';
-  Kit.mk('circle', {cx, cy, r: r - f * 1.2, fill: 'color-mix(in srgb, var(--k) 7%, transparent)'}, sv);
-  const qt = Kit.mk('text', {x: cx, y: cy - f * 2.6, 'text-anchor': 'middle', 'font-size': f * 0.9, 'font-style': 'italic'}, sv);
-  qt.textContent = '“Humans lived with dinosaurs”';
-  const big = Kit.mk('text', {x: cx, y: cy + f * 0.5, 'text-anchor': 'middle', 'font-size': f * 2.1, 'font-weight': 800}, sv);
-  const lrn = Kit.mk('text', {x: cx, y: cy + f * 2.5, 'text-anchor': 'middle', 'font-size': f * 0.95, 'font-weight': 600}, sv);
-  const dot = Kit.mk('circle', {r: f * 0.75, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': f * 0.3}, sv);
-  G = {f, r, cx, cy, top, bot, big, lrn, dot, pt};
-  update();
-}
-
-function update() {
   if (!G) return;
-  const turns = S.v / 100 * ROUNDS;
-  const conf = Math.round(55 + 40 * (1 - Math.exp(-turns * 0.9)));
-  const learn = Math.round(60 * Math.exp(-turns * 0.7));
-  const a = Math.PI + turns * 2 * Math.PI;
-  const [x, y] = G.pt(a);
-  G.dot.setAttribute('cx', x); G.dot.setAttribute('cy', y);
-  const w = G.f * 0.22 * (1 + turns * 0.6);
-  G.top.setAttribute('stroke-width', w); G.bot.setAttribute('stroke-width', w);
-  G.big.textContent = `TRUE · ${conf}% sure`;
-  G.lrn.textContent = `takes in ${learn}% of the fix`;
-  if (S.v > 0.5 && !done) {
-    const onTop = (turns % 1) < 0.5;
-    const p = onTop ? `Round ${Math.min(ROUNDS, Math.floor(turns) + 1)}: the student feels surer it's true…` : `…so less of the correct answer gets in.`;
-    if (p !== lastPhase) { lastPhase = p; Kit.$('say').textContent = p; Kit.haptic('selection'); }
+  const {x, W, H, fs, hr, hx, hy, sx, sy, sw, sh, shell} = G;
+  x.clearRect(0, 0, W, H);
+  x.lineJoin = 'round'; x.lineCap = 'round';
+  // the screen and its stand, playing the right answer (not in a short box, once its work is done)
+  if (!G.compact) {
+  x.fillStyle = SCREEN; x.strokeStyle = INK; x.lineWidth = 2.5;
+  rr(x, sx, sy, sw, sh, 8); x.fill(); x.stroke();
+  x.fillStyle = INK; x.fillRect(sx + sw * .44, sy + sh, sw * .12, sh * .16); rr(x, sx + sw * .26, sy + sh * 1.16, sw * .48, Math.max(4, sh * .07), 2); x.fill();
+  const pr = sh * .2, pcx = sx + sw * .5, pcy = sy + sh * .5;
+  x.fillStyle = BLUE; x.beginPath(); x.arc(pcx, pcy, pr * 1.25, 0, 7); x.fill();
+  x.fillStyle = WHITE; x.beginPath(); x.moveTo(pcx - pr * .42, pcy - pr * .6); x.lineTo(pcx + pr * .62, pcy); x.lineTo(pcx - pr * .42, pcy + pr * .6); x.closePath(); x.fill();
+  x.fillStyle = INK; x.font = `700 ${fs * .95}px Figtree, sans-serif`; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+  const capY = sy + sh * 1.16 + Math.max(4, sh * .07) + fs * 1.15;
+  if (capY < H - 2) x.fillText('the right answer', sx + sw / 2, capY);
   }
+  // the student, in profile, facing the screen
+  x.fillStyle = SKIN; x.fillRect(hx - hr * .22, hy + hr * .7, hr * .6, H - (hy + hr * .7) + 1);
+  x.strokeStyle = INK; x.lineWidth = 2; x.beginPath(); x.moveTo(hx - hr * .22, hy + hr * .82); x.lineTo(hx - hr * .22, H); x.moveTo(hx + hr * .38, hy + hr * .84); x.lineTo(hx + hr * .38, H); x.stroke();
+  const shY = hy + hr * 1.32;
+  if (shY < H - 6) { x.fillStyle = SWEATER; x.lineWidth = 2.2; rr(x, hx - hr * 1.15, shY, hr * 2.6, H - shY + hr, hr * .5); x.fill(); x.stroke(); x.fillStyle = SKIN; x.beginPath(); x.moveTo(hx - hr * .22, shY - 1); x.lineTo(hx + hr * .38, shY - 1); x.lineTo(hx + hr * .08, shY + hr * .28); x.closePath(); x.fill(); }
+  x.fillStyle = HAIR; x.beginPath(); x.ellipse(hx + hr * .2, hy - hr * .2, hr * 1.02, hr * .96, 0, 0, 7); x.fill();
+  x.fillStyle = SKIN; x.strokeStyle = INK; x.lineWidth = 2.2;
+  x.beginPath(); x.ellipse(hx, hy, hr * .86, hr, 0, 0, 7); x.fill(); x.stroke();
+  x.beginPath(); x.moveTo(hx - hr * .8, hy - hr * .05); x.lineTo(hx - hr * 1.02, hy + hr * .2); x.lineTo(hx - hr * .78, hy + hr * .3); x.fillStyle = SKIN; x.fill(); x.stroke();
+  x.fillStyle = HAIR; x.beginPath(); x.moveTo(hx - hr * .8, hy - hr * .42); x.quadraticCurveTo(hx - hr * .3, hy - hr * 1.28, hx + hr * .7, hy - hr * .82); x.quadraticCurveTo(hx + hr * .2, hy - hr * .58, hx - hr * .8, hy - hr * .42); x.fill();
+  x.fillStyle = INK; x.beginPath(); x.arc(hx - hr * .48, hy - hr * .1, Math.max(2, hr * .07), 0, 7); x.fill();
+  x.lineWidth = Math.max(1.6, hr * .055); x.beginPath(); x.moveTo(hx - hr * .63, hy + hr * .55); x.quadraticCurveTo(hx - hr * .46, hy + hr * .49, hx - hr * .32, hy + hr * .56); x.stroke();
+  // the brain, seen through the head as cartoons draw it; what got in settles there in a tidy spiral
+  const bcx = hx + BRAIN.x * hr, bcy = hy + BRAIN.y * hr, brx = BRAIN.rx * hr, bry = BRAIN.ry * hr;
+  x.fillStyle = MIND; x.strokeStyle = '#c9788a'; x.lineWidth = 1.8;
+  x.beginPath();
+  for (let k = 0; k <= 60; k++) { const a = k / 60 * Math.PI * 2, w = 1 + .07 * Math.sin(a * 7); const px = bcx + Math.cos(a) * brx * w, py = bcy + Math.sin(a) * bry * w; k ? x.lineTo(px, py) : x.moveTo(px, py); }
+  x.closePath(); x.fill(); x.stroke();
+  x.lineWidth = 1.5; x.beginPath();
+  x.moveTo(bcx - brx * .1, bcy - bry * .85); x.quadraticCurveTo(bcx + brx * .15, bcy - bry * .1, bcx - brx * .05, bcy + bry * .8);
+  x.moveTo(bcx - brx * .75, bcy - bry * .15); x.quadraticCurveTo(bcx - brx * .45, bcy + bry * .1, bcx - brx * .6, bcy + bry * .45);
+  x.moveTo(bcx + brx * .45, bcy - bry * .6); x.quadraticCurveTo(bcx + brx * .7, bcy - bry * .2, bcx + brx * .5, bcy + bry * .3);
+  x.stroke();
+  x.fillStyle = BLUE;
+  settled.forEach((_, n) => { const p = nest(n); x.beginPath(); x.arc(hx + p.x * hr, hy + p.y * hr, Math.max(2.2, hr * .055), 0, 7); x.fill(); });
+  // the shell of certainty: thicker as the student gets surer
+  const sure = st.sure;
+  x.strokeStyle = RED; x.lineWidth = 2.5 + sure * hr * .1; x.lineCap = 'round';
+  x.beginPath(); x.arc(hx, hy, shell, Math.PI * .68, Math.PI * 1.32); x.stroke();
+  // the specks of this round, in flight
+  if (st.round && st.t < 1) {
+    let got = settled.length;
+    SPECKS[st.round - 1].forEach(s => {
+      const u = (st.t - s.t0) / (.42 * s.sp); if (u <= 0) return;
+      const y0 = sy + sh * .5 + s.y0 * sh * .36, x0 = sx + sw;
+      const hitX = hx + Math.cos(s.a) * shell, hitY = hy + Math.sin(s.a) * shell;
+      let px, py, al = 1;
+      if (u < 1) { px = x0 + (hitX - x0) * u; py = y0 + (hitY - y0) * u; }
+      else if (s.in) { const v = Math.min(1, (u - 1) / .5), p = nest(got++); px = hitX + (hx + p.x * hr - hitX) * v; py = hitY + (hy + p.y * hr - hitY) * v; }
+      else { const v = Math.min(1, (u - 1) / .7); px = hitX - v * hr * 1.3; py = hitY + v * hr * s.bounce; al = 1 - v; if (v >= 1) return; }
+      x.globalAlpha = al; x.fillStyle = BLUE; x.beginPath(); x.arc(px, py, Math.max(2.4, hr * .07), 0, 7); x.fill(); x.globalAlpha = 1;
+    });
+  }
+  // the wrong idea over the head, stamped TRUE: bigger as the student gets surer, centred in the room above the head
+  const idea = '“Humans lived with dinosaurs”';
+  let ifs = fs; x.font = `700 ${ifs}px Figtree, sans-serif`;
+  while (x.measureText(idea).width > W * .64 && ifs > 12) { ifs -= .5; x.font = `700 ${ifs}px Figtree, sans-serif`; }
+  const compact = G.compact, roomTop = 2, roomBot = compact ? H - 2 : hy - hr * 1.22 - 4;
+  let zs = Math.max(fs * 1.25, Math.min(fs * (1.6 + sure * .55), (roomBot - roomTop - fs * 1.6) / 1.3));
+  x.font = `900 ${zs}px Fraunces, serif`;
+  // in a short box the stamp stands on the left, as big as the room between the edge and the shell allows
+  const leftRoom = hx - shell - 8;
+  if (compact) while (x.measureText('TRUE').width + zs * .7 > leftRoom && zs > fs * 1.25) { zs -= .5; x.font = `900 ${zs}px Fraunces, serif`; }
+  const tw = x.measureText('TRUE').width, bh = zs * 1.2, bxl = compact ? 2 : W - 4 - tw - zs * .7, bxr = bxl + tw + zs * .7;
+  x.font = `700 ${ifs}px Figtree, sans-serif`;
+  const two = compact && x.measureText(idea).width > leftRoom, ideaH = two ? fs * 2.75 : fs * 1.5;
+  x.font = `900 ${zs}px Fraunces, serif`;
+  const b0 = compact ? Math.max(roomTop, (H - ideaH - bh) / 2) : roomTop;
+  if (compact) { x.font = `700 ${ifs}px Figtree, sans-serif`; while (x.measureText(idea).width > leftRoom && ifs > 12) { ifs -= .5; x.font = `700 ${ifs}px Figtree, sans-serif`; } x.font = `900 ${zs}px Fraunces, serif`; }
+  const stampTop = b0 + ideaH;
+  x.strokeStyle = RED; x.lineWidth = Math.max(2.5, zs * .08); rr(x, bxl, stampTop, bxr - bxl, bh, 6); x.stroke();
+  x.fillStyle = RED; x.textAlign = 'center'; x.fillText('TRUE', (bxl + bxr) / 2, stampTop + bh * .8);
+  x.fillStyle = INK; x.font = `700 ${ifs}px Figtree, sans-serif`; x.textAlign = compact ? 'left' : 'right';
+  if (two) { x.fillText('“Humans lived', 2, b0 + fs * 1.05); x.fillText('with dinosaurs”', 2, b0 + fs * 2.3); }
+  else x.fillText(idea, compact ? 2 : W - 2, b0 + fs * 1.05);
 }
+function rr(x, a, b, w, h, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
 
+function build() { G = geo(); draw(); }
+
+function play() {
+  if (running || st.round >= ROUNDS) return;
+  running = true; Kit.$('go').disabled = true; Kit.haptic('light');
+  st.round++; st.t = 0;
+  const r = st.round;
+  const end = () => {
+    // what got in stays; then the student feels surer
+    SPECKS[r - 1].filter(s => s.in).forEach(s => settled.push({x: s.sx, y: s.sy}));
+    const after = () => {
+      running = false;
+      const say = Kit.$('say');
+      if (r === 1) say.textContent = 'Round 1 of 3: some got in, and the student feels surer it’s true. Play it again.';
+      if (r === 2) say.textContent = 'Round 2 of 3: surer still, so even less got in.';
+      if (r < ROUNDS) { Kit.$('go').disabled = false; Kit.$('go').textContent = 'Play it again'; Kit.haptic('selection'); }
+      else finish();
+    };
+    if (Kit.calm) { st.sure = SURE[r]; draw(); after(); }
+    else gsap.to(st, {sure: SURE[r], duration: .6, ease: 'back.out(2)', onUpdate: draw, onComplete: after});
+  };
+  if (Kit.calm) { st.t = 1; draw(); end(); return; }
+  gsap.to(st, {t: 1, duration: 2.1, ease: 'none', onUpdate: draw, onComplete: () => { draw(); end(); }});
+}
 function finish() {
-  if (done) return; done = true;
-  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-  requestAnimationFrame(() => { draw(); if (!Kit.calm && G) gsap.from(G.dot, {attr: {r: G.f * 1.6}, duration: .6, ease: 'elastic.out(1,.4)'}); });
+  Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
 }
 
-scrub.addEventListener('input', () => {
-  const v = +scrub.value;
-  gsap.to(S, {v, duration: Kit.calm ? 0 : .25, ease: 'power2.out', overwrite: true, onUpdate: update});
-  if (v >= 100) finish();
-});
-
-Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => {
-  if (Kit.calm || !G) return;
-  gsap.from([G.top, G.bot], {opacity: 0, duration: .5, stagger: .15, ease: 'power2.out'});
-  gsap.fromTo(G.dot, {attr: {r: G.f * 0.75}}, {attr: {r: G.f * 1.1}, duration: .6, yoyo: true, repeat: 3, ease: 'sine.inOut'});
-};
+Kit.$('go').addEventListener('click', play);
+Kit.onShow.card = () => build();
 Kit.play.card = async () => {
-  scrub.value = 100; scrub.dispatchEvent(new Event('input', {bubbles: true}));
-  await new Promise(r => setTimeout(r, 700));
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < ROUNDS; i++) { Kit.$('go').click(); await wait(Kit.calm ? 60 : 2900); }
+  await wait(Kit.calm ? 100 : 300);
 };
+// Drawn again at the size it now has whenever its room changes: when the answer comes in, never stretched.
+{ let seen = ''; new ResizeObserver(() => { const b = cv.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; build(); } }).observe(cv); }
 Kit.single();
 </script>
 </html>

@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "How far does Earth turn between one noon and the next?",
-  "answer": "Earth turns a little more than one full spin in a 24-hour solar day. While it spins, it also moves along its orbit, so the Sun ends up at a slightly different angle. Earth must turn extra to bring the Sun overhead again.",
+  "answer": "Earth turns about 361° in a 24-hour solar day, a little more than one full spin. While it spins, it also moves along its orbit, so the Sun ends up about 1° further round. Earth must turn that extra degree, some 4 minutes, to bring the Sun overhead again.",
   "move": "A 24-hour solar day is a bit more than one full spin of Earth.",
   "keywords": [
     "earth",
@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Animated globe orbiting the Sun. Hold the button to run one solar day and watch a 'you' marker on the globe turn back toward the Sun, past one full rotation."
+    "label": "Earth seen from above the North Pole, under a Sun too big for the card. A person stands on Earth at noon, the Sun overhead. The reader spins Earth with a finger as it moves along its orbit, drawn 20 times faster. After one full turn the Sun is not overhead yet: a yellow wedge shows the extra turn, and the count ends at about 361 degrees."
   },
   "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=744s",

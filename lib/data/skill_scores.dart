@@ -15,17 +15,33 @@
 /// Worked out afresh from the reader's judgements (AppState.judgements),
 /// which are kept in the order they were made: nothing is stored, so the
 /// rule can change and every score follows.
+///
+/// What the reader is shown is not the rating itself but how far their
+/// answers have carried it, counted from nothing: every score a new reader
+/// sees is 0. A rating's starting line is arbitrary — it sat at 1,000, and a
+/// reader a few cards in saw 900, 1,100, 1,200 and wondered what they had
+/// done to be given so much (the owner, on his own phone). Shown from
+/// nothing, it is a number they made. It never goes below nothing: a wrong
+/// answer at nothing costs nothing shown, and the next right one counts from
+/// there, so a reader who starts with a few misses still sees each right
+/// answer count, rather than climbing back unseen to a line they cannot see.
+/// The rating underneath is the same either way, and still decides how far
+/// each answer moves it. Every score is shown through one function,
+/// [shownScore] (lib/data/levels.dart), the levels' scale too.
 library;
 
 import 'dart:math' as math;
 
 import '../models/pill.dart';
+import 'levels.dart' show shownScore;
 import 'pill_bank.dart';
 import 'pills_repository.dart' show dateKey;
 import 'skill_levels.dart';
 import 'skills.dart';
 
-/// Where every score starts.
+/// Where every rating starts, underneath: what each card's worth
+/// ([cardScore]) is reckoned against. The reader never sees it: what they
+/// see starts at 0 ([SkillScore.start]).
 const int kScoreStart = 1000;
 
 /// How far one answer can move a score: half of it for an answer that was
@@ -47,8 +63,9 @@ int cardScore(Pill p) => switch (p.difficulty) {
 double chanceRight(double score, int card) =>
     1 / (1 + math.pow(10, (card - score) / 400));
 
-/// A score: where it stands, where it stood at the end of each of the last
-/// [kScoreDays] days, and how many answers made it.
+/// A score as the reader sees it, from 0: where it stands, where it stood at
+/// the end of each of the last [kScoreDays] days, and how many answers made
+/// it.
 class SkillScore {
   const SkillScore({
     required this.now,
@@ -56,10 +73,10 @@ class SkillScore {
     required this.answers,
   });
 
-  /// A score no answer has moved yet.
+  /// A score no answer has moved yet: its start, shown — nothing.
   static final SkillScore start = SkillScore(
-    now: kScoreStart,
-    days: List.filled(kScoreDays, kScoreStart),
+    now: shownScore(kScoreStart),
+    days: List.filled(kScoreDays, shownScore(kScoreStart)),
     answers: 0,
   );
 
@@ -111,11 +128,32 @@ class _Running {
   final Map<Skill, int> answers = {for (final Skill s in Skill.values) s: 0};
   final Set<String> met = {};
 
-  /// Every score as it stands, the overall one under null.
-  Map<Skill?, double> snapshot() => {null: overall, ...each};
+  /// The lowest each rating has stood, the start included: where what the
+  /// reader is shown counts from.
+  double overallLow = kScoreStart.toDouble();
+  final Map<Skill, double> low = {
+    for (final Skill s in Skill.values) s: kScoreStart.toDouble(),
+  };
 
-  /// The score of [skill] as it stands, or the overall one for null.
+  /// Every score as the reader sees it, the overall one under null.
+  Map<Skill?, double> snapshot() => {
+    null: shown(null),
+    for (final Skill s in Skill.values) s: shown(s),
+  };
+
+  /// The rating of [skill] as it stands, or the overall one for null: what
+  /// the next answer is reckoned against.
   double of(Skill? skill) => skill == null ? overall : each[skill]!;
+
+  /// The score of [skill] as the reader sees it, or the overall one for
+  /// null: its rating through [shownScore], from the lowest it has been,
+  /// the start included. Nothing at the start; never below nothing; and
+  /// above its lowest it moves exactly as the rating does, so every move
+  /// shown is the answer's own.
+  double shown(Skill? skill) => shownScore(
+    of(skill),
+    lowest: skill == null ? overallLow : low[skill]!,
+  ).toDouble();
 
   /// Moves the scores by [j]: false for a judgement with no card, or on a
   /// card the bank no longer has or that is not graded, which moves nothing.
@@ -128,6 +166,7 @@ class _Running {
     final int worth = cardScore(card);
     final double got = j.correct ? 1 : 0;
     overall += kScoreStep * again * (got - chanceRight(overall, worth));
+    overallLow = math.min(overallLow, overall);
     overallAnswers++;
     for (final Skill s in Skill.values) {
       final int? fit = s.fitOf(card);
@@ -139,6 +178,7 @@ class _Running {
               again *
               _fitWeight[fit] *
               (got - chanceRight(now, worth));
+      low[s] = math.min(low[s]!, each[s]!);
       answers[s] = answers[s]! + 1;
     }
     return true;
@@ -206,7 +246,8 @@ ScoreBook scoresOf(
 }
 
 /// How far one answer moved a score: where the score stood just before it
-/// and just after, as the reader sees a score, in whole points.
+/// and just after, as the reader sees a score (from 0, [_Running.shown]), in
+/// whole points. A wrong answer at nothing moved nothing.
 class ScoreMove {
   const ScoreMove({
     required this.before,
@@ -247,11 +288,11 @@ ScoreMove? lastMoveOn(
   ScoreMove? last;
   for (final Judgement j in judgements) {
     final bool mine = j.pillId == pillId;
-    final double before = run.of(scored);
+    final double before = run.shown(scored);
     if (!run.take(j) || !mine) continue;
     last = ScoreMove(
       before: before.round(),
-      after: run.of(scored).round(),
+      after: run.shown(scored).round(),
       skill: scored,
       on: j.on ?? '',
     );

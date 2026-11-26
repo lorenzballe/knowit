@@ -1,168 +1,222 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-turing-weather-crib -->
+<!-- The picture: a weather station radioing its morning report; under it the intercepted message as the lamps an Enigma
+     lit, glowing in a dark lampboard; under those the codebreakers' guess, WETTER ("weather"), as six Enigma keys on a
+     strip the reader slides. A wire runs from each key up to the lamp above it. Where a key sits under its own letter
+     the wire breaks red: a key never lights its own lamp, so the guess cannot sit there. Only one place is clear. Let
+     go there and the strip locks: three of its wires turn into Turing's loop, R to E to T and back to R, a machine on
+     each, and a spark runs round it. Drawn again at its real size whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
-#svg{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
-.stack{display:grid}
-.stack>*{grid-area:1/1;margin:0}
-.hid{visibility:hidden}
-#stat{font:700 max(2cqh,13px)/1.3 var(--body);color:var(--k);align-self:end}
-#stat .bad{color:#d8343b}
-#stat .ok{color:#1c8f4e}
-#why{display:flex;flex-direction:column;gap:.6cqh}
-#why .body{font-size:max(1.85cqh,12.5px);line-height:1.3;overflow-wrap:break-word}
-.low{align-items:end}
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#pic.done{cursor:default;touch-action:manipulation}
+#why .body{font:500 max(1.85cqh,12.5px)/1.32 var(--body);margin:0;overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+.say .bad{color:#b3261e}.say .ok{color:#1c6b3c}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Slide · find the fit">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">CODEBREAKING</span></div>
     <h2 class="q">How did weather reports help Alan Turing break Enigma?</h2>
     <div class="stagebox" id="stage">
-      <svg id="svg"></svg>
-      <div class="stack" id="txt">
-        <p id="stat"></p>
-        <div id="why" class="hid">
-          <p class="body">An Enigma key never lights its own lamp, so a letter can't encrypt to itself. That rules out every spot but one for the guessed weather report.</p>
-          <p class="body">There, the letter pairs chain into a loop: R→E→T→R. Turing wired machines into that same loop to test settings: only correct ones bring R back to R.</p>
-        </div>
+      <svg id="pic" data-drag role="img" aria-label="A weather station radios its morning report. Below, the intercepted message as eleven lamps an Enigma lit; below them the guess WETTER, German for weather, as six keys on a strip that slides along the message, each key wired to the lamp above it."></svg>
+      <div id="why" class="gone">
+        <p class="body">Weather reports gave Turing a guessed piece of text. An Enigma key never lights its own lamp, so a letter can't encrypt to itself, which rules out every spot but one. There the letter pairs form a loop, R→E→T→R, and only correct settings bring R back to R.</p>
       </div>
     </div>
-    <div class="stack low">
-      <p class="say" id="say">Drag the guessed weather report until no letter sits on itself.</p>
-      <div class="keep hid" id="keep"><b>WHAT TO KEEP</b>Boring, predictable messages gave away the unbreakable machine.</div>
-    </div>
+    <p class="say" id="say">Slide the guess along the message until no key sits under its own letter.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Boring, predictable messages gave away the unbreakable machine.</div>
     <div class="foot"><span class="src">Source · Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const X = "QWKDURBTEMZXLPSFNYIOJ";      // intercepted, 6 a.m., Biscay
-const C = "WETTERVORHERSAGE";           // the crib: "weather report"
-const GOOD = 3, MAXO = X.length - C.length;
-const LOOP = [{i:5,a:'R',b:'E'},{i:4,a:'E',b:'T'},{i:2,a:'T',b:'R'}];
-const RED = '#d8343b', GREEN = '#1c8f4e';
-const svg = Kit.$('svg');
-let off = 0, locked = false, G = {}, tl = null, drag = null;
+// Flat colours with one meaning each: the lampboard dark with its lamps lit warm yellow; the keys black with cream
+// letters on a paper strip; a wire that cannot be red; the wires of a place that fits green; the station cream and red.
+const INK = '#10100c', PANEL = '#2b2a2e', LAMP = '#ffd86b', KEY = '#1b1b1f', CREAM = '#fff8ea', PAPER = '#f6e6bd',
+  RED = '#c62828', GREEN = '#1c7c43', ROOF = '#d8452f', SKY = '#ffe9b0';
+const X = 'QKBTRMZETRH';             // the lamps the Enigma lit: the intercepted message
+const C = 'WETTER';                  // the guess: "weather"
+const GOOD = 2, MAXO = X.length - C.length;
+const LOOP = [5, 1, 2];              // where the guess's pairs close a loop: R over E, E over T, T over R
+const clashes = o => [...C].map((ch, i) => X[o + i] === ch ? i : -1).filter(i => i >= 0);
+const st = {off: 0, spark: 0, loop: 0};
+let off = 0, locked = false, drag = null, G = null;
+const svg = Kit.$('pic'), say = Kit.$('say');
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const box = el => { try { return el.getBBox(); } catch (_) { return {x: 0, y: 0, width: 0, height: 0}; } };
 
-const clashes = o => { const r = []; for (let i = 0; i < C.length; i++) if (X[o + i] === C[i]) r.push(i); return r; };
+function build() {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  const fs = Math.max(13, Math.min(15, W / 22));
+  const cell = (W - 4) / X.length, x0 = 2;
+  const lr = Math.min(cell * .42, 17), lf = Math.max(12.5, Math.min(cell * .58, 18));
+  // From the foot up: the guess's caption (while sliding), the strip of keys, the wires, the lampboard. Above them, while
+  // the reader slides, the station radioing its report; once the strip is locked, Turing's loop. They take what is left.
+  const capH = locked ? 0 : fs * 1.7, keyH = lr * 2 + 12, panH = lr * 2 + 14;
+  const gapMin = Math.max(lr * 2.4, 30), rest = H - panH - keyH - capH;
+  let gap = Math.max(gapMin, Math.min(rest * (locked ? .3 : .36), lr * 6.5));
+  let topH = rest - gap - 10;
+  if (topH < (locked ? 56 : 72)) { topH = 0; gap = Math.max(gapMin, Math.min(rest, lr * 8)); }
+  const pad = Math.max(0, H - (topH ? topH + 10 : 0) - panH - gap - keyH - capH) / 2;
+  const panY = pad + (topH ? topH + 10 : 0), lampY = panY + panH / 2, keyY = panY + panH + gap + keyH / 2;
+  G = {W, H, cell, x0, lr, lampY, keyY, fs, topH, pad};
+  const root = mk('g', {}, svg);
+  if (topH && !locked) station(root, W, topH, fs);
+  G.loopG = mk('g', {}, root);
+
+  // The lampboard: the intercepted message, lit.
+  mk('rect', {x: 0, y: panY, width: W, height: panH, rx: Math.min(panH / 2, 14), fill: PANEL, stroke: INK, 'stroke-width': 2}, root);
+  G.lamps = [...X].map((L, j) => {
+    const cx = x0 + (j + .5) * cell;
+    const c = mk('circle', {cx, cy: lampY, r: lr, fill: LAMP, stroke: INK, 'stroke-width': 1.5}, root);
+    const t = mk('text', {x: cx, y: lampY + lf * .36, 'text-anchor': 'middle', fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': lf}, root);
+    t.textContent = L;
+    return {c, t, cx};
+  });
+  // The wires, the strip, the keys: drawn at the strip's place, and moved with it.
+  G.wires = mk('g', {}, root);
+  G.strip = mk('g', {}, root);
+  mk('rect', {x: x0 - 4, y: keyY - keyH / 2, width: C.length * cell + 8, height: keyH, rx: keyH * .3, fill: PAPER, stroke: INK, 'stroke-width': 2}, G.strip);
+  G.keys = [...C].map((L, i) => {
+    const cx = x0 + (i + .5) * cell;
+    const ring = mk('circle', {cx, cy: keyY, r: lr, fill: KEY, stroke: CREAM, 'stroke-width': 2}, G.strip);
+    const edge = mk('circle', {cx, cy: keyY, r: lr + 1.6, fill: 'none', stroke: INK, 'stroke-width': 1.4}, G.strip);
+    const t = mk('text', {x: cx, y: keyY + lf * .36, 'text-anchor': 'middle', fill: CREAM, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': lf}, G.strip);
+    t.textContent = L;
+    return {ring, edge, t};
+  });
+  if (!locked) {
+    const cap = mk('text', {x: x0 + 2, y: keyY + keyH / 2 + fs * 1.2, fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, G.strip);
+    cap.textContent = '‹ the guess: WETTER, “weather” ›';
+    G.cap = cap; G.capW = box(cap).width;
+  } else G.cap = null;
+  render();
+}
+
+// The weather station: a hut with a mast, the morning's weather over it, its report going out as radio waves; and
+// beside it, what it says, every morning, at the same hour.
+function station(root, W, h, fs) {
+  const sc = mk('g', {}, root), s = Math.min(h, W * .62), gy = G.pad + h - 2, top = G.pad + Math.max(4, h - s);
+  mk('line', {x1: 0, x2: W * .56, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, sc);
+  const hw = s * .36, hh = s * .27, sx = Math.max(hw * .7, W * .17);
+  mk('rect', {x: sx - hw / 2, y: gy - hh, width: hw, height: hh, fill: CREAM, stroke: INK, 'stroke-width': 2}, sc);
+  mk('path', {d: `M${sx - hw * .62},${gy - hh} L${sx},${gy - hh - s * .18} L${sx + hw * .62},${gy - hh} Z`, fill: ROOF, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, sc);
+  mk('rect', {x: sx - hw * .13, y: gy - hh * .62, width: hw * .26, height: hh * .62, fill: INK}, sc);
+  mk('rect', {x: sx + hw * .2, y: gy - hh * .7, width: hw * .18, height: hh * .26, fill: LAMP, stroke: INK, 'stroke-width': 1.5}, sc);
+  const mx = sx + hw * .75, mt = top + s * .14;
+  mk('line', {x1: mx, x2: mx, y1: gy, y2: mt, stroke: INK, 'stroke-width': 2.5}, sc);
+  mk('path', {d: `M${mx - s * .07},${gy} L${mx},${mt + s * .3} L${mx + s * .07},${gy} M${mx - s * .045},${gy - s * .2} L${mx + s * .045},${gy - s * .2}`, fill: 'none', stroke: INK, 'stroke-width': 1.6}, sc);
+  mk('circle', {cx: mx, cy: mt, r: Math.max(3.5, s * .035), fill: RED, stroke: INK, 'stroke-width': 1.5}, sc);
+  for (let i = 1; i <= 3; i++) { const r = s * .085 * i; mk('path', {d: `M${mx + r * .7},${mt - r * .7} A${r},${r} 0 0 1 ${mx + r * .7},${mt + r * .7}`, fill: 'none', stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round', opacity: 1 - i * .2}, sc); }
+  // the morning's weather, over the hut: a sun half behind a cloud
+  const cr = s * .1, cx = Math.max(cr * 2.2 + 3, sx - hw * .55), cy = top + s * .3;
+  mk('circle', {cx: cx + cr * .9, cy: cy - cr * .55, r: cr * 1.05, fill: LAMP, stroke: INK, 'stroke-width': 2}, sc);
+  for (let k = 0; k < 7; k++) { const a = -Math.PI * .92 + k * Math.PI * .14, ox = cx + cr * .9, oy = cy - cr * .55; mk('line', {x1: ox + Math.cos(a) * cr * 1.38, y1: oy + Math.sin(a) * cr * 1.38, x2: ox + Math.cos(a) * cr * 1.8, y2: oy + Math.sin(a) * cr * 1.8, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, sc); }
+  mk('path', {d: `M${cx - cr * 1.4},${cy + cr * .8} a${cr * .75},${cr * .75} 0 0 1 ${cr * .25},-${cr * 1.4} a${cr},${cr} 0 0 1 ${cr * 1.95},-${cr * .25} a${cr * .8},${cr * .8} 0 0 1 ${cr * 1.2},${cr * 1.65} Z`, fill: CREAM, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, sc);
+  // what it says
+  const rows = [['Every morning,', 'var(--display)', 800, fs * 1.2], ['the same', 'var(--body)', 700, fs], ['weather report', 'var(--body)', 700, fs]];
+  const ts = rows.map(([t, f, w, z]) => { const e = mk('text', {x: W - 2, y: 0, 'text-anchor': 'end', fill: INK, 'font-family': f, 'font-weight': w, 'font-size': z}, sc); e.textContent = t; return e; });
+  const hs = ts.map(t => box(t).height), tot = hs.reduce((a, b) => a + b, 0);
+  let y = G.pad + Math.max(2, (h - tot) * .42);
+  ts.forEach((t, i) => { y += hs[i]; t.setAttribute('y', (y - hs[i] * .24).toFixed(1)); });
+  const left = Math.min(...ts.map(t => box(t).x)), wavesEnd = mx + s * .085 * 3 * .75 + 6;
+  if (left < wavesEnd) ts.forEach(t => t.remove());
+}
+
+// Turing's loop, read off the three green pairs: R lights E, E lights T, T lights R. A chain across the card, a machine
+// on each link; a spark runs along it, and the last R lights only if the settings are right: R comes back as R.
+function loopChain(g, W, h) {
+  const cy = G.pad + h * .5, nr = Math.max(12, Math.min(W * .05, 18, h * .3));
+  const L = ['R', 'E', 'T', 'R'], x0 = nr + 3, step = (W - 2 * nr - 6) / 3;
+  // the spark runs along the wire, under the machines and the letters it passes through
+  const spark = mk('g', {}, g);
+  for (let i = 0; i < 3; i++) {
+    const a = x0 + i * step + nr + 4, b = x0 + (i + 1) * step - nr - 5, p = Math.max(0, Math.min(1, st.loop * 3 - i));
+    if (p <= 0) continue;
+    const e = a + (b - a) * p, k = nr * .42;
+    mk('line', {x1: a, x2: e, y1: cy, y2: cy, stroke: GREEN, 'stroke-width': 4, 'stroke-linecap': 'round'}, g);
+    if (p > .98) mk('path', {d: `M${b + 2},${cy} L${b - k * 1.1},${cy - k} L${b - k * 1.1},${cy + k} Z`, fill: GREEN}, g);
+    if (p > .5) {
+      // the machine: an Enigma in a box, its three rotors showing
+      const mx = (a + b) / 2, mw = Math.min(nr * 2.2, (b - a) * .62), mh = nr * 1.5;
+      mk('rect', {x: mx - mw / 2, y: cy - mh / 2, width: mw, height: mh, rx: mh * .22, fill: CREAM, stroke: INK, 'stroke-width': 2}, g);
+      for (let r = -1; r <= 1; r++) mk('rect', {x: mx + r * mw * .27 - mw * .08, y: cy - mh * .3, width: mw * .16, height: mh * .6, rx: mw * .04, fill: PANEL}, g);
+    }
+  }
+  L.forEach((ch, i) => {
+    const x = x0 + i * step, last = i === 3, lit = !last || st.loop >= 1;
+    mk('circle', {cx: x, cy, r: nr, fill: lit ? LAMP : CREAM, stroke: last && st.loop >= 1 ? GREEN : INK, 'stroke-width': last && st.loop >= 1 ? 4 : 2.2}, g);
+    const t = mk('text', {x, y: cy + nr * .4, 'text-anchor': 'middle', fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': nr * 1.15}, g);
+    t.textContent = ch;
+  });
+  if (st.loop >= 1) {
+    const x = x0 + ((st.spark + .12) % 1) * step * 3;
+    g.insertBefore(spark, g.firstChild);
+    mk('circle', {cx: x, cy, r: Math.max(6, nr * .42), fill: LAMP, stroke: INK, 'stroke-width': 2}, spark);
+  }
+}
+
+function render() {
+  if (!G) return;
+  const {cell, x0, lr, lampY, keyY, W} = G;
+  const o = st.off, n = Math.round(o), dx = o * cell;
+  G.strip.setAttribute('transform', `translate(${dx.toFixed(1)} 0)`);
+  // the caption rides with the strip, kept inside the card
+  if (G.cap) G.cap.setAttribute('x', Math.min(x0 + 2, W - 2 - G.capW - dx).toFixed(1));
+  const bad = locked ? [] : clashes(n), fits = !bad.length;
+  G.lamps.forEach(l => { l.c.setAttribute('stroke', INK); l.c.setAttribute('stroke-width', 1.5); });
+  G.keys.forEach((k, i) => { k.ring.setAttribute('fill', bad.includes(i) ? RED : KEY); k.edge.setAttribute('stroke', INK); k.edge.setAttribute('stroke-width', 1.4); });
+  G.wires.innerHTML = '';
+  C.split('').forEach((ch, i) => {
+    const x = x0 + (i + .5) * cell + dx, y1 = keyY - lr - 2, y2 = lampY + lr + 2;
+    if (locked) {
+      // locked: the loop's three pairs stand out green, the rest step back
+      const on = LOOP.includes(i);
+      mk('line', {x1: x, x2: x, y1, y2, stroke: on ? GREEN : INK, 'stroke-width': on ? 4 : 1.4, opacity: on ? 1 : .25}, G.wires);
+      if (on) { const l = G.lamps[GOOD + i]; l.c.setAttribute('stroke', GREEN); l.c.setAttribute('stroke-width', 3.5); G.keys[i].edge.setAttribute('stroke', GREEN); G.keys[i].edge.setAttribute('stroke-width', 3.5); }
+      return;
+    }
+    if (bad.includes(i)) {
+      const m = (y1 + y2) / 2, k = Math.min(9, (y1 - y2) * .18);
+      mk('line', {x1: x, x2: x, y1, y2: m + k, stroke: RED, 'stroke-width': 2.4}, G.wires);
+      mk('line', {x1: x, x2: x, y1: m - k, y2, stroke: RED, 'stroke-width': 2.4}, G.wires);
+      mk('path', {d: `M${x - k * .8},${m - k * .8} L${x + k * .8},${m + k * .8} M${x + k * .8},${m - k * .8} L${x - k * .8},${m + k * .8}`, stroke: RED, 'stroke-width': 3, 'stroke-linecap': 'round'}, G.wires);
+      const lamp = G.lamps[n + i]; if (lamp) { lamp.c.setAttribute('stroke', RED); lamp.c.setAttribute('stroke-width', 3.5); }
+    } else mk('line', {x1: x, x2: x, y1, y2, stroke: fits ? GREEN : INK, 'stroke-width': fits ? 2.6 : 1.6, opacity: fits ? 1 : .7}, G.wires);
+  });
+  G.loopG.innerHTML = '';
+  if (locked && G.topH) loopChain(G.loopG, W, G.topH);
+}
 
 function status() {
-  const s = Kit.$('stat');
-  if (locked) { s.classList.add('hid'); return; }
-  const c = clashes(off);
-  s.innerHTML = c.length
-    ? `<span class="bad">${C[c[0]]} sits on ${C[c[0]]}${c.length > 1 ? ' (and more)' : ''}: impossible here.</span> A key never lights its own lamp.`
-    : `<span class="ok">No letter sits on itself.</span> The report could be here. Let go.`;
-}
-
-function paint() {
-  if (!G.crib) return;
-  const c = clashes(off), loopI = locked ? LOOP.map(l => l.i) : [];
-  G.cip.forEach(o => { o.r.style.stroke = 'none'; o.r.style.fill = 'color-mix(in srgb,var(--k) 10%,transparent)'; o.t.style.fill = 'var(--k)'; });
-  G.crib.forEach((o, i) => {
-    const j = off + i, bad = c.includes(i), lp = loopI.includes(i);
-    o.r.style.fill = bad ? RED : lp ? GREEN : locked ? 'color-mix(in srgb,var(--k) 75%,transparent)' : 'var(--k)';
-    o.t.style.fill = 'var(--c)';
-    if (bad) { G.cip[j].r.style.stroke = RED; G.cip[j].r.style.strokeWidth = 2.5; }
-    if (lp) { G.cip[j].r.style.fill = GREEN; G.cip[j].t.style.fill = '#fff'; o.t.style.fill = '#fff'; }
-  });
-}
-
-function fitLabel(t, W) {
-  let w = 0; try { w = t.getBBox().width; } catch (_) { return; }
-  if (!w) return;
-  const pad = 2;
-  if (w > W - pad * 2) {
-    const fs = parseFloat(t.getAttribute('font-size'));
-    t.setAttribute('font-size', fs * (W - pad * 2) / w * 0.98);
-    try { w = t.getBBox().width; } catch (_) {}
-  }
-  const x = parseFloat(t.getAttribute('x'));
-  if (x + w > W - pad) t.setAttribute('x', Math.max(pad, W - pad - w));
-}
-
-function draw() {
-  if (tl) { tl.kill(); tl = null; }
-  svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fl = Math.max(Math.min(f * 0.78, H * 0.04), 12);
-  const cw = Math.min(W / 21.4, 34, Math.max(H * 0.075, 15)), ch = cw * 1.25, fs = Math.min(Math.max(cw * 0.62, 12), cw * 0.85);
-  const x0 = (W - X.length * cw) / 2;
-  const yC = fl * 1.7, yK = yC + ch + cw * 0.55, yKL = yK + ch + fl * 1.45;
-  Object.assign(G, {W, H, cw, ch, x0, yK});
-  const txt = (x, y, s, size, attrs = {}, p = svg) => { const t = Kit.mk('text', Object.assign({x, y, 'font-size': size}, attrs), p); t.textContent = s; return t; };
-  fitLabel(txt(x0, fl * 1.05, 'INTERCEPTED · 6 A.M. · BISCAY', fl, {style: 'fill:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:.04em'}), W);
-  G.cip = [...X].map((L, j) => {
-    const r = Kit.mk('rect', {x: x0 + j * cw + 1, y: yC, width: cw - 2, height: ch, rx: cw * 0.18}, svg);
-    const t = txt(x0 + j * cw + cw / 2, yC + ch / 2 + fs * 0.36, L, fs, {'text-anchor': 'middle', style: 'font-family:var(--mono);font-weight:700'});
-    return {r, t};
-  });
-  const g = Kit.mk('g', {}, svg); G.g = g;
-  G.crib = [...C].map((L, i) => {
-    const r = Kit.mk('rect', {x: x0 + i * cw + 1, y: yK, width: cw - 2, height: ch, rx: cw * 0.18}, g);
-    const t = txt(x0 + i * cw + cw / 2, yK + ch / 2 + fs * 0.36, L, fs, {'text-anchor': 'middle', style: 'font-family:var(--mono);font-weight:700'}, g);
-    return {r, t};
-  });
-  gsap.set(g, {x: off * cw});
-  fitLabel(txt(x0, yKL, 'GUESS · “WEATHER REPORT” IN GERMAN ⇆', fl, {style: 'fill:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:.04em'}), W);
-
-  // the loop: three machines wired back to back
-  const yL = yKL + fl * 0.8, h = H - yL;
-  const L = Kit.mk('g', {opacity: locked ? 1 : 0}, svg); G.loop = L;
-  if (h > 60) {
-    const rr = Math.min(h * 0.4, W * 0.3), nr = Math.max(Math.min(rr * 0.27, cw * 1.1), 13);
-    const cx = W / 2, cy = yL + h * 0.55;
-    const P = {R: [cx, cy - rr], E: [cx + rr * 0.866, cy + rr * 0.5], T: [cx - rr * 0.866, cy + rr * 0.5]};
-    LOOP.forEach(l => {
-      const [ax, ay] = P[l.a], [bx, by] = P[l.b];
-      Kit.mk('line', {x1: ax, y1: ay, x2: bx, y2: by, style: `stroke:${GREEN};stroke-width:${Math.max(2, nr * 0.16)}`}, L);
-      const mx = (ax + bx) / 2, my = (ay + by) / 2, bw = Math.max(fl * 3.6, nr * 2.2), bh = fl * 1.6;
-      Kit.mk('rect', {x: mx - bw / 2, y: my - bh / 2, width: bw, height: bh, rx: bh * 0.25, style: 'fill:var(--k)'}, L);
-      txt(mx, my + fl * 0.36, 'spot ' + (l.i + 1), fl, {'text-anchor': 'middle', style: 'fill:var(--c);font-family:var(--body);font-weight:700'}, L);
-    });
-    G.nodes = {};
-    for (const k in P) {
-      const n = Kit.mk('g', {}, L);
-      Kit.mk('circle', {cx: P[k][0], cy: P[k][1], r: nr, style: `fill:${GREEN}`}, n);
-      txt(P[k][0], P[k][1] + nr * 0.36, k, nr, {'text-anchor': 'middle', style: 'fill:#fff;font-family:var(--mono);font-weight:700'}, n);
-      G.nodes[k] = n;
-    }
-    const dot = Kit.mk('circle', {cx: P.R[0], cy: P.R[1], r: nr * 0.32, style: 'fill:var(--k);stroke:var(--c);stroke-width:2'}, L);
-    G.P = P; G.dot = dot; G.nr = nr;
-    if (locked) pulse();
-  }
-  paint(); status();
-}
-
-function pulse() {
-  if (!G.dot || Kit.calm) return;
-  const P = G.P, R = G.nodes.R;
-  tl = gsap.timeline({repeat: -1, repeatDelay: .5});
-  ['E', 'T', 'R'].forEach(k => tl.to(G.dot, {attr: {cx: P[k][0], cy: P[k][1]}, duration: .6, ease: 'power1.inOut'}));
-  tl.to(R, {scale: 1.25, transformOrigin: '50% 50%', duration: .18, yoyo: true, repeat: 1});
-}
-
-function lock() {
   if (locked) return;
-  locked = true; Kit.haptic('success');
-  paint(); status();
-  Kit.$('why').classList.remove('hid'); Kit.$('say').classList.add('hid'); Kit.$('keep').classList.remove('hid');
-  svg.style.cursor = 'default';
-  if (G.loop) gsap.to(G.loop, {opacity: 1, duration: Kit.calm ? 0 : .6});
-  if (!Kit.calm) gsap.from('#why .body', {opacity: 0, y: 8, stagger: .15, duration: .45});
-  pulse();
+  const c = clashes(off);
+  say.innerHTML = c.length
+    ? `<span class="bad">${C[c[0]]} under ${C[c[0]]}: impossible here.</span> A key never lights its own lamp.`
+    : `<span class="ok">No key under its own letter: it fits here.</span> Let go.`;
 }
-
 function setOff(o) {
   o = Math.max(0, Math.min(MAXO, o));
   if (o === off) return;
   off = o; Kit.haptic('selection');
-  gsap.to(G.g, {x: off * G.cw, duration: .18, ease: 'power2.out'});
-  paint(); status();
+  gsap.to(st, {off, duration: Kit.calm ? 0 : .18, ease: 'power2.out', onUpdate: render, overwrite: true});
+  status();
+}
+function lock() {
+  if (locked) return;
+  locked = true; Kit.haptic('success');
+  svg.classList.add('done'); svg.setAttribute('data-drag', 'off');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  st.off = GOOD;
+  build();
+  if (Kit.calm) { st.loop = 1; render(); return; }
+  gsap.to(st, {loop: 1, duration: 1.1, ease: 'power2.inOut', onUpdate: render, onComplete: () => gsap.to(st, {spark: 3, duration: 6, ease: 'none', onUpdate: render})});
 }
 
 svg.addEventListener('pointerdown', e => {
@@ -170,29 +224,36 @@ svg.addEventListener('pointerdown', e => {
   drag = {sx: e.clientX, so: off};
   try { svg.setPointerCapture(e.pointerId); } catch (_) {}
 });
-svg.addEventListener('pointermove', e => { if (drag) setOff(Math.round(drag.so + (e.clientX - drag.sx) / G.cw)); });
+svg.addEventListener('pointermove', e => {
+  if (!drag) return;
+  const r = svg.getBoundingClientRect(), k = G.W / r.width;
+  setOff(Math.round(drag.so + (e.clientX - drag.sx) * k / G.cell));
+});
 const up = () => {
   if (!drag) return; drag = null;
   if (off === GOOD) lock();
-  else if (!Kit.calm) gsap.fromTo(G.g, {y: 0}, {y: -4, duration: .08, yoyo: true, repeat: 3});
+  else if (!Kit.calm) gsap.fromTo(G.strip, {y: 0}, {y: -4, duration: .08, yoyo: true, repeat: 3, onComplete: render});
 };
 svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
 
-Kit.onShow.card = () => draw();
+Kit.onShow.card = () => build();
 Kit.onEnter.card = () => {
-  if (Kit.calm || !G.cip) return;
-  gsap.from(G.cip.map(o => o.r).concat(G.cip.map(o => o.t)), {opacity: 0, duration: .35, stagger: .012});
-  gsap.from(G.crib.map(o => o.r).concat(G.crib.map(o => o.t)), {opacity: 0, y: 8, duration: .4, stagger: .015, delay: .25});
+  if (Kit.calm || !G || locked) return;
+  gsap.from(G.lamps.map(l => l.c), {attr: {r: 0}, duration: .35, stagger: .03, ease: 'back.out(2)'});
+  const nudge = {d: 0};
+  gsap.to(nudge, {d: .45, duration: .45, repeat: 3, yoyo: true, ease: 'sine.inOut', delay: .7, onUpdate: () => { if (!drag && !locked && off === 0) { st.off = nudge.d; render(); } }, onComplete: () => { if (!drag && !locked) { st.off = off; render(); } }});
 };
 Kit.play.card = async () => {
   const wait = ms => new Promise(r => setTimeout(r, ms));
-  const rc = svg.getBoundingClientRect();
-  const x = rc.left + G.x0 + off * G.cw + G.cw * 2, y = rc.top + G.yK + G.ch / 2;
+  const rc = svg.getBoundingClientRect(), k = rc.width / G.W;
+  const x = rc.left + (G.x0 + G.cell * 2) * k, y = rc.top + G.keyY * k;
   const ev = (t, cx) => svg.dispatchEvent(new PointerEvent(t, {clientX: cx, clientY: y, pointerId: 1, bubbles: true}));
   ev('pointerdown', x); await wait(50);
-  for (let k = 1; k <= GOOD; k++) { ev('pointermove', x + k * G.cw); await wait(60); }
-  ev('pointerup', x + GOOD * G.cw); await wait(900);
+  for (let s = 1; s <= GOOD; s++) { ev('pointermove', x + s * G.cell * k); await wait(80); }
+  ev('pointerup', x + GOOD * G.cell * k); await wait(1400);
 };
+// Drawn again at the size it now has whenever its room changes: when the answer comes in, never shrunk whole.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; build(); } }).observe(svg); }
 Kit.single();
 </script>
 </html>

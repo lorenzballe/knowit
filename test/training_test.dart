@@ -1,11 +1,10 @@
 // The reader's training (lib/widgets/training.dart): their Astute score and
-// the skills they picked with their score in each, first in Your journey and
-// as a box on the profile, and the sheet that rises when the day's cards are
-// done, each score counting from where it stood that morning.
+// the skills they picked with their score in each, first in Your journey —
+// the one number large, the skills tight under it and the others two to a
+// row below — and as a box on the profile. Nothing rises over the finished
+// day any more: the scores count up in the journey (test/journey_test.dart).
 //
 //   flutter test test/training_test.dart
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
@@ -43,56 +42,6 @@ String _n(int v) => NumberFormat.decimalPattern('en').format(v);
 void main() {
   setUpAll(loadFonts);
   setUp(PillBank.reset);
-
-  group('what the day did', () {
-    test('the skills picked that today\'s cards trained or today\'s answers '
-        'moved, the most moved first, each from where it stood last night; '
-        'a card back for another go is not one of the day\'s', () async {
-      final List<Pill> money = trainingCards(
-        Skill.money,
-        4,
-        not: Skill.numbers,
-      );
-      final List<Pill> numbers = trainingCards(
-        Skill.numbers,
-        2,
-        not: Skill.money,
-      );
-      final AppState app = await readyApp({
-        'knowit.skills': ['numbers', 'money'],
-        'knowit.seenIds': [
-          for (final Pill p in [...money, ...numbers]) p.id,
-        ],
-        // Three money cards right today, both numbers cards wrong.
-        'knowit.judgements': jsonEncode([
-          ...jsonDecode(judgementsOf(money.take(3))) as List,
-          ...jsonDecode(judgementsOf(numbers, right: false)) as List,
-        ]),
-      });
-      app.todaysDeck = [...money, ...numbers];
-      app.reviewIdsToday = {money[3].id};
-      final List<DayTraining> day = dayTrainingOf(app);
-      expect(day.map((d) => d.skill).toSet(), {Skill.money, Skill.numbers});
-      final DayTraining m = day.firstWhere((d) => d.skill == Skill.money);
-      final DayTraining n = day.firstWhere((d) => d.skill == Skill.numbers);
-      expect(m.plus, 3);
-      expect(n.plus, 2);
-      expect(m.before, kScoreStart);
-      expect(m.moved, greaterThan(0));
-      expect(n.moved, lessThan(0));
-      expect(day.first.moved.abs(), greaterThanOrEqualTo(day.last.moved.abs()));
-    });
-
-    test('nothing when the reader picked no skill', () async {
-      final AppState app = await readyApp({
-        'knowit.seenIds': training(Skill.money, 3),
-      });
-      app.todaysDeck = [
-        for (final String id in training(Skill.money, 3)) PillBank.byId(id)!,
-      ];
-      expect(dayTrainingOf(app), isEmpty);
-    });
-  });
 
   Future<void> phone(WidgetTester tester, Size size, {double text = 1}) async {
     tester.view.physicalSize = size;
@@ -139,7 +88,7 @@ void main() {
         }),
       ) as AppState;
       final SkillScore score = scoreBookOf(app).of(Skill.money);
-      expect(score.now, greaterThan(kScoreStart));
+      expect(score.now, greaterThan(0));
       await show(tester, (_) => ProfileTraining(app: app));
       final l = lookupAppLocalizations(const Locale('en'));
       for (final String k in ['money', 'decisions', 'fakes']) {
@@ -184,9 +133,11 @@ void main() {
   });
 
   group('in Your journey', () {
-    testWidgets('the Astute score at the head; each skill picked at full size '
-        'with its score and its week, or how it starts; the others small '
-        'with theirs; Edit opens What to learn', (tester) async {
+    testWidgets('the Astute score at the head, large; each skill picked '
+        'under it, tight, with its score and its week, or how it starts; the '
+        'others two to a row with theirs; Edit opens What to learn', (
+      tester,
+    ) async {
       await phone(tester, const Size(390, 1400));
       final List<Pill> money = trainingCards(
         Skill.money,
@@ -223,7 +174,7 @@ void main() {
         ),
         findsOneWidget,
       );
-      expect(book.overall.now, greaterThan(kScoreStart));
+      expect(book.overall.now, greaterThan(0));
       Finder inRow(String skill, String text) => find.descendant(
         of: find.byKey(ValueKey('training-row-$skill')),
         matching: find.text(text),
@@ -232,7 +183,8 @@ void main() {
       expect(inRow('money', _n(m.now)), findsOneWidget);
       expect(inRow('money', l.scoreWeek('+${m.week}')), findsOneWidget);
       expect(inRow('numbers', l.scoreStart), findsOneWidget);
-      expect(inRow('numbers', _n(kScoreStart)), findsOneWidget);
+      // Nobody starts high: a skill no answer has moved is at nothing.
+      expect(inRow('numbers', _n(0)), findsOneWidget);
       for (final Skill s in Skill.values) {
         final bool picked = s == Skill.money || s == Skill.numbers;
         expect(
@@ -241,6 +193,30 @@ void main() {
           reason: s.name,
         );
       }
+      // The one number stays large; the skills are a size and more under
+      // it, a row each no taller than its badge and two lines; the others
+      // sit two to a row.
+      double sizeOf(Finder text) =>
+          tester.widget<Text>(text).style!.fontSize!;
+      final double big = sizeOf(
+        find.descendant(
+          of: find.byKey(const ValueKey('training-score')),
+          matching: find.text(_n(book.overall.now)),
+        ),
+      );
+      expect(sizeOf(inRow('money', _n(m.now))), lessThan(big / 2));
+      expect(
+        tester.getSize(find.byKey(const ValueKey('training-row-money'))).height,
+        lessThan(48),
+      );
+      final Offset a = tester.getTopLeft(
+        find.byKey(const ValueKey('training-other-critical')),
+      );
+      final Offset b = tester.getTopLeft(
+        find.byKey(const ValueKey('training-other-decisions')),
+      );
+      expect(b.dy, a.dy, reason: 'two to a row');
+      expect(b.dx, greaterThan(a.dx));
       await tester.tap(find.byKey(const ValueKey('training-change')));
       await tester.pumpAndSettle();
       expect(find.byType(SkillsScreen), findsOneWidget);
@@ -258,76 +234,13 @@ void main() {
     });
   });
 
-  group('the finished day', () {
-    final List<DayTraining> day = [
-      const DayTraining(
-        skill: Skill.science,
-        plus: 3,
-        before: 1180,
-        after: 1204,
-      ),
-      const DayTraining(skill: Skill.money, plus: 1, before: 1290, after: 1284),
-      const DayTraining(
-        skill: Skill.people,
-        plus: 1,
-        before: 1000,
-        after: 1000,
-      ),
-    ];
-
-    Future<AppState> sheet(
-      WidgetTester tester, {
-      String language = 'en',
-    }) async {
-      final AppState app = await tester.runAsync(readyApp) as AppState;
-      await show(
-        tester,
-        (_) => DayTrainingSheet(app: app, items: day, cards: 5),
-        language: language,
-      );
-      return app;
-    }
-
-    testWidgets('says the day is done, the Astute score and how far today '
-        'moved it, and each skill\'s score counting from last night to now, '
-        'with how far it moved', (tester) async {
-      await phone(tester, const Size(390, 844));
-      await sheet(tester);
-      final l = lookupAppLocalizations(const Locale('en'));
-      expect(find.text('Five for five.'), findsOneWidget);
-      expect(
-        find.textContaining(l.scoreTitle, findRichText: true),
-        findsOneWidget,
-      );
-      for (final DayTraining d in day) {
-        expect(
-          find.byKey(ValueKey('day-training-${d.skill.name}')),
-          findsOneWidget,
-        );
-      }
-      expect(find.text('+24'), findsOneWidget);
-      expect(find.text('\u22126'), findsOneWidget);
-      expect(find.text('0'), findsOneWidget);
-      // Before the scores count, science stands where it did last night.
-      expect(find.text(_n(1180)), findsOneWidget);
-      await tester.pump(const Duration(milliseconds: 400));
-      await tester.pump(const Duration(seconds: 2));
-      expect(find.text(_n(1204)), findsOneWidget);
-      expect(find.text(_n(1284)), findsOneWidget);
-      expect(tester.takeException(), isNull);
-    });
-
+  group('in every language', () {
     for (final String language in AppLocalizations.supportedLocales.map(
       (l) => l.languageCode,
     )) {
-      testWidgets('fits the smallest phone at a large text size in $language, '
-          'and so do the profile\'s box and the journey\'s chapter', (
-        tester,
-      ) async {
+      testWidgets('the profile\'s box and the journey\'s chapter fit the '
+          'smallest phone at a large text size in $language', (tester) async {
         await phone(tester, const Size(320, 568), text: 1.3);
-        await sheet(tester, language: language);
-        await tester.pump(const Duration(seconds: 3));
-        expect(tester.takeException(), isNull, reason: 'sheet');
         final AppState app = await tester.runAsync(
           () => readyApp({
             'knowit.skills': ['science', 'people', 'fakes', 'lead'],

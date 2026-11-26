@@ -1,9 +1,10 @@
 /// Sixty seconds on a screen of its own (lib/widgets/explore/
-/// challenge_screen.dart): the claim in front of the reader set as a page
-/// is, False and True under it — or the claim swiped either way — the
-/// minute a fine rule running down under the running head, and how far
-/// along the eight in short rules over the answers. Each answer is told at
-/// once, by a calm colour and a word.
+/// challenge_screen.dart): the claim in front of the reader on its
+/// subject's card, as the app's cards are everywhere, False and True under
+/// it — or the card swiped either way — the minute a fine rule running
+/// down under the running head, and how far along the eight in short rules
+/// over the answers. Each answer is told at once, by a calm colour and a
+/// word.
 ///
 /// The round is the day's round, kept and counted as on its shelf
 /// ([SixtyRound]): opened again the same day, the screen opens on how it
@@ -21,11 +22,9 @@ import '../../l10n/l10n.dart';
 import '../../models/pill.dart';
 import '../../theme.dart';
 import '../../utils/share_link.dart';
-import '../scaled_text.dart';
 import 'challenge_kit.dart';
 import 'challenge_screen.dart';
 import 'challenges.dart';
-import 'parts.dart';
 import 'sixty_seconds.dart';
 
 /// Sixty seconds, as its screen plays it.
@@ -94,6 +93,16 @@ class SixtyChallenge extends ChallengeGame {
       if (b > 0) (label: l.challengeBest, value: '$b/${pills.length}'),
     ];
   }
+
+  @override
+  List<List<Pill>> get today => [
+    for (final Pill p in pills) [p],
+  ];
+
+  @override
+  List<bool?> get todayMarks => [
+    for (int i = 0; i < pills.length; i++) round.rightAt(i),
+  ];
 
   @override
   void attach(TickerProvider vsync) {
@@ -398,24 +407,8 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
     return GamePlayFrame(
       kit: kit,
       count: l.nOfM(math.min(at + 1, n), n),
-      body: ChallengeCard(
-        tone: kit.look.tone,
-        mark: kit.look.mark,
-        faint: false,
-        padding: const EdgeInsets.fromLTRB(20, 18, 20, 22),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _SixtyClock(game: _game, kit: kit),
-            const SizedBox(height: 22),
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, box) => _claims(box.biggest),
-              ),
-            ),
-          ],
-        ),
-      ),
+      status: _SixtyClock(game: _game),
+      body: LayoutBuilder(builder: (context, box) => _claims(box.biggest)),
       actions: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -432,7 +425,6 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
               Expanded(
                 child: GameButton.plain(
                   key: const ValueKey('sixty-false'),
-                  context: context,
                   label: l.sayFalse,
                   height: 64,
                   size: 17,
@@ -443,7 +435,6 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
               Expanded(
                 child: GameButton.plain(
                   key: const ValueKey('sixty-true'),
-                  context: context,
                   label: l.sayTrue,
                   height: 64,
                   size: 17,
@@ -491,7 +482,7 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
                         v ? l.gameRight : l.gameWrong,
                         style: AppText.body(
                           size: 14,
-                          weight: FontWeight.w600,
+                          weight: FontWeight.w700,
                           height: 1.2,
                           color: colour,
                         ),
@@ -507,7 +498,6 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
   /// The claim in front, the one just answered on its way off the page,
   /// and the answer the claim leans to as the finger moves it.
   Widget _claims(Size area) {
-    final l = context.l10n;
     final int n = _pills.length;
     final int at = math.min(_game.round.answers?.length ?? 0, n);
     final double width = area.width;
@@ -526,7 +516,7 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
           layers.add(
             Positioned.fill(
               child: Opacity(
-                opacity: appear * (1 - lean.abs() * 0.55),
+                opacity: appear,
                 child: Transform.translate(
                   offset: Offset(_drag, 8 * (1 - appear)),
                   child: GestureDetector(
@@ -537,31 +527,13 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
                     child: _SixtyClaim(
                       key: ValueKey('sixty-claim-${pill.id}'),
                       pill: pill,
-                      ink: widget.kit.look.tone.ink,
+                      lean: lean,
                     ),
                   ),
                 ),
               ),
             ),
           );
-          if (lean.abs() > 0.02) {
-            layers.add(
-              Positioned(
-                top: 0,
-                right: lean > 0 ? 0 : null,
-                left: lean < 0 ? 0 : null,
-                child: IgnorePointer(
-                  child: Opacity(
-                    opacity: (lean.abs() * 3).clamp(0.0, 1.0),
-                    child: Text(
-                      upper(context, lean > 0 ? l.sayTrue : l.sayFalse),
-                      style: challengeSmallCaps(widget.kit.look.tone.ink, 11.5),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }
         }
         if (leaving != null && t < 1) {
           final double go = Curves.easeOut.transform((t / 0.6).clamp(0.0, 1.0));
@@ -573,10 +545,7 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
                   opacity: 1 - go,
                   child: Transform.translate(
                     offset: Offset(leaving.from + dir * 32 * go, 0),
-                    child: _SixtyClaim(
-                      pill: _pills[leaving.at],
-                      ink: widget.kit.look.tone.ink,
-                    ),
+                    child: _SixtyClaim(pill: _pills[leaving.at]),
                   ),
                 ),
               ),
@@ -589,18 +558,17 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
   }
 }
 
-/// The minute, as a fine rule in the challenge's tone running down from
-/// the right, and the seconds left beside it in tabular figures.
+/// The minute, as a fine rule in the page's ink running down from the
+/// right, and the seconds left beside it in tabular figures.
 class _SixtyClock extends StatelessWidget {
-  const _SixtyClock({required this.game, required this.kit});
+  const _SixtyClock({required this.game});
 
   final SixtyChallenge game;
-  final GameKit kit;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final Color ink = kit.look.tone.ink;
+    final Palette p = context.p;
     final TextScaler scaler = MediaQuery.textScalerOf(context);
     return AnimatedBuilder(
       animation: game.clock,
@@ -611,29 +579,29 @@ class _SixtyClock extends StatelessWidget {
           excludeSemantics: true,
           child: Row(
             children: [
-              Text(
-                '$secs s',
-                key: const ValueKey('sixty-clock'),
-                textScaler: scaler.clamp(maxScaleFactor: 1.3),
-                style: AppText.body(
-                  size: 13,
-                  weight: FontWeight.w800,
-                  height: 1,
-                  color: ink,
-                ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
-              ),
-              const SizedBox(width: 12),
               Expanded(
                 child: SizedBox(
                   height: 8,
                   child: CustomPaint(
                     painter: _ClockRule(
                       left: game.left / SixtyRound.seconds,
-                      track: ink.withValues(alpha: 0.2),
-                      colour: ink,
+                      track: p.ink.withValues(alpha: 0.14),
+                      colour: p.ink,
                     ),
                   ),
                 ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                l.challengeSeconds(secs),
+                key: const ValueKey('sixty-clock'),
+                textScaler: scaler.clamp(maxScaleFactor: 1.3),
+                style: AppText.body(
+                  size: 14,
+                  weight: FontWeight.w700,
+                  height: 1,
+                  color: p.ink,
+                ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
               ),
             ],
           ),
@@ -677,229 +645,33 @@ class _ClockRule extends CustomPainter {
       old.left != left || old.track != track || old.colour != colour;
 }
 
-/// A claim of the round, set as a page is: its subject in small capitals,
-/// and the claim in the app's serif, as large as its room takes.
+/// A claim of the round on its subject's card, as the app sets a card of
+/// the day: its subject's mark and name at its head, the claim in the
+/// app's serif, as large as the card takes. As the finger moves it, the
+/// answer it leans to shows at the head's end.
 class _SixtyClaim extends StatelessWidget {
-  const _SixtyClaim({super.key, required this.pill, required this.ink});
+  const _SixtyClaim({super.key, required this.pill, this.lean = 0});
 
   final Pill pill;
-
-  /// The card's ink.
-  final Color ink;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        CardHead(pill: pill, ink: ink, labelInk: ink.withValues(alpha: 0.72)),
-        const SizedBox(height: 16),
-        Expanded(
-          child: Semantics(
-            liveRegion: true,
-            child: ScaledText(
-              text: claimOf(pill),
-              min: 18,
-              max: 40,
-              alignment: Alignment.bottomLeft,
-              styleFor: (size) => AppText.display(
-                size: size,
-                weight: FontWeight.w600,
-                height: 1.14,
-                spacing: -0.025 * size,
-                color: ink,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-// ── The cards of a deck ─────────────────────────────────────────────────
-//
-// True or false (true_false_game.dart) still deals its claims on a deck of
-// cards of paper, until it is set as Sixty seconds is.
-
-/// A card of a deck, [depth] cards down: one deeper peeks out under the
-/// one above it, a little narrower, a little turned.
-class DeckCard extends StatelessWidget {
-  const DeckCard({
-    super.key,
-    required this.index,
-    required this.depth,
-    required this.child,
-  });
-
-  /// Its place in the deck, which turns it one way or the other.
-  final int index;
-  final double depth;
-  final Widget child;
-
-  static const double peek = 9;
-
-  @override
-  Widget build(BuildContext context) => Positioned(
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: peek * 2,
-    child: Transform.translate(
-      offset: Offset(0, peek * depth),
-      child: Transform.rotate(
-        angle: (index.isEven ? -1 : 1) * 0.016 * depth,
-        child: Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.diagonal3Values(1 - 0.05 * depth, 1, 1),
-          child: child,
-        ),
-      ),
-    ),
-  );
-}
-
-/// A claim on a card of the deck: its subject and the claim, as large as
-/// it goes. With no [pill], the back of a card still to come. [lean] is how
-/// far the finger has moved it, and which way: the answer it is leaning
-/// to shows in its corner. [verdict], on a card answered, is whether it was
-/// right, stamped on it as it goes.
-class ClaimCard extends StatelessWidget {
-  const ClaimCard({
-    super.key,
-    required this.pill,
-    this.lean = 0,
-    this.verdict,
-    this.stamp = 0,
-    this.text,
-    this.max = 40,
-  });
-
-  final Pill? pill;
   final double lean;
-  final bool? verdict;
-  final double stamp;
-
-  /// The words, when not the claim the card makes.
-  final String? text;
-
-  /// The largest the words are set.
-  final double max;
-
-  @override
-  Widget build(BuildContext context) {
-    final Pill? p = pill;
-    // A card of the challenge's colour, as the app's cards are; the ones
-    // still to come a shade deeper, under it.
-    final ChallengeTone? tone = ChallengeToneScope.maybeOf(context);
-    final BoxDecoration face = tone == null
-        ? BoxDecoration(
-            color: kArtCream,
-            borderRadius: BorderRadius.circular(28),
-            border: Border.all(color: kArtInk, width: 3),
-          )
-        : BoxDecoration(
-            color: p == null
-                ? Color.alphaBlend(
-                    Colors.black.withValues(alpha: 0.28),
-                    tone.vivid,
-                  )
-                : tone.vivid,
-            borderRadius: BorderRadius.circular(24),
-          );
-    if (p == null) return DecoratedBox(decoration: face);
-    final bool? v = verdict;
-    return Container(
-      decoration: face,
-      padding: const EdgeInsets.fromLTRB(22, 20, 22, 24),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              CardHead(
-                pill: p,
-                ink: kArtInk,
-                labelInk: kArtInk.withValues(alpha: 0.62),
-              ),
-              const SizedBox(height: 12),
-              Expanded(
-                child: Semantics(
-                  liveRegion: v == null,
-                  child: ScaledText(
-                    text: text ?? claimOf(p),
-                    min: 17,
-                    max: max,
-                    alignment: Alignment.centerLeft,
-                    styleFor: (size) => AppText.display(
-                      size: size,
-                      weight: FontWeight.w600,
-                      height: 1.12,
-                      spacing: -0.025 * size,
-                      color: kArtInk,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          // The answer the card leans to, as the finger moves it.
-          if (lean.abs() > 0.02 && v == null)
-            Positioned(
-              top: 0,
-              right: lean < 0 ? 0 : null,
-              left: lean > 0 ? 0 : null,
-              child: Opacity(
-                opacity: (lean.abs() * 3).clamp(0.0, 1.0),
-                child: _Lean(sayTrue: lean > 0),
-              ),
-            ),
-          if (v != null)
-            Center(child: GameStamp(right: v, scale: stamp)),
-        ],
-      ),
-    );
-  }
-}
-
-/// "True" or "False" in a card's corner, while the finger swipes it.
-class _Lean extends StatelessWidget {
-  const _Lean({required this.sayTrue});
-
-  final bool sayTrue;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    return Transform.rotate(
-      angle: sayTrue ? -0.12 : 0.12,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(10, 6, 12, 6),
-        decoration: BoxDecoration(
-          color: sayTrue ? kArtInk : kArtCream,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: kArtInk, width: 2.5),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              sayTrue ? Icons.check_rounded : Icons.close_rounded,
-              size: 18,
-              color: sayTrue ? kArtCream : kArtInk,
-            ),
-            const SizedBox(width: 4),
-            Text(
-              upper(context, sayTrue ? l.sayTrue : l.sayFalse),
-              style: AppText.label(
-                size: 13,
-                weight: FontWeight.w800,
-                spacing: 1,
-                color: sayTrue ? kArtCream : kArtInk,
+    return SubjectCard(
+      pill: pill,
+      trailing: lean.abs() > 0.02
+          ? Opacity(
+              opacity: (lean.abs() * 3).clamp(0.0, 1.0),
+              child: SubjectTag(
+                pill: pill,
+                text: lean > 0 ? l.sayTrue : l.sayFalse,
               ),
-            ),
-          ],
-        ),
+            )
+          : null,
+      child: Semantics(
+        liveRegion: true,
+        child: SubjectWords(text: claimOf(pill), ink: pill.ink),
       ),
     );
   }

@@ -1,5 +1,13 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: technology-ballast-drains-water -->
+<!-- Look: a railway cut straight across, flat and stylised, under the card's blue sky. In the cut: two rails in
+     their real profile on rubber pads, held by clips to a concrete sleeper; under it a deep bed of angular grey
+     stones with dark gaps between them; a layer of sand that slopes down to each side; brown soil below and a ditch
+     at each edge. Behind the cut the track runs away over green fields to low hills, a train far off on it, and a
+     grey cloud waits over it all. Rain on the stones: drops run down through the gaps, out along the sand and into
+     the ditches, and the near ditch carries the water away into the distance. Rain on bare soil: the stones go, the
+     sleeper lands on the earth, puddles spread round it, the soil turns to mud and the track sinks. Drawn again at
+     its real size whenever its room changes. -->
 <title>Why are there stones under train tracks?</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -12,13 +20,14 @@
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 .opt.done:not(.on){box-shadow:inset 0 0 0 .3cqh var(--k)}
 #why{font:500 max(1.9cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+#say{min-height:2.84em}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Try both · see why">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">RAILWAYS</span></div>
     <h2 class="q">How does the ballast layer protect the track from water damage?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" aria-label="Cross-section of a railway track in the rain"></svg>
+      <svg id="pic" role="img" aria-label="A railway cut across: rails clipped to a concrete sleeper on a deep bed of angular stones with gaps between them, sand and soil below, a ditch at each side, the track running away over fields under a rain cloud."></svg>
       <div id="btns">
         <button class="opt" data-m="stones">Rain on the stones</button>
         <button class="opt" data-m="soil">Rain on bare soil</button>
@@ -32,146 +41,558 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-let S = {}, scene = 'stones', busy = false, fast = false;
+const svg = Kit.$('pic');
+// Flat colours, one meaning each. Ink for every outline; the card's blue is the sky; water a deeper blue, and its
+// shine pale. The stones grey with a lit face, the gaps between them near black; sand for the layer under the
+// stones; soil brown, mud dark brown; the sleeper concrete, the rails steel; fields and grass green.
+const INK = '#10100c', WATER = '#2563eb', DROP = '#4f9dff', SHINE = '#b5dcff', GAP = '#2a2521',
+  STONES = [['#a29e96', '#cdc9c0'], ['#928e87', '#bbb7af'], ['#aeaaa2', '#d6d2c9'], ['#99958d', '#c3bfb6']],
+  SAND = '#f0c67e', SOIL = '#c4884f', SOIL2 = '#ad7442', SIDE = '#a06b3a', GROUND = '#cf975f', MUD = '#5d3b22',
+  FIELD = '#8fd462', GRASS = '#74c04c', BANK = '#6cb84b', BANK2 = '#5aa63f', HILL = '#4fbe93', HILL2 = '#73d3a8', BED = '#a8a49c', BED2 = '#8d8980',
+  CONC = '#ece6da', CONC2 = '#cdc5b6', CONC3 = '#b5ac9b', STEEL = '#7b8592', STEEL_HI = '#e4e9ef', DARK = '#4a4640',
+  CLOUD = '#f6f7f9', CLOUD_RAIN = '#a3adb9', RAIN = '#f2faff', TRAIN = '#fffbf0', NOSE = '#e8452c', LAMP = '#ffd54a';
+const FONT = 'Figtree, system-ui, sans-serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+const pts = (q, close) => q.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('') + (close ? 'Z' : '');
+const along = q => { let s = 0; for (let i = 1; i < q.length; i++) s += Math.hypot(q[i][0] - q[i - 1][0], q[i][1] - q[i - 1][1]); return s; };
+// Randomness from a seed, so the stones fall the same way on every phone and every time the drawing is redrawn.
+function rng(seed) { let s = seed >>> 0; return () => { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const inPoly = (p, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const a = poly[i], b = poly[j]; if ((a[1] > p[1]) !== (b[1] > p[1]) && p[0] < (b[0] - a[0]) * (p[1] - a[1]) / (b[1] - a[1]) + a[0]) c = !c; } return c; };
+// What of a polygon lies on the near side of a line (through m, facing n).
+function cutBy(poly, mx, my, nx, ny) {
+  const out = [];
+  for (let i = 0; i < poly.length; i++) {
+    const a = poly[i], b = poly[(i + 1) % poly.length], da = (a[0] - mx) * nx + (a[1] - my) * ny, db = (b[0] - mx) * nx + (b[1] - my) * ny;
+    if (da <= 0) out.push(a);
+    if ((da <= 0) !== (db <= 0)) { const t = da / (da - db); out.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]); }
+  }
+  return out;
+}
+
+// What the picture shows, tweened: the stones there or gone, the track dropped onto bare soil and sunk, the cloud and
+// its rain, the drops in the gaps, the water along the sand and in the ditches, the puddles and the mud.
+const st = {stones: 1, drop: 0, sink: 0, cloud: 0, rain: 0, rt: 0, pt: -9, wet: 0, film: 0, ditch: 0, flow: 0, puddle: 0, mud: 0};
+let G = null, E = {}, tl = null, busy = false, fast = false, ended = false, farKey = '', laid = '';
 const done = {stones: false, soil: false};
-const WATER = '#3fa9ff';
 
-function draw() {
-  const svg = Kit.$('pic');
-  const {W, H, f} = Kit.fitSvg(svg);
-  svg.innerHTML = '';
-  const cx = W / 2, bt = H * 0.44, gy = H * 0.66, bw = W * 0.94, tw = W * 0.6;
-  const sh = Math.max(10, H * 0.055), sw = W * 0.58;
-  const r = Math.max(6, Math.min(W, H) * 0.032);
-  S = {W, H, f, cx, bt, gy, bw, tw, sh, sw, r};
+function lay() {
+  const r = Kit.fitSvg(svg), W = r.W, H = r.H, f = r.f;
+  svg.innerHTML = ''; E = {}; farKey = '';
+  laid = `${Math.round(W)}x${Math.round(H)}`;
+  if (W < 80 || H < 48) { G = null; return; }
+  const u = W / 100, cx = W / 2;
+  const fs = clamp(f * .92, 12, 14);
+  // Across, the track at its true proportions: sleeper 2.6 m, rails 1.5 m apart. The rails, the sleeper and the
+  // depths are drawn thicker than they are, so the stones and the water in their gaps can be seen.
+  const railH = clamp(6.4 * u, 13, 22), padH = Math.max(1.6, .5 * u), slpH = clamp(4.9 * u, 10, 17);
+  const sbH = clamp(4.2 * u, 8, 15), ditchD = clamp(6.8 * u, 12, 22), dz = clamp(1.6 * u, 3, 6);
+  const SL = 21 * u, GA = 12.2 * u, SH = 25.5 * u, TOE = 36 * u, CE = 39 * u, DIB = 41.5 * u, DOB = 44.5 * u, DOT = 47 * u;
+  const dzCE = dz * CE / TOE, fixed = slpH + dzCE + ditchD;
+  // Down the picture: sky, the far view, then the cut (stones, sand, soil). When the room is low the sky gives way
+  // first, then the far view, the soil and last the stones; a tall room gives its extra to all of them.
+  // Once the story is told on bare soil, the stones' room goes to the soil, where the mud is.
+  const bare = ended && st.stones < .5;
+  const T = bare ? [.09 * W, .34 * W, .13 * W] : [.26 * W, .19 * W, .16 * W], M = bare ? [Math.max(.05 * W, 14), Math.max(.08 * W, 18), Math.max(.08 * W, 22)] : [Math.max(.11 * W, 28), Math.max(.035 * W, 8), Math.max(.1 * W, 24)];
+  const skyMin = H > 120 ? Math.min((ended ? .1 : .18) * H, 56) : 0;
+  const A = H - fixed - skyMin, sT = T[0] + T[1] + T[2], sM = M[0] + M[1] + M[2];
+  let [bal, soilB, strip] = T, sky = skyMin;
+  if (A >= sT) sky += A - sT;
+  else { const k = (A - sM) / (sT - sM); [bal, soilB, strip] = k >= 0 ? T.map((t, i) => M[i] + (t - M[i]) * k) : M.map(m => m * Math.max(.25, A / sM)); }
+  if (sky > .3 * H) { const e = sky - .3 * H; sky = .3 * H; bal += e * .3; strip += e * .45; soilB += e * .25; }
+  const yH = sky, yG = yH + strip, yS = yG + slpH, yB0 = yS + bal, ySoil = yB0 + dzCE, yD = ySoil + ditchD, yN = ySoil;
+  const yB = x => yB0 + dz * Math.min(Math.abs(x - cx), CE) / TOE;
+  // The far view: one-point perspective from a little left of the track, so the near ditch shows as it runs away.
+  const VPx = cx - 30 * u, d = 1.25 * W;
+  const proj = (x, y, z) => { const k = d / (d + z); return [VPx + (x - VPx) * k, yH + (y - yH) * k]; };
+  const rD = clamp(Math.min(bal / 4.4, .047 * W), 7.5, 16);
+  G = {W, H, f, u, cx, fs, railH, padH, slpH, sbH, ditchD, dz, SL, GA, SH, TOE, CE, DIB, DOB, DOT, yH, yG, yS, yB0, ySoil, yD, yN, yB, VPx, d, proj, rD, sky, strip, bal};
+  G.mudMax = Math.min(.5 * (H - ySoil), Math.max(1.9 * fs, .16 * W));
+  G.sinkD = .55 * slpH;
 
-  const defs = Kit.mk('defs', {}, svg);
-  const cp = Kit.mk('clipPath', {id: 'bc'}, defs);
-  const pts = `${cx - tw / 2},${bt} ${cx + tw / 2},${bt} ${cx + bw / 2},${gy} ${cx - bw / 2},${gy}`;
-  Kit.mk('polygon', {points: pts}, cp);
+  const defs = mk('defs', {}), rr = Math.min(16, W * .05);
+  const slice = mk('clipPath', {id: 'bd-slice'}, defs);
+  mk('path', {d: `M0,0 H${W} V${H - rr} Q${W},${H} ${W - rr},${H} H${rr} Q0,${H} 0,${H - rr} Z`}, slice);
+  const world = mk('g', {'clip-path': 'url(#bd-slice)'});
 
-  // soil
-  Kit.mk('rect', {x: 0, y: gy, width: W, height: H - gy, fill: '#7a4e2d'}, svg);
-  for (let i = 0; i < 40; i++) Kit.mk('circle', {cx: Kit.rnd() * W, cy: gy + 6 + Kit.rnd() * (H - gy - 8), r: r * (0.12 + Kit.rnd() * 0.18), fill: '#5e3b20'}, svg);
-  S.mud = Kit.mk('rect', {x: 0, y: gy, width: W, height: H * 0.13, fill: '#3a2513', opacity: 0}, svg);
-  Kit.mk('text', {x: W * 0.04, y: H - f * 0.6, fill: '#fff', 'font-size': Math.max(12, f * 0.8), 'font-weight': 700, 'font-family': 'var(--body)', 'letter-spacing': '.08em'}, svg).textContent = 'SOIL';
+  // ---- the sky: low hills on the horizon, and the cloud
+  if (yH > 4) {
+    const hill = (amp, ph, fill) => { let dd = `M0,${yH + 1}`; for (let i = 0; i <= 40; i++) { const x = i / 40 * W, h = amp * (.55 + .3 * Math.sin(x / W * 7 + ph) + .15 * Math.sin(x / W * 17 + ph * 2)); dd += `L${x.toFixed(1)},${(yH - Math.min(h, yH * .7)).toFixed(1)}`; } mk('path', {d: dd + `L${W},${yH + 1}Z`, fill}, world); };
+    hill(.075 * W, 1.1, HILL2); hill(.05 * W, 3.7, HILL);
+  }
+  // ---- the far view
+  const VP = [VPx, yH], tri = (a, b, fill, p) => mk('path', {d: pts([a, b, VP], true), fill}, p);
+  const X = s => cx + s;
+  const P1 = [X(-DOT), yN], P2 = [X(-DOB), yD], P3 = [X(-DIB), yD], P4 = [X(-CE), ySoil], P5 = [X(-TOE), yB(X(-TOE))], P6 = [X(-SH), yG];
+  const Q6 = [X(SH), yG], Q4 = [X(CE), ySoil], Q3 = [X(DIB), yD], Q2 = [X(DOB), yD], Q1 = [X(DOT), yN];
+  G.P = {P1, P2, P3, P4, P5, P6, Q6, Q4, Q3, Q2, Q1};
+  const far = mk('g', {}, world);
+  mk('rect', {x: 0, y: yH, width: W, height: H - yH, fill: FIELD}, far);
+  tri(Q3, Q2, BANK2, far); tri(Q2, Q1, BANK, far);            // the far ditch, seen once the stones are gone
+  tri(P1, P2, BANK, far); tri(P2, P3, BANK2, far); tri(P3, P4, BANK, far);
+  E.farWater = mk('path', {fill: WATER}, far);
+  E.farFlow = mk('path', {fill: 'none', stroke: SHINE, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, far);
+  E.farSoil = mk('g', {}, far);
+  tri(P4, Q4, GROUND, E.farSoil);
+  E.farMud = tri(P4, Q4, MUD, E.farSoil);
+  E.farPud = mk('path', {fill: WATER}, E.farSoil);
+  E.farBed = mk('g', {}, far);
+  tri(P4, P5, SAND, E.farBed); tri(P5, P6, BED2, E.farBed); tri(P6, Q6, BED, E.farBed);
+  // The bed's stones seen from above, smaller with distance.
+  {
+    const R = rng(77), dark = [], light = [];
+    for (let i = 0; i < 170; i++) {
+      const k = .1 + .9 * Math.pow(R(), .8), z = d * (1 / k - 1), onSlope = R() < .22;
+      let x, y;
+      if (onSlope) { const t = R(); x = lerp(P5[0], P6[0], t); y = lerp(P5[1], P6[1], t); } else { x = X((R() * 2 - 1) * SH); y = yG; }
+      const [sx, sy] = proj(x, y, z), s = rD * .34 * k * (.6 + .6 * R());
+      if (s < .5) continue;
+      const a = R() * 3;
+      const q = [0, 1, 2, 3].map(j => [sx + Math.cos(a + j * 1.57 + R() * .5) * s, sy + Math.sin(a + j * 1.57 + R() * .5) * s * .55]);
+      (R() < .55 ? dark : light).push(pts(q, true));
+    }
+    mk('path', {d: dark.join(''), fill: '#77736b'}, E.farBed);
+    mk('path', {d: light.join(''), fill: '#c4c0b7'}, E.farBed);
+  }
+  E.farTrack = mk('g', {}, far);
+  // ---- the rain, under the cloud
+  E.rain = mk('path', {fill: 'none', stroke: RAIN, 'stroke-width': Math.max(1.6, .55 * u), 'stroke-linecap': 'round'}, world);
+  {
+    // A flat-bottomed cloud over the track, as big as the sky allows: its base, five puffs on it.
+    const w = Math.min(.5 * W, 2.3 * (yH - 4)), base = clamp(yH * .72, .34 * w + 3, yH - 2);
+    G.cloud = w > .16 * W ? {x: cx + 8 * u, y: base, w} : null;
+    const R = rng(5);
+    G.streaks = Array.from({length: 42}, () => ({x: X((R() * 2 - 1.05) * 40 * u), ph: R(), v: .9 + R() * .25, len: clamp(3.8 * u, 8, 15)}));
+  }
+  if (G.cloud) {
+    const {x, y, w} = G.cloud, bh = .13 * w, puffs = [[-.3, .1], [-.14, .15], [.05, .19], [.23, .14], [.37, .09]];
+    E.cloud = mk('g', {}, world);
+    const shapes = (grow, fill) => {
+      mk('rect', {x: x - .44 * w - grow, y: y - bh - grow, width: .88 * w + 2 * grow, height: bh + 2 * grow, rx: bh / 2 + grow, fill}, E.cloud);
+      return puffs.map(([px, pr]) => mk('circle', {cx: x + px * w, cy: y - bh * .5 - pr * w * .45, r: pr * w + grow, fill}, E.cloud));
+    };
+    shapes(1.6, INK);
+    E.puffs = shapes(-1.1, CLOUD).concat([E.cloud.querySelectorAll('rect')[1]]);
+  }
 
-  // ballast
-  S.gB = Kit.mk('g', {}, svg);
-  Kit.mk('polygon', {points: pts, fill: '#262626'}, S.gB);
-  const gs = Kit.mk('g', {'clip-path': 'url(#bc)'}, S.gB);
-  let row = 0;
-  for (let y = bt + r * 0.7; y < gy + r; y += r * 1.85, row++) {
-    for (let x = cx - bw / 2 + (row % 2) * r; x < cx + bw / 2 + r; x += r * 2.15) {
-      const px = x + (Kit.rnd() - 0.5) * r * 0.4, py = y + (Kit.rnd() - 0.5) * r * 0.3;
-      const n = 6 + Math.floor(Kit.rnd() * 2), a0 = Kit.rnd() * 6;
-      let p = '';
-      for (let k = 0; k < n; k++) {
-        const a = a0 + k * Math.PI * 2 / n, rr = r * (0.72 + Kit.rnd() * 0.22);
-        p += `${px + Math.cos(a) * rr},${py + Math.sin(a) * rr * 0.85} `;
+  // ---- the cut
+  const cut = mk('g', {}, world);
+  mk('path', {d: pts([[-2, yN], P1, P2, P3, P4, Q4, Q3, Q2, Q1, [W + 2, yN], [W + 2, H + 2], [-2, H + 2]], true), fill: SOIL}, cut);
+  {
+    // an older, darker layer of soil deeper down
+    const y0 = lerp(yD, H, .55); let dd = `M-2,${H + 2}`;
+    for (let i = 0; i <= 30; i++) { const x = i / 30 * W; dd += `L${x.toFixed(1)},${(y0 + Math.sin(x / W * 9 + .6) * .016 * W).toFixed(1)}`; }
+    if (H - y0 > 6) { mk('path', {d: dd + `L${W + 2},${H + 2}Z`, fill: SOIL2}, cut); }
+  }
+  const gH = Math.max(2.5, .9 * u);
+  mk('path', {d: pts([[-2, yN - .5], P1, [P1[0] - gH * .5, yN + gH], [-2, yN + gH]], true), fill: GRASS}, cut);
+  mk('path', {d: pts([[W + 2, yN - .5], Q1, [Q1[0] + gH * .5, yN + gH], [W + 2, yN + gH]], true), fill: GRASS}, cut);
+  E.dw = [mk('path', {fill: WATER}, cut), mk('path', {fill: WATER}, cut)];
+  E.dwLine = mk('path', {fill: 'none', stroke: SHINE, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, cut);
+  // bare soil: the mud, the ground, the puddle, the mud squeezed up beside the sleeper
+  E.mud = mk('path', {fill: MUD}, cut);
+  E.flat = mk('path', {d: pts([P4, Q4]), stroke: INK, 'stroke-width': 2.5, fill: 'none'}, cut);
+  E.pud = mk('path', {fill: WATER}, cut);
+  E.pudLine = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, cut);
+  E.pudShine = mk('path', {fill: 'none', stroke: SHINE, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, cut);
+  E.bulge = mk('path', {fill: MUD, stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, cut);
+  // the stones and the sand under them
+  E.bal = mk('g', {}, cut);
+  ballast(E.bal);
+  // the ground's edge: the banks and the ditches
+  mk('path', {d: pts([[-2, yN], P1, P2, P3, P4]) + pts([Q4, Q3, Q2, Q1, [W + 2, yN]]), fill: 'none', stroke: INK, 'stroke-width': 2.5, 'stroke-linejoin': 'round'}, cut);
+  // the track, cut through a sleeper
+  E.track = mk('g', {}, cut);
+  track(E.track);
+  // the slice's own edge
+  mk('path', {d: `M1,${yN} V${H - rr} Q1,${H - 1} ${rr},${H - 1} H${W - rr} Q${W - 1},${H - 1} ${W - 1},${H - rr} V${yN}`, fill: 'none', stroke: INK, 'stroke-width': 2.6, 'stroke-linejoin': 'round'});
+
+  // ---- the words, each on or beside what it names
+  const word = (s, fill, anchor) => { const t = mk('text', {fill, 'font-family': FONT, 'font-weight': 800, 'font-size': fs, 'text-anchor': anchor}); t.textContent = s; return {t, w: t.getComputedTextLength()}; };
+  E.lab = {
+    sleeper: Object.assign(word('sleeper', INK, 'end'), {line: mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.3})}),
+    ballast: Object.assign(word('ballast', INK, 'end'), {line: mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.3})}),
+    ditch: Object.assign(word('ditch', INK, 'end'), {line: mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.3})}),
+    soil: word('soil', '#fffbf0', 'start'),
+    mud: word('mud', '#fffbf0', 'start')
+  };
+  render();
+}
+
+// The stones: points spread evenly through the bed, each the seed of one stone (its Voronoi cell), shrunk so a gap
+// opens all round it, a lit face on top. The gaps join into a network from the surface down to the sand: the paths
+// the rain takes are walked along it, downhill, and drawn under the stones so they show only in the gaps.
+function ballast(g) {
+  const {cx, yG, yS, yB, yB0, SL, SH, TOE, rD, ySoil, sbH, CE, DIB, ditchD, W} = G;
+  const R = rng(20261103);
+  const rough = (a, b, amp) => {
+    const n = Math.max(2, Math.round(Math.hypot(b[0] - a[0], b[1] - a[1]) / (rD * .62))), nx = a[1] - b[1], ny = b[0] - a[0], nl = Math.hypot(nx, ny), out = [];
+    for (let i = 0; i < n; i++) { const t = i / n, o = i ? (R() - .5) * amp : 0; out.push([a[0] + (b[0] - a[0]) * t + nx / nl * o, a[1] + (b[1] - a[1]) * t + ny / nl * o]); }
+    return out;
+  };
+  const A = [cx - TOE, yB(cx - TOE)], B = [cx - SH, yG], C = [cx - SL, yG], D = [cx - SL, yS], E2 = [cx + SL, yS], F = [cx + SL, yG], Gp = [cx + SH, yG], Hp = [cx + TOE, yB(cx + TOE)];
+  const left = rough(A, B, rD * .36).concat(rough(B, C, rD * .16)), right = rough(F, Gp, rD * .16).concat(rough(Gp, Hp, rD * .36));
+  const region = left.concat([C, D, E2], right, [Hp, [cx, yB0]]);
+  G.region = region;
+  // the sand under the stones, sloping down to each side, cut off by the ditches
+  const sx = (DIB - CE) * sbH / ditchD, sand = [];
+  for (let i = 0; i <= 24; i++) { const x = cx - CE + 2 * CE * i / 24; sand.push([x, yB(x)]); }
+  const sandPoly = sand.concat([[cx + CE + sx, ySoil + sbH]], sand.slice().reverse().map(([x, y]) => [x, y + sbH]), [[cx - CE - sx, ySoil + sbH]]);
+  E.sand = mk('path', {d: pts(sandPoly, true), fill: SAND}, g);
+  mk('path', {d: pts([[cx - CE, ySoil], A]) + pts([Hp, [cx + CE, ySoil]]), fill: 'none', stroke: INK, 'stroke-width': 2.5, 'stroke-linecap': 'round'}, g);
+  // seeds, evenly spread (Poisson disc)
+  const xs = region.map(p => p[0]), ys = region.map(p => p[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const seeds = [], active = [];
+  const free = q => inPoly(q, region) && seeds.every(p => (p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2 >= rD * rD);
+  for (let t = 0; t < 400 && seeds.length < 3; t++) { const q = [lerp(x0, x1, R()), lerp(y0, y1, R())]; if (free(q)) { seeds.push(q); active.push(q); } }
+  while (active.length) {
+    const i = Math.floor(R() * active.length), a = active[i]; let hit = false;
+    for (let k = 0; k < 26; k++) { const an = R() * 6.2832, dd = rD * (1 + R() * .9), q = [a[0] + Math.cos(an) * dd, a[1] + Math.sin(an) * dd]; if (free(q)) { seeds.push(q); active.push(q); hit = true; break; } }
+    if (!hit) active.splice(i, 1);
+  }
+  // each seed's cell, inside a box a little bigger than the bed
+  const hull = [[cx - TOE - .7 * rD, yB(cx - TOE) + .4 * rD], [cx - SH - .6 * rD, yG - .7 * rD], [cx + SH + .6 * rD, yG - .7 * rD], [cx + TOE + .7 * rD, yB(cx + TOE) + .4 * rD]];
+  const cells = seeds.map((p, i) => {
+    let c = hull;
+    seeds.forEach((q, j) => { if (j === i || Math.abs(q[0] - p[0]) > 3.2 * rD || Math.abs(q[1] - p[1]) > 3.2 * rD) return; c = cutBy(c, (p[0] + q[0]) / 2, (p[1] + q[1]) / 2, q[0] - p[0], q[1] - p[1]); });
+    return c;
+  });
+  // the gaps: the whole bed, dark; the water goes in here, under the stones
+  const cp = mk('clipPath', {id: 'bd-bed'}, svg.querySelector('defs'));
+  mk('path', {d: pts(region, true)}, cp);
+  E.gaps = mk('path', {d: pts(region, true), fill: GAP}, g);
+  E.wet = mk('g', {'clip-path': 'url(#bd-bed)'}, g);
+  E.drop = mk('g', {'clip-path': 'url(#bd-bed)'}, g);
+  E.film = mk('g', {}, g);
+  E.stones = [];
+  const sg = mk('g', {'clip-path': 'url(#bd-bed)'}, g);
+  cells.forEach(c => {
+    if (c.length < 3) return;
+    let ax = 0, ay = 0, ar = 0;
+    for (let i = 0; i < c.length; i++) { const a = c[i], b = c[(i + 1) % c.length], cr = a[0] * b[1] - b[0] * a[1]; ar += cr; ax += (a[0] + b[0]) * cr; ay += (a[1] + b[1]) * cr; }
+    if (Math.abs(ar) < 1) return;
+    ax /= 3 * ar; ay /= 3 * ar;
+    // shrunk a little more or less, and some corners chipped, so the voids between them come in all sizes
+    const s = .74 + .12 * R();
+    const shrunk = c.map(([x, y]) => [ax + (x - ax) * s + (R() - .5) * .1 * rD, ay + (y - ay) * s + (R() - .5) * .1 * rD]);
+    const stone = [];
+    shrunk.forEach((p, i) => {
+      const a = shrunk[(i + shrunk.length - 1) % shrunk.length], b = shrunk[(i + 1) % shrunk.length];
+      if (R() < .55) { const k1 = .14 + R() * .16, k2 = .14 + R() * .16; stone.push([lerp(p[0], a[0], k1), lerp(p[1], a[1], k1)], [lerp(p[0], b[0], k2), lerp(p[1], b[1], k2)]); }
+      else stone.push(p);
+    });
+    const th = -.5 + R() * 1, o = -(.05 + R() * .3) * rD, nx = -Math.sin(th), ny = Math.cos(th);
+    const lit = cutBy(stone, ax, ay + o, nx, ny);
+    const [base, hi] = STONES[Math.floor(R() * STONES.length)];
+    const sgi = mk('g', {}, sg);
+    mk('path', {d: pts(stone, true), fill: base}, sgi);
+    if (lit.length > 2) mk('path', {d: pts(lit, true), fill: hi}, sgi);
+    E.stones.push({g: sgi, at: .08 + .84 * R(), last: -1});
+  });
+  // the surface of the bed, outlined
+  E.heap = mk('path', {d: pts(left.concat([C])) + pts([F].concat(right.slice(1), [Hp])), fill: 'none', stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, g);
+
+  // The network of gaps: the cells' corners, joined along the cells' edges.
+  const V = new Map(), adj = new Map(), key = (x, y) => `${Math.round(x * 2)},${Math.round(y * 2)}`;
+  cells.forEach(c => c.forEach((a, i) => {
+    const b = c[(i + 1) % c.length], ka = key(a[0], a[1]), kb = key(b[0], b[1]);
+    if (ka === kb) return;
+    V.set(ka, a); V.set(kb, b);
+    if (!adj.has(ka)) adj.set(ka, new Set()); if (!adj.has(kb)) adj.set(kb, new Set());
+    adj.get(ka).add(kb); adj.get(kb).add(ka);
+  }));
+  const top = x => { const a = Math.abs(x - cx); return a < SL ? yS : a <= SH ? yG : yG + (a - SH) / (TOE - SH) * (yB(cx + TOE) - yG); };
+  const starts = [...V.entries()].filter(([, p]) => inPoly(p, region) && p[1] - top(p[0]) < .9 * rD).sort((a, b) => a[1][0] - b[1][0]);
+  const picked = []; let lastX = -1e9;
+  starts.forEach(([k, p]) => { if (p[0] - lastX > rD * .6) { picked.push(k); lastX = p[0]; } });
+  const walk = k0 => {
+    const path = [V.get(k0)], seen = new Set([k0]); let cur = k0;
+    for (let n = 0; n < 60; n++) {
+      const [x, y] = V.get(cur);
+      if (y >= yB(x) - .45 * rD) break;
+      let best = null, bs = -Infinity;
+      for (const nk of adj.get(cur) || []) {
+        if (seen.has(nk)) continue;
+        const [nx, ny] = V.get(nk);
+        if (!inPoly([nx, ny], region) && ny < yB(nx) - 1) continue;
+        if (ny - y < -.25 * rD) continue;
+        const sc = (ny - y) - .25 * Math.abs(nx - x) + R() * .6 * rD;
+        if (sc > bs) { bs = sc; best = nk; }
       }
-      const g = 140 + Math.floor(Kit.rnd() * 70);
-      Kit.mk('polygon', {points: p, fill: `rgb(${g},${g - 4},${g - 10})`, stroke: '#1a1a1a', 'stroke-width': 1}, gs);
+      if (!best) break;
+      seen.add(best); path.push(V.get(best)); cur = best;
     }
-  }
+    const [x, y] = path[path.length - 1];
+    if (y < yB(x) - .6 * rD || path.length < 3) return null;
+    path.push([x, yB(x)]);
+    return path;
+  };
+  const gapW = .22 * rD + 2.6;
+  G.drops = [];
+  // the drops set off in no order across the bed, as rain does
+  const paths = picked.map(walk).filter(Boolean), order = paths.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+  paths.forEach((p, j, all) => {
+    const i = order[j];
+    const len = along(p), seg = Math.min(1.7 * rD, len * .45);
+    const wet = mk('path', {d: pts(p), fill: 'none', stroke: DROP, 'stroke-width': gapW, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'stroke-dasharray': `${len} ${len}`, 'stroke-dashoffset': len, opacity: 0}, E.wet);
+    const dr = mk('path', {d: pts(p), fill: 'none', stroke: DROP, 'stroke-width': gapW, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'stroke-dasharray': `${seg} ${len + seg}`, opacity: 0}, E.drop);
+    G.drops.push({wet, dr, len, seg, t0: .1 + 2.5 * (i / Math.max(1, all.length - 1)) * .9 + R() * .45, D: .7 + .35 * R()});
+  });
+  // Out of the bottom of the stones the water runs along the sloping sand, over the edge and into the ditch.
+  E.films = [-1, 1].map(s => {
+    const p = [[cx + s * .03 * W, yB(cx + s * .03 * W)], [cx + s * TOE, yB(cx + s * TOE)], [cx + s * CE, ySoil], [cx + s * (CE + (DIB - CE) * .8), ySoil + ditchD * .8]];
+    return mk('path', {d: pts(p), fill: 'none', stroke: WATER, 'stroke-width': Math.max(3, .9 * G.u), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': '9 6', opacity: 0}, E.film);
+  });
+}
 
-  S.puddle = Kit.mk('ellipse', {cx, cy: gy, rx: 0, ry: H * 0.014, fill: WATER, opacity: 0.9}, svg);
-
-  // track
-  S.gT = Kit.mk('g', {}, svg);
-  const sy = bt - sh * 0.45;
-  Kit.mk('rect', {x: cx - sw / 2, y: sy, width: sw, height: sh, rx: sh * 0.15, fill: '#8a8f96', stroke: '#2a2a2a', 'stroke-width': 1.5}, S.gT);
+// The track as cut: the sleeper along its length, thicker under the rails; each rail in its profile on a pad; on
+// each side of each rail foot a shoulder cast in the concrete and a clip pressing the foot down.
+function track(g) {
+  const {SL, GA, slpH: sh, railH, padH, u} = G;
+  const k = railH / 172, fw = 150 * k, hw = 36 * k, ft = Math.max(1.6, 11.5 * k), wt = Math.max(1.3, 8.25 * k);
+  const ch = Math.min(sh * .35, 1.3 * u), seat = fw * .5 + 2.4 * u, ramp = 1.6 * u, dip = sh * .2;
+  mk('path', {d: pts([[-SL, ch], [-SL + ch, 0], [-GA + seat, 0], [-GA + seat + ramp, dip], [GA - seat - ramp, dip], [GA - seat, 0], [SL - ch, 0], [SL, ch], [SL, sh], [-SL, sh]], true), fill: CONC, stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, g);
+  const rail = `M${-fw / 2},0 H${fw / 2} V${-ft} L${wt + 9 * k},${-27 * k} Q${wt},${-31 * k} ${wt},${-40 * k} V${-116 * k} Q${wt},${-123 * k} ${wt + 8 * k},${-126 * k} L${hw},${-132 * k} V${-160 * k} Q${hw},${-170.5 * k} ${hw - 10 * k},${-171 * k} Q0,${-173 * k} ${-hw + 10 * k},${-171 * k} Q${-hw},${-170.5 * k} ${-hw},${-160 * k} V${-132 * k} L${-wt - 8 * k},${-126 * k} Q${-wt},${-123 * k} ${-wt},${-116 * k} V${-40 * k} Q${-wt},${-31 * k} ${-wt - 9 * k},${-27 * k} L${-fw / 2},${-ft} Z`;
+  const footTop = ox => -padH - ft - (fw / 2 - ox) / (fw / 2 - wt - 9 * k) * (27 * k - ft);
   [-1, 1].forEach(s => {
-    const x = cx + s * W * 0.17, fw = W * 0.06, hh = sh * 1.1;
-    Kit.mk('rect', {x: x - fw / 2, y: sy - sh * 0.22, width: fw, height: sh * 0.22, fill: '#b8bec7', stroke: '#2a2a2a'}, S.gT);
-    Kit.mk('rect', {x: x - W * 0.008, y: sy - sh * 0.22 - hh * 0.6, width: W * 0.016, height: hh * 0.6, fill: '#b8bec7', stroke: '#2a2a2a'}, S.gT);
-    Kit.mk('rect', {x: x - W * 0.02, y: sy - sh * 0.22 - hh, width: W * 0.04, height: hh * 0.4, rx: 2, fill: '#dfe3e8', stroke: '#2a2a2a'}, S.gT);
+    const x = s * GA;
+    mk('rect', {x: x - fw / 2 - 1, y: -padH, width: fw + 2, height: padH + .6, fill: DARK}, g);
+    [-1, 1].forEach(t => {
+      const x0 = x + t * (fw / 2 + .8), cw = Math.max(3, fw * .3), top = -Math.max(4, railH * .32);
+      mk('rect', {x: t > 0 ? x0 : x0 - cw, y: top, width: cw, height: -top + sh * .28, fill: DARK, stroke: INK, 'stroke-width': 1.2}, g);
+      const ox = fw / 2 - fw * .16, S = [x + t * ox, footTop(ox) - .4], E3 = [x0 + t * cw * .55, top + .3], Cc = [x + t * (fw / 2 + cw * .1), top - railH * .3];
+      const dd = `M${S[0].toFixed(1)},${S[1].toFixed(1)} Q${Cc[0].toFixed(1)},${Cc[1].toFixed(1)} ${E3[0].toFixed(1)},${E3[1].toFixed(1)}`, cs = Math.max(1.8, fw * .11);
+      mk('path', {d: dd, fill: 'none', stroke: INK, 'stroke-width': cs + 2.2, 'stroke-linecap': 'round'}, g);
+      mk('path', {d: dd, fill: 'none', stroke: '#5c6672', 'stroke-width': cs, 'stroke-linecap': 'round'}, g);
+    });
+    mk('path', {d: rail, transform: `translate(${x.toFixed(1)},${(-padH).toFixed(1)})`, fill: STEEL, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+    mk('path', {d: `M${(x - hw + 2.2 * k * 10).toFixed(1)},${(-padH - 168 * k).toFixed(1)} H${(x + hw - 2.2 * k * 10).toFixed(1)}`, stroke: STEEL_HI, 'stroke-width': Math.max(1.2, 5 * k), 'stroke-linecap': 'round'}, g);
   });
+}
 
-  S.gD = Kit.mk('g', {}, svg);
-  S.cap = Kit.mk('text', {x: cx, y: f * 1.3, 'text-anchor': 'middle', style: 'fill:var(--k)', 'font-size': Math.max(13, f), 'font-weight': 700, 'font-family': 'var(--body)'}, svg);
+// Where the track is now: its top in the cut, and its tilt once it sinks.
+function trackAt() {
+  const yT = lerp(G.yG, G.ySoil - G.slpH, st.drop) + st.sink * G.sinkD, tilt = st.sink * 2.6;
+  return {yT, tilt};
+}
+const turn = (x, y, yT, tilt) => { const a = tilt * Math.PI / 180, c = Math.cos(a), s = Math.sin(a); return [G.cx + x * c - y * s, yT + x * s + y * c]; };
 
-  // static state after a resize
-  const dy = gy - bt;
-  if (scene === 'stones') { setCap(done.stones ? 'Water runs through the gaps and away' : 'Stones under the sleepers'); }
-  else {
-    gsap.set(S.gB, {opacity: 0});
-    if (scene === 'mud') {
-      gsap.set(S.gT, {y: dy + sh * 0.6, rotation: 3, transformOrigin: '50% 50%'});
-      gsap.set(S.mud, {attr: {opacity: 0.85}}); gsap.set(S.puddle, {attr: {rx: bw * 0.48}});
-      setCap('The water stays: mud, and the track sinks');
-    } else { gsap.set(S.gT, {y: dy}); setCap('No stones: the sleeper sits on soil'); }
+// The track running away from the cut: sleepers far to near, the two rails, the clips on the near sleepers, a train.
+function farTrack(yT, tilt) {
+  const g = E.farTrack; g.innerHTML = '';
+  const {SL, GA, u, d, proj, yH, cx, railH, padH, slpH} = G;
+  // Away from the cut the sleepers are drawn at their true thickness, 20 cm, and so are the rails.
+  const w = 4.85 * u, sp = 9.7 * u, ex = lerp(.3, 1, st.drop) * SL * 200 / 1300;
+  // Away from the cut the rails are drawn at their true size against the sleepers (the cut shows them larger).
+  const rh = SL * 172 / 1300, rhw = SL * 36 / 1300, rfw = SL * 75 / 1300;
+  const ks = [];
+  for (let k = 1; k < 80; k++) { const z = k * sp; if ((yT - yH) * (d / (d + z) - d / (d + z + sp)) < 1.6) break; ks.push(k); }
+  ks.reverse().forEach(k => {
+    const z1 = k * sp - w / 2, z2 = k * sp + w / 2, near = k < 7;
+    const a = proj(cx - SL, yT, z1), b = proj(cx + SL, yT, z1), c = proj(cx + SL, yT, z2), e = proj(cx - SL, yT, z2);
+    const a2 = proj(cx - SL, yT + ex, z1), b2 = proj(cx + SL, yT + ex, z1), e2 = proj(cx - SL, yT + ex, z2);
+    const line = near ? {stroke: '#6f6758', 'stroke-width': .8, 'stroke-linejoin': 'round'} : {};
+    mk('path', Object.assign({d: pts([a, e, e2, a2], true), fill: CONC3}, line), g);
+    mk('path', Object.assign({d: pts([a, b, b2, a2], true), fill: CONC2}, line), g);
+    mk('path', Object.assign({d: pts([a, b, c, e], true), fill: CONC}, line), g);
+    if (k < 8) [-1, 1].forEach(s => [-1, 1].forEach(t => {
+      const [px, py] = proj(cx + s * GA + t * (rfw + 1.2 * u), yT - .5, k * sp), kk = d / (d + k * sp);
+      mk('ellipse', {cx: px, cy: py, rx: Math.max(.7, 1.1 * u * kk), ry: Math.max(.5, .6 * u * kk), fill: DARK}, g);
+    }));
+  });
+  // the rails: each its side and its shining top, to the vanishing point
+  const VP = [G.VPx, yH];
+  [1, -1].forEach(s => {
+    const FB = turn(s * GA - rfw, -padH, yT, tilt), HL = turn(s * GA - rhw, -padH - rh, yT, tilt), HR = turn(s * GA + rhw, -padH - rh, yT, tilt);
+    mk('path', {d: pts([FB, HL, VP], true), fill: STEEL, stroke: INK, 'stroke-width': .7, 'stroke-linejoin': 'round'}, g);
+    mk('path', {d: pts([HL, HR, VP], true), fill: STEEL_HI}, g);
+  });
+  // a train far off, coming down the line
+  const zt = 5.5 * d, kt = d / (d + zt), [tx, ty] = proj(cx, yT - railH - padH, zt);
+  if (kt * 2 * SL > 12 && ty - 2.9 * SL * kt > 1) {
+    const tw = 2.3 * SL, th = 2.9 * SL, sw = 1.6 / kt, tg = mk('g', {transform: `translate(${tx.toFixed(1)},${ty.toFixed(1)}) scale(${kt.toFixed(4)})`}, g);
+    mk('rect', {x: -tw * .42, y: -th * .14, width: tw * .84, height: th * .14, fill: DARK, stroke: INK, 'stroke-width': sw}, tg);
+    mk('rect', {x: -tw / 2, y: -th, width: tw, height: th * .9, rx: tw * .2, fill: TRAIN, stroke: INK, 'stroke-width': sw}, tg);
+    mk('rect', {x: -tw * .36, y: -th * .86, width: tw * .72, height: th * .26, rx: tw * .08, fill: '#2b3440'}, tg);
+    mk('rect', {x: -tw / 2 + sw / 2, y: -th * .44, width: tw - sw, height: th * .1, fill: NOSE}, tg);
+    [-1, 1].forEach(s => mk('circle', {cx: s * tw * .28, cy: -th * .22, r: tw * .075, fill: LAMP, stroke: INK, 'stroke-width': sw * .7}, tg));
   }
 }
-function setCap(t) { if (S.cap) S.cap.textContent = t; }
 
-function rain(tl, land) {
-  const {H, cx, bw, r} = S;
-  for (let i = 0; i < 44; i++) {
-    const x = cx + (Kit.rnd() - 0.5) * bw * 0.86;
-    const d = Kit.mk('ellipse', {cx: 0, cy: 0, rx: r * 0.22, ry: r * 0.38, fill: WATER, stroke: '#0b4f8a', 'stroke-width': .8}, S.gD);
-    gsap.set(d, {x, y: H * 0.1 - Kit.rnd() * H * 0.05, opacity: 0});
-    const t = i * 0.045;
-    tl.to(d, {opacity: 1, duration: .05}, t);
-    land(d, x, tl, t);
+// The level the ground has at x, in the cut, as the picture now stands: where the rain lands.
+function groundAt(x, yT) {
+  const {cx, SL, SH, TOE, CE, yG, yB, ySoil, yN, DOT, DIB} = G, a = Math.abs(x - cx);
+  if (a < SL) return yT;
+  if (st.stones > .5 && a <= TOE) return a <= SH ? yG : yG + (a - SH) / (TOE - SH) * (yB(cx + TOE) - yG);
+  if (a <= CE) return ySoil;
+  if (a <= DOT) return G.yD - st.ditch * G.ditchD * .62;
+  return yN;
+}
+
+function render() {
+  if (!G) return;
+  const {W, H, cx, u, yH, yG, yB, ySoil, yD, ditchD, CE, DIB, DOB, DOT, SL, slpH, proj, d, fs, rD} = G;
+  const {yT, tilt} = trackAt();
+  // the track, in the cut and running away
+  E.track.setAttribute('transform', `translate(${cx.toFixed(2)},${yT.toFixed(2)}) rotate(${tilt.toFixed(2)})`);
+  const fk = `${yT.toFixed(1)}|${tilt.toFixed(2)}|${st.drop.toFixed(2)}`;
+  if (fk !== farKey) { farKey = fk; farTrack(yT, tilt); }
+  // the stones: there, or taken away one by one
+  E.stones.forEach(s => { const o = clamp((st.stones - s.at) / .1, 0, 1); if (o !== s.last) { s.last = o; s.g.setAttribute('opacity', o.toFixed(2)); s.g.setAttribute('transform', o < 1 ? `translate(0,${((1 - o) * .7 * rD).toFixed(1)})` : ''); } });
+  E.gaps.setAttribute('opacity', smooth(.05, .5, st.stones).toFixed(2));
+  E.heap.setAttribute('opacity', smooth(.3, .9, st.stones).toFixed(2));
+  E.sand.parentNode.setAttribute('opacity', st.stones > .02 ? 1 : 0);
+  E.sand.setAttribute('opacity', smooth(0, .35, st.stones).toFixed(2));
+  E.farBed.setAttribute('opacity', smooth(.1, .7, st.stones).toFixed(2));
+  E.farSoil.setAttribute('opacity', st.stones < .99 ? 1 : 0);
+  // the cloud, darker while it rains, and the rain
+  if (E.puffs) { const c = gsap.utils.interpolate(CLOUD, CLOUD_RAIN, st.cloud); E.puffs.forEach(p => p.setAttribute('fill', c)); }
+  let rain = '';
+  if (st.rain > .01) {
+    const y0 = G.cloud ? G.cloud.y - 2 : 0;
+    G.streaks.forEach(s => {
+      const end = groundAt(s.x + .12 * 40, yT) - 1, span = end - y0 + s.len;
+      if (span <= s.len) return;
+      const yh = y0 + ((st.rt * 520 * s.v + s.ph * span) % span), a = Math.max(y0, yh - s.len), b = Math.min(yh, end);
+      if (b - a < 2) return;
+      rain += `M${(s.x + (a - y0) * .12).toFixed(1)},${a.toFixed(1)}L${(s.x + (b - y0) * .12).toFixed(1)},${b.toFixed(1)}`;
+    });
   }
-}
-function surface(x) {
-  const {cx, bt, gy, tw, bw} = S, a = Math.abs(x - cx);
-  return a < tw / 2 ? bt : bt + (a - tw / 2) / ((bw - tw) / 2) * (gy - bt);
+  E.rain.setAttribute('d', rain); E.rain.setAttribute('opacity', st.rain.toFixed(2));
+  // drops down the gaps, and the gaps they wet
+  G.drops.forEach(p => {
+    const q = (st.pt - p.t0) / p.D, on = q > 0 && q < 1;
+    p.dr.setAttribute('opacity', on ? 1 : 0);
+    if (on) p.dr.setAttribute('stroke-dashoffset', (p.seg - q * (p.len + p.seg)).toFixed(1));
+    p.wet.setAttribute('opacity', (.42 * st.wet * (q > 0 ? 1 : 0)).toFixed(2));
+    p.wet.setAttribute('stroke-dashoffset', (p.len * (1 - clamp(q, 0, 1))).toFixed(1));
+  });
+  E.films.forEach(p => { p.setAttribute('opacity', st.film.toFixed(2)); p.setAttribute('stroke-dashoffset', (-st.rt * 34).toFixed(1)); });
+  // water in the ditches: in the cut, and running away in the near one
+  const yW = yD - st.ditch * ditchD * .62, wIn = DIB - (DIB - CE) * (yD - yW) / ditchD, wOut = DOB + (DOT - DOB) * (yD - yW) / (yD - G.yN);
+  if (st.ditch > .01) {
+    E.dw[0].setAttribute('d', pts([[cx - DOB, yD], [cx - DIB, yD], [cx - wIn, yW], [cx - wOut, yW]], true));
+    E.dw[1].setAttribute('d', pts([[cx + DOB, yD], [cx + DIB, yD], [cx + wIn, yW], [cx + wOut, yW]], true));
+    E.dwLine.setAttribute('d', pts([[cx - wOut + 1, yW], [cx - wIn - 1, yW]]) + pts([[cx + wIn + 1, yW], [cx + wOut - 1, yW]]));
+    E.farWater.setAttribute('d', pts([[cx - wOut, yW], [cx - wIn, yW], [G.VPx, yH]], true));
+  } else { E.dw.forEach(e => e.setAttribute('d', '')); E.dwLine.setAttribute('d', ''); E.farWater.setAttribute('d', ''); }
+  let flow = '';
+  if (st.flow > .01 && st.ditch > .05) {
+    [.3, .62, .45, .8, .2, .55].forEach((lam, i) => {
+      const x = lerp(cx - wOut, cx - wIn, lam), z = ((st.rt * .32 + i * .37) % 1) * 2.4 * d, a = proj(x, yW, z), b = proj(x, yW, z + .16 * d);
+      flow += pts([a, b]);
+    });
+  }
+  E.farFlow.setAttribute('d', flow); E.farFlow.setAttribute('opacity', st.flow.toFixed(2));
+  // bare soil: the mud spreading down, the puddle round the sleeper, the mud squeezed up as it sinks
+  const md = st.mud * G.mudMax;
+  if (md > .5) {
+    let dd = pts([[cx - CE, ySoil], [cx + CE, ySoil]]);
+    for (let i = 0; i <= 30; i++) { const x = cx + CE - 2 * CE * i / 30, k = .5 + .5 * Math.exp(-(((x - cx) / (.26 * W)) ** 2)) + .07 * Math.sin(x / W * 23 + 1.3); dd += `L${x.toFixed(1)},${(ySoil + md * k).toFixed(1)}`; }
+    E.mud.setAttribute('d', dd + 'Z');
+  } else E.mud.setAttribute('d', '');
+  E.farMud.setAttribute('opacity', (.8 * st.mud).toFixed(2));
+  const ph = st.puddle * Math.max(3, .45 * slpH), pw = lerp(.2, .38, st.puddle) * W, yP = ySoil - ph, tp = .05 * W;
+  if (ph > .4) {
+    E.pud.setAttribute('d', `M${cx - pw},${ySoil} C${cx - pw + tp * .5},${ySoil} ${cx - pw + tp * .4},${yP} ${cx - pw + tp},${yP} H${cx + pw - tp} C${cx + pw - tp * .4},${yP} ${cx + pw - tp * .5},${ySoil} ${cx + pw},${ySoil} Z`);
+    E.pudLine.setAttribute('d', `M${cx - pw + tp * .55},${yP + .4} H${cx + pw - tp * .55}`);
+    E.pudShine.setAttribute('d', ph > 2.5 ? `M${cx - pw + tp * 1.3},${yP + ph * .5} h${tp * .9} M${cx + pw - tp * 2.6},${yP + ph * .5} h${tp * .9}` : '');
+  } else { E.pud.setAttribute('d', ''); E.pudLine.setAttribute('d', ''); E.pudShine.setAttribute('d', ''); }
+  if (st.sink > .02) {
+    const hb = st.sink * .62 * slpH, bw = 3.2 * u;
+    let dd = '';
+    [-1, 1].forEach(s => { const e = turn(s * SL, slpH * .2, yT, tilt), x0 = e[0] + s * .3 * u, x1 = x0 + s * bw; dd += `M${x0.toFixed(1)},${(ySoil + 1).toFixed(1)} L${x0.toFixed(1)},${(ySoil - hb).toFixed(1)} Q${(x0 + s * bw * .35).toFixed(1)},${(ySoil - hb * 1.15).toFixed(1)} ${x1.toFixed(1)},${(ySoil + 1).toFixed(1)} Z`; });
+    E.bulge.setAttribute('d', dd);
+  } else E.bulge.setAttribute('d', '');
+  // puddles along the track as it runs away
+  let pud = '';
+  if (st.puddle > .02) {
+    // under the track, between its sleepers, and along both sides of it
+    const R = rng(31), sp = 9.7 * u, grow = Math.sqrt(st.puddle);
+    for (let i = 0; i < 16; i++) {
+      const side = i % 3, zc = (.5 + i * 1.15 + R() * .9) * sp;
+      const xc = side === 0 ? cx + (R() - .5) * SL : cx + (side === 1 ? -1 : 1) * (SL + (2.5 + R() * 4) * u);
+      const rx = (side === 0 ? SL * (.55 + R() * .45) : (2.5 + R() * 3.5) * u) * grow, rz = (.6 + R() * 1.4) * sp * grow;
+      const q = Array.from({length: 16}, (_, j) => { const a = j / 16 * 6.2832; return proj(xc + Math.cos(a) * rx, ySoil, Math.max(0, zc + Math.sin(a) * rz)); });
+      pud += pts(q, true);
+    }
+  }
+  E.farPud.setAttribute('d', pud);
+  labels(yT, tilt);
 }
 
+function labels(yT, tilt) {
+  const {W, u, cx, fs, yH, yG, yB, SH, TOE, SL, ySoil, H, sbH, slpH} = G, L = E.lab;
+  const set = (o, x, y, op) => { o.t.setAttribute('x', x.toFixed(1)); o.t.setAttribute('y', y.toFixed(1)); o.t.setAttribute('opacity', op); o.t.setAttribute('visibility', +op > 0 ? 'visible' : 'hidden'); };
+  const xr = W - 1.4 * u;
+  // sleeper: over the fields to the right, a line down to the sleeper's end
+  let ys = yG - (yG - yH) * .5 + fs * .35;
+  if (yG - yH < fs * 1.7) ys = yH > fs * 1.5 ? yH - fs * .4 : -99;
+  const tgt = turn(SL - 2.4 * u, slpH * .15, yT, tilt);
+  if (ys > 0) { set(L.sleeper, xr, ys, 1); L.sleeper.line.setAttribute('d', pts([[xr - L.sleeper.w - fs * .3, ys - fs * .32], tgt])); }
+  else { set(L.sleeper, 0, -99, 0); L.sleeper.line.setAttribute('d', ''); }
+  // ballast: beside its slope, a short line in to the stones
+  const yb = yG + (yB(cx + TOE) - yG) * .45, slopeX = cx + SH + (TOE - SH) * (yb - yG) / (yB(cx + TOE) - yG), ob = st.stones > .5 ? smooth(.5, 1, st.stones) : 0;
+  if (xr - L.ballast.w > slopeX + 2 * u && ob > 0) { set(L.ballast, xr, yb + fs * .35, ob.toFixed(2)); L.ballast.line.setAttribute('d', pts([[xr - L.ballast.w - fs * .3, yb], [slopeX - 1.4 * u, yb]])); L.ballast.line.setAttribute('opacity', ob.toFixed(2)); }
+  else { set(L.ballast, 0, -99, 0); L.ballast.line.setAttribute('d', ''); }
+  // ditch: under them, over the right-hand ditch, a short line down into it
+  const yd = ySoil - fs * .6, xd = cx + 43 * u;
+  if (ob > 0 && yd - fs * .95 > yb + fs * .5 && xr - L.ditch.w > slopeX + 2 * u) { set(L.ditch, xr, yd, ob.toFixed(2)); L.ditch.line.setAttribute('d', pts([[xd, yd + fs * .3], [xd, ySoil + G.ditchD * .5]])); L.ditch.line.setAttribute('opacity', ob.toFixed(2)); }
+  else { set(L.ditch, 0, -99, 0); L.ditch.line.setAttribute('d', ''); }
+  // soil, in the soil; mud, in the mud
+  const ysoil = (ySoil + sbH + H) / 2 + fs * .35;
+  if (H - ySoil - sbH > fs * 1.5) set(L.soil, cx - 30 * u, ysoil, 1); else set(L.soil, 0, -99, 0);
+  const md = st.mud * G.mudMax, om = smooth(.55, .9, st.mud);
+  if (md > fs * 1.25 && om > 0) set(L.mud, cx + SL + 5 * u, ySoil + md * .52 + fs * .35, om.toFixed(2)); else set(L.mud, 0, -99, 0);
+}
+
+const say = s => () => { Kit.$('say').textContent = s; };
 function playStones() {
-  scene = 'stones';
-  const tl = gsap.timeline();
-  tl.to(S.gB, {opacity: 1, duration: .3}, 0).to(S.gT, {y: 0, rotation: 0, duration: .4}, 0)
-    .to(S.mud, {attr: {opacity: 0}, duration: .3}, 0).to(S.puddle, {attr: {rx: 0}, duration: .3}, 0);
-  tl.call(() => setCap('Rain falls on the stones…'), null, .3);
-  const {cx, sw, sh, bt, gy, r, H} = S;
-  const tl2 = gsap.timeline();
-  rain(tl2, (d, x, t2, t) => {
-    let y = surface(x), xx = x, tt = t;
-    if (Math.abs(x - cx) < sw / 2) {
-      t2.to(d, {y: bt - sh * 0.5, duration: .45, ease: 'power1.in'}, tt); tt += .45;
-      xx = cx + Math.sign(x - cx || 1) * (sw / 2 + r * 0.4);
-      t2.to(d, {x: xx, duration: .25}, tt); tt += .25; y = bt;
-    } else { t2.to(d, {y, duration: .45, ease: 'power1.in'}, tt); tt += .45; }
-    const steps = 3;
-    for (let k = 1; k <= steps; k++) {
-      xx += (Kit.rnd() - 0.5) * r * 1.6;
-      t2.to(d, {x: xx, y: y + (gy - y) * k / steps, duration: .22, ease: 'none'}, tt); tt += .22;
-    }
-    t2.to(d, {y: gy + H * 0.1, opacity: 0, duration: .5}, tt);
-  });
-  tl2.call(() => setCap('Water runs through the gaps and away'), null, 1.1);
-  tl.add(tl2, .4);
-  return tl;
+  const t = gsap.timeline({onUpdate: render});
+  t.call(say('Rain on the stones…'), null, 0);
+  t.set(st, {pt: -9, wet: 0}, 0);
+  t.to(st, {stones: 1, drop: 0, sink: 0, puddle: 0, mud: 0, ditch: 0, film: 0, flow: 0, duration: .6, ease: 'power2.inOut'}, 0);
+  t.to(st, {cloud: 1, duration: .5}, .2);
+  t.to(st, {rain: 1, duration: .4}, .45);
+  t.fromTo(st, {rt: 0}, {rt: 5.2, duration: 5.2, ease: 'none', immediateRender: false}, .45);
+  t.fromTo(st, {pt: 0}, {pt: 4, duration: 4, ease: 'none', immediateRender: false}, .6);
+  t.to(st, {wet: 1, duration: .4}, .7);
+  t.to(st, {film: 1, duration: .6}, 1.5);
+  t.to(st, {ditch: 1, duration: 2.6, ease: 'power1.out'}, 1.8);
+  t.to(st, {flow: 1, duration: .6}, 2);
+  t.call(say('It runs down through the gaps, out to the ditch and away.'), null, 2.2);
+  t.to(st, {rain: 0, duration: .6}, 3.4);
+  t.to(st, {cloud: 0, duration: .8}, 3.7);
+  t.to(st, {film: 0, wet: 0, duration: .9}, 4.3);
+  return t;
+}
+function playSoil() {
+  const t = gsap.timeline({onUpdate: render});
+  t.call(say('No stones: the sleeper sits on bare soil.'), null, 0);
+  t.set(st, {pt: -9, wet: 0}, 0);
+  t.to(st, {film: 0, flow: 0, ditch: 0, puddle: 0, mud: 0, sink: 0, duration: .4}, 0);
+  t.to(st, {stones: 0, duration: .65, ease: 'power1.in'}, 0);
+  t.to(st, {drop: 1, duration: .5, ease: 'power2.in'}, .5);
+  t.call(say('Rain on bare soil…'), null, .95);
+  t.to(st, {cloud: 1, duration: .5}, .8);
+  t.to(st, {rain: 1, duration: .4}, 1);
+  t.fromTo(st, {rt: 0}, {rt: 4.4, duration: 4.4, ease: 'none', immediateRender: false}, 1);
+  t.to(st, {puddle: 1, duration: 2.4, ease: 'power1.out'}, 1.3);
+  t.to(st, {mud: 1, duration: 2.6, ease: 'power1.inOut'}, 1.7);
+  t.to(st, {sink: 1, duration: 1.5, ease: 'power2.inOut'}, 3);
+  t.call(say('The water stays: the soil turns to mud and the track sinks.'), null, 3.3);
+  t.to(st, {rain: 0, duration: .6}, 4);
+  t.to(st, {cloud: 0, duration: .8}, 4.3);
+  return t;
 }
 
-function playSoil() {
-  scene = 'bare';
-  const {gy, bt, sh, sw, cx, bw, r} = S, dy = gy - bt;
-  const tl = gsap.timeline();
-  tl.to(S.mud, {attr: {opacity: 0}, duration: .2}, 0).to(S.puddle, {attr: {rx: 0}, duration: .2}, 0)
-    .to(S.gT, {rotation: 0, duration: .2, transformOrigin: '50% 50%'}, 0)
-    .to(S.gB, {opacity: 0, duration: .4}, 0).to(S.gT, {y: dy, duration: .5, ease: 'power2.in'}, .2);
-  tl.call(() => setCap('No stones: rain falls on soil…'), null, .7);
-  const tl2 = gsap.timeline();
-  rain(tl2, (d, x, t2, t) => {
-    let tt = t;
-    if (Math.abs(x - cx) < sw / 2) {
-      t2.to(d, {y: gy - sh * 0.5, duration: .5, ease: 'power1.in'}, tt); tt += .5;
-      t2.to(d, {x: cx + Math.sign(x - cx || 1) * (sw / 2 + r * 0.4), duration: .25}, tt); tt += .25;
-    }
-    t2.to(d, {y: gy - r * 0.2, duration: .5, ease: 'power1.in'}, tt); tt += .5;
-    t2.to(d, {opacity: 0, scaleY: .3, duration: .25}, tt);
-  });
-  tl2.to(S.puddle, {attr: {rx: bw * 0.48}, duration: 2.2, ease: 'power1.out'}, .5)
-     .to(S.mud, {attr: {opacity: 0.85}, duration: 2.2}, .6)
-     .to(S.gT, {y: dy + sh * 0.6, rotation: 3, transformOrigin: '50% 50%', duration: 1.4, ease: 'power2.inOut'}, 1.6)
-     .call(() => { scene = 'mud'; setCap('The water stays: mud, and the track sinks'); }, null, 1.6);
-  tl.add(tl2, .8);
-  return tl;
+function finish() {
+  ended = true;
+  Kit.hide('say'); Kit.hide('btns'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
 }
 
 Kit.$('btns').addEventListener('click', e => {
@@ -179,19 +600,16 @@ Kit.$('btns').addEventListener('click', e => {
   const m = b.dataset.m;
   [...Kit.$('btns').children].forEach(x => x.classList.toggle('on', x === b));
   Kit.haptic('selection'); busy = true;
-  S.gD.innerHTML = '';
-  const tl = m === 'stones' ? playStones() : playSoil();
-  tl.timeScale(fast || Kit.calm ? 8 : 1);
+  if (tl) tl.kill();
+  tl = m === 'stones' ? playStones() : playSoil();
   tl.eventCallback('onComplete', () => {
-    busy = false; done[m] = true; S.gD.innerHTML = '';
-    b.classList.add('done');
-    if (done.stones && done.soil && Kit.$('why').classList.contains('gone')) {
-      Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-    }
+    busy = false; done[m] = true; b.classList.add('done');
+    if (done.stones && done.soil && Kit.$('why').classList.contains('gone')) finish();
   });
+  if (Kit.calm) tl.progress(1); else tl.timeScale(fast ? 8 : 1);
 });
 
-Kit.onShow.card = () => { draw(); };
+Kit.onShow.card = () => lay();
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   fast = true;
@@ -199,9 +617,8 @@ Kit.play.card = async () => {
   Kit.$('btns').children[0].click(); await w(1200);
   Kit.$('btns').children[1].click(); await w(1400);
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again at the size it now has whenever its room changes: another phone, or the answer coming in.
+new ResizeObserver(() => { const b = svg.getBoundingClientRect(); if (`${Math.round(b.width)}x${Math.round(b.height)}` !== laid) lay(); }).observe(svg);
 Kit.single();
 </script>
 </html>

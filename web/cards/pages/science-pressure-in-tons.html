@@ -1,160 +1,205 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-pressure-in-tons -->
 <title>Astute free card · Pressure in tons</title>
+<!-- A slice of sea from the surface to Titan's depth. The reader drags a table, one square metre, down
+     through it; every 175 m of sea above the table weighs about as much as 100 cars, so a car lands on
+     the stack for every 175 m, two to a row. The stack always reaches the surface: it is the water above
+     the table, in cars. At 3,500 m: twenty cars of 100, about 2,000 cars, about 3,500 tonnes (Geopop:
+     circa 3,500 t/m² at 3,500 m; a metre of sea on a square metre is about a tonne, a car 1.75 t). -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
-#reads{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw}
-.rd{background:color-mix(in srgb,var(--k) 8%,transparent);border-radius:1.4cqh;padding:.8cqh 2.4cqw;min-width:0}
-.rd small{display:block;font:600 max(1.4cqh,12px)/1.2 var(--body);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-.rd b{display:block;font:800 max(2.3cqh,14px)/1.15 var(--display);color:var(--k);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#wrap{position:relative;flex:1;min-height:0}
-#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
-#dial{display:flex;align-items:center;gap:3cqw}
-#dial span{font:700 max(1.5cqh,12px)/1 var(--mono);color:var(--muted);white-space:nowrap}
-#depth{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px);cursor:pointer;margin:0}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{margin:0;font:500 max(1.85cqh,13px)/1.3 var(--body)}
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#sea{display:block;width:100%;flex:1;min-height:0;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#why{font:500 max(1.9cqh,12.5px)/1.34 var(--body);margin:0}
+@container (max-height:520px){#why{display:none}}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Turn a dial">
+<article class="card" id="card" data-topic="science" data-kind="Drag · descend">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DEEP PRESSURE</span></div>
     <h2 class="q">How much weight presses on one square metre at 3,500 metres deep?</h2>
     <div class="stagebox" id="stage">
-      <div id="reads">
-        <div class="rd"><small>Depth</small><b id="rDepth">0 m</b></div>
-        <div class="rd"><small>Pressure</small><b id="rAtm">0 atm</b></div>
-        <div class="rd"><small>Load</small><b id="rTon">0 t/m²</b></div>
-      </div>
-      <div id="wrap"><canvas id="cv"></canvas></div>
-      <div id="dial"><span>0 m</span><input data-drag id="depth" type="range" min="0" max="3500" step="10" value="0" aria-label="Depth in metres"><span>3,500 m</span></div>
+      <svg id="sea" data-drag role="img" aria-label="A slice of sea from the surface down to 3,500 metres, Titan's depth. A small table, one square metre, hangs halfway down, under a stack of ten cars that reaches the surface: about 1,750 tonnes, 1,000 cars. Dragging it down adds a car for every 175 metres of sea above it, each car standing for 100."></svg>
     </div>
-    <p class="say" id="say">Drag the dial down to Titan's depth and watch the cars pile up.</p>
-    <div id="why" class="gone"><p class="body">At 3,500 m the sea presses with 350 atmospheres. That is 3,500 tons on every square metre: about the weight of 2,000 cars stacked on a patch the size of a small table.</p></div>
+    <p class="say" id="say">Drag the table down to Titan's depth.</p>
+    <p class="body gone" id="why">Every 10&nbsp;m of sea adds about one atmosphere: at 3,500&nbsp;m, 350 of them. That is about 3,500 tonnes on each square metre.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>At Titan's depth, each square metre carries about 2,000 cars.</div>
     <div class="foot"><span class="src">Source · Geopop, “Com'è avvenuta l'implosione del sottomarino Titan? La spiegazione tecnica con immagini inedite in 3D” (YouTube, 2023).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const cv = Kit.$('cv'), dial = Kit.$('depth');
-let fit = null, depth = 0, done = false, lastStep = 0;
+const INK = '#10100c', WHITE = '#ffffff', WOOD = '#e2a25a', GLASS = '#cdeeff';
+// The sea darkens in steps of 500 m, flat, as a printed chart of depth would.
+const BANDS = ['#63c9ff', '#4cb3f6', '#3a9ce6', '#2d85d3', '#2470bd', '#1d5ba4', '#17478a', '#123670'];
+const CARS = ['#ff5a4e', '#ffd23d', '#fff4dc', '#ff9ec0', '#8be8c6'];
+const MAX = 3500, STEP = 175, PER = 100, ROWS = 10; // metres; a car for every 175 m of sea, two to a row; each car is 100
 const fmt = n => Math.round(n).toLocaleString('en-US');
-const COLS = ['#ff5a4e','#ffc83d','#1b7f8c','#f2f2f2','#3d63d6','#ff8fb1'];
+const st = {d: 1750};                              // the start: halfway down, ten cars on the table already
+let G = null, done = false, touched = false, shownCars = 0;
 
-function mix(a, b, t){ return a.map((v,i)=>Math.round(v+(b[i]-v)*t)); }
-
-function draw(){
-  if (!fit) return;
-  const {x, W, H} = fit, t = depth / 3500;
-  const n = Math.round(depth * 2000 / 3500);
-  x.clearRect(0,0,W,H);
-  // drifting specks for depth feel
-  x.fillStyle = 'rgba(16,16,12,.14)';
-  for (let i=0;i<26;i++){ const px=((i*97)%100)/100*W, py=((i*53+depth*.02)%100)/100*H; x.fillRect(px,py,2,2); }
-
-  const fs = Math.max(12, Math.min(W,H)*0.05);
-  const pw = Math.min(W*0.3, H*0.3), cx = W/2;
-  const baseY = H - Math.max(fs*2.6, H*0.14);
-  const topY = Math.max(fs*3.2, H*0.17);
-  const maxH = baseY - topY;
-  const cw = pw*1.35, carH0 = pw*0.5;
-  const h = n*carH0 <= maxH ? carH0 : maxH / Math.max(n,1);
-  const squash = Math.min(t*0.5, 0.5);
-
-  // plate (1 m²), slight perspective, thinner under load
-  const dep = pw*0.28, th = Math.max(4, pw*0.12*(1-squash));
-  x.fillStyle = '#c9ced6';
-  x.beginPath(); x.moveTo(cx-pw/2,baseY); x.lineTo(cx+pw/2,baseY); x.lineTo(cx+pw/2+dep*.6,baseY+dep*.5); x.lineTo(cx-pw/2+dep*.6,baseY+dep*.5); x.closePath(); x.fill();
-  x.fillStyle = '#8a929e';
-  x.fillRect(cx-pw/2+dep*.6, baseY+dep*.5, pw, th);
-  if (t > .55){ // cracks
-    x.strokeStyle = `rgba(20,20,20,${(t-.55)*1.8})`; x.lineWidth = 1.4; x.beginPath();
-    x.moveTo(cx, baseY+2); x.lineTo(cx+pw*.12, baseY+dep*.25); x.lineTo(cx+pw*.05, baseY+dep*.45);
-    x.moveTo(cx-pw*.2, baseY+3); x.lineTo(cx-pw*.1, baseY+dep*.3); x.stroke();
-  }
-
-  // the tower of cars
-  for (let i=0;i<n;i++){
-    const y = baseY - (i+1)*h, c = COLS[i%COLS.length];
-    if (h >= 9){
-      const L = cx-cw/2;
-      x.fillStyle = c;
-      x.beginPath(); x.roundRect(L, y+h*.38, cw, h*.38, h*.08); x.fill();
-      x.beginPath(); x.moveTo(L+cw*.22,y+h*.4); x.lineTo(L+cw*.34,y+h*.1); x.lineTo(L+cw*.68,y+h*.1); x.lineTo(L+cw*.8,y+h*.4); x.closePath(); x.fill();
-      x.fillStyle = 'rgba(180,220,255,.85)';
-      x.fillRect(L+cw*.36,y+h*.15,cw*.14,h*.22); x.fillRect(L+cw*.53,y+h*.15,cw*.14,h*.22);
-      x.fillStyle = '#111';
-      for (const wx of [.22,.78]){ x.beginPath(); x.arc(L+cw*wx, y+h*.8, h*.14, 0, 7); x.fill(); }
-    } else {
-      x.fillStyle = c; x.globalAlpha = h < 1.5 ? .9 : 1;
-      x.fillRect(cx-cw/2, y, cw, Math.max(h, .6));
-      x.globalAlpha = 1;
-    }
-  }
-  if (n > 0 && h < 9){ // shading on the dense column
-    const sg = x.createLinearGradient(cx-cw/2,0,cx+cw/2,0);
-    sg.addColorStop(0,'rgba(0,0,0,.35)'); sg.addColorStop(.5,'rgba(0,0,0,0)'); sg.addColorStop(1,'rgba(0,0,0,.4)');
-    x.fillStyle = sg; x.fillRect(cx-cw/2, baseY-n*h, cw, n*h);
-  }
-
-  // labels
-  x.fillStyle = '#10100c'; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
-  x.font = `800 ${fs*1.35}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
-  const headY = Math.max(fs*1.5, (n ? baseY - n*h : baseY) - fs*0.7);
-  x.fillText(`${fmt(n)} ${n===1?'car':'cars'}`, cx, Math.min(headY, topY - fs*0.4));
-  x.font = `600 ${fs*.8}px sans-serif`;
-  x.fillStyle = 'rgba(16,16,12,.85)';
-  x.fillText('1 m × 1 m', cx, baseY + dep*.5 + th + fs*1.25);
+function fitText(fsMax, fsMin, text, width, weight, family) {
+  // The size at which a line of text fits a width, measured once on the page's own fonts.
+  const c = fitText.c || (fitText.c = document.createElement('canvas').getContext('2d'));
+  for (let s = fsMax; s > fsMin; s -= .5) { c.font = `${weight} ${s}px ${family}`; if (c.measureText(text).width <= width) return s; }
+  return fsMin;
 }
 
-function setDepth(d){
-  depth = d;
-  Kit.$('rDepth').textContent = fmt(d) + ' m';
-  Kit.$('rAtm').textContent = fmt(d/10) + ' atm';
-  Kit.$('rTon').textContent = fmt(d) + ' t/m²';
-  const step = Math.floor(d/500);
-  if (step !== lastStep){ lastStep = step; Kit.haptic('light'); }
-  draw();
-  if (!done && d >= 3490){
-    done = true; Kit.haptic('success');
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  }
+// A car seen from the side, its body in one colour, glass, two wheels: drawn with its wheels' bottom at y.
+function car(g, x, y, w, h, colour) {
+  const k = Math.max(1.4, h * .085), at = {stroke: INK, 'stroke-width': k, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const c = Kit.mk('g', {}, g);
+  const r = h * .19, bodyTop = y - h * .62, bodyBot = y - r * .9;
+  Kit.mk('path', Object.assign({d: `M${x - w * .5},${bodyBot} V${bodyTop + h * .14} Q${x - w * .5},${bodyTop} ${x - w * .4},${bodyTop} L${x - w * .25},${bodyTop} L${x - w * .12},${y - h * .98} L${x + w * .2},${y - h * .98} L${x + w * .34},${bodyTop} L${x + w * .44},${bodyTop + h * .03} Q${x + w * .5},${bodyTop + h * .08} ${x + w * .5},${bodyTop + h * .2} V${bodyBot} Z`, fill: colour}, at), c);
+  Kit.mk('path', Object.assign({d: `M${x - w * .2},${bodyTop - h * .02} L${x - w * .1},${y - h * .88} L${x + w * .02},${y - h * .88} L${x + w * .02},${bodyTop - h * .02} Z M${x + w * .07},${bodyTop - h * .02} L${x + w * .07},${y - h * .88} L${x + w * .18},${y - h * .88} L${x + w * .27},${bodyTop - h * .02} Z`, fill: GLASS}, at, {'stroke-width': k * .8}), c);
+  for (const wx of [-.29, .29]) Kit.mk('circle', Object.assign({cx: x + w * wx, cy: y - r, r, fill: INK}, at), c);
+  return c;
 }
-dial.addEventListener('input', () => setDepth(+dial.value));
 
-Kit.onShow.card = () => { fit = Kit.fitCanvas(cv); draw(); };
+function build() {
+  const svg = Kit.$('sea');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12.5, Math.min(15.5, f * .95));
+  const sky = Math.max(fs * 1.9, H * .09);         // the sky over the sea, where the ship floats
+  const bottom = fs * 2.3;                          // the sea below Titan's depth, and its label
+  const y0 = sky, yG = H - bottom;                  // the surface and 3,500 m
+  // The height a row of cars takes: ten rows and the table's top fill the sea from the table at 3,500 m
+  // to a hair under the surface, so the stack always ends at the surface, never through it.
+  const per = (yG - y0 - 5) / (ROWS + .2);
+  const ch = per * .9, gap = Math.max(3, W * .012), cw = Math.min(ch * 2.55, (W * .44 - gap) / 2);
+  const tw = 2 * cw + gap + Math.max(8, cw * .2), leg = Math.max(fs * .9, per * .55);
+  const cx = Math.max(tw / 2 + 10, W * .27);        // the stack's middle
+  const rr = Math.min(18, W * .05);
+  const g = Kit.mk('g', {}, svg);
+  const defs = Kit.mk('defs', {}, g);
+  const clip = Kit.mk('clipPath', {id: 'slice'}, defs);
+  Kit.mk('path', {d: `M0,${y0} H${W} V${H - rr} Q${W},${H} ${W - rr},${H} H${rr} Q0,${H} 0,${H - rr} Z`}, clip);
+  const sea = Kit.mk('g', {'clip-path': 'url(#slice)'}, g);
+  // The sea, a band of colour for each 500 m.
+  BANDS.forEach((c, i) => {
+    const top = y0 + i * (yG - y0) / 7, bot = i < 7 ? y0 + (i + 1) * (yG - y0) / 7 : H + 2;
+    Kit.mk('rect', {x: 0, y: top, width: W, height: bot - top + .6, fill: c}, sea);
+  });
+  // Titan's depth: a dashed line, named under it, at the right.
+  Kit.mk('line', {x1: 0, x2: W, y1: yG, y2: yG, stroke: WHITE, 'stroke-width': 2, 'stroke-dasharray': '7 6', opacity: .9}, sea);
+  const goalT = "Titan's depth · 3,500 m";
+  const gfs = fitText(fs, 11, goalT, W - (cx + tw * .5) - 18, 700, 'Figtree');
+  const goal = Kit.mk('text', {x: W - 10, y: yG + gfs * 1.35, 'text-anchor': 'end', 'font-size': gfs, 'font-weight': 700, fill: WHITE, 'font-family': 'Figtree, sans-serif'}, sea);
+  goal.textContent = goalT;
+
+  // The stack and the table, moved down together; the cars sit on the table's top.
+  const rig = Kit.mk('g', {}, sea);
+  const stack = Kit.mk('g', {}, rig);
+  const table = Kit.mk('g', {}, rig);
+  const at = {stroke: INK, 'stroke-width': Math.max(2, fs * .15), 'stroke-linejoin': 'round'};
+  const th = per * .2;
+  Kit.mk('path', Object.assign({d: `M${cx - tw * .38},0 V${leg} M${cx + tw * .38},0 V${leg}`, fill: 'none', 'stroke-width': Math.max(3.5, fs * .3), 'stroke-linecap': 'round', stroke: INK}), table);
+  Kit.mk('path', Object.assign({d: `M${cx - tw * .38},0 V${leg} M${cx + tw * .38},0 V${leg}`, fill: 'none', 'stroke-width': Math.max(1.8, fs * .15), 'stroke-linecap': 'round', stroke: WOOD}), table);
+  Kit.mk('rect', Object.assign({x: cx - tw / 2, y: -th, width: tw, height: th, rx: th * .35, fill: WOOD}, at), table);
+  const m2 = Kit.mk('text', {x: cx, y: leg + fs * 1.15, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, fill: WHITE, 'font-family': 'Figtree, sans-serif'}, table);
+  m2.textContent = '1 m²';
+
+  // How much sea is on the table, beside it: tonnes, large, and the cars they weigh as.
+  const big = Math.max(24, Math.min(f * 2.25, (W - cx - tw / 2 - 22) / 3.7));
+  const read = Kit.mk('g', {}, sea);
+  const tons = Kit.mk('text', {x: 0, y: 0, 'font-size': big, 'font-weight': 800, fill: WHITE, 'font-family': 'Fraunces, Georgia, serif'}, read);
+  const cars = Kit.mk('text', {x: 0, y: big * .2 + fs * 1.25, 'font-size': fs, 'font-weight': 700, fill: WHITE, 'font-family': 'Figtree, sans-serif'}, read);
+
+  // The key, top right under the ship: one car on the stack is 200 cars.
+  const key = Kit.mk('g', {}, sea);
+  const kh = Math.max(fs * 1.15, Math.min(ch, fs * 1.6)), kw = kh * 2.55;
+  const keyT = Kit.mk('text', {x: W - 10, y: y0 + fs * 2.6, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 700, fill: WHITE, 'font-family': 'Figtree, sans-serif'}, key);
+  keyT.textContent = '= 100 cars';
+  const kx = W - 10 - fitWidth(keyT) - 8 - kw / 2;
+  car(key, kx, y0 + fs * 2.6 + kh * .08, kw, kh, CARS[1]);
+
+  // The edge of the slice, and the surface with its ship.
+  Kit.mk('path', {d: `M0,${y0} V${H - rr} Q0,${H} ${rr},${H} H${W - rr} Q${W},${H} ${W},${H - rr} V${y0}`, fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, g);
+  const wave = [];
+  for (let x = 0; x <= W + 1; x += W / 24) wave.push(`${x.toFixed(1)},${(y0 + Math.sin(x / W * 22) * 1.6).toFixed(1)}`);
+  Kit.mk('polyline', {points: wave.join(' '), fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, g);
+  ship(g, W * .8, y0, Math.min(W * .26, sky * 2.4), sky);
+
+  G = {svg, W, H, f, fs, y0, yG, per, ch, cw, gap, cx, tw, th, leg, rig, stack, read, tons, cars, big, keyBottom: y0 + fs * 3.2};
+  shownCars = 0;
+  render(true);
+}
+function fitWidth(t) { try { return t.getComputedTextLength(); } catch (_) { return 80; } }
+
+// The support ship on the surface: a hull, a deck house, a crane at its stern.
+function ship(g, x, y, w, sky) {
+  const at = {stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const h = Math.min(sky * .42, w * .2);
+  Kit.mk('path', Object.assign({d: `M${x - w / 2},${y - h} H${x + w / 2} L${x + w * .4},${y + h * .45} H${x - w * .44} Z`, fill: '#fff4dc'}, at), g);
+  Kit.mk('path', Object.assign({d: `M${x - w * .46},${y - h * .1} H${x + w * .46}`, fill: 'none', stroke: '#ff5a4e', 'stroke-width': Math.max(2.4, h * .3), 'stroke-linecap': 'butt'}), g);
+  Kit.mk('rect', Object.assign({x: x - w * .12, y: y - h * 2.1, width: w * .34, height: h * 1.1, rx: 2, fill: '#fff4dc'}, at), g);
+  Kit.mk('path', Object.assign({d: `M${x - w * .36},${y - h} L${x - w * .3},${y - h * 2.3} L${x - w * .2},${y - h}`, fill: 'none'}, at), g);
+}
+
+function render(fresh) {
+  if (!G) return;
+  const {cx, per, ch, cw, gap, th, y0, yG, fs, big, W} = G, d = st.d;
+  const yT = tableAt(d);
+  G.rig.setAttribute('transform', `translate(0,${yT.toFixed(1)})`);
+  // One car for each 175 m of sea now above the table, two to a row, left then right.
+  const n = Math.min(2 * ROWS, Math.floor((d + 1) / STEP));
+  while (shownCars < n) {
+    const i = shownCars++, row = Math.floor(i / 2), side = i % 2 ? 1 : -1;
+    const jit = (((i * 37) % 11) / 11 - .5) * cw * .1, tilt = (((i * 53) % 7) / 7 - .5) * 3;
+    const x = cx + side * (cw + gap) / 2 + jit, y = -th - row * per;
+    const c = car(G.stack, x, y, cw, ch, CARS[(i * 3 + row) % CARS.length]);
+    if (tilt) c.setAttribute('transform', `rotate(${tilt.toFixed(1)} ${x} ${y - ch / 2})`);
+    if (!fresh && !Kit.calm) gsap.from(c, {y: -per * 1.4, opacity: 0, duration: .32, ease: 'power3.out'});
+    if (!fresh) Kit.haptic('light');
+  }
+  while (shownCars > n) { const last = G.stack.lastChild; if (last) G.stack.removeChild(last); shownCars--; }
+  // The reading, beside the stack, kept clear of the key at the top.
+  const tonnes = Math.round(d / 10) * 10, many = n * PER;
+  G.tons.textContent = fmt(tonnes) + ' t';
+  G.cars.textContent = n ? `≈ ${fmt(many)} cars` : 'of sea on it';
+  const blockH = big * 1.02 + fs * 1.6;
+  const top = Math.min(yG - blockH - 6, Math.max(G.keyBottom + 6, yT - blockH - per * .2));
+  G.read.setAttribute('transform', `translate(${(cx + G.tw / 2 + Math.max(12, W * .05)).toFixed(1)},${(top + big * .8).toFixed(1)})`);
+  if (touched && !done) Kit.$('say').textContent = d < 5 ? "Drag the table down to Titan's depth." : `${fmt(Math.round(d / 10) * 10)} m down: about ${fmt(tonnes)} tonnes of sea on the table.`;
+  if (d >= MAX - 10 && !done) finish();
+}
+
+function finish() {
+  done = true; st.d = MAX; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => build());
+}
+
+const sea = Kit.$('sea');
+// Where the table's top is at a depth: just under the surface at 0 m, on Titan's line at 3,500 m.
+const tableAt = d => G.y0 + 5 + G.th + d / (2 * STEP) * G.per;
+function depthFrom(e) {
+  const b = sea.getBoundingClientRect(), y = (e.clientY - b.top) / b.height * G.H;
+  return Math.max(0, Math.min(MAX, (y - G.y0 - 5 - G.th) / G.per * 2 * STEP));
+}
+let dragging = false;
+sea.addEventListener('pointerdown', e => { if (done || !G) return; dragging = true; touched = true; try { sea.setPointerCapture(e.pointerId); } catch (_) {} gsap.killTweensOf(st); st.d = depthFrom(e); render(); Kit.haptic('selection'); });
+sea.addEventListener('pointermove', e => { if (!dragging || done) return; st.d = depthFrom(e); render(); });
+['pointerup', 'pointercancel'].forEach(n => sea.addEventListener(n, () => { dragging = false; }));
+
+Kit.onShow.card = () => build();
+let seen = '';
+new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; build(); } }).observe(Kit.$('stage'));
 Kit.onEnter.card = () => {
-  if (Kit.calm) return;
-  const o = {d:0};
-  gsap.to(o, {d:300, duration:.9, ease:'power2.out', yoyo:true, repeat:1, delay:.3,
-    onUpdate(){ if (!done){ dial.value = o.d; setDepth(Math.round(o.d/10)*10); } }});
+  if (Kit.calm || !G || touched) return;
+  // A small dip and back, so the reader sees the table is there to be pulled down.
+  gsap.to(st, {d: 1950, duration: .5, delay: .4, ease: 'power2.inOut', yoyo: true, repeat: 1, onUpdate: () => { if (!touched) render(); }});
 };
 Kit.play.card = async () => {
-  dial.value = 3500; dial.dispatchEvent(new Event('input', {bubbles:true}));
+  const b = sea.getBoundingClientRect(), x = b.left + b.width * .3;
+  const ev = (type, y) => sea.dispatchEvent(new PointerEvent(type, {bubbles: true, clientX: x, clientY: y, pointerId: 1}));
+  ev('pointerdown', b.top + b.height * .15);
+  for (let i = 1; i <= 12; i++) { ev('pointermove', b.top + b.height * (.15 + .07 * i)); await new Promise(r => setTimeout(r, 40)); }
+  ev('pointerup', b.bottom);
   await new Promise(r => setTimeout(r, 700));
 };
 Kit.single();
 </script>
 </html>
-<script data-redraw>
-// Draw again when a drawing changes size: the answer coming in can take room from it, and a canvas
-// left as it was would be stretched by the browser.
-(() => {
-  const seen = new WeakMap();
-  const ro = new ResizeObserver(entries => {
-    let moved = false;
-    for (const e of entries) {
-      const r = e.contentRect, was = seen.get(e.target);
-      if (was && (Math.abs(was[0] - r.width) > 1 || Math.abs(was[1] - r.height) > 1)) moved = true;
-      seen.set(e.target, [r.width, r.height]);
-    }
-    if (!moved) return;
-    const card = document.querySelector('.card');
-    requestAnimationFrame(() => { if (card && Kit.onShow[card.id]) Kit.onShow[card.id](); });
-  });
-  document.querySelectorAll('canvas').forEach(cv => ro.observe(cv));
-})();
-</script>

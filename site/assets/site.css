@@ -336,8 +336,12 @@ body.menu-open { overflow: hidden; }
 .store-google-play svg { aspect-ratio: 239.17 / 70.87; }
 /* The ring follows each badge's own corners, clear of the artwork. */
 .store:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
-/* A store the app is not in yet: its badge, quieter, marked, and no link. */
-.store-soon { position: relative; cursor: default; }
+/* A store the app is not in yet: its badge, quieter and marked "Coming
+   soon". A listing not made yet is no link at all; one made but not live
+   (Apple's, until tool/site/chrome.py says APP_STORE_OPEN) keeps its link,
+   with the mark to say what is there. */
+.store-soon { position: relative; }
+span.store-soon { cursor: default; }
 .store-soon svg { opacity: .5; }
 .store-soon .soon { position: absolute; top: calc(var(--bh) * -.22); right: calc(var(--bh) * -.14); padding: 3px 7px; border-radius: 999px; background: var(--cream); color: var(--night); font: 700 9px/1.2 var(--font-text); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; box-shadow: 0 4px 10px -4px rgba(0, 0, 0, .6); }
 .symbols { position: absolute; width: 0; height: 0; overflow: hidden; }

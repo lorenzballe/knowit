@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' show ImageFilter;
 
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart' hide Step;
 import 'package:intl/intl.dart' hide TextDirection;
 
@@ -29,25 +30,42 @@ import 'progress_text.dart';
 import 'week_screen.dart';
 import 'path_screen.dart';
 import '../widgets/card_edge.dart';
+import '../widgets/count_since.dart';
 import '../widgets/premium.dart';
+import '../widgets/quick_return.dart';
 import '../widgets/area_marks.dart' show goalName;
+import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/move_words.dart';
+import '../widgets/skill_score.dart' show scoreUp, signedNumber;
+import '../widgets/top_edge.dart';
 import '../widgets/training.dart';
 
 part 'journey_story.dart';
 
 /// Your journey, as artboard 137a: tiles, two to a row.
 ///
-/// The score first, with a point for each week since the first day and a
-/// tap on a point to see that week; then the level, and everything else as
-/// tiles — what the reading is worth, the days in a row, the subjects, how
-/// hard and how long, how sure against how right, the moves, what stayed,
-/// the days, and how far it reaches in time, in place, in topics and in
-/// words.
+/// The reader's training first, the Astute score large; what to practise;
+/// the week; and everything else as tiles — the subjects, strongest and
+/// most missed, what has stayed, how far the reading reaches in time, in
+/// place, in topics and in words, how sure against how right, the moves,
+/// the days in a row, the time, the days, what the reading is worth and how
+/// hard; and the story so far.
 ///
 /// Everything on it is counted from what the app writes down, with a date
 /// where it has one ([JourneyRecord]). What it never wrote down is not
 /// worked out now: a tile with nothing to go on shows a dash and says why.
+///
+/// It remembers every figure on it as the reader last saw it: opened again,
+/// a figure that has moved since counts up from there, calmly, and keeps a
+/// quiet mark of how far it went (lib/widgets/count_since.dart). That is
+/// where the day's scores are seen to go up; the finished day no longer
+/// raises a sheet of them.
+///
+/// The whole page scrolls, its title and the way back with it, as
+/// Instagram's pages do: going down, the way back goes up and away with the
+/// page; going back up even a little, it comes straight back over it
+/// ([QuickReturn]). The page goes soft under the status bar as Explore's
+/// does.
 class JourneyScreen extends StatefulWidget {
   const JourneyScreen({super.key, required this.app, required this.onBack});
 
@@ -59,8 +77,33 @@ class JourneyScreen extends StatefulWidget {
 }
 
 class _JourneyScreenState extends State<JourneyScreen> {
-  /// The week tapped on the score chart, if one was; the week in hand if
-  /// not.
+  /// The figures as the reader last saw them, frozen as the page opens, and
+  /// what this visit sees of them, written down as it is seen.
+  late final LastSeen _seen = LastSeen(
+    was: widget.app.journeySeen,
+    onSeen: widget.app.rememberJourney,
+  );
+
+  /// The day the reader last looked, as it was when the page opened.
+  late final String? _lastOn = widget.app.journeySeenOn;
+
+  @override
+  void initState() {
+    super.initState();
+    // A level reached since one was last told rises over the journey once
+    // it has come in (lib/widgets/level_up.dart). The figures under it
+    // count once it has gone (count_since.dart): a count run behind it
+    // would land unseen.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) showLevelUpIfDue(context, widget.app);
+    });
+  }
+
+  @override
+  void dispose() {
+    _seen.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,173 +115,325 @@ class _JourneyScreenState extends State<JourneyScreen> {
     // answers by Claude are on.
     var n = 0;
     final String language = Localizations.localeOf(context).languageCode;
+    // The status bar's room, at least 12 where there is none (a browser):
+    // the page starts under it and runs on under it once scrolled.
+    final EdgeInsets safe = MediaQuery.paddingOf(context);
+    final double top = math.max(safe.top, 12);
+
+    final List<Widget> page = [
+      // The title, beside where the way back stands, and gone with the
+      // page as it scrolls.
+      _Title(
+        title: l.yourJourney,
+        since: _lastOn,
+        today: record.today,
+        moved: _seen.moved,
+      ),
+      const SizedBox(height: 18),
+      // The journey in chapters: what the reader trains and what to
+      // practise first, then the week, then the numbers behind them,
+      // grouped by what they are about, and the story so far at the end.
+      // What the reader is training first: their Astute score, the one
+      // number the journey keeps, and the skills they picked with theirs.
+      _Chapter(
+        n: ++n,
+        title: l.trainingTitle,
+        trailing: TrainingChapter.change(context, app),
+        child: TrainingChapter(app: app),
+      ),
+      chapterGap,
+      // What to do now, under the number it moves.
+      _Chapter(
+        n: ++n,
+        title: l.storyChapterPractice,
+        child: _Practice(app: app),
+      ),
+      chapterGap,
+      // The week in one sentence, and the questions it left the reader
+      // with, each a tap from its card.
+      _Chapter(
+        n: ++n,
+        title: l.storyChapterWeek,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _Headline(app: app),
+            if (_WeekAsksTile.asksOf(app, record.today)
+                case final List<Pill> asks when asks.isNotEmpty) ...[
+              const SizedBox(height: 18),
+              _WeekAsksTile(app: app, asks: asks),
+            ],
+          ],
+        ),
+      ),
+      if (cardAiOn(app, language)) ...[
+        chapterGap,
+        _Chapter(
+          n: ++n,
+          title: l.journeyChapterCoach,
+          child: _Coach(app: app),
+        ),
+      ],
+      chapterGap,
+      _Chapter(
+        n: ++n,
+        title: l.journeyChapterKnow,
+        child: _Stack([
+          _SubjectsTile(app: app, record: record),
+          _Pair(
+            _SpotTile(app: app, strongest: true),
+            _SpotTile(app: app, strongest: false),
+          ),
+          // What has stayed: the cards still with the reader, and how they
+          // held when they came back. Part of what they know, once
+          // something has stayed; it was a chapter of its own near the end,
+          // its bars of then and now hard to read.
+          if (app.heldCards > 0) _MemoryTile(app: app, record: record),
+          _Pair(_InTimeTile(app: app), _InPlaceTile(app: app)),
+          _Pair(_TopicsTile(app: app), _WordsTile(app: app, record: record)),
+        ]),
+      ),
+      chapterGap,
+      _Chapter(
+        n: ++n,
+        title: l.storyChapterReason,
+        child: _Stack([
+          _HowYouReason(app: app),
+          // How far off the reader's sureness is, once there are enough
+          // answers to say: before, the line above says how many more,
+          // and an empty chart said it again.
+          if (app.calibratedAnswers >= kCalibrationFloor)
+            _PointsOffTile(app: app, record: record),
+          _Pair(
+            _SureTile(record: record),
+            _MovesTile(app: app, record: record),
+          ),
+          if (_MissingTile.missed(app).isNotEmpty) _MissingTile(app: app),
+          // What the cards that ask did for the reader, in their own
+          // word; nothing until one has asked.
+          if (app.reactions.isNotEmpty)
+            _Pair(
+              _ReactionTile(app: app, changed: true),
+              _ReactionTile(app: app, changed: false),
+            ),
+        ]),
+      ),
+      chapterGap,
+      _Chapter(
+        n: ++n,
+        title: l.journeyChapterHabits,
+        child: _Stack([
+          _Pair(
+            _InARowTile(app: app, record: record),
+            _ReadingTimeTile(record: record),
+          ),
+          _DaysTile(record: record),
+          _Pair(_WorthTile(app: app), _HowHardTile(record: record)),
+        ]),
+      ),
+      chapterGap,
+      _Chapter(
+        n: ++n,
+        title: l.storyChapterStory,
+        child: _YourStory(app: app),
+      ),
+      // The day, sent as five squares, once it is done: the way the app
+      // travels, kept at the foot of the journey. The finished day sends
+      // it too, on either plan.
+      if (app.dayClosed) ...[
+        const SizedBox(height: 22),
+        Center(
+          child: ShareDay(app: app, from: 'journey'),
+        ),
+      ],
+    ];
 
     return ScreenView(
       name: 'journey',
       child: Scaffold(
         backgroundColor: context.p.surface,
-        body: SafeArea(
-          bottom: false,
-          child: Column(
+        body: LastSeenScope(
+          seen: _seen,
+          child: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 8, 20, 18),
-                child: Row(
-                  children: [
-                    BackCircle(onPressed: widget.onBack),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        l.yourJourney,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.display(
-                          size: 27,
-                          weight: FontWeight.w600,
-                          height: 1,
-                          spacing: -0.8,
-                          color: context.p.ink,
-                        ),
+              // The way back is part of the page, as Instagram's is: it goes
+              // up and away with the chapters, and the moment the reader
+              // goes back up it comes back over them, the page fading under
+              // it there so it never sits on the words; at the top it stands
+              // beside the title.
+              Positioned.fill(
+                child: QuickReturn(
+                  clip: false,
+                  header: Padding(
+                    padding: EdgeInsets.only(left: 20, top: top + 8),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: BackCircle(
+                        onPressed: widget.onBack,
+                        floating: true,
                       ),
                     ),
-                  ],
+                  ),
+                  child: MediaQuery.removePadding(
+                    context: context,
+                    removeTop: true,
+                    child: ListView(
+                      key: const ValueKey('journey-page'),
+                      padding: EdgeInsets.fromLTRB(
+                        16,
+                        top + 8,
+                        16,
+                        30 + safe.bottom,
+                      ),
+                      children: page,
+                    ),
+                  ),
                 ),
               ),
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 30),
-                  // The journey in chapters: what the week says and what to
-                  // practise first, then the numbers behind them, grouped
-                  // by what they are about, and the story so far at the end.
-                  children: [
-                    // What the reader is training first: their Astute
-                    // score, the one number the journey keeps, and the
-                    // skills they picked with theirs.
-                    _Chapter(
-                      n: ++n,
-                      title: l.trainingTitle,
-                      trailing: TrainingChapter.change(context, app),
-                      child: TrainingChapter(app: app),
-                    ),
-                    chapterGap,
-                    // What to do now, under the number it moves.
-                    _Chapter(
-                      n: ++n,
-                      title: l.storyChapterPractice,
-                      child: _Practice(app: app),
-                    ),
-                    chapterGap,
-                    _Chapter(
-                      n: ++n,
-                      title: l.storyChapterWeek,
-                      child: _Headline(app: app),
-                    ),
-                    if (cardAiOn(app, language)) ...[
-                      chapterGap,
-                      _Chapter(
-                        n: ++n,
-                        title: l.journeyChapterCoach,
-                        child: _Coach(app: app),
-                      ),
-                    ],
-                    chapterGap,
-                    _Chapter(
-                      n: ++n,
-                      title: l.journeyChapterKnow,
-                      child: _Stack([
-                        _SubjectsTile(app: app, record: record),
-                        _Pair(
-                          _SpotTile(app: app, strongest: true),
-                          _SpotTile(app: app, strongest: false),
-                        ),
-                        _Pair(_InTimeTile(app: app), _InPlaceTile(app: app)),
-                        _Pair(
-                          _TopicsTile(app: app),
-                          _WordsTile(app: app, record: record),
-                        ),
-                      ]),
-                    ),
-                    chapterGap,
-                    _Chapter(
-                      n: ++n,
-                      title: l.storyChapterReason,
-                      child: _Stack([
-                        _HowYouReason(app: app),
-                        // How far off the reader's sureness is, once there
-                        // are enough answers to say: before, the line above
-                        // says how many more, and an empty chart said it
-                        // again.
-                        if (app.calibratedAnswers >= kCalibrationFloor)
-                          _PointsOffTile(app: app, record: record),
-                        _Pair(
-                          _SureTile(record: record),
-                          _MovesTile(app: app, record: record),
-                        ),
-                        if (_MissingTile.missed(app).isNotEmpty)
-                          _MissingTile(app: app),
-                        // What the cards that ask did for the reader, in
-                        // their own word; nothing until one has asked.
-                        if (app.reactions.isNotEmpty)
-                          _Pair(
-                            _ReactionTile(app: app, changed: true),
-                            _ReactionTile(app: app, changed: false),
-                          ),
-                      ]),
-                    ),
-                    chapterGap,
-                    _Chapter(
-                      n: ++n,
-                      title: l.journeyChapterHabits,
-                      child: _Stack([
-                        _Pair(
-                          _InARowTile(app: app, record: record),
-                          _ReadingTimeTile(record: record),
-                        ),
-                        _DaysTile(record: record),
-                        _Pair(
-                          _WorthTile(app: app),
-                          _HowHardTile(record: record),
-                        ),
-                      ]),
-                    ),
-                    // What stays, once something has: a chapter of noughts
-                    // and dashes told a new reader nothing.
-                    if (app.heldCards > 0 ||
-                        _WeekAsksTile.asksOf(app, record.today).isNotEmpty) ...[
-                      chapterGap,
-                      _Chapter(
-                        n: ++n,
-                        title: l.journeyChapterMemory,
-                        child: _Stack([
-                          if (app.heldCards > 0)
-                            _MemoryTile(app: app, record: record),
-                          if (_WeekAsksTile.asksOf(app, record.today)
-                              case final List<Pill> asks when asks.isNotEmpty)
-                            _WeekAsksTile(app: app, asks: asks),
-                        ]),
-                      ),
-                    ],
-                    chapterGap,
-                    _Chapter(
-                      n: ++n,
-                      title: l.storyChapterStory,
-                      child: _YourStory(app: app),
-                    ),
-                    // The day, sent as five squares, once it is done: the
-                    // way the app travels, kept at the foot of the journey.
-                    // The finished day sends it too, on either plan.
-                    if (app.dayClosed) ...[
-                      const SizedBox(height: 22),
-                      Center(
-                        child: ShareDay(app: app, from: 'journey'),
-                      ),
-                    ],
-                  ],
-                ),
+              // Under the status bar, where the chapters run under the time
+              // and the battery: they go soft and dissolve into the page,
+              // as Explore's shelves do, and so does the way back on its
+              // way up.
+              Positioned(
+                key: const ValueKey('journey-top-edge'),
+                left: 0,
+                right: 0,
+                top: 0,
+                height: top,
+                child: IgnorePointer(child: TopEdge(ground: context.p.surface)),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// [child] growing into its room as it changes, or at once for whoever
+/// asked for less motion: an animated size of no time at all re-dirties its
+/// own layout.
+class _Unfold extends StatelessWidget {
+  const _Unfold({required this.still, required this.child});
+
+  final bool still;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => still
+      ? child
+      : AnimatedSize(
+          duration: const Duration(milliseconds: 280),
+          curve: Curves.easeOutCubic,
+          alignment: Alignment.topLeft,
+          child: child,
+        );
+}
+
+/// The page's title, with the way back standing beside it as the page
+/// opens; and under it, once a figure on the page has moved since the
+/// reader last looked, when that was, after a dot of the marks' green.
+class _Title extends StatelessWidget {
+  const _Title({
+    required this.title,
+    required this.since,
+    required this.today,
+    required this.moved,
+  });
+
+  final String title;
+
+  /// The day the reader last looked, if they have.
+  final String? since;
+  final DateTime today;
+
+  /// Whether anything on the page moved since then.
+  final ValueListenable<bool> moved;
+
+  /// The way back's room at the start of the row.
+  static const double _back = 4 + 44 + 12;
+
+  @override
+  Widget build(BuildContext context) {
+    final String? on = since;
+    final int days = on == null
+        ? 0
+        : math.max(
+            0,
+            DateTime(
+              today.year,
+              today.month,
+              today.day,
+            ).difference(dayOfKey(on)).inDays,
+          );
+    final bool still = MediaQuery.disableAnimationsOf(context);
+    return Padding(
+      padding: const EdgeInsets.only(left: _back, right: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // As tall as the way back beside it, the title on its middle.
+          ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 44),
+            child: Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Semantics(
+                header: true,
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.display(
+                    size: 27,
+                    weight: FontWeight.w600,
+                    height: 1,
+                    spacing: -0.8,
+                    color: context.p.ink,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          if (on != null)
+            ValueListenableBuilder<bool>(
+              valueListenable: moved,
+              builder: (context, moved, _) => _Unfold(
+                still: still,
+                child: !moved
+                    ? const SizedBox(width: double.infinity)
+                    : Padding(
+                        key: const ValueKey('journey-since'),
+                        padding: const EdgeInsets.only(top: 1),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 6,
+                              height: 6,
+                              decoration: BoxDecoration(
+                                color: scoreUp(context),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            const SizedBox(width: 7),
+                            Expanded(
+                              child: Text(
+                                context.l10n.journeySince(days),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppText.body(
+                                  size: 12.5,
+                                  weight: FontWeight.w500,
+                                  height: 1.25,
+                                  color: context.p.ink.withValues(alpha: 0.5),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -403,21 +598,106 @@ class _Unit extends StatelessWidget {
   );
 }
 
+/// A figure of the journey that counts from where the reader last saw it
+/// (lib/widgets/count_since.dart): its name, where it stands, and how it
+/// reads at any value on the way.
+class _Fig {
+  const _Fig(
+    this.id,
+    this.value,
+    this.text, {
+    this.mark,
+    this.better = Better.higher,
+  });
+
+  /// Its name, as it is remembered: 'streak', 'held'.
+  final String id;
+  final double value;
+
+  /// How it reads at a value: '12 days'.
+  final String Function(double value) text;
+
+  /// How its mark says how far it went; by default the whole numbers'
+  /// difference, with its sign.
+  final String Function(BuildContext context, double was, double now)? mark;
+  final Better better;
+}
+
+/// [fig], counting: [builder] sets it at each step, with its mark.
+Widget _count(
+  _Fig fig,
+  Widget Function(BuildContext context, double value, String text, Widget? mark)
+  builder,
+) => CountSince(
+  id: fig.id,
+  value: fig.value,
+  shows: fig.text,
+  mark: fig.mark,
+  better: fig.better,
+  builder: (context, v, mark) => builder(context, v, fig.text(v), mark),
+);
+
+/// How far a share went, in the points the reader sees: +6%.
+String _pointsMark(BuildContext context, double was, double now) {
+  final int d = (now * 100).round() - (was * 100).round();
+  final String sign = d > 0 ? '+' : (d < 0 ? '\u2212' : '');
+  return '$sign${_percent(context, d.abs() / 100)}';
+}
+
+/// A large figure and, on its baseline, the word after it and the mark of
+/// how far it went since the reader last looked.
+class _BigLine extends StatelessWidget {
+  const _BigLine(
+    this.text, {
+    this.unit,
+    this.mark,
+    this.size = 30,
+    this.valueKey,
+  });
+
+  final String text;
+  final String? unit;
+  final Widget? mark;
+  final double size;
+  final Key? valueKey;
+
+  @override
+  Widget build(BuildContext context) {
+    if (unit == null && mark == null) {
+      return _Big(text, size: size, valueKey: valueKey);
+    }
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        Flexible(
+          child: _Big(text, size: size, valueKey: valueKey),
+        ),
+        if (unit != null) ...[const SizedBox(width: 6), _Unit(unit!)],
+        if (mark != null) ...[const SizedBox(width: 6), mark!],
+      ],
+    );
+  }
+}
+
 /// A half tile: what it is, the number, a line under it, and a picture at
-/// the foot.
+/// the foot. The number is [value] as it stands, or [fig], counting from
+/// where the reader last saw it.
 class _Half extends StatelessWidget {
   const _Half({
     super.key,
     required this.label,
-    required this.value,
+    this.value,
+    this.fig,
     this.unit,
     this.sub,
     this.foot,
     this.size = 30,
-  });
+  }) : assert(value != null || fig != null);
 
   final String label;
-  final String value;
+  final String? value;
+  final _Fig? fig;
   final String? unit;
   final String? sub;
   final Widget? foot;
@@ -426,6 +706,7 @@ class _Half extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color ink = context.p.ink;
+    final _Fig? fig = this.fig;
     return _Box(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -444,17 +725,13 @@ class _Half extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          if (unit == null)
-            _Big(value, size: size)
+          if (fig == null)
+            _BigLine(value!, unit: unit, size: size)
           else
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                Flexible(child: _Big(value, size: size)),
-                const SizedBox(width: 6),
-                _Unit(unit!),
-              ],
+            _count(
+              fig,
+              (context, _, text, mark) =>
+                  _BigLine(text, unit: unit, mark: mark, size: size),
             ),
           if (sub != null) ...[
             const SizedBox(height: 6),
@@ -660,9 +937,25 @@ class _WorthTile extends StatelessWidget {
     final int full = math.min(books, 6);
     final double part = (n % perBook) / perBook;
 
+    // The cards as books once there is one; until then, as cards.
+    String worth(double v) {
+      final int cards = v.round();
+      return cards < perBook
+          ? l.journeyCards(cards)
+          : l.journeyBooks(cards ~/ perBook);
+    }
+
     return _Half(
       label: l.journeyWorth,
-      value: books == 0 ? l.journeyCards(n) : l.journeyBooks(books),
+      fig: _Fig(
+        'worth',
+        n.toDouble(),
+        worth,
+        // In books once there were books; across the first, in cards.
+        mark: (context, was, now) => was >= perBook
+            ? signedNumber(context, now ~/ perBook - was ~/ perBook)
+            : '+${l.journeyCards(now.round() - was.round())}',
+      ),
       sub: books == 0
           ? l.journeyToFirstBook(perBook - n)
           : l.journeyOrDocumentaries((n * 3 / 60).round()),
@@ -752,7 +1045,11 @@ class _InARowTile extends StatelessWidget {
         ),
         child: _Half(
           label: l.journeyInARow,
-          value: l.journeyDays(app.liveStreak),
+          fig: _Fig(
+            'streak',
+            app.liveStreak.toDouble(),
+            (v) => l.journeyDays(v.round()),
+          ),
           sub: l.journeyBestActive(app.bestStreak, active, record.daysIn),
           foot: Column(children: [row(0), const SizedBox(height: 3), row(7)]),
         ),
@@ -827,7 +1124,14 @@ class _SubjectsTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
-                _Big(l.journeySubjectsOf(opened, keys.length)),
+                _count(
+                  _Fig(
+                    'subjects',
+                    opened.toDouble(),
+                    (v) => l.journeySubjectsOf(v.round(), keys.length),
+                  ),
+                  (context, _, text, mark) => _BigLine(text, mark: mark),
+                ),
                 const SizedBox(width: 8),
                 Flexible(
                   child: _Unit(
@@ -1090,7 +1394,20 @@ class _HowHardTile extends StatelessWidget {
 
     return _Half(
       label: l.journeyHowHard,
-      value: now == null ? '—' : one.format(now),
+      value: now == null ? '—' : null,
+      fig: now == null
+          ? null
+          : _Fig(
+              'hard',
+              now,
+              (v) => one.format(v),
+              mark: (context, was, now) {
+                final double d =
+                    double.parse(one.format(now).replaceAll(',', '.')) -
+                    double.parse(one.format(was).replaceAll(',', '.'));
+                return '${d >= 0 ? '+' : '\u2212'}${one.format(d.abs())}';
+              },
+            ),
       unit: l.journeyOfThree,
       sub: then == null
           ? l.journeyHardNow
@@ -1126,17 +1443,9 @@ class _ReadingTimeTile extends StatelessWidget {
     ];
     final int most = math.max(1, perWeek.fold(0, math.max));
 
-    final String value;
-    if (timed == null) {
-      value = '—';
-    } else if (minutes < 60) {
-      value = l.journeyMinutes(minutes);
-    } else {
-      value = l.journeyHoursMinutes(
-        minutes ~/ 60,
-        (minutes % 60).toString().padLeft(2, '0'),
-      );
-    }
+    String time(int m) => m < 60
+        ? l.journeyMinutes(m)
+        : l.journeyHoursMinutes(m ~/ 60, (m % 60).toString().padLeft(2, '0'));
     final String sub;
     if (timed == null) {
       sub = l.journeyTimedFromToday;
@@ -1153,7 +1462,16 @@ class _ReadingTimeTile extends StatelessWidget {
 
     return _Half(
       label: l.journeyReadingTime,
-      value: value,
+      value: timed == null ? '—' : null,
+      fig: timed == null
+          ? null
+          : _Fig(
+              'minutes',
+              minutes.toDouble(),
+              (v) => time(v.round()),
+              mark: (context, was, now) =>
+                  '+${time(math.max(0, now.round() - was.round()))}',
+            ),
       sub: sub,
       foot: SizedBox(
         height: 34,
@@ -1217,10 +1535,17 @@ class _PointsOffTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: [
-              _Big(
-                gap == null ? '—' : '${gap.round()}',
-                valueKey: const ValueKey('journey-gap'),
-              ),
+              if (gap == null)
+                const _Big('—', valueKey: ValueKey('journey-gap'))
+              else
+                _count(
+                  _Fig('gap', gap, (v) => '${v.round()}', better: Better.lower),
+                  (context, _, text, mark) => _BigLine(
+                    text,
+                    mark: mark,
+                    valueKey: const ValueKey('journey-gap'),
+                  ),
+                ),
               const SizedBox(width: 8),
               Expanded(
                 child: _Unit(
@@ -1388,7 +1713,15 @@ class _SureTile extends StatelessWidget {
 
     return _Half(
       label: l.journeyRightWhenSure,
-      value: now.share == null ? '—' : _percent(context, now.share!),
+      value: now.share == null ? '—' : null,
+      fig: now.share == null
+          ? null
+          : _Fig(
+              'sure',
+              now.share!,
+              (v) => _percent(context, v),
+              mark: _pointsMark,
+            ),
       sub: sub,
       foot: _Spark(values: values, height: 40, lo: lo, hi: hi),
     );
@@ -1421,7 +1754,7 @@ class _MovesTile extends StatelessWidget {
 
     return _Half(
       label: l.journeyMovesTitle,
-      value: '${have.length}',
+      fig: _Fig('moves', have.length.toDouble(), (v) => '${v.round()}'),
       unit: l.journeyOfN(all),
       sub: have.isEmpty
           ? l.journeyNoneYet
@@ -1636,11 +1969,19 @@ class _WeekAsksTile extends StatelessWidget {
   }
 }
 
-// ── What stayed ───────────────────────────────────────────────────────────
+// ── What has stayed ───────────────────────────────────────────────────────
 
-/// The cards still with the reader, and how the cards went when they came
-/// back — after each wait on the review ladder — now against four weeks
-/// ago.
+/// What has stayed, as part of what the reader knows: the cards still with
+/// them, and how the cards went when they came back after each wait on the
+/// review ladder — two days after a miss, a week after the first right
+/// answer, three weeks after the second.
+///
+/// It was a chapter of its own, What stays with you, with a pair of bars
+/// for each wait, four weeks ago against now, and no word for which bar was
+/// which. Its figures count from where the reader last saw them instead,
+/// which says plainly whether what comes back is holding, and the chapter's
+/// one real thing — the cards that stayed — sits with the rest of what they
+/// know.
 class _MemoryTile extends StatelessWidget {
   const _MemoryTile({required this.app, required this.record});
 
@@ -1652,64 +1993,76 @@ class _MemoryTile extends StatelessWidget {
     final l = context.l10n;
     final Color ink = context.p.ink;
     final int held = app.heldCards;
-    final String before = record.daysBefore(28);
 
     Widget column(int wait) {
       final Tally now = record.recall(wait);
-      final Tally was = record.recall(wait, by: before);
       final int days = kReviewLadder[wait];
       final String after = days % 7 == 0
           ? l.journeyRecallWeeks(now.right, now.of, days ~/ 7)
           : l.journeyRecallDays(now.right, now.of, days);
+      final double? share = now.share;
+      final TextStyle figure = AppText.display(
+        size: 20,
+        weight: FontWeight.w600,
+        height: 1,
+        color: ink,
+      );
+      Widget bar(double v) => ClipRRect(
+        borderRadius: BorderRadius.circular(99),
+        child: SizedBox(
+          height: 4,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              ColoredBox(color: ink.withValues(alpha: 0.1)),
+              FractionallySizedBox(
+                alignment: AlignmentDirectional.centerStart,
+                widthFactor: v.clamp(0.0, 1.0),
+                child: ColoredBox(color: ink),
+              ),
+            ],
+          ),
+        ),
+      );
       return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
-            height: 80,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    height: 1,
-                    color: ink.withValues(alpha: 0.16),
-                  ),
-                ),
-                Positioned.fill(
-                  bottom: 1,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+          if (share == null) ...[
+            Text('—', style: figure),
+            const SizedBox(height: 8),
+            bar(0),
+          ] else
+            _count(
+              _Fig(
+                'recall.$wait',
+                share,
+                (v) => _percent(context, v),
+                mark: _pointsMark,
+              ),
+              (context, v, text, mark) => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
                     children: [
-                      Expanded(
-                        child: _Bar(
-                          height: (was.share ?? 0) * 110,
-                          color: ink.withValues(alpha: 0.22),
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text(text, maxLines: 1, style: figure),
                         ),
                       ),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: _Bar(height: (now.share ?? 0) * 110, color: ink),
-                      ),
+                      if (mark != null) ...[const SizedBox(width: 5), mark],
                     ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: 8),
+                  // The bar fills with the count.
+                  bar(v),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 7),
-          Text(
-            now.share == null ? '—' : _percent(context, now.share!),
-            style: AppText.display(
-              size: 17,
-              weight: FontWeight.w600,
-              height: 1,
-              color: ink,
-            ),
-          ),
-          const SizedBox(height: 7),
+          const SizedBox(height: 8),
           Text(
             after,
             style: AppText.body(
@@ -1724,6 +2077,7 @@ class _MemoryTile extends StatelessWidget {
     }
 
     return _Box(
+      key: const ValueKey('journey-memory'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -1731,17 +2085,24 @@ class _MemoryTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: [
-              _Big('$held', valueKey: const ValueKey('journey-held')),
+              _count(
+                _Fig('held', held.toDouble(), (v) => '${v.round()}'),
+                (context, _, text, mark) => _BigLine(
+                  text,
+                  mark: mark,
+                  valueKey: const ValueKey('journey-held'),
+                ),
+              ),
               const SizedBox(width: 8),
               Flexible(child: _Unit(l.journeyStillWithYou(held))),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               for (var w = 0; w < kReviewLadder.length; w++) ...[
-                if (w > 0) const SizedBox(width: 12),
+                if (w > 0) const SizedBox(width: 14),
                 Expanded(child: column(w)),
               ],
             ],
@@ -1750,29 +2111,6 @@ class _MemoryTile extends StatelessWidget {
       ),
     );
   }
-}
-
-/// A bar standing on the line, allowed to rise past the top of its box as
-/// the design's do.
-class _Bar extends StatelessWidget {
-  const _Bar({required this.height, required this.color});
-
-  final double height;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) => OverflowBox(
-    alignment: Alignment.bottomCenter,
-    maxHeight: math.max(height, 0),
-    minHeight: 0,
-    child: Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
-      ),
-    ),
-  );
 }
 
 // ── Strongest and most missed ─────────────────────────────────────────────
@@ -1889,7 +2227,11 @@ class _ReactionTile extends StatelessWidget {
     return _Half(
       key: ValueKey(changed ? 'journey-changed-mind' : 'journey-new-to-you'),
       label: changed ? l.journeyChangedMind : l.journeyNewToYou,
-      value: '${changed ? n[Reaction.changed] : n[Reaction.fresh]}',
+      fig: _Fig(
+        changed ? 'changed' : 'fresh',
+        ((changed ? n[Reaction.changed] : n[Reaction.fresh]) ?? 0).toDouble(),
+        (v) => '${v.round()}',
+      ),
       sub: changed
           ? l.journeyReactedOf(told)
           : l.journeyKnewAlready(n[Reaction.knew] ?? 0),
@@ -1950,14 +2292,30 @@ class _DaysTile extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Expanded(
-                child: Text(
-                  l.journeyActiveDays(active, record.daysIn),
-                  key: const ValueKey('journey-days'),
-                  style: AppText.body(
-                    size: 15,
-                    weight: FontWeight.w600,
-                    height: 1.2,
-                    color: ink,
+                child: _count(
+                  _Fig(
+                    'activeDays',
+                    active.toDouble(),
+                    (v) => l.journeyActiveDays(v.round(), record.daysIn),
+                  ),
+                  (context, _, text, mark) => Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          text,
+                          key: const ValueKey('journey-days'),
+                          style: AppText.body(
+                            size: 15,
+                            weight: FontWeight.w600,
+                            height: 1.2,
+                            color: ink,
+                          ),
+                        ),
+                      ),
+                      if (mark != null) ...[const SizedBox(width: 6), mark],
+                    ],
                   ),
                 ),
               ),
@@ -2049,7 +2407,9 @@ class _InTimeTile extends StatelessWidget {
       );
     }
     final int years = app.today.year - _eraStarts[oldest]!;
-    final int shown = years >= 100 ? (years / 100).round() * 100 : years;
+    // To the hundred, past a hundred, at every step of a count too.
+    int round(double y) => y >= 100 ? (y / 100).round() * 100 : y.round();
+    final int shown = round(years.toDouble());
     final String era = switch (oldest) {
       'ancient' => l.journeyEraAncient,
       'medieval' => l.journeyEraMedieval,
@@ -2060,7 +2420,13 @@ class _InTimeTile extends StatelessWidget {
     };
     return _Half(
       label: l.journeyInTime,
-      value: l.journeyYears(shown),
+      fig: _Fig(
+        'inTime',
+        shown.toDouble(),
+        (v) => l.journeyYears(round(v)),
+        mark: (context, was, now) =>
+            signedNumber(context, round(now) - round(was)),
+      ),
       sub: l.journeyFromEra(era),
       size: 24,
     );
@@ -2113,7 +2479,11 @@ class _InPlaceTile extends StatelessWidget {
     final String list = joined[0].toUpperCase() + joined.substring(1);
     return _Half(
       label: l.journeyInPlace,
-      value: l.journeyRegions(named.length),
+      fig: _Fig(
+        'inPlace',
+        named.length.toDouble(),
+        (v) => l.journeyRegions(v.round()),
+      ),
       sub: space ? l.journeyPlacesAndSpace(list) : list,
       size: 24,
     );
@@ -2150,7 +2520,11 @@ class _TopicsTile extends StatelessWidget {
     );
     return _Half(
       label: l.journeyTopics,
-      value: l.journeyMet(strands.length),
+      fig: _Fig(
+        'topics',
+        strands.length.toDouble(),
+        (v) => l.journeyMet(v.round()),
+      ),
       sub: l.journeyTopicsMost(most.value.length, most.key),
       size: 24,
     );
@@ -2219,7 +2593,7 @@ class _WordsTile extends StatelessWidget {
     final String words = joined[0].toUpperCase() + joined.substring(1);
     return _Half(
       label: l.journeyWords,
-      value: l.journeyNew(met.length),
+      fig: _Fig('words', met.length.toDouble(), (v) => l.journeyNew(v.round())),
       sub: '$words…',
       size: 24,
     );

@@ -273,7 +273,11 @@ sent, which after a return from a pushed screen is the screen returned to.
 Screen names: `today`, `explore`, `profile` (tabs); `intro`, `onboarding
 subjects`, `onboarding genres`, `comeback` (first run and come-back; the
 first run has had no paywall since October 2026, so `onboarding offer` is
-gone); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
+gone); `onboarding first card`, `onboarding trial` (the one card and the
+offer of the free trial that end the first run behind the server's switch
+`trial.firstRun`, off as built: measured by the steps' own `onboarding step
+done`, and the trial by the store's `entitlement changed`, with no event of
+their own); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
 `journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`,
 `story` (a true story played from Explore); `update gate`, `pause` (the
 update gate's full screens, over everything, §6.13).
@@ -282,7 +286,7 @@ update gate's full screens, over everything, §6.13).
 
 | Event | When | Properties | Why | Where |
 | --- | --- | --- | --- | --- |
-| `day started` | a fresh day is dealt | `cards`, `dealt_by` (`server`, `server-cached`, `phone`), `ms_to_deal` **new**, `own`, `reviews`, `local` **new** (bool: the day holds a card about where the reader lives), `sunday` **new** (bool: the reader's Sunday, with one more of their own than the day would have had; never on Astute+), `topics`, `streak_days`, `rung`, `is_plus`, `slots`, `challenges` | who dealt the day and how fast; whether the cards about home and Sunday's extra card reach readers | P, T:`day` |
+| `day started` | a fresh day is dealt; a new reader's first, when the first run ends | `cards`, `dealt_by` (`server`, `server-cached`, `phone`), `ms_to_deal` **new**, `own`, `reviews`, `local` **new** (bool: the day holds a card about where the reader lives), `sunday` **new** (bool: the reader's Sunday, with one more of their own than the day would have had; never on Astute+), `topics`, `streak_days`, `rung`, `is_plus`, `slots`, `challenges` | who dealt the day and how fast; whether the cards about home and Sunday's extra card reach readers | P, T:`day` |
 | `card viewed` | a card of the day comes up | card facts, `resumed` | the funnel inside a day | P, T:`view` |
 | `hint shown` | a card's hint is opened | `pill_id`, `topic` | | P, T:`hint` |
 | `card answered` | a card is answered | card facts, `graded`, `ms_to_answer`, `correct`, `confidence`, `gave_reason` (bool, never the reason), `review`, `review_stage`, `response_index`, `response_value`, `hint_available` | right, wrong, how sure | P, T:`ans` |
@@ -339,7 +343,7 @@ is in its card facts.
 | `explore noted` **new** | something a reader did in a section of Explore that nothing else records — a reaction, a bet, a stance — said by the section's block (`ExploreHost.note`) | `shelf` (the section's id), `block`, `noted` (what the block calls it), and the block's own facts: `pill_id` and the rest. What the families call it: purpose `thats me`, `life topics`, `trick spotted`, `read or do`; bets `bet laid`, `bet revealed`; shapes `turned`, `paged`, `raised`, `expanded`, `collapsed`; screens `expert picked`, `subject picked`, `asked`, `asked forgotten`, `why`, `why again`, `chain picked`, `era picked`, `stance`, `said` — none carries words the reader typed | what the server-placed sections are used for, one event for every block | P, T:`xn` |
 | `explore search opened`, `explore search closed` | the search field | `had_query` | | P |
 | `explore searched` | a search returns | `query_length`, `words`, `results` — never the text | | P, T:`xs` |
-| `explore top window`, `explore top opened`, `explore loved opened` | the readers' top list | `window`, `month`, `subject`, `rank`, `readers` | | P, T:`xo` (opens) |
+| `explore top window`, `explore top opened`, `explore loved opened` | the readers' top list, real readers' counts only; a card opened from Astute's picks in the list's place (while there are too few readers for one) is not an `explore top opened`, since its place is no rank | `window`, `month`, `subject`, `rank`, `readers` | | P, T:`xo` (opens) |
 | `explore answered`, `explore leaned` | a card answered on a shelf; a side taken on a debate is always `explore leaned`, on whatever shelf, and `right` is only sent for a card that can be right | `pill_id`, `right`, `side`, `confidence` | | P |
 | `explore did you know`, `explore surprise`, `explore spot`, `explore chart unmasked`, `explore slide checked`, `explore range bet`, `explore stake bet`, `explore bigger picked` | the shelf games | `pill_id`, `right`, `new`, `trick`, `off`, `width`, `hit`, `stake`, `won` | | P |
 | `explore mood`, `explore minutes`, `explore sixty started`, `explore sixty finished` | the shelf pickers and the sixty-second round | `tone`, `minutes`, `right`, `answered`, `seconds` | `explore era` and `explore year` went with the Through time shelf, taken out of Explore | P |
@@ -357,7 +361,7 @@ is in its card facts.
 | `pill said` | the reader said a card to someone | card facts, `said_total` | P, T:`said` |
 | `pill opened` | a card opened on a page of its own: from Saved, Liked, the archive or a week of the journey (no deck, so no `card closed`; played again from there, the viewer's `card closed` says `where: detail`) | card facts, `saved`, `liked`, `answered`, `swiped` (reached by a swipe from the card beside it, on a page opened among others: the shelf, the archive's day or search, the week's misses) | P, T:`open` |
 | `card reported` | a report is sent | `pill_id`, `topic`, `report_reason`, `with_note` (bool, never the note) | P, T:`rep` |
-| `share sheet opened`, `pill shared`, `day shared`, `record shared` | sharing. A card leaves as its question and its page on the site (`as`: `link`; `copied` where there was no sheet), as its picture (`image`, or `text` when the picture fell back to the words), or as its page alone (`link copied`); never as its answer | `kind`, `pill_id`, `topic`, `as`, `has_page`, `image`, `streak_days`, `edition`, `sheet`, `from` | P, T:`share` (cards) |
+| `share sheet opened`, `pill shared`, `day shared`, `record shared` | sharing. A card leaves as its question and its page on the site (`as`: `link`; `copied` where there was no sheet), as its picture (`image`, or `text` when the picture fell back to the words), or as its page alone (`link copied`); never as its answer. The day's picture is laid out one of three ways (`layout`: `cover`, one card large over the other four; `list`, the five alike; `story`, the cover on a story's shape), and `format` keeps the shape alone (`post`, four by five, or `story`) | `kind`, `pill_id`, `topic`, `as`, `has_page`, `image`, `streak_days`, `edition`, `sheet`, `from`, `format`, `layout` | P, T:`share` (cards) |
 | `shelf filtered`, `archive filtered` | a subject on Saved, Liked or the archive | `subject` | P |
 
 ### 6.7 First run and coming back

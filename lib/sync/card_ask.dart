@@ -125,6 +125,10 @@ enum AskWhyNot {
   /// The model would not answer this one.
   declined,
 
+  /// Not available right now: what the AI may spend this day or month is
+  /// spent (functions/src/limits.ts), and comes back when it turns.
+  unavailable,
+
   /// Nothing came: no network, a server that did not answer.
   later,
 }
@@ -199,8 +203,10 @@ abstract final class CardAsk {
     if (data is! Map) return const AskNone(AskWhyNot.later);
     final Object? text = data['text'];
     if (text is String && text.trim().isNotEmpty) return AskAnswer(text.trim());
-    return AskNone(
-      data['none'] == 'declined' ? AskWhyNot.declined : AskWhyNot.later,
-    );
+    return AskNone(switch (data['none']) {
+      'declined' => AskWhyNot.declined,
+      'unavailable' => AskWhyNot.unavailable,
+      _ => AskWhyNot.later,
+    });
   }
 }

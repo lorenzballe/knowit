@@ -26,6 +26,7 @@ import 'reveal_body.dart';
 import 'scaled_text.dart';
 import 'skill_mark.dart';
 import 'skill_score.dart';
+import 'source_foot.dart';
 import 'subject_icon.dart';
 import 'web/page_messages.dart';
 import 'web/web_card_face.dart';
@@ -69,7 +70,9 @@ class PillCard extends StatelessWidget {
   final IconData? noteIcon;
 
   /// A tap on [note]: Why this card (why_sheet.dart). Null, the line is
-  /// only read.
+  /// only read. On the back it is the way to the same sheet from the foot,
+  /// beside Go deeper, where the foot being tried carries one
+  /// (source_foot.dart).
   final VoidCallback? onNote;
 
   /// The skill the reader put in focus that this card trains, when it trains
@@ -418,6 +421,10 @@ class PillCard extends StatelessWidget {
                 icon: Icons.place_rounded,
                 text: why,
                 ink: pill.ink,
+                // Being tried: where Why this card is said on the front of
+                // every card (source_foot.dart), a card about a place opens
+                // it from the line that says so.
+                onTap: sourceFoot == SourceFoot.stack ? onNote : null,
               ),
           if (!flipped && note != null)
             _WhyLine(
@@ -434,6 +441,7 @@ class PillCard extends StatelessWidget {
                     given: given,
                     move: move,
                     cornerRoom: onSave != null ? _CardControl.room : 0,
+                    onWhy: onNote,
                   )
                 // The challenge decides the front. A new kind of challenge
                 // will not compile until it is given a face here.
@@ -702,11 +710,15 @@ class _BackFace extends StatelessWidget {
 
   /// How the answer moved the reader's score, beside the verdict.
   final ScoreMove? move;
+
+  /// Opens Why this card from the foot, on a card of the day.
+  final VoidCallback? onWhy;
   const _BackFace({
     required this.pill,
     this.given,
     this.move,
     this.cornerRoom = 0,
+    this.onWhy,
   });
 
   @override
@@ -801,6 +813,7 @@ class _BackFace extends StatelessWidget {
       leastLead: leastLead,
       leastLeadHeight: leastLeadHeight,
       cornerRoom: cornerRoom,
+      onWhy: onWhy,
       // On a card that asked first, the scene waits for the answer: played
       // before, it would have given it away.
       scene: pill.scene != null && pill.asksSomething

@@ -2,13 +2,14 @@
 /// the card itself, opened to the whole screen with a tap on the tile and
 /// playing at once.
 ///
-/// Opened, the card is the screen, not a card laid on it: its ground from
-/// edge to edge, the film across the screen standing on its foot, the
-/// tile's picture growing into it as it opens. The film plays as soon as it
-/// is there, from the frame the tile showed, so the picture comes alive
-/// rather than starting over. A tap pauses it, another goes on; at its end
-/// the last frame stays with the way to watch it again. A pull down, or the
-/// cross above it, puts it back where it came from.
+/// Opened, the card is the screen, not a card laid on it: the film covers it
+/// from the top to the foot, the row with how far it has run and the cross
+/// laid over the top of its picture, the tile's picture growing into it as
+/// it opens. The film plays as soon as it is there, from the frame the tile
+/// showed, so the picture comes alive rather than starting over. A tap
+/// pauses it, another goes on; at its end the last frame stays with the way
+/// to watch it again. A pull down, or the cross, puts it back where it came
+/// from.
 library;
 
 import 'dart:math' as math;
@@ -23,8 +24,24 @@ import '../l10n/l10n.dart';
 import '../theme.dart';
 import 'glass_round.dart';
 
+/// The film's own frame, in its pixels: a modern phone's nine by nineteen
+/// and a half (docs/cards/video/README.md).
+const Size kFilmFrame = Size(1080, 2340);
+
 /// The film's own proportion, width over height.
-const double kFilmAspect = 9 / 16;
+const double kFilmAspect = 1080 / 2340;
+
+/// The part of the film's frame its words keep to, in its pixels. Above it
+/// only its ground, under the status bar and the row of controls laid over
+/// it, with its head on its top line; outside it only drawing that runs on
+/// (the ground, the Earth, light), which a phone wider or shorter than the
+/// frame may cut.
+const Rect kFilmWords = Rect.fromLTRB(64, 330, 1016, 1990);
+
+/// How much of the film's height a tile leaves out above its own top: the
+/// room for the controls, down to as far above the head as the words keep
+/// from the sides (330 - 82 of its 2340 pixels).
+const double kTileCut = 248 / 2340;
 
 /// The corners of a video card, on the screen and as a tile.
 const double _corner = 28;
@@ -40,40 +57,83 @@ String filmClock(Duration length) {
 
 Object _heroOf(VideoCard card) => 'video-card-${card.id}';
 
-/// The room kept above the film for the row of controls, under the top of
-/// the screen's own inset.
-const double _headRoom = 52;
+/// Where the row of controls ends, under the top of the screen's own inset:
+/// four points of air and a row as tall as the cross.
+const double _controls = 48;
+
+/// The air between the row of controls and the film's head, and the least
+/// it is given on a phone so short its head comes up closer.
+const double _headAir = 12, _headAirLeast = 4;
+
+/// How close the film's words come to the screen's sides, and to its foot
+/// (or to its home bar), at the closest.
+const double _wordsSide = 8, _wordsFoot = 2;
 
 /// The corners of the film where it is a card of its own on the ground, on a
-/// phone too short for it to stand across the screen.
+/// screen too wide or too tall for it to cover.
 const double _filmCorner = 20;
 
-/// Where the film stands on a screen of [size] with [safe] insets: across
-/// the whole width, standing on the screen's foot, the card's ground above
-/// it holding the row of controls. On a phone too short for that, as large
-/// as fits under the row, a card of its own on the ground.
+/// Where the film stands on a screen of [size] with [safe] insets: over the
+/// whole screen, from its top to its foot, its head right under the row of
+/// controls laid over its top. On a phone shorter than the frame, its foot
+/// is cut, under its words; on one taller, its sides, and a little more of
+/// them so its head comes up under the controls, as far as its words keep
+/// off the edges. On a screen it cannot cover without cutting its words (a
+/// tablet), as large as fits under the row, a card of its own on the ground.
 Rect filmPlace(Size size, EdgeInsets safe) {
-  final double head = safe.top + _headRoom;
-  final double width = size.width;
-  final double height = width / kFilmAspect;
-  // Lifted off the foot only by more than a home bar takes.
-  final double foot = math.max(0.0, safe.bottom - 34);
-  if (size.height - foot - height >= head) {
-    return Rect.fromLTWH(0, size.height - foot - height, width, height);
+  const Size frame = kFilmFrame;
+  const Rect words = kFilmWords;
+  final double width = size.width, height = size.height;
+  final double head = safe.top + _controls + _headAir;
+  final double headLeast = safe.top + _controls + _headAirLeast;
+  // Large enough to cover the screen; on a phone taller than the frame,
+  // larger still for the head to come up under the controls, as long as
+  // the words keep off the sides.
+  final double cover = math.max(width / frame.width, height / frame.height);
+  final double widest =
+      (width / 2 - _wordsSide) / (frame.width / 2 - words.left);
+  final double lifted = (height - head) / (frame.height - words.top);
+  final double scale = math.max(cover, math.min(lifted, widest));
+  // How high it may stand: no higher than keeps its head under the
+  // controls and the screen's foot covered, no lower than keeps its words
+  // above the foot and the screen's top covered.
+  final double highest = math.max(
+    height - frame.height * scale,
+    headLeast - words.top * scale,
+  );
+  final double lowest = math.min(
+    0.0,
+    height - math.max(safe.bottom, _wordsFoot) - words.bottom * scale,
+  );
+  if (scale <= widest + 1e-9 && highest <= lowest) {
+    final double top = (head - words.top * scale).clamp(highest, lowest);
+    return Rect.fromLTWH(
+      (width - frame.width * scale) / 2,
+      top,
+      frame.width * scale,
+      frame.height * scale,
+    );
   }
-  final double room = math.max(0.0, size.height - head - safe.bottom - 10);
-  final double h = math.min(height, room);
+  final double room = math.max(0.0, height - headLeast - safe.bottom - 10);
+  final double h = math.min(width / kFilmAspect, room);
   final double w = h * kFilmAspect;
-  return Rect.fromLTWH((width - w) / 2, head, w, h);
+  return Rect.fromLTWH((width - w) / 2, headLeast, w, h);
 }
 
 /// Whether the film at [place] stands across the whole of a screen [width]
 /// wide.
 bool _across(Rect place, double width) => place.width >= width - 0.5;
 
+/// Where a tile of [box] shows the film: across its width, from a little
+/// above its head, cut at the tile's foot.
+Rect _tilePlace(Size box) {
+  final double height = box.width / kFilmAspect;
+  return Rect.fromLTWH(0, -kTileCut * height, box.width, height);
+}
+
 /// A video card's first frame on its ground, at [place] in the box it is
-/// given; by default across the box's width from its top, cut at its foot,
-/// as a tile shows it.
+/// given; by default across the box's width from a little above its head,
+/// cut at its foot, as a tile shows it.
 class _Frame extends StatelessWidget {
   const _Frame({
     required this.card,
@@ -103,9 +163,7 @@ class _Frame extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, box) {
           final Size size = box.biggest;
-          final Rect at =
-              place?.call(size) ??
-              Rect.fromLTWH(0, 0, size.width, size.width / kFilmAspect);
+          final Rect at = place?.call(size) ?? _tilePlace(size);
           return Stack(
             clipBehavior: Clip.hardEdge,
             children: [
@@ -139,7 +197,7 @@ RectTween _straight(Rect? begin, Rect? end) =>
 
 /// The tile's picture on its way to the screen and back: its box grows from
 /// the tile to the whole screen, its corners going square, and the picture
-/// moves within it from the tile's top to where the film stands.
+/// moves within it from where the tile shows it to where the film stands.
 Widget _flight(
   BuildContext flightContext,
   Animation<double> animation,
@@ -170,9 +228,10 @@ Widget _flight(
         filmCorner: across * t,
         place: (box) {
           final double w = box.width * (1 + (width - 1) * t);
+          final Rect tile = _tilePlace(box);
           return Rect.fromLTWH(
             box.width * left * t,
-            box.height * top * t,
+            tile.top * (1 - t) + box.height * top * t,
             w,
             w / kFilmAspect,
           );
@@ -182,8 +241,9 @@ Widget _flight(
   );
 }
 
-/// A video card as Explore shows it: its first frame from the top, at the
-/// size it is given, and a mark in its corner that it plays and how long.
+/// A video card as Explore shows it: its first frame from a little above its
+/// head, at the size it is given, and a mark in its corner that it plays and
+/// how long.
 class VideoCardTile extends StatelessWidget {
   const VideoCardTile({
     super.key,
@@ -597,6 +657,7 @@ class _VideoCardScreenState extends State<VideoCardScreen>
         ThemeData.estimateBrightnessForColor(ground) == Brightness.light;
     final Color ink = light ? _filmInk : Colors.white;
     final Rect place = filmPlace(m.size, safe);
+    final Rect seen = place.intersect(Offset.zero & m.size);
     final bool across = _across(place, m.size.width);
     final double pulled = _pull.clamp(0.0, 600.0);
     final double fade = 1 - math.min(pulled / 420, 0.7);
@@ -682,8 +743,10 @@ class _VideoCardScreenState extends State<VideoCardScreen>
                                   ),
                                 ),
                               ),
+                            // What is said over the film, on as much of it
+                            // as is seen: the screen, when it covers it.
                             Positioned.fromRect(
-                              rect: place,
+                              rect: seen,
                               child: FadeTransition(
                                 opacity: late,
                                 child: _Over(
@@ -691,11 +754,14 @@ class _VideoCardScreenState extends State<VideoCardScreen>
                                   failed: _failed,
                                   ended: _ended,
                                   onAgain: _play,
+                                  foot: seen.bottom >= m.size.height - 0.5
+                                      ? safe.bottom
+                                      : 0,
                                 ),
                               ),
                             ),
-                            // The row above the film: how far it has run,
-                            // and the way out.
+                            // The row over the top of the film: how far it
+                            // has run, and the way out.
                             Positioned(
                               top: safe.top + 4,
                               left: 20,
@@ -820,26 +886,27 @@ class _RunBar extends StatelessWidget {
   );
 }
 
-/// What is laid over the film: paused, the way on in its middle; at its
-/// end, the way to watch it again, in the room the last frame leaves between
-/// its picture and its source; where it could not be had, the word that it
-/// needs a connection.
+/// What is laid over the film, on as much of it as is seen: paused, the way
+/// on in its middle; at its end, the way to watch it again at its foot,
+/// under the thumb; where it could not be had, the word that it needs a
+/// connection, at its foot too. The film keeps its own words out of its
+/// foot on the frames these stand over, its first and its last
+/// (docs/cards/video/README.md).
 class _Over extends StatelessWidget {
   const _Over({
     required this.paused,
     required this.failed,
     required this.ended,
     required this.onAgain,
+    this.foot = 0,
   });
 
   final bool paused, failed, ended;
   final VoidCallback onAgain;
 
-  /// Where on the film, from its top, the things laid over it stand (their
-  /// middles): the word that it needs a connection on the ground of its
-  /// first frame, and the way to watch it again between the last frame's
-  /// picture (to 81%) and its source (from 90%).
-  static const double offlineAt = 0.84, againAt = 0.853;
+  /// The screen's own inset at the film's foot, where the film reaches it:
+  /// what stands at the foot stands above it.
+  final double foot;
 
   @override
   Widget build(BuildContext context) {
@@ -847,23 +914,19 @@ class _Over extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, box) {
         final double k = (box.maxWidth / 402).clamp(0.75, 1.1);
-        // [child]'s middle at [y] of the film's height.
-        Widget at(double y, Widget child) => Positioned(
+        // [child] at the foot, above the home bar where there is one.
+        Widget atFoot(Widget child) => Positioned(
           left: 0,
           right: 0,
-          top: box.maxHeight * y,
-          child: FractionalTranslation(
-            translation: const Offset(0, -0.5),
-            child: Center(child: child),
-          ),
+          bottom: math.max(foot, 10) + 8,
+          child: Center(child: child),
         );
         if (failed) {
           return Stack(
             children: [
-              at(
-                offlineAt,
+              atFoot(
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 28 * k),
+                  padding: EdgeInsets.fromLTRB(28 * k, 0, 28 * k, 8),
                   child: Container(
                     key: const ValueKey('video-offline'),
                     padding: const EdgeInsets.fromLTRB(16, 11, 16, 12),
@@ -890,28 +953,32 @@ class _Over extends StatelessWidget {
         if (ended) {
           return Stack(
             children: [
-              at(
-                againAt,
+              atFoot(
                 GestureDetector(
                   key: const ValueKey('video-again'),
+                  behavior: HitTestBehavior.opaque,
                   onTap: onAgain,
-                  child: _Chip(
-                    children: [
-                      const Icon(
-                        Icons.replay_rounded,
-                        size: 18,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        l.videoWatchAgain,
-                        style: AppText.body(
-                          size: 15,
-                          weight: FontWeight.w700,
+                  // A finger's room round the chip.
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: _Chip(
+                      children: [
+                        const Icon(
+                          Icons.replay_rounded,
+                          size: 18,
                           color: Colors.white,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 6),
+                        Text(
+                          l.videoWatchAgain,
+                          style: AppText.body(
+                            size: 15,
+                            weight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

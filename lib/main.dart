@@ -27,6 +27,7 @@ import 'screens/genres_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/explore_screen.dart';
+import 'screens/first_card_screen.dart';
 import 'screens/mix_screen.dart';
 import 'screens/paywall_screen.dart';
 import 'screens/today_screen.dart';
@@ -57,33 +58,7 @@ import 'store_links.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
 import 'widgets/hand_glass.dart';
-
-/// The seeded crowd for Explore's top list: the live bank, tilted to what
-/// readers keep — a question over a fact, a debate over both, the hard ones,
-/// and the subjects people pass on.
-TopSeed launchCrowd() => TopSeed(
-  ids: () => PillBank.cards.map((p) => p.id),
-  appeal: (id) {
-    final Pill? p = PillBank.byId(id);
-    if (p == null) return 0;
-    var a = 1.0;
-    if (p.challenge is TakeASide) {
-      a *= 1.3;
-    } else if (p.asksSomething) {
-      a *= 1.2;
-    }
-    if (p.difficulty == Difficulty.hard) a *= 1.2;
-    if (const {
-      'Weird facts',
-      'Psychology',
-      'Space',
-      'Human body',
-    }.contains(p.topic)) {
-      a *= 1.2;
-    }
-    return a;
-  },
-);
+import 'widgets/tab_zoom.dart';
 
 Future<void> main() async {
   Analytics.launched();
@@ -129,9 +104,6 @@ Future<void> main() async {
     'ms': cloudMs,
     'failure': Cloud.failure == null ? null : Analytics.short(Cloud.failure!),
   });
-  // Explore's top list, with the launch crowd under the real counts until
-  // there are enough of them. See TopSeed.
-  Tallies.instance = Tallies(seed: launchCrowd());
   // The build, and what the server last said about it, before anything is
   // built: a build the server no longer lets run shows nothing of itself —
   // offline, and even if its state never finishes loading (GateKeeper).
@@ -341,10 +313,17 @@ class _PhoneFrame extends StatelessWidget {
 /// the last of those and the first card: no offer, no sign-in, no
 /// permission. Astute+ is offered by the card after the fifth, in Profile
 /// and at the features it opens, once the reader has seen what it adds to.
+///
+/// Behind the server's switch `trial.firstRun`, off as built, two steps
+/// come between the onboarding and the day: one real card
+/// ([_Stage.firstCard]), and then the offer of the free trial
+/// ([_Stage.trialOffer]), the day's five after it whichever the answer.
 enum _Stage {
   intro,
   subjects,
   genres,
+  firstCard,
+  trialOffer,
   comeback,
   shell;
 
@@ -355,6 +334,8 @@ enum _Stage {
     _Stage.intro => 'intro',
     _Stage.subjects => 'onboarding subjects',
     _Stage.genres => 'onboarding genres',
+    _Stage.firstCard => 'onboarding first card',
+    _Stage.trialOffer => 'onboarding trial',
     _Stage.comeback => 'comeback',
     _Stage.shell => 'today',
   };
@@ -456,6 +437,9 @@ class _AstutoRootState extends State<AstutoRoot> {
 
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
+
+  /// The card the first run plays before its offer, while it does.
+  Pill? _firstRunCard;
 
   /// A home-screen widget's tap, waiting for the tabs. The splash, the
   /// first run and the come-back screen hold it; the shell takes it the
@@ -1291,6 +1275,31 @@ class _AstutoRootState extends State<AstutoRoot> {
     if (mounted) _go(_Stage.shell);
   }
 
+  /// The onboarding's questions are over, answered or passed over. As
+  /// built, the day's five come at once. With the server's switch
+  /// `trial.firstRun` on, and the offer due (trialOfferDue: Astute+ not
+  /// already the reader's, not put today, the store's year on sale with
+  /// free days for this reader), one real card comes first, and the offer
+  /// after it.
+  Future<void> _endOnboarding() async {
+    final Pill? card = trialOfferDue(_app) ? _app.firstRunCard : null;
+    if (card == null) return _finishOnboarding();
+    _firstRunCard = card;
+    _go(_Stage.firstCard);
+  }
+
+  /// The first run's card, thrown on: the offer, unless it stopped being
+  /// due while the card was read — Astute+ turned out to be the reader's,
+  /// say — and then the day's five.
+  void _afterFirstCard() {
+    if (!mounted) return;
+    if (trialOfferDue(_app)) {
+      _go(_Stage.trialOffer);
+    } else {
+      _finishOnboarding();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // The opening frame gives way to the app in a short fade, as a feed's
@@ -1366,7 +1375,7 @@ class _AstutoRootState extends State<AstutoRoot> {
           // first day: there is nothing to narrow in a mix nobody set.
           onSkip: () {
             _noteSkipped(_Stage.subjects);
-            _finishOnboarding();
+            _endOnboarding();
           },
         );
 
@@ -1382,13 +1391,30 @@ class _AstutoRootState extends State<AstutoRoot> {
           app: _app,
           onDone: (genresOff, strandsOff) async {
             await _app.setGenresOff(genresOff, strandsOff);
-            if (mounted) await _finishOnboarding();
+            if (mounted) await _endOnboarding();
           },
           onSkip: () {
             _noteSkipped(_Stage.genres);
-            _finishOnboarding();
+            _endOnboarding();
           },
         );
+
+      // Behind `trial.firstRun`: one real card, the opening's best for this
+      // reader, before anything is offered to them.
+      case _Stage.firstCard:
+        final Pill? card = _firstRunCard;
+        if (card == null) return const SizedBox.shrink();
+        return FirstCardScreen(
+          key: ValueKey('first-card-${card.id}'),
+          app: _app,
+          card: card,
+          onDone: _afterFirstCard,
+        );
+
+      // And the free trial, said day by day at the store's own price, with
+      // the way out as plain as the way in; the day's five after it.
+      case _Stage.trialOffer:
+        return TrialOfferScreen(app: _app, onDone: _finishOnboarding);
 
       case _Stage.comeback:
         return ComebackScreen(
@@ -1540,6 +1566,9 @@ class _AstutoShellState extends State<AstutoShell>
   /// until the finished day sends the reader to "today's best" and finds
   /// the tab still on last week's month filter.
   final GlobalKey<ExploreScreenState> _explore = GlobalKey();
+
+  /// Opens Today out of the profile's tile (lib/widgets/tab_zoom.dart).
+  final GlobalKey<TabZoomState> _zoom = GlobalKey();
 
   @override
   void initState() {
@@ -1717,7 +1746,12 @@ class _AstutoShellState extends State<AstutoShell>
   /// from the tab you left to the tab you asked for without lighting the
   /// one between them. A widget's tap always cuts, and without the click:
   /// the app is only just on the screen, and nobody touched the bar.
-  void _goTo(int tab, {String by = 'bar'}) {
+  ///
+  /// From the profile's Today tile, [tile] is where the tile is on the
+  /// screen, and Today opens out of it ([TabZoom]) while the bar's light
+  /// travels across with it: the cut read as the app jumping. With less
+  /// motion asked for, a dissolve, and the light just moves.
+  void _goTo(int tab, {String by = 'bar', Rect? tile}) {
     if (!mounted) return;
     // Explore's tab tapped on Explore: back up to its head, where the
     // subjects are, since the head no longer comes down mid-list.
@@ -1728,6 +1762,8 @@ class _AstutoShellState extends State<AstutoShell>
     final bool fromBar = by == 'bar';
     if (fromBar) HapticFeedback.selectionClick();
     final int from = _tab;
+    // Today still opening out of the profile's tile: it lands now.
+    _zoom.currentState?.finish();
     _barSmall.value = false;
     setState(() => _tab = tab);
     _noteTab(tab, by: by);
@@ -1738,6 +1774,19 @@ class _AstutoShellState extends State<AstutoShell>
         duration: const Duration(milliseconds: 320),
         curve: Curves.easeOutCubic,
       );
+      return;
+    }
+    final TabZoomState? zoom = _zoom.currentState;
+    if (tile != null && zoom != null) {
+      _jump.stop();
+      if (!MediaQuery.disableAnimationsOf(context)) {
+        _jumpFrom = from;
+        _jumpTo = tab;
+        _jump
+          ..reset()
+          ..animateTo(1, duration: const Duration(milliseconds: 420));
+      }
+      zoom.play(tile: tile, swap: () => _pages.jumpToPage(tab));
       return;
     }
     _jumpFrom = from;
@@ -1819,7 +1868,7 @@ class _AstutoShellState extends State<AstutoShell>
         app: widget.app,
         account: widget.account,
         onSignedOut: widget.onSignedOut,
-        onToday: () => _goTo(0, by: 'shelf'),
+        onToday: (tile) => _goTo(0, by: 'shelf', tile: tile),
       ),
     ];
     // Each tab is a screen of its own, in front only while it is the tab
@@ -1873,59 +1922,62 @@ class _AstutoShellState extends State<AstutoShell>
                 .copyWith(overscroll: false),
             child: NotificationListener<ScrollNotification>(
               onNotification: _settle,
-              child: PageView(
-                controller: _pages,
-                physics: _tab == 0 && _deckOnTable
-                    ? const NeverScrollableScrollPhysics()
-                    : null,
-                // The next tab is built before it is reached, so the first
-                // swipe does not pay for a screen being laid out
-                // mid-gesture.
-                allowImplicitScrolling: true,
-                children: [
-                  // Clipped to its own page. A screen is free to paint past
-                  // its edges — the shelf lets a card's glow bleed, a card
-                  // being thrown goes under the tab bar — and without this
-                  // the overflow lands on the tab beside it and rides there
-                  // until the next repaint.
-                  //
-                  // The padding is the height the tab bar would have taken
-                  // if it still reserved room, read back from the media
-                  // query the Scaffold hands a body it has extended. The
-                  // page is taller than the screen it draws; the screens
-                  // are exactly where they were.
-                  for (int i = 0; i < tabs.length; i++)
-                    ClipRect(
-                      child: _KeepAlive(
-                        child: Builder(
-                          // Today keeps the bar's room: its card is the
-                          // whole screen and nothing may cover it. Explore
-                          // and the profile scroll on under a glass bar,
-                          // and pad their own foot so the last row can
-                          // still be lifted clear of it.
-                          builder: (context) => Padding(
-                            padding: EdgeInsets.only(
-                              bottom: i == 0 || !barGlass
-                                  ? MediaQuery.paddingOf(context).bottom
-                                  : 0,
+              child: TabZoom(
+                key: _zoom,
+                child: PageView(
+                  controller: _pages,
+                  physics: _tab == 0 && _deckOnTable
+                      ? const NeverScrollableScrollPhysics()
+                      : null,
+                  // The next tab is built before it is reached, so the first
+                  // swipe does not pay for a screen being laid out
+                  // mid-gesture.
+                  allowImplicitScrolling: true,
+                  children: [
+                    // Clipped to its own page. A screen is free to paint past
+                    // its edges — the shelf lets a card's glow bleed, a card
+                    // being thrown goes under the tab bar — and without this
+                    // the overflow lands on the tab beside it and rides there
+                    // until the next repaint.
+                    //
+                    // The padding is the height the tab bar would have taken
+                    // if it still reserved room, read back from the media
+                    // query the Scaffold hands a body it has extended. The
+                    // page is taller than the screen it draws; the screens
+                    // are exactly where they were.
+                    for (int i = 0; i < tabs.length; i++)
+                      ClipRect(
+                        child: _KeepAlive(
+                          child: Builder(
+                            // Today keeps the bar's room: its card is the
+                            // whole screen and nothing may cover it. Explore
+                            // and the profile scroll on under a glass bar,
+                            // and pad their own foot so the last row can
+                            // still be lifted clear of it.
+                            builder: (context) => Padding(
+                              padding: EdgeInsets.only(
+                                bottom: i == 0 || !barGlass
+                                    ? MediaQuery.paddingOf(context).bottom
+                                    : 0,
+                              ),
+                              child: i == 1
+                                  ? tabs[i]
+                                  : SafeArea(
+                                      bottom: false,
+                                      // A browser has no status bar to sit
+                                      // under, so the page would otherwise
+                                      // start hard against the top edge. On a
+                                      // phone the real inset is larger and
+                                      // this does nothing.
+                                      minimum: const EdgeInsets.only(top: 12),
+                                      child: tabs[i],
+                                    ),
                             ),
-                            child: i == 1
-                                ? tabs[i]
-                                : SafeArea(
-                                    bottom: false,
-                                    // A browser has no status bar to sit
-                                    // under, so the page would otherwise
-                                    // start hard against the top edge. On a
-                                    // phone the real inset is larger and
-                                    // this does nothing.
-                                    minimum: const EdgeInsets.only(top: 12),
-                                    child: tabs[i],
-                                  ),
                           ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

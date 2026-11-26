@@ -62,8 +62,8 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String dayRead(int n, String word) {
-    return '第 $n 天 · 已读$word张';
+  String dayTitle(int n) {
+    return '第 $n 天';
   }
 
   @override
@@ -96,12 +96,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return '明天的五张将在 $when 后开启';
+    return '明天的五张 · 还有$when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '明天的五张从$topic开始，还有 $when';
+    return '明天从$topic开始 · 还有$when';
   }
 
   @override
@@ -385,6 +385,68 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String scoreLevel(String id) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'curiosity': '好奇心',
+      'observation': '观察力',
+      'method': '条理',
+      'judgement': '判断力',
+      'insight': '洞察力',
+      'discernment': '明辨',
+      'acumen': '慧眼',
+      'other': '$id',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get levelUpTitle => '新等级';
+
+  @override
+  String levelUpGain(String skill, String n) {
+    return '本周进步最大：$skill，$n';
+  }
+
+  @override
+  String levelUpAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '至今已作答 $n 次',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelLabel => '等级';
+
+  @override
+  String levelPointsTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '距“$level”还差 $n 分',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String levelAnswersTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '距“$level”还需作答 $n 次',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelTop => '最高等级';
+
+  @override
+  String get levelShareTitle => '分享你的等级';
+
+  @override
   String get signOutQuestion => '退出登录？';
 
   @override
@@ -443,6 +505,42 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get yourRecord => '你的记录';
+
+  @override
+  String get profileTodayFive => '今天的五张';
+
+  @override
+  String profileTodayOf(int read, int of) {
+    return '$read/$of';
+  }
+
+  @override
+  String profileTodayToRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '待读 $n 张',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileJourneyScores => '你的全部分数，按周来看';
+
+  @override
+  String profileInARowLabel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '连续天数');
+    return '$_temp0';
+  }
+
+  @override
+  String get profileWeekTitle => '最近 7 天';
+
+  @override
+  String profileWeekPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '分');
+    return '$_temp0';
+  }
 
   @override
   String get appearance => '外观';
@@ -1179,6 +1277,11 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return '深入了解。来源：$source';
+  }
+
+  @override
   String get sourceKindPaper => '研究';
 
   @override
@@ -1342,40 +1445,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get threeDone => '今日三题 · 完成';
-
-  @override
-  String threeDay(int n) {
-    return '第 $n 天';
-  }
-
-  @override
-  String get threeOf300 => '/ 300';
-
-  @override
-  String threeCloser(int pct) {
-    return '比今天 $pct% 的读者更接近。';
-  }
-
-  @override
-  String threeFirst(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '你是今天最早的 $n 位玩家之一。',
-      one: '你是今天第一个玩的。',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String threeReaders(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '今天有 $n 位读者参与。',
-    );
-    return '$_temp0';
-  }
 
   @override
   String get threeYou => '你';
@@ -1746,11 +1815,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String threeStreak(int n) {
-    return '$n 天';
-  }
-
-  @override
   String get threeSend => '发送';
 
   @override
@@ -1762,18 +1826,115 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String threeShareHead(String date) {
-    return 'Astute · 今日三题 · $date';
-  }
-
-  @override
-  String threeShareScore(int score, int day) {
-    return '$score / 300 · 第 $day 天';
-  }
-
-  @override
   String threeRowSaid(String said, String truth) {
     return '你猜 $said，答案 $truth。';
+  }
+
+  @override
+  String get fiveTitle => '今日五题';
+
+  @override
+  String get fiveSame => '今天大家都是同样五题，约两分钟。';
+
+  @override
+  String get fiveDone => '今日五题 · 完成';
+
+  @override
+  String dailyOf(int max) {
+    return '/ $max';
+  }
+
+  @override
+  String dailyPickRight(String answer) {
+    return '答对了：$answer。';
+  }
+
+  @override
+  String dailyPickWrong(String answer) {
+    return '差一点，答案是$answer。';
+  }
+
+  @override
+  String dailyBetter(int pct, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '比今天 $n 位玩家中的 $pct% 更好。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyPlayers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天目前有 $n 位玩家。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '你是今天最早的 $n 位玩家之一：人数还太少，无法比较。',
+      one: '你是今天第一个玩的：人数还太少，无法比较。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dailyCounting => '正在统计今天的玩家…';
+
+  @override
+  String dailyAverage(int right, int total, String avg) {
+    return '$total 题中你答对了 $right 题。这几题读者平均答对 $avg 题。';
+  }
+
+  @override
+  String get dailyUncounted => '现在无法统计今天的玩家。';
+
+  @override
+  String get dailyEach => '逐题来看';
+
+  @override
+  String dailyItemRight(int pct) {
+    return '今天 $pct% 的玩家答对了';
+  }
+
+  @override
+  String dailyItemGuess(String guess) {
+    return '今天的平均估计：$guess';
+  }
+
+  @override
+  String get dailyItemFew => '回答还太少，无法比较';
+
+  @override
+  String fiveYesterday(int score) {
+    return '昨天的五题：$score / 500。';
+  }
+
+  @override
+  String fiveShareHead(String date) {
+    return 'Astute · 今日五题 · $date';
+  }
+
+  @override
+  String threeShareHeadIn(String subject, String date) {
+    return 'Astute · 今日三题 · $subject · $date';
+  }
+
+  @override
+  String dailyShareScore(int score, int max, int day) {
+    return '$score / $max · 第 $day 天';
+  }
+
+  @override
+  String dailyShareScoreAlone(int score, int max) {
+    return '$score / $max';
   }
 
   @override
@@ -1832,15 +1993,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {'other': '$n 张全部读完。'});
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => '今天你训练了';
-
-  @override
   String get scoreTitle => 'Astute 分数';
 
   @override
@@ -1850,11 +2002,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get scoreStart => '从你的第一次回答开始。';
-
-  @override
-  String scoreToday(String n) {
-    return '今天 $n';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2354,6 +2501,23 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yourJourney => '你的旅程';
 
   @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '自上次访问（$days 天前）以来',
+      one: '自上次访问（昨天）以来',
+      zero: '自上次访问（今天）以来',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '自上次访问以来 $n';
+  }
+
+  @override
   String get thePath => '路径';
 
   @override
@@ -2534,7 +2698,10 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get topEmpty => '榜单还是空的。你喜欢、收藏或讲给别人听的每张卡片都会计入。';
+  String get topPicksTitle => '值得一看';
+
+  @override
+  String get topPicksLine => '读者榜单形成之前，由 Astute 挑选';
 
   @override
   String get readMark => '已读';
@@ -3808,6 +3975,56 @@ class AppLocalizationsZh extends AppLocalizations {
   String get unmaskWindow => '显示完整序列';
 
   @override
+  String get unmaskMisleadTitle => '误导人的图表';
+
+  @override
+  String get unmaskMisleadLine => '数字是真的，花招在画法里。';
+
+  @override
+  String get unmaskAsk => '这张图在误导人。你看得出是怎么做到的吗？';
+
+  @override
+  String get unmaskShowTrick => '揭示花招';
+
+  @override
+  String get unmaskHideTrick => '隐藏花招';
+
+  @override
+  String get unmaskOriginal => '原图';
+
+  @override
+  String get unmaskCorrected => '修正后';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return '坐标轴从$from开始，而不是从零开始。';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return '坐标轴只覆盖$low到$high，小变化看起来很大。';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return '坐标轴从$low到$high，真实的变化看起来很平。';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return '只显示了$shown，而数据涵盖$all。';
+  }
+
+  @override
+  String get unmaskTrickTotals => '比较的是原始总数，而不是公平的指标。';
+
+  @override
+  String get unmaskTrickFlippedRise => '坐标轴上下颠倒，上升看起来像下降。';
+
+  @override
+  String get unmaskTrickFlippedFall => '坐标轴上下颠倒，下降看起来像上升。';
+
+  @override
   String get whatIfTrue => '如果是真的呢？';
 
   @override
@@ -4555,22 +4772,22 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String betsCloserYesMore(String v) {
-    return '对：比 $v 多。';
+    return '答对了：比 $v 多。';
   }
 
   @override
   String betsCloserYesLess(String v) {
-    return '对：比 $v 少。';
+    return '答对了：比 $v 少。';
   }
 
   @override
   String betsCloserNoMore(String v) {
-    return '不对：比 $v 多。';
+    return '答错了：比 $v 多。';
   }
 
   @override
   String betsCloserNoLess(String v) {
-    return '不对：比 $v 少。';
+    return '答错了：比 $v 少。';
   }
 
   @override
@@ -5131,7 +5348,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get spotMissedIt => '不是那条：它是真的。';
 
   @override
-  String get tfRules => '判断真假，再看原因。大多数人都会答错。';
+  String get tfRules => '大多数人都会答错的说法。判断真假，再读原因。它衡量你的判断力：分清真正正确的和只是看似显然的。';
 
   @override
   String get inOrderTitle => '时间排序';
@@ -5141,13 +5358,13 @@ class AppLocalizationsZh extends AppLocalizations {
       '卡片里的四个时刻，年份都被隐去，请按发生的先后排列。它衡量你的时间顺序感，这是一切解释的第一道检验：原因总在结果之前。';
 
   @override
-  String get inOrderFirst => '点选最早的';
+  String get inOrderFirst => '点最先发生的时刻。';
 
   @override
-  String get inOrderNext => '接着点下一个';
+  String get inOrderNext => '再点接下来发生的。';
 
   @override
-  String get inOrderReady => '都排好了，检查一下？';
+  String get inOrderReady => '都排好了。';
 
   @override
   String get inOrderCheck => '检查顺序';
@@ -5172,7 +5389,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get whatYearTitle => '哪一年？';
 
   @override
-  String get whatYearRules => '三个时刻，年份都被隐去。转动刻度猜年份：越接近，得分越高。';
+  String get whatYearRules =>
+      '三个时刻，年份都被隐去。为每一个转到对应的年份：越接近，得分越高，最多十分。它衡量你对事情发生时间的感觉。';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5187,19 +5405,19 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '总共差了 $n 年',
+      other: '总共差了 $n 年。',
     );
     return '$_temp0';
   }
 
   @override
   String whatYearSaid(String guess, int points) {
-    return '你的答案：$guess · +$points';
-  }
-
-  @override
-  String whatYearExact(int points) {
-    return '年份完全正确，+$points';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '你的答案：$guess · $points 分',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5239,7 +5457,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get beforeAfterTitle => '之前还是之后？';
 
   @override
-  String get beforeAfterRules => '六个时刻依次出现。每一个发生在上面那个之前还是之后？';
+  String get beforeAfterRules => '六个时刻依次出现。判断每一个发生在上面那个之前还是之后。它衡量你的顺序感。';
 
   @override
   String get beforeAfterBefore => '之前';
@@ -5399,6 +5617,163 @@ class AppLocalizationsZh extends AppLocalizations {
   String get challengeAgain => '再来一轮';
 
   @override
+  String get spotRules => '四条说法：三条是真的，一条是假的。找出假的那条。它衡量你能否分辨有根据的说法和只是听起来对的说法。';
+
+  @override
+  String get spotAsk => '点你认为是假的那条说法。';
+
+  @override
+  String get biggerRules => '两个数字，各是一张卡片问题的答案。点你认为更大的那个。它衡量你的比例感。';
+
+  @override
+  String get biggerAsk => '点答案更大的那张卡片。';
+
+  @override
+  String biggerRight(String big, String small) {
+    return '答对了：$big 比 $small 大。';
+  }
+
+  @override
+  String biggerWrong(String big, String small) {
+    return '答错了：$big 比 $small 大。';
+  }
+
+  @override
+  String get closerRules => '一步步逼近一个比例：每一次，判断它比剩下范围的中点多还是少。它衡量你的估算能力。';
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) {
+    return '答案是 $said：$steps 步中答对 $right 步。';
+  }
+
+  @override
+  String closerExactSteps(String said, int right, int steps) {
+    return '答案正好是 $said：$steps 步中答对 $right 步。';
+  }
+
+  @override
+  String closerStepsRight(int right, int steps) {
+    return '$steps 步中答对 $right 步。';
+  }
+
+  @override
+  String get magnitudeRules => '十、一千还是一百万？选出最接近答案的十的幂。它衡量你的量级感，这比精确的数字更重要。';
+
+  @override
+  String get rangeRules =>
+      '先定下你的估计，再在它周围设一个范围：范围越窄，答案落在其中时得分越高。它衡量你的校准能力：知道自己知道多少。';
+
+  @override
+  String rangeOption(int w, int pts) {
+    return '±$w · 得 $pts 分';
+  }
+
+  @override
+  String rangeIn(String said, int pts) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: '答案是 $said：在你的范围内，+$pts 分。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rangeOut(String said) {
+    return '答案是 $said：在你的范围外。';
+  }
+
+  @override
+  String stakeRules(int points) {
+    return '选一个答案，从每天的 $points 分里拿出分数押上：答对，赌注翻倍；答错，赌注输掉。它衡量你的确信：只押你知道的。';
+  }
+
+  @override
+  String stakeWon(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '答对了：赢得 $n 分。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stakeLost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '答错了：输掉 $n 分。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get numberRules => '用按钮定下一个数字并锁定。它衡量你的精确度：在必须给出一个数字时，你能接近到什么程度。';
+
+  @override
+  String tfRightIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': '答对了：这是真的。',
+      'other': '答对了：这是假的。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String tfWrongIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': '答错了：这是真的。',
+      'other': '答错了：这是假的。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String inOrderTold(int n, int of) {
+    return '$of 个中有 $n 个位置正确。';
+  }
+
+  @override
+  String get whatYearYours => '你的年份';
+
+  @override
+  String get whatYearExactly => '年份完全正确';
+
+  @override
+  String beforeAfterRight(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': '答对了：是 $year 年，在 $above 年之前。',
+      'other': '答对了：是 $year 年，在 $above 年之后。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': '答错了：是 $year 年，在 $above 年之前。',
+      'other': '答错了：是 $year 年，在 $above 年之后。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAnswer => '答案';
+
+  @override
+  String get challengeYouSaid => '你的答案';
+
+  @override
+  String get challengePoints => '得分';
+
+  @override
+  String get challengeThisRound => '本轮';
+
+  @override
+  String get challengeLeftToday => '今天剩余';
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject，等级 $n';
   }
@@ -5413,6 +5788,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get todaySeeAgainHint => '从第一张开始，全屏重看今天的卡片';
+
+  @override
+  String get yourFiveFromToday => '你今天的五张卡片';
 
   @override
   String get tuneTitle => '调整你的组合';
@@ -5436,6 +5814,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tuneSave => '保存';
 
   @override
+  String get tuneHoldHint => '长按某个类别，打开里面更小的主题';
+
+  @override
   String get shareDayTitle => '分享你的一天';
 
   @override
@@ -5453,7 +5834,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get shareDayHeadline => '今天的五张';
 
   @override
-  String get shareFormatPost => '帖子';
+  String get shareFormatCover => '封面';
+
+  @override
+  String get shareFormatList => '列表';
 
   @override
   String get shareFormatStory => '快拍';
@@ -5650,9 +6034,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => '你的习惯';
-
-  @override
-  String get journeyChapterMemory => '你记住的';
 
   @override
   String get journeyChapterCoach => '你的教练';
@@ -5930,6 +6311,56 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deeperTryAgain => '没有送达。请稍后再试。';
 
   @override
+  String get deeperUnavailable => '暂时无法使用。请稍后再试。';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n家媒体',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n小时前',
+      zero: '刚刚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n天前',
+      one: '昨天',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => '国际';
+
+  @override
+  String get newsKeyPoints => '要点';
+
+  @override
+  String get newsBehind => '新闻背后';
+
+  @override
+  String get newsSources => '来源';
+
+  @override
+  String get newsMadeFrom => '由 Astute 根据这些报道撰写，并与报道逐一核对。';
+
+  @override
   String get deeperDeclined => '这个问题无法回答。';
 
   @override
@@ -6027,11 +6458,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get bookRecommendedBy => '推荐者';
 
   @override
-  String bookPickPhoto(String credit) {
-    return '照片：$credit';
-  }
-
-  @override
   String get bookFreeThisWeek => '本周免费';
 
   @override
@@ -6063,4 +6489,80 @@ class AppLocalizationsZh extends AppLocalizations {
   String bookRetold(String title, String author) {
     return '$author《$title》中的观点，由 Astute 用自己的话讲述。完整的书请到书店寻找。';
   }
+
+  @override
+  String get foundersTitle => '创始人读什么';
+
+  @override
+  String founderBookCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 本书',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get founderTheirBooks => '推荐过的书';
+
+  @override
+  String founderAbout(String name) {
+    return '这些是$name公开推荐过的书，附有原话和说话的出处。$name与 Astute 没有任何关系。';
+  }
+
+  @override
+  String founderPhoto(String author, String licence) {
+    return '照片：$author，$licence，Wikimedia Commons，已裁剪';
+  }
+
+  @override
+  String founderAlso(String names) {
+    return '其他推荐者：$names';
+  }
+
+  @override
+  String get firstCardTitle => '你的第一张卡片';
+
+  @override
+  String get firstCardSwipeOn => '滑动继续';
+
+  @override
+  String get trialOfferTitle => '试用全部 Astute+。';
+
+  @override
+  String get trialOfferMark => 'Astute+。';
+
+  @override
+  String get trialOfferLine => '无论怎么选，今天的五张卡片都在等你。';
+
+  @override
+  String get trialStepToday => '今天';
+
+  @override
+  String get trialStepTodayLine => '全部 Astute+ 即刻开放。不收取任何费用。';
+
+  @override
+  String trialStepDay(int day) {
+    return '第 $day 天';
+  }
+
+  @override
+  String trialStepReminderLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '我们会发通知提醒你：还剩 $days 天。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialStepChargeLine => '每年自动续订。至少提前 24 小时取消，就不会扣费。';
+
+  @override
+  String get trialOfferStart => '开始免费试用';
+
+  @override
+  String get trialOfferFree => '继续免费使用';
 }

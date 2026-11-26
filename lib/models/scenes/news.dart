@@ -41,6 +41,21 @@
 /// - `expires` (string, `yyyy-mm-dd`, required): the last day the card may
 ///   be dealt.
 ///
+/// The news written each morning (functions/src/news.ts) carries its story
+/// page too, Explore's latest news (lib/widgets/news/news_story_page.dart);
+/// a card of the bank has none of it, and a card is read without it:
+///
+/// - `summary` (string, ≤ 110 chars): two short lines under the headline.
+/// - `points` (strings, 3 or 4, each ≤ 120 chars): what to know, the most
+///   important first.
+/// - `sides` (0 or 2 of `{who, view}`): the two sides of a contested story.
+/// - `sources` (`{outlet, title, link}`s): the reports it was made from.
+/// - `rank` (int, from 1): its place in the day's paper, the front page
+///   first.
+/// - `world` (bool): one of the day's most important stories in the world,
+///   for the front page.
+/// - `at` (ISO 8601): when its newest report came out.
+///
 /// Example:
 ///
 /// ```json
@@ -91,6 +106,21 @@ class NewsThen {
   const NewsThen(this.label, this.year, this.headline, this.line);
 }
 
+/// One side of a contested story: who holds it, and their view.
+class NewsSide {
+  final String who;
+  final String view;
+  const NewsSide(this.who, this.view);
+}
+
+/// One report a story was made from.
+class NewsSource {
+  final String outlet;
+  final String title;
+  final Uri link;
+  const NewsSource(this.outlet, this.title, this.link);
+}
+
 /// A piece of news, explained in three taps.
 class NewsScene extends Scene {
   final String headline;
@@ -113,6 +143,28 @@ class NewsScene extends Scene {
   /// The last day the card may be dealt.
   final DateTime expires;
 
+  /// The story page's two lines under the headline; empty on a card of the
+  /// bank, or a paper made before there were story pages.
+  final String summary;
+
+  /// What to know, the most important first.
+  final List<String> points;
+
+  /// The two sides of a contested story, or none.
+  final List<NewsSide> sides;
+
+  /// The reports it was made from, in the editor's order.
+  final List<NewsSource> sources;
+
+  /// Its place in the day's paper, from 1; 0 when the paper did not say.
+  final int rank;
+
+  /// One of the day's most important stories in the world.
+  final bool world;
+
+  /// When its newest report came out, or null.
+  final DateTime? at;
+
   const NewsScene(
     super.raw, {
     required this.headline,
@@ -122,7 +174,28 @@ class NewsScene extends Scene {
     required this.panels,
     required this.then,
     required this.expires,
+    this.summary = '',
+    this.points = const [],
+    this.sides = const [],
+    this.sources = const [],
+    this.rank = 0,
+    this.world = false,
+    this.at,
   });
+
+  /// Every outlet that carries the story, each once: the ones the paper
+  /// names, then any of its reports', then the card's own outlet.
+  List<String> get outlets {
+    final List<String> out = [];
+    for (final String o in [
+      ...reported,
+      for (final NewsSource s in sources) s.outlet,
+      outlet,
+    ]) {
+      if (!out.contains(o)) out.add(o);
+    }
+    return out;
+  }
 
   /// How many taps open the whole card: always three.
   int get steps => panels.length + (then == null ? 0 : 1);
@@ -202,6 +275,10 @@ class NewsScene extends Scene {
       throw FormatException('scene: three steps, panels and then', id);
     }
 
+    // The story page, read leniently: what is missing or malformed is left
+    // out, and the card stands without it.
+    String text(Object? v) => v is String ? v.trim() : '';
+    final Object? at = raw['at'];
     return NewsScene(
       raw,
       headline: need(raw, 'headline', ''),
@@ -215,6 +292,33 @@ class NewsScene extends Scene {
       panels: panels,
       then: then,
       expires: day('expires'),
+      summary: text(raw['summary']),
+      points: [
+        if (raw['points'] case final List list)
+          for (final Object? p in list)
+            if (text(p).isNotEmpty) text(p),
+      ],
+      sides: [
+        if (raw['sides'] case final List list)
+          for (final Object? s in list)
+            if (s is Map &&
+                text(s['who']).isNotEmpty &&
+                text(s['view']).isNotEmpty)
+              NewsSide(text(s['who']), text(s['view'])),
+      ],
+      sources: [
+        if (raw['sources'] case final List list)
+          for (final Object? s in list)
+            if (s is Map &&
+                text(s['outlet']).isNotEmpty &&
+                text(s['title']).isNotEmpty)
+              if (Uri.tryParse(text(s['link'])) case final Uri link
+                  when link.isScheme('https') || link.isScheme('http'))
+                NewsSource(text(s['outlet']), text(s['title']), link),
+      ],
+      rank: raw['rank'] is int ? raw['rank'] as int : 0,
+      world: raw['world'] == true,
+      at: at is String ? DateTime.tryParse(at) : null,
     );
   }
 }

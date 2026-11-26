@@ -2,164 +2,195 @@
 <!-- slug: thinking-random-end-cooperation -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card</title>
+<!-- Two rows of dominoes, a domino a round, standing while both players cooperate. Above, a game
+     whose last round everyone knows, a finish flag after round 8; below, a game whose end is random,
+     its row running on past the card's edge, a flag with a question mark somewhere beyond. The reader
+     betrays in the known last round: round 8 falls, and knocks round 7, and so back to round 1, all
+     red. Then tries it on the random game: there is no last domino to push, the row runs on as each
+     round may be followed by another, and they stay standing (Veritasium: with a known last round
+     players defect from the end backward; in Axelrod's second tournament no one knew when a game would
+     end, the median game set at about 200 rounds). -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block}
-#go{align-self:center;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
-#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#rows{flex:1;min-height:0;width:100%;display:block}
+#go{align-self:flex-start;font:800 max(2cqh,14px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:max(1.7cqh,12px) max(5.5cqw,18px);cursor:pointer}
+#go:active{transform:scale(.97)}
+#why{font:500 max(1.9cqh,12.5px)/1.34 var(--body);margin:0}
+@container (max-height:520px){#why{display:none}}
 </style>
-<article class="card" id="card" data-topic="thinking" data-kind="Tap · see it unravel">
+<article class="card" id="card" data-topic="thinking" data-kind="Tap · dominoes">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GAME THEORY</span></div>
     <h2 class="q">Why does not knowing when a game ends keep players cooperating?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic"></svg>
-      <button id="go">Think backward · 0/10</button>
-      <div id="why" class="gone">
-        <p class="big">No sure last round, no unravelling.</p>
-        <p class="body">With a known end, betraying in the last round is safe, and that logic slides back to round 1. With a random end (200 rounds on average), any round might be followed by another, so you keep cooperating: you might still need them.</p>
-      </div>
+      <svg id="rows" role="img" aria-label="Two rows of dominoes, one domino a round, green while both players cooperate. Above, a game whose last round everyone knows, a finish flag after round 8. Below, a game with a random end: its row runs on past the edge, a question-mark flag somewhere beyond."></svg>
+      <button id="go">Betray in the last round</button>
     </div>
-    <p class="say" id="say">Tap to reason backward from the known last round.</p>
+    <p class="say" id="say">Each domino is a round, green while both cooperate. Push over the known last round.</p>
+    <p class="body gone" id="why">With a known end, betraying in the last round is safe, and that logic slides back to round 1. With a random end, typically about 200 rounds, any round might be followed by another: players keep cooperating, because they might still need each other.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>When the end is uncertain, the future keeps people cooperating.</div>
     <div class="foot"><span class="src">Source · Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const N = 10, MAXC = 600, COLS = 30, ROWS = 20;
-const GREEN = '#22a85a', RED = '#e2443a';
-let k = 0, games = [], shown = 0, face = 6, rolling = false, fast = false;
-let counterTxt = 'Roll: nobody knows which round is last.';
-let boxes = [], cells = [], dieG = null, counterEl = null, capEl = null, histEl = null, G = null;
+const INK = '#10100c', COOP = '#2fae6a', BETRAY = '#e2443a', PAPER = '#fffdf6';
+const N = 8;                      // rounds in the game with a known end
+let G = null, phase = 0, busy = false, shift = 0;
+const fell = Array(N).fill(0);    // how far each domino of the known game has fallen, 0 to its rest angle
+const red = Array(N).fill(false);
 
-function capText() {
-  if (k === 0) return 'Everyone knows round 10 is the last.';
-  if (k === 1) return 'Round 10: no future → betray.';
-  if (k < N) return `So round ${N - k + 1} is now last → betray.`;
-  return 'Unravelled to round 1: all betray.';
-}
-function histText() { return games.length ? 'Game lengths: ' + games.join(' · ') : 'Every round so far: cooperate.'; }
-
-function txt(s, x, y, size, opts = {}) {
-  const t = Kit.mk('text', {x, y, 'text-anchor': opts.a || 'start',
-    style: `fill:${opts.fill || 'var(--k)'};font:${opts.w || 700} ${size}px ${opts.fam || 'var(--body)'}`}, Kit.$('pic'));
-  t.textContent = s; return t;
-}
-function drawDie() {
-  if (!dieG) return;
-  dieG.innerHTML = '';
-  const {dx, dy, d} = G;
-  Kit.mk('rect', {x: dx, y: dy, width: d, height: d, rx: d * .18, style: 'fill:var(--k)'}, dieG);
-  const P = {1: [[.5,.5]], 2: [[.27,.27],[.73,.73]], 3: [[.27,.27],[.5,.5],[.73,.73]],
-    4: [[.27,.27],[.73,.27],[.27,.73],[.73,.73]], 5: [[.27,.27],[.73,.27],[.5,.5],[.27,.73],[.73,.73]],
-    6: [[.27,.25],[.73,.25],[.27,.5],[.73,.5],[.27,.75],[.73,.75]]}[face];
-  P.forEach(([a, b]) => Kit.mk('circle', {cx: dx + a * d, cy: dy + b * d, r: d * .085, style: 'fill:var(--c)'}, dieG));
-}
-function setShown(n) {
-  shown = n;
-  for (let i = 0; i < cells.length; i++) cells[i].style.opacity = i < n ? 1 : 0;
-}
-function draw() {
-  const svg = Kit.$('pic');
-  // Left too little room to draw all of it again, with its words whole (a small phone), it keeps the drawing it has, shown smaller, whole.
-  { const b = svg.getBoundingClientRect(), f0 = Math.max(10, Math.min(b.height / 18, b.width / 22)), fs0 = Math.max(12, Math.min(f0, b.height / 22, b.width / 26));
-    const s0 = Math.min((b.width - fs0 * .6) / (N + (N - 1) * .15), b.height * .11);
-    if (G && G.H && b.height < fs0 * 11.6 + s0 + ROWS) { svg.dataset.kept = '1'; return; } }
+function build() {
+  const svg = Kit.$('rows');
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(12, Math.min(f, H / 22, W / 26));
-  const pad = fs * .3;
-  let y = fs * 1.1;
-  txt('KNOWN END · 10 ROUNDS', pad, y, fs * .9, {fam: 'var(--mono)', w: 700});
-  const gapR = .15, s = Math.min((W - 2 * pad) / (N + (N - 1) * gapR), H * .11);
-  const g = s * gapR, x0 = (W - (N * s + (N - 1) * g)) / 2, yA = y + fs * .8;
-  boxes = [];
-  for (let i = 0; i < N; i++) {
-    const bad = i >= N - k, gp = Kit.mk('g', {}, svg);
-    Kit.mk('rect', {x: x0 + i * (s + g), y: yA, width: s, height: s, rx: s * .18, style: `fill:${bad ? RED : GREEN}`}, gp);
-    const t = Kit.mk('text', {x: x0 + i * (s + g) + s / 2, y: yA + s / 2 + fs * .35, 'text-anchor': 'middle',
-      style: `fill:#fff;font:800 ${Math.max(12, Math.min(fs, s * .5))}px var(--body)`}, gp);
-    t.textContent = bad ? 'D' : 'C';
-    boxes.push(gp);
-  }
-  txt('round 1', x0, yA + s + fs * 1.1, fs * .85, {w: 500, fill: 'var(--muted)'});
-  txt('round 10', x0 + N * s + (N - 1) * g, yA + s + fs * 1.1, fs * .85, {w: 500, fill: 'var(--muted)', a: 'end'});
-  capEl = txt(capText(), W / 2, yA + s + fs * 2.6, fs, {a: 'middle', w: 800, fill: k ? RED : 'var(--k)'});
-  const yB = yA + s + fs * 4.9;
-  Kit.mk('line', {x1: pad, x2: W - pad, y1: yB - fs * 1.6, y2: yB - fs * 1.6, style: 'stroke:var(--edge);stroke-width:1'}, svg);
-  txt('RANDOM END · AVG 200 ROUNDS', pad, yB, fs * .9, {fam: 'var(--mono)', w: 700, fill: k === N ? 'var(--k)' : 'var(--muted)'});
-  const d = fs * 2.1;
-  G = {dx: W - pad - d, dy: yB - fs * 1.05, d, H};
-  dieG = Kit.mk('g', {style: 'cursor:pointer'}, svg);
-  dieG.addEventListener('click', () => { if (k === N) Kit.$('go').click(); });
-  drawDie();
-  const gTop = yB + fs * 1.6, gBot = H - fs * 3.2;
-  const c = Math.max(1, Math.min((W - 2 * pad) / COLS, (gBot - gTop) / ROWS));  // smaller cells where the room is short
-  const gx = (W - c * COLS) / 2;
-  cells = [];
-  for (let i = 0; i < MAXC; i++) {
-    const r = Math.floor(i / COLS), cc = i % COLS;
-    cells.push(Kit.mk('rect', {x: gx + cc * c + c * .1, y: gTop + r * c + c * .1, width: c * .8, height: c * .8, rx: c * .15,
-      style: `fill:${GREEN};opacity:0`}, svg));
-  }
-  setShown(shown);
-  const yC = gTop + c * ROWS + fs * 1.3;
-  counterEl = txt(counterTxt, W / 2, yC, fs, {a: 'middle', w: 800});
-  histEl = txt(histText(), W / 2, yC + fs * 1.4, fs * .9, {a: 'middle', w: 500, fill: 'var(--muted)'});
+  const fs = Math.max(12.5, Math.min(15, f * .95));
+  // Two rows, each a title over a floor of dominoes, set together in the middle of the room.
+  const rowH = H / 2, title = fs * 1.75;
+  const h = Math.max(28, Math.min(rowH - title - 10, W * .19));
+  const w = h * .44, m = Math.min(h * .96, W * .2);            // a domino; the room on the left for round 1 to lie in
+  const s = Math.min((W - m - w - h * .55) / (N - 1), h * .72);  // from one domino to the next
+  const block = title + h + 4, gap = Math.min(Math.max(fs * 1.6, (H - 2 * block) * .4), H - 2 * block);
+  const top = Math.max(0, (H - 2 * block - gap) / 2);
+  const floors = [top + block, top + 2 * block + gap];
+  const g = Kit.mk('g', {}, svg);
+  const defs = Kit.mk('defs', {}, g), cp = Kit.mk('clipPath', {id: 'frame'}, defs);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H}, cp);
+  const rows = [];
+  ['Known end: 8 rounds', 'Random end'].forEach((t, r) => {
+    const y = floors[r];
+    const tt = Kit.mk('text', {x: 0, y: y - h - 10, 'font-size': fs * 1.1, 'font-weight': 800, fill: INK, 'font-family': 'Figtree, sans-serif'}, g);
+    tt.textContent = t;
+    Kit.mk('line', {x1: 0, x2: W, y1: y, y2: y, stroke: INK, 'stroke-width': 2.5, 'stroke-linecap': 'round'}, g);
+    rows.push(Kit.mk('g', {'clip-path': 'url(#frame)'}, g));
+  });
+  // The known game's finish flag, after its last round.
+  const fx = m + (N - 1) * s + w + h * .3;
+  flag(g, fx, floors[0], h * 1.05, false, fs);
+  const last = Kit.mk('text', {x: Math.min(fx + h * .5, W - 2), y: floors[0] - h * 1.05 - 6, 'text-anchor': 'end', 'font-size': fs * .95, 'font-weight': 700, fill: INK, 'font-family': 'Figtree, sans-serif'}, g);
+  last.textContent = 'last round';
+  // The random game's last round, nobody knows where: somewhere past the edge.
+  const unknown = Kit.mk('text', {x: W - 2, y: floors[1] - h - 10, 'text-anchor': 'end', 'font-size': fs * .95, 'font-weight': 700, fill: INK, 'font-family': 'Figtree, sans-serif'}, g);
+  unknown.textContent = 'last round: ?';
+  G = {svg, W, H, f, fs, h, w, m, s, floors, rows};
+  paint();
 }
-function gameLength() { let n = 1; while (Kit.rnd() >= 1 / 200 && n < 5000) n++; return n; }
-function roll() {
-  rolling = true; Kit.haptic('light');
-  const len = gameLength(), o = {n: 0};
-  const dur = (fast || Kit.calm) ? .05 : Math.min(2.6, .7 + len / 220);
-  gsap.to(o, {n: len, duration: dur, ease: 'none',
-    onUpdate() {
-      const n = Math.floor(o.n); setShown(Math.min(n, MAXC));
-      face = 1 + Math.floor(Math.random() * 6); drawDie();
-      counterTxt = `Round ${Math.max(n, 1)}: will there be another?`;
-      counterEl.textContent = counterTxt;
-    },
-    onComplete() {
-      setShown(Math.min(len, MAXC));
-      games.push(len);
-      counterTxt = `Game ${games.length} ended after ${len} rounds.`;
-      counterEl.textContent = counterTxt; histEl.textContent = histText();
-      rolling = false; Kit.haptic('selection');
-      if (games.length >= 3) finish();
-      else Kit.$('go').textContent = `Roll again · ${games.length}/3`;
-    }});
+// A flag on a pole: chequered for the end everyone knows, a question mark for the one nobody knows.
+function flag(g, x, y, h, unknown, fs) {
+  const at = {stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const fw = h * .46, fh = h * .32;
+  Kit.mk('line', Object.assign({x1: x, x2: x, y1: y, y2: y - h, fill: 'none'}, at), g);
+  if (!unknown) {
+    Kit.mk('rect', Object.assign({x, y: y - h, width: fw, height: fh, fill: PAPER}, at), g);
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 3; j++) if ((i + j) % 2 === 0) Kit.mk('rect', {x: x + i * fw / 4, y: y - h + j * fh / 3, width: fw / 4, height: fh / 3, fill: INK}, g);
+    Kit.mk('rect', Object.assign({x, y: y - h, width: fw, height: fh, fill: 'none'}, at), g);
+  } else {
+    Kit.mk('rect', Object.assign({x, y: y - h, width: fw, height: fh * 1.15, rx: 2, fill: '#ffd23d'}, at), g);
+    const q = Kit.mk('text', {x: x + fw / 2, y: y - h + fh * .95, 'text-anchor': 'middle', 'font-size': Math.max(fs, fh * .95), 'font-weight': 800, fill: INK, 'font-family': 'Fraunces, Georgia, serif'}, g);
+    q.textContent = '?';
+  }
+}
+// A domino standing on the floor at x, turned left by its angle about its foot, with its round on its face.
+// One that runs past the card's edge is drawn cut there, open on that side.
+function domino(g, x, y, ang, n, isRed) {
+  const {h, w, fs, W} = G;
+  const d = Kit.mk('g', {transform: `rotate(${(-ang).toFixed(2)} ${x.toFixed(1)} ${y.toFixed(1)})`}, g);
+  const cut = !ang && x + w > W - 1, ww = cut ? Math.max(1, W - 1 - x) : w;
+  if (cut) {
+    const r = Math.min(w * .22, ww);
+    Kit.mk('path', {d: `M${x + ww},${y - h} H${x + r} Q${x},${y - h} ${x},${y - h + r} V${y - r} Q${x},${y} ${x + r},${y} H${x + ww} Z`, fill: isRed ? BETRAY : COOP}, d);
+    Kit.mk('path', {d: `M${x + ww},${y - h} H${x + r} Q${x},${y - h} ${x},${y - h + r} V${y - r} Q${x},${y} ${x + r},${y} H${x + ww}`, fill: 'none', stroke: INK, 'stroke-width': 2.4}, d);
+    return d;
+  }
+  Kit.mk('rect', {x, y: y - h, width: w, height: h, rx: w * .22, fill: isRed ? BETRAY : COOP, stroke: INK, 'stroke-width': 2.4}, d);
+  Kit.mk('line', {x1: x + w * .2, x2: x + w * .8, y1: y - h * .5, y2: y - h * .5, stroke: INK, 'stroke-width': 1.6, opacity: .35}, d);
+  const t = Kit.mk('text', {x: x + w / 2, y: y - h * .66 + fs * .36, 'text-anchor': 'middle', 'font-size': Math.min(fs * 1.05, w * .78), 'font-weight': 800, fill: '#fff', 'font-family': 'Fraunces, Georgia, serif'}, d);
+  t.textContent = n;
+  return d;
+}
+// Where each fallen domino comes to rest: round 1 flat on the floor, each later one leaning on the one
+// before. Falling, a domino stops at the first point of the one before that its face, or its top corner,
+// meets: the least tilt at which any point of that domino's right face lies within its reach.
+function rest() {
+  const {h, w, s} = G, out = [90];
+  for (let i = 1; i < N; i++) {
+    const p = out[i - 1] * Math.PI / 180;
+    let best = 90;
+    for (let u = 0; u <= 1.0001; u += .02) {
+      const cx = w * Math.cos(p) - u * h * Math.sin(p) - s, cy = w * Math.sin(p) + u * h * Math.cos(p);
+      if (cy <= 0 || Math.hypot(cx, cy) > h) continue;
+      best = Math.min(best, Math.atan2(-cx, cy) * 180 / Math.PI);
+    }
+    out.push(best);
+  }
+  return out;
+}
+function paint() {
+  if (!G) return;
+  const {rows, floors, m, s, W} = G;
+  // The known game: its dominoes, fallen as far as they have.
+  rows[0].innerHTML = '';
+  for (let i = 0; i < N; i++) domino(rows[0], m + i * s, floors[0], fell[i], i + 1, red[i]);
+  // The random game: its row runs past the edge, and moves on when someone looks for its end.
+  rows[1].innerHTML = '';
+  // Set so its last domino is always cut by the edge, about half of it showing: the row runs on.
+  const lead = W - .45 * G.w - m, offB = lead - Math.ceil(lead / s) * s;
+  const first = Math.floor(shift), off = (shift - first) * s;
+  for (let k = 0; ; k++) {
+    const x = m + offB + k * s - off;
+    if (x > W - 3) break;
+    if (x < -G.w - 4) continue;
+    domino(rows[1], x, floors[1], 0, first + k + 1, false);
+  }
+}
+
+// The first push: round 8 falls, and each round falls onto the one before it, back to round 1.
+function unravel() {
+  busy = true; Kit.haptic('medium');
+  const ends = rest();
+  const say = Kit.$('say');
+  say.textContent = 'Round 8 has no future: betray it. Then round 7 is the last that matters, and so on.';
+  if (Kit.calm) { for (let i = 0; i < N; i++) { fell[i] = ends[i]; red[i] = true; } paint(); after(); return; }
+  const tl = gsap.timeline({onUpdate: paint, onComplete: after});
+  for (let k = 0; k < N; k++) {
+    const i = N - 1 - k, o = {a: 0};
+    tl.call(() => { red[i] = true; Kit.haptic('light'); }, null, k * .2);
+    tl.to(o, {a: ends[i], duration: .38, ease: 'power2.in', onUpdate: () => { fell[i] = o.a; }}, k * .2);
+  }
+  function after() {
+    busy = false; phase = 1;
+    say.textContent = 'Known last round: it unravels back to round 1, everyone betrays. Now the random game.';
+    Kit.$('go').textContent = 'Betray in its last round';
+  }
+}
+// The second push: there is no last round to push. The row runs on, and nothing falls.
+function noEnd() {
+  busy = true; Kit.haptic('light');
+  const say = Kit.$('say');
+  say.textContent = 'Which round is the last? Each might be followed by another.';
+  const done = () => { busy = false; phase = 2; finish(); };
+  if (Kit.calm) { shift = 4; paint(); done(); return; }
+  const o = {v: shift};
+  gsap.to(o, {v: shift + 4, duration: 2.2, ease: 'power1.inOut', onUpdate: () => { shift = o.v; paint(); if (Math.floor(o.v) !== Math.floor(o.v - .02)) Kit.haptic('selection'); }, onComplete: done});
 }
 function finish() {
   Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   Kit.haptic('success');
-  requestAnimationFrame(draw);
-  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, duration: .45, stagger: .1});
 }
-Kit.$('go').addEventListener('click', () => {
-  if (k < N) {
-    k++; Kit.haptic('light'); draw();
-    if (!Kit.calm) gsap.from(boxes[N - k], {scale: 1.35, transformOrigin: '50% 50%', duration: .35, ease: 'back.out(3)'});
-    if (k < N) Kit.$('go').textContent = `Think backward · ${k}/10`;
-    else {
-      Kit.$('go').textContent = 'Roll the die';
-      Kit.$('say').textContent = 'Now the end is random. Roll the die to play a game.';
-    }
-  } else if (!rolling && games.length < 3) roll();
-});
-Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(boxes, {opacity: 0, y: 8, stagger: .05, duration: .35, ease: 'power3.out'}); };
+Kit.$('go').addEventListener('click', () => { if (busy) return; if (phase === 0) unravel(); else if (phase === 1) noEnd(); });
+
+Kit.onShow.card = () => build();
+let seen = '';
+new ResizeObserver(() => { const b = Kit.$('rows').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; build(); } }).observe(Kit.$('rows'));
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity: 0, y: 8, duration: .45, ease: 'power3.out', delay: .2}); };
 Kit.play.card = async () => {
-  fast = true;
-  const w = ms => new Promise(r => setTimeout(r, ms));
-  for (let i = 0; i < N; i++) { Kit.$('go').click(); await w(30); }
-  for (let i = 0; i < 3; i++) { Kit.$('go').click(); await w(300); }
-  await w(600);
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('go').click(); for (let i = 0; i < 60 && phase < 1; i++) await wait(60);
+  Kit.$('go').click(); for (let i = 0; i < 80 && phase < 2; i++) await wait(60);
+  await wait(400);
 };
 Kit.single();
 </script>

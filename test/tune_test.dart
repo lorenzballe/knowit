@@ -6,15 +6,22 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:astuto/data/genre_names.dart';
+import 'package:astuto/data/genres.dart';
 import 'package:astuto/data/pill_bank.dart';
-import 'package:astuto/l10n/app_localizations.dart';
+import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/archive_screen.dart';
+import 'package:astuto/screens/genres_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/screens/topics_screen.dart';
 import 'package:astuto/screens/tune_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/quick_return.dart';
+import 'package:astuto/widgets/ui.dart' show BackCircle;
 
 import 'explore/core_harness.dart';
 
@@ -22,6 +29,7 @@ Future<void> _pump(
   WidgetTester tester,
   Widget child, {
   Size size = const Size(402, 874),
+  bool calm = false,
 }) async {
   tester.view.physicalSize = size * 3;
   tester.view.devicePixelRatio = 3;
@@ -31,11 +39,60 @@ Future<void> _pump(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: buildAstutoTheme(Brightness.dark),
-      home: child,
+      home: Builder(
+        builder: (context) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(disableAnimations: calm),
+          child: child,
+        ),
+      ),
     ),
   );
   await tester.pump(const Duration(milliseconds: 600));
 }
+
+/// The fine-tuning's page, the one list it scrolls in.
+ScrollPosition _page(WidgetTester tester) => tester
+    .state<ScrollableState>(
+      find.descendant(
+        of: find.byKey(const ValueKey('tune-page')),
+        matching: find.byType(Scrollable),
+      ),
+    )
+    .position;
+
+/// The page scrolled to its foot: as far as it goes once all of it has been
+/// laid out, which a list built as it comes into view only knows on the way.
+Future<void> _toFoot(WidgetTester tester) async {
+  for (int i = 0; i < 40; i++) {
+    final ScrollPosition page = _page(tester);
+    if (i > 0 && (page.pixels - page.maxScrollExtent).abs() < 0.5) break;
+    page.jumpTo(page.maxScrollExtent);
+    await tester.pump(const Duration(milliseconds: 100));
+  }
+}
+
+/// The button at the foot of the screen, tapped wherever the page is.
+Future<void> _save(WidgetTester tester) async {
+  await tester.tap(find.byKey(const ValueKey('tune-save')));
+  await tester.pump(const Duration(milliseconds: 600));
+}
+
+/// The page brought to rest with the first subject's parts on screen, and
+/// [after] of what follows played.
+Future<void> _restOnParts(WidgetTester tester, Duration after) async {
+  _page(tester).jumpTo(560);
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 16));
+  await tester.pump(after);
+}
+
+/// The first subject whose parts the page shows, and the first of them.
+Genre _firstPart(WidgetTester tester) =>
+    kGenres[tester
+            .widgetList<GenreSubject>(find.byType(GenreSubject))
+            .first
+            .topicKey]!
+        .first;
 
 /// The bar of [key], 0 to 100, as the tile draws it.
 int _bar(WidgetTester tester, String key) =>
@@ -101,8 +158,7 @@ void main() {
       });
       final Map<String, double> before = {...app.topicWeights};
       await _pump(tester, TuneScreen(app: app, picked: app.pickedTopics));
-      await tester.tap(find.byKey(const ValueKey('tune-save')));
-      await tester.pump(const Duration(milliseconds: 600));
+      await _save(tester);
       expect(app.topicWeights, before);
     });
 
@@ -122,11 +178,160 @@ void main() {
       );
       await tester.pump();
       expect(_bar(tester, 'music'), 0);
-      await tester.tap(find.byKey(const ValueKey('tune-save')));
-      await tester.pump(const Duration(milliseconds: 600));
+      await _save(tester);
       expect(app.pickedTopics.contains('music'), isFalse);
       expect(app.pickedTopics.contains('thinking'), isTrue);
       expect(app.topicWeights.containsKey('music'), isFalse);
+    });
+  });
+
+  group('One page, and the hint that a part opens', () {
+    testWidgets('the whole page scrolls, the title and the way back with it, '
+        'as on Instagram: going down the way back goes up and away, a little '
+        'way back up it comes straight back over the page, and the button '
+        'stays at the foot throughout, the last of the page clear of it', (
+      tester,
+    ) async {
+      final AppState app = await readyApp({'knowit.tuneHoldHint': true});
+      await _pump(tester, TuneScreen(app: app, picked: app.pickedTopics));
+      final Finder title = find.byKey(
+        const ValueKey('tune-title'),
+        skipOffstage: false,
+      );
+      final Finder back = find.byType(BackCircle);
+      final Offset backAt = tester.getTopLeft(back);
+      final double titleTop = tester.getTopLeft(title).dy;
+      double ground() => tester
+          .widget<Opacity>(find.byKey(const ValueKey('quick-return-ground')))
+          .opacity;
+      // At the top, the title stands beside the way back, with nothing laid
+      // behind it.
+      expect(
+        (tester.getCenter(title).dy - tester.getCenter(back).dy).abs(),
+        lessThan(2),
+      );
+      expect(back.hitTestable(), findsOneWidget);
+      expect(ground(), 0);
+      // The button at the foot of the screen, in reach from the start.
+      final Finder save = find.byKey(const ValueKey('tune-save'));
+      expect(save.hitTestable(), findsOneWidget);
+      final Rect button = tester.getRect(save);
+      expect(button.bottom, greaterThan(874 - 40));
+
+      // A little way down, the way back goes up with the title, as part of
+      // the page, and still nothing behind it.
+      _page(tester).jumpTo(30);
+      await tester.pump();
+      expect(tester.getTopLeft(title).dy, closeTo(titleTop - 30, 0.5));
+      expect(tester.getTopLeft(back).dy, closeTo(backAt.dy - 30, 0.5));
+      expect(ground(), 0);
+
+      // Further down, gone with the page; the button where it was.
+      _page(tester).jumpTo(400);
+      await tester.pump();
+      expect(tester.getRect(back).bottom, lessThanOrEqualTo(0));
+      expect(back.hitTestable(), findsNothing);
+      expect(tester.getRect(save), button);
+
+      // A little way back up, it comes straight back where it stood, the
+      // page fading under it there; the button where it was.
+      _page(tester).jumpTo(380);
+      await tester.pump();
+      await tester.pump(QuickReturn.comeBack);
+      expect(tester.getTopLeft(back), backAt);
+      expect(back.hitTestable(), findsOneWidget);
+      expect(ground(), 1);
+      expect(tester.getRect(save), button);
+
+      // At the foot of the page the button is where it was, and the last
+      // subject stands clear of it and of the fade over it.
+      await _toFoot(tester);
+      expect(tester.getRect(save), button);
+      final double last = [
+        for (final Element e in [
+          ...find.byType(GenreSubject).evaluate(),
+          ...find.byType(GenreSubjectOff).evaluate(),
+        ])
+          tester.getRect(find.byElementPredicate((x) => x == e)).bottom,
+      ].fold(0.0, (a, b) => a > b ? a : b);
+      expect(last, lessThan(button.top - 10 - 22));
+    });
+
+    testWidgets('the first time the parts come to rest on screen, the first '
+        'of them is pressed and opens what is inside, with a line, folds '
+        'again, and never again', (tester) async {
+      final AppState app = await readyApp();
+      await _pump(tester, TuneScreen(app: app, picked: app.pickedTopics));
+      final BuildContext context = tester.element(find.byType(TuneScreen));
+      final String line = context.l10n.tuneHoldHint;
+      expect(find.text(line), findsNothing);
+      final Genre first = _firstPart(tester);
+      final String inside = context.l10n.strandOf(first.strands.first);
+      expect(find.text(inside), findsNothing);
+
+      await _restOnParts(tester, const Duration(milliseconds: 1700));
+      expect(find.text(line), findsOneWidget);
+      expect(find.text(inside), findsOneWidget);
+      expect(tester.takeException(), isNull);
+
+      await tester.pump(const Duration(seconds: 3));
+      expect(find.text(line), findsNothing);
+      expect(find.text(inside), findsNothing);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      expect(prefs.getBool('knowit.tuneHoldHint'), isTrue);
+
+      // Opened again, the page does not show it again.
+      await tester.pumpWidget(const SizedBox());
+      await _pump(tester, TuneScreen(app: app, picked: app.pickedTopics));
+      await _restOnParts(tester, const Duration(milliseconds: 1700));
+      expect(find.text(line), findsNothing);
+    });
+
+    testWidgets('for a reader who asked for less motion, the hint is its line, '
+        'still', (tester) async {
+      final AppState app = await readyApp();
+      await _pump(
+        tester,
+        TuneScreen(app: app, picked: app.pickedTopics),
+        calm: true,
+      );
+      final BuildContext context = tester.element(find.byType(TuneScreen));
+      await _restOnParts(tester, const Duration(milliseconds: 1700));
+      expect(find.text(context.l10n.tuneHoldHint), findsOneWidget);
+      expect(
+        find.text(context.l10n.strandOf(_firstPart(tester).strands.first)),
+        findsNothing,
+      );
+    });
+
+    testWidgets('a part held opens what is inside it, and the hint is not '
+        'owed once the reader has found it', (tester) async {
+      final AppState app = await readyApp();
+      await _pump(tester, TuneScreen(app: app, picked: app.pickedTopics));
+      final BuildContext context = tester.element(find.byType(TuneScreen));
+      final Genre first = _firstPart(tester);
+      // Held as soon as the parts come into view, before they stand whole
+      // on screen and the hint has its turn.
+      _page(tester).jumpTo(300);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 16));
+      expect(find.text(context.l10n.tuneHoldHint), findsNothing);
+      await tester.longPress(find.text(context.l10n.themeOf(first)).first);
+      await tester.pump(const Duration(milliseconds: 600));
+      expect(
+        find.text(context.l10n.strandOf(first.strands.first)),
+        findsOneWidget,
+      );
+      // At rest on the parts later, nothing is shown: still open as the
+      // reader left it, and the hint gone for good.
+      await _restOnParts(tester, const Duration(seconds: 2));
+      expect(
+        find.text(context.l10n.strandOf(first.strands.first)),
+        findsOneWidget,
+      );
+      expect(find.text(context.l10n.tuneHoldHint), findsNothing);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      expect(prefs.getBool('knowit.tuneHoldHint'), isTrue);
     });
   });
 

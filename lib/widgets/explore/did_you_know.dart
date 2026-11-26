@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../flip_card.dart';
 import '../../analytics.dart';
 import '../../data/explore_mix.dart';
 import '../../l10n/l10n.dart';
@@ -254,7 +255,15 @@ class _DidYouKnowState extends State<DidYouKnow>
                     offset: Offset(_dx, 0),
                     child: Transform.rotate(
                       angle: _dx / 18 * math.pi / 180,
-                      child: _face(context, top, toNew, toKnew),
+                      // Turned over as every card in the app is: a real
+                      // half-turn, the answer on its back; a new card on
+                      // top starts face up.
+                      child: FlipCard(
+                        key: ValueKey('dyk-flip-${top.id}'),
+                        showBack: _turned,
+                        front: _face(context, top, toNew, toKnew, false),
+                        back: _face(context, top, toNew, toKnew, true),
+                      ),
                     ),
                   ),
                 ),
@@ -292,7 +301,13 @@ class _DidYouKnowState extends State<DidYouKnow>
     );
   }
 
-  Widget _face(BuildContext context, Pill p, double toNew, double toKnew) {
+  Widget _face(
+    BuildContext context,
+    Pill p,
+    double toNew,
+    double toKnew,
+    bool turned,
+  ) {
     final l = context.l10n;
     final TextStyle foot = AppText.label(
       size: 9,
@@ -327,7 +342,7 @@ class _DidYouKnowState extends State<DidYouKnow>
             children: [
               CardHead(pill: p),
               const SizedBox(height: 12),
-              if (_turned) ...[
+              if (turned) ...[
                 Text(
                   p.question,
                   maxLines: 3,
@@ -343,18 +358,18 @@ class _DidYouKnowState extends State<DidYouKnow>
               ],
               Expanded(
                 child: CardQuestion(
-                  key: ValueKey('dyk-face-${p.id}-$_turned'),
-                  text: _turned ? firstLines(p.answer) : p.question,
+                  key: ValueKey('dyk-face-${p.id}-$turned'),
+                  text: turned ? firstLines(p.answer) : p.question,
                   color: p.ink,
                   min: 14,
-                  max: _turned ? 22 : 27,
+                  max: turned ? 22 : 27,
                   height: 1.1,
                   tracking: -0.034,
                   alignment: Alignment.centerLeft,
                 ),
               ),
               const SizedBox(height: 12),
-              if (_turned)
+              if (turned)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

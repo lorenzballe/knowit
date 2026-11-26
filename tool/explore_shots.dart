@@ -26,6 +26,7 @@ import 'package:astuto/models/pill.dart';
 import 'package:astuto/remote/remote.dart';
 import 'package:astuto/state/explore_play.dart';
 import 'package:astuto/sync/served.dart';
+import 'package:astuto/sync/tally.dart';
 
 Future<void> _loadFonts() async {
   final fonts = {
@@ -309,6 +310,70 @@ void main() {
     }
   }
 
+  // The top list at night on a 390 × 844 phone, in English and Italian:
+  // Astute's picks in its place while real readers' counts cannot carry a
+  // list, and the readers' list once they can — counts made up for the
+  // photograph, on cards across the subjects; nothing here reaches the
+  // app. Into the gallery, or into TOP_DIR:
+  //
+  //   flutter test tool/explore_shots.dart --plain-name "top list:" \
+  //     --update-goldens --dart-define=TOP_DIR=/somewhere/else
+  const String topDir = String.fromEnvironment(
+    'TOP_DIR',
+    defaultValue: 'shots/gallery/explore/top/$label',
+  );
+  for (final String lang in ['en', 'it']) {
+    for (final bool counted in [false, true]) {
+      final String state = counted ? 'readers' : 'picks';
+      testWidgets('top list: $state $lang', (tester) async {
+        size(const Size(390, 844), 3);
+        tester.view.padding = const FakeViewPadding(
+          top: 47 * 3,
+          bottom: 34 * 3,
+        );
+        tester.view.viewPadding = const FakeViewPadding(
+          top: 47 * 3,
+          bottom: 34 * 3,
+        );
+        addTearDown(tester.view.resetPadding);
+        addTearDown(tester.view.resetViewPadding);
+        tester.platformDispatcher.localesTestValue = [Locale(lang)];
+        addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+        _store();
+        final DateTime now = DateTime.now();
+        String ago(int days) => tallyDay(now.subtract(Duration(days: days)));
+        final List<String> heads = [
+          for (final String topic in {for (final p in PillBank.cards) p.topic})
+            PillBank.cards.firstWhere((p) => p.topic == topic).id,
+        ];
+        const List<int> week = [41, 33, 27, 22, 17, 12, 9, 7, 5, 4];
+        final Tallies tallies = Tallies(
+          storeOverride: MemoryTallyStore({
+            if (counted)
+              ago(Tallies.closedAfter + 1): {
+                for (var i = 0; i < heads.length && i < week.length; i++)
+                  heads[i]: week[i],
+              },
+          }),
+        );
+        // ignore: invalid_use_of_visible_for_testing_member
+        Tallies.useForTest(tallies);
+        // ignore: invalid_use_of_visible_for_testing_member
+        addTearDown(() => Tallies.useForTest(Tallies()));
+        await tester.runAsync(tallies.refresh);
+        await tester.pumpWidget(const AstutoApp());
+        await settle(tester);
+        await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+        await settle(tester);
+        await reach(tester, 'section-top', above: 150);
+        await expectLater(
+          find.byType(MaterialApp).first,
+          matchesGoldenFile('$topDir/after-$state-$lang.png'),
+        );
+      });
+    }
+  }
+
   testWidgets('Explore, top to bottom', (tester) async {
     await open(tester);
     await shoot(tester, '00-top');
@@ -576,7 +641,9 @@ void main() {
 
         await say(right: true);
         await say(right: false);
-        // The answer just told, in its calm colour and its word.
+        // The answer just told, in its calm colour and its word: a frame
+        // more, for the word to have come in.
+        await tester.pump(const Duration(milliseconds: 250));
         await take('sixty-told');
         await tester.pump(const Duration(seconds: 3));
         await take('sixty-play');
@@ -768,10 +835,25 @@ void main() {
           await take('intro');
           await tester.tap(find.byKey(ValueKey('$id-play')));
           await settle(tester);
+          // The round asked, before any move.
+          await take('ask');
           // The round in play, a move or two in.
           await move(tester, id, 0);
           if (id == 'closer' || id == 'tf') await move(tester, id, 1);
           await take('play');
+          // Spot the false one, its pick said: the four told.
+          if (id == 'spot') {
+            await tester.tap(find.byKey(const ValueKey('spot-confirm')));
+            for (int f = 0; f < 12; f++) {
+              await tester.pump(const Duration(milliseconds: 90));
+            }
+            await take('told');
+          }
+          // Closer, closer, its last step taken: told on its card.
+          if (id == 'closer') {
+            await move(tester, id, 2);
+            await take('told');
+          }
           // In order, checked: the moments in their true order, their years
           // told, before the report.
           if (id == 'in-order') {

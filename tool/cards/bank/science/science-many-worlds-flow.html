@@ -1,216 +1,199 @@
 <!doctype html>
 <!-- slug: science-many-worlds-flow -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- The picture, drawn by hand with rough.js: the wave of a quantum system as a tree growing up from its source, a
+     fork at each of three measurements, and at the top the observer. At its foot, the rules the tree obeys, as two
+     index cards: the Schrödinger equation, and the collapse rule with its scissors. Copenhagen: at every fork the
+     scissors snip all branches but yours, and one figure stands at the top. Flip to Many-Worlds: the collapse card
+     falls away, the snipped branches grow on by the same one equation, and at their tips stand other yous; yours is
+     the same branch with the same view. Drawn again at its real size whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/rough.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#wrap{position:relative;flex:1;min-height:0}
-#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
-#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;align-self:stretch}
-#go:disabled{opacity:.55;cursor:default}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
-#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#sw{display:flex;gap:1.5cqw;background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:99px;padding:.6cqh}
+.sw{flex:1;font:800 max(2cqh,13.5px)/1.15 var(--body);color:var(--k);background:transparent;border:0;border-radius:99px;padding:max(1.3cqh,9px) 2cqw;cursor:pointer;transition:transform .14s cubic-bezier(.23,1,.32,1)}
+.sw:active{transform:scale(.97)}
+.sw.on{background:var(--k);color:var(--c)}
+#why{display:flex;flex-direction:column;gap:.7cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.12 var(--display);margin:0}
+#why .body{font:500 max(1.95cqh,13px)/1.34 var(--body);margin:0;overflow-wrap:break-word}
 .say,.keep,.q{overflow-wrap:break-word}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* A short card keeps the line of the why; its sentences give their room to the tree. */
+@container (max-height:540px){#why .body{display:none}}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Race · two rules vs one">
+<article class="card" id="card" data-topic="science" data-kind="Flip the rule · compare">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">QUANTUM</span></div>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLIP THE RULE</span></div>
     <h2 class="q">Why do many physicists find Many-Worlds cleaner than the Copenhagen interpretation?</h2>
     <div class="stagebox" id="stage">
-      <div id="wrap"><canvas id="cv"></canvas></div>
-      <button id="go">▶ Run to measurement 1 of 3</button>
+      <svg id="pic" role="img" aria-label="A hand-drawn tree: a wave growing up from its source and forking at three measurements, with you at the top. At its foot two rule cards: the Schrödinger equation, and the collapse rule with scissors that snip every branch but yours."></svg>
+      <div id="sw">
+        <button class="sw on" data-m="0">Copenhagen</button>
+        <button class="sw" data-m="1">Many-Worlds</button>
+      </div>
       <div id="why" class="gone">
         <p class="big">One rule, never broken</p>
         <p class="body">Copenhagen adds a special collapse rule that stops the wave at every measurement. Many-Worlds keeps only the Schrödinger equation: the wave just branches, and you see the branch you are entangled with. Same experience, cleaner maths.</p>
       </div>
     </div>
-    <p class="say" id="say">Tap Run three times and watch which wave keeps flowing.</p>
+    <p class="say" id="say">Copenhagen: two rules, and the scissors cut every branch but yours. Flip to Many-Worlds.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Many-Worlds drops collapse: wave functions just follow one equation.</div>
     <div class="foot"><span class="src">Source · Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const F = [0.28, 0.56, 0.84], GAP = 0.04, YOU = [1, 0, 1];
-const st = {X: 0.12, n: 0, phase: 0, fl: [{v:0},{v:0},{v:0}]};
-let x = null, W = 0, H = 0, K = '#111', C = '#fff', busy = false;
-let DISP = 'serif', BODY = 'sans-serif';
-const cv = Kit.$('cv');
-const sm = t => { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); };
+(() => {
+  // Ink on the card's colour, as a pencil sketch; white for the paper of the rule cards; one accent, white, for you.
+  const INK = '#10100c', PAPER = '#fffdf6';
+  const svg = Kit.$('pic');
+  const YOU = [0, 1, 0];                // your branch at each fork: left, right, left
+  const st = {m: 0, seen: false};       // m: 0 Copenhagen, 1 Many-Worlds
+  let G = null;
+  const clamp = x => Math.max(0, Math.min(1, x));
 
-// flat tints of ink into card colour (same as color-mix(in srgb, K p, C))
-function rgbOf(s) {
-  s = (s || '').trim();
-  if (s[0] === '#') {
-    let h = s.slice(1); if (h.length === 3) h = h.split('').map(c => c + c).join('');
-    const v = parseInt(h.slice(0, 6), 16); return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
-  }
-  const m = s.match(/[\d.]+/g); return m && m.length >= 3 ? m.slice(0, 3).map(Number) : [0, 0, 0];
-}
-function mix(p) {
-  const a = rgbOf(K), b = rgbOf(C);
-  return `rgb(${a.map((v, i) => Math.round(v * p + b[i] * (1 - p))).join(',')})`;
-}
-
-function size() {
-  const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H;
-  const cs = getComputedStyle(Kit.$('card'));
-  K = cs.getPropertyValue('--k').trim() || '#111';
-  C = cs.getPropertyValue('--c').trim() || '#fff';
-  DISP = cs.getPropertyValue('--display').trim() || 'serif';
-  BODY = cs.getPropertyValue('--body').trim() || 'sans-serif';
-  draw();
-}
-
-// a stretch of river: flat water with two inked banks
-function band(u0, u1, ux, yc, wf, water) {
-  if (u1 <= u0) return;
-  const N = 40, top = [], bot = [];
-  for (let i = 0; i <= N; i++) { const u = u0 + (u1 - u0) * i / N, w = wf(u) / 2; top.push([ux(u), yc - w]); bot.push([ux(u), yc + w]); }
-  x.beginPath(); x.moveTo(top[0][0], top[0][1]);
-  top.forEach(p => x.lineTo(p[0], p[1])); bot.slice().reverse().forEach(p => x.lineTo(p[0], p[1]));
-  x.closePath(); x.fillStyle = water; x.fill();
-  x.save(); x.strokeStyle = K; x.lineWidth = 2; x.lineJoin = 'round'; x.lineCap = 'round';
-  [top, bot].forEach(e => { x.beginPath(); e.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.stroke(); });
-  x.restore();
-}
-// the current moving along the water
-function ripple(pts, lw, fs) {
-  if (pts.length < 2) return;
-  x.save(); x.strokeStyle = C; x.lineWidth = Math.max(1.5, lw); x.lineCap = 'round';
-  x.setLineDash([fs * .5, fs * .7]); x.lineDashOffset = -st.phase * fs * 3;
-  x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.stroke(); x.restore();
-}
-// a branch of river drawn along a path: bank colour underneath, water on top
-function stream(pts, lw, water, bank) {
-  const path = () => { x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); };
-  x.save(); x.lineCap = 'round'; x.lineJoin = 'round';
-  path(); x.strokeStyle = bank; x.lineWidth = lw + 4; x.stroke();
-  path(); x.strokeStyle = water; x.lineWidth = lw; x.stroke();
-  x.restore();
-}
-// a small paper boat: the observer riding one branch
-function boat(bx, by, fs) {
-  const w = fs * .85, h = fs * .3;
-  x.save(); x.fillStyle = K; x.lineJoin = 'round';
-  x.beginPath(); x.moveTo(bx - w / 2, by - h * .4); x.lineTo(bx + w / 2, by - h * .4);
-  x.lineTo(bx + w * .3, by + h * .6); x.lineTo(bx - w * .3, by + h * .6); x.closePath(); x.fill();
-  x.beginPath(); x.moveTo(bx - fs * .05, by - h * .4); x.lineTo(bx - fs * .05, by - fs * .95);
-  x.lineTo(bx + w * .38, by - h * .55); x.closePath(); x.fill();
-  x.restore();
-}
-
-function draw() {
-  if (!x) return;
-  x.clearRect(0, 0, W, H);
-  const fs = Math.max(12, Math.min(W * .045, H * .05)), fsS = Math.max(12, fs * .82);
-  const xl = fs * .9, xr = W - fs * .9, ux = u => xl + u * (xr - xl);
-  const X = st.X, n = st.n;
-  const water = mix(.3), waterFaint = mix(.14), bankFaint = mix(.4), soft = mix(.2);
-  for (let L = 0; L < 2; L++) {
-    const top = L * H / 2, at = top + fs * 3.4, ab = top + H / 2 - fs * (L === 0 ? 2 : .9);
-    const yc = (at + ab) / 2, half = Math.max(fs, (ab - at) / 2);
-    const wmax = Math.min(half * 1.2, fs * 1.5), wmin = fs * .25;
-    // titles
-    x.globalAlpha = 1; x.fillStyle = K; x.textBaseline = 'middle';
-    x.font = `800 ${fs}px ${DISP}`;
-    x.textAlign = 'left'; x.fillText(L === 0 ? 'Copenhagen' : 'Many-Worlds', xl, top + fs * 1.1);
-    x.font = `700 ${fsS}px ${BODY}`;
-    x.textAlign = 'right'; x.fillText('stops ' + (L === 0 ? n : 0), xr, top + fs * 1.1);
-    x.font = `500 ${fsS}px ${BODY}`; x.textAlign = 'left'; x.fillStyle = mix(.72);
-    x.fillText(L === 0 ? 'Schrödinger equation + collapse rule' : 'Schrödinger equation only', xl, top + fs * 2.45);
-    // where the measurements happen
-    F.forEach((f, k) => {
-      x.save(); x.strokeStyle = k < n ? mix(.38) : soft; x.lineWidth = 1.5; x.lineCap = 'round';
-      x.beginPath(); x.moveTo(ux(f), at); x.lineTo(ux(f), ab); x.stroke(); x.restore();
-    });
-    // the spring the wave flows from
-    x.beginPath(); x.arc(xl, yc, fs * .3, 0, 7); x.fillStyle = K; x.fill();
-    if (L === 0) {
-      for (let j = 0; j <= n; j++) {
-        const s = j === 0 ? 0 : F[j - 1] + GAP, e = j < n ? F[j] : X;
-        if (e <= s) continue;
-        const wf = u => wmin + (wmax - wmin) * (1 - Math.exp(-(u - s) / .07));
-        band(s, e, ux, yc, wf, water);
-        const pts = []; for (let i = 0; i <= 40; i++) { const u = s + (e - s) * i / 40; pts.push([ux(u), yc]); }
-        ripple(pts, wmax * .12, fs);
-      }
-      // collapse: a dam that stops the river
-      for (let k = 0; k < n; k++) {
-        const cx = ux(F[k] + GAP / 2), v = st.fl[k].v;
-        const hh = (wmax / 2 + fs * .35) * (1 + v * .25), bw = fs * .32 * (1 + v * .5);
-        x.fillStyle = K;
-        x.beginPath();
-        if (x.roundRect) x.roundRect(cx - bw / 2, yc - hh, bw, hh * 2, bw * .25); else x.rect(cx - bw / 2, yc - hh, bw, hh * 2);
-        x.fill();
-        x.font = `700 ${fsS}px ${BODY}`; x.textAlign = 'center';
-        x.fillText('collapse', cx, yc + wmax / 2 + fs * 1.1);
-      }
-    } else {
-      const D = [half * .5, half * .26, half * .13];
-      const yOf = (u, b, j) => { let y = yc; for (let i = 0; i < j; i++) y += (((b >> i) & 1) ? 1 : -1) * D[i] * sm((u - F[i]) / .12); return y; };
-      const youB = j => { let b = 0; for (let i = 0; i < j; i++) b |= YOU[i] << i; return b; };
-      for (let j = 0; j <= n; j++) {
-        const s = j === 0 ? 0 : F[j - 1], e = j < n ? F[j] : X;
-        if (e <= s) continue;
-        if (j === 0) {
-          band(s, e, ux, yc, u => wmin + (wmax - wmin) * (1 - Math.exp(-u / .07)), water);
-          const pts = []; for (let i = 0; i <= 40; i++) pts.push([ux(s + (e - s) * i / 40), yc]);
-          ripple(pts, wmax * .12, fs); continue;
-        }
-        const lw = Math.max(3, wmax * Math.pow(.66, j)), yb = youB(j);
-        for (let pass = 0; pass < 2; pass++) for (let b = 0; b < (1 << j); b++) {
-          const me = b === yb; if ((pass === 1) !== me) continue;
-          const pts = []; for (let i = 0; i <= 40; i++) { const u = s + (e - s) * i / 40; pts.push([ux(u), yOf(u, b, j)]); }
-          stream(pts, lw, me ? water : waterFaint, me ? K : bankFaint);
-          if (me) ripple(pts, lw * .18, fs);
+  function build() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const fs = Math.max(13, Math.min(15, W / 22));
+    const rc = rough.svg(svg);
+    const root = Kit.mk('g', {}, svg);
+    // The tree: the source at the foot, three forks, eight tips under the figures.
+    const cardH = fs * 3.1, base = H - 2, src = [W / 2, base - fs * .9];
+    const tipY = fs * 3.9, forkY = [base - cardH - fs * .6, 0, 0];
+    const span = (forkY[0] - tipY);
+    forkY[1] = forkY[0] - span * .36; forkY[2] = forkY[1] - span * .32;
+    const tipX = i => W * (.07 + .86 * i / 7);
+    // A node at level k (0: first fork, 3: tips), index i among the 2^k there.
+    const nodeX = (k, i) => { if (k === 3) return tipX(i); const n = 1 << k, w = 8 / n; let s = 0; for (let j = i * w; j < (i + 1) * w; j++) s += tipX(j); return s / w; };
+    const nodeY = k => k === 3 ? tipY : forkY[k];
+    // A wavy branch, drawn by hand: a few gentle swings between two points.
+    const wavyPts = (a, b, amp, waves) => {
+      const pts = [], L = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / L, uy = (b[1] - a[1]) / L;
+      for (let i = 0; i <= 16; i++) { const u = i / 16, s = amp * Math.sin(u * Math.PI * 2 * waves) * Math.sin(u * Math.PI); pts.push([a[0] + ux * L * u - uy * s, a[1] + uy * L * u + ux * s]); }
+      return pts;
+    };
+    const wavy = (a, b, amp, waves, opts) => rc.curve(wavyPts(a, b, amp, waves), Object.assign({disableMultiStroke: true}, opts));
+    const edges = [];
+    const ghostG = Kit.mk('g', {}, root), branchG = Kit.mk('g', {}, root), youG = Kit.mk('g', {}, root);
+    // The trunk, from the source to the first fork: always there.
+    youG.appendChild(wavy(src, [W / 2, forkY[0]], fs * .25, 1.5, {stroke: INK, strokeWidth: fs * .26, roughness: .7, bowing: .4, seed: 3}));
+    let you = 0;
+    for (let k = 0; k < 3; k++) {
+      for (let i = 0; i < (1 << k); i++) {
+        for (const side of [0, 1]) {
+          const a = [nodeX(k, i), nodeY(k)], j = i * 2 + side, b = [nodeX(k + 1, j), nodeY(k + 1)], amp = fs * (.32 - k * .06);
+          const onYou = i === you && side === YOU[k], sibling = i === you && side !== YOU[k];
+          // Every branch the wave could take is there as a faint dashed ghost: what the collapse cuts away.
+          if (!onYou) { const p = wavyPts(a, b, amp, 1.5); Kit.mk('path', {d: 'M' + p.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' L'), fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '2 5', 'stroke-linecap': 'round', opacity: .45}, ghostG); }
+          const g = wavy(a, b, amp, 1.5, {stroke: INK, strokeWidth: onYou ? fs * .26 : fs * .15, roughness: .8, bowing: .5, seed: 10 + k * 8 + j});
+          (onYou ? youG : branchG).appendChild(g);
+          const paths = [...g.querySelectorAll('path')].map(p => ({p, L: p.getTotalLength()}));
+          paths.forEach(q => q.p.setAttribute('stroke-dasharray', `${q.L} ${q.L}`));
+          // Where it ends in Copenhagen: your branch whole, its sister a stub the scissors cut, the rest not grown.
+          edges.push({k, paths, cop: onYou ? 1 : sibling ? .3 : 0, a, b, sibling});
         }
       }
-      if (n > 0) {
-        const y = yOf(X, youB(n), n);
-        boat(ux(X) - fs * .2, y, fs);
-        x.fillStyle = K; x.font = `700 ${fsS}px ${BODY}`; x.textAlign = 'right';
-        x.fillText('you', ux(X) - fs * .8, y - Math.max(3, wmax * Math.pow(.66, n)) / 2 - fs * .5);
-      }
+      you = you * 2 + YOU[k];
     }
-    if (L === 0) { x.fillStyle = soft; x.fillRect(0, H / 2 - 1, W, 2); }
+    // The scissors' cuts on the stubs.
+    const snips = Kit.mk('g', {}, root);
+    for (const e of edges.filter(e => e.sibling)) {
+      const t = .3, x = e.a[0] + (e.b[0] - e.a[0]) * t, y = e.a[1] + (e.b[1] - e.a[1]) * t, s = fs * .42;
+      snips.appendChild(rc.line(x - s, y - s, x + s, y + s, {stroke: INK, strokeWidth: 2, roughness: .6, seed: 70 + e.k}));
+      snips.appendChild(rc.line(x - s, y + s, x + s, y - s, {stroke: INK, strokeWidth: 2, roughness: .6, seed: 80 + e.k}));
+    }
+    // The figures at the tips: you, solid; the other yous, sketched, when they are there.
+    const figs = [];
+    const figure = (x, y, me) => {
+      const g = Kit.mk('g', {}, root), r = fs * .48;
+      g.appendChild(rc.circle(x, y - fs * 1.75, r * 2, {stroke: INK, strokeWidth: 1.8, fill: me ? INK : PAPER, fillStyle: 'solid', roughness: .7, seed: me ? 91 : 92 + figs.length}));
+      g.appendChild(rc.path(`M${x - r * 1.15},${y - fs * .1} Q${x - r * 1.1},${y - fs * 1.15} ${x},${y - fs * 1.18} Q${x + r * 1.1},${y - fs * 1.15} ${x + r * 1.15},${y - fs * .1} Z`, {stroke: INK, strokeWidth: 1.8, fill: me ? INK : PAPER, fillStyle: me ? 'solid' : 'hachure', hachureGap: 3, roughness: .7, seed: me ? 93 : 100 + figs.length}));
+      return g;
+    };
+    for (let i = 0; i < 8; i++) { const me = i === you; figs.push({g: figure(tipX(i), tipY - 2, me), me}); }
+    // The rules, at the tree's foot: two index cards either side of the source.
+    const cw = Math.min(W * .4, fs * 9.5), cy = base - cardH;
+    const card = (x, title, sub, seed) => {
+      const g = Kit.mk('g', {}, root);
+      g.appendChild(rc.rectangle(x, cy, cw, cardH - 2, {stroke: INK, strokeWidth: 2, fill: PAPER, fillStyle: 'solid', roughness: .8, seed}));
+      const t = Kit.mk('text', {x: x + fs * .6, y: cy + fs * 1.25, fill: INK, 'font-family': 'Figtree, sans-serif', 'font-weight': 600, 'font-size': fs * .85, opacity: .7}, g); t.textContent = title;
+      const u = Kit.mk('text', {x: x + fs * .6, y: cy + fs * 2.45, fill: INK, 'font-family': 'Figtree, sans-serif', 'font-weight': 800, 'font-size': fs}, g); u.textContent = sub;
+      return {g, u};
+    };
+    const r1 = card(2, 'rule 1', 'Schrödinger', 5);
+    const r2 = card(W - cw - 2, 'rule 2', 'collapse', 6);
+    // The scissors on the collapse card.
+    const sx = W - fs * 1.7, sy = cy + fs * 1.55, sz = fs * .62;
+    r2.g.appendChild(rc.circle(sx - sz * .55, sy + sz * .8, sz * .9, {stroke: INK, strokeWidth: 1.6, roughness: .5, seed: 41}));
+    r2.g.appendChild(rc.circle(sx + sz * .55, sy + sz * .8, sz * .9, {stroke: INK, strokeWidth: 1.6, roughness: .5, seed: 42}));
+    r2.g.appendChild(rc.line(sx - sz * .3, sy + sz * .4, sx + sz * .55, sy - sz * 1.1, {stroke: INK, strokeWidth: 2.2, roughness: .4, seed: 43}));
+    r2.g.appendChild(rc.line(sx + sz * .3, sy + sz * .4, sx - sz * .55, sy - sz * 1.1, {stroke: INK, strokeWidth: 2.2, roughness: .4, seed: 44}));
+    // The source: the wave, ψ.
+    const psi = Kit.mk('text', {x: src[0], y: base - fs * .05, fill: INK, 'font-family': 'Fraunces, serif', 'font-style': 'italic', 'font-weight': 700, 'font-size': fs * 1.35, 'text-anchor': 'middle'}, root); psi.textContent = 'ψ';
+    // Two labels, each on what it names: you, and the other yous.
+    const lab = Kit.mk('g', {}, root);
+    const ux = tipX(you), yLab = tipY - fs * 2.75;
+    const youT = Kit.mk('text', {x: ux, y: Math.max(fs, yLab), fill: INK, 'font-family': 'Figtree, sans-serif', 'font-weight': 800, 'font-size': fs, 'text-anchor': 'middle'}, lab); youT.textContent = 'you';
+    const others = Kit.mk('g', {}, root);
+    const ox = tipX(6), ot = Kit.mk('text', {x: Math.min(W - 2, tipX(7) + fs * .6), y: Math.max(fs, yLab), fill: INK, 'font-family': 'Figtree, sans-serif', 'font-weight': 800, 'font-size': fs, 'text-anchor': 'end'}, others); ot.textContent = 'other yous';
+    G = {W, H, fs, edges, snips, figs, r2, cy, others, ghostG};
+    render();
   }
-}
 
-function run() {
-  if (busy || st.n >= 3) return;
-  busy = true; const k = st.n, go = Kit.$('go'); go.disabled = true; Kit.haptic('selection');
-  const tl = gsap.timeline({onComplete: () => {
-    busy = false;
-    if (st.n >= 3) {
-      Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-      requestAnimationFrame(size);
-    } else { go.disabled = false; go.textContent = `▶ Run to measurement ${st.n + 1} of 3`; }
-  }});
-  tl.to(st, {X: F[k], duration: 1.3, ease: 'none'});
-  tl.add(() => { st.n = k + 1; Kit.haptic('light'); });
-  tl.fromTo(st.fl[k], {v: 1}, {v: 0, duration: .9, ease: 'power2.out'});
-  tl.to(st, {X: k === 2 ? 1 : F[k] + .09, duration: .7, ease: 'power1.out'}, '-=0.5');
-}
-Kit.$('go').addEventListener('click', run);
+  function render() {
+    if (!G) return;
+    const m = st.m;
+    // Each branch grows to where it ends now, the lower forks first.
+    for (const e of G.edges) {
+      const g = e.cop + (1 - e.cop) * clamp(m * 2.2 - e.k * .5);
+      for (const q of e.paths) q.p.setAttribute('stroke-dashoffset', (q.L * (1 - g)).toFixed(1));
+    }
+    G.snips.setAttribute('opacity', (1 - clamp(m * 3)).toFixed(2));
+    G.ghostG.setAttribute('opacity', (1 - clamp(m * 1.4)).toFixed(2));
+    G.figs.forEach(f => { if (!f.me) f.g.setAttribute('opacity', clamp((m - .62) / .3).toFixed(2)); });
+    G.others.setAttribute('opacity', clamp((m - .75) / .25).toFixed(2));
+    // The collapse card falls away in Many-Worlds.
+    const f = clamp(m * 1.6);
+    G.r2.g.setAttribute('transform', `translate(${(f * G.fs * 1.2).toFixed(1)} ${(f * G.fs * 3.4).toFixed(1)}) rotate(${(f * 14).toFixed(1)} ${G.W} ${G.cy})`);
+    G.r2.g.setAttribute('opacity', (1 - clamp(m * 1.4)).toFixed(2));
+    G.r2.g.style.display = m > .99 ? 'none' : '';
+  }
 
-gsap.ticker.add(() => { if (!Kit.calm) st.phase += .016; draw(); });
-Kit.onShow.card = () => { size(); };
-Kit.onEnter.card = () => {
-  if (Kit.calm) return;
-  gsap.fromTo(st, {X: 0}, {X: .12, duration: .9, ease: 'power2.out'});
-};
-Kit.play.card = async () => {
-  gsap.globalTimeline.timeScale(12);
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  for (let i = 0; i < 3; i++) { Kit.$('go').click(); await wait(400); }
-  await wait(300);
-  gsap.globalTimeline.timeScale(1);
-};
+  function flip(to) {
+    const d = Kit.calm ? 0 : 1;
+    gsap.killTweensOf(st);
+    if (d) gsap.to(st, {m: to, duration: 1.5, ease: 'power1.inOut', onUpdate: render, onComplete: () => to === 1 && seen()});
+    else { st.m = to; render(); if (to === 1) seen(); }
+    Kit.$('say').textContent = to ? 'Many-Worlds: one rule. Every branch grows on, and you still see only yours.' : 'Copenhagen: two rules, and the scissors cut every branch but yours.';
+  }
+  // Both seen: the switch and its line give their room to the tree, and the answer comes in.
+  function seen() {
+    if (st.seen) return; st.seen = true; Kit.haptic('success');
+    Kit.$('card').classList.add('answered');
+    Kit.hide('say'); Kit.hide('sw'); Kit.show('why'); Kit.show('keep');
+  }
+  Kit.$('sw').addEventListener('click', e => {
+    const b = e.target.closest('.sw'); if (!b) return;
+    [...Kit.$('sw').children].forEach(x => x.classList.toggle('on', x === b));
+    Kit.haptic('selection'); flip(+b.dataset.m);
+  });
+
+  Kit.onShow.card = () => build();
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.sw', {opacity: 0, y: 8, stagger: .08, duration: .4, ease: 'power3.out', clearProps: 'transform,opacity'}); };
+  Kit.play.card = async () => {
+    Kit.$('sw').children[1].click();
+    await new Promise(r => setTimeout(r, Kit.calm ? 60 : 1900));
+  };
+  // Drawn again at the size it now has whenever its room changes, as when the answer comes in.
+  { let seenSize = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seenSize && G) { seenSize = k; build(); } }).observe(svg); }
+})();
 Kit.single();
 </script>
 </html>
