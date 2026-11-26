@@ -4124,6 +4124,60 @@ class AppLocalizationsPl extends AppLocalizations {
   String get unmaskWindow => 'Pokaż całą serię';
 
   @override
+  String get unmaskMisleadTitle => 'Wykresy, które wprowadzają w błąd';
+
+  @override
+  String get unmaskMisleadLine =>
+      'Liczby są prawdziwe. Sztuczka tkwi w rysunku.';
+
+  @override
+  String get unmaskAsk => 'Ten wykres wprowadza w błąd. Widzisz, jak?';
+
+  @override
+  String get unmaskShowTrick => 'Pokaż sztuczkę';
+
+  @override
+  String get unmaskHideTrick => 'Ukryj sztuczkę';
+
+  @override
+  String get unmaskOriginal => 'Oryginał';
+
+  @override
+  String get unmaskCorrected => 'Poprawiony';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'Oś zaczyna się od $from, a nie od zera.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'Oś obejmuje tylko zakres od $low do $high, więc mała zmiana wygląda na ogromną.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'Oś biegnie od $low do $high, więc prawdziwa zmiana wygląda płasko.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Pokazuje tylko $shown, choć dane obejmują $all.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Porównuje surowe sumy zamiast uczciwej miary.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'Oś jest odwrócona, więc wzrost wygląda jak spadek.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'Oś jest odwrócona, więc spadek wygląda jak wzrost.';
+
+  @override
   String get whatIfTrue => 'A jeśli to prawda?';
 
   @override

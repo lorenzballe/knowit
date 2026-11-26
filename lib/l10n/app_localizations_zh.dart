@@ -3808,6 +3808,56 @@ class AppLocalizationsZh extends AppLocalizations {
   String get unmaskWindow => '显示完整序列';
 
   @override
+  String get unmaskMisleadTitle => '误导人的图表';
+
+  @override
+  String get unmaskMisleadLine => '数字是真的，花招在画法里。';
+
+  @override
+  String get unmaskAsk => '这张图在误导人。你看得出是怎么做到的吗？';
+
+  @override
+  String get unmaskShowTrick => '揭示花招';
+
+  @override
+  String get unmaskHideTrick => '隐藏花招';
+
+  @override
+  String get unmaskOriginal => '原图';
+
+  @override
+  String get unmaskCorrected => '修正后';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return '坐标轴从$from开始，而不是从零开始。';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return '坐标轴只覆盖$low到$high，小变化看起来很大。';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return '坐标轴从$low到$high，真实的变化看起来很平。';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return '只显示了$shown，而数据涵盖$all。';
+  }
+
+  @override
+  String get unmaskTrickTotals => '比较的是原始总数，而不是公平的指标。';
+
+  @override
+  String get unmaskTrickFlippedRise => '坐标轴上下颠倒，上升看起来像下降。';
+
+  @override
+  String get unmaskTrickFlippedFall => '坐标轴上下颠倒，下降看起来像上升。';
+
+  @override
   String get whatIfTrue => '如果是真的呢？';
 
   @override

@@ -3984,6 +3984,60 @@ class AppLocalizationsPt extends AppLocalizations {
   String get unmaskWindow => 'Mostrar a série toda';
 
   @override
+  String get unmaskMisleadTitle => 'Gráficos que enganam';
+
+  @override
+  String get unmaskMisleadLine =>
+      'Os números são verdadeiros. O truque está no desenho.';
+
+  @override
+  String get unmaskAsk => 'Este gráfico engana. Consegues ver como?';
+
+  @override
+  String get unmaskShowTrick => 'Mostrar o truque';
+
+  @override
+  String get unmaskHideTrick => 'Esconder o truque';
+
+  @override
+  String get unmaskOriginal => 'Original';
+
+  @override
+  String get unmaskCorrected => 'Corrigido';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'O eixo começa em $from, não em zero.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'O eixo só vai de $low a $high, por isso uma pequena mudança parece enorme.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'O eixo vai de $low a $high, por isso uma mudança real parece plana.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Mostra só $shown, mas os dados cobrem $all.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Compara totais brutos, não uma medida justa.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'O eixo está de pernas para o ar: uma subida parece uma descida.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'O eixo está de pernas para o ar: uma descida parece uma subida.';
+
+  @override
   String get whatIfTrue => 'E se for verdade?';
 
   @override

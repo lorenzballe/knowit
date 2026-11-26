@@ -811,7 +811,10 @@ class WorkBlock extends ExploreBlock with SectionLayout {
   }
 }
 
-/// Unmask the chart: the honest view of a chart that lies in its drawing.
+/// Charts that mislead: a chart that lies in its drawing, the question of
+/// how, and the same numbers drawn fairly. The section's `look` picks how
+/// the cards show it (UnmaskLook): `before-after` when it names none,
+/// `in-place`, or `current`, the first version under "Unmask the chart".
 class UnmaskBlock extends ExploreBlock with SectionLayout {
   const UnmaskBlock();
 
@@ -827,11 +830,24 @@ class UnmaskBlock extends ExploreBlock with SectionLayout {
     final ExploreMix mix = ExploreShelves.of(host).mix;
     if (mix.unmask.isEmpty) return null;
     final l = context.l10n;
+    final UnmaskLook look = UnmaskLook.named(section.get<String>('look'));
+    final bool first = look == UnmaskLook.current;
     return ShelfFrame(
       key: const ValueKey('mix-unmask'),
-      title: _words(section, host, 'title', l.unmaskTitle),
-      line: _words(section, host, 'subtitle', l.unmaskLine),
+      title: _words(
+        section,
+        host,
+        'title',
+        first ? l.unmaskTitle : l.unmaskMisleadTitle,
+      ),
+      line: _words(
+        section,
+        host,
+        'subtitle',
+        first ? l.unmaskLine : l.unmaskMisleadLine,
+      ),
       child: UnmaskRow(
+        look: look,
         pills: mix.unmask,
         onOpen: _opener(host, section),
         onShown: _shower(host, section),

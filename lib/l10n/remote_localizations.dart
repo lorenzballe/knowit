@@ -3778,6 +3778,74 @@ class RemoteLocalizations extends AppLocalizations {
   String get unmaskWindow => _words.text('unmaskWindow') ?? _base.unmaskWindow;
 
   @override
+  String get unmaskMisleadTitle =>
+      _words.text('unmaskMisleadTitle') ?? _base.unmaskMisleadTitle;
+
+  @override
+  String get unmaskMisleadLine =>
+      _words.text('unmaskMisleadLine') ?? _base.unmaskMisleadLine;
+
+  @override
+  String get unmaskAsk => _words.text('unmaskAsk') ?? _base.unmaskAsk;
+
+  @override
+  String get unmaskShowTrick =>
+      _words.text('unmaskShowTrick') ?? _base.unmaskShowTrick;
+
+  @override
+  String get unmaskHideTrick =>
+      _words.text('unmaskHideTrick') ?? _base.unmaskHideTrick;
+
+  @override
+  String get unmaskOriginal =>
+      _words.text('unmaskOriginal') ?? _base.unmaskOriginal;
+
+  @override
+  String get unmaskCorrected =>
+      _words.text('unmaskCorrected') ?? _base.unmaskCorrected;
+
+  @override
+  String unmaskTrickTruncated(String from) =>
+      _words.format('unmaskTrickTruncated', localeName, {'from': from}) ??
+      _base.unmaskTrickTruncated(from);
+
+  @override
+  String unmaskTrickZoomed(String low, String high) =>
+      _words.format('unmaskTrickZoomed', localeName, {
+        'low': low,
+        'high': high,
+      }) ??
+      _base.unmaskTrickZoomed(low, high);
+
+  @override
+  String unmaskTrickWide(String low, String high) =>
+      _words.format('unmaskTrickWide', localeName, {
+        'low': low,
+        'high': high,
+      }) ??
+      _base.unmaskTrickWide(low, high);
+
+  @override
+  String unmaskTrickWindow(String shown, String all) =>
+      _words.format('unmaskTrickWindow', localeName, {
+        'shown': shown,
+        'all': all,
+      }) ??
+      _base.unmaskTrickWindow(shown, all);
+
+  @override
+  String get unmaskTrickTotals =>
+      _words.text('unmaskTrickTotals') ?? _base.unmaskTrickTotals;
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      _words.text('unmaskTrickFlippedRise') ?? _base.unmaskTrickFlippedRise;
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      _words.text('unmaskTrickFlippedFall') ?? _base.unmaskTrickFlippedFall;
+
+  @override
   String get whatIfTrue => _words.text('whatIfTrue') ?? _base.whatIfTrue;
 
   @override
