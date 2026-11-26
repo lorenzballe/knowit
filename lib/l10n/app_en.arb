@@ -6192,6 +6192,10 @@
  "@tuneSave": {
   "description": "The fine-tuning screen: the button that keeps the bars and the parts as they are now."
  },
+ "tuneHoldHint": "Hold a genre to open the smaller topics inside",
+ "@tuneHoldHint": {
+  "description": "The fine-tuning screen, said once beside the first genre of the first subject while the app presses it by itself and its smaller topics unfold under it: what holding a genre does. One short line."
+ },
  "shareDayTitle": "Share your day",
  "@shareDayTitle": {
   "description": "The sheet that sends the day as a picture: its title."

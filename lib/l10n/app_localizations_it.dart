@@ -5691,6 +5691,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tuneSave => 'Salva';
 
   @override
+  String get tuneHoldHint =>
+      'Tieni premuto un genere per aprire i suoi sotto-argomenti';
+
+  @override
   String get shareDayTitle => 'Condividi la tua giornata';
 
   @override

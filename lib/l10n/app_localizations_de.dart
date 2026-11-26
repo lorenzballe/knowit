@@ -5696,6 +5696,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tuneSave => 'Speichern';
 
   @override
+  String get tuneHoldHint =>
+      'Halte ein Genre, um die kleineren Themen darin zu öffnen';
+
+  @override
   String get shareDayTitle => 'Teile deinen Tag';
 
   @override

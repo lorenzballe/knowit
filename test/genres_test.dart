@@ -266,7 +266,8 @@ void main() {
       await _pump(tester, app, onDone: (_, s) => strands = s);
 
       await tester.longPress(find.text('Ancient Rome'));
-      await tester.pump();
+      // What is inside unfolds into place before it can be tapped.
+      await tester.pump(const Duration(milliseconds: 300));
       await tester.tap(find.text('Roads'));
       await tester.pump();
 

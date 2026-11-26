@@ -2,9 +2,13 @@
 // same for every reader, laid band after band for as long as the reader
 // scrolls, never the same card twice and never one read already, a tap
 // opening a card among the cards laid so far; anywhere but last, its first
-// round of bands; and not one question cut, at a large text size too.
+// round of bands; not one question cut, at a large text size too; and every
+// card as tall as its question, the columns of a band level, none left half
+// empty under a question that ends halfway down it.
 //
 //   flutter test test/explore/feed_test.dart
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -145,8 +149,8 @@ void main() {
       scrollable: find.byType(Scrollable).first,
     );
     expect(find.text('After the feed'), findsOneWidget);
-    // A round of bands holds three cards a band at the most.
-    final int round = kFeedRound * 3;
+    // A round of bands holds four cards a band at the most.
+    final int round = kFeedRound * 4;
     final Set<String> feedCards = {
       for (final (section, id) in host.shown)
         if (section == 'feed') id,
@@ -178,6 +182,86 @@ void main() {
         }
         list.jumpTo(list.pixels + 500);
         await tester.pump();
+      }
+    });
+  }
+
+  for (final double text in [1.0, 1.35]) {
+    testWidgets('at ${text}x, every card as tall as its question: the columns '
+        'of a band level, the tall box and the large one holding the longest '
+        'question, two and two out of step by a clear step, none left half '
+        'empty', (tester) async {
+      for (final String? subject in [null, 'Science', 'History', 'Space']) {
+        final CoreHost host = CoreHost(await readyApp(), subject: subject);
+        await pumpSections(tester, host, const [], text: text);
+        final BuildContext context = tester.element(find.byType(Scaffold));
+        final FeedDeal deal = feedDeal(host, ExploreSection.fromJson(_feed));
+        final FeedGrid grid = FeedGrid(375 - 40);
+        int bands = 0, clean = 0;
+        for (int i = 0; i < 40; i++) {
+          final FeedLaid? band = deal.band(
+            context,
+            i,
+            grid,
+            isRead: host.isRead,
+          );
+          if (band == null) break;
+          bands++;
+          if (band.clean) clean++;
+          final String where = '${subject ?? 'all'}, band $i';
+          for (final List<int> column in FeedGrid.columnsOf(band.shape)) {
+            expect(
+              band.boxes[column.last].bottom,
+              closeTo(band.height, 0.01),
+              reason: '$where: its columns level',
+            );
+          }
+          for (int b = 0; b < band.cards.length; b++) {
+            final Pill pill = band.cards[b];
+            final Rect box = band.boxes[b];
+            final double need = feedNeed(
+              context,
+              pill,
+              box.width,
+              band.looks[b],
+            );
+            final double least = feedLeast(
+              context,
+              pill,
+              box.width,
+              band.looks[b],
+            );
+            expect(
+              box.height,
+              greaterThanOrEqualTo(need - 0.01),
+              reason: '$where: ${pill.question}',
+            );
+            if (band.clean) {
+              expect(
+                box.height - math.max(need, least),
+                lessThanOrEqualTo(feedSpare(box.height) + 0.01),
+                reason: '$where: ${pill.question}',
+              );
+            }
+          }
+          if (band.shape.boxes == 3) {
+            final int longest = band.cards.first.question.length;
+            expect(
+              band.cards.skip(1).every((p) => p.question.length <= longest),
+              isTrue,
+              reason: '$where: the longest question in the large box',
+            );
+          }
+          if (band.shape == FeedShape.staggered && band.clean) {
+            expect(
+              (band.boxes[0].height - band.boxes[2].height).abs(),
+              greaterThanOrEqualTo(kFeedStep - 0.01),
+              reason: '$where: out of step',
+            );
+          }
+        }
+        expect(bands, greaterThan(20));
+        expect(clean, greaterThanOrEqualTo(bands * 0.9));
       }
     });
   }

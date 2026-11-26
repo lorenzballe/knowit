@@ -5893,6 +5893,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tuneSave => 'Сохранить';
 
   @override
+  String get tuneHoldHint => 'Задержи палец на жанре, и откроются темы внутри';
+
+  @override
   String get shareDayTitle => 'Поделись своим днём';
 
   @override
