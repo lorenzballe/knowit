@@ -2,62 +2,19 @@
 //
 // The shelves the phone used to compute for itself, put together once for
 // everybody — today's shelf, a question from every subject, the top of the
-// week and the month, loved since the start — and once per reader, from
+// week and the month and loved since the start, from real readers' counts
+// alone — and once per reader, from
 // their profile, the shelves that are theirs: their subject, what the
 // profile puts first, and where they live. Every card on a shelf travels
 // whole, so a phone reads one document and draws, and a card the phone's
 // own bank has not got yet still shows. A card about a place is only ever
 // on the last of these, for a reader who lives there.
 
-import { Bank, Card, asks, graded, isDebate, isPlaceCard, dateKey, topicName } from './bank.js';
+import { Bank, Card, asks, graded, isPlaceCard, dateKey, topicName } from './bank.js';
 import { Profile } from './profile.js';
 import { fit, leanOf, placeCards } from './deal.js';
 import { fitRank } from './place.js';
-import { keyed, unit } from './rng.js';
-
-// ── The launch crowd (lib/sync/tally.dart, TopSeed) ──────────────────────
-
-export const LAUNCHED_UTC = Date.UTC(2026, 8, 1);
-
-/** How much readers take to a card, around 1: the same tilt as main.dart's launchCrowd. */
-export function appeal(c: Card): number {
-  let a = 1;
-  if (isDebate(c)) a *= 1.3;
-  else if (asks(c)) a *= 1.2;
-  if (c.difficulty === 'hard') a *= 1.2;
-  if (['weird_facts', 'psychology', 'space', 'human_body'].includes(c.topic)) a *= 1.2;
-  return a;
-}
-
-export function popularity(id: string): number {
-  const u = unit(`seed:${id}`);
-  if (u < 0.85) return 0;
-  return 0.3 + 4.5 * Math.pow((u - 0.85) / 0.15, 2.5);
-}
-
-/** The seeded counts for a UTC day. */
-export function seededDay(bank: Bank, day: string): Map<string, number> {
-  const month = day.slice(0, 7);
-  const out = new Map<string, number>();
-  for (const c of bank.live) {
-    const p = popularity(c.id);
-    if (p === 0) continue;
-    const season = 0.4 + 1.2 * unit(`${month}:${c.id}`);
-    const today = 0.5 + unit(`${day}:${c.id}`);
-    const n = Math.floor(p * season * today * appeal(c));
-    if (n > 0) out.set(c.id, n);
-  }
-  return out;
-}
-
-/** A card's seeded count for good at [nowMs]. */
-export function seededTotal(c: Card, nowMs: number): number {
-  const p = popularity(c.id);
-  if (p === 0) return 0;
-  const days = Math.floor((nowMs - LAUNCHED_UTC) / 86_400_000);
-  if (days <= 0) return 0;
-  return Math.floor(p * appeal(c) * days);
-}
+import { keyed } from './rng.js';
 
 // ── The shelves that turn over (pickedPills) ─────────────────────────────
 
@@ -120,29 +77,66 @@ export const monthSeed = (key: string): string => key.slice(0, 7);
 export const ALL_TIME_SEED = 'astuto-all-time';
 
 // ── The top lists ────────────────────────────────────────────────────────
+//
+// What real readers held on to, and nothing else. There was a launch crowd
+// under these counts once — a made-up following, laid under the real one so
+// the list was never empty — and a list that says it is what readers liked
+// cannot be partly invented, however small the part. So a list is real counts
+// only, and until real counts are enough to make one (LIST_READERS,
+// LIST_CARDS) it goes out empty: the phone then puts Astute's own picks in
+// its place, said to be Astute's, and an older phone leaves the shelf out.
 
 export const WEEK_DAYS = 7;
 export const MONTH_DAYS = 30;
 export const CLOSED_AFTER = 2;
+
+/**
+ * How few readers a card can have and still be on a list for everybody. A
+ * count is of readers — a phone adds one to a card the first time its reader
+ * likes, saves or says it, and never again — and under three it is one
+ * person's taste, or a household's, not what readers kept. The phone's
+ * `Tallies.listReaders` (lib/sync/tally.dart).
+ */
+export const LIST_READERS = 3;
+
+/**
+ * How few cards make a list worth showing: a top of one or two is not a top.
+ * The phone's `Tallies.listCards`.
+ */
+export const LIST_CARDS = 5;
 
 export interface Ranked { id: string; readers: number }
 
 /** The counts the store holds, day by day. */
 export type Tallies = Map<string, Map<string, number>>;
 
-/** The list for the [days] days that closed most recently, at [todayUtc]: real counts over the crowd's. */
+/**
+ * [ranked] as it may be shown to everybody: the cards fewer than LIST_READERS
+ * readers held left off, and nothing at all while fewer than LIST_CARDS are
+ * left. The phone's `Tallies.worthShowing`, card for card.
+ */
+export function worthShowing(ranked: Ranked[]): Ranked[] {
+  const held = ranked.filter((r) => r.readers >= LIST_READERS);
+  return held.length >= LIST_CARDS ? held : [];
+}
+
+/**
+ * Whether a card may be on a list for everybody: one still dealt to everybody.
+ * The counts are everybody's, and a card about a place is counted when the
+ * readers who live there keep it; a retired card is never shown again; and an
+ * idea of a book is read whole, from its own row, never one idea alone.
+ */
+const listable = (c: Card | undefined): c is Card => !!c && !c.disabled && !isPlaceCard(c) && !c.book;
+
+/** The list for the [days] days that closed most recently, at [todayUtc]: what real readers held, most first. */
 export function topList(bank: Bank, tallies: Tallies, todayUtc: string, days: number, limit = 10, where?: (c: Card) => boolean): Ranked[] {
   const readers = new Map<string, number>();
   const latest = new Map<string, number>();
   for (let i = CLOSED_AFTER; i < CLOSED_AFTER + days; i++) {
     const day = shift(todayUtc, -i);
-    const merged = new Map(seededDay(bank, day));
-    for (const [id, n] of tallies.get(day) ?? []) merged.set(id, (merged.get(id) ?? 0) + n);
-    for (const [id, n] of merged) {
+    for (const [id, n] of tallies.get(day) ?? []) {
       const c = bank.byId.get(id);
-      // The counts are everybody's, and a card about a place is counted
-      // when the readers who live there keep it; the list never shows it.
-      if (!c || c.disabled || isPlaceCard(c) || (where && !where(c))) continue;
+      if (!listable(c) || (where && !where(c))) continue;
       readers.set(id, (readers.get(id) ?? 0) + n);
       if (!latest.has(id)) latest.set(id, i);
     }
@@ -153,12 +147,12 @@ export function topList(bank: Bank, tallies: Tallies, todayUtc: string, days: nu
     .map(([id, n]) => ({ id, readers: n }));
 }
 
-/** Loved since the start: the totals kept for good, over the crowd's. */
-export function allTime(bank: Bank, totals: Map<string, number>, nowMs: number, limit = 40, where?: (c: Card) => boolean): Ranked[] {
+/** Loved since the start: what real readers kept, in the totals kept for good, most first. */
+export function allTime(bank: Bank, totals: Map<string, number>, limit = 40, where?: (c: Card) => boolean): Ranked[] {
   const readers = new Map<string, number>();
   for (const c of bank.live) {
     if (where && !where(c)) continue;
-    const n = (totals.get(c.id) ?? 0) + seededTotal(c, nowMs);
+    const n = totals.get(c.id) ?? 0;
     if (n > 0) readers.set(c.id, n);
   }
   return [...readers.entries()]
@@ -179,6 +173,14 @@ export interface GlobalExplore {
   day: string;
   version: number;
   at: number;
+  /**
+   * The lists below count real readers only, each held to LIST_READERS and
+   * LIST_CARDS, and are empty until real counts can carry them. A phone that
+   * knows this field trusts the lists only from a document that says so: one
+   * assembled before had the launch crowd under its counts. A phone that does
+   * not know it reads the same lists, and leaves out a shelf that is empty.
+   */
+  readersOnly: true;
   today: Card[];
   asking: Card[];
   topWeek: { id: string; readers: number; card: Card }[];
@@ -194,21 +196,24 @@ export function buildGlobalExplore(bank: Bank, tallies: Tallies, totals: Map<str
   const subjects = new Set(bank.live.map((c) => c.topic));
   for (const s of subjects) {
     const where = (c: Card) => c.topic === s;
+    // A subject's list is held to the same numbers on its own: Top in Economics
+    // is Economics' readers, not the whole list's cards that happen to be Economics.
     bySubject[s] = {
-      week: topList(bank, tallies, todayUtc, WEEK_DAYS, 10, where),
-      month: topList(bank, tallies, todayUtc, MONTH_DAYS, 10, where),
-      loved: allTime(bank, totals, nowMs, 12, where),
+      week: worthShowing(topList(bank, tallies, todayUtc, WEEK_DAYS, 10, where)),
+      month: worthShowing(topList(bank, tallies, todayUtc, MONTH_DAYS, 10, where)),
+      loved: worthShowing(allTime(bank, totals, 12, where)),
     };
   }
   return {
     day: todayUtc,
     version: bank.version,
     at: nowMs,
+    readersOnly: true,
     today: pickedCards(bank, daySeed(todayUtc), 24),
     asking: askingCards(bank, ALL_TIME_SEED, 40),
-    topWeek: topList(bank, tallies, todayUtc, WEEK_DAYS, 10).map(card),
-    topMonth: topList(bank, tallies, todayUtc, MONTH_DAYS, 10).map(card),
-    loved: allTime(bank, totals, nowMs, 40).map(card),
+    topWeek: worthShowing(topList(bank, tallies, todayUtc, WEEK_DAYS, 10)).map(card),
+    topMonth: worthShowing(topList(bank, tallies, todayUtc, MONTH_DAYS, 10)).map(card),
+    loved: worthShowing(allTime(bank, totals, 40)).map(card),
     bySubject,
   };
 }

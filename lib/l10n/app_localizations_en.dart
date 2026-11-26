@@ -2796,8 +2796,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'Nothing on the list yet. Every card you like, save or say counts.';
+  String get topPicksTitle => 'Worth your time';
+
+  @override
+  String get topPicksLine =>
+      'Picked by Astute while the readers\' list fills up';
 
   @override
   String get readMark => 'Read';

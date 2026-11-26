@@ -2814,8 +2814,11 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'Ainda nada na lista. Cada carta de que gostas, que guardas ou que contas entra na conta.';
+  String get topPicksTitle => 'Valem o teu tempo';
+
+  @override
+  String get topPicksLine =>
+      'Escolhidas pelo Astute enquanto a lista dos leitores se vai enchendo';
 
   @override
   String get readMark => 'Lida';

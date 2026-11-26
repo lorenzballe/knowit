@@ -2710,7 +2710,10 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get topEmpty => '아직 순위가 없어요. 좋아요·보관·이야기한 카드가 모두 집계돼요.';
+  String get topPicksTitle => '시간을 들일 만한 카드';
+
+  @override
+  String get topPicksLine => '독자 순위가 채워질 때까지 Astute가 골랐어요';
 
   @override
   String get readMark => '읽음';

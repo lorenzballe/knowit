@@ -30,7 +30,7 @@ against the same Firestore the app writes to.
 | `search`          | a phone asks (callable)  | the pool searched, up to 30 cards whole                              |
 | `playDaily`       | a phone asks (callable)  | a play of Today's five or a subject's three, each answer judged by its card; added once to `daily/{day~game~cards}` (how many played, each score in tens, each card's rights, picks and guesses, nothing about who), the reader's mark at `readers/{uid}/daily/{day~game}`; the counts returned |
 | `nightly`         | every hour               | every reader here in the last 14 days: their local today (and from 17:00 their tomorrow) dealt if missing; their own shelf once a day; the trace older than 21 days, and the marks of the day's games older than 3, cleared |
-| `buildExplore`    | every hour at :05        | `explore/latest` from the counts: today's shelf, the top of the week and month (closed days), loved since the start |
+| `buildExplore`    | every hour at :05        | `explore/latest` from the counts: today's shelf, the top of the week and month (closed days), loved since the start — real readers' counts only, each list empty until it is worth showing, and `readersOnly: true` to say so |
 | `onReaderDeleted` | `readers/{uid}` deleted  | everything under it and `presence/{uid}` deleted                     |
 | `scorecard`       | every day at 04:20 UTC   | the closed days of everybody's trace added to each card's totals; reports read; flags and the quarantine written to `quality/latest`, readers' notes to `quality/notes` |
 | `cardStats`       | HTTPS GET                | `quality/latest` as JSON — numbers per card, nothing about who — for `tool/quality/` |
@@ -87,7 +87,7 @@ ones that shape a reader's day:
 | deal.ts      | `OWN_SUNDAY` +1        | on the reader's own Sunday (their date, so their clock) one card at random becomes one of their own; Astute+, all five their own already, gets nothing more |
 | deal.ts      | `localCard`, one a day  | the card about where the reader lives (docs/PLACES.md §5): city, then region, then country, never one read; it takes a slot at random, or on Astute+ the last of the reader's own |
 | serve.ts     | `TRACE_DAYS` 21, `ACTIVE_DAYS` 14, `PREPARE_TOMORROW_FROM` 17 | three weeks of trace kept, two weeks of absence before a reader is left alone, tomorrow dealt from five in the afternoon |
-| explore.ts   | the crowd, `popularity` | the launch crowd, the phone's numbers bit for bit (`lib/sync/tally.dart`)              |
+| explore.ts   | `LIST_READERS` 3, `LIST_CARDS` 5 | a list for everybody is real readers' counts alone: a card is on it from three readers, and the list is shown from five such cards; until then it goes out empty and the phone shows Astute's picks, said to be Astute's. The phone's `Tallies.listReaders` and `listCards` (`lib/sync/tally.dart`) |
 
 The draw itself is an exponential race (`-ln(u) / weight`), so every card
 keeps a chance in proportion to its weight and no two readers with the same

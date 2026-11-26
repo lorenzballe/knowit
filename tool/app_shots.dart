@@ -93,6 +93,11 @@ Future<void> _counted(WidgetTester tester) async {
         for (var i = 0; i < heads.length && i < week.length; i++)
           heads[i]: week[i] ~/ 3,
       },
+      // Economics' own week, enough for a list of its own (five cards,
+      // three readers each), so the subject's page has both windows.
+      ago(4): {
+        for (var i = 0; i < economics.length && i < 5; i++) economics[i]: 9 - i,
+      },
       ago(12): {
         for (var i = 0; i < economics.length && i < 5; i++)
           economics[economics.length - 1 - i]: 34 - i * 6,

@@ -102,6 +102,7 @@ class ExploreShelves {
     _todayAll = null;
     _askingAll = null;
     _top.clear();
+    _picked = null;
     _third = null;
     _thirdKnown = false;
     _mine = null;
@@ -218,16 +219,24 @@ class ExploreShelves {
   final Map<bool, List<(Pill, int)>> _top = {};
 
   /// The top of the week, or of the [month], narrowed by the subject row
-  /// like every other shelf, each card with how many readers kept it. Until
-  /// the counts have been read — or where they cannot be, offline or on the
-  /// web preview — empty, and the shelf shows its places empty.
+  /// like every other shelf, each card with how many readers kept it: real
+  /// readers only, and only once they make a list worth showing
+  /// ([Tallies.worthShowing]). Until then — and until the counts have been
+  /// read, or where they cannot be, offline or on the web preview — empty,
+  /// and [picked] stands in its place.
   List<(Pill, int)> top({required bool month}) =>
       _top[month] ??= _topOf(month: month);
+
+  /// Whether the server's readers' lists can be shown: there is a server's
+  /// Explore, and it says its lists are real readers' alone. One from
+  /// before had a launch crowd under them, and its lists were dropped when
+  /// it was read; the phone's own counts stand in for them.
+  bool get _servedLists => _served?.readersOnly == true;
 
   List<(Pill, int)> _topOf({required bool month}) {
     final ServedExplore? served = _served;
     final String? key = subjectKey;
-    if (served != null) {
+    if (served != null && _servedLists) {
       if (key == null) {
         return [
           for (final r in (month ? served.topMonth : served.topWeek))
@@ -241,19 +250,38 @@ class ExploreShelves {
       );
     }
     final Tallies tallies = Tallies.instance;
-    if (!tallies.ready) return const [];
+    if (!tallies.answered) return const [];
     return [
-      for (final Ranked place in tallies.top(
-        month ? Tallies.monthDays : Tallies.weekDays,
-        where: (id) {
-          final Pill? pill = pillById(id);
-          return pill != null &&
-              !pill.isAboutAPlace &&
-              (_subject == null || pill.topic == _subject);
-        },
+      for (final Ranked place in Tallies.worthShowing(
+        tallies.top(
+          month ? Tallies.monthDays : Tallies.weekDays,
+          where: _listable,
+        ),
       ))
         (pillById(place.id)!, place.readers),
     ];
+  }
+
+  /// Whether the card [id] may be on a readers' list here: a card dealt to
+  /// everybody ([PillBank.cards]), of the subject in view. The counts are
+  /// everybody's, and a card about a place is counted when the readers who
+  /// live there keep it; a retired card is never shown again; an idea of a
+  /// book is read whole, from its own row. The server's lists keep to the
+  /// same cards.
+  bool _listable(String id) {
+    if (!_dealableIds().contains(id)) return false;
+    return _subject == null || pillById(id)?.topic == _subject;
+  }
+
+  Set<String>? _dealable;
+  int _dealableVersion = -1;
+
+  Set<String> _dealableIds() {
+    if (_dealable == null || _dealableVersion != PillBank.version) {
+      _dealableVersion = PillBank.version;
+      _dealable = {for (final Pill p in PillBank.cards) p.id};
+    }
+    return _dealable!;
   }
 
   /// A card about a place is counted when the readers who live there keep
@@ -263,17 +291,40 @@ class ExploreShelves {
       if (pillById(id) case final Pill p when !p.isAboutAPlace) (p, n),
   ];
 
+  List<Pill>? _picked;
+
+  /// Astute's own picks, in the readers' list's place while their counts
+  /// cannot carry a list ([top] empty in both windows): the cards that ask
+  /// the most — the hardest first, then any that asks something — one
+  /// subject after another, as [pickedPills] picks them for everybody,
+  /// turning over with the week; narrowed by the subject row, and less
+  /// what the reader had read when the shelves were dealt. Never more than
+  /// the list's ten. Shown as Astute's, under their own name: nothing here
+  /// is what readers kept, and the shelf never says it is.
+  List<Pill> get picked => _picked ??= [
+    for (final Pill p in pickedPills(
+      seed: 'picks:${weekSeed(_clock())}',
+      count: 40,
+      topic: _subject,
+    ))
+      if (unread(p)) p,
+  ].take(10).toList();
+
   List<Pill>? _loved;
 
   /// Loved since the start, and not read yet: where somebody who arrived
   /// late finds the best of what came before them, and somebody who has
-  /// been here two years still finds the next one they missed.
+  /// been here two years still finds the next one they missed. Real
+  /// readers' counts for good, and only once they make a list worth
+  /// showing: whether they do is a matter of the list for everybody, before
+  /// what this reader has read is taken out of it. Until then there is no
+  /// such shelf.
   List<Pill> get loved => _loved ??= _lovedOf();
 
   List<Pill> _lovedOf() {
     final ServedExplore? served = _served;
     final String? key = subjectKey;
-    if (served != null) {
+    if (served != null && _servedLists) {
       return [
         for (final p
             in key == null
@@ -284,20 +335,13 @@ class ExploreShelves {
       ].take(8).toList();
     }
     final Tallies tallies = Tallies.instance;
-    if (!tallies.ready) return const [];
+    if (!tallies.answered) return const [];
     return [
-      for (final Ranked place in tallies.allTime(
-        where: (id) {
-          final Pill? pill = pillById(id);
-          return pill != null &&
-              !pill.isAboutAPlace &&
-              unread(pill) &&
-              (_subject == null || pill.topic == _subject);
-        },
-        limit: 8,
+      for (final Ranked place in Tallies.worthShowing(
+        tallies.allTime(where: _listable),
       ))
-        pillById(place.id)!,
-    ];
+        if (pillById(place.id) case final Pill p when unread(p)) p,
+    ].take(8).toList();
   }
 
   (MineReason, String)? _third;

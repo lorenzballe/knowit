@@ -1,12 +1,13 @@
 // Numbers that are the same everywhere.
 //
-// Two of the hashes here are the phone's own, bit for bit: `unit`, which
-// seeds the launch crowd under Explore's top list (lib/sync/tally.dart),
-// and `keyed`, which turns the shelves over day by day
-// (lib/data/pills_repository.dart). A server and a phone that disagreed
-// about either would show two different Explores. The third is a small
-// seeded generator for the dealer, where the server's choice only has to
-// agree with itself.
+// Two of the hashes here are the phone's own, bit for bit: `unit`, the
+// phone's `betUnit` (lib/explore/blocks/bets/answers.dart), which seeds the
+// dealer here through `seedOf`, and `keyed`, which turns the shelves over
+// day by day (lib/data/pills_repository.dart). A server and a phone that
+// disagreed about `keyed` would show two different Explores. The third is a
+// small seeded generator for the dealer, where the server's choice only has
+// to agree with itself. (`unit` once seeded a launch crowd under Explore's
+// top list too; the lists are real readers' counts alone now.)
 
 /** FNV-1a over UTF-16 code units, then the murmur finaliser: [0, 1). */
 export function unit(text: string): number {

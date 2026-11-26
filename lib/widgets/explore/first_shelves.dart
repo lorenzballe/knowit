@@ -1,6 +1,7 @@
 /// The shelves Explore has had from the start, as they were drawn on its
 /// screen: the frame every shelf stands in, the rows of a question from every
-/// subject, and the readers' top list with its window. They moved out of the
+/// subject, and the readers' top list with its window — or Astute's picks in
+/// its place, until readers make one. They moved out of the
 /// screen when Explore became a list of sections, so that the blocks drawing
 /// those shelves (lib/explore/blocks/core/) draw them exactly as before, and
 /// any other block can stand in the same frame.
@@ -281,6 +282,11 @@ class ReadTick extends StatelessWidget {
 class WindowSwitch extends StatelessWidget {
   const WindowSwitch({super.key, required this.month, required this.onPick});
 
+  /// How tall it stands level with the shelf's name: the height a finger
+  /// needs. A head with no switch keeps this room, so a shelf is the same
+  /// height with the switch or without it.
+  static const double height = 44;
+
   /// Whether the month is the one lit.
   final bool month;
 
@@ -301,7 +307,7 @@ class WindowSwitch extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: on ? null : () => onPick(isMonth),
           child: SizedBox(
-            height: 44,
+            height: height,
             child: Center(
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 220),
@@ -362,18 +368,26 @@ class WindowSwitch extends StatelessWidget {
   }
 }
 
-/// The top list: each card standing on its place, the number behind it.
+/// The top list: each card standing on its place, the number behind it —
+/// or, [numbered] false, the same cards in the same row at the same height
+/// with no number, for Astute's own picks in the list's place: a number
+/// says which card readers put first, and on the picks no reader put any
+/// card anywhere.
 class TopRow extends StatelessWidget {
   const TopRow({
     super.key,
-    required this.ranked,
+    required this.pills,
     required this.onOpen,
     required this.isRead,
+    this.numbered = true,
     this.onShown,
   });
 
-  /// The cards in their places, each with how many readers kept it.
-  final List<(Pill, int)> ranked;
+  /// The cards in their places, first first.
+  final List<Pill> pills;
+
+  /// Whether each card stands on its number: the readers' list.
+  final bool numbered;
 
   /// A place tapped, by its index from 0.
   final ValueChanged<int> onOpen;
@@ -392,15 +406,16 @@ class TopRow extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
-        itemCount: ranked.length,
+        itemCount: pills.length,
+        // With no number between them the cards keep the gap of every other
+        // row of cards: this and the ring on each side make ten.
         separatorBuilder: (_, _) => const SizedBox(width: 4),
         itemBuilder: (context, i) {
-          onShown?.call(ranked[i].$1);
+          onShown?.call(pills[i]);
           return TopPlaced(
-            rank: i + 1,
-            pill: ranked[i].$1,
-            readers: ranked[i].$2,
-            read: isRead(ranked[i].$1),
+            rank: numbered ? i + 1 : null,
+            pill: pills[i],
+            read: isRead(pills[i]),
             onTap: () => onOpen(i),
           );
         },
@@ -413,23 +428,16 @@ class TopRow extends StatelessWidget {
 /// over the number's last edge — so the card is still the thing, and the
 /// number is what it stands on. A ring of the page's own colour runs round
 /// the card where it meets the number, the way a magazine cuts a picture
-/// out of the type behind it.
+/// out of the type behind it. With no [rank], the card alone, as wide as on
+/// the list.
 class TopPlace extends StatelessWidget {
-  const TopPlace({
-    super.key,
-    required this.rank,
-    required this.card,
-    this.faint = false,
-  });
+  const TopPlace({super.key, required this.rank, required this.card});
 
-  /// The place, from 1.
-  final int rank;
+  /// The place, from 1, or null for a card on no place.
+  final int? rank;
 
   /// What stands on it.
   final Widget card;
-
-  /// An empty place: the number there, but barely.
-  final bool faint;
 
   static const double _card = 146;
   static const double _ring = 3;
@@ -440,6 +448,16 @@ class TopPlace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int? rank = this.rank;
+    final Widget ringed = Container(
+      padding: const EdgeInsets.all(_ring),
+      decoration: BoxDecoration(
+        color: context.p.surface,
+        borderRadius: BorderRadius.circular(19 + _ring),
+      ),
+      child: card,
+    );
+    if (rank == null) return SizedBox(width: _card + _ring * 2, child: ringed);
     final Color ink = context.p.ink;
     final TextStyle numeral = AppText.display(
       size: 124,
@@ -458,9 +476,6 @@ class TopPlace extends StatelessWidget {
     final double width = painter.width;
     painter.dispose();
     final double cardLeft = width - math.max(8, width * 0.14);
-    final List<Color> fade = faint
-        ? [ink.withValues(alpha: 0.24), ink.withValues(alpha: 0.06)]
-        : [ink, ink.withValues(alpha: 0.42)];
 
     return SizedBox(
       width: cardLeft + _card + _ring * 2,
@@ -475,7 +490,7 @@ class TopPlace extends StatelessWidget {
               shaderCallback: (rect) => LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: fade,
+                colors: [ink, ink.withValues(alpha: 0.42)],
               ).createShader(rect.deflate(_bleed)),
               child: Padding(
                 padding: const EdgeInsets.all(_bleed),
@@ -492,14 +507,7 @@ class TopPlace extends StatelessWidget {
             bottom: 0,
             left: cardLeft,
             width: _card + _ring * 2,
-            child: Container(
-              padding: const EdgeInsets.all(_ring),
-              decoration: BoxDecoration(
-                color: context.p.surface,
-                borderRadius: BorderRadius.circular(19 + _ring),
-              ),
-              child: card,
-            ),
+            child: ringed,
           ),
         ],
       ),
@@ -507,38 +515,38 @@ class TopPlace extends StatelessWidget {
   }
 }
 
-/// A card on the list: its subject, its question, and how many readers
-/// kept it.
+/// A card on the list, or on Astute's picks in its place: its subject and
+/// its question.
 class TopPlaced extends StatelessWidget {
   const TopPlaced({
     super.key,
     required this.rank,
     required this.pill,
-    required this.readers,
     required this.onTap,
     this.read = false,
   });
 
-  /// The place, from 1.
-  final int rank;
+  /// The place, from 1; null for one of Astute's picks, which stand on no
+  /// place.
+  final int? rank;
 
   /// The card on it.
   final Pill pill;
 
-  /// How many readers kept it, which orders the list and is not printed.
-  final int readers;
-
   /// The card tapped.
   final VoidCallback onTap;
 
-  /// Read already: a tick by the subject, and the word under the count.
+  /// Read already: a tick by the subject, and the word at the foot.
   final bool read;
 
   @override
   Widget build(BuildContext context) {
     final Color sub = pill.ink.withValues(alpha: 0.66);
+    // Keyed apart, so the readers' list and Astute's picks are never taken
+    // for each other, by a test or by anything else.
+    final String kind = rank == null ? 'picks' : 'top';
     return GestureDetector(
-      key: ValueKey('top-${pill.id}'),
+      key: ValueKey('$kind-${pill.id}'),
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: TopPlace(
@@ -572,7 +580,7 @@ class TopPlaced extends StatelessWidget {
                       label: context.l10n.readMark,
                       child: Icon(
                         Icons.check_circle_rounded,
-                        key: ValueKey('top-read-${pill.id}'),
+                        key: ValueKey('$kind-read-${pill.id}'),
                         size: 14,
                         color: pill.ink.withValues(alpha: 0.8),
                       ),
@@ -598,11 +606,11 @@ class TopPlaced extends StatelessWidget {
                   ),
                 ),
               ),
-              // No count on the card. Until real readers outnumber it, most
-              // of a number here is the launch crowd (TopSeed), and a
-              // made-up "1,204 readers" is the one thing an app about not
-              // being fooled cannot print. The order stays; the number waits
-              // until it is real.
+              // No count on the card. The list had a launch crowd under it
+              // once, and a made-up "1,204 readers" is the one thing an app
+              // about not being fooled cannot print; every count is a real
+              // reader's now, and the list keeps the look it had: the order
+              // says which card readers kept most.
               Text(
                 read ? context.l10n.readMark : '',
                 maxLines: 1,
@@ -615,59 +623,6 @@ class TopPlaced extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// The list with nothing on it yet: the first three places, numbered and
-/// empty, and on the first of them what puts a card there. The same
-/// height as the list, so nothing jumps when the cards arrive.
-class TopGhost extends StatelessWidget {
-  const TopGhost({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    Widget slot({Widget? child}) => Container(
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
-      decoration: BoxDecoration(
-        color: context.p.ink.withValues(alpha: 0.035),
-        borderRadius: BorderRadius.circular(19),
-        border: Border.all(color: context.p.ink.withValues(alpha: 0.10)),
-      ),
-      child: child,
-    );
-
-    return SizedBox(
-      key: const ValueKey('top-empty'),
-      height: 196,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
-        itemCount: 3,
-        separatorBuilder: (_, _) => const SizedBox(width: 4),
-        itemBuilder: (context, i) => TopPlace(
-          rank: i + 1,
-          faint: true,
-          card: slot(
-            // Set to the space, like the cards: some languages take twice
-            // the words to say it.
-            child: i == 0
-                ? ScaledText(
-                    text: context.l10n.topEmpty,
-                    min: 9.5,
-                    max: 12,
-                    alignment: Alignment.bottomLeft,
-                    styleFor: (size) => AppText.body(
-                      size: size,
-                      weight: FontWeight.w500,
-                      height: 1.4,
-                      color: context.p.inkMuted,
-                    ),
-                  )
-                : null,
           ),
         ),
       ),

@@ -299,6 +299,7 @@ class ServedExplore {
     this.forYou = const [],
     this.local = const [],
     this.crowd = const {},
+    this.readersOnly = true,
     this.fromCache = false,
   });
 
@@ -306,9 +307,21 @@ class ServedExplore {
   final String day;
   final List<Pill> today;
   final List<Pill> asking;
+
+  /// The top of the week and of the month, and loved since the start: real
+  /// readers' counts only, each list empty until real readers make one
+  /// worth showing (functions/src/explore.ts, `worthShowing`).
   final List<ServedRank> topWeek;
   final List<ServedRank> topMonth;
   final List<ServedRank> loved;
+
+  /// Whether the server said its lists are real readers' counts alone
+  /// (`readersOnly`). A server from before laid a launch crowd under them,
+  /// so a document that does not say so has its lists dropped when it is
+  /// read ([parse]), and Explore ranks the phone's own counts instead:
+  /// nothing made up is ever shown as what readers kept, whichever comes
+  /// first, this build or the server's. True for one made in the app.
+  final bool readersOnly;
 
   /// Per subject key: the ids on its week, month and loved lists, with their
   /// counts, so the subject row narrows without another read.
@@ -351,7 +364,9 @@ class ServedExplore {
   /// A card about a place is kept only on the shelf of where the reader
   /// lives. On any other it is dropped here, whatever sent it — a server
   /// from before such cards existed would have put them anywhere — so no
-  /// shelf for everybody ever shows one.
+  /// shelf for everybody ever shows one. And the readers' lists are kept
+  /// only from a server that says they are real readers' alone
+  /// ([readersOnly]).
   static ServedExplore? parse(
     Object? global,
     Object? personal, {
@@ -402,14 +417,16 @@ class ServedExplore {
         }
       }
       final Map? p = personal is Map ? personal : null;
+      final bool readersOnly = global['readersOnly'] == true;
       return ServedExplore(
         day: global['day'] is String ? global['day'] as String : '',
         today: pills(global['today']),
         asking: pills(global['asking']),
-        topWeek: ranked(global['topWeek']),
-        topMonth: ranked(global['topMonth']),
-        loved: ranked(global['loved']),
-        bySubject: by,
+        topWeek: readersOnly ? ranked(global['topWeek']) : const [],
+        topMonth: readersOnly ? ranked(global['topMonth']) : const [],
+        loved: readersOnly ? ranked(global['loved']) : const [],
+        bySubject: readersOnly ? by : const {},
+        readersOnly: readersOnly,
         because: p?['because'] is String ? p!['because'] as String : null,
         mine: pills(p?['mine']),
         forYou: pills(p?['forYou']),

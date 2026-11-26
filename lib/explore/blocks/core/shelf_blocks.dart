@@ -196,9 +196,18 @@ class TodayBlock extends ExploreBlock with SectionLayout {
 
 /// The readers' top list: what readers liked, saved and said, counted
 /// across everyone, each card standing on its number — this week or this
-/// month, as the reader switches it. The shelf is always there: until the
-/// counts have been read it shows its places empty, with the line that says
-/// what puts a card on one.
+/// month, as the reader switches it. Real readers only, and only once they
+/// make a list worth showing ([Tallies.worthShowing]): five cards, three
+/// readers each.
+///
+/// Until they do, the shelf is Astute's own picks ([ExploreShelves.picked])
+/// in the same frame and the same row, at the same height, so nothing moves
+/// when the list takes its place — under their own name, which says they are
+/// Astute's, and without the numbers: a number says which card readers put
+/// first, and on these no reader put any card anywhere. A window with no
+/// list of its own is not offered: when only the month has one, the shelf is
+/// the month's, with no switch to an empty week. A head with no switch keeps
+/// the switch's room, for the same reason.
 class TopBlock extends ExploreBlock with SectionLayout {
   const TopBlock();
 
@@ -212,63 +221,108 @@ class TopBlock extends ExploreBlock with SectionLayout {
     ExploreSection section,
   ) {
     final ExploreShelves shelves = ExploreShelves.of(host);
-    // A list with nothing on it in either window is no section: an empty
-    // ranking on a subject's page read as something broken.
-    if (shelves.top(month: false).isEmpty && shelves.top(month: true).isEmpty) {
-      return null;
+    final bool weekHasList = shelves.top(month: false).isNotEmpty;
+    final bool monthHasList = shelves.top(month: true).isNotEmpty;
+    if (!weekHasList && !monthHasList) {
+      return _picks(context, host, section, shelves);
+    }
+    // One window with a list: that one, and no switch to an empty other.
+    if (!weekHasList || !monthHasList) {
+      return _list(context, host, section, shelves, month: monthHasList);
     }
     return ValueListenableBuilder<bool>(
       valueListenable: shelves.topMonth,
-      builder: (context, month, _) {
-        final l = context.l10n;
-        final String? subject = host.subject;
-        final List<(Pill, int)> top = shelves.top(month: month);
-        return ShelfFrame(
-          title: _words(
-            section,
-            host,
-            'title',
-            subject != null
-                // In the reader's language: the name is the key.
-                ? l.topIn(l.subjectOf(subject))
-                : month
-                ? l.topOfTheMonth
-                : l.topOfTheWeek,
-          ),
-          line: _words(
-            section,
-            host,
-            'subtitle',
-            month ? l.topLineMonth : l.topLineWeek,
-          ),
-          trailing: WindowSwitch(
-            month: month,
-            onPick: (month) {
-              Analytics.capture('explore top window', {
-                'window': month ? 'month' : 'week',
-                'subject': subject ?? 'all',
-              });
-              shelves.topMonth.value = month;
-            },
-          ),
-          child: top.isEmpty
-              ? const TopGhost()
-              : TopRow(
-                  ranked: top,
-                  isRead: host.isRead,
-                  onShown: _shower(host, section),
-                  onOpen: (i) {
-                    Analytics.capture('explore top opened', {
-                      'rank': i + 1,
-                      'readers': top[i].$2,
-                      'window': month ? 'month' : 'week',
-                      'subject': subject ?? 'all',
-                    });
-                    host.open(section, [for (final t in top) t.$1], top[i].$1);
-                  },
-                ),
-        );
-      },
+      builder: (context, month, _) =>
+          _list(context, host, section, shelves, month: month, both: true),
+    );
+  }
+
+  /// The readers' list for the week or the [month], with the switch to the
+  /// other window when [both] have a list.
+  Widget _list(
+    BuildContext context,
+    ExploreHost host,
+    ExploreSection section,
+    ExploreShelves shelves, {
+    required bool month,
+    bool both = false,
+  }) {
+    final l = context.l10n;
+    final String? subject = host.subject;
+    final List<(Pill, int)> top = shelves.top(month: month);
+    final List<Pill> cards = [for (final t in top) t.$1];
+    return ShelfFrame(
+      key: const ValueKey('top-readers'),
+      title: _words(
+        section,
+        host,
+        'title',
+        subject != null
+            // In the reader's language: the name is the key.
+            ? l.topIn(l.subjectOf(subject))
+            : month
+            ? l.topOfTheMonth
+            : l.topOfTheWeek,
+      ),
+      line: _words(
+        section,
+        host,
+        'subtitle',
+        month ? l.topLineMonth : l.topLineWeek,
+      ),
+      trailing: both
+          ? WindowSwitch(
+              month: month,
+              onPick: (month) {
+                Analytics.capture('explore top window', {
+                  'window': month ? 'month' : 'week',
+                  'subject': subject ?? 'all',
+                });
+                shelves.topMonth.value = month;
+              },
+            )
+          : const SizedBox(height: WindowSwitch.height),
+      child: TopRow(
+        pills: cards,
+        isRead: host.isRead,
+        onShown: _shower(host, section),
+        onOpen: (i) {
+          Analytics.capture('explore top opened', {
+            'rank': i + 1,
+            'readers': top[i].$2,
+            'window': month ? 'month' : 'week',
+            'subject': subject ?? 'all',
+          });
+          host.open(section, cards, cards[i]);
+        },
+      ),
+    );
+  }
+
+  /// Astute's picks in the list's place, or nothing when the reader has
+  /// read them all. Always in their own words: a section's `title` and
+  /// `subtitle` name the readers' list, and must never stand over picks.
+  Widget? _picks(
+    BuildContext context,
+    ExploreHost host,
+    ExploreSection section,
+    ExploreShelves shelves,
+  ) {
+    final List<Pill> picked = shelves.picked;
+    if (picked.isEmpty) return null;
+    final l = context.l10n;
+    return ShelfFrame(
+      key: const ValueKey('top-picks'),
+      title: l.topPicksTitle,
+      line: l.topPicksLine,
+      trailing: const SizedBox(height: WindowSwitch.height),
+      child: TopRow(
+        pills: picked,
+        numbered: false,
+        isRead: host.isRead,
+        onShown: _shower(host, section),
+        onOpen: (i) => host.open(section, picked, picked[i]),
+      ),
     );
   }
 }

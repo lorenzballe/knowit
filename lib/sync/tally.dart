@@ -141,92 +141,6 @@ class MemoryTallyStore implements TallyStore {
   }
 }
 
-/// A launch's worth of readers under the real ones.
-///
-/// A top list is only worth having once people have held on to things, and
-/// on the first day nobody has: the list opened as three numbered empty
-/// places, on every phone, for weeks. So until the real counts are enough
-/// to stand alone, the list is seeded — a steady, believable crowd laid
-/// under whatever real readers add, and the real ones rank on top of it.
-///
-/// Deterministic: the same card on the same day always gets the same
-/// number on every phone, so two friends see the same list. About one card
-/// in seven is ever seeded, enough for a subject's own list to fill,
-/// heavy-tailed the way real lists are (a few cards far ahead, a long run
-/// behind), and turning over month by month so the month list is not the
-/// week's forever. [appeal] tilts it towards what readers
-/// actually keep — questions over facts, a debate over both — and away from
-/// nothing.
-///
-/// To retire it, construct [Tallies.instance] without a seed in `main.dart`.
-class TopSeed {
-  TopSeed({required this.ids, double Function(String id)? appeal})
-    : appeal = appeal ?? _flat;
-
-  /// Every card that may be seeded: the live bank.
-  final Iterable<String> Function() ids;
-
-  /// How much readers take to a card, around 1.
-  final double Function(String id) appeal;
-
-  static double _flat(String _) => 1;
-
-  final Map<String, Map<String, int>> _days = {};
-
-  /// A number in [0, 1) from [text], the same everywhere.
-  static double unit(String text) {
-    var h = 0x811c9dc5;
-    for (final int c in text.codeUnits) {
-      h = ((h ^ c) * 0x01000193) & 0xFFFFFFFF;
-    }
-    // FNV alone leaves ids that differ by a digit close together; the
-    // murmur finaliser spreads them over the whole range.
-    h ^= h >> 16;
-    h = (h * 0x85ebca6b) & 0xFFFFFFFF;
-    h ^= h >> 13;
-    h = (h * 0xc2b2ae35) & 0xFFFFFFFF;
-    h ^= h >> 16;
-    return h / 0x100000000;
-  }
-
-  /// How many readers a card has on an ordinary day: nothing for most, and
-  /// from a third of a reader to about five for about one card in seven.
-  static double popularity(String id) {
-    final double u = unit('seed:$id');
-    if (u < 0.85) return 0;
-    return 0.3 + 4.5 * math.pow((u - 0.85) / 0.15, 2.5);
-  }
-
-  /// When the crowd started: the first day of the calendar.
-  static final DateTime launched = DateTime.utc(2026, 9, 1);
-
-  /// A card's seeded count for good, [at] a moment: what its days add up
-  /// to on average — its daily following times the days since [launched],
-  /// the season and the day's luck both averaging one.
-  int total(String id, DateTime at) {
-    final double p = popularity(id);
-    if (p == 0) return 0;
-    final int days = at.toUtc().difference(launched).inDays;
-    if (days <= 0) return 0;
-    return (p * appeal(id) * days).floor();
-  }
-
-  /// The seeded counts for [day] (`yyyy-mm-dd`).
-  Map<String, int> on(String day) => _days.putIfAbsent(day, () {
-    final String month = day.substring(0, 7);
-    final Map<String, int> out = {};
-    for (final String id in ids()) {
-      final double p = popularity(id);
-      if (p == 0) continue;
-      final double season = 0.4 + 1.2 * unit('$month:$id');
-      final double today = 0.5 + unit('$day:$id');
-      final int n = (p * season * today * appeal(id)).floor();
-      if (n > 0) out[id] = n;
-    }
-    return out;
-  });
-}
-
 /// One place on the list: a card, and how many readers held on to it.
 @immutable
 class Ranked {
@@ -245,17 +159,15 @@ class Ranked {
 /// first time its reader likes, saves or says it, and never again, so a
 /// number is a number of readers — and liking, unliking and liking again is
 /// not a way up the list.
+///
+/// And the counts are only ever real ones. The list once had a launch crowd
+/// under it, a made-up following so it was never empty; a list that says it
+/// is what readers liked cannot be partly invented, however small the part.
+/// Until real readers make a list worth showing ([worthShowing]) there is
+/// none, and Explore says plainly what stands in its place.
 class Tallies extends ChangeNotifier {
-  Tallies({this.storeOverride, this.seed, DateTime Function()? clock})
+  Tallies({this.storeOverride, DateTime Function()? clock})
     : _clock = clock ?? DateTime.now;
-
-  /// The launch crowd under the real counts, or null for real counts only.
-  /// See [TopSeed].
-  final TopSeed? seed;
-
-  /// True when the list has something to show: the counts have been read,
-  /// or there is a seed to show until they are.
-  bool get ready => answered || seed != null;
 
   /// A singleton for the same reason the store's subscription is one: the
   /// app has one list, and tests replace it rather than thread it through
@@ -301,7 +213,8 @@ class Tallies extends ChangeNotifier {
   }
 
   /// True once the counts have been read. Until then Explore ranks nothing:
-  /// it shows the list's places empty rather than guess at what is on them.
+  /// Astute's own picks stand in the list's place, said to be Astute's,
+  /// rather than a guess at what readers kept.
   bool get answered => _answered;
 
   /// Counts [pillId] for this phone's reader: once per card, ever.
@@ -405,6 +318,30 @@ class Tallies extends ChangeNotifier {
   /// every phone that reads them.
   static const int closedAfter = 2;
 
+  /// How few readers a card can have and still be on a list for everybody.
+  /// A count is of readers, and under three it is one person's taste, or a
+  /// household's, not what readers kept. The server's `LIST_READERS`
+  /// (functions/src/explore.ts).
+  static const int listReaders = 3;
+
+  /// How few cards make a list worth showing: a top of one or two is not a
+  /// top. The server's `LIST_CARDS`.
+  static const int listCards = 5;
+
+  /// [ranked] as it may be shown to everybody: the cards fewer than
+  /// [listReaders] readers held left off, and nothing at all while fewer
+  /// than [listCards] are left — then Explore shows Astute's own picks in
+  /// the list's place, under their own name, rather than a list too thin to
+  /// mean anything. The server holds its lists to the same two numbers
+  /// (`worthShowing`), card for card.
+  static List<Ranked> worthShowing(List<Ranked> ranked) {
+    final List<Ranked> held = [
+      for (final Ranked r in ranked)
+        if (r.readers >= listReaders) r,
+    ];
+    return held.length >= listCards ? held : const [];
+  }
+
   /// The list for the [days] days that closed most recently: most readers
   /// first; then the card counted most recently, so a card that is rising
   /// beats one that was; then by id, so the order never shuffles between
@@ -426,17 +363,7 @@ class Tallies extends ChangeNotifier {
     final Map<String, int> latest = {};
     for (var i = closedAfter; i < closedAfter + days; i++) {
       final String day = tallyDay(now.subtract(Duration(days: i)));
-      final Map<String, int>? real = _days[day];
-      final Map<String, int>? seeded = seed?.on(day);
-      final Map<String, int>? counts = seeded == null
-          ? real
-          : real == null
-          ? seeded
-          : {
-              ...seeded,
-              for (final e in real.entries)
-                e.key: (seeded[e.key] ?? 0) + e.value,
-            };
+      final Map<String, int>? counts = _days[day];
       if (counts == null) continue;
       counts.forEach((id, n) {
         if (where != null && !where(id)) return;
@@ -456,24 +383,14 @@ class Tallies extends ChangeNotifier {
   }
 
   /// The cards readers held on to most since the start: the counts for
-  /// good, and the launch crowd's under them. Live rather than closed —
-  /// it is a shelf for finding what you missed, not a ranking to quote,
-  /// and it moves too slowly for a day's likes to show. [where] narrows it.
+  /// good. Live rather than closed — it is a shelf for finding what you
+  /// missed, not a ranking to quote, and it moves too slowly for a day's
+  /// likes to show. [where] narrows it.
   List<Ranked> allTime({bool Function(String id)? where, int limit = 40}) {
-    final DateTime now = _clock();
-    final Map<String, int> readers = {};
-    void add(String id, int n) {
-      if (n <= 0 || (where != null && !where(id))) return;
-      readers[id] = (readers[id] ?? 0) + n;
-    }
-
-    _totals.forEach(add);
-    final TopSeed? seed = this.seed;
-    if (seed != null) {
-      for (final String id in seed.ids()) {
-        add(id, seed.total(id, now));
-      }
-    }
+    final Map<String, int> readers = {
+      for (final MapEntry<String, int> e in _totals.entries)
+        if (e.value > 0 && (where == null || where(e.key))) e.key: e.value,
+    };
     final List<MapEntry<String, int>> order = readers.entries.toList()
       ..sort((a, b) {
         final int most = b.value.compareTo(a.value);

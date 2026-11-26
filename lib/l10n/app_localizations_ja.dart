@@ -2700,7 +2700,10 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get topEmpty => 'まだランキングはありません。いいね・保存・話したカードがすべてカウントされます。';
+  String get topPicksTitle => '時間をかける価値のあるカード';
+
+  @override
+  String get topPicksLine => '読者のランキングがそろうまで、Astuteが選んでいます';
 
   @override
   String get readMark => '既読';

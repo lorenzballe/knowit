@@ -2911,8 +2911,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'В списке пока пусто. Считается каждая карточка, которую лайкнули, сохранили или рассказали.';
+  String get topPicksTitle => 'Стоит потратить время';
+
+  @override
+  String get topPicksLine =>
+      'Выбирает Astute, пока заполняется список читателей';
 
   @override
   String get readMark => 'Прочитано';

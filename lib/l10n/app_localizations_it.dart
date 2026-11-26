@@ -2811,8 +2811,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'Ancora niente in classifica. Ogni carta che ti piace, salvi o racconti conta.';
+  String get topPicksTitle => 'Meritano il tuo tempo';
+
+  @override
+  String get topPicksLine =>
+      'Scelte da Astute mentre si riempie la classifica dei lettori';
 
   @override
   String get readMark => 'Letta';
