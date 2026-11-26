@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A draggable column asks how many meters of rock cores came up from the Kola borehole. The reader drags it to guess, and the reveal gives 3,700.1 m, far more than oil wells usually core."
+    "label": "One core tray drawn big, seen from above: five rows of rock core a metre long, 5 m a tray. The reader drags a zoom slider and the view pulls back over the trays, counting them, past the six that hold an oil well's few tens of metres, to all of Kola: 740 trays and 10 cm more, 3,700.1 m. Asks how much rock was actually collected from the Kola borehole."
   },
   "source": "Geopop, “Il buco più profondo della Terra, il racconto scientifico del pozzo Kola in Russia con animazioni 3D” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=88ZLlziYdZg&t=489s",
