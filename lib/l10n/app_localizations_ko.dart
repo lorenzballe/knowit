@@ -510,6 +510,42 @@ class AppLocalizationsKo extends AppLocalizations {
   String get yourRecord => '내 기록';
 
   @override
+  String get profileTodayFive => '오늘의 다섯 장';
+
+  @override
+  String profileTodayOf(int read, int of) {
+    return '$of장 중 $read장';
+  }
+
+  @override
+  String profileTodayToRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n장 남음',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileJourneyScores => '모든 점수를 주 단위로';
+
+  @override
+  String profileInARowLabel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '일 연속');
+    return '$_temp0';
+  }
+
+  @override
+  String get profileWeekTitle => '최근 7일';
+
+  @override
+  String profileWeekPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '점');
+    return '$_temp0';
+  }
+
+  @override
   String get appearance => '화면';
 
   @override

@@ -756,6 +756,48 @@ abstract class AppLocalizations {
   /// **'Your record'**
   String get yourRecord;
 
+  /// Profile, the tile at the top that goes to Today: its title, the day's five cards. As the widget and the shared day call them.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s five'**
+  String get profileTodayFive;
+
+  /// Profile, the Today tile while the day is under way: how many of the day's cards are read, of how many. Short: it ends the tile's title row, after profileTodayFive.
+  ///
+  /// In en, this message translates to:
+  /// **'{read} of {of}'**
+  String profileTodayOf(int read, int of);
+
+  /// Profile, the Today tile before any of the day's cards is read: how many there are to read. Short: it ends the tile's title row. Once all are read the tile says todaySeeAgain instead.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 to read} other{{n} to read}}'**
+  String profileTodayToRead(int n);
+
+  /// Profile, under 'Your journey', beside the Astute score: what the journey holds, the reader's scores over time. On the free plan the row also carries the Astute+ mark and opens the plans.
+  ///
+  /// In en, this message translates to:
+  /// **'All your scores, week by week'**
+  String get profileJourneyScores;
+
+  /// Profile, one of three numbers in a row (score, days in a row, cards read): the label under the number of days in a row the reader finished their five. The number is shown above it, not in it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{day in a row} other{days in a row}}'**
+  String profileInARowLabel(int n);
+
+  /// Profile, small capitals over what the last seven days added to the Astute score, with a bar for each of those days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 days'**
+  String get profileWeekTitle;
+
+  /// Profile, beside the large number of points the last seven days added to the Astute score (+24): the word for points. The number is shown before it, not in it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{point} other{points}}'**
+  String profileWeekPoints(int n);
+
   /// No description provided for @appearance.
   ///
   /// In en, this message translates to:

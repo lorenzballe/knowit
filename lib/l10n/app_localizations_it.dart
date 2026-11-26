@@ -520,6 +520,54 @@ class AppLocalizationsIt extends AppLocalizations {
   String get yourRecord => 'Il tuo record';
 
   @override
+  String get profileTodayFive => 'Le cinque di oggi';
+
+  @override
+  String profileTodayOf(int read, int of) {
+    return '$read su $of';
+  }
+
+  @override
+  String profileTodayToRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n da leggere',
+      one: '1 da leggere',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileJourneyScores =>
+      'Tutti i tuoi punteggi, settimana per settimana';
+
+  @override
+  String profileInARowLabel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'giorni di fila',
+      one: 'giorno di fila',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileWeekTitle => 'Ultimi 7 giorni';
+
+  @override
+  String profileWeekPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'punti',
+      one: 'punto',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get appearance => 'Aspetto';
 
   @override

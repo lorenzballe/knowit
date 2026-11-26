@@ -505,6 +505,57 @@
  "startOverBody": "Wipes everything on this device — streak, saved cards, answers, your judgement record, topics and plan — and reopens the intro.",
  "wipeIt": "Wipe it",
  "yourRecord": "Your record",
+ "profileTodayFive": "Today's five",
+ "@profileTodayFive": {
+  "description": "Profile, the tile at the top that goes to Today: its title, the day's five cards. As the widget and the shared day call them."
+ },
+ "profileTodayOf": "{read} of {of}",
+ "@profileTodayOf": {
+  "description": "Profile, the Today tile while the day is under way: how many of the day's cards are read, of how many. Short: it ends the tile's title row, after profileTodayFive.",
+  "placeholders": {
+   "read": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "profileTodayToRead": "{n, plural, =1{1 to read} other{{n} to read}}",
+ "@profileTodayToRead": {
+  "description": "Profile, the Today tile before any of the day's cards is read: how many there are to read. Short: it ends the tile's title row. Once all are read the tile says todaySeeAgain instead.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "profileJourneyScores": "All your scores, week by week",
+ "@profileJourneyScores": {
+  "description": "Profile, under 'Your journey', beside the Astute score: what the journey holds, the reader's scores over time. On the free plan the row also carries the Astute+ mark and opens the plans."
+ },
+ "profileInARowLabel": "{n, plural, =1{day in a row} other{days in a row}}",
+ "@profileInARowLabel": {
+  "description": "Profile, one of three numbers in a row (score, days in a row, cards read): the label under the number of days in a row the reader finished their five. The number is shown above it, not in it.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "profileWeekTitle": "Last 7 days",
+ "@profileWeekTitle": {
+  "description": "Profile, small capitals over what the last seven days added to the Astute score, with a bar for each of those days."
+ },
+ "profileWeekPoints": "{n, plural, =1{point} other{points}}",
+ "@profileWeekPoints": {
+  "description": "Profile, beside the large number of points the last seven days added to the Astute score (+24): the word for points. The number is shown before it, not in it.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
  "appearance": "Appearance",
  "themeLight": "Light",
  "themeDark": "Dark",
