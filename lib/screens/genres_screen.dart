@@ -1,3 +1,6 @@
+import 'dart:math' as math;
+import 'dart:ui' show PathMetric;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,6 +11,7 @@ import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/balanced_text.dart';
 import '../widgets/subject_icon.dart';
 import 'mix_screen.dart';
 import '../widgets/ui.dart';
@@ -278,11 +282,24 @@ class GenreSubject extends StatelessWidget {
     required this.onHoldGenre,
     required this.onTapStrand,
     this.taste = const {},
+    this.hint,
+    this.hintLine,
   });
 
   /// The reader's lean on each trait ([AppState.taste]): the genres they
   /// liked come first, and are marked. Empty, the six keep their order.
   final Map<String, double> taste;
+
+  /// The hint that holding a genre opens it, played on the first of them, 0
+  /// to 1: a fingertip on the chip and its outline traced for as long as a
+  /// hold takes ([kHoldHintPress]), what is inside unfolding under it with
+  /// [hintLine], and folding away again ([kHoldHintFold]). Null when no
+  /// hint is playing.
+  final Animation<double>? hint;
+
+  /// The line the hint says. Without [hint], it is said alone and still,
+  /// under the genres: the hint for a reader who asked for less motion.
+  final String? hintLine;
 
   /// The six, the ones the reader leaned towards first. Ties keep the
   /// order the subject lists them in.
@@ -392,30 +409,300 @@ class GenreSubject extends StatelessWidget {
                 runSpacing: 6,
                 children: [
                   for (final genre in genres)
-                    _GenreChip(
-                      genre: genre,
-                      colour: style.color,
-                      ink: style.ink,
-                      liked: (taste['genre:${genre.id}'] ?? 0) > 0,
-                      off: genresOff.contains(genre.id),
-                      strandsOff: genre.strands
-                          .where((s) => strandsOff.contains(s.id))
-                          .length,
-                      onTap: () => onTapGenre(genre),
-                      onHold: () => onHoldGenre(genre),
+                    _held(
+                      genre == genres.first ? hint : null,
+                      _GenreChip(
+                        genre: genre,
+                        colour: style.color,
+                        ink: style.ink,
+                        liked: (taste['genre:${genre.id}'] ?? 0) > 0,
+                        off: genresOff.contains(genre.id),
+                        strandsOff: genre.strands
+                            .where((s) => strandsOff.contains(s.id))
+                            .length,
+                        onTap: () => onTapGenre(genre),
+                        onHold: () => onHoldGenre(genre),
+                      ),
                     ),
                 ],
               ),
-              for (final genre in genres)
-                if (open.contains(genre.id))
-                  _Inside(
-                    genre: genre,
+              if (hint case final Animation<double> playing
+                  when !open.contains(genres.first.id))
+                _HintBloom(
+                  animation: playing,
+                  line: hintLine,
+                  colour: style.color,
+                  child: _Inside(
+                    genre: genres.first,
                     colour: style.color,
                     strandsOff: strandsOff,
-                    genreOff: genresOff.contains(genre.id),
+                    genreOff: genresOff.contains(genres.first.id),
                     onTapStrand: onTapStrand,
                   ),
+                )
+              else if (hint == null && hintLine != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: _HintLine(line: hintLine!, colour: style.color),
+                ),
+              // What a hold opens unfolds into place, and folds away.
+              AnimatedSize(
+                duration: MediaQuery.disableAnimationsOf(context)
+                    ? Duration.zero
+                    : const Duration(milliseconds: 260),
+                curve: Curves.easeOutCubic,
+                alignment: Alignment.topLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (final genre in genres)
+                      if (open.contains(genre.id))
+                        _Inside(
+                          genre: genre,
+                          colour: style.color,
+                          strandsOff: strandsOff,
+                          genreOff: genresOff.contains(genre.id),
+                          onTapStrand: onTapStrand,
+                        ),
+                  ],
+                ),
+              ),
             ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// [chip], pressed by the hint when one is playing on it.
+Widget _held(Animation<double>? hint, Widget chip) =>
+    hint == null ? chip : _PressHint(animation: hint, child: chip);
+
+/// Where the hint's press ends and what is inside starts to unfold, on its
+/// timeline of 0 to 1.
+const double kHoldHintPress = 0.2;
+
+/// Where what the hint unfolded starts to fold away again.
+const double kHoldHintFold = 0.76;
+
+/// The part of [t] that falls between [from] and [to], 0 to 1, through
+/// [curve].
+double _between(
+  double t,
+  double from,
+  double to, [
+  Curve curve = Curves.linear,
+]) => curve.transform(((t - from) / (to - from)).clamp(0.0, 1.0));
+
+/// The press of the hint on the first chip: a fingertip on it, the chip
+/// sinking a little under it while a line goes once round its edge — as
+/// long as a hold takes — and then let go, as what is inside opens.
+class _PressHint extends AnimatedWidget {
+  const _PressHint({required Animation<double> animation, required this.child})
+    : super(listenable: animation);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final double t = (listenable as Animation<double>).value;
+    final double down = _between(t, 0.04, kHoldHintPress, Curves.easeInOut);
+    final double up = _between(
+      t,
+      kHoldHintPress,
+      kHoldHintPress + 0.1,
+      Curves.easeOutBack,
+    );
+    return CustomPaint(
+      foregroundPainter: _PressPainter(
+        touch: _between(t, 0.01, 0.07, Curves.easeOut),
+        traced: down,
+        let: _between(t, kHoldHintPress, kHoldHintPress + 0.1, Curves.easeOut),
+        ink: context.p.ink,
+      ),
+      child: Transform.scale(scale: 1 - 0.05 * down * (1 - up), child: child),
+    );
+  }
+}
+
+class _PressPainter extends CustomPainter {
+  const _PressPainter({
+    required this.touch,
+    required this.traced,
+    required this.let,
+    required this.ink,
+  });
+
+  /// How far the fingertip has come down, 0 to 1.
+  final double touch;
+
+  /// How much of the chip's edge the line has gone round, 0 to 1.
+  final double traced;
+
+  /// How far the press has been let go, 0 to 1: the fingertip spreads and
+  /// fades, and the line with it.
+  final double let;
+
+  /// The page's ink, the line's colour.
+  final Color ink;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double gone = 1 - let;
+    if (gone <= 0) return;
+    // The fingertip, a soft disc of light on the chip.
+    final Offset centre = size.center(Offset.zero);
+    final double r = size.height * (0.38 + 0.12 * touch + 0.5 * let);
+    canvas.drawCircle(
+      centre,
+      r,
+      Paint()..color = Colors.white.withValues(alpha: 0.34 * touch * gone),
+    );
+    // The edge, gone round once from the top, clockwise, as a hold is held.
+    if (traced > 0) {
+      final Rect around = (Offset.zero & size).inflate(3.5);
+      final double r = around.height / 2;
+      final Path path = Path()
+        ..moveTo(around.center.dx, around.top)
+        ..lineTo(around.right - r, around.top)
+        ..arcTo(
+          Rect.fromCircle(
+            center: Offset(around.right - r, around.center.dy),
+            radius: r,
+          ),
+          -math.pi / 2,
+          math.pi,
+          false,
+        )
+        ..lineTo(around.left + r, around.bottom)
+        ..arcTo(
+          Rect.fromCircle(
+            center: Offset(around.left + r, around.center.dy),
+            radius: r,
+          ),
+          math.pi / 2,
+          math.pi,
+          false,
+        )
+        ..close();
+      final Paint line = Paint()
+        ..color = ink.withValues(alpha: 0.9 * gone)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.6
+        ..strokeCap = StrokeCap.round;
+      for (final PathMetric metric in path.computeMetrics()) {
+        canvas.drawPath(metric.extractPath(0, metric.length * traced), line);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_PressPainter old) =>
+      old.touch != touch ||
+      old.traced != traced ||
+      old.let != let ||
+      old.ink != ink;
+}
+
+/// What the hint's press opens: [child], the first genre's inside, with the
+/// hint's line over it, unfolding as the press is let go and folding away
+/// again.
+class _HintBloom extends AnimatedWidget {
+  const _HintBloom({
+    required Animation<double> animation,
+    required this.line,
+    required this.colour,
+    required this.child,
+  }) : super(listenable: animation);
+
+  final String? line;
+  final Color colour;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final double t = (listenable as Animation<double>).value;
+    final double open =
+        _between(
+          t,
+          kHoldHintPress,
+          kHoldHintPress + 0.13,
+          Curves.easeOutCubic,
+        ) *
+        (1 -
+            _between(
+              t,
+              kHoldHintFold,
+              kHoldHintFold + 0.14,
+              Curves.easeInOutCubic,
+            ));
+    if (open <= 0) return const SizedBox.shrink();
+    return ClipRect(
+      child: Align(
+        alignment: Alignment.topLeft,
+        heightFactor: open,
+        child: Opacity(
+          opacity: open,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (line case final String said)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: _HintLine(line: said, colour: colour),
+                ),
+              child,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The hint's line, after a small drawing of a fingertip held down: a dot
+/// in the subject's colour, ringed.
+class _HintLine extends StatelessWidget {
+  const _HintLine({required this.line, required this.colour});
+
+  final String line;
+  final Color colour;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    return Row(
+      key: const ValueKey('genre-hold-hint'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 1),
+          child: Container(
+            width: 14,
+            height: 14,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: colour, width: 1.3),
+            ),
+            child: Container(
+              width: 6,
+              height: 6,
+              decoration: BoxDecoration(color: colour, shape: BoxShape.circle),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Flexible(
+          child: BalancedText(
+            line,
+            style: AppText.body(
+              size: 12,
+              weight: FontWeight.w600,
+              height: 1.3,
+              color: p.ink,
+            ),
           ),
         ),
       ],

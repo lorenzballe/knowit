@@ -1378,6 +1378,7 @@
   "tuneHowMuch": "それぞれの量",
   "tuneInsideLine": "気に入った部分ほど先に並びます。タップで外し、長押しで中身を見られます。",
   "tuneSave": "保存",
+  "tuneHoldHint": "ジャンルを長押しすると、中の小さなテーマが開きます",
   "shareDayTitle": "今日をシェア",
   "shareDayRead": "5枚、読了",
   "shareDayTurn": "1日5枚。次はあなたの番。",

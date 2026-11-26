@@ -5748,6 +5748,9 @@ class RemoteLocalizations extends AppLocalizations {
   String get tuneSave => _words.text('tuneSave') ?? _base.tuneSave;
 
   @override
+  String get tuneHoldHint => _words.text('tuneHoldHint') ?? _base.tuneHoldHint;
+
+  @override
   String get shareDayTitle =>
       _words.text('shareDayTitle') ?? _base.shareDayTitle;
 

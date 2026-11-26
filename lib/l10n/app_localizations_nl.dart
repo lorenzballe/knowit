@@ -6084,6 +6084,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get tuneSave => 'Opslaan';
 
   @override
+  String get tuneHoldHint =>
+      'Houd een genre vast om de kleinere onderwerpen erin te openen';
+
+  @override
   String get shareDayTitle => 'Deel je dag';
 
   @override

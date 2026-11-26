@@ -5803,6 +5803,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tuneSave => '保存';
 
   @override
+  String get tuneHoldHint => '长按某个类别，打开里面更小的主题';
+
+  @override
   String get shareDayTitle => '分享你的一天';
 
   @override

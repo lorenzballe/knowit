@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../analytics.dart';
 import '../data/genres.dart';
@@ -29,6 +30,15 @@ import 'mix_screen.dart';
 ///
 /// Saved whole when the reader says so, never a bar at a time: a mix half
 /// dragged is not an answer yet.
+///
+/// One page, scrolled whole: the title goes up with it. Only the way back
+/// stays where it is, as iOS keeps its own, with the page fading under it
+/// once it has scrolled, and the button stays at the foot, as on the topics
+/// page, with the page fading into it: saving is a tap away wherever the
+/// reader is, and the way back, which keeps nothing, is never the only way
+/// off the page. The first time the parts of the subjects come to rest on
+/// screen, the first of them shows what holding one does: pressed, it opens
+/// what is inside under it, says so in a line, and folds again.
 class TuneScreen extends StatefulWidget {
   const TuneScreen({super.key, required this.app, required this.picked});
 
@@ -43,8 +53,128 @@ class TuneScreen extends StatefulWidget {
   State<TuneScreen> createState() => _TuneScreenState();
 }
 
-class _TuneScreenState extends State<TuneScreen> {
+class _TuneScreenState extends State<TuneScreen>
+    with SingleTickerProviderStateMixin {
   AppState get app => widget.app;
+
+  /// Where it is kept that the hint has been shown, once for good.
+  static const String _kHoldHint = 'knowit.tuneHoldHint';
+
+  /// How long the hint takes: a press as long as a hold, what is inside
+  /// open long enough to read, and folded away.
+  static const Duration _hintTime = Duration(milliseconds: 3800);
+
+  /// How far the page has scrolled under the way back, 0 to 1: what the
+  /// fade under it is drawn at.
+  final ValueNotifier<double> _edge = ValueNotifier(0);
+
+  /// The first subject whose parts are shown, which the hint plays on.
+  final GlobalKey _firstParts = GlobalKey();
+
+  /// What the page scrolls in: the screen above the button.
+  final GlobalKey _area = GlobalKey();
+
+  /// Whether the hint is still to be shown: unknown until the phone has
+  /// said, then true until it has been shown or a part held.
+  bool _hintOwed = false;
+
+  /// The hint as it plays.
+  AnimationController? _hint;
+
+  /// The hint said still, for a reader who asked for less motion.
+  bool _hintStill = false;
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      if (!mounted || (prefs.getBool(_kHoldHint) ?? false)) return;
+      _hintOwed = true;
+      // Shown at once where the parts are on screen as the page opens; else
+      // when the reader comes to rest on them.
+      WidgetsBinding.instance.addPostFrameCallback((_) => _maybeHint());
+    });
+  }
+
+  @override
+  void dispose() {
+    _hint?.dispose();
+    _edge.dispose();
+    super.dispose();
+  }
+
+  bool _onScroll(ScrollNotification n) {
+    if (n.depth != 0 || n.metrics.axis != Axis.vertical) return false;
+    _edge.value = (n.metrics.pixels / 24).clamp(0.0, 1.0);
+    // Looked at once the page is laid out where it came to rest.
+    if (n is ScrollEndNotification && _hintOwed) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _maybeHint());
+      WidgetsBinding.instance.ensureVisualUpdate();
+    }
+    return false;
+  }
+
+  /// The hint, if it is owed and the first subject's parts stand whole on
+  /// screen, clear of the way back and of the button, with room under them
+  /// for the hint's line and the first of what opens: what a hold opens
+  /// opens under all of them.
+  void _maybeHint() {
+    if (!_hintOwed || !mounted) return;
+    final RenderObject? parts = _firstParts.currentContext?.findRenderObject();
+    final RenderObject? area = _area.currentContext?.findRenderObject();
+    if (parts is! RenderBox || !parts.hasSize) return;
+    if (area is! RenderBox || !area.hasSize) return;
+    final double top = parts.localToGlobal(Offset.zero).dy;
+    final double head = MediaQuery.paddingOf(context).top + 64;
+    final double bottom = area.localToGlobal(Offset(0, area.size.height)).dy;
+    if (top < head || top + parts.size.height + 60 > bottom - 8) return;
+    _showHint();
+  }
+
+  void _showHint() {
+    _hintOwed = false;
+    SharedPreferences.getInstance().then(
+      (prefs) => prefs.setBool(_kHoldHint, true),
+    );
+    if (MediaQuery.disableAnimationsOf(context)) {
+      setState(() => _hintStill = true);
+      return;
+    }
+    final AnimationController hint = AnimationController(
+      vsync: this,
+      duration: _hintTime,
+    );
+    hint.addStatusListener((status) {
+      if (status != AnimationStatus.completed || !mounted) return;
+      setState(() => _hint = null);
+      _dropAfterFrame(hint);
+    });
+    setState(() => _hint = hint);
+    hint.forward();
+  }
+
+  /// [hint], let go once the frame that stops drawing it is drawn.
+  void _dropAfterFrame(AnimationController hint) {
+    hint.stop();
+    WidgetsBinding.instance.addPostFrameCallback((_) => hint.dispose());
+  }
+
+  /// A part held by the reader: they have found what holding does, and the
+  /// hint is not owed any more.
+  void _held() {
+    if (_hintOwed) {
+      _hintOwed = false;
+      SharedPreferences.getInstance().then(
+        (prefs) => prefs.setBool(_kHoldHint, true),
+      );
+    }
+    final AnimationController? hint = _hint;
+    if (hint != null) {
+      _hint = null;
+      _dropAfterFrame(hint);
+    }
+    _hintStill = false;
+  }
 
   /// What the reader asked for, by topic key: 0 for a subject out of the
   /// mix. A subject in it with no weight of its own is all the way in,
@@ -185,135 +315,230 @@ class _TuneScreenState extends State<TuneScreen> {
       (k) => k.startsWith('genre:') && taste[k]! > 0,
     );
 
+    final EdgeInsets safe = MediaQuery.paddingOf(context);
+    // The first subject whose parts are drawn: the hint plays on it.
+    final String? first = _order
+        .where((k) => kGenres.containsKey(k) && _value[k]! > kMixFloor)
+        .firstOrNull;
     return ScreenView(
       name: 'tune',
       child: Scaffold(
         backgroundColor: p.surface,
-        body: SafeArea(
-          bottom: false,
-          child: Column(
-            children: [
-              // The way back stays put above what scrolls: on iOS 26 it is
-              // Apple's own glass button, a native view, and one inside a
-              // scrolling list is drawn away from its place.
-              Padding(
-                padding: const EdgeInsets.fromLTRB(18, 8, 18, 0),
-                child: Row(
-                  children: [
-                    BackCircle(
+        body: Column(
+          children: [
+            Expanded(
+              child: Stack(
+                key: _area,
+                children: [
+                  NotificationListener<ScrollNotification>(
+                    onNotification: _onScroll,
+                    child: ListView(
+                      key: const ValueKey('tune-page'),
+                      // At the foot, room for the last of it to come clear of
+                      // where the page fades into the button.
+                      padding: EdgeInsets.fromLTRB(18, safe.top + 8, 18, 28),
+                      children: [
+                        // The title beside the way back, as every screen with one
+                        // sets it, one line, smaller where a language runs long;
+                        // it goes up with the page, the way back stays.
+                        SizedBox(
+                          height: 44,
+                          child: Row(
+                            children: [
+                              const SizedBox(width: 44 + 12),
+                              Expanded(
+                                child: FitText(
+                                  l.tuneTitle,
+                                  key: const ValueKey('tune-title'),
+                                  maxLines: 1,
+                                  minSize: 20,
+                                  style: AppText.display(
+                                    size: 27,
+                                    weight: FontWeight.w600,
+                                    height: 1,
+                                    spacing: -0.8,
+                                    color: p.ink,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          _learned ? l.tuneLearned : l.tuneFresh,
+                          style: AppText.body(
+                            size: 13.5,
+                            height: 1.4,
+                            color: p.inkMuted,
+                          ),
+                        ),
+                        const SizedBox(height: 22),
+                        Eyebrow(l.tuneHowMuch),
+                        const SizedBox(height: 10),
+                        _Bars(value: _value, mark: _mark, onDragAt: _setAt),
+                        const SizedBox(height: 8),
+                        Text(
+                          l.subjectsInTheMix(_inMix, kMixSubjects.length),
+                          textAlign: TextAlign.center,
+                          style: AppText.body(
+                            size: 12,
+                            weight: FontWeight.w500,
+                            color: p.inkFaint,
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        Eyebrow(l.genresTitle),
+                        const SizedBox(height: 7),
+                        Text(
+                          likedParts ? l.tuneInsideLine : l.genresLine,
+                          style: AppText.body(
+                            size: 12.5,
+                            height: 1.4,
+                            color: p.inkMuted,
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        for (final String key in _order)
+                          if (kGenres.containsKey(key))
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: _value[key]! > kMixFloor
+                                  ? GenreSubject(
+                                      key: key == first ? _firstParts : null,
+                                      topicKey: key,
+                                      weight: _value[key]! / 100,
+                                      genresOff: _genresOff,
+                                      strandsOff: _strandsOff,
+                                      open: _open,
+                                      taste: taste,
+                                      hint: key == first ? _hint : null,
+                                      hintLine:
+                                          key == first &&
+                                              (_hint != null || _hintStill)
+                                          ? l.tuneHoldHint
+                                          : null,
+                                      onTapGenre: (Genre g) {
+                                        HapticFeedback.selectionClick();
+                                        setState(() {
+                                          if (!_genresOff.remove(g.id)) {
+                                            _genresOff.add(g.id);
+                                          }
+                                        });
+                                      },
+                                      onHoldGenre: (Genre g) {
+                                        HapticFeedback.mediumImpact();
+                                        setState(() {
+                                          _held();
+                                          if (!_open.remove(g.id)) {
+                                            _open.add(g.id);
+                                          }
+                                        });
+                                      },
+                                      onTapStrand: (Strand s) {
+                                        HapticFeedback.selectionClick();
+                                        setState(() {
+                                          if (!_strandsOff.remove(s.id)) {
+                                            _strandsOff.add(s.id);
+                                          }
+                                        });
+                                      },
+                                    )
+                                  : GenreSubjectOff(topicKey: key),
+                            ),
+                      ],
+                    ),
+                  ),
+                  // What runs on under the button fades into the page rather than
+                  // stopping at a line, as on the topics page.
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: 22,
+                    child: IgnorePointer(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [p.surface.withValues(alpha: 0), p.surface],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // What runs under the way back fades into the page there, as
+                  // iOS fades what runs under its own: drawn only once the page
+                  // has moved, so at rest the title stands beside it untouched.
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    height: safe.top + 8 + 44 + 20,
+                    child: IgnorePointer(
+                      child: ValueListenableBuilder<double>(
+                        valueListenable: _edge,
+                        builder: (context, edge, _) => Opacity(
+                          opacity: edge,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                // Whole behind the way back, so nothing runs
+                                // through its ring, then gone a little under it.
+                                colors: [
+                                  p.surface,
+                                  p.surface,
+                                  p.surface.withValues(alpha: 0.7),
+                                  p.surface.withValues(alpha: 0),
+                                ],
+                                stops: [
+                                  0,
+                                  (safe.top + 8 + 36) / (safe.top + 72),
+                                  (safe.top + 8 + 50) / (safe.top + 72),
+                                  1,
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // The way back stays where it is: on iOS 26 it is Apple's own
+                  // glass button, a native view, and one inside a scrolling page
+                  // is drawn away from its place.
+                  Positioned(
+                    left: 18,
+                    top: safe.top + 8,
+                    child: BackCircle(
                       onPressed: () => Navigator.of(context).maybePop(),
                     ),
-                    const SizedBox(width: 12),
-                    // As every screen with a way back sets its title:
-                    // one line, smaller where a language runs long.
-                    Expanded(
-                      child: FitText(
-                        l.tuneTitle,
-                        key: const ValueKey('tune-title'),
-                        maxLines: 1,
-                        minSize: 20,
-                        style: AppText.display(
-                          size: 27,
-                          weight: FontWeight.w600,
-                          height: 1,
-                          spacing: -0.8,
-                          color: p.ink,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
-                  children: [
-                    Text(
-                      _learned ? l.tuneLearned : l.tuneFresh,
-                      style: AppText.body(
-                        size: 13.5,
-                        height: 1.4,
-                        color: p.inkMuted,
-                      ),
-                    ),
-                    const SizedBox(height: 22),
-                    Eyebrow(l.tuneHowMuch),
-                    const SizedBox(height: 10),
-                    _Bars(value: _value, mark: _mark, onDragAt: _setAt),
-                    const SizedBox(height: 8),
-                    Text(
-                      l.subjectsInTheMix(_inMix, kMixSubjects.length),
-                      textAlign: TextAlign.center,
-                      style: AppText.body(
-                        size: 12,
-                        weight: FontWeight.w500,
-                        color: p.inkFaint,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Eyebrow(l.genresTitle),
-                    const SizedBox(height: 7),
-                    Text(
-                      likedParts ? l.tuneInsideLine : l.genresLine,
-                      style: AppText.body(
-                        size: 12.5,
-                        height: 1.4,
-                        color: p.inkMuted,
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    for (final String key in _order)
-                      if (kGenres.containsKey(key))
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: _value[key]! > kMixFloor
-                              ? GenreSubject(
-                                  topicKey: key,
-                                  weight: _value[key]! / 100,
-                                  genresOff: _genresOff,
-                                  strandsOff: _strandsOff,
-                                  open: _open,
-                                  taste: taste,
-                                  onTapGenre: (Genre g) {
-                                    HapticFeedback.selectionClick();
-                                    setState(() {
-                                      if (!_genresOff.remove(g.id)) {
-                                        _genresOff.add(g.id);
-                                      }
-                                    });
-                                  },
-                                  onHoldGenre: (Genre g) {
-                                    HapticFeedback.mediumImpact();
-                                    setState(() {
-                                      if (!_open.remove(g.id)) _open.add(g.id);
-                                    });
-                                  },
-                                  onTapStrand: (Strand s) {
-                                    HapticFeedback.selectionClick();
-                                    setState(() {
-                                      if (!_strandsOff.remove(s.id)) {
-                                        _strandsOff.add(s.id);
-                                      }
-                                    });
-                                  },
-                                )
-                              : GenreSubjectOff(topicKey: key),
-                        ),
-                  ],
-                ),
+            ),
+            // The button stays at the foot of the screen: the mix is saved
+            // whole when the reader says so, and saying so is never a long
+            // scroll away.
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                18,
+                10,
+                18,
+                math.max(24, safe.bottom + 10),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(18, 10, 18, 24),
-                child: PrimaryButton(
-                  key: const ValueKey('tune-save'),
-                  label: enough ? l.tuneSave : l.pickAtLeastN(_minTopics),
-                  background: enough ? p.ink : p.line,
-                  foreground: enough ? null : p.inkFaint,
-                  onPressed: enough ? _save : null,
-                ),
+              child: PrimaryButton(
+                key: const ValueKey('tune-save'),
+                label: enough ? l.tuneSave : l.pickAtLeastN(_minTopics),
+                background: enough ? p.ink : p.line,
+                foreground: enough ? null : p.inkFaint,
+                onPressed: enough ? _save : null,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

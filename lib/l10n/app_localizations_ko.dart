@@ -5825,6 +5825,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tuneSave => '저장';
 
   @override
+  String get tuneHoldHint => '장르를 길게 누르면 안의 작은 주제들이 열립니다';
+
+  @override
   String get shareDayTitle => '오늘을 공유하기';
 
   @override

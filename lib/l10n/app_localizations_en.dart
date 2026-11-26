@@ -6037,6 +6037,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tuneSave => 'Save';
 
   @override
+  String get tuneHoldHint => 'Hold a genre to open the smaller topics inside';
+
+  @override
   String get shareDayTitle => 'Share your day';
 
   @override

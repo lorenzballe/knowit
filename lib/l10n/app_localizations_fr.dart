@@ -6113,6 +6113,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tuneSave => 'Enregistrer';
 
   @override
+  String get tuneHoldHint =>
+      'Maintiens un genre pour ouvrir les sujets qu’il contient';
+
+  @override
   String get shareDayTitle => 'Partage ta journée';
 
   @override

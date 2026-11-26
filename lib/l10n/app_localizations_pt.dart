@@ -6084,6 +6084,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get tuneSave => 'Guardar';
 
   @override
+  String get tuneHoldHint =>
+      'Mantém premido um género para abrir os temas lá dentro';
+
+  @override
   String get shareDayTitle => 'Partilha o teu dia';
 
   @override

@@ -76,3 +76,5 @@ tool/shots/shareday/
 tool/shots/video/
 # Explore's latest news with a morning's paper (tool/news_shots.dart): looked at, not kept
 tool/shots/news/
+# A subject's grid and the mix fine-tuned (tool/gridmix_shots.dart): looked at, not kept
+tool/shots/gridmix/

@@ -6287,6 +6287,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get tuneSave => 'Zapisz';
 
   @override
+  String get tuneHoldHint =>
+      'Przytrzymaj gatunek, żeby otworzyć mniejsze tematy w środku';
+
+  @override
   String get shareDayTitle => 'Udostępnij swój dzień';
 
   @override

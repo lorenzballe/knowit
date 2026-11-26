@@ -8418,6 +8418,12 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get tuneSave;
 
+  /// The fine-tuning screen, said once beside the first genre of the first subject while the app presses it by itself and its smaller topics unfold under it: what holding a genre does. One short line.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold a genre to open the smaller topics inside'**
+  String get tuneHoldHint;
+
   /// The sheet that sends the day as a picture: its title.
   ///
   /// In en, this message translates to:

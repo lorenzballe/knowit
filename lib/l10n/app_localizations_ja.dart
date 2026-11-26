@@ -5810,6 +5810,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tuneSave => '保存';
 
   @override
+  String get tuneHoldHint => 'ジャンルを長押しすると、中の小さなテーマが開きます';
+
+  @override
   String get shareDayTitle => '今日をシェア';
 
   @override

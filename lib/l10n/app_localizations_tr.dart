@@ -5971,6 +5971,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tuneSave => 'Kaydet';
 
   @override
+  String get tuneHoldHint =>
+      'İçindeki küçük konuları açmak için bir türe basılı tut';
+
+  @override
   String get shareDayTitle => 'Gününü paylaş';
 
   @override
