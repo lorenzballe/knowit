@@ -1,7 +1,9 @@
 // The top of the profile (lib/widgets/profile_top.dart): the Astute score on
-// either plan, read exactly as Your journey reads it; the way into the
-// journey, which says Astute+ on the free plan and has no lock; the tile
-// back to Today's five; and Today opening out of that tile
+// either plan, read exactly as Your journey reads it; the top each plan
+// opens on, A free and C on Astute+, its days in a row lit; any of the three
+// picked in the developer tools, at once, and only while they are on; the
+// way into the journey, which says Astute+ on the free plan and has no lock;
+// the tile back to Today's five; and Today opening out of that tile
 // (lib/widgets/tab_zoom.dart), or dissolving in for a reader who asked for
 // less motion.
 //
@@ -18,6 +20,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/data/daily.dart' show dealDay;
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/debug_flags.dart';
+import 'package:astuto/explore/blocks/core/your_day_block.dart'
+    show kStreakOrange;
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
@@ -25,6 +30,7 @@ import 'package:astuto/screens/journey_screen.dart';
 import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/screens/profile_screen.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/state/debug_looks.dart';
 import 'package:astuto/sync/account.dart';
 import 'package:astuto/sync/board.dart';
 import 'package:astuto/theme.dart';
@@ -81,12 +87,26 @@ Map<String, Object> _prefs({bool plus = false, int read = 3}) {
   };
 }
 
-Future<AppState> _app(WidgetTester tester, {bool plus = false}) async {
-  SharedPreferences.setMockInitialValues(_prefs(plus: plus));
+Future<AppState> _app(
+  WidgetTester tester, {
+  bool plus = false,
+  Map<String, Object> more = const {},
+}) async {
+  SharedPreferences.setMockInitialValues({..._prefs(plus: plus), ...more});
   final AppState app = AppState();
   await app.init();
   await tester.pump();
   return app;
+}
+
+/// Which of the three tops is on the screen, by the name its key carries.
+String? _topShown(WidgetTester tester) {
+  for (final ProfileTop top in ProfileTop.values) {
+    if (find.byKey(ValueKey('profile-top-${top.name}')).evaluate().isNotEmpty) {
+      return top.name;
+    }
+  }
+  return null;
 }
 
 Account _account() =>
@@ -140,6 +160,112 @@ void main() {
   tearDown(() {
     TestWidgetsFlutterBinding.instance.platformDispatcher.views.first.reset();
     profileTopForShots = null;
+    DebugLooks.reset();
+  });
+
+  testWidgets('each plan opens on its own top: A, the score, free; C, the '
+      'board, on Astute+, its days in a row lit', (tester) async {
+    expect(profileTopFor(plus: false), ProfileTop.score);
+    expect(profileTopFor(plus: true), ProfileTop.board);
+    for (final bool plus in [false, true]) {
+      final AppState app = await _app(tester, plus: plus);
+      await tester.pumpWidget(_host(app));
+      await _settle(tester);
+      expect(
+        _topShown(tester),
+        plus ? 'board' : 'score',
+        reason: plus ? 'Astute+' : 'free',
+      );
+    }
+
+    // On the board, the six days in a row are the streak: the number lit in
+    // the streak's orange, the flame before it, as the week's finished days
+    // are lit. The score beside it is not.
+    final Finder lit = find.byKey(const ValueKey('profile-streak-lit'));
+    expect(lit, findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('profile-streak')),
+        matching: lit,
+      ),
+      findsOneWidget,
+    );
+    final Text number = tester.widget<Text>(
+      find.descendant(of: lit, matching: find.text('6')),
+    );
+    expect(number.style!.color, kStreakOrange);
+    final Icon flame = tester.widget<Icon>(
+      find.byKey(const ValueKey('profile-streak-flame')),
+    );
+    expect(flame.icon, Icons.local_fire_department_rounded);
+    expect(flame.color, kStreakOrange);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('profile-score')),
+        matching: find.byIcon(Icons.local_fire_department_rounded),
+      ),
+      findsNothing,
+    );
+    // Said as what it is, without the flame.
+    expect(find.bySemanticsLabel('days in a row, 6'), findsOneWidget);
+
+    // A streak that has run out, with no freeze to cover it, is not lit.
+    final DateTime now = DateTime.now();
+    final AppState lapsed = await _app(
+      tester,
+      plus: true,
+      more: {
+        'knowit.lastCompletionDate': dateKey(
+          now.subtract(const Duration(days: 4)),
+        ),
+        'knowit.freezes': 0,
+      },
+    );
+    await tester.pumpWidget(_host(lapsed));
+    await _settle(tester);
+    expect(_topShown(tester), 'board');
+    expect(lit, findsNothing);
+    expect(find.byIcon(Icons.local_fire_department_rounded), findsNothing);
+  });
+
+  testWidgets('the developer tools show any top on either plan, at once, and '
+      'only while they are on', (tester) async {
+    final bool tools = debugToolsOn;
+    addTearDown(() => debugToolsOn = tools);
+    for (final bool plus in [false, true]) {
+      debugToolsOn = true;
+      final AppState app = await _app(tester, plus: plus);
+      await tester.pumpWidget(_host(app));
+      await _settle(tester);
+      final String own = plus ? 'board' : 'score';
+      expect(_topShown(tester), own);
+      for (final (ProfileTopPick pick, String top) in [
+        (ProfileTopPick.a, 'score'),
+        (ProfileTopPick.b, 'week'),
+        (ProfileTopPick.c, 'board'),
+        (ProfileTopPick.auto, own),
+      ]) {
+        // Picked while the profile is on screen: it changes under the
+        // finger, with nothing else to do.
+        await DebugLooks.setProfileTop(pick);
+        await tester.pump();
+        expect(
+          _topShown(tester),
+          top,
+          reason: '${pick.name}, ${plus ? 'Astute+' : 'free'}',
+        );
+      }
+
+      // A pick kept on a phone by a TestFlight build, under the App Store
+      // build installed over it: never read.
+      await DebugLooks.setProfileTop(ProfileTopPick.b);
+      debugToolsOn = false;
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pumpWidget(_host(app));
+      await _settle(tester);
+      expect(_topShown(tester), own);
+      DebugLooks.reset();
+    }
   });
 
   testWidgets('the score is the journey\'s own number, on either plan', (
@@ -151,12 +277,14 @@ void main() {
       await _settle(tester);
       final BuildContext context = tester.element(find.byType(ProfileScreen));
       final String score = scoreNumber(context, scoreBookOf(app).overall.now);
-      // The answers moved it, so this is a number the reader made.
+      // The answers moved it, so this is a number the reader made. The
+      // number itself, whole: on the board the score's panel also says how
+      // far it moved this week, which can be every point of it.
       expect(scoreBookOf(app).overall.answers, greaterThan(0));
       expect(
         find.descendant(
           of: find.byKey(const ValueKey('profile-score')),
-          matching: find.textContaining(score),
+          matching: find.text(score),
           matchRoot: true,
         ),
         findsOneWidget,

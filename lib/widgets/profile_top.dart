@@ -4,9 +4,11 @@
 /// It used to open on the streak, "Your record · 4 days", and then say the
 /// streak again in the panel under it, beside "Today: 5 of 5 read · all
 /// read". A reader on the free plan saw no score anywhere, and a button
-/// lower down into a journey they could not picture. Three answers are kept
-/// here side by side, for the owner to choose between ([ProfileTop]); the
-/// app opens on [kProfileTop].
+/// lower down into a journey they could not picture. Three answers were
+/// drawn side by side for the owner ([ProfileTop]), and he chose one for
+/// each plan ([profileTopFor]): the score on the free plan, the board on
+/// Astute+, its days in a row lit as the streak they are. The developer
+/// tools show any of the three on either plan (DebugLooks).
 ///
 /// The score is read exactly as Your journey reads it — [scoreBookOf], its
 /// overall score, [scoreNumber], [ScoreWeek] and [ScoreSpark] — so the two
@@ -26,29 +28,49 @@ import '../explore/blocks/core/your_day_block.dart'
 import '../l10n/l10n.dart';
 import '../screens/journey_screen.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../theme.dart';
 import 'premium.dart';
 import 'skill_score.dart';
 import 'ui.dart' show Eyebrow;
 
-/// The three tops the profile can open on.
+/// The three tops the profile can open on: A, B and C, as the owner knows
+/// them.
 enum ProfileTop {
-  /// The Astute score, large, with how far it moved this week and its line
-  /// over the month; under it the way into Your journey; then the week, a
-  /// day to a dot, today's dot filling card by card, the streak at its end.
+  /// A. The Astute score, large, with how far it moved this week and its
+  /// line over the month; under it the way into Your journey; then the
+  /// week, a day to a dot, today's dot filling card by card, the streak at
+  /// its end.
   score,
 
-  /// What the last seven days added to the score, large, with a bar for
+  /// B. What the last seven days added to the score, large, with a bar for
   /// each day; the score itself under it; Today's five as one slim row.
   week,
 
-  /// Three numbers in one panel, the score first, the days in a row and
-  /// the cards read beside it, with Today's five at its foot.
+  /// C. Three numbers in one panel, the score first, the days in a row,
+  /// lit while they run, and the cards read beside it, with Today's five
+  /// at its foot.
   board,
 }
 
-/// The top the profile opens on.
-const ProfileTop kProfileTop = ProfileTop.score;
+/// The top each plan opens on: on the free plan the score, the one number
+/// about the reader, over the way into the journey that holds the rest of
+/// it; on Astute+, with the journey already theirs, the board, where the
+/// score stands beside the streak and the cards read.
+ProfileTop profileTopFor({required bool plus}) =>
+    plus ? ProfileTop.board : ProfileTop.score;
+
+/// The top the profile opens on for [app]'s reader: the camera's, when it
+/// photographs them; the one picked in the developer tools; else their
+/// plan's own.
+ProfileTop profileTopOf(AppState app) =>
+    profileTopForShots ??
+    switch (DebugLooks.profileTopPicked) {
+      ProfileTopPick.auto => profileTopFor(plus: app.isPlus),
+      ProfileTopPick.a => ProfileTop.score,
+      ProfileTopPick.b => ProfileTop.week,
+      ProfileTopPick.c => ProfileTop.board,
+    };
 
 /// The top the camera photographs instead (tool/profile_shots.dart), so
 /// all three can be seen in the real app. Null everywhere else.
@@ -76,7 +98,7 @@ void _openJourney(BuildContext context, AppState app) => requirePlus(
   source: 'journey',
 );
 
-/// The top, as [kProfileTop] (or the camera) has it.
+/// The top, as [profileTopOf] has it for the reader.
 class ProfileTopView extends StatelessWidget {
   const ProfileTopView({super.key, required this.app, this.onToday});
 
@@ -88,12 +110,27 @@ class ProfileTopView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SkillScore score = scoreBookOf(app).overall;
-    return switch (profileTopForShots ?? kProfileTop) {
-      ProfileTop.score => _ScoreTop(app: app, score: score, onToday: onToday),
-      ProfileTop.week => _WeekTop(app: app, score: score, onToday: onToday),
-      ProfileTop.board => _BoardTop(app: app, score: score, onToday: onToday),
-    };
+    // A top picked in the developer tools shows at once. A change of plan
+    // redraws the whole app, and this with it.
+    return ValueListenableBuilder<ProfileTopPick>(
+      valueListenable: DebugLooks.profileTop,
+      builder: (context, _, _) {
+        final SkillScore score = scoreBookOf(app).overall;
+        return switch (profileTopOf(app)) {
+          ProfileTop.score => _ScoreTop(
+            app: app,
+            score: score,
+            onToday: onToday,
+          ),
+          ProfileTop.week => _WeekTop(app: app, score: score, onToday: onToday),
+          ProfileTop.board => _BoardTop(
+            app: app,
+            score: score,
+            onToday: onToday,
+          ),
+        };
+      },
+    );
   }
 }
 
@@ -461,8 +498,8 @@ class _BarPainter extends CustomPainter {
 // ── C · The board ─────────────────────────────────────────────────────────
 
 /// Three numbers in a row, as a dashboard keeps them: the score first,
-/// how steady, how much. None of them shouts; Today's five is the panel's
-/// foot, and the journey a row of its own under it.
+/// how steady, how much. Only the streak is lit, while it runs; Today's
+/// five is the panel's foot, and the journey a row of its own under it.
 class _BoardTop extends StatelessWidget {
   const _BoardTop({required this.app, required this.score, this.onToday});
 
@@ -515,8 +552,10 @@ class _BoardTop extends StatelessWidget {
                       Expanded(
                         flex: 4,
                         child: _Stat(
+                          key: const ValueKey('profile-streak'),
                           number: scoreNumber(context, streak),
                           label: l.profileInARowLabel(streak),
+                          lit: streak > 0,
                         ),
                       ),
                       divider(),
@@ -559,15 +598,28 @@ class _Stat extends StatelessWidget {
     required this.number,
     required this.label,
     this.foot,
+    this.lit = false,
   });
 
   final String number;
   final String label;
   final Widget? foot;
 
+  /// The days in a row while they run: the number lit in the streak's
+  /// orange with its flame before it, as the week's finished days and the
+  /// streak's own chip are lit ([_Lit]).
+  final bool lit;
+
   @override
   Widget build(BuildContext context) {
     final p = context.p;
+    final TextStyle style = AppText.display(
+      size: 34,
+      weight: FontWeight.w600,
+      height: 1.05,
+      spacing: -1,
+      color: p.ink,
+    );
     return Semantics(
       container: true,
       label: '$label, $number',
@@ -578,17 +630,9 @@ class _Stat extends StatelessWidget {
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: AlignmentDirectional.centerStart,
-            child: Text(
-              number,
-              maxLines: 1,
-              style: AppText.display(
-                size: 34,
-                weight: FontWeight.w600,
-                height: 1.05,
-                spacing: -1,
-                color: p.ink,
-              ),
-            ),
+            child: lit
+                ? _Lit(number: number, style: style)
+                : Text(number, maxLines: 1, style: style),
           ),
           const SizedBox(height: 6),
           Text(
@@ -603,6 +647,54 @@ class _Stat extends StatelessWidget {
           if (foot != null) ...[const SizedBox(height: 4), foot!],
         ],
       ),
+    );
+  }
+}
+
+/// The streak's number, lit: the flame and the number in the streak's
+/// orange — a shade deeper on paper, where the orange itself is too pale to
+/// read at this size — and on the night paper a soft glow of it, as an
+/// ember gives off. One colour and one mark at the board's own size:
+/// nothing bounces, nothing burns.
+class _Lit extends StatelessWidget {
+  const _Lit({required this.number, required this.style});
+
+  final String number;
+  final TextStyle style;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool dark = context.p.isDark;
+    final Color fire = dark
+        ? kStreakOrange
+        : Color.lerp(kStreakOrange, const Color(0xFF000000), 0.12)!;
+    final List<Shadow> warmth = [
+      if (dark)
+        Shadow(color: kStreakOrange.withValues(alpha: 0.42), blurRadius: 18),
+    ];
+    return Row(
+      key: const ValueKey('profile-streak-lit'),
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // On the digits' middle rather than the line's, which sits higher
+        // for the room an accent over a capital would take.
+        Padding(
+          padding: const EdgeInsets.only(top: 1.5),
+          child: Icon(
+            Icons.local_fire_department_rounded,
+            key: const ValueKey('profile-streak-flame'),
+            size: 26,
+            color: fire,
+            shadows: warmth,
+          ),
+        ),
+        const SizedBox(width: 2),
+        Text(
+          number,
+          maxLines: 1,
+          style: style.copyWith(color: fire, shadows: warmth),
+        ),
+      ],
     );
   }
 }

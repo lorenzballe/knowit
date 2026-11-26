@@ -4,11 +4,10 @@
 /// came, from the first: a drawn card to be played again, a card in words to
 /// be turned over.
 ///
-/// It is where "See again" went. On Today the finished day is the five
-/// already, on its shelf, and a button over the shelf that opened the same
-/// cards said the screen twice (the owner: "maybe it's better to put your
-/// five of today somewhere in Explore"). Explore is where a reader goes once
-/// the day is read, so the way back to the cards themselves is here.
+/// Explore is where a reader goes once the day is read, so a way back to
+/// the cards themselves is here (the owner: "maybe it's better to put your
+/// five of today somewhere in Explore"). Today has its own again, "See
+/// again" over the shelf: both open the five the same way ([openTodaysFive]).
 ///
 /// The reader's own five, never the day's challenge that is the same for
 /// everyone and opens Explore above it: the name says whose they are, and
@@ -65,27 +64,40 @@ class YourFiveBlock extends ExploreBlock with SectionLayout {
         five: five,
         title: section.title(host.language) ?? context.l10n.yourFiveFromToday,
         line: section.subtitle(host.language),
-        onTap: () {
-          HapticFeedback.selectionClick();
-          Analytics.capture('today seen again', {'from': 'explore'});
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => DeckViewerScreen(
-                app: app,
-                deck: five,
-                title: context.l10n.tabToday,
-                // From the first, always: not the card at the front of
-                // Today's shelf, nor the one the last time stopped on. The
-                // five read again are read as they came.
-                initialIndex: 0,
-                source: 'today again',
-              ),
-            ),
-          );
-        },
+        onTap: () => openTodaysFive(context, app, from: 'explore'),
       ),
     );
   }
+}
+
+/// Opens the reader's own five again at full size, in the viewer, the way
+/// they first came, from the first card, always: not the card at the front
+/// of Today's shelf, nor the one the last time stopped on (the owner's
+/// rule). The five read again are read as they came. The one way both doors
+/// to them open them, this row in Explore ([from] `explore`) and "See
+/// again" over Today's shelf (`today`).
+void openTodaysFive(
+  BuildContext context,
+  AppState app, {
+  required String from,
+}) {
+  // A second set dealt after the five does not make the day longer.
+  final List<Pill> five = app.todaysDeck.take(kPillsPerDay).toList();
+  if (five.isEmpty) return;
+  final String title = context.l10n.tabToday;
+  HapticFeedback.selectionClick();
+  Analytics.capture('today seen again', {'from': from});
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (_) => DeckViewerScreen(
+        app: app,
+        deck: five,
+        title: title,
+        initialIndex: 0,
+        source: 'today again',
+      ),
+    ),
+  );
 }
 
 /// The row itself, given what it shows: the five in small, the name, the
