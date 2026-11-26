@@ -381,10 +381,11 @@ read, a small row — the five in small, each a card in its own colour, the
 name, their subjects — and a tap opens them again at full size, the way they
 first came, always from the first card: not the one at the front of Today's
 shelf, nor the one the last re-read stopped on (the owner's rule; the
-`your-day` panel's "See again" opens them the same way). Subjects that do
-not fit the line are counted ("+2"), never cut in the middle of a name. It
-is where Today's "See again" went: the
-finished day on Today is the five already, on its shelf. The reader's own
+`your-day` panel's "See again" opens them the same way, and so does "See
+again" over Today's shelf, from the same function, `openTodaysFive`).
+Subjects that do not fit the line are counted ("+2"), never cut in the
+middle of a name. Explore is where a reader goes once the day is read, so
+the way back to the cards themselves is here too. The reader's own
 cards, never the day's challenge that is the same for everyone, which opens
 Explore above it. Not drawn before the five are read, nor while Explore is
 narrowed to a subject. A build older than it passes over it.

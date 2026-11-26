@@ -673,40 +673,203 @@ void main() {
       expect(app.journeySeen['streak'], streak);
     });
 
-    testWidgets('the whole page scrolls, its title with it; only the way '
-        'back stays, and the page goes soft under the status bar', (
-      tester,
-    ) async {
+    /// Your journey on a 390 by 844 phone with its status bar, [still] if
+    /// the reader asked for less motion, counting the times the way back
+    /// is taken in [backs].
+    Future<void> phone(
+      WidgetTester tester,
+      AppState app, {
+      bool still = false,
+      List<int>? backs,
+    }) async {
       tester.view.physicalSize = const Size(390, 844);
       tester.view.devicePixelRatio = 1;
       tester.view.padding = const FakeViewPadding(top: 47, bottom: 34);
       addTearDown(tester.view.reset);
-      final app = await _app(answeredToday());
-      await tester.pumpWidget(host(app));
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(disableAnimations: still),
+            child: child!,
+          ),
+          home: JourneyScreen(app: app, onBack: () => backs?.add(1)),
+        ),
+      );
       await tester.pumpAndSettle();
-      final Finder back = find.byType(BackCircle);
+    }
+
+    final Finder back = find.byType(BackCircle);
+    final Finder page = find.byKey(const ValueKey('journey-page'));
+    ScrollPosition scrolled(WidgetTester tester) => tester
+        .state<ScrollableState>(
+          find.descendant(of: page, matching: find.byType(Scrollable)),
+        )
+        .position;
+
+    /// A little way back up, as a finger goes: past the slop, then a few
+    /// points at a time.
+    Future<void> upALittle(WidgetTester tester) async {
+      final TestGesture finger = await tester.startGesture(
+        tester.getCenter(page),
+      );
+      await finger.moveBy(const Offset(0, 20));
+      for (int i = 0; i < 4; i++) {
+        await finger.moveBy(const Offset(0, 5));
+      }
+      await finger.up();
+    }
+
+    testWidgets('the whole page scrolls and the way back with it, as on '
+        'Instagram: at the top it stands beside the title; going down it goes '
+        'up and away with the page; a little way back up, it comes straight '
+        'back', (tester) async {
+      final app = await _app(answeredToday());
+      final List<int> backs = [];
+      await phone(tester, app, backs: backs);
       final Finder title = find.text('Your journey');
       final Offset backAt = tester.getTopLeft(back);
       final double titleAt = tester.getCenter(title).dy;
-      // At rest, the title beside the way back, under the status bar.
+      double ground() => tester
+          .widget<Opacity>(find.byKey(const ValueKey('quick-return-ground')))
+          .opacity;
+
+      // At the top, everything where it stood: the title beside the way
+      // back, nothing laid behind it, under the status bar, which the page
+      // goes soft under.
       expect(backAt.dy, greaterThanOrEqualTo(47));
       expect((titleAt - tester.getCenter(back).dy).abs(), lessThan(4));
+      expect(back.hitTestable(), findsOneWidget);
+      expect(ground(), 0);
       expect(
         tester.getSize(find.byKey(const ValueKey('journey-top-edge'))).height,
         47,
       );
-      // Not so far that the title leaves the screen: it rises under the
-      // status bar while the way back stays where it was.
-      await tester.drag(
-        find.byKey(const ValueKey('journey-page')),
-        const Offset(0, -60),
+
+      // A little way down, the way back goes up with the title, point for
+      // point: it is part of the page.
+      await tester.drag(page, const Offset(0, -40));
+      await tester.pumpAndSettle();
+      expect(tester.getCenter(title).dy, closeTo(titleAt - 40, 1));
+      expect(tester.getTopLeft(back).dy, closeTo(backAt.dy - 40, 1));
+      expect(ground(), 0);
+
+      // Further down it has gone with the page: the page is all content.
+      await tester.drag(page, const Offset(0, -600));
+      await tester.pumpAndSettle();
+      expect(scrolled(tester).pixels, closeTo(640, 1));
+      expect(tester.getRect(back).bottom, lessThanOrEqualTo(0));
+      expect(back.hitTestable(), findsNothing);
+
+      // A little way back up, it comes straight back where it stood, over
+      // the page, softly: on its way a moment after, then in its place.
+      await upALittle(tester);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 90));
+      expect(
+        tester.getTopLeft(back).dy,
+        allOf(greaterThan(backAt.dy - 99), lessThan(backAt.dy - 1)),
       );
       await tester.pumpAndSettle();
+      // The page itself hardly moved.
+      expect(scrolled(tester).pixels, inInclusiveRange(600, 634));
       expect(tester.getTopLeft(back), backAt);
-      expect(tester.getCenter(title).dy, closeTo(titleAt - 60, 1));
+      expect(back.hitTestable(), findsOneWidget);
+      // The page fades under it there, as under iOS 26's bar: it never
+      // sits on the words.
+      expect(ground(), 1);
       // Still the way back, over whatever runs under it.
       await tester.tap(back);
+      expect(backs, hasLength(1));
+
+      // Down again, gone again.
+      await tester.drag(page, const Offset(0, -200));
+      await tester.pumpAndSettle();
+      expect(back.hitTestable(), findsNothing);
     });
+
+    testWidgets('for whoever asked for less motion the way back never '
+        'slides: it fades out where it stands going down, and back in a '
+        'little way back up', (tester) async {
+      final app = await _app(answeredToday());
+      await phone(tester, app, still: true);
+      double shown() => tester
+          .widget<AnimatedOpacity>(
+            find.byKey(const ValueKey('quick-return-fade')),
+          )
+          .opacity;
+      final Offset backAt = tester.getTopLeft(back);
+      expect(shown(), 1);
+
+      await tester.drag(page, const Offset(0, -600));
+      await tester.pumpAndSettle();
+      expect(tester.getTopLeft(back), backAt);
+      expect(shown(), 0);
+      expect(back.hitTestable(), findsNothing);
+
+      await upALittle(tester);
+      await tester.pumpAndSettle();
+      expect(tester.getTopLeft(back), backAt);
+      expect(shown(), 1);
+      expect(back.hitTestable(), findsOneWidget);
+    });
+
+    testWidgets('the swipe back from the edge of the screen goes on working '
+        'at the top, with the way back gone, and with it come back', (
+      tester,
+    ) async {
+      final app = await _app(answeredToday());
+      tester.view.physicalSize = const Size(390, 844);
+      tester.view.devicePixelRatio = 1;
+      tester.view.padding = const FakeViewPadding(top: 47, bottom: 34);
+      addTearDown(tester.view.reset);
+      final GlobalKey<NavigatorState> nav = GlobalKey();
+      await tester.pumpWidget(
+        MaterialApp(
+          navigatorKey: nav,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          home: const Scaffold(body: Center(child: Text('profile'))),
+        ),
+      );
+      Future<void> swipedBack(
+        Future<void> Function() before, {
+        required bool backShown,
+      }) async {
+        unawaited(
+          nav.currentState!.push(
+            MaterialPageRoute<void>(
+              builder: (context) => JourneyScreen(
+                app: app,
+                onBack: () => Navigator.of(context).pop(),
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await before();
+        expect(back.hitTestable(), backShown ? findsOneWidget : findsNothing);
+        await tester.dragFrom(const Offset(4, 500), const Offset(320, 0));
+        await tester.pumpAndSettle();
+        expect(find.byType(JourneyScreen), findsNothing);
+        expect(find.text('profile'), findsOneWidget);
+      }
+
+      await swipedBack(() async {}, backShown: true);
+      await swipedBack(() async {
+        await tester.drag(page, const Offset(0, -600));
+        await tester.pumpAndSettle();
+      }, backShown: false);
+      await swipedBack(() async {
+        await tester.drag(page, const Offset(0, -600));
+        await tester.pumpAndSettle();
+        await upALittle(tester);
+        await tester.pumpAndSettle();
+      }, backShown: true);
+    }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
 
     testWidgets('what has stayed is part of what the reader knows, not a '
         'chapter of its own', (tester) async {

@@ -1,173 +1,214 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-motogp-braking-zone -->
+<!-- The picture: the rider's view down a MotoGP straight, drawn flat in perspective on a canvas: the track running
+     to a right-hand corner, kerbs, a gravel trap and a barrier straight on, Tuscan hills on the horizon, and the
+     braking boards at 300, 200 and 100 m that riders brake by. The bike and its rider seen from behind, tucked in at
+     350 km/h; holding Brake, the rider sits up and the bike dives onto its front wheel. The bike slows the way
+     Brembo measures at Mugello's first corner: from over 350 to 90 km/h in 288 m, about 1.6 g, so 350 to 100 km/h
+     takes about 283 m: brake at the 300 board. Drawn again at its real size whenever its room changes. -->
 <title>Astute free card · Braking from 350 to 100</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
-#read{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;font:700 max(1.8cqh,12px)/1.1 var(--mono);color:color-mix(in srgb,var(--k) 72%,transparent)}
-#read b{font:800 max(3.4cqh,20px)/1 var(--display);color:var(--k)}
-#svg{flex:1;min-height:0;width:100%;display:block;overflow:visible}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
-#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
-#again,#again2{align-self:flex-start;font:700 max(1.8cqh,13px)/1 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 40%,transparent);border-radius:1.4cqh;padding:1cqh 3.5cqw;cursor:pointer}
-#brake{font:800 max(2.6cqh,16px)/1 var(--display);letter-spacing:.06em;width:100%;color:var(--c);background:var(--k);border:0;border-radius:2cqh;padding:2.2cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .08s,background .08s}
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#wrap{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#why{display:flex;flex-direction:column;gap:.7cqh}
+#why .big{font:800 max(2.9cqh,17px)/1.12 var(--display);margin:0}
+#why .body{font:500 max(1.95cqh,13px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#brake{font:800 max(2.4cqh,15px)/1 var(--body);width:100%;color:var(--c);background:var(--k);border:0;border-radius:99px;padding:max(2cqh,13px) 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .08s,background .08s}
 #brake.on{transform:scale(.97);background:#d8322a;color:#fff}
-.ax{stroke:var(--k);stroke-width:1.5;opacity:.5}
-.grid{stroke:var(--k);stroke-width:1;opacity:.18}
-.ref{stroke:var(--k);stroke-width:1.2;stroke-dasharray:4 4;opacity:.45}
-.lab{fill:var(--k);font-family:var(--mono);font-weight:700}
-.trail{fill:none;stroke:var(--k);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
-.ideal{fill:none;stroke:#d8322a;stroke-width:2.5;stroke-dasharray:6 5}
-.road{fill:color-mix(in srgb,var(--k) 78%,transparent)}
-.board{fill:#fff}
-.bike{fill:#ffd23a;stroke:#111;stroke-width:2}
-.corner{stroke:var(--k);stroke-width:2.5}
-/* On the smallest card the result takes the room the question no longer needs, and the readout says the speed
-   at the corner (the line that repeated it gives way, and "Ride again" takes the place of "to corner 0 m"),
-   so the chart keeps a drawing of its own. */
-#again2{display:none}
-@container (max-height:540px){.answered .q{font-size:max(2.5cqh,15px)}.answered #res,.answered #read span+span,.answered #again{display:none}.answered #again2{display:block}}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* A short card keeps the verdict and the real figure; the rest gives its room to the picture. */
+@container (max-height:540px){#why .more{display:none}}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Hold · simulate">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">BRAKING</span></div>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD TO BRAKE</span></div>
     <h2 class="q">How many metres does a MotoGP bike need from 350 to 100 km/h?</h2>
     <div class="stagebox" id="stage">
-      <div id="read"><span>SPEED <b id="spd">350</b> km/h</span><span>TO CORNER <b id="dst">420</b> m</span><button id="again2">Ride again</button></div>
-      <svg id="svg" aria-label="Speed against distance to the corner"></svg>
+      <div id="wrap"><canvas id="cv" role="img" aria-label="The rider's view down a straight towards a right-hand corner, with braking boards at 300, 200 and 100 metres, and the bike seen from behind at 350 km/h."></canvas></div>
       <div id="why" class="gone">
         <p class="big" id="res"></p>
         <p class="body" id="verdict"></p>
-        <p class="body">Red dashes: Rossi's way. At 350 km/h he grabs the brakes about 200 m from the corner and falls to 100. Losing 250 km/h in that little road means the squeeze must be exact.</p>
-        <button id="again">Ride again</button>
+        <p class="body more">Real bikes need about 300 m: at Mugello's first corner Brembo measures 288&nbsp;m from over 350 to 90&nbsp;km/h, five seconds on the brakes. Rossi likens it to lifting your maximum in the gym.</p>
       </div>
     </div>
     <p class="say" id="say">Tap Start, then hold Brake to reach the corner at 100 km/h.</p>
-    <button id="brake">START THE RUN</button>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>From 350 to 100 km/h takes only about 200 m of road.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022).</span></div>
+    <button id="brake">Start the run</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>From 350 to 100 km/h takes about 300 m of road: five seconds on the brakes.</div>
+    <div class="foot"><span class="src">Source · Geopop, Rossi interview (YouTube, 2022); braking data: Brembo via motogp.com (2018)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const D0 = 420, DEND = 40;
-const V0 = 350/3.6, V1 = 100/3.6;
-const A = (V0*V0 - V1*V1)/(2*200);   // brakes so 350 -> 100 takes 200 m
-let state = 'idle', braking = false, d = D0, v = V0, pts = [], brakeAt = null, ts = 0.5;
-let G = null, trail, bike;
-const svg = Kit.$('svg'), btn = Kit.$('brake');
+(() => {
+  // Flat colours, one meaning each: sky, Tuscan hills, grass, asphalt, kerb red and white, sand, the barrier, and
+  // the rider in white with a yellow helmet on a yellow bike.
+  const INK = '#10100c', SKY = '#bfe6f2', HILL = '#3f8f5a', HILL2 = '#2f7a4b', GRASS = '#5cbf62', GRASS2 = '#53b259',
+    ROAD = '#5d6168', ROAD2 = '#585c63', LINE = '#f4f2ea', RED = '#d8322a', SAND = '#ecd29a', BIKE = '#ffd23a', SUIT = '#fbf7ec', NAVY = '#22314f', TYRE = '#1d1d20';
+  // The run: from 450 m before the corner at 350 km/h. The brakes take 350 km/h to 100 in about 283 m (Brembo).
+  const D0 = 360, V0 = 350 / 3.6, A = (V0 * V0 - (90 / 3.6) ** 2) / (2 * 288);
+  const cv = Kit.$('cv'), btn = Kit.$('brake');
+  const st = {state: 'idle', braking: false, d: D0, v: V0, brakeAt: null, sit: 0, lean: 0, t: 0, ts: .55, wide: 0};
+  let G = null;
 
-function draw(){
-  svg.innerHTML = '';
-  const {W,H,f} = Kit.fitSvg(svg);
-  const fs = Math.max(12, f*.85);
-  const padL = fs*2.6, padR = fs*1.4, top = fs*.6;
-  // A chart left short (the smallest phone, once the run is over) keeps the speeds and drops the strip of road.
-  const road = H >= fs*9;
-  const trackH = road ? Math.max(H*.15, fs*2.6) : 0;
-  const gb = H - trackH - fs*2;
-  const x = dd => padL + (D0 - dd)/(D0 + DEND)*(W - padL - padR);
-  const y = k => top + (1 - k/380)*(gb - top);
-  G = {W,H,fs,x,y,gb,trackH};
-  // grid
-  [300,200,100].forEach(m => {
-    Kit.mk('line',{x1:x(m),x2:x(m),y1:top,y2:gb,class:'grid'},svg);
-    Kit.mk('text',{x:x(m),y:gb+fs*1.3,'text-anchor':'middle',class:'lab','font-size':fs},svg).textContent = m===300?'300 m':m;
-  });
-  Kit.mk('line',{x1:x(0),x2:x(0),y1:top,y2:gb,class:'corner'},svg);
-  Kit.mk('text',{x:x(0),y:gb+fs*1.3,'text-anchor':'middle',class:'lab','font-size':fs},svg).textContent = 'corner';
-  [350,100].forEach(k => {
-    Kit.mk('line',{x1:padL,x2:W-padR,y1:y(k),y2:y(k),class:'ref'},svg);
-    Kit.mk('text',{x:padL-fs*.4,y:y(k)+fs*.35,'text-anchor':'end',class:'lab','font-size':fs},svg).textContent = k;
-  });
-  Kit.mk('line',{x1:padL,x2:W-padR,y1:gb,y2:gb,class:'ax'},svg);
-  Kit.mk('line',{x1:padL,x2:padL,y1:top,y2:gb,class:'ax'},svg);
-  // track
-  const ty = H - trackH;
-  if (road) {
-    Kit.mk('rect',{x:padL,y:ty,width:x(0)-padL,height:trackH,rx:fs*.3,class:'road'},svg);
-    Kit.mk('rect',{x:x(0),y:ty,width:W-padR-x(0),height:trackH,fill:'#c9a46a'},svg);
-    const n = 6, sh = trackH/n;
-    for (let i=0;i<n;i++) Kit.mk('rect',{x:x(0)-fs*.5,y:ty+i*sh,width:fs*.5,height:sh,fill:i%2?'#fff':'#d8322a'},svg);
-    [300,200,100].forEach(m => Kit.mk('rect',{x:x(m)-fs*.25,y:ty+trackH*.08,width:fs*.5,height:trackH*.3,class:'board'},svg));
+  function fit() { G = Kit.fitCanvas(cv); }
+
+  // The track: straight to the corner, then bending right; straight on, the gravel and a barrier.
+  const bend = p => p > 0 ? .055 * p * p : 0;   // p: metres past the corner
+
+  function draw() {
+    if (!G) return;
+    const {x, W, H} = G, r = Math.min(16, W * .045);
+    x.clearRect(0, 0, W, H);
+    x.save();
+    x.beginPath(); if (x.roundRect) x.roundRect(1.5, 1.5, W - 3, H - 3, r); else x.rect(1.5, 1.5, W - 3, H - 3); x.clip();
+    const hz = H * .38, f = W * 1.05, ch = 1.5 + st.sit * .12, camX = st.wide * 4;
+    const s = D0 - st.d;   // metres run so far
+    // Sky, and the hills on the horizon.
+    x.fillStyle = SKY; x.fillRect(0, 0, W, hz + 1);
+    const hills = (amp, base, col, ph) => { x.beginPath(); x.moveTo(0, hz + 1); for (let i = 0; i <= 40; i++) { const u = i / 40; x.lineTo(u * W, hz - base - amp * (.5 + .5 * Math.sin(u * 7 + ph) * Math.cos(u * 3.1 + ph * .7))); } x.lineTo(W, hz + 1); x.closePath(); x.fillStyle = col; x.fill(); x.lineWidth = 2; x.strokeStyle = INK; x.stroke(); };
+    hills(H * .07, H * .035, HILL, 1.3); hills(H * .05, H * .008, HILL2, 4.1);
+    // The ground, far to near, a band at a time.
+    const zNear = ch * f / (H - hz), zFar = 900;
+    const zs = []; for (let z = zFar; z > zNear; z = z / 1.035 - .05) zs.push(z); zs.push(zNear);
+    const scr = (wx, z) => W / 2 + (wx - camX) * f / z, scy = z => hz + ch * f / z;
+    for (let i = 0; i < zs.length - 1; i++) {
+      const z1 = zs[i], z2 = zs[i + 1], p1 = s + z1 - D0, p2 = s + z2 - D0;   // past the corner, in metres
+      const y1 = scy(z1), y2 = scy(z2), stripe = Math.floor((s + z2) / 9) % 2;
+      x.fillStyle = stripe ? GRASS : GRASS2; x.fillRect(0, y1, W, y2 - y1 + 1);
+      // Each band overlaps the next by a hair, so no seam of grass shows through the asphalt.
+      const quad = (a1, b1, a2, b2, col) => { x.beginPath(); x.moveTo(scr(a1, z1), y1 - .6); x.lineTo(scr(b1, z1), y1 - .6); x.lineTo(scr(b2, z2), y2 + .6); x.lineTo(scr(a2, z2), y2 + .6); x.closePath(); x.fillStyle = col; x.fill(); };
+      // Straight on past the corner: the gravel trap.
+      if (p2 > -6) quad(-16, 18, -16, 18, SAND);
+      const c1 = bend(p1), c2 = bend(p2), hw = 6.5;
+      quad(c1 - hw, c1 + hw, c2 - hw, c2 + hw, stripe ? ROAD : ROAD2);
+      // White edges along the straight, red and white kerbs through the corner.
+      const kerb = p2 > -45, kc = kerb ? (Math.floor((s + z2) / 3) % 2 ? RED : LINE) : LINE, kw = kerb ? .9 : .28;
+      quad(c1 - hw, c1 - hw + kw, c2 - hw, c2 - hw + kw, kc);
+      quad(c1 + hw - kw, c1 + hw, c2 + hw - kw, c2 + hw, kc);
+    }
+    // The barrier straight on, beyond the gravel: red and white blocks.
+    const zb = D0 + 62 - s;
+    if (zb > zNear) {
+      const yb = scy(zb), hb = 1.3 * f / zb, xl = scr(-16, zb), xr = scr(9, zb), n = 10;
+      for (let k = 0; k < n; k++) { x.fillStyle = k % 2 ? LINE : RED; x.fillRect(xl + (xr - xl) * k / n, yb - hb, (xr - xl) / n + .5, hb); }
+      x.lineWidth = 1.5; x.strokeStyle = INK; x.strokeRect(xl, yb - hb, xr - xl, hb);
+    }
+    // The braking boards on the right, 300, 200 and 100 m before the corner.
+    const fsB = Math.max(13, W / 24);
+    for (const m of [300, 200, 100]) {
+      const z = D0 - m - s; if (z < zNear * 1.2 || z > 700) continue;
+      const k = f / z, bx = scr(8.2, z), by = scy(z), bw = 2.8 * k, bh = 1.9 * k, top = by - 3.3 * k;
+      x.fillStyle = INK; x.fillRect(bx - .06 * k, top + bh, .12 * k + .5, by - top - bh);
+      x.fillStyle = '#fff'; x.fillRect(bx - bw / 2, top, bw, bh);
+      x.lineWidth = Math.max(1, k * .07); x.strokeStyle = INK; x.strokeRect(bx - bw / 2, top, bw, bh);
+      if (bh > 7) { x.fillStyle = INK; x.font = `800 ${Math.round(bh * .62)}px Figtree, sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(String(m), bx, top + bh * .54); }
+    }
+    // "corner", named once, on the cover.
+    if (st.state === 'idle') {
+      const zc = D0 - s, cxp = scr(bend(20) - 2, zc + 20), cyp = scy(zc + 20), lx = W * .06, ly = hz - H * .1;
+      x.font = `800 ${fsB}px Figtree, sans-serif`; x.textAlign = 'left'; x.textBaseline = 'alphabetic'; x.fillStyle = INK;
+      const t = `corner, ${D0} m`, tw = x.measureText(t).width;
+      x.fillText(t, lx, ly); x.lineWidth = 1.4; x.strokeStyle = INK; x.beginPath(); x.moveTo(lx + tw + 4, ly - fsB * .3); x.lineTo(cxp - 2, cyp - 3); x.stroke();
+    }
+    bike(x, W, H);
+    // The speed, big, on the sky.
+    const v = Math.round(st.v * 3.6), fsS = Math.max(30, Math.min(W * .13, H * .12));
+    x.textAlign = 'left'; x.textBaseline = 'alphabetic'; x.fillStyle = INK;
+    x.font = `900 ${fsS}px Fraunces, serif`; x.fillText(String(v), W * .055, fsS * 1.05);
+    const vw = x.measureText(String(v)).width;
+    x.font = `800 ${Math.max(13, fsS * .36)}px Figtree, sans-serif`; x.fillText('km/h', W * .055 + vw + 6, fsS * 1.05);
+    x.restore();
+    x.lineWidth = 3; x.strokeStyle = INK; x.beginPath(); if (x.roundRect) x.roundRect(1.5, 1.5, W - 3, H - 3, r); else x.rect(1.5, 1.5, W - 3, H - 3); x.stroke();
   }
-  // ideal (shown at the end)
-  if (state === 'done'){
-    let p = `M${x(D0)},${y(350)} L${x(200)},${y(350)}`;
-    for (let m=200;m>=0;m-=5){ const k = Math.sqrt(V1*V1 + 2*A*m)*3.6; p += ` L${x(m)},${y(k)}`; }
-    Kit.mk('path',{d:p,class:'ideal'},svg);
+
+  // The bike from behind: rear tyre, tail, the rider's legs, back, arms and helmet. Braking, the rider sits up and
+  // the tail lifts as the bike dives onto its front wheel; through the corner, it leans in.
+  function bike(x, W, H) {
+    // Sized so the helmet stays below the horizon: the corner ahead is never hidden.
+    const u = Math.min(W * .043, H * .041), b = st.sit, bob = Kit.calm ? 0 : Math.sin(st.t * 14) * u * .04 * (1 - b);
+    x.save();
+    x.translate(W / 2 + st.wide * W * .1, H - u * .5 + bob - b * u * .55);
+    x.rotate(st.lean * .42);
+    const P = (pts, fill) => { x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0] * u, p[1] * u) : x.moveTo(p[0] * u, p[1] * u)); x.closePath(); x.fillStyle = fill; x.fill(); x.lineWidth = 2.2; x.strokeStyle = INK; x.lineJoin = 'round'; x.stroke(); };
+    const E = (cx, cy, rx, ry, fill) => { x.beginPath(); x.ellipse(cx * u, cy * u, rx * u, ry * u, 0, 0, Math.PI * 2); x.fillStyle = fill; x.fill(); x.lineWidth = 2.2; x.strokeStyle = INK; x.stroke(); };
+    // Shadow on the asphalt, left behind as the tail lifts.
+    x.save(); x.globalAlpha = .28; x.beginPath(); x.ellipse(0, (b * .55 + .5) * u, 3.2 * u, .55 * u, 0, 0, Math.PI * 2); x.fillStyle = INK; x.fill(); x.restore();
+    // Tyre and tail.
+    x.beginPath(); if (x.roundRect) x.roundRect(-1.05 * u, -4.4 * u, 2.1 * u, 4.4 * u, .9 * u); else x.rect(-1.05 * u, -4.4 * u, 2.1 * u, 4.4 * u);
+    x.fillStyle = TYRE; x.fill(); x.lineWidth = 2.2; x.strokeStyle = INK; x.stroke();
+    P([[-2.4, -3.6], [2.4, -3.6], [1.7, -6.2], [-1.7, -6.2]], BIKE);
+    P([[-1.1, -4.4], [1.1, -4.4], [.8, -5.4], [-.8, -5.4]], INK);
+    // Legs, out to the footpegs.
+    P([[-1.6, -6.4], [-3.4, -4.6], [-3.1, -3.4], [-2.2, -3.6], [-1.2, -5.2]], NAVY);
+    P([[1.6, -6.4], [3.4, -4.6], [3.1, -3.4], [2.2, -3.6], [1.2, -5.2]], NAVY);
+    // The back: tucked low at speed, upright on the brakes.
+    const top = -9.2 - b * 1.9;
+    P([[-2.5, -6.1], [2.5, -6.1], [2.9, top + 1.4], [1.6, top], [-1.6, top], [-2.9, top + 1.4]], SUIT);
+    P([[-.35, -6.1], [.35, -6.1], [.35, top + .2], [-.35, top + .2]], BIKE);
+    // Arms out to the bars, elbows wide.
+    for (const sgn of [-1, 1]) { x.beginPath(); x.moveTo(sgn * 2.4 * u, (top + 1.2) * u); x.lineTo(sgn * 3.7 * u, (top + 2.6 + b * .8) * u); x.lineTo(sgn * 3.1 * u, (top + 3.6 + b * 1.4) * u); x.lineWidth = 1.05 * u; x.lineCap = 'round'; x.lineJoin = 'round'; x.strokeStyle = INK; x.stroke(); x.lineWidth = .62 * u; x.strokeStyle = SUIT; x.stroke(); }
+    // The helmet, and its visor.
+    E(0, top - .9, 1.55, 1.45, BIKE);
+    x.beginPath(); x.ellipse(0, (top - .75) * u, 1.15 * u, .42 * u, 0, 0, Math.PI * 2); x.fillStyle = INK; x.fill();
+    x.restore();
   }
-  trail = Kit.mk('path',{class:'trail',d:''},svg);
-  bike = Kit.mk('circle',{r:Math.max(7,fs*.55),cy:ty+trackH*.68,class:'bike'},svg);
-  if (!road) bike.setAttribute('display','none');
-  update();
-}
-function update(){
-  if (!G) return;
-  const {x,y} = G;
-  trail.setAttribute('d', pts.length ? 'M' + pts.map(p => `${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join(' L') : '');
-  bike.setAttribute('cx', x(Math.max(d,0)));
-  Kit.$('spd').textContent = Math.round(v*3.6);
-  Kit.$('dst').textContent = Math.max(0, Math.round(d));
-}
-function tick(t, dtMs){
-  if (state !== 'run') return;
-  const dt = Math.min(dtMs/1000, .05)*ts;
-  if (braking){ if (brakeAt === null) brakeAt = d; v = Math.max(8, v - A*dt); }
-  d -= v*dt;
-  pts.push([Math.max(d,0), v*3.6]);
-  if (d <= 0){ d = 0; finish(); }
-  update();
-}
-gsap.ticker.add(tick);
-function start(){
-  state = 'run'; d = D0; v = V0; pts = [[D0,350]]; brakeAt = null; braking = false;
-  btn.textContent = 'HOLD TO BRAKE'; Kit.haptic('selection');
-}
-function finish(){
-  state = 'done'; braking = false; btn.classList.remove('on');
-  const k = Math.round(v*3.6);
-  Kit.$('res').textContent = `${k} km/h at the corner`;
-  const where = brakeAt === null ? 'You never touched the brakes.' : `You first braked ${Math.round(brakeAt)} m out.`;
-  Kit.$('verdict').textContent = where + ' ' + (k >= 125 ? 'Too fast: you run wide into the gravel.' : k <= 75 ? 'Too early: safe, but you crawl into the corner.' : 'Spot on: a MotoGP stop.');
-  Kit.haptic(k > 75 && k < 125 ? 'success' : 'light');
-  Kit.hide('say'); Kit.hide('brake'); Kit.show('why'); Kit.show('keep'); Kit.$('card').classList.add('answered');
-  draw();
-  if (!Kit.calm) gsap.from('#why,#keep', {opacity:0, y:8, stagger:.1, duration:.4, ease:'power3.out'});
-}
-function release(){ braking = false; btn.classList.remove('on'); }
-btn.addEventListener('pointerdown', e => {
-  e.preventDefault();
-  try { btn.setPointerCapture(e.pointerId); } catch(_){}
-  if (state === 'idle'){ start(); return; }
-  if (state === 'run'){ braking = true; btn.classList.add('on'); Kit.haptic('light'); }
-});
-['pointerup','pointercancel','lostpointercapture'].forEach(ev => btn.addEventListener(ev, release));
-btn.addEventListener('contextmenu', e => e.preventDefault());
-const again = () => {
-  state = 'idle'; d = D0; v = V0; pts = []; ts = 0.5;
-  btn.textContent = 'START THE RUN';
-  Kit.hide('why'); Kit.hide('keep'); Kit.show('say'); Kit.show('brake'); Kit.$('card').classList.remove('answered');
-  draw();
-};
-Kit.$('again').addEventListener('click', again); Kit.$('again2').addEventListener('click', again);
-Kit.onShow.card = () => draw();
-// To an explicit rest, then cleared: the button's own transition (for its press) used to hold it 10px low, on the source.
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.fromTo('#svg,#brake', {opacity:0, y:10}, {opacity:1, y:0, stagger:.1, duration:.45, ease:'power3.out', clearProps:'transform'}); };
-Kit.play.card = async () => {
-  const wait = c => new Promise(r => { const h = () => c() ? r() : setTimeout(h, 16); h(); });
-  const fire = t => btn.dispatchEvent(new PointerEvent(t, {bubbles:true, pointerId:1}));
-  ts = 3;
-  fire('pointerdown'); fire('pointerup');
-  await wait(() => d <= 203);
-  fire('pointerdown');
-  await wait(() => state === 'done');
-  fire('pointerup');
-  await new Promise(r => setTimeout(r, 600));
-};
+
+  function tick() {
+    const dt = Math.min(gsap.ticker.deltaRatio() / 60, .05);
+    st.t += dt;
+    if (st.state === 'run') {
+      const h = dt * st.ts;
+      if (st.braking) { if (st.brakeAt === null) st.brakeAt = st.d; st.v = Math.max(8, st.v - A * h); }
+      st.d -= st.v * h;
+      if (st.d <= 0) { st.d = 0; finish(); }
+    }
+    st.sit += ((st.braking ? 1 : 0) - st.sit) * Math.min(1, dt * 9);
+    draw();
+  }
+  gsap.ticker.add(tick);
+
+  function start() { Object.assign(st, {state: 'run', d: D0, v: V0, brakeAt: null, braking: false}); btn.textContent = 'Hold to brake'; Kit.haptic('selection'); }
+  function finish() {
+    st.state = 'done'; st.braking = false; btn.classList.remove('on');
+    const k = Math.round(st.v * 3.6), wide = k >= 125;
+    Kit.$('res').textContent = `${k} km/h at the corner`;
+    const where = st.brakeAt === null ? 'You never touched the brakes.' : `You braked ${Math.round(st.brakeAt)} m out.`;
+    Kit.$('verdict').textContent = where + ' ' + (wide ? 'Too fast: you run wide into the gravel.' : k <= 75 ? 'Too early: safe, but you crawl into the corner.' : 'Spot on: a MotoGP stop.');
+    Kit.haptic(wide ? 'light' : 'success');
+    // Through the corner: a lean into it, or straight on into the gravel.
+    const d = Kit.calm ? 0 : 1;
+    if (wide) gsap.to(st, {wide: 1, duration: .8 * d, ease: 'power2.out'}); else gsap.to(st, {lean: 1, duration: .7 * d, ease: 'power2.out'});
+    Kit.hide('say'); Kit.hide('brake'); Kit.show('why'); Kit.show('keep'); Kit.$('card').classList.add('answered');
+  }
+  function release() { st.braking = false; btn.classList.remove('on'); }
+  btn.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    try { btn.setPointerCapture(e.pointerId); } catch (_) {}
+    if (st.state === 'idle') { start(); return; }
+    if (st.state === 'run') { st.braking = true; btn.classList.add('on'); Kit.haptic('light'); }
+  });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => btn.addEventListener(ev, release));
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+
+  Kit.onShow.card = () => { fit(); draw(); };
+  Kit.play.card = async () => {
+    const wait = c => new Promise(r => { const h = () => c() ? r() : setTimeout(h, 16); h(); });
+    const fire = t => btn.dispatchEvent(new PointerEvent(t, {bubbles: true, pointerId: 1}));
+    st.ts = 3;
+    fire('pointerdown'); fire('pointerup');
+    await wait(() => st.d <= 286);
+    fire('pointerdown');
+    await wait(() => st.state === 'done');
+    fire('pointerup');
+    await new Promise(r => setTimeout(r, 600));
+  };
+  // Drawn again at its real size whenever its room changes, as when the answer comes in.
+  new ResizeObserver(() => { fit(); draw(); }).observe(Kit.$('wrap'));
+})();
 Kit.single();
 </script>
 </html>

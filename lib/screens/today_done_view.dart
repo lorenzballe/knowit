@@ -8,11 +8,13 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../data/pills_repository.dart' show dateKey;
+import '../explore/blocks/core/your_five_block.dart' show openTodaysFive;
 import '../models/pill.dart';
 import '../data/daily.dart';
 import '../data/skill_levels.dart';
 import '../data/skills.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/card_edge.dart';
@@ -83,25 +85,26 @@ String plusActionOf(BuildContext context) {
 ///
 /// The row over the shelf read "Day 4 · five read", with "See again" and
 /// the day's share beside it. The owner: of course five were read, the
-/// shelf under it is the five; and "See again" opened the very cards the
-/// shelf is showing. Three heads without either were drawn for him
-/// (tool/today_head_shots.dart photographs each); [kDoneHead] is the one
-/// the app ships. In all three the five again at full size are Explore's,
-/// "Your five from today" (lib/explore/blocks/core/your_five_block.dart),
-/// where a reader goes once the day is read.
+/// shelf under it is the five. Three heads without the count were drawn for
+/// him (tool/today_head_shots.dart photographs each). He chose the first,
+/// [kDoneHead], with "See again" back beside the share: the five again at
+/// full size, from the first card, exactly as Explore's "Your five from
+/// today" opens them ([openTodaysFive]). The developer tools can take the
+/// row away ([DoneHead.none], DebugLooks), so he can set the bigger card
+/// beside it on his own phone.
 enum DoneHead {
   /// Which day this is, set as Today names itself while the five are read
   /// and in the same place, so finishing the day changes the word and not
-  /// the screen; the day sent at the end of the row.
+  /// the screen; "See again" and the day sent at the end of the row.
   title,
 
-  /// No row over the shelf: the card rises into the room, and the day is
-  /// sent from the end of the row of dots under it.
+  /// No row over the shelf: the card rises into the room, and "See again"
+  /// and the day sent stand at the two ends of the row of dots under it.
   none,
 
   /// The day's name in the middle and its date under it, as a phone's
   /// photos name the day of the one in front; the day sent at the end of
-  /// the row.
+  /// the row. Only the camera draws it now.
   masthead,
 }
 
@@ -120,10 +123,17 @@ class TodayDoneView extends StatefulWidget {
   /// passes them. On its own the shelf heads itself with the eyebrow.
   final ({String line, String? aside})? heading;
 
-  /// How the head is drawn: [kDoneHead], unless the camera that photographs
-  /// the three asks for another.
+  /// The head the camera photographs instead (tool/today_head_shots.dart),
+  /// so each can be seen in the real app. Null everywhere else.
   @visibleForTesting
-  static DoneHead head = kDoneHead;
+  static DoneHead? headForShots;
+
+  /// How the head is drawn: the camera's, when it asks for one; none while
+  /// the developer tools ask for the day without its top row; else
+  /// [kDoneHead].
+  static DoneHead get head =>
+      headForShots ??
+      (DebugLooks.todayWithoutTopRow ? DoneHead.none : kDoneHead);
 
   const TodayDoneView({
     super.key,
@@ -220,6 +230,18 @@ class _TodayDoneViewState extends State<TodayDoneView>
   double get _step => _cardWidth - 2;
 
   @override
+  void initState() {
+    super.initState();
+    // The developer tools' "no top row" shows at once: this Today is kept
+    // alive beside the profile it is switched on.
+    DebugLooks.noTopRow.addListener(_looksChanged);
+  }
+
+  void _looksChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
   void didUpdateWidget(covariant TodayDoneView old) {
     super.didUpdateWidget(old);
     if (old.at == widget.at) return;
@@ -236,6 +258,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
 
   @override
   void dispose() {
+    DebugLooks.noTopRow.removeListener(_looksChanged);
     _settle.dispose();
     super.dispose();
   }
@@ -366,9 +389,9 @@ class _TodayDoneViewState extends State<TodayDoneView>
   }
 
   /// What stands over the shelf, as [head] draws it: never "five read",
-  /// which the shelf under it says, and never "See again", which opened
-  /// the very cards the shelf is showing (they are Explore's now, "Your
-  /// five from today").
+  /// which the shelf under it says. "See again" is back beside the day
+  /// sent (the owner's choice): it opens the cards themselves at full size,
+  /// from the first, where the shelf has them in small.
   Widget? _head(BuildContext context, List<Pill> deck, DoneHead head) {
     final AppState app = widget.app;
     final Color ink = context.p.ink;
@@ -376,19 +399,21 @@ class _TodayDoneViewState extends State<TodayDoneView>
     final String? aside = heading?.aside;
     final bool centred = head == DoneHead.masthead;
     // On its own, the shelf is headed by its eyebrow, as it always was.
+    final String eyebrowText = context.l10n.shelfEyebrow(
+      context.l10n.countWord('${deck.length}').toUpperCase(),
+    );
+    final TextStyle eyebrowStyle = AppText.label(
+      size: 10.5,
+      weight: FontWeight.w700,
+      spacing: 1.6,
+      color: ink.withValues(alpha: 0.4),
+    );
     final Widget eyebrow = Text(
-      context.l10n.shelfEyebrow(
-        context.l10n.countWord('${deck.length}').toUpperCase(),
-      ),
+      eyebrowText,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       textAlign: centred ? TextAlign.center : TextAlign.start,
-      style: AppText.label(
-        size: 10.5,
-        weight: FontWeight.w700,
-        spacing: 1.6,
-        color: ink.withValues(alpha: 0.4),
-      ),
+      style: eyebrowStyle,
     );
     // Sent once the day is closed: the squares are the closed day's. Until
     // then its room is kept, so the name stands where it will stand.
@@ -397,6 +422,12 @@ class _TodayDoneViewState extends State<TodayDoneView>
         : const SizedBox(width: _ShareDayButton.width);
     switch (head) {
       case DoneHead.title:
+        final TextStyle name = AppText.display(
+          size: 20,
+          weight: FontWeight.w600,
+          spacing: -0.4,
+          color: ink,
+        );
         return Padding(
           // Today's name, while the five are read, stands 24 in and its
           // middle 23 down; the day's stands there too.
@@ -407,30 +438,47 @@ class _TodayDoneViewState extends State<TodayDoneView>
             children: [
               SizedBox(
                 height: _ShareDayButton.height,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: heading == null
-                          ? eyebrow
-                          : Semantics(
-                              header: true,
-                              child: FitText(
-                                heading.line,
-                                key: const ValueKey('shelf-day'),
-                                maxLines: 1,
-                                minSize: 15,
-                                style: AppText.display(
-                                  size: 20,
-                                  weight: FontWeight.w600,
-                                  spacing: -0.4,
-                                  color: ink,
+                child: LayoutBuilder(
+                  builder: (context, box) {
+                    // The name is never cut for the pill. Where the two do
+                    // not share the line with the name at its least size —
+                    // a long language, a larger text, a narrow phone — "See
+                    // again" gives up its word and keeps its mark.
+                    final double lead = heading == null
+                        ? _textWidth(context, eyebrowText, eyebrowStyle)
+                        : _textWidth(
+                            context,
+                            heading.line,
+                            name.copyWith(fontSize: _leastName),
+                          );
+                    final bool compact =
+                        lead +
+                            12 +
+                            _SeeAgainButton.widthOf(context) +
+                            _ShareDayButton.width >
+                        box.maxWidth;
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: heading == null
+                              ? eyebrow
+                              : Semantics(
+                                  header: true,
+                                  child: FitText(
+                                    heading.line,
+                                    key: const ValueKey('shelf-day'),
+                                    maxLines: 1,
+                                    minSize: _leastName,
+                                    style: name,
+                                  ),
                                 ),
-                              ),
-                            ),
-                    ),
-                    const SizedBox(width: 12),
-                    share,
-                  ],
+                        ),
+                        const SizedBox(width: 12),
+                        _SeeAgainButton(app: app, compact: compact),
+                        share,
+                      ],
+                    );
+                  },
                 ),
               ),
               _Aside(text: aside),
@@ -501,19 +549,58 @@ class _TodayDoneViewState extends State<TodayDoneView>
     }
   }
 
+  /// The least the day's name is set at before "See again" beside it gives
+  /// up its word.
+  static const double _leastName = 15;
+
   /// The dots under the shelf, one a card; and where the head has no row,
-  /// the day sent from the end of theirs, the dots kept in the middle.
+  /// what the row held at the two ends of theirs, "See again" at the start
+  /// and the day sent at the end, the dots kept in the middle.
   Widget _dots(List<Pill> deck, int count, int at, DoneHead head) {
     final Widget dots = _Dots(deck: deck, count: count, at: at, onPick: _goTo);
-    if (head != DoneHead.none || !widget.app.dayClosed) return dots;
+    if (head != DoneHead.none) return dots;
+    final AppState app = widget.app;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: Row(
-        children: [
-          const SizedBox(width: _ShareDayButton.width),
-          Expanded(child: dots),
-          _ShareDayButton(app: widget.app),
-        ],
+      child: LayoutBuilder(
+        builder: (context, box) {
+          // Both ends as wide as the wider of the two, so the dots stand in
+          // the middle of the screen. The pill stands as far in from its
+          // end as the share's round mark does from the other. Where that
+          // leaves the dots too little room, "See again" keeps its mark
+          // alone.
+          const double inset =
+              (_ShareDayButton.width - _ShareDayButton.face) / 2;
+          double end(bool compact) => math.max(
+            inset + _SeeAgainButton.widthOf(context, compact: compact),
+            _ShareDayButton.width,
+          );
+          final bool compact =
+              2 * end(false) + _Dots.widthOf(count) + 16 > box.maxWidth;
+          return Row(
+            children: [
+              SizedBox(
+                width: end(compact),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: inset),
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: _SeeAgainButton(app: app, compact: compact),
+                  ),
+                ),
+              ),
+              Expanded(child: dots),
+              SizedBox(
+                width: end(compact),
+                child: Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  // Sent once the day is closed, as from the row.
+                  child: app.dayClosed ? _ShareDayButton(app: app) : null,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -1644,6 +1731,10 @@ class _Dots extends StatelessWidget {
   /// 14 above the dots and 8 below them, on the canvas.
   static const double height = 28;
 
+  /// How wide [count] dots stand: a slice of 6 and 7 of air each, the one
+  /// at the front 22 long.
+  static double widthOf(int count) => count * (6.0 + 7) + (22 - 6);
+
   @override
   Widget build(BuildContext context) {
     final bool still = MediaQuery.disableAnimationsOf(context);
@@ -1912,6 +2003,9 @@ class _ShareDayButton extends StatelessWidget {
   static const double width = 40;
   static const double height = 36;
 
+  /// The round mark the eye sees in that room.
+  static const double face = 30;
+
   @override
   Widget build(BuildContext context) {
     final Color ink = context.p.ink;
@@ -1928,8 +2022,8 @@ class _ShareDayButton extends StatelessWidget {
           height: height,
           child: Center(
             child: Container(
-              width: 30,
-              height: 30,
+              width: face,
+              height: face,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: ink.withValues(alpha: 0.08),
@@ -1942,6 +2036,102 @@ class _ShareDayButton extends StatelessWidget {
       ),
     );
   }
+}
+
+/// "See again": the day's five again at full size, in the viewer, the way
+/// they first came, from the first card whichever one the shelf has at its
+/// front ([openTodaysFive], as Explore's "Your five from today" opens them).
+/// A small pill, ▶ and the word, on the same faint ground as the share's
+/// mark beside it and as high, 30 to the eye and 36 to the finger. Where the
+/// row is short it keeps the mark alone ([compact]).
+class _SeeAgainButton extends StatelessWidget {
+  const _SeeAgainButton({required this.app, this.compact = false});
+
+  final AppState app;
+
+  /// The ▶ alone, in a round mark the size of the share's.
+  final bool compact;
+
+  static TextStyle _labelStyle(Color ink) =>
+      AppText.body(size: 12.5, weight: FontWeight.w700, color: ink);
+
+  /// How wide it stands on its row, at the reader's text size.
+  static double widthOf(BuildContext context, {bool compact = false}) => compact
+      ? _ShareDayButton.face
+      : 9 +
+            17 +
+            3 +
+            _textWidth(
+              context,
+              context.l10n.todaySeeAgain,
+              _labelStyle(context.p.ink),
+            ) +
+            12;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    final l = context.l10n;
+    final Widget mark = Icon(Icons.play_arrow_rounded, size: 17, color: ink);
+    return Semantics(
+      button: true,
+      label: l.todaySeeAgain,
+      hint: l.todaySeeAgainHint,
+      excludeSemantics: true,
+      child: GestureDetector(
+        key: const ValueKey('shelf-see-again'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => openTodaysFive(context, app, from: 'today'),
+        child: SizedBox(
+          height: _ShareDayButton.height,
+          child: Center(
+            child: Container(
+              height: _ShareDayButton.face,
+              width: compact ? _ShareDayButton.face : null,
+              padding: compact
+                  ? EdgeInsets.zero
+                  : const EdgeInsets.fromLTRB(9, 0, 12, 0),
+              decoration: BoxDecoration(
+                color: ink.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(999),
+              ),
+              child: compact
+                  ? mark
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        mark,
+                        const SizedBox(width: 3),
+                        Text(
+                          l.todaySeeAgain,
+                          maxLines: 1,
+                          style: _labelStyle(ink),
+                        ),
+                      ],
+                    ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// How wide [text] sets in [style] on one line, as a Text on this screen
+/// sets it: over the screen's default style, at the reader's text size.
+double _textWidth(BuildContext context, String text, TextStyle style) {
+  final TextPainter painter = TextPainter(
+    text: TextSpan(
+      text: text,
+      style: DefaultTextStyle.of(context).style.merge(style),
+    ),
+    textDirection: Directionality.of(context),
+    textScaler: MediaQuery.textScalerOf(context),
+    maxLines: 1,
+  )..layout();
+  final double width = painter.width;
+  painter.dispose();
+  return width;
 }
 
 /// The small line under the day's name: the freeze spent, which is said

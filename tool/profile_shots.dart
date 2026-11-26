@@ -1,13 +1,16 @@
 // Photographs the top of the profile three ways (lib/widgets/profile_top.dart),
-// each on the free plan and on Astute+, and the way back to Today from its
+// each on the free plan and on Astute+; the top each plan opens on by itself
+// (profile-free, profile-plus); the debug section's looks, as a TestFlight
+// build shows them (profile-debug); and the way back to Today from its
 // tile, frame by frame.
 //
-//   SHOTS=/some/folder flutter test tool/profile_shots.dart --update-goldens
+//   SHOTS=/some/folder LANG_SHOT=it flutter test tool/profile_shots.dart --update-goldens
 //
 // A camera, not a check: it lives outside test/ so CI never runs it. The
 // real app, on a 390 × 844 phone at night: the free reader halfway through
 // the day, the Astute+ reader with the five read. SHOTS is where the
-// pictures go (tool/shots by default); THEME=light shoots the day.
+// pictures go (tool/shots by default); THEME=light shoots the day; LANG_SHOT
+// is the phone's language, English when not given.
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
@@ -21,8 +24,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/data/daily.dart' show dealDay;
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/debug_flags.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/screens/profile_screen.dart';
+import 'package:astuto/state/debug_looks.dart';
 import 'package:astuto/widgets/profile_top.dart';
 
 Future<void> _loadFonts() async {
@@ -145,20 +151,25 @@ void main() {
 
   final String out = Platform.environment['SHOTS'] ?? 'shots';
 
+  final Locale locale = Locale(Platform.environment['LANG_SHOT'] ?? 'en');
+
   setUp(() {
-    final view =
-        TestWidgetsFlutterBinding.instance.platformDispatcher.views.first;
+    final dispatcher = TestWidgetsFlutterBinding.instance.platformDispatcher;
+    final view = dispatcher.views.first;
     view.physicalSize = const Size(390, 844) * 3;
     view.devicePixelRatio = 3;
     // An iPhone's notch and home bar, so the page sits where it would.
     view.padding = const FakeViewPadding(top: 47 * 3, bottom: 34 * 3);
     view.viewPadding = const FakeViewPadding(top: 47 * 3, bottom: 34 * 3);
+    dispatcher.localeTestValue = locale;
+    dispatcher.localesTestValue = [locale];
   });
 
   tearDown(() {
-    final view =
-        TestWidgetsFlutterBinding.instance.platformDispatcher.views.first;
-    view.reset();
+    final dispatcher = TestWidgetsFlutterBinding.instance.platformDispatcher;
+    dispatcher.views.first.reset();
+    dispatcher.clearLocaleTestValue();
+    dispatcher.clearLocalesTestValue();
     _top(null);
   });
 
@@ -187,6 +198,54 @@ void main() {
       });
     }
   }
+
+  // The top each plan opens on by itself: A, the score, free; C, the
+  // board with its streak lit, on Astute+.
+  for (final bool plus in [false, true]) {
+    final String name = 'profile-${plus ? 'plus' : 'free'}';
+    testWidgets(name, (tester) async {
+      _prefs(_reader(plus: plus));
+      await tester.pumpWidget(const AstutoApp());
+      await settle(tester);
+      await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+      await settle(tester);
+      await shoot(name);
+    });
+  }
+
+  // The looks at the head of the debug section, as a TestFlight build
+  // shows it at the foot of the profile.
+  testWidgets('profile-debug', (tester) async {
+    final bool tools = debugToolsOn;
+    debugToolsOn = true;
+    addTearDown(() {
+      debugToolsOn = tools;
+      // ignore: invalid_use_of_visible_for_testing_member
+      DebugLooks.reset();
+    });
+    _prefs(_reader(plus: false));
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await settle(tester);
+    final Finder list = find
+        .descendant(
+          of: find.byType(ProfileScreen),
+          matching: find.byType(Scrollable),
+        )
+        .first;
+    final Finder looks = find.byKey(const ValueKey('debug-no-top-row'));
+    await tester.scrollUntilVisible(looks, 400, scrollable: list);
+    await settle(tester);
+    // The section's name high on the screen, the looks under it, and a
+    // little of the profile over it.
+    final ScrollPosition position = tester
+        .state<ScrollableState>(list)
+        .position;
+    position.jumpTo(position.pixels + tester.getRect(looks).top - 250);
+    await settle(tester);
+    await shoot('profile-debug');
+  });
 
   testWidgets('back to Today, out of the tile', (tester) async {
     _prefs(_reader(plus: false));

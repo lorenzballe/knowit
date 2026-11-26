@@ -24,6 +24,7 @@ import '../models/pill.dart';
 import '../models/place.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/quick_return.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
 import 'card_path_screen.dart';
@@ -198,14 +199,16 @@ class SubjectHomeScreen extends StatelessWidget {
     final TopicStyle style = kTopics[topicKey]!;
     final SubjectHome home = subjectHomeOf(app, topicKey);
     final String name = l.subjectOf(style.name);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // The way back stays put above what scrolls: Apple's glass is a layer
-        // over the page, and a native button inside a scrolling list is drawn
-        // away from its place.
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
+    // The way back and the line beside it are part of the page, as
+    // Instagram's are: they go up and away with it, and come straight back
+    // the moment the reader goes back up ([QuickReturn]). Apple's glass is a
+    // layer over the page, never laid inside the list, where a native button
+    // is drawn away from its place.
+    return QuickReturn(
+      header: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
+        child: SizedBox(
+          height: 44,
           child: Row(
             children: [
               BackCircle(onPressed: () => Navigator.of(context).maybePop()),
@@ -213,6 +216,8 @@ class SubjectHomeScreen extends StatelessWidget {
               Expanded(
                 child: Text(
                   l.subjectKicker.toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppText.label(
                     size: 12,
                     weight: FontWeight.w700,
@@ -224,91 +229,88 @@ class SubjectHomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        Expanded(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
-            children: [
-              _Head(home: home, style: style, name: name),
-              if (home.next case final Pill next) ...[
-                const SizedBox(height: 26),
-                Text(
-                  l.subjectNext,
-                  style: AppText.display(
-                    size: 22,
-                    weight: FontWeight.w600,
-                    spacing: -0.5,
-                    color: p.ink,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  l.subjectNextLine,
-                  style: AppText.body(size: 13.5, color: p.inkMuted),
-                ),
-                const SizedBox(height: 12),
-                _NextCard(
-                  pill: next,
-                  style: style,
-                  onTap: () {
-                    Analytics.capture('subject next opened', {
-                      'subject': topicKey,
-                    });
-                    _openCards(context, [next], 0, name, 'subject next');
-                  },
-                ),
-              ],
-              if (home.themes.isNotEmpty) ...[
-                const SizedBox(height: 26),
-                Text(
-                  l.subjectInside(name),
-                  style: AppText.display(
-                    size: 22,
-                    weight: FontWeight.w600,
-                    spacing: -0.5,
-                    color: p.ink,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                for (final t in home.themes)
-                  _Theme(
-                    key: ValueKey('subject-theme-${t.genre.id}'),
-                    label: context.l10n.themeOf(t.genre),
-                    read: t.read,
-                    total: t.cards.length,
-                    style: style,
-                    onTap: () {
-                      final List<CardPath> parts = partsOf(
-                        t.genre,
-                        topicKey,
-                        PillBank.live,
-                      );
-                      if (parts.isNotEmpty) {
-                        CardPathScreen.open(
-                          context,
-                          app,
-                          currentPart(parts, app.seenIds),
-                          from: 'subject',
-                        );
-                        return;
-                      }
-                      final List<Pill> unread = [
-                        ...t.cards.where((c) => !app.seenIds.contains(c.id)),
-                        ...t.cards.where((c) => app.seenIds.contains(c.id)),
-                      ];
-                      _openCards(
-                        context,
-                        unread,
-                        0,
-                        context.l10n.themeOf(t.genre),
-                        'subject theme',
-                      );
-                    },
-                  ),
-              ],
-            ],
-          ),
-        ),
-      ],
+      ),
+      child: ListView(
+        // Under the way back and its line, as tall as they stand.
+        padding: const EdgeInsets.fromLTRB(20, 8 + 44 + 4 + 12, 20, 32),
+        children: [
+          _Head(home: home, style: style, name: name),
+          if (home.next case final Pill next) ...[
+            const SizedBox(height: 26),
+            Text(
+              l.subjectNext,
+              style: AppText.display(
+                size: 22,
+                weight: FontWeight.w600,
+                spacing: -0.5,
+                color: p.ink,
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              l.subjectNextLine,
+              style: AppText.body(size: 13.5, color: p.inkMuted),
+            ),
+            const SizedBox(height: 12),
+            _NextCard(
+              pill: next,
+              style: style,
+              onTap: () {
+                Analytics.capture('subject next opened', {'subject': topicKey});
+                _openCards(context, [next], 0, name, 'subject next');
+              },
+            ),
+          ],
+          if (home.themes.isNotEmpty) ...[
+            const SizedBox(height: 26),
+            Text(
+              l.subjectInside(name),
+              style: AppText.display(
+                size: 22,
+                weight: FontWeight.w600,
+                spacing: -0.5,
+                color: p.ink,
+              ),
+            ),
+            const SizedBox(height: 12),
+            for (final t in home.themes)
+              _Theme(
+                key: ValueKey('subject-theme-${t.genre.id}'),
+                label: context.l10n.themeOf(t.genre),
+                read: t.read,
+                total: t.cards.length,
+                style: style,
+                onTap: () {
+                  final List<CardPath> parts = partsOf(
+                    t.genre,
+                    topicKey,
+                    PillBank.live,
+                  );
+                  if (parts.isNotEmpty) {
+                    CardPathScreen.open(
+                      context,
+                      app,
+                      currentPart(parts, app.seenIds),
+                      from: 'subject',
+                    );
+                    return;
+                  }
+                  final List<Pill> unread = [
+                    ...t.cards.where((c) => !app.seenIds.contains(c.id)),
+                    ...t.cards.where((c) => app.seenIds.contains(c.id)),
+                  ];
+                  _openCards(
+                    context,
+                    unread,
+                    0,
+                    context.l10n.themeOf(t.genre),
+                    'subject theme',
+                  );
+                },
+              ),
+          ],
+        ],
+      ),
     );
   }
 }

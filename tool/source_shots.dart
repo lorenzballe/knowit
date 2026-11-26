@@ -6,12 +6,13 @@
 //   flutter test tool/source_shots.dart --dart-define=SOURCE_FOOT=line \
 //     --update-goldens
 //
-// once for each of line, stack and pill. A drawn card cannot draw its page
-// here, where there is no WebView: its page is a photograph in the page's
-// place (FakeWebSurface's face), taken by tool/cards/card_check.cjs with
-// BARE=1 on a kit that draws the same foot, and named <card>-<foot>.png in
-// PAGE_SHOTS. The page says `deeper` as it does when its source is tapped,
-// and Go deeper opens from it as it would on a phone.
+// once for each of line, stack, pill and links. A drawn card cannot draw its
+// page here, where there is no WebView: its page is a photograph in the
+// page's place (FakeWebSurface's face), taken by tool/cards/card_check.cjs
+// with BARE=1, told the same foot as the app tells it (FOOT, and LANG_SHOT
+// for the names), and named <card>-<foot>.png in PAGE_SHOTS. The page says
+// `deeper` as it does when its source is tapped, and Go deeper opens from
+// it as it would on a phone.
 //
 // A camera, not a check: it lives outside test/ so CI never runs it. SHOTS
 // (a folder) and LANG_SHOT (a language, Italian by default) move it.
@@ -256,7 +257,7 @@ void main() {
     switch (sourceFoot) {
       // The page's source tapped: Go deeper, and under its source the line
       // to report the card.
-      case SourceFoot.line:
+      case SourceFoot.line || SourceFoot.links:
         page.say(const PageDeeper());
         await _settle(tester, 30);
         await Scrollable.ensureVisible(

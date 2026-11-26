@@ -2602,16 +2602,13 @@ void main() {
     await _finishDay(tester);
 
     // The header says which day this is, where Today's own name stood, so
-    // the day ending changes the word and not the screen; the day's share
-    // at the end of its row. Not "five read", which the shelf says, nor
-    // "See again", which opened the cards the shelf is showing (they are
-    // Explore's now), nor an eyebrow saying "five" again under it. The
-    // first card is at the front, face up, with its line to bring it up
-    // with.
+    // the day ending changes the word and not the screen; "See again" and
+    // the day's share at the end of its row. Not "five read", which the
+    // shelf says, nor an eyebrow saying "five" again under it. The first
+    // card is at the front, face up, with its line to bring it up with.
     expect(find.text('Day 1'), findsOneWidget);
     expect(_todayTitle, findsNothing);
     expect(find.textContaining('five read'), findsNothing);
-    expect(find.byKey(const ValueKey('shelf-see-again')), findsNothing);
     expect(find.text('Hold a card you like'), findsOneWidget);
     expect(find.text("TODAY'S FIVE"), findsNothing);
     final Rect line = tester.getRect(find.text('Day 1'));
@@ -2622,6 +2619,12 @@ void main() {
     );
     expect(share.center.dy, closeTo(line.center.dy, 1.5));
     expect(share.left, greaterThan(line.right));
+    final Rect again = tester.getRect(
+      find.byKey(const ValueKey('shelf-see-again')),
+    );
+    expect(again.center.dy, closeTo(line.center.dy, 1.5));
+    expect(again.left, greaterThan(line.right));
+    expect(again.right, lessThanOrEqualTo(share.left));
     _expectAtFront(tester, 1);
 
     // Each card by its question, as it came in the deck, with the line to
@@ -3554,8 +3557,8 @@ void main() {
 
     // Then what is the reader's own, the account and how the app works,
     // with the debug tools still last. The top's own heading is whichever
-    // of the three the profile opens on (lib/widgets/profile_top.dart).
-    final String top = switch (kProfileTop) {
+    // of the three the free plan opens on (lib/widgets/profile_top.dart).
+    final String top = switch (profileTopFor(plus: false)) {
       ProfileTop.score => 'ASTUTE SCORE',
       ProfileTop.week => 'LAST 7 DAYS',
       ProfileTop.board => 'YOUR RECORD',

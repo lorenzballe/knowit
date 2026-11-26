@@ -66,7 +66,7 @@ abstract final class GoDeeper {
 /// in, once it is turned on.
 bool cardAiOn(AppState app, String language) =>
     debugToolsOn ||
-    Flags.on('cardAi', app.remoteContext(language), fallback: false);
+    AppState.kCardAiFlag.on(app.remoteContext(language));
 
 /// Opens Go deeper on [pill].
 Future<void> showDeeperSheet(BuildContext context, AppState app, Pill pill) {
@@ -596,9 +596,12 @@ class _DeeperSheetState extends State<DeeperSheet>
                                               // Being tried: reporting the
                                               // card under the source it
                                               // would be checked against
-                                              // (source_foot.dart).
+                                              // (source_foot.dart), with A
+                                              // and with D.
                                               if (sourceFoot ==
-                                                  SourceFoot.line) ...[
+                                                      SourceFoot.line ||
+                                                  sourceFoot ==
+                                                      SourceFoot.links) ...[
                                                 const SizedBox(height: 10),
                                                 Padding(
                                                   padding:

@@ -4,6 +4,9 @@
 // way to Why this card beside Go deeper.
 //
 //   flutter test test/source_foot_test.dart
+//
+// and again with --dart-define=SOURCE_FOOT=stack, pill and links, for the
+// ways being tried that the build does not set by default.
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -110,6 +113,22 @@ Offset wordsAt(WidgetTester tester, Finder of, String words) {
   return paragraph.localToGlobal(box.toRect().center);
 }
 
+/// The style [words] are set in, in the paragraphs under [of].
+TextStyle styleOf(WidgetTester tester, Finder of, String words) {
+  TextStyle? found;
+  for (final RichText paragraph in tester.widgetList<RichText>(
+    find.descendant(of: of, matching: find.byType(RichText)),
+  )) {
+    paragraph.text.visitChildren((span) {
+      if (span is TextSpan && span.text == words) found = span.style;
+      return found == null;
+    });
+    if (found != null) break;
+  }
+  expect(found, isNotNull, reason: '"$words" set on its own');
+  return found!;
+}
+
 void main() {
   setUpAll(_loadRealFonts);
   tearDown(() => GoDeeper.open = null);
@@ -168,6 +187,58 @@ void main() {
     await tester.pumpWidget(_back(pill));
     await tester.pumpAndSettle();
     expect(door, findsNothing);
+  });
+
+  // D: B's two lines without the line on the front. Go deeper and Why this
+  // card side by side on one line, in plain words; the source under them,
+  // beside the save and share, and Go deeper's too.
+  testWidgets('with D, Go deeper and Why this card share a line and the '
+      'source is under them, beside the save and share', (tester) async {
+    if (sourceFoot != SourceFoot.links) return;
+    final Pill pill = _card();
+    int why = 0;
+    Pill? opened;
+    GoDeeper.open = (context, p) => opened = p;
+    await tester.pumpWidget(_back(pill, onWhy: () => why++));
+    await tester.pumpAndSettle();
+    final Finder foot = find.byKey(ValueKey('card-foot-${pill.id}'));
+    Rect words(Finder of, String text) => tester.getRect(
+      find
+          .descendant(
+            of: of,
+            matching: find.textContaining(text, findRichText: true),
+          )
+          .last,
+    );
+    final Finder door = find.byKey(ValueKey('card-why-${pill.id}'));
+    final Rect go = words(foot, 'Go deeper');
+    final Rect answer = words(door, 'Why this card');
+    final Rect source = words(foot, 'Geopop · YouTube, 2021');
+    // One line, Why this card after Go deeper, a step quieter: the same
+    // size, a lighter weight, a fainter ink.
+    expect((go.center.dy - answer.center.dy).abs(), lessThan(1));
+    expect(answer.left, greaterThan(go.right));
+    final TextStyle goStyle = styleOf(tester, foot, 'Go deeper');
+    final TextStyle whyStyle = styleOf(tester, door, 'Why this card');
+    expect(goStyle.fontWeight, FontWeight.w700);
+    expect(whyStyle.fontSize, goStyle.fontSize);
+    expect(whyStyle.fontWeight!.value, lessThan(goStyle.fontWeight!.value));
+    expect(whyStyle.color!.a, lessThan(goStyle.color!.a));
+    // The source under them, beside the save and share.
+    expect(source.top, greaterThanOrEqualTo(go.bottom));
+    final Rect save = tester.getRect(
+      find.byIcon(Icons.bookmark_border_rounded).first,
+    );
+    expect(source.right, lessThanOrEqualTo(save.left));
+    expect(source.bottom, greaterThan(save.top));
+    // Each opens what it names; the source is Go deeper's.
+    await tester.tap(door);
+    expect(why, 1);
+    await tester.tapAt(source.center);
+    expect(opened, pill);
+    // Read out, each is a door: Go deeper with its source, and Why this card.
+    expect(find.bySemanticsLabel(RegExp('^Go deeper. Source: ')), findsOne);
+    expect(find.bySemanticsLabel('Why this card'), findsOne);
   });
 
   testWidgets('a back short of room keeps Why this card: on Go deeper\'s '
