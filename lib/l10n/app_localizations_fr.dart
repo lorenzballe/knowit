@@ -2645,8 +2645,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'Rien dans la liste pour l\'instant. Chaque carte que tu aimes, gardes ou racontes compte.';
+  String get topPicksTitle => 'Ça vaut le détour';
+
+  @override
+  String get topPicksLine =>
+      'Choisies par Astute en attendant que la liste des lecteurs se remplisse';
 
   @override
   String get readMark => 'Lue';

@@ -3738,11 +3738,17 @@ abstract class AppLocalizations {
   /// **'{n, plural, =1{1 reader} other{{n} readers}}'**
   String topReaders(int n);
 
-  /// No description provided for @topEmpty.
+  /// Explore: the name of the shelf that stands in the readers' top list's place while real readers' counts are too few to make a list (fewer than five cards each held by three readers or more). The cards are picked by Astute, not by readers: the name must not suggest popularity, a ranking or a chart.
   ///
   /// In en, this message translates to:
-  /// **'Nothing on the list yet. Every card you like, save or say counts.'**
-  String get topEmpty;
+  /// **'Worth your time'**
+  String get topPicksTitle;
+
+  /// Explore: the line under that shelf's name. It says plainly that Astute picked these cards, not readers, and that the readers' own list (Top of the week) comes once enough of them have liked, saved and said cards.
+  ///
+  /// In en, this message translates to:
+  /// **'Picked by Astute while the readers\' list fills up'**
+  String get topPicksLine;
 
   /// No description provided for @readMark.
   ///

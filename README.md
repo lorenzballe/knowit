@@ -359,10 +359,12 @@ one they missed, never a list of old news.
 
 **Loved since the start** sits under the top list: the cards readers held
 on to most over all time — the counts kept for good at `totals/{shard}`
-(the part of a card's id before its first dash), plus the launch crowd's
-average since the first of September 2026 — minus what the reader has
-read. It is not closed day by day like the top list: it is a shelf for
-finding what you missed, not a ranking to quote.
+(the part of a card's id before its first dash), real readers' and
+nothing else — minus what the reader has read. It is not closed day by day
+like the top list: it is a shelf for finding what you missed, not a
+ranking to quote. It keeps to the top list's two numbers (below), judged on
+the list for everybody before the reader's own reading is taken out of it,
+and until they are met there is no such shelf.
 
 **The top of the week and of the month** sit under today's shelf: the cards
 readers liked, saved and said most in the last 7 or 30 days, with a Week /
@@ -371,8 +373,8 @@ other shelf ("Top in Economics"). It is the one ranking that came back,
 because it is the one with something true to rank by. It is numbered — a
 top that does not say which is first is not one — but the cards stay cards,
 each standing over the edge of its number, cut out of it by a ring of the
-page's colour, the number fading down behind it; each says how many readers
-kept it.
+page's colour, the number fading down behind it. How many readers kept a
+card orders the list and is not printed on it.
 
 How it counts (`lib/sync/tally.dart`): the first time a reader likes, saves
 or says a card, their phone adds one to that card's count for the day, at
@@ -380,13 +382,10 @@ or says a card, their phone adds one to that card's count for the day, at
 Once per card per phone, ever, so a count is a count of readers, and
 liking, unliking and liking again is not a way up the list. Explore reads
 the last 30 days, at most every ten minutes; days older than three are
-settled and read once, then kept on the phone. Without the launch crowd
-below, until the counts have been read — or where they cannot be, offline,
-on the web preview, or before the rules are published — nothing is ranked: the shelf shows its first three
-places numbered and empty, the first saying what puts a card there, at the
-list's own height so nothing jumps when the cards arrive. A first version
-hid the shelf until the counts were read, and so on every phone where they
-could not be it was a feature nobody could find.
+settled and read once, then kept on the phone. Until the counts have been
+read — or where they cannot be, offline, on the web preview, or before the
+rules are published — nothing is ranked, and Astute's picks stand in the
+list's place (below).
 
 **One list, fixed for the day.** The list counts closed days only: the
 rules take a count for a day until two days after it began, so from
@@ -397,16 +396,49 @@ would shift under the reader all day, and differently on each phone, since
 a phone sees its own like at once and everybody else's only on its next
 reading. Two days of lag is the price, and a top of the week can pay it.
 
-**The launch crowd.** A top list opened as three empty places, on every
-phone, for the weeks before anybody had held on to anything — so for now
-it is seeded (`TopSeed`, installed in `main.dart`). About one card in seven
-is given a believable daily following, heavy-tailed the way real lists are
-and turning over month by month, tilted to what readers keep (a question
-over a fact, a debate over both, the hard ones); the real counts are added
-on top and rank above it as they come. It is the same list on every phone,
-because it is computed from the card ids and the day. It is a stand-in and
-says nothing true about readers: construct `Tallies.instance` without a seed
-to retire it once the real counts can carry the list alone.
+**Real readers only, and Astute's picks until there are enough.** For its
+first weeks the list was seeded: a launch crowd, a believable following
+made up from the card ids and the day, laid under the real counts so the
+list was never empty. A list that says it is what readers liked most
+cannot be partly invented — an app about not being fooled least of all,
+and presenting made-up popularity as real is an unfair practice under EU
+consumer law — so the crowd is gone, on the phone and on the server alike:
+every list counts real readers and nothing else, and only cards dealt to
+everybody (never a card about a place, a retired one, or one idea of a
+book, which is read whole from its own row).
+
+A list is shown once real readers make one worth showing: at least **five
+cards, each held by at least three readers** in its window, the cards
+fewer readers held left off it (`Tallies.listCards` and
+`Tallies.listReaders` on the phone, `LIST_CARDS` and `LIST_READERS` on the
+server, one rule, `worthShowing`, on both). Three because a count is of
+readers, and fewer is one person's taste or a household's; five because a
+top of one or two is not a top. A subject's list is held to the same
+numbers on its own. When only the month has a list, the shelf is the
+month's, with no switch to an empty week.
+
+Until then the shelf is **Worth your time**, *Picked by Astute while the
+readers' list fills up*: the cards that ask the most, one subject after
+another, the same for everybody and turning over with the week
+(`ExploreShelves.picked`, from `pickedPills`), less what the reader has
+read. It stands in the same frame and the same row, at the same height,
+with the switch's room kept in its head, so nothing moves when the real
+list takes its place. It carries no numbers — a number says which card
+readers put first, and on these no reader put any card anywhere — and it
+always says its own name, whatever title a section gives the readers'
+list. Before the crowd the list was three numbered, empty places, and
+before that it was hidden until the counts were read: one looked broken,
+the other was a feature nobody could find. The picks are neither, and say
+what they are.
+
+The server's Explore (`explore/latest`) says `readersOnly: true` beside its
+lists. A build that knows the field takes the server's lists only from a
+document that says so, and otherwise ranks the phone's own counts, so a
+seeded list is never shown whichever reaches the reader first, the build or
+the server. An older build reads the same lists as before, in the same
+shape: empty while they are thin, so it leaves the shelf out (or, older
+still, shows its empty places and the line that says what puts a card
+there), and the real list once there is one.
 
 `firestore.rules` holds every write to one card, plus one, on a day that is
 today on some clock, and lets nothing be taken back. **The rules have to be

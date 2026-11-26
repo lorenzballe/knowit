@@ -2719,8 +2719,11 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'Na liście jeszcze nic nie ma. Liczy się każda karta, którą polubisz, zachowasz lub opowiesz.';
+  String get topPicksTitle => 'Warte twojego czasu';
+
+  @override
+  String get topPicksLine =>
+      'Wybrane przez Astute, dopóki lista czytelników się nie zapełni';
 
   @override
   String get readMark => 'Przeczytana';

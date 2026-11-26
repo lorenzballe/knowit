@@ -2534,7 +2534,10 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get topEmpty => '榜单还是空的。你喜欢、收藏或讲给别人听的每张卡片都会计入。';
+  String get topPicksTitle => '值得一看';
+
+  @override
+  String get topPicksLine => '读者榜单形成之前，由 Astute 挑选';
 
   @override
   String get readMark => '已读';

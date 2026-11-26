@@ -544,8 +544,10 @@ void main() {
     );
     expect(tester.takeException(), isNull);
     expect(find.text("Today's shelf"), findsOneWidget);
-    // The top list with nothing counted yet is no section.
-    expect(find.byKey(const ValueKey('top-empty')), findsNothing);
+    // The top list with nothing counted yet: Astute's picks in its place,
+    // under their own name.
+    expect(find.byKey(const ValueKey('top-picks')), findsOneWidget);
+    expect(find.byKey(const ValueKey('top-readers')), findsNothing);
     expect(find.byKey(const ValueKey('shelf-asking')), findsOneWidget);
     expect(find.byKey(const ValueKey('mix-month')), findsOneWidget);
     expect(find.byKey(const ValueKey('mix-sixty')), findsOneWidget);

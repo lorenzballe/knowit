@@ -2644,8 +2644,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'Aún no hay nada en la lista. Cada tarjeta que te gusta, guardas o cuentas suma.';
+  String get topPicksTitle => 'Merecen tu tiempo';
+
+  @override
+  String get topPicksLine =>
+      'Elegidas por Astute mientras se llena la lista de los lectores';
 
   @override
   String get readMark => 'Leída';

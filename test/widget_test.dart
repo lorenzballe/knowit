@@ -531,12 +531,22 @@ void main() {
 
     // A shelf says what it holds and why it is a shelf. The rows are a
     // question from every subject; what readers kept is the top list's,
-    // which is not there while there are no counts to read: a list with
-    // nothing on it is no shelf.
+    // which is not there while there are no counts to read. Astute's own
+    // picks stand in its place, and say so: nothing is made up to fill it.
     expect(find.text("Today's shelf"), findsOneWidget);
     expect(find.text('The same for everyone, and only today'), findsOneWidget);
     expect(find.text('Top of the week'), findsNothing);
-    expect(find.byKey(const ValueKey('top-empty')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('top-picks'), skipOffstage: false),
+      findsOneWidget,
+    );
+    expect(
+      find.text(
+        "Picked by Astute while the readers' list fills up",
+        skipOffstage: false,
+      ),
+      findsOneWidget,
+    );
     // Further down, a question from every subject.
     final Finder asking = find.text(
       'A question from every subject',
@@ -658,19 +668,36 @@ void main() {
     expect(find.text("Today's shelf"), findsNothing);
   });
 
-  testWidgets("Explore's top list: numbered cards, the week or the month, "
-      'narrowed by the subject row', (tester) async {
+  testWidgets("Explore's top list: real readers' cards, numbered, the week or "
+      'the month, narrowed by the subject row', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     final DateTime now = DateTime.now();
     String ago(int days) => tallyDay(now.subtract(Duration(days: days)));
-    final Pill econ = PillBank.cards.firstWhere((p) => p.topic == 'Economics');
+    final List<Pill> econs = PillBank.cards
+        .where((p) => p.topic == 'Economics')
+        .take(5)
+        .toList();
+    final Pill econ = econs.first;
     final Pill econToo = PillBank.cards.lastWhere(
       (p) => p.topic == 'Economics',
     );
-    final Pill other = PillBank.cards.firstWhere((p) => p.topic != 'Economics');
+    final String otherTopic = PillBank.cards
+        .firstWhere((p) => p.topic != 'Economics')
+        .topic;
+    final List<Pill> others = PillBank.cards
+        .where((p) => p.topic == otherTopic)
+        .take(5)
+        .toList();
+    final Pill other = others.first;
+    // Real readers enough for a list (five cards, three readers each): five
+    // of one subject, the first held by nine; five of Economics, the first
+    // by five and the rest by four.
     final Tallies tallies = Tallies(
       storeOverride: MemoryTallyStore({
-        ago(Tallies.closedAfter): {other.id: 9, econ.id: 4},
+        ago(Tallies.closedAfter): {
+          for (final Pill p in others) p.id: p == other ? 9 : 3,
+          for (final Pill p in econs) p.id: p == econ ? 5 : 4,
+        },
         ago(Tallies.closedAfter + 12): {econToo.id: 30},
       }),
     );
@@ -683,20 +710,21 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
 
-    // The week: nine readers, then four, in that order, each card on its
+    // The week: nine readers, then five, in that order, each card on its
     // number. The card from twelve days ago is the month's, not the week's.
     expect(find.text('Top of the week'), findsOneWidget);
     expect(
       find.text('Most liked, saved and said in the last 7 days'),
       findsOneWidget,
     );
+    expect(find.byKey(const ValueKey('top-picks')), findsNothing);
     final Finder first = find.byKey(ValueKey('top-${other.id}'));
     final Finder second = find.byKey(ValueKey('top-${econ.id}'));
     expect(first, findsOneWidget);
     expect(second, findsOneWidget);
     expect(tester.getCenter(first).dx, lessThan(tester.getCenter(second).dx));
-    // The order is the counts'; the cards print no count, since most of one
-    // is the launch crowd until real readers outnumber it.
+    // The order is the counts'; the cards print no count: the list kept the
+    // look it had when a launch crowd lay under it.
     expect(find.text('9 readers'), findsNothing);
     expect(find.byKey(ValueKey('top-${econToo.id}')), findsNothing);
 
@@ -719,8 +747,8 @@ void main() {
     expect(find.byKey(ValueKey('top-${other.id}')), findsNothing);
     expect(find.byKey(ValueKey('top-${econ.id}')), findsOneWidget);
 
-    // A subject nobody has counted yet has no top list: an empty ranking on
-    // a subject's page read as something broken.
+    // A subject nobody has counted yet has no top list of its own: Astute's
+    // picks of that subject stand in its place, said to be Astute's.
     final String quiet = kMixSubjects
         .map((s) => s.name)
         .firstWhere((name) => name != 'Economics' && name != other.topic);
@@ -751,8 +779,12 @@ void main() {
     await _settle(tester);
     await tester.tap(find.byKey(ValueKey('subject-$quiet-off')));
     await _settle(tester);
-    expect(find.byKey(const ValueKey('top-empty')), findsNothing);
     expect(find.text('Top in $quiet'), findsNothing);
+    expect(find.byKey(const ValueKey('top-readers')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('top-picks'), skipOffstage: false),
+      findsOneWidget,
+    );
   });
 
   group("The phone's language", () {

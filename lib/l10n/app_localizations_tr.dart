@@ -2610,8 +2610,11 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'Listede henüz bir şey yok. Beğendiğin, sakladığın ya da anlattığın her kart sayılır.';
+  String get topPicksTitle => 'Vaktine değer';
+
+  @override
+  String get topPicksLine =>
+      'Okurların listesi dolana kadar Astute\'un seçtikleri';
 
   @override
   String get readMark => 'Okundu';

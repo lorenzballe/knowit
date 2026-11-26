@@ -2500,7 +2500,11 @@ class RemoteLocalizations extends AppLocalizations {
       _words.format('topReaders', localeName, {'n': n}) ?? _base.topReaders(n);
 
   @override
-  String get topEmpty => _words.text('topEmpty') ?? _base.topEmpty;
+  String get topPicksTitle =>
+      _words.text('topPicksTitle') ?? _base.topPicksTitle;
+
+  @override
+  String get topPicksLine => _words.text('topPicksLine') ?? _base.topPicksLine;
 
   @override
   String get readMark => _words.text('readMark') ?? _base.readMark;

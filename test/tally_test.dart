@@ -166,47 +166,74 @@ void main() {
     },
   );
 
-  group('The launch crowd', () {
-    final List<String> ids = [for (var i = 0; i < 2000; i++) 'card-$i'];
-
-    test('is the same on every phone, and seeds about one card in seven', () {
-      final a = TopSeed(ids: () => ids).on('2026-10-02');
-      final b = TopSeed(ids: () => ids).on('2026-10-02');
-      expect(a, b);
-      final seeded = ids.where((id) => TopSeed.popularity(id) > 0).length;
-      expect(seeded, inInclusiveRange(220, 380));
-    });
-
-    test('gives the list something to show before any count is read, '
-        'and the real readers rank on top of it', () async {
-      final Tallies seeded = Tallies(
+  group('Real readers only', () {
+    test('nothing is ranked before the counts are read, and nothing but '
+        'what readers held after', () async {
+      final Tallies tallies = Tallies(
         storeOverride: MemoryTallyStore({
-          ago(Tallies.closedAfter): {'card-real': 500},
+          ago(Tallies.closedAfter): {'card-real': 5},
         }),
-        seed: TopSeed(ids: () => ids),
         clock: () => now,
       );
-      expect(seeded.answered, isFalse);
-      expect(seeded.ready, isTrue);
-      final List<Ranked> before = seeded.top(7);
-      expect(before, isNotEmpty);
-      expect(before.first.readers, greaterThan(before.last.readers - 1));
+      expect(tallies.answered, isFalse);
+      expect(tallies.top(7), isEmpty);
+      expect(tallies.top(30), isEmpty);
+      expect(tallies.allTime(), isEmpty);
 
-      await seeded.refresh();
-      expect(seeded.top(7).first.id, 'card-real');
-      expect(seeded.top(7).first.readers, greaterThanOrEqualTo(500));
-      // The month holds at least what the week does, card for card.
-      final Map<String, int> month = {
-        for (final r in seeded.top(30, limit: 5000)) r.id: r.readers,
-      };
-      for (final r in seeded.top(7, limit: 5000)) {
-        expect(month[r.id], greaterThanOrEqualTo(r.readers), reason: r.id);
-      }
+      await tallies.refresh();
+      expect(
+        [for (final r in tallies.top(30, limit: 5000)) r.id],
+        ['card-real'],
+      );
+      expect(tallies.top(7).single.readers, 5, reason: 'the readers alone');
+      expect(Tallies().top(30), isEmpty);
     });
 
-    test('is off unless asked for', () {
-      expect(Tallies().ready, isFalse);
-      expect(Tallies().top(30), isEmpty);
+    test('a list worth showing: five cards held by three readers each, '
+        'and the cards fewer readers held left off it', () {
+      expect(Tallies.listReaders, 3);
+      expect(Tallies.listCards, 5);
+      List<Ranked> held(int cards, int readers, [String name = 'c']) => [
+        for (var i = 0; i < cards; i++) Ranked('$name$i', readers),
+      ];
+      List<String> ids(List<Ranked> list) => [for (final r in list) r.id];
+
+      // Four cards is not a list yet, however many held them; nor is any
+      // number of cards one or two readers held.
+      expect(Tallies.worthShowing(held(4, 900)), isEmpty);
+      expect(Tallies.worthShowing(held(10, 2)), isEmpty);
+      expect(Tallies.worthShowing(const []), isEmpty);
+      // Five is, and what fewer than three held stays off it, in order.
+      expect(ids(Tallies.worthShowing([...held(5, 3), ...held(5, 2, 'x')])), [
+        'c0',
+        'c1',
+        'c2',
+        'c3',
+        'c4',
+      ]);
+      // Four held by three and one by two is still four.
+      expect(Tallies.worthShowing([...held(4, 3), Ranked('two', 2)]), isEmpty);
+    });
+
+    test('readers add up over the window: one a day for three closed days '
+        'is three readers', () async {
+      final List<String> cards = [for (var i = 0; i < 5; i++) 'card-$i'];
+      final Tallies tallies = Tallies(
+        storeOverride: MemoryTallyStore({
+          for (final int d in [2, 3, 4])
+            ago(d): {for (final id in cards) id: 1},
+        }),
+        clock: () => now,
+      );
+      await tallies.refresh();
+      final List<Ranked> week = Tallies.worthShowing(tallies.top(7));
+      expect(week, hasLength(5));
+      expect(week.every((r) => r.readers == 3), isTrue);
+      // Four of them would not be.
+      expect(
+        Tallies.worthShowing(tallies.top(7, where: (id) => id != 'card-0')),
+        isEmpty,
+      );
     });
   });
 
@@ -230,7 +257,7 @@ void main() {
     expect(ids(), ['science-2', 'science-1']);
   });
 
-  test('loved since the start: the counts for good, over the launch crowd, '
+  test('loved since the start: the counts for good, and nothing else, '
       'narrowed as asked', () async {
     final MemoryTallyStore store = MemoryTallyStore();
     final Tallies tallies = Tallies(storeOverride: store, clock: () => now);
@@ -244,15 +271,9 @@ void main() {
       [for (final r in tallies.allTime(where: (id) => id != 'space-2')) r.id],
       ['science-1'],
     );
-    // With the crowd, cards nobody has held yet are there too, the ones
-    // readers did hold ranked by both.
-    final Tallies seeded = Tallies(
-      storeOverride: store,
-      seed: TopSeed(ids: () => [for (var i = 0; i < 400; i++) 'card-$i']),
-      clock: () => now,
-    );
-    await seeded.refresh();
-    expect(seeded.allTime(limit: 400).length, greaterThan(2));
+    // No card nobody held: two cards are two cards, and not yet a list.
+    expect(tallies.allTime(limit: 400), hasLength(2));
+    expect(Tallies.worthShowing(tallies.allTime()), isEmpty);
   });
 
   test('a card read in Explore is read: the day never deals it', () async {

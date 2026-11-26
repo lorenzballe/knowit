@@ -2643,8 +2643,11 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get topEmpty =>
-      'Nog niets op de lijst. Elke kaart die je liket, bewaart of vertelt telt mee.';
+  String get topPicksTitle => 'Je tijd waard';
+
+  @override
+  String get topPicksLine =>
+      'Uitgekozen door Astute zolang de lijst van lezers nog groeit';
 
   @override
   String get readMark => 'Gelezen';

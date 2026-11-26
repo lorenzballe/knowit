@@ -622,8 +622,8 @@ that are the names their shelves have always been measured under.
 | `nothing-here` | "Nothing in Cinema yet", when today's shelf and the question from every subject have nothing for the reader. Not a shelf; no gap of its own | — |
 | `offline` | "You are offline", while Explore is the copy kept from the last time the phone had signal. Not a shelf; no gap of its own | — |
 | `today` | Today's shelf, the same for everyone and only today, at the big tile | `title`, `subtitle`, `limit` (8) |
-| `top` | The readers' top of the week or of the month, each card on its number, empty places until there are counts | `title`, `subtitle` |
-| `loved` | Loved since the start, not read yet | `title`, `subtitle` |
+| `top` | The readers' top of the week or of the month, each card on its number: real readers' counts only, shown from five cards held by three readers each. Until then Astute's picks stand in its place, "Worth your time · Picked by Astute while the readers' list fills up", in the same row at the same height, without the numbers. `title` and `subtitle` name the readers' list and are never put over the picks | `title`, `subtitle` |
+| `loved` | Loved since the start, not read yet: real readers' counts for good, held to the top list's numbers, and no shelf until they are met | `title`, `subtitle` |
 | `asking` | A question from every subject, as rows | `title`, `subtitle`, `limit` (6) |
 | `mine` | The reader's own subject: the one they pushed up, or read most of | `title`, `subtitle` |
 | `where-you-live` | The cards about the reader's place, or the tile that offers to switch it on | `title`, `subtitle` |

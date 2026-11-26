@@ -331,6 +331,7 @@ void main() {
       final ServedExplore? got = ServedExplore.parse(
         {
           'day': '2026-10-12',
+          'readersOnly': true,
           'today': mixed,
           'asking': mixed,
           for (final String key in ['topWeek', 'topMonth', 'loved'])

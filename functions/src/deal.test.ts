@@ -1,11 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { Bank, asks, graded, editionOf, expiredOn, isSunday, localDate, localHour, shiftDate } from './bank.js';
+import { Bank, Card, asks, graded, editionOf, expiredOn, isSunday, localDate, localHour, shiftDate } from './bank.js';
 import { keyed, unit } from './rng.js';
 import { buildProfile, readOnboarding, readTrace, weightsOn, dayNumberOf, Event, Snapshot, TASTE_LEAN } from './profile.js';
 import { arrangeDay, commonOfEdition, dealDay, dealOwn, drawn, drawnWeights, explorerDay, ownCardsFor, questionOfEdition, DRAWN_WEIGHT, EXPLORER_SHARE, OWN_FREE, OWN_REWARDED, OWN_SUNDAY, PILLS_PER_DAY, SHOWCASE_DAYS, SHOWCASE_WEIGHT } from './deal.js';
-import { ALL_TIME_SEED, askingCards, buildGlobalExplore, buildPersonalExplore, pickedCards, popularity, topList } from './explore.js';
+import { ALL_TIME_SEED, LIST_CARDS, LIST_READERS, Tallies, allTime, askingCards, buildGlobalExplore, buildPersonalExplore, pickedCards, topList, worthShowing } from './explore.js';
 import { search } from './search.js';
 import { askableDate, datesToPrepare } from './serve.js';
 
@@ -29,13 +29,12 @@ function profileOf(snapshot: Snapshot, events: Event[] = [], plus = false) {
 // ── The same numbers as the phone ────────────────────────────────────────
 
 test('the hashes are the phone\'s, bit for bit', () => {
-  // Reference values printed by lib/sync/tally.dart and pills_repository.dart.
+  // Reference values printed by the phone's betUnit (lib/explore/blocks/bets/answers.dart),
+  // the same function: the dealer's seeds (seedOf) rest on them.
   assert.equal(unit('seed:science-1'), 0.9956654456909746);
   assert.equal(unit('2026-10:space-2'), 0.31467695790342987);
   assert.equal(unit('2026-10-03:space-2'), 0.5869718969333917);
   assert.equal(unit('seed:thinking-4'), 0.10241766786202788);
-  assert.ok(Math.abs(popularity('science-1') - 4.481920005585856) < 1e-12);
-  assert.ok(Math.abs(popularity('weird_facts-local-bans-4') - 4.751586858388467) < 1e-12);
   assert.equal(keyed('astuto-all-time') >= 0, true);
 });
 
@@ -370,17 +369,89 @@ test('Sunday is the reader\'s own: their clock decides it at the edge of the day
 
 // ── Explore ──────────────────────────────────────────────────────────────
 
-test('Explore for everybody: the closed days only, the crowd under the counts, a card whole on every shelf', () => {
-  const tallies = new Map([[shiftDate(DAY, -2), new Map([['science-1', 500]])], [DAY, new Map([['space-2', 999]])]]);
-  const totals = new Map([['thinking-4', 4000]]);
+/** [n] cards of [topic] (any subject when none), each held by [readers]. */
+function held(n: number, readers: number, topic?: string, skip = 0): Map<string, number> {
+  const cards = bank.live.filter((c) => !topic || c.topic === topic).slice(skip, skip + n);
+  return new Map(cards.map((c) => [c.id, readers] as [string, number]));
+}
+
+test('Explore for everybody: real readers only, the closed days only, a card whole on every shelf', () => {
+  const closed = new Map([['science-1', 500], ...held(6, 4, 'history')]);
+  const tallies: Tallies = new Map([[shiftDate(DAY, -2), closed], [DAY, new Map([['space-2', 999]])]]);
+  const totals = new Map([['thinking-4', 4000], ...held(6, 9, 'art')]);
   const doc = buildGlobalExplore(bank, tallies, totals, DAY, NOW);
+  assert.equal(doc.readersOnly, true);
   assert.equal(doc.topWeek[0].id, 'science-1');
+  assert.equal(doc.topWeek[0].readers, 500, 'the count is the readers\' and nothing else');
+  assert.deepEqual(doc.topWeek.map((r) => r.id).sort(), [...closed.keys()].sort(), 'no card nobody held');
   assert.ok(!doc.topWeek.some((r) => r.id === 'space-2'), 'today is still open');
+  assert.ok(doc.topWeek.every((r) => typeof r.card.question === 'string'));
   assert.equal(doc.loved[0].id, 'thinking-4');
+  assert.equal(doc.loved.length, 7);
   assert.equal(doc.today.length, 24);
   assert.ok(doc.today.every((c) => typeof c.question === 'string'));
-  assert.ok(doc.bySubject.space.week.length > 0);
+  assert.equal(doc.bySubject.history.week.length, 6);
   assert.equal(topList(bank, tallies, DAY, 7, 3).length, 3);
+});
+
+test('no readers, no list: nothing is made up to fill one, and the rest of Explore is there', () => {
+  const doc = buildGlobalExplore(bank, new Map(), new Map(), DAY, NOW);
+  assert.deepEqual(doc.topWeek, []);
+  assert.deepEqual(doc.topMonth, []);
+  assert.deepEqual(doc.loved, []);
+  for (const lists of Object.values(doc.bySubject)) assert.deepEqual(lists, { week: [], month: [], loved: [] });
+  assert.equal(doc.today.length, 24);
+  assert.equal(doc.asking.length, 40);
+  // Still the shape every phone reads: an old one finds the same keys, and a list that is empty.
+  assert.deepEqual(Object.keys(doc).sort(), ['asking', 'at', 'bySubject', 'day', 'loved', 'readersOnly', 'today', 'topMonth', 'topWeek', 'version']);
+});
+
+test('a list is shown from five cards held by three readers each, and a card fewer readers held is not on it', () => {
+  assert.equal(LIST_READERS, 3);
+  assert.equal(LIST_CARDS, 5);
+  const week = (counts: Map<string, number>) => buildGlobalExplore(bank, new Map([[shiftDate(DAY, -2), counts]]), new Map(), DAY, NOW).topWeek;
+  // Four is not a list yet; nor are five cards one or two readers each.
+  assert.deepEqual(week(held(4, 3)), []);
+  assert.deepEqual(week(held(9, 2)), []);
+  // Five is, and cards held by fewer than three stay off it.
+  const five = held(5, 3);
+  const two = held(4, 2, undefined, 5);
+  const got = week(new Map([...five, ...two]));
+  assert.deepEqual(got.map((r) => r.id).sort(), [...five.keys()].sort());
+  assert.ok(got.every((r) => r.readers >= LIST_READERS));
+  // Readers add up over the week's closed days: one each on three days is three readers.
+  const ids = [...held(5, 1).keys()];
+  const spread: Tallies = new Map([2, 3, 4].map((d) => [shiftDate(DAY, -d), new Map(ids.map((id) => [id, 1] as [string, number]))]));
+  assert.equal(buildGlobalExplore(bank, spread, new Map(), DAY, NOW).topWeek.length, 5);
+  // The same rule, out of the server's hands.
+  assert.deepEqual(worthShowing([{ id: 'a', readers: 9 }, { id: 'b', readers: 2 }]), []);
+});
+
+test('the month can carry a list before the week does; loved is held to the same numbers', () => {
+  const tallies: Tallies = new Map([[shiftDate(DAY, -12), held(5, 3)]]);
+  const doc = buildGlobalExplore(bank, tallies, new Map([...held(4, 50, 'art')]), DAY, NOW);
+  assert.deepEqual(doc.topWeek, []);
+  assert.equal(doc.topMonth.length, 5);
+  assert.deepEqual(doc.loved, [], 'four cards, however loved, are not a list');
+  assert.equal(allTime(bank, held(4, 50, 'art')).length, 4, 'the ranking itself is all there');
+});
+
+test('a subject\'s list is held to the numbers on its own', () => {
+  const tallies: Tallies = new Map([[shiftDate(DAY, -2), new Map([...held(5, 3, 'science'), ...held(2, 40, 'space')])]]);
+  const doc = buildGlobalExplore(bank, tallies, new Map(), DAY, NOW);
+  assert.equal(doc.bySubject.science.week.length, 5);
+  assert.deepEqual(doc.bySubject.space.week, [], 'two cards of Space, however held, are no Top in Space');
+  assert.equal(doc.topWeek.length, 7, 'and both on the list for everybody');
+});
+
+test('the lists hold only cards dealt to everybody: never one idea of a book', () => {
+  const idea = bank.cards.find((c) => c.book && !c.disabled) as Card;
+  assert.ok(idea, 'the bank has books');
+  const tallies: Tallies = new Map([[shiftDate(DAY, -2), new Map([[idea.id, 900], ...held(5, 3)])]]);
+  const doc = buildGlobalExplore(bank, tallies, new Map([[idea.id, 900], ...held(5, 3)]), DAY, NOW);
+  assert.ok(!doc.topWeek.some((r) => r.id === idea.id));
+  assert.ok(!doc.loved.some((r) => r.id === idea.id));
+  assert.equal(doc.topWeek.length, 5);
 });
 
 test('Explore for one reader: their subject, and what the profile puts first, unread', () => {
