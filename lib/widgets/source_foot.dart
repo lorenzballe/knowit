@@ -25,11 +25,21 @@
 /// the day: beside Go deeper on the back, as a line or as a second pill, or
 /// on the front, as the line under the head that every card carries again.
 ///
-/// A drawn card's page draws the same three, once the kit has them (tried on
-/// a scratch copy of docs/cards/kit/astute-card.js, not on the kit the app
-/// ships): the app tells the page which, and Go deeper's and Why this card's
-/// names in the reader's language, through [PageEnv]'s `foot`, `deeper` and
-/// `why`; the page says `deeper` or `why` when they are tapped.
+/// A back never scrolls for the foot's sake. Short of room, Why this card
+/// gives up its row first and follows the source on Go deeper's line, the
+/// whole foot beside the save and share; the last thing before the back
+/// would scroll, the source's words give way and the two doors stand alone,
+/// Go deeper opening on the source (reveal_body.dart, `_FootForm`).
+///
+/// A drawn card's page draws the same, the kit doing it
+/// (docs/cards/kit/astute-card.js, `deeperFoot`): the app tells the page
+/// which way, and Go deeper's and Why this card's names in the reader's
+/// language, through [PageEnv]'s `foot`, `deeper` and `why`; the page says
+/// `deeper` or `why` when they are tapped. A page cannot say it is short of
+/// room the way a back in words can, so the kit sets Why this card on Go
+/// deeper's line on a card as short as a 375×667 phone's, which every page
+/// was drawn to fit under a foot one row high, and on any page whose column
+/// runs past its card.
 library;
 
 import 'package:flutter/material.dart';
@@ -57,8 +67,9 @@ enum SourceFoot {
 
   /// "Go deeper ›" in a small pill of the card's own wash, "Why this card ›"
   /// in an outlined one beside it, the source under them beside the save
-  /// and share. To report: a flag in Go deeper's head, beside the sheet's
-  /// name, seen the moment it opens.
+  /// and share; on a back short of room the pills give way to the words, as
+  /// [line] sets them. To report: a flag in Go deeper's head, beside the
+  /// sheet's name, seen the moment it opens.
   pill,
 }
 

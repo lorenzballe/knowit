@@ -85,6 +85,44 @@ const ScoreMove _move = ScoreMove(
 const Size _phone = Size(360, 740);
 const Size _card = Size(324, 520);
 
+/// The two smallest phones a reader still carries, with the card the Today
+/// deck gives each, measured in the app: a 375×667 phone with its 20-point
+/// status bar and no home bar, and the 320-wide phone the same way.
+const Map<String, (Size, Size)> _smallest = {
+  'a 375×667 phone': (Size(375, 667), Size(339, 475)),
+  'the 320-wide phone': (Size(320, 568), Size(284, 376)),
+};
+
+/// What a back says, in letters: the answer, the working, the boxes at its
+/// foot and the source.
+int _letters(Pill p) =>
+    p.answer.length +
+    p.steps.join().length +
+    (p.showsMove ? p.barMove.length : 0) +
+    (p.showsAsk ? p.ask.length : 0) +
+    p.sourceShort.length;
+
+/// The longer of the two cases a back can open.
+int _opened(Pill p) => p.counterpoint.length > p.simply.length
+    ? p.counterpoint.length
+    : p.simply.length;
+
+/// The cards drawn by the app with the most to say on their backs: the
+/// longest as turned, and the longest once a case is opened.
+final List<Pill> _fullest = () {
+  final List<Pill> native = [
+    for (final p in PillBank.cards)
+      if (p.web == null) p,
+  ];
+  final List<Pill> turned = [...native]
+    ..sort((a, b) => _letters(b).compareTo(_letters(a)));
+  final List<Pill> opened = [...native]
+    ..sort(
+      (a, b) => (_letters(b) + _opened(b)).compareTo(_letters(a) + _opened(a)),
+    );
+  return {...turned.take(160), ...opened.take(60)}.toList();
+}();
+
 void main() {
   setUpAll(_loadRealFonts);
 
@@ -94,10 +132,13 @@ void main() {
     double scale = 1,
     Size phone = _phone,
     Size card = _card,
+    Locale locale = const Locale('en'),
+    bool why = true,
   }) {
     return tester.pumpWidget(
       MaterialApp(
         debugShowCheckedModeBanner: false,
+        locale: locale,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         theme: buildAstutoTheme(Brightness.dark),
@@ -112,13 +153,19 @@ void main() {
               child: SizedBox.fromSize(
                 size: card,
                 child: PillCard(
-                  key: ValueKey(pill.id),
+                  // A card laid out again without Why this card starts
+                  // turned, not in whatever its last look left open.
+                  key: ValueKey((pill.id, why)),
                   pill: pill,
                   flipped: true,
                   given: _answerFor(pill),
                   move: pill.isGraded ? _move : null,
                   onSave: () {},
                   onShare: () {},
+                  // As a card of the day has it: Why this card, where the
+                  // way being tried puts it on the back (source_foot.dart),
+                  // is counted with the rest of the foot.
+                  onNote: why ? () {} : null,
                 ),
               ),
             ),
@@ -217,6 +264,98 @@ void main() {
     return out;
   }
 
+  /// A tap on what may have been set below the fold of a back that
+  /// scrolls: it is brought into view first, as a reader would scroll to it.
+  Future<void> press(WidgetTester tester, Finder what) async {
+    await tester.ensureVisible(what);
+    await tester.pump();
+    await tester.tap(what, warnIfMissed: false);
+    await settle(tester);
+  }
+
+  /// Turns [pill] over on [card] and opens everything its back can open,
+  /// noting each state that scrolls, cuts a line or runs into the corner.
+  Future<void> check(
+    WidgetTester tester,
+    Pill pill,
+    List<String> findings, {
+    required Size phone,
+    required Size card,
+    Locale locale = const Locale('en'),
+    bool why = true,
+  }) async {
+    final AppLocalizations l = lookupAppLocalizations(locale);
+    await pumpBack(
+      tester,
+      pill,
+      phone: phone,
+      card: card,
+      locale: locale,
+      why: why,
+    );
+    await settle(tester);
+    void note(String stage) {
+      final Object? error = tester.takeException();
+      if (error != null) {
+        findings.add(
+          '${pill.id} ($stage): ${error.toString().split('\n').first}',
+        );
+      }
+      final double scroll = scrollNeeded(tester);
+      if (scroll > 0.5) {
+        findings.add(
+          '${pill.id} ($stage): scrolls ${scroll.toStringAsFixed(0)}',
+        );
+      }
+      for (final line in cut(tester)) {
+        findings.add('${pill.id} ($stage): cut "${_short(line)}"');
+      }
+      for (final line in collisions(tester)) {
+        findings.add('${pill.id} ($stage): $line');
+      }
+    }
+
+    note('turned');
+    // A worked solution, every step out.
+    final all = find.byKey(const ValueKey('all-steps'));
+    if (all.evaluate().isNotEmpty) {
+      await press(tester, all);
+      note('all steps');
+    }
+    // The picture, where it waits behind a line, swapped in.
+    for (final kind in ['picture', 'scene', 'working']) {
+      final open = find.byKey(ValueKey('$kind-toggle'));
+      if (open.evaluate().isEmpty) continue;
+      await press(tester, open);
+      note(kind);
+      final whole = find.byKey(const ValueKey('all-steps'));
+      if (whole.evaluate().isNotEmpty) {
+        await press(tester, whole);
+        note('$kind, all steps');
+      }
+      final back = find.byKey(const ValueKey('back-to-answer'));
+      if (back.evaluate().isNotEmpty) await press(tester, back);
+    }
+    // The other side's case, opened.
+    final other = find.text(l.whatTheOtherSideSays);
+    if (other.evaluate().isNotEmpty) {
+      await press(tester, other);
+      note('other side');
+    }
+    final simply = find.text(l.explainLikeImThree);
+    if (simply.evaluate().isNotEmpty) {
+      await press(tester, simply);
+      note('simply');
+    }
+  }
+
+  void report(List<String> findings) {
+    if (findings.isNotEmpty) {
+      // ignore: avoid_print
+      print('BACKS ${findings.length}\n${findings.join('\n')}');
+    }
+  }
+
   for (final MapEntry(key: name, value: (phone, card)) in _phones.entries) {
     testWidgets('the back of every card fits a $name phone without scrolling', (
       tester,
@@ -227,74 +366,81 @@ void main() {
 
       final findings = <String>[];
       for (final pill in PillBank.cards) {
-        await pumpBack(tester, pill, phone: phone, card: card);
-        await settle(tester);
-        void note(String stage) {
-          final Object? error = tester.takeException();
-          if (error != null) {
-            findings.add(
-              '${pill.id} ($stage): ${error.toString().split('\n').first}',
-            );
-          }
-          final double scroll = scrollNeeded(tester);
-          if (scroll > 0.5) {
-            findings.add(
-              '${pill.id} ($stage): scrolls ${scroll.toStringAsFixed(0)}',
-            );
-          }
-          for (final line in cut(tester)) {
-            findings.add('${pill.id} ($stage): cut "${_short(line)}"');
-          }
-          for (final line in collisions(tester)) {
-            findings.add('${pill.id} ($stage): $line');
-          }
-        }
-
-        note('turned');
-        // A worked solution, every step out.
-        final all = find.byKey(const ValueKey('all-steps'));
-        if (all.evaluate().isNotEmpty) {
-          await tester.tap(all);
-          await settle(tester);
-          note('all steps');
-        }
-        // The picture, where it waits behind a line, swapped in.
-        for (final kind in ['picture', 'scene', 'working']) {
-          final open = find.byKey(ValueKey('$kind-toggle'));
-          if (open.evaluate().isEmpty) continue;
-          await tester.tap(open);
-          await settle(tester);
-          note(kind);
-          final whole = find.byKey(const ValueKey('all-steps'));
-          if (whole.evaluate().isNotEmpty) {
-            await tester.tap(whole);
-            await settle(tester);
-            note('$kind, all steps');
-          }
-          await tester.tap(find.byKey(const ValueKey('back-to-answer')));
-          await settle(tester);
-        }
-        // The other side's case, opened.
-        final other = find.text('What the other side says');
-        if (other.evaluate().isNotEmpty) {
-          await tester.tap(other);
-          await settle(tester);
-          note('other side');
-        }
-        final simply = find.text('Explain it like I am three');
-        if (simply.evaluate().isNotEmpty) {
-          await tester.tap(simply);
-          await settle(tester);
-          note('simply');
-        }
+        await check(tester, pill, findings, phone: phone, card: card);
       }
-
-      if (findings.isNotEmpty) {
-        // ignore: avoid_print
-        print('BACKS ${findings.length}\n${findings.join('\n')}');
-      }
+      report(findings);
       expect(findings, isEmpty, reason: '${findings.length} backs do not fit');
     });
+  }
+
+  // The fullest backs on Today, on the two smallest phones a reader still
+  // carries, in two of the longer languages: the cards drawn by the app with
+  // the most to say, the foot's words in Italian and German. Not every one
+  // of them fits there: the longest say more than a card 475 points high
+  // holds at the smallest type a back is set in, and the 320-wide phone's
+  // card, 376 high, holds few of the fullest. What is held to here is the
+  // foot: Why this card costs no back its fit. Whatever a back opens that
+  // fits without it fits with it, the foot giving up its row, then the
+  // source's words, as the back runs short.
+  for (final MapEntry(key: name, value: (phone, card)) in _smallest.entries) {
+    for (final Locale locale in const [Locale('it'), Locale('de')]) {
+      testWidgets('Why this card costs none of the fullest backs its fit on '
+          '$name in ${locale.languageCode}', (tester) async {
+        tester.view.physicalSize = phone;
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+
+        // The states a finding is about: "turned", "other side", ...
+        Set<String> stages(List<String> findings) => {
+          for (final f in findings)
+            if (RegExp(r'\(([^)]*)\)').firstMatch(f) case final m?) m.group(1)!,
+        };
+
+        final costs = <String>[];
+        final long = <String>[];
+        for (final pill in _fullest) {
+          final withWhy = <String>[];
+          await check(
+            tester,
+            pill,
+            withWhy,
+            phone: phone,
+            card: card,
+            locale: locale,
+          );
+          if (withWhy.isEmpty) continue;
+          final without = <String>[];
+          await check(
+            tester,
+            pill,
+            without,
+            phone: phone,
+            card: card,
+            locale: locale,
+            why: false,
+          );
+          final Set<String> own = stages(without);
+          final List<String> cost = [
+            for (final f in withWhy)
+              if (!own.contains(stages([f]).first)) f,
+          ];
+          costs.addAll(cost);
+          if (without.isNotEmpty) long.add(pill.id);
+        }
+        // ignore: avoid_print
+        print(
+          'FULLEST $name, ${locale.languageCode}: ${long.length} of '
+          '${_fullest.length} do not fit with or without Why this card'
+          '${long.isEmpty ? '' : ': ${long.join(' ')}'}',
+        );
+        report(costs);
+        expect(
+          costs,
+          isEmpty,
+          reason: 'Why this card costs ${costs.length} backs their fit',
+        );
+      });
+    }
   }
 
   testWidgets('the back ends on one box unless the card asks for both', (

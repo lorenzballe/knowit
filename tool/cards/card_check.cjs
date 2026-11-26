@@ -164,8 +164,11 @@ async function single() {
     const page = await browser.newPage({viewport: {width: vp.width, height: vp.height}, deviceScaleFactor: 2});
     const heard = [], errors = [], asked = [];
     await page.exposeFunction('__astuteHeard', text => heard.push(JSON.parse(text)));
+    // The foot as a card of the day has it in the app (lib/widgets/pill_card_stack.dart): Go deeper's name before
+    // the source, and Why this card beside it.
     const env = {mode: 'app', theme: opts.theme || 'dark', lang: 'en', calm: !!opts.calm, sound: false, touch: web.touch || 'taps', platform: 'ios', shown: true,
-      size: {w: vp.width, h: vp.height}, safe: {top: 0, right: 0, bottom: 0, left: 0}, corner: CORNER, subject: {key: topic}};
+      size: {w: vp.width, h: vp.height}, safe: {top: 0, right: 0, bottom: 0, left: 0}, corner: CORNER, subject: {key: topic},
+      foot: 'line', deeper: 'Go deeper', why: 'Why this card'};
     await page.addInitScript(([e, b]) => { window.ASTUTE_ENV = e; window.ASTUTE_SEND = t => window.__astuteHeard(t); (0, eval)(b); }, [env, bridge]);
     page.on('pageerror', e => errors.push(e.message));
     page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
