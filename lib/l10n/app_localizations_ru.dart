@@ -1395,6 +1395,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return 'Глубже. Источник: $source';
+  }
+
+  @override
   String get sourceKindPaper => 'Исследование';
 
   @override

@@ -1232,6 +1232,11 @@ class RemoteLocalizations extends AppLocalizations {
       _base.sourceLabelKind(kind, source);
 
   @override
+  String deeperFootLabel(String source) =>
+      _words.format('deeperFootLabel', localeName, {'source': source}) ??
+      _base.deeperFootLabel(source);
+
+  @override
   String get sourceKindPaper =>
       _words.text('sourceKindPaper') ?? _base.sourceKindPaper;
 

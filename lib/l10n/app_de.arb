@@ -295,6 +295,7 @@
   "dayStreakCaps": "TAGE IN SERIE",
   "sourceLabel": "Quelle · {source}",
   "sourceLabelKind": "{kind} · {source}",
+  "deeperFootLabel": "Tiefer gehen. Quelle: {source}",
   "sourceKindPaper": "Studie",
   "sourceKindBook": "Buch",
   "sourceKindInstitution": "Institution",

@@ -1890,6 +1890,12 @@ abstract class AppLocalizations {
   /// **'{kind} · {source}'**
   String sourceLabelKind(String kind, String source);
 
+  /// What a screen reader says for the foot of a card's back, which opens Go deeper: the sheet's name, then the card's source, with the word Source that the card itself leaves out.
+  ///
+  /// In en, this message translates to:
+  /// **'Go deeper. Source: {source}'**
+  String deeperFootLabel(String source);
+
   /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
   ///
   /// In en, this message translates to:

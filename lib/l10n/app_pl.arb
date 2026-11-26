@@ -295,6 +295,7 @@
   "dayStreakCaps": "DNI SERII",
   "sourceLabel": "Źródło · {source}",
   "sourceLabelKind": "{kind} · {source}",
+  "deeperFootLabel": "Zgłęb temat. Źródło: {source}",
   "sourceKindPaper": "Badanie",
   "sourceKindBook": "Książka",
   "sourceKindInstitution": "Instytucja",

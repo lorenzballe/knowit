@@ -15,6 +15,7 @@ import '../utils/share_link.dart';
 import '../utils/share_origin.dart';
 import 'ui.dart';
 import 'scaled_text.dart';
+import 'source_foot.dart';
 
 /// Opens the share sheet for [pill]: the card as it leaves, and the ways it
 /// can go.
@@ -252,6 +253,18 @@ class _ShareSheetState extends State<_ShareSheet> {
                 color: context.p.inkMuted,
               ),
             ),
+            // Being tried: reporting the card from here, where a feed keeps
+            // it, and the sheet closing once the report has gone
+            // (source_foot.dart).
+            if (sourceFoot == SourceFoot.stack) ...[
+              const SizedBox(height: 8),
+              ReportLine(
+                key: const ValueKey('share-report'),
+                pill: pill,
+                closing: true,
+                centred: true,
+              ),
+            ],
           ],
         ),
       ),

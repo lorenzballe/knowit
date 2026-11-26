@@ -295,6 +295,7 @@
   "dayStreakCaps": "DAGEN OP RIJ",
   "sourceLabel": "Bron · {source}",
   "sourceLabelKind": "{kind} · {source}",
+  "deeperFootLabel": "Verdiepen. Bron: {source}",
   "sourceKindPaper": "Studie",
   "sourceKindBook": "Boek",
   "sourceKindInstitution": "Instelling",

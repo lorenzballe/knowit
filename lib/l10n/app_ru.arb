@@ -295,6 +295,7 @@
   "dayStreakCaps": "ДНЕЙ ПОДРЯД",
   "sourceLabel": "Источник · {source}",
   "sourceLabelKind": "{kind} · {source}",
+  "deeperFootLabel": "Глубже. Источник: {source}",
   "sourceKindPaper": "Исследование",
   "sourceKindBook": "Книга",
   "sourceKindInstitution": "Учреждение",

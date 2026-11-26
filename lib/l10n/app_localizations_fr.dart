@@ -1341,6 +1341,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return 'Approfondir. Source : $source';
+  }
+
+  @override
   String get sourceKindPaper => 'Étude';
 
   @override

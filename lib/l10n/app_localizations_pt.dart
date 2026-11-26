@@ -1341,6 +1341,11 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return 'Aprofundar. Fonte: $source';
+  }
+
+  @override
   String get sourceKindPaper => 'Estudo';
 
   @override

@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import '../../l10n/l10n.dart';
 import '../../models/pill.dart';
 import '../../theme.dart';
+import '../source_foot.dart';
 import '../subject_icon.dart';
 import 'look.dart';
 
@@ -107,33 +108,48 @@ class DeeperHeader extends StatelessWidget {
                     ),
                   ],
                 ),
-                // The sheet's name, worn as a card wears its tag.
-                Semantics(
-                  header: true,
-                  label: l.deeperTitle,
-                  child: ExcludeSemantics(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: ink,
-                        borderRadius: BorderRadius.circular(99),
-                      ),
-                      child: Text(
-                        l.deeperTitle.toUpperCase(),
-                        style: AppText.label(
-                          size: 11,
-                          weight: FontWeight.w800,
-                          spacing: 1.5,
-                          color: look.pearl
-                              ? Colors.white
-                              : Color.lerp(look.world, Colors.white, 0.12),
+                // The sheet's name, worn as a card wears its tag; and, being
+                // tried, the flag to report the card beside it, where it is
+                // seen the moment the sheet opens (source_foot.dart).
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Semantics(
+                      header: true,
+                      label: l.deeperTitle,
+                      child: ExcludeSemantics(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: ink,
+                            borderRadius: BorderRadius.circular(99),
+                          ),
+                          child: Text(
+                            l.deeperTitle.toUpperCase(),
+                            style: AppText.label(
+                              size: 11,
+                              weight: FontWeight.w800,
+                              spacing: 1.5,
+                              color: look.pearl
+                                  ? Colors.white
+                                  : Color.lerp(look.world, Colors.white, 0.12),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                    if (sourceFoot == SourceFoot.pill) ...[
+                      const SizedBox(width: 1),
+                      ReportFlag(
+                        key: const ValueKey('deeper-report-flag'),
+                        pill: pill,
+                        ink: ink,
+                      ),
+                    ],
+                  ],
                 ),
               ],
             ),

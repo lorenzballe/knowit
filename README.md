@@ -759,8 +759,12 @@ how it got through — the critic passing it first time, the quote found on
 the page by a program, a fact that will not change — and the doubtful ones,
 with one in ten of the rest, leave the bank for `tool/cards/review/`, listed
 in an issue with **Publish** and **Drop** under each; a tick does the rest.
-Readers can say a card is wrong (*Report a problem*, under every card's
-source); the server adds up every day how each card does — right and wrong
+Readers can say a card is wrong (*Report a problem*, off the card's face
+and in the app's own sheets, so a drawn card has it too: under the source
+in Go deeper, in the share sheet or in Go deeper's head, the three ways
+being tried in `lib/widgets/source_foot.dart` with the card's foot, which
+leads with Go deeper and brings Why this card back to every card of the
+day); the server adds up every day how each card does — right and wrong
 and how surely, the options picked, likes, throws, reports — flags a card
 far easier or harder than its label, or whose marked answer the crowd
 overwhelmingly rejects, and takes a card three readers say is untrue out of

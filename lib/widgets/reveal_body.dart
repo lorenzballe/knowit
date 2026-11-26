@@ -14,6 +14,7 @@ import 'deeper_sheet.dart';
 import 'diagram_view.dart';
 import 'motion.dart';
 import 'report_sheet.dart';
+import 'source_foot.dart';
 import '../l10n/app_localizations.dart';
 
 /// Everything a card says once it is turned over: the reasoning, the trap,
@@ -244,9 +245,6 @@ abstract final class _Type {
     color: ink,
   );
 
-  static TextStyle source(Color ink, double size) =>
-      AppText.body(size: size, height: 1.35, color: ink.withValues(alpha: 0.6));
-
   /// Where a card pays off: the source's size, a voice firmer than it.
   static TextStyle useful(Color ink, double size) => AppText.body(
     size: size,
@@ -265,82 +263,655 @@ abstract final class _Type {
   );
 }
 
-/// The report as a flag at the end of the card's source line: tap it to say
-/// the card is wrong; once this phone has reported it, a quiet tick instead.
-class _ReportFlag extends StatefulWidget {
-  final Pill pill;
-  final Color ink;
-  final double size;
-  const _ReportFlag({
-    required this.pill,
-    required this.ink,
-    required this.size,
-  });
+/// How a foot that carries Why this card is set, as the back has room for
+/// it ([_Fit.foot]).
+enum _FootForm {
+  /// Go deeper and the source with the card's whole width, Why this card on
+  /// the row beside the save and share under them.
+  rows,
 
-  @override
-  State<_ReportFlag> createState() => _ReportFlagState();
+  /// Short of room: no row for Why this card alone. It follows the source
+  /// on Go deeper's line, and the whole foot keeps to the side of the save
+  /// and share, as a foot without it does.
+  line,
+
+  /// The last the foot gives before the back would scroll: its two doors
+  /// alone beside the save and share. The source is what Go deeper opens
+  /// on, one tap away.
+  doors,
 }
 
-class _ReportFlagState extends State<_ReportFlag> {
-  @override
-  void initState() {
-    super.initState();
-    Reports.instance.load();
-  }
+/// The foot a card's back ends on: Go deeper, and where the card's facts
+/// come from after it, set the way [sourceFoot] says (source_foot.dart); and,
+/// on a card of the day, the way to Why this card beside it (why_sheet.dart).
+///
+/// Go deeper's part opens it, the room above its words included, so it is a
+/// target a thumb finds without the foot taking a line more for it. Where
+/// the foot carries Why this card too, its last row is the one the save and
+/// share stand in, tall enough to reach past them: what goes above that row
+/// has the card's whole width. On a back short of room that row goes first
+/// ([_FootForm]).
+class _Foot extends StatelessWidget {
+  const _Foot({
+    super.key,
+    required this.pill,
+    required this.origin,
+    required this.size,
+    required this.above,
+    required this.corner,
+    required this.onTap,
+    this.onWhy,
+    this.tight = false,
+    this.form = _FootForm.rows,
+  });
 
-  Future<void> _open() async {
-    final bool? sent = await showReportSheet(context, widget.pill);
-    if (sent != true || !mounted) return;
-    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-      SnackBar(
-        content: Text(context.l10n.reportSentToast),
-        duration: const Duration(seconds: 2),
+  final Pill pill;
+
+  /// Where the facts come from: the source as the card says it, after its
+  /// kind where the card names one ("Study · Johnson, Science, 2019").
+  final String origin;
+
+  /// The source's size on this back ([_Fit.source]); the lead's is set
+  /// from it.
+  final double size;
+
+  /// The room above the words, which is the foot's to be pressed.
+  final double above;
+
+  /// The room the save and share take at the foot's right.
+  final double corner;
+  final VoidCallback onTap;
+
+  /// Opens Why this card; null where there is none to open, on a card that
+  /// is not one of the day's.
+  final VoidCallback? onWhy;
+
+  /// Whether the back is short of room ([_Fit.tight]): Go deeper's name is
+  /// then set at the source's own size, firmer only in weight, so the foot
+  /// takes no more lines than the source alone did.
+  final bool tight;
+
+  /// How the foot is set where it carries Why this card.
+  final _FootForm form;
+
+  /// The way this back sets the foot: the one being tried, but for the
+  /// pill, which gives way to the words as a line sets them on a back short
+  /// of room ([tight]), a pill taking the room of a line and a half.
+  static SourceFoot wayOn({required bool tight}) =>
+      tight && sourceFoot == SourceFoot.pill ? SourceFoot.line : sourceFoot;
+
+  /// Whether a foot given [onWhy] carries the way to Why this card: not
+  /// where the way being tried says why on the card's front instead
+  /// ([SourceFoot.stack]).
+  static bool carries(VoidCallback? onWhy) =>
+      onWhy != null && sourceFoot != SourceFoot.stack;
+
+  /// The row beside the save and share: as tall as reaches past them (their
+  /// marks stand 21 points into the face, the room kept round them 9 more),
+  /// its words lifted onto the line their marks sit on.
+  static const double row = 32;
+  static const double rowLift = 3;
+  static double rowFor(double words) =>
+      words + rowLift > row ? words + rowLift : row;
+
+  /// Between the lead and the source under it.
+  static const double stackGap = 2;
+
+  /// Between the pill and what is beside it, or under it.
+  static const double pillGap = 8;
+  static const double pillRunGap = 4;
+
+  /// Between the two doors, where they stand alone.
+  static const double doorsGap = 10;
+
+  /// Round the words inside a pill.
+  static const EdgeInsets pillPad = EdgeInsets.fromLTRB(10, 4, 9, 4.5);
+
+  /// Go deeper's name, a little firmer than the source: the same size on a
+  /// line, a size up on a line of its own, and inside the pill.
+  static TextStyle lead(Color ink, double size, {bool tight = false}) =>
+      AppText.body(
+        size: switch (sourceFoot) {
+          SourceFoot.line || SourceFoot.pill => tight ? size : size + 1,
+          SourceFoot.stack => tight ? size + 1.5 : size + 2.5,
+        },
+        weight: FontWeight.w700,
+        height: 1.3,
+        color: ink.withValues(alpha: 0.94),
+      );
+
+  /// Why this card's name: a door as Go deeper is, a step quieter; on a
+  /// back short of room, at Go deeper's size.
+  static TextStyle why(Color ink, double size, {bool tight = false}) =>
+      AppText.body(
+        size: tight ? size : size + 1,
+        weight: FontWeight.w600,
+        height: 1.3,
+        color: ink.withValues(alpha: 0.8),
+      );
+
+  /// The source after it, as quiet as the source always was.
+  static TextStyle from(Color ink, double size) => AppText.body(
+    size: size,
+    weight: FontWeight.w500,
+    height: 1.35,
+    color: ink.withValues(alpha: 0.6),
+  );
+
+  /// [name] with its chevron, which is kept on its line.
+  static InlineSpan door(String name, TextStyle style) => TextSpan(
+    children: [
+      TextSpan(text: name, style: style),
+      TextSpan(
+        text: '\u00a0\u203a',
+        style: style.copyWith(fontWeight: FontWeight.w800),
       ),
+    ],
+  );
+
+  static InlineSpan leadSpan(
+    AppLocalizations l,
+    Color ink,
+    double size, {
+    bool tight = false,
+  }) => door(l.deeperTitle, lead(ink, size, tight: tight));
+
+  static InlineSpan whySpan(
+    AppLocalizations l,
+    Color ink,
+    double size, {
+    bool tight = false,
+  }) => door(l.whyTitle, why(ink, size, tight: tight));
+
+  /// The lead and the source run together, on a line.
+  static InlineSpan lineSpan(
+    AppLocalizations l,
+    Color ink,
+    double size,
+    String origin, {
+    bool tight = false,
+  }) => TextSpan(
+    children: [
+      leadSpan(l, ink, size, tight: tight),
+      TextSpan(text: '  $origin', style: from(ink, size)),
+    ],
+  );
+
+  /// Go deeper, the source and Why this card in one paragraph, as a back
+  /// short of room sets them ([_FootForm.line]): each door one piece, its
+  /// chevron with it and Why this card's words never parted, so a line
+  /// breaks only between them. Given [deeperTap] and [whyTap], each door
+  /// opens what it names, read out as [deeperLabel] and Why this card.
+  static InlineSpan oneLine(
+    AppLocalizations l,
+    Color ink,
+    double size,
+    String origin, {
+    bool tight = false,
+    GestureRecognizer? deeperTap,
+    GestureRecognizer? whyTap,
+    String? deeperLabel,
+  }) {
+    const String keep = '\u00a0';
+    final TextStyle go = lead(ink, size, tight: tight);
+    final TextStyle answer = why(ink, size, tight: tight);
+    return TextSpan(
+      children: [
+        TextSpan(
+          text: '${l.deeperTitle}$keep\u203a',
+          style: go,
+          recognizer: deeperTap,
+          semanticsLabel: deeperLabel,
+        ),
+        // The source is Go deeper's too: a tap on it is taken by the foot
+        // round it, and it is read out with Go deeper's name. A year that
+        // ends it stays on the line of the word before it.
+        TextSpan(
+          text:
+              '  ${origin.replaceFirstMapped(RegExp(r',\s+(\d{4})$'), (y) => ',$keep${y[1]}')}',
+          style: from(ink, size),
+          semanticsLabel: deeperLabel == null ? null : '',
+        ),
+        TextSpan(text: '   ', style: from(ink, size)),
+        TextSpan(
+          text: '${l.whyTitle.replaceAll(' ', keep)}$keep\u203a',
+          style: answer,
+          recognizer: whyTap,
+          semanticsLabel: deeperLabel == null ? null : l.whyTitle,
+        ),
+      ],
     );
   }
+
+  /// Where things set side by side as a [Wrap] sets them come to: how tall
+  /// the runs they take in [width] are.
+  static double wrapHeight(
+    List<Size> items,
+    double width,
+    double spacing,
+    double runSpacing,
+  ) {
+    double line = 0, height = 0, total = 0;
+    var first = true;
+    for (final Size s in items) {
+      if (!first && line + spacing + s.width > width) {
+        total += height + runSpacing;
+        line = s.width;
+        height = s.height;
+      } else {
+        line += (first ? 0 : spacing) + s.width;
+        height = s.height > height ? s.height : height;
+      }
+      first = false;
+    }
+    return total + height;
+  }
+
+  /// A pill's size round [words].
+  static Size pillSize(_Measure m, InlineSpan words) {
+    final Size s = m.spanSize(words);
+    return Size(s.width + pillPad.horizontal, s.height + pillPad.vertical);
+  }
+
+  /// The size words come to in a [Wrap] [width] wide: their own on a line,
+  /// the width's where they run onto more.
+  static Size wrapped(_Measure m, String words, TextStyle style, double width) {
+    final Size one = m.size(words, style);
+    return one.width <= width
+        ? one
+        : Size(width, m.height(words, style, width));
+  }
+
+  /// Two pills, side by side where they fit and one over the other where
+  /// they do not, as a [Wrap] sets them.
+  static double pillsHeight(_Measure m, List<InlineSpan> spans, double width) =>
+      wrapHeight(
+        [for (final InlineSpan s in spans) pillSize(m, s)],
+        width,
+        pillGap,
+        pillRunGap,
+      );
+
+  /// The room the foot takes on a back [width] wide, the room [above] its
+  /// words included.
+  static double heightFor(
+    _Measure m,
+    Color ink,
+    double size,
+    String origin,
+    double width,
+    double corner,
+    double above, {
+    required bool why,
+    bool tight = false,
+    _FootForm form = _FootForm.rows,
+  }) {
+    final AppLocalizations l = m.l10n;
+    final double room = width - corner;
+    final SourceFoot way = wayOn(tight: tight);
+    if (why && form != _FootForm.rows && way != SourceFoot.stack) {
+      final InlineSpan go = leadSpan(l, ink, size, tight: tight);
+      final InlineSpan answer = whySpan(l, ink, size, tight: tight);
+      return above +
+          switch ((way, form)) {
+            (SourceFoot.pill, _FootForm.doors) => pillsHeight(m, [
+              go,
+              answer,
+            ], room),
+            (SourceFoot.pill, _) => wrapHeight(
+              [
+                pillSize(m, go),
+                pillSize(m, answer),
+                wrapped(m, origin, from(ink, size), room),
+              ],
+              room,
+              pillGap,
+              pillRunGap,
+            ),
+            (_, _FootForm.doors) => wrapHeight(
+              [m.spanSize(go), m.spanSize(answer)],
+              room,
+              doorsGap,
+              0,
+            ),
+            _ => m.spanHeight(
+              oneLine(l, ink, size, origin, tight: tight),
+              room,
+            ),
+          };
+    }
+    if (why && way == SourceFoot.line) {
+      return above +
+          m.spanHeight(lineSpan(l, ink, size, origin, tight: tight), width) +
+          rowFor(m.spanHeight(whySpan(l, ink, size), room));
+    }
+    if (why && way == SourceFoot.pill) {
+      return above +
+          pillsHeight(m, [
+            leadSpan(l, ink, size, tight: tight),
+            whySpan(l, ink, size),
+          ], width) +
+          rowFor(m.height(origin, from(ink, size), room));
+    }
+    final double words = switch (way) {
+      SourceFoot.line => m.spanHeight(
+        lineSpan(l, ink, size, origin, tight: tight),
+        room,
+      ),
+      SourceFoot.stack =>
+        m.spanHeight(leadSpan(l, ink, size, tight: tight), room) +
+            stackGap +
+            m.height(origin, from(ink, size), room),
+      SourceFoot.pill => () {
+        final Size pill = m.spanSize(leadSpan(l, ink, size, tight: tight));
+        final double pillW = pill.width + pillPad.horizontal;
+        final double pillH = pill.height + pillPad.vertical;
+        final Size one = m.size(origin, from(ink, size));
+        // Beside the pill where it fits whole, under it where it does not.
+        return pillW + pillGap + one.width <= room
+            ? (pillH > one.height ? pillH : one.height)
+            : pillH + pillRunGap + m.height(origin, from(ink, size), room);
+      }(),
+    };
+    return above + words;
+  }
+
+  /// A part of the foot that opens something, read out as [label], and
+  /// opened by a reader who cannot see it as by one who can.
+  static Widget _press(String label, VoidCallback onTap, Widget child) =>
+      Semantics(
+        button: true,
+        label: label,
+        onTap: onTap,
+        excludeSemantics: true,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          child: child,
+        ),
+      );
+
+  /// The row beside the save and share, [words] on the line their marks
+  /// sit on; the whole row, short of the corner, is pressed.
+  Widget _row(Widget words, {required VoidCallback onTap, String? label}) {
+    final Widget box = GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: row),
+        child: Align(
+          alignment: AlignmentDirectional.bottomStart,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: rowLift),
+            child: words,
+          ),
+        ),
+      ),
+    );
+    return Padding(
+      padding: EdgeInsetsDirectional.only(end: corner),
+      child: label == null
+          ? ExcludeSemantics(child: box)
+          : Semantics(
+              button: true,
+              label: label,
+              onTap: onTap,
+              excludeSemantics: true,
+              child: box,
+            ),
+    );
+  }
+
+  /// A pill: filled with the card's wash for Go deeper, outlined for Why
+  /// this card. The outline is drawn over the pill, so it takes no room and
+  /// the pill is the size [heightFor] counts.
+  Widget _pill(InlineSpan words, {required bool filled}) {
+    final Color ink = pill.ink;
+    final BorderRadius round = BorderRadius.circular(99);
+    return Container(
+      padding: pillPad,
+      decoration: filled
+          ? BoxDecoration(
+              color: ink.withValues(alpha: 0.11),
+              borderRadius: round,
+            )
+          : null,
+      foregroundDecoration: filled
+          ? null
+          : BoxDecoration(
+              border: Border.all(color: ink.withValues(alpha: 0.3)),
+              borderRadius: round,
+            ),
+      child: Text.rich(words),
+    );
+  }
+
+  /// The foot beside the save and share, the room above its words
+  /// included; a tap anywhere on it that is not a door of its own is Go
+  /// deeper's. Each door is read out on its own, so the foot round them is
+  /// not.
+  Widget _beside(Widget words) => Padding(
+    padding: EdgeInsetsDirectional.only(end: corner),
+    child: GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      excludeFromSemantics: true,
+      child: Padding(
+        padding: EdgeInsets.only(top: above),
+        child: Align(alignment: AlignmentDirectional.centerStart, child: words),
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
-    final String id = widget.pill.id;
-    return ListenableBuilder(
-      listenable: Reports.instance,
-      builder: (context, _) {
-        final bool done = Reports.instance.has(id);
-        // No taller than the line it sits in, so it never deepens it.
-        final Widget mark = SizedBox(
-          height: widget.size * 1.2,
-          child: Icon(
-            done ? Icons.check_rounded : Icons.outlined_flag_rounded,
-            size: widget.size,
-            color: widget.ink.withValues(alpha: done ? 0.45 : 0.6),
+    final AppLocalizations l = context.l10n;
+    final Color ink = pill.ink;
+    // Read out as what it does and then what it names: the word Source,
+    // gone from the card, is said to a reader who cannot see the type.
+    final String deeper = l.deeperFootLabel(origin);
+    final VoidCallback? onWhy = carries(this.onWhy) ? this.onWhy : null;
+    final Key whyKey = ValueKey('card-why-${pill.id}');
+    final SourceFoot way = wayOn(tight: tight);
+
+    if (onWhy != null && form != _FootForm.rows) {
+      final InlineSpan go = leadSpan(l, ink, size, tight: tight);
+      final InlineSpan answer = whySpan(l, ink, size, tight: tight);
+      final bool pills = way == SourceFoot.pill;
+      if (form == _FootForm.doors) {
+        return _beside(
+          Wrap(
+            spacing: pills ? pillGap : doorsGap,
+            runSpacing: pills ? pillRunGap : 0,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              _press(
+                deeper,
+                onTap,
+                pills ? _pill(go, filled: true) : Text.rich(go),
+              ),
+              _press(
+                l.whyTitle,
+                onWhy,
+                KeyedSubtree(
+                  key: whyKey,
+                  child: pills
+                      ? _pill(answer, filled: false)
+                      : Text.rich(answer),
+                ),
+              ),
+            ],
           ),
         );
-        if (done) {
-          return Semantics(
-            label: context.l10n.reportedThanks,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 6),
-              child: mark,
-            ),
-          );
-        }
-        // The visible flag is small; the target around it is not.
-        return Semantics(
-          button: true,
-          label: context.l10n.reportProblem,
-          child: GestureDetector(
-            key: ValueKey('report-$id'),
-            behavior: HitTestBehavior.opaque,
-            onTap: _open,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
-              child: mark,
-            ),
+      }
+      if (pills) {
+        return _beside(
+          Wrap(
+            spacing: pillGap,
+            runSpacing: pillRunGap,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              _press(deeper, onTap, _pill(go, filled: true)),
+              _press(
+                l.whyTitle,
+                onWhy,
+                KeyedSubtree(key: whyKey, child: _pill(answer, filled: false)),
+              ),
+              ExcludeSemantics(child: Text(origin, style: from(ink, size))),
+            ],
           ),
         );
-      },
+      }
+      return _beside(
+        _OneLine(
+          key: ValueKey('card-foot-line-${pill.id}'),
+          span: (deeperTap, whyTap) => oneLine(
+            l,
+            ink,
+            size,
+            origin,
+            tight: tight,
+            deeperTap: deeperTap,
+            whyTap: whyTap,
+            deeperLabel: deeper,
+          ),
+          onDeeper: onTap,
+          onWhy: onWhy,
+        ),
+      );
+    }
+
+    if (onWhy != null && way == SourceFoot.line) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _press(
+            deeper,
+            onTap,
+            Padding(
+              padding: EdgeInsets.only(top: above),
+              child: Text.rich(lineSpan(l, ink, size, origin, tight: tight)),
+            ),
+          ),
+          _row(
+            Text.rich(key: whyKey, whySpan(l, ink, size)),
+            onTap: onWhy,
+            label: l.whyTitle,
+          ),
+        ],
+      );
+    }
+    if (onWhy != null && way == SourceFoot.pill) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: above),
+            child: Wrap(
+              spacing: pillGap,
+              runSpacing: pillRunGap,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                _press(
+                  deeper,
+                  onTap,
+                  _pill(leadSpan(l, ink, size, tight: tight), filled: true),
+                ),
+                _press(
+                  l.whyTitle,
+                  onWhy,
+                  KeyedSubtree(
+                    key: whyKey,
+                    child: _pill(whySpan(l, ink, size), filled: false),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // The source under them is Go deeper's too, and read out with it.
+          _row(Text(origin, style: from(ink, size)), onTap: onTap),
+        ],
+      );
+    }
+    final Widget words = switch (way) {
+      SourceFoot.line => Text.rich(
+        lineSpan(l, ink, size, origin, tight: tight),
+      ),
+      SourceFoot.stack => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text.rich(leadSpan(l, ink, size, tight: tight)),
+          const SizedBox(height: stackGap),
+          Text(origin, style: from(ink, size)),
+        ],
+      ),
+      SourceFoot.pill => Wrap(
+        spacing: pillGap,
+        runSpacing: pillRunGap,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          _pill(leadSpan(l, ink, size, tight: tight), filled: true),
+          Text(origin, style: from(ink, size)),
+        ],
+      ),
+    };
+    return Padding(
+      padding: EdgeInsetsDirectional.only(end: corner),
+      child: _press(
+        deeper,
+        onTap,
+        Padding(
+          padding: EdgeInsets.only(top: above),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: words,
+          ),
+        ),
+      ),
     );
   }
+}
+
+/// The foot's one paragraph on a back short of room ([_FootForm.line]),
+/// which keeps the taps its two doors take for as long as it is shown.
+class _OneLine extends StatefulWidget {
+  const _OneLine({
+    super.key,
+    required this.span,
+    required this.onDeeper,
+    required this.onWhy,
+  });
+
+  final InlineSpan Function(
+    GestureRecognizer deeperTap,
+    GestureRecognizer whyTap,
+  )
+  span;
+  final VoidCallback onDeeper;
+  final VoidCallback onWhy;
+
+  @override
+  State<_OneLine> createState() => _OneLineState();
+}
+
+class _OneLineState extends State<_OneLine> {
+  late final TapGestureRecognizer _deeper = TapGestureRecognizer()
+    ..onTap = () => widget.onDeeper();
+  late final TapGestureRecognizer _why = TapGestureRecognizer()
+    ..onTap = () => widget.onWhy();
+
+  @override
+  void dispose() {
+    _deeper.dispose();
+    _why.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Text.rich(widget.span(_deeper, _why));
 }
 
 /// "Report a problem", under the source it would be checked against; once
@@ -762,6 +1333,19 @@ class _Measure {
     p.dispose();
     return s;
   }
+
+  /// How wide and tall [span] sets on one line.
+  Size spanSize(InlineSpan span) {
+    final p = TextPainter(
+      text: TextSpan(style: _base.style, children: [span]),
+      textDirection: _direction,
+      textScaler: scaler,
+      textHeightBehavior: _base.textHeightBehavior,
+    )..layout();
+    final s = p.size;
+    p.dispose();
+    return s;
+  }
 }
 
 /// The sizes one back of a card is set at.
@@ -778,6 +1362,7 @@ class _Fit {
     this.shortLead = false,
     this.leastLead = false,
     this.scrolls = false,
+    this.foot = _FootForm.rows,
   });
 
   /// Whether the question is printed again above the answer. It is the
@@ -820,6 +1405,10 @@ class _Fit {
   /// text size — and the back scrolls rather than shrink the reader's type.
   final bool scrolls;
 
+  /// How the foot is set where it carries Why this card: on its own row,
+  /// or, short of room, without one ([_FootForm]).
+  final _FootForm foot;
+
   bool get tight => gap < 1;
   bool get tightest => gap < 0.7;
   double get step => body - 0.5;
@@ -827,7 +1416,12 @@ class _Fit {
   double get keep => tightest ? 13 : (body * 0.9).clamp(13.5, 17);
   double get source => tight ? 10.5 : 11.5;
 
-  _Fit copyWith({double? questionSize, double? scene, bool? scrolls}) => _Fit(
+  _Fit copyWith({
+    double? questionSize,
+    double? scene,
+    bool? scrolls,
+    _FootForm? foot,
+  }) => _Fit(
     question: question,
     questionSize: questionSize ?? this.questionSize,
     body: body,
@@ -839,6 +1433,7 @@ class _Fit {
     shortLead: shortLead,
     leastLead: leastLead,
     scrolls: scrolls ?? this.scrolls,
+    foot: foot ?? this.foot,
   );
 }
 
@@ -887,6 +1482,10 @@ class CardReveal extends StatefulWidget {
   /// The scene, on a card that asked first and plays it with the answer.
   final Widget Function(double height)? scene;
 
+  /// Opens Why this card (why_sheet.dart), from the foot beside Go deeper;
+  /// null on a card that is not one of the day's, which has none.
+  final VoidCallback? onWhy;
+
   const CardReveal({
     super.key,
     required this.pill,
@@ -898,6 +1497,7 @@ class CardReveal extends StatefulWidget {
     this.leastLeadHeight,
     this.cornerRoom = 0,
     this.scene,
+    this.onWhy,
   });
 
   /// The answer's band. At most a fifteenth of the measure — about forty
@@ -924,17 +1524,10 @@ class CardReveal extends StatefulWidget {
 enum _Aside { none, scene, picture, working, simply, counter }
 
 class _CardRevealState extends State<CardReveal> {
-  /// A tap on the source: Go deeper (deeper_sheet.dart).
-  late final TapGestureRecognizer _sourceTap = TapGestureRecognizer()
-    ..onTap = () {
-      CardRead.of(context)?.opened('deeper');
-      GoDeeper.open?.call(context, widget.pill);
-    };
-
-  @override
-  void dispose() {
-    _sourceTap.dispose();
-    super.dispose();
+  /// A tap on the foot: Go deeper (deeper_sheet.dart).
+  void _deeper() {
+    CardRead.of(context)?.opened('deeper');
+    GoDeeper.open?.call(context, widget.pill);
   }
 
   /// What is open in the answer's place. A retelling or the other side's
@@ -1307,45 +1900,47 @@ class _CardRevealState extends State<CardReveal> {
         ),
       );
     }
-    gap(10);
-    // What kind of source it is, where the card says: a study, a book, an
-    // institution, the data itself. A reader weighs "Study · Nature" and
-    // "Book · Kahneman" differently, and should be able to.
-    final String? kind = sourceKindName(l10n, pill.sourceKind);
-    final source = kind == null
-        ? l10n.sourceLabel(pill.sourceShort)
+    // The foot: Go deeper, and where the facts come from after it, with no
+    // word Source before them (source_foot.dart). What kind of source it is
+    // stays, where the card says: a study, a book, an institution, the data
+    // itself. A reader weighs "Study · Nature" and "Book · Kahneman"
+    // differently, and should be able to. The flag that reported the card
+    // used to ride at the end of this line; it is off the card's face now,
+    // in Go deeper or the share sheet, which a drawn card reaches too. On a
+    // card of the day, Why this card is beside Go deeper here.
+    // At the tightest, the kind gives way, so Go deeper's name costs the
+    // back no line the source alone did not take.
+    final String? kind = f.tightest
+        ? null
+        : sourceKindName(l10n, pill.sourceKind);
+    final String origin = kind == null
+        ? pill.sourceShort
         : l10n.sourceLabelKind(kind, pill.sourceShort);
-    final sourceStyle = _Type.source(ink, f.source);
-    // The flag to report the card rides at the end of the source it would be
-    // checked against, so it costs the card no line of its own. Measured as a
-    // short unbreakable word, so it wraps where the flag would.
     out.add(
       _Block(
-        m.height('$source\u00A0WW', sourceStyle, width - widget.cornerRoom),
-        Padding(
-          padding: EdgeInsets.only(right: widget.cornerRoom),
-          child: Text.rich(
-            TextSpan(
-              children: [
-                // The source, a door to Go deeper: underlined in dots, so it
-                // reads as one without taking a line of the card.
-                TextSpan(
-                  text: source,
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    decorationStyle: TextDecorationStyle.dotted,
-                    decorationColor: ink.withValues(alpha: 0.35),
-                  ),
-                  recognizer: _sourceTap,
-                ),
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.middle,
-                  child: _ReportFlag(pill: pill, ink: ink, size: f.source),
-                ),
-              ],
-            ),
-            style: sourceStyle,
-          ),
+        _Foot.heightFor(
+          m,
+          ink,
+          f.source,
+          origin,
+          width,
+          widget.cornerRoom,
+          10 * g,
+          why: _Foot.carries(widget.onWhy),
+          tight: f.tight,
+          form: f.foot,
+        ),
+        _Foot(
+          key: ValueKey('card-foot-${pill.id}'),
+          pill: pill,
+          origin: origin,
+          size: f.source,
+          above: 10 * g,
+          corner: widget.cornerRoom,
+          onTap: _deeper,
+          onWhy: widget.onWhy,
+          tight: f.tight,
+          form: f.foot,
         ),
       ),
     );
@@ -1540,8 +2135,25 @@ class _CardRevealState extends State<CardReveal> {
       }
     }
 
+    // Why this card's row is the first thing the foot gives, and only once
+    // the back is short of room: at each setting from there, the foot is
+    // tried with it and then without it.
+    final bool why = _Foot.carries(widget.onWhy);
     for (final f in plans()) {
       if (fits(f)) return grow(f);
+      if (why && f.tight) {
+        final line = f.copyWith(foot: _FootForm.line);
+        if (fits(line)) return grow(line);
+      }
+    }
+    // The last thing it gives, before the back would scroll: the source's
+    // words, so the two doors stand alone. Go deeper opens on the source.
+    if (why) {
+      for (final f in plans()) {
+        if (!f.tightest) continue;
+        final doors = f.copyWith(foot: _FootForm.doors);
+        if (fits(doors)) return grow(doors);
+      }
     }
     return at(
       CardReveal.minBody,

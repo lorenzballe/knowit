@@ -1340,6 +1340,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return 'Profundiza. Fuente: $source';
+  }
+
+  @override
   String get sourceKindPaper => 'Estudio';
 
   @override

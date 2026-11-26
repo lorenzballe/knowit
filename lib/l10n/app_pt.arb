@@ -295,6 +295,7 @@
   "dayStreakCaps": "DIAS SEGUIDOS",
   "sourceLabel": "Fonte · {source}",
   "sourceLabelKind": "{kind} · {source}",
+  "deeperFootLabel": "Aprofundar. Fonte: {source}",
   "sourceKindPaper": "Estudo",
   "sourceKindBook": "Livro",
   "sourceKindInstitution": "Instituição",

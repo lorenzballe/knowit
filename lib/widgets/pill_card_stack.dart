@@ -24,6 +24,7 @@ import 'card_edge.dart';
 import 'flip_card.dart';
 import 'pill_card.dart';
 import 'place_line.dart';
+import 'source_foot.dart';
 import 'web/page_messages.dart';
 import 'web/web_card_face.dart';
 import 'web/web_card_page.dart';
@@ -396,6 +397,12 @@ class _PillCardStackState extends State<PillCardStack>
         ? context.l10n.forYouChip
         : null,
     sure: SureAsk.of(pill),
+    // The foot being tried, the same on a page as on a card in words, led
+    // by Go deeper's name in the reader's language, with Why this card
+    // beside it where the deck has one to open (source_foot.dart).
+    foot: sourceFoot.name,
+    deeper: context.l10n.deeperTitle,
+    why: widget.onNote == null ? null : context.l10n.whyTitle,
   );
 
   /// Whether a free card has lost its page — a later kit, no WebView, a
@@ -1040,6 +1047,13 @@ class _PillCardStackState extends State<PillCardStack>
                           ? null
                           : () => widget.onLike!(pill),
                       onShare: () => widget.onShare(pill),
+                      // Why this card, from the foot beside Go deeper.
+                      onNote: widget.onNote == null
+                          ? null
+                          : () {
+                              _read?.opened('why');
+                              widget.onNote!(pill);
+                            },
                     ),
             );
 

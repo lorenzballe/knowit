@@ -295,6 +295,7 @@
   "dayStreakCaps": "天连续",
   "sourceLabel": "来源 · {source}",
   "sourceLabelKind": "{kind} · {source}",
+  "deeperFootLabel": "深入了解。来源：{source}",
   "sourceKindPaper": "研究",
   "sourceKindBook": "书籍",
   "sourceKindInstitution": "机构",

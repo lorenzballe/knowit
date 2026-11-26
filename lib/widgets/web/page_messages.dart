@@ -293,6 +293,18 @@ class PageEnv {
   /// kit's row of percentages to stand aside and hand the card no number.
   final bool sure;
 
+  /// How the foot of the card is set, being tried (lib/widgets/
+  /// source_foot.dart): `line`, `stack` or `pill`; and Go deeper's name in
+  /// the reader's language, to lead it. A kit that has the three draws the
+  /// page's source as the way into Go deeper, as a card in words does; one
+  /// that has not, or is given no name, leaves the source as the page set
+  /// it. [why] is Why this card's name, for the way to it beside Go deeper
+  /// (the page says `why`, as its line under the head does); null where
+  /// there is none to open.
+  final String? foot;
+  final String? deeper;
+  final String? why;
+
   const PageEnv({
     this.dark = true,
     this.language = 'en',
@@ -307,6 +319,9 @@ class PageEnv {
     this.note,
     this.chip,
     this.sure = true,
+    this.foot,
+    this.deeper,
+    this.why,
   });
 
   PageEnv copyWith({bool? shown, Size? size}) => PageEnv(
@@ -323,6 +338,9 @@ class PageEnv {
     note: note,
     chip: chip,
     sure: sure,
+    foot: foot,
+    deeper: deeper,
+    why: why,
   );
 
   Map<String, Object?> toJson() => {
@@ -343,6 +361,9 @@ class PageEnv {
     'note': note,
     'chip': chip,
     'sure': sure,
+    if (foot != null) 'foot': foot,
+    if (deeper != null) 'deeper': deeper,
+    if (why != null) 'why': why,
   };
 
   /// What changed from [old] that the page should be told, or null when

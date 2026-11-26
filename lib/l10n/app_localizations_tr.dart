@@ -1321,6 +1321,11 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String deeperFootLabel(String source) {
+    return 'Derinleş. Kaynak: $source';
+  }
+
+  @override
   String get sourceKindPaper => 'Araştırma';
 
   @override

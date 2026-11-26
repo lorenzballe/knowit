@@ -24,6 +24,7 @@ import 'area_marks.dart' show goalName;
 import 'chunky.dart';
 import 'move_words.dart';
 import 'premium.dart';
+import 'source_foot.dart';
 
 /// The line [why] says on its card, or null where it would say nothing a
 /// reader could not take for granted: that a card is from one of their
@@ -47,6 +48,29 @@ String? whyLine(AppLocalizations l, CardWhy why) {
     WhyKind.place => null,
     WhyKind.random => l.whyRandom,
   };
+}
+
+/// The line one of the day's cards carries under its head, with its mark:
+/// [whyLine] where its reason says something, but not where a skill's mark
+/// on the card says it already ([marked], on a card for the reader's goal).
+///
+/// That left most cards with no line, and so with no way to this sheet,
+/// whose one door the line was. Being tried (source_foot.dart): the foot of
+/// every card's back carries Why this card beside Go deeper; or, with the
+/// foot that says it on the front ([SourceFoot.stack]), a card whose reason
+/// says nothing worth a line carries the sheet's own name there instead, as
+/// the door to it. A card about a place opens it from its own line.
+(String, IconData)? cardNote(
+  AppLocalizations l,
+  CardWhy why, {
+  bool marked = false,
+}) {
+  final String? line = why.kind == WhyKind.goal && marked
+      ? null
+      : whyLine(l, why);
+  if (line != null) return (line, whyIcon(why.kind));
+  if (sourceFoot != SourceFoot.stack || why.kind == WhyKind.place) return null;
+  return (l.whyTitle, Icons.help_outline_rounded);
 }
 
 /// The mark beside the line: what kind of reason it is.
