@@ -288,4 +288,69 @@ void main() {
       }
     }
   });
+
+  // The way back as Instagram keeps its own (lib/widgets/quick_return.dart),
+  // on a 390 by 844 phone at night: at the top, beside the title; scrolled
+  // down, gone with the page; a little way back up, back over it.
+  //
+  //   flutter test tool/journey_shots.dart --plain-name 'quick return' \
+  //     --update-goldens
+  testWidgets('your journey, quick return', (tester) async {
+    const Size phone = Size(390, 844);
+    const EdgeInsets notch = EdgeInsets.only(top: 47, bottom: 34);
+    tester.view.physicalSize = phone * 3;
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    final String out = Platform.environment['SHOTS'] ?? 'shots';
+    final reader = _reader();
+    // ignore: invalid_use_of_visible_for_testing_member
+    SharedPreferences.setMockInitialValues(reader.prefs);
+    final app = AppState();
+    await app.init();
+    final JourneyRecord before = app.record;
+    app.dayLog = {
+      for (final e in reader.log.entries)
+        e.key: [before.scoreOn(e.key), ...e.value.skip(1)],
+    };
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: Locale(Platform.environment['LANG_SHOT'] ?? 'en'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.dark),
+        debugShowCheckedModeBanner: false,
+        home: MediaQuery(
+          data: const MediaQueryData(size: phone, padding: notch),
+          child: JourneyScreen(app: app, onBack: () {}),
+        ),
+      ),
+    );
+    Future<void> settle() async {
+      for (int f = 0; f < 12; f++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+    }
+
+    // The whole phone, at its own three pixels a point.
+    Future<void> take(String name) => expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('$out/journey-$name.png'),
+    );
+    await settle();
+    await take('1-top');
+    final ScrollPosition page = tester
+        .state<ScrollableState>(
+          find.descendant(
+            of: find.byKey(const ValueKey('journey-page')),
+            matching: find.byType(Scrollable),
+          ),
+        )
+        .position;
+    page.jumpTo(1100);
+    await settle();
+    await take('2-down');
+    page.jumpTo(1060);
+    await settle();
+    await take('3-up');
+  });
 }
