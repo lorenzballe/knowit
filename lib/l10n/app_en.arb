@@ -30,14 +30,12 @@
    }
   }
  },
- "dayRead": "Day {n} · {word} read",
- "@dayRead": {
+ "dayTitle": "Day {n}",
+ "@dayTitle": {
+  "description": "The finished day's title at the top of Today, once the day's five are read: which day of the reader's run of days this is (the streak). Set as Today's own title is while the five are read, so keep it as short.",
   "placeholders": {
    "n": {
     "type": "int"
-   },
-   "word": {
-    "type": "String"
    }
   }
  },
@@ -6163,6 +6161,10 @@
  "todaySeeAgainHint": "Today's cards again, full size, from the first",
  "@todaySeeAgainHint": {
   "description": "Said to a screen reader on the See again button: what it opens."
+ },
+ "yourFiveFromToday": "Your five from today",
+ "@yourFiveFromToday": {
+  "description": "Explore, near the top once the day's five are read: a small row that opens the reader's own five cards of today again, full size. It names the reader's own cards, so it is never taken for the day's challenge that is the same for everyone (\"Today's five\")."
  },
  "tuneTitle": "Tune your mix",
  "@tuneTitle": {

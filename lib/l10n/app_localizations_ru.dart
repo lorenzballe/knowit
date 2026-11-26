@@ -64,8 +64,8 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String dayRead(int n, String word) {
-    return 'День $n · прочитано $word';
+  String dayTitle(int n) {
+    return 'День $n';
   }
 
   @override
@@ -5868,6 +5868,9 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get todaySeeAgainHint =>
       'Сегодняшние карточки снова, во весь экран, с первой';
+
+  @override
+  String get yourFiveFromToday => 'Твои пять карточек за сегодня';
 
   @override
   String get tuneTitle => 'Настрой свой микс';

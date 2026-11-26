@@ -2228,7 +2228,7 @@ void main() {
 
     // ...and the header, which wants nothing, hands it to the page.
     await tester.dragFrom(
-      tester.getCenter(find.textContaining('five read')),
+      tester.getCenter(find.text('Day 1')),
       const Offset(-300, 0),
     );
     await _settle(tester);
@@ -2497,7 +2497,7 @@ void main() {
     // set — the shelf, straight away.
     expect(find.byKey(const ValueKey('magic-card')), findsNothing);
     expect(find.byType(PillCardStack), findsNothing);
-    expect(find.text('Day 1 · five read'), findsOneWidget);
+    expect(find.text('Day 1'), findsOneWidget);
   });
 
   testWidgets('the free day marks the cards that are the reader\'s own', (
@@ -2557,21 +2557,30 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
+    final Rect today = tester.getRect(_todayTitle);
     await _finishDay(tester);
 
-    // The header says where the day got to, with the shelf's buttons on
-    // its row — no eyebrow saying "five" again under it — and the first
-    // card is at the front, face up, with its line to bring it up with.
-    expect(find.text('Day 1 · five read'), findsOneWidget);
+    // The header says which day this is, where Today's own name stood, so
+    // the day ending changes the word and not the screen; the day's share
+    // at the end of its row. Not "five read", which the shelf says, nor
+    // "See again", which opened the cards the shelf is showing (they are
+    // Explore's now), nor an eyebrow saying "five" again under it. The
+    // first card is at the front, face up, with its line to bring it up
+    // with.
+    expect(find.text('Day 1'), findsOneWidget);
     expect(_todayTitle, findsNothing);
+    expect(find.textContaining('five read'), findsNothing);
+    expect(find.byKey(const ValueKey('shelf-see-again')), findsNothing);
     expect(find.text('Hold a card you like'), findsOneWidget);
     expect(find.text("TODAY'S FIVE"), findsNothing);
-    final Rect line = tester.getRect(find.text('Day 1 · five read'));
-    final Rect again = tester.getRect(
-      find.byKey(const ValueKey('shelf-see-again')),
+    final Rect line = tester.getRect(find.text('Day 1'));
+    expect(line.left, closeTo(today.left, 0.5));
+    expect(line.center.dy, closeTo(today.center.dy, 1.5));
+    final Rect share = tester.getRect(
+      find.byKey(const ValueKey('shelf-share-day')),
     );
-    expect(again.top, lessThan(line.bottom + 20));
-    expect(again.left, greaterThan(line.right));
+    expect(share.center.dy, closeTo(line.center.dy, 1.5));
+    expect(share.left, greaterThan(line.right));
     _expectAtFront(tester, 1);
 
     // Each card by its question, as it came in the deck, with the line to
@@ -2656,7 +2665,7 @@ void main() {
           await _settle(tester);
         }
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
-        expect(find.text('Day 1 · five read'), findsNothing);
+        expect(find.text('Day 1'), findsNothing);
 
         // The fifth thrown: the offer is the card on top, with every bar lit
         // and no shelf yet. Nothing times out; nothing says skip.
@@ -2672,13 +2681,13 @@ void main() {
         expect(find.byKey(const ValueKey('week-reward')), findsNothing);
         await tester.pump(const Duration(seconds: 6));
         await _settle(tester);
-        expect(find.text('Day 1 · five read'), findsNothing);
+        expect(find.text('Day 1'), findsNothing);
 
         // Thrown like any other card: the shelf.
         await _swipeCardAway(tester);
         await _settle(tester);
         expect(find.byType(PillCardStack), findsNothing);
-        expect(find.text('Day 1 · five read'), findsOneWidget);
+        expect(find.text('Day 1'), findsOneWidget);
       },
     );
 
@@ -2699,7 +2708,7 @@ void main() {
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
         await _swipeCardAway(tester);
         await _settle(tester);
-        expect(find.text('Day 1 · five read'), findsOneWidget);
+        expect(find.text('Day 1'), findsOneWidget);
       },
     );
 
@@ -2721,7 +2730,7 @@ void main() {
       await _swipeCardAway(tester);
       await _settle(tester);
       expect(find.byType(PillCardStack), findsNothing);
-      expect(find.text('Day 1 · five read'), findsOneWidget);
+      expect(find.text('Day 1'), findsOneWidget);
     });
 
     testWidgets(
@@ -2736,7 +2745,7 @@ void main() {
         await tester.pumpWidget(const AstutoApp());
         await _settle(tester);
         expect(find.byKey(const ValueKey('magic-card')), findsNothing);
-        expect(find.text('Day 1 · five read'), findsOneWidget);
+        expect(find.text('Day 1'), findsOneWidget);
       },
     );
   });
@@ -3409,7 +3418,7 @@ void main() {
       // the word Today and the streak beside it.
       expect(find.text('5 days'), findsOneWidget);
       await finish(tester);
-      expect(find.text('Day 6 · five read'), findsOneWidget);
+      expect(find.text('Day 6'), findsOneWidget);
     });
   });
 
@@ -6060,9 +6069,9 @@ void main() {
       await _settle(tester);
       await _finishDay(tester);
 
-      // The shelf opens on the first card, with the day's line over it and
+      // The shelf opens on the first card, with the day's name over it and
       // nothing about the week in the way.
-      expect(find.textContaining('five read'), findsOneWidget);
+      expect(find.text('Day 7'), findsOneWidget);
       expect(find.byKey(const ValueKey('week-reward')), findsNothing);
 
       // The last card on the shelf is the offer, and it says it there.

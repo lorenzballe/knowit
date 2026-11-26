@@ -62,8 +62,8 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String dayRead(int n, String word) {
-    return '第 $n 天 · 已读$word张';
+  String dayTitle(int n) {
+    return '第 $n 天';
   }
 
   @override
@@ -5413,6 +5413,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get todaySeeAgainHint => '从第一张开始，全屏重看今天的卡片';
+
+  @override
+  String get yourFiveFromToday => '你今天的五张卡片';
 
   @override
   String get tuneTitle => '调整你的组合';

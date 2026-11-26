@@ -374,6 +374,28 @@ Fields: `title`, `subtitle` (none by default: the panel says what it is).
 {"id": "your-day", "block": "your-day", "gap": 4}
 ```
 
+### `your-five`
+
+"Your five from today" ("Le tue cinque di oggi"): once the day's five are
+read, a small row — the five in small, each a card in its own colour, the
+name, their subjects — and a tap opens them again at full size, the way they
+first came, always from the first card: not the one at the front of Today's
+shelf, nor the one the last re-read stopped on (the owner's rule; the
+`your-day` panel's "See again" opens them the same way). Subjects that do
+not fit the line are counted ("+2"), never cut in the middle of a name. It
+is where Today's "See again" went: the
+finished day on Today is the five already, on its shelf. The reader's own
+cards, never the day's challenge that is the same for everyone, which opens
+Explore above it. Not drawn before the five are read, nor while Explore is
+narrowed to a subject. A build older than it passes over it.
+
+Fields: `title` (in place of the name), `subtitle` (in place of the
+subjects).
+
+```json
+{"id": "your-five", "block": "your-five", "gap": 12}
+```
+
 ### `quick-games` — the challenges
 
 Explore's games, called Challenges ("Sfide"): tiles four to a page, two by

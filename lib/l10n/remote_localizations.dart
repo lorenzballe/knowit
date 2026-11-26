@@ -52,9 +52,8 @@ class RemoteLocalizations extends AppLocalizations {
       _words.format('countWord', localeName, {'n': n}) ?? _base.countWord(n);
 
   @override
-  String dayRead(int n, String word) =>
-      _words.format('dayRead', localeName, {'n': n, 'word': word}) ??
-      _base.dayRead(n, word);
+  String dayTitle(int n) =>
+      _words.format('dayTitle', localeName, {'n': n}) ?? _base.dayTitle(n);
 
   @override
   String shelfEyebrow(String word) =>
@@ -5371,6 +5370,10 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get todaySeeAgainHint =>
       _words.text('todaySeeAgainHint') ?? _base.todaySeeAgainHint;
+
+  @override
+  String get yourFiveFromToday =>
+      _words.text('yourFiveFromToday') ?? _base.yourFiveFromToday;
 
   @override
   String get tuneTitle => _words.text('tuneTitle') ?? _base.tuneTitle;

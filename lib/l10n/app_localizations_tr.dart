@@ -62,8 +62,8 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String dayRead(int n, String word) {
-    return '$n. gün · $word okundu';
+  String dayTitle(int n) {
+    return '$n. gün';
   }
 
   @override
@@ -5563,6 +5563,9 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get todaySeeAgainHint =>
       'Bugünün kartları yeniden, tam boyutta, ilkinden başlayarak';
+
+  @override
+  String get yourFiveFromToday => 'Bugünkü beş kartın';
 
   @override
   String get tuneTitle => 'Karışımını ayarla';

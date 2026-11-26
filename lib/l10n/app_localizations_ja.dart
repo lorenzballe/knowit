@@ -62,8 +62,8 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String dayRead(int n, String word) {
-    return '$n日目 · $word枚読了';
+  String dayTitle(int n) {
+    return '$n日目';
   }
 
   @override
@@ -5413,6 +5413,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get todaySeeAgainHint => '今日のカードをもう一度、全画面で最初から';
+
+  @override
+  String get yourFiveFromToday => '今日のあなたの5枚';
 
   @override
   String get tuneTitle => 'ミックスを調整';
