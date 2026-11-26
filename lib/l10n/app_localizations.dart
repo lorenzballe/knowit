@@ -5658,6 +5658,90 @@ abstract class AppLocalizations {
   /// **'Show the whole series'**
   String get unmaskWindow;
 
+  /// Explore: the name of the shelf of real-looking charts whose numbers are true and whose drawing misleads (a cut axis, a cropped window, totals, an upside-down scale). Plain, serious: it says what the charts are.
+  ///
+  /// In en, this message translates to:
+  /// **'Charts that mislead'**
+  String get unmaskMisleadTitle;
+
+  /// Explore: the line under that name, saying what is going on: the numbers on each chart are right, the way they are drawn is the trick.
+  ///
+  /// In en, this message translates to:
+  /// **'The numbers are true. The trick is in the drawing.'**
+  String get unmaskMisleadLine;
+
+  /// On each chart card, before the reader has done anything: the question the card asks of the chart under it.
+  ///
+  /// In en, this message translates to:
+  /// **'This chart misleads. Can you see how?'**
+  String get unmaskAsk;
+
+  /// The button under the chart that shows the trick: the chart redrawn fairly from the same numbers, and the trick said in a sentence. It must not give the trick away.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the trick'**
+  String get unmaskShowTrick;
+
+  /// Once the trick is shown, with the original chart and the corrected one over each other: the button that hides the corrected one and asks the question again.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide the trick'**
+  String get unmaskHideTrick;
+
+  /// Tag on the chart as it was drawn, the misleading one; also one side of the switch between the two charts. One short word, shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Original'**
+  String get unmaskOriginal;
+
+  /// Tag on the same numbers drawn fairly; the other side of that switch. One short word, shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Corrected'**
+  String get unmaskCorrected;
+
+  /// The trick, said plainly, for bars whose value axis does not start at zero. {from} is where it starts, as the chart prints it (77%, 9.5 s).
+  ///
+  /// In en, this message translates to:
+  /// **'The axis starts at {from}, not at zero.'**
+  String unmaskTrickTruncated(String from);
+
+  /// The trick for a value axis squeezed round the data, so a small change fills the chart. {low} and {high} are the axis ends as printed.
+  ///
+  /// In en, this message translates to:
+  /// **'The axis only runs from {low} to {high}, so a small change looks huge.'**
+  String unmaskTrickZoomed(String low, String high);
+
+  /// The trick for a value axis far wider than the data, so a real change looks flat. {low} and {high} are the axis ends as printed (-18 °C, 43 °C).
+  ///
+  /// In en, this message translates to:
+  /// **'The axis runs from {low} to {high}, so a real change looks flat.'**
+  String unmaskTrickWide(String low, String high);
+
+  /// The trick for a chart that keeps only a stretch of a longer series. {shown} is the stretch shown and {all} the whole series, each two labels joined by a dash (2008–2012, 1999–2012).
+  ///
+  /// In en, this message translates to:
+  /// **'It shows only {shown}, but the data cover {all}.'**
+  String unmaskTrickWindow(String shown, String all);
+
+  /// The trick for raw totals compared where only a rate is fair (medals, not medals per person; takings, not tickets).
+  ///
+  /// In en, this message translates to:
+  /// **'It compares raw totals, not a fair measure.'**
+  String get unmaskTrickTotals;
+
+  /// The trick for an upside-down value axis on numbers that went up: the line seems to fall.
+  ///
+  /// In en, this message translates to:
+  /// **'The axis is upside down, so a rise looks like a fall.'**
+  String get unmaskTrickFlippedRise;
+
+  /// The trick for an upside-down value axis on numbers that went down: the line seems to climb.
+  ///
+  /// In en, this message translates to:
+  /// **'The axis is upside down, so a fall looks like a rise.'**
+  String get unmaskTrickFlippedFall;
+
   /// No description provided for @whatIfTrue.
   ///
   /// In en, this message translates to:

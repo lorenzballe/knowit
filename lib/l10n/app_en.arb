@@ -4055,6 +4055,91 @@
  "unmaskTotals": "Make the comparison fair",
  "unmaskTruncated": "Start the axis at zero",
  "unmaskWindow": "Show the whole series",
+ "unmaskMisleadTitle": "Charts that mislead",
+ "@unmaskMisleadTitle": {
+  "description": "Explore: the name of the shelf of real-looking charts whose numbers are true and whose drawing misleads (a cut axis, a cropped window, totals, an upside-down scale). Plain, serious: it says what the charts are."
+ },
+ "unmaskMisleadLine": "The numbers are true. The trick is in the drawing.",
+ "@unmaskMisleadLine": {
+  "description": "Explore: the line under that name, saying what is going on: the numbers on each chart are right, the way they are drawn is the trick."
+ },
+ "unmaskAsk": "This chart misleads. Can you see how?",
+ "@unmaskAsk": {
+  "description": "On each chart card, before the reader has done anything: the question the card asks of the chart under it."
+ },
+ "unmaskShowTrick": "Show the trick",
+ "@unmaskShowTrick": {
+  "description": "The button under the chart that shows the trick: the chart redrawn fairly from the same numbers, and the trick said in a sentence. It must not give the trick away."
+ },
+ "unmaskHideTrick": "Hide the trick",
+ "@unmaskHideTrick": {
+  "description": "Once the trick is shown, with the original chart and the corrected one over each other: the button that hides the corrected one and asks the question again."
+ },
+ "unmaskOriginal": "Original",
+ "@unmaskOriginal": {
+  "description": "Tag on the chart as it was drawn, the misleading one; also one side of the switch between the two charts. One short word, shown in capitals."
+ },
+ "unmaskCorrected": "Corrected",
+ "@unmaskCorrected": {
+  "description": "Tag on the same numbers drawn fairly; the other side of that switch. One short word, shown in capitals."
+ },
+ "unmaskTrickTruncated": "The axis starts at {from}, not at zero.",
+ "@unmaskTrickTruncated": {
+  "description": "The trick, said plainly, for bars whose value axis does not start at zero. {from} is where it starts, as the chart prints it (77%, 9.5 s).",
+  "placeholders": {
+   "from": {
+    "type": "String"
+   }
+  }
+ },
+ "unmaskTrickZoomed": "The axis only runs from {low} to {high}, so a small change looks huge.",
+ "@unmaskTrickZoomed": {
+  "description": "The trick for a value axis squeezed round the data, so a small change fills the chart. {low} and {high} are the axis ends as printed.",
+  "placeholders": {
+   "low": {
+    "type": "String"
+   },
+   "high": {
+    "type": "String"
+   }
+  }
+ },
+ "unmaskTrickWide": "The axis runs from {low} to {high}, so a real change looks flat.",
+ "@unmaskTrickWide": {
+  "description": "The trick for a value axis far wider than the data, so a real change looks flat. {low} and {high} are the axis ends as printed (-18 °C, 43 °C).",
+  "placeholders": {
+   "low": {
+    "type": "String"
+   },
+   "high": {
+    "type": "String"
+   }
+  }
+ },
+ "unmaskTrickWindow": "It shows only {shown}, but the data cover {all}.",
+ "@unmaskTrickWindow": {
+  "description": "The trick for a chart that keeps only a stretch of a longer series. {shown} is the stretch shown and {all} the whole series, each two labels joined by a dash (2008–2012, 1999–2012).",
+  "placeholders": {
+   "shown": {
+    "type": "String"
+   },
+   "all": {
+    "type": "String"
+   }
+  }
+ },
+ "unmaskTrickTotals": "It compares raw totals, not a fair measure.",
+ "@unmaskTrickTotals": {
+  "description": "The trick for raw totals compared where only a rate is fair (medals, not medals per person; takings, not tickets)."
+ },
+ "unmaskTrickFlippedRise": "The axis is upside down, so a rise looks like a fall.",
+ "@unmaskTrickFlippedRise": {
+  "description": "The trick for an upside-down value axis on numbers that went up: the line seems to fall."
+ },
+ "unmaskTrickFlippedFall": "The axis is upside down, so a fall looks like a rise.",
+ "@unmaskTrickFlippedFall": {
+  "description": "The trick for an upside-down value axis on numbers that went down: the line seems to climb."
+ },
  "whatIfTrue": "What if it's true?",
  "whatIfTrueLine": "Cards that keep working after you close them",
  "whatYouBelieve": "What you believe",

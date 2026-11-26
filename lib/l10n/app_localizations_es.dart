@@ -3984,6 +3984,60 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unmaskWindow => 'Muestra la serie completa';
 
   @override
+  String get unmaskMisleadTitle => 'Gráficos que engañan';
+
+  @override
+  String get unmaskMisleadLine =>
+      'Los números son ciertos. El truco está en el dibujo.';
+
+  @override
+  String get unmaskAsk => 'Este gráfico engaña. ¿Ves cómo?';
+
+  @override
+  String get unmaskShowTrick => 'Mostrar el truco';
+
+  @override
+  String get unmaskHideTrick => 'Ocultar el truco';
+
+  @override
+  String get unmaskOriginal => 'Original';
+
+  @override
+  String get unmaskCorrected => 'Corregido';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'El eje empieza en $from, no en cero.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'El eje solo va de $low a $high, así que un cambio pequeño parece enorme.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'El eje va de $low a $high, así que un cambio real parece plano.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Solo muestra $shown, pero los datos abarcan $all.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Compara totales brutos, no una medida justa.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'El eje está al revés, así que una subida parece una bajada.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'El eje está al revés, así que una bajada parece una subida.';
+
+  @override
   String get whatIfTrue => '¿Y si fuera verdad?';
 
   @override

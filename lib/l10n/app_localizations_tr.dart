@@ -3908,6 +3908,59 @@ class AppLocalizationsTr extends AppLocalizations {
   String get unmaskWindow => 'Serinin tamamını göster';
 
   @override
+  String get unmaskMisleadTitle => 'Yanıltan grafikler';
+
+  @override
+  String get unmaskMisleadLine => 'Sayılar doğru. Hile çizimde.';
+
+  @override
+  String get unmaskAsk => 'Bu grafik yanıltıyor. Nasıl, görebiliyor musun?';
+
+  @override
+  String get unmaskShowTrick => 'Hileyi göster';
+
+  @override
+  String get unmaskHideTrick => 'Hileyi gizle';
+
+  @override
+  String get unmaskOriginal => 'Orijinal';
+
+  @override
+  String get unmaskCorrected => 'Düzeltilmiş';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'Eksen sıfırdan değil, $from değerinden başlıyor.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'Eksen yalnızca $low ile $high arasında; küçük bir değişim dev gibi görünüyor.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'Eksen $low ile $high arasında; gerçek bir değişim düz görünüyor.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Yalnızca $shown gösteriliyor, oysa veriler $all dönemini kapsıyor.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Adil bir ölçü yerine ham toplamları karşılaştırıyor.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'Eksen ters çevrilmiş, bu yüzden artış düşüş gibi görünüyor.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'Eksen ters çevrilmiş, bu yüzden düşüş artış gibi görünüyor.';
+
+  @override
   String get whatIfTrue => 'Ya doğruysa?';
 
   @override

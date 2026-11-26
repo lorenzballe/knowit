@@ -3817,6 +3817,56 @@ class AppLocalizationsKo extends AppLocalizations {
   String get unmaskWindow => '전체 기간 보기';
 
   @override
+  String get unmaskMisleadTitle => '오해를 부르는 그래프';
+
+  @override
+  String get unmaskMisleadLine => '숫자는 사실이에요. 속임수는 그리는 방식에 있어요.';
+
+  @override
+  String get unmaskAsk => '이 그래프는 오해를 불러요. 어떻게인지 보이나요?';
+
+  @override
+  String get unmaskShowTrick => '속임수 보기';
+
+  @override
+  String get unmaskHideTrick => '속임수 숨기기';
+
+  @override
+  String get unmaskOriginal => '원본';
+
+  @override
+  String get unmaskCorrected => '수정본';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return '축이 0이 아니라 $from에서 시작해요.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return '축이 $low에서 $high까지만이라 작은 변화가 크게 보여요.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return '축이 $low에서 $high까지라 실제 변화가 밋밋해 보여요.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return '데이터는 $all인데 $shown만 보여 줘요.';
+  }
+
+  @override
+  String get unmaskTrickTotals => '공정한 기준이 아니라 단순 합계를 비교해요.';
+
+  @override
+  String get unmaskTrickFlippedRise => '축이 위아래로 뒤집혀 있어 증가가 감소처럼 보여요.';
+
+  @override
+  String get unmaskTrickFlippedFall => '축이 위아래로 뒤집혀 있어 감소가 증가처럼 보여요.';
+
+  @override
   String get whatIfTrue => '만약 사실이라면?';
 
   @override

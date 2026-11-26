@@ -3974,6 +3974,60 @@ class AppLocalizationsDe extends AppLocalizations {
   String get unmaskWindow => 'Ganze Reihe zeigen';
 
   @override
+  String get unmaskMisleadTitle => 'Grafiken, die täuschen';
+
+  @override
+  String get unmaskMisleadLine =>
+      'Die Zahlen stimmen. Der Trick steckt in der Zeichnung.';
+
+  @override
+  String get unmaskAsk => 'Diese Grafik täuscht. Siehst du, wie?';
+
+  @override
+  String get unmaskShowTrick => 'Trick zeigen';
+
+  @override
+  String get unmaskHideTrick => 'Trick verbergen';
+
+  @override
+  String get unmaskOriginal => 'Original';
+
+  @override
+  String get unmaskCorrected => 'Korrigiert';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'Die Achse beginnt bei $from, nicht bei null.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'Die Achse reicht nur von $low bis $high, so wirkt eine kleine Änderung riesig.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'Die Achse reicht von $low bis $high, so wirkt eine echte Änderung flach.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Gezeigt wird nur $shown, die Daten reichen aber über $all.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Verglichen werden rohe Summen statt eines fairen Maßes.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'Die Achse steht auf dem Kopf, so sieht ein Anstieg wie ein Rückgang aus.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'Die Achse steht auf dem Kopf, so sieht ein Rückgang wie ein Anstieg aus.';
+
+  @override
   String get whatIfTrue => 'Und wenn es stimmt?';
 
   @override

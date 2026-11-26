@@ -660,7 +660,7 @@ that are the names their shelves have always been measured under.
 | `came-back` | The cards that came back, to answer again | `title`, `subtitle` |
 | `move-sampling`, `move-compared` | The two questions to ask of a number | `title`, `subtitle` |
 | `work` | Work it out: every way to play a number, with the points left | `title`, `subtitle` |
-| `unmask` | Unmask the chart | `title`, `subtitle` |
+| `unmask` | Charts that mislead: "This chart misleads. Can you see how?", then the trick said and the same numbers drawn fairly | `title`, `subtitle`, `look`: `before-after` (the default: the original and the corrected chart one over the other, each named), `in-place` (the chart turns fair where it stands, with a switch back to the original) or `current` (the first version, "Unmask the chart") |
 | `how-sure` | How sure am I, and why (its own frame) | — |
 | `what-if` | What if it's true | `title`, `subtitle` |
 | `series` | A few cards that only make the point together | `title`, `subtitle` |

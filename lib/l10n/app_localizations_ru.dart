@@ -4129,6 +4129,60 @@ class AppLocalizationsRu extends AppLocalizations {
   String get unmaskWindow => 'Показать весь ряд';
 
   @override
+  String get unmaskMisleadTitle => 'Графики, которые вводят в заблуждение';
+
+  @override
+  String get unmaskMisleadLine =>
+      'Цифры верные. Подвох — в том, как они нарисованы.';
+
+  @override
+  String get unmaskAsk => 'Этот график вводит в заблуждение. Видите, как?';
+
+  @override
+  String get unmaskShowTrick => 'Показать подвох';
+
+  @override
+  String get unmaskHideTrick => 'Скрыть подвох';
+
+  @override
+  String get unmaskOriginal => 'Оригинал';
+
+  @override
+  String get unmaskCorrected => 'Исправлено';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'Ось начинается с $from, а не с нуля.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'Ось идёт лишь от $low до $high, и небольшое изменение кажется огромным.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'Ось идёт от $low до $high, и реальное изменение кажется плоским.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Показан только отрезок $shown, хотя данные охватывают $all.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Сравниваются голые итоги, а не честная мера.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'Ось перевёрнута, и рост выглядит как падение.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'Ось перевёрнута, и падение выглядит как рост.';
+
+  @override
   String get whatIfTrue => 'А если это правда?';
 
   @override

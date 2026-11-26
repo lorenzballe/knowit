@@ -3945,6 +3945,59 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unmaskWindow => 'Show the whole series';
 
   @override
+  String get unmaskMisleadTitle => 'Charts that mislead';
+
+  @override
+  String get unmaskMisleadLine =>
+      'The numbers are true. The trick is in the drawing.';
+
+  @override
+  String get unmaskAsk => 'This chart misleads. Can you see how?';
+
+  @override
+  String get unmaskShowTrick => 'Show the trick';
+
+  @override
+  String get unmaskHideTrick => 'Hide the trick';
+
+  @override
+  String get unmaskOriginal => 'Original';
+
+  @override
+  String get unmaskCorrected => 'Corrected';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'The axis starts at $from, not at zero.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'The axis only runs from $low to $high, so a small change looks huge.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'The axis runs from $low to $high, so a real change looks flat.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'It shows only $shown, but the data cover $all.';
+  }
+
+  @override
+  String get unmaskTrickTotals => 'It compares raw totals, not a fair measure.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'The axis is upside down, so a rise looks like a fall.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'The axis is upside down, so a fall looks like a rise.';
+
+  @override
   String get whatIfTrue => 'What if it\'s true?';
 
   @override

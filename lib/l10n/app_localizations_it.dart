@@ -3979,6 +3979,60 @@ class AppLocalizationsIt extends AppLocalizations {
   String get unmaskWindow => 'Mostra tutta la serie';
 
   @override
+  String get unmaskMisleadTitle => 'Grafici che ingannano';
+
+  @override
+  String get unmaskMisleadLine =>
+      'I numeri sono veri. Il trucco è nel disegno.';
+
+  @override
+  String get unmaskAsk => 'Questo grafico inganna. Riesci a vedere come?';
+
+  @override
+  String get unmaskShowTrick => 'Mostra il trucco';
+
+  @override
+  String get unmaskHideTrick => 'Nascondi il trucco';
+
+  @override
+  String get unmaskOriginal => 'Originale';
+
+  @override
+  String get unmaskCorrected => 'Corretto';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'L\'asse parte da $from, non da zero.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'L\'asse va solo da $low a $high: un piccolo cambiamento sembra enorme.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'L\'asse va da $low a $high: un cambiamento vero sembra piatto.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Mostra solo $shown, ma i dati coprono $all.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Confronta totali grezzi, non una misura equa.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'L\'asse è capovolto: una salita sembra una discesa.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'L\'asse è capovolto: una discesa sembra una salita.';
+
+  @override
   String get whatIfTrue => 'E se fosse vero?';
 
   @override

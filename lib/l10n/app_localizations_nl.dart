@@ -3978,6 +3978,60 @@ class AppLocalizationsNl extends AppLocalizations {
   String get unmaskWindow => 'Toon de hele reeks';
 
   @override
+  String get unmaskMisleadTitle => 'Grafieken die misleiden';
+
+  @override
+  String get unmaskMisleadLine =>
+      'De cijfers kloppen. De truc zit in de tekening.';
+
+  @override
+  String get unmaskAsk => 'Deze grafiek misleidt. Zie je hoe?';
+
+  @override
+  String get unmaskShowTrick => 'Toon de truc';
+
+  @override
+  String get unmaskHideTrick => 'Verberg de truc';
+
+  @override
+  String get unmaskOriginal => 'Origineel';
+
+  @override
+  String get unmaskCorrected => 'Gecorrigeerd';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'De as begint bij $from, niet bij nul.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'De as loopt maar van $low tot $high, dus een kleine verandering lijkt enorm.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'De as loopt van $low tot $high, dus een echte verandering lijkt vlak.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Je ziet alleen $shown, maar de cijfers beslaan $all.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Hij vergelijkt kale totalen, geen eerlijke maat.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'De as staat op zijn kop, dus een stijging lijkt een daling.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'De as staat op zijn kop, dus een daling lijkt een stijging.';
+
+  @override
   String get whatIfTrue => 'Wat als het waar is?';
 
   @override

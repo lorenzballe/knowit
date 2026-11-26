@@ -3799,6 +3799,56 @@ class AppLocalizationsJa extends AppLocalizations {
   String get unmaskWindow => '全期間を表示';
 
   @override
+  String get unmaskMisleadTitle => '誤解を招くグラフ';
+
+  @override
+  String get unmaskMisleadLine => '数字は正しい。仕掛けは描き方にある。';
+
+  @override
+  String get unmaskAsk => 'このグラフは誤解を招く。どこか分かる？';
+
+  @override
+  String get unmaskShowTrick => '仕掛けを見る';
+
+  @override
+  String get unmaskHideTrick => '仕掛けを隠す';
+
+  @override
+  String get unmaskOriginal => '元のグラフ';
+
+  @override
+  String get unmaskCorrected => '修正後';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return '軸がゼロではなく$fromから始まっている。';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return '軸が$lowから$highまでしかないので、小さな変化が大きく見える。';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return '軸が$lowから$highまであるので、実際の変化が平らに見える。';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'データは$allあるのに、$shownしか見せていない。';
+  }
+
+  @override
+  String get unmaskTrickTotals => '公平な尺度ではなく、単純な合計を比べている。';
+
+  @override
+  String get unmaskTrickFlippedRise => '軸が上下逆さまなので、増加が減少に見える。';
+
+  @override
+  String get unmaskTrickFlippedFall => '軸が上下逆さまなので、減少が増加に見える。';
+
+  @override
   String get whatIfTrue => 'もし本当なら？';
 
   @override

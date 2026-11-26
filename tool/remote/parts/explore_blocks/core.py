@@ -164,6 +164,22 @@ def true_false(section: dict) -> list[str]:
     return problems
 
 
+# How the charts that mislead show their trick (UnmaskLook in
+# lib/widgets/explore/unmask_chart.dart); a section that names none gets
+# the first.
+UNMASK_LOOKS = ("before-after", "in-place", "current")
+
+
+def unmask(section: dict) -> list[str]:
+    problems = shelf("look")(section)
+    if "look" in section and section["look"] not in UNMASK_LOOKS:
+        problems.append(
+            "`look` is how the charts show their trick: "
+            + ", ".join(f'"{look}"' for look in UNMASK_LOOKS)
+        )
+    return problems
+
+
 def carousel(section: dict) -> list[str]:
     return (
         _fields(section, WORDS | {"source", "size", "limit"})
@@ -380,7 +396,7 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     "move-sampling": shelf(),
     "move-compared": shelf(),
     "work": shelf(),
-    "unmask": shelf(),
+    "unmask": unmask,
     "how-sure": shelf(words=False),
     "what-if": shelf(),
     "series": shelf(),
