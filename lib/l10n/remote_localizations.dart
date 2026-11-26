@@ -6184,6 +6184,41 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('deeperTryAgain') ?? _base.deeperTryAgain;
 
   @override
+  String get deeperUnavailable =>
+      _words.text('deeperUnavailable') ?? _base.deeperUnavailable;
+
+  @override
+  String newsOutlets(int n) =>
+      _words.format('newsOutlets', localeName, {'n': n}) ??
+      _base.newsOutlets(n);
+
+  @override
+  String newsHoursAgo(int n) =>
+      _words.format('newsHoursAgo', localeName, {'n': n}) ??
+      _base.newsHoursAgo(n);
+
+  @override
+  String newsDaysAgo(int n) =>
+      _words.format('newsDaysAgo', localeName, {'n': n}) ??
+      _base.newsDaysAgo(n);
+
+  @override
+  String get newsWorld => _words.text('newsWorld') ?? _base.newsWorld;
+
+  @override
+  String get newsKeyPoints =>
+      _words.text('newsKeyPoints') ?? _base.newsKeyPoints;
+
+  @override
+  String get newsBehind => _words.text('newsBehind') ?? _base.newsBehind;
+
+  @override
+  String get newsSources => _words.text('newsSources') ?? _base.newsSources;
+
+  @override
+  String get newsMadeFrom => _words.text('newsMadeFrom') ?? _base.newsMadeFrom;
+
+  @override
   String get deeperDeclined =>
       _words.text('deeperDeclined') ?? _base.deeperDeclined;
 

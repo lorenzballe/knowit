@@ -6269,6 +6269,56 @@ class AppLocalizationsKo extends AppLocalizations {
   String get deeperTryAgain => '전달되지 않았어요. 잠시 후 다시 시도하세요.';
 
   @override
+  String get deeperUnavailable => '지금은 이용할 수 없어요. 나중에 다시 시도하세요.';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n개 매체',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n시간 전',
+      zero: '방금',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일 전',
+      one: '어제',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => '국제';
+
+  @override
+  String get newsKeyPoints => '핵심';
+
+  @override
+  String get newsBehind => '뉴스의 이면';
+
+  @override
+  String get newsSources => '출처';
+
+  @override
+  String get newsMadeFrom => 'Astute가 이 기사들을 바탕으로 쓰고, 기사와 대조해 확인했어요.';
+
+  @override
   String get deeperDeclined => '이건 답할 수 없어요.';
 
   @override

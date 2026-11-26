@@ -1,0 +1,828 @@
+{
+ "_": "A test fixture, never shipped: the paper newsToday would hand the phone on the morning of 26 November 2026, written as functions/src/news.ts writes it, from the real reports of the 36 hours before. tool/news_shots.dart photographs Explore's latest news with it; functions/src/news.test.ts holds it to the pipeline's rules.",
+ "date": "2026-11-26",
+ "cards": [
+  {
+   "id": "news-2026-11-26-us-proposes-new-tariffs-on-china",
+   "topic": "economics",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "The US wants new tariffs on 14 partners. Why would a tax on imports land on American shoppers?",
+   "answer": "Because importers pay it. A US firm that buys goods from China pays the duty at the border, then often passes much of it on in prices. Yale's Budget Lab puts the cost of the tariffs already in force at about $900 a year per US household.",
+   "move": "A tax is paid by whoever cannot avoid it, not whoever it names.",
+   "ask": "When a price I pay goes up, who along the chain really chose to raise it?",
+   "keywords": [
+    "tariffs",
+    "section 301",
+    "trade",
+    "inflation"
+   ],
+   "era": "recent",
+   "region": "americas",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "months",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "news",
+    "headline": "US proposes new tariffs on China, the EU and 12 other partners",
+    "outlet": "BBC News",
+    "reported": [
+     "BBC News",
+     "The Guardian",
+     "The New York Times",
+     "France 24",
+     "DW",
+     "Le Monde",
+     "Al Jazeera"
+    ],
+    "date": "2026-11-26",
+    "panels": [
+     {
+      "label": "What happened",
+      "text": "The top new rate, on goods from China. Vietnam faces up to 35%, and most of the others 20% or 25%.",
+      "figure": "40%"
+     },
+     {
+      "label": "Why",
+      "text": "Washington says its partners subsidise industry and hold down wages to win trade. A tariff is a tax its own importers pay."
+     },
+     {
+      "label": "What it means for you",
+      "text": "Importers often pass the cost on. Tariffs already in force cost each US household about $900 a year, Yale estimates."
+     }
+    ],
+    "expires": "2026-11-29",
+    "summary": "Duties of up to 40% could start next year. Washington cites unfair trade; the EU rejects the premise.",
+    "points": [
+     "China faces the highest rate, up to 40%, then Vietnam at up to 35%; most others 20% or 25%.",
+     "The 14 include the EU, Japan, India, South Korea, Taiwan, Switzerland and Vietnam.",
+     "The legal basis is now Section 301, after the Supreme Court struck down the 'Liberation Day' tariffs.",
+     "Hearings are set for 25 January; the duties would apply next year at the earliest."
+    ],
+    "sides": [
+     {
+      "who": "Washington",
+      "view": "Partners have long used subsidies and held down wages to tilt trade their way; the duties aim to level the field for US workers."
+     },
+     {
+      "who": "The EU and economists",
+      "view": "Brussels rejects the premise; economists warn tariffs push up prices for shoppers and slow trade."
+     }
+    ],
+    "sources": [
+     {
+      "outlet": "BBC News",
+      "title": "US announces new tariffs on host of countries including China",
+      "link": "https://www.bbc.co.uk/news/articles/c893r9ke5p97o"
+     },
+     {
+      "outlet": "The Guardian",
+      "title": "Trump proposing new tariffs on 14 partners including China and EU",
+      "link": "https://www.theguardian.com/us-news/2026/nov/25/trump-new-china-tariffs-europe"
+     },
+     {
+      "outlet": "The New York Times",
+      "title": "Trump Administration Unveils New Tariffs for China, EU and More, Citing Unfair Practices",
+      "link": "https://www.nytimes.com/2026/11/25/business/trump-tariffs-trade.html"
+     },
+     {
+      "outlet": "France 24",
+      "title": "US unveils proposed tariffs on major partners, including EU and China",
+      "link": "https://www.france24.com/en/us-unveils-proposed-tariffs-on-major-partners-including-eu-and-china"
+     },
+     {
+      "outlet": "France 24",
+      "title": "EU says 'strongly' rejects premise of new US tariffs",
+      "link": "https://www.france24.com/en/eu-says-strongly-rejects-premise-of-new-us-tariffs"
+     },
+     {
+      "outlet": "DW",
+      "title": "US plans new tariffs on EU, China and 12 others",
+      "link": "https://www.dw.com/en/us-plans-new-tariffs-on-eu-china-and-12-others/a-80050872"
+     },
+     {
+      "outlet": "Le Monde",
+      "title": "Trump imposes new tariffs on EU and China despite electoral setback",
+      "link": "https://www.lemonde.fr/en/economy/article/2026/11/25/trump-imposes-new-tariffs-on-eu-and-china-despite-electoral-setback_6788278_19.html"
+     },
+     {
+      "outlet": "Al Jazeera",
+      "title": "World reacts to Trump's new tariffs as US stocks tumble",
+      "link": "https://www.aljazeera.com/economy/2026/11/25/world-reacts-to-trumps-new-tariffs-as-us-stocks-tumble"
+     },
+     {
+      "outlet": "BBC News",
+      "title": "What we know about Trump's Thanksgiving tariffs",
+      "link": "https://www.bbc.co.uk/news/videos/c3x29v11ed1xo"
+     }
+    ],
+    "rank": 1,
+    "world": true,
+    "at": "2026-11-25T22:13:00.000Z"
+   },
+   "source": "BBC News, \"US announces new tariffs on host of countries including China\"; The Guardian, \"Trump proposing new tariffs on 14 partners including China and EU\"",
+   "source_kind": "news_archive",
+   "reference": "https://www.bbc.co.uk/news/articles/c893r9ke5p97o",
+   "written": "2026-11-26"
+  },
+  {
+   "id": "news-2026-11-26-ai-fears-drag-wall-street-lower",
+   "topic": "technology",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Nvidia's shares jumped when its boss returned, then fell again. Why does one chipmaker move the whole market?",
+   "answer": "Because Nvidia is both supplier and financier to much of the AI industry. When investors doubt that AI spending will pay off, a fall in its shares spreads to the firms around it. On Wednesday all three main US indices closed lower.",
+   "move": "When one firm both sells to and funds its customers, its risks become theirs.",
+   "ask": "How much of what I own depends, without my noticing, on one company doing well?",
+   "keywords": [
+    "nvidia",
+    "ai bubble",
+    "stock market",
+    "wall street"
+   ],
+   "era": "recent",
+   "region": "americas",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "months",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "news",
+    "headline": "AI fears drag Wall Street lower as Nvidia's rebound fades",
+    "outlet": "BBC News",
+    "reported": [
+     "BBC News",
+     "The New York Times",
+     "France 24",
+     "The Guardian"
+    ],
+    "date": "2026-11-26",
+    "panels": [
+     {
+      "label": "What happened",
+      "text": "Nvidia's fall at the close, after an 8% drop in early trading. All three main US indices ended the day lower.",
+      "figure": "-3.4%"
+     },
+     {
+      "label": "Why",
+      "text": "Investors doubt the huge sums spent on AI will pay off, and Democrats who won the midterms want tougher rules for it."
+     },
+     {
+      "label": "What it means",
+      "text": "Nvidia sells to many AI firms and funds them too, so a rocky fortnight for one company moves the whole market."
+     }
+    ],
+    "expires": "2026-11-29",
+    "summary": "All three main US indices fell again, as investors question whether the money spent on AI will pay off.",
+    "points": [
+     "Nvidia closed 3.4% lower, after falling 8% early, as the lift from Jensen Huang's return faded.",
+     "The tech-heavy Nasdaq lost 0.6%; Amazon fell by just over 3%.",
+     "Anthropic, which listed last week at $83 a share, kept trading below that price.",
+     "Goldman Sachs still expects investment in AI to pass $1 trillion this year."
+    ],
+    "sides": [
+     {
+      "who": "Sceptics",
+      "view": "Firms are racing to outspend each other on AI without showing it is worth it, says investor Todd Schoenberger."
+     },
+     {
+      "who": "Goldman Sachs",
+      "view": "AI will remain the dominant driver of growth in business investment next year."
+     }
+    ],
+    "sources": [
+     {
+      "outlet": "BBC News",
+      "title": "US stocks fall further as fears over AI intensify",
+      "link": "https://www.bbc.co.uk/news/articles/cq0md8g14zryo"
+     },
+     {
+      "outlet": "The New York Times",
+      "title": "Stocks Slump Again as Investors Fret About A.I., Tariffs and Inflation",
+      "link": "https://www.nytimes.com/2026/11/25/business/stocks-sp500-nvidia-ai.html"
+     },
+     {
+      "outlet": "The New York Times",
+      "title": "Why the Nvidia Rally Fizzled",
+      "link": "https://www.nytimes.com/2026/11/25/business/dealbook/nvidia-huang-ai-rally.html"
+     },
+     {
+      "outlet": "France 24",
+      "title": "Huang's return fails to dispel doubts as Nvidia shares drop",
+      "link": "https://www.france24.com/en/video/20261125-huang-s-return-fails-to-dispel-doubts-as-nvidia-shares-drop"
+     },
+     {
+      "outlet": "The Guardian",
+      "title": "Tech sell-off resumes as euphoria from Jensen Huang's Nvidia return subsides",
+      "link": "https://www.theguardian.com/business/2026/nov/24/nvidia-stock-falls-jensen-huang"
+     }
+    ],
+    "rank": 2,
+    "world": true,
+    "at": "2026-11-25T21:43:00.000Z"
+   },
+   "source": "BBC News, \"US stocks fall further as fears over AI intensify\"; The New York Times, \"Why the Nvidia Rally Fizzled\"",
+   "source_kind": "news_archive",
+   "reference": "https://www.bbc.co.uk/news/articles/cq0md8g14zryo",
+   "written": "2026-11-26"
+  },
+  {
+   "id": "news-2026-11-26-israeli-judges-cast-doubt-on-the",
+   "topic": "world",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Judges have doubted the bribery case against Netanyahu. Why does a trial matter so much to who governs Israel?",
+   "answer": "Because his opponents say fear of prison shapes how he governs: it makes him rely on far-right partners to stay in office. He calls the cases a political witch-hunt. Judges doubting the gravest charge comes as his rival tries to form a government.",
+   "move": "Ask who gains from a verdict before weighing what each side says about it.",
+   "ask": "When someone calls a case against them a witch-hunt, what would change my mind either way?",
+   "keywords": [
+    "netanyahu",
+    "corruption trial",
+    "israel",
+    "case 4000"
+   ],
+   "era": "recent",
+   "region": "middle_east",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "months",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "news",
+    "headline": "Israeli judges cast doubt on the bribery case against Netanyahu",
+    "outlet": "BBC News",
+    "reported": [
+     "BBC News",
+     "The New York Times",
+     "France 24",
+     "Al Jazeera"
+    ],
+    "date": "2026-11-26",
+    "panels": [
+     {
+      "label": "What happened",
+      "text": "Judges in Jerusalem said a bribery conviction in the most serious of his cases was unlikely, and urged a rethink.",
+      "figure": "3 cases"
+     },
+     {
+      "label": "Why",
+      "text": "The judges took the unusual step of summoning the attorney general. A weaker case matters as he fights to stay in power."
+     },
+     {
+      "label": "What it means",
+      "text": "His allies want the trial ended; his opponents say his fear of prison has shaped how he governs."
+     }
+    ],
+    "expires": "2026-11-29",
+    "summary": "The court urged prosecutors to rethink two of his three cases. He says the trial must end now.",
+    "points": [
+     "In Case 4000, the most serious, judges said the chances of a conviction for bribery were low.",
+     "They questioned whether Case 2000 is a crime at all, and suggested a plea deal in Case 1000.",
+     "The attorney general, unusually summoned to court, said she would consider their advice.",
+     "It comes as his rival Gadi Eisenkot tries to form a government after an inconclusive election."
+    ],
+    "sides": [
+     {
+      "who": "Netanyahu and his allies",
+      "view": "The cases were fabricated and are falling apart; after ten years of suffering the trial must end immediately."
+     },
+     {
+      "who": "His opponents",
+      "view": "His fear of prison has distorted his decisions and made him depend on far-right partners to stay in power."
+     }
+    ],
+    "sources": [
+     {
+      "outlet": "BBC News",
+      "title": "Israeli judges recommend dropping most serious charges against Netanyahu",
+      "link": "https://www.bbc.co.uk/news/articles/cxj05mv723r2o"
+     },
+     {
+      "outlet": "The New York Times",
+      "title": "Judges in Israel Suggest Dropping Key Corruption Case Against Netanyahu",
+      "link": "https://www.nytimes.com/2026/11/25/world/middleeast/judges-israel-corruption-case-netanyahu.html"
+     },
+     {
+      "outlet": "France 24",
+      "title": "In boost for Netanyahu, judges question corruption trial charges",
+      "link": "https://www.france24.com/en/in-boost-for-netanyahu-judges-question-corruption-trial-charges"
+     },
+     {
+      "outlet": "Al Jazeera",
+      "title": "Netanyahu says corruption trial 'must end' as court suggests dropping case",
+      "link": "https://www.aljazeera.com/news/2026/11/25/netanyahu-says-corruption-trial-must-end-as-court-suggests-dropping-case"
+     }
+    ],
+    "rank": 3,
+    "world": true,
+    "at": "2026-11-25T20:45:00.000Z"
+   },
+   "source": "BBC News, \"Israeli judges recommend dropping most serious charges against Netanyahu\"; Al Jazeera, \"Netanyahu says corruption trial 'must end'\"",
+   "source_kind": "news_archive",
+   "reference": "https://www.bbc.co.uk/news/articles/cxj05mv723r2o",
+   "written": "2026-11-26"
+  },
+  {
+   "id": "news-2026-11-26-asteroid-hit-by-nasa-in-2022",
+   "topic": "space",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A NASA craft hit an asteroid in 2022. Why does Europe need to measure it four years later?",
+   "answer": "Because a push only means something next to the mass it moves. Dart cut Dimorphos's orbit by 33 minutes, but without its mass nobody knows how hard the hit really was. Hera's measurements would tell us what size and speed a spacecraft needs to turn a real threat aside.",
+   "move": "To repeat a result, measure what it acted on, not only what it did.",
+   "ask": "When something I tried worked, do I know why well enough to do it again?",
+   "keywords": [
+    "dart",
+    "hera",
+    "dimorphos",
+    "planetary defence"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "months",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "news",
+    "headline": "Asteroid hit by NASA in 2022 shows a crater almost as big as itself",
+    "outlet": "BBC News",
+    "reported": [
+     "BBC News",
+     "The New York Times",
+     "The Guardian"
+    ],
+    "date": "2026-11-26",
+    "panels": [
+     {
+      "label": "What happened",
+      "text": "How much shorter Dimorphos's orbit of Didymos became after NASA's Dart spacecraft crashed into it in 2022.",
+      "figure": "33 min"
+     },
+     {
+      "label": "Why",
+      "text": "To stop a future asteroid, we must know how much push a given hit gives, and that depends on the mass of the target."
+     },
+     {
+      "label": "What it means for you",
+      "text": "If a rock were ever heading for Earth, this would tell us how big and how early a strike would need to be."
+     }
+    ],
+    "expires": "2026-11-29",
+    "summary": "Europe's Hera probe sent the first close-ups of Dimorphos since the test. It now tumbles as it orbits.",
+    "points": [
+     "NASA's Dart craft hit the 150-metre Dimorphos at 22,000 km/h in 2022, to test turning an asteroid aside.",
+     "The impact cut the time it takes to circle the larger Didymos by about 33 minutes.",
+     "Hera aims to measure Dimorphos's mass, to work out how hard the push really was.",
+     "Boulders the size of cars and buses sit on Didymos, where gravity is 40,000 times weaker than on Earth."
+    ],
+    "sides": [],
+    "sources": [
+     {
+      "outlet": "BBC News",
+      "title": "Images of asteroid targeted to test Earth's defences reveal stadium-sized crater",
+      "link": "https://www.bbc.co.uk/news/articles/cw8dv112r5gmo"
+     },
+     {
+      "outlet": "The New York Times",
+      "title": "Europe's Hera Mission Releases Close-Up Images of the Asteroid Hit by a NASA Spacecraft",
+      "link": "https://www.nytimes.com/2026/11/25/science/hera-nasa-photos-dart-asteroid.html"
+     },
+     {
+      "outlet": "The Guardian",
+      "title": "Nasa knocked an asteroid off course. New closeup photos shed light on aftermath",
+      "link": "https://www.theguardian.com/science/2026/nov/25/dimorphos-asteroid-spacecraft-crash-closeup-images"
+     },
+     {
+      "outlet": "BBC News",
+      "title": "Moment Nasa spacecraft hit asteroid - and what happened next",
+      "link": "https://www.bbc.co.uk/news/videos/cwe9kxpgz2kpo"
+     }
+    ],
+    "rank": 4,
+    "world": true,
+    "at": "2026-11-25T23:20:00.000Z"
+   },
+   "source": "BBC News, \"Images of asteroid targeted to test Earth's defences reveal stadium-sized crater\"",
+   "source_kind": "news_archive",
+   "reference": "https://www.bbc.co.uk/news/articles/cw8dv112r5gmo",
+   "written": "2026-11-26"
+  },
+  {
+   "id": "news-2026-11-26-fuel-tanker-crash-on-a-cairo",
+   "topic": "world",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A fuel tanker fire has killed 31 people near Cairo. Why do road disasters keep happening in Egypt?",
+   "answer": "Because the causes are everyday ones. Reports point to lax maintenance, traffic laws widely flouted and slow emergency response, even in the capital. Nearly 6,000 people died on Egypt's roads last year, several hundred more than the year before.",
+   "move": "A disaster that keeps recurring is usually many small failures, not bad luck.",
+   "ask": "What risk do I accept every day only because it has not gone wrong yet?",
+   "keywords": [
+    "cairo",
+    "road safety",
+    "egypt",
+    "fuel tanker"
+   ],
+   "era": "recent",
+   "region": "middle_east",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "months",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "news",
+    "headline": "Fuel tanker crash on a Cairo highway kills 31",
+    "outlet": "BBC News",
+    "reported": [
+     "BBC News",
+     "The Guardian",
+     "The New York Times",
+     "DW",
+     "Al Jazeera",
+     "Euronews"
+    ],
+    "date": "2026-11-26",
+    "panels": [
+     {
+      "label": "What happened",
+      "text": "People killed when a fuel tanker overturned and caught fire on Cairo's Ring Road on Wednesday evening.",
+      "figure": "31"
+     },
+     {
+      "label": "Why",
+      "text": "Officials have not said how it began. Egypt's roads are known for lax maintenance and widely flouted traffic laws."
+     },
+     {
+      "label": "What it means",
+      "text": "Road deaths rose by several hundred last year, to nearly 6,000, and slow emergency response adds to the toll."
+     }
+    ],
+    "expires": "2026-11-29",
+    "summary": "The tanker overturned on the Ring Road in Giza and caught fire, burning at least 27 vehicles.",
+    "points": [
+     "31 people died and 21 were hurt, Egypt's health ministry says; 39 ambulances were sent.",
+     "State media say a high-voltage cable fell in front of the tanker and the driver lost control.",
+     "Prosecutors have opened an investigation; DNA tests are being used to identify the dead.",
+     "Nearly 6,000 people died on Egypt's roads last year, official figures show."
+    ],
+    "sides": [],
+    "sources": [
+     {
+      "outlet": "BBC News",
+      "title": "Thirty-one killed in massive fire as fuel tanker crashes on Cairo highway",
+      "link": "https://www.bbc.co.uk/news/articles/cqy7rn30v314o"
+     },
+     {
+      "outlet": "The Guardian",
+      "title": "At least 30 killed as fuel tanker crash ignites large fire on Cairo highway",
+      "link": "https://www.theguardian.com/world/2026/nov/25/people-killed-fuel-tanker-crash-ignites-large-fire-cairo-highway"
+     },
+     {
+      "outlet": "The New York Times",
+      "title": "Road Fire Near Cairo Kills Dozens After Petroleum-Laden Truck Crashes",
+      "link": "https://www.nytimes.com/2026/11/25/world/middleeast/road-fire-near-cairo-kills-dozens-after-petroleum-laden-truck-crashes.html"
+     },
+     {
+      "outlet": "DW",
+      "title": "Egypt: At least 31 dead after fuel truck overturns on highway",
+      "link": "https://www.dw.com/en/egypt-at-least-31-dead-after-fuel-truck-overturns-on-highway/a-80055175"
+     },
+     {
+      "outlet": "Al Jazeera",
+      "title": "Deadly truck fire is latest of Egypt's transport disasters",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/25/deadly-truck-fire-is-latest-of-egypts-transport-disasters"
+     },
+     {
+      "outlet": "Euronews",
+      "title": "At least 30 killed in highway fire in Cairo district",
+      "link": "https://www.euronews.com/2026/11/25/at-least-30-killed-in-highway-fire-in-cairo-district"
+     }
+    ],
+    "rank": 5,
+    "world": true,
+    "at": "2026-11-25T22:48:00.000Z"
+   },
+   "source": "BBC News, \"Thirty-one killed in massive fire as fuel tanker crashes on Cairo highway\"; DW, \"Egypt: At least 31 dead after fuel truck overturns on highway\"",
+   "source_kind": "news_archive",
+   "reference": "https://www.bbc.co.uk/news/articles/cqy7rn30v314o",
+   "written": "2026-11-26"
+  },
+  {
+   "id": "news-2026-11-26-us-clears-spacex-to-put-a",
+   "topic": "technology",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "The US has cleared SpaceX to launch a million orbiting computers. Why build a data centre in space?",
+   "answer": "Because AI runs on data centres, and data centres need massive amounts of power. The FCC has licensed SpaceX's Starmind for up to 1,000,000 orbiting modules. A licence is not a fleet, though: SpaceX sought 42,000 Starlinks and about 11,000 fly.",
+   "move": "A permission to build tells you the ceiling, not the plan.",
+   "ask": "When a company announces a huge number, do I know whether it is a target or a limit?",
+   "keywords": [
+    "spacex",
+    "data centres",
+    "starmind",
+    "satellites"
+   ],
+   "era": "recent",
+   "region": "americas",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "months",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "news",
+    "headline": "US clears SpaceX to put a million AI computers into orbit",
+    "outlet": "Al Jazeera",
+    "reported": [
+     "Al Jazeera",
+     "Le Monde",
+     "Sky News"
+    ],
+    "date": "2026-11-26",
+    "panels": [
+     {
+      "label": "What happened",
+      "text": "Satellites SpaceX may now launch as orbiting data centres, called Starmind, under a first-of-its-kind US licence.",
+      "figure": "1 million"
+     },
+     {
+      "label": "Why",
+      "text": "AI runs on data centres, and data centres need massive amounts of power to run."
+     },
+     {
+      "label": "What it means",
+      "text": "Approval is not a plan: SpaceX asked for 42,000 Starlinks and has launched about 11,000 so far."
+     }
+    ],
+    "expires": "2026-11-29",
+    "summary": "The FCC approved Starmind, data centres in space. About 17,000 satellites orbit Earth today.",
+    "points": [
+     "The FCC called it a first: up to 1,000,000 orbiting computers to process data for use on Earth.",
+     "Data centres, the backbone of AI, need massive amounts of power.",
+     "Firms often ask for more than they launch: SpaceX sought 42,000 Starlinks and has about 11,000 up.",
+     "Amazon's rival Leo says SpaceX is unlikely to launch them all, which could take centuries."
+    ],
+    "sides": [
+     {
+      "who": "The FCC and SpaceX",
+      "view": "A bold new frontier for the computing America needs to lead in AI, and a great asset to the world."
+     },
+     {
+      "who": "Amazon and other critics",
+      "view": "SpaceX is unlikely ever to deploy them all, and doing so could take centuries."
+     }
+    ],
+    "sources": [
+     {
+      "outlet": "Al Jazeera",
+      "title": "US grants SpaceX approval for 1 million space data centres",
+      "link": "https://www.aljazeera.com/news/2026/11/25/us-grants-spacex-approval-for-1-million-space-data-centres"
+     },
+     {
+      "outlet": "Le Monde",
+      "title": "US clears SpaceX to launch up to one million orbital data center satellites",
+      "link": "https://www.lemonde.fr/en/science/article/2026/11/25/us-clears-spacex-to-launch-up-to-one-million-orbital-data-center-satellites_6788575_10.html"
+     },
+     {
+      "outlet": "Sky News",
+      "title": "US authorises SpaceX to deploy one million satellites to space",
+      "link": "https://news.sky.com/story/us-authorises-elon-musks-spacex-to-deploy-one-million-satellites-to-space-13616493"
+     }
+    ],
+    "rank": 6,
+    "world": false,
+    "at": "2026-11-25T20:43:00.000Z"
+   },
+   "source": "Al Jazeera, \"US grants SpaceX approval for 1 million space data centres\"; Le Monde, \"US clears SpaceX to launch up to one million orbital data center satellites\"",
+   "source_kind": "news_archive",
+   "reference": "https://www.aljazeera.com/news/2026/11/25/us-grants-spacex-approval-for-1-million-space-data-centres",
+   "written": "2026-11-26"
+  },
+  {
+   "id": "news-2026-11-26-china-flies-its-first-foreign-astronaut",
+   "topic": "space",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "China has flown a Pakistani astronaut to its space station. Why would a space power share a seat?",
+   "answer": "Because a seat in orbit builds ties. China and Pakistan have worked together in space since the early 1990s, and with the ISS due to close from 2030, flying another country's astronaut shows others that China is open to such partnerships.",
+   "move": "A favour only you can give is also a way to make allies.",
+   "ask": "Which favours do I do mostly for what they say about me?",
+   "keywords": [
+    "tiangong",
+    "shenzhou 24",
+    "pakistan",
+    "space station"
+   ],
+   "era": "recent",
+   "region": "asia",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "months",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "news",
+    "headline": "China flies its first foreign astronaut, from Pakistan, to its station",
+    "outlet": "The Guardian",
+    "reported": [
+     "The Guardian",
+     "BBC News",
+     "Euronews"
+    ],
+    "date": "2026-11-26",
+    "panels": [
+     {
+      "label": "What happened",
+      "text": "The year the International Space Station is due to close. China's Tiangong, completed in 2022, is opening up.",
+      "figure": "2030"
+     },
+     {
+      "label": "Why",
+      "text": "Flying other nations' astronauts builds ties; China and Pakistan have worked together in space since the 1990s."
+     }
+    ],
+    "then": {
+     "label": "It happened before",
+     "year": 1978,
+     "headline": "The Soviets fly a Czechoslovak into space",
+     "line": "Interkosmos seats went to allies: a place in orbit was also a way to bind friends to a space power."
+    },
+    "expires": "2026-11-29",
+    "summary": "Muhammad Zeeshan Ali reached Tiangong on Shenzhou 24, as the US-led space station nears its end.",
+    "points": [
+     "Ali, a 40-year-old Pakistan air force pilot, is the first Pakistani to reach orbit.",
+     "He trained for seven months in Beijing, including intensive classes in Chinese.",
+     "The International Space Station is set to stop operating from 2030, according to NASA.",
+     "China says it will work with all countries for the peaceful use of space."
+    ],
+    "sides": [],
+    "sources": [
+     {
+      "outlet": "The Guardian",
+      "title": "China sends first foreign astronaut to ISS rival as it globalises space operations",
+      "link": "https://www.theguardian.com/science/2026/nov/25/china-sends-first-pakistani-astronaut-into-space"
+     },
+     {
+      "outlet": "BBC News",
+      "title": "China's Shenzhou-24 carries Pakistan's first astronaut into space",
+      "link": "https://www.bbc.co.uk/news/articles/c6x2e0j3kx28o"
+     },
+     {
+      "outlet": "Euronews",
+      "title": "China sends first foreign astronaut to its space station as Pakistani joins Shenzhou 24 crew",
+      "link": "https://www.euronews.com/2026/11/25/china-sends-first-foreign-astronaut-to-its-space-station-as-pakistani-joins-shenzhou-24-cr"
+     },
+     {
+      "outlet": "BBC News",
+      "title": "Why has China sent the first Pakistani astronaut to space?",
+      "link": "https://www.bbc.co.uk/news/videos/cj5y1p067kxno"
+     }
+    ],
+    "rank": 7,
+    "world": false,
+    "at": "2026-11-25T14:18:00.000Z"
+   },
+   "source": "The Guardian, \"China sends first foreign astronaut to ISS rival as it globalises space operations\"",
+   "source_kind": "news_archive",
+   "reference": "https://www.theguardian.com/science/2026/nov/25/china-sends-first-pakistani-astronaut-into-space",
+   "written": "2026-11-26"
+  },
+  {
+   "id": "news-2026-11-26-andy-taylor-duran-duran-s-guitarist",
+   "topic": "music",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Duran Duran's guitarist has died at 65. Why did a British synth-pop band conquer America in the 1980s?",
+   "answer": "Because of timing as much as songs. Their airbrushed videos found a natural home on the newly launched MTV, which gave them a huge boost in the US. Andy Taylor's guitar gave the hooks an edge; the press called them leaders of a Second British Invasion.",
+   "move": "A new channel rewards whoever makes what it needs first.",
+   "ask": "Which new place is hungry for what I make, before everyone else notices?",
+   "keywords": [
+    "duran duran",
+    "andy taylor",
+    "new romantic",
+    "mtv"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "months",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "news",
+    "headline": "Andy Taylor, Duran Duran's guitarist, dies at 65",
+    "outlet": "BBC News",
+    "reported": [
+     "BBC News",
+     "The Guardian",
+     "France 24",
+     "DW",
+     "ANSA"
+    ],
+    "date": "2026-11-26",
+    "panels": [
+     {
+      "label": "What happened",
+      "text": "His age. Duran Duran's guitarist died at home on Monday after a long battle with cancer, the band said.",
+      "figure": "65"
+     },
+     {
+      "label": "Why",
+      "text": "His glassy, powerful riffs gave their synth-pop an edge, from Girls On Film to Hungry Like The Wolf."
+     },
+     {
+      "label": "What it means",
+      "text": "Their videos found a natural home on the newly launched MTV, which gave them a huge boost in the US."
+     }
+    ],
+    "expires": "2026-11-29",
+    "summary": "He co-wrote Rio, Girls On Film and Save A Prayer. He died of prostate cancer at home on Monday.",
+    "points": [
+     "His bandmates said he died peacefully at home after a long battle with prostate cancer.",
+     "A fisherman's son from Tynemouth, he taught himself guitar and played professionally at 13.",
+     "He quit at the height of their fame in 1985, then rejoined several times in the 2000s.",
+     "He also played on Robert Palmer's Addicted To Love, and worked with Rod Stewart."
+    ],
+    "sides": [],
+    "sources": [
+     {
+      "outlet": "BBC News",
+      "title": "Duran Duran guitarist Andy Taylor dies aged 65",
+      "link": "https://www.bbc.co.uk/news/articles/cmp3vk6vr44po"
+     },
+     {
+      "outlet": "BBC News",
+      "title": "Andy Taylor: Duran Duran's livewire guitarist who was a true Wild Boy",
+      "link": "https://www.bbc.co.uk/news/articles/c0666rn4l5vo"
+     },
+     {
+      "outlet": "The Guardian",
+      "title": "Andy Taylor, guitarist in Duran Duran, dies aged 65",
+      "link": "https://www.theguardian.com/music/2026/nov/25/andy-taylor-duran-duran-guitarist-dead"
+     },
+     {
+      "outlet": "France 24",
+      "title": "Duran Duran guitarist Andy Taylor dies aged 65",
+      "link": "https://www.france24.com/en/culture/20261125-duran-duran-guitarist-andy-taylor-dies-aged-65"
+     },
+     {
+      "outlet": "DW",
+      "title": "Duran Duran guitarist Andy Taylor dies at 65",
+      "link": "https://www.dw.com/en/duran-duran-guitarist-andy-taylor-dies-at-65/a-80055654"
+     },
+     {
+      "outlet": "ANSA",
+      "title": "Morto Andy Taylor, ex chitarrista dei Duran Duran",
+      "link": "https://www.ansa.it/sito/notizie/topnews/2026/11/25/morto-andy-taylor-ex-chitarrista-dei-duran-duran_08714bc5-1af8-49ef-b7fe-d063c2a5985a.html"
+     }
+    ],
+    "rank": 8,
+    "world": false,
+    "at": "2026-11-25T23:37:00.000Z"
+   },
+   "source": "BBC News, \"Duran Duran guitarist Andy Taylor dies aged 65\"; The Guardian, \"Andy Taylor, guitarist in Duran Duran, dies aged 65\"",
+   "source_kind": "news_archive",
+   "reference": "https://www.bbc.co.uk/news/articles/cmp3vk6vr44po",
+   "written": "2026-11-26"
+  }
+ ]
+}

@@ -1442,12 +1442,14 @@ class _WhyNot extends StatelessWidget {
       AskWhyNot.tomorrow => l.deeperTomorrow,
       AskWhyNot.declined => l.deeperDeclined,
       AskWhyNot.plus => l.deeperPlusOnly,
+      AskWhyNot.unavailable => l.deeperUnavailable,
       AskWhyNot.later => l.deeperTryAgain,
     };
     final IconData icon = switch (why) {
       AskWhyNot.tomorrow => Icons.bedtime_rounded,
       AskWhyNot.declined => Icons.do_not_disturb_on_rounded,
       AskWhyNot.plus => Icons.lock_rounded,
+      AskWhyNot.unavailable => Icons.schedule_rounded,
       AskWhyNot.later => Icons.cloud_off_rounded,
     };
     final String? detail = debugToolsOn ? none.detail : null;

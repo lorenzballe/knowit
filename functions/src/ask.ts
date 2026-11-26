@@ -7,18 +7,25 @@
 // sends can pose as the card. What the reader wrote goes in as their words,
 // to be looked at or answered, never as instructions.
 //
-// What it costs is bounded three ways. The model is the cheapest that answers
-// well (Claude Haiku, at low effort). An answer that does not depend on the
-// reader (the card said simply, its two sides, an example) is asked once per
-// card and language and kept: every reader after the first is answered from
-// the keeping, at no cost. And a reader may ask the model PER_DAY times a day,
-// the whole app ALL_PER_DAY times, after which the answer is "tomorrow".
+// What it costs is bounded four ways. The model is the cheapest that answers
+// well (Claude Haiku, at the lowest effort, without thinking, and a short
+// answer at most). An answer that does not depend on the reader (the card
+// said simply, its two sides, an example) is asked once per card and language
+// and kept: every reader after the first is answered from the keeping, at no
+// cost. A reader may ask the model PER_DAY times a day, the whole app
+// ALL_PER_DAY times, after which the answer is "tomorrow". And every call to
+// the model, here and elsewhere, is held to the one budget the AI shares, so
+// much a month and a day (limits.ts, kept by budget.ts), after which the
+// answer is "not available right now". Kept answers are free and still given.
 
 import { createHash } from 'node:crypto';
 
 import Anthropic from '@anthropic-ai/sdk';
 
 import type { Card } from './bank.js';
+import { costOf, worstCost, type Usage } from './budget.js';
+
+export { costOf };
 
 /** The model that answers: the cheapest, for short answers about one card. */
 export const MODEL = 'claude-haiku-5-5';
@@ -38,19 +45,11 @@ export const PER_DAY = 20;
 export const ALL_PER_DAY = 10000;
 
 /**
- * The most the answers may cost in a calendar month, in US dollars (about
- * three euros): past it, nobody is answered by the model until the month
- * turns. Kept answers are free and still given.
+ * The most an answer may write, in tokens: an answer is at most 120 words,
+ * which is under 400 tokens even in the languages that take the most, and
+ * the model does not think before it.
  */
-export const MONTH_BUDGET_USD = 3.2;
-
-/** The model's price, dollars per million tokens. */
-const PRICE = { input: 0.1, output: 0.5 };
-
-/** What one answer cost, from the tokens the API says it used. */
-export function costOf(usage: { input_tokens?: number | null; output_tokens?: number | null }): number {
-  return ((usage.input_tokens ?? 0) * PRICE.input + (usage.output_tokens ?? 0) * PRICE.output) / 1e6;
-}
+export const ASK_MAX_TOKENS = 800;
 
 /** A question, as the phone asks it, read and checked. */
 export interface Ask {
@@ -197,35 +196,50 @@ export function quizText(q: Quiz): string {
   ].join('\n');
 }
 
-/** Why a question was not answered, as the phone is told. */
-export type NoAnswer = 'declined' | 'empty';
+/**
+ * Why a question was not answered, as the phone is told: the model would
+ * not, it gave nothing usable, or the AI's budget is spent ("unavailable",
+ * said by index.ts before the model is asked).
+ */
+export type NoAnswer = 'declined' | 'empty' | 'unavailable';
+
+/** The most asking about [card] can cost: what the model reads, and the longest answer. */
+export function askWorst(card: Card, ask: Ask): number {
+  const { system, user } = buildRequest(card, ask);
+  return worstCost(system.length + user.length, ASK_MAX_TOKENS);
+}
 
 /** Asks the model, and returns its answer, or why there is none. */
 export async function answer(
   client: Anthropic,
   card: Card,
   ask: Ask,
-): Promise<({ text: string } | { none: NoAnswer }) & { cost: number }> {
+): Promise<({ text: string } | { none: NoAnswer }) & { cost: number; usage: Usage }> {
   const { system, user } = buildRequest(card, ask);
   const response = await client.messages.create({
     model: MODEL,
-    max_tokens: 1500,
-    // Short answers to plain questions: the least thinking that does them well.
+    max_tokens: ASK_MAX_TOKENS,
+    // Short answers to plain questions: the lowest effort, and no thinking
+    // before them (accepted at effort high or below).
+    thinking: { type: 'disabled' },
     output_config: { effort: 'low' },
     system,
     messages: [{ role: 'user', content: user }],
   });
-  const cost = costOf(response.usage);
-  if (response.stop_reason === 'refusal') return { none: 'declined', cost };
+  const usage = response.usage;
+  const cost = costOf(usage);
+  if (response.stop_reason === 'refusal') return { none: 'declined', cost, usage };
+  // An answer cut off at the cap is not given, nor kept for every reader after.
+  if (response.stop_reason === 'max_tokens') return { none: 'empty', cost, usage };
   const text = response.content
     .map((block) => (block.type === 'text' ? block.text : ''))
     .join('')
     .trim();
-  if (!text) return { none: 'empty', cost };
+  if (!text) return { none: 'empty', cost, usage };
   if (ask.mode === 'quiz') {
     // Kept and shown only as a question the phone can play.
     const quiz = readQuiz(text);
-    return quiz ? { text: quizText(quiz), cost } : { none: 'empty', cost };
+    return quiz ? { text: quizText(quiz), cost, usage } : { none: 'empty', cost, usage };
   }
-  return { text, cost };
+  return { text, cost, usage };
 }

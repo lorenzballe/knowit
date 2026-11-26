@@ -9096,6 +9096,60 @@ abstract class AppLocalizations {
   /// **'It didn\'t come through. Try again in a moment.'**
   String get deeperTryAgain;
 
+  /// Go deeper and the coach's note: what is said when the AI's spending for the day or the month is spent (functions/src/limits.ts), so nothing can be asked until it turns. Polite and calm; no blame, no retry button.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available right now. Please try again later.'**
+  String get deeperUnavailable;
+
+  /// Explore's latest news: how many outlets report a story, over its headline and on its page (set in small capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 outlet} other{{n} outlets}}'**
+  String newsOutlets(int n);
+
+  /// Explore's latest news: how long ago a story's newest report came out, in hours, beside it (set in small capitals). 0 is under an hour.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Just now} =1{1h ago} other{{n}h ago}}'**
+  String newsHoursAgo(int n);
+
+  /// Explore's latest news: how long ago a story's newest report came out, in days, from one day on (set in small capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Yesterday} other{{n} days ago}}'**
+  String newsDaysAgo(int n);
+
+  /// Explore's latest news: where a story no subject fits is filed (politics, diplomacy, a conflict, a disaster), over its headline in small capitals, as a subject's name is.
+  ///
+  /// In en, this message translates to:
+  /// **'World'**
+  String get newsWorld;
+
+  /// A story of Explore's latest news, on its page: the heading over the three or four points to know (set in small capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'Key points'**
+  String get newsKeyPoints;
+
+  /// A story of Explore's latest news, on its page: the heading over the question the story raises and its answer, the reasoning behind the news (set in small capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'Behind the news'**
+  String get newsBehind;
+
+  /// A story of Explore's latest news, on its page: the heading over the list of reports it was made from, each opened in the browser (set in small capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get newsSources;
+
+  /// A story of Explore's latest news, at the foot of its page: how it was made. Plain and quiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Written by Astute from these reports, and checked against them.'**
+  String get newsMadeFrom;
+
   /// Go deeper, the sheet a tap on a card's source opens: deeperDeclined
   ///
   /// In en, this message translates to:

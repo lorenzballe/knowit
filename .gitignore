@@ -74,3 +74,5 @@ tool/shots/explore-tour/
 tool/shots/shareday/
 # A video card opened on phones over its film (tool/video_shots.dart): looked at, not kept
 tool/shots/video/
+# Explore's latest news with a morning's paper (tool/news_shots.dart): looked at, not kept
+tool/shots/news/

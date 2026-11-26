@@ -6553,6 +6553,59 @@ class AppLocalizationsNl extends AppLocalizations {
   String get deeperTryAgain => 'Het kwam niet door. Probeer het zo opnieuw.';
 
   @override
+  String get deeperUnavailable =>
+      'Nu even niet beschikbaar. Probeer het later opnieuw.';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n media',
+      one: '1 medium',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n u geleden',
+      zero: 'Zojuist',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dagen geleden',
+      one: 'Gisteren',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => 'Wereld';
+
+  @override
+  String get newsKeyPoints => 'De kern';
+
+  @override
+  String get newsBehind => 'Achter het nieuws';
+
+  @override
+  String get newsSources => 'Bronnen';
+
+  @override
+  String get newsMadeFrom =>
+      'Door Astute geschreven uit deze berichten, en eraan getoetst.';
+
+  @override
   String get deeperDeclined => 'Hierop kan ze geen antwoord geven.';
 
   @override

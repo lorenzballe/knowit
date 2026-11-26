@@ -5,7 +5,14 @@
 
 import type Anthropic from '@anthropic-ai/sdk';
 
-import { LANGUAGES, MODEL, costOf } from './ask.js';
+import { LANGUAGES, MODEL } from './ask.js';
+import { costOf, worstCost, type Usage } from './budget.js';
+
+/**
+ * The most a note may write, in tokens: at most 80 words, which is under 300
+ * tokens even in the languages that take the most; no thinking before it.
+ */
+export const COACH_MAX_TOKENS = 600;
 
 /** The week as the phone counts it: numbers and a few names, nothing else. */
 export interface CoachStats {
@@ -117,24 +124,35 @@ export function coachRequest(ask: CoachAsk): { system: string; user: string } {
   };
 }
 
+/** The most writing [ask]'s note can cost: what the model reads, and the longest note. */
+export function coachWorst(ask: CoachAsk): number {
+  const { system, user } = coachRequest(ask);
+  return worstCost(system.length + user.length, COACH_MAX_TOKENS);
+}
+
 /** Asks the model for the note, and returns it, or why there is none. */
 export async function coachNote(
   client: Anthropic,
   ask: CoachAsk,
-): Promise<({ text: string } | { none: 'declined' | 'empty' }) & { cost: number }> {
+): Promise<({ text: string } | { none: 'declined' | 'empty' }) & { cost: number; usage: Usage }> {
   const { system, user } = coachRequest(ask);
   const response = await client.messages.create({
     model: MODEL,
-    max_tokens: 1200,
+    max_tokens: COACH_MAX_TOKENS,
+    // A few sentences from a few numbers: the lowest effort, no thinking.
+    thinking: { type: 'disabled' },
     output_config: { effort: 'low' },
     system,
     messages: [{ role: 'user', content: user }],
   });
-  const cost = costOf(response.usage);
-  if (response.stop_reason === 'refusal') return { none: 'declined', cost };
+  const usage = response.usage;
+  const cost = costOf(usage);
+  if (response.stop_reason === 'refusal') return { none: 'declined', cost, usage };
+  // A note cut off at the cap is not kept as the week's.
+  if (response.stop_reason === 'max_tokens') return { none: 'empty', cost, usage };
   const text = response.content
     .map((block) => (block.type === 'text' ? block.text : ''))
     .join('')
     .trim();
-  return text ? { text, cost } : { none: 'empty', cost };
+  return text ? { text, cost, usage } : { none: 'empty', cost, usage };
 }

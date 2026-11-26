@@ -6558,6 +6558,59 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das kam nicht an. Versuch es gleich noch einmal.';
 
   @override
+  String get deeperUnavailable =>
+      'Gerade nicht verfügbar. Versuch es später noch einmal.';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n Medien',
+      one: '1 Medium',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Vor $n Std.',
+      zero: 'Gerade eben',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Vor $n Tagen',
+      one: 'Gestern',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => 'Welt';
+
+  @override
+  String get newsKeyPoints => 'Das Wichtigste';
+
+  @override
+  String get newsBehind => 'Hinter der Nachricht';
+
+  @override
+  String get newsSources => 'Quellen';
+
+  @override
+  String get newsMadeFrom =>
+      'Von Astute aus diesen Berichten geschrieben und an ihnen geprüft.';
+
+  @override
   String get deeperDeclined => 'Darauf kann sie nicht antworten.';
 
   @override

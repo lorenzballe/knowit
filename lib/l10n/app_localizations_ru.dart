@@ -6793,6 +6793,62 @@ class AppLocalizationsRu extends AppLocalizations {
   String get deeperTryAgain => 'Не дошло. Попробуй через минуту.';
 
   @override
+  String get deeperUnavailable => 'Сейчас недоступно. Попробуй позже.';
+
+  @override
+  String newsOutlets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n издания',
+      many: '$n изданий',
+      few: '$n издания',
+      one: '$n издание',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ч назад',
+      zero: 'Только что',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n дня назад',
+      many: '$n дней назад',
+      few: '$n дня назад',
+      one: 'Вчера',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsWorld => 'Мир';
+
+  @override
+  String get newsKeyPoints => 'Главное';
+
+  @override
+  String get newsBehind => 'За новостью';
+
+  @override
+  String get newsSources => 'Источники';
+
+  @override
+  String get newsMadeFrom =>
+      'Написано Astute по этим материалам и сверено с ними.';
+
+  @override
   String get deeperDeclined => 'На это ИИ ответить не может.';
 
   @override
