@@ -210,6 +210,30 @@ policy are on screen either way. Only a debug build, which has no store to
 ask, shows the plans as sold (`Subscription.previewWithoutStore`). A free
 trial ends on "Free trial started.", not on a purchase.
 
+**The first run's trial, a prototype behind a switch.** Most trials in this
+category start on the day of the install, and Astute never offers one in
+the first run. Behind the server's switch `trial.firstRun`
+(`AppState.kFirstRunTrialFlag`, off as built; docs/REMOTE.md) the first run
+ends otherwise. After the genres the reader plays one real card, the
+opening's best for them (`AppState.firstRunCard`, lib/data/first_days.dart),
+read outside the day as a card opened in Explore is. Then one calm screen
+offers the year's free days (`TrialOfferScreen`, lib/screens/trial_offer.dart,
+drawn with the paywall's own pieces): today everything opens and nothing is
+paid; on day 12 a notification, promised only where the phone can show one
+(`AppState.kTrialWarningDays`, the warning that already exists); on day 14
+the year starts at the store's own price, the largest figure on the screen,
+renewing until cancelled, and nothing charged to a trial cancelled 24 hours
+before. Under the headline, the five, the assistant and every path and book;
+at the foot, "Start the free trial" and "Continue for free" as two buttons
+of one size, and restore, the terms and the privacy policy. After it, the
+day's five, dealt as on any first day, without the card already played. It
+is never put during the five, never twice in a day (`knowit.trialOfferedOn`,
+kept across a sign-out), never to a reader who already has Astute+ (asked
+before the card, after it, and while the offer is up), and never without the
+store's own year with free days for this reader (`trialOfferDue`): no price
+written into the app stands in. `tool/trial_day_shots.dart` photographs it
+with a stand-in store at the owner's prices.
+
 ## Today, done
 
 The finished day is artboard 66a. The tab at rest is a shelf: the day's five

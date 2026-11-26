@@ -1560,5 +1560,17 @@
   "founderTheirBooks": "Les livres recommandés",
   "founderAbout": "Ce sont des livres que {name} a recommandés en public, avec les mots cités et l’endroit où ils ont été dits. {name} n’a aucun lien avec Astute.",
   "founderPhoto": "Photo : {author}, {licence}, Wikimedia Commons, recadrée",
-  "founderAlso": "Également recommandé par {names}"
+  "founderAlso": "Également recommandé par {names}",
+  "firstCardTitle": "Ta première carte",
+  "firstCardSwipeOn": "Glisse pour continuer",
+  "trialOfferTitle": "Essaie tout Astute+.",
+  "trialOfferMark": "Astute+.",
+  "trialOfferLine": "Les cinq cartes du jour t’attendent de toute façon.",
+  "trialStepToday": "Aujourd’hui",
+  "trialStepTodayLine": "Tout Astute+ s’ouvre. Tu ne paies rien.",
+  "trialStepDay": "Jour {day}",
+  "trialStepReminderLine": "{days, plural, =1{On t’envoie une notification : plus qu’un jour.} other{On t’envoie une notification : plus que {days} jours.}}",
+  "trialStepChargeLine": "Se renouvelle chaque année. Annule au moins 24 heures avant et tu ne paies rien.",
+  "trialOfferStart": "Commencer l’essai",
+  "trialOfferFree": "Continuer gratuitement"
 }

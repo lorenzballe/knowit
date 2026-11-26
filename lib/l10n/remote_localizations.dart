@@ -6460,4 +6460,54 @@ class RemoteLocalizations extends AppLocalizations {
   String founderAlso(String names) =>
       _words.format('founderAlso', localeName, {'names': names}) ??
       _base.founderAlso(names);
+
+  @override
+  String get firstCardTitle =>
+      _words.text('firstCardTitle') ?? _base.firstCardTitle;
+
+  @override
+  String get firstCardSwipeOn =>
+      _words.text('firstCardSwipeOn') ?? _base.firstCardSwipeOn;
+
+  @override
+  String get trialOfferTitle =>
+      _words.text('trialOfferTitle') ?? _base.trialOfferTitle;
+
+  @override
+  String get trialOfferMark =>
+      _words.text('trialOfferMark') ?? _base.trialOfferMark;
+
+  @override
+  String get trialOfferLine =>
+      _words.text('trialOfferLine') ?? _base.trialOfferLine;
+
+  @override
+  String get trialStepToday =>
+      _words.text('trialStepToday') ?? _base.trialStepToday;
+
+  @override
+  String get trialStepTodayLine =>
+      _words.text('trialStepTodayLine') ?? _base.trialStepTodayLine;
+
+  @override
+  String trialStepDay(int day) =>
+      _words.format('trialStepDay', localeName, {'day': day}) ??
+      _base.trialStepDay(day);
+
+  @override
+  String trialStepReminderLine(int days) =>
+      _words.format('trialStepReminderLine', localeName, {'days': days}) ??
+      _base.trialStepReminderLine(days);
+
+  @override
+  String get trialStepChargeLine =>
+      _words.text('trialStepChargeLine') ?? _base.trialStepChargeLine;
+
+  @override
+  String get trialOfferStart =>
+      _words.text('trialOfferStart') ?? _base.trialOfferStart;
+
+  @override
+  String get trialOfferFree =>
+      _words.text('trialOfferFree') ?? _base.trialOfferFree;
 }

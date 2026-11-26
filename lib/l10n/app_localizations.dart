@@ -9485,6 +9485,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Also recommended by {names}'**
   String founderAlso(String names);
+
+  /// The first run, after the onboarding, when the server's switch trial.firstRun is on: the heading over the one card a new reader plays before the offer of the free trial. The card is a real one, chosen for them; the day's five come after the offer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first card'**
+  String get firstCardTitle;
+
+  /// Beside that heading, once, quietly: how the card is sent on. What comes next is not another card but the offer, so not 'the next one'.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe to go on'**
+  String get firstCardSwipeOn;
+
+  /// The headline of the first run's offer of the free trial, after the one card. Calm and plain: no price and no number in it (the year's price is the largest figure on the screen, as the stores ask), and no 'free'. trialOfferMark must appear in it word for word: that part is painted in the paywall's three colours.
+  ///
+  /// In en, this message translates to:
+  /// **'Try all of Astute+.'**
+  String get trialOfferTitle;
+
+  /// The part of trialOfferTitle painted in the three colours: the plan's name, with the full stop when the title ends on it. It must be copied from trialOfferTitle exactly.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute+.'**
+  String get trialOfferMark;
+
+  /// Under that headline: whichever the reader chooses, the trial or the free plan, the day's five cards come next. It takes the pressure off the choice, and it is true.
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s five are waiting for you either way.'**
+  String get trialOfferLine;
+
+  /// The free trial's three days, on the offer, as a timeline: the first step's name, today. Beside it, the date.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get trialStepToday;
+
+  /// Under 'Today' on that timeline: everything Astute+ adds opens today, and nothing is charged. The step's name already says today.
+  ///
+  /// In en, this message translates to:
+  /// **'All of Astute+ opens. You pay nothing.'**
+  String get trialStepTodayLine;
+
+  /// A later step's name on that timeline: the trial's day it falls on, counted from today (day 12, the reminder; day 14, the first charge). Beside it, the date.
+  ///
+  /// In en, this message translates to:
+  /// **'Day {day}'**
+  String trialStepDay(int day);
+
+  /// Under the reminder's day on that timeline: the app sends a notification {days} days before the trial ends (always 2 today). Says 'notification' because that is how it comes, and only where the phone can show one.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{We send you a notification: 1 day to go.} other{We send you a notification: {days} days to go.}}'**
+  String trialStepReminderLine(int days);
+
+  /// Under the year's price, on the day the trial ends: the year renews every year until it is cancelled, and a trial cancelled at least 24 hours before its end is charged nothing (the stores' own rule).
+  ///
+  /// In en, this message translates to:
+  /// **'Renews every year. Cancel at least 24 hours before and nothing is charged.'**
+  String get trialStepChargeLine;
+
+  /// The offer's button: starts the year's free trial, through the store's own sheet, which says the terms again before anything is charged.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the free trial'**
+  String get trialOfferStart;
+
+  /// The offer's way out, a button as plain as the other: the free plan, and the day's five cards.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue for free'**
+  String get trialOfferFree;
 }
 
 class _AppLocalizationsDelegate

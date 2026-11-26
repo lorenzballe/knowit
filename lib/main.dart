@@ -27,6 +27,7 @@ import 'screens/genres_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/explore_screen.dart';
+import 'screens/first_card_screen.dart';
 import 'screens/mix_screen.dart';
 import 'screens/paywall_screen.dart';
 import 'screens/today_screen.dart';
@@ -312,10 +313,17 @@ class _PhoneFrame extends StatelessWidget {
 /// the last of those and the first card: no offer, no sign-in, no
 /// permission. Astute+ is offered by the card after the fifth, in Profile
 /// and at the features it opens, once the reader has seen what it adds to.
+///
+/// Behind the server's switch `trial.firstRun`, off as built, two steps
+/// come between the onboarding and the day: one real card
+/// ([_Stage.firstCard]), and then the offer of the free trial
+/// ([_Stage.trialOffer]), the day's five after it whichever the answer.
 enum _Stage {
   intro,
   subjects,
   genres,
+  firstCard,
+  trialOffer,
   comeback,
   shell;
 
@@ -326,6 +334,8 @@ enum _Stage {
     _Stage.intro => 'intro',
     _Stage.subjects => 'onboarding subjects',
     _Stage.genres => 'onboarding genres',
+    _Stage.firstCard => 'onboarding first card',
+    _Stage.trialOffer => 'onboarding trial',
     _Stage.comeback => 'comeback',
     _Stage.shell => 'today',
   };
@@ -427,6 +437,9 @@ class _AstutoRootState extends State<AstutoRoot> {
 
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
+
+  /// The card the first run plays before its offer, while it does.
+  Pill? _firstRunCard;
 
   /// A home-screen widget's tap, waiting for the tabs. The splash, the
   /// first run and the come-back screen hold it; the shell takes it the
@@ -1262,6 +1275,31 @@ class _AstutoRootState extends State<AstutoRoot> {
     if (mounted) _go(_Stage.shell);
   }
 
+  /// The onboarding's questions are over, answered or passed over. As
+  /// built, the day's five come at once. With the server's switch
+  /// `trial.firstRun` on, and the offer due (trialOfferDue: Astute+ not
+  /// already the reader's, not put today, the store's year on sale with
+  /// free days for this reader), one real card comes first, and the offer
+  /// after it.
+  Future<void> _endOnboarding() async {
+    final Pill? card = trialOfferDue(_app) ? _app.firstRunCard : null;
+    if (card == null) return _finishOnboarding();
+    _firstRunCard = card;
+    _go(_Stage.firstCard);
+  }
+
+  /// The first run's card, thrown on: the offer, unless it stopped being
+  /// due while the card was read — Astute+ turned out to be the reader's,
+  /// say — and then the day's five.
+  void _afterFirstCard() {
+    if (!mounted) return;
+    if (trialOfferDue(_app)) {
+      _go(_Stage.trialOffer);
+    } else {
+      _finishOnboarding();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // The opening frame gives way to the app in a short fade, as a feed's
@@ -1337,7 +1375,7 @@ class _AstutoRootState extends State<AstutoRoot> {
           // first day: there is nothing to narrow in a mix nobody set.
           onSkip: () {
             _noteSkipped(_Stage.subjects);
-            _finishOnboarding();
+            _endOnboarding();
           },
         );
 
@@ -1353,13 +1391,30 @@ class _AstutoRootState extends State<AstutoRoot> {
           app: _app,
           onDone: (genresOff, strandsOff) async {
             await _app.setGenresOff(genresOff, strandsOff);
-            if (mounted) await _finishOnboarding();
+            if (mounted) await _endOnboarding();
           },
           onSkip: () {
             _noteSkipped(_Stage.genres);
-            _finishOnboarding();
+            _endOnboarding();
           },
         );
+
+      // Behind `trial.firstRun`: one real card, the opening's best for this
+      // reader, before anything is offered to them.
+      case _Stage.firstCard:
+        final Pill? card = _firstRunCard;
+        if (card == null) return const SizedBox.shrink();
+        return FirstCardScreen(
+          key: ValueKey('first-card-${card.id}'),
+          app: _app,
+          card: card,
+          onDone: _afterFirstCard,
+        );
+
+      // And the free trial, said day by day at the store's own price, with
+      // the way out as plain as the way in; the day's five after it.
+      case _Stage.trialOffer:
+        return TrialOfferScreen(app: _app, onDone: _finishOnboarding);
 
       case _Stage.comeback:
         return ComebackScreen(

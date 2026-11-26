@@ -1560,5 +1560,17 @@
   "founderTheirBooks": "Рекомендованные книги",
   "founderAbout": "Это книги, рекомендованные публично, в приведённых словах и с указанием, где это было сказано. {name} не имеет никакого отношения к Astute.",
   "founderPhoto": "Фото: {author}, {licence}, Wikimedia Commons, кадрировано",
-  "founderAlso": "Также рекомендуют: {names}"
+  "founderAlso": "Также рекомендуют: {names}",
+  "firstCardTitle": "Твоя первая карточка",
+  "firstCardSwipeOn": "Листай дальше",
+  "trialOfferTitle": "Попробуй весь Astute+.",
+  "trialOfferMark": "Astute+.",
+  "trialOfferLine": "Пять сегодняшних карточек ждут тебя в любом случае.",
+  "trialStepToday": "Сегодня",
+  "trialStepTodayLine": "Открывается весь Astute+. Ты ничего не платишь.",
+  "trialStepDay": "День {day}",
+  "trialStepReminderLine": "{days, plural, =1{Мы пришлём тебе уведомление: остался 1 день.} few{Мы пришлём тебе уведомление: осталось {days} дня.} many{Мы пришлём тебе уведомление: осталось {days} дней.} other{Мы пришлём тебе уведомление: осталось {days} дня.}}",
+  "trialStepChargeLine": "Продлевается каждый год. Отмени хотя бы за 24 часа — и ничего не заплатишь.",
+  "trialOfferStart": "Начать пробный период",
+  "trialOfferFree": "Продолжить бесплатно"
 }

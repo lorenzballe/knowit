@@ -3,7 +3,8 @@
   "push.ask": {"default": true},
   "account.offer": {"default": true},
   "place.ask": {"default": true},
-  "review.ask": {"default": true}
+  "review.ask": {"default": true},
+  "trial.firstRun": {"default": false}
  },
  "tunables": {
   "push.askGapDays": {"type": "count", "default": 3, "min": 1, "max": 30},

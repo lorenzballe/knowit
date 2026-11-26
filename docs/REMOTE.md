@@ -186,6 +186,7 @@ The knobs this build reads:
 | `account.offer` | switch | on | — | the account's sheet after a finished day | `AppState.shouldOfferAccount` |
 | `place.ask` | switch | on | — | the place's sheet after a finished day (Explore and Profile still ask when the reader asks them to) | `AppState.shouldAskForPlace` |
 | `review.ask` | switch | on | — | the store's rating prompt | `AppState.shouldAskForReview` |
+| `trial.firstRun` | switch | off | — | the first run's free trial: after the onboarding, one real card, then the offer of the year's free days, then the day's five (never to a reader with Astute+, never twice a day, never without the store's own year on sale) | `trialOfferDue` (lib/screens/trial_offer.dart) |
 | `push.askGapDays` | number | 3 | 1 to 30 | the days a "Not now" holds the reminder sheet back | `AppState.shouldAskForPush` |
 | `push.deferralsAllowed` | number | 3 | 1 to 10 | how many "Not now"s the sheet takes before it stops coming | `AppState.shouldAskForPush` |
 | `push.times` | three times | 08:30, 12:30, 19:00 | 05:00–11:00, 11:00–15:00, 17:00–23:00 (the last minute out) | the times the reminder sheet offers, each where its word ("Morning", "Lunchtime", "Evening") stays true | `lib/widgets/reminder_ask.dart` |
@@ -199,6 +200,8 @@ Changing them from the server:
 - no rating prompt on Android builds up to 9: `"flags": {"review.ask": {"on": false, "audience": {"platforms": ["android"], "maxBuild": 9}}}`;
 - ask about reminders again two days after a "Not now", at 07:45 rather than 08:30:
   `"tunables": {"push.askGapDays": 2, "push.times": ["07:45", "12:30", "19:00"]}`;
+- the first run's free trial for half of new readers on iPhone:
+  `"flags": {"trial.firstRun": {"on": true, "audience": {"platforms": ["ios"], "rollout": 50}}}`;
 - the first-evening reminder for a fifth of readers, half and half:
   `"experiments": {"push.firstAsk": {"variants": ["cameBack", "firstDay"], "audience": {"rollout": 20}}}`.
 

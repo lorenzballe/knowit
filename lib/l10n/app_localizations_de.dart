@@ -6840,4 +6840,53 @@ class AppLocalizationsDe extends AppLocalizations {
   String founderAlso(String names) {
     return 'Auch empfohlen von $names';
   }
+
+  @override
+  String get firstCardTitle => 'Deine erste Karte';
+
+  @override
+  String get firstCardSwipeOn => 'Zum Weitergehen wischen';
+
+  @override
+  String get trialOfferTitle => 'Teste das ganze Astute+.';
+
+  @override
+  String get trialOfferMark => 'Astute+.';
+
+  @override
+  String get trialOfferLine =>
+      'Die fünf Karten von heute warten so oder so auf dich.';
+
+  @override
+  String get trialStepToday => 'Heute';
+
+  @override
+  String get trialStepTodayLine =>
+      'Ganz Astute+ steht dir offen. Du zahlst nichts.';
+
+  @override
+  String trialStepDay(int day) {
+    return 'Tag $day';
+  }
+
+  @override
+  String trialStepReminderLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Wir schicken dir eine Mitteilung: noch $days Tage.',
+      one: 'Wir schicken dir eine Mitteilung: noch 1 Tag.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialStepChargeLine =>
+      'Verlängert sich jedes Jahr. Kündige mindestens 24 Stunden vorher, und es kostet nichts.';
+
+  @override
+  String get trialOfferStart => 'Testphase starten';
+
+  @override
+  String get trialOfferFree => 'Kostenlos weiter';
 }

@@ -7087,4 +7087,55 @@ class AppLocalizationsRu extends AppLocalizations {
   String founderAlso(String names) {
     return 'Также рекомендуют: $names';
   }
+
+  @override
+  String get firstCardTitle => 'Твоя первая карточка';
+
+  @override
+  String get firstCardSwipeOn => 'Листай дальше';
+
+  @override
+  String get trialOfferTitle => 'Попробуй весь Astute+.';
+
+  @override
+  String get trialOfferMark => 'Astute+.';
+
+  @override
+  String get trialOfferLine =>
+      'Пять сегодняшних карточек ждут тебя в любом случае.';
+
+  @override
+  String get trialStepToday => 'Сегодня';
+
+  @override
+  String get trialStepTodayLine =>
+      'Открывается весь Astute+. Ты ничего не платишь.';
+
+  @override
+  String trialStepDay(int day) {
+    return 'День $day';
+  }
+
+  @override
+  String trialStepReminderLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Мы пришлём тебе уведомление: осталось $days дня.',
+      many: 'Мы пришлём тебе уведомление: осталось $days дней.',
+      few: 'Мы пришлём тебе уведомление: осталось $days дня.',
+      one: 'Мы пришлём тебе уведомление: остался 1 день.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialStepChargeLine =>
+      'Продлевается каждый год. Отмени хотя бы за 24 часа — и ничего не заплатишь.';
+
+  @override
+  String get trialOfferStart => 'Начать пробный период';
+
+  @override
+  String get trialOfferFree => 'Продолжить бесплатно';
 }

@@ -95,6 +95,10 @@ class AppState extends ChangeNotifier {
   static const _kTodayDate = 'knowit.todayDate';
   static const _kTodayIndex = 'knowit.todayIndex';
   static const _kOnboarded = 'knowit.onboarded';
+
+  /// The day the first run last offered the free trial (see
+  /// [trialOfferedOn]).
+  static const _kTrialOfferedOn = 'knowit.trialOfferedOn';
   static const _kTopics = 'knowit.topics';
   static const _kTopicWeights = 'knowit.topicWeights';
   static const _kGoal = 'knowit.goal';
@@ -634,6 +638,7 @@ class AppState extends ChangeNotifier {
     pillsRead = _prefs.getInt(_kPillsRead) ?? 0;
 
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
+    trialOfferedOn = _prefs.getString(_kTrialOfferedOn);
     // A reader not yet through the first run is new, and opens on the cards
     // chosen for a first impression; one who was through it before this
     // was kept is dealt as they always were.
@@ -2513,15 +2518,77 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ── The first run's free trial ────────────────────────────────────────
+
+  /// The first run's free trial (`trial.firstRun`): after the onboarding a
+  /// new reader plays one card, the opening's best for them
+  /// ([firstRunCard]), and is then offered the year's free days on a
+  /// screen of their own (lib/screens/trial_offer.dart) before the day's
+  /// five. Off as built: the first run goes from the subjects to the five
+  /// with nothing in between, and the server can turn it on for some
+  /// readers or all of them.
+  static const RemoteFlag kFirstRunTrialFlag = RemoteFlag(
+    'trial.firstRun',
+    fallback: false,
+  );
+
+  /// Whether the first run plays a card and offers the trial after it.
+  bool get firstRunTrialOn => kFirstRunTrialFlag.on(_here);
+
+  /// The day the offer was last put, as a date key; null when never. Kept
+  /// for the phone rather than the reader, like the experiments' draws: a
+  /// sign-out and a first run again the same day is not a second chance to
+  /// ask.
+  String? trialOfferedOn;
+
+  /// Whether the offer has been put today: it never is twice in a day.
+  bool get trialOfferedToday => trialOfferedOn == dateKey(today);
+
+  /// Noted as the offer goes up, before the reader answers it, so an app
+  /// closed on it does not put it again the same day.
+  Future<void> notedTrialOffered() async {
+    trialOfferedOn = dateKey(today);
+    await _prefs.setString(_kTrialOfferedOn, trialOfferedOn!);
+  }
+
+  /// The card the first run plays before its offer: the first of the
+  /// opening this reader may be dealt (lib/data/first_days.dart), their own
+  /// subjects first, a subject they turned off never, and nothing read.
+  /// Null when the opening has nothing left for them; then there is no
+  /// card, and no offer either.
+  Pill? get firstRunCard => openingFor(
+    today,
+    topics: pickedTopics,
+    claimed: profile.claimed,
+    mix: topicWeights,
+    genresOff: genresOff,
+    strandsOff: strandsOff,
+    exclude: {...seenIds, ...answers.keys},
+  ).firstOrNull;
+
+  /// The card the first run played, once it has been thrown on.
+  String? _firstRunCardId;
+
+  /// The first run's card, read: it counts as read like a card opened in
+  /// Explore, so the day dealt after it never deals it again.
+  Future<void> readFirstRunCard(String pillId) async {
+    _firstRunCardId = pillId;
+    await markReadElsewhere(pillId);
+  }
+
   /// The first morning, dealt again now that the reader has said what they
   /// want. It was dealt when the app opened, before the first run asked
   /// anything, so every new reader of a date met the same five whatever
   /// they chose. Only a day not begun is dealt again, and only on the
-  /// phone: a first day is the opening's (lib/data/first_days.dart).
+  /// phone: a first day is the opening's (lib/data/first_days.dart). The
+  /// card the first run played before its offer was read outside the day,
+  /// and is dealt out of it again rather than taken for a day begun.
   Future<void> _dealFirstMorningAgain() async {
     if (!opensOn(today) || todayIndex > 0) return;
     if (todaysDeck.any(
-      (p) => seenIds.contains(p.id) || answers.containsKey(p.id),
+      (p) =>
+          p.id != _firstRunCardId &&
+          (seenIds.contains(p.id) || answers.containsKey(p.id)),
     )) {
       return;
     }
@@ -2843,6 +2910,11 @@ class AppState extends ChangeNotifier {
   /// trial has not ended: late, but still before the charge.
   static const Duration kLateTrialWarning = Duration(minutes: 1);
 
+  /// How many days before a free trial's charge its warning comes: two. The
+  /// first run's offer promises the warning on this day, so the two are
+  /// one number (lib/screens/trial_offer.dart).
+  static const int kTrialWarningDays = 2;
+
   /// The warning two days before a free trial turns into a paid year, at
   /// the reader's hour: when it ends, what the year will cost, and the way
   /// to stop it, in the phone's language and at the store's own price.
@@ -2866,7 +2938,13 @@ class AppState extends ChangeNotifier {
       return null;
     }
     final (int hour, int minute) = _notifyClock;
-    DateTime when = DateTime(ends.year, ends.month, ends.day - 2, hour, minute);
+    DateTime when = DateTime(
+      ends.year,
+      ends.month,
+      ends.day - kTrialWarningDays,
+      hour,
+      minute,
+    );
     if (!when.isAfter(clock)) when = clock.add(kLateTrialWarning);
     if (!when.isBefore(ends)) return null;
     final AppLocalizations l = _strings;
@@ -2891,7 +2969,7 @@ class AppState extends ChangeNotifier {
     final FreeTrial? t = trial;
     return warning != null &&
         t != null &&
-        _daysBetween(warning.when, t.endsAt) == 2;
+        _daysBetween(warning.when, t.endsAt) == kTrialWarningDays;
   }
 
   /// The days left on a trial that will charge, in its last two, for a
@@ -3534,6 +3612,10 @@ class AppState extends ChangeNotifier {
     // The experiment's draws belong to the phone, not to the account.
     await _prefs.setString(_kTasteVariant, tasteVariant);
     await _prefs.setString(_kSureSeed, SureAsk.seed);
+    // So does the day the first run last offered the trial: never twice in
+    // a day, whoever runs it.
+    final String? offered = trialOfferedOn;
+    if (offered != null) await _prefs.setString(_kTrialOfferedOn, offered);
     // The clear above took the reader's own answer to "measure this?" with
     // it. An opt-out a sign-out quietly undoes is not a choice, it is a
     // delay — so it goes back down before anything else is written.

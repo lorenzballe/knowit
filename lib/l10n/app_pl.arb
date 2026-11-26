@@ -1560,5 +1560,17 @@
   "founderTheirBooks": "Polecane książki",
   "founderAbout": "To książki polecone publicznie, w cytowanych słowach, z miejscem, w którym to padło. {name} nie ma żadnego związku z Astute.",
   "founderPhoto": "Zdjęcie: {author}, {licence}, Wikimedia Commons, przycięte",
-  "founderAlso": "Polecają też: {names}"
+  "founderAlso": "Polecają też: {names}",
+  "firstCardTitle": "Twoja pierwsza karta",
+  "firstCardSwipeOn": "Przesuń, by przejść dalej",
+  "trialOfferTitle": "Wypróbuj cały Astute+.",
+  "trialOfferMark": "Astute+.",
+  "trialOfferLine": "Dzisiejsze pięć kart czeka na ciebie tak czy inaczej.",
+  "trialStepToday": "Dziś",
+  "trialStepTodayLine": "Otwiera się cały Astute+. Nic nie płacisz.",
+  "trialStepDay": "Dzień {day}",
+  "trialStepReminderLine": "{days, plural, =1{Wysyłamy ci powiadomienie: został 1 dzień.} few{Wysyłamy ci powiadomienie: zostały {days} dni.} many{Wysyłamy ci powiadomienie: zostało {days} dni.} other{Wysyłamy ci powiadomienie: zostało {days} dni.}}",
+  "trialStepChargeLine": "Odnawia się co roku. Anuluj co najmniej 24 godziny wcześniej, a nic nie zapłacisz.",
+  "trialOfferStart": "Zacznij okres próbny",
+  "trialOfferFree": "Kontynuuj za darmo"
 }

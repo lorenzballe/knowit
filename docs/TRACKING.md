@@ -273,7 +273,11 @@ sent, which after a return from a pushed screen is the screen returned to.
 Screen names: `today`, `explore`, `profile` (tabs); `intro`, `onboarding
 subjects`, `onboarding genres`, `comeback` (first run and come-back; the
 first run has had no paywall since October 2026, so `onboarding offer` is
-gone); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
+gone); `onboarding first card`, `onboarding trial` (the one card and the
+offer of the free trial that end the first run behind the server's switch
+`trial.firstRun`, off as built: measured by the steps' own `onboarding step
+done`, and the trial by the store's `entitlement changed`, with no event of
+their own); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
 `journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`,
 `story` (a true story played from Explore); `update gate`, `pause` (the
 update gate's full screens, over everything, §6.13).
