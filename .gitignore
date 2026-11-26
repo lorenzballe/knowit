@@ -70,3 +70,5 @@ tool/shots/paywall/
 tool/shots/purchase/
 # Explore on a phone, top to bottom (tool/explore_tour_shots.dart): looked at, not kept
 tool/shots/explore-tour/
+# A video card opened on phones over its film (tool/video_shots.dart): looked at, not kept
+tool/shots/video/

@@ -6,6 +6,7 @@
 //
 //   flutter test test/video_card_test.dart
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -56,7 +57,7 @@ class _Player extends VideoPlayerPlatform {
           VideoEvent(
             eventType: VideoEventType.initialized,
             duration: const Duration(milliseconds: 52700),
-            size: const Size(1080, 1920),
+            size: kFilmFrame,
           ),
         );
       }
@@ -198,6 +199,18 @@ void main() {
     ),
   );
 
+  /// Where the film's words keep to on the screen, with its picture at
+  /// [place].
+  Rect wordsOn(Rect place) {
+    final double k = place.width / kFilmFrame.width;
+    return Rect.fromLTRB(
+      place.left + kFilmWords.left * k,
+      place.top + kFilmWords.top * k,
+      place.left + kFilmWords.right * k,
+      place.top + kFilmWords.bottom * k,
+    );
+  }
+
   testWidgets('a tap on the tile opens the card to the whole screen, and it '
       'plays at once from the frame the tile shows; a tap pauses it, another '
       'goes on; at its end it is offered again; the cross puts it back', (
@@ -221,14 +234,16 @@ void main() {
     await settle(tester);
     expect(find.byType(VideoCardScreen), findsOneWidget);
     expect(player.asked.last, 'play');
-    // The card is the screen: the film across it, standing on its foot, the
-    // card's ground above it holding the row of controls. No way to play it
-    // is asked for: it plays.
+    // The card is the screen: the film covers it from its top to its foot,
+    // its head right under the row of controls laid over its top. No way to
+    // play it is asked for: it plays.
     final Rect place = pictureOn(tester);
-    expect(place.width / place.height, closeTo(9 / 16, 0.01));
-    expect(place.width, closeTo(402, 0.5));
-    expect(place.bottom, closeTo(874, 0.5));
-    expect(place.top, greaterThanOrEqualTo(62 + 48));
+    expect(place.width / place.height, closeTo(kFilmAspect, 0.001));
+    expect(place.left, lessThanOrEqualTo(0));
+    expect(place.right, greaterThanOrEqualTo(402));
+    expect(place.top, lessThanOrEqualTo(0));
+    expect(place.bottom, greaterThanOrEqualTo(874));
+    expect(wordsOn(place).top, closeTo(62 + 48 + 12, 0.5));
     expect(find.byKey(const ValueKey('video-play')), findsNothing);
     // Until it moves, the frame it starts on is the picture, and the line of
     // how far it has run says it is coming.
@@ -314,27 +329,42 @@ void main() {
   for (final (Size size, EdgeInsets safe) in [
     (const Size(320, 568), const EdgeInsets.only(top: 20)),
     (const Size(375, 667), const EdgeInsets.only(top: 20)),
+    (const Size(390, 844), const EdgeInsets.only(top: 47, bottom: 34)),
+    (const Size(393, 852), const EdgeInsets.only(top: 59, bottom: 34)),
     (const Size(430, 932), const EdgeInsets.only(top: 59, bottom: 34)),
+    (const Size(360, 800), const EdgeInsets.only(top: 24, bottom: 24)),
     (const Size(412, 915), const EdgeInsets.only(top: 24, bottom: 48)),
+    (const Size(820, 1180), const EdgeInsets.only(top: 24, bottom: 20)),
   ]) {
     for (final String language in ['en', 'it', 'de', 'ja']) {
       testWidgets('the card lays out on a ${size.width.round()} by '
-          '${size.height.round()} phone in $language', (tester) async {
+          '${size.height.round()} screen in $language', (tester) async {
         await phone(tester, size: size, language: language, safe: safe);
         await open(tester);
         final Rect place = pictureOn(tester);
-        expect(place.left, greaterThanOrEqualTo(0));
-        expect(place.right, lessThanOrEqualTo(size.width + 0.01));
-        expect(place.top, greaterThanOrEqualTo(safe.top + 48));
-        // On a phone long enough, across it and on its foot, lifted only
-        // above a foot taller than a home bar; else whole above the foot.
-        if (size.height / size.width > 16 / 9 + 0.1) {
-          expect(place.width, closeTo(size.width, 0.5));
+        final Rect words = wordsOn(place);
+        expect(place.width / place.height, closeTo(kFilmAspect, 0.001));
+        if (size.shortestSide < 600) {
+          // On a phone, the film covers the screen; its head comes under
+          // the row of controls, its words keep off the sides and above the
+          // foot, or the home bar.
+          expect(place.left, lessThanOrEqualTo(0.01));
+          expect(place.right, greaterThanOrEqualTo(size.width - 0.01));
+          expect(place.top, lessThanOrEqualTo(0.01));
+          expect(place.bottom, greaterThanOrEqualTo(size.height - 0.01));
+          expect(words.top, greaterThanOrEqualTo(safe.top + 48 + 4 - 0.01));
+          expect(words.top, lessThanOrEqualTo(safe.top + 48 + 12 + 0.01));
+          expect(words.left, greaterThanOrEqualTo(8 - 0.01));
+          expect(words.right, lessThanOrEqualTo(size.width - 8 + 0.01));
           expect(
-            place.bottom,
-            closeTo(size.height - (safe.bottom - 34).clamp(0, 99), 0.5),
+            words.bottom,
+            lessThanOrEqualTo(size.height - math.max(safe.bottom, 2) + 0.01),
           );
         } else {
+          // On a tablet, a card of its own on the ground, whole, under the
+          // row of controls and above the foot.
+          expect(place.left, greaterThan(0));
+          expect(place.top, greaterThanOrEqualTo(safe.top + 48));
           expect(place.bottom, lessThanOrEqualTo(size.height - safe.bottom));
         }
         expect(tester.takeException(), isNull);
