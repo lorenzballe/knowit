@@ -274,6 +274,12 @@ example draws exactly what null draws: it is where changing Explore starts.
 `remote/examples/explore-gallery.json` shows every core block at every size;
 docs/explore/core.md is their catalogue.
 
+The Explore the server sends is a front page, edited down on 26 November
+2026 to the strong sections, each once (its note, `_`, says what is on it,
+what was left out and why). The page as it was before, seventeen sections on
+a Wednesday, is `remote/examples/explore-long.json`: copied over
+`remote/explore.json` and bundled, it is back.
+
 A section:
 
 | Field | What it says |
