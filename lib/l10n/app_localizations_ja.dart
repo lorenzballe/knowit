@@ -447,6 +447,42 @@ class AppLocalizationsJa extends AppLocalizations {
   String get yourRecord => 'あなたの記録';
 
   @override
+  String get profileTodayFive => '今日の5枚';
+
+  @override
+  String profileTodayOf(int read, int of) {
+    return '$of枚中$read枚';
+  }
+
+  @override
+  String profileTodayToRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'あと$n枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileJourneyScores => 'すべてのスコアを、週ごとに';
+
+  @override
+  String profileInARowLabel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '日連続');
+    return '$_temp0';
+  }
+
+  @override
+  String get profileWeekTitle => '過去7日間';
+
+  @override
+  String profileWeekPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: 'ポイント');
+    return '$_temp0';
+  }
+
+  @override
   String get appearance => '外観';
 
   @override

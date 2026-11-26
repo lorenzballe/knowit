@@ -470,6 +470,59 @@ class AppLocalizationsRu extends AppLocalizations {
   String get yourRecord => 'Твоя история';
 
   @override
+  String get profileTodayFive => 'Пять на сегодня';
+
+  @override
+  String profileTodayOf(int read, int of) {
+    return '$read из $of';
+  }
+
+  @override
+  String profileTodayToRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ещё $n',
+      many: 'ещё $n',
+      few: 'ещё $n',
+      one: 'ещё $n',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileJourneyScores => 'Все твои рейтинги, неделя за неделей';
+
+  @override
+  String profileInARowLabel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'дня подряд',
+      many: 'дней подряд',
+      few: 'дня подряд',
+      one: 'день подряд',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileWeekTitle => 'Последние 7 дней';
+
+  @override
+  String profileWeekPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'очка',
+      many: 'очков',
+      few: 'очка',
+      one: 'очко',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get appearance => 'Оформление';
 
   @override

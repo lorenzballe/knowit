@@ -421,6 +421,38 @@ class RemoteLocalizations extends AppLocalizations {
   String get yourRecord => _words.text('yourRecord') ?? _base.yourRecord;
 
   @override
+  String get profileTodayFive =>
+      _words.text('profileTodayFive') ?? _base.profileTodayFive;
+
+  @override
+  String profileTodayOf(int read, int of) =>
+      _words.format('profileTodayOf', localeName, {'read': read, 'of': of}) ??
+      _base.profileTodayOf(read, of);
+
+  @override
+  String profileTodayToRead(int n) =>
+      _words.format('profileTodayToRead', localeName, {'n': n}) ??
+      _base.profileTodayToRead(n);
+
+  @override
+  String get profileJourneyScores =>
+      _words.text('profileJourneyScores') ?? _base.profileJourneyScores;
+
+  @override
+  String profileInARowLabel(int n) =>
+      _words.format('profileInARowLabel', localeName, {'n': n}) ??
+      _base.profileInARowLabel(n);
+
+  @override
+  String get profileWeekTitle =>
+      _words.text('profileWeekTitle') ?? _base.profileWeekTitle;
+
+  @override
+  String profileWeekPoints(int n) =>
+      _words.format('profileWeekPoints', localeName, {'n': n}) ??
+      _base.profileWeekPoints(n);
+
+  @override
   String get appearance => _words.text('appearance') ?? _base.appearance;
 
   @override

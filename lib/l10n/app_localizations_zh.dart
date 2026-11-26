@@ -445,6 +445,42 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yourRecord => '你的记录';
 
   @override
+  String get profileTodayFive => '今天的五张';
+
+  @override
+  String profileTodayOf(int read, int of) {
+    return '$read/$of';
+  }
+
+  @override
+  String profileTodayToRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '待读 $n 张',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileJourneyScores => '你的全部分数，按周来看';
+
+  @override
+  String profileInARowLabel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '连续天数');
+    return '$_temp0';
+  }
+
+  @override
+  String get profileWeekTitle => '最近 7 天';
+
+  @override
+  String profileWeekPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '分');
+    return '$_temp0';
+  }
+
+  @override
   String get appearance => '外观';
 
   @override

@@ -451,6 +451,46 @@ class AppLocalizationsTr extends AppLocalizations {
   String get yourRecord => 'Sicilin';
 
   @override
+  String get profileTodayFive => 'Bugünün beşi';
+
+  @override
+  String profileTodayOf(int read, int of) {
+    return '$of karttan $read';
+  }
+
+  @override
+  String profileTodayToRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n okunacak',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileJourneyScores => 'Tüm puanların, hafta hafta';
+
+  @override
+  String profileInARowLabel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'gün üst üste',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileWeekTitle => 'Son 7 gün';
+
+  @override
+  String profileWeekPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: 'puan');
+    return '$_temp0';
+  }
+
+  @override
   String get appearance => 'Görünüm';
 
   @override

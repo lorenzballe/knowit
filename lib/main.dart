@@ -57,6 +57,7 @@ import 'store_links.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
 import 'widgets/hand_glass.dart';
+import 'widgets/tab_zoom.dart';
 
 /// The seeded crowd for Explore's top list: the live bank, tilted to what
 /// readers keep — a question over a fact, a debate over both, the hard ones,
@@ -1541,6 +1542,9 @@ class _AstutoShellState extends State<AstutoShell>
   /// the tab still on last week's month filter.
   final GlobalKey<ExploreScreenState> _explore = GlobalKey();
 
+  /// Opens Today out of the profile's tile (lib/widgets/tab_zoom.dart).
+  final GlobalKey<TabZoomState> _zoom = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -1717,7 +1721,12 @@ class _AstutoShellState extends State<AstutoShell>
   /// from the tab you left to the tab you asked for without lighting the
   /// one between them. A widget's tap always cuts, and without the click:
   /// the app is only just on the screen, and nobody touched the bar.
-  void _goTo(int tab, {String by = 'bar'}) {
+  ///
+  /// From the profile's Today tile, [tile] is where the tile is on the
+  /// screen, and Today opens out of it ([TabZoom]) while the bar's light
+  /// travels across with it: the cut read as the app jumping. With less
+  /// motion asked for, a dissolve, and the light just moves.
+  void _goTo(int tab, {String by = 'bar', Rect? tile}) {
     if (!mounted) return;
     // Explore's tab tapped on Explore: back up to its head, where the
     // subjects are, since the head no longer comes down mid-list.
@@ -1728,6 +1737,8 @@ class _AstutoShellState extends State<AstutoShell>
     final bool fromBar = by == 'bar';
     if (fromBar) HapticFeedback.selectionClick();
     final int from = _tab;
+    // Today still opening out of the profile's tile: it lands now.
+    _zoom.currentState?.finish();
     _barSmall.value = false;
     setState(() => _tab = tab);
     _noteTab(tab, by: by);
@@ -1738,6 +1749,19 @@ class _AstutoShellState extends State<AstutoShell>
         duration: const Duration(milliseconds: 320),
         curve: Curves.easeOutCubic,
       );
+      return;
+    }
+    final TabZoomState? zoom = _zoom.currentState;
+    if (tile != null && zoom != null) {
+      _jump.stop();
+      if (!MediaQuery.disableAnimationsOf(context)) {
+        _jumpFrom = from;
+        _jumpTo = tab;
+        _jump
+          ..reset()
+          ..animateTo(1, duration: const Duration(milliseconds: 420));
+      }
+      zoom.play(tile: tile, swap: () => _pages.jumpToPage(tab));
       return;
     }
     _jumpFrom = from;
@@ -1819,7 +1843,7 @@ class _AstutoShellState extends State<AstutoShell>
         app: widget.app,
         account: widget.account,
         onSignedOut: widget.onSignedOut,
-        onToday: () => _goTo(0, by: 'shelf'),
+        onToday: (tile) => _goTo(0, by: 'shelf', tile: tile),
       ),
     ];
     // Each tab is a screen of its own, in front only while it is the tab
@@ -1873,59 +1897,62 @@ class _AstutoShellState extends State<AstutoShell>
                 .copyWith(overscroll: false),
             child: NotificationListener<ScrollNotification>(
               onNotification: _settle,
-              child: PageView(
-                controller: _pages,
-                physics: _tab == 0 && _deckOnTable
-                    ? const NeverScrollableScrollPhysics()
-                    : null,
-                // The next tab is built before it is reached, so the first
-                // swipe does not pay for a screen being laid out
-                // mid-gesture.
-                allowImplicitScrolling: true,
-                children: [
-                  // Clipped to its own page. A screen is free to paint past
-                  // its edges — the shelf lets a card's glow bleed, a card
-                  // being thrown goes under the tab bar — and without this
-                  // the overflow lands on the tab beside it and rides there
-                  // until the next repaint.
-                  //
-                  // The padding is the height the tab bar would have taken
-                  // if it still reserved room, read back from the media
-                  // query the Scaffold hands a body it has extended. The
-                  // page is taller than the screen it draws; the screens
-                  // are exactly where they were.
-                  for (int i = 0; i < tabs.length; i++)
-                    ClipRect(
-                      child: _KeepAlive(
-                        child: Builder(
-                          // Today keeps the bar's room: its card is the
-                          // whole screen and nothing may cover it. Explore
-                          // and the profile scroll on under a glass bar,
-                          // and pad their own foot so the last row can
-                          // still be lifted clear of it.
-                          builder: (context) => Padding(
-                            padding: EdgeInsets.only(
-                              bottom: i == 0 || !barGlass
-                                  ? MediaQuery.paddingOf(context).bottom
-                                  : 0,
+              child: TabZoom(
+                key: _zoom,
+                child: PageView(
+                  controller: _pages,
+                  physics: _tab == 0 && _deckOnTable
+                      ? const NeverScrollableScrollPhysics()
+                      : null,
+                  // The next tab is built before it is reached, so the first
+                  // swipe does not pay for a screen being laid out
+                  // mid-gesture.
+                  allowImplicitScrolling: true,
+                  children: [
+                    // Clipped to its own page. A screen is free to paint past
+                    // its edges — the shelf lets a card's glow bleed, a card
+                    // being thrown goes under the tab bar — and without this
+                    // the overflow lands on the tab beside it and rides there
+                    // until the next repaint.
+                    //
+                    // The padding is the height the tab bar would have taken
+                    // if it still reserved room, read back from the media
+                    // query the Scaffold hands a body it has extended. The
+                    // page is taller than the screen it draws; the screens
+                    // are exactly where they were.
+                    for (int i = 0; i < tabs.length; i++)
+                      ClipRect(
+                        child: _KeepAlive(
+                          child: Builder(
+                            // Today keeps the bar's room: its card is the
+                            // whole screen and nothing may cover it. Explore
+                            // and the profile scroll on under a glass bar,
+                            // and pad their own foot so the last row can
+                            // still be lifted clear of it.
+                            builder: (context) => Padding(
+                              padding: EdgeInsets.only(
+                                bottom: i == 0 || !barGlass
+                                    ? MediaQuery.paddingOf(context).bottom
+                                    : 0,
+                              ),
+                              child: i == 1
+                                  ? tabs[i]
+                                  : SafeArea(
+                                      bottom: false,
+                                      // A browser has no status bar to sit
+                                      // under, so the page would otherwise
+                                      // start hard against the top edge. On a
+                                      // phone the real inset is larger and
+                                      // this does nothing.
+                                      minimum: const EdgeInsets.only(top: 12),
+                                      child: tabs[i],
+                                    ),
                             ),
-                            child: i == 1
-                                ? tabs[i]
-                                : SafeArea(
-                                    bottom: false,
-                                    // A browser has no status bar to sit
-                                    // under, so the page would otherwise
-                                    // start hard against the top edge. On a
-                                    // phone the real inset is larger and
-                                    // this does nothing.
-                                    minimum: const EdgeInsets.only(top: 12),
-                                    child: tabs[i],
-                                  ),
                           ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

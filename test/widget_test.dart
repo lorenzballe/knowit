@@ -52,6 +52,7 @@ import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/place_it.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/premium.dart';
+import 'package:astuto/widgets/profile_top.dart';
 import 'package:astuto/widgets/ui.dart';
 
 import 'shelves_explore.dart';
@@ -875,15 +876,23 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      // The journey button on the profile is the paywall on the free plan,
-      // and says so with a lock before it is pressed.
+      // The way into the journey, under the score, is the paywall on the
+      // free plan, and says Astute+ before it is pressed — no lock: the
+      // score above it is the reader's, whole.
       await _openProfile(tester);
       final Finder button = find.byKey(const ValueKey('profile-journey'));
       await tester.scrollUntilVisible(button, 200, scrollable: _profileList);
       await _settle(tester);
       expect(
-        find.descendant(of: button, matching: find.byType(PlusLock)),
+        find.descendant(
+          of: button,
+          matching: find.byKey(const ValueKey('profile-journey-plus')),
+        ),
         findsOneWidget,
+      );
+      expect(
+        find.descendant(of: button, matching: find.byType(PlusLock)),
+        findsNothing,
       );
       // The level is the journey's: the profile no longer shows it.
       expect(find.text('Day one'), findsNothing);
@@ -2145,7 +2154,7 @@ void main() {
       const Offset(-300, 0),
     );
     await _settle(tester);
-    expect(find.text('YOUR RECORD'), findsOneWidget);
+    expect(find.byKey(const ValueKey('profile-score')), findsOneWidget);
     expect(
       tester
           .widget<Semantics>(find.byKey(const ValueKey('tab-Profile')))
@@ -3502,9 +3511,15 @@ void main() {
     expect(find.text('SEE THE PLANS'), findsOneWidget);
 
     // Then what is the reader's own, the account and how the app works,
-    // with the debug tools still last.
-    final order = await _sectionOrder(tester, const [
-      'YOUR RECORD',
+    // with the debug tools still last. The top's own heading is whichever
+    // of the three the profile opens on (lib/widgets/profile_top.dart).
+    final String top = switch (kProfileTop) {
+      ProfileTop.score => 'ASTUTE SCORE',
+      ProfileTop.week => 'LAST 7 DAYS',
+      ProfileTop.board => 'YOUR RECORD',
+    };
+    final order = await _sectionOrder(tester, [
+      top,
       'APPEARANCE',
       'YOUR TOPICS',
       'DAILY NUDGE',
@@ -3513,8 +3528,8 @@ void main() {
       'ABOUT',
       'DEBUG',
     ]);
-    expect(order, const [
-      'YOUR RECORD',
+    expect(order, [
+      top,
       'APPEARANCE',
       'YOUR TOPICS',
       'DAILY NUDGE',
