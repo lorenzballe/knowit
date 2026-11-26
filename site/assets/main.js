@@ -688,8 +688,9 @@
     }
   });
 
-  // Calibration: how sure you said you were, against how often a typical
-  // first month was right at that number.
+  // Calibration: how sure you said you were, against how often you were
+  // right at that number. The numbers are an example, and the page says so;
+  // they are no one's measured month.
   const ACC = { 50: 54, 60: 58, 70: 63, 80: 69, 90: 77 };
   const px = x => 64 + (x - 50) / 40 * 432;
   const py = y => 350 - (y - 40) / 60 * 320;

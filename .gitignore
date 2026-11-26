@@ -78,3 +78,5 @@ tool/shots/video/
 tool/shots/news/
 # A subject's grid and the mix fine-tuned (tool/gridmix_shots.dart): looked at, not kept
 tool/shots/gridmix/
+# The site's pictures of the app, at the site's sizes (tool/site_shots.dart): copied to site/assets by tool/site/shots.py, not kept here
+tool/shots/site/

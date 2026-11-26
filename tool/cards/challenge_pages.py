@@ -35,6 +35,12 @@ import json
 import sys
 from pathlib import Path
 
+# Where the app can be had, said as every page of the site says it: the
+# stores live, from tool/site/chrome.py, so one switch there reaches these
+# pages too.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from chrome import where  # noqa: E402
+
 SITE = "https://astutetheapp.com"
 APP_STORE = "https://apps.apple.com/app/id6806852300"
 GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=com.astuto.app"
@@ -158,7 +164,7 @@ HEAD = """<!DOCTYPE html>
 
 FOOT = """<section class="more">
   <h2>Five cards like this, every morning.</h2>
-  <p>Questions with a why, drawn to be played. Free on iPhone and Android.</p>
+  <p>Questions with a why, drawn to be played. {where}.</p>
   <div class="stores">
     <a href="{app_store}">App Store</a>
     <a class="alt" href="{google_play}">Google Play</a>
@@ -296,6 +302,7 @@ def render(card: dict) -> str:
     )
     body = DRAWN.format(page=_e(page), title=_e(card.get("question"))) if page else words_card(card)
     foot = FOOT.format(
+        where=where(sentence=True),
         app_store=f"{APP_STORE}?ct=challenge",
         google_play=f"{GOOGLE_PLAY}&referrer=utm_source%3Dchallenge",
         script="" if page else f'<script src="/c/card.js?v={VERSION}" defer></script>\n',

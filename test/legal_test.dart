@@ -22,6 +22,7 @@ void main() {
     final String text = page.readAsStringSync();
     for (final String processor in const [
       'Firebase',
+      'Anthropic',
       'RevenueCat',
       'PostHog',
       'Apple',
@@ -91,6 +92,34 @@ void main() {
     expect(policy, contains('<li><strong>Dove vivi.</strong>'));
   });
 
+  test('the policy says what goes to Anthropic, in both its languages', () {
+    // The assistant, the coach and the news are written by Claude: the
+    // policy says what is sent for each, that nothing in it says who the
+    // reader is, and how much of what they write goes, at the length the
+    // server cuts it to (functions/src/ask.ts, MAX_TEXT).
+    final String policy = File('site/privacy.html').readAsStringSync();
+    final RegExpMatch? cap = RegExp(
+      r'export const MAX_TEXT = (\d+);',
+    ).firstMatch(File('functions/src/ask.ts').readAsStringSync());
+    expect(cap, isNotNull);
+    for (final String said in [
+      '<p id="assistant">',
+      '<p id="assistente">',
+      '<p id="news">',
+      '<p id="notizie">',
+      '<p id="links">',
+      '<p id="link">',
+      '<p id="todays-five">',
+      '<p id="cinque-di-oggi">',
+      'up to ${cap!.group(1)} characters',
+      'fino a ${cap.group(1)} caratteri',
+      'nothing that identifies you',
+      'niente che ti identifichi',
+    ]) {
+      expect(policy, contains(said), reason: said);
+    }
+  });
+
   test('the site has every page the stores ask for', () {
     // The App Store wants a support page and a privacy policy; the paywall
     // and the listing link the terms. Each one at the address its link uses.
@@ -133,10 +162,13 @@ void main() {
       expect(File(badge).existsSync(), isTrue, reason: badge);
     }
     // Astute is on Google Play (tool/site/chrome.py, GOOGLE_PLAY_OPEN):
-    // Google's badge is a link, never marked as coming.
+    // Google's badge is a link, never marked as coming. Apple's stays a
+    // link too, ready for the day its listing is live, while the words
+    // around it say the iPhone app is still coming (APP_STORE_OPEN).
     expect(home, isNot(contains('store-google-play store-soon')));
-    // Every page is signed by TheBaleCompany, says the app is free on both
-    // phones, and links the Play listing.
+    expect(home, isNot(contains('store-app-store store-soon')));
+    // Every page is signed by TheBaleCompany, says where the app is, as
+    // chrome.py writes it, and links the Play listing.
     for (final String page in const [
       'site/index.html',
       'site/privacy.html',
@@ -149,7 +181,14 @@ void main() {
     ]) {
       final String text = File(page).readAsStringSync();
       expect(text, contains('© 2026 TheBaleCompany'), reason: page);
-      expect(text, contains('iPhone and Android'), reason: page);
+      expect(
+        text,
+        anyOf(
+          contains('Free on iPhone and Android'),
+          contains('Free on Android · coming to iPhone'),
+        ),
+        reason: page,
+      );
       expect(text, isNot(contains('Android coming soon')), reason: page);
       expect(
         text,
