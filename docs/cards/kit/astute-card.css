@@ -110,15 +110,38 @@ canvas.full,svg.full{position:absolute;inset:0;width:100%;height:100%;user-selec
 .kit-pill.kit-with-why .kit-go{margin:0}
 .kit-pill .kit-why-door{display:inline-block;padding:3px 8px 3.5px 9px;border-radius:99px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--k) 30%,transparent);opacity:.85}
 .kit-pill.kit-with-why .kit-from{flex-basis:100%;display:flex;align-items:flex-end;box-sizing:border-box;min-height:32px;padding-bottom:3px;margin-right:var(--kit-corner-w,0px)}
+/* links: Go deeper's name a size up, as stack sets it, the source under it. With Why this card, the two doors in plain
+   words on one line, Why this card in a regular weight and quieter, and the source under them beside the save and share:
+   pill, without the pills. */
+.kit-links .kit-go{display:block;width:max-content;font-size:14px;line-height:1.3;margin-bottom:2px}
+.kit-links .kit-from{display:block}
+.kit-links.kit-with-why{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:16px}
+.kit-links.kit-with-why .kit-go{margin:0}
+.kit-links .kit-why-door{font:500 14px/1.3 var(--body);opacity:.72}
+.kit-links .kit-go::after,.kit-links .kit-why-door::after{font-weight:inherit}
+/* Without Why this card, on a back short of room (kit-flat): Go deeper's name and the source run together, as a line
+   sets them. */
+.kit-flat.kit-links .kit-go{display:inline;width:auto;font-size:12.5px;margin:0 .55em 0 0}
+.kit-flat.kit-links .kit-from{display:inline}
+.kit-links.kit-with-why .kit-from{flex-basis:100%;display:flex;align-items:flex-end;box-sizing:border-box;min-height:32px;padding-bottom:3px;margin-right:var(--kit-corner-w,0px)}
 /* A back short of room (kit-short): no row for Why this card alone. It follows the source on Go deeper's line,
-   and the whole foot keeps to the side of the save and share; the pills give way to the words, as a line has them. */
+   and the whole foot keeps to the side of the save and share; the pills give way to the words, as a line has them,
+   and links takes a line's sizes. */
 .kit-app .foot.kit-two.kit-short{flex-direction:row;align-items:flex-end;min-height:var(--kit-corner-h,0px);padding-right:var(--kit-corner-w,0px)}
 .kit-two.kit-short .src{flex:1}
-.kit-short .kit-door > .kit-why-door{margin-left:.9em}
+.kit-short .kit-gap{word-spacing:.7em}
 .kit-short .kit-pill.kit-with-why{display:block}
 .kit-short .kit-pill .kit-go{display:inline;background:none;padding:0;margin:0 .55em 0 0}
 .kit-short .kit-pill .kit-why-door{display:inline;box-shadow:none;padding:0}
 .kit-short .kit-pill.kit-with-why .kit-from{display:inline;flex-basis:auto;min-height:0;padding:0;margin:0}
+.kit-short .kit-links.kit-with-why{display:block}
+.kit-short .kit-links .kit-go{display:inline;width:auto;font-size:12.5px;margin:0 .55em 0 0}
+.kit-short .kit-links .kit-why-door{font-size:12.5px}
+.kit-short .kit-links.kit-with-why .kit-from{display:inline;flex-basis:auto;min-height:0;padding:0;margin:0}
+/* The last it gives (kit-bare): the source's words, where with them the foot would be taller than its row. The two
+   doors stand alone, and Go deeper opens on the source. */
+.kit-short.kit-bare .kit-door > .kit-from{display:none}
+.kit-short.kit-bare .kit-door > .kit-go{margin-right:0}
 .keep.gone~.foot .kit-why-door,.turn:not(.over) .face.front .foot .kit-why-door{visibility:hidden}
 /* The corner the native save and share sit in: the foot keeps it, so the source wraps before it. */
 .kit-app .foot{min-height:var(--kit-corner-h,0px);padding-right:var(--kit-corner-w,0px);align-items:flex-end}

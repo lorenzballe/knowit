@@ -14,6 +14,7 @@ import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/pill_card.dart';
+import 'package:astuto/widgets/source_foot.dart';
 
 /// The back of every card in the bank, on the smallest phone we design for,
 /// fits the card: nothing overflows, nothing has to be scrolled to.
@@ -24,6 +25,14 @@ import 'package:astuto/widgets/pill_card.dart';
 /// the Today deck gives it on a 360×740 phone with ordinary system bars —
 /// measured from the app, not guessed — and the fonts are the real ones,
 /// because the test font's metrics are nothing like Fraunces'.
+///
+/// The foot is set the way the build says (lib/widgets/source_foot.dart),
+/// so each way being tried that carries Why this card on the back is held
+/// to this in a run of its own:
+///
+///   flutter test test/card_back_fit_test.dart
+///   flutter test test/card_back_fit_test.dart --dart-define=SOURCE_FOOT=pill
+///   flutter test test/card_back_fit_test.dart --dart-define=SOURCE_FOOT=links
 Future<void> _loadRealFonts() async {
   final faces = {
     'Fraunces': 'assets/fonts/Fraunces.ttf',
@@ -367,6 +376,22 @@ void main() {
       final findings = <String>[];
       for (final pill in PillBank.cards) {
         await check(tester, pill, findings, phone: phone, card: card);
+        // With D the foot of a card that is not one of the day's, with no
+        // Why this card to open, is of another shape: Go deeper on a line of
+        // its own and the source under it, as B sets them. Its back is held
+        // to the same.
+        if (sourceFoot == SourceFoot.links) {
+          final without = <String>[];
+          await check(
+            tester,
+            pill,
+            without,
+            phone: phone,
+            card: card,
+            why: false,
+          );
+          findings.addAll([for (final f in without) 'without Why: $f']);
+        }
       }
       report(findings);
       expect(findings, isEmpty, reason: '${findings.length} backs do not fit');

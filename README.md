@@ -793,7 +793,7 @@ with one in ten of the rest, leave the bank for `tool/cards/review/`, listed
 in an issue with **Publish** and **Drop** under each; a tick does the rest.
 Readers can say a card is wrong (*Report a problem*, off the card's face
 and in the app's own sheets, so a drawn card has it too: under the source
-in Go deeper, in the share sheet or in Go deeper's head, the three ways
+in Go deeper, in the share sheet or in Go deeper's head, the four ways
 being tried in `lib/widgets/source_foot.dart` with the card's foot, which
 leads with Go deeper and brings Why this card back to every card of the
 day); the server adds up every day how each card does — right and wrong
