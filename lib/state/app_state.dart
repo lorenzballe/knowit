@@ -42,6 +42,7 @@ import '../sync/trace.dart';
 import '../utils/home_widget.dart';
 import '../utils/reminders.dart';
 import 'journey_record.dart';
+import 'debug_looks.dart';
 import 'music_sound.dart';
 import 'progress.dart';
 import 'card_notes.dart';
@@ -672,6 +673,7 @@ class AppState extends ChangeNotifier {
     Trace.instance.plus = isPlus;
     themeMode = _decodeTheme(_prefs.getString(_kTheme));
     MusicSound.load(_prefs);
+    DebugLooks.load(_prefs);
     seenIds = (_prefs.getStringList(_kSeenIds) ?? []).toSet();
     ownIdsToday = (_prefs.getStringList(_kOwnIds) ?? []).toSet();
     answers = _decodeAnswers(_prefs.getString(_kAnswers));
@@ -3616,6 +3618,8 @@ class AppState extends ChangeNotifier {
     // a day, whoever runs it.
     final String? offered = trialOfferedOn;
     if (offered != null) await _prefs.setString(_kTrialOfferedOn, offered);
+    // So do the looks the developer tools are trying on this phone.
+    await DebugLooks.keep(_prefs);
     // The clear above took the reader's own answer to "measure this?" with
     // it. An opt-out a sign-out quietly undoes is not a choice, it is a
     // delay — so it goes back down before anything else is written.

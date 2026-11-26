@@ -347,13 +347,15 @@ level, in `PathScreen`. The rung dates are written the moment a rung is
 cleared (`rungDates`, in the snapshot, earliest date winning in a merge)
 and never moved.
 
-Once the day is done, its header is the shelf's first row: a dot in the
-front card's colour, "Day 6 · five read" and, small under it, what has been
-liked; at the far end the shelf's two buttons, See again and the day sent.
-It used to be a line of its own over an eyebrow ("TODAY'S FIVE") that said
-the five again, with a band of air between the two; one row gives the card
-that room. The line gives a point or two before See again gives up its
-word for its mark alone.
+Once the day is done, its header is the shelf's first row: "Day 6", where
+Today's own name stood while the five were read, and, small under it, what
+has been liked; at the far end a small pill, ▶ See again, and the day sent.
+See again opens the five at full size in the viewer, always from the first
+card whichever one the shelf has at its front, exactly as Explore's "Your
+five from today" does (`openTodaysFive`). The day's name gives a point or
+two before See again gives up its word for its mark alone. The developer
+tools can take the row away to set the bigger card beside it on a phone:
+then See again and the day sent stand at the two ends of the row of dots.
 
 ## Explore, and the archive
 
@@ -1529,7 +1531,13 @@ store through RevenueCat rather than from a bool the app wrote to itself.
 and restart, toggle the plan, and a readout of what the app knows about
 itself: whether Firebase started and why not, the account id, the last auth
 error, whether the store answered, and whether PostHog is sending, opted out
-or not running at all. It is needed in release builds, because TestFlight
+or not running at all. At its head are two looks to try on the phone itself
+(`lib/state/debug_looks.dart`): *Today, day read: no top row*, the finished
+day without the row over its card, so the card is bigger; and *Profile top*,
+Auto (A free · C Astute+), A, B or C. Each shows at once and is kept on the
+phone, through the wipe too; a build without the tools never reads them, so
+a look kept by a TestFlight build is nothing to the App Store build
+installed over it. It is needed in release builds, because TestFlight
 builds are release builds, and the build testers get is the very binary then
 submitted to the App Store. So an iPhone decides at launch (`readDebugTools`
 in `lib/debug_flags.dart`, from `main()`): it asks `AppDelegate.swift` on
@@ -1692,11 +1700,14 @@ you know), *Holding* (it is still there weeks later), *Sharp*. Any five
 cards at all carry somebody up it. The journey shows the rung, one bar
 held to whichever requirement is furthest behind, and the single next
 step — telling somebody four things at once is telling them nothing.
-The profile opens on the Astute score, on either plan, read as the journey
+On the free plan the profile opens on the Astute score, read as the journey
 reads it, with its week and its month, and under it the way into the journey,
-"All your scores, week by week" — marked Astute+ on the free plan but never
-locked: the score above it is already the reader's own
-(`widgets/profile_top.dart`, where two other tops are kept for comparison).
+"All your scores, week by week" — marked Astute+ but never locked: the score
+above it is already the reader's own. On Astute+ it opens on the board: the
+score, the days in a row and the cards read side by side, the days in a row
+lit while they run, the number in the streak's orange with its flame
+(`widgets/profile_top.dart`, `profileTopFor`, where the third top is kept for
+comparison).
 Lower down it keeps how well you know yourself: the level, the moves you keep
 missing, whether the gap is closing and the week in questions are all the
 journey's.

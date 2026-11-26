@@ -1,6 +1,6 @@
 // Your five from today: the small row near the top of Explore that opens the
-// reader's own five again at full size once they are read — where Today's
-// "See again" went. Drawn only once the day is read and never on a
+// reader's own five again at full size once they are read, as "See again"
+// over Today's shelf does. Drawn only once the day is read and never on a
 // subject's page, whole on a small phone at large text, in the reader's
 // language, and opening the five themselves from the first.
 //
