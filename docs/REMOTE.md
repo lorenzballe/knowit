@@ -187,6 +187,7 @@ The knobs this build reads:
 | `place.ask` | switch | on | — | the place's sheet after a finished day (Explore and Profile still ask when the reader asks them to) | `AppState.shouldAskForPlace` |
 | `review.ask` | switch | on | — | the store's rating prompt | `AppState.shouldAskForReview` |
 | `trial.firstRun` | switch | off | — | the first run's free trial: after the onboarding, one real card, then the offer of the year's free days, then the day's five (never to a reader with Astute+, never twice a day, never without the store's own year on sale) | `trialOfferDue` (lib/screens/trial_offer.dart) |
+| `cardAi` | switch | off | — | the answers by Claude, Astute+'s: the assistant in Go deeper and the weekly coach in Your journey (a free reader sees them locked); the developer tools have them on regardless | `cardAiOn` (lib/widgets/deeper_sheet.dart) |
 | `push.askGapDays` | number | 3 | 1 to 30 | the days a "Not now" holds the reminder sheet back | `AppState.shouldAskForPush` |
 | `push.deferralsAllowed` | number | 3 | 1 to 10 | how many "Not now"s the sheet takes before it stops coming | `AppState.shouldAskForPush` |
 | `push.times` | three times | 08:30, 12:30, 19:00 | 05:00–11:00, 11:00–15:00, 17:00–23:00 (the last minute out) | the times the reminder sheet offers, each where its word ("Morning", "Lunchtime", "Evening") stays true | `lib/widgets/reminder_ask.dart` |

@@ -1,7 +1,8 @@
 {
  "gate": null,
  "flags": {
-  "trial.firstRun": true
+  "trial.firstRun": true,
+  "cardAi": true
  },
  "tunables": {},
  "experiments": {}

@@ -1,10 +1,11 @@
 {
  "schema": 1,
- "hash": "0c90e29e389bbe01",
+ "hash": "427e9e9bc85b137a",
  "app": {
   "gate": null,
   "flags": {
-   "trial.firstRun": true
+   "trial.firstRun": true,
+   "cardAi": true
   },
   "tunables": {},
   "experiments": {}

@@ -66,7 +66,7 @@ abstract final class GoDeeper {
 /// in, once it is turned on.
 bool cardAiOn(AppState app, String language) =>
     debugToolsOn ||
-    Flags.on('cardAi', app.remoteContext(language), fallback: false);
+    AppState.kCardAiFlag.on(app.remoteContext(language));
 
 /// Opens Go deeper on [pill].
 Future<void> showDeeperSheet(BuildContext context, AppState app, Pill pill) {

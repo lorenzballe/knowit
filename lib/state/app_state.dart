@@ -2534,6 +2534,12 @@ class AppState extends ChangeNotifier {
     fallback: false,
   );
 
+  /// The answers by Claude: the assistant in Go deeper and the weekly coach
+  /// in Your journey, both Astute+'s (a free reader sees them locked). Off
+  /// as built; the developer tools have them on whatever the server says
+  /// (cardAiOn, lib/widgets/deeper_sheet.dart).
+  static const RemoteFlag kCardAiFlag = RemoteFlag('cardAi', fallback: false);
+
   /// Whether the first run plays a card and offers the trial after it.
   bool get firstRunTrialOn => kFirstRunTrialFlag.on(_here);
 
