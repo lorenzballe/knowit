@@ -6663,6 +6663,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Scritto da Astute a partire da questi articoli, e verificato su di essi.';
 
   @override
+  String get newsWhyItMatters => 'Perché conta';
+
+  @override
   String get deeperDeclined => 'A questa non può rispondere.';
 
   @override

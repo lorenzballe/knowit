@@ -6543,6 +6543,9 @@ class AppLocalizationsTr extends AppLocalizations {
       'Astute bu haberlerden yazdı ve onlarla karşılaştırarak doğruladı.';
 
   @override
+  String get newsWhyItMatters => 'Neden önemli';
+
+  @override
   String get deeperDeclined => 'Buna yanıt veremiyor.';
 
   @override

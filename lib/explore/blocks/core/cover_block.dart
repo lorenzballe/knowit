@@ -12,6 +12,11 @@
 /// less what the reader has read; every card on it is of a subject of its
 /// own where the deal has enough. The first time Explore opens it comes up a
 /// tile at a time; after that it is simply there.
+///
+/// The feed at the foot of the page leaves out the cards the cover laid, and
+/// does not open in the cover's shape (lib/explore/blocks/core/
+/// feed_block.dart): the cover says which as the engine asks it what it has
+/// to show, before anything is laid out ([ExploreShelves.onCover]).
 library;
 
 import 'dart:math' as math;
@@ -21,7 +26,9 @@ import 'package:flutter/material.dart';
 import '../../../models/pill.dart';
 import '../../../widgets/explore/card_tiles.dart';
 import '../../explore_block.dart';
+import 'feed_block.dart' show filmTile;
 import 'layout.dart';
+import 'shelves.dart';
 
 /// The room between two tiles of the cover, across and down.
 const double kCoverSpacing = 8;
@@ -46,6 +53,16 @@ class CoverBlock extends ExploreBlock with SectionLayout {
   ) {
     final List<Pill> cards = host.cardsFor(section, limit: 60);
     if (cards.length < 3) return null;
+    // The cover as it will be laid across the page, between its margins:
+    // its cards are the ones the feed under it leaves out.
+    final CoverDeal? deal = CoverDeal.of(
+      context,
+      cards,
+      CoverGrid(math.max(0, MediaQuery.sizeOf(context).width - 40)),
+      isRead: host.isRead,
+    );
+    if (deal == null) return null;
+    ExploreShelves.of(host).onCover.addAll([for (final p in deal.laid) p.id]);
     return SectionFrame(
       title: section.title(host.language),
       line: section.subtitle(host.language),
@@ -363,6 +380,7 @@ class _CoverMosaicState extends State<CoverMosaic>
                     child: _CoverTile(
                       key: ValueKey('cover-${pill.id}'),
                       pill: pill,
+                      section: widget.section,
                       box: size,
                       radius: TileLook.forBox(grid.smallBox).radius,
                       read: host.isRead(pill),
@@ -428,6 +446,7 @@ class _CoverTile extends StatefulWidget {
   const _CoverTile({
     super.key,
     required this.pill,
+    required this.section,
     required this.box,
     required this.radius,
     required this.read,
@@ -435,6 +454,10 @@ class _CoverTile extends StatefulWidget {
   });
 
   final Pill pill;
+
+  /// The cover's section, which a film is played from.
+  final ExploreSection section;
+
   final Size box;
 
   /// The corner, the same on every tile of the cover.
@@ -456,11 +479,15 @@ class _CoverTileState extends State<_CoverTile> {
   @override
   Widget build(BuildContext context) {
     final Pill pill = widget.pill;
-    final Widget face = BoxTile(
-      pill: pill,
-      box: widget.box,
-      read: widget.read,
-      look: TileLook.forBox(widget.box).withRadius(widget.radius),
+    final Widget face = filmTile(
+      pill,
+      widget.section,
+      BoxTile(
+        pill: pill,
+        box: widget.box,
+        read: widget.read,
+        look: TileLook.forBox(widget.box).withRadius(widget.radius),
+      ),
     );
     return Semantics(
       button: true,

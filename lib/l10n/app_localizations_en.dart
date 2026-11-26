@@ -6619,6 +6619,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Written by Astute from these reports, and checked against them.';
 
   @override
+  String get newsWhyItMatters => 'Why it matters';
+
+  @override
   String get deeperDeclined => 'That\'s one it can\'t answer.';
 
   @override

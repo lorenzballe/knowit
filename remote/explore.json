@@ -1,5 +1,5 @@
 {
-  "_": "Explore edited down to a front page (26 November 2026), each section once, the strong ones only: the day's challenge, the same for everyone, and under it the reader's own five once they are read and what the reader started and left (Continue); the news and the line of the day; where the reader lives; one feature on five days of the week (true stories on Monday, did you know on Tuesday, charts that mislead on Wednesday, where it came from on Thursday, a few cards on Sunday); the challenges; the top list; books and what the founders read, then, every other day from the third, Astute+ for a reader on the free plan; and the endless feed. Left out, because the feed or another section already does their work: the cover (the feed lays the same mosaic of the same cards), cards to watch (one film), the paths (a card read from Explore opens its own path, and Continue keeps the ones started), what a card is useful for (its cards are the feed's, its areas are in search), and Friday's and Saturday's features (a row of the hardest cards, a button to one card at random). On a subject's page the founders are left out too: there they list the books of the row above. The page as it was is remote/examples/explore-long.json: copied over this file and bundled, it is back. The day's challenge and the challenges are for Explore of every subject only. Builds 54 and older keep the shelves they knew.",
+  "_": "Explore as a weekly schedule, like a newspaper (prototype 2, 26 November 2026). The top is the same every day, so a reader learns where things are: the day's challenge, the same for everyone, then the reader's own five once read and what they started and left (Continue), the news (look: lead, one story large with why it matters and two more as rows; front is the page as it was, pager a story to a card) and the line of the day. The middle changes with the day of the week: the cover, the day's cards in a mosaic, on Monday and Saturday only, heading the middle so the top stays where it is; then one feature a day, all seven days: true stories on Monday, did you know on Tuesday, charts that mislead on Wednesday, where it came from on Thursday, for the sharpest on Friday, surprise me on Saturday, a few cards on Sunday. Then every day the challenges, the top list, books, what the founders read (Explore for every subject only) and where the reader lives, under the books. Then one door to Astute+ a day: the offer on Monday, Wednesday, Friday and Sunday, for a reader on the free plan from the third day; the ten-card paths on Tuesday, Thursday and Saturday. Then the endless feed, which leaves out the cards the cover laid and never opens in its shape, and deals the films as cards. Cards to watch and what a card is useful for are gone: a film is a card in the feed and on the shelves now. Prototype 1 is remote/examples/explore-lean-v1.json, the page before it remote/examples/explore-long.json: either, copied over this file and bundled, is back. The day's challenge and the challenges are for Explore of every subject only. Builds 54 and older keep the shelves they knew.",
   "sections": [
     {
       "id": "nothing",
@@ -71,7 +71,8 @@
         "ja": "この数日のニュースと、その理由。",
         "ko": "요 며칠의 이야기와 그 이유.",
         "zh": "这几天的新闻，以及背后的原因。"
-      }
+      },
+      "look": "lead"
     },
     {
       "id": "line-of-day",
@@ -142,8 +143,37 @@
       }
     },
     {
-      "id": "where-you-live",
-      "block": "where-you-live"
+      "id": "cover",
+      "block": "cover",
+      "gap": 32,
+      "title": {
+        "en": "On the cover today",
+        "it": "Oggi in copertina",
+        "de": "Heute auf dem Titel",
+        "es": "Hoy en portada",
+        "fr": "En couverture aujourd’hui",
+        "pt": "Hoje na capa",
+        "nl": "Vandaag op de cover",
+        "pl": "Dziś na okładce",
+        "ru": "Сегодня на обложке",
+        "tr": "Bugün kapakta",
+        "ja": "今日の表紙",
+        "ko": "오늘의 표지",
+        "zh": "今日封面"
+      },
+      "source": {
+        "query": {
+          "unread": true,
+          "perSubject": 1,
+          "limit": 40
+        }
+      },
+      "audience": {
+        "weekdays": [
+          1,
+          6
+        ]
+      }
     },
     {
       "id": "surprise-mon",
@@ -231,6 +261,58 @@
           {
             "weekdays": [
               4
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise-fri",
+      "block": "sharpest",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              5
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise-sat",
+      "block": "surprise",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              6
             ]
           },
           {
@@ -396,6 +478,10 @@
       "subjectPages": false
     },
     {
+      "id": "where-you-live",
+      "block": "where-you-live"
+    },
+    {
       "id": "plus-offer",
       "block": "promo",
       "from": "explore offer",
@@ -429,6 +515,47 @@
               }
             ]
           }
+        ]
+      }
+    },
+    {
+      "id": "paths",
+      "block": "paths",
+      "title": {
+        "en": "Ten-card paths",
+        "it": "Percorsi da 10 carte",
+        "de": "Pfade aus zehn Karten",
+        "es": "Recorridos de 10 cartas",
+        "fr": "Parcours de 10 cartes",
+        "ja": "10枚のコース",
+        "ko": "10장 코스",
+        "nl": "Paden van tien kaarten",
+        "pl": "Ścieżki z 10 kart",
+        "pt": "Percursos de 10 cartas",
+        "ru": "Маршруты из 10 карточек",
+        "tr": "10 kartlık yollar",
+        "zh": "十张卡片之路"
+      },
+      "subtitle": {
+        "en": "One theme, from the easiest card to the hardest.",
+        "it": "Un tema, dalla carta più facile alla più difficile.",
+        "de": "Ein Thema, von der leichtesten Karte bis zur schwersten.",
+        "es": "Un tema, de la carta más fácil a la más difícil.",
+        "fr": "Un thème, de la carte la plus facile à la plus difficile.",
+        "ja": "ひとつのテーマを、やさしいカードから難しいカードへ。",
+        "ko": "하나의 주제를 가장 쉬운 카드부터 가장 어려운 카드까지.",
+        "nl": "Eén thema, van de makkelijkste kaart tot de moeilijkste.",
+        "pl": "Jeden temat, od najłatwiejszej karty do najtrudniejszej.",
+        "pt": "Um tema, da carta mais fácil à mais difícil.",
+        "ru": "Одна тема — от самой лёгкой карточки до самой трудной.",
+        "tr": "Tek bir konu, en kolay karttan en zoruna.",
+        "zh": "一个主题，从最简单的卡片到最难的。"
+      },
+      "audience": {
+        "weekdays": [
+          2,
+          4,
+          6
         ]
       }
     },

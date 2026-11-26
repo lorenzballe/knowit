@@ -6367,6 +6367,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get newsMadeFrom => 'Astuteがこれらの記事をもとに書き、記事と照らし合わせて確かめました。';
 
   @override
+  String get newsWhyItMatters => 'なぜ重要か';
+
+  @override
   String get deeperDeclined => 'これには答えられません。';
 
   @override

@@ -474,11 +474,16 @@ class ChallengeDots extends StatelessWidget {
     required this.controller,
     required this.count,
     required this.onPick,
+    this.name = 'challenge',
   });
 
   final PageController controller;
   final int count;
   final ValueChanged<int> onPick;
+
+  /// What its keys are named after: the challenges' own, or another pager's
+  /// that dots its pages the same way (the latest news, as cards).
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -493,7 +498,7 @@ class ChallengeDots extends StatelessWidget {
         final int shown = at.round().clamp(0, count - 1);
         final l = context.l10n;
         return Semantics(
-          key: const ValueKey('challenge-dots'),
+          key: ValueKey('$name-dots'),
           container: true,
           value: l.challengesPage(shown + 1, count),
           increasedValue: shown + 1 < count
@@ -508,7 +513,7 @@ class ChallengeDots extends StatelessWidget {
               children: [
                 for (int i = 0; i < count; i++)
                   GestureDetector(
-                    key: ValueKey('challenge-dot-$i'),
+                    key: ValueKey('$name-dot-$i'),
                     behavior: HitTestBehavior.opaque,
                     onTap: () => onPick(i),
                     child: Padding(

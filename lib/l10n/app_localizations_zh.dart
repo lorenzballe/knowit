@@ -6361,6 +6361,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get newsMadeFrom => '由 Astute 根据这些报道撰写，并与报道逐一核对。';
 
   @override
+  String get newsWhyItMatters => '为何重要';
+
+  @override
   String get deeperDeclined => '这个问题无法回答。';
 
   @override

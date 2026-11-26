@@ -7,9 +7,18 @@
 /// films are on the site, beside the cards' pages (web/cards/video/); the
 /// first frame of each ships with the app (assets/video/), so its card is
 /// there at once and the film is fetched only when it is played.
+///
+/// A video card is a card like any other on Explore: [videoPills] makes it
+/// one, in its subject's colour, its question the film's, and Explore deals
+/// it among the bank's cards, in the feed and on the shelves that lay any
+/// card as a tile (lib/explore/blocks/core/shelves.dart), with a play mark
+/// in its corner (lib/widgets/explore/card_tiles.dart). A tap on it plays
+/// the film on the whole screen, out of its tile, rather than opening a card.
 library;
 
+import '../models/pill.dart';
 import 'card_pages.dart' show kCardsBase;
+import 'topics.dart';
 
 /// One video card.
 class VideoCard {
@@ -83,3 +92,37 @@ const List<VideoCard> kVideoCards = [
     ground: 0xFFFFB000,
   ),
 ];
+
+final Map<String, VideoCard> _byId = {
+  for (final VideoCard card in kVideoCards) card.id: card,
+};
+
+/// The video card [id] names, or null for any other card.
+VideoCard? videoCardById(String id) => _byId[id];
+
+/// The video card [pill] is, or null for a card that is no film.
+VideoCard? videoCardOf(Pill pill) => _byId[pill.id];
+
+final Map<String, List<Pill>> _pills = {};
+
+/// The video cards as cards, for a reader of [language]: each in its
+/// subject's colour and under its subject, its question the film's in the
+/// language it is told in for them. Nothing to answer, no back: a tap plays
+/// the film (openVideoCard), which is the card.
+List<Pill> videoPills(String language) =>
+    _pills[language] ??= List.unmodifiable([
+      for (final VideoCard card in kVideoCards)
+        if (kTopics[card.subject] case final TopicStyle style)
+          Pill(
+            id: card.id,
+            topic: style.name,
+            color: style.color,
+            ink: style.ink,
+            tint: style.tint,
+            question: card.titleFor(language),
+            answer: '',
+            barMove: '',
+            source: '',
+            language: card.languageFor(language),
+          ),
+    ]);

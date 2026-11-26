@@ -6889,6 +6889,9 @@ class AppLocalizationsPl extends AppLocalizations {
       'Napisane przez Astute na podstawie tych artykułów i z nimi sprawdzone.';
 
   @override
+  String get newsWhyItMatters => 'Dlaczego to ważne';
+
+  @override
   String get deeperDeclined => 'Na to nie może odpowiedzieć.';
 
   @override
