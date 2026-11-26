@@ -22,9 +22,9 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   with the app's Today screen laid out in the app's own points rather than
   pictured — and four hard cards from the bank around it, today's question,
   the day's row, the two cream sheets laid on the night paper (calibration,
-  the science), the cards that flip, the subjects going by both ways, the
-  app's five screens in a row, the widgets, friends, the plans, the
-  questions and the last word. `site/assets/main.js` adds what moves: the
+  the science), the cards that flip, Explore and Your journey, the subjects
+  going by both ways, the app's screens in a row, the widgets, the plans,
+  the questions and the last word. `site/assets/main.js` adds what moves: the
   menu, the nav that floats and frosts and its progress line in the three
   lights' colours, things that come into view as they are reached, numbers
   that count up, a light that follows the pointer across a card, the phone
@@ -37,14 +37,21 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   the cards that flip, the plan picker and the questions. Today's question
   is shown live from `/widget/days.json`, the file the widget reads, with
   the edition in the first screen's kicker and the time to the next one. It
-  presents Astute on the App Store, with Apple's own badge, and says Android
-  is coming: no page links to Google Play until the listing is live. An
-  iPhone's Download goes straight to the App Store, an Android phone's to
-  `/get`, which says the app is not there yet, and a computer's to a code to
-  scan with the phone, which opens `/get` and from there the App Store. It
-  reads fully without JavaScript, and without motion for anyone who has
-  asked their system for less. The screens in `site/assets/` are
-  `tool/shots/` at 840×1826, as WebP.
+  presents Astute on Google Play and on the App Store, each with the store's
+  own badge. The Play listing is live; the App Store's is made but not live
+  yet, so until `APP_STORE_OPEN` in `tool/site/chrome.py` says it is (one
+  line to change at launch) Apple's badge keeps its link but is marked
+  "Coming soon", every line that says where the app is says "Free on
+  Android · coming to iPhone", and no Download button leads to the store's
+  empty page. An Android phone's Download goes to Google Play, a computer's
+  to a code to scan with the phone, and an iPhone's, like the code, to
+  `/get`: from there an Android phone goes on to Google Play, and an iPhone,
+  until the listing is live, stays on a page that says the app is on its
+  way. It reads fully without JavaScript, and without motion for anyone who
+  has asked their system for less. The phone pictures in `site/assets/` are
+  taken by `tool/site_shots.dart`, the app on an iPhone 16 Pro at night in
+  English with cards from the bank, and made WebP at 840×1826 by
+  `tool/site/shots.py`; nothing on them is made up about other readers.
 - **What the site measures**: the pages read and the store buttons pressed,
   `$pageview` and `store clicked` (`store`, `page`, `ref`), into the same
   PostHog project as the app, from `site/assets/main.js`. Nothing is kept on

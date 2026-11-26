@@ -1,8 +1,8 @@
 /* astutetheapp.com — the landing page, section by section. What every
    page shares is in site.css; this is the rest: the first screen and its
    phone, today's question, the day's row, the two cream sheets, the cards
-   that flip, the subjects, the screens, the widgets, the plans, the
-   questions and the last word. Every state the script switches is on
+   that flip, Explore, Your journey, the subjects, the screens, the
+   widgets, the plans, the questions and the last word. Every state the script switches is on
    an attribute, not an inline style, so the page reads the same without
    it. */
 
@@ -12,7 +12,7 @@
 .section { position: relative; padding-block: clamp(88px, 10vw, 150px); }
 /* Where a glow or a marquee runs past the edge, the section keeps it: a
    phone's browser would otherwise widen the page to fit. */
-#subjects, #widgets, #pricing { overflow: hidden; }
+#subjects, #widgets, #pricing, #explore, #journey { overflow: hidden; }
 .section.tight { padding-top: clamp(64px, 7vw, 96px); }
 [id] { scroll-margin-top: 88px; }
 /* A hairline that fades at both ends, between two dark sections. */
@@ -211,6 +211,8 @@
 }
 .js .w > .shimmer { animation: word-in 1s var(--ease-out) both, shimmer 7s ease-in-out 1.2s infinite alternate; animation-delay: calc(var(--i, 0) * 70ms + 80ms), 1.2s; }
 @keyframes shimmer { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+/* Where the app is today, under its badges. */
+.hero-where { margin: 14px 0 0; font: 500 13px/1.4 var(--font-text); color: var(--cream-50); }
 /* Four facts under the badges, each a number in the serif. */
 .facts { list-style: none; margin: 34px 0 0; padding: 24px 0 0; border-top: 1px solid var(--hairline); display: flex; flex-wrap: wrap; gap: 14px 30px; }
 .facts li { display: flex; align-items: baseline; gap: 8px; font: 500 13px/1.2 var(--font-text); color: var(--cream-60); }
@@ -739,6 +741,8 @@
 .mini-conf span.on { background: var(--cream); color: var(--night); }
 .peek { margin: auto -26px -26px; height: 214px; position: relative; overflow: hidden; }
 .peek .device { position: absolute; left: 50%; top: 0; transform: translateX(-50%); }
+/* The day as it is sent is a picture, not a screen: no phone around it. */
+.peek .shared { position: absolute; left: 50%; top: 18px; width: 230px; height: auto; border-radius: 16px; transform: translateX(-50%) rotate(-2deg); box-shadow: 0 24px 48px -20px rgba(0, 0, 0, .8), 0 0 0 1px rgba(242, 241, 236, .08); }
 .peek::after { content: ""; position: absolute; inset: auto 0 0; height: 60px; background: linear-gradient(180deg, transparent, rgba(20, 20, 22, .55)); pointer-events: none; }
 
 /* ── Calibration ────────────────────────────────────────────────────── */
@@ -886,6 +890,33 @@
 .widget-list b { display: block; font-weight: 600; color: var(--cream); }
 .widget-list i { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(242, 241, 236, .06); border: 1px solid rgba(242, 241, 236, .1); }
 .widget-list svg { width: 16px; height: 16px; }
+
+/* ── Explore and Your journey ───────────────────────────────────────── */
+
+/* What a section holds, a line each, ruled as the widgets' list is but
+   closer, so nine of them stand beside one phone. */
+.feature-list { list-style: none; margin: 28px 0 0; padding: 0; max-width: 520px; }
+.feature-list li { display: flex; gap: 14px; align-items: flex-start; padding: 13px 0; border-top: 1px solid var(--hairline); font: 400 15px/1.5 var(--font-text); color: var(--cream-70); }
+.feature-list li:last-child { border-bottom: 1px solid var(--hairline); }
+.feature-list b { display: block; font-weight: 600; color: var(--cream); }
+.feature-list i { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(242, 241, 236, .06); border: 1px solid rgba(242, 241, 236, .1); }
+.feature-list svg { width: 16px; height: 16px; }
+.feature-list + .sub { margin-top: 22px; }
+/* The phone beside them, in a light of its own. */
+.feature-art, .journey-art { position: relative; display: flex; justify-content: center; }
+.feature-art::before, .journey-art::before { content: ""; position: absolute; inset: -8% -10%; background: radial-gradient(closest-side, rgba(45, 224, 210, .2), transparent 72%); pointer-events: none; }
+.journey-art::before { background: radial-gradient(closest-side, rgba(255, 225, 77, .15), transparent 72%); }
+.feature-art .device { --w: min(300px, 66vw); }
+/* Your journey in front, the new level behind it and to its left, smaller
+   and far enough out that its name is read whole. */
+.journey-art { align-items: flex-start; padding-top: 24px; }
+.journey-art .device { --w: min(270px, 48vw); flex: none; }
+.journey-art .device.behind { --w: min(236px, 42vw); margin-right: calc(var(--w) * -.14); margin-top: 64px; transform: rotate(-5deg); opacity: .92; }
+.journey-art .device:not(.behind) { transform: rotate(2.5deg); }
+/* The phones follow the words, and on a screen wide enough for the two
+   columns of .split (936px: two of 400px, the gap and the gutters) they
+   stand to their left, across from Explore's. */
+@media (min-width: 937px) { .journey-art { order: -1; } }
 
 /* ── The science ────────────────────────────────────────────────────── */
 
