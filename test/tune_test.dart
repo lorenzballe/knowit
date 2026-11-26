@@ -70,9 +70,8 @@ Future<void> _toFoot(WidgetTester tester) async {
   }
 }
 
-/// The button at the page's foot, scrolled to and tapped.
+/// The button at the foot of the screen, tapped wherever the page is.
 Future<void> _save(WidgetTester tester) async {
-  await _toFoot(tester);
   await tester.tap(find.byKey(const ValueKey('tune-save')));
   await tester.pump(const Duration(milliseconds: 600));
 }
@@ -186,10 +185,9 @@ void main() {
   });
 
   group('One page, and the hint that a part opens', () {
-    testWidgets('the whole page scrolls: the title goes up with it, the way '
-        'back stays where it is, and the button is the foot of the page', (
-      tester,
-    ) async {
+    testWidgets('the whole page scrolls: the title goes up with it, only the '
+        'way back and the button stay where they are, and the last of the '
+        'page comes clear of the button', (tester) async {
       final AppState app = await readyApp({'knowit.tuneHoldHint': true});
       await _pump(tester, TuneScreen(app: app, picked: app.pickedTopics));
       final Finder title = find.byKey(
@@ -205,22 +203,31 @@ void main() {
             .abs(),
         lessThan(2),
       );
+      // The button at the foot of the screen, in reach from the start.
+      final Finder save = find.byKey(const ValueKey('tune-save'));
+      expect(save.hitTestable(), findsOneWidget);
+      final Rect button = tester.getRect(save);
+      expect(button.bottom, greaterThan(874 - 40));
+
       _page(tester).jumpTo(120);
       await tester.pump();
       expect(tester.getTopLeft(find.byType(BackCircle)), back);
+      expect(tester.getRect(save), button);
       expect(tester.getTopLeft(title).dy, closeTo(titleTop - 120, 0.5));
-      // The button scrolls with the rest: at the foot of the page, and off
-      // the screen until the page gets there.
-      expect(
-        find.byKey(const ValueKey('tune-save')).hitTestable(),
-        findsNothing,
-      );
+
+      // At the foot of the page the button is where it was, and the last
+      // subject stands clear of it and of the fade over it.
       await _toFoot(tester);
-      expect(
-        tester.getBottomLeft(find.byKey(const ValueKey('tune-save'))).dy,
-        greaterThan(874 - 80),
-      );
       expect(tester.getTopLeft(find.byType(BackCircle)), back);
+      expect(tester.getRect(save), button);
+      final double last = [
+        for (final Element e in [
+          ...find.byType(GenreSubject).evaluate(),
+          ...find.byType(GenreSubjectOff).evaluate(),
+        ])
+          tester.getRect(find.byElementPredicate((x) => x == e)).bottom,
+      ].fold(0.0, (a, b) => a > b ? a : b);
+      expect(last, lessThan(button.top - 10 - 22));
     });
 
     testWidgets('the first time the parts come to rest on screen, the first '
@@ -276,7 +283,12 @@ void main() {
       await _pump(tester, TuneScreen(app: app, picked: app.pickedTopics));
       final BuildContext context = tester.element(find.byType(TuneScreen));
       final Genre first = _firstPart(tester);
-      // Held where the page opens, before the hint had its turn.
+      // Held as soon as the parts come into view, before they stand whole
+      // on screen and the hint has its turn.
+      _page(tester).jumpTo(300);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 16));
+      expect(find.text(context.l10n.tuneHoldHint), findsNothing);
       await tester.longPress(find.text(context.l10n.themeOf(first)).first);
       await tester.pump(const Duration(milliseconds: 600));
       expect(
