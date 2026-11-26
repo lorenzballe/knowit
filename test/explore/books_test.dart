@@ -1,6 +1,7 @@
 // Books in pills (explore/blocks/core/books_block.dart): a book's big ideas,
-// a card each, in the book's order; one book a week whole for everybody, the
-// rest two ideas free and then the way to Astute+.
+// a card each, in the book's order; one book a week whole for everybody, set
+// apart at the head of the section, the rest two ideas free and then the way
+// to Astute+.
 //
 //   flutter test test/explore/books_test.dart
 import 'package:flutter/material.dart';
@@ -9,11 +10,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/explore/blocks/core/books_block.dart';
+import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
+
+import 'core_harness.dart';
 
 Future<AppState> _app({bool plus = false}) async {
   SharedPreferences.setMockInitialValues({
@@ -27,6 +31,7 @@ Future<AppState> _app({bool plus = false}) async {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(loadFonts);
   final DateTime monday = DateTime(2026, 11, 16);
 
   test('the bank holds whole books, their ideas in the book\'s order', () {
@@ -213,7 +218,10 @@ void main() {
     final AppState app = await _app();
     final List<CardBook> books = booksOf(PillBank.live, today: app.today);
     // Tall enough for every row of covers, so the grid builds them all.
-    tester.view.physicalSize = Size(402, 320.0 * ((books.length + 2) ~/ 3) + 400);
+    tester.view.physicalSize = Size(
+      402,
+      320.0 * ((books.length + 2) ~/ 3) + 400,
+    );
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(
@@ -235,5 +243,114 @@ void main() {
     final Pill card = PillBank.live.firstWhere((p) => p.book != null);
     expect(card.book!.part, greaterThanOrEqualTo(1));
     expect(card.book!.year, greaterThan(1900));
+  });
+
+  // The section on Explore, as the engine draws it.
+  final List<ExploreSection> section = sectionsOf([
+    {
+      'id': 'books',
+      'block': 'books',
+      'title': {'en': 'Books in pills'},
+      'subtitle': {'en': 'The big ideas of bestsellers.'},
+    },
+  ]);
+
+  testWidgets('on Explore the book of the week is set apart at the head, '
+      'free this week on the free plan, and the others follow in a row', (
+    tester,
+  ) async {
+    final AppState app = await _app();
+    final String weekly = bookOfTheWeek(PillBank.live, app.today)!;
+    final List<CardBook> books = booksOf(PillBank.live, today: app.today);
+    await pumpSections(
+      tester,
+      CoreHost(app),
+      section,
+      size: const Size(390, 844),
+    );
+    final Finder week = find.byKey(ValueKey('book-week-$weekly'));
+    expect(week, findsOneWidget);
+    for (final String words in [
+      'BOOK OF THE WEEK',
+      books.first.book.badge,
+      'Free this week',
+      '${books.first.cards.length} ideas · ${bookMinutes(books.first)} min',
+    ]) {
+      expect(
+        find.descendant(of: week, matching: find.text(words)),
+        findsOneWidget,
+        reason: words,
+      );
+    }
+    // Its title and author beside the cover (and on the cover drawn while
+    // the edition's own comes).
+    for (final String words in [
+      books.first.book.title,
+      books.first.book.author,
+    ]) {
+      expect(
+        find.descendant(of: week, matching: find.text(words)),
+        findsWidgets,
+        reason: words,
+      );
+    }
+    // Not again in the row, which starts with the next book.
+    expect(
+      find.byKey(ValueKey('book-$weekly'), skipOffstage: false),
+      findsNothing,
+    );
+    expect(find.byKey(ValueKey('book-${books[1].id}')), findsOneWidget);
+    expect(find.byKey(const ValueKey('books-see-all')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+
+    await tester.tap(week);
+    for (var i = 0; i < 8; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(find.byType(BookScreen), findsOneWidget);
+    expect(tester.widget<BookScreen>(find.byType(BookScreen)).book.id, weekly);
+  });
+
+  testWidgets('on Astute+ the week\'s book is set apart without the word '
+      'free, which is every book for them', (tester) async {
+    final AppState app = await _app(plus: true);
+    final String weekly = bookOfTheWeek(PillBank.live, app.today)!;
+    await pumpSections(tester, CoreHost(app), section);
+    expect(find.byKey(ValueKey('book-week-$weekly')), findsOneWidget);
+    expect(find.text('Free this week'), findsNothing);
+  });
+
+  testWidgets('on a subject\'s page without the week\'s book, its books are a '
+      'row and nothing is set apart', (tester) async {
+    final AppState app = await _app();
+    final String weekly = bookOfTheWeek(PillBank.live, app.today)!;
+    final String weeklyTopic = booksOf(
+      PillBank.live,
+      today: app.today,
+    ).firstWhere((b) => b.id == weekly).first.topic;
+    final String topic = PillBank.live
+        .firstWhere((p) => p.book != null && p.topic != weeklyTopic)
+        .topic;
+    final List<CardBook> theirs = booksOf(
+      PillBank.live,
+      today: app.today,
+      subject: topic,
+    );
+    expect(theirs.any((b) => b.id == weekly), isFalse);
+    await pumpSections(tester, CoreHost(app, subject: topic), section);
+    expect(find.byKey(ValueKey('book-week-$weekly')), findsNothing);
+    expect(find.byKey(ValueKey('book-${theirs.first.id}')), findsOneWidget);
+  });
+
+  testWidgets('at twice the text size the section still fits', (tester) async {
+    final AppState app = await _app();
+    await pumpSections(tester, CoreHost(app), section, text: 2);
+    expect(
+      find.byKey(
+        ValueKey('book-week-${bookOfTheWeek(PillBank.live, app.today)}'),
+      ),
+      findsOneWidget,
+    );
+    expect(tester.takeException(), isNull);
   });
 }

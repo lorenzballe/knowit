@@ -6314,11 +6314,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookRecommendedBy => 'Consigliato da';
 
   @override
-  String bookPickPhoto(String credit) {
-    return 'Foto: $credit';
-  }
-
-  @override
   String get bookFreeThisWeek => 'Gratis questa settimana';
 
   @override
@@ -6349,5 +6344,37 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String bookRetold(String title, String author) {
     return 'Le idee di $title di $author, raccontate con parole di Astute. Per il libro intero, cercalo in libreria.';
+  }
+
+  @override
+  String get foundersTitle => 'Cosa leggono i fondatori';
+
+  @override
+  String founderBookCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n libri',
+      one: '1 libro',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get founderTheirBooks => 'I libri che ha consigliato';
+
+  @override
+  String founderAbout(String name) {
+    return 'Sono libri che $name ha consigliato in pubblico, con le parole citate e il punto in cui le ha dette. $name non ha alcun legame con Astute.';
+  }
+
+  @override
+  String founderPhoto(String author, String licence) {
+    return 'Foto: $author, $licence, Wikimedia Commons, ritagliata';
+  }
+
+  @override
+  String founderAlso(String names) {
+    return 'Consigliato anche da $names';
   }
 }

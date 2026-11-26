@@ -6200,11 +6200,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get bookRecommendedBy => 'Önerenler';
 
   @override
-  String bookPickPhoto(String credit) {
-    return 'Fotoğraf: $credit';
-  }
-
-  @override
   String get bookFreeThisWeek => 'Bu hafta ücretsiz';
 
   @override
@@ -6235,5 +6230,36 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String bookRetold(String title, String author) {
     return '$author imzalı $title kitabının fikirleri, Astute\'un kendi sözleriyle. Kitabın tamamı için kitapçına bak.';
+  }
+
+  @override
+  String get foundersTitle => 'Kurucular ne okuyor';
+
+  @override
+  String founderBookCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kitap',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get founderTheirBooks => 'Önerdiği kitaplar';
+
+  @override
+  String founderAbout(String name) {
+    return 'Bunlar $name adlı kişinin herkesin önünde önerdiği kitaplar; alıntılanan sözler ve söylendiği yerle birlikte. $name ile Astute arasında hiçbir bağ yok.';
+  }
+
+  @override
+  String founderPhoto(String author, String licence) {
+    return 'Fotoğraf: $author, $licence, Wikimedia Commons, kırpıldı';
+  }
+
+  @override
+  String founderAlso(String names) {
+    return 'Ayrıca önerenler: $names';
   }
 }

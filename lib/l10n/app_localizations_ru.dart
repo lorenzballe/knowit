@@ -6544,11 +6544,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get bookRecommendedBy => 'Рекомендуют';
 
   @override
-  String bookPickPhoto(String credit) {
-    return 'Фото: $credit';
-  }
-
-  @override
   String get bookFreeThisWeek => 'Бесплатно на этой неделе';
 
   @override
@@ -6579,5 +6574,39 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String bookRetold(String title, String author) {
     return 'Идеи книги «$title» ($author), пересказанные словами Astute. Всю книгу ищи в книжном.';
+  }
+
+  @override
+  String get foundersTitle => 'Что читают основатели';
+
+  @override
+  String founderBookCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n книги',
+      many: '$n книг',
+      few: '$n книги',
+      one: '$n книга',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get founderTheirBooks => 'Рекомендованные книги';
+
+  @override
+  String founderAbout(String name) {
+    return 'Это книги, рекомендованные публично, в приведённых словах и с указанием, где это было сказано. $name не имеет никакого отношения к Astute.';
+  }
+
+  @override
+  String founderPhoto(String author, String licence) {
+    return 'Фото: $author, $licence, Wikimedia Commons, кадрировано';
+  }
+
+  @override
+  String founderAlso(String names) {
+    return 'Также рекомендуют: $names';
   }
 }

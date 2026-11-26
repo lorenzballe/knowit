@@ -1456,7 +1456,6 @@
   "bookAgain": "Noch einmal lesen",
   "bookTheIdeas": "Die Ideen",
   "bookRecommendedBy": "Empfohlen von",
-  "bookPickPhoto": "Foto: {credit}",
   "bookFreeThisWeek": "Diese Woche gratis",
   "booksSeeAll": "Alle ansehen",
   "booksLibraryTitle": "Alle Bücher",
@@ -1470,5 +1469,11 @@
   "videoPlay": "Abspielen",
   "videoPause": "Pause",
   "videoWatchAgain": "Noch einmal ansehen",
-  "videoOffline": "Das Video braucht eine Verbindung. Tippe, um es noch einmal zu versuchen."
+  "videoOffline": "Das Video braucht eine Verbindung. Tippe, um es noch einmal zu versuchen.",
+  "foundersTitle": "Was Gründer lesen",
+  "founderBookCount": "{n, plural, =1{1 Buch} other{{n} Bücher}}",
+  "founderTheirBooks": "Empfohlene Bücher",
+  "founderAbout": "Bücher, die {name} öffentlich empfohlen hat, mit den zitierten Worten und der Stelle, an der sie fielen. {name} steht in keiner Verbindung zu Astute.",
+  "founderPhoto": "Foto: {author}, {licence}, Wikimedia Commons, zugeschnitten",
+  "founderAlso": "Auch empfohlen von {names}"
 }

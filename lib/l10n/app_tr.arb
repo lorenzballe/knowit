@@ -1456,7 +1456,6 @@
   "bookAgain": "Yeniden oku",
   "bookTheIdeas": "Fikirler",
   "bookRecommendedBy": "Önerenler",
-  "bookPickPhoto": "Fotoğraf: {credit}",
   "bookFreeThisWeek": "Bu hafta ücretsiz",
   "booksSeeAll": "Tümünü gör",
   "booksLibraryTitle": "Tüm kitaplar",
@@ -1470,5 +1469,11 @@
   "videoPlay": "Oynat",
   "videoPause": "Duraklat",
   "videoWatchAgain": "Tekrar izle",
-  "videoOffline": "Video için bağlantı gerekiyor. Tekrar denemek için dokun."
+  "videoOffline": "Video için bağlantı gerekiyor. Tekrar denemek için dokun.",
+  "foundersTitle": "Kurucular ne okuyor",
+  "founderBookCount": "{n, plural, other{{n} kitap}}",
+  "founderTheirBooks": "Önerdiği kitaplar",
+  "founderAbout": "Bunlar {name} adlı kişinin herkesin önünde önerdiği kitaplar; alıntılanan sözler ve söylendiği yerle birlikte. {name} ile Astute arasında hiçbir bağ yok.",
+  "founderPhoto": "Fotoğraf: {author}, {licence}, Wikimedia Commons, kırpıldı",
+  "founderAlso": "Ayrıca önerenler: {names}"
 }

@@ -1456,7 +1456,6 @@
   "bookAgain": "Relire",
   "bookTheIdeas": "Les idées",
   "bookRecommendedBy": "Recommandé par",
-  "bookPickPhoto": "Photo : {credit}",
   "bookFreeThisWeek": "Gratuit cette semaine",
   "booksSeeAll": "Tout voir",
   "booksLibraryTitle": "Tous les livres",
@@ -1470,5 +1469,11 @@
   "videoPlay": "Lire",
   "videoPause": "Pause",
   "videoWatchAgain": "Revoir",
-  "videoOffline": "La vidéo a besoin d’une connexion. Touchez pour réessayer."
+  "videoOffline": "La vidéo a besoin d’une connexion. Touchez pour réessayer.",
+  "foundersTitle": "Ce que lisent les fondateurs",
+  "founderBookCount": "{n, plural, =1{1 livre} other{{n} livres}}",
+  "founderTheirBooks": "Les livres recommandés",
+  "founderAbout": "Ce sont des livres que {name} a recommandés en public, avec les mots cités et l’endroit où ils ont été dits. {name} n’a aucun lien avec Astute.",
+  "founderPhoto": "Photo : {author}, {licence}, Wikimedia Commons, recadrée",
+  "founderAlso": "Également recommandé par {names}"
 }

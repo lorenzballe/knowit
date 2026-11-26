@@ -1456,7 +1456,6 @@
   "bookAgain": "Opnieuw lezen",
   "bookTheIdeas": "De ideeën",
   "bookRecommendedBy": "Aanbevolen door",
-  "bookPickPhoto": "Foto: {credit}",
   "bookFreeThisWeek": "Gratis deze week",
   "booksSeeAll": "Alles bekijken",
   "booksLibraryTitle": "Alle boeken",
@@ -1470,5 +1469,11 @@
   "videoPlay": "Afspelen",
   "videoPause": "Pauzeren",
   "videoWatchAgain": "Opnieuw kijken",
-  "videoOffline": "De video heeft een verbinding nodig. Tik om het opnieuw te proberen."
+  "videoOffline": "De video heeft een verbinding nodig. Tik om het opnieuw te proberen.",
+  "foundersTitle": "Wat oprichters lezen",
+  "founderBookCount": "{n, plural, =1{1 boek} other{{n} boeken}}",
+  "founderTheirBooks": "Aanbevolen boeken",
+  "founderAbout": "Dit zijn boeken die {name} in het openbaar aanraadde, met de geciteerde woorden en waar ze werden gezegd. {name} heeft geen enkele band met Astute.",
+  "founderPhoto": "Foto: {author}, {licence}, Wikimedia Commons, bijgesneden",
+  "founderAlso": "Ook aanbevolen door {names}"
 }

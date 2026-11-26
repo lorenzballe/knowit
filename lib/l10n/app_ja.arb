@@ -1456,7 +1456,6 @@
   "bookAgain": "もう一度読む",
   "bookTheIdeas": "アイデア",
   "bookRecommendedBy": "この本をすすめた人",
-  "bookPickPhoto": "写真：{credit}",
   "bookFreeThisWeek": "今週は無料",
   "booksSeeAll": "すべて見る",
   "booksLibraryTitle": "すべての本",
@@ -1470,5 +1469,11 @@
   "videoPlay": "再生",
   "videoPause": "一時停止",
   "videoWatchAgain": "もう一度見る",
-  "videoOffline": "動画には接続が必要です。タップしてもう一度試してください。"
+  "videoOffline": "動画には接続が必要です。タップしてもう一度試してください。",
+  "foundersTitle": "創業者が読む本",
+  "founderBookCount": "{n, plural, other{{n}冊}}",
+  "founderTheirBooks": "すすめた本",
+  "founderAbout": "これらは{name}が公の場ですすめた本で、引用した言葉と語られた場所を添えています。{name}は Astute とは関係ありません。",
+  "founderPhoto": "写真：{author}、{licence}、Wikimedia Commons、トリミング",
+  "founderAlso": "ほかにすすめた人：{names}"
 }

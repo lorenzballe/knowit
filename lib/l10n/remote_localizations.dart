@@ -5993,11 +5993,6 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('bookRecommendedBy') ?? _base.bookRecommendedBy;
 
   @override
-  String bookPickPhoto(String credit) =>
-      _words.format('bookPickPhoto', localeName, {'credit': credit}) ??
-      _base.bookPickPhoto(credit);
-
-  @override
   String get bookFreeThisWeek =>
       _words.text('bookFreeThisWeek') ?? _base.bookFreeThisWeek;
 
@@ -6038,4 +6033,35 @@ class RemoteLocalizations extends AppLocalizations {
         'author': author,
       }) ??
       _base.bookRetold(title, author);
+
+  @override
+  String get foundersTitle =>
+      _words.text('foundersTitle') ?? _base.foundersTitle;
+
+  @override
+  String founderBookCount(int n) =>
+      _words.format('founderBookCount', localeName, {'n': n}) ??
+      _base.founderBookCount(n);
+
+  @override
+  String get founderTheirBooks =>
+      _words.text('founderTheirBooks') ?? _base.founderTheirBooks;
+
+  @override
+  String founderAbout(String name) =>
+      _words.format('founderAbout', localeName, {'name': name}) ??
+      _base.founderAbout(name);
+
+  @override
+  String founderPhoto(String author, String licence) =>
+      _words.format('founderPhoto', localeName, {
+        'author': author,
+        'licence': licence,
+      }) ??
+      _base.founderPhoto(author, licence);
+
+  @override
+  String founderAlso(String names) =>
+      _words.format('founderAlso', localeName, {'names': names}) ??
+      _base.founderAlso(names);
 }

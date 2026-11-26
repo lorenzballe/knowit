@@ -1,5 +1,5 @@
 {
-  "_": "Explore as the owner and the app agreed it in November: what is new today (the cover, the day's challenge, the news), what the reader started and left (Continue: a path read partway, a book stopped at an idea), what is the reader's (for you, where you live), one surprise a day of the week (a different shelf each weekday), then the depth (paths, the challenges, books, and after the books, every other day from the third, Astute+ for a reader on the free plan), the top list, what a card is useful for, and the endless feed. The day's challenge and the challenges are for Explore of every subject only; a subject's page is that subject's cards. Builds 54 and older keep the shelves they knew.",
+  "_": "Explore as the owner and the app agreed it in November: what is new today (the cover, the day's challenge, the news), what the reader started and left (Continue: a path read partway, a book stopped at an idea), what is the reader's (for you, where you live), one surprise a day of the week (a different shelf each weekday), then the depth (paths, the challenges, books and what the founders read, and after them, every other day from the third, Astute+ for a reader on the free plan), the top list, what a card is useful for, and the endless feed. The day's challenge and the challenges are for Explore of every subject only; a subject's page is that subject's cards. Builds 54 and older keep the shelves they knew.",
   "sections": [
     {
       "id": "nothing",
@@ -484,6 +484,40 @@
       }
     },
     {
+      "id": "founders",
+      "block": "founders",
+      "title": {
+        "en": "What founders read",
+        "it": "Cosa leggono i fondatori",
+        "de": "Was Gründer lesen",
+        "es": "Lo que leen los fundadores",
+        "fr": "Ce que lisent les fondateurs",
+        "pt": "O que leem os fundadores",
+        "nl": "Wat oprichters lezen",
+        "pl": "Co czytają założyciele",
+        "ru": "Что читают основатели",
+        "tr": "Kurucular ne okuyor",
+        "ja": "創業者が読む本",
+        "ko": "창업자들이 읽는 책",
+        "zh": "创始人读什么"
+      },
+      "subtitle": {
+        "en": "The books they recommended in public, in their own words, and where they said it.",
+        "it": "I libri che hanno consigliato in pubblico, con le loro parole e dove l’hanno detto.",
+        "de": "Die Bücher, die sie öffentlich empfohlen haben, in ihren eigenen Worten, und wo sie es sagten.",
+        "es": "Los libros que recomendaron en público, con sus propias palabras, y dónde lo dijeron.",
+        "fr": "Les livres qu’ils ont recommandés en public, avec leurs propres mots, et où ils l’ont dit.",
+        "pt": "Os livros que recomendaram em público, com as suas palavras, e onde o disseram.",
+        "nl": "De boeken die ze in het openbaar aanraadden, in hun eigen woorden, en waar ze dat zeiden.",
+        "pl": "Książki, które publicznie polecili, ich własnymi słowami, i miejsce, gdzie to powiedzieli.",
+        "ru": "Книги, которые они советовали публично, их собственными словами, и где это было сказано.",
+        "tr": "Herkesin önünde önerdikleri kitaplar, kendi sözleriyle ve bunu nerede söyledikleriyle.",
+        "ja": "公の場ですすめた本を、本人の言葉と、それを語った場所とともに。",
+        "ko": "공개적으로 추천한 책을, 그들의 말과 그 말을 한 곳과 함께.",
+        "zh": "他们公开推荐过的书，附上原话和说话的出处。"
+      }
+    },
+    {
       "id": "plus-offer",
       "block": "promo",
       "from": "explore offer",
@@ -523,40 +557,6 @@
     {
       "id": "top",
       "block": "top"
-    },
-    {
-      "id": "founder-books",
-      "block": "founder-books",
-      "title": {
-        "en": "What the founders read",
-        "it": "Cosa leggono i grandi imprenditori",
-        "de": "Was die großen Gründer lesen",
-        "es": "Lo que leen los grandes emprendedores",
-        "fr": "Ce que lisent les grands entrepreneurs",
-        "pt": "O que leem os grandes empreendedores",
-        "nl": "Wat de grote ondernemers lezen",
-        "pl": "Co czytają wielcy przedsiębiorcy",
-        "ru": "Что читают великие предприниматели",
-        "tr": "Büyük girişimciler ne okuyor",
-        "ja": "偉大な起業家が読む本",
-        "ko": "위대한 창업자들이 읽는 책",
-        "zh": "伟大企业家读的书"
-      },
-      "subtitle": {
-        "en": "Books Bill Gates, Warren Buffett, Charlie Munger and others recommended, with where they said it.",
-        "it": "Libri consigliati da Bill Gates, Warren Buffett, Charlie Munger e altri, con dove l’hanno detto.",
-        "de": "Bücher, die Bill Gates, Warren Buffett, Charlie Munger und andere empfohlen haben, mit der Stelle, an der sie es sagten.",
-        "es": "Libros que recomendaron Bill Gates, Warren Buffett, Charlie Munger y otros, con dónde lo dijeron.",
-        "fr": "Des livres recommandés par Bill Gates, Warren Buffett, Charlie Munger et d’autres, avec l’endroit où ils l’ont dit.",
-        "pt": "Livros recomendados por Bill Gates, Warren Buffett, Charlie Munger e outros, com onde o disseram.",
-        "nl": "Boeken die Bill Gates, Warren Buffett, Charlie Munger en anderen aanraadden, met waar ze het zeiden.",
-        "pl": "Książki polecane przez Billa Gatesa, Warrena Buffetta, Charliego Mungera i innych, z miejscem, gdzie to powiedzieli.",
-        "ru": "Книги, которые советовали Билл Гейтс, Уоррен Баффет, Чарли Мангер и другие, и где они это сказали.",
-        "tr": "Bill Gates, Warren Buffett, Charlie Munger ve başkalarının önerdiği kitaplar, nerede söyledikleriyle birlikte.",
-        "ja": "ビル・ゲイツ、ウォーレン・バフェット、チャーリー・マンガーらがすすめた本。どこで語ったかも添えて。",
-        "ko": "빌 게이츠, 워런 버핏, 찰리 멍거 등이 추천한 책, 어디서 말했는지도 함께.",
-        "zh": "比尔·盖茨、沃伦·巴菲特、查理·芒格等人推荐的书，并附上他们说这话的出处。"
-      }
     },
     {
       "id": "goal",

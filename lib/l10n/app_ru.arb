@@ -1456,7 +1456,6 @@
   "bookAgain": "Перечитать",
   "bookTheIdeas": "Идеи",
   "bookRecommendedBy": "Рекомендуют",
-  "bookPickPhoto": "Фото: {credit}",
   "bookFreeThisWeek": "Бесплатно на этой неделе",
   "booksSeeAll": "Смотреть все",
   "booksLibraryTitle": "Все книги",
@@ -1470,5 +1469,11 @@
   "videoPlay": "Воспроизвести",
   "videoPause": "Пауза",
   "videoWatchAgain": "Смотреть снова",
-  "videoOffline": "Для видео нужно подключение. Коснитесь, чтобы повторить."
+  "videoOffline": "Для видео нужно подключение. Коснитесь, чтобы повторить.",
+  "foundersTitle": "Что читают основатели",
+  "founderBookCount": "{n, plural, one{{n} книга} few{{n} книги} many{{n} книг} other{{n} книги}}",
+  "founderTheirBooks": "Рекомендованные книги",
+  "founderAbout": "Это книги, рекомендованные публично, в приведённых словах и с указанием, где это было сказано. {name} не имеет никакого отношения к Astute.",
+  "founderPhoto": "Фото: {author}, {licence}, Wikimedia Commons, кадрировано",
+  "founderAlso": "Также рекомендуют: {names}"
 }

@@ -570,22 +570,67 @@ Fields: `title`, `subtitle`, `limit` (paths shown, 8 by default).
  "title": {"en": "Ten-card paths", "it": "Percorsi da 10 carte"}}
 ```
 
-### `founder-books`
+### `books`
 
-The books in pills that the people who built the companies everyone knows
-recommended in public (lib/data/book_picks.dart): a row like the books'
-own, in the same weekly turn and with the same way in, each tile under the
-names of who recommended it. A book's own page says each pick: who, what
-they built, their words quoted exactly, and where they said it, which a tap
-opens. Every pick is checked against that page; a pick nobody can check is
-left out. Fewer than three such books (two on a subject's page), no
-section.
+Books in pills: a book's big ideas, four to eight cards in the book's own
+order (`book` on a card, lib/data/books.dart). The book of the week, the
+same for every reader, is set apart at the head: its cover large on a
+ground of its subject's colour, its title and author, why it is worth the
+minutes (the prize, the copies sold, the bestseller list), how many ideas
+in how many minutes, how far the reader is, and on the free plan that it
+is free this week. The other books follow in a row, each its cover, title,
+author and a dash for each idea, the ones read filled, a tick on one read
+whole and a lock on one for Astute+. "See all" opens every book at once in
+a grid. A tap opens the book's own page: its ideas in order, who
+recommended it of the people on `founders`, and the way in (the first two
+ideas free, the week's book whole). The row turns once a week; narrowed to
+a subject it shows that subject's books, the week's set apart only when it
+is one of them. With no whole book, no section.
 
 Fields: `title`, `subtitle`.
 
 ```json
-{"id": "founder-books", "block": "founder-books",
- "title": {"en": "What the founders read", "it": "Cosa leggono i grandi imprenditori"}}
+{"id": "books", "block": "books",
+ "title": {"en": "Books in pills", "it": "Libri in pillole"}}
+```
+
+### `founders`
+
+What founders read: the people who built the companies everyone knows, and
+the investors who built Berkshire Hathaway (lib/data/founders.dart), with
+the books in pills they recommended in public.
+
+On Explore for every subject, a row of the people, each a tile with their
+face, how many of the books they recommended are in pills, their name, what
+they built, and a dash for each book, filled for the ones read whole. A tap
+opens their page: the face, name and what they built, how many books and
+ideas, then those books, each its cover, title and author, their words
+about it quoted exactly, where and when they said it (a tap opens that
+page, so anyone can check), how far the reader is, and a tap anywhere else
+opens the book's own page. At its foot, that these are books the person
+recommended in public and that they have no connection with Astute, and
+who took the photo, under what licence, from Wikimedia Commons, cropped (a
+tap opens the photo's page). Fewer than three people, no row.
+
+On a subject's page, where a person would have a book or two, the books of
+that subject the people recommended instead, one list and not by person:
+each book with its cover, the words of who recommended it, their face and
+name beside where they said it, and the others who recommended it too.
+None, no section.
+
+The faces are photos free to use from Wikimedia Commons (CC0, public
+domain, CC BY or CC BY-SA), cropped square and kept small in the app
+(assets/founders/, with CREDITS.md beside them); without one, the initials
+of the name stand in. A pick is listed while its book is in the bank and
+passed over while it is not, and so is a person with none. Names, roles and
+titles are never cut short: a tile is as tall as its words need. With no
+`title`, it is called "What founders read" in the reader's language.
+
+Fields: `title`, `subtitle`.
+
+```json
+{"id": "founders", "block": "founders",
+ "title": {"en": "What founders read", "it": "Cosa leggono i fondatori"}}
 ```
 
 ### `line-of-day`
