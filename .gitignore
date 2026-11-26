@@ -72,3 +72,5 @@ tool/shots/purchase/
 tool/shots/explore-tour/
 # The day as a picture, in each of its layouts (tool/share_day_shots.dart): looked at, not kept
 tool/shots/shareday/
+# A video card opened on phones over its film (tool/video_shots.dart): looked at, not kept
+tool/shots/video/
