@@ -5708,7 +5708,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get shareDayHeadline => 'Le cinque di oggi';
 
   @override
-  String get shareFormatPost => 'Post';
+  String get shareFormatCover => 'Copertina';
+
+  @override
+  String get shareFormatList => 'Elenco';
 
   @override
   String get shareFormatStory => 'Storia';

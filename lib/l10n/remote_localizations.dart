@@ -5415,8 +5415,12 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('shareDayHeadline') ?? _base.shareDayHeadline;
 
   @override
-  String get shareFormatPost =>
-      _words.text('shareFormatPost') ?? _base.shareFormatPost;
+  String get shareFormatCover =>
+      _words.text('shareFormatCover') ?? _base.shareFormatCover;
+
+  @override
+  String get shareFormatList =>
+      _words.text('shareFormatList') ?? _base.shareFormatList;
 
   @override
   String get shareFormatStory =>

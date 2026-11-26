@@ -5710,7 +5710,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get shareDayHeadline => 'As cinco de hoje';
 
   @override
-  String get shareFormatPost => 'Publicação';
+  String get shareFormatCover => 'Capa';
+
+  @override
+  String get shareFormatList => 'Lista';
 
   @override
   String get shareFormatStory => 'Story';

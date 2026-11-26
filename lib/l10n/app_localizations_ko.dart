@@ -5469,7 +5469,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get shareDayHeadline => '오늘의 다섯 장';
 
   @override
-  String get shareFormatPost => '게시물';
+  String get shareFormatCover => '표지';
+
+  @override
+  String get shareFormatList => '목록';
 
   @override
   String get shareFormatStory => '스토리';
