@@ -1,7 +1,8 @@
 /// Spot the false one on a screen of its own (challenge_screen.dart): the
-/// four claims one under another, each as large as its card takes; a tap
-/// picks one, a large button says it is meant; then every claim says what
-/// it is, true or false, the pick stamped right or wrong.
+/// four claims one under another, each on its subject's card as the app's
+/// cards are everywhere, as large as its card takes; a tap picks one and
+/// rings it, a button says it is meant; then every claim says at its head
+/// what it is, true or false, the false one struck through.
 ///
 /// It is the day's game of its shelf, kept and counted as there
 /// ([pickSpot]): one pick a day, recorded as that card's answer, the other
@@ -16,12 +17,9 @@ import '../../data/explore_mix.dart';
 import '../../l10n/l10n.dart';
 import '../../models/pill.dart';
 import '../../state/explore_play.dart';
-import '../../theme.dart';
 import '../../utils/share_link.dart';
-import '../scaled_text.dart';
 import 'challenge_kit.dart';
 import 'challenge_screen.dart';
-import 'parts.dart' show upper;
 import 'spot_the_false.dart';
 
 /// Spot the false one, as its screen plays it.
@@ -62,7 +60,12 @@ class SpotChallenge extends ChallengeGame {
   bool get over => picked != null;
 
   @override
-  String rules(AppLocalizations l) => l.spotLine;
+  String rules(AppLocalizations l) => l.spotRules;
+
+  @override
+  List<List<Pill>> get today => [
+    for (final Pill p in spot.cards) [p],
+  ];
 
   @override
   (IconData, String)? note(AppLocalizations l) =>
@@ -204,18 +207,10 @@ class _SpotPlayState extends State<_SpotPlay>
     final bool told = mine != null;
     return GamePlayFrame(
       kit: kit,
-      status: Text(
-        told ? (_game.right ? l.spotGotIt : l.spotMissedIt) : l.spotPrompt,
+      status: GameStatus(
+        told ? (_game.right ? l.spotGotIt : l.spotMissedIt) : l.spotAsk,
         key: const ValueKey('spot-prompt'),
-        maxLines: 3,
-        textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.3),
-        style: AppText.display(
-          size: 17,
-          weight: FontWeight.w700,
-          height: 1.12,
-          spacing: -0.2,
-          color: kit.ink,
-        ),
+        verdict: told ? _game.right : null,
       ),
       body: AnimatedBuilder(
         animation: _tell,
@@ -223,7 +218,7 @@ class _SpotPlayState extends State<_SpotPlay>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             for (int i = 0; i < cards.length; i++) ...[
-              if (i > 0) const SizedBox(height: 10),
+              if (i > 0) const SizedBox(height: 12),
               Expanded(
                 child: _Claim(
                   key: ValueKey('spot-claim-${cards[i].id}'),
@@ -231,9 +226,7 @@ class _SpotPlayState extends State<_SpotPlay>
                   chosen: !told && _chosen == cards[i].id,
                   // Each claim tells what it is a beat after the one
                   // above it.
-                  tell: told
-                      ? ((_tell.value * 1.6 - i * 0.2).clamp(0.0, 1.0))
-                      : 0,
+                  told: told && _tell.value * 1.6 - i * 0.2 > 0,
                   mine: mine?.id == cards[i].id,
                   onTap: () => _choose(cards[i]),
                 ),
@@ -242,36 +235,31 @@ class _SpotPlayState extends State<_SpotPlay>
           ],
         ),
       ),
-      actions: GameButton(
+      actions: GameButton.primary(
         key: const ValueKey('spot-confirm'),
         label: l.spotConfirm,
-        icon: Icons.close_rounded,
-        face: kArtInk,
-        ink: kArtCream,
-        height: 72,
         onTap: _chosen != null && !told ? _confirm : null,
       ),
     );
   }
 }
 
-/// One claim of the four, on its card: picked, it turns to ink; told, it
-/// says what it is, and the pick is stamped.
+/// One claim of the four, on its subject's card: picked, it is ringed;
+/// told, it says at its head what it is, the false one struck through, and
+/// the true ones not picked drawn back.
 class _Claim extends StatelessWidget {
   const _Claim({
     super.key,
     required this.pill,
     required this.chosen,
-    required this.tell,
+    required this.told,
     required this.mine,
     required this.onTap,
   });
 
   final Pill pill;
   final bool chosen;
-
-  /// How far it has told what it is, 0 to 1.
-  final double tell;
+  final bool told;
   final bool mine;
   final VoidCallback onTap;
 
@@ -279,10 +267,6 @@ class _Claim extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final bool truth = trueOrFalseAnswer(pill);
-    final bool told = tell > 0;
-    final Color face = chosen ? kArtInk : gameFace(context);
-    final Color ink = chosen ? kArtCream : kArtInk;
-    final double fade = told && truth && !mine ? 0.72 : 1;
     return Semantics(
       button: !told,
       selected: chosen,
@@ -296,82 +280,22 @@ class _Claim extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Positioned.fill(
-              child: Opacity(
-                opacity: fade,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 160),
-                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                  decoration: BoxDecoration(
-                    color: face,
-                    borderRadius: BorderRadius.circular(22),
-                    border: gameBorder(context),
-                  ),
-                  child: ScaledText(
-                    text: claimOf(pill),
-                    min: 13,
-                    max: 22,
-                    alignment: Alignment.centerLeft,
-                    styleFor: (size) => AppText.display(
-                      size: size,
-                      weight: FontWeight.w600,
-                      height: 1.14,
-                      spacing: -0.02 * size,
-                      color: ink,
-                    ).copyWith(
-                      decoration: told && !truth
-                          ? TextDecoration.lineThrough
-                          : null,
-                      decorationColor: kGameWrong,
-                      decorationThickness: 2.4,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            if (told)
-              Positioned(
-                right: 10,
-                bottom: -8,
-                child: Transform.scale(
-                  scale: Curves.easeOutBack.transform(tell),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 9,
-                      vertical: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: truth ? kArtInk : kGameWrong,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: kArtInk, width: 2.2),
-                    ),
-                    child: Text(
-                      upper(context, truth ? l.sayTrue : l.sayFalse),
-                      style: AppText.label(
-                        size: 11,
-                        weight: FontWeight.w800,
-                        spacing: 0.9,
-                        height: 1,
-                        color: kArtCream,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            if (told && mine)
-              Positioned(
-                right: -6,
-                top: -10,
-                child: GameStamp(
-                  right: !truth,
-                  size: 46,
-                  scale: Curves.easeOutBack.transform(tell),
-                ),
-              ),
-          ],
+        child: SubjectCard(
+          pill: pill,
+          small: true,
+          picked: chosen || mine,
+          quiet: told && truth && !mine,
+          trailing: told
+              ? SubjectTag(pill: pill, text: truth ? l.sayTrue : l.sayFalse)
+              : null,
+          child: SubjectWords(
+            text: claimOf(pill),
+            ink: pill.ink,
+            min: 13,
+            max: 23,
+            struck: told && !truth,
+            alignment: Alignment.centerLeft,
+          ),
         ),
       ),
     );

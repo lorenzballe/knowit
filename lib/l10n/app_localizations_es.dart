@@ -4764,22 +4764,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String betsCloserYesMore(String v) {
-    return 'Bien: es más de $v.';
+    return 'Correcto: es más de $v.';
   }
 
   @override
   String betsCloserYesLess(String v) {
-    return 'Bien: es menos de $v.';
+    return 'Correcto: es menos de $v.';
   }
 
   @override
   String betsCloserNoMore(String v) {
-    return 'No: es más de $v.';
+    return 'Incorrecto: es más de $v.';
   }
 
   @override
   String betsCloserNoLess(String v) {
-    return 'No: es menos de $v.';
+    return 'Incorrecto: es menos de $v.';
   }
 
   @override
@@ -5377,7 +5377,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tfRules =>
-      'Di verdadero o falso y luego mira por qué. Casi todos fallan.';
+      'Afirmaciones en las que casi todos fallan. Di verdadero o falso y luego lee por qué. Mide el juicio: distinguir lo que es cierto de lo que solo parece obvio.';
 
   @override
   String get inOrderTitle => 'En orden';
@@ -5387,13 +5387,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cuatro momentos de las cartas, sin su año, para ordenar según ocurrieron. Mide tu sentido de la cronología, la primera prueba de cualquier explicación: una causa va antes que su efecto.';
 
   @override
-  String get inOrderFirst => 'Toca el más antiguo';
+  String get inOrderFirst => 'Toca el momento que fue primero.';
 
   @override
-  String get inOrderNext => 'Ahora el siguiente';
+  String get inOrderNext => 'Ahora el que vino después.';
 
   @override
-  String get inOrderReady => 'Todos colocados. ¿Comprobar?';
+  String get inOrderReady => 'Todos colocados.';
 
   @override
   String get inOrderCheck => 'Comprobar el orden';
@@ -5419,7 +5419,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get whatYearRules =>
-      'Tres momentos, cada uno sin su año. Márcalo en el dial: cuanto más cerca, más puntos.';
+      'Tres momentos, sin su año. Marca el año de cada uno: cuanto más cerca, más puntos, hasta diez. Mide tu sentido de cuándo ocurrieron las cosas.';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5434,20 +5434,21 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n años de desvío en total',
-      one: '1 año de desvío en total',
+      other: '$n años de desvío en total.',
+      one: '1 año de desvío en total.',
     );
     return '$_temp0';
   }
 
   @override
   String whatYearSaid(String guess, int points) {
-    return 'Dijiste $guess · +$points';
-  }
-
-  @override
-  String whatYearExact(int points) {
-    return 'Año exacto, +$points';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: 'Dijiste $guess · $points puntos',
+      one: 'Dijiste $guess · 1 punto',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5491,7 +5492,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get beforeAfterRules =>
-      'Seis momentos, uno tras otro. ¿Cada uno ocurrió antes o después del de arriba?';
+      'Seis momentos, uno tras otro. Di si cada uno ocurrió antes o después del de arriba. Mide tu sentido de la secuencia.';
 
   @override
   String get beforeAfterBefore => 'Antes';
@@ -5651,6 +5652,171 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get challengeAgain => 'Otra ronda';
+
+  @override
+  String get spotRules =>
+      'Cuatro afirmaciones: tres son verdaderas y una es falsa. Encuentra la falsa. Mide lo bien que distingues una afirmación fundada de una que solo suena bien.';
+
+  @override
+  String get spotAsk => 'Toca la afirmación que creas que es falsa.';
+
+  @override
+  String get biggerRules =>
+      'Dos cifras, cada una la respuesta a la pregunta de una carta. Toca la que creas que es mayor. Mide tu sentido de la proporción.';
+
+  @override
+  String get biggerAsk => 'Toca la carta cuya respuesta es mayor.';
+
+  @override
+  String biggerRight(String big, String small) {
+    return 'Correcto: $big es más que $small.';
+  }
+
+  @override
+  String biggerWrong(String big, String small) {
+    return 'Incorrecto: $big es más que $small.';
+  }
+
+  @override
+  String get closerRules =>
+      'Acércate a un porcentaje paso a paso: cada vez, di si está por encima o por debajo de la mitad de lo que queda. Mide tu capacidad de estimación.';
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) {
+    return 'Es $said: acertaste $right de $steps pasos.';
+  }
+
+  @override
+  String closerExactSteps(String said, int right, int steps) {
+    return 'Es exactamente $said: acertaste $right de $steps pasos.';
+  }
+
+  @override
+  String closerStepsRight(int right, int steps) {
+    return 'Acertaste $right de $steps pasos.';
+  }
+
+  @override
+  String get magnitudeRules =>
+      '¿Diez, mil o un millón? Elige la potencia de diez más cercana a la respuesta. Mide tu sentido de la escala, que importa más que las cifras exactas.';
+
+  @override
+  String get rangeRules =>
+      'Fija tu estimación y luego un rango a su alrededor: cuanto más estrecho, más paga si la respuesta cae dentro. Mide la calibración: saber cuánto sabes.';
+
+  @override
+  String rangeOption(int w, int pts) {
+    return '±$w · paga $pts';
+  }
+
+  @override
+  String rangeIn(String said, int pts) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: 'Es $said: dentro de tu rango, +$pts puntos.',
+      one: 'Es $said: dentro de tu rango, +1 punto.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rangeOut(String said) {
+    return 'Es $said: fuera de tu rango.';
+  }
+
+  @override
+  String stakeRules(int points) {
+    return 'Elige una respuesta y apuesta puntos por ella, de $points al día: si aciertas, tu apuesta se duplica; si no, la pierdes. Mide la convicción: apostar por lo que sabes, y solo por eso.';
+  }
+
+  @override
+  String stakeWon(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Correcto: ganas $n puntos.',
+      one: 'Correcto: ganas 1 punto.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stakeLost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Incorrecto: pierdes $n puntos.',
+      one: 'Incorrecto: pierdes 1 punto.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get numberRules =>
+      'Fija una sola cifra con los botones y bloquéala. Mide la precisión: cuánto te acercas cuando tienes que comprometerte con un número.';
+
+  @override
+  String tfRightIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Correcto: es verdadero.',
+      'other': 'Correcto: es falso.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String tfWrongIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Incorrecto: es verdadero.',
+      'other': 'Incorrecto: es falso.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String inOrderTold(int n, int of) {
+    return '$n de $of en su lugar.';
+  }
+
+  @override
+  String get whatYearYours => 'Tu año';
+
+  @override
+  String get whatYearExactly => 'El año exacto';
+
+  @override
+  String beforeAfterRight(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Correcto: fue en $year, antes de $above.',
+      'other': 'Correcto: fue en $year, después de $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Incorrecto: fue en $year, antes de $above.',
+      'other': 'Incorrecto: fue en $year, después de $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAnswer => 'Respuesta';
+
+  @override
+  String get challengeYouSaid => 'Dijiste';
+
+  @override
+  String get challengePoints => 'Puntos';
+
+  @override
+  String get challengeThisRound => 'Esta ronda';
+
+  @override
+  String get challengeLeftToday => 'Quedan hoy';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

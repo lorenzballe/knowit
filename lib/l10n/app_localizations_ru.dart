@@ -4943,12 +4943,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String betsCloserNoMore(String v) {
-    return 'Нет: больше $v.';
+    return 'Неверно: больше $v.';
   }
 
   @override
   String betsCloserNoLess(String v) {
-    return 'Нет: меньше $v.';
+    return 'Неверно: меньше $v.';
   }
 
   @override
@@ -5565,7 +5565,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tfRules =>
-      'Скажи «правда» или «ложь», а потом узнай почему. Большинство ошибается.';
+      'Утверждения, в которых ошибается большинство. Скажи «правда» или «ложь», а потом прочитай почему. Испытание измеряет суждение: умение отличить то, что верно, от того, что лишь кажется очевидным.';
 
   @override
   String get inOrderTitle => 'По порядку';
@@ -5575,13 +5575,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'Четыре события из карточек, без года: расставь их в том порядке, в каком они произошли. Испытание измеряет чувство хронологии, первую проверку любого объяснения: причина идёт раньше следствия.';
 
   @override
-  String get inOrderFirst => 'Нажми самое раннее';
+  String get inOrderFirst => 'Нажми событие, которое было первым.';
 
   @override
-  String get inOrderNext => 'Теперь следующее';
+  String get inOrderNext => 'Теперь то, что было следующим.';
 
   @override
-  String get inOrderReady => 'Всё расставлено. Проверим?';
+  String get inOrderReady => 'Всё расставлено.';
 
   @override
   String get inOrderCheck => 'Проверить порядок';
@@ -5607,7 +5607,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get whatYearRules =>
-      'Три события, у каждого скрыт год. Выставь его на шкале: чем ближе, тем больше очков.';
+      'Три события, без года. Выставь год каждого: чем ближе, тем больше очков, до десяти. Испытание измеряет чувство того, когда что произошло.';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5622,22 +5622,25 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'В сумме ошибка на $n года',
-      many: 'В сумме ошибка на $n лет',
-      few: 'В сумме ошибка на $n года',
-      one: 'В сумме ошибка на $n год',
+      other: 'В сумме ошибка на $n года.',
+      many: 'В сумме ошибка на $n лет.',
+      few: 'В сумме ошибка на $n года.',
+      one: 'В сумме ошибка на $n год.',
     );
     return '$_temp0';
   }
 
   @override
   String whatYearSaid(String guess, int points) {
-    return 'Твой ответ: $guess · +$points';
-  }
-
-  @override
-  String whatYearExact(int points) {
-    return 'Ровно тот год, +$points';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: 'Твой ответ: $guess · $points очка',
+      many: 'Твой ответ: $guess · $points очков',
+      few: 'Твой ответ: $guess · $points очка',
+      one: 'Твой ответ: $guess · $points очко',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5687,7 +5690,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get beforeAfterRules =>
-      'Шесть событий, одно за другим. Каждое случилось раньше или позже того, что выше?';
+      'Шесть событий, одно за другим. Скажи, случилось ли каждое раньше или позже того, что выше. Испытание измеряет чувство последовательности.';
 
   @override
   String get beforeAfterBefore => 'Раньше';
@@ -5851,6 +5854,177 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get challengeAgain => 'Ещё раз';
+
+  @override
+  String get spotRules =>
+      'Четыре утверждения: три верны, одно ложно. Найди ложное. Испытание измеряет, насколько хорошо ты отличаешь обоснованное утверждение от того, что лишь звучит убедительно.';
+
+  @override
+  String get spotAsk => 'Нажми на утверждение, которое считаешь ложным.';
+
+  @override
+  String get biggerRules =>
+      'Два числа, каждое — ответ на вопрос карточки. Нажми на то, которое, по-твоему, больше. Испытание измеряет чувство пропорции.';
+
+  @override
+  String get biggerAsk => 'Нажми на карточку с большим ответом.';
+
+  @override
+  String biggerRight(String big, String small) {
+    return 'Верно: $big больше, чем $small.';
+  }
+
+  @override
+  String biggerWrong(String big, String small) {
+    return 'Неверно: $big больше, чем $small.';
+  }
+
+  @override
+  String get closerRules =>
+      'Приближайся к доле шаг за шагом: каждый раз говори, больше она или меньше середины оставшегося промежутка. Испытание измеряет умение оценивать.';
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) {
+    return 'Это $said: верно $right из $steps шагов.';
+  }
+
+  @override
+  String closerExactSteps(String said, int right, int steps) {
+    return 'Это ровно $said: верно $right из $steps шагов.';
+  }
+
+  @override
+  String closerStepsRight(int right, int steps) {
+    return 'Верно $right из $steps шагов.';
+  }
+
+  @override
+  String get magnitudeRules =>
+      'Десять, тысяча или миллион? Выбери степень десяти, ближайшую к ответу. Испытание измеряет чувство масштаба, которое важнее точных цифр.';
+
+  @override
+  String get rangeRules =>
+      'Задай свою оценку, а затем диапазон вокруг неё: чем он уже, тем больше приносит, если ответ попадёт внутрь. Испытание измеряет калибровку: знание того, сколько ты знаешь.';
+
+  @override
+  String rangeOption(int w, int pts) {
+    return '±$w · даёт $pts';
+  }
+
+  @override
+  String rangeIn(String said, int pts) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: 'Это $said: в твоём диапазоне, +$pts очка.',
+      many: 'Это $said: в твоём диапазоне, +$pts очков.',
+      few: 'Это $said: в твоём диапазоне, +$pts очка.',
+      one: 'Это $said: в твоём диапазоне, +$pts очко.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rangeOut(String said) {
+    return 'Это $said: вне твоего диапазона.';
+  }
+
+  @override
+  String stakeRules(int points) {
+    return 'Выбери ответ и поставь на него очки из своих $points в день: если прав, ставка удваивается; если нет, сгорает. Испытание измеряет убеждённость: ставить на то, что знаешь, и только на это.';
+  }
+
+  @override
+  String stakeWon(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Верно: ты выигрываешь $n очка.',
+      many: 'Верно: ты выигрываешь $n очков.',
+      few: 'Верно: ты выигрываешь $n очка.',
+      one: 'Верно: ты выигрываешь $n очко.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stakeLost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Неверно: ты теряешь $n очка.',
+      many: 'Неверно: ты теряешь $n очков.',
+      few: 'Неверно: ты теряешь $n очка.',
+      one: 'Неверно: ты теряешь $n очко.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get numberRules =>
+      'Задай кнопками одно число и зафиксируй его. Испытание измеряет точность: насколько близко ты подходишь, когда нужно остановиться на одном числе.';
+
+  @override
+  String tfRightIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Верно: это правда.',
+      'other': 'Верно: это ложь.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String tfWrongIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Неверно: это правда.',
+      'other': 'Неверно: это ложь.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String inOrderTold(int n, int of) {
+    return '$n из $of на своём месте.';
+  }
+
+  @override
+  String get whatYearYours => 'Твой год';
+
+  @override
+  String get whatYearExactly => 'Точный год';
+
+  @override
+  String beforeAfterRight(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Верно: это был $year год, до $above.',
+      'other': 'Верно: это был $year год, после $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Неверно: это был $year год, до $above.',
+      'other': 'Неверно: это был $year год, после $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAnswer => 'Ответ';
+
+  @override
+  String get challengeYouSaid => 'Твой ответ';
+
+  @override
+  String get challengePoints => 'Очки';
+
+  @override
+  String get challengeThisRound => 'Этот раунд';
+
+  @override
+  String get challengeLeftToday => 'Осталось на сегодня';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

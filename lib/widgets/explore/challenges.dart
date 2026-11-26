@@ -750,17 +750,6 @@ class _ChallengeTileState extends State<ChallengeTile> {
         return Stack(
           clipBehavior: Clip.hardEdge,
           children: [
-            // The mark again, large and faint, off the corner: the tile is
-            // the challenge's colour first and its words second.
-            Positioned(
-              right: -14,
-              bottom: -14,
-              child: ChallengeMarkView(
-                mark: look.mark,
-                colour: ink.withValues(alpha: 0.13),
-                size: box.maxWidth * 0.52,
-              ),
-            ),
             Padding(
               padding: ChallengeTile.pad,
               child: Column(
