@@ -1,6 +1,6 @@
 // Astute's server: what it does for a reader, and when.
 //
-// Seven things, in europe-west1, where the readers are:
+// What it does, in europe-west1, where the readers are:
 //
 // - `dealDay` (callable): a phone asks for its day and gets it, dealt from
 //   the reader's profile and written to readers/{uid}/days/{date}, so the
@@ -28,9 +28,13 @@
 // - `askCard` (callable, Astute+): a question about a card answered by
 //   Claude (ask.ts): the card said simply, its two sides, the reader's own
 //   reasoning looked at, or their question answered; so many a day.
+// - `playDaily` (callable): a play of Today's five or a subject's three,
+//   judged here and added once to the counts of everybody who played the
+//   same cards that day (daily.ts), which the phone shows on the result.
 //
-// The rules (firestore.rules) let no phone write a day, a profile or
-// Explore: what the server dealt is what the server dealt.
+// The rules (firestore.rules) let no phone write a day, a profile,
+// Explore or the day's games' counts: what the server dealt is what the
+// server dealt, and what it counted is what it judged.
 
 import Anthropic from '@anthropic-ai/sdk';
 import { initializeApp } from 'firebase-admin/app';
@@ -45,6 +49,7 @@ import { logger } from 'firebase-functions';
 import { ALL_PER_DAY, MODEL, MONTH_BUDGET_USD, PER_DAY, SHARED, answer as answerAsk, cacheKey, readAsk } from './ask.js';
 import { Bank, currentBank, dateKey, parseDate } from './bank.js';
 import { coachNote, readCoach } from './coach.js';
+import { countPlay, readPlay } from './daily.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
 import { NEWS_LATEST_DAYS, NEWS_MODEL, NEWS_MONTH_BUDGET_USD, askModel, fetchText, makePaper } from './news.js';
 import { search as searchBank } from './search.js';
@@ -273,6 +278,28 @@ export const newsToday = onCall({ enforceAppCheck: false, maxInstances: 10, memo
     }
   }
   return { date, cards };
+});
+
+// ── The day's games, counted ─────────────────────────────────────────────
+
+export const playDaily = onCall({ enforceAppCheck: false, maxInstances: 10 }, async (request) => {
+  const uid = request.auth?.uid;
+  if (!uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
+  // The bank as written, quarantine and all: a card held out of the deal
+  // since the phone dealt it is judged all the same.
+  const play = readPlay(request.data, await currentBank(), Date.now());
+  if (typeof play === 'string') {
+    logger.warn('daily refused', { why: play });
+    throw new HttpsError('invalid-argument', play);
+  }
+  try {
+    const out = await countPlay(db, uid, play);
+    logger.info('daily', { day: play.day, game: play.game, subject: play.subject, score: play.score, counted: out.counted, players: out.counts?.players });
+    return out;
+  } catch (e) {
+    logger.error('daily failed', { day: play.day, game: play.game, error: String(e) });
+    throw new HttpsError('unavailable', 'Try again in a moment.');
+  }
 });
 
 // ── The pool, asked a question ───────────────────────────────────────────

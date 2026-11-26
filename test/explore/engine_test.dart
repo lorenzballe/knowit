@@ -296,10 +296,11 @@ void main() {
       expect(find.byKey(const ValueKey('tall-kept-off')), findsNothing);
     });
 
-    testWidgets('the day\'s challenge, the quick games and the reader\'s '
-        'subjects are Explore\'s for every subject only', (tester) async {
+    testWidgets('the bet of the day, the quick games and the reader\'s '
+        'subjects are Explore\'s for every subject only; the day\'s '
+        'challenge is on every page, five on All, a subject\'s own three on '
+        'its page', (tester) async {
       for (final String block in [
-        'three',
         'bets-day',
         'quick-games',
         'subject-levels',
@@ -307,7 +308,14 @@ void main() {
       ]) {
         expect(kExploreBlocks[block]!.onSubjectPages, isFalse, reason: block);
       }
-      for (final String block in ['cover', 'feed', 'paths', 'books', 'top']) {
+      for (final String block in [
+        'three',
+        'cover',
+        'feed',
+        'paths',
+        'books',
+        'top',
+      ]) {
         expect(kExploreBlocks[block]!.onSubjectPages, isTrue, reason: block);
       }
     });

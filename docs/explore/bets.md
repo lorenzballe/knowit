@@ -185,17 +185,27 @@ Where everyone else guessed on a card is still left out: `lib/sync/tally.dart`
 counts, per card, how many readers hold it, and nothing of what anyone
 answered, so the bet of the day shows how far off the reader was instead.
 
-Today's three is the one game with a crowd, and it is counted for it alone:
-`lib/sync/crowd.dart` keeps, for each day, how many readers came to each
-score in tens of points (`crowd/{day}`, `n.b0` to `n.b30`), and nothing
-about who. A reader adds their score once, in one batch with a mark under
-their own id (`crowd/{day}/readers/{uid}`) that cannot be there already and
-is never changed or read back; `firestore.rules` lets a count move only by
-one, and only together with that mark. The result listens to the day's
-counts while it is on screen, so the line and the spread move as readers
-come in. Under five readers it says only how many have played; with a
-score in the lower half, how many played, never how few it beat. Signed
-out, or with no server, the result shows the score alone.
+Today's five and each subject's three are the games with a crowd, counted
+for them alone, on the server. A phone sends its play once it is over, and
+`playDaily` (`functions/src/daily.ts`) judges every answer by the card's own
+test and adds it, once, to the counts of everybody who played the same
+cards that day (`daily/{day~game~cards}`): how many played, how many came
+to each score in tens of points, and for each card how many got it right,
+which option each picked or where the guesses fell; nothing about who. A
+mark under the reader's own record (`readers/{uid}/daily/{day~game}`),
+which no phone reads or writes, is what stops a play being counted twice;
+`firestore.rules` lets every signed-in phone read the counts and none write
+them. The result listens to its game's counts while it is on screen
+(`lib/sync/daily_crowd.dart`), so the line, the spread and each card's
+share move as players come in. Under five players it says the reader is
+among the first, too few yet to compare; with a score in the lower half,
+how many played, never how few it beat; a card under five answers, that
+too few have answered it yet. With no count of today (signed out, offline,
+the server out of reach) it says so, and gives how often readers get these
+cards right where the scorecard publishes it (`crowdOf`).
+
+Builds from before the five counted today's three in `crowd/{day}`, which
+the rules still take from them.
 
 ## The blocks: fields and examples
 
@@ -375,21 +385,30 @@ A whole round, as one document:
 ]}
 ```
 
-### `three` — today's three (C1)
+### `three` — Today's five, and each subject's three (C1)
 
-Three shares to estimate, the same three for everyone that day, one at a
-time on a track, about a minute in all: a hundred points for the answer
-itself, three fewer for every point off, in tens. Then the day's score out
-of three hundred, where it stands among today's readers (The crowd, above),
-the days in a row, a way to send it on that says how far off and never the
-answers, and the three cards, where each answer is explained. A card read
-before is played all the same; only its first answer is the card's. It
-opens Explore, and is never on a subject's page. It needs three cards that
-take a share as a number; with fewer it is left out.
+On Explore for every subject, Today's five: five questions, each from
+another subject. At the top of each subject's page, its Today's three:
+three of that subject, never the five's card of it. Both are the same for
+everyone that day, dealt on the phone from the date alone
+(`daily_deal.dart`), whatever the reader has read or answered; every subject
+comes round to the five as often as every other, and a card comes back only
+after many days. Played one after another: a pick of two or three options
+tapped and locked in, or a share set on the track. A hundred points a card:
+a right pick, or a guess on the answer itself, three fewer for every point
+off, in tens. Then the score out of five hundred or three hundred, where it
+stands among today's players (The crowd, above), card by card what the
+reader said against the answer and how everybody did, yesterday's score, a
+way to send it on that says how it went and never the answers, and the
+cards, where each answer is explained. A card read before is played all the
+same; only its first answer is the card's. The five counts the days in a
+row.
 
-One size, three cards, no tone and no line under it. Its one field is
-`gap`, the room above it in points (0 to 120): it opens Explore, 6 under
-the head. `source` may name the three.
+One size, no tone and no line under it. Its one field is `gap`, the room
+above it in points (0 to 120): it opens Explore and each subject's page, 6
+under the head. `source` may name the cards: on Explore for every subject
+five of five subjects, on a subject's page three of its own; otherwise, or
+when it names too few, the day's deal.
 
 ```json
 {"id": "three", "block": "three"}
@@ -397,7 +416,8 @@ the head. `source` may name the three.
 
 ```json
 {"id": "three", "block": "three",
- "source": {"ids": ["art-detection-9", "psychology-streaks-6", "maths-percentages-4"]}}
+ "source": {"ids": ["art-detection-9", "psychology-streaks-6", "maths-percentages-4",
+                    "science-absolute-zero-5", "space-asteroid-risk-2"]}}
 ```
 
 ## What a block asks of Explore

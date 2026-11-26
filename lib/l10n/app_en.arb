@@ -1323,7 +1323,7 @@
  },
  "threeTitle": "Today's three",
  "@threeTitle": {
-  "description": "Today's three: three shares to estimate, the same for everyone that day. A name, short."
+  "description": "Today's three: three questions of one subject at the top of its page in Explore, the same for everyone that day. A name, short."
  },
  "threeStep": "{n} of {total}",
  "@threeStep": {
@@ -1339,11 +1339,11 @@
  },
  "threeSame": "The same three for everyone today. About a minute.",
  "@threeSame": {
-  "description": "Under the Lock in button of today's three."
+  "description": "Under the Lock in button of a subject's three."
  },
  "threeYouSaid": "You said {guess}.",
  "@threeYouSaid": {
-  "description": "After a guess is locked in, after 'It is 9%.': what the reader said.",
+  "description": "After a share is locked in, after 'It is 9%.': what the reader said.",
   "placeholders": {
    "guess": {
     "type": "String"
@@ -1352,7 +1352,7 @@
  },
  "threePoints": "{n, plural, =0{No points} =1{+1 point} other{+{n} points}}",
  "@threePoints": {
-  "description": "Points a guess won, out of 100.",
+  "description": "Points an answer won, out of 100.",
   "placeholders": {
    "n": {
     "type": "int"
@@ -1361,59 +1361,19 @@
  },
  "threeNext": "Next",
  "@threeNext": {
-  "description": "Button: on to the next of today's three."
+  "description": "Button: on to the next question."
  },
  "threeSeeScore": "See your score",
  "@threeSeeScore": {
-  "description": "Button after the third guess: the day's score."
+  "description": "Button after the last question: the day's score."
  },
  "threeDone": "Today's three · done",
  "@threeDone": {
-  "description": "Head of the result card of today's three."
- },
- "threeDay": "Day {n}",
- "@threeDay": {
-  "description": "Days in a row today's three was played, on the result card.",
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "threeOf300": "of 300",
- "@threeOf300": {
-  "description": "Beside the day's score in large figures: '200 of 300'."
- },
- "threeCloser": "Closer than {pct}% of today's readers.",
- "@threeCloser": {
-  "description": "Where the day's score stands among the readers who played today.",
-  "placeholders": {
-   "pct": {
-    "type": "int"
-   }
-  }
- },
- "threeFirst": "{n, plural, =1{The first to play today.} other{One of the first {n} to play today.}}",
- "@threeFirst": {
-  "description": "When fewer than five readers have played today.",
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "threeReaders": "{n, plural, =1{1 reader played today.} other{{n} readers played today.}}",
- "@threeReaders": {
-  "description": "On the result of today's three, when the score is in the lower half of today's readers: how many played.",
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
+  "description": "Head of the result card of a subject's three."
  },
  "threeYou": "You",
  "@threeYou": {
-  "description": "Under the bar of today's readers by score that holds the reader's own score. One short word."
+  "description": "Under the bar of today's players by score that holds the reader's own score. One short word."
  },
  "whyMissing": "A move you keep missing: {move}",
  "@whyMissing": {
@@ -1862,46 +1822,191 @@
    }
   }
  },
- "threeStreak": "{n, plural, =1{1 day} other{{n} days}}",
- "@threeStreak": {
-  "description": "Days in a row today's three was played, beside this week's seven days: short, it shares a line with them.",
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
  "threeSend": "Send it",
  "@threeSend": {
   "description": "Button: send the day's score to someone."
  },
  "threeWhy": "See the why",
  "@threeWhy": {
-  "description": "Button: open the three cards, where each answer is explained."
+  "description": "Button: open the cards, where each answer is explained."
  },
  "threeYesterday": "Yesterday's three: {score} of 300.",
  "@threeYesterday": {
-  "description": "Under the result: yesterday's score.",
+  "description": "Under the result of a subject's three: yesterday's score.",
   "placeholders": {
    "score": {
     "type": "int"
    }
   }
  },
- "threeShareHead": "Astute · Today's three · {date}",
- "@threeShareHead": {
-  "description": "First line of the message the score is sent in.",
+ "threeRowSaid": "You said {said}. It is {truth}.",
+ "@threeRowSaid": {
+  "description": "On the result, under a question answered with a share: the guess and the answer.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   },
+   "truth": {
+    "type": "String"
+   }
+  }
+ },
+ "fiveTitle": "Today's five",
+ "@fiveTitle": {
+  "description": "Today's five: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short."
+ },
+ "fiveSame": "The same five for everyone today. About two minutes.",
+ "@fiveSame": {
+  "description": "Under the Lock in button of today's five."
+ },
+ "fiveDone": "Today's five · done",
+ "@fiveDone": {
+  "description": "Head of the result card of today's five."
+ },
+ "dailyOf": "of {max}",
+ "@dailyOf": {
+  "description": "Beside the day's score in large figures: '380 of 500'.",
+  "placeholders": {
+   "max": {
+    "type": "int"
+   }
+  }
+ },
+ "dailyPickRight": "Right: {answer}.",
+ "@dailyPickRight": {
+  "description": "After a pick is locked in, when it is right: the right answer.",
+  "placeholders": {
+   "answer": {
+    "type": "String"
+   }
+  }
+ },
+ "dailyPickWrong": "Not quite: it is {answer}.",
+ "@dailyPickWrong": {
+  "description": "After a pick is locked in, when it is wrong: the right answer.",
+  "placeholders": {
+   "answer": {
+    "type": "String"
+   }
+  }
+ },
+ "dailyBetter": "{n, plural, other{Better than {pct}% of today's {n} players.}}",
+ "@dailyBetter": {
+  "description": "On the result of today's five or three: where the score stands among today's players, when it is in the upper half. Always five players or more.",
+  "placeholders": {
+   "pct": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "dailyPlayers": "{n, plural, =1{1 player today so far.} other{{n} players today so far.}}",
+ "@dailyPlayers": {
+  "description": "On the result of today's five or three, when the score is in the lower half of today's players: how many have played so far.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "dailyFirst": "{n, plural, =1{The first to play today: too few players yet to compare.} other{One of the first {n} to play today: too few players yet to compare.}}",
+ "@dailyFirst": {
+  "description": "On the result, when fewer than five players have played today: too few to set the score among.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "dailyCounting": "Counting today's players…",
+ "@dailyCounting": {
+  "description": "On the result, while the play is on its way to be counted."
+ },
+ "dailyAverage": "You got {right} of {total} right. On these, readers get {avg} right on average.",
+ "@dailyAverage": {
+  "description": "On the result, when today's players cannot be counted but the server has said how often readers get each of these cards right: the reader's right answers, and the average over all readers. avg has one decimal: '2.6'.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   },
+   "avg": {
+    "type": "String"
+   }
+  }
+ },
+ "dailyUncounted": "Today's players can't be counted right now.",
+ "@dailyUncounted": {
+  "description": "On the result, when today's players cannot be counted: offline, or the server not reachable."
+ },
+ "dailyEach": "Question by question",
+ "@dailyEach": {
+  "description": "Small heading over the questions on the result, each with how everybody did."
+ },
+ "dailyItemRight": "{pct}% of today's players got it right",
+ "@dailyItemRight": {
+  "description": "Under one question on the result: the share of today's players who got it right.",
+  "placeholders": {
+   "pct": {
+    "type": "int"
+   }
+  }
+ },
+ "dailyItemGuess": "Today's average guess: {guess}",
+ "@dailyItemGuess": {
+  "description": "Under a question answered with a share on the result: the average of today's players' guesses.",
+  "placeholders": {
+   "guess": {
+    "type": "String"
+   }
+  }
+ },
+ "dailyItemFew": "Too few answers yet to compare",
+ "@dailyItemFew": {
+  "description": "Under one question on the result, when too few have answered it to compare."
+ },
+ "fiveYesterday": "Yesterday's five: {score} of 500.",
+ "@fiveYesterday": {
+  "description": "Under the result: yesterday's score of today's five.",
+  "placeholders": {
+   "score": {
+    "type": "int"
+   }
+  }
+ },
+ "fiveShareHead": "Astute · Today's five · {date}",
+ "@fiveShareHead": {
+  "description": "First line of the message today's five is sent in.",
   "placeholders": {
    "date": {
     "type": "String"
    }
   }
  },
- "threeShareScore": "{score} of 300 · day {day}",
- "@threeShareScore": {
-  "description": "Second line of the message: the score and the days in a row.",
+ "threeShareHeadIn": "Astute · Today's three · {subject} · {date}",
+ "@threeShareHeadIn": {
+  "description": "First line of the message a subject's three is sent in.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   },
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "dailyShareScore": "{score} of {max} · day {day}",
+ "@dailyShareScore": {
+  "description": "Second line of the message: the score, the most it could be, and the days in a row.",
   "placeholders": {
    "score": {
+    "type": "int"
+   },
+   "max": {
     "type": "int"
    },
    "day": {
@@ -1909,15 +2014,15 @@
    }
   }
  },
- "threeRowSaid": "You said {said}. It is {truth}.",
- "@threeRowSaid": {
-  "description": "On the result, under each of the three: the guess and the answer.",
+ "dailyShareScoreAlone": "{score} of {max}",
+ "@dailyShareScoreAlone": {
+  "description": "Second line of the message for a subject's three: the score and the most it could be.",
   "placeholders": {
-   "said": {
-    "type": "String"
+   "score": {
+    "type": "int"
    },
-   "truth": {
-    "type": "String"
+   "max": {
+    "type": "int"
    }
   }
  },

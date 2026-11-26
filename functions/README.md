@@ -16,6 +16,8 @@ against the same Firestore the app writes to.
     src/search.ts    the pool asked a question
     src/scorecard.ts how every card does with the readers: counted, flagged,
                      and the cards readers say are untrue held out of the deal
+    src/daily.ts     the day's games: a play judged as the phone judges it,
+                     and counted once with everybody's who played its cards
     src/serve.ts     one reader against Firestore: read, deal, write, forget
     src/index.ts     the functions themselves, and when they run
     src/*.test.ts    node:test, against the bundled bank; no project needed
@@ -26,14 +28,16 @@ against the same Firestore the app writes to.
 |-------------------|--------------------------|----------------------------------------------------------------------|
 | `dealDay`         | a phone asks (callable)  | deals `date` for the caller, writes `readers/{uid}/days/{date}`, returns it |
 | `search`          | a phone asks (callable)  | the pool searched, up to 30 cards whole                              |
-| `nightly`         | every hour               | every reader here in the last 14 days: their local today (and from 17:00 their tomorrow) dealt if missing; their own shelf once a day; the trace older than 21 days cleared |
+| `playDaily`       | a phone asks (callable)  | a play of Today's five or a subject's three, each answer judged by its card; added once to `daily/{day~game~cards}` (how many played, each score in tens, each card's rights, picks and guesses, nothing about who), the reader's mark at `readers/{uid}/daily/{day~game}`; the counts returned |
+| `nightly`         | every hour               | every reader here in the last 14 days: their local today (and from 17:00 their tomorrow) dealt if missing; their own shelf once a day; the trace older than 21 days, and the marks of the day's games older than 3, cleared |
 | `buildExplore`    | every hour at :05        | `explore/latest` from the counts: today's shelf, the top of the week and month (closed days), loved since the start |
 | `onReaderDeleted` | `readers/{uid}` deleted  | everything under it and `presence/{uid}` deleted                     |
 | `scorecard`       | every day at 04:20 UTC   | the closed days of everybody's trace added to each card's totals; reports read; flags and the quarantine written to `quality/latest`, readers' notes to `quality/notes` |
 | `cardStats`       | HTTPS GET                | `quality/latest` as JSON — numbers per card, nothing about who — for `tool/quality/` |
 
-The rules (`../firestore.rules`) let no phone write a day, a profile or
-Explore. What the server dealt is what the server dealt.
+The rules (`../firestore.rules`) let no phone write a day, a profile,
+Explore or the day's games' counts. What the server dealt is what the
+server dealt.
 
 ## What it reads
 

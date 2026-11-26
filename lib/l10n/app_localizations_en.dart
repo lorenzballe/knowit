@@ -1393,41 +1393,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get threeDone => 'Today\'s three · done';
 
   @override
-  String threeDay(int n) {
-    return 'Day $n';
-  }
-
-  @override
-  String get threeOf300 => 'of 300';
-
-  @override
-  String threeCloser(int pct) {
-    return 'Closer than $pct% of today\'s readers.';
-  }
-
-  @override
-  String threeFirst(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'One of the first $n to play today.',
-      one: 'The first to play today.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String threeReaders(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n readers played today.',
-      one: '1 reader played today.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get threeYou => 'You';
 
   @override
@@ -1805,17 +1770,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String threeStreak(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n days',
-      one: '1 day',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get threeSend => 'Send it';
 
   @override
@@ -1827,18 +1781,117 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String threeShareHead(String date) {
-    return 'Astute · Today\'s three · $date';
-  }
-
-  @override
-  String threeShareScore(int score, int day) {
-    return '$score of 300 · day $day';
-  }
-
-  @override
   String threeRowSaid(String said, String truth) {
     return 'You said $said. It is $truth.';
+  }
+
+  @override
+  String get fiveTitle => 'Today\'s five';
+
+  @override
+  String get fiveSame => 'The same five for everyone today. About two minutes.';
+
+  @override
+  String get fiveDone => 'Today\'s five · done';
+
+  @override
+  String dailyOf(int max) {
+    return 'of $max';
+  }
+
+  @override
+  String dailyPickRight(String answer) {
+    return 'Right: $answer.';
+  }
+
+  @override
+  String dailyPickWrong(String answer) {
+    return 'Not quite: it is $answer.';
+  }
+
+  @override
+  String dailyBetter(int pct, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Better than $pct% of today\'s $n players.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyPlayers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n players today so far.',
+      one: '1 player today so far.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dailyFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'One of the first $n to play today: too few players yet to compare.',
+      one: 'The first to play today: too few players yet to compare.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dailyCounting => 'Counting today\'s players…';
+
+  @override
+  String dailyAverage(int right, int total, String avg) {
+    return 'You got $right of $total right. On these, readers get $avg right on average.';
+  }
+
+  @override
+  String get dailyUncounted => 'Today\'s players can\'t be counted right now.';
+
+  @override
+  String get dailyEach => 'Question by question';
+
+  @override
+  String dailyItemRight(int pct) {
+    return '$pct% of today\'s players got it right';
+  }
+
+  @override
+  String dailyItemGuess(String guess) {
+    return 'Today\'s average guess: $guess';
+  }
+
+  @override
+  String get dailyItemFew => 'Too few answers yet to compare';
+
+  @override
+  String fiveYesterday(int score) {
+    return 'Yesterday\'s five: $score of 500.';
+  }
+
+  @override
+  String fiveShareHead(String date) {
+    return 'Astute · Today\'s five · $date';
+  }
+
+  @override
+  String threeShareHeadIn(String subject, String date) {
+    return 'Astute · Today\'s three · $subject · $date';
+  }
+
+  @override
+  String dailyShareScore(int score, int max, int day) {
+    return '$score of $max · day $day';
+  }
+
+  @override
+  String dailyShareScoreAlone(int score, int max) {
+    return '$score of $max';
   }
 
   @override

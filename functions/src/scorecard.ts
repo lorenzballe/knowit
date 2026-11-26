@@ -475,7 +475,7 @@ export async function readTotals(db: Firestore): Promise<Map<string, Counted>> {
  * were right. Counts only, as the scorecard keeps them: nothing about who,
  * and nothing on a card too few readers met for a share to mean anything, so
  * no one reader's answer can be read back out of it. The phone says "64% got
- * it wrong" from this (lib/sync/crowd.dart).
+ * it wrong" from this (lib/sync/served.dart, wrongShare).
  */
 export function crowdOf(totals: Map<string, Counted>, min = MIN_ANSWERS): Record<string, [number, number]> {
   const out: Record<string, [number, number]> = {};
