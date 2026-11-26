@@ -168,7 +168,6 @@ class CardPathScreen extends StatelessWidget {
         // a native button is drawn away from its place.
         Expanded(
           child: QuickReturn(
-            ground: p.surface,
             header: Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
               child: SizedBox(

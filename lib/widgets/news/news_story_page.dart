@@ -67,7 +67,6 @@ class NewsStoryPage extends StatelessWidget {
       body: SafeArea(
         bottom: false,
         child: QuickReturn(
-          ground: p.surface,
           header: Padding(
             padding: const EdgeInsets.fromLTRB(14, 6, 14, 0),
             child: Row(

@@ -732,12 +732,17 @@ void main() {
       final Finder title = find.text('Your journey');
       final Offset backAt = tester.getTopLeft(back);
       final double titleAt = tester.getCenter(title).dy;
+      double ground() => tester
+          .widget<Opacity>(find.byKey(const ValueKey('quick-return-ground')))
+          .opacity;
 
       // At the top, everything where it stood: the title beside the way
-      // back, under the status bar, which the page goes soft under.
+      // back, nothing laid behind it, under the status bar, which the page
+      // goes soft under.
       expect(backAt.dy, greaterThanOrEqualTo(47));
       expect((titleAt - tester.getCenter(back).dy).abs(), lessThan(4));
       expect(back.hitTestable(), findsOneWidget);
+      expect(ground(), 0);
       expect(
         tester.getSize(find.byKey(const ValueKey('journey-top-edge'))).height,
         47,
@@ -749,6 +754,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.getCenter(title).dy, closeTo(titleAt - 40, 1));
       expect(tester.getTopLeft(back).dy, closeTo(backAt.dy - 40, 1));
+      expect(ground(), 0);
 
       // Further down it has gone with the page: the page is all content.
       await tester.drag(page, const Offset(0, -600));
@@ -771,6 +777,9 @@ void main() {
       expect(scrolled(tester).pixels, inInclusiveRange(600, 634));
       expect(tester.getTopLeft(back), backAt);
       expect(back.hitTestable(), findsOneWidget);
+      // The page fades under it there, as under iOS 26's bar: it never
+      // sits on the words.
+      expect(ground(), 1);
       // Still the way back, over whatever runs under it.
       await tester.tap(back);
       expect(backs, hasLength(1));

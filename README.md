@@ -137,8 +137,9 @@ Instagram keeps its own (`widgets/quick_return.dart`). It is part of the
 page: going down, it goes up and away with the page, point for point, with
 the small line beside it where there is one, and the page is all content;
 going back up even a little, it comes straight back over the page, softly,
-the page's colour laid behind it where it has no glass of its own; at the
-top it stands where it always stood. What has to stay, Save at the foot of
+with the page's colour laid behind it and fading out under it, as iOS 26
+fades a page under its bar, so it never sits on the words; at the top it
+stands where it always stood, with nothing behind it. What has to stay, Save at the foot of
 Tune your mix and a path's way on, stays. With less motion asked for nothing
 slides: it fades out where it stands and back in. With a screen reader on it
 stays put. It reads only the page's own scrolling and takes no touch, so the

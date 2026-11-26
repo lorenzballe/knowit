@@ -5,27 +5,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/quick_return.dart';
 
 /// A page as long as a journey under a way back and a small header, 56
 /// points tall: 8 over the ring, 4 under it. A row of its own that
 /// scrolls sideways comes under the title. The page stops at its ends
 /// unless it [bounces], as on an iPhone, whose first points of a drag are
-/// eased in. [lines] makes it as long as it is.
+/// eased in. [lines] makes it as long as it is; [brightness], dark or
+/// light.
 Widget _host({
   bool still = false,
   bool reader = false,
   bool bounces = false,
   int lines = 80,
+  Brightness brightness = Brightness.dark,
   VoidCallback? onBack,
 }) => MaterialApp(
+  theme: buildAstutoTheme(brightness),
   home: Builder(
     builder: (context) => MediaQuery(
       data: MediaQuery.of(context)
           .copyWith(disableAnimations: still, accessibleNavigation: reader),
       child: Scaffold(
         body: QuickReturn(
-          ground: Colors.black,
           header: Padding(
             padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
             child: Row(
@@ -147,6 +150,36 @@ void main() {
     expect(_scrolled(tester).pixels, 0);
     expect(tester.getTopLeft(_back), place);
     expect(_ground(tester), 0);
+  });
+
+  testWidgets('back over the page, what lies behind it is the page\'s own '
+      'colour, fading out under it: light on a light page, dark on a dark '
+      'one', (tester) async {
+    for (final Brightness b in Brightness.values) {
+      await tester.pumpWidget(const SizedBox());
+      await _phone(tester, _host(brightness: b));
+      expect(_ground(tester), 0);
+      await tester.drag(_page, const Offset(0, -500));
+      await tester.pumpAndSettle();
+      await tester.drag(_page, const Offset(0, 20));
+      await tester.pumpAndSettle();
+      expect(tester.getTopLeft(_back), const Offset(20, 8));
+      expect(_ground(tester), 1);
+      final Color page = buildAstutoTheme(b).extension<Palette>()!.surface;
+      final Gradient fade =
+          (tester
+                      .widget<DecoratedBox>(
+                        find.descendant(
+                          of: find.byKey(const ValueKey('quick-return-ground')),
+                          matching: find.byType(DecoratedBox),
+                        ),
+                      )
+                      .decoration
+                  as BoxDecoration)
+              .gradient!;
+      expect(fade.colors.first, page);
+      expect(fade.colors.last, page.withValues(alpha: 0));
+    }
   });
 
   testWidgets('left part of the way up when the page stops, it goes on out '

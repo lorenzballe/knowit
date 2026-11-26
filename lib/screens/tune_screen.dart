@@ -338,7 +338,6 @@ class _TuneScreenState extends State<TuneScreen>
                   Positioned.fill(
                     child: QuickReturn(
                       clip: false,
-                      ground: p.surface,
                       header: Padding(
                         padding: EdgeInsets.only(left: 18, top: safe.top + 8),
                         child: Align(

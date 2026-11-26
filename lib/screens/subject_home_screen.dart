@@ -205,7 +205,6 @@ class SubjectHomeScreen extends StatelessWidget {
     // layer over the page, never laid inside the list, where a native button
     // is drawn away from its place.
     return QuickReturn(
-      ground: p.surface,
       header: Padding(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
         child: SizedBox(

@@ -4,8 +4,10 @@
 /// - Going down, the way back and the small header it stands in go up and
 ///   away with the page, point for point, so the page is all content.
 /// - Coming back up, even a little, they come straight back over the page,
-///   softly, wherever the reader is.
-/// - At the top they stand where they always stood.
+///   softly, wherever the reader is, with the page's colour laid behind
+///   them and fading out under them, as iOS 26 fades a page under its bar:
+///   nothing runs through the ring or under the words beside it.
+/// - At the top they stand where they always stood, with nothing behind.
 ///
 /// For whoever asked for less motion nothing slides: the way back fades out
 /// where it stands, and back in. With a screen reader on it stays where it
@@ -25,12 +27,13 @@ import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 
+import '../theme.dart';
+
 class QuickReturn extends StatefulWidget {
   const QuickReturn({
     super.key,
     required this.header,
     required this.child,
-    this.ground,
     this.clip = true,
   });
 
@@ -42,12 +45,6 @@ class QuickReturn extends StatefulWidget {
   /// The page: what scrolls, filling the room, with room for [header] at
   /// its top.
   final Widget child;
-
-  /// The page's colour, laid behind [header] while it is back over the
-  /// page, so what runs under it fades into the page there rather than
-  /// running through the ring; and not at all while it stands in its own
-  /// place. Null for a header that carries its own ground, as glass does.
-  final Color? ground;
 
   /// Whether what goes up past the top of the room is cut there: not for
   /// a page laid under the status bar, whose header goes up past the edge
@@ -68,8 +65,8 @@ class QuickReturn extends StatefulWidget {
   /// How long, for whoever asked for less motion, it takes to fade.
   static const Duration fade = Duration(milliseconds: 200);
 
-  /// How far past its own foot the header still has something to show: a
-  /// glass ring's shadow, or [ground] fading out under it.
+  /// How far past its own foot the header still has something to show: the
+  /// page's colour fading out under it, and a glass ring's shadow.
   static const double shade = 24;
 
   @override
@@ -181,7 +178,8 @@ class _QuickReturnState extends State<QuickReturn>
   Widget build(BuildContext context) {
     _still = MediaQuery.disableAnimationsOf(context);
     _stays = MediaQuery.accessibleNavigationOf(context);
-    final Color? ground = widget.ground;
+    // The page's own colour, light or dark as the page is.
+    final Color ground = context.p.surface;
     final Widget room = Stack(
       fit: StackFit.expand,
       children: [
@@ -197,42 +195,35 @@ class _QuickReturnState extends State<QuickReturn>
           right: 0,
           top: 0,
           child: AnimatedBuilder(
-            // How far the page has scrolled matters only to the ground.
-            animation: ground == null
-                ? _up
-                : Listenable.merge([_up, _scrolled]),
+            animation: Listenable.merge([_up, _scrolled]),
             child: KeyedSubtree(key: _header, child: widget.header),
             builder: (context, header) {
               final double gone = _gone;
               final double up = _stays ? 0 : _up.value;
               // Where it stands: in its place, or as far up as it is.
               final double at = _still ? 0 : up;
-              Widget shown = header!;
-              if (ground != null) {
-                shown = Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      bottom: -(QuickReturn.shade - 4),
-                      child: IgnorePointer(
-                        child: Opacity(
-                          key: const ValueKey('quick-return-ground'),
-                          // As much as the page has run under it.
-                          opacity: ((_scrolled.value - at) / 24).clamp(
-                            0.0,
-                            1.0,
-                          ),
-                          child: _Ground(color: ground),
-                        ),
+              // The page's colour behind it, as much as the page has run
+              // under it: none while it stands in its own place, whole once
+              // it is back over the page.
+              final Widget shown = Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: -(QuickReturn.shade - 4),
+                    child: IgnorePointer(
+                      child: Opacity(
+                        key: const ValueKey('quick-return-ground'),
+                        opacity: ((_scrolled.value - at) / 24).clamp(0.0, 1.0),
+                        child: _Ground(color: ground),
                       ),
                     ),
-                    shown,
-                  ],
-                );
-              }
+                  ),
+                  header!,
+                ],
+              );
               final bool away = gone > 0 && up >= gone / 2;
               if (_still) {
                 return IgnorePointer(

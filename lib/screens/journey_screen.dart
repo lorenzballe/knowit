@@ -258,8 +258,9 @@ class _JourneyScreenState extends State<JourneyScreen> {
             children: [
               // The way back is part of the page, as Instagram's is: it goes
               // up and away with the chapters, and the moment the reader
-              // goes back up it comes back, on its glass, over whatever is
-              // there; at the top it stands beside the title.
+              // goes back up it comes back over them, the page fading under
+              // it there so it never sits on the words; at the top it stands
+              // beside the title.
               Positioned.fill(
                 child: QuickReturn(
                   clip: false,
