@@ -157,6 +157,10 @@ flutter:
   # The app mark ships in both themes; BrandMark picks between them.
   assets:
     - assets/brand/
+    # The faces of What founders read, cropped square and small, from
+    # Wikimedia Commons: who took each one, and its licence, are in the
+    # CREDITS.md beside them (lib/data/founders.dart).
+    - assets/founders/
     # The first frame of each video card, so its card is there at once
     # (lib/data/video_cards.dart).
     - assets/video/

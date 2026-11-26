@@ -52,9 +52,8 @@ class RemoteLocalizations extends AppLocalizations {
       _words.format('countWord', localeName, {'n': n}) ?? _base.countWord(n);
 
   @override
-  String dayRead(int n, String word) =>
-      _words.format('dayRead', localeName, {'n': n, 'word': word}) ??
-      _base.dayRead(n, word);
+  String dayTitle(int n) =>
+      _words.format('dayTitle', localeName, {'n': n}) ?? _base.dayTitle(n);
 
   @override
   String shelfEyebrow(String word) =>
@@ -355,6 +354,44 @@ class RemoteLocalizations extends AppLocalizations {
       _base.rungOfTotal(at, of);
 
   @override
+  String scoreLevel(String id) =>
+      _words.format('scoreLevel', localeName, {'id': id}) ??
+      _base.scoreLevel(id);
+
+  @override
+  String get levelUpTitle => _words.text('levelUpTitle') ?? _base.levelUpTitle;
+
+  @override
+  String levelUpGain(String skill, String n) =>
+      _words.format('levelUpGain', localeName, {'skill': skill, 'n': n}) ??
+      _base.levelUpGain(skill, n);
+
+  @override
+  String levelUpAnswers(int n) =>
+      _words.format('levelUpAnswers', localeName, {'n': n}) ??
+      _base.levelUpAnswers(n);
+
+  @override
+  String get levelLabel => _words.text('levelLabel') ?? _base.levelLabel;
+
+  @override
+  String levelPointsTo(int n, String level) =>
+      _words.format('levelPointsTo', localeName, {'n': n, 'level': level}) ??
+      _base.levelPointsTo(n, level);
+
+  @override
+  String levelAnswersTo(int n, String level) =>
+      _words.format('levelAnswersTo', localeName, {'n': n, 'level': level}) ??
+      _base.levelAnswersTo(n, level);
+
+  @override
+  String get levelTop => _words.text('levelTop') ?? _base.levelTop;
+
+  @override
+  String get levelShareTitle =>
+      _words.text('levelShareTitle') ?? _base.levelShareTitle;
+
+  @override
   String get signOutQuestion =>
       _words.text('signOutQuestion') ?? _base.signOutQuestion;
 
@@ -419,6 +456,38 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get yourRecord => _words.text('yourRecord') ?? _base.yourRecord;
+
+  @override
+  String get profileTodayFive =>
+      _words.text('profileTodayFive') ?? _base.profileTodayFive;
+
+  @override
+  String profileTodayOf(int read, int of) =>
+      _words.format('profileTodayOf', localeName, {'read': read, 'of': of}) ??
+      _base.profileTodayOf(read, of);
+
+  @override
+  String profileTodayToRead(int n) =>
+      _words.format('profileTodayToRead', localeName, {'n': n}) ??
+      _base.profileTodayToRead(n);
+
+  @override
+  String get profileJourneyScores =>
+      _words.text('profileJourneyScores') ?? _base.profileJourneyScores;
+
+  @override
+  String profileInARowLabel(int n) =>
+      _words.format('profileInARowLabel', localeName, {'n': n}) ??
+      _base.profileInARowLabel(n);
+
+  @override
+  String get profileWeekTitle =>
+      _words.text('profileWeekTitle') ?? _base.profileWeekTitle;
+
+  @override
+  String profileWeekPoints(int n) =>
+      _words.format('profileWeekPoints', localeName, {'n': n}) ??
+      _base.profileWeekPoints(n);
 
   @override
   String get appearance => _words.text('appearance') ?? _base.appearance;
@@ -3775,6 +3844,74 @@ class RemoteLocalizations extends AppLocalizations {
   String get unmaskWindow => _words.text('unmaskWindow') ?? _base.unmaskWindow;
 
   @override
+  String get unmaskMisleadTitle =>
+      _words.text('unmaskMisleadTitle') ?? _base.unmaskMisleadTitle;
+
+  @override
+  String get unmaskMisleadLine =>
+      _words.text('unmaskMisleadLine') ?? _base.unmaskMisleadLine;
+
+  @override
+  String get unmaskAsk => _words.text('unmaskAsk') ?? _base.unmaskAsk;
+
+  @override
+  String get unmaskShowTrick =>
+      _words.text('unmaskShowTrick') ?? _base.unmaskShowTrick;
+
+  @override
+  String get unmaskHideTrick =>
+      _words.text('unmaskHideTrick') ?? _base.unmaskHideTrick;
+
+  @override
+  String get unmaskOriginal =>
+      _words.text('unmaskOriginal') ?? _base.unmaskOriginal;
+
+  @override
+  String get unmaskCorrected =>
+      _words.text('unmaskCorrected') ?? _base.unmaskCorrected;
+
+  @override
+  String unmaskTrickTruncated(String from) =>
+      _words.format('unmaskTrickTruncated', localeName, {'from': from}) ??
+      _base.unmaskTrickTruncated(from);
+
+  @override
+  String unmaskTrickZoomed(String low, String high) =>
+      _words.format('unmaskTrickZoomed', localeName, {
+        'low': low,
+        'high': high,
+      }) ??
+      _base.unmaskTrickZoomed(low, high);
+
+  @override
+  String unmaskTrickWide(String low, String high) =>
+      _words.format('unmaskTrickWide', localeName, {
+        'low': low,
+        'high': high,
+      }) ??
+      _base.unmaskTrickWide(low, high);
+
+  @override
+  String unmaskTrickWindow(String shown, String all) =>
+      _words.format('unmaskTrickWindow', localeName, {
+        'shown': shown,
+        'all': all,
+      }) ??
+      _base.unmaskTrickWindow(shown, all);
+
+  @override
+  String get unmaskTrickTotals =>
+      _words.text('unmaskTrickTotals') ?? _base.unmaskTrickTotals;
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      _words.text('unmaskTrickFlippedRise') ?? _base.unmaskTrickFlippedRise;
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      _words.text('unmaskTrickFlippedFall') ?? _base.unmaskTrickFlippedFall;
+
+  @override
   String get whatIfTrue => _words.text('whatIfTrue') ?? _base.whatIfTrue;
 
   @override
@@ -5154,11 +5291,6 @@ class RemoteLocalizations extends AppLocalizations {
       _base.whatYearSaid(guess, points);
 
   @override
-  String whatYearExact(int points) =>
-      _words.format('whatYearExact', localeName, {'points': points}) ??
-      _base.whatYearExact(points);
-
-  @override
   String whatYearOff(int n) =>
       _words.format('whatYearOff', localeName, {'n': n}) ??
       _base.whatYearOff(n);
@@ -5347,6 +5479,156 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('challengeAgain') ?? _base.challengeAgain;
 
   @override
+  String get spotRules => _words.text('spotRules') ?? _base.spotRules;
+
+  @override
+  String get spotAsk => _words.text('spotAsk') ?? _base.spotAsk;
+
+  @override
+  String get biggerRules => _words.text('biggerRules') ?? _base.biggerRules;
+
+  @override
+  String get biggerAsk => _words.text('biggerAsk') ?? _base.biggerAsk;
+
+  @override
+  String biggerRight(String big, String small) =>
+      _words.format('biggerRight', localeName, {'big': big, 'small': small}) ??
+      _base.biggerRight(big, small);
+
+  @override
+  String biggerWrong(String big, String small) =>
+      _words.format('biggerWrong', localeName, {'big': big, 'small': small}) ??
+      _base.biggerWrong(big, small);
+
+  @override
+  String get closerRules => _words.text('closerRules') ?? _base.closerRules;
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) =>
+      _words.format('closerDoneSteps', localeName, {
+        'said': said,
+        'right': right,
+        'steps': steps,
+      }) ??
+      _base.closerDoneSteps(said, right, steps);
+
+  @override
+  String closerExactSteps(String said, int right, int steps) =>
+      _words.format('closerExactSteps', localeName, {
+        'said': said,
+        'right': right,
+        'steps': steps,
+      }) ??
+      _base.closerExactSteps(said, right, steps);
+
+  @override
+  String closerStepsRight(int right, int steps) =>
+      _words.format('closerStepsRight', localeName, {
+        'right': right,
+        'steps': steps,
+      }) ??
+      _base.closerStepsRight(right, steps);
+
+  @override
+  String get magnitudeRules =>
+      _words.text('magnitudeRules') ?? _base.magnitudeRules;
+
+  @override
+  String get rangeRules => _words.text('rangeRules') ?? _base.rangeRules;
+
+  @override
+  String rangeOption(int w, int pts) =>
+      _words.format('rangeOption', localeName, {'w': w, 'pts': pts}) ??
+      _base.rangeOption(w, pts);
+
+  @override
+  String rangeIn(String said, int pts) =>
+      _words.format('rangeIn', localeName, {'said': said, 'pts': pts}) ??
+      _base.rangeIn(said, pts);
+
+  @override
+  String rangeOut(String said) =>
+      _words.format('rangeOut', localeName, {'said': said}) ??
+      _base.rangeOut(said);
+
+  @override
+  String stakeRules(int points) =>
+      _words.format('stakeRules', localeName, {'points': points}) ??
+      _base.stakeRules(points);
+
+  @override
+  String stakeWon(int n) =>
+      _words.format('stakeWon', localeName, {'n': n}) ?? _base.stakeWon(n);
+
+  @override
+  String stakeLost(int n) =>
+      _words.format('stakeLost', localeName, {'n': n}) ?? _base.stakeLost(n);
+
+  @override
+  String get numberRules => _words.text('numberRules') ?? _base.numberRules;
+
+  @override
+  String tfRightIs(String side) =>
+      _words.format('tfRightIs', localeName, {'side': side}) ??
+      _base.tfRightIs(side);
+
+  @override
+  String tfWrongIs(String side) =>
+      _words.format('tfWrongIs', localeName, {'side': side}) ??
+      _base.tfWrongIs(side);
+
+  @override
+  String inOrderTold(int n, int of) =>
+      _words.format('inOrderTold', localeName, {'n': n, 'of': of}) ??
+      _base.inOrderTold(n, of);
+
+  @override
+  String get whatYearYours =>
+      _words.text('whatYearYours') ?? _base.whatYearYours;
+
+  @override
+  String get whatYearExactly =>
+      _words.text('whatYearExactly') ?? _base.whatYearExactly;
+
+  @override
+  String beforeAfterRight(String side, String year, String above) =>
+      _words.format('beforeAfterRight', localeName, {
+        'side': side,
+        'year': year,
+        'above': above,
+      }) ??
+      _base.beforeAfterRight(side, year, above);
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) =>
+      _words.format('beforeAfterWrong', localeName, {
+        'side': side,
+        'year': year,
+        'above': above,
+      }) ??
+      _base.beforeAfterWrong(side, year, above);
+
+  @override
+  String get challengeAnswer =>
+      _words.text('challengeAnswer') ?? _base.challengeAnswer;
+
+  @override
+  String get challengeYouSaid =>
+      _words.text('challengeYouSaid') ?? _base.challengeYouSaid;
+
+  @override
+  String get challengePoints =>
+      _words.text('challengePoints') ?? _base.challengePoints;
+
+  @override
+  String get challengeThisRound =>
+      _words.text('challengeThisRound') ?? _base.challengeThisRound;
+
+  @override
+  String get challengeLeftToday =>
+      _words.text('challengeLeftToday') ?? _base.challengeLeftToday;
+
+  @override
   String exploreSubjectLevel(String subject, int n) =>
       _words.format('exploreSubjectLevel', localeName, {
         'subject': subject,
@@ -5368,6 +5650,10 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get todaySeeAgainHint =>
       _words.text('todaySeeAgainHint') ?? _base.todaySeeAgainHint;
+
+  @override
+  String get yourFiveFromToday =>
+      _words.text('yourFiveFromToday') ?? _base.yourFiveFromToday;
 
   @override
   String get tuneTitle => _words.text('tuneTitle') ?? _base.tuneTitle;
@@ -5412,8 +5698,12 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('shareDayHeadline') ?? _base.shareDayHeadline;
 
   @override
-  String get shareFormatPost =>
-      _words.text('shareFormatPost') ?? _base.shareFormatPost;
+  String get shareFormatCover =>
+      _words.text('shareFormatCover') ?? _base.shareFormatCover;
+
+  @override
+  String get shareFormatList =>
+      _words.text('shareFormatList') ?? _base.shareFormatList;
 
   @override
   String get shareFormatStory =>
@@ -5986,11 +6276,6 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('bookRecommendedBy') ?? _base.bookRecommendedBy;
 
   @override
-  String bookPickPhoto(String credit) =>
-      _words.format('bookPickPhoto', localeName, {'credit': credit}) ??
-      _base.bookPickPhoto(credit);
-
-  @override
   String get bookFreeThisWeek =>
       _words.text('bookFreeThisWeek') ?? _base.bookFreeThisWeek;
 
@@ -6031,4 +6316,35 @@ class RemoteLocalizations extends AppLocalizations {
         'author': author,
       }) ??
       _base.bookRetold(title, author);
+
+  @override
+  String get foundersTitle =>
+      _words.text('foundersTitle') ?? _base.foundersTitle;
+
+  @override
+  String founderBookCount(int n) =>
+      _words.format('founderBookCount', localeName, {'n': n}) ??
+      _base.founderBookCount(n);
+
+  @override
+  String get founderTheirBooks =>
+      _words.text('founderTheirBooks') ?? _base.founderTheirBooks;
+
+  @override
+  String founderAbout(String name) =>
+      _words.format('founderAbout', localeName, {'name': name}) ??
+      _base.founderAbout(name);
+
+  @override
+  String founderPhoto(String author, String licence) =>
+      _words.format('founderPhoto', localeName, {
+        'author': author,
+        'licence': licence,
+      }) ??
+      _base.founderPhoto(author, licence);
+
+  @override
+  String founderAlso(String names) =>
+      _words.format('founderAlso', localeName, {'names': names}) ??
+      _base.founderAlso(names);
 }

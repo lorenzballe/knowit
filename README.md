@@ -122,6 +122,15 @@ nothing running.
 All of it defers to the reduce-motion setting: whoever asked for less gets
 the finished state.
 
+One move is the shell's: the profile's Today tile opens Today out of itself
+(`widgets/tab_zoom.dart`). Today is two tabs from the profile, so a slide
+would drag Explore across the screen, and the cut it replaced read as the app
+jumping. The profile is pictured for half a second while the tile grows into
+the screen with Today inside it, its contents gone before Today's arrive, and
+the bar's light travels to Today with it. With less motion asked for it is a
+dissolve of a fifth of a second, which moves nothing; tapping another tab
+lands it at once.
+
 ## One palette
 
 The app used to paint Today dark and the other tabs on paper, which meant it
@@ -144,8 +153,9 @@ repaints at once, and the status bar follows it.
 genres under it, which is where the onboarding ends), Today with
 the card stack and, once the five are done, the shelf, Explore (shelves of
 cards nobody dealt you, with a search over the whole pool), Saved with its
-empty state, Profile (record, appearance, topics, how well you know
-yourself, the button into the journey, daily nudge), the come-back screen
+empty state, Profile (the Astute score with the way into the journey under
+it, the week that goes back to Today's five, appearance, topics, how well you
+know yourself, daily nudge), the come-back screen
 after a lapsed streak, and the disclosure page on how pills are written.
 
 **Astute+** — three things, all delivered, and everything else the same on
@@ -1606,10 +1616,14 @@ you know), *Holding* (it is still there weeks later), *Sharp*. Any five
 cards at all carry somebody up it. The journey shows the rung, one bar
 held to whichever requirement is furthest behind, and the single next
 step — telling somebody four things at once is telling them nothing.
-The profile keeps only how well you know yourself, and a button into the
-journey with the Astute+ lock on it for the free plan: the level, the moves
-you keep missing, whether the gap is closing and the week in questions are
-all the journey's.
+The profile opens on the Astute score, on either plan, read as the journey
+reads it, with its week and its month, and under it the way into the journey,
+"All your scores, week by week" — marked Astute+ on the free plan but never
+locked: the score above it is already the reader's own
+(`widgets/profile_top.dart`, where two other tops are kept for comparison).
+Lower down it keeps how well you know yourself: the level, the moves you keep
+missing, whether the gap is closing and the week in questions are all the
+journey's.
 
 **Weeks kept.** Five days out of seven keeps a week, and the record counts
 the weeks in a row. The daily streak is the sharper number and the crueller

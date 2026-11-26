@@ -174,11 +174,11 @@ abstract class AppLocalizations {
   /// **'{n, select, 1{one} 2{two} 3{three} 4{four} 5{five} 6{six} 7{seven} 8{eight} 9{nine} 10{ten} other{{n}}}'**
   String countWord(String n);
 
-  /// No description provided for @dayRead.
+  /// The finished day's title at the top of Today, once the day's five are read: which day of the reader's run of days this is (the streak). Set as Today's own title is while the five are read, so keep it as short.
   ///
   /// In en, this message translates to:
-  /// **'Day {n} · {word} read'**
-  String dayRead(int n, String word);
+  /// **'Day {n}'**
+  String dayTitle(int n);
 
   /// No description provided for @shelfEyebrow.
   ///
@@ -600,6 +600,60 @@ abstract class AppLocalizations {
   /// **'{at} / {of}'**
   String rungOfTotal(int at, int of);
 
+  /// The name of one of the levels of the reader's Astute score (scoreTitle), from where everybody starts (curiosity) to the top (acumen): a quality of good thinking. A noun, never an adjective, so it never has to agree with the reader's gender. Shown big on the full-screen moment a level is reached, and small in Your journey. Each level is a step up from the one before: observation, method, judgement, insight, discernment, acumen. Avoid a word that also reads as a warning (Italian 'Attenzione', Polish 'Uwaga').
+  ///
+  /// In en, this message translates to:
+  /// **'{id, select, curiosity{Curiosity} observation{Observation} method{Method} judgement{Judgement} insight{Insight} discernment{Discernment} acumen{Acumen} other{{id}}}'**
+  String scoreLevel(String id);
+
+  /// Over the level's name on the full-screen moment a new level of the Astute score is reached, and on the picture it is shared as. Shown in capitals. Quiet and plain, never an exclamation.
+  ///
+  /// In en, this message translates to:
+  /// **'New level'**
+  String get levelUpTitle;
+
+  /// On the full-screen moment a new level is reached, under the score: what got the reader there. skill is the name of the skill whose score rose most in the last seven days (skillName); n is how far it rose, signed and formatted: "+34".
+  ///
+  /// In en, this message translates to:
+  /// **'Your biggest gain this week: {skill}, {n}'**
+  String levelUpGain(String skill, String n);
+
+  /// On the full-screen moment a new level is reached, in place of levelUpGain when no skill rose this week: how many answers the Astute score stands on.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One answer so far.} other{{n} answers so far.}}'**
+  String levelUpAnswers(int n);
+
+  /// Your journey, small, beside the Astute score: over the name of the level the reader has reached (scoreLevel). One short word, shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get levelLabel;
+
+  /// Your journey, small, beside the level the reader has reached: how many points of the Astute score the next level is away. level is the next level's name (scoreLevel).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 point to {level}} other{{n} points to {level}}}'**
+  String levelPointsTo(int n, String level);
+
+  /// Your journey, small, in place of levelPointsTo for a new reader: a level needs ten answers behind the score, and this says how many more answers the next level needs. level is the next level's name (scoreLevel).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 answer to {level}} other{{n} answers to {level}}}'**
+  String levelAnswersTo(int n, String level);
+
+  /// Your journey, small, in place of levelPointsTo once the reader has reached the last level: there is no next one.
+  ///
+  /// In en, this message translates to:
+  /// **'The top level'**
+  String get levelTop;
+
+  /// Title of the sheet that sends the picture of a level just reached, as the day's is sent (shareDayTitle).
+  ///
+  /// In en, this message translates to:
+  /// **'Share your level'**
+  String get levelShareTitle;
+
   /// No description provided for @signOutQuestion.
   ///
   /// In en, this message translates to:
@@ -701,6 +755,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your record'**
   String get yourRecord;
+
+  /// Profile, the tile at the top that goes to Today: its title, the day's five cards. As the widget and the shared day call them.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s five'**
+  String get profileTodayFive;
+
+  /// Profile, the Today tile while the day is under way: how many of the day's cards are read, of how many. Short: it ends the tile's title row, after profileTodayFive.
+  ///
+  /// In en, this message translates to:
+  /// **'{read} of {of}'**
+  String profileTodayOf(int read, int of);
+
+  /// Profile, the Today tile before any of the day's cards is read: how many there are to read. Short: it ends the tile's title row. Once all are read the tile says todaySeeAgain instead.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 to read} other{{n} to read}}'**
+  String profileTodayToRead(int n);
+
+  /// Profile, under 'Your journey', beside the Astute score: what the journey holds, the reader's scores over time. On the free plan the row also carries the Astute+ mark and opens the plans.
+  ///
+  /// In en, this message translates to:
+  /// **'All your scores, week by week'**
+  String get profileJourneyScores;
+
+  /// Profile, one of three numbers in a row (score, days in a row, cards read): the label under the number of days in a row the reader finished their five. The number is shown above it, not in it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{day in a row} other{days in a row}}'**
+  String profileInARowLabel(int n);
+
+  /// Profile, small capitals over what the last seven days added to the Astute score, with a bar for each of those days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 days'**
+  String get profileWeekTitle;
+
+  /// Profile, beside the large number of points the last seven days added to the Astute score (+24): the word for points. The number is shown before it, not in it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{point} other{points}}'**
+  String profileWeekPoints(int n);
 
   /// No description provided for @appearance.
   ///
@@ -5652,6 +5748,90 @@ abstract class AppLocalizations {
   /// **'Show the whole series'**
   String get unmaskWindow;
 
+  /// Explore: the name of the shelf of real-looking charts whose numbers are true and whose drawing misleads (a cut axis, a cropped window, totals, an upside-down scale). Plain, serious: it says what the charts are.
+  ///
+  /// In en, this message translates to:
+  /// **'Charts that mislead'**
+  String get unmaskMisleadTitle;
+
+  /// Explore: the line under that name, saying what is going on: the numbers on each chart are right, the way they are drawn is the trick.
+  ///
+  /// In en, this message translates to:
+  /// **'The numbers are true. The trick is in the drawing.'**
+  String get unmaskMisleadLine;
+
+  /// On each chart card, before the reader has done anything: the question the card asks of the chart under it.
+  ///
+  /// In en, this message translates to:
+  /// **'This chart misleads. Can you see how?'**
+  String get unmaskAsk;
+
+  /// The button under the chart that shows the trick: the chart redrawn fairly from the same numbers, and the trick said in a sentence. It must not give the trick away.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the trick'**
+  String get unmaskShowTrick;
+
+  /// Once the trick is shown, with the original chart and the corrected one over each other: the button that hides the corrected one and asks the question again.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide the trick'**
+  String get unmaskHideTrick;
+
+  /// Tag on the chart as it was drawn, the misleading one; also one side of the switch between the two charts. One short word, shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Original'**
+  String get unmaskOriginal;
+
+  /// Tag on the same numbers drawn fairly; the other side of that switch. One short word, shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Corrected'**
+  String get unmaskCorrected;
+
+  /// The trick, said plainly, for bars whose value axis does not start at zero. {from} is where it starts, as the chart prints it (77%, 9.5 s).
+  ///
+  /// In en, this message translates to:
+  /// **'The axis starts at {from}, not at zero.'**
+  String unmaskTrickTruncated(String from);
+
+  /// The trick for a value axis squeezed round the data, so a small change fills the chart. {low} and {high} are the axis ends as printed.
+  ///
+  /// In en, this message translates to:
+  /// **'The axis only runs from {low} to {high}, so a small change looks huge.'**
+  String unmaskTrickZoomed(String low, String high);
+
+  /// The trick for a value axis far wider than the data, so a real change looks flat. {low} and {high} are the axis ends as printed (-18 °C, 43 °C).
+  ///
+  /// In en, this message translates to:
+  /// **'The axis runs from {low} to {high}, so a real change looks flat.'**
+  String unmaskTrickWide(String low, String high);
+
+  /// The trick for a chart that keeps only a stretch of a longer series. {shown} is the stretch shown and {all} the whole series, each two labels joined by a dash (2008–2012, 1999–2012).
+  ///
+  /// In en, this message translates to:
+  /// **'It shows only {shown}, but the data cover {all}.'**
+  String unmaskTrickWindow(String shown, String all);
+
+  /// The trick for raw totals compared where only a rate is fair (medals, not medals per person; takings, not tickets).
+  ///
+  /// In en, this message translates to:
+  /// **'It compares raw totals, not a fair measure.'**
+  String get unmaskTrickTotals;
+
+  /// The trick for an upside-down value axis on numbers that went up: the line seems to fall.
+  ///
+  /// In en, this message translates to:
+  /// **'The axis is upside down, so a rise looks like a fall.'**
+  String get unmaskTrickFlippedRise;
+
+  /// The trick for an upside-down value axis on numbers that went down: the line seems to climb.
+  ///
+  /// In en, this message translates to:
+  /// **'The axis is upside down, so a fall looks like a rise.'**
+  String get unmaskTrickFlippedFall;
+
   /// No description provided for @whatIfTrue.
   ///
   /// In en, this message translates to:
@@ -6618,28 +6798,28 @@ abstract class AppLocalizations {
   /// **'Less'**
   String get betsLess;
 
-  /// After a step said right: the answer is more than this share.
+  /// After a step said right: the answer is more than this share. Begins with the same word as the step said wrong ('Right' against 'Wrong').
   ///
   /// In en, this message translates to:
   /// **'Right: it is more than {v}.'**
   String betsCloserYesMore(String v);
 
-  /// After a step said right: the answer is less than this share.
+  /// After a step said right: the answer is less than this share. Begins with the same word as the step said wrong ('Right' against 'Wrong').
   ///
   /// In en, this message translates to:
   /// **'Right: it is less than {v}.'**
   String betsCloserYesLess(String v);
 
-  /// After a step said wrong: the answer is more than this share.
+  /// After a step said wrong: the answer is more than this share. Begins with the word for a wrong answer, never 'No'.
   ///
   /// In en, this message translates to:
-  /// **'No: it is more than {v}.'**
+  /// **'Wrong: it is more than {v}.'**
   String betsCloserNoMore(String v);
 
-  /// After a step said wrong: the answer is less than this share.
+  /// After a step said wrong: the answer is less than this share. Begins with the word for a wrong answer, never 'No'.
   ///
   /// In en, this message translates to:
-  /// **'No: it is less than {v}.'**
+  /// **'Wrong: it is less than {v}.'**
   String betsCloserNoLess(String v);
 
   /// When the answer sits exactly on the share a step asked about, which ends the game.
@@ -7500,10 +7680,10 @@ abstract class AppLocalizations {
   /// **'Not that one: it\'s true.'**
   String get spotMissedIt;
 
-  /// True or false on the whole screen: its rules, in a line, before playing.
+  /// True or false (the claims most people get wrong) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
   ///
   /// In en, this message translates to:
-  /// **'Say true or false, then see why. Most people get these wrong.'**
+  /// **'Claims most people get wrong. Say true or false, then read why. It measures judgement: telling what is so from what only seems obvious.'**
   String get tfRules;
 
   /// Explore, the challenges: the name of the game of putting four moments from the cards in the order they happened. Short: a tile's name.
@@ -7518,22 +7698,22 @@ abstract class AppLocalizations {
   /// **'Four moments from the cards, their years taken out, to put in the order they happened. It measures your sense of chronology, the first test of any explanation: a cause comes before its effect.'**
   String get inOrderRules;
 
-  /// In order, while playing, before any moment is placed: what to tap first.
+  /// In order, while playing, before any moment is placed: what to tap first. One short sentence, with a full stop.
   ///
   /// In en, this message translates to:
-  /// **'Tap the earliest'**
+  /// **'Tap the moment that came first.'**
   String get inOrderFirst;
 
-  /// In order, while playing, once one or more moments are placed: what to tap next.
+  /// In order, while playing, once one or more moments are placed: what to tap next. One short sentence, with a full stop.
   ///
   /// In en, this message translates to:
-  /// **'Now the next one'**
+  /// **'Now the one that came next.'**
   String get inOrderNext;
 
-  /// In order, while playing, once every moment is placed: the order can be checked.
+  /// In order, while playing, once every moment is placed, over the button that checks the order. Two or three words, with a full stop.
   ///
   /// In en, this message translates to:
-  /// **'All placed. Check it?'**
+  /// **'All placed.'**
   String get inOrderReady;
 
   /// In order, while playing: the big button that checks the order the moments were put in.
@@ -7572,10 +7752,10 @@ abstract class AppLocalizations {
   /// **'What year?'**
   String get whatYearTitle;
 
-  /// What year?, before playing: its rules, in a line.
+  /// What year? (three moments, the year of each dialled in) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
   ///
   /// In en, this message translates to:
-  /// **'Three moments, each missing its year. Dial it in: the closer, the more points.'**
+  /// **'Three moments, their years taken out. Dial in the year of each: the nearer, the more points, up to ten. It measures your sense of when things happened.'**
   String get whatYearRules;
 
   /// What year?: the points scored, of the most there were, as a screen reader says the score and as the score is sent on.
@@ -7593,20 +7773,14 @@ abstract class AppLocalizations {
   /// What year?, at the end: the line under the score, how many years off the guesses were, all added up.
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{1 year off in all} other{{n} years off in all}}'**
+  /// **'{n, plural, =1{1 year off in all.} other{{n} years off in all.}}'**
   String whatYearOffInAll(int n);
 
-  /// What year?: under a moment once told, the year the reader dialled and the points it scored.
+  /// What year?: under a moment in the report, the year the reader dialled and the points it scored.
   ///
   /// In en, this message translates to:
-  /// **'You said {guess} · +{points}'**
+  /// **'{points, plural, =1{You said {guess} · 1 point} other{You said {guess} · {points} points}}'**
   String whatYearSaid(String guess, int points);
-
-  /// What year?: a year dialled exactly, and the points it scored. Calm, no exclamation mark.
-  ///
-  /// In en, this message translates to:
-  /// **'Exact year, +{points}'**
-  String whatYearExact(int points);
 
   /// What year?: how many years off a dialled year was.
   ///
@@ -7638,10 +7812,10 @@ abstract class AppLocalizations {
   /// **'Before or after?'**
   String get beforeAfterTitle;
 
-  /// Before or after?, before playing: its rules, in a line.
+  /// Before or after? (six moments, each against the one above it) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
   ///
   /// In en, this message translates to:
-  /// **'Six moments, one after another. Did each happen before or after the one above it?'**
+  /// **'Six moments, one after another. Say whether each happened before or after the one above it. It measures your sense of sequence.'**
   String get beforeAfterRules;
 
   /// Before or after?: the button that says the moment happened before the one above it.
@@ -7902,6 +8076,192 @@ abstract class AppLocalizations {
   /// **'Another round'**
   String get challengeAgain;
 
+  /// Spot the false one (four claims, one false) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Four claims: three are true and one is false. Find the false one. It measures how well you tell a sound claim from one that only sounds right.'**
+  String get spotRules;
+
+  /// Spot the false one on the whole screen, over the four claims: what to do. One short sentence, with a full stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the claim you think is false.'**
+  String get spotAsk;
+
+  /// Which is bigger? (two hidden figures, each the answer to a card) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Two figures, each the answer to a card\'s question. Tap the one you think is bigger. It measures your sense of proportion.'**
+  String get biggerRules;
+
+  /// Which is bigger? on the whole screen, over the two cards before one is picked: what to do. One short sentence, with a full stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the card whose answer is bigger.'**
+  String get biggerAsk;
+
+  /// Which is bigger?, once a card is picked, over the two cards: the pick was right; the bigger figure and the smaller, as figures ('95%', '85%').
+  ///
+  /// In en, this message translates to:
+  /// **'Right: {big} is bigger than {small}.'**
+  String biggerRight(String big, String small);
+
+  /// Which is bigger?, once a card is picked, over the two cards: the pick was wrong; the bigger figure and the smaller, as figures ('95%', '85%').
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong: {big} is bigger than {small}.'**
+  String biggerWrong(String big, String small);
+
+  /// Closer, closer (a share closed in on, more or less, step by step) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Close in on a share step by step: each time, say whether it is more or less than the middle of what is left. It measures estimation.'**
+  String get closerRules;
+
+  /// Closer, closer on the whole screen, on the card once its steps are taken: what the share is, and how many of the steps taken were said right.
+  ///
+  /// In en, this message translates to:
+  /// **'It is {said}: you were right on {right} of {steps} steps.'**
+  String closerDoneSteps(String said, int right, int steps);
+
+  /// Closer, closer on the whole screen, on the card once its steps are taken: what the share is (exactly the line of the last step, which ends the game), and how many of the steps taken were said right.
+  ///
+  /// In en, this message translates to:
+  /// **'It is exactly {said}: you were right on {right} of {steps} steps.'**
+  String closerExactSteps(String said, int right, int steps);
+
+  /// Closer, closer's report, and a card's line in it: how many of the steps taken were said right, of how many.
+  ///
+  /// In en, this message translates to:
+  /// **'You were right on {right} of {steps} steps.'**
+  String closerStepsRight(int right, int steps);
+
+  /// Orders of magnitude (the power of ten nearest a figure) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten, a thousand or a million? Pick the power of ten nearest the answer. It measures your sense of scale, which matters more than the exact digits.'**
+  String get magnitudeRules;
+
+  /// Bet a range (a guess, and a range around it that pays more the narrower it is) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your guess, then a range around it: the narrower the range, the more it pays if the answer falls inside. It measures calibration: knowing how much you know.'**
+  String get rangeRules;
+
+  /// Bet a range on the whole screen: one of the widths to pick, as a button: how far either side of the guess, in percentage points, and the points it pays if the answer falls inside. Short: three sit side by side.
+  ///
+  /// In en, this message translates to:
+  /// **'±{w} · pays {pts}'**
+  String rangeOption(int w, int pts);
+
+  /// Bet a range, on the card once the bet is laid: the answer ('42%'), and that it fell inside the range bet on, and the points it paid.
+  ///
+  /// In en, this message translates to:
+  /// **'{pts, plural, =1{It is {said}: inside your range, +1 point.} other{It is {said}: inside your range, +{pts} points.}}'**
+  String rangeIn(String said, int pts);
+
+  /// Bet a range, on the card once the bet is laid: the answer ('42%'), and that it fell outside the range bet on.
+  ///
+  /// In en, this message translates to:
+  /// **'It is {said}: outside your range.'**
+  String rangeOut(String said);
+
+  /// Place your bet (an answer picked, and points staked on it from the day's) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick an answer and stake points on it, from {points} a day: right, your stake is doubled; wrong, it is lost. It measures conviction: backing what you know, and only that.'**
+  String stakeRules(int points);
+
+  /// Place your bet, on the card once the bet is laid: the answer picked was right, and the points won (the stake).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Right: you win 1 point.} other{Right: you win {n} points.}}'**
+  String stakeWon(int n);
+
+  /// Place your bet, on the card once the bet is laid: the answer picked was wrong, and the points lost (the stake).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Wrong: you lose 1 point.} other{Wrong: you lose {n} points.}}'**
+  String stakeLost(int n);
+
+  /// Your number (one figure, set with steppers and locked in) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a single figure with the steppers and lock it in. It measures precision: how near you can get when you have to commit to one number.'**
+  String get numberRules;
+
+  /// True or false on the whole screen, on the card once a claim is answered: the answer was right, and what the claim is ('true' or 'false': side is the word 'true' or anything else).
+  ///
+  /// In en, this message translates to:
+  /// **'{side, select, true{Right: it is true.} other{Right: it is false.}}'**
+  String tfRightIs(String side);
+
+  /// True or false on the whole screen, on the card once a claim is answered: the answer was wrong, and what the claim is ('true' or 'false': side is the word 'true' or anything else).
+  ///
+  /// In en, this message translates to:
+  /// **'{side, select, true{Wrong: it is true.} other{Wrong: it is false.}}'**
+  String tfWrongIs(String side);
+
+  /// In order, once the order is checked, over the moments: how many stand in their right place, of how many.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} in the right place.'**
+  String inOrderTold(int n, int of);
+
+  /// What year?, while a moment is played: the name over the year the reader has dialled, in small capitals. Two or three words.
+  ///
+  /// In en, this message translates to:
+  /// **'Your year'**
+  String get whatYearYours;
+
+  /// What year?, once a moment is told: the year dialled was the year it happened. Calm, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'The exact year'**
+  String get whatYearExactly;
+
+  /// Before or after?, once a moment is said, over the two moments: the call was right; the year of the moment asked about, and whether it came before or after the year of the one above it (side is 'before' or anything else, for after).
+  ///
+  /// In en, this message translates to:
+  /// **'{side, select, before{Right: it was {year}, before {above}.} other{Right: it was {year}, after {above}.}}'**
+  String beforeAfterRight(String side, String year, String above);
+
+  /// Before or after?, once a moment is said, over the two moments: the call was wrong; the year of the moment asked about, and whether it came before or after the year of the one above it (side is 'before' or anything else, for after).
+  ///
+  /// In en, this message translates to:
+  /// **'{side, select, before{Wrong: it was {year}, before {above}.} other{Wrong: it was {year}, after {above}.}}'**
+  String beforeAfterWrong(String side, String year, String above);
+
+  /// A challenge, once a round is told: the name over the right answer ('2012', '3.6'), in small capitals. One or two words.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer'**
+  String get challengeAnswer;
+
+  /// A challenge, once a round is told: the name over what the reader answered ('1925', '4.4'), in small capitals. One or two words.
+  ///
+  /// In en, this message translates to:
+  /// **'You said'**
+  String get challengeYouSaid;
+
+  /// A challenge, once a round is told: the name over the points a moment scored ('7'), in small capitals. One or two words.
+  ///
+  /// In en, this message translates to:
+  /// **'Points'**
+  String get challengePoints;
+
+  /// A challenge's report, among its figures: the name of the points the round won or lost, beside them ('+40 points').
+  ///
+  /// In en, this message translates to:
+  /// **'This round'**
+  String get challengeThisRound;
+
+  /// Place your bet's report, among its figures: the name of the points left to stake today, beside them ('80 points').
+  ///
+  /// In en, this message translates to:
+  /// **'Left today'**
+  String get challengeLeftToday;
+
   /// Explore, the subjects with their levels: one subject's ring, said to a screen reader. The level is 1 to 10.
   ///
   /// In en, this message translates to:
@@ -7925,6 +8285,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today\'s cards again, full size, from the first'**
   String get todaySeeAgainHint;
+
+  /// Explore, near the top once the day's five are read: a small row that opens the reader's own five cards of today again, full size. It names the reader's own cards, so it is never taken for the day's challenge that is the same for everyone ("Today's five").
+  ///
+  /// In en, this message translates to:
+  /// **'Your five from today'**
+  String get yourFiveFromToday;
 
   /// The screen under the topics editor, and the row that opens it: how much of each subject, and which parts of each.
   ///
@@ -7998,13 +8364,19 @@ abstract class AppLocalizations {
   /// **'Today\'s five'**
   String get shareDayHeadline;
 
-  /// The sheet that sends the day as a picture: the shape for a chat or a feed, four by five.
+  /// The sheet that sends the day as a picture: the shape with one card large, its drawing beside its question, over the other four in a list. Four by five, like a magazine's cover.
   ///
   /// In en, this message translates to:
-  /// **'Post'**
-  String get shareFormatPost;
+  /// **'Cover'**
+  String get shareFormatCover;
 
-  /// The sheet that sends the day as a picture: the tall shape for a story, nine by sixteen.
+  /// The sheet that sends the day as a picture: the shape with the five cards alike in a list, each its drawing and its question. Four by five.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get shareFormatList;
+
+  /// The sheet that sends the day as a picture: the tall shape for a story, nine by sixteen, with one card large over the other four.
   ///
   /// In en, this message translates to:
   /// **'Story'**
@@ -8874,12 +9246,6 @@ abstract class AppLocalizations {
   /// **'Recommended by'**
   String get bookRecommendedBy;
 
-  /// Books in pills, a book's own page: under a person who recommended the book, who took their photo and its licence, as the licence asks (e.g. 'Nick, CC BY 2.0')
-  ///
-  /// In en, this message translates to:
-  /// **'Photo: {credit}'**
-  String bookPickPhoto(String credit);
-
   /// Books in pills, a book's own page: bookFreeThisWeek
   ///
   /// In en, this message translates to:
@@ -8933,6 +9299,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The ideas of {title} by {author}, retold in Astute\'s own words. To read the whole book, find it at your bookshop.'**
   String bookRetold(String title, String author);
+
+  /// What founders read, Explore's row of the people who built well-known companies, each opening the books they recommended in public: the row's name when the remote document gives none.
+  ///
+  /// In en, this message translates to:
+  /// **'What founders read'**
+  String get foundersTitle;
+
+  /// What founders read: how many of a person's recommended books are in the app as books in pills, on their tile.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 book} other{{n} books}}'**
+  String founderBookCount(int n);
+
+  /// What founders read, a person's own page: the label over the books they recommended in public. Without a pronoun where the language allows it.
+  ///
+  /// In en, this message translates to:
+  /// **'The books they recommended'**
+  String get founderTheirBooks;
+
+  /// What founders read, at the foot of a person's own page: that these are books {name} (a famous founder or investor, e.g. 'Bill Gates') recommended in public, quoted, each with its source, and that {name} has no connection with the app, so nothing reads as an endorsement. Quiet and plain; use the name, not a pronoun, where the language would need a gender.
+  ///
+  /// In en, this message translates to:
+  /// **'These are books {name} recommended in public, in the words quoted, each with where it was said. {name} has no connection with Astute.'**
+  String founderAbout(String name);
+
+  /// What founders read: the credit under a person's photo, as its licence asks: who took it ({author}, e.g. 'Nick'), its licence ({licence}, e.g. 'CC BY 2.0' or 'Public domain', not translated), where it is from, and that it was cropped.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo: {author}, {licence}, Wikimedia Commons, cropped'**
+  String founderPhoto(String author, String licence);
+
+  /// What founders read, on a subject's page: under a book's quote, the other people who recommended the same book ({names}, e.g. 'Mark Zuckerberg, Naval Ravikant').
+  ///
+  /// In en, this message translates to:
+  /// **'Also recommended by {names}'**
+  String founderAlso(String names);
 }
 
 class _AppLocalizationsDelegate

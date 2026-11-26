@@ -158,9 +158,26 @@ class _CountSinceState extends State<CountSince>
   bool _shown = false;
   bool _queued = false;
 
+  /// Whether the page is the one in front: false while something has risen
+  /// over it, as a level rises over Your journey as it opens
+  /// (lib/widgets/level_up.dart). A figure waits while it is covered, and
+  /// one covered as it counts counts again from the start once it is
+  /// uncovered: a count run behind it would land unseen.
+  bool _inFront = true;
+
+  /// True as the page comes back in front, until the figure is looked at:
+  /// what covered the page is still going, so a count waits as it does as
+  /// the page opens.
+  bool _returning = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    final bool inFront = ModalRoute.isCurrentOf(context) ?? true;
+    if (inFront != _inFront) {
+      _inFront = inFront;
+      inFront ? _uncovered() : _covered();
+    }
     final LastSeen? seen = LastSeenScope.of(context);
     if (identical(seen, _seen)) return;
     _seen = seen;
@@ -209,10 +226,36 @@ class _CountSinceState extends State<CountSince>
     });
   }
 
-  /// Once the figure is on screen: written down as seen, and counted if it
-  /// moved. Until then, watched as the page scrolls.
+  /// Something rose over the page: a count under way goes back to where it
+  /// starts, to run again once the page is in front.
+  void _covered() {
+    final AnimationController? count = _count;
+    if (count != null && count.isAnimating) {
+      count.stop();
+      count.value = 0;
+    }
+  }
+
+  /// The page in front again: a count put back runs from its start, beat
+  /// included, so it begins once what covered the page has gone; a figure
+  /// not yet looked at is looked at.
+  void _uncovered() {
+    final AnimationController? count = _count;
+    if (count != null && _from != null && count.isDismissed) {
+      count.forward(from: 0);
+    } else if (!_shown) {
+      _returning = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _look());
+    }
+  }
+
+  /// Once the figure is on screen, with nothing over the page: written down
+  /// as seen, and counted if it moved. Until then, watched as the page
+  /// scrolls.
   void _look() {
-    if (!mounted || _shown) return;
+    if (!mounted || _shown || !_inFront) return;
+    final bool returning = _returning;
+    _returning = false;
     if (!_onScreen()) {
       if (_watching == null) {
         final ScrollPosition? position = Scrollable.maybeOf(context)?.position;
@@ -230,9 +273,9 @@ class _CountSinceState extends State<CountSince>
       setState(() => _from = null);
       return;
     }
-    // The figures there as the page opens wait for it to arrive; one
-    // scrolled to begins at once.
-    final Duration wait = seen._opening
+    // The figures there as the page opens, or as it comes back in front,
+    // wait for it to arrive; one scrolled to begins at once.
+    final Duration wait = seen._opening || returning
         ? CountSince.opening
         : CountSince.reached;
     final Duration total = wait + CountSince.duration;

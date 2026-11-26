@@ -62,8 +62,8 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String dayRead(int n, String word) {
-    return 'Tag $n · $word gelesen';
+  String dayTitle(int n) {
+    return 'Tag $n';
   }
 
   @override
@@ -390,6 +390,71 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String scoreLevel(String id) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'curiosity': 'Neugier',
+      'observation': 'Aufmerksamkeit',
+      'method': 'Methode',
+      'judgement': 'Urteilskraft',
+      'insight': 'Einsicht',
+      'discernment': 'Weitblick',
+      'acumen': 'Scharfsinn',
+      'other': '$id',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get levelUpTitle => 'Neue Stufe';
+
+  @override
+  String levelUpGain(String skill, String n) {
+    return 'Dein größter Zuwachs diese Woche: $skill, $n';
+  }
+
+  @override
+  String levelUpAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n Antworten bisher.',
+      one: 'Eine Antwort bisher.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelLabel => 'Stufe';
+
+  @override
+  String levelPointsTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Noch $n Punkte bis $level',
+      one: 'Noch 1 Punkt bis $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String levelAnswersTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Noch $n Antworten bis $level',
+      one: 'Noch 1 Antwort bis $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelTop => 'Die höchste Stufe';
+
+  @override
+  String get levelShareTitle => 'Teile deine Stufe';
+
+  @override
   String get signOutQuestion => 'Abmelden?';
 
   @override
@@ -454,6 +519,53 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get yourRecord => 'Deine Bilanz';
+
+  @override
+  String get profileTodayFive => 'Die fünf von heute';
+
+  @override
+  String profileTodayOf(int read, int of) {
+    return '$read von $of';
+  }
+
+  @override
+  String profileTodayToRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n zu lesen',
+      one: '1 zu lesen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileJourneyScores => 'Alle deine Punktzahlen, Woche für Woche';
+
+  @override
+  String profileInARowLabel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Tage in Folge',
+      one: 'Tag in Folge',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileWeekTitle => 'Letzte 7 Tage';
+
+  @override
+  String profileWeekPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Punkte',
+      one: 'Punkt',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get appearance => 'Erscheinungsbild';
@@ -3973,6 +4085,60 @@ class AppLocalizationsDe extends AppLocalizations {
   String get unmaskWindow => 'Ganze Reihe zeigen';
 
   @override
+  String get unmaskMisleadTitle => 'Grafiken, die täuschen';
+
+  @override
+  String get unmaskMisleadLine =>
+      'Die Zahlen stimmen. Der Trick steckt in der Zeichnung.';
+
+  @override
+  String get unmaskAsk => 'Diese Grafik täuscht. Siehst du, wie?';
+
+  @override
+  String get unmaskShowTrick => 'Trick zeigen';
+
+  @override
+  String get unmaskHideTrick => 'Trick verbergen';
+
+  @override
+  String get unmaskOriginal => 'Original';
+
+  @override
+  String get unmaskCorrected => 'Korrigiert';
+
+  @override
+  String unmaskTrickTruncated(String from) {
+    return 'Die Achse beginnt bei $from, nicht bei null.';
+  }
+
+  @override
+  String unmaskTrickZoomed(String low, String high) {
+    return 'Die Achse reicht nur von $low bis $high, so wirkt eine kleine Änderung riesig.';
+  }
+
+  @override
+  String unmaskTrickWide(String low, String high) {
+    return 'Die Achse reicht von $low bis $high, so wirkt eine echte Änderung flach.';
+  }
+
+  @override
+  String unmaskTrickWindow(String shown, String all) {
+    return 'Gezeigt wird nur $shown, die Daten reichen aber über $all.';
+  }
+
+  @override
+  String get unmaskTrickTotals =>
+      'Verglichen werden rohe Summen statt eines fairen Maßes.';
+
+  @override
+  String get unmaskTrickFlippedRise =>
+      'Die Achse steht auf dem Kopf, so sieht ein Anstieg wie ein Rückgang aus.';
+
+  @override
+  String get unmaskTrickFlippedFall =>
+      'Die Achse steht auf dem Kopf, so sieht ein Rückgang wie ein Anstieg aus.';
+
+  @override
   String get whatIfTrue => 'Und wenn es stimmt?';
 
   @override
@@ -4771,12 +4937,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String betsCloserNoMore(String v) {
-    return 'Nein: mehr als $v.';
+    return 'Daneben: mehr als $v.';
   }
 
   @override
   String betsCloserNoLess(String v) {
-    return 'Nein: weniger als $v.';
+    return 'Daneben: weniger als $v.';
   }
 
   @override
@@ -5378,7 +5544,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tfRules =>
-      'Sag wahr oder falsch, dann erfährst du, warum. Die meisten liegen daneben.';
+      'Behauptungen, bei denen die meisten danebenliegen. Sag wahr oder falsch, dann lies, warum. Gemessen wird dein Urteil: zu unterscheiden, was stimmt und was nur offensichtlich scheint.';
 
   @override
   String get inOrderTitle => 'Der Reihe nach';
@@ -5388,13 +5554,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Vier Momente aus den Karten, ohne ihre Jahreszahl, in die Reihenfolge zu bringen, in der sie geschahen. Gemessen wird dein Sinn für Chronologie, die erste Probe jeder Erklärung: Eine Ursache kommt vor ihrer Wirkung.';
 
   @override
-  String get inOrderFirst => 'Tippe den frühesten an';
+  String get inOrderFirst => 'Tippe auf den Moment, der zuerst kam.';
 
   @override
-  String get inOrderNext => 'Jetzt den nächsten';
+  String get inOrderNext => 'Jetzt auf den, der danach kam.';
 
   @override
-  String get inOrderReady => 'Alle gesetzt. Prüfen?';
+  String get inOrderReady => 'Alle gesetzt.';
 
   @override
   String get inOrderCheck => 'Reihenfolge prüfen';
@@ -5420,7 +5586,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get whatYearRules =>
-      'Drei Momente, jeweils ohne Jahr. Dreh es ein: je näher, desto mehr Punkte.';
+      'Drei Momente, ohne ihre Jahreszahl. Stell für jeden das Jahr ein: Je näher, desto mehr Punkte, bis zu zehn. Gemessen wird dein Gespür dafür, wann etwas geschah.';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5435,20 +5601,21 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Insgesamt $n Jahre daneben',
-      one: 'Insgesamt 1 Jahr daneben',
+      other: 'Insgesamt $n Jahre daneben.',
+      one: 'Insgesamt 1 Jahr daneben.',
     );
     return '$_temp0';
   }
 
   @override
   String whatYearSaid(String guess, int points) {
-    return 'Du hast $guess gesagt · +$points';
-  }
-
-  @override
-  String whatYearExact(int points) {
-    return 'Genau das Jahr, +$points';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: 'Du sagtest $guess · $points Punkte',
+      one: 'Du sagtest $guess · 1 Punkt',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5492,7 +5659,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get beforeAfterRules =>
-      'Sechs Momente, einer nach dem anderen. Geschah jeder vor oder nach dem darüber?';
+      'Sechs Momente, einer nach dem anderen. Sag, ob jeder vor oder nach dem darüber geschah. Gemessen wird dein Sinn für Abfolgen.';
 
   @override
   String get beforeAfterBefore => 'Davor';
@@ -5654,6 +5821,171 @@ class AppLocalizationsDe extends AppLocalizations {
   String get challengeAgain => 'Noch einmal';
 
   @override
+  String get spotRules =>
+      'Vier Behauptungen: Drei sind wahr, eine ist falsch. Finde die falsche. Gemessen wird, wie gut du eine fundierte Behauptung von einer unterscheidest, die nur richtig klingt.';
+
+  @override
+  String get spotAsk => 'Tippe auf die Behauptung, die du für falsch hältst.';
+
+  @override
+  String get biggerRules =>
+      'Zwei Zahlen, jede die Antwort auf die Frage einer Karte. Tippe auf die, die du für größer hältst. Gemessen wird dein Sinn für Proportionen.';
+
+  @override
+  String get biggerAsk => 'Tippe auf die Karte mit der größeren Antwort.';
+
+  @override
+  String biggerRight(String big, String small) {
+    return 'Richtig: $big ist mehr als $small.';
+  }
+
+  @override
+  String biggerWrong(String big, String small) {
+    return 'Daneben: $big ist mehr als $small.';
+  }
+
+  @override
+  String get closerRules =>
+      'Taste dich Schritt für Schritt an einen Anteil heran: Sag jedes Mal, ob er über oder unter der Mitte des verbliebenen Bereichs liegt. Gemessen wird dein Schätzvermögen.';
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) {
+    return 'Es sind $said: $right von $steps Schritten richtig.';
+  }
+
+  @override
+  String closerExactSteps(String said, int right, int steps) {
+    return 'Es sind genau $said: $right von $steps Schritten richtig.';
+  }
+
+  @override
+  String closerStepsRight(int right, int steps) {
+    return '$right von $steps Schritten richtig.';
+  }
+
+  @override
+  String get magnitudeRules =>
+      'Zehn, tausend oder eine Million? Wähle die Zehnerpotenz, die der Antwort am nächsten ist. Gemessen wird dein Sinn für Größenordnungen, der mehr zählt als die genauen Ziffern.';
+
+  @override
+  String get rangeRules =>
+      'Setz deine Schätzung, dann einen Bereich darum: Je enger er ist, desto mehr bringt er, wenn die Antwort hineinfällt. Gemessen wird deine Kalibrierung: zu wissen, wie viel du weißt.';
+
+  @override
+  String rangeOption(int w, int pts) {
+    return '±$w · bringt $pts';
+  }
+
+  @override
+  String rangeIn(String said, int pts) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: 'Es sind $said: in deinem Bereich, +$pts Punkte.',
+      one: 'Es sind $said: in deinem Bereich, +1 Punkt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rangeOut(String said) {
+    return 'Es sind $said: außerhalb deines Bereichs.';
+  }
+
+  @override
+  String stakeRules(int points) {
+    return 'Wähle eine Antwort und setz Punkte darauf, von $points am Tag: Liegst du richtig, verdoppelt sich dein Einsatz; sonst ist er weg. Gemessen wird deine Überzeugung: auf das zu setzen, was du weißt, und nur darauf.';
+  }
+
+  @override
+  String stakeWon(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Richtig: Du gewinnst $n Punkte.',
+      one: 'Richtig: Du gewinnst 1 Punkt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stakeLost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Daneben: Du verlierst $n Punkte.',
+      one: 'Daneben: Du verlierst 1 Punkt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get numberRules =>
+      'Stell mit den Tasten eine einzige Zahl ein und leg dich fest. Gemessen wird deine Genauigkeit: wie nah du kommst, wenn du dich auf eine Zahl festlegen musst.';
+
+  @override
+  String tfRightIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Richtig: Es ist wahr.',
+      'other': 'Richtig: Es ist falsch.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String tfWrongIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Daneben: Es ist wahr.',
+      'other': 'Daneben: Es ist falsch.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String inOrderTold(int n, int of) {
+    return '$n von $of am richtigen Platz.';
+  }
+
+  @override
+  String get whatYearYours => 'Dein Jahr';
+
+  @override
+  String get whatYearExactly => 'Genau das Jahr';
+
+  @override
+  String beforeAfterRight(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Richtig: Es war $year, vor $above.',
+      'other': 'Richtig: Es war $year, nach $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Daneben: Es war $year, vor $above.',
+      'other': 'Daneben: Es war $year, nach $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAnswer => 'Antwort';
+
+  @override
+  String get challengeYouSaid => 'Du sagtest';
+
+  @override
+  String get challengePoints => 'Punkte';
+
+  @override
+  String get challengeThisRound => 'Diese Runde';
+
+  @override
+  String get challengeLeftToday => 'Heute übrig';
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, Stufe $n';
   }
@@ -5669,6 +6001,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get todaySeeAgainHint =>
       'Die Karten von heute noch einmal, groß, ab der ersten';
+
+  @override
+  String get yourFiveFromToday => 'Deine fünf von heute';
 
   @override
   String get tuneTitle => 'Deinen Mix anpassen';
@@ -5712,7 +6047,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get shareDayHeadline => 'Die fünf von heute';
 
   @override
-  String get shareFormatPost => 'Beitrag';
+  String get shareFormatCover => 'Cover';
+
+  @override
+  String get shareFormatList => 'Liste';
 
   @override
   String get shareFormatStory => 'Story';
@@ -6321,11 +6659,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookRecommendedBy => 'Empfohlen von';
 
   @override
-  String bookPickPhoto(String credit) {
-    return 'Foto: $credit';
-  }
-
-  @override
   String get bookFreeThisWeek => 'Diese Woche gratis';
 
   @override
@@ -6356,5 +6689,37 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String bookRetold(String title, String author) {
     return 'Die Ideen aus $title von $author, in Astutes eigenen Worten erzählt. Das ganze Buch findest du im Buchhandel.';
+  }
+
+  @override
+  String get foundersTitle => 'Was Gründer lesen';
+
+  @override
+  String founderBookCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n Bücher',
+      one: '1 Buch',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get founderTheirBooks => 'Empfohlene Bücher';
+
+  @override
+  String founderAbout(String name) {
+    return 'Bücher, die $name öffentlich empfohlen hat, mit den zitierten Worten und der Stelle, an der sie fielen. $name steht in keiner Verbindung zu Astute.';
+  }
+
+  @override
+  String founderPhoto(String author, String licence) {
+    return 'Foto: $author, $licence, Wikimedia Commons, zugeschnitten';
+  }
+
+  @override
+  String founderAlso(String names) {
+    return 'Auch empfohlen von $names';
   }
 }

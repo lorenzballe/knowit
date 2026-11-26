@@ -32,7 +32,6 @@ import '../../utils/share_link.dart';
 import 'challenge_kit.dart';
 import 'challenge_screen.dart';
 import 'challenges.dart';
-import 'parts.dart' show CardHead;
 
 /// What the three games share: the day's deal, the round in play, and the
 /// round kept for the day as it is played.
@@ -162,6 +161,11 @@ abstract class TimeChallenge extends ChallengeGame {
 
   List<Pill> get pills => [for (final DatedLine d in lines) d.pill];
 
+  @override
+  List<List<Pill>> get today => [
+    for (final DatedLine d in lines) [d.pill],
+  ];
+
   /// The share: the game, the day, the score, the squares.
   Future<void> shareScore(
     BuildContext context, {
@@ -264,13 +268,13 @@ class InOrderChallenge extends TimeChallenge {
         for (int i = 0; i < n; i++)
           GameReviewItem(
             key: ValueKey('in-order-row-${t[i].pill.id}'),
-            text: t[i].text,
+            text: t[i].statement,
             tag: '${t[i].year}',
             tagDark: true,
             mark: rightAt(i),
             detail: l.inOrderYours(s.indexOf(t[i].pill.id) + 1),
             semantics:
-                '${t[i].year}. ${t[i].text} '
+                '${t[i].year}. ${t[i].statement} '
                 '${l.inOrderYours(s.indexOf(t[i].pill.id) + 1)}. '
                 '${rightAt(i) ? l.gameRight : l.gameWrong}.',
             onTap: () => onOpen([for (final d in t) d.pill], t[i].pill),
@@ -337,13 +341,12 @@ class _InOrderPlayState extends State<_InOrderPlay> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final GameKit kit = widget.kit;
-    final Palette p = kit.palette;
     final List<DatedLine> shown = _game.lines;
     final List<DatedLine> truth = _game.truth;
     final int n = shown.length;
     final bool all = _picks.length == n;
     final String prompt = _told
-        ? l.nOfM(_game.right, n)
+        ? l.inOrderTold(_game.right, n)
         : _picks.isEmpty
         ? l.inOrderFirst
         : all
@@ -351,24 +354,17 @@ class _InOrderPlayState extends State<_InOrderPlay> {
         : l.inOrderNext;
     return GamePlayFrame(
       kit: kit,
-      status: Text(
+      status: GameStatus(
         prompt,
         key: const ValueKey('in-order-prompt'),
-        maxLines: 2,
-        textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.4),
-        style: AppText.display(
-          size: 22,
-          weight: FontWeight.w400,
-          height: 1.2,
-          spacing: -0.3,
-          color: p.ink,
-        ),
+        verdict: _told && _game.right == n ? true : null,
       ),
       body: LayoutBuilder(
         builder: (context, box) {
-          const double gap = 8;
+          const double gap = 12;
           final double h = (box.maxHeight - gap * (n - 1)) / n;
           return Stack(
+            clipBehavior: Clip.none,
             children: [
               for (final DatedLine d in shown)
                 () {
@@ -387,8 +383,6 @@ class _InOrderPlayState extends State<_InOrderPlay> {
                       rank: pick < 0 ? null : pick + 1,
                       told: _told,
                       right: _told ? _game.rightAt(slot) : null,
-                      tone: kit.look.tone,
-                      accent: kit.accent,
                       onTap: () => _tap(d),
                     ),
                   );
@@ -399,27 +393,23 @@ class _InOrderPlayState extends State<_InOrderPlay> {
       ),
       actions: GameButton.primary(
         key: const ValueKey('in-order-check'),
-        context: context,
         label: l.inOrderCheck,
-        tone: kit.look.tone,
         onTap: all && !_told ? _check : null,
       ),
     );
   }
 }
 
-/// One moment of In order, set as a line of a page: in its margin where it
-/// was put — an empty ring before it is, its place after — and once told,
-/// its year, in the calm green where it stands right and the calm red
-/// where it does not.
+/// One moment of In order, on its subject's card, said as what happened;
+/// at its head's end where the reader put it — an empty ring before it is
+/// placed, its place after — and once told, its year and whether it stands
+/// where it was put.
 class _Moment extends StatelessWidget {
   const _Moment({
     required this.line,
     required this.rank,
     required this.told,
     required this.right,
-    required this.tone,
-    required this.accent,
     required this.onTap,
   });
 
@@ -427,19 +417,15 @@ class _Moment extends StatelessWidget {
   final int? rank;
   final bool told;
   final bool? right;
-  final ChallengeTone tone;
-  final Color accent;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final Palette p = context.p;
     final int? r = rank;
-    final bool on = r != null && !told;
     return Semantics(
       button: !told,
-      selected: on,
+      selected: r != null && !told,
       label: [
         if (told) '${line.year}.',
         line.statement,
@@ -451,106 +437,86 @@ class _Moment extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: AnimatedContainer(
-          duration: MediaQuery.disableAnimationsOf(context)
-              ? Duration.zero
-              : const Duration(milliseconds: 160),
-          curve: Curves.easeOut,
-          decoration: BoxDecoration(
-            color: p.surfaceRaised,
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(
-              color: on
-                  ? tone.vivid
-                  : p.isDark
-                  ? p.surfaceRaised
-                  : p.line,
-              width: 2,
-            ),
+        child: SubjectCard(
+          pill: line.pill,
+          small: true,
+          trailing: _Place(
+            pill: line.pill,
+            rank: r,
+            year: told ? line.year : null,
+            right: right,
           ),
-          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 62,
-                child: Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: _Place(
-                    rank: r,
-                    year: told ? line.year : null,
-                    right: right,
-                    tone: tone,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: MomentText(
-                  line: line,
-                  shown: told,
-                  max: 23,
-                  min: 13,
-                  ink: p.ink,
-                  accent: accent,
-                ),
-              ),
-            ],
-          ),
+          child: MomentWords(line: line, min: 13, max: 21),
         ),
       ),
     );
   }
 }
 
-/// Where a moment was put — an empty ring before it is, its place in the
-/// ring after — and once told, its year, in a calm colour.
+/// Where a moment was put, at its card's head: an empty ring before it is,
+/// its place in a disc of the card's ink after; and once told, its year,
+/// and on a disc of the page whether it stands right.
 class _Place extends StatelessWidget {
   const _Place({
+    required this.pill,
     required this.rank,
     required this.year,
     required this.right,
-    required this.tone,
   });
 
+  final Pill pill;
   final int? rank;
   final int? year;
   final bool? right;
-  final ChallengeTone tone;
 
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
+    final Color ink = pill.ink;
     final TextScaler scaler = MediaQuery.textScalerOf(
       context,
     ).clamp(maxScaleFactor: 1.2);
     final int? y = year;
     if (y != null) {
-      final Color c = right == true ? challengeRight(p) : challengeWrong(p);
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
-        decoration: BoxDecoration(
-          color: c.withValues(alpha: 0.16),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Text(
-          '$y',
-          textScaler: scaler,
-          style: AppText.body(
-            size: 13.5,
-            weight: FontWeight.w800,
-            height: 1,
-            color: c,
-          ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
-        ),
+      final bool ok = right == true;
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '$y',
+            textScaler: scaler,
+            style: AppText.display(
+              size: 18,
+              weight: FontWeight.w700,
+              height: 1,
+              color: ink,
+            ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            width: 22,
+            height: 22,
+            decoration: BoxDecoration(color: p.surface, shape: BoxShape.circle),
+            alignment: Alignment.center,
+            child: GameVerdictGlyph(
+              right: ok,
+              colour: ok ? challengeRight(p) : challengeWrong(p),
+              size: 12,
+            ),
+          ),
+        ],
       );
     }
     final int? r = rank;
     return Container(
-      width: 32,
-      height: 32,
+      width: 26,
+      height: 26,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: r == null ? null : tone.vivid,
-        border: r == null ? Border.all(color: p.lineStrong, width: 1.5) : null,
+        color: r == null ? null : ink,
+        border: r == null
+            ? Border.all(color: ink.withValues(alpha: 0.45), width: 1.5)
+            : null,
       ),
       alignment: Alignment.center,
       child: r == null
@@ -559,10 +525,10 @@ class _Place extends StatelessWidget {
               '$r',
               textScaler: scaler,
               style: AppText.display(
-                size: 16,
+                size: 14,
                 weight: FontWeight.w700,
                 height: 1,
-                color: tone.ink,
+                color: pill.color,
               ),
             ),
     );
@@ -607,6 +573,11 @@ class WhatYearChallenge extends TimeChallenge {
   /// A year near enough to count as got: half the points or more.
   bool? rightAt(int i) => guessAt(i) == null ? null : pointsAt(i) >= 5;
 
+  @override
+  List<bool?> get todayMarks => [
+    for (int i = 0; i < lines.length; i++) rightAt(i),
+  ];
+
   int get points => [
     for (int i = 0; i < lines.length; i++) pointsAt(i),
   ].fold(0, (a, b) => a + b);
@@ -642,7 +613,7 @@ class WhatYearChallenge extends TimeChallenge {
         for (int i = 0; i < n; i++)
           GameReviewItem(
             key: ValueKey('what-year-row-${lines[i].pill.id}'),
-            text: lines[i].text,
+            text: lines[i].statement,
             tag: '${lines[i].year}',
             tagDark: true,
             mark: rightAt(i),
@@ -650,7 +621,7 @@ class WhatYearChallenge extends TimeChallenge {
                 ? null
                 : l.whatYearSaid('${guessAt(i)}', pointsAt(i)),
             semantics:
-                '${lines[i].year}. ${lines[i].text} '
+                '${lines[i].year}. ${lines[i].statement} '
                 '${guessAt(i) == null ? '' : l.whatYearSaid('${guessAt(i)}', pointsAt(i))}',
             onTap: () => onOpen(pills, lines[i].pill),
           ),
@@ -735,96 +706,85 @@ class _WhatYearPlayState extends State<_WhatYearPlay> {
     final int pts = _told ? _game.pointsAt(_at) : 0;
     final int off = (shownYear - line.year).abs();
     final bool last = _at + 1 >= n;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
     return GamePlayFrame(
       kit: kit,
       count: l.nOfM(_at + 1, n),
       marks: [for (int i = 0; i < n; i++) _game.rightAt(i)],
       at: _at,
-      status: Text(
-        l.gamePoints(_game.points),
-        key: const ValueKey('what-year-points'),
-        textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.4),
-        style: AppText.display(
-          size: 22,
-          weight: FontWeight.w700,
-          height: 1,
-          color: kit.ink,
-        ),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: AnimatedSwitcher(
               duration: kit.motion(260),
-              child: GamePaper(
+              child: SubjectCard(
                 key: ValueKey('what-year-moment-${line.pill.id}'),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    CardHead(
-                      pill: line.pill,
-                      ink: kArtInk,
-                      labelInk: kArtInk.withValues(alpha: 0.62),
-                    ),
-                    const SizedBox(height: 10),
-                    Expanded(
-                      child: MomentText(line: line, shown: _told, max: 30),
-                    ),
-                  ],
-                ),
+                pill: line.pill,
+                child: MomentWords(line: line),
               ),
             ),
           ),
           const SizedBox(height: 14),
-          // The year, large: what the dial says, and once locked how far off.
-          Semantics(
-            liveRegion: true,
-            label: _told
-                ? '${line.year}. ${l.whatYearSaid('$shownYear', pts)}'
-                : null,
-            excludeSemantics: _told,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                Text(
-                  _told ? '${line.year}' : '$shownYear',
-                  key: const ValueKey('what-year-year'),
-                  textScaler: MediaQuery.textScalerOf(
-                    context,
-                  ).clamp(maxScaleFactor: 1.2),
-                  style: AppText.display(
-                    size: 56,
-                    weight: FontWeight.w700,
-                    height: 1,
-                    spacing: -2,
-                    color: kit.ink,
-                  ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
-                ),
-                const SizedBox(width: 12),
-                if (_told)
-                  Expanded(
-                    child: Text(
-                      off == 0
-                          ? l.whatYearExact(pts)
-                          : '${l.whatYearOff(off)}. '
-                                '${l.whatYearSaid('$shownYear', pts)}',
-                      key: const ValueKey('what-year-off'),
-                      textScaler: MediaQuery.textScalerOf(
-                        context,
-                      ).clamp(maxScaleFactor: 1.4),
-                      style: AppText.body(
-                        size: 16,
-                        weight: FontWeight.w800,
-                        height: 1.2,
-                        color: kit.ink,
-                      ),
-                    ),
+          // The year: what the dial says — and once locked, the answer
+          // beside what was said and the points, each told once.
+          if (_told) ...[
+            Semantics(
+              liveRegion: true,
+              label: '${line.year}. ${l.whatYearSaid('$shownYear', pts)}',
+              excludeSemantics: true,
+              child: GameFigureRow(
+                key: const ValueKey('what-year-year'),
+                figures: [
+                  (
+                    label: l.challengeAnswer,
+                    value: '${line.year}',
+                    unit: null,
+                    answer: true,
                   ),
-              ],
+                  (
+                    label: l.challengeYouSaid,
+                    value: '$shownYear',
+                    unit: null,
+                    answer: false,
+                  ),
+                  (
+                    label: l.challengePoints,
+                    value: '$pts',
+                    unit: null,
+                    answer: false,
+                  ),
+                ],
+              ),
             ),
-          ),
+            const SizedBox(height: 6),
+            Text(
+              off == 0 ? l.whatYearExactly : l.whatYearOff(off),
+              key: const ValueKey('what-year-off'),
+              textScaler: scaler.clamp(maxScaleFactor: 1.4),
+              style: AppText.body(
+                size: 14.5,
+                weight: FontWeight.w600,
+                height: 1.3,
+                color: kit.palette.inkMuted,
+              ),
+            ),
+          ] else ...[
+            GameLabel(l.whatYearYours),
+            const SizedBox(height: 2),
+            Text(
+              '$shownYear',
+              key: const ValueKey('what-year-year'),
+              textScaler: scaler.clamp(maxScaleFactor: 1.2),
+              style: AppText.display(
+                size: 48,
+                weight: FontWeight.w600,
+                height: 1.05,
+                spacing: -1.4,
+                color: kit.ink,
+              ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+            ),
+          ],
           const SizedBox(height: 10),
           YearDial(
             key: const ValueKey('what-year-dial'),
@@ -840,17 +800,14 @@ class _WhatYearPlayState extends State<_WhatYearPlay> {
               for (final int by in const [-10, -1, 1, 10]) ...[
                 if (by != -10) const SizedBox(width: 8),
                 Expanded(
-                  child: GameButton(
+                  child: GameOption(
                     key: ValueKey('what-year-step-$by'),
                     label: by > 0 ? '+$by' : '−${by.abs()}',
                     semantics: by < 0
                         ? l.whatYearEarlier(-by)
                         : l.whatYearLater(by),
-                    face: kArtCream,
-                    ink: kArtInk,
-                    height: 52,
-                    size: 17,
-                    radius: 16,
+                    height: 50,
+                    size: 16,
                     onTap: _told
                         ? null
                         : () {
@@ -865,22 +822,14 @@ class _WhatYearPlayState extends State<_WhatYearPlay> {
         ],
       ),
       actions: _told
-          ? GameButton(
+          ? GameButton.primary(
               key: const ValueKey('what-year-next'),
               label: last ? l.gameSeeResult : l.gameNextCard,
-              icon: Icons.arrow_forward_rounded,
-              face: kArtInk,
-              ink: kArtCream,
-              height: 66,
               onTap: _next,
             )
-          : GameButton(
+          : GameButton.primary(
               key: const ValueKey('what-year-lock'),
               label: l.betsLockIn,
-              icon: Icons.lock_rounded,
-              face: kArtInk,
-              ink: kArtCream,
-              height: 66,
               onTap: _lock,
             ),
     );
@@ -969,6 +918,7 @@ class _YearDialState extends State<YearDial>
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final Palette p = context.p;
     final bool open = widget.onChanged != null;
     final int v = _at.round();
     return Semantics(
@@ -987,11 +937,16 @@ class _YearDialState extends State<YearDial>
             : null,
         onHorizontalDragEnd: open ? _end : null,
         child: Container(
-          height: 76,
+          height: 68,
           decoration: BoxDecoration(
-            color: gameFace(context),
-            borderRadius: BorderRadius.circular(18),
-            border: gameBorder(context),
+            color: p.isDark ? const Color(0xFF1A1A1E) : Colors.white,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: p.isDark
+                  ? const Color(0x1AFFFFFF)
+                  : const Color(0x14000000),
+              width: 0.8,
+            ),
           ),
           clipBehavior: Clip.antiAlias,
           child: CustomPaint(
@@ -1000,12 +955,15 @@ class _YearDialState extends State<YearDial>
               first: widget.first,
               last: widget.last,
               answer: widget.answer,
+              ink: p.ink,
+              faint: p.inkMuted,
+              right: challengeRight(p),
               digits: AppText.body(
-                size: 11.5,
-                weight: FontWeight.w800,
+                size: 11,
+                weight: FontWeight.w700,
                 height: 1,
-                color: kArtInk,
-              ),
+                color: p.inkMuted,
+              ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
             ),
             size: Size.infinite,
           ),
@@ -1021,6 +979,9 @@ class _RulerPainter extends CustomPainter {
     required this.first,
     required this.last,
     required this.answer,
+    required this.ink,
+    required this.faint,
+    required this.right,
     required this.digits,
   });
 
@@ -1028,6 +989,9 @@ class _RulerPainter extends CustomPainter {
   final int first;
   final int last;
   final int? answer;
+  final Color ink;
+  final Color faint;
+  final Color right;
   final TextStyle digits;
 
   @override
@@ -1037,18 +1001,18 @@ class _RulerPainter extends CustomPainter {
     final int from = math.max(first, (at - mid / px).floor() - 1);
     final int to = math.min(last, (at + mid / px).ceil() + 1);
     final Paint tick = Paint()
-      ..color = kArtInk
+      ..color = faint
       ..strokeCap = StrokeCap.round;
     for (int y = from; y <= to; y++) {
       final double x = mid + (y - at) * px;
       final double h = y % 100 == 0
-          ? 30
+          ? 24
           : y % 10 == 0
-          ? 22
+          ? 18
           : y % 5 == 0
-          ? 14
-          : 8;
-      tick.strokeWidth = y % 10 == 0 ? 2.4 : 1.4;
+          ? 11
+          : 6;
+      tick.strokeWidth = y % 10 == 0 ? 1.6 : 1;
       canvas.drawLine(Offset(x, size.height - 6), Offset(x, size.height - 6 - h), tick);
       if (y % 10 == 0) {
         final TextPainter t = TextPainter(
@@ -1065,34 +1029,31 @@ class _RulerPainter extends CustomPainter {
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromCenter(
-            center: Offset(x, size.height / 2 + 6),
-            width: 8,
-            height: size.height - 16,
+            center: Offset(x, size.height / 2),
+            width: 5,
+            height: size.height,
           ),
-          const Radius.circular(4),
+          const Radius.circular(2.5),
         ),
-        Paint()..color = kGameRight,
+        Paint()..color = right,
       );
     }
     // The needle: where the dial stands.
-    final Path needle = Path()
-      ..moveTo(mid - 9, 0)
-      ..lineTo(mid + 9, 0)
-      ..lineTo(mid, 12)
-      ..close();
-    canvas.drawPath(needle, Paint()..color = kArtInk);
     canvas.drawLine(
       Offset(mid, 0),
       Offset(mid, size.height),
       Paint()
-        ..color = kArtInk
-        ..strokeWidth = 3,
+        ..color = ink
+        ..strokeWidth = 2,
     );
   }
 
   @override
   bool shouldRepaint(_RulerPainter old) =>
-      old.at != at || old.answer != answer;
+      old.at != at ||
+      old.answer != answer ||
+      old.ink != ink ||
+      old.faint != faint;
 }
 
 // ── Before or after? ─────────────────────────────────────────────────────
@@ -1134,6 +1095,9 @@ class BeforeAfterChallenge extends TimeChallenge {
   List<bool?> get marks => [for (int i = 1; i < lines.length; i++) rightAt(i)];
 
   @override
+  List<bool?> get todayMarks => [null, ...marks];
+
+  @override
   String get tally => '$right/$needed';
 
   @override
@@ -1160,7 +1124,7 @@ class BeforeAfterChallenge extends TimeChallenge {
         for (int i = 0; i < lines.length; i++)
           GameReviewItem(
             key: ValueKey('before-after-row-${lines[i].pill.id}'),
-            text: lines[i].text,
+            text: lines[i].statement,
             tag: '${lines[i].year}',
             tagDark: true,
             mark: rightAt(i),
@@ -1171,7 +1135,7 @@ class BeforeAfterChallenge extends TimeChallenge {
                 : saidAt(i)!
                 ? l.beforeAfterSaidAfter('${lines[i - 1].year}')
                 : l.beforeAfterSaidBefore('${lines[i - 1].year}'),
-            semantics: '${lines[i].year}. ${lines[i].text}',
+            semantics: '${lines[i].year}. ${lines[i].statement}',
             onTap: () => onOpen(pills, lines[i].pill),
           ),
       ],
@@ -1256,22 +1220,21 @@ class _BeforeAfterPlayState extends State<_BeforeAfterPlay> {
     final DatedLine above = _game.lines[_at - 1];
     final DatedLine here = _game.lines[_at];
     final bool? right = _told ? _game.rightAt(_at) : null;
+    final String side = here.year > above.year ? 'after' : 'before';
     return GamePlayFrame(
       kit: kit,
+      count: l.nOfM(_at, _game.needed),
       marks: _game.marks,
       at: _at - 1,
-      status: Text(
-        l.beforeAfterAsk('${above.year}'),
+      // The question, naming the year above; once said, what was so.
+      status: GameStatus(
+        switch (right) {
+          null => l.beforeAfterAsk('${above.year}'),
+          true => l.beforeAfterRight(side, '${here.year}', '${above.year}'),
+          false => l.beforeAfterWrong(side, '${here.year}', '${above.year}'),
+        },
         key: const ValueKey('before-after-ask'),
-        maxLines: 2,
-        textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.4),
-        style: AppText.display(
-          size: 18,
-          weight: FontWeight.w700,
-          height: 1.1,
-          spacing: -0.3,
-          color: kit.ink,
-        ),
+        verdict: right,
       ),
       body: AnimatedSwitcher(
         duration: kit.motion(360),
@@ -1280,7 +1243,7 @@ class _BeforeAfterPlayState extends State<_BeforeAfterPlay> {
           opacity: animation,
           child: SlideTransition(
             position: Tween(
-              begin: const Offset(0, 0.08),
+              begin: const Offset(0, 0.06),
               end: Offset.zero,
             ).animate(animation),
             child: child,
@@ -1292,20 +1255,20 @@ class _BeforeAfterPlayState extends State<_BeforeAfterPlay> {
           children: [
             Expanded(
               flex: 4,
-              child: _ChainCard(
+              child: SubjectCard(
                 key: ValueKey('before-after-above-${above.pill.id}'),
-                line: above,
-                shown: true,
+                pill: above.pill,
+                small: true,
+                child: MomentWords(line: above, min: 13, max: 24),
               ),
             ),
-            const _Link(),
+            const SizedBox(height: 14),
             Expanded(
               flex: 6,
-              child: _ChainCard(
+              child: SubjectCard(
                 key: ValueKey('before-after-here-${here.pill.id}'),
-                line: here,
-                shown: _told,
-                right: right,
+                pill: here.pill,
+                child: MomentWords(line: here, min: 14),
               ),
             ),
           ],
@@ -1314,25 +1277,21 @@ class _BeforeAfterPlayState extends State<_BeforeAfterPlay> {
       actions: Row(
         children: [
           Expanded(
-            child: GameButton(
+            child: GameButton.plain(
               key: const ValueKey('before-after-before'),
               label: l.beforeAfterBefore,
-              icon: Icons.arrow_upward_rounded,
-              face: kArtCream,
-              ink: kArtInk,
-              height: 84,
+              height: 64,
+              size: 17,
               onTap: _told ? null : () => _say(false),
             ),
           ),
           const SizedBox(width: 12),
           Expanded(
-            child: GameButton(
+            child: GameButton.plain(
               key: const ValueKey('before-after-after'),
               label: l.beforeAfterAfter,
-              icon: Icons.arrow_downward_rounded,
-              face: kArtInk,
-              ink: kArtCream,
-              height: 84,
+              height: 64,
+              size: 17,
               onTap: _told ? null : () => _say(true),
             ),
           ),
@@ -1342,215 +1301,27 @@ class _BeforeAfterPlayState extends State<_BeforeAfterPlay> {
   }
 }
 
-/// The line of time between the moment above and the one asked about.
-class _Link extends StatelessWidget {
-  const _Link();
-
-  @override
-  Widget build(BuildContext context) => SizedBox(
-    height: 30,
-    child: Center(
-      child: Container(width: 4, color: kArtInk),
-    ),
-  );
-}
-
-/// A moment of the chain, on its card: its year in a tab once told.
-class _ChainCard extends StatelessWidget {
-  const _ChainCard({
-    super.key,
-    required this.line,
-    required this.shown,
-    this.right,
-  });
-
-  final DatedLine line;
-  final bool shown;
-  final bool? right;
-
-  @override
-  Widget build(BuildContext context) {
-    final bool? r = right;
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned.fill(
-          child: GamePaper(
-            padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                CardHead(
-                  pill: line.pill,
-                  ink: kArtInk,
-                  labelInk: kArtInk.withValues(alpha: 0.62),
-                ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: MomentText(line: line, shown: shown, max: 26, min: 14),
-                ),
-              ],
-            ),
-          ),
-        ),
-        if (r != null)
-          Positioned(
-            right: -6,
-            top: -10,
-            child: GameStamp(right: r, size: 52),
-          ),
-      ],
-    );
-  }
-}
-
 // ── The moment's words ───────────────────────────────────────────────────
 
-/// A moment's words, set as large as the box takes, its year a gap until
-/// it is [shown] and then filled in. On a card of paper — no [accent] —
-/// the gap is shaded and the year set in the paper's reverse; set as a
-/// page is, with an [accent], the words are in the serif's regular weight,
-/// the gap a hairline under a space the year's width, and the year comes
-/// in the challenge's tone.
-class MomentText extends StatelessWidget {
-  const MomentText({
-    super.key,
-    required this.line,
-    required this.shown,
-    this.max = 28,
-    this.min = 15,
-    this.ink = kArtInk,
-    this.accent,
-  });
+/// A moment's words on its card: said plainly, as what happened, its year
+/// kept back — the year is told once, where the game tells it — in the
+/// card's serif and ink, as large as the card takes ([SubjectWords]).
+class MomentWords extends StatelessWidget {
+  const MomentWords({super.key, required this.line, this.min = 18, this.max});
 
   final DatedLine line;
-  final bool shown;
-  final double max;
   final double min;
 
-  /// The words' colour.
-  final Color ink;
-
-  /// The challenge's tone, for a moment set as a page is.
-  final Color? accent;
-
-  TextSpan _span(double size, String gapLabel, [Color? scoped]) {
-    final Color? a = accent ?? scoped;
-    if (a != null) {
-      // On a challenge's screen the moment is said plainly, as what
-      // happened, its year kept back; once told, the year under it — save
-      // where the year is told beside it ([accent], In order's margin).
-      TextStyle serif(FontWeight weight, Color colour) => AppText.display(
-        size: size,
-        weight: weight,
-        height: 1.24,
-        spacing: -0.012 * size,
-        color: colour,
-      );
-      return TextSpan(
-        style: serif(FontWeight.w600, ink),
-        children: [
-          TextSpan(text: line.statement),
-          if (shown && accent == null)
-            TextSpan(
-              text: '\n${line.year}',
-              style: serif(FontWeight.w800, a),
-            ),
-        ],
-      );
-    }
-    final TextStyle base = AppText.display(
-      size: size,
-      weight: FontWeight.w600,
-      height: 1.16,
-      spacing: -0.02 * size,
-      color: ink,
-    );
-    return TextSpan(
-      style: base,
-      children: [
-        TextSpan(text: line.before),
-        if (shown)
-          TextSpan(
-            text: ' ${line.year} ',
-            style: base.copyWith(
-              color: kArtCream,
-              fontWeight: FontWeight.w800,
-              background: Paint()..color = kArtInk,
-            ),
-          )
-        else
-          TextSpan(
-            text: '     ',
-            semanticsLabel: gapLabel,
-            style: base.copyWith(
-              background: Paint()..color = kArtInk.withValues(alpha: 0.16),
-              decoration: TextDecoration.underline,
-              decorationColor: kArtInk,
-              decorationThickness: 2.2,
-            ),
-          ),
-        TextSpan(text: line.after),
-      ],
-    );
-  }
+  /// The largest the words are set; unset, as a card's question.
+  final double? max;
 
   @override
-  Widget build(BuildContext context) {
-    final String gap = context.l10n.timeGap;
-    // On a challenge's card of its colour, the year comes in the card's
-    // ink, never in a box of ink.
-    final Color? scoped = ChallengeToneScope.maybeOf(context) == null
-        ? null
-        : ink;
-    final TextScaler scaler = MediaQuery.textScalerOf(context);
-    final TextDirection direction = Directionality.of(context);
-    final List<String> words = line.text.split(RegExp(r'\s+'));
-    return LayoutBuilder(
-      builder: (context, box) {
-        bool fits(double size) {
-          final TextPainter p = TextPainter(
-            text: _span(size, gap, scoped),
-            textDirection: direction,
-            textScaler: scaler,
-          )..layout(maxWidth: box.maxWidth);
-          final bool tall = p.height <= box.maxHeight;
-          p.dispose();
-          if (!tall) return false;
-          // No word broken across two lines.
-          final TextStyle style = AppText.display(
-            size: size,
-            weight: FontWeight.w800,
-            spacing: -0.02 * size,
-          );
-          for (final String w in words) {
-            final TextPainter one = TextPainter(
-              text: TextSpan(text: w, style: style),
-              textDirection: direction,
-              textScaler: scaler,
-              maxLines: 1,
-            )..layout();
-            final bool wide = one.width > box.maxWidth;
-            one.dispose();
-            if (wide) return false;
-          }
-          return true;
-        }
-
-        double size = max;
-        while (size > min && !fits(size)) {
-          size -= 1;
-        }
-        final Widget text = Text.rich(
-          _span(size, gap, scoped),
-          key: ValueKey('moment-${line.pill.id}-${shown ? 'told' : 'gap'}'),
-          textScaler: scaler,
-        );
-        if (fits(size)) {
-          return Align(alignment: Alignment.centerLeft, child: text);
-        }
-        return SingleChildScrollView(child: text);
-      },
-    );
-  }
+  Widget build(BuildContext context) => SubjectWords(
+    key: ValueKey('moment-${line.pill.id}'),
+    text: line.statement,
+    ink: line.pill.ink,
+    min: min,
+    max: max,
+    alignment: max == null ? const Alignment(-1, -0.3) : Alignment.centerLeft,
+  );
 }

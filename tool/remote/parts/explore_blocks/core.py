@@ -164,6 +164,22 @@ def true_false(section: dict) -> list[str]:
     return problems
 
 
+# How the charts that mislead show their trick (UnmaskLook in
+# lib/widgets/explore/unmask_chart.dart); a section that names none gets
+# the first.
+UNMASK_LOOKS = ("before-after", "in-place", "current")
+
+
+def unmask(section: dict) -> list[str]:
+    problems = shelf("look")(section)
+    if "look" in section and section["look"] not in UNMASK_LOOKS:
+        problems.append(
+            "`look` is how the charts show their trick: "
+            + ", ".join(f'"{look}"' for look in UNMASK_LOOKS)
+        )
+    return problems
+
+
 def carousel(section: dict) -> list[str]:
     return (
         _fields(section, WORDS | {"source", "size", "limit"})
@@ -380,7 +396,7 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     "move-sampling": shelf(),
     "move-compared": shelf(),
     "work": shelf(),
-    "unmask": shelf(),
+    "unmask": unmask,
     "how-sure": shelf(words=False),
     "what-if": shelf(),
     "series": shelf(),
@@ -416,15 +432,22 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     # in each subject, and more like what they saved. Each works out its
     # own and reads no `source`.
     "your-day": shelf(),
+    # The reader's own five, once read: a small row that opens them again
+    # at full size. Not drawn before.
+    "your-five": shelf(),
     "quick-games": quick_games,
     "subject-levels": subject_levels,
     "like-saved": shelf("limit"),
     # Ten cards on a theme, easy to hard, a row of them: Astute+.
     "paths": shelf("limit"),
+    # Books in pills: the week's book set apart, the others in a row. Works
+    # out its own from the bank.
     "books": shelf(),
-    # The books in pills the people who built the companies everyone
-    # knows recommended, under their names (lib/data/book_picks.dart).
-    "founder-books": shelf(),
+    # What founders read: the people who built the companies everyone
+    # knows, each opening the books they recommended in public
+    # (lib/data/founders.dart); on a subject's page, that subject's books
+    # they recommended, in one list. Works out its own.
+    "founders": shelf(),
     # What the reader started and left: a path read partway, a book
     # stopped at an idea. Works out its own; none started, no section.
     "continue": shelf("limit"),

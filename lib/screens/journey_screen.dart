@@ -33,6 +33,7 @@ import '../widgets/card_edge.dart';
 import '../widgets/count_since.dart';
 import '../widgets/premium.dart';
 import '../widgets/area_marks.dart' show goalName;
+import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/move_words.dart';
 import '../widgets/skill_score.dart' show scoreUp, signedNumber;
 import '../widgets/top_edge.dart';
@@ -82,6 +83,18 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
   /// The day the reader last looked, as it was when the page opened.
   late final String? _lastOn = widget.app.journeySeenOn;
+
+  @override
+  void initState() {
+    super.initState();
+    // A level reached since one was last told rises over the journey once
+    // it has come in (lib/widgets/level_up.dart). The figures under it
+    // count once it has gone (count_since.dart): a count run behind it
+    // would land unseen.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) showLevelUpIfDue(context, widget.app);
+    });
+  }
 
   @override
   void dispose() {
@@ -226,7 +239,9 @@ class _JourneyScreenState extends State<JourneyScreen> {
       // it too, on either plan.
       if (app.dayClosed) ...[
         const SizedBox(height: 22),
-        Center(child: ShareDay(app: app, from: 'journey')),
+        Center(
+          child: ShareDay(app: app, from: 'journey'),
+        ),
       ],
     ];
 
@@ -263,9 +278,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
                 right: 0,
                 top: 0,
                 height: top,
-                child: IgnorePointer(
-                  child: TopEdge(ground: context.p.surface),
-                ),
+                child: IgnorePointer(child: TopEdge(ground: context.p.surface)),
               ),
               // The way back, the one thing that stays.
               Positioned(
@@ -618,7 +631,13 @@ String _pointsMark(BuildContext context, double was, double now) {
 /// A large figure and, on its baseline, the word after it and the mark of
 /// how far it went since the reader last looked.
 class _BigLine extends StatelessWidget {
-  const _BigLine(this.text, {this.unit, this.mark, this.size = 30, this.valueKey});
+  const _BigLine(
+    this.text, {
+    this.unit,
+    this.mark,
+    this.size = 30,
+    this.valueKey,
+  });
 
   final String text;
   final String? unit;
@@ -635,7 +654,9 @@ class _BigLine extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
       children: [
-        Flexible(child: _Big(text, size: size, valueKey: valueKey)),
+        Flexible(
+          child: _Big(text, size: size, valueKey: valueKey),
+        ),
         if (unit != null) ...[const SizedBox(width: 6), _Unit(unit!)],
         if (mark != null) ...[const SizedBox(width: 6), mark!],
       ],
@@ -1502,12 +1523,7 @@ class _PointsOffTile extends StatelessWidget {
                 const _Big('—', valueKey: ValueKey('journey-gap'))
               else
                 _count(
-                  _Fig(
-                    'gap',
-                    gap,
-                    (v) => '${v.round()}',
-                    better: Better.lower,
-                  ),
+                  _Fig('gap', gap, (v) => '${v.round()}', better: Better.lower),
                   (context, _, text, mark) => _BigLine(
                     text,
                     mark: mark,

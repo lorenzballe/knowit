@@ -7,8 +7,13 @@
 <!--
   Astute, prototype video card: how Eratosthenes measured the Earth with a stick (about 240 BC).
   One SVG scene driven by one paused GSAP timeline. Open the page to watch it loop (scaled to fit);
-  render frame by frame with window.renderAt(seconds) at 1080x1920. Everything is inline: the two
-  kit fonts (Fraunces, Figtree, SIL OFL 1.1) and GSAP 3.15 (docs/cards/kit/vendor/gsap.min.js).
+  render frame by frame with window.renderAt(seconds) at 1080x2340, a modern phone's 9 by 19.5.
+  Everything is inline: the two kit fonts (Fraunces, Figtree, SIL OFL 1.1) and GSAP 3.15
+  (docs/cards/kit/vendor/gsap.min.js).
+  The frame fills the screen and the app lays its row of controls over the top: nothing but ground
+  above y 330, where the head starts. Every word stays between x 64 and 1016 and above y 1990: on a
+  phone shorter than the frame the app keeps the head under its controls and cuts the foot, so only
+  the ground, the Earth and the light go lower (docs/cards/video/README.md).
 -->
 <style>
 @font-face{font-family:"Fraunces";font-style:normal;font-weight:100 900;font-display:block;src:url(data:font/woff2;base64,%%FRAUNCES%%) format("woff2")}
@@ -17,21 +22,21 @@
 :root{--c:#FFB000;--k:#10100c;--cream:#FFF3D6;--blue:#2B5CFF;--display:"Fraunces",Georgia,serif;--body:"Figtree",system-ui,sans-serif;font-variation-settings:"SOFT" 30,"WONK" 0}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:#0d0d0b;overflow:hidden}
-#v{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--c);color:var(--k);transform-origin:0 0}
+#v{position:absolute;left:0;top:0;width:1080px;height:2340px;overflow:hidden;background:var(--c);color:var(--k);transform-origin:0 0}
 #scene{position:absolute;left:0;top:0}
-#head{position:absolute;left:80px;right:80px;top:82px;height:70px;display:flex;align-items:center;gap:20px;opacity:0}
+#head{position:absolute;left:80px;right:80px;top:330px;height:70px;display:flex;align-items:center;gap:20px;opacity:0}
 #head svg{width:46px;height:46px;flex:none}
 #head .t{font:600 32px/1 var(--body);letter-spacing:.16em}
 #head .tag{margin-left:auto;font:800 25px/1 var(--body);letter-spacing:.12em;padding:15px 26px;border-radius:99px;background:var(--k);color:var(--c)}
-.cap{position:absolute;left:80px;top:226px;width:920px;margin:0;font:800 72px/1.13 var(--display);letter-spacing:-.012em;text-wrap:balance}
+.cap{position:absolute;left:80px;top:474px;width:920px;margin:0;font:800 72px/1.13 var(--display);letter-spacing:-.012em;text-wrap:balance}
 .cap .w{display:inline-block}
 .cap b{font-weight:900;color:var(--blue)}
 .cap em{font-style:italic;font-weight:700}
 #title{font-size:116px;line-height:1.02;letter-spacing:-.022em}
-.place{position:absolute;left:80px;top:548px;display:flex;align-items:center;gap:14px;font:800 32px/1 var(--body);letter-spacing:.12em;padding:15px 26px 15px 24px;border-radius:99px;background:var(--k);color:var(--c);white-space:nowrap;opacity:0}
-.place span{font-weight:600;letter-spacing:.02em;opacity:.82}
+.place{position:absolute;left:80px;top:700px;display:flex;align-items:center;gap:18px;font:900 42px/1 var(--body);letter-spacing:.1em;padding:19px 32px 19px 30px;border-radius:99px;background:var(--k);color:var(--c);white-space:nowrap;opacity:0}
+.place span{font-weight:700;letter-spacing:.02em;color:var(--cream)}
 .tagx{position:absolute;left:0;top:0;white-space:nowrap;opacity:0}
-.lab{font:800 40px/1.1 var(--body);text-align:center}
+.lab{font:800 48px/1.1 var(--body);text-align:center}
 .chip{font:900 60px/1 var(--display);font-variation-settings:"SOFT" 30,"WONK" 0,"opsz" 48;color:#fff;background:var(--blue);padding:12px 28px 17px;border-radius:99px;box-shadow:0 0 0 10px var(--halo,var(--c))}
 .row{position:absolute;left:0;width:1080px;display:flex;justify-content:center;align-items:baseline;gap:24px;white-space:nowrap;opacity:0}
 .num{font:900 88px/1 var(--display);letter-spacing:-.01em;font-variation-settings:"SOFT" 30,"WONK" 0,"opsz" 48}
@@ -44,12 +49,12 @@ html,body{margin:0;height:100%;background:#0d0d0b;overflow:hidden}
 #k3{text-align:center}
 #k3 .num{font-size:56px}
 #k3 .lab2{font:700 36px/1.2 var(--body);margin-top:8px}
-#src{position:absolute;left:80px;top:1716px;width:920px;font:500 30px/1.3 var(--body);opacity:0}
+#src{position:absolute;left:80px;top:760px;width:920px;font:500 32px/1.3 var(--body);opacity:0}
 </style>
 </head>
 <body>
 <div id="v">
-<svg id="scene" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
+<svg id="scene" width="1080" height="2340" viewBox="0 0 1080 2340" aria-hidden="true">
   <g id="rays" stroke="#fff" stroke-width="5" stroke-linecap="round"></g>
   <g id="world">
     <circle id="earth" cx="0" cy="16000" r="16000" fill="#FFF3D6" stroke="#10100c" stroke-width="6" vector-effect="non-scaling-stroke"/>
@@ -83,7 +88,7 @@ html,body{margin:0;height:100%;background:#0d0d0b;overflow:hidden}
     <g id="leaders"></g>
     <g id="bar" opacity="0">
       <path id="barTrack" fill="none" stroke="#10100c" stroke-width="6" stroke-linecap="round"/>
-      <rect id="barBand" y="1482" height="36" rx="18" fill="#2B5CFF"/>
+      <rect id="barBand" height="36" rx="18" fill="#2B5CFF"/>
       <path id="barMark" fill="none" stroke="#10100c" stroke-width="7" stroke-linecap="round"/>
     </g>
   </g>
@@ -113,11 +118,11 @@ html,body{margin:0;height:100%;background:#0d0d0b;overflow:hidden}
 <div class="tagx chip" id="cO" style="--halo:var(--cream)">7.2°</div>
 <div class="tagx chip" id="c5k">5,000 stadia</div>
 
-<div class="row" id="cnt" style="top:1492px"><span class="num big" id="cntN">1</span><span class="unit">slices of 7.2°</span></div>
-<div class="row" id="eq1" style="top:1492px"><span class="num">50 <span class="op">×</span> 5,000 stadia</span></div>
-<div class="row" id="eq2" style="top:1606px"><span class="num"><span id="eqN">= 5,000</span> stadia</span></div>
-<div class="row" id="k1" style="top:1196px"><span class="num" style="font-size:96px">250,000 stadia</span></div>
-<div class="row" id="k2" style="top:1316px"><span class="num blue" style="font-size:80px"><span class="opx">≈</span> 39,000–46,000 km</span></div>
+<div class="row" id="cnt" style="top:770px"><span class="num big" id="cntN">1</span><span class="unit">slices of 7.2°</span></div>
+<div class="row" id="eq1" style="top:690px"><span class="num">50 <span class="op">×</span> 5,000 stadia</span></div>
+<div class="row" id="eq2" style="top:804px"><span class="num"><span id="eqN">= 5,000</span> stadia</span></div>
+<div class="row" id="k1" style="top:760px"><span class="num" style="font-size:96px">250,000 stadia</span></div>
+<div class="row" id="k2" style="top:872px"><span class="num blue" style="font-size:80px"><span class="opx">≈</span> 39,000–46,000 km</span></div>
 <div class="tagx" id="k3"><div class="num">40,008 km</div><div class="lab2">the true value, pole to pole</div></div>
 <div id="src">Source · Cleomedes, <i>Caelestia</i> I.7</div>
 </div>
@@ -138,6 +143,12 @@ const O = {x: 0, y: R}, S = {x: 0, y: 0}, A = {x: -R * Math.sin(ALPHA), y: R - R
 const UP_S = {x: 0, y: -1}, UP_A = {x: -Math.sin(ALPHA), y: -Math.cos(ALPHA)}, NORTH_A = {x: -Math.cos(ALPHA), y: Math.sin(ALPHA)};
 const WELL_X = 288;
 
+// ---------- the frame: 1080 by 2340 ----------
+// Nothing but ground above y 330 (the app's controls), the head from there; every word above y 1990.
+const GY = 1600;              // the ground under the two cities, while the camera stands on it
+const SUN_Y0 = 1575;          // the sun turns with the camera round (540, SUN_Y0), P.sunD above it
+const CAP_GAP = 34;           // from a caption's last line to what is set under it (the source)
+
 const add = (a, b, k = 1) => ({x: a.x + b.x * k, y: a.y + b.y * k});
 const sub = (a, b) => ({x: a.x - b.x, y: a.y - b.y});
 const lerp = (a, b, t) => ({x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t});
@@ -150,10 +161,10 @@ const pt = p => f1(p.x) + ' ' + f1(p.y);
 const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 // The camera: world point (wx, wy) sits at screen point (px, py); zoom exp(lz); rotation rot (degrees).
-const cam = {wx: 0, wy: 0, px: 540, py: 1720, lz: 0, rot: 0};
+const cam = {wx: 0, wy: 0, px: 540, py: GY + 320, lz: 0, rot: 0};
 // Everything else that moves is a number here, tweened by the one timeline and drawn by sync().
 const P = {
-  t: 0, dip: 0, rp: 0, rayOp: 0, yTop: 832,
+  t: 0, dip: 0, rp: 0, rayOp: 0, yTop: 1075,
   sunOp: 0, sunS: .7, sunR: 58, sunD: 600,
   stickS: 0, stickA: 1, well: 0, beam: 0, splash: 0,
   keyA: 0, keyS: 0, keyOp: 1, wedgeA: 0,
@@ -164,7 +175,7 @@ const P = {
 };
 
 let DR = {x: 0, y: 0};
-const DC = {x: 540, y: 1100};
+const DC = {x: 540, y: 1350};
 const Z = () => Math.exp(cam.lz - P.dip);
 const rv = v => { const r = cam.rot * DEG, c = Math.cos(r), s = Math.sin(r); return {x: v.x * c - v.y * s, y: v.x * s + v.y * c}; };
 const toS = p => {
@@ -199,8 +210,9 @@ function placeTag(id, a, inside) {
   T.el.style.opacity = op; T.g.setAttribute('opacity', op);
   if (op <= 0) return;
   const {w, h, gap} = T; let x, y, from;
-  if (T.side === 'below') { x = a.x - w / 2; y = a.y + gap; from = {x: a.x, y: y - 9}; }
-  else if (T.side === 'above') { x = a.x - w / 2; y = a.y - gap - h; from = {x: a.x, y: y + h + 9}; }
+  // a word under or over its point keeps to the margins, its leader still straight down to it
+  if (T.side === 'below') { x = clamp(a.x - w / 2, 80, 1000 - w); y = a.y + gap; from = {x: a.x, y: y - 9}; }
+  else if (T.side === 'above') { x = clamp(a.x - w / 2, 80, 1000 - w); y = a.y - gap - h; from = {x: a.x, y: y + h + 9}; }
   else if (T.side === 'right') { x = a.x + gap; y = a.y - h / 2; from = {x: x - 9, y: a.y}; }
   else { x = a.x - gap - w; y = a.y - h / 2; from = {x: x + w + 9, y: a.y}; }
   T.el.style.left = f1(x) + 'px'; T.el.style.top = f1(y) + 'px';
@@ -217,7 +229,7 @@ function placeTag(id, a, inside) {
 const sliceEls = [], rayEls = [];
 for (let i = 0; i < 40; i++) rayEls.push(mk('line', {opacity: 0}, document.getElementById('rays')));
 for (let i = 0; i < 8; i++) { const a = (i + .5) * Math.PI / 4; mk('line', {x1: f1(Math.cos(a) * 76), y1: f1(Math.sin(a) * 76), x2: f1(Math.cos(a) * 96), y2: f1(Math.sin(a) * 96), 'vector-effect': 'non-scaling-stroke'}, document.getElementById('sunTicks')); }
-const BAR = {x0: 150, x1: 930, v0: 36000, v1: 49000, y: 1500};
+const BAR = {x0: 150, x1: 930, v0: 36000, v1: 49000, y: 1040};
 const barX = v => BAR.x0 + (v - BAR.v0) / (BAR.v1 - BAR.v0) * (BAR.x1 - BAR.x0);
 
 function sync() {
@@ -230,7 +242,7 @@ function sync() {
 
   // the sun, far away: it turns with the camera but never slides with it
   const r = cam.rot * DEG;
-  const sun = {x: 540 + DR.x * .3 + P.sunD * Math.sin(r), y: 1330 - P.sunD * Math.cos(r)};
+  const sun = {x: 540 + DR.x * .3 + P.sunD * Math.sin(r), y: SUN_Y0 - P.sunD * Math.cos(r)};
   $('sun').setAttribute('transform', `translate(${pt(sun)}) scale(${(P.sunS * P.sunR / 58).toFixed(4)})`);
   $('sun').setAttribute('opacity', P.sunOp);
   const yTop = P.yTop;
@@ -328,7 +340,7 @@ function sync() {
   const xm = (BAR.x0 + BAR.x1) / 2;
   setD('barTrack', P.bar > 0 ? seg({x: xm - (xm - BAR.x0) * P.bar, y: BAR.y}, {x: xm + (BAR.x1 - xm) * P.bar, y: BAR.y}) : '');
   const b0 = barX(39000), b1 = barX(46000), bm = (b0 + b1) / 2, bw = (b1 - b0) * P.band;
-  $('barBand').setAttribute('x', f1(bm - bw / 2)); $('barBand').setAttribute('width', f1(Math.max(0, bw)));
+  $('barBand').setAttribute('x', f1(bm - bw / 2)); $('barBand').setAttribute('width', f1(Math.max(0, bw))); $('barBand').setAttribute('y', BAR.y - 18);
   const xt = barX(40008);
   setD('barMark', P.mark > 0 ? seg({x: xt, y: BAR.y - 40 - 30 * (1 - P.mark)}, {x: xt, y: BAR.y + 40 - 30 * (1 - P.mark)}) : '');
   $('barMark').setAttribute('opacity', P.mark);
@@ -382,6 +394,10 @@ function build() {
   for (const id in TAGS) { TAGS[id].w = TAGS[id].el.offsetWidth; TAGS[id].h = TAGS[id].el.offsetHeight; }
   $('eqN').style.minWidth = (() => { const s = $('eqN'), t = s.textContent; s.innerHTML = '<span class="op">=</span> 250,000'; const w = s.offsetWidth; s.textContent = t; return w + 4; })() + 'px';
   for (let k = 0; k < 50; k++) sliceEls.push(mk('path', {fill: '#FFDC8E'}, $('slices')));
+  // what is set under a caption follows its last line, however many lines it takes in this language
+  const under = (id, gap) => ($(id).offsetTop + $(id).offsetHeight + gap) + 'px';
+  $('pS').style.top = under('c2', 56); $('pA').style.top = under('c3', 56);
+  $('src').style.top = under('c9', CAP_GAP);
 
   // beat starts (s): each caption stays long enough to be read twice
   const B = {b1: 0, b2: 4.5, b3: 10.4, b4: 16.6, b5: 22.4, b6: 28.7, b7: 33.6, b8: 39.2, b9: 45.7};
@@ -391,7 +407,7 @@ function build() {
 
   // 1 · the question
   fx(0, .5, '#head', {opacity: 0, y: -14}, {opacity: 1, y: 0});
-  camMove(.15, 1.7, S, {x: 540, y: 1400}, 1, 0, 'power3.out');
+  camMove(.15, 1.7, S, {x: 540, y: GY}, 1, 0, 'power3.out');
   capIn('title', .3, true);
   tw(.95, .75, {stickS: 1}, 'power3.out');
   tw(1.0, .7, {well: 1}, 'power1.out');
@@ -408,7 +424,7 @@ function build() {
   tw(b + 1.9, .55, {splash: 1}, 'power3.out');
   tw(b + 2.4, .5, {tLight: 1}, 'power2.out');
   tw(b + 3.0, .5, {tNo: 1}, 'power2.out');
-  camMove(b + 2.2, B.b3 - b - 2.25, S, {x: 540, y: 1400}, 1.05, 0, 'sine.inOut');
+  camMove(b + 2.2, B.b3 - b - 2.25, S, {x: 540, y: GY - 12}, 1.05, 0, 'sine.inOut');   // the push in ends a little higher, its word under the well above y 1990
 
   // 3 · Alexandria, the same moment: a shadow, and its angle
   b = B.b3;
@@ -416,7 +432,7 @@ function build() {
   fx(b, .35, '#pS', {opacity: 1, x: 0}, {opacity: 0, x: -26}, 'power2.in');
   tw(b, .35, {tNo: 0, tLight: 0}, 'power2.in');
   capIn('c3', b + .34);
-  camMove(b + .15, 2.6, A, {x: 540, y: 1400}, 1, 7.2, 'sine.inOut');
+  camMove(b + .15, 2.6, A, {x: 540, y: GY}, 1, 7.2, 'sine.inOut');
   tw(b + .15, 1.3, {dip: .9}, 'sine.inOut');
   tw(b + 1.45, 1.3, {dip: 0}, 'sine.inOut');
   fx(b + 2.3, .55, '#pA', {opacity: 0, x: -26}, {opacity: 1, x: 0}, 'power3.out');
@@ -424,7 +440,7 @@ function build() {
   tw(b + 3.2, .6, {wedgeA: 1}, 'power3.out');
   tw(b + 3.55, .5, {cA1: 1}, 'power3.out');
   tw(b + 4.0, .5, {tSh: 1}, 'power2.out');
-  camMove(b + 2.9, B.b4 - b - 3.0, TA_W, {x: 540, y: 880}, 1.3, 7.2, 'sine.inOut');
+  camMove(b + 2.9, B.b4 - b - 3.0, TA_W, {x: 540, y: 1130}, 1.3, 7.2, 'sine.inOut');
 
   // 4 · why: the sun is so far that its rays arrive parallel
   b = B.b4;
@@ -433,8 +449,8 @@ function build() {
   tw(b, .35, {tSh: 0, cA1: 0}, 'power2.in');
   capIn('c4', b + .34);
   tw(b + .05, .7, {well: 0}, 'power1.in');
-  camMove(b + .1, 2.9, A, {x: 446, y: 1192}, 1500 / 16000, 0, 'power2.inOut');
-  tw(b + .1, 2.9, {sunR: 36, sunD: 690, yTop: 730}, 'power2.inOut');
+  camMove(b + .1, 2.9, A, {x: 446, y: 1500}, 1500 / 16000, 0, 'power2.inOut');
+  tw(b + .1, 2.9, {sunR: 36, sunD: 745, yTop: 920}, 'power2.inOut');
   tw(b + 2.6, .8, {keyS: 1}, 'power2.inOut');
   tw(b + 2.6, .8, {rayOp: .4}, 'power2.inOut');
   tw(b + 3.2, .5, {cA2: 1}, 'power3.out');
@@ -443,7 +459,7 @@ function build() {
   b = B.b5;
   capOut(['c4'], b);
   capIn('c5', b + .34);
-  camMove(b + .15, 2.3, A, {x: 483.6, y: 887.1}, 900 / 16000, 0, 'power2.inOut');
+  camMove(b + .15, 2.3, A, {x: 483.6, y: 1057}, 900 / 16000, 0, 'power2.inOut');
   tw(b + .5, 1.8, {radS: 1}, 'power2.inOut');
   tw(b + .65, 1.8, {radA: 1}, 'power2.inOut');
   tw(b + 2.3, .4, {dotO: 1}, 'power2.out');
@@ -455,10 +471,10 @@ function build() {
   capOut(['c5'], b);
   tw(b, .35, {cA2: 0, cO: 0}, 'power2.in');
   capIn('c6', b + .34);
-  camMove(b + .15, 2.1, O, {x: 540, y: 1110}, 330 / 16000, 0, 'power2.inOut');
+  camMove(b + .15, 2.1, O, {x: 540, y: 1600}, 480 / 16000, 0, 'power2.inOut');
   tw(b + .15, .45, {sunOp: 0}, 'power1.in');
   tw(b + .15, 1.2, {rayOp: 0, keyOp: 0}, 'power2.inOut');
-  tw(b + .15, 2.1, {sunD: 820, yTop: 560}, 'power2.inOut');
+  tw(b + .15, 2.1, {sunD: 900, yTop: 800}, 'power2.inOut');
   tw(b + 1.8, .7, {wedgeO: 1}, 'power2.inOut');
   tw(b + 2.3, .01, {slices: 1}, 'none');
   fx(b + 2.3, .5, '#cnt', {opacity: 0, y: 22}, {opacity: 1, y: 0}, 'power3.out');
@@ -482,7 +498,7 @@ function build() {
   fx(b, .4, '#eq1', {opacity: 1, y: 0}, {opacity: 0, y: -26}, 'power2.in');
   capIn('c8', b + .34);
   fx(b + .05, .4, '#eq2', {opacity: 1, y: 0}, {opacity: 0, y: -40}, 'power2.in');
-  camMove(b + .1, 1.3, O, {x: 540, y: 900}, 240 / 16000, 0, 'power2.inOut');
+  camMove(b + .1, 1.3, O, {x: 540, y: 1720}, 360 / 16000, 0, 'power2.inOut');
   fx(b + 1.15, .6, '#k1', {opacity: 0, y: 30}, {opacity: 1, y: 0}, 'power3.out');
   fx(b + 1.85, .55, '#k2', {opacity: 0, y: 24}, {opacity: 1, y: 0}, 'power3.out');
   tw(b + 2.4, .01, {barOp: 1}, 'none');
@@ -497,24 +513,25 @@ function build() {
   fx(b, .45, ['#k1', '#k2'], {opacity: 1, y: 0}, {opacity: 0, y: -24}, 'power2.in');
   tw(b, .45, {barOp: 0, k3: 0}, 'power2.in');
   capIn('c9', b + .34);
-  camMove(b + .1, 1.8, O, {x: 540, y: 1200}, 350 / 16000, 0, 'power2.inOut');
-  tw(b + .1, 1.8, {sunD: 680, sunR: 34, yTop: 726}, 'power2.inOut');
+  camMove(b + .1, 1.8, O, {x: 540, y: 1600}, 480 / 16000, 0, 'power2.inOut');
+  tw(b, .01, {sunD: 760}, 'none');   // unseen since 6, the sun comes back from under the caption
+  tw(b + .1, 1.8, {sunD: 675, sunR: 34, yTop: 980}, 'power2.inOut');
   tw(b + .8, 1.0, {sunOp: 1, keyOp: 1, rayOp: .55}, 'power2.inOut');
-  fx(b + 2.0, .7, '#src', {opacity: 0, y: 12}, {opacity: .78, y: 0});
+  fx(b + 2.0, .7, '#src', {opacity: 0, y: 12}, {opacity: .85, y: 0});
   tl.set({}, {}, END);
   return END;
 }
 
 tag('tNo', 'below', 62); tag('tLight', 'below', 30); tag('tSh', 'below', 50);
-tag('cA1', 'right', 64); tag('cA2', 'left', 56); tag('cO', 'left', 56); tag('c5k', 'above', 104);
+tag('cA1', 'right', 64); tag('cA2', 'left', 56); tag('cO', 'left', 56); tag('c5k', 'above', 90);
 
 function fit() {
-  const s = Math.min(innerWidth / 1080, innerHeight / 1920);
-  $('v').style.transform = `translate(${(innerWidth - 1080 * s) / 2}px, ${(innerHeight - 1920 * s) / 2}px) scale(${s})`;
+  const s = Math.min(innerWidth / 1080, innerHeight / 2340);
+  $('v').style.transform = `translate(${(innerWidth - 1080 * s) / 2}px, ${(innerHeight - 2340 * s) / 2}px) scale(${s})`;
 }
 addEventListener('resize', fit); fit();
 
-document.fonts.ready.then(() => Promise.all(['800 72px Fraunces', 'italic 700 72px Fraunces', '900 72px Fraunces', '700 40px Figtree', '600 30px Figtree'].map(f => document.fonts.load(f)))).then(() => {
+document.fonts.ready.then(() => Promise.all(['800 72px Fraunces', 'italic 700 72px Fraunces', '900 72px Fraunces', '700 40px Figtree', '900 42px Figtree', '600 30px Figtree'].map(f => document.fonts.load(f)))).then(() => {
   const END = build();
   window.DURATION = END;
   window.renderAt = t => { tl.pause(); tl.seek(t); sync(); };

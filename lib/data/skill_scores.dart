@@ -26,12 +26,14 @@
 /// there, so a reader who starts with a few misses still sees each right
 /// answer count, rather than climbing back unseen to a line they cannot see.
 /// The rating underneath is the same either way, and still decides how far
-/// each answer moves it ([_Running.shown]).
+/// each answer moves it. Every score is shown through one function,
+/// [shownScore] (lib/data/levels.dart), the levels' scale too.
 library;
 
 import 'dart:math' as math;
 
 import '../models/pill.dart';
+import 'levels.dart' show shownScore;
 import 'pill_bank.dart';
 import 'pills_repository.dart' show dateKey;
 import 'skill_levels.dart';
@@ -71,10 +73,10 @@ class SkillScore {
     required this.answers,
   });
 
-  /// A score no answer has moved yet: nothing.
+  /// A score no answer has moved yet: its start, shown — nothing.
   static final SkillScore start = SkillScore(
-    now: 0,
-    days: List.filled(kScoreDays, 0),
+    now: shownScore(kScoreStart),
+    days: List.filled(kScoreDays, shownScore(kScoreStart)),
     answers: 0,
   );
 
@@ -144,12 +146,14 @@ class _Running {
   double of(Skill? skill) => skill == null ? overall : each[skill]!;
 
   /// The score of [skill] as the reader sees it, or the overall one for
-  /// null: how far its rating stands above the lowest it has been, the
-  /// start included. Nothing at the start; never below nothing; and above
-  /// its lowest it moves exactly as the rating does, so every move shown
-  /// is the answer's own.
-  double shown(Skill? skill) =>
-      skill == null ? overall - overallLow : each[skill]! - low[skill]!;
+  /// null: its rating through [shownScore], from the lowest it has been,
+  /// the start included. Nothing at the start; never below nothing; and
+  /// above its lowest it moves exactly as the rating does, so every move
+  /// shown is the answer's own.
+  double shown(Skill? skill) => shownScore(
+    of(skill),
+    lowest: skill == null ? overallLow : low[skill]!,
+  ).toDouble();
 
   /// Moves the scores by [j]: false for a judgement with no card, or on a
   /// card the bank no longer has or that is not graded, which moves nothing.

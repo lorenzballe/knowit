@@ -10,9 +10,9 @@ import 'layout.dart';
 /// film. A tap on one opens it to the whole screen, a second tap plays it
 /// (lib/widgets/video_card.dart).
 ///
-/// One card is shown large, across the page, cut from the top of its first
-/// frame, a little taller than wide; more than one go in a row, each as a
-/// film is held, upright. On a subject's page, that subject's.
+/// One card is shown large, across the page, its first frame cut from a
+/// little above its head, a little taller than wide; more than one go in a
+/// row, each upright, nine by sixteen. On a subject's page, that subject's.
 class VideoCardsBlock extends ExploreBlock with SectionLayout {
   const VideoCardsBlock();
 
@@ -46,7 +46,7 @@ class VideoCardsBlock extends ExploreBlock with SectionLayout {
           builder: (context, box) => SizedBox(
             width: box.maxWidth,
             // Five by six: the head, the question and its picture, the
-            // film's own frame cut from the top above the ground.
+            // film's own frame cut above the ground.
             height: box.maxWidth * 6 / 5,
             child: VideoCardTile(
               card: card,
@@ -59,7 +59,7 @@ class VideoCardsBlock extends ExploreBlock with SectionLayout {
     } else {
       const double width = 200;
       shown = SizedBox(
-        height: width / kFilmAspect,
+        height: width * 16 / 9,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 20),

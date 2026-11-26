@@ -28,6 +28,7 @@ import '../theme.dart';
 import 'chunky.dart';
 import 'count_since.dart';
 import 'fit_text.dart';
+import 'level_up.dart' show LevelLine;
 import 'skill_score.dart';
 import 'ui.dart' show Eyebrow;
 
@@ -360,10 +361,19 @@ class TrainingChapter extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // The one number is every reader's, skills picked or not.
+          // The one number is every reader's, skills picked or not, and
+          // its line over the month.
           _Overall(score: book.overall),
+          if (book.overall.answers > 0) ...[
+            const SizedBox(height: 12),
+            ScoreSpark(values: book.overall.days, colour: p.ink, height: 40),
+          ],
+          // Under it, the level it has reached and how far the next one is,
+          // on the panel's own ground (lib/widgets/level_up.dart).
+          const SizedBox(height: 16),
+          LevelLine(app: app, framed: false),
           if (picked.isNotEmpty) ...[
-            const SizedBox(height: 8),
+            const SizedBox(height: 14),
             Text(
               l.trainingLine,
               style: AppText.body(
@@ -372,10 +382,6 @@ class TrainingChapter extends StatelessWidget {
                 color: p.ink.withValues(alpha: 0.62),
               ),
             ),
-          ],
-          if (book.overall.answers > 0) ...[
-            const SizedBox(height: 12),
-            ScoreSpark(values: book.overall.days, colour: p.ink, height: 40),
           ],
           const SizedBox(height: 16),
           rule,

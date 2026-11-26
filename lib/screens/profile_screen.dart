@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-import '../data/pills_repository.dart' show kPillsPerDay;
 import '../l10n/l10n.dart';
 
 import 'package:flutter/services.dart';
@@ -27,21 +26,19 @@ import '../utils/reminders.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/place_ask.dart';
-import '../widgets/premium.dart';
 import '../widgets/profile_menu.dart';
+import '../widgets/profile_top.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/sign_in_sheet.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
-import 'journey_screen.dart';
 import 'saved_screen.dart';
 import 'how_screen.dart';
 import 'paywall_screen.dart';
 import '../widgets/training.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
-import '../explore/blocks/core/your_day_block.dart' show DayPanel, weekOf;
 import '../widgets/hand_glass.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -50,8 +47,10 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onSignedOut;
 
   /// Takes the reader to the Today tab: the shell's, since a tab cannot
-  /// change tabs on its own. Null where Profile stands alone.
-  final VoidCallback? onToday;
+  /// change tabs on its own. Told where on the screen the tile tapped for
+  /// it is, so Today can open out of it; null from anywhere else. Null
+  /// where Profile stands alone.
+  final ValueChanged<Rect?>? onToday;
 
   const ProfileScreen({
     super.key,
@@ -72,7 +71,7 @@ class ProfileScreen extends StatelessWidget {
   /// button says. It used to pop the shelf and leave them on Profile.
   void _backToToday(BuildContext routeContext) {
     Navigator.of(routeContext).popUntil((route) => route.isFirst);
-    onToday?.call();
+    onToday?.call(null);
   }
 
   /// The time of the daily nudge, on the phone's own clock. Chosen once on
@@ -320,35 +319,12 @@ class ProfileScreen extends StatelessWidget {
         children: [
           // The record, not an identity. This screen used to open with a
           // circle of initials nobody typed, a name nobody set, and four
-          // boxes reading zero — a dashboard of nothing, with an
-          // advertisement as the brightest object on it. What a reader comes
-          // here for is the one number the habit has produced, so that is
-          // what it opens with.
-          Eyebrow(context.l10n.yourRecord),
-          const SizedBox(height: 12),
-          _Headline(app: app),
-          // The day and the streak: how many of today's five are read, the
-          // week, the days in a row. They were at the top of Explore, which
-          // now opens straight on its cards; the record is where a reader
-          // looks for how they are doing. Before a day is dealt, the week.
-          if (app.todaysDeck.isNotEmpty) ...[
-            const SizedBox(height: 18),
-            DayPanel(
-              read: app.dayClosed
-                  ? kPillsPerDay
-                  : app.todayIndex.clamp(0, kPillsPerDay),
-              of: kPillsPerDay,
-              streak: app.liveStreak,
-              week: weekOf(app, app.today),
-              today: app.today,
-              onTap: onToday ?? () {},
-            ),
-          ] else if (app.weekCompletion().any((day) => day)) ...[
-            const SizedBox(height: 18),
-            WeekStrip(week: app.weekCompletion(), barHeight: 34),
-          ],
-          const SizedBox(height: 16),
-          _RecordLine(app: app),
+          // boxes reading zero; then with the streak, said twice, over a
+          // line of five more numbers. It opens now on the number about the
+          // reader — the Astute score, on either plan — with the way into
+          // the journey that holds the rest of it, and the week, which goes
+          // to Today's five (lib/widgets/profile_top.dart).
+          ProfileTopView(app: app, onToday: onToday),
           _TrialNotice(app: app),
           // Under the reader's own record and above everything else: the
           // offer is about the record, so it reads as the next thing to say
@@ -467,12 +443,11 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 10),
             _ShareRecord(app: app),
           ],
-          // How well you know yourself is the one measurement kept here.
-          // Everything else the app counts — the level, the moves you keep
-          // missing, the week in questions, whether the gap is closing —
-          // is the journey, one button away.
-          const SizedBox(height: 22),
-          _JourneyButton(app: app),
+          // How well you know yourself is the one measurement kept down
+          // here. Everything else the app counts — the level, the moves you
+          // keep missing, the week in questions, whether the gap is closing
+          // — is the journey, whose way in now sits under the score at the
+          // top: a second button down here said the same thing twice.
           const SizedBox(height: 22),
           Eyebrow(context.l10n.dailyNudge),
           const SizedBox(height: 11),
@@ -1377,16 +1352,22 @@ class _PlusCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const Spacer(),
-              Text(
-                switch (Subscription.instance.trialDays) {
-                  final int days => context.l10n.trialDaysFree(days),
-                  null => '',
-                },
-                style: AppText.body(
-                  size: 12,
-                  weight: FontWeight.w600,
-                  color: context.p.onInverse.withValues(alpha: 0.6),
+              const SizedBox(width: 12),
+              // Room for the free days whatever their length: in Russian,
+              // at a larger text size on a small phone, they pushed the
+              // row past the card's edge.
+              Expanded(
+                child: Text(
+                  switch (Subscription.instance.trialDays) {
+                    final int days => context.l10n.trialDaysFree(days),
+                    null => '',
+                  },
+                  textAlign: TextAlign.end,
+                  style: AppText.body(
+                    size: 12,
+                    weight: FontWeight.w600,
+                    color: context.p.onInverse.withValues(alpha: 0.6),
+                  ),
                 ),
               ),
             ],
@@ -1484,99 +1465,8 @@ class _DebugLine extends StatelessWidget {
   }
 }
 
-/// The one number the habit has produced, set as a headline.
-///
-/// A streak while there is one, because that is what a reader comes back to
-/// protect. Before there is a streak it says what has actually been read,
-/// and on the first morning it says neither, because a screen that opens
-/// with a zero has told you nothing except that you have not started.
-class _Headline extends StatelessWidget {
-  const _Headline({required this.app});
-
-  final AppState app;
-
-  @override
-  Widget build(BuildContext context) {
-    final int streak = app.liveStreak;
-    // The same count the coverage panel prints. Reading it from a second
-    // field meant the headline said the record had not started while the
-    // panel underneath said forty-six.
-    final int read = app.seenIds.length;
-
-    if (streak == 0 && read == 0) {
-      return Text(
-        context.l10n.recordStartsToday,
-        style: AppText.display(
-          size: 34,
-          weight: FontWeight.w600,
-          height: 1.08,
-          spacing: -1.1,
-          color: context.p.ink,
-        ),
-      );
-    }
-
-    final bool onStreak = streak > 0;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.baseline,
-      textBaseline: TextBaseline.alphabetic,
-      children: [
-        Text(
-          '${onStreak ? streak : read}',
-          style: AppText.display(
-            size: 64,
-            weight: FontWeight.w600,
-            height: 1,
-            spacing: -3,
-            color: context.p.ink,
-          ),
-        ),
-        const SizedBox(width: 10),
-        Text(
-          onStreak
-              ? context.l10n.dayWord(streak)
-              : context.l10n.pillReadWord(read),
-          style: AppText.body(
-            size: 16,
-            weight: FontWeight.w500,
-            color: context.p.inkMuted,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-/// The rest of the numbers, on one line rather than in a row of boxes.
-class _RecordLine extends StatelessWidget {
-  const _RecordLine({required this.app});
-
-  final AppState app;
-
-  @override
-  Widget build(BuildContext context) {
-    final int weeks = app.keptWeeks;
-    final parts = <String>[
-      if (app.liveStreak > 0) context.l10n.nPillsRead(app.seenIds.length),
-      // Five days out of seven is a week kept. The daily streak is the
-      // sharper number and the crueller one — a flight or a fever and two
-      // months are gone — so the record carries both, and this is the one
-      // that survives a life.
-      if (weeks > 0) context.l10n.nWeeksKept(weeks),
-      if (app.dueReviews.isNotEmpty)
-        context.l10n.nComingBack(app.dueReviews.length),
-      if (app.freezes > 0) context.l10n.nFreezesInHand(app.freezes),
-      app.isPlus ? context.l10n.plusName : context.l10n.freePlan,
-    ];
-    return Text(
-      parts.join('  ·  '),
-      style: AppText.body(size: 13, color: context.p.inkMuted),
-    );
-  }
-}
-
-/// A free trial's last two days, said once and quietly under the line that
-/// names the plan, to a reader the warning before the charge does not reach
+/// A free trial's last two days, said once and quietly under the profile's
+/// top, to a reader the warning before the charge does not reach
 /// (AppState.trialNoticeDays). It is that warning, shorter: when the trial
 /// ends, and the way to manage it — the store's own screen, which the
 /// Manage subscription row further down opens too.
@@ -1625,88 +1515,6 @@ class _TrialNotice extends StatelessWidget {
               ),
               style: AppText.body(size: 13, color: context.p.inkMuted),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// The way into the journey: the level, the moves you keep missing, the
-/// week in questions and every other number the app keeps about the reader,
-/// on a screen of their own. The journey is Astute+, so on the free plan the
-/// button carries the lock and opens the plans instead.
-class _JourneyButton extends StatelessWidget {
-  const _JourneyButton({required this.app});
-
-  final AppState app;
-
-  @override
-  Widget build(BuildContext context) {
-    final bool locked = !app.isPlus;
-    return Semantics(
-      button: true,
-      child: GestureDetector(
-        key: const ValueKey('profile-journey'),
-        behavior: HitTestBehavior.opaque,
-        onTap: () => requirePlus(
-          context,
-          app,
-          () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (routeContext) => JourneyScreen(
-                app: app,
-                onBack: () => Navigator.of(routeContext).pop(),
-              ),
-            ),
-          ),
-          source: 'journey',
-        ),
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(18, 16, 16, 16),
-          decoration: BoxDecoration(
-            color: context.p.surfaceRaised,
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: context.p.line),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.l10n.yourJourney,
-                      style: AppText.display(
-                        size: 21,
-                        weight: FontWeight.w600,
-                        height: 1.1,
-                        spacing: -0.5,
-                        color: context.p.ink,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      context.l10n.journeyButtonLine,
-                      style: AppText.body(
-                        size: 13,
-                        height: 1.35,
-                        color: context.p.inkMuted,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              if (locked)
-                const PlusLock(locked: true)
-              else
-                Icon(
-                  Icons.chevron_right_rounded,
-                  size: 22,
-                  color: context.p.inkFaint,
-                ),
-            ],
           ),
         ),
       ),

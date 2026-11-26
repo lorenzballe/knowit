@@ -1,12 +1,17 @@
-/// The parts every challenge's screen is drawn with, on the app's own page:
-/// precise controls with a hairline round them, the challenge's tone kept
-/// for its primary button, figures in tabular figures, verdicts told in a
-/// calm colour and a short phrase — the way a serious learning tool sets
-/// a test, not the way a game dresses up.
+/// The parts every challenge's screen is drawn with, on the app's own page.
+///
+/// One rule for colour, the app's own: a card of a round is its subject's
+/// card, as it is everywhere else in the app — the subject's colour and
+/// ink, and at its head the subject's mark and name, as on a card of the
+/// day ([SubjectCard]). Everything else is the page's: the controls the
+/// app's own raised and inverse pills, the figures in its ink, and a
+/// verdict told in its calm green or its alert, with a mark and a word.
+/// The challenge's own colour stays on its tile among Explore's
+/// challenges, and nowhere on its screen.
 ///
 /// One kit, so the twelve screens are one family: whatever the challenge,
-/// Begin is the same button, a right answer the same calm green, the next
-/// challenge the same card.
+/// Begin is the same button, a right answer the same green, a card the
+/// same card.
 library;
 
 import 'dart:math' as math;
@@ -18,24 +23,16 @@ import 'package:intl/intl.dart' show DateFormat, NumberFormat;
 
 import '../../analytics.dart';
 import '../../l10n/l10n.dart';
-import '../../models/pill.dart' show kConfidenceLevels;
+import '../../models/pill.dart' show Pill, kConfidenceLevels;
 import '../../theme.dart';
 import '../../utils/share_link.dart';
-import '../card_edge.dart' show colourContrast;
+import '../card_edge.dart' show cardFace, cardHairline;
 import '../glass_round.dart';
+import '../scaled_text.dart';
+import '../subject_icon.dart' show CardMark, SubjectIcon;
 import 'challenge_marks.dart';
 import 'challenges.dart';
 import 'parts.dart' show upper;
-
-/// The drawn cards' ink and paper: what the challenges whose rounds are
-/// still set on cards of paper draw them in.
-const Color kArtInk = Color(0xFF10100C);
-const Color kArtCream = Color(0xFFFFFBF0);
-
-/// The green a right answer is told in on a card of paper, and the coral
-/// of a wrong one.
-const Color kGameRight = Color(0xFF2BD67B);
-const Color kGameWrong = Color(0xFFFF5A4E);
 
 /// A challenge's screen, opened over Explore out of its tile: the page
 /// grows out of the tile's panel. With motion reduced it is there at once.
@@ -146,77 +143,431 @@ Future<void> shareGame(
   }
 }
 
-/// What a claim, a figure or a moment is set on: a card of the
-/// challenge's colour, as the app's cards are of their subject's (on a
-/// screen with no challenge, a card of paper). Its words are the cards'
-/// ink, which every colour of the wheel carries.
-class GamePaper extends StatelessWidget {
-  const GamePaper({
+// ── The cards ───────────────────────────────────────────────────────────
+
+/// A card of a round, as the app's cards are wherever they turn up: the
+/// face its subject's colour, lifted and cut from the page as a card of
+/// the day is ([cardFace]); its subject's mark and name at its head
+/// ([SubjectHead]), with [trailing] at the head's end; under the head,
+/// [child], in the card's ink.
+///
+/// [small] for the cards a screen shows several of at once. [picked] rings
+/// it in the page's ink: the one chosen. [quiet] draws it back a little,
+/// for a card the round has done with.
+class SubjectCard extends StatelessWidget {
+  const SubjectCard({
     super.key,
-    required this.child,
-    this.padding = const EdgeInsets.fromLTRB(20, 18, 20, 20),
-    this.radius = 26,
-    this.colour = kArtCream,
-    this.line = 3,
+    required this.pill,
+    this.child,
+    this.trailing,
+    this.small = false,
+    this.picked = false,
+    this.quiet = false,
   });
 
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-  final double radius;
-  final Color colour;
-  final double line;
+  final Pill pill;
+
+  /// What the card says, under its head. None: a card of the deck still to
+  /// come, its face alone.
+  final Widget? child;
+  final Widget? trailing;
+  final bool small;
+  final bool picked;
+  final bool quiet;
+
+  /// The corners of a card the screen's, and of one of several.
+  static const double radius = 28;
+  static const double smallRadius = 22;
 
   @override
   Widget build(BuildContext context) {
-    final ChallengeTone? tone = ChallengeToneScope.maybeOf(context);
-    if (tone == null) {
-      return Container(
-        padding: padding,
-        decoration: BoxDecoration(
-          color: colour,
-          borderRadius: BorderRadius.circular(radius),
-          border: Border.all(color: kArtInk, width: line),
+    final Palette p = context.p;
+    final double r = small ? smallRadius : radius;
+    final Widget? words = child;
+    Widget card = Container(
+      decoration: cardFace(context, pill.color, radius: r, lift: 1),
+      padding: words == null
+          ? EdgeInsets.zero
+          : small
+          ? const EdgeInsets.fromLTRB(16, 13, 16, 14)
+          : const EdgeInsets.fromLTRB(22, 20, 22, 22),
+      child: words == null
+          ? null
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SubjectHead(pill: pill, trailing: trailing, small: small),
+                SizedBox(height: small ? 8 : 14),
+                Expanded(child: words),
+              ],
+            ),
+    );
+    if (quiet) card = Opacity(opacity: 0.62, child: card);
+    final bool calm = MediaQuery.disableAnimationsOf(context);
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Positioned.fill(child: card),
+        // The ring of the one picked, round the card and clear of it, in the
+        // page's ink: on any colour of the wheel, it reads.
+        Positioned(
+          left: -5,
+          top: -5,
+          right: -5,
+          bottom: -5,
+          child: IgnorePointer(
+            child: AnimatedOpacity(
+              opacity: picked ? 1 : 0,
+              duration: calm
+                  ? Duration.zero
+                  : const Duration(milliseconds: 160),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(r + 5),
+                  border: Border.all(color: p.ink, width: 2.5),
+                ),
+              ),
+            ),
+          ),
         ),
-        child: child,
-      );
-    }
-    final Color face = gameFace(context);
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            face,
-            Color.alphaBlend(Colors.black.withValues(alpha: 0.1), face),
-          ],
-        ),
-      ),
-      child: child,
+      ],
     );
   }
 }
 
-/// The face of a card a round is set on: the challenge's colour, or the
-/// drawn cards' paper on a screen with no challenge.
-Color gameFace(BuildContext context) {
-  final ChallengeTone? tone = ChallengeToneScope.maybeOf(context);
-  if (tone == null) return kArtCream;
-  // The cards' words are dark: a colour that carries white is lightened
-  // until they read on it.
-  return tone.ink == Colors.white
-      ? Color.lerp(tone.vivid, Colors.white, 0.42)!
-      : tone.vivid;
+/// A card's head, as a card of the day carries it: its subject's mark and
+/// its name in small capitals, in the card's ink, and [trailing] at its
+/// end — what the card turned out to be, its year, its place.
+class SubjectHead extends StatelessWidget {
+  const SubjectHead({
+    super.key,
+    required this.pill,
+    this.trailing,
+    this.small = false,
+  });
+
+  final Pill pill;
+  final Widget? trailing;
+  final bool small;
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget? end = trailing;
+    return Row(
+      children: [
+        CardMark(pill: pill, size: small ? 14 : 16, ink: pill.ink),
+        SizedBox(width: small ? 7 : 8),
+        Expanded(
+          child: Text(
+            upper(context, context.l10n.subjectOf(pill.topic)),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textScaler: MediaQuery.textScalerOf(
+              context,
+            ).clamp(maxScaleFactor: 1.4),
+            style: AppText.label(
+              size: small ? 10 : 11,
+              spacing: small ? 1.2 : 1.4,
+              color: pill.ink.withValues(alpha: 0.72),
+            ),
+          ),
+        ),
+        if (end != null) ...[const SizedBox(width: 8), end],
+      ],
+    );
+  }
 }
 
-/// The line of ink round such a card: none on a challenge's screen, where
-/// the cards are the app's own.
-Border? gameBorder(BuildContext context, {double width = 3}) =>
-    ChallengeToneScope.maybeOf(context) == null
-    ? Border.all(color: kArtInk, width: width)
-    : null;
+/// A few words at a card's head, at its end, in small capitals of the
+/// card's ink: "TRUE", "BIGGER", a year.
+class SubjectTag extends StatelessWidget {
+  const SubjectTag({super.key, required this.pill, required this.text});
+
+  final Pill pill;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Text(
+    upper(context, text),
+    maxLines: 1,
+    textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.4),
+    style: AppText.label(
+      size: 11,
+      weight: FontWeight.w800,
+      spacing: 1.2,
+      color: pill.ink,
+    ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+  );
+}
+
+/// A card's words — a question, a claim, a moment — set as a card of the
+/// day sets its question: in the app's serif, as large as the room takes,
+/// up to a poster's line on a card that is the screen's ([max] unset),
+/// so a short one fills its card rather than floating in a band of
+/// colour.
+class SubjectWords extends StatelessWidget {
+  const SubjectWords({
+    super.key,
+    required this.text,
+    required this.ink,
+    this.min = 18,
+    this.max,
+    this.struck = false,
+    this.alignment = const Alignment(-1, -0.3),
+  });
+
+  final String text;
+  final Color ink;
+  final double min;
+
+  /// The largest it is set: by default, as a card of the day with its
+  /// answers under it sets its question.
+  final double? max;
+
+  /// Struck through, once it is told to be false.
+  final bool struck;
+  final Alignment alignment;
+
+  /// The largest a question is set on a card [width] wide: the app's own.
+  static double maxFor(double width) => (width * 0.16).clamp(40.0, 56.0);
+
+  static TextStyle style(double size, Color ink) => AppText.display(
+    size: size,
+    weight: FontWeight.w600,
+    height: 1.14,
+    spacing: -0.3 - size * 0.018,
+    color: ink,
+  );
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, box) => ScaledText(
+      text: text,
+      min: min,
+      max: max ?? maxFor(box.maxWidth),
+      alignment: alignment,
+      styleFor: (size) {
+        final TextStyle s = style(size, ink);
+        return struck
+            ? s.copyWith(
+                decoration: TextDecoration.lineThrough,
+                decorationColor: ink,
+                decorationThickness: 2,
+              )
+            : s;
+      },
+    ),
+  );
+}
+
+/// A card once its round is told, as the back of a card of the day: the
+/// question, smaller; under a hairline, what it came to; why, as much of
+/// it as the card holds; and at its foot, where the card has one, what to
+/// keep, in its box as the card's own back sets it.
+class SubjectTold extends StatelessWidget {
+  const SubjectTold({
+    super.key,
+    required this.pill,
+    required this.question,
+    required this.verdict,
+    required this.why,
+  });
+
+  final Pill pill;
+  final String question;
+  final String verdict;
+  final String why;
+
+  /// [answer] without the word it opens on where that word only says again
+  /// what the verdict says: "False. Nielsen's figures…" told as false.
+  static String withoutVerdict(BuildContext context, String answer) {
+    final l = context.l10n;
+    final String text = answer.trim();
+    for (final String word in {l.sayTrue, l.sayFalse, 'True', 'False'}) {
+      final Match? m = RegExp(
+        '^${RegExp.escape(word)}[.,:;!]\\s+',
+        caseSensitive: false,
+      ).firstMatch(text);
+      if (m != null) {
+        final String rest = text.substring(m.end);
+        if (rest.isEmpty) return text;
+        return rest[0].toUpperCase() + rest.substring(1);
+      }
+    }
+    return text;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = pill.ink;
+    final String keep = pill.barMove.trim();
+    final TextScaler scaler = MediaQuery.textScalerOf(
+      context,
+    ).clamp(maxScaleFactor: 1.4);
+    final TextStyle asked = AppText.display(
+      size: 18,
+      weight: FontWeight.w600,
+      height: 1.2,
+      spacing: -0.3,
+      color: ink.withValues(alpha: 0.74),
+    );
+    final TextStyle said = AppText.display(
+      size: 23,
+      weight: FontWeight.w700,
+      height: 1.16,
+      spacing: -0.4,
+      color: ink,
+    );
+    final TextStyle kept = AppText.body(
+      size: 15,
+      weight: FontWeight.w600,
+      height: 1.38,
+      color: ink.withValues(alpha: 0.94),
+    );
+    final TextStyle keptLabel = AppText.label(
+      size: 10.5,
+      spacing: 1.2,
+      color: ink.withValues(alpha: 0.6),
+    );
+    return LayoutBuilder(
+      builder: (context, box) {
+        final TextDirection direction = Directionality.of(context);
+        double tall(String text, TextStyle style, double width, [int? lines]) {
+          final TextPainter painter = TextPainter(
+            text: TextSpan(text: text, style: style),
+            textDirection: direction,
+            textScaler: scaler,
+            maxLines: lines,
+            ellipsis: lines == null ? null : '…',
+          )..layout(maxWidth: width);
+          final double h = painter.height;
+          painter.dispose();
+          return h;
+        }
+
+        // What to keep goes at the foot only where it leaves why three
+        // lines at least: on a card short of room, why comes first.
+        final double above =
+            tall(question, asked, box.maxWidth, 4) +
+            25 +
+            tall(verdict, said, box.maxWidth) +
+            10;
+        final double keepBox = keep.isEmpty
+            ? 0
+            : 12 +
+                  25 +
+                  tall('A', keptLabel, 100) +
+                  6 +
+                  tall(keep, kept, box.maxWidth - 30, 4);
+        final double whyLine = scaler.scale(14.5) * 1.42;
+        final bool keeps =
+            keep.isNotEmpty && box.maxHeight - above - keepBox >= whyLine * 3;
+        // A card too short for even two lines of why under its question and
+        // its verdict, on a small phone: all of it, scrolled, rather than
+        // any of it cut.
+        if (box.maxHeight - above < whyLine * 2) {
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  question,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  textScaler: scaler,
+                  style: asked,
+                ),
+                const SizedBox(height: 10),
+                Container(height: 1, color: ink.withValues(alpha: 0.22)),
+                const SizedBox(height: 10),
+                Semantics(
+                  liveRegion: true,
+                  child: Text(verdict, textScaler: scaler, style: said),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  why.trim(),
+                  textScaler: scaler,
+                  style: AppText.body(
+                    size: 14,
+                    weight: FontWeight.w500,
+                    height: 1.42,
+                    color: ink.withValues(alpha: 0.9),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              question,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              textScaler: scaler,
+              style: asked,
+            ),
+            const SizedBox(height: 12),
+            Container(height: 1, color: ink.withValues(alpha: 0.22)),
+            const SizedBox(height: 12),
+            Semantics(
+              liveRegion: true,
+              child: Text(verdict, textScaler: scaler, style: said),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ScaledText(
+                text: why.trim(),
+                min: 13.5,
+                max: 20,
+                alignment: Alignment.topLeft,
+                styleFor: (size) => AppText.body(
+                  size: size,
+                  weight: FontWeight.w500,
+                  height: 1.42,
+                  color: ink.withValues(alpha: 0.9),
+                ),
+              ),
+            ),
+            if (keeps) ...[
+              const SizedBox(height: 12),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.fromLTRB(15, 12, 15, 13),
+                decoration: BoxDecoration(
+                  color: pill.wash,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.l10n.barMoveCaps,
+                      textScaler: scaler,
+                      style: keptLabel,
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      keep,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      textScaler: scaler,
+                      style: kept,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ],
+        );
+      },
+    );
+  }
+}
+
+// ── The page's own controls ─────────────────────────────────────────────
 
 /// The way out, as the app's controls are drawn: Apple's own glass on iOS
 /// 26 and later, and elsewhere a hairline circle round a cross.
@@ -266,83 +617,67 @@ class GameClose extends StatelessWidget {
   }
 }
 
-/// A button, flat and precise: a face, a hairline round it where the face
-/// alone would not show on the page, the label in the app's sans. It dims
-/// a little under the finger. With no [onTap] it stands faded: not yet.
+/// The page's plain face for a control: a shade off the night's black, or
+/// white on the day's paper, with a hairline round it.
+Color _plainFace(Palette p) => p.isDark ? const Color(0xFF1A1A1E) : Colors.white;
+Color _plainLine(Palette p) =>
+    p.isDark ? const Color(0x1AFFFFFF) : const Color(0x14000000);
+
+/// One of the app's pill buttons: [primary], the inverse one — Begin, Next,
+/// Bet, Lock in — or plain, the page's own with a hairline — an answer,
+/// the score sent on. It dims a little under the finger; with no [onTap]
+/// it stands faded: not yet.
 class GameButton extends StatefulWidget {
   const GameButton({
     super.key,
     required this.label,
-    required this.face,
-    required this.ink,
     required this.onTap,
+    this.primary = false,
     this.icon,
     this.height = 56,
-    this.size = 16,
+    this.size = 15.5,
     this.semantics,
-    this.selected,
-    this.radius = 12,
-    this.fade = true,
-    this.border,
   });
 
-  /// The challenge's primary button: its face the challenge's [tone].
+  /// The way on: the inverse pill.
   factory GameButton.primary({
     Key? key,
-    required BuildContext context,
     required String label,
-    required ChallengeTone tone,
     required VoidCallback? onTap,
     double height = 56,
     String? semantics,
-  }) {
-    final Palette p = context.p;
-    return GameButton(
-      key: key,
-      label: label,
-      face: p.inverse,
-      ink: p.onInverse,
-      border: p.inverse,
-      onTap: onTap,
-      height: height,
-      radius: 999,
-      size: 15.5,
-      semantics: semantics,
-    );
-  }
+  }) => GameButton(
+    key: key,
+    label: label,
+    onTap: onTap,
+    primary: true,
+    height: height,
+    semantics: semantics,
+  );
 
-  /// A plain button: the page's own ground, a hairline round it, ink.
+  /// An answer, or a way aside: the page's own pill.
   factory GameButton.plain({
     Key? key,
-    required BuildContext context,
     required String label,
     required VoidCallback? onTap,
     IconData? icon,
     double height = 56,
     double size = 15.5,
     String? semantics,
-  }) {
-    final Palette p = context.p;
-    return GameButton(
-      key: key,
-      label: label,
-      icon: icon,
-      face: p.isDark ? const Color(0xFF1A1A1E) : Colors.white,
-      ink: p.ink,
-      border: p.isDark ? const Color(0x1AFFFFFF) : const Color(0x14000000),
-      onTap: onTap,
-      height: height,
-      radius: 999,
-      size: size,
-      semantics: semantics,
-    );
-  }
+  }) => GameButton(
+    key: key,
+    label: label,
+    onTap: onTap,
+    icon: icon,
+    height: height,
+    size: size,
+    semantics: semantics,
+  );
 
   final String label;
-  final IconData? icon;
-  final Color face;
-  final Color ink;
   final VoidCallback? onTap;
+  final bool primary;
+  final IconData? icon;
   final double height;
 
   /// How large the label is set.
@@ -350,19 +685,6 @@ class GameButton extends StatefulWidget {
 
   /// What a screen reader says, when not the label.
   final String? semantics;
-
-  /// Whether it is the one chosen, where it is one of a set.
-  final bool? selected;
-
-  final double radius;
-
-  /// Whether it fades with no [onTap]: not yet. One told — the right amount
-  /// lit green — stands as it is.
-  final bool fade;
-
-  /// The hairline round it; by default one only where the face does not
-  /// show on the page by itself.
-  final Color? border;
 
   @override
   State<GameButton> createState() => _GameButtonState();
@@ -381,20 +703,125 @@ class _GameButtonState extends State<GameButton> {
     final Palette p = context.p;
     final bool calm = MediaQuery.disableAnimationsOf(context);
     final bool on = widget.onTap != null;
-    // The drawn cards' paper and ink, as the challenges' rounds still ask
-    // for them: the app's raised button and its inverse one.
-    final (Color face, Color ink) = switch (widget.face) {
-      kArtCream => (p.isDark ? const Color(0xFF1A1A1E) : Colors.white, p.ink),
-      kArtInk => (p.inverse, p.onInverse),
-      final Color f => (f, widget.ink),
+    final Color face = widget.primary ? p.inverse : _plainFace(p);
+    final Color ink = widget.primary ? p.onInverse : p.ink;
+    return Semantics(
+      button: true,
+      enabled: on,
+      label: widget.semantics ?? widget.label,
+      excludeSemantics: true,
+      onTap: widget.onTap,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: (_) => _press(true),
+        onTapUp: (_) => _press(false),
+        onTapCancel: () => _press(false),
+        onTap: widget.onTap,
+        child: AnimatedOpacity(
+          opacity: !on ? 0.42 : (_down ? 0.8 : 1),
+          duration: calm ? Duration.zero : const Duration(milliseconds: 120),
+          curve: Curves.easeOut,
+          child: Container(
+            height: widget.height,
+            decoration: BoxDecoration(
+              color: face,
+              borderRadius: BorderRadius.circular(999),
+              border: widget.primary
+                  ? null
+                  : Border.all(color: _plainLine(p), width: 0.8),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            alignment: Alignment.center,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (widget.icon != null) ...[
+                    Icon(widget.icon, size: widget.size + 2, color: ink),
+                    const SizedBox(width: 8),
+                  ],
+                  Text(
+                    widget.label,
+                    maxLines: 1,
+                    style: AppText.body(
+                      size: widget.size,
+                      weight: FontWeight.w700,
+                      height: 1,
+                      spacing: 0.1,
+                      color: ink,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// One of a set to choose from — a size, an amount, a stake, a width, a
+/// step — on the page: plain; [selected], the inverse; once told, the one
+/// that was right in the calm green with a tick, the one picked wrong in
+/// the alert with a cross ([verdict]), and the rest faded.
+class GameOption extends StatefulWidget {
+  const GameOption({
+    super.key,
+    required this.label,
+    required this.onTap,
+    this.selected = false,
+    this.verdict,
+    this.height = 52,
+    this.size = 15,
+    this.semantics,
+    this.fade = true,
+  });
+
+  final String label;
+  final VoidCallback? onTap;
+  final bool selected;
+
+  /// True for the answer, once told; false for a pick that was not it.
+  final bool? verdict;
+  final double height;
+  final double size;
+  final String? semantics;
+
+  /// Whether it fades with nothing to do and nothing to tell.
+  final bool fade;
+
+  @override
+  State<GameOption> createState() => _GameOptionState();
+}
+
+class _GameOptionState extends State<GameOption> {
+  bool _down = false;
+
+  void _press(bool down) {
+    if (widget.onTap == null) return;
+    if (_down != down) setState(() => _down = down);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final bool calm = MediaQuery.disableAnimationsOf(context);
+    final bool on = widget.onTap != null;
+    final bool? v = widget.verdict;
+    final Color? told = switch (v) {
+      true => challengeRight(p),
+      false => challengeWrong(p),
+      null => null,
     };
-    final bool legacy = widget.face == kArtCream || widget.face == kArtInk;
-    final bool lifted = face == p.inverse && on;
-    final Color line =
-        widget.border ??
-        (face.a < 1 || colourContrast(face, p.surface) < 1.6
-            ? p.lineStrong
-            : face);
+    final Color face = told != null
+        ? Color.alphaBlend(told.withValues(alpha: 0.14), p.surface)
+        : widget.selected
+        ? p.inverse
+        : _plainFace(p);
+    final Color ink = told ?? (widget.selected ? p.onInverse : p.ink);
+    final bool quiet = !on && !widget.selected && v == null && widget.fade;
     return Semantics(
       button: true,
       enabled: on,
@@ -409,60 +836,46 @@ class _GameButtonState extends State<GameButton> {
         onTapCancel: () => _press(false),
         onTap: widget.onTap,
         child: AnimatedOpacity(
-          opacity: !on && widget.fade ? 0.5 : (_down ? 0.8 : 1),
+          opacity: quiet ? 0.45 : (_down ? 0.8 : 1),
           duration: calm ? Duration.zero : const Duration(milliseconds: 120),
-          curve: Curves.easeOut,
-          child: Container(
+          child: AnimatedContainer(
+            duration: calm ? Duration.zero : const Duration(milliseconds: 160),
             height: widget.height,
             decoration: BoxDecoration(
               color: face,
-              borderRadius: BorderRadius.circular(legacy ? 999 : widget.radius),
+              borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: widget.face == kArtCream
-                    ? (p.isDark
-                          ? const Color(0x1AFFFFFF)
-                          : const Color(0x14000000))
-                    : legacy
-                    ? face
-                    : line,
-                width: 0.8,
+                color: told != null
+                    ? told.withValues(alpha: 0.6)
+                    : widget.selected
+                    ? p.inverse
+                    : _plainLine(p),
+                width: told != null ? 1.2 : 0.8,
               ),
-              boxShadow: lifted
-                  ? [
-                      BoxShadow(
-                        color: Colors.black.withValues(
-                          alpha: p.isDark ? 0.35 : 0.16,
-                        ),
-                        blurRadius: 14,
-                        spreadRadius: -4,
-                        offset: const Offset(0, 6),
-                      ),
-                    ]
-                  : null,
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             alignment: Alignment.center,
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (widget.icon != null) ...[
-                    Icon(widget.icon, size: widget.size + 3, color: widget.ink),
-                    if (widget.label.isNotEmpty) const SizedBox(width: 8),
+                  if (v != null) ...[
+                    GameVerdictGlyph(right: v, colour: ink, size: 13),
+                    const SizedBox(width: 6),
                   ],
-                  if (widget.label.isNotEmpty)
-                    Text(
-                      widget.label,
-                      maxLines: 1,
-                      style: AppText.body(
-                        size: widget.size,
-                        weight: FontWeight.w700,
-                        height: 1,
-                        spacing: 0.1,
-                        color: ink,
-                      ),
+                  Text(
+                    widget.label,
+                    maxLines: 1,
+                    style: AppText.body(
+                      size: widget.size,
+                      weight: FontWeight.w700,
+                      height: 1,
+                      color: ink,
+                    ).copyWith(
+                      fontFeatures: const [FontFeature.tabularFigures()],
                     ),
+                  ),
                 ],
               ),
             ),
@@ -473,149 +886,146 @@ class _GameButtonState extends State<GameButton> {
   }
 }
 
-/// A mark and a few quiet words: a record, the points, how a challenge
-/// counts.
-class GameChip extends StatelessWidget {
-  const GameChip({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.ink,
-    this.ground,
-  });
+/// What a round says over its cards, in the app's serif: what to do, the
+/// question the round asks, or — with [verdict] — how the answer went,
+/// with its mark in the calm green or the alert.
+class GameStatus extends StatelessWidget {
+  const GameStatus(this.text, {super.key, this.verdict});
 
-  final IconData icon;
-  final String label;
-  final Color ink;
-
-  /// What it stands on. Unused on the page, which is its ground.
-  final Color? ground;
+  final String text;
+  final bool? verdict;
 
   @override
-  Widget build(BuildContext context) => Row(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Icon(icon, size: 16, color: context.p.inkMuted),
-      const SizedBox(width: 6),
-      Flexible(
-        child: Text(
-          label,
-          style: AppText.body(
-            size: 13.5,
-            weight: FontWeight.w500,
-            height: 1.3,
-            color: ink,
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
-/// A challenge on a card of its colour, as a card of the day is on its
-/// subject's: deepening a little to its corner, its mark large and faint
-/// off that corner.
-class ChallengeCard extends StatelessWidget {
-  const ChallengeCard({
-    super.key,
-    required this.tone,
-    required this.mark,
-    required this.child,
-    this.padding = const EdgeInsets.fromLTRB(20, 18, 20, 22),
-    this.faint = true,
-    this.big = false,
-  });
-
-  /// Whether the faint mark is the card's size, for a card that is the
-  /// screen's.
-  final bool big;
-
-  final ChallengeTone tone;
-  final ChallengeMark mark;
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-
-  /// Whether the mark lies large and faint in its corner.
-  final bool faint;
-
-  @override
-  Widget build(BuildContext context) => ClipRRect(
-    borderRadius: BorderRadius.circular(24),
-    child: DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            tone.vivid,
-            Color.alphaBlend(Colors.black.withValues(alpha: 0.14), tone.vivid),
-          ],
-        ),
-      ),
-      child: Stack(
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final bool? v = verdict;
+    final TextScaler scaler = MediaQuery.textScalerOf(
+      context,
+    ).clamp(maxScaleFactor: 1.4);
+    return Semantics(
+      liveRegion: v != null,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (faint && !big)
-            Positioned(
-              right: -24,
-              bottom: -24,
-              child: ChallengeMarkView(
-                mark: mark,
-                colour: tone.ink.withValues(alpha: 0.1),
-                size: 170,
+          if (v != null) ...[
+            Padding(
+              padding: EdgeInsets.only(top: scaler.scale(4)),
+              child: GameVerdictGlyph(
+                right: v,
+                colour: v ? challengeRight(p) : challengeWrong(p),
+                size: scaler.scale(15),
               ),
             ),
-          // On a card that is the screen's, the mark large across its
-          // middle, between the name and the figures at its foot.
-          if (faint && big)
-            Positioned(
-              right: -46,
-              top: 120,
-              bottom: 40,
-              child: Center(
-                child: ChallengeMarkView(
-                  mark: mark,
-                  colour: tone.ink.withValues(alpha: 0.16),
-                  size: 300,
-                ),
+            const SizedBox(width: 9),
+          ],
+          Expanded(
+            child: Text(
+              text,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              textScaler: scaler,
+              style: AppText.display(
+                size: 19,
+                weight: FontWeight.w600,
+                height: 1.2,
+                spacing: -0.25,
+                color: p.ink,
               ),
             ),
-          Padding(padding: padding, child: child),
+          ),
         ],
       ),
+    );
+  }
+}
+
+/// A name over a figure or a control, in small capitals of the page's
+/// muted ink, as the app's cards name their parts.
+class GameLabel extends StatelessWidget {
+  const GameLabel(this.text, {super.key, this.colour});
+
+  final String text;
+  final Color? colour;
+
+  @override
+  Widget build(BuildContext context) => Text(
+    upper(context, text),
+    maxLines: 2,
+    overflow: TextOverflow.ellipsis,
+    textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.4),
+    style: AppText.label(
+      size: 10.5,
+      weight: FontWeight.w700,
+      spacing: 1.2,
+      height: 1.3,
+      color: colour ?? context.p.inkMuted,
     ),
   );
 }
 
-/// A challenge card's head, as a card's carries its subject: the mark and
-/// the skill it trains, in small capitals.
-class ChallengeCardHead extends StatelessWidget {
-  const ChallengeCardHead({super.key, required this.look, this.label});
+/// One figure of a told round: its name, the figure, and its unit.
+typedef GameFigure = ({String label, String value, String? unit, bool answer});
 
-  final ChallengeLook look;
+/// Figures side by side, each its name over it: what the answer was and
+/// what the reader said, the answer in the calm green.
+class GameFigureRow extends StatelessWidget {
+  const GameFigureRow({super.key, required this.figures});
 
-  /// What the head says instead of the skill.
-  final String? label;
+  final List<GameFigure> figures;
 
   @override
   Widget build(BuildContext context) {
-    final Color ink = look.tone.ink;
+    final Palette p = context.p;
+    final TextScaler scaler = MediaQuery.textScalerOf(
+      context,
+    ).clamp(maxScaleFactor: 1.3);
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ChallengeMarkView(mark: look.mark, colour: ink, size: 15),
-        const SizedBox(width: 7),
-        Flexible(
-          child: Text(
-            upper(context, label ?? look.skill),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppText.label(
-              size: 9.5,
-              weight: FontWeight.w700,
-              spacing: 1.2,
-              color: ink.withValues(alpha: 0.78),
+        for (int i = 0; i < figures.length; i++) ...[
+          if (i > 0) const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GameLabel(figures[i].label),
+                const SizedBox(height: 4),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    figures[i].value,
+                    maxLines: 1,
+                    textScaler: scaler,
+                    style: AppText.display(
+                      size: 34,
+                      weight: FontWeight.w600,
+                      height: 1.05,
+                      spacing: -0.8,
+                      color: figures[i].answer ? challengeRight(p) : p.ink,
+                    ).copyWith(
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                ),
+                if (figures[i].unit case final String unit
+                    when unit.isNotEmpty)
+                  Text(
+                    unit,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textScaler: scaler,
+                    style: AppText.body(
+                      size: 13,
+                      weight: FontWeight.w600,
+                      height: 1.25,
+                      color: p.inkMuted,
+                    ),
+                  ),
+              ],
             ),
           ),
-        ),
+        ],
       ],
     );
   }
@@ -633,8 +1043,7 @@ class ChallengePanel extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
 
-  /// Its name, small, beside a dot of the challenge's colour, as Go
-  /// deeper names its parts.
+  /// Its name, small, over it.
   final String? label;
 
   @override
@@ -654,46 +1063,13 @@ class ChallengePanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
-                ChallengeDotLabel(text: name, colour: p.ink),
+                GameLabel(name),
                 const SizedBox(height: 10),
                 Flexible(child: child),
               ],
             ),
     );
   }
-}
-
-/// A card's name in small capitals, as the app's cards carry theirs.
-/// [colour] is kept for the callers; the label is the page's muted ink.
-class ChallengeDotLabel extends StatelessWidget {
-  const ChallengeDotLabel({
-    super.key,
-    required this.text,
-    required this.colour,
-  });
-
-  final String text;
-  final Color colour;
-
-  @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      Flexible(
-        child: Text(
-          upper(context, text),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppText.label(
-            size: 10.5,
-            weight: FontWeight.w700,
-            spacing: 1.2,
-            height: 1.3,
-            color: context.p.inkMuted,
-          ),
-        ),
-      ),
-    ],
-  );
 }
 
 /// The reader's figures: each a row, what it is on the left and the
@@ -759,6 +1135,119 @@ class ChallengeFigures extends StatelessWidget {
   }
 }
 
+/// The day's round as a list, before it is played: a row a turn, each
+/// card's subject on a tile of its colour — its mark on it where the round
+/// is short enough for rows of a good height — and its name, and a turn
+/// already taken its verdict.
+class ChallengeDeck extends StatelessWidget {
+  const ChallengeDeck({super.key, required this.rounds, this.marks = const []});
+
+  final List<List<Pill>> rounds;
+  final List<bool?> marks;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final l = context.l10n;
+    final TextScaler scaler = MediaQuery.textScalerOf(
+      context,
+    ).clamp(maxScaleFactor: 1.5);
+    // A short round's rows are a finger's height, each subject's mark on
+    // its tile; a long one's are closer, the tile a square of colour.
+    final int n = rounds.length;
+    final double tile = n <= 3
+        ? 38
+        : n <= 4
+        ? 30
+        : n <= 6
+        ? 24
+        : 13;
+    final double pad = n <= 3
+        ? 15
+        : n <= 4
+        ? 10
+        : n <= 6
+        ? 8
+        : 8.5;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (int i = 0; i < rounds.length; i++) ...[
+          Container(height: 1, color: p.line),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: pad),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: scaler.scale(22),
+                  child: Text(
+                    '${i + 1}',
+                    textScaler: scaler,
+                    style: AppText.body(
+                      size: 13,
+                      weight: FontWeight.w700,
+                      height: 1.2,
+                      color: p.inkMuted,
+                    ).copyWith(
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                ),
+                for (final Pill pill in rounds[i]) ...[
+                  Container(
+                    width: tile,
+                    height: tile,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: pill.color,
+                      borderRadius: BorderRadius.circular(tile > 20 ? 8 : 3),
+                      border: cardHairline(pill.color, p.surfaceRaised),
+                    ),
+                    child: tile > 20
+                        ? SubjectIcon(
+                            subject: pill.topic,
+                            size: tile * 0.5,
+                            ink: pill.ink,
+                          )
+                        : null,
+                  ),
+                  const SizedBox(width: 6),
+                ],
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    [
+                      for (final Pill pill in rounds[i])
+                        l.subjectOf(pill.topic),
+                    ].join(' · '),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textScaler: scaler,
+                    style: AppText.body(
+                      size: 14.5,
+                      weight: FontWeight.w600,
+                      height: 1.25,
+                      color: p.ink,
+                    ),
+                  ),
+                ),
+                if (i < marks.length && marks[i] != null) ...[
+                  const SizedBox(width: 8),
+                  GameVerdictGlyph(
+                    right: marks[i],
+                    colour: marks[i]! ? challengeRight(p) : challengeWrong(p),
+                    size: 14,
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
 /// How far along: one short rule a card, the ones done in the calm green
 /// or red of right or wrong, the one in front in ink, the rest faint.
 class GameSegments extends StatelessWidget {
@@ -802,7 +1291,7 @@ class GameSegments extends StatelessWidget {
                     ? Duration.zero
                     : const Duration(milliseconds: 180),
                 curve: Curves.easeOut,
-                height: 5,
+                height: 4,
                 decoration: BoxDecoration(
                   color: switch (marks[i]) {
                     true => challengeRight(p),
@@ -833,10 +1322,11 @@ class GameSquares extends StatelessWidget {
   Widget build(BuildContext context) {
     final Palette p = context.p;
     return ExcludeSemantics(
-      child: Row(
+      child: Wrap(
+        spacing: 5,
+        runSpacing: 5,
         children: [
-          for (int i = 0; i < marks.length; i++) ...[
-            if (i > 0) const SizedBox(width: 5),
+          for (int i = 0; i < marks.length; i++)
             Container(
               width: 16,
               height: 16,
@@ -852,52 +1342,7 @@ class GameSquares extends StatelessWidget {
                     : null,
               ),
             ),
-          ],
         ],
-      ),
-    );
-  }
-}
-
-/// Right or wrong, on a card of paper as it is told: a thin ring round a
-/// thin mark, in a calm colour. [scale] grows it in.
-class GameStamp extends StatelessWidget {
-  const GameStamp({
-    super.key,
-    required this.right,
-    this.scale = 1,
-    this.size = 96,
-  });
-
-  final bool right;
-  final double scale;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final Color colour = right
-        ? challengeRight(Palette.light)
-        : challengeWrong(Palette.light);
-    return Transform.scale(
-      scale: scale.clamp(0.0, 1.0),
-      child: Semantics(
-        label: right ? l.gameRight : l.gameWrong,
-        child: Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            color: kArtCream,
-            shape: BoxShape.circle,
-            border: Border.all(color: colour, width: 1.5),
-          ),
-          alignment: Alignment.center,
-          child: GameVerdictGlyph(
-            right: right,
-            colour: colour,
-            size: size * 0.42,
-          ),
-        ),
       ),
     );
   }
@@ -967,8 +1412,8 @@ class _VerdictPainter extends CustomPainter {
       old.right != right || old.colour != colour;
 }
 
-/// The challenge after this one, as its tile is: its colour, its head, its
-/// name and what it asks — a tap away.
+/// The challenge after this one, on a card of the page's own: its mark and
+/// the skill it trains, its name and what it asks — a tap away.
 class GameNextCard extends StatelessWidget {
   const GameNextCard({
     super.key,
@@ -985,7 +1430,7 @@ class GameNextCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final Color ink = look.tone.ink;
+    final Palette p = context.p;
     final TextScaler scaler = MediaQuery.textScalerOf(context)
         .clamp(maxScaleFactor: 1.5);
     return Semantics(
@@ -997,9 +1442,7 @@ class GameNextCard extends StatelessWidget {
         key: ValueKey('$id-next'),
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: ChallengeCard(
-          tone: look.tone,
-          mark: look.mark,
+        child: ChallengePanel(
           padding: const EdgeInsets.fromLTRB(18, 16, 16, 18),
           child: Row(
             children: [
@@ -1007,8 +1450,18 @@ class GameNextCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ChallengeCardHead(look: look),
-                    const SizedBox(height: 14),
+                    Row(
+                      children: [
+                        ChallengeMarkView(
+                          mark: look.mark,
+                          colour: p.inkMuted,
+                          size: 14,
+                        ),
+                        const SizedBox(width: 7),
+                        Expanded(child: GameLabel(look.skill)),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
                     Text(
                       look.title,
                       textScaler: scaler,
@@ -1017,7 +1470,7 @@ class GameNextCard extends StatelessWidget {
                         weight: FontWeight.w600,
                         height: 1.08,
                         spacing: -0.4,
-                        color: ink,
+                        color: p.ink,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -1025,25 +1478,17 @@ class GameNextCard extends StatelessWidget {
                       look.line,
                       textScaler: scaler,
                       style: AppText.body(
-                        size: 13,
+                        size: 13.5,
                         weight: FontWeight.w500,
                         height: 1.3,
-                        color: ink.withValues(alpha: 0.76),
+                        color: p.inkMuted,
                       ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(width: 12),
-              Container(
-                width: 38,
-                height: 38,
-                decoration: BoxDecoration(
-                  color: ink.withValues(alpha: 0.14),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(Icons.arrow_forward_rounded, size: 20, color: ink),
-              ),
+              Icon(Icons.arrow_forward_rounded, size: 20, color: p.inkMuted),
             ],
           ),
         ),
@@ -1080,8 +1525,8 @@ class GameReviewItem {
   /// What it is, in a tag on the right: "TRUE", "1962", "42%".
   final String? tag;
 
-  /// Whether the tag is set strongly, in the challenge's colour, rather
-  /// than quietly.
+  /// Whether the tag is set strongly, in the page's inverse, rather than
+  /// quietly.
   final bool tagDark;
 
   /// A line under the words: what the reader said, by how much they were off.
@@ -1091,28 +1536,15 @@ class GameReviewItem {
   final VoidCallback? onTap;
 }
 
-/// The cards of a round again, on a card of the page's own, as the shelf's
-/// round sets them: each its verdict, its words, what it is in a tag of
-/// the challenge's colour — a tap from its card.
+/// The cards of a round again, on a card of the page's own: each its
+/// verdict, its words, what it is in a tag — a tap from its card.
 class GameReview extends StatelessWidget {
-  const GameReview({
-    super.key,
-    required this.items,
-    this.tone,
-    this.spread = false,
-    this.label,
-  });
+  const GameReview({super.key, required this.items, this.label});
 
   final List<GameReviewItem> items;
 
   /// The card's name, over its rows.
   final String? label;
-
-  /// Whether the rows spread down a card taller than they need.
-  final bool spread;
-
-  /// The challenge's colour, for the tags.
-  final ChallengeTone? tone;
 
   @override
   Widget build(BuildContext context) {
@@ -1124,9 +1556,6 @@ class GameReview extends StatelessWidget {
           : const EdgeInsets.fromLTRB(18, 18, 18, 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: spread
-            ? MainAxisAlignment.spaceEvenly
-            : MainAxisAlignment.start,
         children: [
           for (int i = 0; i < items.length; i++)
             DecoratedBox(
@@ -1145,30 +1574,24 @@ class GameReview extends StatelessWidget {
   /// A tag longer than this goes under the words, not beside them.
   static const int _tagBeside = 9;
 
-  Widget _tag(BuildContext context, Palette p, String tag, bool strong) {
-    final ChallengeTone? t = tone;
-    final Color face = strong && t != null
-        ? t.vivid
-        : p.ink.withValues(alpha: 0.08);
-    final Color ink = strong && t != null ? t.ink : p.ink;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-      decoration: BoxDecoration(
-        color: face,
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Text(
-        upper(context, tag),
-        style: AppText.label(
-          size: 10,
-          weight: FontWeight.w800,
-          spacing: 0.8,
-          height: 1.1,
-          color: ink,
-        ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
-      ),
-    );
-  }
+  Widget _tag(BuildContext context, Palette p, String tag, bool strong) =>
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+        decoration: BoxDecoration(
+          color: strong ? p.inverse : p.ink.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Text(
+          upper(context, tag),
+          style: AppText.label(
+            size: 10,
+            weight: FontWeight.w800,
+            spacing: 0.8,
+            height: 1.1,
+            color: strong ? p.onInverse : p.ink,
+          ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+        ),
+      );
 
   Widget _row(BuildContext context, Palette p, GameReviewItem item) {
     final bool? right = item.mark;
@@ -1248,35 +1671,26 @@ class GameReview extends StatelessWidget {
   }
 }
 
-/// How sure, asked large: the card's own levels, each a button, so a bet
-/// laid on the screen counts towards how sure against how right like an
-/// answer given on the card.
+/// How sure, asked on the page: the card's own levels, each an option, so
+/// a bet laid on the screen counts towards how sure against how right like
+/// an answer given on the card.
 class GameSure extends StatelessWidget {
-  const GameSure({
-    super.key,
-    required this.id,
-    required this.ink,
-    required this.onPick,
-  });
+  const GameSure({super.key, required this.id, required this.onPick});
 
   /// The keys' prefix: each level is `<id>-sure-<pct>`.
   final String id;
-  final Color ink;
   final ValueChanged<int> onPick;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final double scale = MediaQuery.textScalerOf(context).scale(1);
-    Widget level(int pct) => GameButton(
+    Widget level(int pct) => GameOption(
       key: ValueKey('$id-sure-$pct'),
-      label: '$pct%',
+      label: gamePercent(context, pct, 100),
       semantics: l.percentSure(pct),
-      face: pct >= 80 ? kArtInk : kArtCream,
-      ink: pct >= 80 ? kArtCream : kArtInk,
-      height: 58,
-      size: 17,
-      radius: 12,
+      height: 52,
+      size: 15,
       onTap: () {
         HapticFeedback.selectionClick();
         onPick(pct);
@@ -1285,18 +1699,8 @@ class GameSure extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          l.howSureAreYou,
-          textAlign: TextAlign.center,
-          style: AppText.display(
-            size: 22,
-            weight: FontWeight.w500,
-            height: 1.15,
-            spacing: -0.3,
-            color: ink,
-          ),
-        ),
-        const SizedBox(height: 12),
+        GameStatus(l.howSureAreYou),
+        const SizedBox(height: 10),
         if (scale <= 1.3)
           Row(
             children: [
@@ -1310,7 +1714,6 @@ class GameSure extends StatelessWidget {
           Wrap(
             spacing: 6,
             runSpacing: 8,
-            alignment: WrapAlignment.center,
             children: [
               for (final int pct in kConfidenceLevels)
                 SizedBox(width: 96, child: level(pct)),

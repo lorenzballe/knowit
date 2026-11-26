@@ -1,8 +1,8 @@
 /// True or false on a screen of its own (challenge_screen.dart): the day's
-/// claims of its shelf on a deck, one at a time, False and True under it,
-/// large; each answer told at once, on the card and in the hand, with the
-/// first lines of why; then the next. No clock: there is time to think,
-/// and to read why.
+/// claims of its shelf on a deck, one at a time, each on its subject's
+/// card as the app's cards are everywhere, False and True under it; each
+/// answer told at once, on the card and in the hand, with why; then the
+/// next. No clock: there is time to think, and to read why.
 ///
 /// It is the shelf's own row, kept and counted as there: an answer is the
 /// card's own answer, recorded as the card records one, and a card already
@@ -11,19 +11,17 @@
 /// or on how it went.
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../data/explore_mix.dart';
 import '../../l10n/l10n.dart';
 import '../../models/pill.dart';
-import '../../theme.dart';
 import '../../utils/share_link.dart';
-import '../scaled_text.dart';
 import 'challenge_kit.dart';
 import 'challenge_screen.dart';
-import 'parts.dart' show upper;
-import 'sixty_game.dart' show ClaimCard, DeckCard;
 
 /// True or false, as its screen plays it.
 class TrueFalseChallenge extends ChallengeGame {
@@ -95,8 +93,12 @@ class TrueFalseChallenge extends ChallengeGame {
   String rules(AppLocalizations l) => l.tfRules;
 
   @override
-  (IconData, String)? note(AppLocalizations l) =>
-      (Icons.today_rounded, l.gameCardsToday(pills.length));
+  List<List<Pill>> get today => [
+    for (final Pill p in pills) [p],
+  ];
+
+  @override
+  List<bool?> get todayMarks => marks;
 
   @override
   String playLabel(AppLocalizations l) =>
@@ -207,10 +209,8 @@ class _TrueFalsePlayState extends State<_TrueFalsePlay> {
       HapticFeedback.heavyImpact();
     }
     final l = context.l10n;
-    widget.kit.say(
-      '${right ? l.gameRight : l.gameWrong}. '
-      '${trueOrFalseAnswer(_game.pills[_at]) ? l.sayTrue : l.sayFalse}.',
-    );
+    final String side = '${trueOrFalseAnswer(_game.pills[_at])}';
+    widget.kit.say(right ? l.tfRightIs(side) : l.tfWrongIs(side));
     setState(() => _told = true);
   }
 
@@ -235,9 +235,12 @@ class _TrueFalsePlayState extends State<_TrueFalsePlay> {
     final List<Pill> pills = _game.pills;
     final int n = pills.length;
     final Pill p = pills[_at];
-    final int left = [
-      for (int i = _at + 1; i < n; i++) _game.saidAt(i) == null,
-    ].where((x) => x).length;
+    // The cards still to come, each its subject's colour under the one in
+    // front, as the day's deck is.
+    final List<Pill> coming = [
+      for (int i = _at + 1; i < n; i++)
+        if (_game.saidAt(i) == null) pills[i],
+    ];
     return GamePlayFrame(
       kit: kit,
       count: l.nOfM(_at + 1, n),
@@ -246,14 +249,12 @@ class _TrueFalsePlayState extends State<_TrueFalsePlay> {
       body: Stack(
         clipBehavior: Clip.none,
         children: [
-          for (int depth = left.clamp(0, 2); depth >= 1; depth--)
-            DeckCard(
-              index: _at + depth,
+          for (int depth = math.min(coming.length, 2); depth >= 1; depth--)
+            _DeckCard(
               depth: depth.toDouble(),
-              child: const ClaimCard(pill: null),
+              child: SubjectCard(pill: coming[depth - 1]),
             ),
-          DeckCard(
-            index: _at,
+          _DeckCard(
             depth: 0,
             child: AnimatedSwitcher(
               duration: kit.motion(260),
@@ -263,43 +264,42 @@ class _TrueFalsePlayState extends State<_TrueFalsePlay> {
                       pill: p,
                       right: _game.rightAt(_at) ?? false,
                     )
-                  : ClaimCard(key: ValueKey('tf-claim-${p.id}'), pill: p),
+                  : SubjectCard(
+                      key: ValueKey('tf-claim-${p.id}'),
+                      pill: p,
+                      child: Semantics(
+                        liveRegion: true,
+                        child: SubjectWords(text: claimOf(p), ink: p.ink),
+                      ),
+                    ),
             ),
           ),
         ],
       ),
       actions: _told
-          ? GameButton(
+          ? GameButton.primary(
               key: const ValueKey('tf-next'),
               label: _game.next == null ? l.gameSeeResult : l.gameNextCard,
-              icon: Icons.arrow_forward_rounded,
-              face: kArtInk,
-              ink: kArtCream,
-              height: 84,
               onTap: _next,
             )
           : Row(
               children: [
                 Expanded(
-                  child: GameButton(
+                  child: GameButton.plain(
                     key: const ValueKey('tf-false'),
                     label: l.sayFalse,
-                    icon: Icons.close_rounded,
-                    face: kArtCream,
-                    ink: kArtInk,
-                    height: 84,
+                    height: 64,
+                    size: 17,
                     onTap: () => _say(false),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: GameButton(
+                  child: GameButton.plain(
                     key: const ValueKey('tf-true'),
                     label: l.sayTrue,
-                    icon: Icons.check_rounded,
-                    face: kArtInk,
-                    ink: kArtCream,
-                    height: 84,
+                    height: 64,
+                    size: 17,
                     onTap: () => _say(true),
                   ),
                 ),
@@ -309,8 +309,35 @@ class _TrueFalsePlayState extends State<_TrueFalsePlay> {
   }
 }
 
-/// A claim answered: right or wrong, what it is, and the first lines of
-/// why, on its card.
+/// A card of the deck, [depth] cards down: one deeper shows under the one
+/// above it, a little lower and a little narrower, as the day's deck does.
+class _DeckCard extends StatelessWidget {
+  const _DeckCard({required this.depth, required this.child});
+
+  final double depth;
+  final Widget child;
+
+  static const double peek = 8;
+
+  @override
+  Widget build(BuildContext context) => Positioned(
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: peek * 2,
+    child: Transform.translate(
+      offset: Offset(0, peek * depth),
+      child: Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.diagonal3Values(1 - 0.045 * depth, 1, 1),
+        child: child,
+      ),
+    ),
+  );
+}
+
+/// A claim answered, on its card: the claim, smaller; whether the answer
+/// was right and what the claim is; and why, as much as the card holds.
 class _Told extends StatelessWidget {
   const _Told({super.key, required this.pill, required this.right});
 
@@ -321,84 +348,14 @@ class _Told extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final bool truth = trueOrFalseAnswer(pill);
-    return Container(
-      decoration: BoxDecoration(
-        color: gameFace(context),
-        borderRadius: BorderRadius.circular(24),
-        border: gameBorder(context),
-      ),
-      padding: const EdgeInsets.fromLTRB(22, 20, 22, 22),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              GameStamp(right: right, size: 52),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  right ? l.gameRight : l.gameWrong,
-                  style: AppText.display(
-                    size: 28,
-                    weight: FontWeight.w700,
-                    height: 1.05,
-                    spacing: -0.6,
-                    color: kArtInk,
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
-                decoration: BoxDecoration(
-                  color: truth ? kArtInk : kArtCream,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: kArtInk, width: 2.2),
-                ),
-                child: Text(
-                  upper(context, truth ? l.sayTrue : l.sayFalse),
-                  style: AppText.label(
-                    size: 12,
-                    weight: FontWeight.w800,
-                    spacing: 0.9,
-                    height: 1,
-                    color: truth ? kArtCream : kArtInk,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          Text(
-            claimOf(pill),
-            maxLines: 4,
-            overflow: TextOverflow.ellipsis,
-            style: AppText.display(
-              size: 18,
-              weight: FontWeight.w600,
-              height: 1.18,
-              spacing: -0.3,
-              color: kArtInk.withValues(alpha: 0.72),
-            ),
-          ),
-          const SizedBox(height: 12),
-          Expanded(
-            child: Semantics(
-              liveRegion: true,
-              child: ScaledText(
-                text: firstLines(pill.answer, max: 240),
-                min: 14,
-                max: 21,
-                alignment: Alignment.topLeft,
-                styleFor: (size) => AppText.body(
-                  size: size,
-                  weight: FontWeight.w600,
-                  height: 1.34,
-                  color: kArtInk,
-                ),
-              ),
-            ),
-          ),
-        ],
+    return SubjectCard(
+      pill: pill,
+      trailing: SubjectTag(pill: pill, text: truth ? l.sayTrue : l.sayFalse),
+      child: SubjectTold(
+        pill: pill,
+        question: claimOf(pill),
+        verdict: right ? l.tfRightIs('$truth') : l.tfWrongIs('$truth'),
+        why: SubjectTold.withoutVerdict(context, pill.answer),
       ),
     );
   }

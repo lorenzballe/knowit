@@ -1,3 +1,4 @@
+import 'dart:async' show unawaited;
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -570,6 +571,56 @@ void main() {
       expect(opacityOf(tester, mark), 1);
       expect(find.text('Since your last visit, yesterday'), findsOneWidget);
       expect(tester.hasRunningAnimations, isFalse);
+    });
+
+    testWidgets('a level rising over the page as it opens holds every count '
+        'until it has gone: a count run behind it would land unseen', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(402, 1400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final app = await _app(
+        answeredToday(
+          also: {
+            'knowit.journeySeen': jsonEncode({'score': 10}),
+            'knowit.journeySeenOn': daysAgo(2),
+          },
+        ),
+      );
+      final int now = _scoreOf(app);
+      await tester.pumpWidget(host(app));
+      await tester.pump();
+      // Over the page as it opens, the way a level rises over it.
+      final NavigatorState navigator = tester.state(find.byType(Navigator));
+      unawaited(
+        navigator.push(
+          PageRouteBuilder<void>(
+            pageBuilder: (_, _, _) => const ColoredBox(color: Colors.black),
+          ),
+        ),
+      );
+      // The next frame, as a phone's comes, well inside the page's beat.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 3));
+      Finder held(String text) => find.descendant(
+        of: find.byKey(const ValueKey('training-score'), skipOffstage: false),
+        matching: find.text(text, skipOffstage: false),
+        skipOffstage: false,
+      );
+      expect(held('10'), findsOneWidget);
+      expect(held('$now'), findsNothing);
+      // Gone: the count runs now, from where the reader last saw it, once
+      // what covered the page has had its moment to go.
+      navigator.pop();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(inScore('10'), findsOneWidget);
+      await tester.pumpAndSettle();
+      expect(inScore('$now'), findsOneWidget);
+      final Finder mark = markIn(find.byKey(const ValueKey('training-score')));
+      expect(tester.widget<Text>(mark).data, '+${now - 10}');
+      expect(opacityOf(tester, mark), 1);
     });
 
     testWidgets('a figure below the fold counts when it is reached, not '
