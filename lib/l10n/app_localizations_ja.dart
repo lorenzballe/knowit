@@ -96,12 +96,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return '明日の5枚は$when後に開きます';
+    return '明日の5枚 · あと$when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '明日の5枚は$topicから。あと$when';
+    return '明日は$topicから · あと$when';
   }
 
   @override
@@ -1995,15 +1995,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {'other': '$n枚中$n枚。'});
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => '今日鍛えたもの';
-
-  @override
   String get scoreTitle => 'Astuteスコア';
 
   @override
@@ -2013,11 +2004,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get scoreStart => '最初の回答から始まります。';
-
-  @override
-  String scoreToday(String n) {
-    return '今日 $n';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2517,6 +2503,23 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get yourJourney => 'あなたの旅';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '前回（$days日前）から',
+      one: '前回（昨日）から',
+      zero: '前回（今日）から',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '前回から$n';
+  }
 
   @override
   String get thePath => '道のり';
@@ -6032,9 +6035,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'あなたの習慣';
-
-  @override
-  String get journeyChapterMemory => '記憶に残ったこと';
 
   @override
   String get journeyChapterCoach => 'あなたのコーチ';

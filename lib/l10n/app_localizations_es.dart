@@ -96,12 +96,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Las cinco de mañana se abren en $when';
+    return 'Las cinco de mañana · en $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Mañana las cinco empiezan con $topic, en $when';
+    return 'Mañana: $topic · en $when';
   }
 
   @override
@@ -2077,19 +2077,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Cinco de cinco.',
-      '6': 'Seis de seis.',
-      'other': '$n de $n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Hoy entrenaste';
-
-  @override
   String get scoreTitle => 'Puntuación Astute';
 
   @override
@@ -2099,11 +2086,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get scoreStart => 'Empieza con tu primera respuesta.';
-
-  @override
-  String scoreToday(String n) {
-    return '$n hoy';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2617,6 +2599,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get yourJourney => 'Tu viaje';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Desde tu última visita, hace $days días',
+      one: 'Desde tu última visita, ayer',
+      zero: 'Desde tu última visita de hoy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '$n desde tu última visita';
+  }
 
   @override
   String get thePath => 'El camino';
@@ -6316,9 +6315,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Tus hábitos';
-
-  @override
-  String get journeyChapterMemory => 'Lo que te queda';
 
   @override
   String get journeyChapterCoach => 'Tu coach';

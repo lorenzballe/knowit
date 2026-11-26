@@ -98,12 +98,12 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Jutrzejsza piątka otworzy się za $when';
+    return 'Jutrzejsza piątka · za $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Jutrzejsza piątka zaczyna się od: $topic, za $when';
+    return 'Jutro: $topic · za $when';
   }
 
   @override
@@ -2154,19 +2154,6 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Pięć na pięć.',
-      '6': 'Sześć na sześć.',
-      'other': '$n na $n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Dziś ćwiczyłeś';
-
-  @override
   String get scoreTitle => 'Wynik Astute';
 
   @override
@@ -2176,11 +2163,6 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get scoreStart => 'Zaczyna się od twojej pierwszej odpowiedzi.';
-
-  @override
-  String scoreToday(String n) {
-    return '$n dzisiaj';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2700,6 +2682,23 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get yourJourney => 'Twoja podróż';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Od ostatniej wizyty, $days dni temu',
+      one: 'Od ostatniej wizyty, wczoraj',
+      zero: 'Od ostatniej wizyty, dziś',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '$n od ostatniej wizyty';
+  }
 
   @override
   String get thePath => 'Ścieżka';
@@ -6522,9 +6521,6 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Twoje nawyki';
-
-  @override
-  String get journeyChapterMemory => 'Co ci zostaje';
 
   @override
   String get journeyChapterCoach => 'Twój coach';

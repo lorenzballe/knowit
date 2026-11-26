@@ -1891,15 +1891,6 @@ class RemoteLocalizations extends AppLocalizations {
       _base.trainingMore(n);
 
   @override
-  String trainingDayTitle(String n) =>
-      _words.format('trainingDayTitle', localeName, {'n': n}) ??
-      _base.trainingDayTitle(n);
-
-  @override
-  String get trainingDayLine =>
-      _words.text('trainingDayLine') ?? _base.trainingDayLine;
-
-  @override
   String get scoreTitle => _words.text('scoreTitle') ?? _base.scoreTitle;
 
   @override
@@ -1908,10 +1899,6 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get scoreStart => _words.text('scoreStart') ?? _base.scoreStart;
-
-  @override
-  String scoreToday(String n) =>
-      _words.format('scoreToday', localeName, {'n': n}) ?? _base.scoreToday(n);
 
   @override
   String scoreMoveLabel(String name, String n) =>
@@ -2454,6 +2441,16 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get yourJourney => _words.text('yourJourney') ?? _base.yourJourney;
+
+  @override
+  String journeySince(int days) =>
+      _words.format('journeySince', localeName, {'days': days}) ??
+      _base.journeySince(days);
+
+  @override
+  String journeySinceMark(String n) =>
+      _words.format('journeySinceMark', localeName, {'n': n}) ??
+      _base.journeySinceMark(n);
 
   @override
   String get thePath => _words.text('thePath') ?? _base.thePath;
@@ -5990,10 +5987,6 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get journeyChapterHabits =>
       _words.text('journeyChapterHabits') ?? _base.journeyChapterHabits;
-
-  @override
-  String get journeyChapterMemory =>
-      _words.text('journeyChapterMemory') ?? _base.journeyChapterMemory;
 
   @override
   String get journeyChapterCoach =>

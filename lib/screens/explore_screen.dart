@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math' as math;
-import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,6 +36,7 @@ import '../analytics.dart';
 import '../measure/screens.dart';
 import '../measure/shelves.dart';
 import '../widgets/hand_glass.dart';
+import '../widgets/top_edge.dart';
 
 /// Cards nobody dealt you — artboard 72a.
 ///
@@ -668,7 +668,7 @@ class ExploreScreenState extends State<ExploreScreen>
           right: 0,
           top: 0,
           height: top,
-          child: IgnorePointer(child: _TopEdge(ground: context.p.surface)),
+          child: IgnorePointer(child: TopEdge(ground: context.p.surface)),
         ),
       ],
     );
@@ -984,70 +984,14 @@ class _Head extends StatelessWidget {
   }
 }
 
+/// How tall the row of the lens and the subjects is.
+const double _headRow = 50;
+
 /// Every subject, across the top, narrowing every shelf at once.
 ///
 /// The mark keeps the subject's colour even when the chip is not chosen,
 /// which is what makes the row readable as a palette rather than as a row
 /// of grey pills.
-/// The top edge of the screen where the cards run under the status bar: a
-/// blur strongest at the top and thinning to nothing at the foot, with the
-/// page's colour over it, so the cards go soft and dissolve into the page
-/// under the time and the battery. The blur is laid in thin slices, each
-/// blurring the cards themselves rather than the slice above it, by a
-/// little less than the one before: close enough that no seam shows, and
-/// one picture of the cards serves them all.
-class _TopEdge extends StatelessWidget {
-  const _TopEdge({required this.ground});
-
-  final Color ground;
-
-  /// From the top of the screen down: how soft each slice is.
-  static const List<double> sigmas = [9, 7.5, 6, 4.6, 3.4, 2.4, 1.5, 0.8];
-
-  @override
-  Widget build(BuildContext context) => Stack(
-    fit: StackFit.expand,
-    children: [
-      BackdropGroup(
-        child: Column(
-          children: [
-            for (final double sigma in sigmas)
-              Expanded(
-                child: ClipRect(
-                  child: BackdropFilter.grouped(
-                    filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
-                    child: const SizedBox.expand(),
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-      // The page's own colour over the blur, nearly whole at the edge of
-      // the screen and gone at the foot: what passes under the time
-      // dissolves into the page rather than being cut by a line.
-      DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              ground.withValues(alpha: 0.9),
-              ground.withValues(alpha: 0.55),
-              ground.withValues(alpha: 0.18),
-              ground.withValues(alpha: 0),
-            ],
-            stops: const [0, 0.45, 0.75, 1],
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
-/// How tall the row of the lens and the subjects is.
-const double _headRow = 50;
-
 class _SubjectRow extends StatelessWidget {
   const _SubjectRow({
     required this.selected,

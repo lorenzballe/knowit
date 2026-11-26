@@ -351,7 +351,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
         // the one about tomorrow.
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 6, 24, 0),
-          child: _Tomorrow(lead: _tomorrowsLead(app)),
+          child: TomorrowLine(lead: _tomorrowsLead(app)),
         ),
         // The way on is the journey: where the day just went, on the
         // ladder. Beside it, the day sent as five squares.
@@ -1713,21 +1713,35 @@ class _Dots extends StatelessWidget {
 /// Tomorrow's deck is dealt from the date and the reading history, both of
 /// which are settled by tonight, so the subject named here is the one that
 /// will actually be on top in the morning.
-class _Tomorrow extends StatelessWidget {
-  const _Tomorrow({required this.lead});
+///
+/// One line, never two (the owner's iPhone: "Tomorrow's five start with
+/// Weird facts, in 3h 50m" ran onto a second line and took the shelf's
+/// room). Said short in every language — "Tomorrow: Weird facts · in
+/// 3 h 50" — with the time as the journey writes one; at the larger text
+/// sizes it is set up to three sizes down, and past that cut, never
+/// wrapped.
+class TomorrowLine extends StatelessWidget {
+  const TomorrowLine({super.key, required this.lead, this.now});
 
   /// The card on top of tomorrow's deck, or null if there is somehow none.
   final Pill? lead;
 
+  /// The moment the wait is counted from: now, unless a test sets one.
+  final DateTime? now;
+
   @override
   Widget build(BuildContext context) {
     final Pill? lead = this.lead;
-    final now = DateTime.now();
+    final l = context.l10n;
+    final now = this.now ?? DateTime.now();
     final tomorrow = DateTime(now.year, now.month, now.day + 1);
     final left = tomorrow.difference(now);
     final int hours = left.inHours;
     final int minutes = left.inMinutes % 60;
-    final String when = hours >= 1 ? '${hours}h ${minutes}m' : '${minutes}m';
+    // The compact time the journey writes: "3 h 50", "25 min".
+    final String when = hours >= 1
+        ? l.journeyHoursMinutes(hours, minutes.toString().padLeft(2, '0'))
+        : l.journeyMinutes(math.max(1, minutes));
 
     // A subject's colour is its mark's colour, unless the ground is so close
     // to it that the mark vanishes — Thinking's white on paper. Measured as a
@@ -1746,13 +1760,17 @@ class _Tomorrow extends StatelessWidget {
           const SizedBox(width: 12),
         ],
         Expanded(
-          child: Text(
+          child: FitText(
             lead == null
-                ? context.l10n.tomorrowsFiveOpenIn(when)
-                : context.l10n.topicOpensTomorrow(
-                    context.l10n.subjectOf(lead.topic),
-                    when,
-                  ),
+                ? l.tomorrowsFiveOpenIn(when)
+                : l.topicOpensTomorrow(l.subjectOf(lead.topic), when),
+            key: const ValueKey('shelf-tomorrow'),
+            maxLines: 1,
+            // A point at a time from 13.5, three at most: with the phone's
+            // text set 1.3 times larger, 10.5 is as large as 13.5 is at the
+            // usual size.
+            minSize: 10.5,
+            ellipsis: true,
             style: AppText.body(
               size: 13.5,
               weight: FontWeight.w500,

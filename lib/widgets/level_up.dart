@@ -34,6 +34,7 @@ import '../theme.dart';
 import '../utils/share_image.dart';
 import '../utils/share_link.dart';
 import '../utils/share_origin.dart';
+import 'fit_text.dart';
 import 'glass_round.dart';
 import 'skill_score.dart' show scoreBookOf, scoreNumber, scoreUp, signedNumber;
 import 'training.dart' show pickedSkills;
@@ -708,6 +709,28 @@ class LevelLine extends StatefulWidget {
   State<LevelLine> createState() => _LevelLineState();
 }
 
+/// Whether [text], set in [style], keeps to [lines] lines in [width].
+bool _fitsIn(
+  BuildContext context,
+  String text,
+  TextStyle style,
+  double width,
+  int lines,
+) {
+  final painter = TextPainter(
+    text: TextSpan(
+      text: text,
+      style: DefaultTextStyle.of(context).style.merge(style),
+    ),
+    maxLines: lines,
+    textDirection: Directionality.of(context),
+    textScaler: MediaQuery.textScalerOf(context),
+  )..layout(maxWidth: width);
+  final bool fits = !painter.didExceedMaxLines;
+  painter.dispose();
+  return fits;
+}
+
 class _LevelLineState extends State<LevelLine> {
   /// The highest level told, once read: until then, the score's own.
   int? _told;
@@ -732,70 +755,96 @@ class _LevelLineState extends State<LevelLine> {
         : s.answersShort > 0
         ? l.levelAnswersTo(s.answersShort, l.scoreLevel(next.id))
         : l.levelPointsTo(s.pointsShort!, l.scoreLevel(next.id));
-    final Widget inside = Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    final TextStyle nameStyle = AppText.display(
+      size: 20,
+      weight: FontWeight.w600,
+      height: 1.1,
+      spacing: -0.3,
+      color: p.ink,
+    );
+    final TextStyle toGoStyle = AppText.body(
+      size: 12.5,
+      weight: FontWeight.w600,
+      height: 1.3,
+      color: p.ink.withValues(alpha: 0.55),
+    );
+    final Widget label = Text(
+      _caps(context, l.levelLabel),
+      style: AppText.body(
+        size: 9.5,
+        weight: FontWeight.w700,
+        spacing: 1.3,
+        color: p.ink.withValues(alpha: 0.45),
+      ),
+    );
+    final Widget steps = LevelSteps(
+      reached: s.reached,
+      toward: s.toNext,
+      ink: p.ink,
+      gap: 4,
+      height: 4,
+    );
+    final Widget inside = LayoutBuilder(
+      builder: (context, box) {
+        // Side by side where the name keeps to one line in its half and the
+        // way to the next level to two in the other; one over the other,
+        // each the whole width, where they do not: a long name
+        // ("Nieuwsgierigheid", "Любознательность") or a long way to say it
+        // ("25 punktów do poziomu Spostrzegawczość") is not cut to fit half
+        // a small phone.
+        final double half = (box.maxWidth - 12) / 2;
+        final bool side =
+            _fitsIn(context, name, nameStyle, half, 1) &&
+            _fitsIn(context, toGo, toGoStyle, half, 2);
+        if (side) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    _caps(context, l.levelLabel),
-                    style: AppText.body(
-                      size: 9.5,
-                      weight: FontWeight.w700,
-                      spacing: 1.3,
-                      color: p.ink.withValues(alpha: 0.45),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        label,
+                        const SizedBox(height: 5),
+                        Text(name, maxLines: 1, style: nameStyle),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.display(
-                      size: 20,
-                      weight: FontWeight.w600,
-                      height: 1.1,
-                      spacing: -0.3,
-                      color: p.ink,
+                  const SizedBox(width: 12),
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 2),
+                      child: Text(
+                        toGo,
+                        textAlign: TextAlign.end,
+                        maxLines: 2,
+                        style: toGoStyle,
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(width: 12),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 2),
-                child: Text(
-                  toGo,
-                  textAlign: TextAlign.end,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.body(
-                    size: 12.5,
-                    weight: FontWeight.w600,
-                    height: 1.3,
-                    color: p.ink.withValues(alpha: 0.55),
-                  ),
-                ),
-              ),
-            ),
+              const SizedBox(height: 12),
+              steps,
+            ],
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            label,
+            const SizedBox(height: 5),
+            FitText(name, maxLines: 1, minSize: 15, style: nameStyle),
+            const SizedBox(height: 4),
+            Text(toGo, style: toGoStyle),
+            const SizedBox(height: 12),
+            steps,
           ],
-        ),
-        const SizedBox(height: 12),
-        LevelSteps(
-          reached: s.reached,
-          toward: s.toNext,
-          ink: p.ink,
-          gap: 4,
-          height: 4,
-        ),
-      ],
+        );
+      },
     );
     return Semantics(
       container: true,

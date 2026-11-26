@@ -96,12 +96,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Les cinq de demain s\'ouvrent dans $when';
+    return 'Les cinq de demain · dans $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Demain, les cinq commencent par $topic, dans $when';
+    return 'Demain : $topic · dans $when';
   }
 
   @override
@@ -2079,19 +2079,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Cinq sur cinq.',
-      '6': 'Six sur six.',
-      'other': '$n sur $n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Aujourd’hui, tu as entraîné';
-
-  @override
   String get scoreTitle => 'Score Astute';
 
   @override
@@ -2101,11 +2088,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get scoreStart => 'Ta première réponse le lance.';
-
-  @override
-  String scoreToday(String n) {
-    return '$n aujourd’hui';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2618,6 +2600,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get yourJourney => 'Ton voyage';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Depuis ta dernière visite, il y a $days jours',
+      one: 'Depuis ta dernière visite, hier',
+      zero: 'Depuis ta dernière visite, plus tôt aujourd’hui',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '$n depuis ta dernière visite';
+  }
 
   @override
   String get thePath => 'Le chemin';
@@ -6350,9 +6349,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Tes habitudes';
-
-  @override
-  String get journeyChapterMemory => 'Ce qui te reste';
 
   @override
   String get journeyChapterCoach => 'Ton coach';

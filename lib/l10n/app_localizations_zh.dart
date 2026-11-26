@@ -96,12 +96,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return '明天的五张将在 $when 后开启';
+    return '明天的五张 · 还有$when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '明天的五张从$topic开始，还有 $when';
+    return '明天从$topic开始 · 还有$when';
   }
 
   @override
@@ -1988,15 +1988,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {'other': '$n 张全部读完。'});
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => '今天你训练了';
-
-  @override
   String get scoreTitle => 'Astute 分数';
 
   @override
@@ -2006,11 +1997,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get scoreStart => '从你的第一次回答开始。';
-
-  @override
-  String scoreToday(String n) {
-    return '今天 $n';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2508,6 +2494,23 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get yourJourney => '你的旅程';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '自上次访问（$days 天前）以来',
+      one: '自上次访问（昨天）以来',
+      zero: '自上次访问（今天）以来',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '自上次访问以来 $n';
+  }
 
   @override
   String get thePath => '路径';
@@ -6023,9 +6026,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => '你的习惯';
-
-  @override
-  String get journeyChapterMemory => '你记住的';
 
   @override
   String get journeyChapterCoach => '你的教练';

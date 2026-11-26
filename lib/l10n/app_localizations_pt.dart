@@ -96,12 +96,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'As cinco de amanhã abrem em $when';
+    return 'As cinco de amanhã · em $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Amanhã as cinco começam com $topic, em $when';
+    return 'Amanhã: $topic · em $when';
   }
 
   @override
@@ -2079,19 +2079,6 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Cinco de cinco.',
-      '6': 'Seis de seis.',
-      'other': '$n de $n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Hoje treinaste';
-
-  @override
   String get scoreTitle => 'Pontuação Astute';
 
   @override
@@ -2101,11 +2088,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get scoreStart => 'Começa com a tua primeira resposta.';
-
-  @override
-  String scoreToday(String n) {
-    return '$n hoje';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2618,6 +2600,23 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get yourJourney => 'A tua viagem';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Desde a tua última visita, há $days dias',
+      one: 'Desde a tua última visita, ontem',
+      zero: 'Desde a tua última visita, hoje',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '$n desde a tua última visita';
+  }
 
   @override
   String get thePath => 'O caminho';
@@ -6319,9 +6318,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Os teus hábitos';
-
-  @override
-  String get journeyChapterMemory => 'O que te fica';
 
   @override
   String get journeyChapterCoach => 'O teu coach';

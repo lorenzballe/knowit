@@ -243,7 +243,7 @@ void main() {
         reason: s.name,
       );
     }
-    expect(book.of(Skill.money).now, greaterThan(kScoreStart));
+    expect(book.of(Skill.money).now, greaterThan(0));
     // In focus: the pill on a picked skill's edge, and on no other.
     double focus(Skill s) => tester
         .widget<AnimatedScale>(

@@ -26,16 +26,13 @@ import 'package:astuto/widgets/level_up.dart';
 
 import 'explore/core_harness.dart';
 
-/// A score as the book keeps it: [now] shown, [yesterday] shown at the end
-/// of yesterday, on [answers] answers.
+/// A score as the book holds it, shown already ([shownScore]): [now],
+/// [yesterday] at the end of yesterday, on [answers] answers.
 ScoreBook _book(int now, {int? yesterday, int answers = 40}) {
-  final List<int> days = List.filled(
-    kScoreDays,
-    kScoreStart + (yesterday ?? now),
-  );
-  days[kScoreDays - 1] = kScoreStart + now;
+  final List<int> days = List.filled(kScoreDays, yesterday ?? now);
+  days[kScoreDays - 1] = now;
   return ScoreBook(
-    overall: SkillScore(now: kScoreStart + now, days: days, answers: answers),
+    overall: SkillScore(now: now, days: days, answers: answers),
     skills: const {},
   );
 }
@@ -61,6 +58,13 @@ void main() {
       expect(shownScore(kScoreStart), 0);
       expect(shownScore(kScoreStart + 24), 24);
       expect(shownScore(kScoreStart - 40), 0);
+      // A score taken under its start counts from the lowest it has been:
+      // after a few misses, each right answer still counts.
+      expect(shownScore(kScoreStart - 40, lowest: kScoreStart - 40), 0);
+      expect(shownScore(kScoreStart - 16, lowest: kScoreStart - 40), 24);
+      // The book's scores are shown through it: nobody starts above 0.
+      expect(SkillScore.start.now, 0);
+      expect(scoresOf(const [], today: DateTime(2026, 11, 25)).overall.now, 0);
     });
 
     test('starts at 0, and each level asks 25 points more than the step '
@@ -117,8 +121,9 @@ void main() {
             ),
           );
         }
+        // The book's scores are shown already, through shownScore.
         final SkillScore o = scoresOf(said, today: today).overall;
-        levelOn.add(levelAt(shownScore(o.now), answers: o.answers));
+        levelOn.add(levelAt(o.now, answers: o.answers));
       }
       int firstDay(int level) => levelOn.indexWhere((l) => l >= level) + 1;
       expect(levelOn.first, 0);

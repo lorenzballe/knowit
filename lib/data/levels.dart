@@ -5,7 +5,9 @@
 ///
 /// Every level is set on the score as the reader sees it ([shownScore]),
 /// never on the score the engine keeps, so the shown scale can change in
-/// one place and every level keeps its meaning.
+/// one place and every level keeps its meaning. A [SkillScore]'s figures
+/// are shown scores already, made by [shownScore] as the engine runs: the
+/// levels read them as they are.
 ///
 /// A level once reached is kept: a score that falls back under it, as a
 /// score moved by every answer will, does not take it away, and it is never
@@ -21,15 +23,23 @@ import 'pills_repository.dart' show dateKey;
 import 'skill_scores.dart';
 import 'skills.dart';
 
-/// The Astute score as the reader sees it, from the score the engine keeps,
-/// which starts every reader at [kScoreStart].
+/// A score as the reader sees it, from the rating the engine keeps
+/// ([kept]) and the lowest that rating has ever stood, its start included
+/// ([lowest]: [kScoreStart], until a wrong answer takes it under).
 ///
-/// The one place the kept score becomes the shown one. Shown, a new reader
-/// starts from 0, not from 1,000, and a score that has fallen under where
-/// it started shows 0, not a number under nothing. Every level of
-/// [kScoreLevels] is set on this scale: when the shown scale changes, this
-/// is the line to change, and the ladder follows.
-int shownScore(int kept) => math.max(0, kept - kScoreStart);
+/// The one place a kept score becomes the shown one. The engine shows every
+/// score through it as it runs (lib/data/skill_scores.dart), so the Astute
+/// score and each skill's are on one scale wherever they are shown — Your
+/// journey, the profile, a card's back, the levels — and every level of
+/// [kScoreLevels] is set on it. Shown, a new reader starts from 0, not from
+/// 1,000, and a score never goes under nothing: it is how far the reader's
+/// answers have carried the rating from the lowest it has been, so after a
+/// few misses at the start each right answer still counts, rather than
+/// climbing back unseen to a line the reader cannot see. When the shown
+/// scale changes, this is the line to change, and the ladder and every
+/// figure follow.
+int shownScore(num kept, {num lowest = kScoreStart}) =>
+    math.max(0, (kept - math.min(lowest, kScoreStart)).round());
 
 /// One level: its name, looked up by [id] in the reader's language
 /// (AppLocalizations.scoreLevel), and the shown score it is reached at.
@@ -124,7 +134,7 @@ class LevelStanding {
     bool newReader = false,
   }) {
     final SkillScore overall = book.overall;
-    final int shown = shownScore(overall.now);
+    final int shown = overall.now;
     final int answers = overall.answers;
     return LevelStanding(
       shown: shown,
@@ -134,10 +144,7 @@ class LevelStanding {
           ? told.clamp(0, kScoreLevels.length - 1)
           : newReader
           ? 0
-          : levelAt(
-              shownScore(overall.days[overall.days.length - 2]),
-              answers: answers,
-            ),
+          : levelAt(overall.days[overall.days.length - 2], answers: answers),
     );
   }
 
@@ -206,7 +213,7 @@ class LevelMoment {
     final (Skill, int)? most = biggestGain(book, picked: picked);
     return LevelMoment(
       level: level,
-      score: shownScore(book.overall.now),
+      score: book.overall.now,
       from: countFrom(book.overall, kScoreLevels[level]),
       answers: book.overall.answers,
       skill: most?.$1,
@@ -237,7 +244,7 @@ class LevelMoment {
 int countFrom(SkillScore overall, ScoreLevel level) {
   final List<int> days = overall.days;
   for (var i = days.length - 2; i >= 0; i--) {
-    final int shown = shownScore(days[i]);
+    final int shown = days[i];
     if (shown < level.from) return shown;
   }
   return 0;
@@ -255,8 +262,7 @@ int countFrom(SkillScore overall, ScoreLevel level) {
   (Skill, int)? best;
   for (final Skill s in order) {
     final SkillScore score = book.of(s);
-    final int gain =
-        shownScore(score.now) - shownScore(score.days[score.days.length - 8]);
+    final int gain = score.now - score.days[score.days.length - 8];
     if (gain > 0 && (best == null || gain > best.$2)) best = (s, gain);
   }
   return best;

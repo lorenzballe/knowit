@@ -77,18 +77,35 @@ void main() {
     test('a card that does not train the skill moves the score of every '
         'skill together; a card never answered moves nothing', () async {
       await readyApp();
-      final Pill other = graded().firstWhere(
-        (p) => Skill.money.fitOf(p) == null,
+      final List<Pill> others = graded()
+          .where((p) => Skill.money.fitOf(p) == null)
+          .take(2)
+          .toList();
+      final Pill first = others[0], other = others[1];
+      final Pill never = graded().firstWhere(
+        (p) => p.id != other.id && p.id != first.id,
       );
-      final Pill never = graded().firstWhere((p) => p.id != other.id);
-      final List<Judgement> js = [said(other, false)];
+      final List<Judgement> js = [said(first, true), said(other, false)];
       final ScoreMove move = lastMoveOn(other.id, js, skill: Skill.money)!;
       expect(move.skill, isNull);
-      expect(move.before, kScoreStart);
+      expect(move.before, scoresOf(js.take(1), today: today).overall.now);
       expect(move.after, scoresOf(js, today: today).overall.now);
       expect(move.by, lessThan(0));
       expect(lastMoveOn(other.id, js), isNotNull);
       expect(lastMoveOn(never.id, js), isNull);
+    });
+
+    test('a wrong answer at nothing moves nothing shown, and the card says '
+        'nothing of it', () async {
+      await readyApp();
+      final Pill other = graded().firstWhere(
+        (p) => Skill.money.fitOf(p) == null,
+      );
+      final List<Judgement> js = [said(other, false)];
+      final ScoreMove move = lastMoveOn(other.id, js)!;
+      expect(move.before, 0);
+      expect(move.after, 0);
+      expect(move.by, 0);
     });
   });
 

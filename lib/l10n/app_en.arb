@@ -67,15 +67,16 @@
    }
   }
  },
- "tomorrowsFiveOpenIn": "Tomorrow's five open in {when}",
+ "tomorrowsFiveOpenIn": "Tomorrow's five · in {when}",
  "@tomorrowsFiveOpenIn": {
   "placeholders": {
    "when": {
     "type": "String"
    }
-  }
+  },
+  "description": "One line under the finished day's cards, never two, when tomorrow's first card is not known: how long until the next five open. when is a compact time, already formatted: \"3 h 50\", \"25 min\"."
  },
- "topicOpensTomorrow": "Tomorrow's five start with {topic}, in {when}",
+ "topicOpensTomorrow": "Tomorrow: {topic} · in {when}",
  "@topicOpensTomorrow": {
   "placeholders": {
    "topic": {
@@ -84,7 +85,8 @@
    "when": {
     "type": "String"
    }
-  }
+  },
+  "description": "One line under the finished day's cards, never two: the subject of tomorrow's first card, and how long until the next five open. when is a compact time, already formatted (journeyHoursMinutes or journeyMinutes): \"3 h 50\", \"25 min\". Keep it as short as the English."
  },
  "exploreTodaysBest": "Explore today's best",
  "magicUnlock": "Try {days} days free",
@@ -2215,19 +2217,6 @@
    }
   }
  },
- "trainingDayTitle": "{n, select, 5{Five for five.} 6{Six for six.} other{{n} for {n}.}}",
- "@trainingDayTitle": {
-  "description": "Title of the sheet that rises when the reader finishes the day's cards: all n read (five, six on a Sunday). Then trainingDayLine and the skills those cards trained.",
-  "placeholders": {
-   "n": {
-    "type": "String"
-   }
-  }
- },
- "trainingDayLine": "Today you trained",
- "@trainingDayLine": {
-  "description": "Under trainingDayTitle: the skills today's cards trained follow, each with how many cards and its bar."
- },
  "scoreTitle": "Astute score",
  "@scoreTitle": {
   "description": "The reader's score in all the skills together: a number with no top, moved by every answer on a card (like a chess rating). Its name; Astute is the app's name."
@@ -2244,15 +2233,6 @@
  "scoreStart": "Your first answer starts it.",
  "@scoreStart": {
   "description": "Under a skill's score that no answer has moved yet."
- },
- "scoreToday": "{n} today",
- "@scoreToday": {
-  "description": "On the sheet that rises when the day's cards are done: how far the reader's Astute score moved today. n is the signed number, already formatted: \"+26\", \"−4\" or \"0\".",
-  "placeholders": {
-   "n": {
-    "type": "String"
-   }
-  }
  },
  "scoreMoveLabel": "{name}: {n} for this answer",
  "@scoreMoveLabel": {
@@ -2795,6 +2775,24 @@
   }
  },
  "yourJourney": "Your journey",
+ "journeySince": "{days, plural, =0{Since your last visit, earlier today} =1{Since your last visit, yesterday} other{Since your last visit, {days} days ago}}",
+ "@journeySince": {
+  "description": "Under the title of Your journey, once a figure on it has moved since the reader last opened it: when that was. The figures that moved count up from there and carry a small mark of how far (journeySinceMark). days is how many days ago the last visit was: 0 for earlier today.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "journeySinceMark": "{n} since your last visit",
+ "@journeySinceMark": {
+  "description": "Read aloud for the small mark beside a figure of Your journey that moved since the reader last opened it. n is the move with its sign, already formatted: \"+12\", \"−3\", \"+6%\".",
+  "placeholders": {
+   "n": {
+    "type": "String"
+   }
+  }
+ },
  "thePath": "The path",
  "youAreHere": "YOU ARE HERE",
  "reachedOn": "Reached {date}",
@@ -7043,10 +7041,6 @@
  "journeyChapterHabits": "Your habits",
  "@journeyChapterHabits": {
   "description": "A chapter of Your journey, in small capitals: days in a row, reading time, the calendar of days read and how hard the cards are."
- },
- "journeyChapterMemory": "What stays with you",
- "@journeyChapterMemory": {
-  "description": "A chapter of Your journey, in small capitals: how many cards the reader still remembers after days and weeks."
  },
  "journeyChapterCoach": "Your coach",
  "@journeyChapterCoach": {
