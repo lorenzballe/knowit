@@ -355,6 +355,44 @@ class RemoteLocalizations extends AppLocalizations {
       _base.rungOfTotal(at, of);
 
   @override
+  String scoreLevel(String id) =>
+      _words.format('scoreLevel', localeName, {'id': id}) ??
+      _base.scoreLevel(id);
+
+  @override
+  String get levelUpTitle => _words.text('levelUpTitle') ?? _base.levelUpTitle;
+
+  @override
+  String levelUpGain(String skill, String n) =>
+      _words.format('levelUpGain', localeName, {'skill': skill, 'n': n}) ??
+      _base.levelUpGain(skill, n);
+
+  @override
+  String levelUpAnswers(int n) =>
+      _words.format('levelUpAnswers', localeName, {'n': n}) ??
+      _base.levelUpAnswers(n);
+
+  @override
+  String get levelLabel => _words.text('levelLabel') ?? _base.levelLabel;
+
+  @override
+  String levelPointsTo(int n, String level) =>
+      _words.format('levelPointsTo', localeName, {'n': n, 'level': level}) ??
+      _base.levelPointsTo(n, level);
+
+  @override
+  String levelAnswersTo(int n, String level) =>
+      _words.format('levelAnswersTo', localeName, {'n': n, 'level': level}) ??
+      _base.levelAnswersTo(n, level);
+
+  @override
+  String get levelTop => _words.text('levelTop') ?? _base.levelTop;
+
+  @override
+  String get levelShareTitle =>
+      _words.text('levelShareTitle') ?? _base.levelShareTitle;
+
+  @override
   String get signOutQuestion =>
       _words.text('signOutQuestion') ?? _base.signOutQuestion;
 

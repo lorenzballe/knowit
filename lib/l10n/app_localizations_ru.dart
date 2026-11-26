@@ -406,6 +406,77 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String scoreLevel(String id) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'curiosity': 'Любознательность',
+      'observation': 'Наблюдательность',
+      'method': 'Метод',
+      'judgement': 'Здравомыслие',
+      'insight': 'Понимание',
+      'discernment': 'Зоркость',
+      'acumen': 'Проницательность',
+      'other': '$id',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get levelUpTitle => 'Новый уровень';
+
+  @override
+  String levelUpGain(String skill, String n) {
+    return 'Самый большой рост за неделю: $skill, $n';
+  }
+
+  @override
+  String levelUpAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Пока $n ответа.',
+      many: 'Пока $n ответов.',
+      few: 'Пока $n ответа.',
+      one: 'Пока $n ответ.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelLabel => 'Уровень';
+
+  @override
+  String levelPointsTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n очка до уровня «$level»',
+      many: '$n очков до уровня «$level»',
+      few: '$n очка до уровня «$level»',
+      one: '$n очко до уровня «$level»',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String levelAnswersTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ответа до уровня «$level»',
+      many: '$n ответов до уровня «$level»',
+      few: '$n ответа до уровня «$level»',
+      one: '$n ответ до уровня «$level»',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelTop => 'Высший уровень';
+
+  @override
+  String get levelShareTitle => 'Поделиться уровнем';
+
+  @override
   String get signOutQuestion => 'Выйти?';
 
   @override

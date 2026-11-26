@@ -389,6 +389,71 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String scoreLevel(String id) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'curiosity': 'Curiosidade',
+      'observation': 'Observação',
+      'method': 'Método',
+      'judgement': 'Critério',
+      'insight': 'Perspicácia',
+      'discernment': 'Discernimento',
+      'acumen': 'Sagacidade',
+      'other': '$id',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get levelUpTitle => 'Novo nível';
+
+  @override
+  String levelUpGain(String skill, String n) {
+    return 'O que mais cresceu esta semana: $skill, $n';
+  }
+
+  @override
+  String levelUpAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n respostas até agora.',
+      one: '$n resposta até agora.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelLabel => 'Nível';
+
+  @override
+  String levelPointsTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n pontos para $level',
+      one: '$n ponto para $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String levelAnswersTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n respostas para $level',
+      one: '$n resposta para $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelTop => 'O nível mais alto';
+
+  @override
+  String get levelShareTitle => 'Partilha o teu nível';
+
+  @override
   String get signOutQuestion => 'Terminar sessão?';
 
   @override
