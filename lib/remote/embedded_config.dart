@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "91896f923df82aea",
+ "hash": "c03c70c173b8321c",
  "app": {
   "gate": null,
   "flags": {
@@ -91,7 +91,7 @@ const String kEmbeddedRemote = r'''
      "ko": "요 며칠의 이야기와 그 이유.",
      "zh": "这几天的新闻，以及背后的原因。"
     },
-    "look": "lead"
+    "look": "pager"
    },
    {
     "id": "line-of-day",
