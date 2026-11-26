@@ -386,6 +386,68 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String scoreLevel(String id) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'curiosity': '好奇心',
+      'observation': '観察力',
+      'method': '論理',
+      'judgement': '判断力',
+      'insight': '洞察力',
+      'discernment': '見識',
+      'acumen': '慧眼',
+      'other': '$id',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get levelUpTitle => '新しいレベル';
+
+  @override
+  String levelUpGain(String skill, String n) {
+    return '今週いちばん伸びたのは$skill：$n';
+  }
+
+  @override
+  String levelUpAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'これまでの回答数：$n',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelLabel => 'レベル';
+
+  @override
+  String levelPointsTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '「$level」まであと$nポイント',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String levelAnswersTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '「$level」まであと$n問',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelTop => '最高レベル';
+
+  @override
+  String get levelShareTitle => 'レベルをシェア';
+
+  @override
   String get signOutQuestion => 'ログアウトしますか？';
 
   @override

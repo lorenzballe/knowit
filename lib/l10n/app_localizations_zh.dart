@@ -385,6 +385,68 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String scoreLevel(String id) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'curiosity': '好奇心',
+      'observation': '观察力',
+      'method': '条理',
+      'judgement': '判断力',
+      'insight': '洞察力',
+      'discernment': '明辨',
+      'acumen': '慧眼',
+      'other': '$id',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get levelUpTitle => '新等级';
+
+  @override
+  String levelUpGain(String skill, String n) {
+    return '本周进步最大：$skill，$n';
+  }
+
+  @override
+  String levelUpAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '至今已作答 $n 次',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelLabel => '等级';
+
+  @override
+  String levelPointsTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '距“$level”还差 $n 分',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String levelAnswersTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '距“$level”还需作答 $n 次',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelTop => '最高等级';
+
+  @override
+  String get levelShareTitle => '分享你的等级';
+
+  @override
   String get signOutQuestion => '退出登录？';
 
   @override

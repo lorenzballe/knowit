@@ -43,7 +43,11 @@ enum ShareRef {
 
   /// The line of the day (lib/data/day_lines.dart), with where it was
   /// written.
-  line('share_line');
+  line('share_line'),
+
+  /// A level of the Astute score reached, as its picture
+  /// (lib/widgets/level_up.dart).
+  level('share_level');
 
   const ShareRef(this.ref);
 

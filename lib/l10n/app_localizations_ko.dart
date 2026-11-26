@@ -387,6 +387,68 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String scoreLevel(String id) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'curiosity': '호기심',
+      'observation': '관찰력',
+      'method': '논리',
+      'judgement': '판단력',
+      'insight': '통찰력',
+      'discernment': '분별력',
+      'acumen': '혜안',
+      'other': '$id',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get levelUpTitle => '새 레벨';
+
+  @override
+  String levelUpGain(String skill, String n) {
+    return '이번 주 가장 많이 오른 능력: $skill, $n';
+  }
+
+  @override
+  String levelUpAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '지금까지 답변 $n개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelLabel => '레벨';
+
+  @override
+  String levelPointsTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$level까지 $n점',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String levelAnswersTo(int n, String level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$level까지 답변 $n개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get levelTop => '최고 레벨';
+
+  @override
+  String get levelShareTitle => '레벨 공유하기';
+
+  @override
   String get signOutQuestion => '로그아웃할까요?';
 
   @override

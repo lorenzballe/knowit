@@ -31,6 +31,7 @@ import 'path_screen.dart';
 import '../widgets/card_edge.dart';
 import '../widgets/premium.dart';
 import '../widgets/area_marks.dart' show goalName;
+import '../widgets/level_up.dart' show LevelLine, showLevelUpIfDue;
 import '../widgets/move_words.dart';
 import '../widgets/training.dart';
 
@@ -59,6 +60,16 @@ class JourneyScreen extends StatefulWidget {
 }
 
 class _JourneyScreenState extends State<JourneyScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // A level reached since one was last told rises over the journey once
+    // it has come in (lib/widgets/level_up.dart).
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) showLevelUpIfDue(context, widget.app);
+    });
+  }
+
   /// The week tapped on the score chart, if one was; the week in hand if
   /// not.
 
@@ -118,7 +129,16 @@ class _JourneyScreenState extends State<JourneyScreen> {
                       n: ++n,
                       title: l.trainingTitle,
                       trailing: TrainingChapter.change(context, app),
-                      child: TrainingChapter(app: app),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          TrainingChapter(app: app),
+                          // The level the score has reached, small, and how
+                          // far the next one is (lib/widgets/level_up.dart).
+                          const SizedBox(height: 8),
+                          LevelLine(app: app),
+                        ],
+                      ),
                     ),
                     chapterGap,
                     // What to do now, under the number it moves.

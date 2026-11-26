@@ -600,6 +600,60 @@ abstract class AppLocalizations {
   /// **'{at} / {of}'**
   String rungOfTotal(int at, int of);
 
+  /// The name of one of the levels of the reader's Astute score (scoreTitle), from where everybody starts (curiosity) to the top (acumen): a quality of good thinking. A noun, never an adjective, so it never has to agree with the reader's gender. Shown big on the full-screen moment a level is reached, and small in Your journey. Each level is a step up from the one before: observation, method, judgement, insight, discernment, acumen. Avoid a word that also reads as a warning (Italian 'Attenzione', Polish 'Uwaga').
+  ///
+  /// In en, this message translates to:
+  /// **'{id, select, curiosity{Curiosity} observation{Observation} method{Method} judgement{Judgement} insight{Insight} discernment{Discernment} acumen{Acumen} other{{id}}}'**
+  String scoreLevel(String id);
+
+  /// Over the level's name on the full-screen moment a new level of the Astute score is reached, and on the picture it is shared as. Shown in capitals. Quiet and plain, never an exclamation.
+  ///
+  /// In en, this message translates to:
+  /// **'New level'**
+  String get levelUpTitle;
+
+  /// On the full-screen moment a new level is reached, under the score: what got the reader there. skill is the name of the skill whose score rose most in the last seven days (skillName); n is how far it rose, signed and formatted: "+34".
+  ///
+  /// In en, this message translates to:
+  /// **'Your biggest gain this week: {skill}, {n}'**
+  String levelUpGain(String skill, String n);
+
+  /// On the full-screen moment a new level is reached, in place of levelUpGain when no skill rose this week: how many answers the Astute score stands on.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One answer so far.} other{{n} answers so far.}}'**
+  String levelUpAnswers(int n);
+
+  /// Your journey, small, beside the Astute score: over the name of the level the reader has reached (scoreLevel). One short word, shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get levelLabel;
+
+  /// Your journey, small, beside the level the reader has reached: how many points of the Astute score the next level is away. level is the next level's name (scoreLevel).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 point to {level}} other{{n} points to {level}}}'**
+  String levelPointsTo(int n, String level);
+
+  /// Your journey, small, in place of levelPointsTo for a new reader: a level needs ten answers behind the score, and this says how many more answers the next level needs. level is the next level's name (scoreLevel).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 answer to {level}} other{{n} answers to {level}}}'**
+  String levelAnswersTo(int n, String level);
+
+  /// Your journey, small, in place of levelPointsTo once the reader has reached the last level: there is no next one.
+  ///
+  /// In en, this message translates to:
+  /// **'The top level'**
+  String get levelTop;
+
+  /// Title of the sheet that sends the picture of a level just reached, as the day's is sent (shareDayTitle).
+  ///
+  /// In en, this message translates to:
+  /// **'Share your level'**
+  String get levelShareTitle;
+
   /// No description provided for @signOutQuestion.
   ///
   /// In en, this message translates to:

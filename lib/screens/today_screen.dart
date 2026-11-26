@@ -19,6 +19,7 @@ import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/skill_mark.dart';
 import '../widgets/skill_score.dart' show todayMoveOf;
+import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/training.dart';
 import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
@@ -128,12 +129,14 @@ class _TodayScreenState extends State<TodayScreen> {
   /// the finished day (the reminder, the account, the place) wait for it.
   void _riseTraining() {
     _trainingDue = false;
-    Future<void>.delayed(const Duration(milliseconds: 650), () {
+    Future<void>.delayed(const Duration(milliseconds: 650), () async {
       if (!mounted || !widget.app.todayCompleted || _magic) return;
       if (!(ModalRoute.of(context)?.isCurrent ?? true)) return;
       final List<DayTraining> items = dayTrainingOf(widget.app);
-      if (items.isEmpty) return;
-      showDayTraining(context, widget.app, items);
+      if (items.isNotEmpty) await showDayTraining(context, widget.app, items);
+      // Then, the day at rest, a level its answers reached
+      // (lib/widgets/level_up.dart).
+      if (mounted) await showLevelUpIfDue(context, widget.app);
     });
   }
 
