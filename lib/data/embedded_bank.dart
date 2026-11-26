@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611241207,
- "built": "2026-11-24T12:07:04Z",
+ "version": 202611260026,
+ "built": "2026-11-26T00:26:11Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -243724,12 +243724,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two side-by-side panels compare rain on a track bed. In the left panel rain falls on the stones and drains through the gaps, away from the track. In the right panel rain falls on bare soil and pools, turning to mud. The question asked is why there are stones under train tracks.",
-    "page": "pages/technology-ballast-drains-water.html?v=4c9738ce3a4a",
-    "bytes": 11029,
+    "label": "A railway cut across under a rain cloud: rails clipped to a concrete sleeper, a deep bed of angular stones with gaps between them, sand and soil below, a ditch at each side, the track running off over fields. It asks how the ballast protects the track from water. Rain on the stones runs down through the gaps and off to the ditches; rain on bare soil pools, turns to mud and the sleeper sinks.",
+    "page": "pages/technology-ballast-drains-water.html?v=2dbf58d4663a",
+    "bytes": 43402,
     "thumbs": {
-     "front": "thumbs/technology-ballast-drains-water-front.webp?v=625471502a37",
-     "back": "thumbs/technology-ballast-drains-water-back.webp?v=625471502a37"
+     "front": "thumbs/technology-ballast-drains-water-front.webp?v=ba4689482507",
+     "back": "thumbs/technology-ballast-drains-water-back.webp?v=ba4689482507"
     }
    },
    "source": "Geopop, “A cosa servono le pietre sui binari?” (YouTube, 2021)",
@@ -275240,7 +275240,9 @@ const String kEmbeddedBank = r'''
   "482": "thinking-6",
   "483": "thinking-book-the-demon-haunted-world-4",
   "484": "thinking-z14",
-  "485": "thinking-7"
+  "485": "thinking-7",
+  "486": "thinking-4",
+  "487": "thinking-z11"
  },
  "commons": {
   "1": [
@@ -280092,6 +280094,26 @@ const String kEmbeddedBank = r'''
    "thinking-two-four-seven",
    "human_body-anti-ageing-claims-1",
    "medicine-when-not-to-take-them-3"
+  ],
+  "486": [
+   "thinking-airport-tells",
+   "sport-doping-1",
+   "maths-pentagons-never-tile",
+   "technology-induction-it-control",
+   "science-air-off-bacteria",
+   "human_body-breath-1",
+   "nature-siberian-anticyclone-trap",
+   "economics-book-business-adventures-5"
+  ],
+  "487": [
+   "food-diet-studies-4",
+   "psychology-insomnia-11",
+   "pop_culture-brand-loyalty-3",
+   "technology-sewer-spoil-removal",
+   "maths-all-nines-minus-one",
+   "weird_facts-book-a-short-history-of-nearly-everything-1",
+   "history-pyramid-sun-rays",
+   "art-myths-about-genius-1"
   ]
  }
 }
