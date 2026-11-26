@@ -162,11 +162,16 @@ void main() {
       expect(File(badge).existsSync(), isTrue, reason: badge);
     }
     // Astute is on Google Play (tool/site/chrome.py, GOOGLE_PLAY_OPEN):
-    // Google's badge is a link, never marked as coming. Apple's stays a
-    // link too, ready for the day its listing is live, while the words
-    // around it say the iPhone app is still coming (APP_STORE_OPEN).
+    // Google's badge is a link, never marked as coming. Apple's listing is
+    // made but not live until chrome.py's APP_STORE_OPEN says it is: until
+    // then its badge keeps its link but is marked "Coming soon", and no
+    // Download button leads to a store page that is not there.
     expect(home, isNot(contains('store-google-play store-soon')));
-    expect(home, isNot(contains('store-app-store store-soon')));
+    final bool appStoreOpen = RegExp(
+      r'^APP_STORE_OPEN = True$',
+      multiLine: true,
+    ).hasMatch(File('tool/site/chrome.py').readAsStringSync());
+    final RegExp download = RegExp(r'<a\b[^>]*\bdata-store\b[^>]*>');
     // Every page is signed by TheBaleCompany, says where the app is, as
     // chrome.py writes it, and links the Play listing.
     for (final String page in const [
@@ -197,6 +202,38 @@ void main() {
         ),
         reason: page,
       );
+      final List<String> buttons = [
+        for (final RegExpMatch m in download.allMatches(text)) m.group(0)!,
+      ];
+      expect(buttons, isNotEmpty, reason: page);
+      for (final String button in buttons) {
+        expect(
+          button,
+          contains(
+            appStoreOpen
+                ? 'href="https://apps.apple.com/app/id6806852300'
+                : 'href="/get"',
+          ),
+          reason: '$page: $button',
+        );
+      }
+      if (appStoreOpen) {
+        expect(text, isNot(contains('store-app-store store-soon')));
+      } else {
+        expect(
+          text,
+          contains(
+            '<a class="store store-app-store store-soon" '
+            'href="https://apps.apple.com/app/id6806852300',
+          ),
+          reason: page,
+        );
+        expect(
+          text,
+          isNot(contains('<a class="store store-app-store" ')),
+          reason: page,
+        );
+      }
     }
   });
 

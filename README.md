@@ -39,11 +39,12 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   the edition in the first screen's kicker and the time to the next one. It
   presents Astute on Google Play and on the App Store, each with the store's
   own badge. The Play listing is live; the App Store's is made but not live
-  yet, so Apple's badge and its link stay ready for the day it is, while
-  every line that says where the app is says "Free on Android · coming to
-  iPhone" (`APP_STORE_OPEN` in `tool/site/chrome.py`, one switch for all of
-  them). An Android phone's Download goes to Google Play, an iPhone's to the
-  App Store, and a computer's to a code to scan with the phone, which opens
+  yet, so until `APP_STORE_OPEN` in `tool/site/chrome.py` says it is (one
+  line to change at launch) Apple's badge keeps its link but is marked
+  "Coming soon", every line that says where the app is says "Free on
+  Android · coming to iPhone", and no Download button leads to the store's
+  empty page. An Android phone's Download goes to Google Play, a computer's
+  to a code to scan with the phone, and an iPhone's, like the code, to
   `/get`: from there an Android phone goes on to Google Play, and an iPhone,
   until the listing is live, stays on a page that says the app is on its
   way. It reads fully without JavaScript, and without motion for anyone who

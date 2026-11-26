@@ -37,9 +37,11 @@ from pathlib import Path
 
 # Where the app can be had, said as every page of the site says it: the
 # stores live, from tool/site/chrome.py, so one switch there reaches these
-# pages too.
+# pages too. Until the App Store listing is live (APP_STORE_OPEN), Google
+# Play is the button and the App Store's is marked as coming, so that no
+# friend is sent to the store's empty page without being told.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
-from chrome import where  # noqa: E402
+from chrome import APP_STORE_OPEN, where  # noqa: E402
 
 SITE = "https://astutetheapp.com"
 APP_STORE = "https://apps.apple.com/app/id6806852300"
@@ -119,6 +121,7 @@ header{width:100%;max-width:440px;display:flex;align-items:center;justify-conten
 .stores a{display:inline-flex;align-items:center;justify-content:center;height:46px;padding:0 18px;border-radius:14px;
   background:#f4f2ec;color:#0c0c0e;font-weight:700;font-size:15px;text-decoration:none}
 .stores a.alt{background:transparent;color:#f4f2ec;border:1px solid rgba(244,242,236,.25)}
+.stores a .soon{margin-left:8px;padding:3px 7px;border-radius:999px;background:#f4f2ec;color:#0c0c0e;font-size:9.5px;font-weight:750;letter-spacing:.08em;text-transform:uppercase}
 .hint{font-size:14.5px;line-height:1.45;opacity:.8;margin:auto 0 14px}
 .hint+.reveal,.hint+.guess{margin-top:0}
 .guess{margin-top:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -166,8 +169,7 @@ FOOT = """<section class="more">
   <h2>Five cards like this, every morning.</h2>
   <p>Questions with a why, drawn to be played. {where}.</p>
   <div class="stores">
-    <a href="{app_store}">App Store</a>
-    <a class="alt" href="{google_play}">Google Play</a>
+    {stores}
   </div>
 </section>
 {script}</body>
@@ -303,11 +305,23 @@ def render(card: dict) -> str:
     body = DRAWN.format(page=_e(page), title=_e(card.get("question"))) if page else words_card(card)
     foot = FOOT.format(
         where=where(sentence=True),
-        app_store=f"{APP_STORE}?ct=challenge",
-        google_play=f"{GOOGLE_PLAY}&referrer=utm_source%3Dchallenge",
+        stores=stores(),
         script="" if page else f'<script src="/c/card.js?v={VERSION}" defer></script>\n',
     )
     return head + body + foot
+
+
+def stores() -> str:
+    """The two stores' buttons at a page's foot: the App Store's first once
+    its listing is live; until then Google Play's, and the App Store's after
+    it, marked as coming."""
+    app_store = f"{APP_STORE}?ct=challenge"
+    google_play = f"{GOOGLE_PLAY}&referrer=utm_source%3Dchallenge"
+    if APP_STORE_OPEN:
+        return (f'<a href="{app_store}">App Store</a>\n'
+                f'    <a class="alt" href="{google_play}">Google Play</a>')
+    return (f'<a href="{google_play}">Google Play</a>\n'
+            f'    <a class="alt" href="{app_store}">App Store<span class="soon">Coming soon</span></a>')
 
 
 def write(site: Path, bank: dict) -> int:

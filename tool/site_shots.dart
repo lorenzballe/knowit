@@ -634,8 +634,10 @@ void main() {
 
   testWidgets('go deeper: what is below the card', (tester) async {
     await open(tester, _day(_five));
-    final BuildContext context = tester.element(find.byType(PillCard).first);
-    GoDeeper.open!(context, PillBank.byId(_deeper)!);
+    GoDeeper.open!(
+      tester.element(find.byType(PillCard).first),
+      PillBank.byId(_deeper)!,
+    );
     for (int i = 0; i < 30; i++) {
       await tester.pump(const Duration(milliseconds: 90));
     }

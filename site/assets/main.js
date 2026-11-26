@@ -13,9 +13,12 @@
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const onChange = (mq, fn) => (mq.addEventListener ? mq.addEventListener('change', fn) : mq.addListener(fn));
 
-  // Download links go to the App Store on an iPhone or iPad and to Google Play
-  // on Android; on a computer they go to the QR code at the foot of the
-  // landing page, to be scanned with the phone.
+  // Download links go to Google Play on Android, and on a computer to the QR
+  // code at the foot of the landing page, to be scanned with the phone. On
+  // an iPhone or iPad they go where tool/site/chrome.py wrote them: the App
+  // Store once its listing is live, and until then /get, which says the
+  // iPhone app is on its way rather than leave the store to say it has no
+  // such page.
   const ua = navigator.userAgent;
   const android = /android/i.test(ua);
   const ios = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
