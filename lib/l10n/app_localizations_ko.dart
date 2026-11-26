@@ -4619,22 +4619,22 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String betsCloserYesMore(String v) {
-    return '맞아요, $v보다 많아요.';
+    return '정답: $v보다 많아요.';
   }
 
   @override
   String betsCloserYesLess(String v) {
-    return '맞아요, $v보다 적어요.';
+    return '정답: $v보다 적어요.';
   }
 
   @override
   String betsCloserNoMore(String v) {
-    return '아니요, $v보다 많아요.';
+    return '오답: $v보다 많아요.';
   }
 
   @override
   String betsCloserNoLess(String v) {
-    return '아니요, $v보다 적어요.';
+    return '오답: $v보다 적어요.';
   }
 
   @override
@@ -5195,7 +5195,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get spotMissedIt => '그게 아니에요. 그건 사실이에요.';
 
   @override
-  String get tfRules => '참인지 거짓인지 답하고 이유를 확인하세요. 대부분 틀려요.';
+  String get tfRules =>
+      '대부분이 틀리는 주장들이에요. 참인지 거짓인지 답한 뒤 이유를 읽어 보세요. 판단력을 잽니다. 사실인 것과 뻔해 보이기만 하는 것을 가려내는 힘이죠.';
 
   @override
   String get inOrderTitle => '순서대로';
@@ -5205,13 +5206,13 @@ class AppLocalizationsKo extends AppLocalizations {
       '카드 속 네 가지 사건, 연도는 가려져 있어요. 일어난 순서대로 놓으세요. 시간 순서를 가늠하는 감각을 잽니다. 원인은 결과보다 먼저 오니, 모든 설명의 첫 시험이죠.';
 
   @override
-  String get inOrderFirst => '가장 이른 것을 탭하세요';
+  String get inOrderFirst => '가장 먼저 일어난 사건을 누르세요.';
 
   @override
-  String get inOrderNext => '이제 그다음';
+  String get inOrderNext => '이제 그다음 사건을 누르세요.';
 
   @override
-  String get inOrderReady => '모두 놓았어요. 확인할까요?';
+  String get inOrderReady => '모두 놓았어요.';
 
   @override
   String get inOrderCheck => '순서 확인';
@@ -5237,7 +5238,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get whatYearRules =>
-      '연도가 가려진 세 가지 사건. 다이얼로 연도를 맞춰 보세요. 가까울수록 점수가 높아요.';
+      '연도가 가려진 세 가지 사건. 각각의 연도를 다이얼로 맞추세요. 가까울수록 점수가 높고, 최대 10점이에요. 일이 언제 일어났는지에 대한 감각을 잽니다.';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5252,19 +5253,19 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '모두 합쳐 $n년 차이',
+      other: '모두 합쳐 $n년 차이예요.',
     );
     return '$_temp0';
   }
 
   @override
   String whatYearSaid(String guess, int points) {
-    return '내 답: $guess · +$points';
-  }
-
-  @override
-  String whatYearExact(int points) {
-    return '정확한 연도, +$points';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '내 답: $guess · $points점',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5304,7 +5305,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get beforeAfterTitle => '전일까 후일까?';
 
   @override
-  String get beforeAfterRules => '여섯 가지 사건이 차례로 나와요. 각각 위의 사건보다 전일까요, 후일까요?';
+  String get beforeAfterRules =>
+      '여섯 가지 사건이 차례로 나와요. 각각 위의 사건보다 전인지 후인지 답하세요. 순서 감각을 잽니다.';
 
   @override
   String get beforeAfterBefore => '전';
@@ -5462,6 +5464,168 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get challengeAgain => '한 번 더';
+
+  @override
+  String get spotRules =>
+      '네 가지 주장 중 셋은 참, 하나는 거짓이에요. 거짓을 찾아보세요. 근거 있는 주장과 그럴듯하게 들리기만 하는 주장을 얼마나 잘 가려내는지 잽니다.';
+
+  @override
+  String get spotAsk => '거짓이라고 생각하는 주장을 누르세요.';
+
+  @override
+  String get biggerRules =>
+      '두 숫자는 각각 카드 질문의 답이에요. 더 크다고 생각하는 쪽을 누르세요. 비율 감각을 잽니다.';
+
+  @override
+  String get biggerAsk => '답이 더 큰 카드를 누르세요.';
+
+  @override
+  String biggerRight(String big, String small) {
+    return '정답: $big, $small보다 커요.';
+  }
+
+  @override
+  String biggerWrong(String big, String small) {
+    return '오답: $big, $small보다 커요.';
+  }
+
+  @override
+  String get closerRules =>
+      '한 비율에 한 걸음씩 다가가세요. 매번 남은 범위의 가운데보다 많은지 적은지 답하세요. 어림하는 능력을 잽니다.';
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) {
+    return '답은 $said. $steps단계 중 $right단계를 맞혔어요.';
+  }
+
+  @override
+  String closerExactSteps(String said, int right, int steps) {
+    return '답은 정확히 $said. $steps단계 중 $right단계를 맞혔어요.';
+  }
+
+  @override
+  String closerStepsRight(int right, int steps) {
+    return '$steps단계 중 $right단계를 맞혔어요.';
+  }
+
+  @override
+  String get magnitudeRules =>
+      '십, 천, 아니면 백만? 답에 가장 가까운 10의 거듭제곱을 고르세요. 규모 감각을 잽니다. 정확한 숫자보다 더 중요한 감각이죠.';
+
+  @override
+  String get rangeRules =>
+      '추정값을 정한 뒤 그 주위로 범위를 정하세요. 범위가 좁을수록 답이 그 안에 들 때 더 많은 점수를 얻어요. 보정 능력을 잽니다. 내가 얼마나 아는지 아는 힘이죠.';
+
+  @override
+  String rangeOption(int w, int pts) {
+    return '±$w · $pts점';
+  }
+
+  @override
+  String rangeIn(String said, int pts) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: '답은 $said. 범위 안이에요, +$pts점.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rangeOut(String said) {
+    return '답은 $said. 범위 밖이에요.';
+  }
+
+  @override
+  String stakeRules(int points) {
+    return '답을 고르고 하루 $points점 중에서 점수를 거세요. 맞으면 건 점수가 두 배, 틀리면 잃어요. 확신을 잽니다. 아는 것에, 아는 것에만 거는 힘이죠.';
+  }
+
+  @override
+  String stakeWon(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '정답: $n점을 얻었어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stakeLost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오답: $n점을 잃었어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get numberRules =>
+      '버튼으로 숫자 하나를 정하고 확정하세요. 정밀함을 잽니다. 숫자 하나에 걸어야 할 때 얼마나 가까이 가는지요.';
+
+  @override
+  String tfRightIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': '정답: 참이에요.',
+      'other': '정답: 거짓이에요.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String tfWrongIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': '오답: 참이에요.',
+      'other': '오답: 거짓이에요.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String inOrderTold(int n, int of) {
+    return '$of개 중 $n개가 제자리에 있어요.';
+  }
+
+  @override
+  String get whatYearYours => '내 연도';
+
+  @override
+  String get whatYearExactly => '정확한 연도예요';
+
+  @override
+  String beforeAfterRight(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': '정답: $year년, $above년 이전이에요.',
+      'other': '정답: $year년, $above년 이후예요.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': '오답: $year년, $above년 이전이에요.',
+      'other': '오답: $year년, $above년 이후예요.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAnswer => '정답';
+
+  @override
+  String get challengeYouSaid => '내 답';
+
+  @override
+  String get challengePoints => '점수';
+
+  @override
+  String get challengeThisRound => '이번 라운드';
+
+  @override
+  String get challengeLeftToday => '오늘 남은 점수';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

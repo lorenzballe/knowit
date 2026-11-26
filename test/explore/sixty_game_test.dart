@@ -24,7 +24,6 @@ import 'package:astuto/state/explore_play.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/utils/share_link.dart' show sendText;
 import 'package:astuto/utils/share_text.dart';
-import 'package:astuto/widgets/explore/challenge_kit.dart';
 import 'package:astuto/widgets/explore/challenge_marks.dart';
 import 'package:astuto/widgets/explore/challenge_screen.dart';
 import 'package:astuto/widgets/explore/challenges.dart';
@@ -179,12 +178,13 @@ void main() {
     // No best yet: no figures to show.
     expect(find.byKey(const ValueKey('sixty-record')), findsNothing);
     expect(find.bySemanticsLabel('Begin'), findsOneWidget);
-    // The page is the app's own; the challenge on a card of its colour.
+    // The page is the app's own, and so is the card the challenge is set
+    // on: under its words, the day's eight claims, a row each.
     final ChallengeGround ground = tester.widget(
       find.byKey(const ValueKey('sixty-ground')),
     );
     expect(ground.colour, Palette.dark.surface);
-    expect(find.byType(ChallengeCard), findsWidgets);
+    expect(find.byKey(const ValueKey('sixty-today')), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('sixty-close')));
     await tester.pumpAndSettle();

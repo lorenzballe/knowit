@@ -26,10 +26,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../l10n/l10n.dart';
+import '../../models/pill.dart' show Pill;
 import '../../theme.dart';
 import 'challenge_kit.dart';
+import 'challenge_marks.dart';
 import 'challenges.dart';
-import 'parts.dart' show winColor;
+import 'parts.dart' show upper, winColor;
 
 /// The three moments of a challenge's screen.
 enum GameMoment { intro, play, result }
@@ -93,7 +95,6 @@ class GameOutcome {
     this.of,
     this.best,
     this.figures = const [],
-    this.chips = const [],
     this.board,
     this.reviewTitle,
     this.review = const [],
@@ -117,9 +118,6 @@ class GameOutcome {
 
   /// The round's figures: the accuracy, the time where it counts, the best.
   final List<ChallengeFigure> figures;
-
-  /// What the round came to besides.
-  final List<Widget> chips;
 
   /// The round at a glance.
   final Widget? board;
@@ -148,6 +146,14 @@ abstract class ChallengeGame extends ChangeNotifier {
 
   /// The reader's own figures, shown before the round: the best.
   List<ChallengeFigure> figures(AppLocalizations l) => const [];
+
+  /// The day's round, a turn to a row — the cards each turn is played
+  /// with — as the first moment lists it under Today.
+  List<List<Pill>> get today => const [];
+
+  /// Each turn's verdict, where the round is under way: right, wrong, or
+  /// not yet.
+  List<bool?> get todayMarks => const [];
 
   /// The first moment's button: Begin, or Continue on a round begun.
   String playLabel(AppLocalizations l) => l.gamePlay;
@@ -430,108 +436,93 @@ class _ChallengeScreenState extends State<ChallengeScreen>
   Widget _intro(BuildContext context, ChallengeRoom room, Palette p) {
     final l = context.l10n;
     final ChallengeLook look = widget.look;
-    final Color ink = look.tone.ink;
     final TextScaler scaler = MediaQuery.textScalerOf(context);
-    final List<ChallengeFigure> figures = _game.figures(l);
     final (IconData, String)? note = _game.note(l);
-    final List<ChallengeFigure> rows = figures.isNotEmpty
-        ? figures
-        : [if (note != null) (label: note.$2, value: '')];
-    // The challenge on a card of its colour, as a card of the day is on
-    // its subject's: its head, its name, what it measures.
-    final Widget card = ChallengeCard(
-      tone: look.tone,
-      mark: look.mark,
-      big: true,
-      padding: const EdgeInsets.fromLTRB(22, 20, 22, 26),
+    final List<ChallengeFigure> rows = [
+      if (note != null) (label: note.$2, value: ''),
+      ..._game.figures(l),
+    ];
+    final List<List<Pill>> today = _game.today;
+    final String rules = _game.rules(l);
+    // The challenge on a card of the page's own, as a card of the day is
+    // set: its head, its name, what it asks and what it measures; at its
+    // foot the day's round, a turn to a row, and the reader's figures.
+    final Widget card = Container(
+      decoration: BoxDecoration(
+        color: p.surfaceRaised,
+        borderRadius: BorderRadius.circular(SubjectCard.radius),
+        border: p.isDark ? null : Border.all(color: p.line),
+      ),
+      padding: const EdgeInsets.fromLTRB(22, 20, 22, 8),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ChallengeCardHead(look: look, key: ValueKey('$_id-skill')),
-          const SizedBox(height: 30),
+          Row(
+            children: [
+              ChallengeMarkView(mark: look.mark, colour: p.inkMuted, size: 15),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  upper(context, look.skill),
+                  key: ValueKey('$_id-skill'),
+                  textScaler: scaler.clamp(maxScaleFactor: 1.4),
+                  style: AppText.label(
+                    size: 11,
+                    spacing: 1.4,
+                    color: p.inkMuted,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 22),
           Semantics(
             header: true,
             child: Text(
               look.title,
               textScaler: scaler.clamp(maxScaleFactor: 1.3),
               style: AppText.display(
-                size: 44,
+                size: 40,
                 weight: FontWeight.w600,
-                height: 1.02,
-                spacing: -1.2,
-                color: ink,
+                height: 1.04,
+                spacing: -1,
+                color: p.ink,
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
           Text(
-            _game.rules(l),
+            rules,
             key: ValueKey('$_id-rules'),
             style: AppText.body(
-              size: 17,
+              // Short rules a little larger, so the card is not left
+              // with a band of nothing under a few lines.
+              size: rules.length < 140
+                  ? 20
+                  : rules.length < 190
+                  ? 19
+                  : 18,
               weight: FontWeight.w500,
-              height: 1.42,
-              color: ink.withValues(alpha: 0.88),
+              height: 1.45,
+              color: p.ink.withValues(alpha: 0.86),
             ),
           ),
           const Spacer(),
           const SizedBox(height: 24),
-          // At the card's foot, the reader's own figures large, as a card's
-          // number is — or how the challenge counts.
+          if (today.isNotEmpty) ...[
+            GameLabel(l.challengeToday),
+            const SizedBox(height: 8),
+            ChallengeDeck(
+              key: ValueKey('$_id-today'),
+              rounds: today,
+              marks: _game.todayMarks,
+            ),
+          ],
           if (rows.isNotEmpty)
-            Wrap(
+            ChallengeFigures(
               key: ValueKey('$_id-record'),
-              spacing: 28,
-              runSpacing: 14,
-              children: [
-                for (final ChallengeFigure f in rows)
-                  f.value.isEmpty
-                      ? Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 7,
-                          ),
-                          decoration: BoxDecoration(
-                            color: ink.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(99),
-                          ),
-                          child: Text(
-                            f.label,
-                            style: AppText.body(
-                              size: 13.5,
-                              weight: FontWeight.w700,
-                              height: 1.2,
-                              color: ink,
-                            ),
-                          ),
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              f.label,
-                              style: AppText.label(
-                                size: 10.5,
-                                weight: FontWeight.w700,
-                                spacing: 1.2,
-                                color: ink.withValues(alpha: 0.72),
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              f.value,
-                              style: AppText.display(
-                                size: 40,
-                                weight: FontWeight.w600,
-                                height: 1,
-                                spacing: -1,
-                                color: ink,
-                              ),
-                            ),
-                          ],
-                        ),
-              ],
+              rows: rows,
+              bare: true,
             ),
         ],
       ),
@@ -539,16 +530,16 @@ class _ChallengeScreenState extends State<ChallengeScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ChallengeRunningHead(id: _id, title: look.title, room: room),
-        // The card takes the room the screen has, its name at its foot as
-        // a card of the day's; where the words are more than the room,
-        // they scroll.
+        // The name is the card's: the head keeps the way out.
+        ChallengeRunningHead(id: _id, title: '', room: room),
+        // The card takes the room the screen has; where the words are more
+        // than the room, they scroll.
         Expanded(
           child: LayoutBuilder(
             builder: (context, box) => SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 6, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 2, 20, 0),
               child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: box.maxHeight - 6),
+                constraints: BoxConstraints(minHeight: box.maxHeight - 2),
                 child: IntrinsicHeight(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -565,9 +556,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
           padding: EdgeInsets.fromLTRB(20, 14, 20, room.foot),
           child: GameButton.primary(
             key: ValueKey('$_id-play'),
-            context: context,
             label: _game.playLabel(l),
-            tone: look.tone,
             onTap: _play,
           ),
         ),
@@ -611,10 +600,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ChallengeDotLabel(
-                                text: widget.look.skill,
-                                colour: widget.look.tone.vivid,
-                              ),
+                              GameLabel(widget.look.skill),
                               const SizedBox(height: 14),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -688,14 +674,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                                 const SizedBox(height: 14),
                                 ChallengeFigures(rows: out.figures, bare: true),
                               ],
-                              if (out.chips.isNotEmpty) ...[
-                                const SizedBox(height: 14),
-                                Wrap(
-                                  spacing: 16,
-                                  runSpacing: 8,
-                                  children: out.chips,
-                                ),
-                              ],
                               if (out.board case final Widget board) ...[
                                 const SizedBox(height: 16),
                                 board,
@@ -708,7 +686,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                         const SizedBox(height: 14),
                         GameReview(
                           items: out.review,
-                          tone: widget.look.tone,
                           label: out.reviewTitle ?? l.gameReview,
                         ),
                       ],
@@ -716,10 +693,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                         const SizedBox(height: 22),
                         Padding(
                           padding: const EdgeInsets.only(left: 4),
-                          child: ChallengeDotLabel(
-                            text: l.gameNext,
-                            colour: next.tone.vivid,
-                          ),
+                          child: GameLabel(l.gameNext),
                         ),
                         const SizedBox(height: 10),
                         GameNextCard(
@@ -743,9 +717,7 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                 child: _game.replays
                     ? GameButton.primary(
                         key: ValueKey('$_id-again'),
-                        context: context,
                         label: l.challengeAgain,
-                        tone: widget.look.tone,
                         onTap: _play,
                       )
                     : _Tomorrow(key: ValueKey('$_id-tomorrow')),
@@ -754,7 +726,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
               Expanded(
                 child: GameButton.plain(
                   key: ValueKey('$_id-share'),
-                  context: context,
                   label: l.share,
                   icon: Icons.ios_share_rounded,
                   onTap: () => _game.share(context),

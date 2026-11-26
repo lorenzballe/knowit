@@ -576,7 +576,9 @@ void main() {
 
         await say(right: true);
         await say(right: false);
-        // The answer just told, in its calm colour and its word.
+        // The answer just told, in its calm colour and its word: a frame
+        // more, for the word to have come in.
+        await tester.pump(const Duration(milliseconds: 250));
         await take('sixty-told');
         await tester.pump(const Duration(seconds: 3));
         await take('sixty-play');
@@ -768,10 +770,25 @@ void main() {
           await take('intro');
           await tester.tap(find.byKey(ValueKey('$id-play')));
           await settle(tester);
+          // The round asked, before any move.
+          await take('ask');
           // The round in play, a move or two in.
           await move(tester, id, 0);
           if (id == 'closer' || id == 'tf') await move(tester, id, 1);
           await take('play');
+          // Spot the false one, its pick said: the four told.
+          if (id == 'spot') {
+            await tester.tap(find.byKey(const ValueKey('spot-confirm')));
+            for (int f = 0; f < 12; f++) {
+              await tester.pump(const Duration(milliseconds: 90));
+            }
+            await take('told');
+          }
+          // Closer, closer, its last step taken: told on its card.
+          if (id == 'closer') {
+            await move(tester, id, 2);
+            await take('told');
+          }
           // In order, checked: the moments in their true order, their years
           // told, before the report.
           if (id == 'in-order') {

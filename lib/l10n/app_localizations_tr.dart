@@ -4733,22 +4733,22 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String betsCloserYesMore(String v) {
-    return 'Doğru: $v değerinden fazla.';
+    return 'Bildin: $v değerinden fazla.';
   }
 
   @override
   String betsCloserYesLess(String v) {
-    return 'Doğru: $v değerinden az.';
+    return 'Bildin: $v değerinden az.';
   }
 
   @override
   String betsCloserNoMore(String v) {
-    return 'Hayır: $v değerinden fazla.';
+    return 'Bilemedin: $v değerinden fazla.';
   }
 
   @override
   String betsCloserNoLess(String v) {
-    return 'Hayır: $v değerinden az.';
+    return 'Bilemedin: $v değerinden az.';
   }
 
   @override
@@ -5331,7 +5331,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tfRules =>
-      'Doğru mu yanlış mı söyle, sonra nedenini gör. Çoğu kişi yanılıyor.';
+      'Çoğu kişinin yanıldığı iddialar. Doğru mu yanlış mı söyle, sonra nedenini oku. Muhakemeni ölçer: doğru olanı yalnızca apaçık görünenden ayırmayı.';
 
   @override
   String get inOrderTitle => 'Sırayla';
@@ -5341,13 +5341,13 @@ class AppLocalizationsTr extends AppLocalizations {
       'Kartlardan dört an, yılları gizli; onları oluş sırasına diz. Kronoloji duygunu ölçer; her açıklamanın ilk sınavı budur: neden, sonucundan önce gelir.';
 
   @override
-  String get inOrderFirst => 'En eskisine dokun';
+  String get inOrderFirst => 'İlk gelen ana dokun.';
 
   @override
-  String get inOrderNext => 'Şimdi sıradaki';
+  String get inOrderNext => 'Şimdi ondan sonra geleni.';
 
   @override
-  String get inOrderReady => 'Hepsi yerleşti. Kontrol edelim mi?';
+  String get inOrderReady => 'Hepsi yerleşti.';
 
   @override
   String get inOrderCheck => 'Sırayı kontrol et';
@@ -5373,7 +5373,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get whatYearRules =>
-      'Üç an, her birinin yılı gizli. Yılı kadranla bul: ne kadar yakınsan o kadar puan.';
+      'Üç an, yılları gizli. Her birinin yılını ayarla: ne kadar yakınsan o kadar puan, ona kadar. Olayların ne zaman olduğuna dair sezgini ölçer.';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5388,19 +5388,19 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Toplamda $n yıl saptın',
+      other: 'Toplamda $n yıl saptın.',
     );
     return '$_temp0';
   }
 
   @override
   String whatYearSaid(String guess, int points) {
-    return 'Senin cevabın: $guess · +$points';
-  }
-
-  @override
-  String whatYearExact(int points) {
-    return 'Yılı tam bildin, +$points';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: 'Senin cevabın: $guess · $points puan',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5441,7 +5441,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get beforeAfterRules =>
-      'Altı an, art arda. Her biri üstündekinden önce mi oldu, sonra mı?';
+      'Altı an, art arda. Her birinin üstündekinden önce mi sonra mı olduğunu söyle. Sıralama duygunu ölçer.';
 
   @override
   String get beforeAfterBefore => 'Önce';
@@ -5599,6 +5599,168 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get challengeAgain => 'Bir daha';
+
+  @override
+  String get spotRules =>
+      'Dört iddia: üçü doğru, biri yanlış. Yanlış olanı bul. Sağlam bir iddiayı yalnızca doğru gibi görünenden ne kadar iyi ayırdığını ölçer.';
+
+  @override
+  String get spotAsk => 'Yanlış olduğunu düşündüğün iddiaya dokun.';
+
+  @override
+  String get biggerRules =>
+      'İki sayı, her biri bir kartın sorusunun cevabı. Daha büyük olduğunu düşündüğüne dokun. Orantı duygunu ölçer.';
+
+  @override
+  String get biggerAsk => 'Cevabı daha büyük olan karta dokun.';
+
+  @override
+  String biggerRight(String big, String small) {
+    return 'Bildin: $big, $small değerinden büyük.';
+  }
+
+  @override
+  String biggerWrong(String big, String small) {
+    return 'Bilemedin: $big, $small değerinden büyük.';
+  }
+
+  @override
+  String get closerRules =>
+      'Bir orana adım adım yaklaş: her seferinde, kalan aralığın ortasından fazla mı az mı olduğunu söyle. Tahmin yeteneğini ölçer.';
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) {
+    return 'Cevap $said: $steps adımın $right tanesi doğru.';
+  }
+
+  @override
+  String closerExactSteps(String said, int right, int steps) {
+    return 'Cevap tam olarak $said: $steps adımın $right tanesi doğru.';
+  }
+
+  @override
+  String closerStepsRight(int right, int steps) {
+    return '$steps adımın $right tanesi doğru.';
+  }
+
+  @override
+  String get magnitudeRules =>
+      'On mu, bin mi, bir milyon mu? Cevaba en yakın on kuvvetini seç. Ölçek duygunu ölçer; bu, kesin rakamlardan daha önemlidir.';
+
+  @override
+  String get rangeRules =>
+      'Tahminini belirle, sonra çevresine bir aralık koy: aralık ne kadar darsa, cevap içine düşerse o kadar çok kazandırır. Kalibrasyonunu ölçer: ne kadar bildiğini bilmeyi.';
+
+  @override
+  String rangeOption(int w, int pts) {
+    return '±$w · $pts kazandırır';
+  }
+
+  @override
+  String rangeIn(String said, int pts) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: 'Cevap $said: aralığının içinde, +$pts puan.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rangeOut(String said) {
+    return 'Cevap $said: aralığının dışında.';
+  }
+
+  @override
+  String stakeRules(int points) {
+    return 'Bir cevap seç ve günlük $points puanından ona puan yatır: doğruysa bahsin ikiye katlanır, yanlışsa kaybolur. Kararlılığını ölçer: bildiğine, yalnızca bildiğine oynamayı.';
+  }
+
+  @override
+  String stakeWon(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bildin: $n puan kazandın.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stakeLost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bilemedin: $n puan kaybettin.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get numberRules =>
+      'Düğmelerle tek bir sayı ayarla ve kilitle. Kesinliğini ölçer: tek bir sayıya bağlanman gerektiğinde ne kadar yaklaşabildiğini.';
+
+  @override
+  String tfRightIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Bildin: doğru.',
+      'other': 'Bildin: yanlış.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String tfWrongIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Bilemedin: doğru.',
+      'other': 'Bilemedin: yanlış.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String inOrderTold(int n, int of) {
+    return '$of andan $n tanesi doğru yerde.';
+  }
+
+  @override
+  String get whatYearYours => 'Senin yılın';
+
+  @override
+  String get whatYearExactly => 'Tam yılı';
+
+  @override
+  String beforeAfterRight(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Bildin: $year yılıydı, $above öncesi.',
+      'other': 'Bildin: $year yılıydı, $above sonrası.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Bilemedin: $year yılıydı, $above öncesi.',
+      'other': 'Bilemedin: $year yılıydı, $above sonrası.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAnswer => 'Cevap';
+
+  @override
+  String get challengeYouSaid => 'Senin cevabın';
+
+  @override
+  String get challengePoints => 'Puan';
+
+  @override
+  String get challengeThisRound => 'Bu tur';
+
+  @override
+  String get challengeLeftToday => 'Bugün kalan';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

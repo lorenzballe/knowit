@@ -4601,22 +4601,22 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String betsCloserYesMore(String v) {
-    return '正解、$vより多い。';
+    return '正解：$vより多い。';
   }
 
   @override
   String betsCloserYesLess(String v) {
-    return '正解、$vより少ない。';
+    return '正解：$vより少ない。';
   }
 
   @override
   String betsCloserNoMore(String v) {
-    return 'いいえ、$vより多い。';
+    return '不正解：$vより多い。';
   }
 
   @override
   String betsCloserNoLess(String v) {
-    return 'いいえ、$vより少ない。';
+    return '不正解：$vより少ない。';
   }
 
   @override
@@ -5181,7 +5181,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get spotMissedIt => 'それではない。それは正しい。';
 
   @override
-  String get tfRules => '正しいか間違いかを答えて、理由を見よう。たいていの人が間違えます。';
+  String get tfRules =>
+      'たいていの人が間違える主張です。正しいか間違いかを答え、理由を読みましょう。判断力を測ります。本当に正しいことと、ただ当たり前に見えることを見分ける力です。';
 
   @override
   String get inOrderTitle => '時代順';
@@ -5191,13 +5192,13 @@ class AppLocalizationsJa extends AppLocalizations {
       'カードから4つの出来事。年は伏せてあります。起きた順に並べてください。時系列の感覚を測ります。原因は結果より先に起こる、あらゆる説明の最初の試金石です。';
 
   @override
-  String get inOrderFirst => 'いちばん古いものをタップ';
+  String get inOrderFirst => '最初に起きた出来事をタップ。';
 
   @override
-  String get inOrderNext => '次に古いものは？';
+  String get inOrderNext => '次に起きたものをタップ。';
 
   @override
-  String get inOrderReady => '全部並べたら確認しよう';
+  String get inOrderReady => '全部並べました。';
 
   @override
   String get inOrderCheck => '順番を確認';
@@ -5222,7 +5223,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get whatYearTitle => '何年？';
 
   @override
-  String get whatYearRules => '年が伏せられた3つの出来事。ダイヤルで年を合わせよう。近いほど高得点。';
+  String get whatYearRules =>
+      '年が伏せられた3つの出来事。それぞれの年をダイヤルで合わせます。近いほど高得点で、最高10ポイント。出来事がいつ起きたかの感覚を測ります。';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5237,19 +5239,19 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '合計$n年のずれ',
+      other: '合計$n年のずれ。',
     );
     return '$_temp0';
   }
 
   @override
   String whatYearSaid(String guess, int points) {
-    return 'あなたの答え：$guess・+$points';
-  }
-
-  @override
-  String whatYearExact(int points) {
-    return '年までぴったり。+$points';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: 'あなたの答え：$guess・$pointsポイント',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5289,7 +5291,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get beforeAfterTitle => '前か後か？';
 
   @override
-  String get beforeAfterRules => '6つの出来事が順に出てきます。それぞれ上の出来事より前か後か？';
+  String get beforeAfterRules =>
+      '6つの出来事が順に出てきます。それぞれ上の出来事より前か後かを答えてください。順序の感覚を測ります。';
 
   @override
   String get beforeAfterBefore => '前';
@@ -5447,6 +5450,168 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get challengeAgain => 'もう一度';
+
+  @override
+  String get spotRules =>
+      '4つの主張のうち、3つは正しく、1つは間違いです。間違いを見つけてください。根拠のある主張と、もっともらしく聞こえるだけの主張を見分ける力を測ります。';
+
+  @override
+  String get spotAsk => '間違いだと思う主張をタップしてください。';
+
+  @override
+  String get biggerRules =>
+      '2つの数字は、それぞれカードの問いの答えです。大きいと思うほうをタップしてください。比率の感覚を測ります。';
+
+  @override
+  String get biggerAsk => '答えが大きいほうのカードをタップしてください。';
+
+  @override
+  String biggerRight(String big, String small) {
+    return '正解：$bigは$smallより大きい。';
+  }
+
+  @override
+  String biggerWrong(String big, String small) {
+    return '不正解：$bigは$smallより大きい。';
+  }
+
+  @override
+  String get closerRules =>
+      'ある割合に一歩ずつ近づきます。毎回、残った範囲の真ん中より多いか少ないかを答えてください。見積もる力を測ります。';
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) {
+    return '答えは$said。$stepsステップ中$right回正解。';
+  }
+
+  @override
+  String closerExactSteps(String said, int right, int steps) {
+    return '答えはちょうど$said。$stepsステップ中$right回正解。';
+  }
+
+  @override
+  String closerStepsRight(int right, int steps) {
+    return '$stepsステップ中$right回正解。';
+  }
+
+  @override
+  String get magnitudeRules =>
+      '10か、1000か、100万か。答えにいちばん近い10の累乗を選んでください。規模の感覚を測ります。正確な数字より大切な感覚です。';
+
+  @override
+  String get rangeRules =>
+      '予想を決め、その周りに範囲を設定します。範囲が狭いほど、答えが入ったときの得点が高くなります。較正を測ります。自分がどれだけ知っているかを知る力です。';
+
+  @override
+  String rangeOption(int w, int pts) {
+    return '±$w・$ptsポイント';
+  }
+
+  @override
+  String rangeIn(String said, int pts) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: '答えは$said。範囲内なので+$ptsポイント。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rangeOut(String said) {
+    return '答えは$said。範囲外です。';
+  }
+
+  @override
+  String stakeRules(int points) {
+    return '答えを選び、1日$pointsポイントの中からポイントを賭けます。正解なら賭け金は倍に、不正解なら失います。確信の強さを測ります。知っていることに、知っていることだけに賭ける力です。';
+  }
+
+  @override
+  String stakeWon(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '正解：$nポイント獲得。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stakeLost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '不正解：$nポイントを失いました。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get numberRules =>
+      'ボタンで数字を1つ決め、確定します。精度を測ります。1つの数字に決めなければならないとき、どこまで近づけるかです。';
+
+  @override
+  String tfRightIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': '正解：正しい主張です。',
+      'other': '正解：間違った主張です。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String tfWrongIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': '不正解：正しい主張です。',
+      'other': '不正解：間違った主張です。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String inOrderTold(int n, int of) {
+    return '$of個中$n個が正しい位置。';
+  }
+
+  @override
+  String get whatYearYours => 'あなたの年';
+
+  @override
+  String get whatYearExactly => 'ぴったりの年';
+
+  @override
+  String beforeAfterRight(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': '正解：$year年、$above年より前。',
+      'other': '正解：$year年、$above年より後。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': '不正解：$year年、$above年より前。',
+      'other': '不正解：$year年、$above年より後。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAnswer => '答え';
+
+  @override
+  String get challengeYouSaid => 'あなたの答え';
+
+  @override
+  String get challengePoints => 'ポイント';
+
+  @override
+  String get challengeThisRound => 'このラウンド';
+
+  @override
+  String get challengeLeftToday => '今日の残り';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

@@ -4966,22 +4966,22 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String betsCloserYesMore(String v) {
-    return 'Tak: to więcej niż $v.';
+    return 'Dobrze: to więcej niż $v.';
   }
 
   @override
   String betsCloserYesLess(String v) {
-    return 'Tak: to mniej niż $v.';
+    return 'Dobrze: to mniej niż $v.';
   }
 
   @override
   String betsCloserNoMore(String v) {
-    return 'Nie: to więcej niż $v.';
+    return 'Źle: to więcej niż $v.';
   }
 
   @override
   String betsCloserNoLess(String v) {
-    return 'Nie: to mniej niż $v.';
+    return 'Źle: to mniej niż $v.';
   }
 
   @override
@@ -5604,7 +5604,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get tfRules =>
-      'Powiedz: prawda czy fałsz, a potem zobacz dlaczego. Większość się myli.';
+      'Twierdzenia, przy których większość się myli. Powiedz: prawda czy fałsz, a potem przeczytaj dlaczego. Mierzy osąd: odróżnianie tego, co prawdziwe, od tego, co tylko wydaje się oczywiste.';
 
   @override
   String get inOrderTitle => 'Po kolei';
@@ -5614,13 +5614,13 @@ class AppLocalizationsPl extends AppLocalizations {
       'Cztery chwile z kart, bez roku, do ułożenia w kolejności, w jakiej się wydarzyły. Mierzy wyczucie chronologii, pierwszy sprawdzian każdego wyjaśnienia: przyczyna poprzedza skutek.';
 
   @override
-  String get inOrderFirst => 'Stuknij najwcześniejszą';
+  String get inOrderFirst => 'Stuknij chwilę, która była pierwsza.';
 
   @override
-  String get inOrderNext => 'Teraz następną';
+  String get inOrderNext => 'Teraz tę, która była następna.';
 
   @override
-  String get inOrderReady => 'Wszystko ułożone. Sprawdzić?';
+  String get inOrderReady => 'Wszystko ułożone.';
 
   @override
   String get inOrderCheck => 'Sprawdź kolejność';
@@ -5646,7 +5646,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get whatYearRules =>
-      'Trzy chwile, każda bez roku. Ustaw go na pokrętle: im bliżej, tym więcej punktów.';
+      'Trzy chwile, bez roku. Ustaw rok każdej: im bliżej, tym więcej punktów, do dziesięciu. Mierzy wyczucie tego, kiedy coś się wydarzyło.';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5661,22 +5661,25 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Łącznie pomyłka o $n roku',
-      many: 'Łącznie pomyłka o $n lat',
-      few: 'Łącznie pomyłka o $n lata',
-      one: 'Łącznie pomyłka o 1 rok',
+      other: 'Łącznie pomyłka o $n roku.',
+      many: 'Łącznie pomyłka o $n lat.',
+      few: 'Łącznie pomyłka o $n lata.',
+      one: 'Łącznie pomyłka o 1 rok.',
     );
     return '$_temp0';
   }
 
   @override
   String whatYearSaid(String guess, int points) {
-    return 'Twoja odpowiedź: $guess · +$points';
-  }
-
-  @override
-  String whatYearExact(int points) {
-    return 'Dokładnie ten rok, +$points';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: 'Twoja odpowiedź: $guess · $points punktu',
+      many: 'Twoja odpowiedź: $guess · $points punktów',
+      few: 'Twoja odpowiedź: $guess · $points punkty',
+      one: 'Twoja odpowiedź: $guess · 1 punkt',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5726,7 +5729,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get beforeAfterRules =>
-      'Sześć chwil, jedna po drugiej. Czy każda wydarzyła się przed, czy po tej wyżej?';
+      'Sześć chwil, jedna po drugiej. Powiedz, czy każda wydarzyła się przed, czy po tej wyżej. Mierzy wyczucie kolejności.';
 
   @override
   String get beforeAfterBefore => 'Przed';
@@ -5890,6 +5893,177 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get challengeAgain => 'Jeszcze raz';
+
+  @override
+  String get spotRules =>
+      'Cztery twierdzenia: trzy są prawdziwe, jedno fałszywe. Znajdź fałszywe. Mierzy, jak dobrze odróżniasz twierdzenie uzasadnione od takiego, które tylko brzmi przekonująco.';
+
+  @override
+  String get spotAsk => 'Stuknij twierdzenie, które uważasz za fałszywe.';
+
+  @override
+  String get biggerRules =>
+      'Dwie liczby, każda to odpowiedź na pytanie z karty. Stuknij tę, która według ciebie jest większa. Mierzy wyczucie proporcji.';
+
+  @override
+  String get biggerAsk => 'Stuknij kartę z większą odpowiedzią.';
+
+  @override
+  String biggerRight(String big, String small) {
+    return 'Dobrze: $big to więcej niż $small.';
+  }
+
+  @override
+  String biggerWrong(String big, String small) {
+    return 'Źle: $big to więcej niż $small.';
+  }
+
+  @override
+  String get closerRules =>
+      'Zbliżaj się do odsetka krok po kroku: za każdym razem powiedz, czy jest powyżej, czy poniżej środka tego, co zostało. Mierzy umiejętność szacowania.';
+
+  @override
+  String closerDoneSteps(String said, int right, int steps) {
+    return 'To $said: dobrze w $right z $steps kroków.';
+  }
+
+  @override
+  String closerExactSteps(String said, int right, int steps) {
+    return 'To dokładnie $said: dobrze w $right z $steps kroków.';
+  }
+
+  @override
+  String closerStepsRight(int right, int steps) {
+    return 'Dobrze w $right z $steps kroków.';
+  }
+
+  @override
+  String get magnitudeRules =>
+      'Dziesięć, tysiąc czy milion? Wybierz potęgę dziesięciu najbliższą odpowiedzi. Mierzy wyczucie skali, które liczy się bardziej niż dokładne cyfry.';
+
+  @override
+  String get rangeRules =>
+      'Ustaw swoje oszacowanie, a potem przedział wokół niego: im węższy, tym więcej daje, jeśli odpowiedź w nim wypadnie. Mierzy kalibrację: wiedzę o tym, ile wiesz.';
+
+  @override
+  String rangeOption(int w, int pts) {
+    return '±$w · daje $pts';
+  }
+
+  @override
+  String rangeIn(String said, int pts) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: 'To $said: w twoim przedziale, +$pts punktu.',
+      many: 'To $said: w twoim przedziale, +$pts punktów.',
+      few: 'To $said: w twoim przedziale, +$pts punkty.',
+      one: 'To $said: w twoim przedziale, +1 punkt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rangeOut(String said) {
+    return 'To $said: poza twoim przedziałem.';
+  }
+
+  @override
+  String stakeRules(int points) {
+    return 'Wybierz odpowiedź i postaw na nią punkty, z $points na dzień: jeśli masz rację, stawka się podwaja; jeśli nie, przepada. Mierzy przekonanie: stawianie na to, co wiesz, i tylko na to.';
+  }
+
+  @override
+  String stakeWon(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Dobrze: wygrywasz $n punktu.',
+      many: 'Dobrze: wygrywasz $n punktów.',
+      few: 'Dobrze: wygrywasz $n punkty.',
+      one: 'Dobrze: wygrywasz 1 punkt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stakeLost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Źle: tracisz $n punktu.',
+      many: 'Źle: tracisz $n punktów.',
+      few: 'Źle: tracisz $n punkty.',
+      one: 'Źle: tracisz 1 punkt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get numberRules =>
+      'Ustaw przyciskami jedną liczbę i zatwierdź ją. Mierzy precyzję: jak blisko jesteś, gdy musisz postawić na jedną liczbę.';
+
+  @override
+  String tfRightIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Dobrze: to prawda.',
+      'other': 'Dobrze: to fałsz.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String tfWrongIs(String side) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'true': 'Źle: to prawda.',
+      'other': 'Źle: to fałsz.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String inOrderTold(int n, int of) {
+    return '$n z $of na właściwym miejscu.';
+  }
+
+  @override
+  String get whatYearYours => 'Twój rok';
+
+  @override
+  String get whatYearExactly => 'Dokładnie ten rok';
+
+  @override
+  String beforeAfterRight(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Dobrze: to był rok $year, przed $above.',
+      'other': 'Dobrze: to był rok $year, po $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String beforeAfterWrong(String side, String year, String above) {
+    String _temp0 = intl.Intl.selectLogic(side, {
+      'before': 'Źle: to był rok $year, przed $above.',
+      'other': 'Źle: to był rok $year, po $above.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAnswer => 'Odpowiedź';
+
+  @override
+  String get challengeYouSaid => 'Twoja odpowiedź';
+
+  @override
+  String get challengePoints => 'Punkty';
+
+  @override
+  String get challengeThisRound => 'Ta runda';
+
+  @override
+  String get challengeLeftToday => 'Zostało dziś';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

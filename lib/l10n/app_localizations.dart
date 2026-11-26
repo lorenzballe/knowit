@@ -6708,28 +6708,28 @@ abstract class AppLocalizations {
   /// **'Less'**
   String get betsLess;
 
-  /// After a step said right: the answer is more than this share.
+  /// After a step said right: the answer is more than this share. Begins with the same word as the step said wrong ('Right' against 'Wrong').
   ///
   /// In en, this message translates to:
   /// **'Right: it is more than {v}.'**
   String betsCloserYesMore(String v);
 
-  /// After a step said right: the answer is less than this share.
+  /// After a step said right: the answer is less than this share. Begins with the same word as the step said wrong ('Right' against 'Wrong').
   ///
   /// In en, this message translates to:
   /// **'Right: it is less than {v}.'**
   String betsCloserYesLess(String v);
 
-  /// After a step said wrong: the answer is more than this share.
+  /// After a step said wrong: the answer is more than this share. Begins with the word for a wrong answer, never 'No'.
   ///
   /// In en, this message translates to:
-  /// **'No: it is more than {v}.'**
+  /// **'Wrong: it is more than {v}.'**
   String betsCloserNoMore(String v);
 
-  /// After a step said wrong: the answer is less than this share.
+  /// After a step said wrong: the answer is less than this share. Begins with the word for a wrong answer, never 'No'.
   ///
   /// In en, this message translates to:
-  /// **'No: it is less than {v}.'**
+  /// **'Wrong: it is less than {v}.'**
   String betsCloserNoLess(String v);
 
   /// When the answer sits exactly on the share a step asked about, which ends the game.
@@ -7590,10 +7590,10 @@ abstract class AppLocalizations {
   /// **'Not that one: it\'s true.'**
   String get spotMissedIt;
 
-  /// True or false on the whole screen: its rules, in a line, before playing.
+  /// True or false (the claims most people get wrong) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
   ///
   /// In en, this message translates to:
-  /// **'Say true or false, then see why. Most people get these wrong.'**
+  /// **'Claims most people get wrong. Say true or false, then read why. It measures judgement: telling what is so from what only seems obvious.'**
   String get tfRules;
 
   /// Explore, the challenges: the name of the game of putting four moments from the cards in the order they happened. Short: a tile's name.
@@ -7608,22 +7608,22 @@ abstract class AppLocalizations {
   /// **'Four moments from the cards, their years taken out, to put in the order they happened. It measures your sense of chronology, the first test of any explanation: a cause comes before its effect.'**
   String get inOrderRules;
 
-  /// In order, while playing, before any moment is placed: what to tap first.
+  /// In order, while playing, before any moment is placed: what to tap first. One short sentence, with a full stop.
   ///
   /// In en, this message translates to:
-  /// **'Tap the earliest'**
+  /// **'Tap the moment that came first.'**
   String get inOrderFirst;
 
-  /// In order, while playing, once one or more moments are placed: what to tap next.
+  /// In order, while playing, once one or more moments are placed: what to tap next. One short sentence, with a full stop.
   ///
   /// In en, this message translates to:
-  /// **'Now the next one'**
+  /// **'Now the one that came next.'**
   String get inOrderNext;
 
-  /// In order, while playing, once every moment is placed: the order can be checked.
+  /// In order, while playing, once every moment is placed, over the button that checks the order. Two or three words, with a full stop.
   ///
   /// In en, this message translates to:
-  /// **'All placed. Check it?'**
+  /// **'All placed.'**
   String get inOrderReady;
 
   /// In order, while playing: the big button that checks the order the moments were put in.
@@ -7662,10 +7662,10 @@ abstract class AppLocalizations {
   /// **'What year?'**
   String get whatYearTitle;
 
-  /// What year?, before playing: its rules, in a line.
+  /// What year? (three moments, the year of each dialled in) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
   ///
   /// In en, this message translates to:
-  /// **'Three moments, each missing its year. Dial it in: the closer, the more points.'**
+  /// **'Three moments, their years taken out. Dial in the year of each: the nearer, the more points, up to ten. It measures your sense of when things happened.'**
   String get whatYearRules;
 
   /// What year?: the points scored, of the most there were, as a screen reader says the score and as the score is sent on.
@@ -7683,20 +7683,14 @@ abstract class AppLocalizations {
   /// What year?, at the end: the line under the score, how many years off the guesses were, all added up.
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{1 year off in all} other{{n} years off in all}}'**
+  /// **'{n, plural, =1{1 year off in all.} other{{n} years off in all.}}'**
   String whatYearOffInAll(int n);
 
-  /// What year?: under a moment once told, the year the reader dialled and the points it scored.
+  /// What year?: under a moment in the report, the year the reader dialled and the points it scored.
   ///
   /// In en, this message translates to:
-  /// **'You said {guess} · +{points}'**
+  /// **'{points, plural, =1{You said {guess} · 1 point} other{You said {guess} · {points} points}}'**
   String whatYearSaid(String guess, int points);
-
-  /// What year?: a year dialled exactly, and the points it scored. Calm, no exclamation mark.
-  ///
-  /// In en, this message translates to:
-  /// **'Exact year, +{points}'**
-  String whatYearExact(int points);
 
   /// What year?: how many years off a dialled year was.
   ///
@@ -7728,10 +7722,10 @@ abstract class AppLocalizations {
   /// **'Before or after?'**
   String get beforeAfterTitle;
 
-  /// Before or after?, before playing: its rules, in a line.
+  /// Before or after? (six moments, each against the one above it) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
   ///
   /// In en, this message translates to:
-  /// **'Six moments, one after another. Did each happen before or after the one above it?'**
+  /// **'Six moments, one after another. Say whether each happened before or after the one above it. It measures your sense of sequence.'**
   String get beforeAfterRules;
 
   /// Before or after?: the button that says the moment happened before the one above it.
@@ -7991,6 +7985,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Another round'**
   String get challengeAgain;
+
+  /// Spot the false one (four claims, one false) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Four claims: three are true and one is false. Find the false one. It measures how well you tell a sound claim from one that only sounds right.'**
+  String get spotRules;
+
+  /// Spot the false one on the whole screen, over the four claims: what to do. One short sentence, with a full stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the claim you think is false.'**
+  String get spotAsk;
+
+  /// Which is bigger? (two hidden figures, each the answer to a card) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Two figures, each the answer to a card\'s question. Tap the one you think is bigger. It measures your sense of proportion.'**
+  String get biggerRules;
+
+  /// Which is bigger? on the whole screen, over the two cards before one is picked: what to do. One short sentence, with a full stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the card whose answer is bigger.'**
+  String get biggerAsk;
+
+  /// Which is bigger?, once a card is picked, over the two cards: the pick was right; the bigger figure and the smaller, as figures ('95%', '85%').
+  ///
+  /// In en, this message translates to:
+  /// **'Right: {big} is bigger than {small}.'**
+  String biggerRight(String big, String small);
+
+  /// Which is bigger?, once a card is picked, over the two cards: the pick was wrong; the bigger figure and the smaller, as figures ('95%', '85%').
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong: {big} is bigger than {small}.'**
+  String biggerWrong(String big, String small);
+
+  /// Closer, closer (a share closed in on, more or less, step by step) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Close in on a share step by step: each time, say whether it is more or less than the middle of what is left. It measures estimation.'**
+  String get closerRules;
+
+  /// Closer, closer on the whole screen, on the card once its steps are taken: what the share is, and how many of the steps taken were said right.
+  ///
+  /// In en, this message translates to:
+  /// **'It is {said}: you were right on {right} of {steps} steps.'**
+  String closerDoneSteps(String said, int right, int steps);
+
+  /// Closer, closer on the whole screen, on the card once its steps are taken: what the share is (exactly the line of the last step, which ends the game), and how many of the steps taken were said right.
+  ///
+  /// In en, this message translates to:
+  /// **'It is exactly {said}: you were right on {right} of {steps} steps.'**
+  String closerExactSteps(String said, int right, int steps);
+
+  /// Closer, closer's report, and a card's line in it: how many of the steps taken were said right, of how many.
+  ///
+  /// In en, this message translates to:
+  /// **'You were right on {right} of {steps} steps.'**
+  String closerStepsRight(int right, int steps);
+
+  /// Orders of magnitude (the power of ten nearest a figure) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten, a thousand or a million? Pick the power of ten nearest the answer. It measures your sense of scale, which matters more than the exact digits.'**
+  String get magnitudeRules;
+
+  /// Bet a range (a guess, and a range around it that pays more the narrower it is) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your guess, then a range around it: the narrower the range, the more it pays if the answer falls inside. It measures calibration: knowing how much you know.'**
+  String get rangeRules;
+
+  /// Bet a range on the whole screen: one of the widths to pick, as a button: how far either side of the guess, in percentage points, and the points it pays if the answer falls inside. Short: three sit side by side.
+  ///
+  /// In en, this message translates to:
+  /// **'±{w} · pays {pts}'**
+  String rangeOption(int w, int pts);
+
+  /// Bet a range, on the card once the bet is laid: the answer ('42%'), and that it fell inside the range bet on, and the points it paid.
+  ///
+  /// In en, this message translates to:
+  /// **'{pts, plural, =1{It is {said}: inside your range, +1 point.} other{It is {said}: inside your range, +{pts} points.}}'**
+  String rangeIn(String said, int pts);
+
+  /// Bet a range, on the card once the bet is laid: the answer ('42%'), and that it fell outside the range bet on.
+  ///
+  /// In en, this message translates to:
+  /// **'It is {said}: outside your range.'**
+  String rangeOut(String said);
+
+  /// Place your bet (an answer picked, and points staked on it from the day's) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick an answer and stake points on it, from {points} a day: right, your stake is doubled; wrong, it is lost. It measures conviction: backing what you know, and only that.'**
+  String stakeRules(int points);
+
+  /// Place your bet, on the card once the bet is laid: the answer picked was right, and the points won (the stake).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Right: you win 1 point.} other{Right: you win {n} points.}}'**
+  String stakeWon(int n);
+
+  /// Place your bet, on the card once the bet is laid: the answer picked was wrong, and the points lost (the stake).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Wrong: you lose 1 point.} other{Wrong: you lose {n} points.}}'**
+  String stakeLost(int n);
+
+  /// Your number (one figure, set with steppers and locked in) on the whole screen, before the round, under its name: what it asks and what it measures, in two or three plain sentences, each ending with a full stop. Serious, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a single figure with the steppers and lock it in. It measures precision: how near you can get when you have to commit to one number.'**
+  String get numberRules;
+
+  /// True or false on the whole screen, on the card once a claim is answered: the answer was right, and what the claim is ('true' or 'false': side is the word 'true' or anything else).
+  ///
+  /// In en, this message translates to:
+  /// **'{side, select, true{Right: it is true.} other{Right: it is false.}}'**
+  String tfRightIs(String side);
+
+  /// True or false on the whole screen, on the card once a claim is answered: the answer was wrong, and what the claim is ('true' or 'false': side is the word 'true' or anything else).
+  ///
+  /// In en, this message translates to:
+  /// **'{side, select, true{Wrong: it is true.} other{Wrong: it is false.}}'**
+  String tfWrongIs(String side);
+
+  /// In order, once the order is checked, over the moments: how many stand in their right place, of how many.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} in the right place.'**
+  String inOrderTold(int n, int of);
+
+  /// What year?, while a moment is played: the name over the year the reader has dialled, in small capitals. Two or three words.
+  ///
+  /// In en, this message translates to:
+  /// **'Your year'**
+  String get whatYearYours;
+
+  /// What year?, once a moment is told: the year dialled was the year it happened. Calm, no exclamation mark.
+  ///
+  /// In en, this message translates to:
+  /// **'The exact year'**
+  String get whatYearExactly;
+
+  /// Before or after?, once a moment is said, over the two moments: the call was right; the year of the moment asked about, and whether it came before or after the year of the one above it (side is 'before' or anything else, for after).
+  ///
+  /// In en, this message translates to:
+  /// **'{side, select, before{Right: it was {year}, before {above}.} other{Right: it was {year}, after {above}.}}'**
+  String beforeAfterRight(String side, String year, String above);
+
+  /// Before or after?, once a moment is said, over the two moments: the call was wrong; the year of the moment asked about, and whether it came before or after the year of the one above it (side is 'before' or anything else, for after).
+  ///
+  /// In en, this message translates to:
+  /// **'{side, select, before{Wrong: it was {year}, before {above}.} other{Wrong: it was {year}, after {above}.}}'**
+  String beforeAfterWrong(String side, String year, String above);
+
+  /// A challenge, once a round is told: the name over the right answer ('2012', '3.6'), in small capitals. One or two words.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer'**
+  String get challengeAnswer;
+
+  /// A challenge, once a round is told: the name over what the reader answered ('1925', '4.4'), in small capitals. One or two words.
+  ///
+  /// In en, this message translates to:
+  /// **'You said'**
+  String get challengeYouSaid;
+
+  /// A challenge, once a round is told: the name over the points a moment scored ('7'), in small capitals. One or two words.
+  ///
+  /// In en, this message translates to:
+  /// **'Points'**
+  String get challengePoints;
+
+  /// A challenge's report, among its figures: the name of the points the round won or lost, beside them ('+40 points').
+  ///
+  /// In en, this message translates to:
+  /// **'This round'**
+  String get challengeThisRound;
+
+  /// Place your bet's report, among its figures: the name of the points left to stake today, beside them ('80 points').
+  ///
+  /// In en, this message translates to:
+  /// **'Left today'**
+  String get challengeLeftToday;
 
   /// Explore, the subjects with their levels: one subject's ring, said to a screen reader. The level is 1 to 10.
   ///
