@@ -25,6 +25,7 @@ library;
 
 import 'dart:math' as math;
 
+import 'package:flutter/scheduler.dart' show SchedulerBinding, SchedulerPhase;
 import 'package:flutter/widgets.dart';
 
 import '../theme.dart';
@@ -104,12 +105,21 @@ class _QuickReturnState extends State<QuickReturn>
     super.dispose();
   }
 
+  /// The last [_gone] read outside a layout.
+  double _goneSeen = 0;
+
   /// How far up the header goes to be out of sight: its own height and
-  /// whatever it shows under it.
+  /// whatever it shows under it. A scroll can start while the page is being
+  /// laid out (a page that opens on a place jumps there then), and no size
+  /// may be read in the middle of a layout: then it is the last one read.
   double get _gone {
+    if (SchedulerBinding.instance.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
+      return _goneSeen;
+    }
     final RenderObject? box = _header.currentContext?.findRenderObject();
-    if (box is! RenderBox || !box.hasSize) return 0;
-    return box.size.height + QuickReturn.shade;
+    if (box is! RenderBox || !box.hasSize) return _goneSeen;
+    return _goneSeen = box.size.height + QuickReturn.shade;
   }
 
   bool get _returning => _up.isAnimating && _to == 0;
@@ -178,6 +188,11 @@ class _QuickReturnState extends State<QuickReturn>
   Widget build(BuildContext context) {
     _still = MediaQuery.disableAnimationsOf(context);
     _stays = MediaQuery.accessibleNavigationOf(context);
+    // The header measured once each frame is laid out, for a scroll that
+    // starts inside the next layout.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _goneSeen = _gone;
+    });
     // The page's own colour, light or dark as the page is.
     final Color ground = context.p.surface;
     final Widget room = Stack(
