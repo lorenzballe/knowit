@@ -7664,5 +7664,63 @@
     "type": "String"
    }
   }
+ },
+ "firstCardTitle": "Your first card",
+ "@firstCardTitle": {
+  "description": "The first run, after the onboarding, when the server's switch trial.firstRun is on: the heading over the one card a new reader plays before the offer of the free trial. The card is a real one, chosen for them; the day's five come after the offer."
+ },
+ "firstCardSwipeOn": "Swipe to go on",
+ "@firstCardSwipeOn": {
+  "description": "Beside that heading, once, quietly: how the card is sent on. What comes next is not another card but the offer, so not 'the next one'."
+ },
+ "trialOfferTitle": "Try all of Astute+.",
+ "@trialOfferTitle": {
+  "description": "The headline of the first run's offer of the free trial, after the one card. Calm and plain: no price and no number in it (the year's price is the largest figure on the screen, as the stores ask), and no 'free'. trialOfferMark must appear in it word for word: that part is painted in the paywall's three colours."
+ },
+ "trialOfferMark": "Astute+.",
+ "@trialOfferMark": {
+  "description": "The part of trialOfferTitle painted in the three colours: the plan's name, with the full stop when the title ends on it. It must be copied from trialOfferTitle exactly."
+ },
+ "trialOfferLine": "Today’s five are waiting for you either way.",
+ "@trialOfferLine": {
+  "description": "Under that headline: whichever the reader chooses, the trial or the free plan, the day's five cards come next. It takes the pressure off the choice, and it is true."
+ },
+ "trialStepToday": "Today",
+ "@trialStepToday": {
+  "description": "The free trial's three days, on the offer, as a timeline: the first step's name, today. Beside it, the date."
+ },
+ "trialStepTodayLine": "All of Astute+ opens. You pay nothing.",
+ "@trialStepTodayLine": {
+  "description": "Under 'Today' on that timeline: everything Astute+ adds opens today, and nothing is charged. The step's name already says today."
+ },
+ "trialStepDay": "Day {day}",
+ "@trialStepDay": {
+  "description": "A later step's name on that timeline: the trial's day it falls on, counted from today (day 12, the reminder; day 14, the first charge). Beside it, the date.",
+  "placeholders": {
+   "day": {
+    "type": "int"
+   }
+  }
+ },
+ "trialStepReminderLine": "{days, plural, =1{We send you a notification: 1 day to go.} other{We send you a notification: {days} days to go.}}",
+ "@trialStepReminderLine": {
+  "description": "Under the reminder's day on that timeline: the app sends a notification {days} days before the trial ends (always 2 today). Says 'notification' because that is how it comes, and only where the phone can show one.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "trialStepChargeLine": "Renews every year. Cancel at least 24 hours before and nothing is charged.",
+ "@trialStepChargeLine": {
+  "description": "Under the year's price, on the day the trial ends: the year renews every year until it is cancelled, and a trial cancelled at least 24 hours before its end is charged nothing (the stores' own rule)."
+ },
+ "trialOfferStart": "Start the free trial",
+ "@trialOfferStart": {
+  "description": "The offer's button: starts the year's free trial, through the store's own sheet, which says the terms again before anything is charged."
+ },
+ "trialOfferFree": "Continue for free",
+ "@trialOfferFree": {
+  "description": "The offer's way out, a button as plain as the other: the free plan, and the day's five cards."
  }
 }

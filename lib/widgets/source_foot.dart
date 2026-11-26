@@ -2,7 +2,7 @@
 /// facts come from after it — where "Report a problem" lives once it is off
 /// the card's face, and the way back to Why this card.
 ///
-/// Being tried (November 2026), three ways, for the owner to choose between.
+/// Being tried (November 2026), four ways, for the owner to choose between.
 /// The foot read "Source · Geopop · YouTube, 2021", underlined in dots, and
 /// nobody could tell that a tap on it opened Go deeper. Each way here leads
 /// with the sheet's own name, Go deeper, in a firmer weight and with a
@@ -22,14 +22,16 @@
 /// head, and since the line was kept for the reasons that say something (a
 /// move the reader misses, a card back for another go, their goal, chance),
 /// most cards had no way to it. Each way brings it back on every card of
-/// the day: beside Go deeper on the back, as a line or as a second pill, or
-/// on the front, as the line under the head that every card carries again.
+/// the day: beside Go deeper on the back, as a line, as a second pill or as
+/// a second door on Go deeper's own line, or on the front, as the line under
+/// the head that every card carries again.
 ///
-/// A back never scrolls for the foot's sake. Short of room, Why this card
-/// gives up its row first and follows the source on Go deeper's line, the
-/// whole foot beside the save and share; the last thing before the back
-/// would scroll, the source's words give way and the two doors stand alone,
-/// Go deeper opening on the source (reveal_body.dart, `_FootForm`).
+/// A back never scrolls for the foot's sake. Short of room, the foot gives
+/// up a row first: Why this card follows the source on Go deeper's line,
+/// the whole foot beside the save and share, the same with each way that
+/// carries it; the last thing before the back would scroll, the source's
+/// words give way and the two doors stand alone, Go deeper opening on the
+/// source (reveal_body.dart, `_FootForm`).
 ///
 /// A drawn card's page draws the same, the kit doing it
 /// (docs/cards/kit/astute-card.js, `deeperFoot`): the app tells the page
@@ -51,7 +53,7 @@ import '../sync/reports.dart';
 import '../theme.dart';
 import 'report_sheet.dart';
 
-/// The three ways of setting the foot.
+/// The ways of setting the foot: A, B, C and D on the owner's sheets.
 enum SourceFoot {
   /// "Go deeper ›" in a firmer weight and the source after it, one line
   /// that wraps like a sentence, the card's whole width; "Why this card ›"
@@ -71,12 +73,23 @@ enum SourceFoot {
   /// [line] sets them. To report: a flag in Go deeper's head, beside the
   /// sheet's name, seen the moment it opens.
   pill,
+
+  /// The fourth way, the owner's own (November 2026): [stack]'s two lines,
+  /// without the line on the front. "Go deeper ›" a size up and firm, as
+  /// [stack] sets it, and "Why this card ›" beside it on the same line, in
+  /// words as plain as a link's, a step quieter; the source under the two,
+  /// small and quiet, beside the save and share: [pill] without its pills.
+  /// Nothing on the card's front. On a card with no Why this card to open,
+  /// [stack]'s two lines. On a back short of room it gives way to [line]'s
+  /// own forms, with Why this card and without it. To report: the foot of
+  /// Go deeper, as with [line].
+  links,
 }
 
 /// The way being tried. `line` unless the build names another
-/// (`--dart-define=SOURCE_FOOT=stack` or `pill`), which is how the camera,
-/// tool/source_shots.dart, photographs all three; changing the default
-/// here changes it for good.
+/// (`--dart-define=SOURCE_FOOT=stack`, `pill` or `links`), which is how the
+/// camera, tool/source_shots.dart, photographs them all; changing the
+/// default here changes it for good.
 const String _sourceFootName = String.fromEnvironment(
   'SOURCE_FOOT',
   defaultValue: 'line',
@@ -85,6 +98,8 @@ const SourceFoot sourceFoot = _sourceFootName == 'stack'
     ? SourceFoot.stack
     : _sourceFootName == 'pill'
     ? SourceFoot.pill
+    : _sourceFootName == 'links'
+    ? SourceFoot.links
     : SourceFoot.line;
 
 /// Opens "what's wrong with this card?" for [pill], and says it went:

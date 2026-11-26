@@ -14,6 +14,7 @@ import '../debug_flags.dart';
 import '../legal.dart';
 import '../models/place.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../state/music_sound.dart';
 import '../state/progress.dart' show kCalibrationFloor;
 import '../sync/identity.dart';
@@ -784,6 +785,11 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
+            // Looks to set side by side on the phone itself, first in the
+            // section, where they are found: each shows at once and is kept
+            // on the phone (DebugLooks).
+            const _DebugLooksPanel(),
+            const SizedBox(height: 14),
             // What the app actually knows about itself. "Nothing happens"
             // is the least useful bug report there is, so it is replaced
             // here by something that can be read off a screen.
@@ -1408,6 +1414,230 @@ class _PlusCard extends StatelessWidget {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The looks the developer tools try on this phone ([DebugLooks]): the
+/// finished day without the row over its card, and which top the profile
+/// opens on. English, as the rest of the section is.
+class _DebugLooksPanel extends StatelessWidget {
+  const _DebugLooksPanel();
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.p;
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: p.line)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ValueListenableBuilder<bool>(
+            valueListenable: DebugLooks.noTopRow,
+            builder: (context, on, _) => _DebugSwitchRow(
+              key: const ValueKey('debug-no-top-row'),
+              label: 'Today, day read: no top row',
+              note:
+                  'No "Day 4" row over the finished day, so the card is '
+                  'bigger. See again and Share go to the ends of the dots.',
+              value: on,
+              onChanged: DebugLooks.setNoTopRow,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(0, 14, 0, 16),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: p.line)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Profile top',
+                  style: AppText.body(
+                    size: 14,
+                    weight: FontWeight.w500,
+                    color: p.ink,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  'Auto is the plan\'s own: A for free readers, C for '
+                  'Astute+.',
+                  style: AppText.body(
+                    size: 12,
+                    height: 1.35,
+                    color: p.inkFaint,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ValueListenableBuilder<ProfileTopPick>(
+                  valueListenable: DebugLooks.profileTop,
+                  builder: (context, pick, _) => _ProfileTopPicker(pick: pick),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A row of the debug section that is a switch, the whole row: its name,
+/// what it does under it, and the switch at its end.
+class _DebugSwitchRow extends StatelessWidget {
+  const _DebugSwitchRow({
+    super.key,
+    required this.label,
+    required this.note,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final String label;
+  final String note;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.p;
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => onChanged(!value),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          border: Border(top: BorderSide(color: p.line)),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: AppText.body(
+                      size: 14,
+                      weight: FontWeight.w500,
+                      color: p.ink,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    note,
+                    style: AppText.body(
+                      size: 12,
+                      height: 1.35,
+                      color: p.inkFaint,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 14),
+            NudgeSwitch(value: value, label: label, onChanged: onChanged),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Auto, A, B or C, as the profile's top: a segmented control like the
+/// appearance's, each choice with what it is under its letter.
+class _ProfileTopPicker extends StatelessWidget {
+  const _ProfileTopPicker({required this.pick});
+
+  final ProfileTopPick pick;
+
+  static const _options = [
+    (pick: ProfileTopPick.auto, name: 'Auto', note: 'A free · C Astute+'),
+    (pick: ProfileTopPick.a, name: 'A', note: 'score'),
+    (pick: ProfileTopPick.b, name: 'B', note: 'week'),
+    (pick: ProfileTopPick.c, name: 'C', note: 'board'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.p;
+    return PaperCard(
+      padding: const EdgeInsets.all(5),
+      radius: 16,
+      child: Row(
+        children: [
+          for (final option in _options)
+            Expanded(
+              // Auto carries the most words.
+              flex: option.pick == ProfileTopPick.auto ? 2 : 1,
+              child: Builder(
+                builder: (context) {
+                  final bool selected = option.pick == pick;
+                  return Semantics(
+                    button: true,
+                    selected: selected,
+                    label: option.pick == ProfileTopPick.auto
+                        ? 'Auto (${option.note})'
+                        : '${option.name}, ${option.note}',
+                    excludeSemantics: true,
+                    child: GestureDetector(
+                      key: ValueKey('debug-profile-top-${option.pick.name}'),
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        if (selected) return;
+                        HapticFeedback.selectionClick();
+                        DebugLooks.setProfileTop(option.pick);
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        constraints: const BoxConstraints(minHeight: 48),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 7,
+                        ),
+                        decoration: BoxDecoration(
+                          color: selected ? p.inverse : Colors.transparent,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              option.name,
+                              maxLines: 1,
+                              style: AppText.body(
+                                size: 13.5,
+                                weight: FontWeight.w700,
+                                color: selected ? p.onInverse : p.ink,
+                              ),
+                            ),
+                            const SizedBox(height: 1),
+                            Text(
+                              option.note,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppText.body(
+                                size: 10.5,
+                                weight: FontWeight.w500,
+                                color: (selected ? p.onInverse : p.inkMuted)
+                                    .withValues(alpha: 0.75),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
         ],
       ),
     );

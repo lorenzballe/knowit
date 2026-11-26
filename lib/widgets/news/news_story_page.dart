@@ -16,8 +16,10 @@
 /// - the reports it was made from, each opened in the browser, and a line
 ///   on how it was written.
 ///
-/// The way back stays put above what scrolls (on iOS 26 Apple's own glass
-/// button, a native view).
+/// The way back is part of the page, as Instagram's is: it goes up and away
+/// with the story, and comes straight back the moment the reader goes back
+/// up ([QuickReturn]). On iOS 26 it is Apple's own glass button, a native
+/// view, laid over the page and never inside what scrolls.
 library;
 
 import 'package:flutter/material.dart';
@@ -27,6 +29,7 @@ import '../../data/news_paper.dart';
 import '../../l10n/l10n.dart';
 import '../../models/pill.dart';
 import '../../theme.dart';
+import '../quick_return.dart';
 import '../ui.dart' show BackCircle;
 import 'news_parts.dart';
 
@@ -63,61 +66,57 @@ class NewsStoryPage extends StatelessWidget {
       backgroundColor: p.surface,
       body: SafeArea(
         bottom: false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(14, 6, 14, 0),
-              child: Row(
-                children: [
-                  BackCircle(onPressed: () => Navigator.of(context).maybePop()),
-                ],
-              ),
+        child: QuickReturn(
+          header: Padding(
+            padding: const EdgeInsets.fromLTRB(14, 6, 14, 0),
+            child: Row(
+              children: [
+                BackCircle(onPressed: () => Navigator.of(context).maybePop()),
+              ],
             ),
-            Expanded(
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: SingleChildScrollView(
-                      key: ValueKey('news-story-${pill.id}'),
-                      padding: EdgeInsets.fromLTRB(0, 18, 0, bottom + 48),
-                      child: Center(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 620),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 22),
-                            child: _Story(
-                              pill: pill,
-                              openLink: openLink ?? _launch,
-                            ),
-                          ),
+          ),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: SingleChildScrollView(
+                  key: ValueKey('news-story-${pill.id}'),
+                  // Under the way back, as tall as it stands.
+                  padding: EdgeInsets.fromLTRB(0, 6 + 44 + 18, 0, bottom + 48),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 620),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 22),
+                        child: _Story(
+                          pill: pill,
+                          openLink: openLink ?? _launch,
                         ),
                       ),
                     ),
                   ),
-                  // What scrolls up goes out of sight softly under the way
-                  // back, not cut at a line.
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    height: 18,
-                    child: IgnorePointer(
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [p.surface, p.surface.withValues(alpha: 0)],
-                          ),
-                        ),
+                ),
+              ),
+              // What scrolls up goes out of sight softly at the top of the
+              // page, not cut at a line, once the way back has gone with it.
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                height: 18,
+                child: IgnorePointer(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [p.surface, p.surface.withValues(alpha: 0)],
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

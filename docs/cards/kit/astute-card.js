@@ -208,19 +208,20 @@ const Kit = (() => {
   // a tap on the source (the listener below), and says deeper. Standing alone, with no Go deeper to open, the source
   // stays as the page wrote it.
   // The app says how (env.foot, the native card's way: line, the two run together; stack, the name on a line of its
-  // own over the source; pill, the name in a small pill of the card's wash) and Go deeper's name in the reader's
-  // language (env.deeper); where it does not (the pictures, the checker), the two run together, in English.
-  // Why this card (env.why, its name, sent on a card of the day only) is beside it with line and pill: under the
-  // source on a line, a second, outlined pill on pill, the source then under the two pills. The foot's last row
-  // stands beside the native save and share, as tall as reaches past them; what is above it has the card's whole
-  // width. A tap on it says why. With stack the app says why on the front instead, as the line under the head
-  // (env.note). From November 2026.
+  // own over the source; pill, the name in a small pill of the card's wash; links, the name a size up as on stack)
+  // and Go deeper's name in the reader's language (env.deeper); where it does not (the pictures, the checker), the
+  // two run together, in English.
+  // Why this card (env.why, its name, sent on a card of the day only) is beside it with line, pill and links: under
+  // the source on a line, a second, outlined pill on pill, a second door in plain words on Go deeper's own line on
+  // links; the source then under the two doors. The foot's last row stands beside the native save and share, as tall
+  // as reaches past them; what is above it has the card's whole width. A tap on it says why. With stack the app says
+  // why on the front instead, as the line under the head (env.note). From November 2026.
   const FOOT = 'line', DEEPER = 'Go deeper';
   function deeperFoot() {
     if (!bridge() || !bridge().deeper) return;
     const e = env(), style = e.foot || FOOT, lead = e.deeper || DEEPER;
     const why = style === 'stack' || !bridge().why ? null : e.why || null;
-    if (!['line', 'stack', 'pill'].includes(style)) return;
+    if (!['line', 'stack', 'pill', 'links'].includes(style)) return;
     document.querySelectorAll('.foot .src').forEach(el => {
       let go = el.querySelector(':scope > .kit-go'), from = el.querySelector(':scope > .kit-from');
       if (!go) {
@@ -238,19 +239,21 @@ const Kit = (() => {
         el.append(go, from);
       }
       go.textContent = lead;
-      el.classList.remove('kit-line', 'kit-stack', 'kit-pill', 'kit-with-why'); el.classList.add('kit-door', 'kit-' + style);
+      el.classList.remove('kit-line', 'kit-stack', 'kit-pill', 'kit-links', 'kit-with-why', 'kit-flat'); el.classList.add('kit-door', 'kit-' + style);
       const foot = el.closest('.foot');
-      foot.querySelectorAll('.kit-why-door').forEach(d => d.remove());
-      foot.classList.remove('kit-short');
+      foot.querySelectorAll('.kit-why-door, .kit-gap').forEach(d => d.remove());
+      foot.classList.remove('kit-short', 'kit-bare');
       foot.classList.toggle('kit-two', !!why);
       if (!why) return;
       el.classList.add('kit-with-why');
       const door = document.createElement('span'); door.className = 'kit-why-door'; door.textContent = why;
       door.setAttribute('role', 'button');
-      if (style === 'pill') el.insertBefore(door, from); else foot.appendChild(door);
+      if (besideGo(el)) el.insertBefore(door, from); else foot.appendChild(door);
     });
     fitFoot();
   }
+  // Where Why this card stands beside Go deeper, before the source (pill, links), rather than on a row of its own.
+  const besideGo = src => src.classList.contains('kit-pill') || src.classList.contains('kit-links');
   // Why this card on a row of its own costs the back a line. On a back with no line to give the row goes (kit-short):
   // Why this card follows the source on Go deeper's line, and the whole foot keeps to the side of the save and share,
   // as a native card's does, as high as the source alone always was. A card as short as a 375 by 667 phone's (475
@@ -260,19 +263,36 @@ const Kit = (() => {
   let watching = null, footQueued = false;
   function fitFoot() {
     const inn = card && card.querySelector('.in'), feet = [...document.querySelectorAll('.foot.kit-two')];
-    if (!inn || !feet.length) return;
-    // Short, the door follows the source; else it is the row beside the save and share, or the second pill.
+    // Links on a card with no Why this card to open: Go deeper's name on a line of its own over the source, a line more
+    // than the source alone. On a back short of room they run together, as a line sets them (kit-flat), as on a
+    // native card.
+    const lone = [...document.querySelectorAll('.foot:not(.kit-two) > .src.kit-links')];
+    if (!inn || !(feet.length || lone.length)) return;
+    lone.forEach(s => s.classList.remove('kit-flat'));
+    if (lone.length && (innerHeight < SHORT_CARD || inn.scrollHeight > inn.clientHeight + 1)) lone.forEach(s => s.classList.add('kit-flat'));
+    // Short, the door follows the source; else it is the row beside the save and share, or the second pill. Between
+    // the source and the door, a space a line may break at (kit-gap): a door with no room left on the source's last
+    // line starts the next one, at its start, rather than running on under the save and share.
     const shorten = on => feet.forEach(f => {
-      f.classList.toggle('kit-short', on);
+      f.classList.toggle('kit-short', on); f.classList.remove('kit-bare');
       const src = f.querySelector('.src.kit-door'), door = f.querySelector('.kit-why-door');
       if (!src || !door) return;
-      if (on) src.appendChild(door);
-      else if (src.classList.contains('kit-pill')) src.insertBefore(door, src.querySelector(':scope > .kit-from'));
+      f.querySelectorAll('.kit-gap').forEach(g => g.remove());
+      if (on) { const gap = document.createElement('span'); gap.className = 'kit-gap'; gap.textContent = ' '; src.append(gap, door); }
+      else if (besideGo(src)) src.insertBefore(door, src.querySelector(':scope > .kit-from'));
       else f.appendChild(door);
     });
     const over = () => inn.scrollHeight > inn.clientHeight + 1;
     shorten(false);
     if (innerHeight < SHORT_CARD || over()) shorten(true);
+    // The last a short back's foot gives (kit-bare): the source's words, where with them it would be taller than the
+    // row beside the save and share that every page was drawn to leave it. The two doors stand alone, and Go deeper
+    // opens on the source, as on a native card (lib/widgets/reveal_body.dart, _FootForm.doors).
+    const row = (env().corner || {}).h || 0;
+    if (row) feet.forEach(f => {
+      const src = f.querySelector('.src.kit-door');
+      if (f.classList.contains('kit-short') && src && src.getBoundingClientRect().height > row + 1) f.classList.add('kit-bare');
+    });
     // What this changed is the foot's own doing, not the page's: nothing to look at again for it.
     if (watching) watching.takeRecords();
   }

@@ -288,6 +288,24 @@ void main() {
   Future<void> take(WidgetTester tester, String name) =>
       expectLater(find.byType(MaterialApp), matchesGoldenFile(_out(name)));
 
+  // The way back as Instagram keeps its own (lib/widgets/quick_return.dart),
+  // in Italian: at the top, beside the title; scrolled down, gone with the
+  // page while Save stays at the foot; a little way back up, back over the
+  // page, which fades under it there.
+  //
+  //   flutter test tool/gridmix_shots.dart --plain-name 'quick return' \
+  //     --update-goldens --dart-define=GRIDMIX_DIR=/some/folder
+  testWidgets('tune: quick return', (tester) async {
+    final ScrollableState list = await tune(tester, 'it', hinted: true);
+    await take(tester, 'tune-1-top');
+    list.position.jumpTo(640);
+    await _settle(tester, 6);
+    await take(tester, 'tune-2-down');
+    list.position.jumpTo(600);
+    await _settle(tester, 6);
+    await take(tester, 'tune-3-up');
+  });
+
   // The other masonry, a shelf a section can name: a month of one subject,
   // each card as tall as its question, the mark behind the tall ones.
   testWidgets('masonry: a month of Science and of History', (tester) async {

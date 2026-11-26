@@ -1,4 +1,4 @@
-import 'dart:async' show Timer, unawaited;
+import 'dart:async' show Timer, scheduleMicrotask, unawaited;
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
@@ -21,6 +21,7 @@ import '../store_links.dart'
 import '../sync/review_access.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
+import '../utils/reminders.dart' show remindersSupported;
 import '../widgets/chunky.dart';
 import '../widgets/fit_text.dart';
 import '../widgets/ambient.dart';
@@ -28,6 +29,8 @@ import '../widgets/motion.dart';
 import '../widgets/ui.dart' show ScreenView;
 import 'purchase_success_screen.dart';
 import '../widgets/glass_round.dart';
+
+part 'trial_offer.dart';
 
 /// What Astute+ costs, in cents, so the saving can be worked out rather than
 /// asserted. A hardcoded "save 37%" is a number that quietly stops being true

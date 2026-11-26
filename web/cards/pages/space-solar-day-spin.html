@@ -1,173 +1,219 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: space-solar-day-spin -->
 <title>Astute free card</title>
+<!-- Earth seen from above the North Pole, big, beside a Sun too big for the card. A person stands on
+     Earth at noon, the Sun overhead. The reader spins Earth with a finger; as it spins it also moves
+     along its orbit (here twenty times faster than real, so the step shows). After one full turn,
+     360°, the person points the same way in space as at the start, but the Sun has moved across the
+     sky: Earth must turn a little more to bring it overhead again. In real life about 1° more, some 4
+     minutes: 360° in a year of 365.25 days is 0.986° a day (Veritasium, "The SAT Question Everyone Got
+     Wrong", 2023: a solar day is a little more than one spin). -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:.6cqh;flex:1;min-height:0}
-#sky{flex:0 1 auto;height:27cqh;min-height:20cqh;width:100%;display:block;touch-action:none}
-#ctrl{display:flex;justify-content:center}
-#hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 7cqw;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;transition:transform .12s}
-#hold.down{transform:scale(.96)}
-#why{display:flex;flex-direction:column;gap:.2cqh;flex:0 0 auto;min-height:0}
-#why .big{font:800 max(2.4cqh,16px)/1.05 var(--display);margin:0}
-#why .body{font:500 max(1.7cqh,12px)/1.18 var(--body);margin:0;overflow-wrap:anywhere}
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#sky{display:block;width:100%;flex:1;min-height:0;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#why{font:500 max(1.9cqh,12.5px)/1.34 var(--body);margin:0}
+@container (max-height:520px){#why{display:none}}
 </style>
-<article class="card" id="card" data-topic="space" data-kind="Hold · watch">
+<article class="card" id="card" data-topic="space" data-kind="Spin it · one day">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SOLAR DAY</span></div>
     <h2 class="q">How far does Earth turn between one noon and the next?</h2>
     <div class="stagebox" id="stage">
-      <svg id="sky"></svg>
-      <div id="ctrl"><button id="hold">Hold to run one day</button></div>
-      <div id="why" class="gone"><p class="big">A bit more than 360°</p><p class="body">While Earth spins, it also moves along its orbit, so the Sun ends up at a slightly different angle. One full turn isn't enough: Earth must turn a little extra to bring the Sun overhead again.</p></div>
+      <svg id="sky" data-drag role="img" aria-label="Earth seen from above the North Pole, beside the Sun. A person stands on Earth at noon, the Sun overhead. Spin Earth with a finger, one day: from noon to the next noon."></svg>
     </div>
-    <p class="say" id="say">Hold the button. Watch “you” turn back toward the Sun.</p>
+    <p class="say" id="say">Spin Earth with your finger, one day: from noon, Sun overhead, to the next noon.</p>
+    <p class="body gone" id="why">While Earth spins, it also moves along its orbit, so the Sun ends up at a slightly different angle. Earth must turn about 1° more, some 4 minutes, to bring the Sun overhead again.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A 24-hour solar day is a bit more than one full spin of Earth.</div>
     <div class="foot"><span class="src">Source · Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const RATIO = 16;          // spin / orbit, orbit step exaggerated so it shows
-const FULL = 360 + 360 / (RATIO - 1); // turn needed to face the Sun again
-let s = 0, state = 0, holding = false, fast = false;
-let G = null;
-const D = Math.PI / 180;
-const ink = () => getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#ffffff';
-const col = () => getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#2B5CFF';
-
-function arcPath(cx, cy, r, a0, span) { // counter-clockwise on screen from a0 (deg) by span
-  if (span <= 0.01) return '';
-  if (span >= 359.99) return `M${cx + r},${cy}a${r},${r} 0 1 0 ${-2 * r},0a${r},${r} 0 1 0 ${2 * r},0`;
-  const a1 = a0 - span;
-  const p = a => [cx + r * Math.cos(a * D), cy + r * Math.sin(a * D)];
-  const [x0, y0] = p(a0), [x1, y1] = p(a1);
-  return `M${x0},${y0}A${r},${r} 0 ${span > 180 ? 1 : 0} 0 ${x1},${y1}`;
-}
+const LINE = '#0b1442', SUN = '#ffd23d', SUN2 = '#ffb21e', SEA = '#62cdfc', LAND = '#5fd383', ICE = '#ffffff', NIGHT = '#0b1442', SHIRT = '#ff5a4e';
+const RATIO = 365.25 / 20;              // spins per trip round the Sun, drawn: the orbit twenty times faster than real
+const FULL = 360 * RATIO / (RATIO - 1); // the turn that brings the Sun back overhead, drawn: about 381°
+const D2R = Math.PI / 180;
+let G = null, spin = 0, state = 0, lastQuarter = 0, grabbed = null;
+// Land seen from above the pole: three blobs round the ice, each a ring of radii (seeded, the same on every phone).
+const LANDS = [[30, 95], [150, 80], [255, 70]].map(([a, w]) => ({a, w, r: Array.from({length: 9}, () => .55 + Kit.rnd() * .33)}));
 
 function build() {
   const svg = Kit.$('sky');
-  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const K = ink();
-  const m = Math.min(W, H);
-  const rs = m * 0.13, rE = m * 0.085;
-  const sx = W * 0.3, sy = Math.max(H * 0.1, rs * 1.35 + 4);
-  const R = Math.max(rE * 2, Math.min(H * 0.6, H - sy - rE * 1.8 - f * 1.4));
-  const g = {W, H, f, sx, sy, R, rs, rE};
-  Kit.mk('path', {d: arcPath(sx, sy, R, 100, 40), style: `fill:none;stroke:${K};stroke-opacity:.25;stroke-width:1.5;stroke-dasharray:4 6`}, svg);
-  g.trail = Kit.mk('path', {style: `fill:none;stroke:${K};stroke-opacity:.7;stroke-width:3;stroke-linecap:round`}, svg);
-  Kit.mk('circle', {cx: sx, cy: sy, r: rs * 1.35, style: `fill:${K};opacity:.18`}, svg);
-  Kit.mk('circle', {cx: sx, cy: sy, r: rs, style: `fill:#ffb300;stroke:${K};stroke-width:2`}, svg);
-  const st = Kit.mk('text', {x: sx, y: sy + f * 0.35, 'text-anchor': 'middle', style: `font:800 ${f}px var(--body);fill:#152f8f`}, svg);
-  st.textContent = 'Sun';
-  g.sunline = Kit.mk('line', {style: `stroke:#ffb300;stroke-width:2;stroke-dasharray:6 5`}, svg);
-  g.gap = Kit.mk('path', {style: 'fill:#ffb300;opacity:.35'}, svg);
-  g.ring = Kit.mk('path', {style: `fill:none;stroke:${K};stroke-width:${Math.max(3, rE * 0.12)};stroke-linecap:round`}, svg);
-  g.extra = Kit.mk('path', {style: `fill:none;stroke:#ffb300;stroke-width:${Math.max(5, rE * 0.2)};stroke-linecap:round`}, svg);
-  g.ghost = Kit.mk('line', {style: `stroke:${K};stroke-opacity:.45;stroke-width:2;stroke-dasharray:3 4`}, svg);
-  g.night = Kit.mk('circle', {r: rE, style: `fill:#152f8f;stroke:${K};stroke-width:2`}, svg);
-  g.day = Kit.mk('path', {style: 'fill:#8fa9ff'}, svg);
-  g.pin = Kit.mk('line', {style: `stroke:${K};stroke-width:${Math.max(3, rE * 0.1)};stroke-linecap:round`}, svg);
-  g.dot = Kit.mk('circle', {r: Math.max(4, rE * 0.16), style: `fill:${K};stroke:#152f8f;stroke-width:2`}, svg);
-  g.you = Kit.mk('text', {'text-anchor': 'middle', style: `font:700 ${Math.max(12, f * 0.85)}px var(--body);fill:${K}`}, svg);
-  g.you.textContent = 'you';
-  const lab = Kit.mk('text', {x: W - 6, y: f * 1.1, 'text-anchor': 'end', style: `font:600 ${Math.max(12, f * 0.85)}px var(--body);fill:${K};opacity:.75`}, svg);
-  lab.textContent = 'Earth has turned';
-  g.num = Kit.mk('text', {x: W - 6, y: f * 1.1 + f * 3.1, 'text-anchor': 'end', style: `font:800 ${f * 2.3}px var(--mono);fill:${K}`}, svg);
-  const note = Kit.mk('text', {x: 6, y: H - 6, style: `font:500 ${Math.max(12, f * 0.75)}px var(--body);fill:${K};opacity:.6`}, svg);
-  note.textContent = 'orbit step exaggerated';
-  G = g;
+  const fs = Math.max(12.5, Math.min(15.5, f * .95));
+  // The Sun along the top edge, too big for the card; Earth under it, so at noon the person stands
+  // upright with the Sun overhead, and the orbit carries Earth to the right as the day goes on.
+  // Laid out from the Sun down: its cap, a clear gap for the person, the beam and the wedge, then Earth.
+  const RS = W * .37, sx = W * .4, sy = -RS * .45, capH = sy + RS;
+  // Earth in the room left under the Sun, as big as that room allows with a clear gap above it.
+  const room = H - capH - fs * 1.5;
+  const RE = Math.max(18, Math.min(W * .2, room / 3.6));
+  const ey0 = capH + Math.max(2.45 * RE, room * .56), D = ey0 - sy;
+  const g = Kit.mk('g', {}, svg);
+  Kit.mk('circle', {cx: sx, cy: sy, r: RS * 1.06, fill: SUN, opacity: .28}, g);
+  Kit.mk('circle', {cx: sx, cy: sy, r: RS, fill: SUN, stroke: LINE, 'stroke-width': 3}, g);
+  Kit.mk('circle', {cx: sx, cy: sy, r: RS * .78, fill: SUN2, opacity: .45}, g);
+  const note = Kit.mk('text', {x: W - 4, y: H - 5, 'text-anchor': 'end', 'font-size': Math.max(12, fs * .85), 'font-weight': 700, fill: '#fff', opacity: .8, 'font-family': 'Figtree, sans-serif'}, g);
+  note.textContent = 'orbit drawn 20× faster';
+  // The orbit: a thin arc through where Earth goes, and the part travelled, bolder.
+  const pt = a => [sx + D * Math.cos(a * D2R), sy - D * Math.sin(a * D2R)];
+  const arc = (a0, a1) => { const [x0, y0] = pt(a0), [x1, y1] = pt(a1); return `M${x0.toFixed(1)},${y0.toFixed(1)} A${D},${D} 0 0 0 ${x1.toFixed(1)},${y1.toFixed(1)}`; };
+  Kit.mk('path', {d: arc(258, 302), fill: 'none', stroke: '#fff', 'stroke-width': 2, opacity: .4}, g);
+  const trail = Kit.mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': 3.5, 'stroke-linecap': 'round', opacity: .85}, g);
+  // The Sun's direction from Earth, a beam; the way the person faced at the start; the turn still to go.
+  const beam = Kit.mk('line', {stroke: SUN, 'stroke-width': Math.max(3, fs * .24), 'stroke-linecap': 'round', 'stroke-dasharray': '2 7'}, g);
+  const wedge = Kit.mk('path', {fill: SUN, stroke: LINE, 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+  const ghost = Kit.mk('line', {stroke: '#fff', 'stroke-width': 2.5, 'stroke-dasharray': '5 5', 'stroke-linecap': 'round', opacity: 0}, g);
+  const turnT = Kit.mk('text', {'font-size': fs, 'font-weight': 800, fill: SUN, 'font-family': 'Figtree, sans-serif', opacity: 0}, g);
+  // Earth: its sea, its land and ice turning with it, its night side away from the Sun, its rim.
+  const earth = Kit.mk('g', {}, g);
+  const defs = Kit.mk('defs', {}, g), cp = Kit.mk('clipPath', {id: 'globe'}, defs);
+  Kit.mk('circle', {r: RE}, cp);
+  Kit.mk('circle', {r: RE, fill: SEA}, earth);
+  const turning = Kit.mk('g', {'clip-path': 'url(#globe)'}, earth);
+  for (const L of LANDS) {
+    const outer = L.r.map((r, i) => { const a = (L.a - L.w / 2 + L.w * i / (L.r.length - 1)) * D2R; return [Math.cos(a) * RE * (r + .1), -Math.sin(a) * RE * (r + .1)]; });
+    const inner = L.r.slice().reverse().map((r, i) => { const a = (L.a + L.w / 2 - L.w * i / (L.r.length - 1)) * D2R; return [Math.cos(a) * RE * (r - .26), -Math.sin(a) * RE * (r - .26)]; });
+    Kit.mk('path', {d: smooth(outer.concat(inner)), fill: LAND, stroke: LINE, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, turning);
+  }
+  Kit.mk('circle', {r: RE * .27, fill: ICE, stroke: LINE, 'stroke-width': 1.8}, turning);
+  const night = Kit.mk('path', {fill: NIGHT, opacity: .42}, earth);
+  Kit.mk('circle', {r: RE, fill: 'none', stroke: LINE, 'stroke-width': 3}, earth);
+  // The person: standing on the rim, head out, in a red shirt.
+  const you = Kit.mk('g', {}, earth);
+  const u = Math.max(1.6, RE * .05);
+  Kit.mk('path', {d: `M${-1.3 * u},0 L${-1.3 * u},${-4 * u} M${1.3 * u},0 L${1.3 * u},${-4 * u}`, stroke: LINE, 'stroke-width': Math.max(2, u * .95), 'stroke-linecap': 'round'}, you);
+  Kit.mk('rect', {x: -2.4 * u, y: -8.6 * u, width: 4.8 * u, height: 5.2 * u, rx: 1.6 * u, fill: SHIRT, stroke: LINE, 'stroke-width': 2}, you);
+  Kit.mk('circle', {cx: 0, cy: -10.6 * u, r: 2 * u, fill: '#f2c29b', stroke: LINE, 'stroke-width': 2}, you);
+  const youT = Kit.mk('text', {'font-size': fs * 1.05, 'font-weight': 800, fill: '#fff', 'text-anchor': 'middle', 'font-family': 'Figtree, sans-serif'}, g);
+  youT.textContent = 'you';
+  // The spin hint: a curved arrow round Earth's far side, the way it turns, until the reader turns it.
+  const hint = Kit.mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+  // How far Earth has turned, large, in the Sun's cap.
+  const big = Math.min(fs * 2.3, capH * .5);
+  const num = Kit.mk('text', {x: sx, y: capH - Math.max(6, capH * .1), 'text-anchor': 'middle', 'font-size': big, 'font-weight': 800, fill: LINE, 'font-family': 'Fraunces, Georgia, serif'}, g);
+  const cap = Kit.mk('text', {x: sx, y: capH - Math.max(6, capH * .1) - big * 1.12, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700, fill: LINE, 'font-family': 'Figtree, sans-serif'}, g);
+  G = {svg, W, H, f, fs, RS, RE, sx, sy, D, trail, beam, wedge, ghost, turnT, earth, turning, night, you, youT, hint, num, cap, arc};
   render();
 }
-
+// A closed smooth path through points (Catmull-Rom).
+function smooth(p) {
+  const n = p.length, q = i => p[(i + n) % n];
+  let d = `M${q(0)[0].toFixed(1)},${q(0)[1].toFixed(1)}`;
+  for (let i = 0; i < n; i++) { const [a, b, c, e] = [q(i - 1), q(i), q(i + 1), q(i + 2)]; d += `C${(b[0] + (c[0] - a[0]) / 6).toFixed(1)},${(b[1] + (c[1] - a[1]) / 6).toFixed(1)} ${(c[0] - (e[0] - b[0]) / 6).toFixed(1)},${(c[1] - (e[1] - b[1]) / 6).toFixed(1)} ${c[0].toFixed(1)},${c[1].toFixed(1)}`; }
+  return d + 'Z';
+}
+// Where Earth is when it has spun so far: its centre, and the Sun's direction from it (degrees, up = 90).
+function at(s) {
+  const phi = 270 + s / RATIO, ex = G.sx + G.D * Math.cos(phi * D2R), ey = G.sy - G.D * Math.sin(phi * D2R);
+  return {phi, ex, ey, sunDir: phi - 180};
+}
 function render() {
   if (!G) return;
-  const g = G, o = s / RATIO, phi = (90 - o) * D;
-  const ex = g.sx + g.R * Math.cos(phi), ey = g.sy + g.R * Math.sin(phi);
-  g.trail.setAttribute('d', arcPath(g.sx, g.sy, g.R, 90, o));
-  const a = Math.atan2(g.sy - ey, g.sx - ex) / D; // sun direction from Earth
-  const pa = -90 - s;                              // where "you" points
-  // day side faces the Sun
-  const r = g.rE, p1 = [ex + r * Math.cos((a - 90) * D), ey + r * Math.sin((a - 90) * D)], p2 = [ex + r * Math.cos((a + 90) * D), ey + r * Math.sin((a + 90) * D)];
-  g.night.setAttribute('cx', ex); g.night.setAttribute('cy', ey);
-  g.day.setAttribute('d', `M${p1}A${r},${r} 0 0 1 ${p2}Z`);
-  const dS = Math.max(0, Math.hypot(g.sx - ex, g.sy - ey) - g.rs * 1.1);
-  g.sunline.setAttribute('x1', ex); g.sunline.setAttribute('y1', ey);
-  g.sunline.setAttribute('x2', ex + dS * Math.cos(a * D)); g.sunline.setAttribute('y2', ey + dS * Math.sin(a * D));
-  const rr = r * 1.55;
-  g.ring.setAttribute('d', arcPath(ex, ey, rr, -90, Math.min(s, 360)));
-  g.extra.setAttribute('d', s > 360 ? arcPath(ex, ey, rr, -90, s - 360) : '');
-  // the angle still to turn once a full spin is done
-  if (s >= 360 && state < 2) {
-    const rem = FULL - s, R2 = r * 1.3, a0 = pa;
-    const q = arcPath(ex, ey, R2, a0, rem);
-    g.gap.setAttribute('d', rem > 0.05 ? `M${ex},${ey}L${ex + R2 * Math.cos(a0 * D)},${ey + R2 * Math.sin(a0 * D)}${q.replace(/^M[^A]*/, '')}Z` : '');
-    g.ghost.setAttribute('x1', ex); g.ghost.setAttribute('y1', ey);
-    g.ghost.setAttribute('x2', ex); g.ghost.setAttribute('y2', ey - r * 2.1);
-  } else { g.gap.setAttribute('d', ''); g.ghost.setAttribute('x2', ex); g.ghost.setAttribute('y2', ey); g.ghost.setAttribute('x1', ex); g.ghost.setAttribute('y1', ey); }
-  const tx = ex + r * 1.3 * Math.cos(pa * D), ty = ey + r * 1.3 * Math.sin(pa * D);
-  g.pin.setAttribute('x1', ex); g.pin.setAttribute('y1', ey); g.pin.setAttribute('x2', tx); g.pin.setAttribute('y2', ty);
-  g.dot.setAttribute('cx', tx); g.dot.setAttribute('cy', ty);
-  g.you.setAttribute('x', ex + r * 2.15 * Math.cos(pa * D)); g.you.setAttribute('y', ey + r * 2.15 * Math.sin(pa * D) + g.f * 0.3);
-  g.num.textContent = (state === 2 ? '360°+' : Math.round(s) + '°');
+  const {RE, fs} = G, {phi, ex, ey, sunDir} = at(spin);
+  const P = (a, r) => [ex + r * Math.cos(a * D2R), ey - r * Math.sin(a * D2R)];
+  G.earth.setAttribute('transform', `translate(${ex.toFixed(1)},${ey.toFixed(1)})`);
+  G.turning.setAttribute('transform', `rotate(${(-spin).toFixed(2)})`);
+  G.trail.setAttribute('d', phi > 270.05 ? G.arc(270, phi) : '');
+  // Night: the half of Earth turned away from the Sun.
+  const n0 = (sunDir + 90) * D2R, n1 = (sunDir - 90) * D2R;
+  G.night.setAttribute('d', `M${(RE * Math.cos(n0)).toFixed(1)},${(-RE * Math.sin(n0)).toFixed(1)} A${RE},${RE} 0 0 0 ${(RE * Math.cos(n1)).toFixed(1)},${(-RE * Math.sin(n1)).toFixed(1)} Z`);
+  // The person, where the spin has carried them: at the start, facing the Sun.
+  const youDir = 90 + spin;
+  G.you.setAttribute('transform', `rotate(${(90 - youDir).toFixed(2)}) translate(0,${(-RE + 1).toFixed(1)})`);
+  // Its name on the open side: away from the wedge, which is to its left while turning and to its right at the end.
+  const [tx, ty] = P(youDir + (state === 2 ? 28 : -26), RE * 1.66);
+  G.youT.setAttribute('x', tx.toFixed(1)); G.youT.setAttribute('y', (ty + fs * .36).toFixed(1));
+  // The beam toward the Sun, from Earth's rim to the Sun's edge.
+  const reach = Math.hypot(G.sx - ex, G.sy - ey) - G.RS - 5;
+  const [b0x, b0y] = P(sunDir, RE * 1.08), [b1x, b1y] = P(sunDir, Math.max(RE * 1.1, reach));
+  G.beam.setAttribute('x1', b0x.toFixed(1)); G.beam.setAttribute('y1', b0y.toFixed(1)); G.beam.setAttribute('x2', b1x.toFixed(1)); G.beam.setAttribute('y2', b1y.toFixed(1));
+  // After a full turn: the way the person faced at the start, and the wedge still to turn.
+  const past = spin >= 359.5;
+  const [gx, gy] = P(90, Math.max(RE * 1.1, reach));
+  G.ghost.setAttribute('x1', ex.toFixed(1)); G.ghost.setAttribute('y1', ey.toFixed(1)); G.ghost.setAttribute('x2', gx.toFixed(1)); G.ghost.setAttribute('y2', gy.toFixed(1));
+  G.ghost.setAttribute('opacity', past ? .9 : 0);
+  // Turning, the wedge is what is still to go; at the end, the whole extra turn past one full spin.
+  const rest = sunDir - (youDir - 360);
+  if (past && (state === 2 || rest > .2)) {
+    // A band just outside the rim, so it shows whole: from the way the person faced to the way of the Sun.
+    const r0 = RE * 1.06, r1 = RE * 2.05, a0 = (state === 2 ? 90 : youDir - 360) * D2R, a1 = sunDir * D2R;
+    const p = (r, a) => `${(ex + r * Math.cos(a)).toFixed(1)},${(ey - r * Math.sin(a)).toFixed(1)}`;
+    G.wedge.setAttribute('d', `M${p(r0, a0)} L${p(r1, a0)} A${r1},${r1} 0 0 0 ${p(r1, a1)} L${p(r0, a1)} A${r0},${r0} 0 0 1 ${p(r0, a0)} Z`);
+  } else G.wedge.setAttribute('d', '');
+  // The wedge named on its open side: still to turn, left of it; at the end, the extra turn, right of it.
+  if (past && (state === 2 || rest > .2)) {
+    const [lx, ly] = state === 2 ? P(62, RE * 1.8) : P(sunDir + 10, RE * 1.72);
+    G.turnT.textContent = state === 2 ? 'extra turn' : 'still to turn';
+    G.turnT.setAttribute('text-anchor', state === 2 ? 'start' : 'end');
+    let w = 0; try { w = G.turnT.getComputedTextLength(); } catch (_) {}
+    const x = state === 2 ? Math.min(lx, G.W - 3 - w) : Math.max(lx, 3 + w);
+    G.turnT.setAttribute('x', x.toFixed(1)); G.turnT.setAttribute('y', (ly + fs * .36).toFixed(1)); G.turnT.setAttribute('opacity', 1);
+  } else G.turnT.setAttribute('opacity', 0);
+  // The hint arrow, round Earth's lower right, the way it turns.
+  if (spin < 8 && state === 0) {
+    const r = RE * 1.3, a0 = -75, a1 = -15, p0 = P(a0, r), p1 = P(a1, r), h = fs * .6, t = (a1 + 90) * D2R;
+    const tx1 = -Math.cos(t), ty1 = Math.sin(t), nx = -ty1, ny = tx1;
+    G.hint.setAttribute('d', `M${p0[0].toFixed(1)},${p0[1].toFixed(1)} A${r},${r} 0 0 0 ${p1[0].toFixed(1)},${p1[1].toFixed(1)} M${(p1[0] + h * (tx1 + .7 * nx)).toFixed(1)},${(p1[1] + h * (ty1 + .7 * ny)).toFixed(1)} L${p1[0].toFixed(1)},${p1[1].toFixed(1)} L${(p1[0] + h * (tx1 - .7 * nx)).toFixed(1)},${(p1[1] + h * (ty1 - .7 * ny)).toFixed(1)}`);
+  } else G.hint.setAttribute('d', '');
+  // The count: degrees to a full turn; a full turn and a bit; at the end, the real figure.
+  G.num.textContent = state === 2 ? '≈ 361°' : spin < 359.5 ? Math.round(spin) + '°' : '360° + …';
+  G.cap.textContent = state === 2 ? 'noon to noon, Earth turns' : 'Earth has turned';
 }
 
-function tick(t, dt) {
-  if (!holding || state === 2) return;
-  const k = fast ? 8 : 1, sec = Math.min(dt, 50) / 1000;
-  if (state === 0) {
-    s += 90 * k * sec;
-    if (s >= 360) {
-      s = 360; state = 1; release(); Kit.haptic('light');
-      Kit.$('say').textContent = 'One full turn, 360°. But the Sun isn\u2019t overhead yet. Hold again.';
-      Kit.$('hold').textContent = 'Hold to keep turning';
-      if (!Kit.calm) gsap.fromTo('#say', {opacity: 0}, {opacity: 1, duration: .35});
-    }
-  } else if (state === 1) {
-    s += 10 * k * sec;
-    if (s >= FULL) { s = FULL; finish(); }
+function turnBy(d) {
+  if (state === 2) return;
+  const was = spin;
+  spin = Math.max(0, Math.min(FULL, spin + d));
+  if (state === 0 && spin >= 360) {
+    spin = 360; state = 1; Kit.haptic('medium');
+    Kit.$('say').textContent = 'One full turn, 360°. But the Sun is not overhead yet: keep turning.';
   }
-  render();
+  const q = Math.floor(spin / 90); if (q !== lastQuarter) { lastQuarter = q; Kit.haptic('light'); }
+  if (state === 1 && spin >= FULL - .05) { spin = FULL; finish(); return; }
+  if (spin !== was) render();
 }
-
 function finish() {
-  state = 2; release(); Kit.haptic('success');
-  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  render();
+  state = 2; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => build());
 }
 
-function press(e) { if (e) e.preventDefault(); if (state === 2) return; holding = true; Kit.$('hold').classList.add('down'); Kit.haptic('selection'); }
-function release() { holding = false; Kit.$('hold').classList.remove('down'); }
-const hb = Kit.$('hold');
-hb.addEventListener('pointerdown', press);
-['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => hb.addEventListener(ev, release));
-hb.addEventListener('contextmenu', e => e.preventDefault());
-gsap.ticker.add(tick);
-
-// redraw whenever the drawing's box changes
-let lastW = 0, lastH = 0;
-if (typeof ResizeObserver !== 'undefined') {
-  new ResizeObserver(() => {
-    const r = Kit.$('sky').getBoundingClientRect();
-    const w = Math.round(r.width), h = Math.round(r.height);
-    if (!G || w < 2 || h < 2 || (w === lastW && h === lastH)) return;
-    lastW = w; lastH = h;
-    build();
-  }).observe(Kit.$('sky'));
+// The finger turns Earth round its own centre: any way round, it turns Earth on, as a day only runs forward.
+const sky = Kit.$('sky');
+function angleOf(e) {
+  const b = sky.getBoundingClientRect(), x = (e.clientX - b.left) / b.width * G.W, y = (e.clientY - b.top) / b.height * G.H, {ex, ey} = at(spin);
+  return Math.hypot(x - ex, y - ey) < G.RE * .25 ? null : Math.atan2(-(y - ey), x - ex) / D2R;
 }
+sky.addEventListener('pointerdown', e => { if (!G || state === 2) return; grabbed = angleOf(e); try { sky.setPointerCapture(e.pointerId); } catch (_) {} sky.style.cursor = 'grabbing'; });
+sky.addEventListener('pointermove', e => {
+  if (grabbed === null || !G) return;
+  const a = angleOf(e); if (a === null) return;
+  let d = a - grabbed; d = ((d + 540) % 360) - 180; grabbed = a;
+  turnBy(Math.abs(d));
+});
+['pointerup', 'pointercancel'].forEach(n => sky.addEventListener(n, () => { grabbed = null; sky.style.cursor = ''; }));
 
-Kit.onShow.card = () => { const r = Kit.$('sky').getBoundingClientRect(); lastW = Math.round(r.width); lastH = Math.round(r.height); build(); };
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
+Kit.onShow.card = () => build();
+let seen = '';
+new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; build(); } }).observe(Kit.$('stage'));
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.hint, {attr: {opacity: .2}}, {attr: {opacity: 1}, duration: .5, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+};
 Kit.play.card = async () => {
   const wait = ms => new Promise(r => setTimeout(r, ms));
-  fast = true;
-  press(); let n = 0; while (state === 0 && n++ < 200) await wait(30);
-  press(); n = 0; while (state === 1 && n++ < 200) await wait(30);
-  if (state !== 2) { s = FULL; finish(); }
-  await wait(600);
+  const b = sky.getBoundingClientRect(), k = b.width / G.W;
+  const pos = a => { const {ex, ey} = at(spin); return [b.left + (ex + G.RE * 1.2 * Math.cos(a * D2R)) * k, b.top + (ey - G.RE * 1.2 * Math.sin(a * D2R)) * k]; };
+  const ev = (type, a) => { const [x, y] = pos(a); sky.dispatchEvent(new PointerEvent(type, {bubbles: true, clientX: x, clientY: y, pointerId: 1})); };
+  let a = 0; ev('pointerdown', a);
+  for (let i = 0; i < 80 && state !== 2; i++) { a += 12; ev('pointermove', a); await wait(12); }
+  ev('pointerup', a);
+  await wait(700);
 };
 Kit.single();
 </script>

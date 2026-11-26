@@ -1,13 +1,16 @@
 // Photographs the head of the finished day on Today, each way it can be
 // drawn (DoneHead in lib/screens/today_done_view.dart): at night on a
 // 390 by 844 phone and an SE's 375 by 667, the one the app ships on paper
-// and with the line under its name, and Explore's way back to the reader's
-// own five, "Your five from today", with what it opens.
+// and with the line under its name, the day with no top row as the
+// developer tools set it (DebugLooks), what "See again" opens, and
+// Explore's way back to the reader's own five, "Your five from today",
+// with what it opens.
 //
-//   SHOTS=/some/folder flutter test tool/today_head_shots.dart --update-goldens
+//   SHOTS=/some/folder LANG_SHOT=it flutter test tool/today_head_shots.dart --update-goldens
 //
 // A camera, not a check: it lives outside test/ so CI never runs it. The
 // cards' pictures are read from web/cards, as the site serves them.
+// LANG_SHOT is the phone's language, English when not given.
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -18,10 +21,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart' show dateKey;
+import 'package:astuto/debug_flags.dart';
+import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/today_done_view.dart';
+import 'package:astuto/state/debug_looks.dart';
 import 'package:astuto/widgets/web/card_thumb.dart';
+
+/// The phone's language.
+final Locale _locale = Locale(Platform.environment['LANG_SHOT'] ?? 'en');
 
 Future<void> _loadFonts() async {
   final fonts = {
@@ -111,7 +120,12 @@ List<Pill> _five() {
 
 /// A reader on the fourth day running, today's five read, on the free plan.
 /// [liked]: a card liked some other day, so the hint about liking is spent.
-Map<String, Object> _finished({bool paper = false, bool liked = true}) {
+/// [more]: anything else the phone keeps.
+Map<String, Object> _finished({
+  bool paper = false,
+  bool liked = true,
+  Map<String, Object> more = const {},
+}) {
   final DateTime now = DateTime.now();
   String back(int days) =>
       dateKey(DateTime(now.year, now.month, now.day - days));
@@ -136,28 +150,35 @@ Map<String, Object> _finished({bool paper = false, bool liked = true}) {
     'knowit.completedDates': [for (int d = 3; d >= 0; d--) back(d)],
     'knowit.seenIds': [...PillBank.cards.take(40).map((p) => p.id), ...deck],
     if (liked) 'knowit.likedIds': [PillBank.cards[7].id],
+    ...more,
   };
 }
 
-/// The app on the finished day, its head drawn as [head].
+/// The app on the finished day, its head drawn as [head] — or, with none
+/// given, as the app itself decides, the developer tools included.
 Future<void> _open(
   WidgetTester tester,
   _Phone phone,
-  DoneHead head, {
+  DoneHead? head, {
   bool paper = false,
   bool liked = true,
+  Map<String, Object> more = const {},
 }) async {
   _hold(tester, phone);
   addTearDown(tester.view.reset);
+  tester.platformDispatcher.localeTestValue = _locale;
+  tester.platformDispatcher.localesTestValue = [_locale];
+  addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+  addTearDown(tester.platformDispatcher.clearLocalesTestValue);
   // ignore: invalid_use_of_visible_for_testing_member
-  TodayDoneView.head = head;
+  TodayDoneView.headForShots = head;
   addTearDown(() {
     // ignore: invalid_use_of_visible_for_testing_member
-    TodayDoneView.head = kDoneHead;
+    TodayDoneView.headForShots = null;
   });
   // ignore: invalid_use_of_visible_for_testing_member
   SharedPreferences.setMockInitialValues(
-    _finished(paper: paper, liked: liked),
+    _finished(paper: paper, liked: liked, more: more),
   );
   await tester.pumpWidget(const AstutoApp());
   await _settle(tester);
@@ -201,13 +222,51 @@ void main() {
     });
   }
 
+  // The card at the front, as the dots under the shelf name it.
+  final String third = lookupAppLocalizations(_locale).cardOf(3, 5);
+
+  // The day with no top row, as the developer tools set it and the phone
+  // keeps it: no head asked for, the app deciding.
+  for (final _Phone phone in [_tall, _se]) {
+    testWidgets('no top row, from the developer tools, ${phone.name}', (
+      tester,
+    ) async {
+      final bool tools = debugToolsOn;
+      debugToolsOn = true;
+      addTearDown(() {
+        debugToolsOn = tools;
+        // ignore: invalid_use_of_visible_for_testing_member
+        DebugLooks.reset();
+      });
+      await _open(
+        tester,
+        phone,
+        null,
+        more: const {'knowit.debug.todayNoTopRow': true},
+      );
+      await shoot(tester, 'debug-no-top-row-${phone.name}-dark');
+    });
+  }
+
+  // "See again" over the shelf, with the third card at its front: the five
+  // at full size, from the first.
+  testWidgets('see again, from the first card', (tester) async {
+    await _open(tester, _tall, kDoneHead);
+    await tester.tap(find.bySemanticsLabel(third).last);
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('shelf-see-again')));
+    await _settle(tester);
+    await _pictures(tester);
+    await shoot(tester, 'see-again-opened-390-dark');
+  });
+
   // Explore, once the day is read: the way back to the reader's own five,
   // near the top, and what it opens — from the first card, though the
   // reader left the shelf on the third.
   for (final _Phone phone in [_tall, _se]) {
     testWidgets('your five from today, ${phone.name}', (tester) async {
       await _open(tester, phone, kDoneHead);
-      await tester.tap(find.bySemanticsLabel('Card 3 of 5').last);
+      await tester.tap(find.bySemanticsLabel(third).last);
       await _settle(tester);
       await tester.tap(find.byKey(const ValueKey('tab-Explore')));
       await _settle(tester);

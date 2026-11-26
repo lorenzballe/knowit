@@ -1,139 +1,196 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-knotted-molecule -->
+<!-- The picture: a molecular model drawn big, atoms as beads on a string, swaying slowly in 3D. Two threads of atoms
+     wound around two copper ions, their ends still open: the copper holds them crossed, as in Sauvage and
+     Dietrich-Buchecker's 1989 synthesis (a double helix around two copper(I) ions, then the ring closed, then the
+     copper removed). The copper sits on two real crossings of the knot. Two taps: the ends are joined into one loop,
+     the copper is washed out, and the loop stays a trefoil knot. A finger turns the model. Drawn on a canvas at its
+     real size, again whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#stage{display:flex;flex-direction:column;gap:1.6cqh;flex:1;min-height:0}
 #wrap{flex:1;min-height:0;position:relative}
-#cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{margin:0}
-#why .body{margin:0;overflow-wrap:anywhere}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#yr{position:absolute;left:0;top:0;margin:0;font:900 max(7.4cqh,38px)/1 var(--display);letter-spacing:-.02em;pointer-events:none}
+#ctl{display:flex;align-items:center;gap:3.5cqw}
+#ctl .say{flex:1;margin:0;overflow-wrap:anywhere}
+#go{flex:none;font:800 max(2.1cqh,14px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:max(1.6cqh,11px) max(4.6cqw,16px);cursor:pointer;transition:transform .14s cubic-bezier(.23,1,.32,1)}
+#go:active{transform:scale(.96)}
+#go:disabled{opacity:.45;cursor:default}
+#why .body{margin:0;font-size:max(2.2cqh,13.5px);line-height:1.38;overflow-wrap:anywhere}
+/* A short card keeps the answer's first sentence; the second gives its room to the model. */
+@container (max-height:540px){#why .more{display:none}}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Drag · see what it does">
+<article class="card" id="card" data-topic="science" data-kind="Tie it · two steps">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">MOLECULAR KNOTS</span></div>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TIE IT</span></div>
     <h2 class="q">When was the first synthetic knotted molecule created?</h2>
     <div class="stagebox" id="stage">
-      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="wrap"><canvas id="cv" data-drag role="img" aria-label="A molecular model: two threads of atoms wound around two copper ions, their ends still open."></canvas><p id="yr" class="gone">1989</p></div>
+      <div id="ctl">
+        <p class="say" id="say">Two copper ions (Cu) hold two threads of atoms crossed. Join the ends.</p>
+        <button id="go">Join the ends</button>
+      </div>
       <div id="why" class="gone">
-        <p class="big">1989</p>
-        <p class="body">Chemist Jean-Pierre Sauvage tied molecules around copper ions into a trefoil knot. The knot stops the atoms from unfurling, trapping them in higher energy states that give the molecule new properties.</p>
+        <p class="body">Chemist Jean-Pierre Sauvage tied molecules around copper ions into a trefoil knot, the first synthetic knotted molecule.<span class="more"> The knot stops the atoms from unfurling, trapping them in higher energy states that give the molecule new properties.</span></p>
       </div>
     </div>
-    <p class="say" id="say">Drag the copper ion into the ring and watch the strand.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Tie a molecule in a different knot and you get a different material.</div>
     <div class="foot"><span class="src">Source · Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const cv = Kit.$('cv');
-let G = null;                       // {x,W,H}
-const st = {p: 0, ion: null, drag: false, done: false, time: 0, ringA: 1};
-let ionX = 0, ionY = 0;
+(() => {
+  // Flat colours, one meaning each: the atoms of the threads cream, the copper ions copper, ink for every outline.
+  const INK = '#10100c', BEAD = '#fbf6e6', BEAD_D = '#d6cfb8', CU = '#e0792c', CU_D = '#a44f12';
+  const TAU = Math.PI * 2;
+  const cv = Kit.$('cv');
 
-function css(v){ return getComputedStyle(Kit.$('card')).getPropertyValue(v).trim() || '#000'; }
-function geo(){
-  const {W, H} = G, S = Math.min(W, H * 0.82);
-  return {W, H, S, cx: W / 2, cy: H * 0.42, k: S * 0.125, r: Math.max(S * 0.065, 16), sx: W / 2, sy: H * 0.86};
-}
-function points(g){
-  const N = 240, out = [], p = st.p, e = p * p * (3 - 2 * p), jig = 1 - e, t0 = st.time;
-  for (let i = 0; i <= N; i++){
-    const u = i / N, t = u * Math.PI * 2;
-    const lx = g.cx + (u - .5) * g.W * .84;
-    const ly = g.cy + (Math.sin(u * 9 + t0 * 1.4) * .06 + Math.sin(u * 4 - t0) * .04) * g.S * jig;
-    const tx = g.cx + g.k * (Math.sin(t) + 2 * Math.sin(2 * t));
-    const ty = g.cy - g.k * (Math.cos(t) - 2 * Math.cos(2 * t)) + g.k * .45;
-    out.push({x: lx + (tx - lx) * e, y: ly + (ty - ly) * e, z: -Math.sin(3 * t) * e});
-  }
-  return out;
-}
-function draw(){
-  if (!G) return;
-  const x = G.x, g = geo(), ink = css('--k'), bg = css('--c'), body = css('--body') || 'sans-serif', mono = css('--mono') || 'monospace';
-  x.clearRect(0, 0, g.W, g.H);
-  // target ring
-  if (st.ringA > 0){
-    x.save(); x.globalAlpha = st.ringA * .55; x.strokeStyle = ink; x.lineWidth = Math.max(g.S * .008, 2);
-    x.setLineDash([g.S * .02, g.S * .018]);
-    x.beginPath(); x.arc(g.cx, g.cy + g.k * .45, g.r * 1.35, 0, Math.PI * 2); x.stroke(); x.restore();
-  }
-  // strand, drawn by depth so crossings go over and under
-  const P = points(g), segs = [];
-  for (let i = 0; i < P.length - 1; i++) segs.push({a: P[i], b: P[i + 1], z: (P[i].z + P[i + 1].z) / 2, i});
-  segs.sort((m, n) => m.z - n.z || m.i - n.i);
-  const w = Math.max(g.S * .028, 6);
-  for (const s of segs){
-    x.lineCap = 'butt'; x.strokeStyle = bg; x.lineWidth = w + Math.max(g.S * .03, 7);
-    x.beginPath(); x.moveTo(s.a.x, s.a.y); x.lineTo(s.b.x, s.b.y); x.stroke();
-    x.lineCap = 'round'; x.strokeStyle = ink; x.lineWidth = w;
-    x.beginPath(); x.moveTo(s.a.x, s.a.y); x.lineTo(s.b.x, s.b.y); x.stroke();
-  }
-  // atoms along the chain
-  x.fillStyle = bg;
-  for (let i = 0; i < P.length - 1; i += 12){ x.beginPath(); x.arc(P[i].x, P[i].y, w * .26, 0, Math.PI * 2); x.fill(); }
-  // copper ion
-  x.save();
-  x.shadowColor = 'rgba(0,0,0,.25)'; x.shadowBlur = st.drag ? 14 : 6;
-  x.fillStyle = '#c66a2b'; x.beginPath(); x.arc(ionX, ionY, g.r, 0, Math.PI * 2); x.fill(); x.restore();
-  x.strokeStyle = '#7a3a10'; x.lineWidth = Math.max(g.S * .006, 2); x.beginPath(); x.arc(ionX, ionY, g.r, 0, Math.PI * 2); x.stroke();
-  x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle';
-  x.font = `700 ${Math.max(g.r * .7, 13)}px ${mono}`; x.fillText('Cu⁺', ionX, ionY + 1);
-  // caption under the drawing
-  x.fillStyle = ink; x.globalAlpha = .75; x.font = `600 ${Math.max(g.S * .042, 12)}px ${body}`;
-  const cap = st.done ? 'trefoil knot · locked shape' : (st.p > 0 ? 'self-assembling…' : 'a loose strand: free to unfurl');
-  if (!(st.p === 0 && !st.done && ionY > g.H * .78 && false)) x.fillText(cap, g.cx, st.done || st.p > 0 ? g.H * .9 + 0 : g.cy - g.S * .2);
-  x.globalAlpha = 1;
-}
-Kit.onShow.card = () => {
-  G = Kit.fitCanvas(cv);
-  const g = geo();
-  if (st.p > 0){ ionX = g.cx; ionY = g.cy + g.k * .45; }
-  else if (!st.drag){ ionX = g.sx; ionY = g.sy; }
-  draw();
-};
-gsap.ticker.add(() => { if (!Kit.calm && st.p < 1) st.time += .03; draw(); });
+  // The trefoil knot, by length along it, so the beads sit evenly on the string.
+  const K = th => [Math.sin(th) + 2 * Math.sin(2 * th), Math.cos(th) - 2 * Math.cos(2 * th), -1.25 * Math.sin(3 * th)];
+  const M = 3000, P = [], L = [0];
+  for (let i = 0; i <= M; i++) P.push(K(TAU * i / M));
+  for (let i = 1; i <= M; i++) L.push(L[i - 1] + Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1], P[i][2] - P[i - 1][2]));
+  const LEN = L[M];
+  const along = f => { const s = ((f % 1) + 1) % 1 * LEN; let lo = 0, hi = M; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (L[m] <= s) lo = m; else hi = m; } const k = (s - L[lo]) / (L[hi] - L[lo] || 1); return P[lo].map((v, j) => v + (P[hi][j] - v) * k); };
+  // 72 atoms. The loop is cut at 0 and at a half: two threads, each passing every crossing once (the crossings fall
+  // at arc 0.053 with 0.613, 0.280 with 0.720, 0.387 with 0.947). Three atoms at each cut are the links that close it.
+  const N = 72, R = LEN / N * .74, MID = -.47;   // MID: the knot's middle, top to bottom (it spans -3 to 2.06)
+  const LINKS = [[N - 1, 0, 1], [N / 2 - 1, N / 2, N / 2 + 1]], links = new Set(LINKS.flat());
+  const knot = Array.from({length: N}, (_, i) => along(i / N));
+  // Each copper ion sits at a crossing of the two threads (arc 0.387 with 0.947, and 0.280 with 0.720), between the
+  // thread in front (depth -0.91) and the one behind (+0.91); it is moved off the front thread, across the back one
+  // and toward the knot's middle, so the front thread does not hide it. It still touches both.
+  const CROSS = [[.3866, .9469], [.2801, .7199]].map(pair => {
+    const a = pair.reduce((m, f) => along(f)[2] < along(m)[2] ? f : m);
+    const p = along(a), u = along(a + .002), v = along(a - .002), d = Math.hypot(u[0] - v[0], u[1] - v[1]);
+    let n = [-(u[1] - v[1]) / d, (u[0] - v[0]) / d];
+    if (n[0] * -p[0] + n[1] * -p[1] < 0) n = [-n[0], -n[1]];
+    return [p[0] + n[0] * .5, p[1] + n[1] * .5, -.35];
+  });
 
-function loc(e){ const r = cv.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; }
-cv.addEventListener('pointerdown', e => {
-  if (st.p > 0 || !G) return; const q = loc(e), g = geo();
-  if (Math.hypot(q.x - ionX, q.y - ionY) < g.r * 1.8){ st.drag = true; cv.setPointerCapture && cv.setPointerCapture(e.pointerId); Kit.haptic('selection'); }
-});
-cv.addEventListener('pointermove', e => { if (!st.drag) return; const q = loc(e); ionX = q.x; ionY = q.y; });
-cv.addEventListener('pointerup', () => {
-  if (!st.drag) return; st.drag = false; const g = geo(), tx = g.cx, ty = g.cy + g.k * .45;
-  if (Math.hypot(ionX - tx, ionY - ty) < g.r * 2.2) tie(tx, ty);
-  else gsap.to({}, {duration: .35, onUpdate(){ const k = this.progress(); ionX += (g.sx - ionX) * k; ionY += (g.sy - ionY) * k; }});
-});
-function tie(tx, ty){
-  Kit.haptic('light');
-  const d = Kit.calm ? 0 : 1;
-  gsap.to(window, {duration: .25 * d, onUpdate(){ ionX += (tx - ionX) * .4; ionY += (ty - ionY) * .4; }, onComplete(){ ionX = tx; ionY = ty; }});
-  gsap.to(st, {ringA: 0, duration: .3 * d});
-  gsap.to(st, {p: 1, duration: 1.6 * d, ease: 'power2.inOut', onComplete: finish});
-}
-function finish(){
-  if (st.done) return; st.done = true; Kit.haptic('success');
-  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  Kit.onShow.card();
-  if (!Kit.calm) gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
-}
-Kit.onEnter.card = () => {
-  if (Kit.calm || !G) return; const g = geo();
-  gsap.fromTo({v: 0}, {v: 0}, {v: 1, duration: .9, ease: 'sine.inOut', yoyo: true, repeat: 1,
-    onUpdate(){ if (!st.drag && st.p === 0) ionY = g.sy - this.targets()[0].v * g.r * .5; }});
-};
-Kit.play.card = async () => {
-  const w = ms => new Promise(r => setTimeout(r, ms)), r = cv.getBoundingClientRect(), g = geo();
-  const ev = (t, X, Y) => cv.dispatchEvent(new PointerEvent(t, {bubbles: true, pointerId: 1, clientX: r.left + X, clientY: r.top + Y}));
-  ev('pointerdown', ionX, ionY); await w(50);
-  for (let i = 1; i <= 8; i++){ ev('pointermove', g.sx + (g.cx - g.sx) * i / 8, g.sy + (g.cy + g.k * .45 - g.sy) * i / 8); await w(20); }
-  ev('pointerup', g.cx, g.cy + g.k * .45); await w(2300);
-};
+  // How far the model reaches on screen over every turn a finger may give it (in model units): the scale is set
+  // from this once, so the model never runs out of its box and never breathes as it turns.
+  const F = 14, TILT = .32, YAW = 1.05;
+  const view = (p, yaw) => { const ca = Math.cos(yaw), sa = Math.sin(yaw), x1 = p[0] * ca + p[2] * sa, z1 = -p[0] * sa + p[2] * ca, y = p[1] - MID;
+    const y2 = y * Math.cos(TILT) - z1 * Math.sin(TILT), z2 = y * Math.sin(TILT) + z1 * Math.cos(TILT), k = F / (F + z2); return [x1 * k, y2 * k, z2, k]; };
+  const BOX = (() => { let x0 = 0, x1 = 0, y0 = 0, y1 = 0;
+    const all = knot.map(p => [p, 1.1]).concat(CROSS.map(p => [p, 1.85]));
+    for (let a = -YAW; a <= YAW + 1e-9; a += YAW / 12) for (const [p, m] of all) { const [x, y, , k] = view(p, a), r = R * m * k; x0 = Math.min(x0, x - r); x1 = Math.max(x1, x + r); y0 = Math.min(y0, y - r); y1 = Math.max(y1, y + r); }
+    return {x0, x1, y0, y1}; })();
+
+  // in: the threads gathering on the copper as the card comes up; close: the links; free: the copper leaving.
+  const st = {in: 1, close: 0, free: 0, step: 0, busy: false, yaw: 0, sway: 0, drag: null, t: 0, year: 0};
+  let G = null;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ease = t => t < 0 ? 0 : t > 1 ? 1 : t * t * (3 - 2 * t);
+  const mix = (a, b, t) => { const p = x => [parseInt(x.slice(1, 3), 16), parseInt(x.slice(3, 5), 16), parseInt(x.slice(5, 7), 16)], A = p(a), B = p(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',')})`; };
+
+  function fit() { G = Kit.fitCanvas(cv); }
+
+  // Where every atom is now. As the card comes up the two threads draw in onto the copper, each from its own side.
+  function model() {
+    const out = [], g = ease(st.in);
+    for (let i = 0; i < N; i++) {
+      if (links.has(i)) continue;
+      const p = knot[i], side = i < N / 2 ? -1 : 1, s = 1 + .07 * (1 - g);
+      out.push({p: [p[0] * s + side * .25 * (1 - g), MID + (p[1] - MID) * s, p[2]], r: R, cu: false});
+    }
+    if (st.close > 0) for (const i of links) out.push({p: knot[i], r: R * ease(st.close * 1.25 - (i === 0 || i === N / 2 ? .25 : 0)), cu: false});
+    CROSS.forEach((c, k) => {
+      const f = ease(st.free), away = k ? [3.2, 4.6, 0] : [-5.4, -3.4, 0];
+      out.push({p: [lerp(c[0], away[0], f), lerp(c[1], away[1], f), 0], r: R * 1.75 * (1 - .35 * f) * (.4 + .6 * g), cu: true, fade: (1 - f) * g});
+    });
+    return out;
+  }
+
+  function draw() {
+    if (!G) return;
+    const {x, W, H} = G;
+    x.clearRect(0, 0, W, H);
+    // The year takes the top left corner at the end: the model moves over to give it room.
+    const left = Math.min(W * .1, 34) * st.year, bw = BOX.x1 - BOX.x0, bh = BOX.y1 - BOX.y0;
+    const S = Math.min((W - left) * .98 / bw, H * .98 / bh);
+    const ox = left + (W - left - bw * S) / 2 - BOX.x0 * S, oy = (H - bh * S) / 2 - BOX.y0 * S;
+    const yaw = Math.max(-YAW, Math.min(YAW, st.yaw + st.sway));
+    const items = model().map(o => { const [x1, y2, z2, k] = view(o.p, yaw); return Object.assign(o, {sx: ox + x1 * S, sy: oy + y2 * S, sr: o.r * S * k, d: z2}); });
+    const lw = Math.max(1.6, S * .045);
+    // Where the ends will be joined: a dashed line through the gap, until the links are in.
+    if (st.close < 1 && st.in > .9) {
+      x.save(); x.globalAlpha = .75 * (1 - st.close); x.strokeStyle = INK; x.lineWidth = Math.max(1.6, lw * .9); x.setLineDash([lw * 2.2, lw * 2]); x.lineCap = 'round';
+      for (const ids of LINKS) {
+        const a = (ids[0] - 1 + N) % N, b = (ids[2] + 1) % N, pts = [a, ...ids, b].map(i => { const [x1, y2] = view(knot[i], yaw); return [ox + x1 * S, oy + y2 * S]; });
+        x.beginPath(); pts.forEach((q, j) => j ? x.lineTo(q[0], q[1]) : x.moveTo(q[0], q[1])); x.stroke();
+      }
+      x.restore();
+    }
+    items.sort((a, b) => b.d - a.d);
+    for (const o of items) {
+      if (o.sr < .5) continue;
+      const far = Math.min(1, Math.max(0, (o.d + 1.4) / 2.8));
+      x.save();
+      if (o.cu) x.globalAlpha = Math.max(0, Math.min(1, o.fade));
+      x.beginPath(); x.arc(o.sx, o.sy, o.sr, 0, TAU);
+      x.fillStyle = o.cu ? CU_D : mix(BEAD_D, '#b9b19a', far * .5); x.fill();
+      x.beginPath(); x.arc(o.sx - o.sr * .2, o.sy - o.sr * .22, o.sr * .78, 0, TAU);
+      x.fillStyle = o.cu ? CU : mix(BEAD, '#e4dcc4', far * .55); x.fill();
+      x.beginPath(); x.arc(o.sx, o.sy, o.sr, 0, TAU);
+      x.lineWidth = lw; x.strokeStyle = INK; x.stroke();
+      if (o.cu && o.sr > 9) {
+        x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle';
+        x.font = `800 ${Math.round(o.sr * .82)}px Figtree, sans-serif`; x.fillText('Cu', o.sx, o.sy + o.sr * .05);
+      }
+      x.restore();
+    }
+  }
+
+  // The two steps, each a tap.
+  const STEPS = [
+    {say: 'One closed loop, knotted around the copper. Now wash the copper out.', btn: 'Remove copper', run: d => gsap.to(st, {close: 1, duration: .9 * d, ease: 'power2.out'})},
+    {run: d => gsap.to(st, {free: 1, duration: 1.1 * d, ease: 'power2.in'})}
+  ];
+  function next() {
+    if (st.busy || st.step > 1) return;
+    const s = STEPS[st.step], d = Kit.calm ? 0 : 1, go = Kit.$('go');
+    st.busy = true; go.disabled = true; Kit.haptic('light');
+    gsap.killTweensOf(st, 'in'); st.in = 1;
+    const tw = s.run(d);
+    const done = () => {
+      st.busy = false; st.step++;
+      if (st.step === 2) return finish();
+      go.disabled = false; go.textContent = s.btn; Kit.$('say').textContent = s.say;
+    };
+    if (d) tw.eventCallback('onComplete', done); else { tw.progress(1); done(); }
+  }
+  function finish() {
+    Kit.haptic('success');
+    Kit.hide('ctl'); Kit.show('yr'); Kit.show('why'); Kit.show('keep');
+    if (Kit.calm) st.year = 1; else gsap.to(st, {year: 1, duration: .6, ease: 'power2.out'});
+  }
+  Kit.$('go').addEventListener('click', next);
+
+  // A finger turns the model; let go, and it keeps a slow sway.
+  const pt = e => { const r = cv.getBoundingClientRect(); return e.clientX - r.left; };
+  cv.addEventListener('pointerdown', e => { st.drag = {x: pt(e), yaw: st.yaw}; try { cv.setPointerCapture(e.pointerId); } catch (_) {} cv.style.cursor = 'grabbing'; });
+  cv.addEventListener('pointermove', e => { if (st.drag) st.yaw = Math.max(-YAW + .38, Math.min(YAW - .38, st.drag.yaw + (pt(e) - st.drag.x) / Math.max(120, G ? G.W : 300) * Math.PI)); });
+  const up = () => { st.drag = null; cv.style.cursor = ''; };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  gsap.ticker.add(() => { if (!Kit.calm) { st.t += gsap.ticker.deltaRatio() / 60; if (!st.drag) st.sway = .38 * Math.sin(st.t * .55); } draw(); });
+  Kit.onShow.card = () => { fit(); draw(); };
+  // As the card comes up the copper gathers the two threads onto itself.
+  Kit.onEnter.card = () => { if (!Kit.calm && st.step === 0) gsap.fromTo(st, {in: 0}, {in: 1, duration: 1.1, ease: 'power2.out'}); };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    for (let i = 0; i < 2; i++) { Kit.$('go').click(); await w(Kit.calm ? 60 : 1500); }
+  };
+  // Drawn again at its real size whenever its room changes, as when the answer comes in.
+  new ResizeObserver(() => { fit(); draw(); }).observe(Kit.$('wrap'));
+})();
 Kit.single();
 </script>
 </html>

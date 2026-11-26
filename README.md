@@ -137,6 +137,22 @@ the bar's light travels to Today with it. With less motion asked for it is a
 dissolve of a fifth of a second, which moves nothing; tapping another tab
 lands it at once.
 
+The long pages reached from the others (Your journey, Tune your mix, a
+subject's home, an area, a path, a news story) keep their way back as
+Instagram keeps its own (`widgets/quick_return.dart`). It is part of the
+page: going down, it goes up and away with the page, point for point, with
+the small line beside it where there is one, and the page is all content;
+going back up even a little, it comes straight back over the page, softly,
+with the page's colour laid behind it and fading out under it, as iOS 26
+fades a page under its bar, so it never sits on the words; at the top it
+stands where it always stood, with nothing behind it. What has to stay, Save at the foot of
+Tune your mix and a path's way on, stays. With less motion asked for nothing
+slides: it fades out where it stands and back in. With a screen reader on it
+stays put. It reads only the page's own scrolling and takes no touch, so the
+swipe back from the edge of the screen works whatever it is doing; and it is
+never laid inside the list, where Apple's own glass button, a native view on
+iOS 26, is drawn away from its place.
+
 ## One palette
 
 The app used to paint Today dark and the other tabs on paper, which meant it
@@ -215,6 +231,30 @@ Apple's licence on an iPhone, the site's own on Android — and the privacy
 policy are on screen either way. Only a debug build, which has no store to
 ask, shows the plans as sold (`Subscription.previewWithoutStore`). A free
 trial ends on "Free trial started.", not on a purchase.
+
+**The first run's trial, a prototype behind a switch.** Most trials in this
+category start on the day of the install, and Astute never offers one in
+the first run. Behind the server's switch `trial.firstRun`
+(`AppState.kFirstRunTrialFlag`, off as built; docs/REMOTE.md) the first run
+ends otherwise. After the genres the reader plays one real card, the
+opening's best for them (`AppState.firstRunCard`, lib/data/first_days.dart),
+read outside the day as a card opened in Explore is. Then one calm screen
+offers the year's free days (`TrialOfferScreen`, lib/screens/trial_offer.dart,
+drawn with the paywall's own pieces): today everything opens and nothing is
+paid; on day 12 a notification, promised only where the phone can show one
+(`AppState.kTrialWarningDays`, the warning that already exists); on day 14
+the year starts at the store's own price, the largest figure on the screen,
+renewing until cancelled, and nothing charged to a trial cancelled 24 hours
+before. Under the headline, the five, the assistant and every path and book;
+at the foot, "Start the free trial" and "Continue for free" as two buttons
+of one size, and restore, the terms and the privacy policy. After it, the
+day's five, dealt as on any first day, without the card already played. It
+is never put during the five, never twice in a day (`knowit.trialOfferedOn`,
+kept across a sign-out), never to a reader who already has Astute+ (asked
+before the card, after it, and while the offer is up), and never without the
+store's own year with free days for this reader (`trialOfferDue`): no price
+written into the app stands in. `tool/trial_day_shots.dart` photographs it
+with a stand-in store at the owner's prices.
 
 ## Today, done
 
@@ -329,13 +369,15 @@ level, in `PathScreen`. The rung dates are written the moment a rung is
 cleared (`rungDates`, in the snapshot, earliest date winning in a merge)
 and never moved.
 
-Once the day is done, its header is the shelf's first row: a dot in the
-front card's colour, "Day 6 · five read" and, small under it, what has been
-liked; at the far end the shelf's two buttons, See again and the day sent.
-It used to be a line of its own over an eyebrow ("TODAY'S FIVE") that said
-the five again, with a band of air between the two; one row gives the card
-that room. The line gives a point or two before See again gives up its
-word for its mark alone.
+Once the day is done, its header is the shelf's first row: "Day 6", where
+Today's own name stood while the five were read, and, small under it, what
+has been liked; at the far end a small pill, ▶ See again, and the day sent.
+See again opens the five at full size in the viewer, always from the first
+card whichever one the shelf has at its front, exactly as Explore's "Your
+five from today" does (`openTodaysFive`). The day's name gives a point or
+two before See again gives up its word for its mark alone. The developer
+tools can take the row away to set the bigger card beside it on a phone:
+then See again and the day sent stand at the two ends of the row of dots.
 
 ## Explore, and the archive
 
@@ -799,7 +841,7 @@ with one in ten of the rest, leave the bank for `tool/cards/review/`, listed
 in an issue with **Publish** and **Drop** under each; a tick does the rest.
 Readers can say a card is wrong (*Report a problem*, off the card's face
 and in the app's own sheets, so a drawn card has it too: under the source
-in Go deeper, in the share sheet or in Go deeper's head, the three ways
+in Go deeper, in the share sheet or in Go deeper's head, the four ways
 being tried in `lib/widgets/source_foot.dart` with the card's foot, which
 leads with Go deeper and brings Why this card back to every card of the
 day); the server adds up every day how each card does — right and wrong
@@ -1511,7 +1553,13 @@ store through RevenueCat rather than from a bool the app wrote to itself.
 and restart, toggle the plan, and a readout of what the app knows about
 itself: whether Firebase started and why not, the account id, the last auth
 error, whether the store answered, and whether PostHog is sending, opted out
-or not running at all. It is needed in release builds, because TestFlight
+or not running at all. At its head are two looks to try on the phone itself
+(`lib/state/debug_looks.dart`): *Today, day read: no top row*, the finished
+day without the row over its card, so the card is bigger; and *Profile top*,
+Auto (A free · C Astute+), A, B or C. Each shows at once and is kept on the
+phone, through the wipe too; a build without the tools never reads them, so
+a look kept by a TestFlight build is nothing to the App Store build
+installed over it. It is needed in release builds, because TestFlight
 builds are release builds, and the build testers get is the very binary then
 submitted to the App Store. So an iPhone decides at launch (`readDebugTools`
 in `lib/debug_flags.dart`, from `main()`): it asks `AppDelegate.swift` on
@@ -1674,11 +1722,14 @@ you know), *Holding* (it is still there weeks later), *Sharp*. Any five
 cards at all carry somebody up it. The journey shows the rung, one bar
 held to whichever requirement is furthest behind, and the single next
 step — telling somebody four things at once is telling them nothing.
-The profile opens on the Astute score, on either plan, read as the journey
+On the free plan the profile opens on the Astute score, read as the journey
 reads it, with its week and its month, and under it the way into the journey,
-"All your scores, week by week" — marked Astute+ on the free plan but never
-locked: the score above it is already the reader's own
-(`widgets/profile_top.dart`, where two other tops are kept for comparison).
+"All your scores, week by week" — marked Astute+ but never locked: the score
+above it is already the reader's own. On Astute+ it opens on the board: the
+score, the days in a row and the cards read side by side, the days in a row
+lit while they run, the number in the streak's orange with its flame
+(`widgets/profile_top.dart`, `profileTopFor`, where the third top is kept for
+comparison).
 Lower down it keeps how well you know yourself: the level, the moves you keep
 missing, whether the gap is closing and the week in questions are all the
 journey's.

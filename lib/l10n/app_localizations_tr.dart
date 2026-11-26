@@ -6708,4 +6708,51 @@ class AppLocalizationsTr extends AppLocalizations {
   String founderAlso(String names) {
     return 'Ayrıca önerenler: $names';
   }
+
+  @override
+  String get firstCardTitle => 'İlk kartın';
+
+  @override
+  String get firstCardSwipeOn => 'Devam etmek için kaydır';
+
+  @override
+  String get trialOfferTitle => 'Astute+’ın tamamını dene.';
+
+  @override
+  String get trialOfferMark => 'Astute+';
+
+  @override
+  String get trialOfferLine => 'Bugünün beş kartı her durumda seni bekliyor.';
+
+  @override
+  String get trialStepToday => 'Bugün';
+
+  @override
+  String get trialStepTodayLine =>
+      'Astute+’ın tamamı açılır. Hiçbir şey ödemezsin.';
+
+  @override
+  String trialStepDay(int day) {
+    return '$day. gün';
+  }
+
+  @override
+  String trialStepReminderLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Sana bir bildirim göndeririz: $days gün kaldı.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialStepChargeLine =>
+      'Her yıl yenilenir. En az 24 saat önce iptal edersen hiçbir şey ödemezsin.';
+
+  @override
+  String get trialOfferStart => 'Ücretsiz denemeyi başlat';
+
+  @override
+  String get trialOfferFree => 'Ücretsiz devam et';
 }

@@ -1560,5 +1560,17 @@
   "founderTheirBooks": "推荐过的书",
   "founderAbout": "这些是{name}公开推荐过的书，附有原话和说话的出处。{name}与 Astute 没有任何关系。",
   "founderPhoto": "照片：{author}，{licence}，Wikimedia Commons，已裁剪",
-  "founderAlso": "其他推荐者：{names}"
+  "founderAlso": "其他推荐者：{names}",
+  "firstCardTitle": "你的第一张卡片",
+  "firstCardSwipeOn": "滑动继续",
+  "trialOfferTitle": "试用全部 Astute+。",
+  "trialOfferMark": "Astute+。",
+  "trialOfferLine": "无论怎么选，今天的五张卡片都在等你。",
+  "trialStepToday": "今天",
+  "trialStepTodayLine": "全部 Astute+ 即刻开放。不收取任何费用。",
+  "trialStepDay": "第 {day} 天",
+  "trialStepReminderLine": "{days, plural, other{我们会发通知提醒你：还剩 {days} 天。}}",
+  "trialStepChargeLine": "每年自动续订。至少提前 24 小时取消，就不会扣费。",
+  "trialOfferStart": "开始免费试用",
+  "trialOfferFree": "继续免费使用"
 }

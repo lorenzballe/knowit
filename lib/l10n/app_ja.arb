@@ -1560,5 +1560,17 @@
   "founderTheirBooks": "すすめた本",
   "founderAbout": "これらは{name}が公の場ですすめた本で、引用した言葉と語られた場所を添えています。{name}は Astute とは関係ありません。",
   "founderPhoto": "写真：{author}、{licence}、Wikimedia Commons、トリミング",
-  "founderAlso": "ほかにすすめた人：{names}"
+  "founderAlso": "ほかにすすめた人：{names}",
+  "firstCardTitle": "最初のカード",
+  "firstCardSwipeOn": "スワイプで先へ",
+  "trialOfferTitle": "Astute+のすべてを試す。",
+  "trialOfferMark": "Astute+",
+  "trialOfferLine": "どちらを選んでも、今日の5枚が待っています。",
+  "trialStepToday": "今日",
+  "trialStepTodayLine": "Astute+のすべてが使えます。お支払いはありません。",
+  "trialStepDay": "{day}日目",
+  "trialStepReminderLine": "{days, plural, other{通知でお知らせします：残り{days}日。}}",
+  "trialStepChargeLine": "毎年自動で更新されます。24時間前までにキャンセルすれば、料金はかかりません。",
+  "trialOfferStart": "無料トライアルを始める",
+  "trialOfferFree": "無料で続ける"
 }

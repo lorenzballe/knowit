@@ -6547,4 +6547,49 @@ class AppLocalizationsKo extends AppLocalizations {
   String founderAlso(String names) {
     return '함께 추천한 사람: $names';
   }
+
+  @override
+  String get firstCardTitle => '첫 번째 카드';
+
+  @override
+  String get firstCardSwipeOn => '밀어서 계속하기';
+
+  @override
+  String get trialOfferTitle => 'Astute+ 전체를 체험해 보세요.';
+
+  @override
+  String get trialOfferMark => 'Astute+';
+
+  @override
+  String get trialOfferLine => '어느 쪽을 골라도 오늘의 카드 다섯 장이 기다리고 있어요.';
+
+  @override
+  String get trialStepToday => '오늘';
+
+  @override
+  String get trialStepTodayLine => 'Astute+ 전체가 열려요. 결제되지 않아요.';
+
+  @override
+  String trialStepDay(int day) {
+    return '$day일째';
+  }
+
+  @override
+  String trialStepReminderLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '알림으로 알려 드려요: $days일 남았어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialStepChargeLine => '매년 갱신돼요. 24시간 전까지 해지하면 결제되지 않아요.';
+
+  @override
+  String get trialOfferStart => '무료 체험 시작하기';
+
+  @override
+  String get trialOfferFree => '무료로 계속하기';
 }

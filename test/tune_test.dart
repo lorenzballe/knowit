@@ -20,6 +20,7 @@ import 'package:astuto/screens/topics_screen.dart';
 import 'package:astuto/screens/tune_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/quick_return.dart';
 import 'package:astuto/widgets/ui.dart' show BackCircle;
 
 import 'explore/core_harness.dart';
@@ -185,40 +186,66 @@ void main() {
   });
 
   group('One page, and the hint that a part opens', () {
-    testWidgets('the whole page scrolls: the title goes up with it, only the '
-        'way back and the button stay where they are, and the last of the '
-        'page comes clear of the button', (tester) async {
+    testWidgets('the whole page scrolls, the title and the way back with it, '
+        'as on Instagram: going down the way back goes up and away, a little '
+        'way back up it comes straight back over the page, and the button '
+        'stays at the foot throughout, the last of the page clear of it', (
+      tester,
+    ) async {
       final AppState app = await readyApp({'knowit.tuneHoldHint': true});
       await _pump(tester, TuneScreen(app: app, picked: app.pickedTopics));
       final Finder title = find.byKey(
         const ValueKey('tune-title'),
         skipOffstage: false,
       );
-      final Offset back = tester.getTopLeft(find.byType(BackCircle));
+      final Finder back = find.byType(BackCircle);
+      final Offset backAt = tester.getTopLeft(back);
       final double titleTop = tester.getTopLeft(title).dy;
-      // At rest, the title stands beside the way back.
+      double ground() => tester
+          .widget<Opacity>(find.byKey(const ValueKey('quick-return-ground')))
+          .opacity;
+      // At the top, the title stands beside the way back, with nothing laid
+      // behind it.
       expect(
-        (tester.getCenter(title).dy -
-                tester.getCenter(find.byType(BackCircle)).dy)
-            .abs(),
+        (tester.getCenter(title).dy - tester.getCenter(back).dy).abs(),
         lessThan(2),
       );
+      expect(back.hitTestable(), findsOneWidget);
+      expect(ground(), 0);
       // The button at the foot of the screen, in reach from the start.
       final Finder save = find.byKey(const ValueKey('tune-save'));
       expect(save.hitTestable(), findsOneWidget);
       final Rect button = tester.getRect(save);
       expect(button.bottom, greaterThan(874 - 40));
 
-      _page(tester).jumpTo(120);
+      // A little way down, the way back goes up with the title, as part of
+      // the page, and still nothing behind it.
+      _page(tester).jumpTo(30);
       await tester.pump();
-      expect(tester.getTopLeft(find.byType(BackCircle)), back);
+      expect(tester.getTopLeft(title).dy, closeTo(titleTop - 30, 0.5));
+      expect(tester.getTopLeft(back).dy, closeTo(backAt.dy - 30, 0.5));
+      expect(ground(), 0);
+
+      // Further down, gone with the page; the button where it was.
+      _page(tester).jumpTo(400);
+      await tester.pump();
+      expect(tester.getRect(back).bottom, lessThanOrEqualTo(0));
+      expect(back.hitTestable(), findsNothing);
       expect(tester.getRect(save), button);
-      expect(tester.getTopLeft(title).dy, closeTo(titleTop - 120, 0.5));
+
+      // A little way back up, it comes straight back where it stood, the
+      // page fading under it there; the button where it was.
+      _page(tester).jumpTo(380);
+      await tester.pump();
+      await tester.pump(QuickReturn.comeBack);
+      expect(tester.getTopLeft(back), backAt);
+      expect(back.hitTestable(), findsOneWidget);
+      expect(ground(), 1);
+      expect(tester.getRect(save), button);
 
       // At the foot of the page the button is where it was, and the last
       // subject stands clear of it and of the fade over it.
       await _toFoot(tester);
-      expect(tester.getTopLeft(find.byType(BackCircle)), back);
       expect(tester.getRect(save), button);
       final double last = [
         for (final Element e in [

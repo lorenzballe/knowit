@@ -6520,4 +6520,49 @@ class AppLocalizationsZh extends AppLocalizations {
   String founderAlso(String names) {
     return '其他推荐者：$names';
   }
+
+  @override
+  String get firstCardTitle => '你的第一张卡片';
+
+  @override
+  String get firstCardSwipeOn => '滑动继续';
+
+  @override
+  String get trialOfferTitle => '试用全部 Astute+。';
+
+  @override
+  String get trialOfferMark => 'Astute+。';
+
+  @override
+  String get trialOfferLine => '无论怎么选，今天的五张卡片都在等你。';
+
+  @override
+  String get trialStepToday => '今天';
+
+  @override
+  String get trialStepTodayLine => '全部 Astute+ 即刻开放。不收取任何费用。';
+
+  @override
+  String trialStepDay(int day) {
+    return '第 $day 天';
+  }
+
+  @override
+  String trialStepReminderLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '我们会发通知提醒你：还剩 $days 天。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialStepChargeLine => '每年自动续订。至少提前 24 小时取消，就不会扣费。';
+
+  @override
+  String get trialOfferStart => '开始免费试用';
+
+  @override
+  String get trialOfferFree => '继续免费使用';
 }

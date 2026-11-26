@@ -92,6 +92,23 @@ class TheBlocks(unittest.TestCase):
         for name in bets.BLOCKS:
             self.assertEqual(check(section(name)), [], name)
 
+    def test_todays_games_play_a_pick_of_words_as_well(self):
+        """Today's five and each subject's three deal any pick of two or three
+        options, words included, and a share (dailyKindOf); never a mature
+        card, a page, a place or a part of a book, even when it is a pick."""
+        def kind(cid: str):
+            return bets.daily_kind(bets.bank()[cid])
+
+        self.assertEqual(kind(WORDS_PICK), "pick")
+        self.assertEqual(kind(ODDS_PICK), "pick")
+        self.assertEqual(kind(SHARE_TYPED), "share")
+        for cid in (READ, ESTIMATE, STEPPED, "cinema-cgi-7", "psychology-fear-7",
+                    "art-book-the-story-of-art-2", "history-bologna-1"):
+            self.assertIsNone(kind(cid), cid)
+        self.assertEqual(check(section("three", source={"ids": [WORDS_PICK]})), [])
+        problems = check(section("three", source={"ids": [READ]}))
+        self.assertTrue(any("not one three plays" in p for p in problems), problems)
+
     def test_every_example_in_the_doc_passes(self):
         doc = (ROOT / "docs" / "explore" / "bets.md").read_text(encoding="utf-8")
         examples = [json.loads(m) for m in re.findall(r"```json\n(.*?)```", doc, re.S)]

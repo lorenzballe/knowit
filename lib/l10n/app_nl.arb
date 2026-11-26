@@ -1560,5 +1560,17 @@
   "founderTheirBooks": "Aanbevolen boeken",
   "founderAbout": "Dit zijn boeken die {name} in het openbaar aanraadde, met de geciteerde woorden en waar ze werden gezegd. {name} heeft geen enkele band met Astute.",
   "founderPhoto": "Foto: {author}, {licence}, Wikimedia Commons, bijgesneden",
-  "founderAlso": "Ook aanbevolen door {names}"
+  "founderAlso": "Ook aanbevolen door {names}",
+  "firstCardTitle": "Je eerste kaart",
+  "firstCardSwipeOn": "Veeg om verder te gaan",
+  "trialOfferTitle": "Probeer heel Astute+.",
+  "trialOfferMark": "Astute+.",
+  "trialOfferLine": "De vijf kaarten van vandaag wachten hoe dan ook op je.",
+  "trialStepToday": "Vandaag",
+  "trialStepTodayLine": "Heel Astute+ gaat open. Je betaalt niets.",
+  "trialStepDay": "Dag {day}",
+  "trialStepReminderLine": "{days, plural, =1{We sturen je een melding: nog 1 dag.} other{We sturen je een melding: nog {days} dagen.}}",
+  "trialStepChargeLine": "Wordt elk jaar verlengd. Zeg minstens 24 uur van tevoren op en je betaalt niets.",
+  "trialOfferStart": "Start de proefperiode",
+  "trialOfferFree": "Gratis doorgaan"
 }

@@ -1,168 +1,229 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: psychology-bamboccia-disillusa -->
+<!-- The picture: the two halves of a "bamboccia disillusa", drawn. A young woman lies along a mustard couch, eyes shut,
+     waiting: that is the doing nothing, the "bambocciona". Over her head a thought bubble: that is the excuse, the
+     "disillusa". Six lines come one at a time; the reader taps the couch or the bubble. A line of doing nothing lands
+     on the couch as a note, an excuse lands in the bubble as a quote. On the answer, any line in the wrong half moves
+     across, marked red, and her clothes take on the couch's own stripes: to a man looking for a partner, she has
+     become part of the furniture. Drawn again at its real size whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#pic{display:block;width:100%;flex:1;min-height:0;touch-action:manipulation;user-select:none;-webkit-user-select:none}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
-#why .big{font:800 max(2.4cqh,15px)/1.15 var(--display)}
+#pic{display:block;width:100%;flex:1;min-height:0;user-select:none;-webkit-user-select:none}
+#pic [data-tap]{cursor:pointer}
+#why .body{font:500 max(1.9cqh,12.5px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
 .q,.say,.keep{overflow-wrap:anywhere}
 </style>
-<article class="card" id="card" data-topic="psychology" data-kind="Sort · two groups">
+<article class="card" id="card" data-topic="psychology" data-kind="Sort · two halves">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SELF-SABOTAGE</span></div>
     <h2 class="q">What is a “bamboccia disillusa”, and why do valuable men pass?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic"></svg>
+      <svg id="pic" role="img" aria-label="A young woman lies on a couch, eyes shut, waiting; over her head, a thought bubble. Each line goes on the couch, the doing nothing of a bambocciona, or in the bubble, the excuse of a disillusa."></svg>
       <div id="why" class="gone">
-        <p class="big">Two halves: doing nothing, and an excuse for it.</p>
-        <p class="body">She doesn’t study, work or look for either. She just waits, sure that it’s all pointless anyway. To a man seeking a partner she looks like a couch cover: decorative, with no growth to build on. The coach says it goes for men too.</p>
+        <p class="body">Doing nothing, plus an excuse for it: to a man seeking a partner she looks like a decorative couch cover, with no growth to build on. The coach says it goes for men too.</p>
       </div>
     </div>
-    <p class="say" id="say">Tap a bin: is this line “bambocciona” or “disillusa”?</p>
+    <p class="say" id="say">Doing nothing, or the excuse? <b>Tap the couch or the bubble.</b></p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Waiting plus “it’s pointless” reads as no future to share.</div>
     <div class="foot"><span class="src">Source · Diventare Strong, “SEDURRE un UOMO per una RELAZIONE. 12 ERRORI Madornali.” (YouTube, 2023)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const ITEMS=[
-  {t:'Doesn’t study',g:0},
-  {t:'“No point anymore”',g:1},
-  {t:'No job, no job hunt',g:0},
-  {t:'“All jobs stink”',g:1},
-  {t:'Just waits at home',g:0},
-  {t:'“Don’t feel like it”',g:1}
+// Flat colours with one meaning each: the couch mustard, its stripes the "couch cover" she turns into; the thought
+// bubble white; notes of doing nothing pale yellow; a line in the wrong half red.
+const DARK = '#1d1030', COUCH = '#f2b632', COUCH2 = '#d9961c', STRIPE = '#fff1c9', BUBBLE = '#ffffff', NOTE = '#fff3a8',
+  SKIN = '#f1c9a3', HAIR = '#3b2418', TOP = '#2fb3a6', LEGS = '#2b3a67', WRONG = '#ff5a5f', WHITE = '#ffffff';
+const ITEMS = [
+  {t: 'Doesn’t study', g: 0},
+  {t: '“No point anymore”', g: 1},
+  {t: 'No job, no job hunt', g: 0},
+  {t: '“All jobs stink”', g: 1},
+  {t: 'Just waits at home', g: 0},
+  {t: '“Don’t feel like it”', g: 1}
 ];
-ITEMS.forEach(o=>o.a=-1);
-const RED='#e5484d';
-let idx=0, order=[], phase='sort', geo=null;
-const svg=Kit.$('pic');
-const st=(el,s)=>{el.setAttribute('style',s);return el;};
+ITEMS.forEach(o => o.a = -1);
+const st = {blend: 0};
+let idx = 0, phase = 'sort', G = null, busy = false;
+const svg = Kit.$('pic');
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const box = el => { try { return el.getBBox(); } catch (_) { return {x: 0, y: 0, width: 0, height: 0}; } };
+const side = i => phase === 'fixed' ? ITEMS[i].g : ITEMS[i].a;
+// Shrink a line to fit a width, never under 12px.
+// Put a line right under another, by their measured boxes, so two titles never touch.
+function under(t, above) { const a = box(above), b = box(t), y = +t.getAttribute('y'); t.setAttribute('y', (y + (a.y + a.height + 1) - b.y).toFixed(1)); }
+function fit(t, maxw, size) { t.setAttribute('font-size', size); let w = box(t).width; if (w > maxw) t.setAttribute('font-size', Math.max(12, size * maxw / w)); }
 
-function layout(){
-  const {W,H,f}=Kit.fitSvg(svg);
-  let fs=Math.max(f*.8,12);
-  if(fs*16>H-2) fs=Math.max((H-2)/16,10);
-  const pad=W*.035;
-  const topH=Math.max(Math.min(H*.27,H-2-fs*11.7),fs*4.4);
-  const bw=(W-pad*3)/2;
-  return {W,H,f,fs,pad,topH,bw,by:topH,bh:H-topH-2,head:fs*3.4};
-}
-function binOf(i){return phase==='fixed'?ITEMS[i].g:ITEMS[i].a;}
-function slot(b,j){
-  const g=geo, avail=g.bh-g.head-g.fs*.5, rh=Math.max(Math.min(g.fs*2.15,avail/6),g.fs*1.3);
-  const x=g.pad+b*(g.bw+g.pad)+g.fs*.45;
-  return {x,y:g.by+g.head+j*rh,w:g.bw-g.fs*.9,h:Math.max(rh*.86,g.fs*1.25)};
-}
-function fitText(t,maxw,size){
-  let s=size; t.style.fontSize=s+'px';
-  let L=t.getComputedTextLength();
-  if(L>maxw){s=Math.max(12,s*maxw/L);t.style.fontSize=s+'px';L=t.getComputedTextLength();
-    if(L>maxw){t.setAttribute('textLength',maxw);t.setAttribute('lengthAdjust','spacingAndGlyphs');}}
-}
-function couch(p,cx,by,w){
-  const h=w*.45,x=cx-w/2,y=by-h;
-  const s='fill:var(--k);opacity:.13;pointer-events:none';
-  st(Kit.mk('rect',{x:x+w*.12,y:y,width:w*.76,height:h*.55,rx:h*.12},p),s);
-  st(Kit.mk('rect',{x:x+w*.1,y:y+h*.45,width:w*.8,height:h*.35,rx:h*.08},p),s);
-  st(Kit.mk('rect',{x:x,y:y+h*.3,width:w*.14,height:h*.55,rx:h*.07},p),s);
-  st(Kit.mk('rect',{x:x+w*.86,y:y+h*.3,width:w*.14,height:h*.55,rx:h*.07},p),s);
-  st(Kit.mk('rect',{x:x+w*.08,y:y+h*.85,width:w*.06,height:h*.15},p),s);
-  st(Kit.mk('rect',{x:x+w*.86,y:y+h*.85,width:w*.06,height:h*.15},p),s);
-}
-function cloud(p,cx,by,w){
-  const r=w*.16,cy=by-w*.38;
-  const s='fill:var(--k);opacity:.13;pointer-events:none';
-  [[-1.3,.25,.8],[-0.4,-.2,1.1],[.6,0,.95],[1.35,.3,.7]].forEach(([dx,dy,k])=>st(Kit.mk('circle',{cx:cx+dx*r,cy:cy+dy*r,r:r*k},p),s));
-  st(Kit.mk('rect',{x:cx-r*1.9,y:cy+r*.2,width:r*3.8,height:r*.8,rx:r*.4},p),s);
-  for(let i=0;i<4;i++)st(Kit.mk('line',{x1:cx-r*1.2+i*r*.8,y1:cy+r*1.3,x2:cx-r*1.4+i*r*.8,y2:cy+r*1.9},p),'stroke:var(--k);opacity:.13;stroke-width:'+r*.22+';stroke-linecap:round;pointer-events:none');
-}
-function draw(){
-  geo=layout(); svg.innerHTML=''; const g=geo, fs=g.fs;
-  const NAMES=[['BAMBOCCIONA','does nothing, waits'],['DISILLUSA','sees no point']];
-  for(let b=0;b<2;b++){
-    const bx=g.pad+b*(g.bw+g.pad);
-    const grp=Kit.mk('g',{'data-b':b},svg); grp.style.cursor=phase==='sort'?'pointer':'default';
-    st(Kit.mk('rect',{x:bx,y:g.by,width:g.bw,height:g.bh,rx:fs},grp),'fill:var(--k);fill-opacity:.07;stroke:var(--k);stroke-opacity:.35;stroke-width:1.5');
-    const iw=Math.min(g.bw*.7,g.bh*.5);
-    (b?cloud:couch)(grp,bx+g.bw/2,g.by+g.bh-fs*.5,iw);
-    const t1=st(Kit.mk('text',{x:bx+g.bw/2,y:g.by+fs*1.55,'text-anchor':'middle'},grp),'fill:var(--k);font:800 '+fs*1.05+'px var(--display);letter-spacing:.04em;pointer-events:none');
-    t1.textContent=NAMES[b][0]; fitText(t1,g.bw-fs,fs*1.05);
-    const t2=st(Kit.mk('text',{x:bx+g.bw/2,y:g.by+fs*2.75,'text-anchor':'middle'},grp),'fill:var(--k);opacity:.7;font:500 '+fs*.92+'px var(--body);pointer-events:none');
-    t2.textContent=NAMES[b][1]; fitText(t2,g.bw-fs,fs*.92);
-    order.filter(i=>binOf(i)===b).forEach((i,j)=>{
-      const s=slot(b,j), wrong=phase!=='sort'&&ITEMS[i].a!==ITEMS[i].g;
-      const c=Kit.mk('g',{id:'chip'+i},svg); c.style.pointerEvents='none';
-      st(Kit.mk('rect',{x:s.x,y:s.y,width:s.w,height:s.h,rx:s.h*.3},c),'fill:'+(wrong?RED:'var(--k)'));
-      const t=st(Kit.mk('text',{x:s.x+fs*.5,y:s.y+s.h/2,'dominant-baseline':'central'},c),'fill:'+(wrong?'#fff':'var(--c)')+';font:700 '+fs*.9+'px var(--body)');
-      t.textContent=ITEMS[i].t; fitText(t,s.w-fs,fs*.9);
-    });
+function build() {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  const asking = phase === 'sort' && idx < ITEMS.length;
+  // Sizes from the content: three lines in each half, a title over each; the couch takes what is left.
+  const tight = H < 210;
+  const fs = tight ? Math.max(12, Math.min(13, W / 24)) : Math.max(12.5, Math.min(14.5, W / 22));
+  let lineH = tight ? fs * 1.38 : Math.max(fs * 1.6, Math.min(fs * 1.95, H * .075));
+  const pillH = asking ? Math.max(fs * 2.4, Math.min(H * .12, 42)) : 0;
+  const titleH = tight ? fs * 1.7 : fs * 3;
+  const midH = titleH + 3 * lineH + fs * .7;
+  // Two arrangements. Tall: the bubble and the notes side by side, over a couch the width of the card (the bubble's
+  // puffs rise over its top edge: room is left for them). Short, a small phone once the answer is in: the bubble down
+  // the left, the notes over a smaller couch on the right, so the couch is never squashed.
+  const top0 = pillH ? pillH + 6 : 2;
+  let midTop, midBot, ch, cx0, cw, cy0, colX, colW, colTop, bx, bw, by, bh;
+  if (!tight) {
+    midTop = top0 + midH * (H < 260 ? .1 : .14); midBot = midTop + midH;
+    ch = Math.min(W * .44, H - midBot - (H < 260 ? 8 : 14));
+    ch = H - midBot - Math.max(H < 260 ? 8 : 14, H - midBot - ch);
+    cx0 = 2; cw = W - 4; cy0 = H - ch;
+    colX = W * .57; colW = W - colX - 2; colTop = midTop;
+    bx = 3; bw = W * .53; by = midTop; bh = midH;
+  } else {
+    cx0 = W * .5; cw = W - cx0 - 2; ch = Math.max(36, Math.min(H * .46, cw * .52, H - (top0 + titleH + 3 * fs * 1.32 + 6))); cy0 = H - ch;
+    colX = W * .52; colW = W - colX - 2; colTop = top0;
+    lineH = Math.min(lineH, (cy0 - 4 - colTop - titleH) / 3);
+    bx = 3; bw = W * .47; by = top0 + H * .07; bh = H - by - 4;
+    midTop = colTop; midBot = cy0;
   }
-  const cx=g.W/2;
-  if(phase==='sort'&&idx<ITEMS.length){
-    const n=st(Kit.mk('text',{x:cx,y:fs*1.1,'text-anchor':'middle'},svg),'fill:var(--k);opacity:.6;font:700 '+fs*.9+'px var(--mono)');
-    n.textContent=(idx+1)+' / '+ITEMS.length;
-    const c=Kit.mk('g',{id:'cur'},svg); c.style.pointerEvents='none';
-    const big=Math.max(fs*1.2,13), ch=big*2.2, cw=Math.min(g.W*.86,big*13), cy=g.topH*.62;
-    st(Kit.mk('rect',{x:cx-cw/2,y:cy-ch/2,width:cw,height:ch,rx:ch*.3},c),'fill:var(--k)');
-    const t=st(Kit.mk('text',{x:cx,y:cy,'text-anchor':'middle','dominant-baseline':'central'},c),'fill:var(--c);font:800 '+big+'px var(--body)');
-    t.textContent=ITEMS[idx].t; fitText(t,cw-big,big);
-    geo.cur={x:cx,y:cy};
-  }else{
-    const ok=ITEMS.filter(o=>o.a===o.g).length;
-    const t=st(Kit.mk('text',{x:cx,y:g.topH*.42,'text-anchor':'middle'},svg),'fill:var(--k);font:800 '+fs*1.25+'px var(--display)');
-    t.textContent=ok+' of 6 in the right bin'; fitText(t,g.W*.94,fs*1.25);
-    const u=st(Kit.mk('text',{x:cx,y:g.topH*.42+fs*1.7,'text-anchor':'middle'},svg),'fill:var(--k);opacity:.75;font:600 '+fs*.95+'px var(--body)');
-    u.textContent=phase==='fixed'?(ok<6?'Red lines moved home.':'Doing nothing, plus the excuse.'):'Checking…';
-    fitText(u,g.W*.94,fs*.95);
-  }
+  G = {W, H, fs, lineH};
+  const root = mk('g', {}, svg);
+  const o = {stroke: DARK, 'stroke-width': 2, 'stroke-linejoin': 'round'};
+
+  // ---- the couch, and her on it: the doing nothing ----
+  const couch = mk('g', {'data-tap': '', 'data-b': 0}, root);
+  mk('rect', {x: colX - 4, y: colTop, width: W - colX + 4, height: H - colTop, fill: 'transparent'}, couch);
+  if (!tight) mk('rect', {x: 0, y: midBot, width: W, height: H - midBot, fill: 'transparent'}, couch);
+  mk('rect', Object.assign({x: cx0 + cw * .06, y: cy0, width: cw * .88, height: ch * .56, rx: ch * .15, fill: COUCH}, o), couch);
+  mk('rect', Object.assign({x: cx0 + cw * .09, y: cy0 + ch * .62, width: cw * .82, height: ch * .2, fill: COUCH2}, o), couch);
+  for (const ax of [cx0, cx0 + cw * .88]) mk('rect', Object.assign({x: ax, y: cy0 + ch * .3, width: cw * .12, height: ch * .54, rx: ch * .13, fill: COUCH}, o), couch);
+  for (const lx of [cx0 + cw * .06, cx0 + cw * .92]) mk('rect', {x: lx, y: cy0 + ch * .84, width: cw * .025, height: ch * .16, fill: DARK}, couch);
+  // her: head on the left arm, knees up, an arm hanging off the seat; at the end, dressed in the couch's own stripes
+  const seat = cy0 + ch * .63, hr = Math.min(ch * .16, cw * .06), hx = cx0 + cw * .15, hy = seat - hr * 1.15;
+  const defs = mk('defs', {}, couch);
+  const stripes = (id, base) => { const p = mk('pattern', {id, width: 9, height: 9, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(90)'}, defs); mk('rect', {width: 9, height: 9, fill: base}, p); mk('rect', {width: 4.5, height: 9, fill: STRIPE}, p); return `url(#${id})`; };
+  const blend = st.blend > .5;
+  const topFill = blend ? stripes('ct', COUCH) : TOP, legFill = blend ? stripes('cl', COUCH2) : LEGS;
+  const bt = ch * .24;                                        // how thick she is, lying down
+  mk('path', Object.assign({d: `M${hx + hr * .2},${hy - hr * .95} C${hx - hr * 2.1},${hy - hr * .9} ${hx - hr * 2.2},${seat} ${hx - hr * .6},${seat} Z`, fill: HAIR}, o), couch);
+  const hip = cx0 + cw * .5, knee = [cx0 + cw * .64, seat - ch * .5], foot = [cx0 + cw * .8, seat];
+  // legs: thigh up to the knee, shin down to the foot
+  mk('path', {d: `M${hip},${seat - bt * .5} L${knee[0]},${knee[1]} L${foot[0]},${foot[1] - bt * .4}`, fill: 'none', stroke: DARK, 'stroke-width': bt * .78 + 4, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, couch);
+  mk('path', {d: `M${hip},${seat - bt * .5} L${knee[0]},${knee[1]} L${foot[0]},${foot[1] - bt * .4}`, fill: 'none', stroke: legFill, 'stroke-width': bt * .78, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, couch);
+  mk('ellipse', Object.assign({cx: foot[0] + bt * .3, cy: seat - bt * .2, rx: bt * .45, ry: bt * .24, fill: DARK}, o), couch);
+  mk('rect', Object.assign({x: hx + hr * .7, y: seat - bt, width: hip - hx - hr * .5, height: bt, rx: bt * .45, fill: topFill}, o), couch);
+  mk('path', {d: `M${hx + hr * 2.1},${seat - bt * .45} Q${hx + hr * 2.6},${seat + ch * .12} ${hx + hr * 2.45},${seat + ch * .27}`, fill: 'none', stroke: DARK, 'stroke-width': bt * .36 + 4, 'stroke-linecap': 'round'}, couch);
+  mk('path', {d: `M${hx + hr * 2.1},${seat - bt * .45} Q${hx + hr * 2.6},${seat + ch * .12} ${hx + hr * 2.45},${seat + ch * .27}`, fill: 'none', stroke: blend ? COUCH : TOP, 'stroke-width': bt * .36, 'stroke-linecap': 'round'}, couch);
+  mk('circle', Object.assign({cx: hx + hr * 2.45, cy: seat + ch * .29, r: bt * .2, fill: SKIN}, o), couch);
+  mk('circle', Object.assign({cx: hx, cy: hy, r: hr, fill: SKIN}, o), couch);
+  mk('path', {d: `M${hx - hr * .5},${hy - hr * .1} q${hr * .18},${hr * .18} ${hr * .36},0 M${hx + hr * .14},${hy - hr * .1} q${hr * .18},${hr * .18} ${hr * .36},0 M${hx - hr * .18},${hy + hr * .46} q${hr * .22},-${hr * .08} ${hr * .44},0`, fill: 'none', stroke: DARK, 'stroke-width': Math.max(1.4, hr * .12), 'stroke-linecap': 'round'}, couch);
+  mk('path', Object.assign({d: `M${hx - hr},${hy - hr * .05} C${hx - hr * .9},${hy - hr * 1.4} ${hx + hr * 1.1},${hy - hr * 1.35} ${hx + hr * .98},${hy - hr * .25} C${hx + hr * .3},${hy - hr * .8} ${hx - hr * .4},${hy - hr * .72} ${hx - hr},${hy - hr * .05} Z`, fill: HAIR}, o), couch);
+
+  // ---- the notes of doing nothing, pinned up over the couch's right side ----
+  const t1 = mk('text', {x: colX + colW / 2, y: colTop + fs * 1.05, 'text-anchor': 'middle', fill: WHITE, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 1.1}, couch);
+  t1.textContent = tight ? 'doing nothing' : 'bambocciona'; fit(t1, colW, fs * 1.1);
+  if (!tight) { const t2 = mk('text', {x: colX + colW / 2, y: 0, 'text-anchor': 'middle', fill: WHITE, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .95, opacity: .92}, couch); t2.textContent = 'doing nothing'; fit(t2, colW, fs * .95); under(t2, t1); }
+  const notes = ITEMS.map((_, i) => i).filter(i => side(i) === 0 && (phase !== 'sort' || ITEMS[i].a >= 0));
+  G.notes = {};
+  notes.forEach((i, j) => {
+    const y = colTop + titleH + j * lineH + 2, h = lineH - 4;
+    const g = mk('g', {id: 'n' + i}, couch);
+    const wrong = phase !== 'sort' && ITEMS[i].a !== ITEMS[i].g;
+    mk('rect', {x: colX + 2, y, width: colW - 4, height: h, rx: 3, fill: wrong ? WRONG : NOTE, stroke: DARK, 'stroke-width': 1.5, transform: `rotate(${[-1.6, 1.2, -.8][j % 3]} ${colX + colW / 2} ${y + h / 2})`}, g);
+    const t = mk('text', {x: colX + colW / 2, y: y + h / 2 + fs * .36, 'text-anchor': 'middle', fill: DARK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, g);
+    t.textContent = ITEMS[i].t; fit(t, colW - 14, fs);
+    G.notes[i] = {x: colX + colW / 2, y: y + h / 2};
+  });
+
+  // ---- the thought bubble over her head: the excuse ----
+  const bub = mk('g', {'data-tap': '', 'data-b': 1}, root);
+  const body = {x: bx + bw * .04, y: by + bh * .06, width: bw * .92, height: bh * .88, rx: Math.min(bh * .32, 30)};
+  const puffs = [[.24, 0, .17], [.5, -.02, .2], [.76, 0, .17], [.3, 1, .15], [.7, 1, .15]].map(([u, v, r]) => [bx + bw * u, by + bh * (v ? .94 : .06) + (v ? 0 : 0), bh * r]);
+  puffs.forEach(([x, y, r]) => mk('circle', {cx: x, cy: y, r: r + 2, fill: DARK}, bub));
+  mk('rect', Object.assign({}, body, {x: body.x - 2, y: body.y - 2, width: body.width + 4, height: body.height + 4, fill: DARK}), bub);
+  puffs.forEach(([x, y, r]) => mk('circle', {cx: x, cy: y, r, fill: BUBBLE}, bub));
+  mk('rect', Object.assign({}, body, {fill: BUBBLE}), bub);
+  // its trail down to her head
+  const tx = hx + hr * .9, ty = hy - hr * 1.1, ex = tight ? bx + bw - 4 : bx + bw * .34, ey = tight ? by + bh * .74 : by + bh + 2;
+  [[.2, .2], [.48, .28], [.78, .36]].forEach(([f, k]) => mk('circle', {cx: tx + (ex - tx) * f, cy: ty + (ey - ty) * f, r: Math.max(2.5, Math.min(hr * k * 1.4, (ty - ey) * .12 + 2)), fill: BUBBLE, stroke: DARK, 'stroke-width': 1.6}, bub));
+  const b1 = mk('text', {x: bx + bw / 2, y: by + bh * .06 + fs * 1.15, 'text-anchor': 'middle', fill: DARK, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 1.1}, bub);
+  b1.textContent = tight ? 'the excuse' : 'disillusa'; fit(b1, bw * .8, fs * 1.1);
+  if (!tight) { const b2 = mk('text', {x: bx + bw / 2, y: 0, 'text-anchor': 'middle', fill: DARK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .95, opacity: .72}, bub); b2.textContent = 'the excuse'; fit(b2, bw * .8, fs * .95); under(b2, b1); }
+  const quotes = ITEMS.map((_, i) => i).filter(i => side(i) === 1 && (phase !== 'sort' || ITEMS[i].a >= 0));
+  if (!quotes.length) { const dots = mk('text', {x: bx + bw / 2, y: by + titleH + 1.6 * lineH, 'text-anchor': 'middle', fill: DARK, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2.2, opacity: .35}, bub); dots.textContent = '…'; }
+  G.quotes = {};
+  quotes.forEach((i, j) => {
+    const qStep = tight ? Math.min(lineH * 1.35, (bh * .86 - titleH) / 3) : lineH;
+    const y = by + titleH + (j + .5) * qStep + fs * .36;
+    const wrong = phase !== 'sort' && ITEMS[i].a !== ITEMS[i].g;
+    const t = mk('text', {id: 'q' + i, x: bx + bw / 2, y, 'text-anchor': 'middle', fill: wrong ? '#d3262c' : DARK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, bub);
+    t.textContent = ITEMS[i].t; fit(t, bw * .84, fs);
+    G.quotes[i] = {x: bx + bw / 2, y: y - fs * .36};
+  });
+
+  // ---- the line in hand ----
+  if (asking) {
+    const g = mk('g', {id: 'hand'}, root);
+    const t = mk('text', {x: W / 2, y: pillH / 2 + fs * .44, 'text-anchor': 'middle', fill: DARK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs * 1.18}, g);
+    t.textContent = ITEMS[idx].t; fit(t, W * .66, fs * 1.18);
+    const pw = Math.min(W * .74, box(t).width + fs * 2.4);
+    g.insertBefore(mk('rect', {x: W / 2 - pw / 2, y: 2, width: pw, height: pillH - 4, rx: (pillH - 4) / 2, fill: WHITE, stroke: DARK, 'stroke-width': 2}), t);
+    const c = mk('text', {x: W - 2, y: pillH / 2 + fs * .35, 'text-anchor': 'end', fill: WHITE, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .9, opacity: .85}, g);
+    c.textContent = (idx + 1) + ' of 6';
+    if (box(c).x < W / 2 + pw / 2 + 4) c.remove();
+    G.hand = {g, x: W / 2, y: pillH / 2};
+  } else G.hand = null;
+  root.querySelectorAll('[data-b]').forEach(el => el.addEventListener('click', e => { e.stopPropagation(); place(+el.dataset.b); }));
 }
-function place(b){
-  const i=idx, from=geo.cur;
-  ITEMS[i].a=b; order.push(i); idx++; Kit.haptic('light');
-  draw();
-  const j=order.filter(k=>ITEMS[k].a===b).indexOf(i), s=slot(b,j);
-  if(!Kit.calm&&from) gsap.from('#chip'+i,{x:from.x-(s.x+s.w/2),y:from.y-(s.y+s.h/2),duration:.45,ease:'power3.out'});
-  if(!Kit.calm&&idx<ITEMS.length) gsap.from('#cur',{opacity:0,y:-8,duration:.3});
-  if(idx===ITEMS.length) setTimeout(grade,550);
+
+function place(b) {
+  if (phase !== 'sort' || idx >= ITEMS.length || busy) return;
+  const i = idx, from = G.hand;
+  ITEMS[i].a = b; idx++; Kit.haptic('light');
+  build();
+  const to = b ? G.quotes[i] : G.notes[i], el = svg.querySelector((b ? '#q' : '#n') + i);
+  if (!Kit.calm && from && to && el) gsap.from(el, {x: from.x - to.x, y: from.y - to.y, scale: 1.1, transformOrigin: '50% 50%', duration: .45, ease: 'power3.out'});
+  if (!Kit.calm && G.hand) gsap.from(G.hand.g, {opacity: 0, y: -8, duration: .3});
+  if (idx === ITEMS.length) { busy = true; setTimeout(grade, Kit.calm ? 30 : 600); }
 }
-function grade(){
-  phase='graded'; draw();
-  const ok=ITEMS.filter(o=>o.a===o.g).length;
-  Kit.answer({choice:ok+' of 6',correct:ok>=5});
-  Kit.haptic(ok===6?'success':'selection');
-  setTimeout(()=>{
-    const old={};
-    order.forEach(i=>{const b=ITEMS[i].a,j=order.filter(k=>ITEMS[k].a===b).indexOf(i);old[i]=slot(b,j);});
-    phase='fixed';
+
+function grade() {
+  const ok = ITEMS.filter(o => o.a === o.g).length;
+  Kit.answer({choice: ok + ' of 6', correct: ok >= 5});
+  Kit.haptic(ok === 6 ? 'success' : 'selection');
+  phase = 'graded';
+  const wrong = ITEMS.map((o, i) => i).filter(i => ITEMS[i].a !== ITEMS[i].g);
+  const old = {}; wrong.forEach(i => old[i] = ITEMS[i].a ? G.quotes[i] : G.notes[i]);
+  const go = () => {
+    phase = 'fixed';
     Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    draw();
-    order.forEach(i=>{
-      if(ITEMS[i].a===ITEMS[i].g||Kit.calm)return;
-      const b=ITEMS[i].g,j=order.filter(k=>ITEMS[k].g===b).indexOf(i),s=slot(b,j),o=old[i];
-      gsap.from('#chip'+i,{x:o.x-s.x,y:o.y-s.y,duration:.6,ease:'power2.inOut'});
+    Kit.$('say').textContent = ok + ' of 6 in the right half.';
+    build();
+    if (!Kit.calm) wrong.forEach(i => {
+      const now = ITEMS[i].g ? G.quotes[i] : G.notes[i], el = svg.querySelector((ITEMS[i].g ? '#q' : '#n') + i);
+      if (now && old[i] && el) gsap.from(el, {x: old[i].x - now.x, y: old[i].y - now.y, duration: .65, ease: 'power2.inOut'});
     });
-    if(!Kit.calm) gsap.from('#why',{opacity:0,y:8,duration:.4});
-  },900);
+    // and she becomes part of the furniture
+    if (Kit.calm) { st.blend = 1; build(); }
+    else gsap.to(st, {blend: 1, duration: .01, delay: .9, onComplete: build});
+  };
+  build();
+  const els = wrong.map(i => svg.querySelector((ITEMS[i].a ? '#q' : '#n') + i)).filter(Boolean);
+  if (Kit.calm || !els.length) return go();
+  gsap.to(els, {x: '+=5', duration: .05, repeat: 7, yoyo: true, onComplete: go});
 }
-svg.addEventListener('click',e=>{
-  const t=e.target.closest('[data-b]');
-  if(!t||phase!=='sort'||idx>=ITEMS.length)return;
-  place(+t.dataset.b);
-});
-Kit.onShow.card = () => { draw(); };
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#cur',{opacity:0,scale:.9,transformOrigin:'50% 50%',duration:.45,ease:'back.out(2)'}); };
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm && G && G.hand) gsap.from(G.hand.g, {opacity: 0, scale: .9, transformOrigin: '50% 50%', duration: .45, ease: 'back.out(2)'}); };
 Kit.play.card = async () => {
-  const wait=ms=>new Promise(r=>setTimeout(r,ms));
-  const picks=[0,1,0,0,0,1];
-  for(const b of picks){ svg.querySelector('[data-b="'+b+'"] rect').dispatchEvent(new MouseEvent('click',{bubbles:true})); await wait(120); }
-  await wait(2300);
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (const b of [0, 1, 0, 0, 0, 1]) { svg.querySelector(`[data-b="${b}"]`).dispatchEvent(new MouseEvent('click', {bubbles: true})); await wait(Kit.calm ? 40 : 160); }
+  await wait(Kit.calm ? 200 : 2400);
 };
+// Drawn again at the size it now has whenever its room changes: when the answer comes in, never shrunk whole.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; build(); } }).observe(svg); }
 Kit.single();
 </script>
 </html>
