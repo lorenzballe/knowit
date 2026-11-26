@@ -282,7 +282,7 @@ update gate's full screens, over everything, §6.13).
 
 | Event | When | Properties | Why | Where |
 | --- | --- | --- | --- | --- |
-| `day started` | a fresh day is dealt | `cards`, `dealt_by` (`server`, `server-cached`, `phone`), `ms_to_deal` **new**, `own`, `reviews`, `local` **new** (bool: the day holds a card about where the reader lives), `sunday` **new** (bool: the reader's Sunday, with one more of their own than the day would have had; never on Astute+), `topics`, `streak_days`, `rung`, `is_plus`, `slots`, `challenges` | who dealt the day and how fast; whether the cards about home and Sunday's extra card reach readers | P, T:`day` |
+| `day started` | a fresh day is dealt; a new reader's first, when the first run ends | `cards`, `dealt_by` (`server`, `server-cached`, `phone`), `ms_to_deal` **new**, `own`, `reviews`, `local` **new** (bool: the day holds a card about where the reader lives), `sunday` **new** (bool: the reader's Sunday, with one more of their own than the day would have had; never on Astute+), `topics`, `streak_days`, `rung`, `is_plus`, `slots`, `challenges` | who dealt the day and how fast; whether the cards about home and Sunday's extra card reach readers | P, T:`day` |
 | `card viewed` | a card of the day comes up | card facts, `resumed` | the funnel inside a day | P, T:`view` |
 | `hint shown` | a card's hint is opened | `pill_id`, `topic` | | P, T:`hint` |
 | `card answered` | a card is answered | card facts, `graded`, `ms_to_answer`, `correct`, `confidence`, `gave_reason` (bool, never the reason), `review`, `review_stage`, `response_index`, `response_value`, `hint_available` | right, wrong, how sure | P, T:`ans` |
