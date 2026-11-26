@@ -176,7 +176,7 @@ def thumbs_index() -> dict[str, str]:
 # taken again (tool/cards/thumbs.cjs keeps the same) and the app and the site fetch the new ones
 # instead of keeping the old under the same name. 2: the source hidden under the question, a video
 # cited by its channel.
-PICTURES = "\n<!-- pictures 3 -->"
+PICTURES = "\n<!-- pictures 2 -->"
 
 
 def picture_hash(html: str) -> str:
