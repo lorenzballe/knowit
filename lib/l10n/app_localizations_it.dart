@@ -96,12 +96,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Le cinque di domani si aprono tra $when';
+    return 'Le cinque di domani · tra $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Domani le cinque iniziano con $topic, tra $when';
+    return 'Domani: $topic · tra $when';
   }
 
   @override
@@ -1909,19 +1909,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Cinque su cinque.',
-      '6': 'Sei su sei.',
-      'other': '$n su $n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Oggi hai allenato';
-
-  @override
   String get scoreTitle => 'Punteggio Astute';
 
   @override
@@ -1931,11 +1918,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get scoreStart => 'Parte dalla tua prima risposta.';
-
-  @override
-  String scoreToday(String n) {
-    return '$n oggi';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2448,6 +2430,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get yourJourney => 'Il tuo viaggio';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Dalla tua ultima visita, $days giorni fa',
+      one: 'Dalla tua ultima visita, ieri',
+      zero: 'Dalla tua ultima visita di oggi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '$n dalla tua ultima visita';
+  }
 
   @override
   String get thePath => 'Il percorso';
@@ -5919,9 +5918,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Le tue abitudini';
-
-  @override
-  String get journeyChapterMemory => 'Cosa ti resta';
 
   @override
   String get journeyChapterCoach => 'Il tuo coach';

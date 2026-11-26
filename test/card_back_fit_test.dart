@@ -76,8 +76,8 @@ const Map<String, (Size, Size)> _phones = {
 /// The score an answer moved, beside the verdict of every graded back, as
 /// wide as it comes: an answer moves a score by 24 at most.
 const ScoreMove _move = ScoreMove(
-  before: 1024,
-  after: 1000,
+  before: 24,
+  after: 0,
   skill: Skill.money,
   on: '',
 );

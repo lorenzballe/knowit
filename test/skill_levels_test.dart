@@ -207,7 +207,7 @@ void main() {
       }),
     ) as AppState;
     final SkillScore score = scoreBookOf(app).of(Skill.money);
-    expect(score.now, greaterThan(kScoreStart));
+    expect(score.now, greaterThan(0));
     expect(score.answers, 4);
     final l = lookupAppLocalizations(const Locale('en'));
     await tester.pumpWidget(

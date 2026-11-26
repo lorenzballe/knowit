@@ -10,6 +10,7 @@ import 'card_edge.dart';
 import 'chunky.dart';
 import 'subject_icon.dart';
 import 'glass_round.dart';
+import 'hand_glass.dart' show LiquidGlass;
 
 // Every screen names itself by wrapping in a ScreenView, which lives with
 // the rest of what the app measures. It is a wrapper and not a mixin
@@ -169,10 +170,27 @@ class SkipCorner extends StatelessWidget {
 class BackCircle extends StatelessWidget {
   final VoidCallback onPressed;
   final bool dark;
-  const BackCircle({super.key, required this.onPressed, this.dark = false});
+
+  /// Pinned over a page that scrolls under it, as Your journey's is: where
+  /// the system's glass is not there, the ring is laid on glass drawn by
+  /// hand, or on the raised ground with a shadow, so what passes under it
+  /// never shows through.
+  final bool floating;
+
+  const BackCircle({
+    super.key,
+    required this.onPressed,
+    this.dark = false,
+    this.floating = false,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final Widget arrow = Icon(
+      Icons.arrow_back_rounded,
+      size: 17,
+      color: context.p.ink,
+    );
     return GlassRound(
       symbol: GlassRound.back,
       label: MaterialLocalizations.of(context).backButtonTooltip,
@@ -189,20 +207,24 @@ class BackCircle extends StatelessWidget {
             width: 44,
             height: 44,
             child: Center(
-              child: Container(
-                width: 38,
-                height: 38,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: context.p.line),
-                ),
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.arrow_back_rounded,
-                  size: 17,
-                  color: context.p.ink,
-                ),
-              ),
+              child: floating
+                  ? SizedBox.square(
+                      dimension: 40,
+                      child: LiquidGlass(
+                        circle: true,
+                        child: Center(child: arrow),
+                      ),
+                    )
+                  : Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: context.p.line),
+                      ),
+                      alignment: Alignment.center,
+                      child: arrow,
+                    ),
             ),
           ),
         ),

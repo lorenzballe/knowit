@@ -96,12 +96,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return '내일의 다섯 장은 $when 후에 열려요';
+    return '내일의 다섯 장 · $when 후';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '내일의 다섯 장은 $topic부터 시작해요. $when 후';
+    return '내일은 $topic부터 · $when 후';
   }
 
   @override
@@ -1843,15 +1843,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {'other': '$n장 중 $n장.'});
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => '오늘 훈련한 것';
-
-  @override
   String get scoreTitle => 'Astute 점수';
 
   @override
@@ -1861,11 +1852,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get scoreStart => '첫 답변부터 시작돼요.';
-
-  @override
-  String scoreToday(String n) {
-    return '오늘 $n';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2367,6 +2353,23 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get yourJourney => '나의 여정';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '지난 방문($days일 전) 이후',
+      one: '지난 방문(어제) 이후',
+      zero: '지난 방문(오늘) 이후',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '지난 방문 이후 $n';
+  }
 
   @override
   String get thePath => '길';
@@ -5670,9 +5673,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => '나의 습관';
-
-  @override
-  String get journeyChapterMemory => '기억에 남은 것';
 
   @override
   String get journeyChapterCoach => '나의 코치';

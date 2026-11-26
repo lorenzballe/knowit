@@ -128,6 +128,8 @@ class AppState extends ChangeNotifier {
   static const _kJudgements = 'knowit.judgements';
   static const _kReadingLog = 'knowit.readingLog';
   static const _kPathsOpened = 'knowit.pathsOpened';
+  static const _kJourneySeen = 'knowit.journeySeen';
+  static const _kJourneySeenOn = 'knowit.journeySeenOn';
   static const _kNotes = 'knowit.notes';
   static const _kTasteVariant = 'knowit.exp.tasteVariant';
   static const _kReactions = 'knowit.reactions';
@@ -273,6 +275,15 @@ class AppState extends ChangeNotifier {
   /// from 1, seconds since the epoch): what Explore's Continue goes on
   /// with (continue_block.dart). Kept on the phone, six at most.
   List<String> pathsOpened = [];
+
+  /// Every figure of Your journey as the reader last saw it, by its name
+  /// ('score', 'skill.focus', 'held'), and the day they last looked:
+  /// opened again, a figure that has moved since counts from here to where
+  /// it stands (lib/widgets/count_since.dart). Written as each figure is
+  /// seen, so one never scrolled to still counts from the last time it was.
+  /// Kept on the phone only: what this phone showed is this phone's.
+  Map<String, double> journeySeen = {};
+  String? journeySeenOn;
 
   /// The reader's notes, by card: a few lines of their own on a card
   /// (card_notes.dart). A note taken away stays as an empty one, so that
@@ -678,6 +689,8 @@ class AppState extends ChangeNotifier {
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
     readingLog = ReadingLog.decode(_prefs.getString(_kReadingLog));
     pathsOpened = _prefs.getStringList(_kPathsOpened) ?? [];
+    journeySeen = _decodeWeights(_prefs.getString(_kJourneySeen));
+    journeySeenOn = _prefs.getString(_kJourneySeenOn);
     notes = CardNotes.decode(_prefs.getString(_kNotes));
     reactions = _decodeReactions(_prefs.getString(_kReactions));
     // The phone's own draw for the cards that ask how sure only some of the
@@ -3319,6 +3332,16 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// The figures of Your journey just seen, written over what was seen of
+  /// them before, and today as the day they were.
+  Future<void> rememberJourney(Map<String, double> seen) async {
+    if (seen.isEmpty) return;
+    journeySeen = {...journeySeen, ...seen};
+    journeySeenOn = dateKey(today);
+    await _prefs.setString(_kJourneySeen, jsonEncode(journeySeen));
+    await _prefs.setString(_kJourneySeenOn, journeySeenOn!);
+  }
+
   static Map<String, double> _decodeWeights(String? raw) {
     if (raw == null || raw.isEmpty) return {};
     try {
@@ -3460,6 +3483,8 @@ class AppState extends ChangeNotifier {
     judgements = [];
     readingLog = [];
     pathsOpened = [];
+    journeySeen = {};
+    journeySeenOn = null;
     notes = {};
     reactions = {};
     topicWeights = {};

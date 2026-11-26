@@ -13,6 +13,8 @@ import 'package:astuto/screens/journey_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/state/journey_record.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/skill_score.dart' show scoreBookOf;
+import 'package:astuto/widgets/ui.dart' show BackCircle;
 
 /// Answers said how sure, level by level: (count, right) before the last
 /// week and (count, right) in it. Plus, if asked, some from before the app
@@ -45,6 +47,9 @@ Map<String, Object> _answered(
     'knowit.judgements': jsonEncode(judgements),
   };
 }
+
+/// The Astute score [app]'s reader sees.
+int _scoreOf(AppState app) => scoreBookOf(app).overall.now;
 
 Future<AppState> _app(Map<String, Object> prefs) async {
   SharedPreferences.setMockInitialValues(prefs);
@@ -417,6 +422,286 @@ void main() {
       expect(find.text('LEVEL 1 OF 7'), findsNothing);
       expect(find.text('Counted from today'), findsOneWidget);
       expect(find.text('nothing dated yet'), findsOneWidget);
+    });
+  });
+
+  group('since the last visit', () {
+    /// Six cards answered right today, on cards the bank has: a score to
+    /// count up to.
+    Map<String, Object> answeredToday({Map<String, Object> also = const {}}) {
+      final List<Pill> right = PillBank.cards
+          .where((p) => p.isGraded)
+          .take(6)
+          .toList();
+      final String today = dateKey(DateTime.now());
+      return {
+        'knowit.onboarded': true,
+        'knowit.plus': true,
+        'knowit.seenIds': [for (final p in right) p.id],
+        'knowit.judgements': jsonEncode([
+          for (final p in right) {'c': 80, 'k': true, 'p': p.id, 'd': today},
+        ]),
+        ...also,
+      };
+    }
+
+    String daysAgo(int n) =>
+        dateKey(DateTime.now().subtract(Duration(days: n)));
+
+    Widget host(AppState app, {bool still = false}) => MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      theme: buildAstutoTheme(Brightness.dark),
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(disableAnimations: still),
+        child: child!,
+      ),
+      home: JourneyScreen(app: app, onBack: () {}),
+    );
+
+    Finder inScore(String text) => find.descendant(
+      of: find.byKey(const ValueKey('training-score')),
+      matching: find.text(text),
+    );
+
+    Finder markIn(Finder where) => find.descendant(
+      of: where,
+      matching: find.byKey(const ValueKey('since-mark')),
+    );
+
+    double opacityOf(WidgetTester tester, Finder mark) => tester
+        .widget<AnimatedOpacity>(
+          find.ancestor(of: mark, matching: find.byType(AnimatedOpacity)),
+        )
+        .opacity;
+
+    testWidgets('a figure that moved since the reader last looked stands '
+        'where it was, counts calmly to where it is, and keeps a quiet mark '
+        'of how far; what they saw is written down for next time', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(402, 1400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final app = await _app(
+        answeredToday(
+          also: {
+            'knowit.journeySeen': jsonEncode({'score': 10}),
+            'knowit.journeySeenOn': daysAgo(2),
+          },
+        ),
+      );
+      final int now = _scoreOf(app);
+      expect(now, greaterThan(30));
+      await tester.pumpWidget(host(app));
+      await tester.pump();
+      // Where it was, while the page arrives.
+      expect(inScore('10'), findsOneWidget);
+      expect(
+        markIn(find.byKey(const ValueKey('training-score'))),
+        findsOneWidget,
+      );
+      expect(
+        opacityOf(tester, markIn(find.byKey(const ValueKey('training-score')))),
+        0,
+      );
+      await tester.pump(const Duration(milliseconds: 1000));
+      // On its way: neither where it was nor where it is.
+      expect(inScore('10'), findsNothing);
+      expect(inScore('$now'), findsNothing);
+      await tester.pumpAndSettle();
+      expect(inScore('$now'), findsOneWidget);
+      final Finder mark = markIn(find.byKey(const ValueKey('training-score')));
+      expect(tester.widget<Text>(mark).data, '+${now - 10}');
+      expect(opacityOf(tester, mark), 1);
+      // When the last visit was, under the title.
+      expect(find.text('Since your last visit, 2 days ago'), findsOneWidget);
+      // Written down: next time it counts from here.
+      final prefs = await SharedPreferences.getInstance();
+      final Map<String, dynamic> seen = jsonDecode(
+        prefs.getString('knowit.journeySeen')!,
+      ) as Map<String, dynamic>;
+      expect(seen['score'], now);
+      expect(prefs.getString('knowit.journeySeenOn'), daysAgo(0));
+      expect(app.journeySeen['score'], now);
+    });
+
+    testWidgets('opened again with nothing new, nothing counts and nothing '
+        'is marked; the first time, nothing is either', (tester) async {
+      tester.view.physicalSize = const Size(402, 1400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final app = await _app(answeredToday());
+      await tester.pumpWidget(host(app));
+      await tester.pump();
+      expect(inScore('${_scoreOf(app)}'), findsOneWidget);
+      expect(find.byKey(const ValueKey('since-mark')), findsNothing);
+      expect(find.byKey(const ValueKey('journey-since')), findsNothing);
+      await tester.pumpAndSettle();
+      expect(app.journeySeen['score'], _scoreOf(app));
+      // Again: what was seen is where it stands.
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpWidget(host(app));
+      await tester.pump();
+      expect(inScore('${_scoreOf(app)}'), findsOneWidget);
+      expect(find.byKey(const ValueKey('since-mark')), findsNothing);
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('whoever asked for less motion gets every figure where it '
+        'stands, with its mark', (tester) async {
+      tester.view.physicalSize = const Size(402, 1400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final app = await _app(
+        answeredToday(
+          also: {
+            'knowit.journeySeen': jsonEncode({'score': 10}),
+            'knowit.journeySeenOn': daysAgo(1),
+          },
+        ),
+      );
+      final int now = _scoreOf(app);
+      await tester.pumpWidget(host(app, still: true));
+      await tester.pump();
+      await tester.pump();
+      expect(inScore('$now'), findsOneWidget);
+      final Finder mark = markIn(find.byKey(const ValueKey('training-score')));
+      expect(opacityOf(tester, mark), 1);
+      expect(find.text('Since your last visit, yesterday'), findsOneWidget);
+      expect(tester.hasRunningAnimations, isFalse);
+    });
+
+    testWidgets('a figure below the fold counts when it is reached, not '
+        'before, and one never reached is not written down as seen', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(402, 800);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final app = await _app(
+        answeredToday(
+          also: {
+            'knowit.streak': 3,
+            'knowit.lastCompletionDate': daysAgo(0),
+            'knowit.journeySeen': jsonEncode({'streak': 1, 'score': 10}),
+            'knowit.journeySeenOn': daysAgo(2),
+          },
+        ),
+      );
+      final int streak = app.liveStreak;
+      expect(streak, greaterThan(1));
+      await tester.pumpWidget(host(app));
+      await tester.pumpAndSettle();
+      // The days in a row are far down the page: not seen yet.
+      expect(app.journeySeen['streak'], 1);
+      final Finder list = find.byKey(const ValueKey('journey-page'));
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('journey-week')),
+        300,
+        scrollable: find.descendant(
+          of: list,
+          matching: find.byType(Scrollable),
+        ),
+      );
+      // Brought to the top of the page by the scroll: down a little, into
+      // the middle of it.
+      await tester.drag(list, const Offset(0, 200));
+      await tester.pump();
+      final Finder row = find.byKey(const ValueKey('journey-week'));
+      expect(
+        find.descendant(of: row, matching: find.text('1 day')),
+        findsOneWidget,
+      );
+      await tester.pumpAndSettle();
+      expect(
+        find.descendant(of: row, matching: find.text('$streak days')),
+        findsOneWidget,
+      );
+      expect(tester.widget<Text>(markIn(row)).data, '+${streak - 1}');
+      expect(app.journeySeen['streak'], streak);
+    });
+
+    testWidgets('the whole page scrolls, its title with it; only the way '
+        'back stays, and the page goes soft under the status bar', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(390, 844);
+      tester.view.devicePixelRatio = 1;
+      tester.view.padding = const FakeViewPadding(top: 47, bottom: 34);
+      addTearDown(tester.view.reset);
+      final app = await _app(answeredToday());
+      await tester.pumpWidget(host(app));
+      await tester.pumpAndSettle();
+      final Finder back = find.byType(BackCircle);
+      final Finder title = find.text('Your journey');
+      final Offset backAt = tester.getTopLeft(back);
+      final double titleAt = tester.getCenter(title).dy;
+      // At rest, the title beside the way back, under the status bar.
+      expect(backAt.dy, greaterThanOrEqualTo(47));
+      expect((titleAt - tester.getCenter(back).dy).abs(), lessThan(4));
+      expect(
+        tester.getSize(find.byKey(const ValueKey('journey-top-edge'))).height,
+        47,
+      );
+      // Not so far that the title leaves the screen: it rises under the
+      // status bar while the way back stays where it was.
+      await tester.drag(
+        find.byKey(const ValueKey('journey-page')),
+        const Offset(0, -60),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.getTopLeft(back), backAt);
+      expect(tester.getCenter(title).dy, closeTo(titleAt - 60, 1));
+      // Still the way back, over whatever runs under it.
+      await tester.tap(back);
+    });
+
+    testWidgets('what has stayed is part of what the reader knows, not a '
+        'chapter of its own', (tester) async {
+      tester.view.physicalSize = const Size(402, 9000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final Pill card = PillBank.cards.firstWhere(
+        (p) => p.challenge is PickOne,
+      );
+      final app = await _app({
+        'knowit.onboarded': true,
+        'knowit.plus': true,
+        'knowit.seenIds': [card.id],
+        'knowit.answersJson': jsonEncode({
+          card.id: {'r': '${(card.challenge as PickOne).correct}', 's': 3},
+        }),
+      });
+      expect(app.heldCards, 1);
+      await tester.pumpWidget(host(app));
+      await tester.pumpAndSettle();
+      final l = lookupAppLocalizations(const Locale('en'));
+      expect(find.byKey(const ValueKey('journey-memory')), findsOneWidget);
+      expect(find.textContaining('WHAT STAYS WITH YOU'), findsNothing);
+      final double memory = tester
+          .getTopLeft(find.byKey(const ValueKey('journey-memory')))
+          .dy;
+      expect(
+        memory,
+        greaterThan(
+          tester
+              .getTopLeft(
+                find.textContaining(l.journeyChapterKnow.toUpperCase()),
+              )
+              .dy,
+        ),
+      );
+      expect(
+        memory,
+        lessThan(
+          tester
+              .getTopLeft(
+                find.textContaining(l.storyChapterReason.toUpperCase()),
+              )
+              .dy,
+        ),
+      );
     });
   });
 }

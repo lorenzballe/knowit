@@ -96,12 +96,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Tomorrow\'s five open in $when';
+    return 'Tomorrow\'s five · in $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Tomorrow\'s five start with $topic, in $when';
+    return 'Tomorrow: $topic · in $when';
   }
 
   @override
@@ -1901,19 +1901,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Five for five.',
-      '6': 'Six for six.',
-      'other': '$n for $n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Today you trained';
-
-  @override
   String get scoreTitle => 'Astute score';
 
   @override
@@ -1923,11 +1910,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scoreStart => 'Your first answer starts it.';
-
-  @override
-  String scoreToday(String n) {
-    return '$n today';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2437,6 +2419,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yourJourney => 'Your journey';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Since your last visit, $days days ago',
+      one: 'Since your last visit, yesterday',
+      zero: 'Since your last visit, earlier today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '$n since your last visit';
+  }
 
   @override
   String get thePath => 'The path';
@@ -5877,9 +5876,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Your habits';
-
-  @override
-  String get journeyChapterMemory => 'What stays with you';
 
   @override
   String get journeyChapterCoach => 'Your coach';

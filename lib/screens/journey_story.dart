@@ -467,7 +467,7 @@ class _CoachState extends State<_Coach> {
         key: const ValueKey('journey-coach-locked'),
         behavior: HitTestBehavior.opaque,
         onTap: () => requirePlus(context, app, () {}, source: 'journey coach'),
-        child: _Box(
+        child: _CoachFrame(
           child: Row(
             children: [
               Expanded(child: Text(l.coachTeaser, style: line)),
@@ -480,7 +480,7 @@ class _CoachState extends State<_Coach> {
     }
     final String? kept = Coach.kept[_key];
     final AskResult? result = kept != null ? AskAnswer(kept) : _result;
-    return _Box(
+    return _CoachFrame(
       key: const ValueKey('journey-coach'),
       child: switch ((_busy, result)) {
         (true, _) => Row(
@@ -578,6 +578,139 @@ class _CoachState extends State<_Coach> {
       },
     );
   }
+}
+
+/// The coach's box: the journey's own panel, with a thin outline of every
+/// colour the app has turning slowly round it — the one box on the page
+/// that is somebody talking to the reader rather than a count, said by its
+/// edge and nothing else. The card after the fifth turns the same colours
+/// round its rim (magic_card.dart); here they are a hairline, a little
+/// light off it and no more, and they take twelve seconds to go round.
+/// A phone that asked for less motion gets the outline standing still.
+class _CoachFrame extends StatefulWidget {
+  const _CoachFrame({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  State<_CoachFrame> createState() => _CoachFrameState();
+}
+
+class _CoachFrameState extends State<_CoachFrame>
+    with SingleTickerProviderStateMixin {
+  /// One turn of the colours.
+  static const Duration _period = Duration(seconds: 12);
+
+  /// One clock for every outline, read on every frame: the box is built
+  /// again as the page scrolls it out and back in, and an outline counted
+  /// from its own build would start its turn over each time.
+  static final Stopwatch _clock = Stopwatch()..start();
+
+  static double get _turnNow =>
+      (_clock.elapsedMicroseconds % _period.inMicroseconds) /
+      _period.inMicroseconds;
+
+  /// Only a heartbeat: it asks for a frame, and the painter asks the clock.
+  late final AnimationController _beat = AnimationController(
+    vsync: this,
+    duration: _period,
+  );
+
+  bool _still = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _still = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    if (_still) {
+      _beat.stop();
+    } else if (!_beat.isAnimating) {
+      _beat.repeat();
+    }
+  }
+
+  @override
+  void dispose() {
+    _beat.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    return RepaintBoundary(
+      child: CustomPaint(
+        painter: _RainbowEdge(
+          turn: _beat,
+          still: _still,
+          fill: p.ink.withValues(alpha: 0.06),
+          dark: p.isDark,
+        ),
+        child: RepaintBoundary(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: widget.child,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The panel and its outline: the colours swept round the box's middle,
+/// turned by the clock, as a stroke a point and a half wide over a softer
+/// one of the same colours, blurred, for a little light.
+class _RainbowEdge extends CustomPainter {
+  _RainbowEdge({
+    required Animation<double> turn,
+    required this.still,
+    required this.fill,
+    required this.dark,
+  }) : super(repaint: turn);
+
+  final bool still;
+  final Color fill;
+  final bool dark;
+
+  static const double radius = 22;
+  static const double width = 1.5;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Rect rect = Offset.zero & size;
+    final RRect panel = RRect.fromRectAndRadius(
+      rect,
+      const Radius.circular(radius),
+    );
+    canvas.drawRRect(panel, Paint()..color = fill);
+    final double turn = still ? 0.08 : _CoachFrameState._turnNow;
+    final Shader sweep = SweepGradient(
+      colors: [...kSpectrum, kSpectrum.first],
+      transform: GradientRotation(turn * 2 * math.pi),
+    ).createShader(rect);
+    final RRect edge = panel.deflate(width / 2);
+    // The light off it: wider, soft, faint.
+    canvas.drawRRect(
+      edge,
+      Paint()
+        ..shader = sweep
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 5
+        ..color = Color.fromRGBO(255, 255, 255, dark ? 0.32 : 0.22)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
+    );
+    canvas.drawRRect(
+      edge,
+      Paint()
+        ..shader = sweep
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = width,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_RainbowEdge old) =>
+      old.still != still || old.fill != fill || old.dark != dark;
 }
 
 // ── Practise ──────────────────────────────────────────────────────────────

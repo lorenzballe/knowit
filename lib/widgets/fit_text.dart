@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 /// ends in three dots reads as broken. Shrinking is the honest answer — a
 /// line of type a size smaller is still the line, and the reader never
 /// knows it was ever bigger. Nothing is ever clipped: at [minSize] the text
-/// wraps on as many lines as it needs.
+/// wraps on as many lines as it needs — unless it is a line that must stay
+/// [maxLines] long whatever comes ([ellipsis]), which at [minSize] is cut
+/// with three dots as the last resort.
 class FitText extends StatelessWidget {
   const FitText(
     this.text, {
@@ -18,6 +20,8 @@ class FitText extends StatelessWidget {
     this.maxLines = 2,
     this.minSize = 18,
     this.textAlign = TextAlign.start,
+    this.ellipsis = false,
+    this.wholeWords = false,
   });
 
   final String text;
@@ -25,6 +29,47 @@ class FitText extends StatelessWidget {
   final int maxLines;
   final double minSize;
   final TextAlign textAlign;
+
+  /// Never more than [maxLines] lines: at [minSize], what still does not
+  /// fit ends in three dots rather than wrapping on.
+  final bool ellipsis;
+
+  /// Whether every word must also fit a line of its own at the size taken:
+  /// in a narrow box a long name ("Wissenschaftlich denken") breaks inside
+  /// its first word and still keeps to two lines, which is no better than
+  /// cut. Words in scripts that break between any two characters — Chinese,
+  /// Japanese, Korean — are no such words.
+  final bool wholeWords;
+
+  /// A character of a script whose lines break between any two of them.
+  static final RegExp _breaksAnywhere = RegExp(
+    r'[\u1100-\u11ff\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]',
+  );
+
+  /// Whether each word of [text], set in [style], fits [width] alone: what
+  /// [wholeWords] asks at each size, and what a box choosing its own width
+  /// can ask before it sets one.
+  static bool wordsFit(
+    String text,
+    TextStyle style,
+    TextScaler scaler,
+    TextDirection direction,
+    double width,
+  ) {
+    for (final String word in text.split(RegExp(r'\s+'))) {
+      if (word.isEmpty || _breaksAnywhere.hasMatch(word)) continue;
+      final painter = TextPainter(
+        text: TextSpan(text: word, style: style),
+        maxLines: 1,
+        textDirection: direction,
+        textScaler: scaler,
+      )..layout();
+      final bool fits = painter.width <= width;
+      painter.dispose();
+      if (!fits) return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +91,16 @@ class FitText extends StatelessWidget {
             textScaler: scaler,
             textAlign: textAlign,
           )..layout(maxWidth: width);
-          final bool fits = !painter.didExceedMaxLines;
+          final bool fits =
+              !painter.didExceedMaxLines &&
+              (!wholeWords ||
+                  wordsFit(
+                    text,
+                    base.copyWith(fontSize: size),
+                    scaler,
+                    direction,
+                    width,
+                  ));
           painter.dispose();
           if (fits) break;
           size -= 1;
@@ -55,7 +109,8 @@ class FitText extends StatelessWidget {
           text,
           textAlign: textAlign,
           style: base.copyWith(fontSize: size),
-          maxLines: size <= minSize ? null : maxLines,
+          maxLines: size <= minSize && !ellipsis ? null : maxLines,
+          overflow: ellipsis ? TextOverflow.ellipsis : null,
           softWrap: true,
         );
       },

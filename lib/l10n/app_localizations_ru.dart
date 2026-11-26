@@ -98,12 +98,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Завтрашняя пятёрка откроется через $when';
+    return 'Завтрашняя пятёрка · через $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Завтрашняя пятёрка начнётся с темы «$topic», через $when';
+    return 'Завтра: $topic · через $when';
   }
 
   @override
@@ -1983,19 +1983,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Пять из пяти.',
-      '6': 'Шесть из шести.',
-      'other': '$n из $n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Сегодня ты тренировал';
-
-  @override
   String get scoreTitle => 'Рейтинг Astute';
 
   @override
@@ -2005,11 +1992,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get scoreStart => 'Он начнётся с твоего первого ответа.';
-
-  @override
-  String scoreToday(String n) {
-    return '$n сегодня';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2531,6 +2513,25 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get yourJourney => 'Ваш путь';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'С прошлого визита, $days дня назад',
+      many: 'С прошлого визита, $days дней назад',
+      few: 'С прошлого визита, $days дня назад',
+      one: 'С прошлого визита, $days день назад',
+      zero: 'С прошлого визита, сегодня',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '$n с прошлого визита';
+  }
 
   @override
   String get thePath => 'Дорога';
@@ -6121,9 +6122,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Твои привычки';
-
-  @override
-  String get journeyChapterMemory => 'Что остаётся с тобой';
 
   @override
   String get journeyChapterCoach => 'Твой коуч';

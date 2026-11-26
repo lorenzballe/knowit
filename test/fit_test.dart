@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ import 'package:astuto/data/card_json.dart';
 import 'package:astuto/data/daily.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/data/skills.dart';
+import 'package:astuto/data/topics.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
@@ -38,6 +41,7 @@ import 'package:astuto/sync/board.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/report_sheet.dart';
+import 'package:astuto/widgets/skill_score.dart' show scoreBookOf;
 
 /// Every screen, in every language, on a narrow phone: nothing cut.
 ///
@@ -340,6 +344,197 @@ void main() {
       print('CUT ${findings.length}\n${findings.join('\n')}');
     }
     expect(findings, isEmpty, reason: '${findings.length} places cut text');
+  });
+
+  // The journey's skills not picked, two to a row: beside a score of three
+  // figures a name has little more than eighty points on a small phone, less
+  // than some of its words need ("wetenschapper", "Wissenschaftlich"). Every
+  // name whole in every language: not cut, and no word wider than its line,
+  // which would break it in the middle while keeping to two lines.
+  testWidgets("the journey's skills keep every name whole in every "
+      'language', (tester) async {
+    tester.view.physicalSize = phone;
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    tester.platformDispatcher.textScaleFactorTestValue = 1.0;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+
+    // Weeks of answers, nearly all right: scores of three figures.
+    final DateTime now = DateTime.now();
+    String ago(int days) => dateKey(now.subtract(Duration(days: days)));
+    final AppState app = await appWith({
+      ...done,
+      'knowit.judgements': jsonEncode([
+        for (var i = 0; i < 90; i++)
+          {
+            'c': 70,
+            'k': i % 9 != 0,
+            'p': PillBank.cards.where((p) => p.isGraded).elementAt(i).id,
+            'd': ago(40 - i ~/ 3),
+          },
+      ]),
+    });
+    final RegExp breaksAnywhere = RegExp(
+      r'[\u1100-\u11ff\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]',
+    );
+    final Finder cells = find.byWidgetPredicate(
+      (w) =>
+          w.key is ValueKey<String> &&
+          (w.key! as ValueKey<String>).value.startsWith('training-other-'),
+      skipOffstage: false,
+    );
+
+    final findings = <String>[];
+    var widest = 0;
+    for (final Locale locale in locales) {
+      await tester.pumpWidget(
+        host(locale, JourneyScreen(app: app, onBack: () {})),
+      );
+      await settle(tester);
+      expect(cells, findsWidgets, reason: '[$locale] no skills below');
+      for (final Element cell in cells.evaluate()) {
+        final RenderParagraph name = tester.renderObject<RenderParagraph>(
+          find
+              .descendant(
+                of: find.byWidget(cell.widget),
+                matching: find.byType(RichText),
+                skipOffstage: false,
+              )
+              .first,
+        );
+        final String said = name.text.toPlainText();
+        if (name.didExceedMaxLines) findings.add('[$locale] "$said": cut');
+        for (final String word in said.split(RegExp(r'\s+'))) {
+          if (word.isEmpty || breaksAnywhere.hasMatch(word)) continue;
+          final TextPainter alone = TextPainter(
+            text: TextSpan(text: word, style: name.text.style),
+            textDirection: name.textDirection,
+            textScaler: name.textScaler,
+            maxLines: 1,
+          )..layout();
+          if (alone.width > name.constraints.maxWidth + 0.5) {
+            findings.add(
+              '[$locale] "$said": "$word" broken, '
+              '${alone.width.round()} in ${name.constraints.maxWidth.round()}',
+            );
+          }
+          alone.dispose();
+        }
+      }
+      // The scores beside the names: three figures, as the case is.
+      for (final Skill s in Skill.values) {
+        widest = math.max(widest, scoreBookOf(app).of(s).now);
+      }
+    }
+    expect(
+      widest,
+      greaterThanOrEqualTo(100),
+      reason: 'scores of three figures',
+    );
+    expect(findings, isEmpty, reason: findings.join('\n'));
+  });
+
+  // The line under the finished day's shelf ran onto a second line on the
+  // owner's iPhone ("Tomorrow's five start with Weird facts, in 3h 50m")
+  // and took the shelf's room. One line in every language, then, for every
+  // subject, with the widest wait the clock gives — 23 h 59, half a minute
+  // after midnight — and the widest mark: a card that thinks too carries
+  // Thinking's lightbulb beside its own.
+  testWidgets("tomorrow's line is one line in every language, for every "
+      'subject', (tester) async {
+    tester.view.physicalSize = phone;
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+
+    final DateTime today = DateTime.now();
+    final DateTime justAfterMidnight = DateTime(
+      today.year,
+      today.month,
+      today.day,
+      0,
+      0,
+      30,
+    );
+    final Pill thinker = PillBank.cards.firstWhere((p) => p.thinksToo);
+    final List<Pill?> leads = [
+      null,
+      for (final String topic in kTopics.keys)
+        cardFromJson({
+          ...cardToJson(thinker),
+          'id': 'tomorrow-$topic',
+          'topic': topic,
+        }),
+    ];
+    // The languages the app's own face sets. The others are set in the
+    // phone's own faces for their scripts, which this machine does not
+    // have, so how wide they come out here says little about a phone.
+    const Set<String> ownFace = {
+      'en',
+      'de',
+      'es',
+      'fr',
+      'it',
+      'nl',
+      'pl',
+      'pt',
+      'tr',
+    };
+
+    final findings = <String>[];
+    for (final Locale locale in locales) {
+      // The reader's own text size, the next one up, and the largest the
+      // accessibility settings give.
+      for (final double scale in const [1.0, 1.3, 2.0]) {
+        tester.platformDispatcher.textScaleFactorTestValue = scale;
+        for (final Pill? lead in leads) {
+          await tester.pumpWidget(
+            host(
+              locale,
+              Scaffold(
+                body: Center(
+                  child: Padding(
+                    // As the shelf sets it.
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: TomorrowLine(lead: lead, now: justAfterMidnight),
+                  ),
+                ),
+              ),
+            ),
+          );
+          final RenderParagraph line = tester.renderObject<RenderParagraph>(
+            find.descendant(
+              of: find.byKey(const ValueKey('shelf-tomorrow')),
+              matching: find.byType(RichText),
+            ),
+          );
+          final String said = line.text.toPlainText();
+          final String where = '[$locale x$scale] "$said"';
+          final TextPainter one = TextPainter(
+            text: TextSpan(text: said, style: line.text.style),
+            textDirection: line.textDirection,
+            textScaler: line.textScaler,
+            maxLines: 1,
+          )..layout();
+          final double oneLine = one.height;
+          one.dispose();
+          if (line.size.height > oneLine * 1.5) {
+            findings.add('$where: more than one line');
+          }
+          final bool own = ownFace.contains(locale.languageCode);
+          // Cut with three dots only at the largest sizes, the last resort.
+          if (line.didExceedMaxLines && (scale == 1.0 || own && scale < 2)) {
+            findings.add('$where: cut');
+          }
+          // Short enough to be said at its size, not set smaller to fit.
+          final double size = line.text.style!.fontSize!;
+          if (scale == 1.0 && own && size < 13.5) {
+            findings.add('$where: set at $size to fit');
+          }
+        }
+      }
+    }
+    expect(findings, isEmpty, reason: findings.join('\n'));
   });
 }
 

@@ -96,12 +96,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Die fünf von morgen öffnen sich in $when';
+    return 'Die fünf von morgen · in $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Morgen beginnen die fünf mit $topic, in $when';
+    return 'Morgen: $topic · in $when';
   }
 
   @override
@@ -1911,19 +1911,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Fünf von fünf.',
-      '6': 'Sechs von sechs.',
-      'other': '$n von $n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Heute hast du trainiert';
-
-  @override
   String get scoreTitle => 'Astute-Punktzahl';
 
   @override
@@ -1933,11 +1920,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get scoreStart => 'Deine erste Antwort startet sie.';
-
-  @override
-  String scoreToday(String n) {
-    return '$n heute';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2449,6 +2431,23 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get yourJourney => 'Deine Reise';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Seit deinem letzten Besuch vor $days Tagen',
+      one: 'Seit deinem letzten Besuch gestern',
+      zero: 'Seit deinem letzten Besuch heute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return '$n seit deinem letzten Besuch';
+  }
 
   @override
   String get thePath => 'Der Weg';
@@ -5925,9 +5924,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Deine Gewohnheiten';
-
-  @override
-  String get journeyChapterMemory => 'Was dir bleibt';
 
   @override
   String get journeyChapterCoach => 'Dein Coach';

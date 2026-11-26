@@ -228,16 +228,16 @@ abstract class AppLocalizations {
   /// **'Card {k} of {n}'**
   String cardOf(int k, int n);
 
-  /// No description provided for @tomorrowsFiveOpenIn.
+  /// One line under the finished day's cards, never two, when tomorrow's first card is not known: how long until the next five open. when is a compact time, already formatted: "3 h 50", "25 min".
   ///
   /// In en, this message translates to:
-  /// **'Tomorrow\'s five open in {when}'**
+  /// **'Tomorrow\'s five · in {when}'**
   String tomorrowsFiveOpenIn(String when);
 
-  /// No description provided for @topicOpensTomorrow.
+  /// One line under the finished day's cards, never two: the subject of tomorrow's first card, and how long until the next five open. when is a compact time, already formatted (journeyHoursMinutes or journeyMinutes): "3 h 50", "25 min". Keep it as short as the English.
   ///
   /// In en, this message translates to:
-  /// **'Tomorrow\'s five start with {topic}, in {when}'**
+  /// **'Tomorrow: {topic} · in {when}'**
   String topicOpensTomorrow(String topic, String when);
 
   /// No description provided for @exploreTodaysBest.
@@ -2658,18 +2658,6 @@ abstract class AppLocalizations {
   /// **'{n, plural, =1{and 1 more} other{and {n} more}}'**
   String trainingMore(int n);
 
-  /// Title of the sheet that rises when the reader finishes the day's cards: all n read (five, six on a Sunday). Then trainingDayLine and the skills those cards trained.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, select, 5{Five for five.} 6{Six for six.} other{{n} for {n}.}}'**
-  String trainingDayTitle(String n);
-
-  /// Under trainingDayTitle: the skills today's cards trained follow, each with how many cards and its bar.
-  ///
-  /// In en, this message translates to:
-  /// **'Today you trained'**
-  String get trainingDayLine;
-
   /// The reader's score in all the skills together: a number with no top, moved by every answer on a card (like a chess rating). Its name; Astute is the app's name.
   ///
   /// In en, this message translates to:
@@ -2687,12 +2675,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your first answer starts it.'**
   String get scoreStart;
-
-  /// On the sheet that rises when the day's cards are done: how far the reader's Astute score moved today. n is the signed number, already formatted: "+26", "−4" or "0".
-  ///
-  /// In en, this message translates to:
-  /// **'{n} today'**
-  String scoreToday(String n);
 
   /// Read out for the small chip beside the verdict on a card's back: how far this answer moved one of the reader's scores. name is the score's name, a skill's ("Money") or the Astute score's; n is the signed number, already formatted: "+12" or "−8".
   ///
@@ -3443,6 +3425,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your journey'**
   String get yourJourney;
+
+  /// Under the title of Your journey, once a figure on it has moved since the reader last opened it: when that was. The figures that moved count up from there and carry a small mark of how far (journeySinceMark). days is how many days ago the last visit was: 0 for earlier today.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Since your last visit, earlier today} =1{Since your last visit, yesterday} other{Since your last visit, {days} days ago}}'**
+  String journeySince(int days);
+
+  /// Read aloud for the small mark beside a figure of Your journey that moved since the reader last opened it. n is the move with its sign, already formatted: "+12", "−3", "+6%".
+  ///
+  /// In en, this message translates to:
+  /// **'{n} since your last visit'**
+  String journeySinceMark(String n);
 
   /// No description provided for @thePath.
   ///
@@ -8333,12 +8327,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your habits'**
   String get journeyChapterHabits;
-
-  /// A chapter of Your journey, in small capitals: how many cards the reader still remembers after days and weeks.
-  ///
-  /// In en, this message translates to:
-  /// **'What stays with you'**
-  String get journeyChapterMemory;
 
   /// A chapter of Your journey, in small capitals, on Astute+ with the answers by Claude: the coach's note on the week.
   ///

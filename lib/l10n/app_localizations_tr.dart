@@ -96,12 +96,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Yarının beşlisi $when sonra açılıyor';
+    return 'Yarının beşlisi · $when sonra';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return 'Yarının beşlisi $topic ile başlıyor, $when sonra';
+    return 'Yarın: $topic · $when sonra';
   }
 
   @override
@@ -1882,19 +1882,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String trainingDayTitle(String n) {
-    String _temp0 = intl.Intl.selectLogic(n, {
-      '5': 'Beşte beş.',
-      '6': 'Altıda altı.',
-      'other': '$n/$n.',
-    });
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingDayLine => 'Bugün çalıştırdıkların';
-
-  @override
   String get scoreTitle => 'Astute puanı';
 
   @override
@@ -1904,11 +1891,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get scoreStart => 'İlk cevabınla başlar.';
-
-  @override
-  String scoreToday(String n) {
-    return 'bugün $n';
-  }
 
   @override
   String scoreMoveLabel(String name, String n) {
@@ -2420,6 +2402,23 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get yourJourney => 'Yolculuğun';
+
+  @override
+  String journeySince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days gün önceki ziyaretinden beri',
+      one: 'Dünkü ziyaretinden beri',
+      zero: 'Bugünkü son ziyaretinden beri',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeySinceMark(String n) {
+    return 'son ziyaretinden beri $n';
+  }
 
   @override
   String get thePath => 'Yol';
@@ -5814,9 +5813,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get journeyChapterHabits => 'Alışkanlıkların';
-
-  @override
-  String get journeyChapterMemory => 'Aklında kalanlar';
 
   @override
   String get journeyChapterCoach => 'Koçun';

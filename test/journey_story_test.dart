@@ -143,7 +143,11 @@ void main() {
     expect(find.text('3  ·  THIS WEEK'), findsOneWidget);
     expect(find.text('4  ·  YOUR COACH'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('journey-coach-ask')));
-    await tester.pumpAndSettle();
+    // The coach's outline keeps turning, so the page never settles: the
+    // answer is waited for a frame at a time.
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
     expect(find.text('A good week: 8 in 10 right when sure.'), findsOneWidget);
     expect(sent?['sure'], 8);
     expect(sent!.keys, containsAll(['read', 'days', 'streak', 'missed']));

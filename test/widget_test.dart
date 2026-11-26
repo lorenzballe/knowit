@@ -3084,13 +3084,24 @@ void main() {
       await app.init();
       final lead = app.tomorrowsDeck.first;
       expect(
-        find.textContaining("Tomorrow's five start with ${lead.topic}, in"),
+        find.textContaining('Tomorrow: ${lead.topic} · in'),
         findsOneWidget,
       );
+      // On one line: it ran onto a second on the owner's phone and took
+      // the shelf's room.
+      final Finder line = find.descendant(
+        of: find.byKey(const ValueKey('shelf-tomorrow')),
+        matching: find.byType(Text),
+      );
+      final Text text = tester.widget<Text>(line);
+      expect(text.maxLines, 1);
+      expect(tester.getSize(line).height, lessThan(24));
     });
 
-    testWidgets('finishing the day with skills picked raises what its cards '
-        'trained in them, over the shelf; Done puts it away', (tester) async {
+    testWidgets('finishing the day with skills picked raises nothing over the '
+        'shelf: the scores the day moved count up in the journey instead', (
+      tester,
+    ) async {
       SharedPreferences.setMockInitialValues({
         ..._installed(plus: true),
         // Between them they are trained by nearly every subject.
@@ -3100,24 +3111,14 @@ void main() {
       await _settle(tester);
       await finish(tester);
       await _settle(tester);
-      expect(find.byKey(const ValueKey('day-training')), findsOneWidget);
+      await _settle(tester);
       expect(find.byType(TodayDoneView), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('day-training-done')));
-      await _settle(tester);
-      expect(find.byKey(const ValueKey('day-training')), findsNothing);
+      expect(find.byType(BottomSheet), findsNothing);
+      expect(find.text('Five for five.'), findsNothing);
+      expect(find.byKey(const ValueKey('training-score')), findsNothing);
+      // The day's own close stays: its line heads the shelf.
+      expect(find.textContaining('five read'), findsOneWidget);
       expect(tester.takeException(), isNull);
-    });
-
-    testWidgets('with no skill picked, nothing rises over the finished day', (
-      tester,
-    ) async {
-      SharedPreferences.setMockInitialValues(_installed(plus: true));
-      await tester.pumpWidget(const AstutoApp());
-      await _settle(tester);
-      await finish(tester);
-      await _settle(tester);
-      await _settle(tester);
-      expect(find.byKey(const ValueKey('day-training')), findsNothing);
     });
 
     testWidgets('the way on is the journey, and it opens on the numbers', (
@@ -3817,7 +3818,7 @@ void main() {
       // Under the shelf, and no longer inside a scrolling page — the
       // closing screen is one screenful, and its last line is about
       // tomorrow rather than about the clock.
-      expect(find.textContaining("Tomorrow's five start with"), findsOneWidget);
+      expect(find.textContaining('Tomorrow: '), findsOneWidget);
     });
   });
 
