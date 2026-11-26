@@ -174,11 +174,11 @@ abstract class AppLocalizations {
   /// **'{n, select, 1{one} 2{two} 3{three} 4{four} 5{five} 6{six} 7{seven} 8{eight} 9{nine} 10{ten} other{{n}}}'**
   String countWord(String n);
 
-  /// No description provided for @dayRead.
+  /// The finished day's title at the top of Today, once the day's five are read: which day of the reader's run of days this is (the streak). Set as Today's own title is while the five are read, so keep it as short.
   ///
   /// In en, this message translates to:
-  /// **'Day {n} · {word} read'**
-  String dayRead(int n, String word);
+  /// **'Day {n}'**
+  String dayTitle(int n);
 
   /// No description provided for @shelfEyebrow.
   ///
@@ -7931,6 +7931,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today\'s cards again, full size, from the first'**
   String get todaySeeAgainHint;
+
+  /// Explore, near the top once the day's five are read: a small row that opens the reader's own five cards of today again, full size. It names the reader's own cards, so it is never taken for the day's challenge that is the same for everyone ("Today's five").
+  ///
+  /// In en, this message translates to:
+  /// **'Your five from today'**
+  String get yourFiveFromToday;
 
   /// The screen under the topics editor, and the row that opens it: how much of each subject, and which parts of each.
   ///

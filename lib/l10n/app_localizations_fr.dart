@@ -62,8 +62,8 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String dayRead(int n, String word) {
-    return 'Jour $n · $word lues';
+  String dayTitle(int n) {
+    return 'Jour $n';
   }
 
   @override
@@ -5681,6 +5681,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get todaySeeAgainHint =>
       'Les cartes du jour à nouveau, en grand, depuis la première';
+
+  @override
+  String get yourFiveFromToday => 'Tes cinq du jour';
 
   @override
   String get tuneTitle => 'Règle ton mélange';

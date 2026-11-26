@@ -402,13 +402,10 @@ class _TodayScreenState extends State<TodayScreen> {
                 app: app,
                 at: at,
                 onPick: (k) => setState(() => _shelfAt = k),
-                // Which day this was, and what it made, on the shelf's own
-                // first row.
+                // Which day this is, on the shelf's own first row: that
+                // the five were read is what the shelf under it shows.
                 heading: (
-                  line: context.l10n.dayRead(
-                    app.dayNumber,
-                    context.l10n.countWord('${app.todaysDeck.length}'),
-                  ),
+                  line: context.l10n.dayTitle(app.dayNumber),
                   aside: _shelfAside(context, app),
                 ),
               ),

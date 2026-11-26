@@ -416,6 +416,9 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     # in each subject, and more like what they saved. Each works out its
     # own and reads no `source`.
     "your-day": shelf(),
+    # The reader's own five, once read: a small row that opens them again
+    # at full size. Not drawn before.
+    "your-five": shelf(),
     "quick-games": quick_games,
     "subject-levels": subject_levels,
     "like-saved": shelf("limit"),

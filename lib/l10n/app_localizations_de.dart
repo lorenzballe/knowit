@@ -62,8 +62,8 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String dayRead(int n, String word) {
-    return 'Tag $n · $word gelesen';
+  String dayTitle(int n) {
+    return 'Tag $n';
   }
 
   @override
@@ -5670,6 +5670,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get todaySeeAgainHint =>
       'Die Karten von heute noch einmal, groß, ab der ersten';
+
+  @override
+  String get yourFiveFromToday => 'Deine fünf von heute';
 
   @override
   String get tuneTitle => 'Deinen Mix anpassen';

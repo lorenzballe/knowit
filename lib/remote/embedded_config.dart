@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "8b4a99064565d082",
+ "hash": "d5d9143b16fbcfec",
  "app": {
   "gate": null,
   "flags": {},
@@ -29,6 +29,11 @@ const String kEmbeddedRemote = r'''
     "id": "three",
     "block": "three",
     "gap": 6
+   },
+   {
+    "id": "your-five",
+    "block": "your-five",
+    "gap": 12
    },
    {
     "id": "continue",

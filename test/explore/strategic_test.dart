@@ -135,6 +135,8 @@ void main() {
       );
       expect(viewer.deck, hasLength(5));
       expect(viewer.title, 'Oggi');
+      // From the first, always.
+      expect(viewer.initialIndex, 0);
     });
 
     testWidgets('not there while Explore is narrowed to a subject, nor with '

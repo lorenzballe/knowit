@@ -87,6 +87,8 @@ class YourDayBlock extends ExploreBlock with SectionLayout {
                         app: app,
                         deck: app.todaysDeck.take(kPillsPerDay).toList(),
                         title: context.l10n.tabToday,
+                        // From the first, always, as Your five opens them.
+                        initialIndex: 0,
                         source: 'explore day',
                       ),
                     ),

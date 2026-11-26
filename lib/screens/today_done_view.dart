@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../l10n/l10n.dart';
 
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../data/pills_repository.dart' show dateKey;
 import '../models/pill.dart';
@@ -20,9 +21,7 @@ import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
 import '../widgets/liked_mark.dart';
 import '../widgets/skill_mark.dart';
-import 'deck_viewer_screen.dart';
 import 'journey_screen.dart';
-import '../analytics.dart';
 import '../widgets/motion.dart';
 import '../widgets/magic_card.dart';
 import '../widgets/premium.dart';
@@ -80,6 +79,35 @@ String plusActionOf(BuildContext context) {
   return null;
 }
 
+/// How the finished day heads its shelf, and where the day is sent from.
+///
+/// The row over the shelf read "Day 4 · five read", with "See again" and
+/// the day's share beside it. The owner: of course five were read, the
+/// shelf under it is the five; and "See again" opened the very cards the
+/// shelf is showing. Three heads without either were drawn for him
+/// (tool/today_head_shots.dart photographs each); [kDoneHead] is the one
+/// the app ships. In all three the five again at full size are Explore's,
+/// "Your five from today" (lib/explore/blocks/core/your_five_block.dart),
+/// where a reader goes once the day is read.
+enum DoneHead {
+  /// Which day this is, set as Today names itself while the five are read
+  /// and in the same place, so finishing the day changes the word and not
+  /// the screen; the day sent at the end of the row.
+  title,
+
+  /// No row over the shelf: the card rises into the room, and the day is
+  /// sent from the end of the row of dots under it.
+  none,
+
+  /// The day's name in the middle and its date under it, as a phone's
+  /// photos name the day of the one in front; the day sent at the end of
+  /// the row.
+  masthead,
+}
+
+/// The head the app ships: [DoneHead.title].
+const DoneHead kDoneHead = DoneHead.title;
+
 class TodayDoneView extends StatefulWidget {
   final AppState app;
 
@@ -87,14 +115,15 @@ class TodayDoneView extends StatefulWidget {
   final int at;
   final ValueChanged<int> onPick;
 
-  /// The day's own line, and the aside under it, at the head of the shelf
-  /// in place of its eyebrow: where the day got to, beside the shelf's two
-  /// buttons, on one row. The Today tab passes them. They used to be a row
-  /// of their own over the eyebrow's, and the eyebrow ("TODAY'S FIVE") said
-  /// again what the line had just said ("five read"), with an odd band of
-  /// air between the two. On its own the shelf heads itself with the
-  /// eyebrow.
+  /// The day's name ("Day 4"), and the aside under it, at the head of the
+  /// shelf in place of its eyebrow, drawn as [head] says. The Today tab
+  /// passes them. On its own the shelf heads itself with the eyebrow.
   final ({String line, String? aside})? heading;
+
+  /// How the head is drawn: [kDoneHead], unless the camera that photographs
+  /// the three asks for another.
+  @visibleForTesting
+  static DoneHead head = kDoneHead;
 
   const TodayDoneView({
     super.key,
@@ -302,38 +331,6 @@ class _TodayDoneViewState extends State<TodayDoneView>
     }
   }
 
-  /// How wide [text] sets in [style] on one line, at the reader's text size.
-  static double _width(BuildContext context, String text, TextStyle style) {
-    final TextPainter painter = TextPainter(
-      text: TextSpan(text: text, style: style),
-      textDirection: Directionality.of(context),
-      textScaler: MediaQuery.textScalerOf(context),
-      maxLines: 1,
-    )..layout();
-    final double width = painter.width;
-    painter.dispose();
-    return width;
-  }
-
-  /// The day's cards again at full size, the way they first came, from the
-  /// one at the front of the shelf: the page a widget's tap opens. The
-  /// shelf shows them in small; this is the cards themselves.
-  void _seeAgain(BuildContext context, List<Pill> deck, int at) {
-    HapticFeedback.selectionClick();
-    Analytics.capture('today seen again', {'from': 'today', 'at': at});
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => DeckViewerScreen(
-          app: widget.app,
-          deck: deck,
-          title: context.l10n.tabToday,
-          initialIndex: at < deck.length ? at : 0,
-          source: 'today again',
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final app = widget.app;
@@ -341,90 +338,14 @@ class _TodayDoneViewState extends State<TodayDoneView>
     if (deck.isEmpty) return const SizedBox.shrink();
     final int count = _count(deck);
     final int at = widget.at.clamp(0, count - 1);
-    final Color ink = context.p.ink;
+    final DoneHead head = TodayDoneView.head;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          // Eight above rather than sixteen: the row is as tall as its two
-          // buttons now, and the shelf under it keeps nearly all its room.
-          // Headed by the day's line, the row is the screen's first, and
-          // sits where that line did.
-          padding: EdgeInsets.fromLTRB(
-            24,
-            widget.heading == null ? 8 : 0,
-            18,
-            0,
-          ),
-          child: LayoutBuilder(
-            builder: (context, box) {
-              final ({String line, String? aside})? heading = widget.heading;
-              final String eyebrow = context.l10n.shelfEyebrow(
-                context.l10n.countWord('${deck.length}').toUpperCase(),
-              );
-              final TextStyle eyebrowStyle = AppText.label(
-                size: 10.5,
-                weight: FontWeight.w700,
-                spacing: 1.6,
-                color: ink.withValues(alpha: 0.4),
-              );
-              // The heading is never cut for the buttons: where the two do
-              // not fit on the line ("DIE FÜNF VON HEUTE" and "Nochmal
-              // ansehen"), "See again" gives up its word and keeps its mark.
-              // The day's line gives a point or two first (it is set to
-              // shrink to fit), and only past that does "See again" give up
-              // its word: "Giorno 13 · cinque lette" and "Rivedi" share an
-              // SE's line with the line a size down.
-              final double lead = heading == null
-                  ? _width(context, eyebrow, eyebrowStyle)
-                  : _DayHeading.dotRoom +
-                        _width(
-                          context,
-                          heading.line,
-                          _DayHeading.lineStyle(ink, size: _DayHeading.least),
-                        );
-              final bool compact =
-                  lead + 12 + _DayTools.widthOf(context, app, compact: false) >
-                  box.maxWidth;
-              return Row(
-                children: [
-                  Expanded(
-                    child: heading == null
-                        ? Text(
-                            eyebrow,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: eyebrowStyle,
-                          )
-                        : _DayHeading(
-                            line: heading.line,
-                            aside: heading.aside,
-                            // The card at the front's colour; the offer's,
-                            // the spectrum's violet, as the glow takes.
-                            dot: at < deck.length
-                                ? deck[at].color
-                                : kSpectrum[9],
-                          ),
-                  ),
-                  const SizedBox(width: 12),
-                  // Where the counter was: the dots under the shelf already say
-                  // which card is at the front, so the row's end is the day's
-                  // two ways on instead — the five again at full size, and the
-                  // day sent. Neither takes a line of its own: on a small phone
-                  // the shelf is what this screen is for.
-                  _DayTools(
-                    app: app,
-                    compact: compact,
-                    onSeeAgain: () => _seeAgain(context, deck, at),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
+        ?_head(context, deck, head),
         Expanded(child: _shelf(context, deck, at)),
-        _Dots(deck: deck, count: count, at: at, onPick: _goTo),
+        _dots(deck, count, at, head),
         // Close under the dots: they count the deck, but they read as
         // belonging to whatever line they sit nearest, and that line is
         // the one about tomorrow.
@@ -441,6 +362,159 @@ class _TodayDoneViewState extends State<TodayDoneView>
         // What the canvas leaves between the last line and the tab bar.
         const SizedBox(height: 16),
       ],
+    );
+  }
+
+  /// What stands over the shelf, as [head] draws it: never "five read",
+  /// which the shelf under it says, and never "See again", which opened
+  /// the very cards the shelf is showing (they are Explore's now, "Your
+  /// five from today").
+  Widget? _head(BuildContext context, List<Pill> deck, DoneHead head) {
+    final AppState app = widget.app;
+    final Color ink = context.p.ink;
+    final ({String line, String? aside})? heading = widget.heading;
+    final String? aside = heading?.aside;
+    final bool centred = head == DoneHead.masthead;
+    // On its own, the shelf is headed by its eyebrow, as it always was.
+    final Widget eyebrow = Text(
+      context.l10n.shelfEyebrow(
+        context.l10n.countWord('${deck.length}').toUpperCase(),
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      textAlign: centred ? TextAlign.center : TextAlign.start,
+      style: AppText.label(
+        size: 10.5,
+        weight: FontWeight.w700,
+        spacing: 1.6,
+        color: ink.withValues(alpha: 0.4),
+      ),
+    );
+    // Sent once the day is closed: the squares are the closed day's. Until
+    // then its room is kept, so the name stands where it will stand.
+    final Widget share = app.dayClosed
+        ? _ShareDayButton(app: app)
+        : const SizedBox(width: _ShareDayButton.width);
+    switch (head) {
+      case DoneHead.title:
+        return Padding(
+          // Today's name, while the five are read, stands 24 in and its
+          // middle 23 down; the day's stands there too.
+          padding: const EdgeInsets.fromLTRB(24, 5, 18, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: _ShareDayButton.height,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: heading == null
+                          ? eyebrow
+                          : Semantics(
+                              header: true,
+                              child: FitText(
+                                heading.line,
+                                key: const ValueKey('shelf-day'),
+                                maxLines: 1,
+                                minSize: 15,
+                                style: AppText.display(
+                                  size: 20,
+                                  weight: FontWeight.w600,
+                                  spacing: -0.4,
+                                  color: ink,
+                                ),
+                              ),
+                            ),
+                    ),
+                    const SizedBox(width: 12),
+                    share,
+                  ],
+                ),
+              ),
+              _Aside(text: aside),
+            ],
+          ),
+        );
+      case DoneHead.none:
+        // Nothing over the shelf but, on the day there is one, the aside;
+        // a little air, so the card does not meet the status bar.
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(24, 6, 24, 0),
+          child: _Aside(text: aside, centred: true),
+        );
+      case DoneHead.masthead:
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(18, 3, 18, 0),
+          child: Row(
+            children: [
+              // As wide as the share, so the name is in the middle.
+              const SizedBox(width: _ShareDayButton.width + 8),
+              Expanded(
+                child: heading == null
+                    ? eyebrow
+                    : Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Semantics(
+                            header: true,
+                            child: FitText(
+                              heading.line,
+                              key: const ValueKey('shelf-day'),
+                              maxLines: 1,
+                              minSize: 13,
+                              textAlign: TextAlign.center,
+                              style: AppText.body(
+                                size: 16,
+                                weight: FontWeight.w700,
+                                height: 1.2,
+                                color: ink,
+                              ),
+                            ),
+                          ),
+                          // The aside on the day there is one; the date on
+                          // every other.
+                          FitText(
+                            aside ?? _dateOf(context, app.today),
+                            key: ValueKey(
+                              aside == null ? 'shelf-date' : 'shelf-aside',
+                            ),
+                            maxLines: 1,
+                            minSize: 10.5,
+                            textAlign: TextAlign.center,
+                            style: AppText.body(
+                              size: 12,
+                              weight: FontWeight.w500,
+                              height: 1.3,
+                              color: ink.withValues(alpha: 0.5),
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+              const SizedBox(width: 8),
+              share,
+            ],
+          ),
+        );
+    }
+  }
+
+  /// The dots under the shelf, one a card; and where the head has no row,
+  /// the day sent from the end of theirs, the dots kept in the middle.
+  Widget _dots(List<Pill> deck, int count, int at, DoneHead head) {
+    final Widget dots = _Dots(deck: deck, count: count, at: at, onPick: _goTo);
+    if (head != DoneHead.none || !widget.app.dayClosed) return dots;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      child: Row(
+        children: [
+          const SizedBox(width: _ShareDayButton.width),
+          Expanded(child: dots),
+          _ShareDayButton(app: widget.app),
+        ],
+      ),
     );
   }
 
@@ -1779,7 +1853,7 @@ class _JourneyButtonState extends State<_JourneyButton> {
 /// The way on: the journey, which is Astute+, the whole width. The day sent
 /// as five squares used to stand beside it as a second button, which made
 /// the row two things to choose between; it is a mark at the end of the
-/// shelf's heading now ([_DayTools]), where it costs the shelf nothing. The
+/// shelf's heading now ([_ShareDayButton]), where it costs the shelf nothing. The
 /// offer stays the sixth card on the shelf; nothing in this row sells.
 class _Actions extends StatelessWidget {
   const _Actions({required this.app});
@@ -1808,222 +1882,97 @@ class _Actions extends StatelessWidget {
   }
 }
 
-/// The end of the shelf's heading: the day's five again at full size, and
-/// the day sent as five squares once it is closed.
-///
-/// "See again" opens the cards themselves, the way they first came, which is
-/// what a tap on the widget does; the shelf above only has them in small.
-/// The day is sent with no gate, on either plan, as it always was: a day in
-/// somebody's chat is how the app travels.
-/// The day's line at the head of the shelf — a dot in the front card's
-/// colour, which day this was — and under it, small, the freeze spent or,
-/// until the reader has liked a card, how to. A liked card says so on
-/// itself, with the heart in its corner, rather than as a count here.
-class _DayHeading extends StatelessWidget {
-  const _DayHeading({
-    required this.line,
-    required this.aside,
-    required this.dot,
-  });
+/// The day sent, as a picture of its five: a round mark at the end of a
+/// row, 36 high to the finger and 30 to the eye. No gate, on either plan,
+/// as it always was: a day in somebody's chat is how the app travels.
+class _ShareDayButton extends StatelessWidget {
+  const _ShareDayButton({required this.app});
 
-  final String line;
-  final String? aside;
-  final Color dot;
+  final AppState app;
 
-  /// The dot and the air after it.
-  static const double dotRoom = 18;
-
-  /// The size the line is set at, and the least it shrinks to before the
-  /// buttons beside it give up their words.
-  static const double size = 17;
-  static const double least = 15;
-
-  static TextStyle lineStyle(Color ink, {double size = size}) => AppText.body(
-    size: size,
-    weight: FontWeight.w600,
-    spacing: -0.2,
-    height: 1.2,
-    color: ink,
-  );
+  /// The room it takes on its row.
+  static const double width = 40;
+  static const double height = 36;
 
   @override
   Widget build(BuildContext context) {
-    final bool still = MediaQuery.disableAnimationsOf(context);
     final Color ink = context.p.ink;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          // On the line's middle: a line of 17 at 1.2 is 20.4 high.
-          padding: const EdgeInsets.only(top: 6.2),
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: still ? 0 : 500),
-            curve: Curves.easeOut,
-            width: 8,
-            height: 8,
-            decoration: BoxDecoration(color: dot, shape: BoxShape.circle),
+    return Semantics(
+      button: true,
+      label: context.l10n.shareMyDay,
+      excludeSemantics: true,
+      child: GestureDetector(
+        key: const ValueKey('shelf-share-day'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => ShareDay.send(context, app, from: 'done view'),
+        child: SizedBox(
+          width: width,
+          height: height,
+          child: Center(
+            child: Container(
+              width: 30,
+              height: 30,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: ink.withValues(alpha: 0.08),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.ios_share_rounded, size: 15, color: ink),
+            ),
           ),
         ),
-        const SizedBox(width: dotRoom - 8),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Semantics(
-                header: true,
-                child: FitText(
-                  line,
-                  maxLines: 1,
-                  minSize: 13,
-                  style: lineStyle(ink),
-                ),
-              ),
-              // The line under goes the moment the reader's first card is
-              // liked; the shelf under it closes up in a beat, not a jump.
-              AnimatedSize(
-                duration: Duration(milliseconds: still ? 0 : 260),
-                curve: Curves.easeOut,
-                alignment: Alignment.topLeft,
-                child: aside == null
-                    ? const SizedBox(width: double.infinity)
-                    : Padding(
-                        padding: const EdgeInsets.only(top: 2),
-                        child: FitText(
-                          aside!,
-                          key: const ValueKey('shelf-aside'),
-                          maxLines: 2,
-                          minSize: 11,
-                          style: AppText.body(
-                            size: 12,
-                            weight: FontWeight.w500,
-                            height: 1.25,
-                            color: ink.withValues(alpha: 0.42),
-                          ),
-                        ),
-                      ),
-              ),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
 
-class _DayTools extends StatelessWidget {
-  const _DayTools({
-    required this.app,
-    required this.onSeeAgain,
-    this.compact = false,
-  });
+/// The small line under the day's name: the freeze spent, which is said
+/// here and nowhere else, or, until the reader has liked a card, how to. A
+/// liked card says so on itself, with the heart in its corner, rather than
+/// as a count here. It goes the moment the reader's first card is liked,
+/// and the shelf under it closes up in a beat, not a jump.
+class _Aside extends StatelessWidget {
+  const _Aside({required this.text, this.centred = false});
 
-  final AppState app;
-  final VoidCallback onSeeAgain;
-
-  /// The mark alone, without its word, where the line is short.
-  final bool compact;
-
-  static TextStyle _labelStyle(Color ink) =>
-      AppText.body(size: 12.5, weight: FontWeight.w700, color: ink);
-
-  /// How wide the two take on the line.
-  static double widthOf(
-    BuildContext context,
-    AppState app, {
-    required bool compact,
-  }) {
-    double width = compact ? 28 : 9 + 17 + 3 + 12;
-    if (!compact) {
-      width += _TodayDoneViewState._width(
-        context,
-        context.l10n.todaySeeAgain,
-        _labelStyle(context.p.ink),
-      );
-    }
-    if (app.dayClosed) width += 40;
-    return width;
-  }
+  final String? text;
+  final bool centred;
 
   @override
   Widget build(BuildContext context) {
-    final Color ink = context.p.ink;
-    final l = context.l10n;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Semantics(
-          button: true,
-          label: l.todaySeeAgain,
-          hint: l.todaySeeAgainHint,
-          excludeSemantics: true,
-          child: GestureDetector(
-            key: const ValueKey('shelf-see-again'),
-            behavior: HitTestBehavior.opaque,
-            onTap: onSeeAgain,
-            // 36 high to the finger, 28 to the eye.
-            child: SizedBox(
-              height: 36,
-              child: Center(
-                child: Container(
-                  height: 28,
-                  width: compact ? 28 : null,
-                  padding: compact
-                      ? EdgeInsets.zero
-                      : const EdgeInsets.fromLTRB(9, 0, 12, 0),
-                  decoration: BoxDecoration(
-                    color: ink.withValues(alpha: 0.08),
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: compact
-                      ? Icon(Icons.play_arrow_rounded, size: 17, color: ink)
-                      : Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.play_arrow_rounded,
-                              size: 17,
-                              color: ink,
-                            ),
-                            const SizedBox(width: 3),
-                            Text(l.todaySeeAgain, style: _labelStyle(ink)),
-                          ],
-                        ),
-                ),
+    final bool still = MediaQuery.disableAnimationsOf(context);
+    final String? text = this.text;
+    return AnimatedSize(
+      duration: Duration(milliseconds: still ? 0 : 260),
+      curve: Curves.easeOut,
+      alignment: centred ? Alignment.topCenter : Alignment.topLeft,
+      child: text == null
+          ? const SizedBox(width: double.infinity)
+          : FitText(
+              text,
+              key: const ValueKey('shelf-aside'),
+              maxLines: 2,
+              minSize: 11,
+              textAlign: centred ? TextAlign.center : TextAlign.start,
+              style: AppText.body(
+                size: 12,
+                weight: FontWeight.w500,
+                height: 1.25,
+                color: context.p.ink.withValues(alpha: 0.42),
               ),
             ),
-          ),
-        ),
-        // Once the day is closed, the same test the journey's foot makes:
-        // the squares are the closed day's.
-        if (app.dayClosed)
-          Semantics(
-            button: true,
-            label: l.shareMyDay,
-            excludeSemantics: true,
-            child: GestureDetector(
-              key: const ValueKey('shelf-share-day'),
-              behavior: HitTestBehavior.opaque,
-              onTap: () => ShareDay.send(context, app, from: 'done view'),
-              child: SizedBox(
-                width: 40,
-                height: 36,
-                child: Center(
-                  child: Container(
-                    width: 28,
-                    height: 28,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: ink.withValues(alpha: 0.08),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(Icons.ios_share_rounded, size: 15, color: ink),
-                  ),
-                ),
-              ),
-            ),
-          ),
-      ],
     );
   }
+}
+
+/// [day] in full, as the phone's language writes it, with a capital where
+/// a line starts: "Tuesday, November 25", "Martedì 25 novembre".
+String _dateOf(BuildContext context, DateTime day) {
+  final String locale = Localizations.localeOf(context).toString();
+  String date;
+  try {
+    date = DateFormat.MMMMEEEEd(locale).format(day);
+  } catch (_) {
+    date = DateFormat.MMMMEEEEd('en').format(day);
+  }
+  return date.isEmpty ? date : date[0].toUpperCase() + date.substring(1);
 }
