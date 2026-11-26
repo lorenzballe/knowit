@@ -6290,6 +6290,10 @@ class RemoteLocalizations extends AppLocalizations {
   String get newsMadeFrom => _words.text('newsMadeFrom') ?? _base.newsMadeFrom;
 
   @override
+  String get newsWhyItMatters =>
+      _words.text('newsWhyItMatters') ?? _base.newsWhyItMatters;
+
+  @override
   String get deeperDeclined =>
       _words.text('deeperDeclined') ?? _base.deeperDeclined;
 

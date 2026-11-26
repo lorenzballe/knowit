@@ -1,0 +1,872 @@
+{
+  "_": "Explore's first edit as a front page, prototype 1 (26 November 2026), kept so it can come back: copied over remote/explore.json and bundled (python3 tool/remote/bundle.py), it is the page again. Its note then: Explore edited down to a front page (26 November 2026), each section once, the strong ones only: the day's challenge, the same for everyone, and under it the reader's own five once they are read and what the reader started and left (Continue); the news and the line of the day; where the reader lives; one feature on five days of the week (true stories on Monday, did you know on Tuesday, charts that mislead on Wednesday, where it came from on Thursday, a few cards on Sunday); the challenges; the top list; books and what the founders read, then, every other day from the third, Astute+ for a reader on the free plan; and the endless feed. Left out, because the feed or another section already does their work: the cover (the feed lays the same mosaic of the same cards), cards to watch (one film), the paths (a card read from Explore opens its own path, and Continue keeps the ones started), what a card is useful for (its cards are the feed's, its areas are in search), and Friday's and Saturday's features (a row of the hardest cards, a button to one card at random). On a subject's page the founders are left out too: there they list the books of the row above. The page as it was is remote/examples/explore-long.json: copied over this file and bundled, it is back. The day's challenge and the challenges are for Explore of every subject only. Builds 54 and older keep the shelves they knew.",
+  "sections": [
+    {
+      "id": "nothing",
+      "block": "nothing-here"
+    },
+    {
+      "id": "offline",
+      "block": "offline"
+    },
+    {
+      "id": "three",
+      "block": "three",
+      "gap": 6
+    },
+    {
+      "id": "your-five",
+      "block": "your-five",
+      "gap": 12
+    },
+    {
+      "id": "continue",
+      "block": "continue",
+      "gap": 20,
+      "title": {
+        "en": "Continue",
+        "it": "Continua",
+        "de": "Weitermachen",
+        "es": "Continúa",
+        "fr": "Reprendre",
+        "pt": "Continuar",
+        "nl": "Verder",
+        "pl": "Kontynuuj",
+        "ru": "Продолжить",
+        "tr": "Devam et",
+        "ja": "続きから",
+        "ko": "이어서",
+        "zh": "继续"
+      }
+    },
+    {
+      "id": "news-today",
+      "block": "news-today",
+      "title": {
+        "en": "Latest news",
+        "it": "Ultime notizie",
+        "de": "Neueste Nachrichten",
+        "es": "Últimas noticias",
+        "fr": "Dernières nouvelles",
+        "pt": "Últimas notícias",
+        "nl": "Laatste nieuws",
+        "pl": "Najnowsze wiadomości",
+        "ru": "Последние новости",
+        "tr": "Son haberler",
+        "ja": "最新ニュース",
+        "ko": "최신 뉴스",
+        "zh": "最新消息"
+      },
+      "subtitle": {
+        "en": "The stories of these days, and the why behind each.",
+        "it": "Le storie di questi giorni, e il perché di ognuna.",
+        "de": "Die Geschichten dieser Tage und das Warum dahinter.",
+        "es": "Las historias de estos días y el porqué de cada una.",
+        "fr": "Les histoires de ces jours-ci, et le pourquoi de chacune.",
+        "pt": "As histórias destes dias e o porquê de cada uma.",
+        "nl": "De verhalen van deze dagen, en het waarom erachter.",
+        "pl": "Historie tych dni i to, dlaczego się wydarzyły.",
+        "ru": "Истории этих дней и то, почему они случились.",
+        "tr": "Bu günlerin haberleri ve her birinin nedeni.",
+        "ja": "この数日のニュースと、その理由。",
+        "ko": "요 며칠의 이야기와 그 이유.",
+        "zh": "这几天的新闻，以及背后的原因。"
+      }
+    },
+    {
+      "id": "line-of-day",
+      "block": "line-of-day",
+      "title": {
+        "en": "Line of the day",
+        "it": "La frase del giorno",
+        "de": "Der Satz des Tages",
+        "es": "La frase del día",
+        "fr": "La phrase du jour",
+        "pt": "A frase do dia",
+        "nl": "De zin van de dag",
+        "pl": "Zdanie dnia",
+        "ru": "Фраза дня",
+        "tr": "Günün sözü",
+        "ja": "今日のひとこと",
+        "ko": "오늘의 한 줄",
+        "zh": "每日一句"
+      },
+      "subtitle": {
+        "en": "Every line checked against where it was first written.",
+        "it": "Ogni frase verificata là dove fu scritta per la prima volta.",
+        "de": "Jeder Satz geprüft an der Stelle, an der er zuerst stand.",
+        "es": "Cada frase comprobada donde se escribió por primera vez.",
+        "fr": "Chaque phrase vérifiée là où elle a été écrite pour la première fois.",
+        "pt": "Cada frase verificada onde foi escrita pela primeira vez.",
+        "nl": "Elke zin gecontroleerd op de plek waar hij voor het eerst stond.",
+        "pl": "Każde zdanie sprawdzone tam, gdzie zostało po raz pierwszy zapisane.",
+        "ru": "Каждая фраза сверена с тем местом, где её впервые написали.",
+        "tr": "Her söz ilk yazıldığı yerde doğrulandı.",
+        "ja": "どの言葉も、最初に書かれた場所で確かめています。",
+        "ko": "모든 문장은 처음 쓰인 곳에서 확인했어요.",
+        "zh": "每一句都对照过它最初写下的地方。"
+      }
+    },
+    {
+      "id": "maths-daily",
+      "block": "maths-daily",
+      "title": {
+        "en": "Problem of the day",
+        "it": "Il problema del giorno",
+        "de": "Aufgabe des Tages",
+        "es": "El problema del día",
+        "fr": "Le problème du jour",
+        "pt": "O problema do dia",
+        "nl": "Opgave van de dag",
+        "pl": "Zadanie dnia",
+        "ru": "Задача дня",
+        "tr": "Günün problemi",
+        "ja": "今日の問題",
+        "ko": "오늘의 문제",
+        "zh": "每日一题"
+      },
+      "subtitle": {
+        "en": "A new one every day, the same for everyone.",
+        "it": "Uno nuovo ogni giorno, lo stesso per tutti.",
+        "de": "Jeden Tag eine neue, für alle dieselbe.",
+        "es": "Uno nuevo cada día, el mismo para todos.",
+        "fr": "Un nouveau chaque jour, le même pour tous.",
+        "pt": "Um novo todos os dias, o mesmo para todos.",
+        "nl": "Elke dag een nieuwe, voor iedereen dezelfde.",
+        "pl": "Codziennie nowe, dla wszystkich to samo.",
+        "ru": "Каждый день новая, одна на всех.",
+        "tr": "Her gün yenisi, herkes için aynısı.",
+        "ja": "毎日新しい問題。みんな同じ問題です。",
+        "ko": "매일 새로운 문제, 모두에게 같은 문제.",
+        "zh": "每天一道新题，人人相同。"
+      }
+    },
+    {
+      "id": "where-you-live",
+      "block": "where-you-live"
+    },
+    {
+      "id": "surprise-mon",
+      "block": "stories",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              1
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise-tue",
+      "block": "did-you-know",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              2
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise-wed",
+      "block": "unmask",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              3
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise-thu",
+      "block": "origins",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              4
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise-sun",
+      "block": "series",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              7
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "quick-games",
+      "block": "quick-games",
+      "title": {
+        "en": "Challenges",
+        "it": "Sfide",
+        "de": "Herausforderungen",
+        "es": "Desafíos",
+        "fr": "Défis",
+        "ja": "チャレンジ",
+        "ko": "챌린지",
+        "nl": "Uitdagingen",
+        "pl": "Wyzwania",
+        "pt": "Desafios",
+        "ru": "Испытания",
+        "tr": "Meydan okumalar",
+        "zh": "挑战"
+      },
+      "subtitle": {
+        "en": "Short exercises in judgement and estimation, a few minutes each.",
+        "it": "Brevi esercizi di giudizio e di stima, pochi minuti ciascuno.",
+        "de": "Kurze Übungen in Urteilskraft und Schätzung, je ein paar Minuten.",
+        "es": "Ejercicios breves de juicio y estimación, de unos minutos cada uno.",
+        "fr": "De courts exercices de jugement et d'estimation, de quelques minutes chacun.",
+        "ja": "判断と見積もりの短い練習。どれも数分で終わります。",
+        "ko": "판단과 추정을 위한 짧은 연습, 하나에 몇 분이면 됩니다.",
+        "nl": "Korte oefeningen in oordeel en schatting, elk een paar minuten.",
+        "pl": "Krótkie ćwiczenia z oceniania i szacowania, po kilka minut każde.",
+        "pt": "Exercícios breves de juízo e estimativa, de poucos minutos cada.",
+        "ru": "Короткие упражнения на суждение и оценку, по несколько минут каждое.",
+        "tr": "Muhakeme ve tahmin üzerine kısa alıştırmalar, her biri birkaç dakika.",
+        "zh": "关于判断与估算的简短练习，每个只需几分钟。"
+      },
+      "audience": {
+        "any": [
+          {
+            "minBuild": 55
+          },
+          {
+            "platforms": [
+              "web",
+              "android"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "top",
+      "block": "top"
+    },
+    {
+      "id": "books",
+      "block": "books",
+      "title": {
+        "en": "Books in pills",
+        "it": "Libri in pillole",
+        "de": "Bücher in Häppchen",
+        "es": "Libros en píldoras",
+        "fr": "Livres en pilules",
+        "ja": "本をひとくちで",
+        "ko": "한입 책",
+        "nl": "Boeken in hapjes",
+        "pl": "Książki w pigułce",
+        "pt": "Livros em pílulas",
+        "ru": "Книги в двух словах",
+        "tr": "Kapsül kitaplar",
+        "zh": "一口读书"
+      },
+      "subtitle": {
+        "en": "The big ideas of bestsellers, five cards a book, a few minutes in all.",
+        "it": "Le grandi idee dei bestseller, cinque carte a libro, pochi minuti in tutto.",
+        "de": "Die großen Ideen von Bestsellern, fünf Karten pro Buch, ein paar Minuten insgesamt.",
+        "es": "Las grandes ideas de los bestsellers, cinco tarjetas por libro, unos minutos en total.",
+        "fr": "Les grandes idées des best-sellers, cinq cartes par livre, quelques minutes en tout.",
+        "ja": "ベストセラーの大事なアイデアを、1冊5枚のカードで。全部で数分。",
+        "ko": "베스트셀러의 핵심 아이디어를 책 한 권에 카드 다섯 장으로. 다 합쳐 몇 분.",
+        "nl": "De grote ideeën van bestsellers, vijf kaarten per boek, een paar minuten in totaal.",
+        "pl": "Najważniejsze idee bestsellerów, pięć kart na książkę, kilka minut w sumie.",
+        "pt": "As grandes ideias dos bestsellers, cinco cartas por livro, poucos minutos ao todo.",
+        "ru": "Главные идеи бестселлеров, пять карточек на книгу, несколько минут на всё.",
+        "tr": "Çok satan kitapların büyük fikirleri, kitap başına beş kart, toplamda birkaç dakika.",
+        "zh": "畅销书的核心观点，每本五张卡片，总共几分钟。"
+      }
+    },
+    {
+      "id": "founders",
+      "block": "founders",
+      "title": {
+        "en": "What founders read",
+        "it": "Cosa leggono i fondatori",
+        "de": "Was Gründer lesen",
+        "es": "Lo que leen los fundadores",
+        "fr": "Ce que lisent les fondateurs",
+        "pt": "O que leem os fundadores",
+        "nl": "Wat oprichters lezen",
+        "pl": "Co czytają założyciele",
+        "ru": "Что читают основатели",
+        "tr": "Kurucular ne okuyor",
+        "ja": "創業者が読む本",
+        "ko": "창업자들이 읽는 책",
+        "zh": "创始人读什么"
+      },
+      "subtitle": {
+        "en": "The books they recommended in public, in their own words, and where they said it.",
+        "it": "I libri che hanno consigliato in pubblico, con le loro parole e dove l’hanno detto.",
+        "de": "Die Bücher, die sie öffentlich empfohlen haben, in ihren eigenen Worten, und wo sie es sagten.",
+        "es": "Los libros que recomendaron en público, con sus propias palabras, y dónde lo dijeron.",
+        "fr": "Les livres qu’ils ont recommandés en public, avec leurs propres mots, et où ils l’ont dit.",
+        "pt": "Os livros que recomendaram em público, com as suas palavras, e onde o disseram.",
+        "nl": "De boeken die ze in het openbaar aanraadden, in hun eigen woorden, en waar ze dat zeiden.",
+        "pl": "Książki, które publicznie polecili, ich własnymi słowami, i miejsce, gdzie to powiedzieli.",
+        "ru": "Книги, которые они советовали публично, их собственными словами, и где это было сказано.",
+        "tr": "Herkesin önünde önerdikleri kitaplar, kendi sözleriyle ve bunu nerede söyledikleriyle.",
+        "ja": "公の場ですすめた本を、本人の言葉と、それを語った場所とともに。",
+        "ko": "공개적으로 추천한 책을, 그들의 말과 그 말을 한 곳과 함께.",
+        "zh": "他们公开推荐过的书，附上原话和说话的出处。"
+      },
+      "subjectPages": false
+    },
+    {
+      "id": "plus-offer",
+      "block": "promo",
+      "from": "explore offer",
+      "subjectPages": false,
+      "audience": {
+        "all": [
+          {
+            "plus": false
+          },
+          {
+            "minDays": 3
+          },
+          {
+            "weekdays": [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "today",
+      "block": "today",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "loved",
+      "block": "loved",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "asking",
+      "block": "asking",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "mine",
+      "block": "mine",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "moving",
+      "block": "purpose.moving",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "month",
+      "block": "month",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "signature-numbers",
+      "block": "numbers",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "signature-debates",
+      "block": "debates",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "theme-sharpest-0",
+      "block": "sharpest",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "theme-origins-0",
+      "block": "origins",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "theme-stories-0",
+      "block": "stories",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "theme-trueOrFalse-0",
+      "block": "true-false",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "came-back",
+      "block": "came-back",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "move-sampling",
+      "block": "move-sampling",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "move-counterfactual",
+      "block": "move-compared",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "work",
+      "block": "work",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "unmask",
+      "block": "unmask",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "how-sure",
+      "block": "how-sure",
+      "gap": 28,
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "what-if",
+      "block": "what-if",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "series",
+      "block": "series",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "sixty",
+      "block": "sixty",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "mood",
+      "block": "mood",
+      "gap": 28,
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "did-you-know",
+      "block": "did-you-know",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise",
+      "block": "surprise",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "theme-practical-0",
+      "block": "practical",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "feed",
+      "block": "feed",
+      "title": {
+        "en": "Keep exploring",
+        "it": "Continua a esplorare",
+        "de": "Weiter entdecken",
+        "es": "Sigue explorando",
+        "fr": "Continue d'explorer",
+        "ja": "もっと探す",
+        "ko": "계속 둘러보기",
+        "nl": "Verder ontdekken",
+        "pl": "Odkrywaj dalej",
+        "pt": "Continua a explorar",
+        "ru": "Исследуй дальше",
+        "tr": "Keşfetmeye devam et",
+        "zh": "继续探索"
+      },
+      "subtitle": {
+        "en": "The same for everyone. Nothing here is picked for you.",
+        "it": "Uguale per tutti. Niente qui è scelto per te.",
+        "de": "Für alle gleich. Nichts hier ist für dich ausgesucht.",
+        "es": "Igual para todos. Nada aquí está elegido para ti.",
+        "fr": "Pareil pour tout le monde. Rien ici n'est choisi pour toi.",
+        "ja": "誰にとっても同じ。あなた向けに選んだものはありません。",
+        "ko": "누구에게나 똑같아요. 맞춤으로 고른 건 없어요.",
+        "nl": "Voor iedereen hetzelfde. Niets hier is voor jou gekozen.",
+        "pl": "Dla wszystkich to samo. Nic tu nie jest wybrane dla ciebie.",
+        "pt": "Igual para todos. Nada aqui foi escolhido para ti.",
+        "ru": "Для всех одинаково. Здесь ничего не подобрано под тебя.",
+        "tr": "Herkes için aynı. Burada hiçbir şey senin için seçilmedi.",
+        "zh": "人人看到的都一样，没有为你挑选。"
+      }
+    }
+  ]
+}

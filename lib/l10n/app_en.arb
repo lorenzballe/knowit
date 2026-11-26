@@ -7454,6 +7454,10 @@
  "@newsMadeFrom": {
   "description": "A story of Explore's latest news, at the foot of its page: how it was made. Plain and quiet."
  },
+ "newsWhyItMatters": "Why it matters",
+ "@newsWhyItMatters": {
+  "description": "Explore's latest news, in the looks that lead with one story (a lead story, story cards): the heading, set in small capitals, over the one line that says what the story means for the reader, taken from the story's own step of what it means."
+ },
  "deeperDeclined": "That's one it can't answer.",
  "@deeperDeclined": {
   "description": "Go deeper, the sheet a tap on a card's source opens: deeperDeclined"

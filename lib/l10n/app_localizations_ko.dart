@@ -6388,6 +6388,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get newsMadeFrom => 'Astute가 이 기사들을 바탕으로 쓰고, 기사와 대조해 확인했어요.';
 
   @override
+  String get newsWhyItMatters => '왜 중요한가';
+
+  @override
   String get deeperDeclined => '이건 답할 수 없어요.';
 
   @override

@@ -6668,6 +6668,9 @@ class AppLocalizationsPt extends AppLocalizations {
       'Escrito pelo Astute a partir destas notícias, e verificado com elas.';
 
   @override
+  String get newsWhyItMatters => 'Porque importa';
+
+  @override
   String get deeperDeclined => 'A esta não consegue responder.';
 
   @override

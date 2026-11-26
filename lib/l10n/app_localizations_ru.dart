@@ -6913,6 +6913,9 @@ class AppLocalizationsRu extends AppLocalizations {
       'Написано Astute по этим материалам и сверено с ними.';
 
   @override
+  String get newsWhyItMatters => 'Почему это важно';
+
+  @override
   String get deeperDeclined => 'На это ИИ ответить не может.';
 
   @override

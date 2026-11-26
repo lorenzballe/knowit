@@ -266,6 +266,77 @@ void main() {
     });
   }
 
+  testWidgets('under a cover the feed leaves out the cards the cover laid, '
+      'and does not open in its shape: no mosaic of the same cards twice', (
+    tester,
+  ) async {
+    final CoreHost host = CoreHost(await readyApp());
+    await pumpSections(
+      tester,
+      host,
+      sectionsOf([
+        {
+          'id': 'cover',
+          'block': 'cover',
+          'source': {
+            'query': {'unread': true, 'perSubject': 1, 'limit': 40},
+          },
+        },
+        _feed,
+      ]),
+      size: const Size(375, 2000),
+    );
+    final Set<String> cover = {
+      for (final Element e
+          in find
+              .byWidgetPredicate(
+                (w) =>
+                    w.key is ValueKey<String> &&
+                    (w.key! as ValueKey<String>).value.startsWith('cover-'),
+              )
+              .evaluate())
+        (e.widget.key! as ValueKey<String>).value.substring('cover-'.length),
+    };
+    expect(cover, hasLength(6));
+    expect(coverAbove(host), cover);
+
+    final FeedDeal deal = feedDeal(host, ExploreSection.fromJson(_feed));
+    final BuildContext context = tester.element(find.byType(Scaffold));
+    for (int i = 0; i < 60; i++) {
+      deal.band(context, i, FeedGrid(375 - 40), isRead: host.isRead);
+    }
+    expect(deal.laid, isNotEmpty);
+    expect(deal.laid.where((p) => cover.contains(p.id)), isEmpty);
+    expect(kCoverShapes, isNot(contains(deal.bands.first.shape)));
+
+    // Without a cover, the same feed lays them where the day puts them.
+    final CoreHost alone = CoreHost(await readyApp());
+    await pumpSections(tester, alone, sectionsOf([_feed]));
+    expect(coverAbove(alone), isEmpty);
+  });
+
+  test(
+    'a feed under a cover never draws its shape first, whatever the lot',
+    () {
+      for (int day = 1; day <= 60; day++) {
+        final String seed = '2026-11-$day|feed|';
+        expect(
+          kCoverShapes,
+          isNot(contains(FeedPattern(seed, notFirst: kCoverShapes).shapeAt(0))),
+          reason: seed,
+        );
+      }
+      // Without one, the lot opens on them on some days.
+      expect(
+        [
+          for (int day = 1; day <= 60; day++)
+            FeedPattern('2026-11-$day|feed|').shapeAt(0),
+        ].any(kCoverShapes.contains),
+        isTrue,
+      );
+    },
+  );
+
   test('the shapes of its bands, by lot: every shape, never one twice in a '
       'row, the large cards on either side in turn, the same lot for the '
       'same day and page and another for another', () {

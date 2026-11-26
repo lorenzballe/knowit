@@ -19,6 +19,7 @@ import '../../../data/pill_bank.dart';
 import '../../../data/pills_repository.dart';
 import '../../../data/themed_shelves.dart';
 import '../../../data/topics.dart';
+import '../../../data/video_cards.dart';
 import '../../../models/pill.dart';
 import '../../../models/place.dart';
 import '../../../state/app_state.dart';
@@ -72,8 +73,10 @@ class ExploreShelves {
   static ExploreShelves of(ExploreHost host) {
     if (host is ExploreShelfHost) return host.shelves;
     final ExploreShelves shelves = _kept[host] ??= ExploreShelves(host.app);
-    if (!shelves._begun || shelves.subject != host.subject) {
-      shelves.begin(subject: host.subject);
+    if (!shelves._begun ||
+        shelves.subject != host.subject ||
+        shelves.language != host.language) {
+      shelves.begin(subject: host.subject, language: host.language);
     }
     return shelves;
   }
@@ -86,6 +89,18 @@ class ExploreShelves {
   String? get subject => _subject;
   String? _subject;
 
+  /// The language Explore is shown in: a film's question is said in it
+  /// (videoPills).
+  String get language => _language;
+  String _language = 'en';
+
+  /// The cards a cover higher on the page laid for this build, by id: the
+  /// feed under it leaves them out, so a card is never met twice on one
+  /// page. Laid afresh at every build, as the engine asks every section what
+  /// it has to show, before anything is laid out (lib/explore/blocks/core/
+  /// cover_block.dart).
+  final Set<String> onCover = {};
+
   /// The top list's window, the week or the month: the reader's to switch,
   /// kept as long as the screen is.
   final ValueNotifier<bool> topMonth = ValueNotifier<bool>(false);
@@ -94,9 +109,15 @@ class ExploreShelves {
   /// read, and every shelf worked out afresh when it is next asked for. The
   /// mix, the cards that came back and the cards a source dealt stay dealt
   /// for as long as what they were dealt from does.
-  void begin({String? subject}) {
+  void begin({String? subject, String? language}) {
     _begun = true;
     _subject = subject;
+    if (language != null && language != _language) {
+      _language = language;
+      _queries.clear();
+      _cards.clear();
+    }
+    onCover.clear();
     _dealToday();
     _served = Served.instance.lastExplore;
     _todayAll = null;
@@ -597,7 +618,8 @@ class ExploreShelves {
       // for two halves, a theme for a set — and a section that wants
       // other cards says which.
       final String key =
-          '${section.id}|*|${_subject ?? ''}|$dealtOn|${PillBank.version}';
+          '${section.id}|*|${_subject ?? ''}|$dealtOn|${PillBank.version}|'
+          '$_language';
       if (_queries.length > 200) _queries.clear();
       final List<Pill> pool = _queries[key] ??= _pool(section);
       return pool.take(most ?? pool.length).toList();
@@ -616,7 +638,7 @@ class ExploreShelves {
       // sources are worked out again on every one.
       final String key =
           '${section.id}|${_keyOf(query)}|${_subject ?? ''}|$dealtOn|'
-          '${PillBank.version}';
+          '${PillBank.version}|$_language';
       if (_queries.length > 200) _queries.clear();
       found = _queries[key] ??= _query(section, query);
       final Object? own = query['limit'];
@@ -686,16 +708,40 @@ class ExploreShelves {
 
   /// Every card the dealer may hand anybody, narrowed to the subject in
   /// view, in an order that turns with the day and is the same on every
-  /// phone that day.
+  /// phone that day. The feed's has the films among them ([_withFilms]).
   List<Pill> _pool(ExploreSection section) {
     final String salt =
         'pool:${section.id}:${themeDay(_clock())}'
         '${_round == 0 ? '' : ':r$_round'}';
-    final List<Pill> cards = only(PillBank.cards).toList();
+    final List<Pill> films = section.block == 'feed'
+        ? only(videoPills(_language))
+        : const [];
+    final List<Pill> cards = [...only(PillBank.cards), ...films];
     final Map<String, int> rank = {
       for (final Pill p in cards) p.id: shelfHash('$salt:${p.id}'),
     };
-    return cards..sort((a, b) => rank[a.id]!.compareTo(rank[b.id]!));
+    cards.sort((a, b) => rank[a.id]!.compareTo(rank[b.id]!));
+    return films.isEmpty ? cards : _withFilms(cards, films, salt);
+  }
+
+  /// The feed's cards in the day's order, each film where its lot put it
+  /// like any card, but for the day's film, which opens the feed: one a
+  /// day, by the day's lot, of the films the reader had not watched when the
+  /// day was dealt. One film among six thousand cards, left where its lot
+  /// puts it, is a film nobody finds; watched, it is a card read, and the
+  /// feed leaves it out from the next deal.
+  List<Pill> _withFilms(List<Pill> cards, List<Pill> films, String salt) {
+    final List<Pill> waiting = [
+      for (final Pill f in films)
+        if (unread(f)) f,
+    ];
+    if (waiting.isEmpty) return cards;
+    final Pill film = waiting[shelfHash('film:$salt') % waiting.length];
+    return [
+      film,
+      for (final Pill p in cards)
+        if (p.id != film.id) p,
+    ];
   }
 
   List<Pill> _query(ExploreSection section, Map query) {
@@ -721,7 +767,15 @@ class ExploreShelves {
       'fixed' => 'fixed:${section.id}',
       _ => 'day:${section.id}${_round == 0 ? '' : ':r$_round'}',
     };
-    final Iterable<Pill> fits = only(PillBank.cards).where(
+    // A film is a card of its subject like any other on a shelf that lays
+    // every card as a tile; it is no kind of question, and has no level.
+    final List<Pill> films =
+        kFilmBlocks.contains(section.block) &&
+            formats == null &&
+            difficulty == null
+        ? videoPills(_language)
+        : const [];
+    final Iterable<Pill> fits = only([...PillBank.cards, ...films]).where(
       (p) =>
           (subjects == null || subjects.contains(subjectKeyOf(p))) &&
           (formats == null || formats.any((f) => isFormat(p, f))) &&
@@ -781,6 +835,22 @@ class ExploreShelves {
     ]);
   }
 }
+
+/// The blocks that deal a film among their cards, from their source: the
+/// ones that lay every card as a tile in words and open it through the
+/// host, which plays a film rather than opening it as a card. The feed
+/// deals the films from the whole bank (ExploreShelves._pool).
+const Set<String> kFilmBlocks = {
+  'feed',
+  'cover',
+  'carousel',
+  'grid',
+  'bento',
+  'hero',
+  'pair',
+  'stack',
+  'ticker',
+};
 
 /// Whether [pill] is of [format]: a kind of question — `read`, `pickOne`,
 /// `number`, `estimate`, `debate`, and `trueOrFalse` among the ones to pick

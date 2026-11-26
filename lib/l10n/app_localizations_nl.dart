@@ -6668,6 +6668,9 @@ class AppLocalizationsNl extends AppLocalizations {
       'Door Astute geschreven uit deze berichten, en eraan getoetst.';
 
   @override
+  String get newsWhyItMatters => 'Waarom het ertoe doet';
+
+  @override
   String get deeperDeclined => 'Hierop kan ze geen antwoord geven.';
 
   @override

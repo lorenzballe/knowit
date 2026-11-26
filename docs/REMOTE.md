@@ -275,6 +275,20 @@ example draws exactly what null draws: it is where changing Explore starts.
 `remote/examples/explore-gallery.json` shows every core block at every size;
 docs/explore/core.md is their catalogue.
 
+The Explore the server sends is a weekly schedule, as a paper's is (its note,
+`_`, says what is on it and why): the top the same every day, so a reader
+learns where things are (the day's challenge, the reader's own five, what
+they started, the news, the line of the day); the middle by the day of the
+week (the cover on Monday and Saturday, `"audience": {"weekdays": [1, 6]}`,
+and one feature for each day); then every day the challenges, the top list,
+books, what the founders read and where the reader lives; one door to
+Astute+ a day (the offer on Monday, Wednesday, Friday and Sunday, the paths
+on Tuesday, Thursday and Saturday, each by `weekdays`); and the feed. The
+first edit of it as a front page, each section once, is
+`remote/examples/explore-lean-v1.json`; the page as it was before that,
+seventeen sections on a Wednesday, `remote/examples/explore-long.json`.
+Either, copied over `remote/explore.json` and bundled, is back.
+
 A section:
 
 | Field | What it says |

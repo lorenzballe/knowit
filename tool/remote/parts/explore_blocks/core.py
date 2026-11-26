@@ -180,6 +180,22 @@ def unmask(section: dict) -> list[str]:
     return problems
 
 
+# How the latest news is laid out (NewsLook in
+# lib/widgets/news/news_looks.dart); a section that names none gets the
+# front page, the first.
+NEWS_LOOKS = ("front", "lead", "pager")
+
+
+def news_today(section: dict) -> list[str]:
+    problems = shelf("look")(section)
+    if "look" in section and section["look"] not in NEWS_LOOKS:
+        problems.append(
+            "`look` is how the news is laid out: "
+            + ", ".join(f'"{look}"' for look in NEWS_LOOKS)
+        )
+    return problems
+
+
 def carousel(section: dict) -> list[str]:
     return (
         _fields(section, WORDS | {"source", "size", "limit"})
@@ -453,7 +469,9 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     "continue": shelf("limit"),
     # The problem of the day, on the Maths page only: it picks its own.
     "maths-daily": shelf(),
-    "news-today": shelf(),
+    # The latest news, reasoned: the morning's paper, laid out as a front
+    # page, as one story leading two, or as a story to a card (`look`).
+    "news-today": news_today,
     # One sentence worth keeping a day, checked where it was written
     # (lib/data/day_lines.dart): it picks its own.
     "line-of-day": shelf(),

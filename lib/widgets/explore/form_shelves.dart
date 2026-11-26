@@ -549,48 +549,42 @@ class SharpRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // The subject's name has the head to itself, whole: HARD
+                // stands at the foot, where it never pushes a name out.
                 CardHead(
                   pill: p,
                   ink: accent,
                   labelInk: accent,
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (isRead(p)) ...[
-                        ReadMark(pill: p, color: accent),
-                        const SizedBox(width: 6),
-                      ],
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 7,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: accent,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Text(
-                          upper(context, context.l10n.hardBadge),
-                          style: AppText.label(
-                            size: 9,
-                            weight: FontWeight.w700,
-                            spacing: 1,
-                            height: 1,
-                            color: ground,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  trailing: isRead(p) ? ReadMark(pill: p, color: accent) : null,
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: CardQuestion(
                       text: p.question,
                       color: context.p.ink,
                       min: 11,
                       max: 17,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 7,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: accent,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    upper(context, context.l10n.hardBadge),
+                    style: AppText.label(
+                      size: 9,
+                      weight: FontWeight.w700,
+                      spacing: 1,
+                      height: 1,
+                      color: ground,
                     ),
                   ),
                 ),

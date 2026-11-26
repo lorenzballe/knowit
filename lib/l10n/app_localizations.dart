@@ -9234,6 +9234,12 @@ abstract class AppLocalizations {
   /// **'Written by Astute from these reports, and checked against them.'**
   String get newsMadeFrom;
 
+  /// Explore's latest news, in the looks that lead with one story (a lead story, story cards): the heading, set in small capitals, over the one line that says what the story means for the reader, taken from the story's own step of what it means.
+  ///
+  /// In en, this message translates to:
+  /// **'Why it matters'**
+  String get newsWhyItMatters;
+
   /// Go deeper, the sheet a tap on a card's source opens: deeperDeclined
   ///
   /// In en, this message translates to:

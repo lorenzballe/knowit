@@ -9,7 +9,11 @@
 /// same shape twice in a row, and the large ones in turn on either side, so
 /// the eye goes down the page in a zigzag. A card read already is left out,
 /// and one about a place reaches only the readers who live there, as on
-/// every shelf.
+/// every shelf. Under a cover (lib/explore/blocks/core/cover_block.dart),
+/// the cards the cover laid are left out too, and the feed does not open
+/// in the cover's own shape: a page never shows the same mosaic of the same
+/// cards twice. The films are cards like the others (lib/data/
+/// video_cards.dart), each a tap from playing out of its box.
 ///
 /// The shapes give each box its width and its type; its question gives it
 /// its height. A box stands as tall as its question set whole, never less
@@ -32,11 +36,14 @@ import 'package:flutter/material.dart';
 
 import '../../../data/local_cards.dart' show reachesReader;
 import '../../../data/pills_repository.dart' show dateKey, stableHash;
+import '../../../data/video_cards.dart';
 import '../../../models/pill.dart';
 import '../../../widgets/explore/card_tiles.dart';
 import '../../../widgets/scaled_text.dart';
+import '../../../widgets/video_card.dart' show VideoCardHero, videoHeroTag;
 import '../../explore_block.dart';
 import 'layout.dart';
+import 'shelves.dart';
 
 /// The shapes a band of the feed takes.
 enum FeedShape {
@@ -80,6 +87,9 @@ enum FeedShape {
   };
 }
 
+/// The cover's own shapes: what the feed does not open with under a cover.
+const Set<FeedShape> kCoverShapes = {FeedShape.coverLeft, FeedShape.coverRight};
+
 /// How many bands make the feed's first round: what it shows when it is
 /// not the last section.
 const int kFeedRound = 6;
@@ -97,10 +107,14 @@ const int kFeedLookAhead = 10;
 /// comes at most once in four bands. Two side by side come up most, as the
 /// breath between the large ones.
 class FeedPattern {
-  FeedPattern(String seed) : _state = stableHash('feed-shapes:$seed') | 1;
+  FeedPattern(String seed, {this.notFirst = const {}})
+    : _state = stableHash('feed-shapes:$seed') | 1;
 
   int _state;
   final List<FeedShape> _shapes = [];
+
+  /// Shapes the first band never takes: the cover's, under a cover.
+  final Set<FeedShape> notFirst;
 
   /// How often each shape is drawn, against the others.
   static const Map<FeedShape, int> _weights = {
@@ -138,7 +152,8 @@ class FeedPattern {
       for (final FeedShape s in FeedShape.values)
         if (s != last &&
             !(s.side != 0 && s.side == lastSide) &&
-            !(s == FeedShape.across && acrossLately))
+            !(s == FeedShape.across && acrossLately) &&
+            !(_shapes.isEmpty && notFirst.contains(s)))
           s,
     ];
     final int total = open.fold(0, (n, s) => n + _weights[s]!);
@@ -399,7 +414,7 @@ double _measure(
   );
   frame += look.questionGap * (look.foot ? 2 : 1);
   if (look.foot) {
-    if (read) {
+    if (footSaysMove(pill, read)) {
       final TextPainter move = TextPainter(
         text: TextSpan(text: pill.barMove, style: look.moveStyle(pill)),
         textDirection: direction,
@@ -449,8 +464,12 @@ double _measure(
 /// than [feedSpare] lets it. A shape that no choice fills so is laid as
 /// two side by side instead, or as one card across.
 class FeedDeal {
-  FeedDeal(this.pool, {required this.skip, String seed = ''})
-    : pattern = FeedPattern(seed);
+  FeedDeal(
+    this.pool, {
+    required this.skip,
+    String seed = '',
+    Set<FeedShape> notFirst = const {},
+  }) : pattern = FeedPattern(seed, notFirst: notFirst);
 
   /// The cards, in the day's order.
   final List<Pill> pool;
@@ -698,12 +717,31 @@ class FeedDeal {
 }
 
 /// The feed's deal for [section] as [host] deals it now: the whole bank in
-/// the day's order, less what is not for this reader.
-FeedDeal feedDeal(ExploreHost host, ExploreSection section) => FeedDeal(
-  host.cardsFor(section),
-  skip: (p) => host.isRead(p) || !reachesReader(p, host.app.place),
+/// the day's order, less what is not for this reader and what a cover
+/// higher on the page laid ([coverAbove]).
+FeedDeal feedDeal(ExploreHost host, ExploreSection section) =>
+    _dealFor(host, section, host.cardsFor(section), coverAbove(host));
+
+FeedDeal _dealFor(
+  ExploreHost host,
+  ExploreSection section,
+  List<Pill> pool,
+  Set<String> cover,
+) => FeedDeal(
+  pool,
+  skip: (p) =>
+      host.isRead(p) ||
+      !reachesReader(p, host.app.place) ||
+      cover.contains(p.id),
   seed: feedSeed(host, section),
+  notFirst: cover.isEmpty ? const {} : kCoverShapes,
 );
+
+/// The cards a cover higher on [host]'s page laid in this build: none on a
+/// page without one.
+Set<String> coverAbove(ExploreHost host) => {
+  ...ExploreShelves.of(host).onCover,
+};
 
 /// What the lot of the feed's shapes is drawn by: the day, the section and
 /// the subject in view, so the same page has the same shapes on every phone
@@ -793,21 +831,18 @@ class _FeedSliverState extends State<FeedSliver> {
   /// for another.
   FeedDeal _current() {
     final List<Pill> pool = widget.host.cardsFor(widget.section);
+    final Set<String> cover = coverAbove(widget.host);
     final String key = [
       feedSeed(widget.host, widget.section),
       pool.length,
       for (final Pill p in pool.take(3)) p.id,
       _across(context).toStringAsFixed(1),
       MediaQuery.textScalerOf(context).scale(10),
+      (cover.toList()..sort()).join(','),
     ].join('|');
     if (_deal == null || key != _dealtFor) {
       _dealtFor = key;
-      _deal = FeedDeal(
-        pool,
-        skip: (p) =>
-            widget.host.isRead(p) || !reachesReader(p, widget.host.app.place),
-        seed: feedSeed(widget.host, widget.section),
-      );
+      _deal = _dealFor(widget.host, widget.section, pool, cover);
     }
     return _deal!;
   }
@@ -890,16 +925,20 @@ class FeedBand extends StatelessWidget {
                   behavior: HitTestBehavior.opaque,
                   onTap: () =>
                       host.open(section, List.of(deal.laid), band.cards[b]),
-                  child: BoxTile(
-                    pill: band.cards[b],
-                    box: band.boxes[b].size,
-                    read: host.isRead(band.cards[b]),
-                    look: band.looks[b],
-                    // Every card in words, a drawn one too: its question
-                    // in its colour, and the drawing for the card opened.
-                    // Pictures shrunk into boxes of every shape, or cut
-                    // to them, set beside cards in words, read as two
-                    // kinds of card on one page.
+                  child: filmTile(
+                    band.cards[b],
+                    section,
+                    BoxTile(
+                      pill: band.cards[b],
+                      box: band.boxes[b].size,
+                      read: host.isRead(band.cards[b]),
+                      look: band.looks[b],
+                      // Every card in words, a drawn one too: its question
+                      // in its colour, and the drawing for the card opened.
+                      // Pictures shrunk into boxes of every shape, or cut
+                      // to them, set beside cards in words, read as two
+                      // kinds of card on one page.
+                    ),
                   ),
                 ),
               ),
@@ -908,4 +947,13 @@ class FeedBand extends StatelessWidget {
       ),
     );
   }
+}
+
+/// [tile], the tile of [pill] on [section]: one its film grows out of when
+/// [pill] is a video card (the host plays it from there, videoHeroTag), as
+/// it is otherwise.
+Widget filmTile(Pill pill, ExploreSection section, Widget tile) {
+  final VideoCard? film = videoCardOf(pill);
+  if (film == null) return tile;
+  return VideoCardHero(tag: videoHeroTag(film, section.id), child: tile);
 }
