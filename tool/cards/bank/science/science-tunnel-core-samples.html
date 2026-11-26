@@ -1,152 +1,214 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-tunnel-core-samples -->
 <title>Astute free card</title>
+<!-- The Alps between France and Italy, cut open: the Mont Cenis base tunnel through them, 57.5 km, and
+     the rigs on the mountains that drilled the rock along its route. Under them, a core: the reader
+     drags it out to guess how long all the core is, laid end to end, then says how sure. The real
+     core runs out under it: about 65 km, past the tunnel's far end (Geopop, 2022: "circa 65 km di
+     carotaggi" and a tunnel of 57.5 km; TELT puts the whole cross-border line at 65 km). The scale
+     is the line's own, in km. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
-#why{display:flex;flex-direction:column;gap:.8cqh;flex:none}
-#why .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0}
-#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
-.sw{display:inline-block;width:1.1em;height:.7em;border-radius:.2em;vertical-align:baseline;margin:0 .15em}
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#alps{display:block;width:100%;flex:1;min-height:0;touch-action:none;cursor:ew-resize;user-select:none;-webkit-user-select:none}
+#why{font:500 max(1.9cqh,12.5px)/1.34 var(--body);margin:0}
+@container (max-height:520px){#why{display:none}}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Guess · drag">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
     <h2 class="q">How much rock core was drilled to map the Turin–Lyon tunnel's geology?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" aria-label="Drag to set the length of all the rock core, end to end"></svg>
-      <div id="why" class="gone">
-        <p class="big">About 65 km of core</p>
-        <p class="body">Every cylinder of rock pulled up along the route was examined. Together they identified all the rock formations, the faults <span class="sw" style="background:#c0392b"></span> and the water <span class="sw" style="background:#2f80c8"></span>, before the digging.</p>
-      </div>
+      <svg id="alps" data-drag role="img" aria-label="The Alps cut open, the 57.5 km base tunnel running through them from France to Italy, drill rigs on the peaks. Under them, a rock core to drag out: how long is all the core, laid end to end?"></svg>
     </div>
     <div id="sure"></div>
-    <p class="say" id="say">Drag the drill down: how long is all the core, laid end to end?</p>
+    <p class="say" id="say">Drag the core out along the line: laid end to end, how far does all of it reach?</p>
+    <p class="body gone" id="why">Every cylinder of rock pulled up along the route was examined: together they identified all the rock formations before the digging.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A big tunnel is first read in rock: here, about 65 km of it.</div>
     <div class="foot"><span class="src">Source · Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const REAL = 65, MIN = 0.01, MAX = 200;
-let guess = null, revealed = false, animNext = false, geo = null, lastSize = '';
-const svg = Kit.$('pic');
-const ROCK = ['#6b5d4f','#9a8a74','#3f4a52','#b9ae98','#7d6e5c','#545e66'];
-// layers in log-fraction space
-const layers = []; { let p = 0; while (p < 1) { const w = .02 + Kit.rnd() * .045; const water = Kit.rnd() < .12; layers.push({a: p, b: Math.min(1, p + w), c: water ? '#2f80c8' : ROCK[Math.floor(Kit.rnd() * ROCK.length)], water}); p += w; } }
-const faults = []; for (let i = 0; i < 9; i++) faults.push(.06 + Kit.rnd() * .9);
-const L = v => Math.log10(v);
-function fmt(km) { if (km < 1) return Number((km * 1000).toPrecision(2)) + ' m'; return Number(km.toPrecision(2)) + ' km'; }
+const INK = '#10100c', SNOW = '#ffffff', BACK = '#bccde0', BACK_SHADE = '#9db2ca', FRONT = '#82a0c0', SHADE = '#5f7ea0', EARTH = '#dcc398', PALE = '#fff8e6';
+const ROCKS = ['#8a8f99', '#c9b48f', '#5f6a78', '#b89a7a', '#9aa58b', '#d1c3a8', '#6e5d52'];
+const REAL = 65, TUNNEL = 57.5, KM = 70;           // km: the core end to end, the base tunnel, the width of the drawing
+const fmt = km => km < 10 ? (Math.round(km * 10) / 10).toLocaleString('en-US') : Math.round(km).toLocaleString('en-US');
+let G = null, guess = null, revealed = false, grown = 0, dragging = false;
+// The core's pieces: cylinders of rock a few km long, their colours as the line meets them (seeded).
+const PIECES = []; { let a = 0; while (a < KM) { const l = 1.6 + Kit.rnd() * 3.4; PIECES.push([a, Math.min(KM, a + l), ROCKS[Math.floor(Kit.rnd() * ROCKS.length)]]); a += l; } }
 
-function draw() {
-  gsap.killTweensOf('#pic *');
+function build() {
+  const svg = Kit.$('alps');
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  lastSize = W + 'x' + H;
-  const fs = Math.max(f * .95, 12);
-  const top = fs * 2.0, bot = H - fs * .9;
-  const yOf = km => top + (L(km) - L(MIN)) / (L(MAX) - L(MIN)) * (bot - top);
-  const kmOf = y => Math.pow(10, L(MIN) + Math.max(0, Math.min(1, (y - top) / (bot - top))) * (L(MAX) - L(MIN)));
-  geo = {kmOf};
-  const ax = W * .2, cw = Math.max(W * .12, 26), xA = W * .26, xB = xA + cw + W * .06, xL = xB + cw + W * .04;
-  const ink = 'var(--k)';
-  // axis
-  Kit.mk('line', {x1: ax, x2: ax, y1: top, y2: bot, stroke: ink, 'stroke-width': 1.5, opacity: .5}, svg);
-  let lastLabelY = -Infinity;
-  [[.01,'10 m'],[.1,'100 m'],[1,'1 km'],[10,'10 km'],[100,'100 km']].forEach(([v, t]) => {
-    const y = yOf(v);
-    Kit.mk('line', {x1: ax - 5, x2: W * .98, y1: y, y2: y, stroke: ink, 'stroke-width': 1, opacity: .13}, svg);
-    if (y - lastLabelY < fs * 1.1) return;
-    lastLabelY = y;
-    const tx = Kit.mk('text', {x: ax - 8, y: y + fs * .35, 'text-anchor': 'end', fill: ink, 'font-size': fs * .85, 'font-family': 'var(--mono)', opacity: .75}, svg); tx.textContent = t;
-  });
-  // headers
-  [[xA, 'you'], [xB, 'real']].forEach(([x, t], i) => {
-    if (i === 1 && !revealed) return;
-    const tx = Kit.mk('text', {x: x + cw / 2, y: top - fs * .7, 'text-anchor': 'middle', fill: ink, 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--body)'}, svg); tx.textContent = t;
-  });
-  function column(x, km, id, real) {
-    const defs = Kit.mk('defs', {}, svg);
-    const cp = Kit.mk('clipPath', {id}, defs);
-    const h = yOf(km) - top;
-    const cr = Kit.mk('rect', {x, y: top, width: cw, height: h, rx: cw * .25}, cp);
-    const g = Kit.mk('g', {'clip-path': `url(#${id})`}, svg);
-    layers.forEach(l => {
-      const y1 = top + l.a * (bot - top), y2 = top + l.b * (bot - top);
-      Kit.mk('rect', {x, y: y1, width: cw, height: y2 - y1 + .5, fill: (!real && l.water) ? ROCK[1] : l.c, opacity: real ? 1 : .55}, g);
+  const fs = Math.max(12.5, Math.min(15, f * .92));
+  const x0 = Math.max(10, W * .035), x1 = W - Math.max(6, W * .02);
+  const X = km => x0 + km / KM * (x1 - x0);
+  // Two rods under the mountains: the reader's guess, and the real core under it once it shows.
+  const rh = Math.max(13, Math.min(H * .075, fs * 1.4));
+  const trackR = H - rh * .5 - 3, trackG = revealed ? trackR - rh - fs * 2.1 : trackR;
+  const floor = trackG - rh * .5 - fs * 2.2;         // the valley floor; the mountains stand on it
+  const tunY = floor - Math.max(fs * .9, (floor) * .1);
+  const g = Kit.mk('g', {}, svg);
+
+  // The mountains, cut open: a back range, and in front of it broad peaks lit from the left, each with
+  // its shadowed face, snow on the tall ones; the tunnel runs through their foot.
+  const poly = pts => 'M' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z';
+  const range = (pk, from, to) => {
+    const pts = [[X(from), floor]];
+    pk.forEach(([k, h], i) => {
+      pts.push([X(k), floor * h]);
+      if (i < pk.length - 1) { const [k2, h2] = pk[i + 1], lo = Math.max(h, h2); pts.push([(X(k) + X(k2)) / 2, floor * (lo + (1 - lo) * .42)]); }
     });
-    if (real) faults.forEach(p => {
-      const y = top + p * (bot - top), n = 4, s = cw / n; let d = `M${x} ${y}`;
-      for (let i = 1; i <= n; i++) d += ` L${x + i * s} ${y + (i % 2 ? -fs * .3 : fs * .3)}`;
-      Kit.mk('path', {d, fill: 'none', stroke: '#c0392b', 'stroke-width': Math.max(2, fs * .17)}, g);
-    });
-    const ol = Kit.mk('rect', {x, y: top, width: cw, height: h, rx: cw * .25, fill: 'none', stroke: ink, 'stroke-width': 2}, svg);
-    // drill bit
-    const bit = Kit.mk('path', {d: `M${x - 2} ${top + h} L${x + cw + 2} ${top + h} L${x + cw / 2} ${top + h + fs * .8} Z`, fill: ink}, svg);
-    return {cr, ol, bit, h};
-  }
-  const gk = guess == null ? MIN * 2 : guess;
-  const A = column(xA, gk, 'cA', false);
-  // labels
-  const yR = yOf(REAL);
-  let yG = yOf(gk);
-  if (revealed && Math.abs(yG - yR) < fs * 1.5) yG = yG <= yR ? yR - fs * 1.5 : yR + fs * 1.5;
-  const gl = Kit.mk('text', {x: xL, y: yG + fs * .35, fill: ink, 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg);
-  gl.textContent = guess == null ? 'drag ↓' : fmt(guess);
-  if (guess == null && !revealed && !Kit.calm) gsap.to(gl, {attr: {y: yG + fs * .9}, duration: .7, repeat: -1, yoyo: true, ease: 'sine.inOut'});
-  if (revealed) {
-    const B = column(xB, REAL, 'cB', true);
-    const rl = Kit.mk('text', {x: xL, y: yR + fs * .35, fill: ink, 'font-size': fs * 1.25, 'font-weight': 900, 'font-family': 'var(--display)'}, svg);
-    rl.textContent = '65 km';
-    Kit.mk('line', {x1: xB + cw + 3, x2: xL - 4, y1: yR, y2: yR, stroke: ink, 'stroke-width': 2}, svg);
-    if (animNext && !Kit.calm) {
-      animNext = false;
-      gsap.from([B.cr, B.ol], {attr: {height: 0}, duration: 1.6, ease: 'power2.inOut'});
-      gsap.from(B.bit, {y: -B.h, duration: 1.6, ease: 'power2.inOut'});
-      gsap.from(rl, {opacity: 0, x: -8, delay: 1.4, duration: .4});
+    pts.push([X(to), floor]);
+    return pts;
+  };
+  const draw = (pts, fill, shade, id) => {
+    const defs = Kit.mk('defs', {}, g), clip = Kit.mk('clipPath', {id}, defs);
+    Kit.mk('path', {d: poly(pts)}, clip);
+    const rock = Kit.mk('g', {'clip-path': `url(#${id})`}, g);
+    Kit.mk('path', {d: poly(pts), fill}, rock);
+    for (let i = 1; i < pts.length - 1; i += 2) {
+      // A peak's shadowed face: from its top down its right slope, then straight down to the foot.
+      const [px, py] = pts[i], [nx, ny] = pts[i + 1], [ax, ay] = pts[i - 1];
+      Kit.mk('path', {d: poly([[px, py], [nx, ny], [nx, floor], [px + (nx - px) * .25, floor]]), fill: shade}, rock);
+      if (py > floor * .5) continue;
+      // Snow: down both slopes a quarter of the peak's height, with a ragged edge.
+      const c = (floor - py) * .26, tl = c / Math.max(1, ay - py), tr = c / Math.max(1, ny - py);
+      const l = [px + (ax - px) * Math.min(1, tl), py + c], r = [px + (nx - px) * Math.min(1, tr), py + c], w = r[0] - l[0];
+      Kit.mk('path', {d: poly([l, [px, py], r, [r[0] - w * .18, py + c * .78], [l[0] + w * .64, py + c * 1.1], [l[0] + w * .42, py + c * .74], [l[0] + w * .2, py + c * 1.06]]), fill: SNOW, stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, rock);
     }
-    animNext = false;
+    Kit.mk('path', {d: poly(pts), fill: 'none', stroke: INK, 'stroke-width': 2.6, 'stroke-linejoin': 'round'}, g);
+  };
+  const back = range([[9, .34], [21, .16], [33, .08], [45, .22]], 3, TUNNEL - 3);
+  const front = range([[2.5, .64], [13, .4], [26, .2], [38, .32], [49, .46], [55.5, .7]], -.6, TUNNEL + .6);
+  draw(back, BACK, BACK_SHADE, 'backR');
+  draw(front, FRONT, SHADE, 'frontR');
+  // The valley floor, either side, and under the mountains the earth the cores are laid out on.
+  Kit.mk('rect', {x: 0, y: floor, width: W, height: H - floor, fill: EARTH}, g);
+  Kit.mk('line', {x1: 0, x2: W, y1: floor, y2: floor, stroke: INK, 'stroke-width': 2.6}, g);
+
+  // The rigs that drilled it, and their boreholes down to the tunnel's level; the tunnel's name is
+  // set over its far end, clear of them.
+  const rigs = [8, 19, 31];
+  for (const km of rigs) {
+    const x = X(km), top = surfaceAt(front, x);
+    Kit.mk('line', {x1: x, x2: x, y1: top, y2: tunY, stroke: INK, 'stroke-width': 1.8, opacity: .75}, g);
+    rig(g, x, top + 1, Math.max(fs * 1.25, floor * .11));
+  }
+  // The base tunnel, portal to portal, and its name over it on the right.
+  const tr = Math.max(4, fs * .36);
+  Kit.mk('rect', {x: X(0), y: tunY - tr, width: X(TUNNEL) - X(0), height: tr * 2, rx: tr, fill: INK}, g);
+  Kit.mk('rect', {x: X(0) + tr, y: tunY - tr * .25, width: X(TUNNEL) - X(0) - 2 * tr, height: tr * .5, fill: '#ffd23d', opacity: .9}, g);
+  const tl = Kit.mk('text', {x: X(TUNNEL) - 2, y: tunY - tr - fs * .45, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 800, fill: '#fff', stroke: INK, 'stroke-width': fs * .32, 'paint-order': 'stroke', 'stroke-linejoin': 'round', 'font-family': 'Figtree, sans-serif'}, g);
+  tl.textContent = 'Base tunnel · 57.5 km';
+  // A village in the valley past the Italian portal.
+  houses(g, X(TUNNEL) + (W - X(TUNNEL)) * .55, floor, Math.min((W - X(TUNNEL)) * .32, Math.max(fs * 1.1, rh)));
+
+  // The tunnel's far end, carried down to the cores, so a core can be seen to stop short of it or run past.
+  Kit.mk('line', {x1: X(TUNNEL), x2: X(TUNNEL), y1: tunY + tr, y2: H, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '4 4', opacity: .55}, g);
+  // The rods.
+  const rods = Kit.mk('g', {}, g);
+  G = {svg, W, H, f, fs, X, x0, x1, rh, trackG, trackR, rods, floor};
+  drawRods();
+}
+function surfaceAt(pts, x) {
+  for (let i = 1; i < pts.length; i++) { const [ax, ay] = pts[i - 1], [bx, by] = pts[i]; if (x >= ax && x <= bx) return ay + (by - ay) * (x - ax) / (bx - ax || 1); }
+  return pts[0][1];
+}
+function rig(g, x, y, h) {
+  const w = h * .5, at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', fill: 'none'};
+  Kit.mk('path', Object.assign({d: `M${x - w / 2},${y} L${x - w * .1},${y - h} L${x + w * .1},${y - h} L${x + w / 2},${y} M${x - w * .36},${y - h * .32} L${x + w * .2},${y - h * .64} M${x + w * .36},${y - h * .32} L${x - w * .2},${y - h * .64}`}, at), g);
+  Kit.mk('rect', {x: x - w * .16, y: y - h * 1.1, width: w * .32, height: h * .12, fill: '#ff8a3d', stroke: INK, 'stroke-width': 1.8}, g);
+}
+function houses(g, x, y, h, one) {
+  const at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'};
+  (one ? [[0, 1.2, '#ffd23d']] : [[-1.05, 1, '#fff8e6'], [0, 1.25, '#ffd23d'], [1.0, .9, '#fff8e6']]).forEach(([dx, k, c]) => {
+    const w = h * .9 * k, hh = h * .75 * k, cx = x + dx * h;
+    Kit.mk('rect', Object.assign({x: cx - w / 2, y: y - hh, width: w, height: hh, fill: c}, at), g);
+    Kit.mk('path', Object.assign({d: `M${cx - w * .62},${y - hh} L${cx},${y - hh - w * .55} L${cx + w * .62},${y - hh} Z`, fill: '#e0533f'}, at), g);
+  });
+}
+// A rod of core from 0 to km: rock pieces in their colours, or the reader's guess, plain.
+function rod(g, km, y, real) {
+  const {X, rh} = G, x0 = X(0), x1 = X(Math.max(km, .4)), r = rh / 2;
+  const defs = Kit.mk('defs', {}, g), id = 'rod' + (real ? 'R' : 'G');
+  const cp = Kit.mk('clipPath', {id}, defs);
+  Kit.mk('rect', {x: x0, y: y - r, width: x1 - x0, height: rh, rx: Math.min(r, (x1 - x0) / 2)}, cp);
+  const in_ = Kit.mk('g', {'clip-path': `url(#${id})`}, g);
+  if (real) for (const [a, b, c] of PIECES) { if (a >= km) break; Kit.mk('rect', {x: X(a), y: y - r, width: X(Math.min(b, km)) - X(a) + .5, height: rh, fill: c}, in_); Kit.mk('line', {x1: X(b), x2: X(b), y1: y - r, y2: y + r, stroke: INK, 'stroke-width': 1.2, opacity: .55}, in_); }
+  else Kit.mk('rect', {x: x0, y: y - r, width: x1 - x0, height: rh, fill: PALE}, in_);
+  Kit.mk('rect', {x: x0, y: y - r * .62, width: x1 - x0, height: r * .32, fill: '#fff', opacity: real ? .25 : 0}, in_);
+  Kit.mk('rect', {x: x0, y: y - r, width: x1 - x0, height: rh, rx: Math.min(r, (x1 - x0) / 2), fill: 'none', stroke: INK, 'stroke-width': 2.2}, g);
+  return x1;
+}
+function label(g, x, y, text, size, weight, family, room) {
+  // Right of the rod's end where there is room, else just inside its start, over it.
+  const t = Kit.mk('text', {y, 'font-size': size, 'font-weight': weight, fill: INK, 'font-family': family}, g);
+  t.textContent = text;
+  let w = text.length * size * .55; try { w = t.getComputedTextLength(); } catch (_) {}
+  const fits = x + 8 + w <= G.W - 4;
+  t.setAttribute('x', fits ? x + 8 : Math.max(G.x0, Math.min(x - w, G.W - 4 - w)));
+  if (!fits) t.setAttribute('y', y - G.rh * .5 - size * .35);
+  return t;
+}
+function drawRods() {
+  if (!G) return;
+  const {rods, trackG, trackR, fs, rh} = G;
+  rods.innerHTML = '';
+  const gk = guess == null ? 6 : guess;
+  const xg = rod(rods, gk, trackG, false);
+  // The rod's end, a round handle to pull, until the guess is in.
+  if (!revealed) { Kit.mk('circle', {cx: xg, cy: trackG, r: rh * .62, fill: '#fff', stroke: INK, 'stroke-width': 2.2}, rods); Kit.mk('path', {d: `M${xg - rh * .12},${trackG - rh * .24} L${xg + rh * .14},${trackG} L${xg - rh * .12},${trackG + rh * .24}`, fill: 'none', stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, rods); }
+  label(rods, xg + (revealed ? 0 : rh * .5), trackG + fs * .36, guess == null ? 'drag the core' : `${fmt(guess)} km`, fs * 1.08, 800, 'Figtree, sans-serif');
+  if (revealed) {
+    rod(rods, Math.max(.4, grown), trackR, true);
+    // Over each rod, what it is; over the real one, how long, once it has run out.
+    const head = Kit.mk('text', {x: G.X(0), y: trackR - rh * .5 - fs * .5, 'font-size': fs, 'font-weight': 700, fill: INK, 'font-family': 'Figtree, sans-serif'}, rods);
+    head.textContent = 'All the core, end to end' + (grown > REAL - .5 ? ': ' : '');
+    if (grown > REAL - .5) { const n = Kit.mk('tspan', {'font-family': 'Fraunces, Georgia, serif', 'font-weight': 800, 'font-size': fs * 1.3}, head); n.textContent = '65 km'; }
+    const yours = Kit.mk('text', {x: G.X(0), y: trackG - rh * .5 - fs * .5, 'font-size': fs, 'font-weight': 700, fill: INK, 'font-family': 'Figtree, sans-serif'}, rods);
+    yours.textContent = 'Your guess';
   }
 }
 
-function setFromEvent(e) {
-  if (revealed || !geo) return;
-  const r = svg.getBoundingClientRect();
-  const km = geo.kmOf(e.clientY - r.top);
-  const old = guess; guess = km;
-  if (old == null || fmt(old) !== fmt(km)) { if (old != null) Kit.haptic('selection'); }
-  draw();
-}
-let dragging = false;
-svg.addEventListener('pointerdown', e => { if (revealed) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setFromEvent(e); });
-svg.addEventListener('pointermove', e => { if (dragging) setFromEvent(e); });
-const end = () => { if (!dragging) return; dragging = false; if (guess != null && !revealed) sure.on(); };
-svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+const alps = Kit.$('alps');
+function kmFrom(e) { const b = alps.getBoundingClientRect(), x = (e.clientX - b.left) / b.width * G.W; return Math.max(.1, Math.min(KM, (x - G.X(0)) / (G.X(KM) - G.X(0)) * KM)); }
+alps.addEventListener('pointerdown', e => { if (revealed || !G) return; dragging = true; try { alps.setPointerCapture(e.pointerId); } catch (_) {} guess = kmFrom(e); drawRods(); Kit.haptic('selection'); });
+alps.addEventListener('pointermove', e => { if (!dragging || revealed) return; const was = guess == null ? '' : fmt(guess); guess = kmFrom(e); if (fmt(guess) !== was && Math.round(guess) % 5 === 0) Kit.haptic('selection'); drawRods(); });
+const end = () => { if (!dragging) return; dragging = false; if (guess != null && !revealed) { sure.on(); Kit.$('say').textContent = `${fmt(guess)} km of core, end to end. How sure are you?`; } };
+alps.addEventListener('pointerup', end); alps.addEventListener('pointercancel', end);
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   if (guess == null) return;
-  const ok = guess >= 30 && guess <= 130, said = fmt(guess);
+  const ok = guess >= REAL / 2 && guess <= REAL * 2, said = fmt(guess) + ' km';
   Kit.answer({choice: said, correct: ok, sure: pct});
-  revealed = true; animNext = true;
+  revealed = true;
+  sure.grade(ok, pct, `${said}, ${ok ? 'close' : (guess < REAL / 2 ? 'far too little' : 'too much')}`);
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  sure.grade(ok, pct, `${said}, ${ok ? 'close' : (guess < 30 ? 'far too little' : 'too much')}`);
   Kit.haptic('success');
-  requestAnimationFrame(() => requestAnimationFrame(draw));
+  // The real core runs out once the page has made room for the answer, at the size it then has.
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    build();
+    if (Kit.calm) { grown = REAL; drawRods(); return; }
+    gsap.to({k: 0}, {k: REAL, duration: 1.8, ease: 'power2.inOut', onUpdate() { grown = this.targets()[0].k; drawRods(); }});
+  }));
 });
 
-new ResizeObserver(() => { const r = svg.getBoundingClientRect(); if (r.width && (Math.round(r.width) + 'x' + Math.round(r.height)) !== lastSize && !animNext) draw(); }).observe(svg);
-Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.onShow.card = () => build();
+let seen = '';
+new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; build(); } }).observe(Kit.$('stage'));
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#alps', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
 Kit.play.card = async () => {
-  const r = svg.getBoundingClientRect(), x = r.left + r.width * .3;
-  const ev = (t, y) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
-  ev('pointerdown', r.top + r.height * .3); ev('pointermove', r.top + r.height * .5); ev('pointerup', r.top + r.height * .5);
+  const b = alps.getBoundingClientRect(), y = b.top + b.height * .9;
+  const ev = (t, x) => alps.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', b.left + b.width * .1); ev('pointermove', b.left + b.width * .2); ev('pointermove', b.left + b.width * .26); ev('pointerup', b.left + b.width * .26);
   await new Promise(res => setTimeout(res, 150));
-  Kit.$('sure').querySelector('[data-v="80"]').click();
-  await new Promise(res => setTimeout(res, 2200));
+  Kit.$('sure').querySelector('[data-v="80"]')?.click();
+  await new Promise(res => setTimeout(res, 2600));
 };
 Kit.single();
 </script>

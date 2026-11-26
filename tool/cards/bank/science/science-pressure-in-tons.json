@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A depth dial runs from 0 to 3,500 metres beside readouts for depth, pressure in atmospheres, and load in tons per square metre. Dragging it down shows cars piling onto one square metre, reaching about 2,000 cars at 3,500 metres."
+    "label": "A slice of sea from the surface down to Titan's depth, 3,500 metres. A small table, one square metre, hangs halfway down under a stack of ten cars that reaches the surface: about 1,750 tonnes, 1,000 cars. Dragging it down adds a car for every 175 metres of sea above it, each standing for 100, until 2,000 cars reach from the table to the surface."
   },
   "source": "Geopop, “Com'è avvenuta l'implosione del sottomarino Titan? La spiegazione tecnica con immagini inedite in 3D” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=2wC4fyRA6cM&t=204s",
