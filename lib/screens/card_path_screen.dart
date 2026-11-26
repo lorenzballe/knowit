@@ -24,6 +24,7 @@ import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/move_words.dart';
 import '../widgets/premium.dart';
+import '../widgets/quick_return.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
 
@@ -160,53 +161,66 @@ class CardPathScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // The way back stays put above what scrolls: Apple's glass is a layer
-        // over the page, and a native button inside a scrolling list is drawn
-        // away from its place.
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
-          child: Row(
-            children: [
-              BackCircle(onPressed: () => Navigator.of(context).maybePop()),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  l.pathKicker.toUpperCase(),
-                  style: AppText.label(
-                    size: 12,
-                    weight: FontWeight.w700,
-                    spacing: 1.4,
-                    color: p.inkMuted,
-                  ),
+        // The way back and the line beside it are part of the page, as
+        // Instagram's are: they go up and away with it, and come straight
+        // back the moment the reader goes back up ([QuickReturn]). Apple's
+        // glass is a layer over the page, never laid inside the list, where
+        // a native button is drawn away from its place.
+        Expanded(
+          child: QuickReturn(
+            ground: p.surface,
+            header: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
+              child: SizedBox(
+                height: 44,
+                child: Row(
+                  children: [
+                    BackCircle(
+                      onPressed: () => Navigator.of(context).maybePop(),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        l.pathKicker.toUpperCase(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.label(
+                          size: 12,
+                          weight: FontWeight.w700,
+                          spacing: 1.4,
+                          color: p.inkMuted,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
-            children: [
-              _Head(path: path, style: style, read: read),
-              const SizedBox(height: 14),
-              for (int i = 0; i < path.cards.length; i++)
-                _Row(
-                  key: ValueKey('path-card-$i'),
-                  index: i,
-                  pill: path.cards[i],
-                  style: style,
-                  read: read[i],
-                  open: open(i),
-                  next: i == next,
-                  free: !plus && i < kPathFree,
-                  onTap: () => _read(context, i),
-                ),
-              // The theme goes on: the next part, from here on either plan.
-              if (deeper != null && (next != null || !plus)) ...[
-                const SizedBox(height: 12),
-                _Deeper(app: app, path: deeper, style: style),
+            ),
+            child: ListView(
+              // Under the way back and its line, as tall as they stand.
+              padding: const EdgeInsets.fromLTRB(20, 8 + 44 + 4 + 12, 20, 20),
+              children: [
+                _Head(path: path, style: style, read: read),
+                const SizedBox(height: 14),
+                for (int i = 0; i < path.cards.length; i++)
+                  _Row(
+                    key: ValueKey('path-card-$i'),
+                    index: i,
+                    pill: path.cards[i],
+                    style: style,
+                    read: read[i],
+                    open: open(i),
+                    next: i == next,
+                    free: !plus && i < kPathFree,
+                    onTap: () => _read(context, i),
+                  ),
+                // The theme goes on: the next part, from here on either plan.
+                if (deeper != null && (next != null || !plus)) ...[
+                  const SizedBox(height: 12),
+                  _Deeper(app: app, path: deeper, style: style),
+                ],
               ],
-            ],
+            ),
           ),
         ),
         Container(

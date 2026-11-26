@@ -131,6 +131,21 @@ the bar's light travels to Today with it. With less motion asked for it is a
 dissolve of a fifth of a second, which moves nothing; tapping another tab
 lands it at once.
 
+The long pages reached from the others (Your journey, Tune your mix, a
+subject's home, an area, a path, a news story) keep their way back as
+Instagram keeps its own (`widgets/quick_return.dart`). It is part of the
+page: going down, it goes up and away with the page, point for point, with
+the small line beside it where there is one, and the page is all content;
+going back up even a little, it comes straight back over the page, softly,
+the page's colour laid behind it where it has no glass of its own; at the
+top it stands where it always stood. What has to stay, Save at the foot of
+Tune your mix and a path's way on, stays. With less motion asked for nothing
+slides: it fades out where it stands and back in. With a screen reader on it
+stays put. It reads only the page's own scrolling and takes no touch, so the
+swipe back from the edge of the screen works whatever it is doing; and it is
+never laid inside the list, where Apple's own glass button, a native view on
+iOS 26, is drawn away from its place.
+
 ## One palette
 
 The app used to paint Today dark and the other tabs on paper, which meant it

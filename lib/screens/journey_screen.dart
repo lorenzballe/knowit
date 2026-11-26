@@ -32,6 +32,7 @@ import 'path_screen.dart';
 import '../widgets/card_edge.dart';
 import '../widgets/count_since.dart';
 import '../widgets/premium.dart';
+import '../widgets/quick_return.dart';
 import '../widgets/area_marks.dart' show goalName;
 import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/move_words.dart';
@@ -60,9 +61,11 @@ part 'journey_story.dart';
 /// where the day's scores are seen to go up; the finished day no longer
 /// raises a sheet of them.
 ///
-/// The whole page scrolls, its title with it: only the way back stays,
-/// pinned over the page, and the page goes soft under the status bar as
-/// Explore's does.
+/// The whole page scrolls, its title and the way back with it, as
+/// Instagram's pages do: going down, the way back goes up and away with the
+/// page; going back up even a little, it comes straight back over it
+/// ([QuickReturn]). The page goes soft under the status bar as Explore's
+/// does.
 class JourneyScreen extends StatefulWidget {
   const JourneyScreen({super.key, required this.app, required this.onBack});
 
@@ -253,25 +256,43 @@ class _JourneyScreenState extends State<JourneyScreen> {
           seen: _seen,
           child: Stack(
             children: [
+              // The way back is part of the page, as Instagram's is: it goes
+              // up and away with the chapters, and the moment the reader
+              // goes back up it comes back, on its glass, over whatever is
+              // there; at the top it stands beside the title.
               Positioned.fill(
-                child: MediaQuery.removePadding(
-                  context: context,
-                  removeTop: true,
-                  child: ListView(
-                    key: const ValueKey('journey-page'),
-                    padding: EdgeInsets.fromLTRB(
-                      16,
-                      top + 8,
-                      16,
-                      30 + safe.bottom,
+                child: QuickReturn(
+                  clip: false,
+                  header: Padding(
+                    padding: EdgeInsets.only(left: 20, top: top + 8),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: BackCircle(
+                        onPressed: widget.onBack,
+                        floating: true,
+                      ),
                     ),
-                    children: page,
+                  ),
+                  child: MediaQuery.removePadding(
+                    context: context,
+                    removeTop: true,
+                    child: ListView(
+                      key: const ValueKey('journey-page'),
+                      padding: EdgeInsets.fromLTRB(
+                        16,
+                        top + 8,
+                        16,
+                        30 + safe.bottom,
+                      ),
+                      children: page,
+                    ),
                   ),
                 ),
               ),
               // Under the status bar, where the chapters run under the time
               // and the battery: they go soft and dissolve into the page,
-              // as Explore's shelves do.
+              // as Explore's shelves do, and so does the way back on its
+              // way up.
               Positioned(
                 key: const ValueKey('journey-top-edge'),
                 left: 0,
@@ -279,12 +300,6 @@ class _JourneyScreenState extends State<JourneyScreen> {
                 top: 0,
                 height: top,
                 child: IgnorePointer(child: TopEdge(ground: context.p.surface)),
-              ),
-              // The way back, the one thing that stays.
-              Positioned(
-                left: 20,
-                top: top + 8,
-                child: BackCircle(onPressed: widget.onBack, floating: true),
               ),
             ],
           ),
