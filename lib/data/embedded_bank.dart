@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611260026,
- "built": "2026-11-26T00:26:11Z",
+ "version": 202611261603,
+ "built": "2026-11-26T16:03:34Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -59842,14 +59842,10 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A bar chart shows radiation falling over the first 24 hours after the Nagasaki bomb. A draggable bar asks how much had already gone after 24 hours.",
+    "label": "Nagasaki's valley between green hills, the bomb's burst drawn high in the air above it, and the radiation it left behind as 20 yellow hazard marks over the city, each 5% of it. The reader drags a strip to say how much was gone after 24 hours, and marks vanish as they drag; then the real day passes and 16 of the 20 go: 80%.",
     "graded": false,
-    "page": "pages/history-nagasaki-radiation-fade.html?v=cd43b3c52ed0",
-    "bytes": 8688,
-    "thumbs": {
-     "front": "thumbs/history-nagasaki-radiation-fade-front.webp?v=ec754cea4832",
-     "back": "thumbs/history-nagasaki-radiation-fade-back.webp?v=ec754cea4832"
-    }
+    "page": "pages/history-nagasaki-radiation-fade.html?v=f8066b265552",
+    "bytes": 16055
    },
    "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=o47-tXGxpv8&t=1213s",
@@ -63959,14 +63955,10 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A sorting game titled 'Three inventions, millions of deaths'. Three inventions (leaded gas, CFC Freon, and a pulley bed lift) must be sorted into two sides: harmed millions (the whole world) or killed only him (its inventor). Tap a card to sort it.",
+    "label": "The whole world as a globe on one side, the inventor in his bed on the other, and his three inventions one at a time: a leaded-gas pump, a Freon fridge, a pulley bed lift. The reader taps who each one harmed. On the answer the globe takes a grey ring of lead and a torn ozone ring, and the lift's ropes close red round the man.",
     "graded": false,
-    "page": "pages/history-three-deadly-inventions.html?v=d234672da7e9",
-    "bytes": 15184,
-    "thumbs": {
-     "front": "thumbs/history-three-deadly-inventions-front.webp?v=19de2d82b525",
-     "back": "thumbs/history-three-deadly-inventions-back.webp?v=19de2d82b525"
-    }
+    "page": "pages/history-three-deadly-inventions.html?v=7d88428809e5",
+    "bytes": 21129
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA",
@@ -64262,13 +64254,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A draggable Enigma wiring diagram showing three machines linked in a loop of letters R, E, T, R. The reader drags the guessed weather report until no letter sits on itself, so only the correct setting closes the loop back to R.",
-    "page": "pages/history-turing-weather-crib.html?v=7673c082beae",
-    "bytes": 9883,
-    "thumbs": {
-     "front": "thumbs/history-turing-weather-crib-front.webp?v=38403d5869ee",
-     "back": "thumbs/history-turing-weather-crib-back.webp?v=38403d5869ee"
-    }
+    "label": "A weather station radios the same report every morning. Below, the intercepted message as eleven lit Enigma lamps, and the guess WETTER, German for weather, as six keys on a strip the reader slides. Where a key sits under its own letter its wire breaks red; in the one place that fits, the letter pairs close Turing's loop, R to E to T and back to R.",
+    "page": "pages/history-turing-weather-crib.html?v=42d247a32772",
+    "bytes": 17683
    },
    "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=JsBZOcqZerk&t=1574s",
@@ -134351,13 +134339,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Titled 'The 1976 impossibility', the page asks how much more likely a heatwave as hot as 1976's is today than 50 years ago. Press play to see 50 summers in each world, one dot per summer, with red dots marking summers as hot as this heatwave, as the dots move from impossible to normal.",
-    "page": "pages/nature-1976-impossible-heatwave.html?v=189e81fb01ca",
-    "bytes": 8629,
-    "thumbs": {
-     "front": "thumbs/nature-1976-impossible-heatwave-front.webp?v=f49aadb3974a",
-     "back": "thumbs/nature-1976-impossible-heatwave-back.webp?v=f49aadb3974a"
-    }
+    "label": "A summer machine: a hopper drops summers as balls through pegs into bins from cooler to hotter; red bins hold summers as hot as this heatwave. The 1976 climate's 30 summers lie piled on the left, none near the red. The reader adds 50 years of trapped heat: the hopper slides right and the same summers fall again, some now in the red. An illustration.",
+    "page": "pages/nature-1976-impossible-heatwave.html?v=4b708d38616c",
+    "bytes": 13641
    },
    "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=TU196LhDGT4",
@@ -174820,13 +174804,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Quiz card: the line \"waiting plus 'it's pointless'\" is to be sorted into one of two bins, \"bambocciona\" or \"disillusa\". The text explains a woman who neither studies, works, nor looks for either, seen as a decorative couch cover by men seeking a partner. Tap a bin to answer.",
-    "page": "pages/psychology-bamboccia-disillusa.html?v=6f2a0c2d9cb2",
-    "bytes": 9079,
-    "thumbs": {
-     "front": "thumbs/psychology-bamboccia-disillusa-front.webp?v=8cb27891865c",
-     "back": "thumbs/psychology-bamboccia-disillusa-back.webp?v=8cb27891865c"
-    }
+    "label": "A young woman lies on a couch, eyes shut, waiting, with a thought bubble over her head. Six lines come one at a time; the reader taps the couch for doing nothing (bambocciona) or the bubble for the excuse (disillusa). On the answer, wrong ones move across in red, and her clothes take on the couch's stripes, like a decorative couch cover.",
+    "page": "pages/psychology-bamboccia-disillusa.html?v=9af4f2ff77df",
+    "bytes": 17899
    },
    "source": "Diventare Strong, “SEDURRE un UOMO per una RELAZIONE. 12 ERRORI Madornali.” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=vOtnYyTkv4Y&t=1876s",
@@ -203460,13 +203440,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A molecular strand is shown next to a copper ion. The reader drags the copper ion into the ring to watch the strand wrap into a trefoil knot. The page asks when the first synthetic knotted molecule was created.",
-    "page": "pages/science-knotted-molecule.html?v=bcd97c5ed4b6",
-    "bytes": 7558,
-    "thumbs": {
-     "front": "thumbs/science-knotted-molecule-front.webp?v=e46ed741c946",
-     "back": "thumbs/science-knotted-molecule-back.webp?v=e46ed741c946"
-    }
+    "label": "A big molecular model swaying in 3D: two threads of atoms wound around two copper ions, their ends still open. The reader taps to join the ends into one loop, then to wash the copper out: the loop stays tied as a trefoil knot, and a finger can turn it. Asks when the first synthetic knotted molecule was created.",
+    "page": "pages/science-knotted-molecule.html?v=c4b9d0376868",
+    "bytes": 12875
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=1467s",
@@ -203545,13 +203521,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A draggable column asks how many meters of rock cores came up from the Kola borehole. The reader drags it to guess, and the reveal gives 3,700.1 m, far more than oil wells usually core.",
-    "page": "pages/science-kola-rock-cores.html?v=43befdbccd59",
-    "bytes": 8752,
-    "thumbs": {
-     "front": "thumbs/science-kola-rock-cores-front.webp?v=177364b1364d",
-     "back": "thumbs/science-kola-rock-cores-back.webp?v=177364b1364d"
-    }
+    "label": "One core tray drawn big, seen from above: five rows of rock core a metre long, 5 m a tray. The reader drags a zoom slider and the view pulls back over the trays, counting them, past the six that hold an oil well's few tens of metres, to all of Kola: 740 trays and 10 cm more, 3,700.1 m. Asks how much rock was actually collected from the Kola borehole.",
+    "page": "pages/science-kola-rock-cores.html?v=011b977891e9",
+    "bytes": 16739
    },
    "source": "Geopop, “Il buco più profondo della Terra, il racconto scientifico del pozzo Kola in Russia con animazioni 3D” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=88ZLlziYdZg&t=489s",
@@ -204010,14 +203982,10 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Chart of light reflected by stacked thin-layer mirrors, with a draggable guess. Text: one pair of layers reflects 0.4% of chip-making light. Asks what 50 pairs reflect. Reader drags on the chart to guess.",
+    "label": "A mirror drawn big in section: 50 pairs of thin layers on glass. Light comes down onto it as a wave; one pair sends back 0.4%, a faint ripple, into a tall meter of light back. The reader drags the meter to guess what 50 pairs reflect and says how sure; the mirror then builds pair by pair and the echo grows to about 70%, not the 20% of plain adding.",
     "graded": false,
-    "page": "pages/science-layers-in-step.html?v=88fd3ce9146a",
-    "bytes": 15901,
-    "thumbs": {
-     "front": "thumbs/science-layers-in-step-front.webp?v=b4ca639dfbb4",
-     "back": "thumbs/science-layers-in-step-back.webp?v=b4ca639dfbb4"
-    }
+    "page": "pages/science-layers-in-step.html?v=0649acc3391e",
+    "bytes": 18417
    },
    "source": "Veritasium, “The Closest Thing We Have to Alien Technology” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=MiUHjLxm3V0",
@@ -204569,13 +204537,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Card titled QUANTUM asking why many physicists find Many-Worlds cleaner than Copenhagen. A 'Run to measurement' step counter reads 1 of 3, with a Run button. The reader taps Run three times to watch which wave branch keeps flowing.",
-    "page": "pages/science-many-worlds-flow.html?v=0a98c9625eb4",
-    "bytes": 10957,
-    "thumbs": {
-     "front": "thumbs/science-many-worlds-flow-front.webp?v=0ddfc342b4d8",
-     "back": "thumbs/science-many-worlds-flow-back.webp?v=0ddfc342b4d8"
-    }
+    "label": "A hand-drawn tree: a wave grows up from its source, forking at three measurements, you at the top. At its foot two rule cards: the Schrödinger equation, and collapse with scissors that cut every branch but yours. The reader flips to Many-Worlds: the collapse card falls away and every branch grows on, with other yous at the tips. Asks why physicists find Many-Worlds cleaner.",
+    "page": "pages/science-many-worlds-flow.html?v=56ed11a87de2",
+    "bytes": 13897
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=694s",
@@ -205104,8 +205068,8 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "How many metres does a MotoGP bike need from 350 to 100 km/h?",
-   "answer": "From 350 to 100 km/h takes only about 200 m of road. Rossi grabs the brakes about 200 m from the corner, so losing 250 km/h in that short stretch means the squeeze must be exact.",
-   "move": "From 350 to 100 km/h takes only about 200 m of road.",
+   "answer": "From 350 to 100 km/h takes about 300 m of road, five seconds on the brakes: at Mugello's first corner Brembo measures 288 m from over 350 to 90 km/h. Losing 250 km/h in that short stretch means the squeeze must be exact.",
+   "move": "From 350 to 100 km/h takes about 300 m of road: five seconds on the brakes.",
    "keywords": [
     "motogp",
     "valentino rossi",
@@ -205126,13 +205090,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A speed-versus-distance graph of a MotoGP bike braking from 350 km/h toward a corner 420 m away, with red dashes showing Valentino Rossi's braking point. Asks how many metres the bike needs to slow from 350 to 100 km/h.",
-    "page": "pages/science-motogp-braking-zone.html?v=8299349b55a4",
-    "bytes": 9793,
-    "thumbs": {
-     "front": "thumbs/science-motogp-braking-zone-front.webp?v=d3080b7720dd",
-     "back": "thumbs/science-motogp-braking-zone-back.webp?v=d3080b7720dd"
-    }
+    "label": "The rider's view down a MotoGP straight, drawn flat in perspective: braking boards at 300, 200 and 100 m before a right-hand corner, the bike and rider from behind, the speed in big numbers. The reader taps Start, then holds Brake: the rider sits up and the bike slows the way Brembo measures. Asks how many metres a MotoGP bike needs from 350 to 100 km/h.",
+    "page": "pages/science-motogp-braking-zone.html?v=2e88ec679ddc",
+    "bytes": 14786
    },
    "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=9AvpiROfyUM&t=129s",
@@ -205254,13 +205214,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two electron pictures that merge into one shared, interconnected web when tapped. The question asks why measuring one entangled electron instantly affects the other, light-years away.",
-    "page": "pages/science-one-shared-wavefunction.html?v=dd595fd01abe",
-    "bytes": 10553,
-    "thumbs": {
-     "front": "thumbs/science-one-shared-wavefunction-front.webp?v=958f73afaf08",
-     "back": "thumbs/science-one-shared-wavefunction-back.webp?v=958f73afaf08"
-    }
+    "label": "Wave functions as clouds of dots: electrons A and B, each in its own cloud. A tap: they meet, the clouds become one, and they fly apart with that one cloud stretched light-years between them. A tap on A measures it: the whole cloud collapses at once, A is up and B down in that instant, while light from A is still on its way. Asks why measuring one entangled electron affects the other.",
+    "page": "pages/science-one-shared-wavefunction.html?v=7fb6bd9beff5",
+    "bytes": 11421
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=413s",
@@ -206970,13 +206926,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A depth dial runs from 0 to 3,500 metres beside readouts for depth, pressure in atmospheres, and load in tons per square metre. Dragging it down shows cars piling onto one square metre, reaching about 2,000 cars at 3,500 metres.",
-    "page": "pages/science-pressure-in-tons.html?v=25d6a0970a37",
-    "bytes": 7973,
-    "thumbs": {
-     "front": "thumbs/science-pressure-in-tons-front.webp?v=b8552d7a7f93",
-     "back": "thumbs/science-pressure-in-tons-back.webp?v=b8552d7a7f93"
-    }
+    "label": "A slice of sea from the surface down to Titan's depth, 3,500 metres. A small table, one square metre, hangs halfway down under a stack of ten cars that reaches the surface: about 1,750 tonnes, 1,000 cars. Dragging it down adds a car for every 175 metres of sea above it, each standing for 100, until 2,000 cars reach from the table to the surface.",
+    "page": "pages/science-pressure-in-tons.html?v=8dcc62e8c327",
+    "bytes": 14577
    },
    "source": "Geopop, “Com'è avvenuta l'implosione del sottomarino Titan? La spiegazione tecnica con immagini inedite in 3D” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=2wC4fyRA6cM&t=204s",
@@ -213553,13 +213505,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Question: What is a template horizon in drawing a geological cross-section? A blank section shows only the ground surface. A slider builds the section in four steps, from one continuous key layer.",
-    "page": "pages/science-template-horizon.html?v=6944ab7f4aca",
-    "bytes": 9638,
-    "thumbs": {
-     "front": "thumbs/science-template-horizon-front.webp?v=b607e7e9ac19",
-     "back": "thumbs/science-template-horizon-back.webp?v=b607e7e9ac19"
-    }
+    "label": "A hill cut open into a geological cross-section, its rock in layers bowed like a bowl. Drawn one layer at a time, the layers swell, thin and break off, the red sandstone too. The reader draws one line through three red dots, two outcrops and the bottom of a borehole: the template horizon. Every other layer is then built from it, even and continuous.",
+    "page": "pages/science-template-horizon.html?v=5d4d0dbbe9ff",
+    "bytes": 17091
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=2205s",
@@ -214611,14 +214559,10 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A photo of a long core barrel with labelled rock layers, beside a draggable drill. The question asks how long all the rock core drilled along the Turin–Lyon tunnel route would be laid end to end.",
+    "label": "The Alps cut open between France and Italy, with the 57.5 km base tunnel through them and drill rigs on the peaks. Under them, the reader drags out a rock core to guess how long all the core drilled along the route is, laid end to end, then says how sure. The real core then runs out past the tunnel's far end: about 65 km.",
     "graded": false,
-    "page": "pages/science-tunnel-core-samples.html?v=e882e10663a9",
-    "bytes": 8962,
-    "thumbs": {
-     "front": "thumbs/science-tunnel-core-samples-front.webp?v=74c73f923bb9",
-     "back": "thumbs/science-tunnel-core-samples-back.webp?v=74c73f923bb9"
-    }
+    "page": "pages/science-tunnel-core-samples.html?v=a827f894a3fa",
+    "bytes": 15503
    },
    "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=Jo7Sd0wxNE0&t=266s",
@@ -221752,14 +221696,10 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Four copies of three orbiting stars, released at rest with starting errors of 1,000,000 km, 1,000 km and 1 km. The page asks how much longer each copy can be predicted, with options a million times, a thousand times, ten times, or less than twice.",
+    "label": "Three suns of 3, 4 and 5 solar masses at rest on a triangle, in four copies laid over each other: one exact, three nudged 1,000,000 km, 1,000 km and 1 km. The reader bets how much longer the 1 km copy stays in step than the 1,000,000 km one, then watches them move while a ruler fills: the copies part in about years 5.3, 7.3 and 9.6.",
     "graded": false,
-    "page": "pages/space-four-copies.html?v=0b100e95fdf9",
-    "bytes": 17367,
-    "thumbs": {
-     "front": "thumbs/space-four-copies-front.webp?v=4664df952ebd",
-     "back": "thumbs/space-four-copies-back.webp?v=4664df952ebd"
-    }
+    "page": "pages/space-four-copies.html?v=6bf3331dbf14",
+    "bytes": 19043
    },
    "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=XKSjCOKDtpk",
@@ -227895,7 +227835,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "How far does Earth turn between one noon and the next?",
-   "answer": "Earth turns a little more than one full spin in a 24-hour solar day. While it spins, it also moves along its orbit, so the Sun ends up at a slightly different angle. Earth must turn extra to bring the Sun overhead again.",
+   "answer": "Earth turns about 361° in a 24-hour solar day, a little more than one full spin. While it spins, it also moves along its orbit, so the Sun ends up about 1° further round. Earth must turn that extra degree, some 4 minutes, to bring the Sun overhead again.",
    "move": "A 24-hour solar day is a bit more than one full spin of Earth.",
    "keywords": [
     "earth",
@@ -227917,13 +227857,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Animated globe orbiting the Sun. Hold the button to run one solar day and watch a 'you' marker on the globe turn back toward the Sun, past one full rotation.",
-    "page": "pages/space-solar-day-spin.html?v=f13073bc04e5",
-    "bytes": 10252,
-    "thumbs": {
-     "front": "thumbs/space-solar-day-spin-front.webp?v=84dda707a277",
-     "back": "thumbs/space-solar-day-spin-back.webp?v=84dda707a277"
-    }
+    "label": "Earth seen from above the North Pole, under a Sun too big for the card. A person stands on Earth at noon, the Sun overhead. The reader spins Earth with a finger as it moves along its orbit, drawn 20 times faster. After one full turn the Sun is not overhead yet: a yellow wedge shows the extra turn, and the count ends at about 361 degrees.",
+    "page": "pages/space-solar-day-spin.html?v=8c16af185baf",
+    "bytes": 16422
    },
    "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=744s",
@@ -264187,7 +264123,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "Why does not knowing when a game ends keep players cooperating?",
-   "answer": "With a known last round, betraying in that round is safe, and the same logic slides back to round 1. With a random end, averaging 200 rounds, any round might be followed by another, so players keep cooperating because they might still need each other.",
+   "answer": "With a known last round, betraying in that round is safe, and the same logic slides back to round 1. With a random end, typically about 200 rounds, any round might be followed by another, so players keep cooperating because they might still need each other.",
    "move": "When the end is uncertain, the future keeps people cooperating.",
    "keywords": [
     "game theory",
@@ -264209,13 +264145,9 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Interactive card titled 'Why does not knowing when a game ends keep players cooperating?' with a tap-to-reason prompt. Tapping reasons backward from a known last round. A counter shows 0 of 10.",
-    "page": "pages/thinking-random-end-cooperation.html?v=43018d2f8c7b",
-    "bytes": 8867,
-    "thumbs": {
-     "front": "thumbs/thinking-random-end-cooperation-front.webp?v=b8fa1dd3ffda",
-     "back": "thumbs/thinking-random-end-cooperation-back.webp?v=b8fa1dd3ffda"
-    }
+    "label": "Two rows of dominoes, one a round, green while both players cooperate. Above, a game whose last round everyone knows, round 8; below, a game with a random end, its row running on past the edge. Pushing over the known last round knocks every round back to round 1, all red. In the random game there is no last domino to push, and they stay standing.",
+    "page": "pages/thinking-random-end-cooperation.html?v=852910394e40",
+    "bytes": 12155
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=781s",
@@ -264602,14 +264534,10 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A loop of two arrows labeled Confidence in Wrong Idea and Less Learning. A slider moves a student around the loop; each round, the student feels surer of the wrong idea and less of the correct explanation gets in.",
-    "page": "pages/thinking-vicious-cycle.html?v=4e69874421c0",
-    "bytes": 6013,
-    "thumbs": {
-     "front": "thumbs/thinking-vicious-cycle-front.webp?v=6bedf905febf",
-     "back": "thumbs/thinking-vicious-cycle-back.webp?v=6bedf905febf"
-    }
+    "touch": "taps",
+    "label": "A student in profile, sure that humans lived with dinosaurs, stamped TRUE, faces a screen playing a clear video of the right answer. Each tap plays it again: blue specks of the explanation fly at the head, some settle in the brain, the rest bounce off a red shell of certainty that thickens each round while the TRUE stamp grows.",
+    "page": "pages/thinking-vicious-cycle.html?v=ebe235a4f5a8",
+    "bytes": 14969
    },
    "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
    "reference": "https://www.youtube.com/watch?v=eVtCO84MDj8&t=398s",
