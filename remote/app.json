@@ -1,6 +1,8 @@
 {
  "gate": null,
- "flags": {},
+ "flags": {
+  "trial.firstRun": true
+ },
  "tunables": {},
  "experiments": {}
 }
