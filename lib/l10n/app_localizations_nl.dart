@@ -159,7 +159,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String nothingForYet(String query) {
-    return 'Nog niets voor \"$query\".';
+    return 'Nog niets voor ‘$query’.';
   }
 
   @override
@@ -219,7 +219,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String nothingForTryTopic(String query) {
-    return 'Niets voor \"$query\". Probeer een vak.';
+    return 'Niets voor ‘$query’. Probeer een vak.';
   }
 
   @override
@@ -243,7 +243,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get keepTheOnesYoullUse => 'Bewaar wat je echt gaat gebruiken';
 
   @override
-  String get backToTodaysFive => 'TERUG NAAR DE VIJF VAN VANDAAG';
+  String get backToTodaysFive => 'Terug naar de vijf van vandaag';
 
   @override
   String get archive => 'Archief';
@@ -315,7 +315,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String youSaidPercentSure(int n) {
-    return 'Je zei $n% zeker';
+    return 'Je was $n% zeker';
   }
 
   @override
@@ -775,7 +775,7 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get shareMyRecord => 'MIJN STAAT VAN DIENST DELEN';
+  String get shareMyRecord => 'Mijn staat van dienst delen';
 
   @override
   String lastCallsAgainstFirst(int n) {
@@ -846,7 +846,7 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get seeThePlans => 'BEKIJK DE ABONNEMENTEN';
+  String get seeThePlans => 'Bekijk de abonnementen';
 
   @override
   String get recordStartsToday => 'Je staat van dienst begint vandaag.';
@@ -1909,11 +1909,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return 'Jij zei $said. Het is $truth.';
-  }
-
-  @override
   String get fiveTitle => 'De vijf van vandaag';
 
   @override
@@ -1930,12 +1925,17 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String dailyPickRight(String answer) {
-    return 'Goed: $answer.';
+    return 'Goed: $answer';
   }
 
   @override
   String dailyPickWrong(String answer) {
-    return 'Niet helemaal: het is $answer.';
+    return 'Niet helemaal. Goed: $answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return 'Jouw antwoord: $answer';
   }
 
   @override
@@ -2310,21 +2310,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get tapToReveal => 'Tik om te onthullen';
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return 'Je zei $given · het is $answer, en $band telt';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return 'Je zei $given · het is $answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · je zei $pct% zeker';
-  }
-
-  @override
   String get verdictRight => 'Goed.';
 
   @override
@@ -2335,7 +2320,27 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String verdictSure(int pct) {
-    return 'Je was $pct% zeker.';
+    return 'Je was $pct% zeker.';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return 'Je zei $given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return 'Je zei $given, $pct% zeker';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return 'Goed: $answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return 'Goed: $answer ($low tot $high telde)';
   }
 
   @override
@@ -3112,7 +3117,22 @@ class AppLocalizationsNl extends AppLocalizations {
   String get revealShowWorking => 'Toon de uitwerking';
 
   @override
-  String get sceneLockIn => 'VASTLEGGEN';
+  String get sceneLockIn => 'Bevestigen';
+
+  @override
+  String get placeItDrag => 'Sleep langs de liniaal.';
+
+  @override
+  String get placeItHappy => 'Tevreden zo?';
+
+  @override
+  String get placeItEstimate => 'Je schatting';
+
+  @override
+  String get placeItNotSet => 'nog niet gezet';
+
+  @override
+  String get placeItLock => 'Mijn schatting bevestigen';
 
   @override
   String get sceneYou => 'JIJ';
@@ -3414,7 +3434,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String journeyMinAWeek(int now, int was) {
-    return '$now min per week, was $was';
+    return '$now min per week, eerst $was min';
   }
 
   @override
@@ -4893,7 +4913,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'Stel het in, zet het vast, zie hoe ver je ernaast zat';
 
   @override
-  String get betsLock => 'Vast';
+  String get betsLock => 'Bevestigen';
 
   @override
   String get betsSpotOn => 'Precies goed.';
@@ -5044,7 +5064,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get betsDayLine =>
-      'Zet je schatting vast en zie hoe ver je ernaast zat';
+      'Bevestig je schatting en zie hoe ver je ernaast zat';
 
   @override
   String get betsDayTag => 'Gok van de dag';
@@ -5053,7 +5073,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get betsDayTagSame => 'Gok van de dag · voor iedereen dezelfde';
 
   @override
-  String get betsLockIn => 'Vastzetten';
+  String get betsLockIn => 'Bevestigen';
 
   @override
   String betsItIs(String said) {
@@ -6661,6 +6681,15 @@ class AppLocalizationsNl extends AppLocalizations {
   String get newsBehind => 'Achter het nieuws';
 
   @override
+  String get newsMeansForYou => 'Wat het voor jou betekent';
+
+  @override
+  String get newsMeans => 'Wat het betekent';
+
+  @override
+  String get newsHappenedBefore => 'Het gebeurde al eens';
+
+  @override
   String get newsSources => 'Bronnen';
 
   @override
@@ -6822,6 +6851,36 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get founderTheirBooks => 'Aanbevolen boeken';
+
+  @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': 'Medeoprichter van Microsoft',
+      'warren_buffett': 'De belegger die Berkshire Hathaway groot maakte',
+      'mark_zuckerberg': 'Oprichter van Facebook',
+      'charlie_munger': 'Partner van Warren Buffett bij Berkshire Hathaway',
+      'marc_andreessen': 'Medeoprichter van Netscape en Andreessen Horowitz',
+      'tobi_lutke': 'Oprichter van Shopify',
+      'naval_ravikant': 'Medeoprichter van AngelList',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes, zijn boeken voor de zomer',
+      'berkshire_meeting': 'de jaarvergadering van Berkshire Hathaway',
+      'berkshire_letter':
+          'zijn brief aan de aandeelhouders van Berkshire Hathaway',
+      'year_of_books': 'A Year of Books, op Facebook',
+      'publisher_praise': 'zijn lof voor het boek, bij de uitgever',
+      'ferriss_five': 'The Tim Ferriss Show, bij de vijf beste boeken die hij heeft gelezen',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
 
   @override
   String founderAbout(String name) {

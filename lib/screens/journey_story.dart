@@ -97,9 +97,11 @@ class _Headline extends StatelessWidget {
     final String line = switch (h.kind) {
       StoryHeadlineKind.sure => l.storyHeadlineSure(h.n),
       StoryHeadlineKind.streak => l.storyHeadlineStreak(h.n),
-      StoryHeadlineKind.strong => l.storyHeadlineStrong(
-        l.subjectOf(kTopics[h.subject]?.name ?? ''),
-        _percent(context, h.share),
+      StoryHeadlineKind.strong => l.elided(
+        l.storyHeadlineStrong(
+          l.subjectOf(kTopics[h.subject]?.name ?? ''),
+          _percent(context, h.share),
+        ),
       ),
       StoryHeadlineKind.read => l.storyHeadlineRead(h.n),
     };
@@ -219,9 +221,11 @@ class _HowYouReason extends StatelessWidget {
                 ? l.storySaidRightToGo(
                     math.max(1, kCalibrationFloor - app.calibratedAnswers),
                   )
-                : l.storySaidRight(
-                    _percent(context, said.sure / 100),
-                    _percent(context, said.right / 100),
+                : l.elided(
+                    l.storySaidRight(
+                      _percent(context, said.sure / 100),
+                      _percent(context, said.right / 100),
+                    ),
                   ),
           ),
           if (app.reactions.isNotEmpty)

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../l10n/l10n.dart';
 import '../measure/card_read.dart';
 import '../models/pill.dart';
 import '../theme.dart';
@@ -139,6 +140,7 @@ class _PlaceItInputState extends State<PlaceItInput> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final pill = widget.pill;
     final value = _ruler.valueAt(_t);
     final unit = widget.estimate.unit;
@@ -190,8 +192,8 @@ class _PlaceItInputState extends State<PlaceItInput> {
         LayoutBuilder(
           builder: (context, box) => Semantics(
             slider: true,
-            label: 'Your estimate',
-            value: _moved ? roughNumber(value) : 'not set',
+            label: l.placeItEstimate,
+            value: _moved ? roughNumber(value) : l.placeItNotSet,
             increasedValue: roughNumber(_ruler.valueAt(_t + 0.05)),
             decreasedValue: roughNumber(_ruler.valueAt(_t - 0.05)),
             onIncrease: () => setState(() {
@@ -250,7 +252,7 @@ class _PlaceItInputState extends State<PlaceItInput> {
           children: [
             Expanded(
               child: Text(
-                _moved ? 'Happy with that?' : 'Drag along the ruler.',
+                _moved ? l.placeItHappy : l.placeItDrag,
                 style: AppText.body(
                   size: 13,
                   weight: FontWeight.w500,
@@ -260,7 +262,7 @@ class _PlaceItInputState extends State<PlaceItInput> {
             ),
             Semantics(
               button: true,
-              label: 'Lock in my estimate',
+              label: l.placeItLock,
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: canLock
@@ -282,7 +284,7 @@ class _PlaceItInputState extends State<PlaceItInput> {
                       borderRadius: BorderRadius.circular(999),
                     ),
                     child: Text(
-                      'LOCK IT IN',
+                      l.sceneLockIn,
                       style: AppText.label(
                         size: 11.5,
                         weight: FontWeight.w800,

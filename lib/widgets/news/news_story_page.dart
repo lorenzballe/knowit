@@ -218,14 +218,20 @@ class _Story extends StatelessWidget {
           const SizedBox(height: 14),
           for (final NewsSide side in s.sides) _Side(side: side, style: body),
         ],
+        // The step's name is the page's own, in the reader's language like
+        // every other on it: the story's words name it in English.
         if (s.then case final NewsThen then) ...[
           const _Gap(),
-          _Label(then.label),
+          _Label(l.newsHappenedBefore),
           const SizedBox(height: 12),
           _Then(then: then, color: desk.color),
         ] else if (meaning != null) ...[
           const _Gap(),
-          _Label(meaning.label),
+          _Label(
+            meaning.label.toLowerCase().contains('for you')
+                ? l.newsMeansForYou
+                : l.newsMeans,
+          ),
           const SizedBox(height: 10),
           Text(meaning.text, style: body),
         ],

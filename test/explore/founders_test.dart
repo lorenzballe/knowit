@@ -133,6 +133,43 @@ void main() {
     );
   });
 
+  test('what they built and where they said it are said in the reader\'s '
+      'language, every language; in English, as the data says them', () {
+    final AppLocalizations en = lookupAppLocalizations(const Locale('en'));
+    for (final Founder f in kFounders) {
+      expect(en.roleOf(f), f.role, reason: f.id);
+      for (final BookPick k in f.picks) {
+        expect(en.whereOf(k), k.where, reason: '${f.id} ${k.book}');
+        expect(en.sourceOf(k), k.source, reason: '${f.id} ${k.book}');
+      }
+    }
+    final AppLocalizations it = lookupAppLocalizations(const Locale('it'));
+    expect(it.roleOf(_gates), 'Cofondatore di Microsoft');
+    expect(it.roleOf(founderById('mark-zuckerberg')!), 'Fondatore di Facebook');
+    expect(
+      it.sourceOf(founderById('warren-buffett')!.picks[1]),
+      'La sua lettera agli azionisti di Berkshire Hathaway, 2017',
+    );
+    expect(
+      it.sourceOf(founderById('warren-buffett')!.picks.first),
+      'L’assemblea annuale di Berkshire Hathaway, 2008',
+    );
+    // A name every language writes as it is stays as it is.
+    expect(it.sourceOf(_gates.picks.first), 'GatesNotes, 2014');
+    for (final Locale locale in AppLocalizations.supportedLocales) {
+      if (locale.languageCode == 'en') continue;
+      final AppLocalizations l = lookupAppLocalizations(locale);
+      for (final Founder f in kFounders) {
+        final String at = '${locale.languageCode} ${f.id}';
+        expect(l.roleOf(f), isNot(f.role), reason: at);
+        for (final BookPick k in f.picks) {
+          if (k.whereKey == null) continue;
+          expect(l.whereOf(k), isNot(k.where), reason: '$at ${k.book}');
+        }
+      }
+    }
+  });
+
   test('every face is a photo free to use from Wikimedia Commons, kept small '
       'in the app, credited beside it in CREDITS.md and on the page', () {
     final String credits = File('assets/founders/CREDITS.md')
@@ -269,6 +306,9 @@ void main() {
     );
     expect(find.text('Cosa leggono i fondatori'), findsOneWidget);
     expect(find.text('6 LIBRI'), findsOneWidget);
+    // What they built, in Italian too.
+    expect(find.text('Cofondatore di Microsoft'), findsOneWidget);
+    expect(find.text('Co-founder of Microsoft'), findsNothing);
   });
 
   testWidgets('on a subject\'s page: its books they recommended, one list, '

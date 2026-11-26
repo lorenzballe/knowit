@@ -8,12 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/l10n/app_localizations.dart';
+import 'package:astuto/l10n/l10n.dart' show SubjectNames;
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/journey_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/state/journey_record.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/move_words.dart' show moveName;
 import 'package:astuto/widgets/skill_score.dart' show scoreBookOf;
 import 'package:astuto/widgets/ui.dart' show BackCircle;
 
@@ -405,6 +407,68 @@ void main() {
       await tester.tap(find.text(read.first.ask));
       await tester.pumpAndSettle();
       expect(find.byType(DeckViewerScreen), findsOneWidget);
+    });
+
+    testWidgets('on an Italian phone the subject with the most topics and '
+        'the newest move are named in Italian, never as the bank files them', (
+      tester,
+    ) async {
+      // Cards of Space read, on strands of their own.
+      final List<Pill> space = PillBank.cards
+          .where((p) => p.topic == 'Space' && p.strand.isNotEmpty)
+          .take(6)
+          .toList();
+      final int topics = {for (final p in space) p.strand}.length;
+      // Two picks of one move answered right: a move the reader can spot,
+      // and so the newest.
+      final Map<Principle, List<Pill>> byMove = {};
+      for (final Pill p in PillBank.cards) {
+        if (p.challenge is PickOne && p.principle.isReal) {
+          byMove.putIfAbsent(p.principle, () => []).add(p);
+        }
+      }
+      final List<Pill> move = byMove.values
+          .firstWhere((cards) => cards.length >= 2)
+          .take(2)
+          .toList();
+      final app = await _app({
+        'knowit.onboarded': true,
+        'knowit.plus': true,
+        'knowit.seenIds': [for (final p in space) p.id],
+      });
+      await tester.runAsync(() async {
+        for (final Pill p in move) {
+          await app.recordAnswer(p.id, '${(p.challenge as PickOne).correct}');
+        }
+      });
+      tester.view.physicalSize = const Size(402, 6000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: const Locale('it'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          home: JourneyScreen(app: app, onBack: () {}),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final AppLocalizations it = lookupAppLocalizations(const Locale('it'));
+      final Finder list = find.byType(Scrollable).first;
+
+      final String most = it.journeyTopicsMost(topics, it.subjectOf('Space'));
+      expect(most, endsWith('in Spazio'));
+      await tester.scrollUntilVisible(find.text(most), 300, scrollable: list);
+      expect(find.text(most), findsOneWidget);
+      expect(find.textContaining('in Space'), findsNothing);
+
+      final Principle newest = move.first.principle;
+      final String last = it.journeyNewest(moveName(it, newest));
+      expect(moveName(it, newest), isNot(newest.label));
+      await tester.scrollUntilVisible(find.text(last), 300, scrollable: list);
+      expect(find.text(last), findsOneWidget);
+      expect(find.text(it.journeyNewest(newest.label)), findsNothing);
     });
 
     testWidgets('before there is anything to say, how many more answers '

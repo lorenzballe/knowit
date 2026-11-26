@@ -210,7 +210,9 @@ class MagnitudeTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BetVerdict(
-            s == null ? verdict : '$verdict ${l.betsYouWereSure(s)}',
+            s == null
+                ? verdict
+                : '$verdict ${l.elided(l.betsYouWereSure(s))}',
             key: ValueKey('bets-magnitude-said-${pill.id}'),
             ink: ink,
           ),

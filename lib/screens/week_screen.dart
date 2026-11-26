@@ -309,7 +309,9 @@ class _MissRow extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    context.l10n.youSaidPercentSure(miss.confidence),
+                    context.l10n.elided(
+                      context.l10n.youSaidPercentSure(miss.confidence),
+                    ),
                     style: AppText.label(
                       size: 10.5,
                       weight: FontWeight.w700,

@@ -958,7 +958,7 @@ class _WorthTile extends StatelessWidget {
       ),
       sub: books == 0
           ? l.journeyToFirstBook(perBook - n)
-          : l.journeyOrDocumentaries((n * 3 / 60).round()),
+          : l.elided(l.journeyOrDocumentaries((n * 3 / 60).round())),
       foot: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -1760,7 +1760,7 @@ class _MovesTile extends StatelessWidget {
           ? l.journeyNoneYet
           : newest == null
           ? null
-          : l.journeyNewest(newest.label),
+          : l.journeyNewest(moveName(l, newest)),
       foot: _Spark(values: weekly, height: 40, lo: 0, hi: top, steps: true),
     );
   }
@@ -2525,7 +2525,7 @@ class _TopicsTile extends StatelessWidget {
         strands.length.toDouble(),
         (v) => l.journeyMet(v.round()),
       ),
-      sub: l.journeyTopicsMost(most.value.length, most.key),
+      sub: l.journeyTopicsMost(most.value.length, l.subjectOf(most.key)),
       size: 24,
     );
   }

@@ -532,7 +532,7 @@ class _AnsweredLine extends StatelessWidget {
     final right = pill.challenge.accepts(given.response);
     final sure = given.confidence == null
         ? ''
-        : context.l10n.atPercentSure(given.confidence!);
+        : context.l10n.elided(context.l10n.atPercentSure(given.confidence!));
     return Row(
       children: [
         Icon(
@@ -546,7 +546,13 @@ class _AnsweredLine extends StatelessWidget {
             right
                 ? context.l10n.youGotThisOne(sure)
                 : context.l10n.youSaidAnswer(
-                    pill.challenge.describe(given.response),
+                    // A pick is the card's words, quoted in the app's
+                    // sentence; a number is said as it is.
+                    pill.challenge is PickOne
+                        ? context.l10n.quoted(
+                            pill.challenge.describe(given.response),
+                          )
+                        : pill.challenge.describe(given.response),
                     sure,
                   ),
             style: AppText.body(

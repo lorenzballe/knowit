@@ -1727,14 +1727,6 @@ class RemoteLocalizations extends AppLocalizations {
       _base.threeYesterday(score);
 
   @override
-  String threeRowSaid(String said, String truth) =>
-      _words.format('threeRowSaid', localeName, {
-        'said': said,
-        'truth': truth,
-      }) ??
-      _base.threeRowSaid(said, truth);
-
-  @override
   String get fiveTitle => _words.text('fiveTitle') ?? _base.fiveTitle;
 
   @override
@@ -1756,6 +1748,11 @@ class RemoteLocalizations extends AppLocalizations {
   String dailyPickWrong(String answer) =>
       _words.format('dailyPickWrong', localeName, {'answer': answer}) ??
       _base.dailyPickWrong(answer);
+
+  @override
+  String dailyYourPick(String answer) =>
+      _words.format('dailyYourPick', localeName, {'answer': answer}) ??
+      _base.dailyYourPick(answer);
 
   @override
   String dailyBetter(int pct, int n) =>
@@ -2116,31 +2113,6 @@ class RemoteLocalizations extends AppLocalizations {
   String get tapToReveal => _words.text('tapToReveal') ?? _base.tapToReveal;
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) =>
-      _words.format('youSaidItIsCounted', localeName, {
-        'given': given,
-        'answer': answer,
-        'band': band,
-      }) ??
-      _base.youSaidItIsCounted(given, answer, band);
-
-  @override
-  String youSaidItIs(String given, String answer) =>
-      _words.format('youSaidItIs', localeName, {
-        'given': given,
-        'answer': answer,
-      }) ??
-      _base.youSaidItIs(given, answer);
-
-  @override
-  String lineYouSaidSure(String line, int pct) =>
-      _words.format('lineYouSaidSure', localeName, {
-        'line': line,
-        'pct': pct,
-      }) ??
-      _base.lineYouSaidSure(line, pct);
-
-  @override
   String get verdictRight => _words.text('verdictRight') ?? _base.verdictRight;
 
   @override
@@ -2153,6 +2125,33 @@ class RemoteLocalizations extends AppLocalizations {
   String verdictSure(int pct) =>
       _words.format('verdictSure', localeName, {'pct': pct}) ??
       _base.verdictSure(pct);
+
+  @override
+  String verdictYouSaid(String given) =>
+      _words.format('verdictYouSaid', localeName, {'given': given}) ??
+      _base.verdictYouSaid(given);
+
+  @override
+  String verdictYouSaidSure(String given, int pct) =>
+      _words.format('verdictYouSaidSure', localeName, {
+        'given': given,
+        'pct': pct,
+      }) ??
+      _base.verdictYouSaidSure(given, pct);
+
+  @override
+  String verdictRightIs(String answer) =>
+      _words.format('verdictRightIs', localeName, {'answer': answer}) ??
+      _base.verdictRightIs(answer);
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) =>
+      _words.format('verdictRightWithin', localeName, {
+        'answer': answer,
+        'low': low,
+        'high': high,
+      }) ??
+      _base.verdictRightWithin(answer, low, high);
 
   @override
   String get giveMeANudge => _words.text('giveMeANudge') ?? _base.giveMeANudge;
@@ -2977,6 +2976,23 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get sceneLockIn => _words.text('sceneLockIn') ?? _base.sceneLockIn;
+
+  @override
+  String get placeItDrag => _words.text('placeItDrag') ?? _base.placeItDrag;
+
+  @override
+  String get placeItHappy => _words.text('placeItHappy') ?? _base.placeItHappy;
+
+  @override
+  String get placeItEstimate =>
+      _words.text('placeItEstimate') ?? _base.placeItEstimate;
+
+  @override
+  String get placeItNotSet =>
+      _words.text('placeItNotSet') ?? _base.placeItNotSet;
+
+  @override
+  String get placeItLock => _words.text('placeItLock') ?? _base.placeItLock;
 
   @override
   String get sceneYou => _words.text('sceneYou') ?? _base.sceneYou;
@@ -6284,6 +6300,17 @@ class RemoteLocalizations extends AppLocalizations {
   String get newsBehind => _words.text('newsBehind') ?? _base.newsBehind;
 
   @override
+  String get newsMeansForYou =>
+      _words.text('newsMeansForYou') ?? _base.newsMeansForYou;
+
+  @override
+  String get newsMeans => _words.text('newsMeans') ?? _base.newsMeans;
+
+  @override
+  String get newsHappenedBefore =>
+      _words.text('newsHappenedBefore') ?? _base.newsHappenedBefore;
+
+  @override
   String get newsSources => _words.text('newsSources') ?? _base.newsSources;
 
   @override
@@ -6442,6 +6469,16 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get founderTheirBooks =>
       _words.text('founderTheirBooks') ?? _base.founderTheirBooks;
+
+  @override
+  String founderRole(String id, String role) =>
+      _words.format('founderRole', localeName, {'id': id, 'role': role}) ??
+      _base.founderRole(id, role);
+
+  @override
+  String founderWhere(String id, String where) =>
+      _words.format('founderWhere', localeName, {'id': id, 'where': where}) ??
+      _base.founderWhere(id, where);
 
   @override
   String founderAbout(String name) =>

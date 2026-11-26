@@ -20,6 +20,7 @@ import 'package:astuto/explore/blocks/bets/deal.dart' show BetSection, answerOf;
 import 'package:astuto/explore/blocks/bets/three.dart';
 import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
+import 'package:astuto/l10n/l10n.dart' show Quoting;
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/daily_crowd.dart';
@@ -432,6 +433,30 @@ void main() {
     for (final String id in ids) {
       expect(textOf(tester, 'three-row-crowd-$id'), l.dailyItemFew);
     }
+    // Under each question, what was said against the answer: a wrong pick
+    // as two lines, the reader's and the right one; a right pick, the
+    // right one; a share, both numbers. The card's words quoted, whole.
+    final BetNumbers numbers = BetNumbers('en');
+    for (final (int i, String id) in ids.indexed) {
+      final Pill p = PillBank.byId(id)!;
+      final String said = switch (p.challenge) {
+        PickOne(:final correct, :final options, :final correctOption) =>
+          i == 1
+              ? '${l.dailyYourPick(l.quoted(options[(correct + 1) % options.length]))}'
+                    '\n${l.dailyPickRight(l.quoted(correctOption))}'
+              : l.dailyPickRight(l.quoted(correctOption)),
+        _ =>
+          '${l.dailyYourPick(numbers.percent((answerOf(p)!.value + 5).clamp(0, 100).toDouble()))}'
+              '\n${l.dailyPickRight(numbers.percent(answerOf(p)!.value))}',
+      };
+      final Finder line = find.descendant(
+        of: find.byKey(ValueKey('three-row-$id')),
+        matching: find.text(said),
+      );
+      expect(line, findsOneWidget, reason: id);
+      expect(tester.widget<Text>(line).maxLines, isNull, reason: id);
+      expect(tester.widget<Text>(line).overflow, isNull, reason: id);
+    }
 
     // Back on the page, the result, sent no more.
     await show(tester, host);
@@ -633,7 +658,11 @@ void main() {
       await tapKey(tester, 'three-option-$id-$wrong');
       expect(find.text(l.betsLockIn), findsOneWidget);
       await tapKey(tester, 'three-lock-$id');
-      expect(textOf(tester, 'three-said-$id'), l.dailyPickWrong(correctOption));
+      // The card's words quoted in the app's sentence.
+      expect(
+        textOf(tester, 'three-said-$id'),
+        l.dailyPickWrong(l.quoted(correctOption)),
+      );
       expect(textOf(tester, 'three-points-$id'), l.threePoints(0));
       expect(
         find.bySemanticsLabel('$correctOption. ${l.betsRight}'),

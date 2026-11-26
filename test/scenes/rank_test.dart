@@ -208,7 +208,7 @@ void main() {
           'Sharks',
         ]);
 
-        await tester.tap(find.text('LOCK IT IN'));
+        await tester.tap(find.text('Lock it in'));
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
 
@@ -223,7 +223,7 @@ void main() {
         expect(find.text('81,000'), findsOneWidget);
         expect(find.text('6'), findsWidgets);
         expect(find.text('2 OF 4'), findsOneWidget);
-        expect(find.text('LOCK IT IN'), findsNothing);
+        expect(find.text('Lock it in'), findsNothing);
         // Dogs and Snakes were swapped; the tie goes to the higher one.
         expect(find.text('At least 81,000.'), findsOneWidget);
         // Snakes up one, dogs down one, beside the place numbers 1 to 4.
@@ -243,7 +243,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
       expect(find.text('597,000'), findsOneWidget);
@@ -262,7 +262,7 @@ void main() {
       await tester.pumpWidget(host(animals(), height: 400, still: true));
       await tester.pump();
       expect(tester.hasRunningAnimations, isFalse);
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pump();
       expect(find.text('597,000'), findsOneWidget);
       expect(find.text('0 OF 4'), findsOneWidget);
@@ -286,7 +286,7 @@ void main() {
           ],
         }, height: 360),
       );
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
       expect(find.text('15,415 L'), findsOneWidget);
       expect(find.text('214 L'), findsOneWidget);
@@ -306,7 +306,7 @@ void main() {
         }, height: 360),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
       expect(find.text(r'$3 million'), findsOneWidget);
       expect(find.text(r'$12.5'), findsOneWidget);
@@ -337,10 +337,10 @@ void main() {
       expect(tester.getSemantics(mosquitoes), isSemantics(value: '2 of 4'));
 
       expect(
-        tester.getSemantics(find.bySemanticsLabel('LOCK IT IN')),
+        tester.getSemantics(find.bySemanticsLabel('Lock it in')),
         isSemantics(isButton: true, hasTapAction: true),
       );
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pumpAndSettle();
       expect(
         tester.getSemantics(mosquitoes),
@@ -413,7 +413,7 @@ void main() {
       // A tap among the rows does not turn the card over.
       await tester.tap(find.text('Dogs'));
       await tester.pumpAndSettle();
-      expect(find.text('LOCK IT IN'), findsOneWidget);
+      expect(find.text('Lock it in'), findsOneWidget);
     });
   });
 }

@@ -159,7 +159,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String nothingForYet(String query) {
-    return 'Ancora niente per \"$query\".';
+    return 'Ancora niente per «$query».';
   }
 
   @override
@@ -171,7 +171,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get all => 'Tutte';
 
   @override
-  String get theArchive => 'L\'archivio';
+  String get theArchive => 'L’archivio';
 
   @override
   String results(int n) {
@@ -220,7 +220,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String nothingForTryTopic(String query) {
-    return 'Niente per \"$query\". Prova con una materia.';
+    return 'Niente per «$query». Prova con una materia.';
   }
 
   @override
@@ -244,7 +244,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get keepTheOnesYoullUse => 'Tieni quelle che userai davvero';
 
   @override
-  String get backToTodaysFive => 'TORNA ALLE CINQUE DI OGGI';
+  String get backToTodaysFive => 'Torna alle cinque di oggi';
 
   @override
   String get archive => 'Archivio';
@@ -280,7 +280,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get worthGoingBackTo =>
-      'Quelle su cui vale la pena tornare. Sbagliare qualcosa di cui eri sicuro è l\'unico modo economico per scoprire cosa credi davvero.';
+      'Quelle su cui vale la pena tornare. Sbagliare qualcosa di cui eri sicuro è l’unico modo economico per scoprire cosa credi davvero.';
 
   @override
   String get whereThisIsGoing => 'Dove sta andando';
@@ -292,7 +292,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get sayHowSureOnMore =>
-      'Di\' quanto sei sicuro su qualche altra carta e l\'app ti dirà quanto vale quella sicurezza.';
+      'Di’ quanto sei sicuro su qualche altra carta e l’app ti dirà quanto vale quella sicurezza.';
 
   @override
   String confidenceOff(int gap) {
@@ -316,7 +316,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String youSaidPercentSure(int n) {
-    return 'Hai detto $n% sicuro';
+    return 'Eri sicuro al $n%';
   }
 
   @override
@@ -338,7 +338,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String rungClaim(String id) {
     String _temp0 = intl.Intl.selectLogic(id, {
       'day_one': 'Tutti partono da qui.',
-      'reading': 'L\'abitudine è partita.',
+      'reading': 'L’abitudine è partita.',
       'answering': 'Ti impegni prima di girare la carta.',
       'saying_how_sure': 'Metti un numero su quello che pensi di sapere.',
       'calibrated': 'Quello che dici di sapere, lo sai.',
@@ -376,7 +376,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String stepBeforeJudged(int n) {
-    return 'ancora $n risposte prima che l\'app giudichi la tua sicurezza';
+    return 'ancora $n risposte prima che l’app giudichi la tua sicurezza';
   }
 
   @override
@@ -465,7 +465,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deleteAccount => 'Elimina account';
 
   @override
-  String get deletingAccount => 'Eliminazione dell\'account…';
+  String get deletingAccount => 'Eliminazione dell’account…';
 
   @override
   String get deleteAccountQuestion => 'Eliminare il tuo account?';
@@ -488,7 +488,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get couldNotDeleteAccount =>
-      'Non è stato possibile eliminare l\'account. Riprova tra poco.';
+      'Non è stato possibile eliminare l’account. Riprova tra poco.';
 
   @override
   String get signOut => 'Esci';
@@ -504,14 +504,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get signInNotAvailableBuild =>
-      'L\'accesso non è disponibile in questa versione.';
+      'L’accesso non è disponibile in questa versione.';
 
   @override
   String get startOverQuestion => 'Ricominciare da capo?';
 
   @override
   String get startOverBody =>
-      'Cancella tutto su questo dispositivo — serie, carte salvate, risposte, il tuo record di giudizi, materie e piano — e riapre l\'introduzione.';
+      'Cancella tutto su questo dispositivo — serie, carte salvate, risposte, il tuo record di giudizi, materie e piano — e riapre l’introduzione.';
 
   @override
   String get wipeIt => 'Cancella';
@@ -692,7 +692,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get howStep4Line =>
-      'Quando abbastanza lettori dicono che una carta è sbagliata, smette di essere distribuita finché una persona non l\'ha controllata.';
+      'Quando abbastanza lettori dicono che una carta è sbagliata, smette di essere distribuita finché una persona non l’ha controllata.';
 
   @override
   String get howReportTitle => 'Hai trovato un errore?';
@@ -716,7 +716,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String acrossNAnswersHowSure(int n) {
-    return 'In $n risposte hai detto quanto eri sicuro. Ecco com\'è andata.';
+    return 'In $n risposte hai detto quanto eri sicuro. Ecco com’è andata.';
   }
 
   @override
@@ -776,7 +776,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get shareMyRecord => 'CONDIVIDI IL MIO RECORD';
+  String get shareMyRecord => 'Condividi il mio record';
 
   @override
   String lastCallsAgainstFirst(int n) {
@@ -847,7 +847,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get seeThePlans => 'VEDI I PIANI';
+  String get seeThePlans => 'Vedi i piani';
 
   @override
   String get recordStartsToday => 'Il tuo record inizia oggi.';
@@ -1111,7 +1111,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'C\'è tutto. Fai scorrere una materia verso sinistra per vederne meno, o fino in fondo per toglierla.';
+      'C’è tutto. Fai scorrere una materia verso sinistra per vederne meno, o fino in fondo per toglierla.';
 
   @override
   String get next => 'Avanti';
@@ -1158,7 +1158,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get introQuestionLine =>
-      'Prima di\' quanto sei sicuro. Col tempo scopri quanto vale il tuo «sono sicuro».';
+      'Prima di’ quanto sei sicuro. Col tempo scopri quanto vale il tuo «sono sicuro».';
 
   @override
   String get introMixTitle => 'Il mix lo scegli tu';
@@ -1399,17 +1399,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String paywallRecordOver(int sure, int right) {
-    return 'Dici $sure% sicuro e hai ragione $right volte su 100. Astute+ ti mostra se quel divario si chiude, e le mosse che sbagli più spesso.';
+    return 'Ti dici sicuro al $sure% e hai ragione $right volte su 100. Astute+ ti mostra se quel divario si chiude, e le mosse che sbagli più spesso.';
   }
 
   @override
   String paywallRecordUnder(int sure, int right) {
-    return 'Dici $sure% sicuro e hai ragione $right volte su 100: ne sai più di quanto pensi. Astute+ ti mostra se quel divario si chiude.';
+    return 'Ti dici sicuro al $sure% e hai ragione $right volte su 100: ne sai più di quanto pensi. Astute+ ti mostra se quel divario si chiude.';
   }
 
   @override
   String paywallRecordEven(int sure, int right) {
-    return 'Dici $sure% sicuro e hai ragione $right volte su 100: quasi alla pari. Astute+ ti mostra se regge, e le mosse che sbagli più spesso.';
+    return 'Ti dici sicuro al $sure% e hai ragione $right volte su 100: quasi alla pari. Astute+ ti mostra se regge, e le mosse che sbagli più spesso.';
   }
 
   @override
@@ -1583,8 +1583,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'L\'hai incontrata $n volte.',
-      one: 'L\'hai incontrata una volta.',
+      other: 'L’hai incontrata $n volte.',
+      one: 'L’hai incontrata una volta.',
     );
     return '$_temp0';
   }
@@ -1618,7 +1618,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get whyLastMetRow => 'L\'ultima volta con questa mossa';
+  String get whyLastMetRow => 'L’ultima volta con questa mossa';
 
   @override
   String whyDaysAgo(int n) {
@@ -1868,13 +1868,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String moveLine(String move) {
     String _temp0 = intl.Intl.selectLogic(move, {
       'baseRate':
-          'L\'accuratezza di un test non è la probabilità che riguardi te',
+          'L’accuratezza di un test non è la probabilità che riguardi te',
       'survivorship': 'I dati che hai sono quelli sopravvissuti',
       'regression': 'Gli estremi tornano indietro da soli',
       'confirmation': 'Cercare un sì non è una prova',
       'anchoring': 'Il primo numero detto sposta tutti quelli dopo',
       'sampling': 'Chi finisce nel campione decide cosa può dire',
-      'confounding': 'Forse qualcos\'altro causa entrambe le cose',
+      'confounding': 'Forse qualcos’altro causa entrambe le cose',
       'counterfactual': 'Un cambiamento non dice nulla senza un confronto',
       'multipleComparisons': 'Prova abbastanza cose e una passerà',
       'availability': 'Facile da immaginare non vuol dire frequente',
@@ -1888,7 +1888,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'reflection': 'La risposta che arriva per prima è quella da controllare',
       'simpson':
           'Un insieme può pendere da un lato dove nessuna sua parte pende',
-      'estimation': 'Spezza l\'impossibile in cose che puoi stimare',
+      'estimation': 'Spezza l’impossibile in cose che puoi stimare',
       'computation': 'Un problema che puoi davvero finire',
       'other': 'Ragionamento',
     });
@@ -1907,11 +1907,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return 'Avevi detto $said. È $truth.';
-  }
-
-  @override
   String get fiveTitle => 'Le cinque di oggi';
 
   @override
@@ -1927,12 +1922,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String dailyPickRight(String answer) {
-    return 'Giusto: $answer.';
+    return 'Giusta: $answer';
   }
 
   @override
   String dailyPickWrong(String answer) {
-    return 'Non proprio: è $answer.';
+    return 'Non proprio. Giusta: $answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return 'La tua: $answer';
   }
 
   @override
@@ -1985,7 +1985,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String dailyItemRight(int pct) {
-    return 'L\'ha azzeccata il $pct% dei giocatori di oggi';
+    return 'L’ha azzeccata il $pct% dei giocatori di oggi';
   }
 
   @override
@@ -2075,7 +2075,7 @@ class AppLocalizationsIt extends AppLocalizations {
       n,
       locale: localeName,
       other: 'e altre $n',
-      one: 'e un\'altra',
+      one: 'e un’altra',
     );
     return '$_temp0';
   }
@@ -2259,7 +2259,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get perMonthShort => '/mese';
 
   @override
-  String get perYear => 'all\'anno';
+  String get perYear => 'all’anno';
 
   @override
   String aMonth(String price) {
@@ -2287,7 +2287,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get restorePurchases => 'Ripristina acquisti';
 
   @override
-  String get termsOfUse => 'Termini d\'uso';
+  String get termsOfUse => 'Termini d’uso';
 
   @override
   String get privacyPolicy => 'Privacy';
@@ -2299,28 +2299,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get pickASideNoRightAnswer =>
-      'Scegli una parte. Non c\'è una risposta giusta.';
+      'Scegli una parte. Non c’è una risposta giusta.';
 
   @override
   String get estimateCloseEnough => 'Stima. Basta andarci vicino.';
 
   @override
   String get tapToReveal => 'Tocca per scoprire';
-
-  @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return 'Hai detto $given · è $answer, e $band conta';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return 'Hai detto $given · è $answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · hai detto $pct% sicuro';
-  }
 
   @override
   String get verdictRight => 'Giusto.';
@@ -2333,7 +2318,27 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String verdictSure(int pct) {
-    return 'Avevi detto $pct% sicuro.';
+    return 'Eri sicuro al $pct%.';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return 'Hai detto $given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return 'Hai detto $given, sicuro al $pct%';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return 'Giusta: $answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return 'Giusta: $answer (andava bene da $low a $high)';
   }
 
   @override
@@ -2341,7 +2346,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get beingRightMattersLess =>
-      'Avere ragione conta meno che sapere quanto spesso ce l\'hai.';
+      'Avere ragione conta meno che sapere quanto spesso ce l’hai.';
 
   @override
   String get writeItBeforeTheirs => 'Scrivilo prima di leggere la loro.';
@@ -2386,7 +2391,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get because => 'Perché…';
 
   @override
-  String get nowShowMeTheOtherSide => 'Ora mostrami l\'altra parte';
+  String get nowShowMeTheOtherSide => 'Ora mostrami l’altra parte';
 
   @override
   String get skipShowMeAnyway => 'Salta — mostramela comunque';
@@ -2401,10 +2406,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get explainLikeImThree => 'Spiegamelo come a un bambino';
 
   @override
-  String get whatTheOtherSideSaysCaps => 'COSA DICE L\'ALTRA PARTE';
+  String get whatTheOtherSideSaysCaps => 'COSA DICE L’ALTRA PARTE';
 
   @override
-  String get whatTheOtherSideSays => 'Cosa dice l\'altra parte';
+  String get whatTheOtherSideSays => 'Cosa dice l’altra parte';
 
   @override
   String theTrap(String trap) {
@@ -2423,7 +2428,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String youGotThisOne(String sure) {
-    return 'Questa l\'hai indovinata$sure';
+    return 'Questa l’hai indovinata$sure';
   }
 
   @override
@@ -2444,10 +2449,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get musicSoundTurnOn => 'Accendi';
 
   @override
-  String get thatWasTheOnlyOne => 'Era l\'unica';
+  String get thatWasTheOnlyOne => 'Era l’unica';
 
   @override
-  String get lastOne => 'L\'ultima';
+  String get lastOne => 'L’ultima';
 
   @override
   String deckEndTitle(String word) {
@@ -2552,7 +2557,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get holdToLikeLandsHere =>
-      'Tieni premuta una carta che ti piace e finisce qui — e l\'app te ne dà altre così.';
+      'Tieni premuta una carta che ti piace e finisce qui — e l’app te ne dà altre così.';
 
   @override
   String get tapTheBookmarkLandsHere =>
@@ -2840,7 +2845,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get exploreOffline =>
-      'Sei offline. Questa è Esplora come l\'hai letta l\'ultima volta.';
+      'Sei offline. Questa è Esplora come l’hai letta l’ultima volta.';
 
   @override
   String get askYourselfCaps => 'CHIEDITI';
@@ -2938,13 +2943,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get themePast0 => 'Il mondo antico';
 
   @override
-  String get themePast1 => 'Dal Seicento all\'Ottocento';
+  String get themePast1 => 'Dal Seicento all’Ottocento';
 
   @override
   String get themePast2 => 'Il secolo scorso';
 
   @override
-  String get themePastLine => 'Un\'epoca diversa ogni volta che torna';
+  String get themePastLine => 'Un’epoca diversa ogni volta che torna';
 
   @override
   String get themePlace0 => 'Asia e Medio Oriente';
@@ -2977,7 +2982,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get themeIdeas => 'Grandi idee';
 
   @override
-  String get themeIdeasLine => 'La teoria dietro le cose, un\'idea alla volta';
+  String get themeIdeasLine => 'La teoria dietro le cose, un’idea alla volta';
 
   @override
   String get themeCurious => 'Solo curiosità';
@@ -3019,7 +3024,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get plusInTheApp =>
-      'Astute+ è nell\'app: scarica Astute su iPhone o Android per iniziare la prova gratuita.';
+      'Astute+ è nell’app: scarica Astute su iPhone o Android per iniziare la prova gratuita.';
 
   @override
   String get purchaseComplete => 'Acquisto completato.';
@@ -3112,7 +3117,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get revealShowWorking => 'Mostra il ragionamento';
 
   @override
-  String get sceneLockIn => 'CONFERMA';
+  String get sceneLockIn => 'Conferma';
+
+  @override
+  String get placeItDrag => 'Trascina lungo il righello.';
+
+  @override
+  String get placeItHappy => 'Va bene così?';
+
+  @override
+  String get placeItEstimate => 'La tua stima';
+
+  @override
+  String get placeItNotSet => 'non ancora data';
+
+  @override
+  String get placeItLock => 'Conferma la mia stima';
 
   @override
   String get sceneYou => 'TU';
@@ -3414,7 +3434,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String journeyMinAWeek(int now, int was) {
-    return '$now min a settimana, prima $was';
+    return '$now min a settimana, all’inizio $was min';
   }
 
   @override
@@ -3631,7 +3651,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get anotherOne => 'Un\'altra';
+  String get anotherOne => 'Un’altra';
 
   @override
   String answerIs(String said) {
@@ -3826,7 +3846,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get modeBigger => 'Quale è più grande?';
+  String get modeBigger => 'Qual è più grande?';
 
   @override
   String get modeCloser => 'Più vicino';
@@ -3932,7 +3952,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get rightLastTime => 'Giusta l\'ultima volta';
+  String get rightLastTime => 'Giusta l’ultima volta';
 
   @override
   String get sayFalse => 'Falso';
@@ -3982,7 +4002,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get sixtyLine => 'Otto vero o falso. Segui l\'istinto';
+  String get sixtyLine => 'Otto vero o falso. Segui l’istinto';
 
   @override
   String get sixtyPerfect => 'Tutte e otto giuste.';
@@ -4086,7 +4106,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String leanVerdict(String says) {
-    return '$says. Aprila per sentire l\'altra campana.';
+    return '$says. Aprila per sentire l’altra campana.';
   }
 
   @override
@@ -4129,13 +4149,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get toneTough => 'Tosto';
 
   @override
-  String get unmaskBack => 'Mostralo com\'era';
+  String get unmaskBack => 'Mostralo com’era';
 
   @override
   String get unmaskFlipped => 'Rimettilo dritto';
 
   @override
-  String get unmaskLine => 'Stessi numeri, un\'altra immagine';
+  String get unmaskLine => 'Stessi numeri, un’altra immagine';
 
   @override
   String get unmaskStretched => 'Usa una scala onesta';
@@ -4147,7 +4167,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get unmaskTotals => 'Rendi il confronto equo';
 
   @override
-  String get unmaskTruncated => 'Fai partire l\'asse da zero';
+  String get unmaskTruncated => 'Fai partire l’asse da zero';
 
   @override
   String get unmaskWindow => 'Mostra tutta la serie';
@@ -4176,17 +4196,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String unmaskTrickTruncated(String from) {
-    return 'L\'asse parte da $from, non da zero.';
+    return 'L’asse parte da $from, non da zero.';
   }
 
   @override
   String unmaskTrickZoomed(String low, String high) {
-    return 'L\'asse va solo da $low a $high: un piccolo cambiamento sembra enorme.';
+    return 'L’asse va solo da $low a $high: un piccolo cambiamento sembra enorme.';
   }
 
   @override
   String unmaskTrickWide(String low, String high) {
-    return 'L\'asse va da $low a $high: un cambiamento vero sembra piatto.';
+    return 'L’asse va da $low a $high: un cambiamento vero sembra piatto.';
   }
 
   @override
@@ -4200,11 +4220,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get unmaskTrickFlippedRise =>
-      'L\'asse è capovolto: una salita sembra una discesa.';
+      'L’asse è capovolto: una salita sembra una discesa.';
 
   @override
   String get unmaskTrickFlippedFall =>
-      'L\'asse è capovolto: una discesa sembra una salita.';
+      'L’asse è capovolto: una discesa sembra una salita.';
 
   @override
   String get whatIfTrue => 'E se fosse vero?';
@@ -4217,7 +4237,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get whatYouBelieve => 'Ciò in cui credi';
 
   @override
-  String get wrongLastTime => 'Sbagliata l\'ultima volta';
+  String get wrongLastTime => 'Sbagliata l’ultima volta';
 
   @override
   String youLose(int n) {
@@ -4366,7 +4386,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purposeCommitTitle => 'Prima rispondi';
 
   @override
-  String get purposeCommitLine => 'Di\' cosa ne pensi, poi apri la carta';
+  String get purposeCommitLine => 'Di’ cosa ne pensi, poi apri la carta';
 
   @override
   String get purposeInYourHeadLine => 'Un numero da trovare a mente';
@@ -4419,7 +4439,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'confirmation': 'Cercare un sì non è una prova',
       'anchoring': 'Il primo numero detto sposta tutti quelli dopo',
       'sampling': 'Chi finisce nel campione decide cosa può dire',
-      'confounding': 'Forse qualcos\'altro causa entrambe le cose',
+      'confounding': 'Forse qualcos’altro causa entrambe le cose',
       'counterfactual':
           'Un cambiamento non vuol dire nulla senza un gruppo di controllo',
       'multipleComparisons': 'Prova abbastanza cose e una passerà',
@@ -4430,10 +4450,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'conditional': 'Quello che ti hanno detto cambia le probabilità',
       'independence': 'Il caso non ha memoria',
       'coincidence': 'Le cose rare sono comuni quando i tentativi sono tanti',
-      'exponential': 'Nessuno ha l\'intuito per i raddoppi',
+      'exponential': 'Nessuno ha l’intuito per i raddoppi',
       'reflection': 'La risposta che arriva per prima è quella da controllare',
       'simpson': 'Il totale può pendere dove nessuna parte pende',
-      'estimation': 'Spezza l\'impossibile in cose che puoi stimare',
+      'estimation': 'Spezza l’impossibile in cose che puoi stimare',
       'computation': 'Un problema che puoi davvero finire',
       'other': '$move',
     });
@@ -4449,15 +4469,15 @@ class AppLocalizationsIt extends AppLocalizations {
       'confirmation': 'Cosa mi darebbe torto?',
       'anchoring': 'Quale numero è arrivato per primo?',
       'sampling': 'Chi è stato contato?',
-      'confounding': 'Cos\'altro potrebbe causare entrambe le cose?',
+      'confounding': 'Cos’altro potrebbe causare entrambe le cose?',
       'counterfactual': 'Rispetto a cosa?',
       'multipleComparisons': 'Quante cose sono state provate?',
       'availability': 'È comune o solo facile da immaginare?',
       'sunkCost': 'Cosa resta da decidere da qui in poi?',
       'conjunction': 'Ogni dettaglio lo rende meno probabile?',
       'conditional': 'Cosa cambia saperlo?',
-      'independence': 'L\'ultimo risultato cambia il prossimo?',
-      'coincidence': 'Quante occasioni c\'erano?',
+      'independence': 'L’ultimo risultato cambia il prossimo?',
+      'coincidence': 'Quante occasioni c’erano?',
       'exponential': 'Cosa succede quando raddoppia ancora?',
       'reflection': 'La prima risposta è quella giusta?',
       'simpson': 'Ogni parte pende dalla stessa parte?',
@@ -4486,7 +4506,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get purposeOtherSide => 'L\'altra parte';
+  String get purposeOtherSide => 'L’altra parte';
 
   @override
   String get purposeOtherSideLine =>
@@ -4514,7 +4534,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purposeMovingYears => 'Può cambiare tra qualche anno';
 
   @override
-  String get purposeMovingMonths => 'Può cambiare entro l\'anno';
+  String get purposeMovingMonths => 'Può cambiare entro l’anno';
 
   @override
   String get purposeWhy => 'Ah, ecco perché';
@@ -4562,7 +4582,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Studi e affermazioni che suonano meglio di quel che sono';
 
   @override
-  String get purposeTheClaim => 'L\'affermazione';
+  String get purposeTheClaim => 'L’affermazione';
 
   @override
   String get purposeNumber => 'In un numero';
@@ -4575,7 +4595,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purposeOutOfWhat => 'Su quanti?';
 
   @override
-  String get purposeOffer => 'In un\'offerta';
+  String get purposeOffer => 'In un’offerta';
 
   @override
   String get purposeOfferLine => 'Prezzi, affari e chi paga davvero';
@@ -4893,7 +4913,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impostalo, bloccalo, guarda di quanto hai sbagliato';
 
   @override
-  String get betsLock => 'Blocca';
+  String get betsLock => 'Conferma';
 
   @override
   String get betsSpotOn => 'Centrato.';
@@ -4915,7 +4935,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get betsAnswer => 'risposta';
 
   @override
-  String get betsBiggerTitle => 'Quale è più grande?';
+  String get betsBiggerTitle => 'Qual è più grande?';
 
   @override
   String get betsBiggerLine =>
@@ -5044,7 +5064,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get betsDayLine =>
-      'Blocca la tua stima, poi guarda di quanto hai sbagliato';
+      'Conferma la tua stima, poi guarda di quanto hai sbagliato';
 
   @override
   String get betsDayTag => 'Puntata del giorno';
@@ -5053,7 +5073,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get betsDayTagSame => 'Puntata del giorno · uguale per tutti';
 
   @override
-  String get betsLockIn => 'Blocca';
+  String get betsLockIn => 'Conferma';
 
   @override
   String betsItIs(String said) {
@@ -5109,7 +5129,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get screensExpertHistorianAs => 'Pensa come uno storico';
 
   @override
-  String get screensExpertHistorianAsks => 'Cosa si sapeva all\'epoca?';
+  String get screensExpertHistorianAsks => 'Cosa si sapeva all’epoca?';
 
   @override
   String get screensExpertDoctor => 'Medico';
@@ -5119,7 +5139,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get screensExpertDoctorAsks =>
-      'Quanto è comune, e cos\'altro potrebbe essere?';
+      'Quanto è comune, e cos’altro potrebbe essere?';
 
   @override
   String get screensExpertScientist => 'Scienziato';
@@ -5279,7 +5299,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get screensTimeLine =>
-      'Un\'epoca alla volta, fino a quest\'anno. Trascina per viaggiare';
+      'Un’epoca alla volta, fino a quest’anno. Trascina per viaggiare';
 
   @override
   String get screensTimeCaption =>
@@ -5313,7 +5333,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get screensEraEarlyModernWhen => 'Dal 1500 al 1800';
 
   @override
-  String get screensEraNineteenth => 'L\'Ottocento';
+  String get screensEraNineteenth => 'L’Ottocento';
 
   @override
   String get screensEraNineteenthWhen => 'Dal 1800 al 1900';
@@ -5335,7 +5355,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get screensMindLine =>
-      'Di\' come la pensi prima di leggere, e poi di nuovo dopo';
+      'Di’ come la pensi prima di leggere, e poi di nuovo dopo';
 
   @override
   String get screensMindClaim => 'Affermazione';
@@ -5358,11 +5378,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String screensMindLevel(String level) {
     String _temp0 = intl.Intl.selectLogic(level, {
-      '0': 'Per nulla d\'accordo',
+      '0': 'Per nulla d’accordo',
       '1': 'In disaccordo',
       '2': 'Non so',
-      '3': 'D\'accordo',
-      'other': 'Del tutto d\'accordo',
+      '3': 'D’accordo',
+      'other': 'Del tutto d’accordo',
     });
     return '$_temp0';
   }
@@ -5391,7 +5411,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get screensMindFirst =>
-      'Prima di\' come la pensi. Un tocco, prima di leggere.';
+      'Prima di’ come la pensi. Un tocco, prima di leggere.';
 
   @override
   String screensMindChanged(int changed, int total) {
@@ -5407,13 +5427,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get screensSayLine =>
-      'Una frase da portare a cena. Tocca quando l\'hai detta';
+      'Una frase da portare a cena. Tocca quando l’hai detta';
 
   @override
   String get screensSayTonight => 'La frase di stasera';
 
   @override
-  String get screensSaySaid => 'L\'ho detta';
+  String get screensSaySaid => 'L’ho detta';
 
   @override
   String get screensSayDone => 'Detta';
@@ -5456,7 +5476,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get screensFrontPuzzle => 'Il rompicapo del giorno';
 
   @override
-  String get screensFrontEnd => 'Questa è l\'edizione di oggi';
+  String get screensFrontEnd => 'Questa è l’edizione di oggi';
 
   @override
   String get screensFrontTomorrow => 'Quella di domani esce al mattino';
@@ -5485,7 +5505,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get exploreGameNone =>
-      'Per ora qui non c\'è niente da giocare. Torna domani.';
+      'Per ora qui non c’è niente da giocare. Torna domani.';
 
   @override
   String get challengesTitle => 'Sfide';
@@ -5587,7 +5607,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get gameSeeResult => 'Guarda com\'è andata';
+  String get gameSeeResult => 'Guarda com’è andata';
 
   @override
   String get gameNextCard => 'Avanti';
@@ -5603,14 +5623,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tfRules =>
-      'Affermazioni su cui quasi tutti sbagliano. Di\' vero o falso, poi leggi perché. Misura il giudizio: distinguere ciò che è vero da ciò che sembra soltanto ovvio.';
+      'Affermazioni su cui quasi tutti sbagliano. Di’ vero o falso, poi leggi perché. Misura il giudizio: distinguere ciò che è vero da ciò che sembra soltanto ovvio.';
 
   @override
   String get inOrderTitle => 'In ordine';
 
   @override
   String get inOrderRules =>
-      'Quattro momenti dalle carte, senza il loro anno, da mettere nell\'ordine in cui sono accaduti. Misura il senso della cronologia, la prima prova di ogni spiegazione: una causa viene prima del suo effetto.';
+      'Quattro momenti dalle carte, senza il loro anno, da mettere nell’ordine in cui sono accaduti. Misura il senso della cronologia, la prima prova di ogni spiegazione: una causa viene prima del suo effetto.';
 
   @override
   String get inOrderFirst => 'Tocca il momento venuto per primo.';
@@ -5622,7 +5642,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get inOrderReady => 'Tutti al loro posto.';
 
   @override
-  String get inOrderCheck => 'Controlla l\'ordine';
+  String get inOrderCheck => 'Controlla l’ordine';
 
   @override
   String inOrderPlaced(int n) {
@@ -5645,7 +5665,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get whatYearRules =>
-      'Tre momenti, senza il loro anno. Trova l\'anno di ciascuno sulla rotella: più ti avvicini, più punti fai, fino a dieci. Misura il senso di quando le cose sono accadute.';
+      'Tre momenti, senza il loro anno. Trova l’anno di ciascuno sulla rotella: più ti avvicini, più punti fai, fino a dieci. Misura il senso di quando le cose sono accadute.';
 
   @override
   String whatYearPoints(int n, int of) {
@@ -5718,7 +5738,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get beforeAfterRules =>
-      'Sei momenti, uno dopo l\'altro. Di\' se ciascuno è accaduto prima o dopo quello sopra. Misura il senso della sequenza.';
+      'Sei momenti, uno dopo l’altro. Di’ se ciascuno è accaduto prima o dopo quello sopra. Misura il senso della sequenza.';
 
   @override
   String get beforeAfterBefore => 'Prima';
@@ -5871,20 +5891,20 @@ class AppLocalizationsIt extends AppLocalizations {
       n,
       locale: localeName,
       other: 'Il tempo è finito con $n affermazioni senza risposta.',
-      one: 'Il tempo è finito con un\'affermazione senza risposta.',
+      one: 'Il tempo è finito con un’affermazione senza risposta.',
     );
     return '$_temp0';
   }
 
   @override
-  String get challengeAgain => 'Un\'altra prova';
+  String get challengeAgain => 'Un’altra prova';
 
   @override
   String get spotRules =>
-      'Quattro affermazioni: tre sono vere e una è falsa. Trova quella falsa. Misura quanto sai distinguere un\'affermazione fondata da una che sembra soltanto vera.';
+      'Quattro affermazioni: tre sono vere e una è falsa. Trova quella falsa. Misura quanto sai distinguere un’affermazione fondata da una che sembra soltanto vera.';
 
   @override
-  String get spotAsk => 'Tocca l\'affermazione che secondo te è falsa.';
+  String get spotAsk => 'Tocca l’affermazione che secondo te è falsa.';
 
   @override
   String get biggerRules =>
@@ -5905,7 +5925,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get closerRules =>
-      'Avvicinati a una percentuale passo dopo passo: ogni volta di\' se è più o meno del valore a metà dell\'intervallo rimasto. Misura la capacità di stima.';
+      'Avvicinati a una percentuale passo dopo passo: ogni volta di’ se è più o meno del valore a metà dell’intervallo rimasto. Misura la capacità di stima.';
 
   @override
   String closerDoneSteps(String said, int right, int steps) {
@@ -6009,7 +6029,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get whatYearYours => 'Il tuo anno';
 
   @override
-  String get whatYearExactly => 'L\'anno esatto';
+  String get whatYearExactly => 'L’anno esatto';
 
   @override
   String beforeAfterRight(String side, String year, String above) {
@@ -6119,12 +6139,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String crowdGotRight(int n) {
-    return 'L\'ha azzeccata il $n% dei lettori';
+    return 'L’ha azzeccata il $n% dei lettori';
   }
 
   @override
   String crowdGotWrong(int n) {
-    return 'Anche il $n% dei lettori l\'ha sbagliata';
+    return 'Anche il $n% dei lettori l’ha sbagliata';
   }
 
   @override
@@ -6166,7 +6186,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get widgetAskLine =>
-      'Una carta nuova ogni mattina senza aprire l\'app, e accanto la tua serie.';
+      'Una carta nuova ogni mattina senza aprire l’app, e accanto la tua serie.';
 
   @override
   String get widgetAskStepHold =>
@@ -6224,10 +6244,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get shareWhichSide => 'Tu da che parte stai?';
 
   @override
-  String get rereadRight => 'La prima volta l\'hai indovinata.';
+  String get rereadRight => 'La prima volta l’hai indovinata.';
 
   @override
-  String get rereadWrong => 'La prima volta l\'hai sbagliata.';
+  String get rereadWrong => 'La prima volta l’hai sbagliata.';
 
   @override
   String betsDayShareLine(int off) {
@@ -6349,7 +6369,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get storyBetter => 'Meglio della settimana scorsa.';
 
   @override
-  String get storyWorse => 'Un po\' meno della settimana scorsa.';
+  String get storyWorse => 'Un po’ meno della settimana scorsa.';
 
   @override
   String storyHeadlineStreak(int n) {
@@ -6595,10 +6615,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deeperSource => 'Fonte';
 
   @override
-  String get deeperOpenSource => 'Apri l\'originale';
+  String get deeperOpenSource => 'Apri l’originale';
 
   @override
-  String get deeperAiNote => 'Risponde un\'AI: può sbagliare.';
+  String get deeperAiNote => 'Risponde un’AI: può sbagliare.';
 
   @override
   String get deeperBusy => 'Ci penso…';
@@ -6656,6 +6676,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get newsBehind => 'Dietro la notizia';
 
   @override
+  String get newsMeansForYou => 'Cosa significa per te';
+
+  @override
+  String get newsMeans => 'Cosa significa';
+
+  @override
+  String get newsHappenedBefore => 'È già successo';
+
+  @override
   String get newsSources => 'Fonti';
 
   @override
@@ -6670,7 +6699,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get deeperSimpleLead =>
-      'L\'idea della carta, come la racconteresti a un bambino curioso di dieci anni.';
+      'L’idea della carta, come la racconteresti a un bambino curioso di dieci anni.';
 
   @override
   String get deeperSidesLead =>
@@ -6695,7 +6724,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deeperSideA => 'Una parte';
 
   @override
-  String get deeperSideB => 'L\'altra parte';
+  String get deeperSideB => 'L’altra parte';
 
   @override
   String get deeperVersus => 'VS';
@@ -6735,7 +6764,7 @@ class AppLocalizationsIt extends AppLocalizations {
       n,
       locale: localeName,
       other: 'Altre $n idee da questo libro',
-      one: 'Ancora un\'idea da questo libro',
+      one: 'Ancora un’idea da questo libro',
     );
     return '$_temp0';
   }
@@ -6816,6 +6845,36 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get founderTheirBooks => 'I libri che ha consigliato';
+
+  @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': 'Cofondatore di Microsoft',
+      'warren_buffett': 'L’investitore che ha fatto grande Berkshire Hathaway',
+      'mark_zuckerberg': 'Fondatore di Facebook',
+      'charlie_munger': 'Socio di Warren Buffett in Berkshire Hathaway',
+      'marc_andreessen': 'Cofondatore di Netscape e di Andreessen Horowitz',
+      'tobi_lutke': 'Fondatore di Shopify',
+      'naval_ravikant': 'Cofondatore di AngelList',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes, i suoi libri per l’estate',
+      'berkshire_meeting': 'l’assemblea annuale di Berkshire Hathaway',
+      'berkshire_letter': 'la sua lettera agli azionisti di Berkshire Hathaway',
+      'year_of_books': 'A Year of Books, su Facebook',
+      'publisher_praise': 'il suo elogio del libro, sul sito dell’editore',
+      'ferriss_five':
+          'The Tim Ferriss Show, tra i cinque libri migliori che abbia letto',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
 
   @override
   String founderAbout(String name) {

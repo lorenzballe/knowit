@@ -141,7 +141,7 @@
  },
  "somewhereToStart": "Somewhere to start that is not today",
  "searchEveryCard": "Search every card",
- "nothingForYet": "Nothing for \"{query}\" yet.",
+ "nothingForYet": "Nothing for “{query}” yet.",
  "@nothingForYet": {
   "placeholders": {
    "query": {
@@ -195,7 +195,7 @@
  },
  "yesterday": "Yesterday",
  "noPillsMatchFilter": "No cards match that filter yet.",
- "nothingForTryTopic": "Nothing for \"{query}\". Try a topic instead.",
+ "nothingForTryTopic": "Nothing for “{query}”. Try a topic instead.",
  "@nothingForTryTopic": {
   "placeholders": {
    "query": {
@@ -219,7 +219,7 @@
   }
  },
  "keepTheOnesYoullUse": "Keep the ones you'll actually use",
- "backToTodaysFive": "BACK TO TODAY'S FIVE",
+ "backToTodaysFive": "Back to today's five",
  "archive": "Archive",
  "yourWeek": "Your week",
  "nothingThisWeekYet": "Nothing this week yet. Five cards start it.",
@@ -290,7 +290,7 @@
    }
   }
  },
- "youSaidPercentSure": "You said {n}% sure",
+ "youSaidPercentSure": "You said {n}% sure",
  "@youSaidPercentSure": {
   "placeholders": {
    "n": {
@@ -718,7 +718,7 @@
    }
   }
  },
- "shareMyRecord": "SHARE MY RECORD",
+ "shareMyRecord": "Share my record",
  "lastCallsAgainstFirst": "Your last {n} calls, against your first {n}",
  "@lastCallsAgainstFirst": {
   "placeholders": {
@@ -791,7 +791,7 @@
    }
   }
  },
- "seeThePlans": "SEE THE PLANS",
+ "seeThePlans": "See the plans",
  "recordStartsToday": "Your record starts today.",
  "dayWord": "{n, plural, =1{day} other{days}}",
  "@dayWord": {
@@ -1969,18 +1969,6 @@
    }
   }
  },
- "threeRowSaid": "You said {said}. It is {truth}.",
- "@threeRowSaid": {
-  "description": "On the result, under a question answered with a share: the guess and the answer.",
-  "placeholders": {
-   "said": {
-    "type": "String"
-   },
-   "truth": {
-    "type": "String"
-   }
-  }
- },
  "fiveTitle": "Today's five",
  "@fiveTitle": {
   "description": "Today's five: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short."
@@ -2002,18 +1990,27 @@
    }
   }
  },
- "dailyPickRight": "Right: {answer}.",
+ "dailyPickRight": "Right: {answer}",
  "@dailyPickRight": {
-  "description": "After a pick is locked in, when it is right: the right answer.",
+  "description": "The right answer, quoted or as a number: after a pick is locked in, when it is right, and on the result under each card.",
   "placeholders": {
    "answer": {
     "type": "String"
    }
   }
  },
- "dailyPickWrong": "Not quite: it is {answer}.",
+ "dailyPickWrong": "Not quite. Right: {answer}",
  "@dailyPickWrong": {
-  "description": "After a pick is locked in, when it is wrong: the right answer.",
+  "description": "After a pick is locked in, when it is wrong: the right answer, quoted.",
+  "placeholders": {
+   "answer": {
+    "type": "String"
+   }
+  }
+ },
+ "dailyYourPick": "Yours: {answer}",
+ "@dailyYourPick": {
+  "description": "A card on the result of the day's game, answered wrong: the reader's answer, on a line of its own above the right one. The answer comes quoted, or as a number.",
   "placeholders": {
    "answer": {
     "type": "String"
@@ -2474,42 +2471,6 @@
  "pickASideNoRightAnswer": "Pick a side. There is no right answer.",
  "estimateCloseEnough": "Estimate. Close enough counts.",
  "tapToReveal": "Tap to reveal",
- "youSaidItIsCounted": "You said {given} · it is {answer}, and {band} counted",
- "@youSaidItIsCounted": {
-  "placeholders": {
-   "given": {
-    "type": "String"
-   },
-   "answer": {
-    "type": "String"
-   },
-   "band": {
-    "type": "String"
-   }
-  }
- },
- "youSaidItIs": "You said {given} · it is {answer}",
- "@youSaidItIs": {
-  "placeholders": {
-   "given": {
-    "type": "String"
-   },
-   "answer": {
-    "type": "String"
-   }
-  }
- },
- "lineYouSaidSure": "{line} · you said {pct}% sure",
- "@lineYouSaidSure": {
-  "placeholders": {
-   "line": {
-    "type": "String"
-   },
-   "pct": {
-    "type": "int"
-   }
-  }
- },
  "verdictRight": "Right.",
  "@verdictRight": {
   "description": "The verdict on the back of a card answered right, set large."
@@ -2522,12 +2483,57 @@
  "@verdictWrong": {
   "description": "The verdict on the back of a card answered wrong, set large: kind, not a scolding."
  },
- "verdictSure": "You were {pct}% sure.",
+ "verdictSure": "You were {pct}% sure.",
  "@verdictSure": {
   "description": "Under the verdict: how sure the reader said they were. {pct} is 50 to 90.",
   "placeholders": {
    "pct": {
     "type": "int"
+   }
+  }
+ },
+ "verdictYouSaid": "You said {given}",
+ "@verdictYouSaid": {
+  "description": "A card's back, after the verdict, when the answer was wrong: what the reader said, quoted, or as a number. The right answer follows after a dot.",
+  "placeholders": {
+   "given": {
+    "type": "String"
+   }
+  }
+ },
+ "verdictYouSaidSure": "You said {given}, {pct}% sure",
+ "@verdictYouSaidSure": {
+  "description": "A card's back, after the verdict, when the answer was wrong: what the reader said, quoted or as a number, and how sure they were. The number and its words never part across lines.",
+  "placeholders": {
+   "given": {
+    "type": "String"
+   },
+   "pct": {
+    "type": "int"
+   }
+  }
+ },
+ "verdictRightIs": "Right: {answer}",
+ "@verdictRightIs": {
+  "description": "A card's back, after what the reader said when it was wrong: the right answer, quoted, or as a number.",
+  "placeholders": {
+   "answer": {
+    "type": "String"
+   }
+  }
+ },
+ "verdictRightWithin": "Right: {answer} ({low} to {high} counted)",
+ "@verdictRightWithin": {
+  "description": "A card's back, after what the reader said when an estimate was wrong: the right answer, and what counted as close enough.",
+  "placeholders": {
+   "answer": {
+    "type": "String"
+   },
+   "low": {
+    "type": "String"
+   },
+   "high": {
+    "type": "String"
    }
   }
  },
@@ -3197,9 +3203,29 @@
  "@showAllSteps": {
   "description": "Button under a worked solution: show every step at once."
  },
- "sceneLockIn": "LOCK IT IN",
+ "sceneLockIn": "Lock it in",
  "@sceneLockIn": {
   "description": "Label inside an interactive card scene."
+ },
+ "placeItDrag": "Drag along the ruler.",
+ "@placeItDrag": {
+  "description": "An estimate card, under its ruler, before the mark is moved: how to put it."
+ },
+ "placeItHappy": "Happy with that?",
+ "@placeItHappy": {
+  "description": "An estimate card, under its ruler, once the mark is moved, beside the button that confirms it."
+ },
+ "placeItEstimate": "Your estimate",
+ "@placeItEstimate": {
+  "description": "Said by a screen reader: the ruler an estimate is put on."
+ },
+ "placeItNotSet": "not set",
+ "@placeItNotSet": {
+  "description": "Said by a screen reader: the ruler's value before the mark is moved."
+ },
+ "placeItLock": "Lock in my estimate",
+ "@placeItLock": {
+  "description": "Said by a screen reader: the button that confirms an estimate."
  },
  "sceneYou": "YOU",
  "@sceneYou": {
@@ -3577,7 +3603,7 @@
    }
   }
  },
- "journeyMinAWeek": "{now} min a week, from {was}",
+ "journeyMinAWeek": "{now} min a week, from {was} min",
  "@journeyMinAWeek": {
   "description": "Under the reading time: minutes a week lately, and at the start.",
   "placeholders": {
@@ -5435,7 +5461,7 @@
  },
  "screensQuoted": "“{text}”",
  "@screensQuoted": {
-  "description": "Words set in this language's own quotation marks: an expert's question on Explore's 'Think like an expert'.",
+  "description": "Words set in this language's own quotation marks: an expert's question on Explore's 'Think like an expert', and a card's words (an option, an answer) inside the app's own sentences.",
   "placeholders": {
    "text": {
     "type": "String"
@@ -7446,6 +7472,18 @@
  "@newsBehind": {
   "description": "A story of Explore's latest news, on its page: the heading over the question the story raises and its answer, the reasoning behind the news (set in small capitals)."
  },
+ "newsMeansForYou": "What it means for you",
+ "@newsMeansForYou": {
+  "description": "A news story's page, in small capitals: what the story means for the reader's own life (money, health, work, the everyday)."
+ },
+ "newsMeans": "What it means",
+ "@newsMeans": {
+  "description": "A news story's page, in small capitals: what the story means."
+ },
+ "newsHappenedBefore": "It happened before",
+ "@newsHappenedBefore": {
+  "description": "A news story's page, in small capitals: a past case with the same mechanism, with its year."
+ },
  "newsSources": "Sources",
  "@newsSources": {
   "description": "A story of Explore's latest news, on its page: the heading over the list of reports it was made from, each opened in the browser (set in small capitals)."
@@ -7634,6 +7672,30 @@
  "founderTheirBooks": "The books they recommended",
  "@founderTheirBooks": {
   "description": "What founders read, a person's own page: the label over the books they recommended in public. Without a pronoun where the language allows it."
+ },
+ "founderRole": "{id, select, bill_gates{Co-founder of Microsoft} warren_buffett{The investor who built Berkshire Hathaway} mark_zuckerberg{Founder of Facebook} charlie_munger{Warren Buffett’s partner at Berkshire Hathaway} marc_andreessen{Co-founder of Netscape and Andreessen Horowitz} tobi_lutke{Founder of Shopify} naval_ravikant{Co-founder of AngelList} other{{role}}}",
+ "@founderRole": {
+  "description": "What a founder built, in a few words, under their name on Explore, their page and a book's page. One case per person, by their id (lib/data/founders.dart); any other is their role in English.",
+  "placeholders": {
+   "id": {
+    "type": "String"
+   },
+   "role": {
+    "type": "String"
+   }
+  }
+ },
+ "founderWhere": "{id, select, gates_summer{GatesNotes, his books for the summer} berkshire_meeting{Berkshire Hathaway’s annual meeting} berkshire_letter{his letter to Berkshire Hathaway’s shareholders} year_of_books{A Year of Books, on Facebook} publisher_praise{his praise for the book, at its publisher} ferriss_five{The Tim Ferriss Show, among the five best books he has read} other{{where}}}",
+ "@founderWhere": {
+  "description": "Where a founder recommended a book, as its source line says it, before the year (\"…, 2017\"); the first letter is set up in capitals when it starts the line. One case per place said as a phrase (lib/data/founders.dart); any other is a name kept as it is (\"GatesNotes\", \"Twitter\").",
+  "placeholders": {
+   "id": {
+    "type": "String"
+   },
+   "where": {
+    "type": "String"
+   }
+  }
  },
  "founderAbout": "These are books {name} recommended in public, in the words quoted, each with where it was said. {name} has no connection with Astute.",
  "@founderAbout": {

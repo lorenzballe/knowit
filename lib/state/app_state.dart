@@ -2960,11 +2960,13 @@ class AppState extends ChangeNotifier {
       id: kTrialWarningId,
       when: when,
       title: l.trialWarningTitle(_daysBetween(when, ends)),
-      body: l.trialWarningBody(
-        _longDate(l.localeName, ends),
-        price,
-        // The way out, named exactly as the tab and the row are named.
-        '${l.tabProfile} → ${l.manageSubscription}',
+      body: l.elided(
+        l.trialWarningBody(
+          _longDate(l.localeName, ends),
+          price,
+          // The way out, named exactly as the tab and the row are named.
+          '${l.tabProfile} → ${l.manageSubscription}',
+        ),
       ),
     );
   }

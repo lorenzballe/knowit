@@ -327,7 +327,7 @@ abstract class AppLocalizations {
   /// No description provided for @nothingForYet.
   ///
   /// In en, this message translates to:
-  /// **'Nothing for \"{query}\" yet.'**
+  /// **'Nothing for “{query}” yet.'**
   String nothingForYet(String query);
 
   /// No description provided for @matching.
@@ -399,7 +399,7 @@ abstract class AppLocalizations {
   /// No description provided for @nothingForTryTopic.
   ///
   /// In en, this message translates to:
-  /// **'Nothing for \"{query}\". Try a topic instead.'**
+  /// **'Nothing for “{query}”. Try a topic instead.'**
   String nothingForTryTopic(String query);
 
   /// No description provided for @saved.
@@ -441,7 +441,7 @@ abstract class AppLocalizations {
   /// No description provided for @backToTodaysFive.
   ///
   /// In en, this message translates to:
-  /// **'BACK TO TODAY\'S FIVE'**
+  /// **'Back to today\'s five'**
   String get backToTodaysFive;
 
   /// No description provided for @archive.
@@ -537,7 +537,7 @@ abstract class AppLocalizations {
   /// No description provided for @youSaidPercentSure.
   ///
   /// In en, this message translates to:
-  /// **'You said {n}% sure'**
+  /// **'You said {n}% sure'**
   String youSaidPercentSure(int n);
 
   /// No description provided for @rungName.
@@ -1125,7 +1125,7 @@ abstract class AppLocalizations {
   /// No description provided for @shareMyRecord.
   ///
   /// In en, this message translates to:
-  /// **'SHARE MY RECORD'**
+  /// **'Share my record'**
   String get shareMyRecord;
 
   /// No description provided for @lastCallsAgainstFirst.
@@ -1227,7 +1227,7 @@ abstract class AppLocalizations {
   /// No description provided for @seeThePlans.
   ///
   /// In en, this message translates to:
-  /// **'SEE THE PLANS'**
+  /// **'See the plans'**
   String get seeThePlans;
 
   /// No description provided for @recordStartsToday.
@@ -2616,12 +2616,6 @@ abstract class AppLocalizations {
   /// **'Yesterday\'s three: {score} of 300.'**
   String threeYesterday(int score);
 
-  /// On the result, under a question answered with a share: the guess and the answer.
-  ///
-  /// In en, this message translates to:
-  /// **'You said {said}. It is {truth}.'**
-  String threeRowSaid(String said, String truth);
-
   /// Today's five: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short.
   ///
   /// In en, this message translates to:
@@ -2646,17 +2640,23 @@ abstract class AppLocalizations {
   /// **'of {max}'**
   String dailyOf(int max);
 
-  /// After a pick is locked in, when it is right: the right answer.
+  /// The right answer, quoted or as a number: after a pick is locked in, when it is right, and on the result under each card.
   ///
   /// In en, this message translates to:
-  /// **'Right: {answer}.'**
+  /// **'Right: {answer}'**
   String dailyPickRight(String answer);
 
-  /// After a pick is locked in, when it is wrong: the right answer.
+  /// After a pick is locked in, when it is wrong: the right answer, quoted.
   ///
   /// In en, this message translates to:
-  /// **'Not quite: it is {answer}.'**
+  /// **'Not quite. Right: {answer}'**
   String dailyPickWrong(String answer);
+
+  /// A card on the result of the day's game, answered wrong: the reader's answer, on a line of its own above the right one. The answer comes quoted, or as a number.
+  ///
+  /// In en, this message translates to:
+  /// **'Yours: {answer}'**
+  String dailyYourPick(String answer);
 
   /// On the result of today's five or three: where the score stands among today's players, when it is in the upper half. Always five players or more.
   ///
@@ -3162,24 +3162,6 @@ abstract class AppLocalizations {
   /// **'Tap to reveal'**
   String get tapToReveal;
 
-  /// No description provided for @youSaidItIsCounted.
-  ///
-  /// In en, this message translates to:
-  /// **'You said {given} · it is {answer}, and {band} counted'**
-  String youSaidItIsCounted(String given, String answer, String band);
-
-  /// No description provided for @youSaidItIs.
-  ///
-  /// In en, this message translates to:
-  /// **'You said {given} · it is {answer}'**
-  String youSaidItIs(String given, String answer);
-
-  /// No description provided for @lineYouSaidSure.
-  ///
-  /// In en, this message translates to:
-  /// **'{line} · you said {pct}% sure'**
-  String lineYouSaidSure(String line, int pct);
-
   /// The verdict on the back of a card answered right, set large.
   ///
   /// In en, this message translates to:
@@ -3201,8 +3183,32 @@ abstract class AppLocalizations {
   /// Under the verdict: how sure the reader said they were. {pct} is 50 to 90.
   ///
   /// In en, this message translates to:
-  /// **'You were {pct}% sure.'**
+  /// **'You were {pct}% sure.'**
   String verdictSure(int pct);
+
+  /// A card's back, after the verdict, when the answer was wrong: what the reader said, quoted, or as a number. The right answer follows after a dot.
+  ///
+  /// In en, this message translates to:
+  /// **'You said {given}'**
+  String verdictYouSaid(String given);
+
+  /// A card's back, after the verdict, when the answer was wrong: what the reader said, quoted or as a number, and how sure they were. The number and its words never part across lines.
+  ///
+  /// In en, this message translates to:
+  /// **'You said {given}, {pct}% sure'**
+  String verdictYouSaidSure(String given, int pct);
+
+  /// A card's back, after what the reader said when it was wrong: the right answer, quoted, or as a number.
+  ///
+  /// In en, this message translates to:
+  /// **'Right: {answer}'**
+  String verdictRightIs(String answer);
+
+  /// A card's back, after what the reader said when an estimate was wrong: the right answer, and what counted as close enough.
+  ///
+  /// In en, this message translates to:
+  /// **'Right: {answer} ({low} to {high} counted)'**
+  String verdictRightWithin(String answer, String low, String high);
 
   /// No description provided for @giveMeANudge.
   ///
@@ -4443,8 +4449,38 @@ abstract class AppLocalizations {
   /// Label inside an interactive card scene.
   ///
   /// In en, this message translates to:
-  /// **'LOCK IT IN'**
+  /// **'Lock it in'**
   String get sceneLockIn;
+
+  /// An estimate card, under its ruler, before the mark is moved: how to put it.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag along the ruler.'**
+  String get placeItDrag;
+
+  /// An estimate card, under its ruler, once the mark is moved, beside the button that confirms it.
+  ///
+  /// In en, this message translates to:
+  /// **'Happy with that?'**
+  String get placeItHappy;
+
+  /// Said by a screen reader: the ruler an estimate is put on.
+  ///
+  /// In en, this message translates to:
+  /// **'Your estimate'**
+  String get placeItEstimate;
+
+  /// Said by a screen reader: the ruler's value before the mark is moved.
+  ///
+  /// In en, this message translates to:
+  /// **'not set'**
+  String get placeItNotSet;
+
+  /// Said by a screen reader: the button that confirms an estimate.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock in my estimate'**
+  String get placeItLock;
 
   /// Label inside an interactive card scene.
   ///
@@ -4785,7 +4821,7 @@ abstract class AppLocalizations {
   /// Under the reading time: minutes a week lately, and at the start.
   ///
   /// In en, this message translates to:
-  /// **'{now} min a week, from {was}'**
+  /// **'{now} min a week, from {was} min'**
   String journeyMinAWeek(int now, int was);
 
   /// Under the reading time, before there is a start to compare with.
@@ -6990,7 +7026,7 @@ abstract class AppLocalizations {
   /// **'{n, plural, =0{Spot on.} =1{You were 1 percentage point off.} other{You were {n} percentage points off.}}'**
   String betsPointsOff(int n);
 
-  /// Words set in this language's own quotation marks: an expert's question on Explore's 'Think like an expert'.
+  /// Words set in this language's own quotation marks: an expert's question on Explore's 'Think like an expert', and a card's words (an option, an answer) inside the app's own sentences.
   ///
   /// In en, this message translates to:
   /// **'“{text}”'**
@@ -9222,6 +9258,24 @@ abstract class AppLocalizations {
   /// **'Behind the news'**
   String get newsBehind;
 
+  /// A news story's page, in small capitals: what the story means for the reader's own life (money, health, work, the everyday).
+  ///
+  /// In en, this message translates to:
+  /// **'What it means for you'**
+  String get newsMeansForYou;
+
+  /// A news story's page, in small capitals: what the story means.
+  ///
+  /// In en, this message translates to:
+  /// **'What it means'**
+  String get newsMeans;
+
+  /// A news story's page, in small capitals: a past case with the same mechanism, with its year.
+  ///
+  /// In en, this message translates to:
+  /// **'It happened before'**
+  String get newsHappenedBefore;
+
   /// A story of Explore's latest news, on its page: the heading over the list of reports it was made from, each opened in the browser (set in small capitals).
   ///
   /// In en, this message translates to:
@@ -9467,6 +9521,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The books they recommended'**
   String get founderTheirBooks;
+
+  /// What a founder built, in a few words, under their name on Explore, their page and a book's page. One case per person, by their id (lib/data/founders.dart); any other is their role in English.
+  ///
+  /// In en, this message translates to:
+  /// **'{id, select, bill_gates{Co-founder of Microsoft} warren_buffett{The investor who built Berkshire Hathaway} mark_zuckerberg{Founder of Facebook} charlie_munger{Warren Buffett’s partner at Berkshire Hathaway} marc_andreessen{Co-founder of Netscape and Andreessen Horowitz} tobi_lutke{Founder of Shopify} naval_ravikant{Co-founder of AngelList} other{{role}}}'**
+  String founderRole(String id, String role);
+
+  /// Where a founder recommended a book, as its source line says it, before the year ("…, 2017"); the first letter is set up in capitals when it starts the line. One case per place said as a phrase (lib/data/founders.dart); any other is a name kept as it is ("GatesNotes", "Twitter").
+  ///
+  /// In en, this message translates to:
+  /// **'{id, select, gates_summer{GatesNotes, his books for the summer} berkshire_meeting{Berkshire Hathaway’s annual meeting} berkshire_letter{his letter to Berkshire Hathaway’s shareholders} year_of_books{A Year of Books, on Facebook} publisher_praise{his praise for the book, at its publisher} ferriss_five{The Tim Ferriss Show, among the five best books he has read} other{{where}}}'**
+  String founderWhere(String id, String where);
 
   /// What founders read, at the foot of a person's own page: that these are books {name} (a famous founder or investor, e.g. 'Bill Gates') recommended in public, quoted, each with its source, and that {name} has no connection with the app, so nothing reads as an endorsement. Quiet and plain; use the name, not a pronoun, where the language would need a gender.
   ///

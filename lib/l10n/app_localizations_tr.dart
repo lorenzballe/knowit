@@ -158,7 +158,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String nothingForYet(String query) {
-    return '\"$query\" için henüz bir şey yok.';
+    return '«$query» için henüz bir şey yok.';
   }
 
   @override
@@ -218,7 +218,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String nothingForTryTopic(String query) {
-    return '\"$query\" için bir şey yok. Bir konu dene.';
+    return '«$query» için bir şey yok. Bir konu dene.';
   }
 
   @override
@@ -242,7 +242,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get keepTheOnesYoullUse => 'Gerçekten kullanacaklarını sakla';
 
   @override
-  String get backToTodaysFive => 'BUGÜNÜN BEŞLİSİNE DÖN';
+  String get backToTodaysFive => 'Bugünün beşlisine dön';
 
   @override
   String get archive => 'Arşiv';
@@ -762,7 +762,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get shareMyRecord => 'SİCİLİMİ PAYLAŞ';
+  String get shareMyRecord => 'Sicilimi paylaş';
 
   @override
   String lastCallsAgainstFirst(int n) {
@@ -833,7 +833,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get seeThePlans => 'PLANLARI GÖR';
+  String get seeThePlans => 'Planları gör';
 
   @override
   String get recordStartsToday => 'Sicilin bugün başlıyor.';
@@ -1879,11 +1879,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return 'Senin: $said. Doğrusu: $truth.';
-  }
-
-  @override
   String get fiveTitle => 'Bugünün beşlisi';
 
   @override
@@ -1899,12 +1894,17 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String dailyPickRight(String answer) {
-    return 'Doğru: $answer.';
+    return 'Doğrusu: $answer';
   }
 
   @override
   String dailyPickWrong(String answer) {
-    return 'Tam değil: doğrusu $answer.';
+    return 'Tam değil. Doğrusu: $answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return 'Senin cevabın: $answer';
   }
 
   @override
@@ -2277,21 +2277,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tapToReveal => 'Görmek için dokun';
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return '$given dedin · $answer, ve $band sayıldı';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return '$given dedin · $answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · %$pct emin dedin';
-  }
-
-  @override
   String get verdictRight => 'Doğru.';
 
   @override
@@ -2302,7 +2287,27 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String verdictSure(int pct) {
-    return '%$pct emindin.';
+    return '%$pct emindin.';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return 'Senin cevabın: $given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return 'Senin cevabın: $given, %$pct emin';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return 'Doğrusu: $answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return 'Doğrusu: $answer ($low ile $high arası sayılırdı)';
   }
 
   @override
@@ -3075,7 +3080,22 @@ class AppLocalizationsTr extends AppLocalizations {
   String get revealShowWorking => 'Çözümü göster';
 
   @override
-  String get sceneLockIn => 'ONAYLA';
+  String get sceneLockIn => 'Onayla';
+
+  @override
+  String get placeItDrag => 'Cetvel boyunca sürükle.';
+
+  @override
+  String get placeItHappy => 'Böyle kalsın mı?';
+
+  @override
+  String get placeItEstimate => 'Tahminin';
+
+  @override
+  String get placeItNotSet => 'henüz yok';
+
+  @override
+  String get placeItLock => 'Tahminimi onayla';
 
   @override
   String get sceneYou => 'SEN';
@@ -3363,7 +3383,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String journeyMinAWeek(int now, int was) {
-    return 'haftada $now dk, başta $was';
+    return 'haftada $now dk, başta $was dk';
   }
 
   @override
@@ -4812,7 +4832,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get betsNumberLine => 'Ayarla, sabitle, ne kadar saptığını gör';
 
   @override
-  String get betsLock => 'Sabitle';
+  String get betsLock => 'Onayla';
 
   @override
   String get betsSpotOn => 'Tam isabet.';
@@ -4955,7 +4975,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get betsDayTitle => 'Günün bahsi';
 
   @override
-  String get betsDayLine => 'Tahminini sabitle, sonra ne kadar saptığını gör';
+  String get betsDayLine => 'Tahminini onayla, sonra ne kadar saptığını gör';
 
   @override
   String get betsDayTag => 'Günün bahsi';
@@ -4964,7 +4984,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get betsDayTagSame => 'Günün bahsi · herkes için aynı';
 
   @override
-  String get betsLockIn => 'Sabitle';
+  String get betsLockIn => 'Onayla';
 
   @override
   String betsItIs(String said) {
@@ -6536,6 +6556,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get newsBehind => 'Haberin ardında';
 
   @override
+  String get newsMeansForYou => 'Senin için ne anlama geliyor';
+
+  @override
+  String get newsMeans => 'Ne anlama geliyor';
+
+  @override
+  String get newsHappenedBefore => 'Daha önce de oldu';
+
+  @override
   String get newsSources => 'Kaynaklar';
 
   @override
@@ -6693,6 +6722,35 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get founderTheirBooks => 'Önerdiği kitaplar';
+
+  @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': 'Microsoft’un kurucu ortağı',
+      'warren_buffett': 'Berkshire Hathaway’i büyüten yatırımcı',
+      'mark_zuckerberg': 'Facebook’un kurucusu',
+      'charlie_munger': 'Warren Buffett’ın Berkshire Hathaway’deki ortağı',
+      'marc_andreessen': 'Netscape ve Andreessen Horowitz’in kurucu ortağı',
+      'tobi_lutke': 'Shopify’ın kurucusu',
+      'naval_ravikant': 'AngelList’in kurucu ortağı',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes, yaz için seçtiği kitaplar',
+      'berkshire_meeting': 'Berkshire Hathaway’in yıllık genel kurulu',
+      'berkshire_letter': 'Berkshire Hathaway hissedarlarına mektubu',
+      'year_of_books': 'Facebook’ta A Year of Books',
+      'publisher_praise': 'yayınevinin sitesindeki övgüsü',
+      'ferriss_five': 'The Tim Ferriss Show, okuduğu en iyi beş kitap arasında',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
 
   @override
   String founderAbout(String name) {

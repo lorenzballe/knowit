@@ -307,7 +307,9 @@ class StakeTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BetVerdict(
-            s == null ? verdict : '$verdict ${l.betsYouWereSure(s)}',
+            s == null
+                ? verdict
+                : '$verdict ${l.elided(l.betsYouWereSure(s))}',
             key: ValueKey('bets-stake-said-${pill.id}'),
             ink: ink,
           ),

@@ -1826,11 +1826,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return '你猜 $said，答案 $truth。';
-  }
-
-  @override
   String get fiveTitle => '今日五题';
 
   @override
@@ -1846,12 +1841,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String dailyPickRight(String answer) {
-    return '答对了：$answer。';
+    return '正确答案：$answer';
   }
 
   @override
   String dailyPickWrong(String answer) {
-    return '差一点，答案是$answer。';
+    return '差一点。正确答案：$answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return '你的答案：$answer';
   }
 
   @override
@@ -2211,21 +2211,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tapToReveal => '点按揭晓';
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return '你说 $given · 答案是 $answer，$band 之内算对';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return '你说 $given · 答案是 $answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · 你说有 $pct% 的把握';
-  }
-
-  @override
   String get verdictRight => '答对了。';
 
   @override
@@ -2237,6 +2222,26 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String verdictSure(int pct) {
     return '你当时有 $pct% 的把握。';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return '你的答案：$given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return '你的答案：$given（$pct% 的把握）';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return '正确答案：$answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return '正确答案：$answer（$low 到 $high 之间都算对）';
   }
 
   @override
@@ -2984,6 +2989,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get sceneLockIn => '确定';
+
+  @override
+  String get placeItDrag => '沿着刻度尺拖动。';
+
+  @override
+  String get placeItHappy => '就这样吗？';
+
+  @override
+  String get placeItEstimate => '你的估计';
+
+  @override
+  String get placeItNotSet => '未设置';
+
+  @override
+  String get placeItLock => '确定我的估计';
 
   @override
   String get sceneYou => '你';
@@ -4687,7 +4707,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get betsNumberLine => '调好、锁定，看看差了多少';
 
   @override
-  String get betsLock => '锁定';
+  String get betsLock => '确定';
 
   @override
   String get betsSpotOn => '分毫不差。';
@@ -4823,7 +4843,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get betsDayTitle => '今日一赌';
 
   @override
-  String get betsDayLine => '锁定你的猜测，再看看差了多少';
+  String get betsDayLine => '确定你的猜测，再看看差了多少';
 
   @override
   String get betsDayTag => '今日一赌';
@@ -4832,7 +4852,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get betsDayTagSame => '今日一赌 · 人人同题';
 
   @override
-  String get betsLockIn => '锁定';
+  String get betsLockIn => '确定';
 
   @override
   String betsItIs(String said) {
@@ -6355,6 +6375,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get newsBehind => '新闻背后';
 
   @override
+  String get newsMeansForYou => '这对你意味着什么';
+
+  @override
+  String get newsMeans => '这意味着什么';
+
+  @override
+  String get newsHappenedBefore => '以前也发生过';
+
+  @override
   String get newsSources => '来源';
 
   @override
@@ -6505,6 +6534,35 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get founderTheirBooks => '推荐过的书';
+
+  @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': '微软联合创始人',
+      'warren_buffett': '让伯克希尔·哈撒韦壮大的投资人',
+      'mark_zuckerberg': 'Facebook 创始人',
+      'charlie_munger': '沃伦·巴菲特在伯克希尔·哈撒韦的搭档',
+      'marc_andreessen': '网景和安德森·霍洛维茨的联合创始人',
+      'tobi_lutke': 'Shopify 创始人',
+      'naval_ravikant': 'AngelList 联合创始人',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes，他的夏季书单',
+      'berkshire_meeting': '伯克希尔·哈撒韦股东大会',
+      'berkshire_letter': '他致伯克希尔·哈撒韦股东的信',
+      'year_of_books': 'Facebook 上的“A Year of Books”',
+      'publisher_praise': '他在出版社页面上的推荐语',
+      'ferriss_five': 'The Tim Ferriss Show，他读过的五本最好的书之一',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
 
   @override
   String founderAbout(String name) {
