@@ -25,6 +25,7 @@ import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
 import '../widgets/learn_looks.dart' show goalUnsaid, markedSkills;
+import 'paywall_screen.dart' show showFirstOfferIfDue;
 import 'today_done_view.dart';
 
 /// The card is the screen: dark chrome, and the deck filling everything
@@ -187,7 +188,11 @@ class _TodayScreenState extends State<TodayScreen> {
       if (!mounted || !widget.app.todayCompleted || _magic) return;
       if (!(ModalRoute.of(context)?.isCurrent ?? true)) return;
       final bool rose = await showLevelUpIfDue(context, widget.app);
-      if (rose || !moment || !mounted) return;
+      if (rose || !mounted) return;
+      // The first week's page or the first month's, when one is due
+      // (lib/state/first_offers.dart): a level reached wins the evening.
+      if (await showFirstOfferIfDue(context, widget.app)) return;
+      if (!moment || !mounted) return;
       await showDayMomentIfDue(context, widget.app);
     });
   }
