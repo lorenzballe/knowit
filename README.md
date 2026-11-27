@@ -1154,6 +1154,57 @@ The archive keeps what each day was actually dealt: the calendar is
 re-dealt from the start whenever the pool grows, and a day dealt again from
 the same date is only most of the truth.
 
+## Listen: the day's five, read aloud
+
+*Ascolta le cinque di oggi*: a quiet pill at the end of Today's header while
+the five are read, and a small player over the day. For each card, its
+question; a pause of about four seconds to think, opened by a soft tone;
+then the answer and its why, the card's own words as its back has them (a
+debate with its other side); a breath; the next card. The card being read is
+lit in the list, the others quiet, and a line across the top fills as each
+is heard. It goes on with the screen locked: the day is one queue the phone
+walks through itself (just_audio, with the session told it is speech, and
+the `audio` background mode in `ios/Runner/Info.plist`), so the app is not
+woken between one sound and the next, and the pause is a sound
+(`assets/audio/`, `tool/media/listen_tones.py`), not a timer.
+
+Everybody hears the first card of the day that can be heard, so they know
+what it is; on the free plan the player then stops on the offer of the
+rest, which opens the paywall (`requirePlus`, source `listen`), and with
+Astute+ taken there the rest follow at once. A drawn card is read from its
+words in the bank, less the sentences about its page ("Drag the slider to
+zero…"), which mean nothing heard; one left with less than a sentence is
+passed over and the player says so. In the bank as it ships, 934 drawn
+cards are live, 93 lose a sentence or more, and none is left with nothing
+to hear.
+
+The voice is ElevenLabs' (`functions/src/listen.ts`): Finley, "Articulate
+Anchor", a calm, crisp British voice made for explainers, on Eleven v4, its
+newest model. Each clip is made once, for every reader alike, kept in
+Firebase Storage under the hash of its words and voice, so a card whose
+words change is read anew and nothing else is ever paid for twice; the
+readers who listen have their next days' cards made ahead of them twice a
+day (`listenAhead`), so playing starts at once. ElevenLabs charges by the
+character ($0.08 for a thousand on v4): a card is about 390 characters, about
+three cents, so a day of five read for the first time is about sixteen
+cents, and the same cards read to a thousand readers cost nothing more; the
+whole bank, read once, would be about 2.2 million characters.
+What it may read is held to so many characters a month and a day
+(`functions/src/limits.ts`, under the plan's own allowance), with a hard
+stop; past it, what was made still plays and the rest is "not available
+right now".
+
+The key is the Actions secret `ELEVENLABS_API_KEY`, kept in Secret Manager
+by the *Cloud deploy* workflow, which checks it by reading three characters
+in Listen's own voice and says in its summary what ElevenLabs made of it.
+Without a key the functions answer "not configured" and the app hides
+Listen; with a key but no credit bought yet, Listen is calmly "not available
+right now" until the plan is bought, with nothing to deploy again. The
+switch `listen` (docs/REMOTE.md) is off in the build and in
+`remote/app.json`, and goes on once the key and the plan are in. Counted as
+`listen started`, `listen card heard`, `listen finished` and `listen
+stopped` (docs/TRACKING.md).
+
 ## Liked, saved, and less like this
 
 The heart and the bookmark used to be one gesture doing two jobs. A card
