@@ -500,7 +500,12 @@ class TileBody extends StatelessWidget {
               final TextScaler scaler = MediaQuery.textScalerOf(context);
               double width(String text) {
                 final TextPainter t = TextPainter(
-                  text: TextSpan(text: text, style: look.labelStyle(pill)),
+                  // As it is drawn: inside the page's own text style.
+                  text: TextSpan(
+                    text: text,
+                    style: DefaultTextStyle.of(context).style
+                        .merge(look.labelStyle(pill)),
+                  ),
                   textDirection: Directionality.of(context),
                   textScaler: scaler,
                   maxLines: 1,
