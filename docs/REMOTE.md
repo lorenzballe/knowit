@@ -484,7 +484,10 @@ the card turns over, as a native one does), `done`, `haptic`, `open`,
 `zones` (where it wants the finger), `pan` (web build only: a drag that is
 not its own) and `error`. The app says `env` (dark, language, less motion,
 sound, touch, platform, size, the corner to leave, the subject, the line and
-the chip a native card carries), `show` and `hide`.
+the chip a native card carries, the foot, and, on a hard card the developer
+tools ring, `hard`: the colours to draw itself in and the tag it carries,
+lib/widgets/hard_ring.dart), `show` and `hide`. A page told no `hard` draws
+as it always has.
 
 **Touch.** With `taps`, a tap goes to the page; a drag anywhere throws the
 card and a long press keeps it, as on any card. With `drags`, a touch that

@@ -157,6 +157,27 @@ const Kit = (() => {
     addEventListener('pointerup', end, true); addEventListener('pointercancel', end, true);
   }
 
+  // A hard card ringed (env.hard, being tried in the app from November 2026; lib/widgets/hard_ring.dart): the page
+  // draws itself in the colours the app says in place of its subject's — its ground (c), its ink (k: the drawing,
+  // the subject's name, what it asks), its question's ink (q) — and the app draws the ring (edge) round it, as
+  // Explore's shelf of the hardest draws those cards. The page's own colours are kept, and given back when the app
+  // stops saying so. Without env.hard nothing here runs, and every page draws as it always has.
+  const HARD_VARS = ['--c', '--k', '--edge'];
+  function ring(h) {
+    const st = card.style, root = document.documentElement;
+    if (h && h.c && h.k) {
+      if (card.dataset.kitOwn === undefined) card.dataset.kitOwn = JSON.stringify(HARD_VARS.map(v => st.getPropertyValue(v)));
+      st.setProperty('--c', h.c); st.setProperty('--k', h.k); st.setProperty('--edge', h.edge || h.k);
+      root.style.setProperty('--kit-q', h.q || h.k);
+      root.classList.add('kit-hard');
+    } else if (card.dataset.kitOwn !== undefined) {
+      const own = JSON.parse(card.dataset.kitOwn); delete card.dataset.kitOwn;
+      HARD_VARS.forEach((v, i) => own[i] ? st.setProperty(v, own[i]) : st.removeProperty(v));
+      root.style.removeProperty('--kit-q');
+      root.classList.remove('kit-hard');
+    }
+  }
+
   // The card's ground, its subject's mark and name, and in the app the line and the chip a native
   // card carries under its head.
   function dress() {
@@ -164,15 +185,18 @@ const Kit = (() => {
     const s = Object.assign(own ? {key, name: own[0], c: own[1], k: own[2], edge: own[3], icon: own[4]} : {}, e.subject || {});
     if (!s.c) return;
     const st = card.style;
+    ring(null);
     if (!st.getPropertyValue('--c')) { st.setProperty('--c', s.c); st.setProperty('--k', s.k); st.setProperty('--edge', s.edge); }
+    if (e.hard) ring(e.hard);
     document.documentElement.style.setProperty('--ground', st.getPropertyValue('--c') || s.c);
     const label = card.querySelector('.label');
     if (!label) return;
     const svg = label.querySelector('svg');
     if (svg && !svg.childElementCount && s.icon) { svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('aria-hidden', 'true'); mk('path', {d: s.icon, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.9, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg); }
     const name = label.querySelector('.t'); if (name && s.name) name.textContent = s.name;
-    label.querySelector('.kit-chip')?.remove(); card.querySelector('.kit-note')?.remove();
+    label.querySelector('.kit-chip')?.remove(); label.querySelector('.kit-hard-tag')?.remove(); card.querySelector('.kit-note')?.remove();
     if (e.chip && name) { const c = document.createElement('span'); c.className = 'kit-chip'; c.textContent = e.chip; name.after(c); }
+    if (e.hard && e.hard.label && name) { const t = document.createElement('span'); t.className = 'kit-hard-tag'; t.textContent = e.hard.label; name.after(t); }
     if (e.note) { const n = document.createElement('p'); n.className = 'kit-note'; if (bridge() && bridge().why) n.classList.add('kit-why'); n.textContent = e.note; label.after(n); }
     fitLabel();
   }
@@ -188,7 +212,11 @@ const Kit = (() => {
     root.classList.toggle('kit-calm', !!e.calm);
     root.dataset.theme = e.theme; root.dataset.platform = e.platform;
     const c = e.corner; root.style.setProperty('--kit-corner-w', c ? c.w + 'px' : '0px'); root.style.setProperty('--kit-corner-h', c ? c.h + 'px' : '0px');
-    if (card) dress();
+    if (!card) return;
+    // A drawing reads its colours as it draws: ringed or given back, it is drawn again in them.
+    const was = card.style.getPropertyValue('--c');
+    dress();
+    if (isReady && card.style.getPropertyValue('--c') !== was) onShow[card.id]?.();
   }
 
   // A video is cited by its channel, not by a title that can run to a sentence: "Source · Veritasium,

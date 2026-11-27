@@ -62,6 +62,39 @@ enum PaywallLook {
   d,
 }
 
+/// The picture the day is sent as (lib/widgets/share_day.dart, the new ones
+/// in lib/widgets/share_looks.dart), by the letter the owner knows it by.
+/// He asked for it nicer, softly graded and coloured, and weighed three ways
+/// of showing a card: its drawing whole, a small preview of it, or only its
+/// subject's mark. C ships ([DebugLooks.sharePictureShips]); the tools show
+/// A, the picture as it was, and B. Each keeps every question whole.
+enum SharePictureLook {
+  /// A. The picture as it shipped until November 2026: black, each card's
+  /// drawing cut down to a square beside its question.
+  a,
+
+  /// B. The cards: the day's first drawn card large, the whole card, lit
+  /// from behind by its colour; on the list the five cards whole in a row.
+  b,
+
+  /// C. Light: no drawing; black lit by the day's colours from its corners,
+  /// each card its subject's mark on a disc of its colour. The one that
+  /// ships.
+  c,
+}
+
+/// How a hard card looks wherever it is read, as the developer tools pick
+/// it (lib/widgets/hard_ring.dart): as today, in its subject's colour like
+/// every card, or ringed, dark and ringed in its subject's colour with HARD
+/// on it, as Explore's shelf of the hardest cards draws them.
+enum HardCardLook {
+  /// As the app ships: a hard card looks like any other.
+  today,
+
+  /// Dark, ringed in the subject's colour, the label in it, HARD on it.
+  ringed,
+}
+
 /// What to learn, three other ways, as the developer tools try them beside
 /// the one that ships (lib/widgets/learn_looks.dart): the owner did not
 /// believe in twelve skills, each with a score, a mark on the cards and a
@@ -109,8 +142,9 @@ enum CardFootPick {
 /// Looks the developer tools let a phone try on, so the owner can compare
 /// on his own phone what only pictures showed him before: the finished day
 /// with no row over its card, the profile's other tops, where the day is
-/// sent from, What to learn three other ways, the paywall's prototypes, and
-/// the four feet of a card.
+/// sent from, the picture it is sent as, What to learn three other ways,
+/// the paywall's prototypes, the four feet of a card, and the hard cards
+/// ringed.
 /// Changed from the debug section at the foot of the profile, kept on the
 /// phone, and listened to where each is drawn, so a change shows at once.
 ///
@@ -124,6 +158,8 @@ abstract final class DebugLooks {
   static const String _kPaywall = 'knowit.debug.paywallLook';
   static const String _kLearn = 'knowit.debug.learn';
   static const String _kCardFoot = 'knowit.debug.cardFoot';
+  static const String _kSharePicture = 'knowit.debug.sharePicture';
+  static const String _kHardCards = 'knowit.debug.hardCards';
 
   /// The finished day with no row over its shelf, as kept.
   static final ValueNotifier<bool> noTopRow = ValueNotifier<bool>(false);
@@ -154,6 +190,17 @@ abstract final class DebugLooks {
   static final ValueNotifier<CardFootPick?> cardFoot =
       ValueNotifier<CardFootPick?>(null);
 
+  /// The picture the day is sent as that ships.
+  static const SharePictureLook sharePictureShips = SharePictureLook.c;
+
+  /// The picture the day is sent as, as kept.
+  static final ValueNotifier<SharePictureLook> sharePicture =
+      ValueNotifier<SharePictureLook>(sharePictureShips);
+
+  /// How a hard card looks, as kept.
+  static final ValueNotifier<HardCardLook> hardCards =
+      ValueNotifier<HardCardLook>(HardCardLook.today);
+
   /// Whether the finished day goes without its top row in this run.
   static bool get todayWithoutTopRow => debugToolsOn && noTopRow.value;
 
@@ -182,6 +229,16 @@ abstract final class DebugLooks {
   static CardFootPick? get cardFootPicked =>
       debugToolsOn ? cardFoot.value : null;
 
+  /// The picture the day is sent as in this run: the one that ships, unless
+  /// the tools are on and another was picked.
+  static SharePictureLook get sharePicturePicked =>
+      debugToolsOn ? sharePicture.value : sharePictureShips;
+
+  /// How a hard card looks in this run: as today, unless the tools are on
+  /// and ringed was picked.
+  static HardCardLook get hardCardsPicked =>
+      debugToolsOn ? hardCards.value : HardCardLook.today;
+
   /// Reads what this phone keeps. Nothing kept is the app as it ships.
   static void load(SharedPreferences prefs) {
     noTopRow.value = prefs.getBool(_kNoTopRow) ?? false;
@@ -199,6 +256,26 @@ abstract final class DebugLooks {
         LearnLook.today;
     cardFoot.value = CardFootPick.values
         .asNameMap()[prefs.getString(_kCardFoot)];
+    sharePicture.value =
+        SharePictureLook.values.asNameMap()[prefs.getString(_kSharePicture)] ??
+        sharePictureShips;
+    hardCards.value =
+        HardCardLook.values.asNameMap()[prefs.getString(_kHardCards)] ??
+        HardCardLook.today;
+  }
+
+  /// Picks the picture the day is sent as, and keeps it so.
+  static Future<void> setSharePicture(SharePictureLook look) async {
+    sharePicture.value = look;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_kSharePicture, look.name);
+  }
+
+  /// Picks how a hard card looks, and keeps it so.
+  static Future<void> setHardCards(HardCardLook look) async {
+    hardCards.value = look;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_kHardCards, look.name);
   }
 
   /// Picks the paywall, and keeps it so.
@@ -263,6 +340,12 @@ abstract final class DebugLooks {
     if (cardFoot.value case final CardFootPick foot) {
       await prefs.setString(_kCardFoot, foot.name);
     }
+    if (sharePicture.value != sharePictureShips) {
+      await prefs.setString(_kSharePicture, sharePicture.value.name);
+    }
+    if (hardCards.value != HardCardLook.today) {
+      await prefs.setString(_kHardCards, hardCards.value.name);
+    }
   }
 
   /// The app as it ships, for a test that changed any of them.
@@ -274,5 +357,7 @@ abstract final class DebugLooks {
     paywall.value = paywallShips;
     learn.value = LearnLook.today;
     cardFoot.value = null;
+    sharePicture.value = sharePictureShips;
+    hardCards.value = HardCardLook.today;
   }
 }

@@ -19,6 +19,7 @@ import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/card_edge.dart';
 import '../widgets/fit_text.dart';
+import '../widgets/hard_ring.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
 import '../widgets/liked_mark.dart';
@@ -271,12 +272,13 @@ class _TodayDoneViewState extends State<TodayDoneView>
   @override
   void initState() {
     super.initState();
-    // The developer tools' "no top row", where the day is sent from, and
-    // What to learn's look show at once: this Today is kept alive beside the
-    // profile they are switched on.
+    // The developer tools' "no top row", where the day is sent from, the
+    // hard cards ringed and What to learn's look show at once: this Today is
+    // kept alive beside the profile they are switched on.
     DebugLooks.noTopRow.addListener(_looksChanged);
     DebugLooks.shareDay.addListener(_looksChanged);
     DebugLooks.learn.addListener(_looksChanged);
+    DebugLooks.hardCards.addListener(_looksChanged);
   }
 
   void _looksChanged() {
@@ -303,6 +305,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
     DebugLooks.noTopRow.removeListener(_looksChanged);
     DebugLooks.shareDay.removeListener(_looksChanged);
     DebugLooks.learn.removeListener(_looksChanged);
+    DebugLooks.hardCards.removeListener(_looksChanged);
     _settle.dispose();
     super.dispose();
   }
@@ -800,9 +803,18 @@ class _TodayDoneViewState extends State<TodayDoneView>
         ? context.l10n.forYouChip
         : null;
     String picture(bool back) => '${pill.id}-${back ? 'back' : 'front'}';
+    // A hard card in words, where the developer tools ring it, as it was in
+    // the deck: dark, ringed, HARD in its head (hard_ring.dart). A drawn one
+    // is its picture, taken as it always looked.
+    final Palette p = context.p;
+    final Color? ring = pill.web == null && HardRing.on(pill)
+        ? HardRing.accentOf(pill, p)
+        : null;
+    final Pill shown = ring == null ? pill : HardRing.dressed(pill, p);
     Widget face(bool back) => _CardFace(
       key: ValueKey('shelf-face-${pill.id}-${back ? 'back' : 'front'}'),
-      pill: pill,
+      pill: shown,
+      ring: ring,
       come: _come.contains(picture(back)),
       onCome: () => _came(picture(back)),
       number: k + 1,
@@ -824,8 +836,8 @@ class _TodayDoneViewState extends State<TodayDoneView>
     // Held down, the card is liked; the bookmark on its back saves it.
     return HoldToKeep(
       saved: app.isLiked(pill.id),
-      ink: pill.ink,
-      ground: pill.color,
+      ink: shown.ink,
+      ground: shown.color,
       onToggle: () => app.toggleLiked(pill.id),
       child: FlipCard(showBack: _flipped, front: face(false), back: face(true)),
     );
@@ -952,10 +964,16 @@ class _CardFace extends StatelessWidget {
     required this.onShare,
     this.come = true,
     this.onCome,
+    this.ring,
   });
 
   final Pill pill;
   final int number;
+
+  /// The ring's colour, on a hard card in words ringed (hard_ring.dart):
+  /// its edge, its subject's mark and name, and HARD in its head. [pill] is
+  /// then in the ringed colours already.
+  final Color? ring;
 
   /// Whether the card's picture has come. Until it has, the card is plain
   /// grey with its save and share (CardThumb.waiting), and its edge and the
@@ -1120,7 +1138,9 @@ class _CardFace extends StatelessWidget {
       color: colour,
       // The deck's corner, at the shelf's scale: one card, one shape.
       borderRadius: BorderRadius.circular(34 * s),
-      border: cardHairline(colour, p.surface),
+      border: ring == null
+          ? cardHairline(colour, p.surface)
+          : Border.all(color: ring!, width: HardRing.width * s),
       boxShadow: [
         // A pool under the card rather than a wash over the screen: the
         // canvas throws the card's colour across the whole page, which on
@@ -1131,7 +1151,7 @@ class _CardFace extends StatelessWidget {
         // on the first pass and less far than the canvas asks.
         if (glow > 0 && glowing)
           BoxShadow(
-            color: pill.color.withValues(
+            color: (ring ?? pill.color).withValues(
               alpha: (p.isDark ? 0.52 : 0.36) * glow,
             ),
             offset: Offset(0, 30 * s),
@@ -1160,7 +1180,7 @@ class _CardFace extends StatelessWidget {
       children: [
         Row(
           children: [
-            CardMark(pill: pill, size: 16 * s, ink: ink),
+            CardMark(pill: pill, size: 16 * s, ink: ring ?? ink),
             SizedBox(width: 8 * s),
             Expanded(
               child: Row(
@@ -1174,10 +1194,14 @@ class _CardFace extends StatelessWidget {
                         size: 9.5 * s,
                         weight: FontWeight.w700,
                         spacing: 1.4,
-                        color: sub,
+                        color: ring ?? sub,
                       ),
                     ),
                   ),
+                  if (ring case final Color ring) ...[
+                    SizedBox(width: 8 * s),
+                    HardTag(accent: ring, ground: pill.color, scale: s),
+                  ],
                   if (chip case final String chip) ...[
                     SizedBox(width: 8 * s),
                     // The deck's own chip, at the shelf's scale.

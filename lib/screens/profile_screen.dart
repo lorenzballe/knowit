@@ -1580,9 +1580,10 @@ class _PlusCard extends StatelessWidget {
 }
 
 /// The looks the developer tools try on this phone ([DebugLooks]): the
-/// finished day without the row over its card, where the day is sent from,
-/// which top the profile opens on, how a card's foot is set, What to
-/// learn's look, and which paywall. English, as the rest of the section is.
+/// finished day without the row over its card, where the day is sent from
+/// and the picture it is sent as, which top the profile opens on, how a
+/// card's foot is set, how a hard card looks, What to learn's look, and
+/// which paywall. English, as the rest of the section is.
 class _DebugLooksPanel extends StatelessWidget {
   const _DebugLooksPanel({required this.app});
 
@@ -1620,6 +1621,44 @@ class _DebugLooksPanel extends StatelessWidget {
               valueListenable: DebugLooks.shareDay,
               builder: (context, pick, _) =>
                   _ShareDayLook(app: app, pick: pick),
+            ),
+          ),
+          Container(
+            key: const ValueKey('debug-share-picture'),
+            padding: const EdgeInsets.fromLTRB(0, 14, 0, 16),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: p.line)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Share picture',
+                  style: AppText.body(
+                    size: 14,
+                    weight: FontWeight.w500,
+                    color: p.ink,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  'The picture the day is sent as, from Share your day. A: the '
+                  'old one, drawings cut to squares. B: the first drawn card '
+                  'whole and lit, the five whole on the list. C: no drawings, '
+                  'black lit by the day\'s colours, subject marks. C ships.',
+                  style: AppText.body(
+                    size: 12,
+                    height: 1.35,
+                    color: p.inkFaint,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ValueListenableBuilder<SharePictureLook>(
+                  valueListenable: DebugLooks.sharePicture,
+                  builder: (context, look, _) =>
+                      _SharePicturePicker(look: look),
+                ),
+              ],
             ),
           ),
           Container(
@@ -1690,6 +1729,43 @@ class _DebugLooksPanel extends StatelessWidget {
                   builder: (context, pick, _) => _CardFootPicker(
                     pick: pick ?? footPickOf(builtSourceFoot),
                   ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            key: const ValueKey('debug-hard-cards'),
+            padding: const EdgeInsets.fromLTRB(0, 14, 0, 16),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: p.line)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Hard cards',
+                  style: AppText.body(
+                    size: 14,
+                    weight: FontWeight.w500,
+                    color: p.ink,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  'Ringed: a hard card, wherever it is read, dark and ringed '
+                  'in its subject\'s colour with HARD on it, as Explore\'s '
+                  'shelf of the hardest draws it; front and back, in words '
+                  'and drawn. As today is how the app ships.',
+                  style: AppText.body(
+                    size: 12,
+                    height: 1.35,
+                    color: p.inkFaint,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ValueListenableBuilder<HardCardLook>(
+                  valueListenable: DebugLooks.hardCards,
+                  builder: (context, look, _) => _HardCardsPicker(look: look),
                 ),
               ],
             ),
@@ -2152,6 +2228,77 @@ class _CardFootPicker extends StatelessWidget {
     picked: pick,
     keyOf: (pick) => 'debug-card-foot-${pick.name}',
     onPick: DebugLooks.setCardFoot,
+  );
+}
+
+/// A, B or C, as the picture the day is sent as (share_looks.dart).
+class _SharePicturePicker extends StatelessWidget {
+  const _SharePicturePicker({required this.look});
+
+  final SharePictureLook look;
+
+  static const List<_DebugChoice<SharePictureLook>> _choices = [
+    (
+      pick: SharePictureLook.a,
+      name: 'A',
+      note: 'the old one',
+      said: 'Share picture A, the old one',
+      flex: 1,
+    ),
+    (
+      pick: SharePictureLook.b,
+      name: 'B',
+      note: 'cards',
+      said: 'Share picture B, cards',
+      flex: 1,
+    ),
+    (
+      pick: SharePictureLook.c,
+      name: 'C',
+      note: 'light, ships',
+      said: 'Share picture C, light, ships',
+      flex: 1,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) => _DebugPicker<SharePictureLook>(
+    choices: _choices,
+    picked: look,
+    keyOf: (pick) => 'debug-share-picture-${pick.name}',
+    onPick: DebugLooks.setSharePicture,
+  );
+}
+
+/// As today or ringed, as a hard card wherever it is read (hard_ring.dart).
+class _HardCardsPicker extends StatelessWidget {
+  const _HardCardsPicker({required this.look});
+
+  final HardCardLook look;
+
+  static const List<_DebugChoice<HardCardLook>> _choices = [
+    (
+      pick: HardCardLook.today,
+      name: 'As today',
+      note: 'like any card',
+      said: 'Hard cards as today',
+      flex: 1,
+    ),
+    (
+      pick: HardCardLook.ringed,
+      name: 'Ringed',
+      note: 'dark, HARD',
+      said: 'Hard cards ringed',
+      flex: 1,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) => _DebugPicker<HardCardLook>(
+    choices: _choices,
+    picked: look,
+    keyOf: (pick) => 'debug-hard-cards-${pick.name}',
+    onPick: DebugLooks.setHardCards,
   );
 }
 

@@ -1151,12 +1151,21 @@ takes an asking slot before any fresh question does — one at most, so a
 day always has one question it has never asked. What came due and found
 no room waits after the five, on the finished day, on either plan.
 
-**Share my day.** A picture of the day's five: each card's question beside
-its front, in the day's colours, as a post or a story — no score, and no
-answer, because it is sent to show the cards that came out, not how the
-reader did. On a phone it goes to the share sheet; in a browser it is
-copied. It is sent from the finished day, beside the journey's button, or
-from the foot of the journey, and `day shared` says which (`from`).
+**Share my day.** A picture of the day's five, as a cover, a list or a
+story — no score, and no answer, because it is sent to show the cards that
+came out, not how the reader did. It is black, lit from its corners by the
+day's own colours (the first card's, the last card's, the middle one's), each
+card its subject's mark on a disc of its colour beside its question in
+Fraunces, the first set large on the cover and the story; every question
+whole, never cut, the type coming down a step at a time where a day runs
+long (`lib/widgets/share_looks.dart`, C). The developer tools still show A,
+the picture as it was, each drawing cut down to a square, and B, the day's
+first drawn card whole and lit by its colour, and the five cards whole in a
+row on the list (*Share picture*, below); `tool/share_day_shots.dart`
+photographs all three. On a phone it goes to the share sheet; in a browser
+it is copied. It is sent from the finished day, beside the journey's
+button, or from the foot of the journey, and `day shared` says which
+(`from`).
 
 **Share a card.** A card leaves as a line and a link, never as its answer:
 what is asked of the friend (answering it, or taking a side), its question,
@@ -1821,7 +1830,7 @@ store through RevenueCat rather than from a bool the app wrote to itself.
 and restart, toggle the plan, and a readout of what the app knows about
 itself: whether Firebase started and why not, the account id, the last auth
 error, whether the store answered, and whether PostHog is sending, opted out
-or not running at all. At its head are five looks to try on the phone itself
+or not running at all. At its head are the looks to try on the phone itself
 (`lib/state/debug_looks.dart`): *Today, day read: no top row*, the finished
 day without the row over its card, so the card is bigger; *Today, day read:
 share the day*, where the finished day is sent from — A as it ships, See
@@ -1843,10 +1852,23 @@ nothing to pick, the skills ranked
 in Your journey from the reader's answers, right answers out of those
 given, the weakest to practise on five cards, and on the free plan the
 strong point alone on the profile. The camera is `tool/learn_shots.dart`;
-and *Card foot*, A line, B two lines, C buttons or D links
+*Card foot*, A line, B two lines, C buttons or D links
 (`lib/widgets/source_foot.dart`), on cards in words and on drawn ones,
 whose page is told it as `foot` as it was told the build's `SOURCE_FOOT`,
-which still sets the way when none is picked; A is the default.
+which still sets the way when none is picked; A is the default; *Share
+picture*, the picture the day is sent as, A as it was, B the cards, C light,
+which ships (Share my day, above); and *Hard cards*, as today or ringed
+(`lib/widgets/hard_ring.dart`): a hard card, wherever it is read — Today's
+deck and shelf, the deck viewer, Explore's cards — front and back, dark,
+ringed in its subject's colour, its subject's name in it and HARD in its
+head, as Explore's shelf of the hardest draws them; on the day paper the
+raised paper, a pale colour taken to its darker tone. A card in words is
+drawn in those colours; a drawn card's page is told them as `hard`, and the
+kit draws itself in them (its ground, its subject's colour as its ink, the
+question in the light ink), while a page told nothing draws as it always
+has. Its pictures are not taken again, so with the look on the shelf and
+Explore still show a drawn hard card as it was. The cameras are
+`tool/hard_card_shots.dart` and `HARD=1 node tool/cards/card_check.cjs`.
 Under the looks, beside *Open the paywall*, *Preview: your first week* and
 *Preview: your first month* open those two pages with sample numbers, on
 either plan, keeping and counting nothing (`lib/screens/first_offer.dart`).
