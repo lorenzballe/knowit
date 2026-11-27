@@ -2235,6 +2235,46 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
   });
 
+  // A miss practised from Your journey ("Le 10 sbagliate con sicurezza"):
+  // the card as it opens, and its back once answered right this time.
+  _shoot('practice', (tester) async {
+    final _Roll roll = _Roll('practice');
+    final reader = _journeyReader();
+    await _open(tester, {...reader.prefs, LevelMemory.key: 99});
+    await tester.tap(_keyed('tab-Profile').first);
+    await _settle(tester, 16);
+    await tester.tap(_keyed('profile-journey').first, warnIfMissed: false);
+    await _settle(tester, 20);
+    final Finder misses = _keyed('story-practice-misses');
+    await tester.scrollUntilVisible(misses, 300, scrollable: _down());
+    await _settle(tester, 6);
+    await roll.take(tester, 'allenati', 'Il tuo viaggio: Allenati');
+    await tester.tap(misses.first);
+    await _settle(tester, 20);
+    final PillCardStack deck = tester.widget(find.byType(PillCardStack));
+    final Pill top = deck.deck[deck.index];
+    await roll.take(
+      tester,
+      'sbagliata-fronte',
+      'Una sbagliata con sicurezza, ripresa: come si apre',
+    );
+    if (top.challenge case PickOne(:final options, :final correct)) {
+      await tester.tap(find.text(options[correct]).last);
+      await _settle(tester, 10);
+      final Finder sure = find.text('70%');
+      if (_has(sure)) {
+        await tester.tap(sure.last);
+        await _settle(tester, 20);
+      }
+      await roll.take(
+        tester,
+        'sbagliata-retro',
+        'Ripresa e azzeccata questa volta: il retro',
+      );
+    }
+    debugDefaultTargetPlatformOverride = null;
+  });
+
   // -------------------------------------------------------------------------
   // 7. The profile and its settings, the topics, and Regola il tuo mix.
   _shoot('profile', (tester) async {
