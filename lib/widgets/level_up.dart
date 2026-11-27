@@ -41,6 +41,7 @@ import 'glass_round.dart';
 import 'skill_score.dart' show scoreBookOf, scoreNumber, scoreUp, signedNumber;
 import 'training.dart' show pickedSkills;
 import 'ui.dart' show PrimaryButton;
+import '../l10n/dates.dart';
 
 /// Where [app]'s reader stands on the levels, with [told] the highest level
 /// kept as told.
@@ -86,17 +87,18 @@ Future<bool> showLevelUpIfDue(BuildContext context, AppState app) async {
       due,
       picked: pickedSkills(app),
     );
-    // In the looks of What to learn with no skills to show (A and B,
-    // lib/widgets/learn_looks.dart), the level says the answers behind it,
-    // not a skill the reader never sees.
+    // In the looks of What to learn with no skills to show, or with one a
+    // week and no score in it (A, B and E, lib/widgets/learn_looks.dart),
+    // the level says the answers behind it, not a skill's score the reader
+    // never sees.
     final LevelMoment moment = switch (DebugLooks.learnPicked) {
-      LearnLook.score || LearnLook.aim => LevelMoment(
+      LearnLook.score || LearnLook.aim || LearnLook.weekly => LevelMoment(
         level: found.level,
         score: found.score,
         from: found.from,
         answers: found.answers,
       ),
-      LearnLook.today || LearnLook.profile => found,
+      LearnLook.today || LearnLook.profile || LearnLook.aimProfile => found,
     };
     unawaited(
       Navigator.of(
@@ -1131,10 +1133,10 @@ class LevelPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final String date = DateFormat(
-      'd MMMM y',
-      Localizations.localeOf(context).toString(),
-    ).format(day);
+    final String date = formatDay(
+      DateFormat('d MMMM y', Localizations.localeOf(context).toString()),
+      day,
+    );
     final TextStyle faint = AppText.label(
       size: 11,
       weight: FontWeight.w700,
@@ -1147,11 +1149,17 @@ class LevelPicture extends StatelessWidget {
         borderRadius: BorderRadius.circular(26),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: _ground,
+            // The glow already laid on the black: a decoration with a
+            // gradient paints no colour, so a glow fading to nothing left
+            // cream words on the white of a sheet on paper, and on whatever
+            // a chat puts behind a picture sent.
             gradient: RadialGradient(
               center: const Alignment(0, -0.25),
               radius: 0.95,
-              colors: [_ink.withValues(alpha: 0.11), _ground.withAlpha(0)],
+              colors: [
+                Color.alphaBlend(_ink.withValues(alpha: 0.11), _ground),
+                _ground,
+              ],
             ),
           ),
           child: Padding(

@@ -45,8 +45,13 @@ class PurchaseSuccessScreen extends StatefulWidget {
   /// The small line under the button.
   final String foot;
 
-  /// Where "Receipt" goes, if anywhere.
+  /// Where "Receipt" goes; with none — a week a friend's invitation gave,
+  /// where nothing was bought — there is no "Receipt" at all.
   final VoidCallback? onReceipt;
+
+  /// The name the screen is measured under: a purchase's, or a week's from
+  /// a friend's invitation (lib/widgets/invite_sheet.dart).
+  final String screenName;
 
   /// The store's answer, when it is still on its way: null while it is,
   /// true once the purchase is confirmed, false when it did not go through.
@@ -75,6 +80,7 @@ class PurchaseSuccessScreen extends StatefulWidget {
     required this.foot,
     this.onReceipt,
     this.confirmed,
+    this.screenName = 'purchase success',
   });
 
   /// The two pictures the take draws, decoded ahead — the paywall asks for
@@ -237,7 +243,7 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
 
   @override
   Widget build(BuildContext context) =>
-      ScreenView(name: 'purchase success', child: _page(context));
+      ScreenView(name: widget.screenName, child: _page(context));
 
   Widget _page(BuildContext context) {
     final l = context.l10n;
@@ -672,20 +678,22 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: widget.onReceipt,
-                child: Text(
-                  '${l.successReceipt} ›',
-                  style: AppText.body(
-                    size: 13,
-                    weight: FontWeight.w600,
-                    height: 1,
-                    color: Colors.white.withValues(alpha: .7),
+              if (widget.onReceipt != null) ...[
+                const SizedBox(width: 12),
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: widget.onReceipt,
+                  child: Text(
+                    '${l.successReceipt} ›',
+                    style: AppText.body(
+                      size: 13,
+                      weight: FontWeight.w600,
+                      height: 1,
+                      color: Colors.white.withValues(alpha: .7),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ],
           ),
         ),

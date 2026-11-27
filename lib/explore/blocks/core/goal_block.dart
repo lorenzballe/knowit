@@ -5,8 +5,7 @@ import '../../../data/goals.dart';
 import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
 import '../../../state/app_state.dart';
-import '../../../state/debug_looks.dart' show LearnLook;
-import '../../../widgets/learn_looks.dart' show aimOf, learnLook;
+import '../../../state/debug_looks.dart';
 import '../../../widgets/area_marks.dart';
 import '../../../widgets/explore/card_tiles.dart';
 import '../../../widgets/explore/first_shelves.dart';
@@ -16,9 +15,13 @@ import '../../../screens/area_screen.dart';
 import '../../../theme.dart';
 
 /// Where a card pays off in a life (lib/data/goals.dart), on Explore for
-/// every subject: a shelf of one area a day, each in turn, the same for
-/// everybody, under the same words its cards carry on their backs: "Useful
-/// for: Money and shopping". Nothing is asked of the reader for it.
+/// every subject, under the same words its cards carry on their backs:
+/// "Useful for: Money and shopping". The reader's own area, every day, once
+/// they have said on the profile where they want to see more clearly
+/// (lib/widgets/aim_picker.dart), and Explore puts it among the first
+/// shelves ([withAimShelf]); where the server's Explore names the block
+/// for a reader who has said nothing, an area a day, each in turn, the same
+/// for everybody.
 class GoalBlock extends ExploreBlock with SectionLayout {
   const GoalBlock();
 
@@ -34,12 +37,7 @@ class GoalBlock extends ExploreBlock with SectionLayout {
     if (host.subject != null) return null;
     final AppState app = host.app;
     final l = context.l10n;
-    // The area of the day, the same for everybody; in What to learn's look
-    // B, which asks the reader for one aim, the aim's every day
-    // (lib/widgets/learn_looks.dart).
-    final Goal area =
-        (learnLook == LearnLook.aim ? aimOf(app) : null) ??
-        Goal.ofDay(app.today);
+    final Goal area = Goal.of(app.goal) ?? Goal.ofDay(app.today);
     final List<Pill> cards = area.cardsFor(app.today, app.seenIds);
     if (cards.isEmpty) return null;
     return ShelfFrame(
@@ -74,4 +72,31 @@ class GoalBlock extends ExploreBlock with SectionLayout {
       ),
     );
   }
+}
+
+/// Explore's sections with the shelf of the reader's goal among the first,
+/// after Today's five and what to continue: a reader who said on the profile
+/// where they want to see more clearly was told there would be cards for it
+/// every day, and this is where they are. With no goal, or with the block
+/// already placed by the server, the sections as the server sent them.
+///
+/// In What to learn's look E, as the developer tools try it, the week's
+/// skill has its shelf there too, over the goal's (FocusBlock).
+List<ExploreSection> withAimShelf(AppState app, List<ExploreSection> sections) {
+  final bool aim =
+      Goal.of(app.goal) != null && !sections.any((s) => s.block == 'goal');
+  final bool focus =
+      DebugLooks.learnPicked == LearnLook.weekly &&
+      !sections.any((s) => s.block == 'focus');
+  if (!aim && !focus) return sections;
+  var at = 0;
+  for (final (int i, ExploreSection s) in sections.indexed) {
+    if (s.id == 'your-five' || s.id == 'continue') at = i + 1;
+  }
+  return [
+    ...sections.take(at),
+    if (focus) const ExploreSection(id: 'focus', block: 'focus'),
+    if (aim) const ExploreSection(id: 'goal', block: 'goal'),
+    ...sections.skip(at),
+  ];
 }

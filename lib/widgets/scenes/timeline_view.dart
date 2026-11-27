@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../l10n/l10n.dart';
 import '../../models/scene.dart';
 import '../../theme.dart';
+import '../press_scale.dart';
 
 /// Plays a [TimelineScene]: one lane per event over a shared time axis.
 ///
@@ -492,33 +493,37 @@ class _TimelineSceneViewState extends State<TimelineSceneView>
                 behavior: HitTestBehavior.opaque,
                 onTap: _lock,
                 // Waiting, it is an outline; once every event is placed it
-                // fills with ink — a change of shape, not only of shade.
-                child: TweenAnimationBuilder<double>(
-                  tween: Tween(end: ready ? 1 : 0),
-                  duration: Duration(milliseconds: still ? 0 : 200),
-                  curve: Curves.easeOut,
-                  builder: (context, on, _) => Container(
-                    constraints: const BoxConstraints(minHeight: 44),
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                      color: ink.withValues(alpha: on),
-                      border: Border.all(
-                        color: ink.withValues(alpha: 0.3 + 0.7 * on),
-                        width: 1.5,
+                // fills with ink — a change of shape, not only of shade —
+                // and gives under the finger when pressed.
+                child: PressScale(
+                  live: ready && !_locked,
+                  child: TweenAnimationBuilder<double>(
+                    tween: Tween(end: ready ? 1 : 0),
+                    duration: Duration(milliseconds: still ? 0 : 200),
+                    curve: Curves.easeOut,
+                    builder: (context, on, _) => Container(
+                      constraints: const BoxConstraints(minHeight: 44),
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: ink.withValues(alpha: on),
+                        border: Border.all(
+                          color: ink.withValues(alpha: 0.3 + 0.7 * on),
+                          width: 1.5,
+                        ),
+                        borderRadius: BorderRadius.circular(999),
                       ),
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                    child: Text(
-                      l10n.sceneLockIn,
-                      style: AppText.label(
-                        size: 11.5,
-                        weight: FontWeight.w800,
-                        spacing: 1.1,
-                        color: Color.lerp(
-                          ink.withValues(alpha: 0.5),
-                          widget.ground,
-                          on,
+                      child: Text(
+                        l10n.sceneLockIn,
+                        style: AppText.label(
+                          size: 11.5,
+                          weight: FontWeight.w800,
+                          spacing: 1.1,
+                          color: Color.lerp(
+                            ink.withValues(alpha: 0.5),
+                            widget.ground,
+                            on,
+                          ),
                         ),
                       ),
                     ),

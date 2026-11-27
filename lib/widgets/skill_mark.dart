@@ -14,8 +14,10 @@ import '../data/skills.dart';
 import '../l10n/l10n.dart';
 import '../screens/skills_screen.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../theme.dart';
 import 'chunky.dart';
+import 'learn_looks.dart' show showFocusMarkSheet;
 import 'liked_mark.dart';
 import 'skill_score.dart';
 
@@ -83,6 +85,7 @@ class SkillMark extends StatelessWidget {
     required double middle,
     required String subject,
     String? chip,
+    double extra = 0,
     TextScaler scaler = TextScaler.noScaling,
   }) {
     double measure(String text, double size, double spacing) {
@@ -107,7 +110,7 @@ class SkillMark extends StatelessWidget {
 
     double left = CardTags.margin + 16 + 8 + measure(subject, 11, 1.4);
     if (chip != null) left += 9 + measure(chip, 9.5, 1) + 16;
-    return width - middle - size / 2 - gap >= left;
+    return width - middle - size / 2 - gap >= left + extra;
   }
 
   @override
@@ -144,7 +147,9 @@ class SkillMark extends StatelessWidget {
 
 /// Puts the sheet a card's skill mark opens: the skill the card trains, that
 /// it is one the reader put in focus, their level in it, and the way to What
-/// to learn.
+/// to learn. In What to learn's look E, as the developer tools try it, the
+/// mark is the week's skill's, and opens what that is
+/// (lib/widgets/learn_looks.dart).
 Future<void> showSkillMarkSheet(
   BuildContext context,
   AppState app,
@@ -155,6 +160,9 @@ Future<void> showSkillMarkSheet(
     'skill': skill.name,
     if (cardId != null) ...app.cardFacts(cardId),
   });
+  if (DebugLooks.learnPicked == LearnLook.weekly) {
+    return showFocusMarkSheet(context, app, skill);
+  }
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,

@@ -2170,6 +2170,78 @@ class AppLocalizationsEs extends AppLocalizations {
       'Unas pocas respuestas más y aquí verás dónde eres fuerte.';
 
   @override
+  String get readTitle => 'Dónde ya ves claro';
+
+  @override
+  String get readBlind => 'Tu punto ciego';
+
+  @override
+  String get readLocked =>
+      'Cinco tarjetas sobre tu punto ciego, y tu perfil completo, con Astute+.';
+
+  @override
+  String get readEmpty =>
+      'Unas pocas respuestas más y aquí verás dónde ves claro y dónde no.';
+
+  @override
+  String get readNoAim =>
+      'Elige arriba dónde quieres ver más claro: tus respuestas te dirán dónde ya lo haces.';
+
+  @override
+  String get readLine =>
+      'Las habilidades que pide este objetivo, leídas en tus respuestas: dónde ves claro y tu punto ciego.';
+
+  @override
+  String get readOthers => 'El resto de tu perfil';
+
+  @override
+  String get focusTitle => 'El foco de la semana';
+
+  @override
+  String get focusFromGoal =>
+      'Elegido a partir de tu objetivo: cada semana una habilidad distinta.';
+
+  @override
+  String get focusFromMisses =>
+      'Elegido a partir de tus respuestas: donde más fallas.';
+
+  @override
+  String get focusLine =>
+      'Las tarjetas que lo entrenan llevan su marca. El domingo, cómo fue la semana.';
+
+  @override
+  String focusLast(String skill) {
+    return 'La semana pasada: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'Desde el lunes: $skill';
+  }
+
+  @override
+  String get focusResult => 'Cómo fue la semana';
+
+  @override
+  String get focusPlus =>
+      'Con Astute+, el foco lo eligen tus respuestas: donde más fallas.';
+
+  @override
+  String get focusMarkBody =>
+      'Esta semana entrenas esta habilidad: las tarjetas que la entrenan llevan esta marca. El domingo verás cómo fue.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'Foco de la semana: $skill';
+  }
+
+  @override
+  String get focusShelfLine => 'Tarjetas para entrenarlo, aún sin leer.';
+
+  @override
+  String get focusOpen => 'Tu semana';
+
+  @override
   String get scoreTitle => 'Puntuación Astute';
 
   @override
@@ -7185,4 +7257,181 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Ahora no';
+
+  @override
+  String get listenEntry => 'Escucha las cinco de hoy';
+
+  @override
+  String get listenEntryShort => 'Escuchar';
+
+  @override
+  String get listenTitle => 'Las cinco de hoy';
+
+  @override
+  String get listenQuestion => 'Pregunta';
+
+  @override
+  String get listenThink => 'Piénsalo…';
+
+  @override
+  String get listenAnswer => 'Respuesta';
+
+  @override
+  String get listenPreparing => 'Preparando la voz…';
+
+  @override
+  String get listenWaiting => 'La siguiente tarjeta está en camino…';
+
+  @override
+  String get listenFreeNote =>
+      'La primera tarjeta es gratis; las demás, con Astute+.';
+
+  @override
+  String get listenOfferTitle =>
+      'El resto de las tarjetas de hoy, leídas para ti';
+
+  @override
+  String get listenOfferLine =>
+      'Con Astute+ escuchas las cinco cada día, incluso con la pantalla bloqueada.';
+
+  @override
+  String get listenNothing => 'Esta tarjeta no tiene nada que escuchar';
+
+  @override
+  String get listenCardUnavailable => 'No disponible ahora';
+
+  @override
+  String get listenUnavailable =>
+      'La escucha no está disponible ahora. Vuelve a intentarlo más tarde.';
+
+  @override
+  String get listenDone => 'Todas las tarjetas de hoy, escuchadas.';
+
+  @override
+  String get listenAgain => 'Escuchar otra vez';
+
+  @override
+  String get listenNextCard => 'Siguiente tarjeta';
+
+  @override
+  String get inviteSection => 'Amigos';
+
+  @override
+  String get inviteRow => 'Invita a un amigo';
+
+  @override
+  String get inviteRowLine => 'Una semana de Astute+ para los dos';
+
+  @override
+  String get inviteCodeRow => '¿Tienes un código?';
+
+  @override
+  String get inviteCodeAccepted => 'Código aceptado';
+
+  @override
+  String get inviteCodeAcceptedLine =>
+      'Tu semana empieza cuando termines tu primer día';
+
+  @override
+  String get inviteSheetLine =>
+      'Envía tu código a un amigo. Cuando termine su primer día, las cinco tarjetas, cada uno tendrá una semana de Astute+.';
+
+  @override
+  String get inviteYourCode => 'Tu código';
+
+  @override
+  String get inviteCopy => 'Copiar';
+
+  @override
+  String get inviteSend => 'Enviar la invitación';
+
+  @override
+  String inviteRules(int cap) {
+    return 'Vale para una cuenta nueva que nunca ha tenido Astute+. Recibes hasta $cap semanas al año.';
+  }
+
+  @override
+  String inviteWeeksSoFar(int n, int cap) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n semanas de $cap este año',
+      one: '1 semana de $cap este año',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inviteCapped(int cap) {
+    return 'Ya has tenido las $cap semanas de este año. Tus amigos siguen recibiendo la suya.';
+  }
+
+  @override
+  String inviteMessage(String code, String link) {
+    return 'Te invito a Astute: cinco tarjetas al día para mantener la mente ágil. Con mi código $code, cuando termines tu primer día tendremos una semana de Astute+ cada uno.\n$link';
+  }
+
+  @override
+  String inviteMessageCapped(String code, String link) {
+    return 'Te invito a Astute: cinco tarjetas al día para mantener la mente ágil. Con mi código $code, cuando termines tu primer día tendrás una semana de Astute+ de regalo.\n$link';
+  }
+
+  @override
+  String get inviteCodeTitle => 'El código de un amigo';
+
+  @override
+  String get inviteCodeLine =>
+      'Escribe el código que te envió un amigo. Cuando termines tu primer día, cada uno tendrá una semana de Astute+.';
+
+  @override
+  String get inviteCodeUse => 'Usar el código';
+
+  @override
+  String get inviteCodeWaitingLine =>
+      'Termina tu primer día, las cinco tarjetas: entonces empieza la semana de Astute+, para ti y para el amigo que te invitó.';
+
+  @override
+  String get inviteRefusedUnknown =>
+      'Ese código no existe. Revisa las letras y vuelve a intentarlo.';
+
+  @override
+  String get inviteRefusedOwn => 'Es tu propio código: envíaselo a un amigo.';
+
+  @override
+  String get inviteRefusedUsed => 'Ya has usado el código de un amigo.';
+
+  @override
+  String get inviteRefusedLate =>
+      'Los códigos son para cuentas nuevas, en su primera semana.';
+
+  @override
+  String get inviteRefusedPlus =>
+      'Los códigos son para cuentas que nunca han tenido Astute+.';
+
+  @override
+  String get inviteSuccessTitle => 'Una semana de Astute+, de regalo.';
+
+  @override
+  String get inviteSuccessPlan => 'Astute+ · una semana';
+
+  @override
+  String inviteSuccessUntil(String date) {
+    return 'Hasta el $date';
+  }
+
+  @override
+  String get inviteSuccessFoot =>
+      'Nada que pagar y nada que cancelar: después vuelves al plan gratuito.';
+
+  @override
+  String inviteEarned(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n amigos terminaron su primer día: $n semanas de Astute+ para ti.',
+      one: 'Un amigo terminó su primer día: una semana de Astute+ para ti.',
+    );
+    return '$_temp0';
+  }
 }

@@ -4,10 +4,19 @@
 // from the first card to the day sent, Explore top to bottom for every
 // subject and for Economics, what opens inside Explore, Your journey, the
 // profile with its settings and the fine-tuning of the mix, the paywall a
-// free reader meets, and a level reached.
+// free reader meets, a level reached, and search.
 //
 //   flutter test tool/tour_shots.dart --update-goldens \
 //     --dart-define=TOUR_DIR=/some/folder [--plain-name today]
+//
+// TOUR_PHONE (small: an SE's 375 by 667; large: 430 by 932), TOUR_THEME=light
+// (the day, as Appearance sets it), TOUR_LANG (a language) and TOUR_RATIO
+// (pixels a point) move it, for a sweep of every phone, light and language;
+// --name 'today|journey' takes several areas at once. Beside each picture a
+// .txt says every run of text on it, top to bottom; cut.txt lists the runs
+// that do not fit (more lines than they may take, or wider than their room),
+// and overflow.txt any overflow, which is written down rather than stopping
+// the camera.
 //
 // A camera, not a check: it lives outside test/ so CI never runs it. Each
 // area lands in a folder of its own under TOUR_DIR (tool/shots/gallery/tour
@@ -31,6 +40,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
@@ -51,6 +61,7 @@ import 'package:astuto/explore/blocks/bets/bets_day.dart';
 import 'package:astuto/explore/blocks/bets/daily_deal.dart';
 import 'package:astuto/explore/blocks/bets/deal.dart' show answerOf;
 import 'package:astuto/explore/blocks/bets/three.dart';
+import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/remote/remote.dart';
@@ -76,12 +87,130 @@ import '../test/explore/core_harness.dart' show loadFonts;
 const String _dirGiven = String.fromEnvironment('TOUR_DIR');
 final String _dir = _dirGiven.isEmpty ? 'shots/gallery/tour' : _dirGiven;
 
-/// The phone: an iPhone of 390 by 844 points, three pixels a point, its
-/// notch and its home bar.
-const Size _phone = Size(390, 844);
-const double _notch = 47;
-const double _homeBar = 34;
-const double _ratio = 3;
+/// The phone: an iPhone of 390 by 844 points, its notch and its home bar;
+/// TOUR_PHONE=small for an SE's 375 by 667 (a status bar, no home bar),
+/// large for 430 by 932. TOUR_RATIO pixels a point, three by default.
+const String _phoneGiven = String.fromEnvironment(
+  'TOUR_PHONE',
+  defaultValue: 'medium',
+);
+final Size _phone = switch (_phoneGiven) {
+  'small' => const Size(375, 667),
+  'large' => const Size(430, 932),
+  _ => const Size(390, 844),
+};
+final double _notch = switch (_phoneGiven) {
+  'small' => 20,
+  'large' => 59,
+  _ => 47,
+};
+final double _homeBar = _phoneGiven == 'small' ? 0 : 34;
+final double _ratio = const int.fromEnvironment(
+  'TOUR_RATIO',
+  defaultValue: 3,
+).toDouble();
+
+/// The reader's language (TOUR_LANG, Italian by default) and the light they
+/// read by (TOUR_THEME=light for the day, as Appearance sets it; the night by
+/// default, as the app ships). The captions stay in Italian, for the owner.
+const String _lang = String.fromEnvironment('TOUR_LANG', defaultValue: 'it');
+const bool _light = String.fromEnvironment('TOUR_THEME') == 'light';
+final AppLocalizations _l = lookupAppLocalizations(const Locale(_lang));
+
+/// What the screen says, beside each picture: every run of text on it, top
+/// to bottom, and in cut.txt those that do not fit (more lines than they
+/// may take, or wider than their room on a line that does not wrap).
+void _writeText(WidgetTester tester, String area, String name) {
+  final List<(double, double, String)> lines = [];
+  final List<String> cut = [];
+  for (final Element e in find.byType(RichText).evaluate()) {
+    final RenderObject? r = e.renderObject;
+    if (r is! RenderParagraph || !r.attached || !r.hasSize) continue;
+    final Rect rect = r.localToGlobal(Offset.zero) & r.size;
+    if (rect.bottom <= 0 ||
+        rect.top >= _phone.height ||
+        rect.right <= 0 ||
+        rect.left >= _phone.width) {
+      continue;
+    }
+    final String text = r.text.toPlainText().replaceAll('\n', ' / ').trim();
+    if (text.isEmpty) continue;
+    lines.add((rect.top, rect.left, text));
+    bool wide = false;
+    try {
+      wide =
+          !r.softWrap &&
+          r.getMaxIntrinsicWidth(double.infinity) > r.size.width + 1;
+    } catch (_) {}
+    if (r.didExceedMaxLines || wide) {
+      cut.add(
+        '$name\t${rect.left.round()},${rect.top.round()} '
+        '${rect.width.round()}x${rect.height.round()}\t'
+        '${r.didExceedMaxLines ? 'lines' : 'wide'}\t$text',
+      );
+    }
+  }
+  lines.sort(
+    (a, b) => a.$1 != b.$1 ? a.$1.compareTo(b.$1) : a.$2.compareTo(b.$2),
+  );
+  final File out = File('$_dir/$area/$name.txt');
+  out.parent.createSync(recursive: true);
+  out.writeAsStringSync(
+    lines.map((l) => '${l.$1.round()}\t${l.$2.round()}\t${l.$3}').join('\n'),
+  );
+  if (cut.isNotEmpty) {
+    File('$_dir/$area/cut.txt')
+        .writeAsStringSync('${cut.join('\n')}\n', mode: FileMode.append);
+  }
+}
+
+/// The last picture taken, for the overflow log to say where it was.
+String _lastShot = '';
+
+/// A test of the tour, with any overflow written down in overflow.txt
+/// (beside the area it was in, after the picture it followed) rather than
+/// stopping the camera: a sweep has to see the rest.
+void _shoot(String name, Future<void> Function(WidgetTester) body) {
+  testWidgets(name, (tester) async {
+    final FlutterExceptionHandler? before = FlutterError.onError;
+    FlutterError.onError = (FlutterErrorDetails d) {
+      final String what = d.exceptionAsString();
+      if (what.contains('overflowed')) {
+        final File log = File('$_dir/overflow.txt');
+        log.parent.createSync(recursive: true);
+        log.writeAsStringSync(
+          '$name\tafter $_lastShot\t${what.split('\n').first}\n',
+          mode: FileMode.append,
+        );
+        return;
+      }
+      before?.call(d);
+    };
+    try {
+      await body(tester);
+    } finally {
+      FlutterError.onError = before;
+      // A test that stops early (no film to play) leaves the phone's
+      // platform as it was.
+      debugDefaultTargetPlatformOverride = null;
+    }
+  });
+}
+
+/// The endless feed's head, in the reader's language, as the document the
+/// build bundles names it.
+String _feedTitle() {
+  final Object? explore = Remote.embedded.parts['explore'];
+  if (explore is Map) {
+    for (final Object? s in (explore['sections'] as List? ?? const [])) {
+      if (s is Map && s['id'] == 'feed' && s['title'] is Map) {
+        final Map<Object?, Object?> title = s['title'] as Map;
+        return '${title[_lang] ?? title['en']}';
+      }
+    }
+  }
+  return 'Continua a esplorare';
+}
 
 // ---------------------------------------------------------------------------
 // The camera.
@@ -122,6 +251,8 @@ class _Roll {
       find.byType(MaterialApp).first,
       matchesGoldenFile('$_dir/$area/$name.png'),
     );
+    _writeText(tester, area, name);
+    _lastShot = '$area/$name';
     _captions['$name.png'] = {
       'caption': caption,
       if (touch != null) 'touch': [touch.dx, touch.dy],
@@ -243,14 +374,16 @@ void _hold(WidgetTester tester) {
   final view = tester.view;
   view.physicalSize = _phone * _ratio;
   view.devicePixelRatio = _ratio;
-  view.padding = const FakeViewPadding(
+  view.padding = FakeViewPadding(
     top: _notch * _ratio,
     bottom: _homeBar * _ratio,
   );
   view.viewPadding = view.padding;
-  tester.platformDispatcher.localesTestValue = const [Locale('it')];
-  tester.platformDispatcher.localeTestValue = const Locale('it');
-  tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+  tester.platformDispatcher.localesTestValue = const [Locale(_lang)];
+  tester.platformDispatcher.localeTestValue = const Locale(_lang);
+  tester.platformDispatcher.platformBrightnessTestValue = _light
+      ? Brightness.light
+      : Brightness.dark;
   debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
   addTearDown(() {
     view.reset();
@@ -275,7 +408,10 @@ const Map<String, Object> _quiet = {
 /// The app opened on [prefs], on the phone, until it is at rest.
 Future<void> _open(WidgetTester tester, Map<String, Object> prefs) async {
   _hold(tester);
-  SharedPreferences.setMockInitialValues(prefs);
+  SharedPreferences.setMockInitialValues({
+    ...prefs,
+    if (_light) 'knowit.theme': 'light',
+  });
   await tester.pumpWidget(const AstutoApp());
   await tester.runAsync(
     () => Future<void>.delayed(const Duration(milliseconds: 300)),
@@ -631,7 +767,7 @@ Future<void> _scrollTour(WidgetTester tester, _Roll roll, String where) async {
       '$where · ${i + 1}${on.isEmpty ? '' : ' · ${on.join(', ')}'}',
     );
     // The endless feed, by its head: once it has come up, two more.
-    if (_has(find.text('Continua a esplorare'))) inFeed = math.max(inFeed, 1);
+    if (_has(find.text(_feedTitle()))) inFeed = math.max(inFeed, 1);
     if (inFeed > 0 && inFeed++ > 2) break;
     final double before = list.position.pixels;
     if (before >= list.position.maxScrollExtent - 1) break;
@@ -1161,7 +1297,7 @@ void main() {
 
   // -------------------------------------------------------------------------
   // 1. The onboarding, every step in order.
-  testWidgets('onboarding', (tester) async {
+  _shoot('onboarding', (tester) async {
     final _Roll roll = _Roll('onboarding');
     // A build with somewhere to send measurement, as the store's has: the
     // intro asks about it. Answered no below; nothing is ever sent.
@@ -1186,7 +1322,7 @@ void main() {
       }
     }
     // The question about measuring, answered no.
-    final Finder no = find.text('No, grazie');
+    final Finder no = find.text(_l.consentNo);
     if (_has(no)) {
       await tester.tap(no.first);
       await _settle(tester, 10);
@@ -1196,7 +1332,7 @@ void main() {
         'Intro dopo «No, grazie»: resta solo «Inizia a leggere»',
       );
     }
-    await tester.tap(find.text('Inizia a leggere').first);
+    await tester.tap(find.text(_l.startReading).first);
     await _settle(tester, 20);
 
     // The subjects: everything in, each turned down by dragging it left.
@@ -1248,7 +1384,7 @@ void main() {
       'materie-scelte',
       'Materie scelte: Sport e Cultura pop tolte, altre ridotte; il conto in fondo',
     );
-    await tester.tap(find.text('Avanti').last);
+    await tester.tap(find.text(_l.next).last);
     await _settle(tester, 20);
 
     // The genres: the subjects in the order the wheel left them, six genres
@@ -1259,25 +1395,25 @@ void main() {
       'Generi: le materie nell’ordine del mix, sei generi ciascuna, tutti accesi',
     );
     final List<Genre> economics = kGenres['economics']!;
-    final Finder second = find.text(themeName(economics[1], 'it')).first;
+    final Finder second = find.text(themeName(economics[1], _lang)).first;
     await tester.tap(second);
     await _settle(tester, 6);
     await roll.take(
       tester,
       'generi-tocco',
-      'Generi: un tocco spegne «${themeName(economics[1], 'it')}» (12 di 13)',
+      'Generi: un tocco spegne «${themeName(economics[1], _lang)}» (12 di 13)',
       touch: tester.getCenter(second),
     );
 
     // A hold on the first genre: what is inside it opens under the row.
-    final Finder firstChip = find.text(themeName(economics.first, 'it')).first;
+    final Finder firstChip = find.text(themeName(economics.first, _lang)).first;
     final Offset at = tester.getCenter(firstChip);
     final TestGesture press = await tester.startGesture(at);
     await tester.pump(const Duration(milliseconds: 250));
     await roll.take(
       tester,
       'generi-pressione',
-      'Generi: dito tenuto su «${themeName(economics.first, 'it')}» (prima che si apra)',
+      'Generi: dito tenuto su «${themeName(economics.first, _lang)}» (prima che si apra)',
       touch: at,
     );
     // Past the hold's half second: it opens, and is caught opening.
@@ -1298,11 +1434,11 @@ void main() {
     await roll.take(
       tester,
       'generi-aperto',
-      'Generi: «${themeName(economics.first, 'it')}» aperto, i suoi sotto-argomenti',
+      'Generi: «${themeName(economics.first, _lang)}» aperto, i suoi sotto-argomenti',
     );
     // One strand inside turned off.
     final Strand strand = economics.first.strands[1];
-    final String strandName = kStrandNames['it']?[strand.id] ?? strand.label;
+    final String strandName = kStrandNames[_lang]?[strand.id] ?? strand.label;
     final Finder strandRow = find.text(strandName);
     if (_has(strandRow)) {
       final Offset s = tester.getCenter(strandRow.first);
@@ -1327,7 +1463,7 @@ void main() {
       await roll.take(tester, 'generi-giu-$i', 'Generi, più giù ($i)');
       if (list.position.pixels >= list.position.maxScrollExtent - 1) break;
     }
-    await tester.tap(find.textContaining('Continua').last);
+    await tester.tap(find.byType(PrimaryButton).last);
     await _settle(tester, 20);
 
     // The first day.
@@ -1365,7 +1501,7 @@ void main() {
   // -------------------------------------------------------------------------
   // 2. Today: the first card, a card front and back, Go deeper, Why this
   // card, the day finished and sent.
-  testWidgets('today', (tester) async {
+  _shoot('today', (tester) async {
     final _Roll roll = _Roll('today');
     await _open(tester, _fourDaysIn());
     final Finder stack = find.byType(PillCardStack);
@@ -1400,7 +1536,7 @@ void main() {
     // Go deeper, from the source on the back: its line starts with the
     // words, the source after them.
     final Finder deeper = find
-        .textContaining('Approfondisci', findRichText: true)
+        .textContaining(_l.deeperTitle, findRichText: true)
         .hitTestable();
     if (_has(deeper)) {
       await tester.tapAt(tester.getTopLeft(deeper.first) + const Offset(24, 9));
@@ -1521,7 +1657,7 @@ void main() {
               'carta-${i + 1}-parte-scelta',
               'Carta ${i + 1}: scelta una parte, chiede il perché in una riga',
             );
-            final Finder skip = find.textContaining('mostramela');
+            final Finder skip = find.text(_l.skipShowMeAnyway);
             if (_has(skip)) {
               await tester.tap(skip.first);
               await _settle(tester, 20);
@@ -1582,7 +1718,7 @@ void main() {
         'condividi',
         'Condividi la giornata: il foglio, «Copertina»',
       );
-      for (final String layout in const ['Elenco', 'Storia']) {
+      for (final String layout in [_l.shareFormatList, _l.shareFormatStory]) {
         final Finder chip = find.text(layout).hitTestable();
         if (!_has(chip)) continue;
         await tester.tap(chip.first);
@@ -1616,14 +1752,14 @@ void main() {
 
   // -------------------------------------------------------------------------
   // 3. Explore, every subject, top to bottom; 4. a subject's own (Economics).
-  testWidgets('explore-all', (tester) async {
+  _shoot('explore-all', (tester) async {
     final _Roll roll = _Roll('explore-all');
     await _openExplore(tester);
     await _scrollTour(tester, roll, 'Esplora · Tutte');
     debugDefaultTargetPlatformOverride = null;
   });
 
-  testWidgets('explore-subject', (tester) async {
+  _shoot('explore-subject', (tester) async {
     final _Roll roll = _Roll('explore-subject');
     await _openExplore(tester);
     final Finder chip = _keyed('subject-Economics-off');
@@ -1633,11 +1769,49 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
   });
 
+  // Search, from Explore's lens: what it offers before a word is typed, a
+  // word the bank answers, a word it does not, and a kind of card.
+  _shoot('search', (tester) async {
+    final _Roll roll = _Roll('search');
+    await _openExplore(tester);
+    await tester.tap(_keyed('explore-search').first);
+    await _settle(tester, 16);
+    await roll.take(tester, 'cerca', 'Cerca: aperta, prima di scrivere');
+    if (await _scrollBy(
+      tester,
+      _phone.height * 0.6,
+      list: find.descendant(
+        of: _keyed('search-start'),
+        matching: find.byType(Scrollable),
+      ),
+    )) {
+      await roll.take(tester, 'cerca-giu', 'Cerca: aperta, più giù');
+    }
+    final Finder field = find.byType(TextField);
+    if (_has(field)) {
+      await tester.enterText(field.first, 'brain');
+      await _settle(tester, 16);
+      await roll.take(tester, 'cerca-risultati', 'Cerca: «brain», i risultati');
+      await tester.enterText(field.first, 'zzqxw');
+      await _settle(tester, 12);
+      await roll.take(tester, 'cerca-nessuno', 'Cerca: nessun risultato');
+      await tester.enterText(field.first, '');
+      await _settle(tester, 12);
+    }
+    final Finder kind = _prefixed('search-kind-').hitTestable();
+    if (_has(kind)) {
+      await tester.tap(kind.first);
+      await _settle(tester, 16);
+      await roll.take(tester, 'cerca-tipo', 'Cerca: un tipo di carta');
+    }
+    debugDefaultTargetPlatformOverride = null;
+  });
+
   // -------------------------------------------------------------------------
   // 5. Inside Explore.
 
   // A. A challenge: In order, out of its tile, played to its end.
-  testWidgets('inside: challenge', (tester) async {
+  _shoot('inside: challenge', (tester) async {
     final _Roll roll = _Roll('inside-explore', prefix: 'A');
     await _openExplore(tester);
     if (!await _reach(tester, 'challenge-sixty', above: 160)) return;
@@ -1722,7 +1896,7 @@ void main() {
   });
 
   // B. Today's five, played through, and its result against today's players.
-  testWidgets("inside: today's five", (tester) async {
+  _shoot("inside: today's five", (tester) async {
     final _Roll roll = _Roll('inside-explore', prefix: 'B');
     _todaysPlayers();
     await _openExplore(tester);
@@ -1826,7 +2000,7 @@ void main() {
   });
 
   // C. A news story, opened from the latest news.
-  testWidgets('inside: news', (tester) async {
+  _shoot('inside: news', (tester) async {
     final _Roll roll = _Roll('inside-explore', prefix: 'C');
     await _openExplore(tester);
     if (!await _reach(tester, 'section-news-today', above: 100)) return;
@@ -1848,7 +2022,7 @@ void main() {
   });
 
   // D. A book in pills: the book of the week, its page, its first idea.
-  testWidgets('inside: book', (tester) async {
+  _shoot('inside: book', (tester) async {
     final _Roll roll = _Roll('inside-explore', prefix: 'D');
     await _openExplore(tester);
     if (!await _reach(tester, 'section-books', above: 100)) return;
@@ -1883,7 +2057,7 @@ void main() {
   });
 
   // E. What the founders read, and one founder's page.
-  testWidgets('inside: founder', (tester) async {
+  _shoot('inside: founder', (tester) async {
     final _Roll roll = _Roll('inside-explore', prefix: 'E');
     await _openExplore(tester);
     if (!await _reach(tester, 'section-founders', above: 120)) return;
@@ -1903,7 +2077,7 @@ void main() {
   });
 
   // F. The charts that mislead, as Explore has them on a Wednesday.
-  testWidgets('inside: unmask', (tester) async {
+  _shoot('inside: unmask', (tester) async {
     final _Roll roll = _Roll('inside-explore', prefix: 'F');
     _adoptOnWeekday(3);
     addTearDown(Remote.reset);
@@ -1947,7 +2121,7 @@ void main() {
   });
 
   // G. The card to watch: its tile, and the film opened.
-  testWidgets('inside: video', (tester) async {
+  _shoot('inside: video', (tester) async {
     final _Roll roll = _Roll('inside-explore', prefix: 'G');
     final _Player player = _Player();
     VideoPlayerPlatform.instance = player;
@@ -1988,7 +2162,7 @@ void main() {
 
   // -------------------------------------------------------------------------
   // 6. Your journey, with the level reached as it opens; 8. a level-up.
-  testWidgets('journey', (tester) async {
+  _shoot('journey', (tester) async {
     final _Roll roll = _Roll('journey');
     final reader = _journeyReader();
     // What the phone would have written down as the days went: the score
@@ -2061,9 +2235,49 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
   });
 
+  // A miss practised from Your journey ("Le 10 sbagliate con sicurezza"):
+  // the card as it opens, and its back once answered right this time.
+  _shoot('practice', (tester) async {
+    final _Roll roll = _Roll('practice');
+    final reader = _journeyReader();
+    await _open(tester, {...reader.prefs, LevelMemory.key: 99});
+    await tester.tap(_keyed('tab-Profile').first);
+    await _settle(tester, 16);
+    await tester.tap(_keyed('profile-journey').first, warnIfMissed: false);
+    await _settle(tester, 20);
+    final Finder misses = _keyed('story-practice-misses');
+    await tester.scrollUntilVisible(misses, 300, scrollable: _down());
+    await _settle(tester, 6);
+    await roll.take(tester, 'allenati', 'Il tuo viaggio: Allenati');
+    await tester.tap(misses.first);
+    await _settle(tester, 20);
+    final PillCardStack deck = tester.widget(find.byType(PillCardStack));
+    final Pill top = deck.deck[deck.index];
+    await roll.take(
+      tester,
+      'sbagliata-fronte',
+      'Una sbagliata con sicurezza, ripresa: come si apre',
+    );
+    if (top.challenge case PickOne(:final options, :final correct)) {
+      await tester.tap(find.text(options[correct]).last);
+      await _settle(tester, 10);
+      final Finder sure = find.text('70%');
+      if (_has(sure)) {
+        await tester.tap(sure.last);
+        await _settle(tester, 20);
+      }
+      await roll.take(
+        tester,
+        'sbagliata-retro',
+        'Ripresa e azzeccata questa volta: il retro',
+      );
+    }
+    debugDefaultTargetPlatformOverride = null;
+  });
+
   // -------------------------------------------------------------------------
   // 7. The profile and its settings, the topics, and Regola il tuo mix.
-  testWidgets('profile', (tester) async {
+  _shoot('profile', (tester) async {
     final _Roll roll = _Roll('profile');
     await _open(tester, _threeWeeksIn());
     await tester.tap(_keyed('tab-Profile').first);
@@ -2145,7 +2359,7 @@ void main() {
   // -------------------------------------------------------------------------
   // 9. The paywall, for a free reader: from the profile, and from the lock
   // on the finished day.
-  testWidgets('paywall', (tester) async {
+  _shoot('paywall', (tester) async {
     final _Roll roll = _Roll('paywall');
     // The fifth card on top: thrown, the card after it offers Astute+.
     await _open(tester, _fourDaysIn(index: _todayFive.length - 1));
@@ -2186,7 +2400,7 @@ void main() {
       'giornata-finita',
       'Giornata finita, piano gratuito: «Il tuo viaggio» col lucchetto',
     );
-    final Finder journey = find.textContaining('Il tuo viaggio').hitTestable();
+    final Finder journey = find.textContaining(_l.yourJourney).hitTestable();
     if (_has(journey)) {
       await tester.tap(journey.first);
       await _settle(tester, 24);
@@ -2199,7 +2413,7 @@ void main() {
     }
     await tester.tap(_keyed('tab-Profile').first);
     await _settle(tester, 16);
-    final Finder plans = find.text('Vedi i piani');
+    final Finder plans = find.text(_l.seeThePlans);
     if (_has(plans)) {
       await Scrollable.ensureVisible(
         tester.element(plans.first),

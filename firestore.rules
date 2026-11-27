@@ -3,10 +3,10 @@ rules_version = '2';
 // Astute stores one document per reader, with what they did and what was
 // dealt them under it, one board per reader that a friend may look at, a
 // count per card per day of how many readers held on to it, the same count
-// kept for good, Explore as the server assembled it, and the day's games as
-// it counted them. The policy: you may read and write your own, anyone signed in
-// may read a board or a day's counts and add one to a count, and nothing
-// else exists.
+// kept for good, Explore as the server assembled it, the day's games as it
+// counted them, and the invitations, which only the server reads and writes.
+// The policy: you may read and write your own, anyone signed in may read a
+// board or a day's counts and add one to a count, and nothing else exists.
 //
 // Deploy with:  firebase deploy --only firestore:rules
 service cloud.firestore {
@@ -101,6 +101,14 @@ service cloud.firestore {
       // play being counted twice. The phone neither reads nor writes them;
       // a mark it could take away would be a play it could count again.
       match /daily/{game} {
+        allow read, write: if false;
+      }
+
+      // The cards the reader asked to hear read aloud on a day, and on the
+      // free plan which one was the day's free card (functions/src/
+      // listen.ts): all that stops a second free card. Server's alone,
+      // like the marks above.
+      match /listen/{day} {
         allow read, write: if false;
       }
 
@@ -255,6 +263,31 @@ service cloud.firestore {
         allow read, update, delete: if false;
       }
     }
+
+    // Invita un amico (functions/src/invite.ts): a reader's code and the
+    // weeks friends earned them, whose each code is, and the code a reader
+    // came with and where its week stands. Written only by the functions,
+    // which are also the only way a phone hears of them (inviteState,
+    // redeemInvite): no phone reads any of it, its own included. A code is
+    // whose it is to the server alone, and a week a phone could write would
+    // be a week nobody gave.
+    match /invites/{uid} {
+      allow read, write: if false;
+    }
+
+    match /inviteCodes/{code} {
+      allow read, write: if false;
+    }
+
+    match /invited/{uid} {
+      allow read, write: if false;
+    }
+
+    // The cards read aloud, the server's alone: where each clip is
+    // (listen/{hash}), the characters read this day and month
+    // (listenSpend/{period}), and when each reader last listened
+    // (listeners/{uid}), which goes with the account. Closed to every
+    // phone by the rule below; named here so nobody opens them by mistake.
 
     // Anything not named above is closed, including reads of other readers.
     match /{document=**} {

@@ -19,6 +19,7 @@ import '../data/genres.dart';
 import '../data/local_cards.dart';
 import '../data/books.dart';
 import '../data/goals.dart';
+import '../data/learn_reading.dart' show withFocusLean;
 import '../data/skills.dart';
 import '../data/news_paper.dart';
 import '../data/pill_bank.dart';
@@ -47,6 +48,7 @@ import 'music_sound.dart';
 import 'progress.dart';
 import 'card_notes.dart';
 import 'reading_log.dart';
+import '../l10n/dates.dart';
 
 /// Which paid plan the paywall has selected. Purchases are not wired up.
 enum Plan { month, year }
@@ -321,6 +323,9 @@ class AppState extends ChangeNotifier {
 
   /// What the reader wants to get better at (lib/data/goals.dart), by key,
   /// in the order they picked: up to [kMostGoals], none until they say.
+  /// The profile asks for one, where they want to see more clearly
+  /// (lib/widgets/aim_picker.dart); until it is answered there, the areas
+  /// of the skills picked on What to learn stand for it ([setSkills]).
   List<String> goals = const [];
 
   /// The first of [goals], or null.
@@ -341,8 +346,13 @@ class AppState extends ChangeNotifier {
   }.take(kMostGoals).toList();
 
   /// Says what the reader wants to learn: the skills this build knows, each
-  /// once, in the order given; their areas become the reader's goals.
+  /// once, in the order given; their areas become the reader's goals, while
+  /// the goals are still the skills' own. Once the reader has said on the
+  /// profile where they want to see more clearly
+  /// (lib/widgets/aim_picker.dart), that stands: the profile is the one
+  /// place the goal is picked, and a skill picked after it does not move it.
   Future<void> setSkills(List<String> keys) async {
+    final bool theirs = listEquals(goals, areasOf(skills));
     skills = List.unmodifiable(<String>{
       for (final String k in keys)
         if (Skill.of(k) case final Skill s) s.name,
@@ -351,7 +361,11 @@ class AppState extends ChangeNotifier {
     Analytics.person(
       set: {'skills': skills.join(','), 'skills_count': skills.length},
     );
-    await setGoals(areasOf(skills));
+    if (theirs) {
+      await setGoals(areasOf(skills));
+    } else {
+      notifyListeners();
+    }
   }
 
   /// Whether the reader has been asked what they want to get better at: on
@@ -718,7 +732,9 @@ class AppState extends ChangeNotifier {
     // time (SureAsk): kept, so a card asks or not the same way all day.
     String? sureSeed = _prefs.getString(_kSureSeed);
     if (sureSeed == null) {
-      sureSeed = math.Random().nextInt(1 << 32).toRadixString(36);
+      // 0x7fffffff, not 1 << 32: on the web build an int is a double
+      // and 1 << 32 is 0, which nextInt refuses.
+      sureSeed = math.Random().nextInt(0x7fffffff).toRadixString(36);
       _prefs.setString(_kSureSeed, sureSeed);
     }
     SureAsk.seed = sureSeed;
@@ -977,9 +993,13 @@ class AppState extends ChangeNotifier {
   }) {
     final int day = dayNumberOf(date);
     final Map<String, double> weights = profile.weightsOn(day, leanedWeights);
-    final Map<String, double> lean = isPlus
-        ? profile.tasteWith(taste)
-        : profile.lean;
+    // In What to learn's look E, as the developer tools try it, the reader's
+    // own cards lean into the week's skill too (lib/data/learn_reading.dart);
+    // as it ships, the lean is the reader's alone.
+    final Map<String, double> lean = withFocusLean(
+      this,
+      isPlus ? profile.tasteWith(taste) : profile.lean,
+    );
     final List<Pill> due = isPlus ? reviews : const [];
     if (firstDays && day < kOpeningDays) {
       final Deal? opening = dealOpening(
@@ -2575,6 +2595,28 @@ class AppState extends ChangeNotifier {
   /// Whether today's five can be sent to a friend as a challenge.
   bool get shareChallengeOn => kShareChallengeFlag.on(_here);
 
+  /// Listen (`listen`): the day's five read aloud by ElevenLabs, from a
+  /// quiet entry at the end of Today's header while the five are read
+  /// (lib/listen/). The first card of a day for everybody, the rest for
+  /// Astute+. Off as built, and off in remote/app.json until the owner has
+  /// added the ElevenLabs key and its plan; a server without a key says
+  /// "not configured", and the app hides it then too.
+  static const RemoteFlag kListenFlag = RemoteFlag('listen', fallback: false);
+
+  /// Whether Listen is offered on Today, as far as the server's switch goes.
+  bool get listenOn => kListenFlag.on(_here);
+
+  /// Invita un amico (`invite`): in the profile, a link with the reader's
+  /// code to send a friend, and "Have a code?" for a friend's; a week of
+  /// Astute+ for each of the two once the friend has finished a first day
+  /// (lib/sync/invite.dart, functions/src/invite.ts). Off as built, and off
+  /// on the server until RevenueCat's key is in place; even on, nothing
+  /// shows where the server says invitations are not set up.
+  static const RemoteFlag kInviteFlag = RemoteFlag('invite', fallback: false);
+
+  /// Whether the server has invitations on for this reader.
+  bool get inviteOn => kInviteFlag.on(_here);
+
   /// Whether the first run plays a card and offers the trial after it.
   bool get firstRunTrialOn => kFirstRunTrialFlag.on(_here);
 
@@ -3140,7 +3182,7 @@ class AppState extends ChangeNotifier {
     // at launch can outrun; this loads them, and does nothing once loaded.
     unawaited(initializeDateFormatting());
     try {
-      return DateFormat.MMMMd(locale).format(day);
+      return formatDay(DateFormat.MMMMd(locale), day);
     } catch (_) {
       return DateFormat.MMMMd('en').format(day);
     }

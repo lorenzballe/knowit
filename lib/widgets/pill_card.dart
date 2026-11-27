@@ -16,6 +16,7 @@ import '../models/place.dart';
 import '../sync/served.dart';
 import '../theme.dart';
 import 'card_edge.dart';
+import 'hard_ring.dart';
 import 'hold_to_keep.dart';
 import 'liked_mark.dart';
 import 'motion.dart';
@@ -112,7 +113,37 @@ class PillCard extends StatelessWidget {
     this.page,
     this.onPageMessage,
     this.controlsLive = true,
-  });
+  }) : _accent = null;
+
+  /// [of], drawn ringed (hard_ring.dart): [dressed], its card in the ringed
+  /// colours, its subject's mark and name in the ring's colour, and HARD
+  /// beside them.
+  PillCard._ringed(PillCard of, Pill dressed, Color this._accent)
+    : pill = dressed,
+      indexLabel = of.indexLabel,
+      flipped = of.flipped,
+      given = of.given,
+      onAnswer = of.onAnswer,
+      isReview = of.isReview,
+      isOwn = of.isOwn,
+      home = of.home,
+      note = of.note,
+      noteIcon = of.noteIcon,
+      onNote = of.onNote,
+      skill = of.skill,
+      onSkill = of.onSkill,
+      move = of.move,
+      saved = of.saved,
+      onSave = of.onSave,
+      liked = of.liked,
+      onLike = of.onLike,
+      onShare = of.onShare,
+      page = of.page,
+      onPageMessage = of.onPageMessage,
+      controlsLive = of.controlsLive;
+
+  /// The ring's colour, on a hard card drawn ringed; null on every other.
+  final Color? _accent;
 
   /// Whether the save and share on the card can be pressed, and read out:
   /// not on a card waiting under the one being read. They are drawn there
@@ -142,7 +173,17 @@ class PillCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget card = Stack(
+    // A hard card, where the developer tools ring it, is the same card
+    // drawn again in the ringed colours.
+    if (_accent == null && HardRing.on(pill)) {
+      final Palette p = context.p;
+      return PillCard._ringed(
+        this,
+        HardRing.dressed(pill, p),
+        HardRing.accentOf(pill, p),
+      );
+    }
+    Widget card = Stack(
       children: [
         _face(context),
         if (skill != null) _skillMark(context, skill!),
@@ -180,6 +221,9 @@ class PillCard extends StatelessWidget {
           ),
       ],
     );
+    if (_accent case final Color ring) {
+      card = HardRingEdge(colour: ring, radius: 34, child: card);
+    }
     // Held, the whole card is the button. Built round every card, the one
     // waiting under the card being read too, which cannot be liked yet: a
     // card given a new parent as it rises is built again from nothing, and a
@@ -233,6 +277,8 @@ class PillCard extends StatelessWidget {
         middle: right,
         subject: context.l10n.subjectOf(pill.topic),
         chip: chip,
+        // A hard card ringed carries HARD in its head too.
+        extra: _accent == null ? 0 : 9 + 44,
         scaler: drawn ? TextScaler.noScaling : MediaQuery.textScalerOf(context),
       )) {
         return const SizedBox.shrink();
@@ -361,17 +407,23 @@ class PillCard extends StatelessWidget {
               Row(
                 children: [
                   // The subject's own mark beside its name, as on the shelf
-                  // the card ends the day on: one card, drawn one way.
-                  CardMark(pill: pill, size: 16, ink: pill.ink),
+                  // the card ends the day on: one card, drawn one way. On a
+                  // hard card ringed, both in the ring's colour, and HARD
+                  // after them, as Explore's shelf of the hardest has them.
+                  CardMark(pill: pill, size: 16, ink: _accent ?? pill.ink),
                   const SizedBox(width: 8),
                   Text(
                     context.l10n.subjectOf(pill.topic).toUpperCase(),
                     style: AppText.label(
                       size: 11,
                       spacing: 1.4,
-                      color: pill.ink.withValues(alpha: 0.72),
+                      color: _accent ?? pill.ink.withValues(alpha: 0.72),
                     ),
                   ),
+                  if (_accent case final Color accent) ...[
+                    const SizedBox(width: 9),
+                    HardTag(accent: accent, ground: pill.color),
+                  ],
                   if (isReview || isOwn) ...[
                     const SizedBox(width: 9),
                     Container(
@@ -470,10 +522,11 @@ class PillCard extends StatelessWidget {
                       onAnswer: onAnswer,
                       given: given,
                       corner: onSave != null,
-                      input: (commit) => _NumberInput(
+                      input: (commit, taken) => _NumberInput(
                         pill: pill,
                         unit: unit,
                         onAnswer: commit,
+                        taken: taken != InputTaken.no,
                       ),
                     ),
                     // Only a card with its page asks on its page; one that
@@ -486,10 +539,11 @@ class PillCard extends StatelessWidget {
                       given: given,
                       corner: onSave != null,
                       prompt: context.l10n.estimateCloseEnough,
-                      input: (commit) => PlaceItInput(
+                      input: (commit, taken) => PlaceItInput(
                         pill: pill,
                         estimate: estimate,
                         onAnswer: commit,
+                        taken: taken,
                       ),
                     ),
                   },
@@ -1062,9 +1116,10 @@ class _AskFace extends StatefulWidget {
   /// [_PickGroup]).
   final List<String>? options;
 
-  /// Built with the callback that reports a raw response: the input of a
-  /// card that is not a pick.
-  final Widget Function(ValueChanged<String>? commit)? input;
+  /// Built with the callback that reports a raw response, and whether the
+  /// response has been taken: the input of a card that is not a pick. Once
+  /// taken it takes nothing more, and says what it took.
+  final Widget Function(ValueChanged<String>? commit, InputTaken taken)? input;
   final void Function(String response, int? confidence, String? reason)?
   onAnswer;
 
@@ -1111,6 +1166,12 @@ class _AskFaceState extends State<_AskFace>
   /// The level of how sure just tapped, locked in the same way.
   int? _level;
 
+  /// The answer of an input that is not a pick (a number, a mark on a
+  /// ruler) just taken, locked in the same way: the press shows, and it
+  /// takes nothing more while the card turns, or while how sure comes in
+  /// under it.
+  bool _taken = false;
+
   /// The reason sent: the card turns on it, once.
   bool _sent = false;
 
@@ -1129,6 +1190,7 @@ class _AskFaceState extends State<_AskFace>
       _pending = null;
       _locked = null;
       _level = null;
+      _taken = false;
       _sent = false;
       _lock.value = 0;
     }
@@ -1142,22 +1204,34 @@ class _AskFaceState extends State<_AskFace>
 
   void _commit(String response) {
     // Taken already: nothing more is, until the card has turned.
-    if (_pending != null || _locked != null) return;
+    if (_pending != null || _locked != null || _taken) return;
     final bool pick = widget.options != null;
     // A graded card that does not ask how sure this time ([SureAsk]) is
     // answered as it is committed: right or wrong is kept all the same.
-    // It turns at once, the option filled with ink turning with it.
+    // It turns at once, the option filled with ink turning with it, or the
+    // number or the mark taken, locked.
     if (widget.pill.isGraded && !SureAsk.of(widget.pill)) {
-      if (pick) setState(() => _locked = int.tryParse(response));
+      setState(() {
+        if (pick) {
+          _locked = int.tryParse(response);
+        } else {
+          _taken = true;
+        }
+      });
       widget.onAnswer?.call(response, null, null);
       return;
     }
     // The card does not turn yet: how sure, or why, comes first. The tap
-    // is felt, and the option shows taken, before anything else moves.
-    if (pick) HapticFeedback.lightImpact();
+    // is felt, and the option, number or mark shows taken, before anything
+    // else moves.
+    HapticFeedback.lightImpact();
     setState(() {
       _pending = response;
-      if (pick) _locked = int.tryParse(response);
+      if (pick) {
+        _locked = int.tryParse(response);
+      } else {
+        _taken = true;
+      }
     });
     if (MediaQuery.disableAnimationsOf(context)) {
       _lock.value = 1;
@@ -1254,11 +1328,17 @@ class _AskFaceState extends State<_AskFace>
             Estimate() => PlaceItInput.heightFor(scaler),
             _ => 0,
           };
+    // What stays over the step once the answer is taken: the option kept,
+    // the number typed, or the figure the ruler was set to.
+    final double kept = options != null
+        ? _PickGroup.keptHeightFor(context, options, width, scaler)
+        : switch (pill.challenge) {
+            TypeNumber() => 54,
+            Estimate() => PlaceItInput.keptHeightFor(scaler),
+            _ => 0,
+          };
     final double step =
-        (options == null
-            ? 0
-            : _PickGroup.keptHeightFor(context, options, width, scaler) +
-                  _PickGroup.stepGap) +
+        (kept > 0 ? kept + _PickGroup.stepGap : 0) +
         (pill.isGraded
             ? _ConfidenceStep.heightFor(context, width, scaler)
             : _ReasonStep.heightFor(scaler));
@@ -1392,10 +1472,19 @@ class _AskFaceState extends State<_AskFace>
                     fold: _lock,
                     step: step,
                   )
-                else if (step == null)
-                  widget.input!(widget.onAnswer == null ? null : _commit)
                 else
-                  step,
+                  _InputGroup(
+                    input: widget.input!(
+                      widget.onAnswer == null || _taken ? null : _commit,
+                      !_taken
+                          ? InputTaken.no
+                          : step == null
+                          ? InputTaken.turning
+                          : InputTaken.kept,
+                    ),
+                    fold: _lock,
+                    step: step,
+                  ),
                 if (pill.hasHint && options == null && _pending == null)
                   _hint(context),
                 // Under a pick the nudge goes with the options the step
@@ -1526,6 +1615,45 @@ class _AskFaceState extends State<_AskFace>
   }
 }
 
+/// The input of a card that is not a pick (a number, a mark on a ruler) and
+/// the step that comes under it once its answer is taken: the input stays,
+/// locked and saying what it took, as the option kept stays over a pick's
+/// step, and how sure comes in under it as it does there. Always the same
+/// column, so the input keeps what was typed or set as the step arrives.
+class _InputGroup extends StatelessWidget {
+  final Widget input;
+  final Animation<double> fold;
+  final Widget? step;
+
+  const _InputGroup({required this.input, required this.fold, this.step});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: fold,
+      builder: (context, child) {
+        final double f = step == null ? 0 : _PickGroup.foldOf(fold.value);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            child!,
+            if (step case final Widget step when f > 0)
+              _PickGroup._part(
+                Padding(
+                  padding: const EdgeInsets.only(top: _PickGroup.stepGap),
+                  child: step,
+                ),
+                f,
+                (f - 0.2) / 0.8,
+              ),
+          ],
+        );
+      },
+      child: KeyedSubtree(key: const ValueKey('ask-input'), child: input),
+    );
+  }
+}
+
 /// The options of a pick, one tap each, the answer the option's index; and
 /// what becomes of them once one is taken.
 ///
@@ -1651,10 +1779,12 @@ class _PickGroup extends StatelessWidget {
     return most;
   }
 
-  /// [child] shown to [height] of its own, from its top, and at [fade].
+  /// [child] shown to [height] of its own, from its top, and at [fade];
+  /// against the start of the card, where the option kept stands, however
+  /// narrow it sets (levels that wrap were centred, an indent of their own).
   static Widget _part(Widget child, double height, double fade) => ClipRect(
     child: Align(
-      alignment: Alignment.topCenter,
+      alignment: AlignmentDirectional.topStart,
       heightFactor: height.clamp(0.0, 1.0),
       child: Opacity(opacity: fade.clamp(0.0, 1.0), child: child),
     ),
@@ -1785,15 +1915,25 @@ class _Tick extends StatelessWidget {
 
 /// Type the number you worked out. Nothing is graded until you commit, and an
 /// empty box will not commit.
+///
+/// The arrow gives under the finger and, the moment it is pressed, the
+/// number is taken, as a pick is: the field fills with the card's ink, the
+/// number in the card's colour, the arrow turns to a tick, the keyboard goes
+/// down and nothing more is typed while the card turns, or while how sure
+/// comes in under it.
 class _NumberInput extends StatefulWidget {
   final Pill pill;
   final String unit;
   final ValueChanged<String>? onAnswer;
 
+  /// The number has been taken: shown so, and nothing more is typed.
+  final bool taken;
+
   const _NumberInput({
     required this.pill,
     required this.unit,
     required this.onAnswer,
+    this.taken = false,
   });
 
   @override
@@ -1835,10 +1975,12 @@ class _NumberInputState extends State<_NumberInput> {
   }
 
   /// Kept in plain form, so the answer is graded the same way whatever
-  /// language the reader typed it in.
+  /// language the reader typed it in. The keyboard goes down with it, so
+  /// what comes under the number is in sight.
   void _submit() {
     final String? reading = _reading;
-    if (reading == null || widget.onAnswer == null) return;
+    if (reading == null || widget.onAnswer == null || widget.taken) return;
+    FocusManager.instance.primaryFocus?.unfocus();
     widget.onAnswer!(reading);
   }
 
@@ -1846,6 +1988,9 @@ class _NumberInputState extends State<_NumberInput> {
   Widget build(BuildContext context) {
     final pill = widget.pill;
     final unit = widget.unit;
+    final bool taken = widget.taken;
+    // Filled at once, not faded in: a key that is down is down.
+    final Color words = taken ? pill.color : pill.ink;
 
     return Row(
       children: [
@@ -1854,9 +1999,9 @@ class _NumberInputState extends State<_NumberInput> {
             height: 54,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              color: pill.wash,
+              color: taken ? pill.ink : pill.wash,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: pill.washEdge),
+              border: Border.all(color: taken ? pill.ink : pill.washEdge),
             ),
             child: Row(
               children: [
@@ -1866,6 +2011,9 @@ class _NumberInputState extends State<_NumberInput> {
                       controller: _controller,
                       onChanged: _edited,
                       onSubmitted: (_) => _submit(),
+                      readOnly: taken || widget.onAnswer == null,
+                      showCursor: !taken,
+                      enableInteractiveSelection: !taken,
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                         signed: true,
@@ -1874,7 +2022,7 @@ class _NumberInputState extends State<_NumberInput> {
                       style: AppText.display(
                         size: 22,
                         weight: FontWeight.w600,
-                        color: pill.ink,
+                        color: words,
                       ),
                       decoration: InputDecoration(
                         isDense: true,
@@ -1909,7 +2057,7 @@ class _NumberInputState extends State<_NumberInput> {
                       overflow: TextOverflow.ellipsis,
                       style: AppText.body(
                         size: 14,
-                        color: pill.ink.withValues(alpha: 0.5),
+                        color: words.withValues(alpha: taken ? 0.75 : 0.5),
                       ),
                     ),
                   ),
@@ -1919,14 +2067,16 @@ class _NumberInputState extends State<_NumberInput> {
         ),
         const SizedBox(width: 10),
         Semantics(
-          button: true,
+          button: !taken,
+          selected: taken,
           label: context.l10n.checkMyAnswer,
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: _submit,
+          child: _Press(
+            onTap: !_ready || taken || widget.onAnswer == null ? null : _submit,
             child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 160),
-              opacity: _ready ? 1 : 0.35,
+              duration: MediaQuery.disableAnimationsOf(context)
+                  ? Duration.zero
+                  : const Duration(milliseconds: 160),
+              opacity: _ready || taken ? 1 : 0.35,
               child: Container(
                 width: 54,
                 height: 54,
@@ -1935,11 +2085,13 @@ class _NumberInputState extends State<_NumberInput> {
                   borderRadius: BorderRadius.circular(14),
                 ),
                 alignment: Alignment.center,
-                child: Icon(
-                  Icons.arrow_forward_rounded,
-                  size: 20,
-                  color: pill.color,
-                ),
+                child: taken
+                    ? _Tick(color: pill.color, size: 22)
+                    : Icon(
+                        Icons.arrow_forward_rounded,
+                        size: 20,
+                        color: pill.color,
+                      ),
               ),
             ),
           ),
@@ -2133,7 +2285,9 @@ class _ConfidenceStep extends StatelessWidget {
   }
 
   /// Whether the levels stand in one row at [width]: each as wide as the
-  /// others, with room either side of its words.
+  /// others, with room either side of its words. Six points a side, as the
+  /// kit's row keeps none of its own: at twenty, a 375-point phone broke the
+  /// five into three and two, with a hole on the right of the card.
   static bool oneRow(BuildContext context, double width, TextScaler scaler) {
     final int n = kConfidenceLevels.length;
     final double each = (width - _gap * (n - 1)) / n;
@@ -2141,7 +2295,7 @@ class _ConfidenceStep extends StatelessWidget {
     for (final int level in kConfidenceLevels) {
       widest = math.max(widest, _wordsWidth(context, level, scaler));
     }
-    return widest + 20 <= each;
+    return widest + 12 <= each;
   }
 
   /// How tall the step sets at [width]: the question, and the levels in a

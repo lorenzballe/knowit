@@ -319,4 +319,78 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('a miss practised from the journey is asked afresh: a question '
+      'again, its back says how this answer went, and the first answer and '
+      'the day it comes back stand', (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final Pill card = PillBank.live.firstWhere(
+      (p) => !p.hasPage && p.challenge is PickOne && p.isGraded,
+    );
+    final PickOne pick = card.challenge as PickOne;
+    final String wrong = '${(pick.correct + 1) % pick.options.length}';
+    final DateTime now = DateTime.now();
+    final String today = dateKey(now);
+    final String back = dateKey(now.add(const Duration(days: 2)));
+    final app = await _app({
+      'knowit.seenIds': [card.id],
+      'knowit.answersJson': jsonEncode({
+        card.id: {'r': wrong, 'c': 80, 'd': back},
+      }),
+      'knowit.judgements': jsonEncode([
+        {'c': 80, 'k': false, 'p': card.id, 'd': today},
+      ]),
+    });
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.dark),
+        home: JourneyScreen(app: app, onBack: () {}),
+      ),
+    );
+    await tester.pump();
+    Future<void> wait() async {
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+    }
+
+    final Finder row = find.byKey(const ValueKey('story-practice-misses'));
+    await tester.scrollUntilVisible(
+      row,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pump();
+    await tester.tap(row);
+    await wait();
+
+    // The question, every option there to be picked, none marked as the
+    // reader's: not the first answer, turned over.
+    expect(find.text(card.question), findsOneWidget);
+    expect(find.textContaining('Not quite.'), findsNothing);
+    expect(find.text('YOURS'), findsNothing);
+    for (final String option in pick.options) {
+      expect(find.text(option), findsOneWidget);
+    }
+
+    // Right, this time: the back says so.
+    await tester.tap(find.text(pick.options[pick.correct]));
+    await wait();
+    if (find.text('80%').evaluate().isNotEmpty) {
+      await tester.tap(find.text('80%').last);
+      await wait();
+    }
+    expect(find.textContaining('Right.'), findsOneWidget);
+    expect(find.textContaining('Not quite.'), findsNothing);
+
+    // The record never hears of it: the first answer, its judgement and the
+    // day the card comes back stand as they were.
+    expect(app.answerFor(card.id)!.response, wrong);
+    expect(app.answerFor(card.id)!.dueOn, back);
+    expect(app.judgements, hasLength(1));
+  });
 }

@@ -182,6 +182,46 @@ await check('the marks of the games a reader played are the server\'s alone, eve
   await assertFails(reader().collection('readers/anon-reader/daily').get());
 });
 
+await check('what a reader heard read aloud, and the clips, are the server\'s alone', async () => {
+  // The day's free card is what stops a second one: a phone that could
+  // write it could hear every card free.
+  const heard = `readers/anon-reader/listen/${today}`;
+  await assertFails(reader().doc(heard).set({ free: 'science-1', cards: ['science-1'] }));
+  await env.withSecurityRulesDisabled((ctx) => ctx.firestore().doc(heard).set({ free: 'science-1', cards: ['science-1'] }));
+  await assertFails(reader().doc(heard).get());
+  await assertFails(reader().doc(heard).delete());
+  await assertFails(reader().doc('listeners/anon-reader').set({ at: 1, plus: true }));
+  await assertFails(reader().doc(`listenSpend/${today}`).set({ chars: 0 }));
+  await assertFails(reader().doc(`listenSpend/${today}`).get());
+  await assertFails(reader().doc('listen/0a1b').set({ url: 'https://example.com/clip.mp3' }));
+  await assertFails(reader().doc('listen/0a1b').get());
+});
+
+await check('invitations are the server\'s alone: no phone reads or writes a code, a week or a friend\'s, its own included', async () => {
+  await env.withSecurityRulesDisabled(async (ctx) => {
+    await ctx.firestore().doc('invites/alice').set({ code: 'K7MQ2P', at: 1, weeks: [2], friends: 1, until: 3 });
+    await ctx.firestore().doc('inviteCodes/K7MQ2P').set({ uid: 'alice', at: 1 });
+    await ctx.firestore().doc('invited/bob').set({ code: 'K7MQ2P', at: 2, state: 'waiting' });
+  });
+  const alice = env.authenticatedContext('alice').firestore();
+  const bob = env.authenticatedContext('bob').firestore();
+  // Not one's own side, not one's own code, not the code one came with.
+  await assertFails(alice.doc('invites/alice').get());
+  await assertFails(alice.doc('inviteCodes/K7MQ2P').get());
+  await assertFails(bob.doc('invited/bob').get());
+  await assertFails(bob.doc('inviteCodes/K7MQ2P').get());
+  await assertFails(bob.collection('inviteCodes').get());
+  await assertFails(bob.collection('invites').where('code', '==', 'K7MQ2P').get());
+  await assertFails(stranger().doc('inviteCodes/K7MQ2P').get());
+  // Nor written: a week given to oneself, a code taken, a use undone.
+  await assertFails(alice.doc('invites/alice').set({ weeks: [] }, { merge: true }));
+  await assertFails(alice.doc('invites/alice').update({ until: 9e12 }));
+  await assertFails(bob.doc('inviteCodes/BBBBBB').set({ uid: 'bob', at: 1 }));
+  await assertFails(bob.doc('invited/bob').delete());
+  await assertFails(bob.doc('invited/bob').set({ code: 'K7MQ2P', at: 2, state: 'granted' }));
+  await assertFails(env.authenticatedContext('carl').firestore().doc('invited/carl').set({ code: 'K7MQ2P', at: 2, state: 'waiting' }));
+});
+
 await check('the rest of the rules still stand', async () => {
   await assertSucceeds(env.authenticatedContext('alice').firestore().doc('readers/alice').set({ a: 1 }));
   await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice').get());

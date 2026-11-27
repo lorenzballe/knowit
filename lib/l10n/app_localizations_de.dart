@@ -2169,6 +2169,78 @@ class AppLocalizationsDe extends AppLocalizations {
       'Noch ein paar Antworten, dann siehst du hier, wo du stark bist.';
 
   @override
+  String get readTitle => 'Wo du schon klar siehst';
+
+  @override
+  String get readBlind => 'Dein blinder Fleck';
+
+  @override
+  String get readLocked =>
+      'Fünf Karten zu deinem blinden Fleck und dein ganzes Profil, mit Astute+.';
+
+  @override
+  String get readEmpty =>
+      'Noch ein paar Antworten, dann siehst du hier, wo du klar siehst und wo nicht.';
+
+  @override
+  String get readNoAim =>
+      'Wähl oben, wo du klarer sehen willst: Deine Antworten zeigen dir, wo du es schon tust.';
+
+  @override
+  String get readLine =>
+      'Die Fähigkeiten, die dieses Ziel braucht, aus deinen Antworten gelesen: wo du klar siehst, und dein blinder Fleck.';
+
+  @override
+  String get readOthers => 'Der Rest deines Profils';
+
+  @override
+  String get focusTitle => 'Der Fokus der Woche';
+
+  @override
+  String get focusFromGoal =>
+      'Aus deinem Ziel gewählt: jede Woche eine andere Fähigkeit.';
+
+  @override
+  String get focusFromMisses =>
+      'Aus deinen Antworten gewählt: wo du am häufigsten danebenliegst.';
+
+  @override
+  String get focusLine =>
+      'Karten, die ihn trainieren, tragen sein Zeichen. Am Sonntag: wie die Woche lief.';
+
+  @override
+  String focusLast(String skill) {
+    return 'Letzte Woche: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'Ab Montag: $skill';
+  }
+
+  @override
+  String get focusResult => 'Wie die Woche lief';
+
+  @override
+  String get focusPlus =>
+      'Mit Astute+ wählen deine Antworten den Fokus: wo du am häufigsten danebenliegst.';
+
+  @override
+  String get focusMarkBody =>
+      'Diese Woche trainierst du diese Fähigkeit: Karten, die sie trainieren, tragen dieses Zeichen. Am Sonntag siehst du, wie es lief.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'Fokus der Woche: $skill';
+  }
+
+  @override
+  String get focusShelfLine => 'Karten dafür, noch nicht gelesen.';
+
+  @override
+  String get focusOpen => 'Deine Woche';
+
+  @override
   String get scoreTitle => 'Astute-Punktzahl';
 
   @override
@@ -6684,7 +6756,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get goalDecide => 'Alltagsentscheidungen';
+  String get goalDecide => 'Entscheidungen im Alltag';
 
   @override
   String get goalPeople => 'Menschen';
@@ -7190,4 +7262,182 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Nicht jetzt';
+
+  @override
+  String get listenEntry => 'Hör dir die fünf von heute an';
+
+  @override
+  String get listenEntryShort => 'Anhören';
+
+  @override
+  String get listenTitle => 'Die fünf von heute';
+
+  @override
+  String get listenQuestion => 'Frage';
+
+  @override
+  String get listenThink => 'Denk kurz nach…';
+
+  @override
+  String get listenAnswer => 'Antwort';
+
+  @override
+  String get listenPreparing => 'Die Stimme wird vorbereitet…';
+
+  @override
+  String get listenWaiting => 'Die nächste Karte ist unterwegs…';
+
+  @override
+  String get listenFreeNote =>
+      'Die erste Karte ist gratis, die übrigen gibt es mit Astute+.';
+
+  @override
+  String get listenOfferTitle => 'Die übrigen Karten von heute, vorgelesen';
+
+  @override
+  String get listenOfferLine =>
+      'Mit Astute+ hörst du jeden Tag alle fünf, auch bei gesperrtem Bildschirm.';
+
+  @override
+  String get listenNothing => 'Auf dieser Karte gibt es nichts zu hören';
+
+  @override
+  String get listenCardUnavailable => 'Gerade nicht verfügbar';
+
+  @override
+  String get listenUnavailable =>
+      'Vorlesen ist gerade nicht verfügbar. Versuch es später noch einmal.';
+
+  @override
+  String get listenDone => 'Alle Karten von heute gehört.';
+
+  @override
+  String get listenAgain => 'Noch einmal anhören';
+
+  @override
+  String get listenNextCard => 'Nächste Karte';
+
+  @override
+  String get inviteSection => 'Freunde';
+
+  @override
+  String get inviteRow => 'Freund einladen';
+
+  @override
+  String get inviteRowLine => 'Eine Woche Astute+ für euch beide';
+
+  @override
+  String get inviteCodeRow => 'Hast du einen Code?';
+
+  @override
+  String get inviteCodeAccepted => 'Code angenommen';
+
+  @override
+  String get inviteCodeAcceptedLine =>
+      'Deine Woche beginnt, wenn du deinen ersten Tag beendest';
+
+  @override
+  String get inviteSheetLine =>
+      'Schick einem Freund deinen Code. Wenn er seinen ersten Tag beendet, die fünf Karten, bekommt ihr beide eine Woche Astute+.';
+
+  @override
+  String get inviteYourCode => 'Dein Code';
+
+  @override
+  String get inviteCopy => 'Kopieren';
+
+  @override
+  String get inviteSend => 'Einladung senden';
+
+  @override
+  String inviteRules(int cap) {
+    return 'Gilt für ein neues Konto, das noch nie Astute+ hatte. Du bekommst bis zu $cap Wochen im Jahr.';
+  }
+
+  @override
+  String inviteWeeksSoFar(int n, int cap) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n von $cap Wochen in diesem Jahr',
+      one: '1 von $cap Wochen in diesem Jahr',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inviteCapped(int cap) {
+    return 'Du hast die $cap Wochen dieses Jahres bekommen. Deine Freunde bekommen ihre trotzdem.';
+  }
+
+  @override
+  String inviteMessage(String code, String link) {
+    return 'Komm zu Astute: fünf Karten am Tag, die den Kopf wach halten. Mit meinem Code $code bekommen wir beide eine Woche Astute+, sobald du deinen ersten Tag beendet hast.\n$link';
+  }
+
+  @override
+  String inviteMessageCapped(String code, String link) {
+    return 'Komm zu Astute: fünf Karten am Tag, die den Kopf wach halten. Mit meinem Code $code bekommst du eine Woche Astute+, sobald du deinen ersten Tag beendet hast.\n$link';
+  }
+
+  @override
+  String get inviteCodeTitle => 'Der Code eines Freundes';
+
+  @override
+  String get inviteCodeLine =>
+      'Gib den Code ein, den dir ein Freund geschickt hat. Wenn du deinen ersten Tag beendest, bekommt ihr beide eine Woche Astute+.';
+
+  @override
+  String get inviteCodeUse => 'Code verwenden';
+
+  @override
+  String get inviteCodeWaitingLine =>
+      'Beende deinen ersten Tag, die fünf Karten: Dann beginnt die Woche Astute+, für dich und für den Freund, der dich eingeladen hat.';
+
+  @override
+  String get inviteRefusedUnknown =>
+      'Diesen Code gibt es nicht. Prüf die Zeichen und versuch es noch einmal.';
+
+  @override
+  String get inviteRefusedOwn =>
+      'Das ist dein eigener Code: Schick ihn einem Freund.';
+
+  @override
+  String get inviteRefusedUsed =>
+      'Du hast schon den Code eines Freundes verwendet.';
+
+  @override
+  String get inviteRefusedLate =>
+      'Codes gelten für neue Konten, in ihrer ersten Woche.';
+
+  @override
+  String get inviteRefusedPlus =>
+      'Codes gelten für Konten, die noch nie Astute+ hatten.';
+
+  @override
+  String get inviteSuccessTitle => 'Eine Woche Astute+, geschenkt.';
+
+  @override
+  String get inviteSuccessPlan => 'Astute+ · eine Woche';
+
+  @override
+  String inviteSuccessUntil(String date) {
+    return 'Bis zum $date';
+  }
+
+  @override
+  String get inviteSuccessFoot =>
+      'Nichts zu bezahlen und nichts zu kündigen: Danach bist du wieder im Gratis-Tarif.';
+
+  @override
+  String inviteEarned(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n Freunde haben ihren ersten Tag beendet: $n Wochen Astute+ für dich.',
+      one: 'Ein Freund hat seinen ersten Tag beendet: eine Woche Astute+ für dich.',
+    );
+    return '$_temp0';
+  }
 }

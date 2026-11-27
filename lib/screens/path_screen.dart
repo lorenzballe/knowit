@@ -9,6 +9,7 @@ import '../widgets/top_edge.dart' show SoftTop;
 import '../widgets/ui.dart';
 import 'progress_text.dart';
 import 'week_screen.dart';
+import '../l10n/dates.dart';
 
 /// The ladder as a trail: where the reader has been, where they stand, and
 /// what is ahead — each stop with the day it was first reached.
@@ -169,7 +170,7 @@ class _Stop extends StatelessWidget {
     final date = DateTime(parts[0]!, parts[1]!, parts[2]!);
     final String locale = Localizations.localeOf(context).toString();
     return context.l10n.elided(
-      context.l10n.reachedOn(DateFormat.MMMd(locale).format(date)),
+      context.l10n.reachedOn(formatDay(DateFormat.MMMd(locale), date)),
     );
   }
 

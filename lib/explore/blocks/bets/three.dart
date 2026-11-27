@@ -45,6 +45,7 @@ import 'daily_deal.dart';
 import 'deal.dart';
 import 'five_challenge.dart';
 import 'parts.dart';
+import '../../../l10n/dates.dart';
 
 /// What a guess is worth: a hundred for the answer itself, three fewer for
 /// every point off, nothing past thirty-three; in tens, so a day's score
@@ -1277,7 +1278,7 @@ class _DailyResultState extends State<DailyResult> {
     final DateTime now = BetsDay.instance.now;
     String date;
     try {
-      date = DateFormat.MMMd(locale).format(now);
+      date = formatDay(DateFormat.MMMd(locale), now);
     } catch (_) {
       date = DateFormat.MMMd('en').format(now);
     }

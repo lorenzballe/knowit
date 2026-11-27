@@ -26,6 +26,38 @@ WebSurface makePlatformSurface() => FrameWebSurface();
 /// Whether this platform can show a page: a browser always can.
 bool platformShowsPages() => true;
 
+/// Every page's iframe, so the others can let the pointer through while one
+/// page's drag is out ([platformWatchRelease]).
+final Set<web.HTMLIFrameElement> _frames = {};
+
+/// The window's ear for the button coming up, while a drag is out.
+JSFunction? _release;
+
+/// [WebSurfaces.watchRelease] on the web build: every iframe but the one
+/// dragged ([over]) lets the pointer through to the app's window, and the
+/// window says when the button comes up there, once.
+void platformWatchRelease(VoidCallback? onRelease, {WebSurface? over}) {
+  final JSFunction? was = _release;
+  _release = null;
+  if (was != null) {
+    web.window.removeEventListener('pointerup', was, true.toJS);
+    web.window.removeEventListener('pointercancel', was, true.toJS);
+  }
+  final web.HTMLIFrameElement? held = over is FrameWebSurface
+      ? over._frame
+      : null;
+  for (final web.HTMLIFrameElement frame in _frames) {
+    frame.style.pointerEvents = onRelease == null || frame == held
+        ? ''
+        : 'none';
+  }
+  if (onRelease == null) return;
+  final JSFunction heard = ((web.Event _) => onRelease()).toJS;
+  _release = heard;
+  web.window.addEventListener('pointerup', heard, true.toJS);
+  web.window.addEventListener('pointercancel', heard, true.toJS);
+}
+
 /// One iframe, registered as a platform view of its own.
 class FrameWebSurface implements WebSurface {
   FrameWebSurface() {
@@ -36,6 +68,7 @@ class FrameWebSurface implements WebSurface {
       ..style.width = '100%'
       ..style.height = '100%'
       ..style.display = 'block';
+    _frames.add(_frame);
     ui_web.platformViewRegistry.registerViewFactory(_type, (int _) => _frame);
     _listener = _heard.toJS;
     web.window.addEventListener('message', _listener);
@@ -92,6 +125,7 @@ class FrameWebSurface implements WebSurface {
     _gone = true;
     onMessage = null;
     WebSurfaces.live--;
+    _frames.remove(_frame);
     web.window.removeEventListener('message', _listener);
     _frame.srcdoc = ''.toJS;
   }

@@ -246,6 +246,35 @@ class PageSubject {
   };
 }
 
+/// A hard card drawn ringed (lib/widgets/hard_ring.dart), as its page is
+/// told it: the colours it draws itself in, in place of its subject's —
+/// its ground, its ink (its drawing, its name, what it asks), its
+/// question's ink, and the ring the app draws round it — and the tag it
+/// carries beside its subject's name.
+class PageHard {
+  const PageHard({
+    required this.ground,
+    required this.ink,
+    required this.question,
+    required this.ring,
+    required this.label,
+  });
+
+  final Color ground;
+  final Color ink;
+  final Color question;
+  final Color ring;
+  final String label;
+
+  Map<String, Object?> toJson() => {
+    'c': _hex(ground),
+    'k': _hex(ink),
+    'q': _hex(question),
+    'edge': _hex(ring),
+    'label': label,
+  };
+}
+
 /// Where the page is shown, as the app tells it: everything a card might
 /// want to know about the reader and the phone, and nothing about who they
 /// are.
@@ -305,6 +334,11 @@ class PageEnv {
   final String? deeper;
   final String? why;
 
+  /// A hard card ringed, being tried (lib/widgets/hard_ring.dart): the
+  /// colours the page draws itself in, and its tag. Null for every other
+  /// card, and a page given none draws itself as it always has.
+  final PageHard? hard;
+
   const PageEnv({
     this.dark = true,
     this.language = 'en',
@@ -322,6 +356,7 @@ class PageEnv {
     this.foot,
     this.deeper,
     this.why,
+    this.hard,
   });
 
   PageEnv copyWith({bool? shown, Size? size}) => PageEnv(
@@ -341,6 +376,7 @@ class PageEnv {
     foot: foot,
     deeper: deeper,
     why: why,
+    hard: hard,
   );
 
   Map<String, Object?> toJson() => {
@@ -364,6 +400,7 @@ class PageEnv {
     if (foot != null) 'foot': foot,
     if (deeper != null) 'deeper': deeper,
     if (why != null) 'why': why,
+    if (hard != null) 'hard': hard!.toJson(),
   };
 
   /// What changed from [old] that the page should be told, or null when

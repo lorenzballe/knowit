@@ -84,6 +84,18 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   back to today's and says so. The app does not claim the address, so a
   friend with the app installed plays on the page too, where the two scores
   are.
+- `/invito` is where a friend lands from "Invita un amico", written by
+  `tool/site/invito_page.py` when the site is put together: the link,
+  `invito?c=K7MQ2P`, carries the reader's code and nothing else. The page
+  says, in Italian or in English as the browser asks, what the friend gets
+  (a week of Astute+, theirs and the inviter's, once the first day is read)
+  and how: get the app, then open the link again from the message, where the
+  phone hands it to the app, or type the code in Profile under "Have a
+  code?". It shows the code with a button to copy it, and on Android one
+  more that opens the app on the code, or Google Play when it is not there.
+  The code leaves the address before anything is counted. Unlike `/sfida`,
+  the app claims this address (`site/.well-known/`, the manifest), so a
+  friend who has the app opens it there.
 - `/privacy`, `/terms` and `/support` — the pages the stores ask for — share
   its nav, footer and `site/assets/site.css`: night paper, cream ink,
   Fraunces and Figtree served from the site itself, and on a wide screen a
@@ -208,9 +220,32 @@ genres under it, which is where the onboarding ends), Today with
 the card stack and, once the five are done, the shelf, Explore (shelves of
 cards nobody dealt you, with a search over the whole pool), Saved with its
 empty state, Profile (the Astute score with the way into the journey under
-it, the week that goes back to Today's five, appearance, topics, how well you
-know yourself, daily nudge), the come-back screen
-after a lapsed streak, and the disclosure page on how pills are written.
+it, the week that goes back to Today's five, appearance, topics, where you
+want to see more clearly, how well you know yourself, daily nudge), the
+come-back screen after a lapsed streak, and the disclosure page on how pills
+are written.
+
+**Where you want to see more clearly.** Under the subjects on the profile,
+for every reader, the question B first asked at the end of the first run
+(`lib/widgets/aim_picker.dart`): *Dove vuoi vederci più chiaro?* and the six
+areas a card can be useful for, each a row with its mark, its name and what
+it covers, one of them picked. Down the page rather than in a row that turns
+sideways: the lines are what a reader chooses by, a sideways row would show
+one and a half of them with the pick perhaps out of sight, and the tabs
+already slide under the finger. Each area has its subject's colour
+(`goalTone`): its glyph in a thin ring of it, and the row picked washed,
+edged and ticked in it; the rest is the page's ink. On paper the six hues
+are deepened to one lightness, so Economics' yellow and Life's peach still
+read on white. The pick is the reader's goal (`setGoals`), which everything
+that leans to a goal reads, so each follows at once: the cards dealt for
+the reader lean to its subjects and say so, Explore has its shelf every day
+after Today's five (`withAimShelf`), the coach writes towards it, and the
+paywall that ships opens on it. The profile is the one place it is picked:
+the skills on What to learn give their areas as the goal only until the
+reader picks one here, and B's question uses the same rows. The six names
+are set at one size and so are the six lines, the largest at which no word
+breaks; on the 320-wide phone at a large text size the words go under the
+mark rather than shrink. A pick is `goal set` (docs/TRACKING.md).
 
 **Astute+** — three things, all delivered, and everything else the same on
 both plans. **Five cards a day, all yours**: on the free plan two of the
@@ -1116,12 +1151,21 @@ takes an asking slot before any fresh question does — one at most, so a
 day always has one question it has never asked. What came due and found
 no room waits after the five, on the finished day, on either plan.
 
-**Share my day.** A picture of the day's five: each card's question beside
-its front, in the day's colours, as a post or a story — no score, and no
-answer, because it is sent to show the cards that came out, not how the
-reader did. On a phone it goes to the share sheet; in a browser it is
-copied. It is sent from the finished day, beside the journey's button, or
-from the foot of the journey, and `day shared` says which (`from`).
+**Share my day.** A picture of the day's five, as a cover, a list or a
+story — no score, and no answer, because it is sent to show the cards that
+came out, not how the reader did. It is black, lit from its corners by the
+day's own colours (the first card's, the last card's, the middle one's), each
+card its subject's mark on a disc of its colour beside its question in
+Fraunces, the first set large on the cover and the story; every question
+whole, never cut, the type coming down a step at a time where a day runs
+long (`lib/widgets/share_looks.dart`, C). The developer tools still show A,
+the picture as it was, each drawing cut down to a square, and B, the day's
+first drawn card whole and lit by its colour, and the five cards whole in a
+row on the list (*Share picture*, below); `tool/share_day_shots.dart`
+photographs all three. On a phone it goes to the share sheet; in a browser
+it is copied. It is sent from the finished day, beside the journey's
+button, or from the foot of the journey, and `day shared` says which
+(`from`).
 
 **Share a card.** A card leaves as a line and a link, never as its answer:
 what is asked of the friend (answering it, or taking a side), its question,
@@ -1154,6 +1198,57 @@ The archive keeps what each day was actually dealt: the calendar is
 re-dealt from the start whenever the pool grows, and a day dealt again from
 the same date is only most of the truth.
 
+## Listen: the day's five, read aloud
+
+*Ascolta le cinque di oggi*: a quiet pill at the end of Today's header while
+the five are read, and a small player over the day. For each card, its
+question; a pause of about four seconds to think, opened by a soft tone;
+then the answer and its why, the card's own words as its back has them (a
+debate with its other side); a breath; the next card. The card being read is
+lit in the list, the others quiet, and a line across the top fills as each
+is heard. It goes on with the screen locked: the day is one queue the phone
+walks through itself (just_audio, with the session told it is speech, and
+the `audio` background mode in `ios/Runner/Info.plist`), so the app is not
+woken between one sound and the next, and the pause is a sound
+(`assets/audio/`, `tool/media/listen_tones.py`), not a timer.
+
+Everybody hears the first card of the day that can be heard, so they know
+what it is; on the free plan the player then stops on the offer of the
+rest, which opens the paywall (`requirePlus`, source `listen`), and with
+Astute+ taken there the rest follow at once. A drawn card is read from its
+words in the bank, less the sentences about its page ("Drag the slider to
+zero…"), which mean nothing heard; one left with less than a sentence is
+passed over and the player says so. In the bank as it ships, 934 drawn
+cards are live, 93 lose a sentence or more, and none is left with nothing
+to hear.
+
+The voice is ElevenLabs' (`functions/src/listen.ts`): Finley, "Articulate
+Anchor", a calm, crisp British voice made for explainers, on Eleven v4, its
+newest model. Each clip is made once, for every reader alike, kept in
+Firebase Storage under the hash of its words and voice, so a card whose
+words change is read anew and nothing else is ever paid for twice; the
+readers who listen have their next days' cards made ahead of them twice a
+day (`listenAhead`), so playing starts at once. ElevenLabs charges by the
+character ($0.08 for a thousand on v4): a card is about 390 characters, about
+three cents, so a day of five read for the first time is about sixteen
+cents, and the same cards read to a thousand readers cost nothing more; the
+whole bank, read once, would be about 2.2 million characters.
+What it may read is held to so many characters a month and a day
+(`functions/src/limits.ts`, under the plan's own allowance), with a hard
+stop; past it, what was made still plays and the rest is "not available
+right now".
+
+The key is the Actions secret `ELEVENLABS_API_KEY`, kept in Secret Manager
+by the *Cloud deploy* workflow, which checks it by reading three characters
+in Listen's own voice and says in its summary what ElevenLabs made of it.
+Without a key the functions answer "not configured" and the app hides
+Listen; with a key but no credit bought yet, Listen is calmly "not available
+right now" until the plan is bought, with nothing to deploy again. The
+switch `listen` (docs/REMOTE.md) is off in the build and in
+`remote/app.json`, and goes on once the key and the plan are in. Counted as
+`listen started`, `listen card heard`, `listen finished` and `listen
+stopped` (docs/TRACKING.md).
+
 ## Liked, saved, and less like this
 
 The heart and the bookmark used to be one gesture doing two jobs. A card
@@ -1179,6 +1274,63 @@ backup (`friendCodes`), shown nowhere. A board an older build published
 stays at `boards/{code}` in Firestore (the code is `friendCodeOf`, six
 letters worked from the account id) until its reader deletes the account,
 which still takes it down.
+
+## Invita un amico
+
+A reader sends a friend a week of Astute+ and has one too, once the friend
+has read a first day. It is behind the server's switch `invite`, off as
+built and off in `remote/app.json` until RevenueCat's secret key is
+deployed; even on, nothing shows while the server answers "not configured",
+nor on a build that cannot show Astute+ (the web app).
+
+- **Inviting.** In the profile, a box of its own between the reader's cards
+  and the account: *Invite a friend — a week of Astute+ for you both*. It
+  opens a sheet with the reader's code, made on the server the first time,
+  the year's weeks so far, and *Send the invitation*: the system's share
+  sheet with a line in the reader's language and
+  `astutetheapp.com/invito?c=<code>` (copied where there is no sheet). The
+  code is six characters drawn at random from digits and consonants with no
+  vowel and nothing that reads as another (no 0/O, 1/I/L, U/V): it spells no
+  word and says nothing about anyone.
+- **Using a code.** The phone hands the link to the app on iPhone and Android
+  (the site's `apple-app-site-association` and the manifest name `/invito`;
+  `ios/Runner/AppDelegate.swift` and `MainActivity.kt` read the code as
+  `WidgetOpen.inviteCodeOfLink` does), and the code waits, kept on the phone,
+  for the first run to end and the switch to be on; then its sheet rises with
+  the code in it. Or it is typed under *Have a code?*, which the profile shows
+  to an account the server calls new that has never held Astute+.
+- **The rules** (`functions/src/invite.ts`): one code per account, never
+  one's own, an account made in the last week that has never held Astute+ in
+  RevenueCat; nothing given until the friend's backup has a finished day;
+  then a week each, through RevenueCat's REST API v1 as a promotional
+  `astuto_pro`, each starting where the Astute+ already held ends, so a
+  second friend's week is a week more. An inviter has eight weeks in any 365
+  days; past that the friend still has theirs and the inviter's message says
+  so. The friend's week is the evening's moment, on the purchase's own
+  screen in its own words (given, until when, nothing to pay or cancel), and
+  the card after the fifth offers nothing that evening; the inviter is told
+  on the profile the next time it asks. The customer is read again at once
+  (`Subscription.refreshCustomerInfo`), so Astute+ shows without waiting.
+- **What is kept**: the code and its weeks (`invites/{uid}`), whose code it is
+  (`inviteCodes/{code}`), the code a reader came with (`invited/{uid}`),
+  written only by the functions and read by no phone, all of it gone with the
+  account. Never in PostHog: the events say what happened, not with which
+  code (docs/TRACKING.md §6.14).
+- **To turn it on**: the owner makes a RevenueCat secret key (Project settings
+  → API keys → + New secret API key, API version V1) and adds it in GitHub
+  as the Actions secret `REVENUECAT_SECRET_KEY`; the *Cloud deploy* workflow
+  keeps it in Secret Manager. Then `"invite": true` in `remote/app.json`, or
+  for Android first `{"on": true, "audience": {"platforms": ["android"]}}`.
+- **Apple.** The reward is free time and nothing else — no money, nothing
+  asked about ratings or reviews — and the copy says so. But a code that
+  opens Astute+ is close to what guideline 3.1.1 forbids ("their own
+  mechanisms to unlock content or functionality, such as license keys"),
+  which is why Google Play's reviewers' code is never offered on an iPhone
+  (*Selling Astute+*). Referral weeks are common on the App Store; if App
+  Review objects, the switch's audience turns it off for iPhone alone.
+
+`tool/invite_shots.dart` photographs it in the app; the page is
+`tool/site/invito_page.py`.
 
 ## The home-screen widgets
 
@@ -1678,7 +1830,7 @@ store through RevenueCat rather than from a bool the app wrote to itself.
 and restart, toggle the plan, and a readout of what the app knows about
 itself: whether Firebase started and why not, the account id, the last auth
 error, whether the store answered, and whether PostHog is sending, opted out
-or not running at all. At its head are five looks to try on the phone itself
+or not running at all. At its head are the looks to try on the phone itself
 (`lib/state/debug_looks.dart`): *Today, day read: no top row*, the finished
 day without the row over its card, so the card is bigger; *Today, day read:
 share the day*, where the finished day is sent from — A as it ships, See
@@ -1688,20 +1840,47 @@ your day" and "Later", once a day and never over anything else asked that
 evening (`lib/widgets/day_moment.dart`), with a way to see it at once; D the
 day as a card after the five on the shelf, where the shelf lands the evening
 it is finished; *Profile top*, Auto (A free · C Astute+), A, B or C; and
-*What to learn*, three answers to the skills beside the way they ship
-(`lib/widgets/learn_looks.dart`) — A the Astute score alone, no picker, no
-marks, no skill scores, Your journey opening on the score and its level; B
-one aim, asked at the end of the first run and from the profile: where the
-reader wants to be sharper, one of the six areas the cards name on their
-backs, said in words and counts, with a shelf of it on Explore every day
-and a line on the cards dealt for it; C nothing to pick, the skills ranked
-in Your journey from the reader's answers, right answers out of those
-given, the weakest to practise on five cards, and on the free plan the
-strong point alone on the profile. The camera is `tool/learn_shots.dart`;
+*What to learn*, five answers to the skills beside the way they ship, now
+that the question of the aim is every reader's (above), each what becomes
+of the skills beside it (`lib/widgets/learn_looks.dart`, what they read
+from the answers in `lib/data/learn_reading.dart`) — A the Astute score
+alone, no picker, no marks, no skill scores, nothing under the question,
+Your journey opening on the score and its level; B the aim alone, asked at
+the end of the first run too, nothing under the question, a line on the
+cards dealt for it, and Your journey opening on its week in words and
+counts; C nothing to pick, the skills ranked from the reader's answers,
+right answers out of those given, the weakest to practise on five cards,
+Your journey opening on the ranking and the free plan's profile on the
+strong point alone; D the aim read: the four skills the aim takes
+(`aimSkills`), ranked from the answers, where the reader sees clearly and
+their blind spot under the question on either plan, and in Your journey,
+Astute+, all four with five cards on the blind spot and the rest of the
+profile; E a focus a week: one of the aim's four, Monday to Sunday, in turn
+on the free plan and the one the reader slips on most on Astute+, its mark
+on the cards that train it, a shelf of it among Explore's first (the
+`focus` block, drawn in E alone), the day's own cards leaning to its genres
+where the phone deals the day (the server's day does not know the week's
+skill yet), its days on the profile and in Your journey, and on Sunday how
+the week went and the next. B, D and E ask for the aim at the end of the first run.
+In every look but Now an answer moves the Astute score alone. The camera is
+`tool/learn_shots.dart`;
 and *Card foot*, A line, B two lines, C buttons or D links
 (`lib/widgets/source_foot.dart`), on cards in words and on drawn ones,
 whose page is told it as `foot` as it was told the build's `SOURCE_FOOT`,
-which still sets the way when none is picked; A is the default.
+which still sets the way when none is picked; A is the default; *Share
+picture*, the picture the day is sent as, A as it was, B the cards, C light,
+which ships (Share my day, above); and *Hard cards*, as today or ringed
+(`lib/widgets/hard_ring.dart`): a hard card, wherever it is read — Today's
+deck and shelf, the deck viewer, Explore's cards — front and back, dark,
+ringed in its subject's colour, its subject's name in it and HARD in its
+head, as Explore's shelf of the hardest draws them; on the day paper the
+raised paper, a pale colour taken to its darker tone. A card in words is
+drawn in those colours; a drawn card's page is told them as `hard`, and the
+kit draws itself in them (its ground, its subject's colour as its ink, the
+question in the light ink), while a page told nothing draws as it always
+has. Its pictures are not taken again, so with the look on the shelf and
+Explore still show a drawn hard card as it was. The cameras are
+`tool/hard_card_shots.dart` and `HARD=1 node tool/cards/card_check.cjs`.
 Under the looks, beside *Open the paywall*, *Preview: your first week* and
 *Preview: your first month* open those two pages with sample numbers, on
 either plan, keeping and counting nothing (`lib/screens/first_offer.dart`).

@@ -36,6 +36,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n dias',
       one: '1 dia',
+      zero: '$n dias',
     );
     return '$_temp0';
   }
@@ -179,6 +180,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n resultados',
       one: '1 resultado',
+      zero: '$n resultados',
     );
     return '$_temp0';
   }
@@ -206,6 +208,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n cartas',
       one: '1 carta',
+      zero: '$n cartas',
     );
     return '$_temp0';
   }
@@ -267,6 +270,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$days dias em sete.',
       one: '1 dia em sete.',
+      zero: '$days dias em sete.',
     );
     return '$_temp0 Com cinco, a semana conta.';
   }
@@ -534,6 +538,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n por ler',
       one: '1 por ler',
+      zero: '$n por ler',
     );
     return '$_temp0';
   }
@@ -757,6 +762,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'mais $n contextos por vir',
       one: 'mais 1 contexto por vir',
+      zero: 'mais $n contextos por vir',
     );
     return '$_temp0';
   }
@@ -772,6 +778,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'mais $n a ser seguidos',
       one: 'mais 1 a ser seguido',
+      zero: 'mais $n a ser seguidos',
     );
     return '$_temp0';
   }
@@ -882,6 +889,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n cartas lidas',
       one: '1 carta lida',
+      zero: '$n cartas lidas',
     );
     return '$_temp0';
   }
@@ -893,6 +901,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n semanas cumpridas',
       one: '1 semana cumprida',
+      zero: '$n semanas cumpridas',
     );
     return '$_temp0';
   }
@@ -909,6 +918,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n proteções disponíveis',
       one: '1 proteção disponível',
+      zero: '$n proteções disponíveis',
     );
     return '$_temp0';
   }
@@ -948,6 +958,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n cartas que acertaste voltam hoje',
       one: '1 carta que acertaste volta hoje',
+      zero: '$n cartas que acertaste voltam hoje',
     );
     return '$_temp0';
   }
@@ -1296,6 +1307,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n dias seguidos',
       one: '1 dia seguido',
+      zero: '$n dias seguidos',
     );
     return '$_temp0';
   }
@@ -1691,6 +1703,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n cartas',
       one: '1 carta',
+      zero: '$n cartas',
     );
     return '$_temp0';
   }
@@ -1955,6 +1968,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'Até agora, $n jogadores hoje.',
       one: 'Até agora, 1 jogador hoje.',
+      zero: 'Até agora, $n jogadores hoje.',
     );
     return '$_temp0';
   }
@@ -2092,6 +2106,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'e mais $n',
       one: 'e mais 1',
+      zero: 'e mais $n',
     );
     return '$_temp0';
   }
@@ -2171,6 +2186,78 @@ class AppLocalizationsPt extends AppLocalizations {
       'Mais algumas respostas e verás aqui onde és forte.';
 
   @override
+  String get readTitle => 'Onde já vês claro';
+
+  @override
+  String get readBlind => 'O teu ponto cego';
+
+  @override
+  String get readLocked =>
+      'Cinco cartas sobre o teu ponto cego, e o teu perfil inteiro, com o Astute+.';
+
+  @override
+  String get readEmpty =>
+      'Mais algumas respostas e verás aqui onde vês claro e onde não.';
+
+  @override
+  String get readNoAim =>
+      'Escolhe acima onde queres ver mais claro: as tuas respostas vão dizer-te onde já vês.';
+
+  @override
+  String get readLine =>
+      'As competências que este objetivo pede, lidas nas tuas respostas: onde vês claro, e o teu ponto cego.';
+
+  @override
+  String get readOthers => 'O resto do teu perfil';
+
+  @override
+  String get focusTitle => 'O foco da semana';
+
+  @override
+  String get focusFromGoal =>
+      'Escolhido a partir do teu objetivo: cada semana uma competência diferente.';
+
+  @override
+  String get focusFromMisses =>
+      'Escolhido a partir das tuas respostas: onde falhas mais.';
+
+  @override
+  String get focusLine =>
+      'As cartas que o treinam têm a sua marca. No domingo, como correu a semana.';
+
+  @override
+  String focusLast(String skill) {
+    return 'Na semana passada: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'A partir de segunda: $skill';
+  }
+
+  @override
+  String get focusResult => 'Como correu a semana';
+
+  @override
+  String get focusPlus =>
+      'Com o Astute+, o foco é escolhido pelas tuas respostas: onde falhas mais.';
+
+  @override
+  String get focusMarkBody =>
+      'Esta semana treinas esta competência: as cartas que a treinam têm esta marca. No domingo vês como correu.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'Foco da semana: $skill';
+  }
+
+  @override
+  String get focusShelfLine => 'Cartas que o treinam, ainda por ler.';
+
+  @override
+  String get focusOpen => 'A tua semana';
+
+  @override
   String get scoreTitle => 'Pontuação Astute';
 
   @override
@@ -2193,6 +2280,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'de $n respostas',
       one: 'de 1 resposta',
+      zero: 'de $n respostas',
     );
     return '$_temp0';
   }
@@ -2615,6 +2703,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n gostadas hoje',
       one: '1 gostada hoje',
+      zero: '$n gostadas hoje',
     );
     return '$_temp0';
   }
@@ -2762,6 +2851,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n truques',
       one: '1 truque',
+      zero: '$n truques',
     );
     return '$_temp0';
   }
@@ -2901,6 +2991,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n leitores',
       one: '1 leitor',
+      zero: '$n leitores',
     );
     return '$_temp0';
   }
@@ -3393,6 +3484,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n cartas',
       one: '1 carta',
+      zero: '$n cartas',
     );
     return '$_temp0';
   }
@@ -3404,6 +3496,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n respostas',
       one: '1 resposta',
+      zero: '$n respostas',
     );
     return '$_temp0';
   }
@@ -3415,6 +3508,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n respostas com a tua certeza',
       one: '1 resposta com a tua certeza',
+      zero: '$n respostas com a tua certeza',
     );
     return '$_temp0';
   }
@@ -3426,6 +3520,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n cartas retidas',
       one: '1 carta retida',
+      zero: '$n cartas retidas',
     );
     return '$_temp0';
   }
@@ -3437,6 +3532,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n pontos',
       one: '1 ponto',
+      zero: '$n pontos',
     );
     return '$_temp0';
   }
@@ -3451,6 +3547,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n livros',
       one: '1 livro',
+      zero: '$n livros',
     );
     return '$_temp0';
   }
@@ -3467,6 +3564,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'faltam $n para o primeiro livro',
       one: 'falta 1 para o primeiro livro',
+      zero: 'faltam $n para o primeiro livro',
     );
     return '$_temp0';
   }
@@ -3627,6 +3725,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$days dias',
       one: '1 dia',
+      zero: '$days dias',
     );
     return '$active de $_temp0';
   }
@@ -3689,6 +3788,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n regiões',
       one: '1 região',
+      zero: '$n regiões',
     );
     return '$_temp0';
   }
@@ -3726,6 +3826,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n descobertos',
       one: '1 descoberto',
+      zero: '$n descobertos',
     );
     return '$_temp0';
   }
@@ -3745,6 +3846,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n novas',
       one: '1 nova',
+      zero: '$n novas',
     );
     return '$_temp0';
   }
@@ -3972,6 +4074,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$cards cartas',
       one: '1 carta',
+      zero: '$cards cartas',
     );
     return '$_temp0 · $minutes min';
   }
@@ -4871,6 +4974,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'Restam-te $n pontos hoje',
       one: 'Resta-te 1 ponto hoje',
+      zero: 'Restam-te $n pontos hoje',
     );
     return '$_temp0';
   }
@@ -5151,6 +5255,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'Falhaste por $n ordens de grandeza.',
       one: 'Falhaste por 1 ordem de grandeza.',
+      zero: 'Falhaste por $n ordens de grandeza.',
     );
     return '$_temp0';
   }
@@ -5260,12 +5365,14 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'Cruza-se com $subjects temas',
       one: 'Cruza-se com 1 tema',
+      zero: 'Cruza-se com $subjects temas',
     );
     String _temp1 = intl.Intl.pluralLogic(
       cards,
       locale: localeName,
       other: 'em $cards cartas',
       one: 'em 1 carta',
+      zero: 'em $cards cartas',
     );
     return '$_temp0 $_temp1';
   }
@@ -5296,6 +5403,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n cartas respondem',
       one: '1 carta responde',
+      zero: '$n cartas respondem',
     );
     return '$_temp0';
   }
@@ -5348,6 +5456,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n porquês de profundidade.',
       one: '1 porquê de profundidade.',
+      zero: '$n porquês de profundidade.',
     );
     return '$_temp0 Mais fundo não dá.';
   }
@@ -5368,6 +5477,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n porquês',
       one: '1 porquê',
+      zero: '$n porquês',
     );
     return '$_temp0';
   }
@@ -5387,6 +5497,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$at porquês',
       one: '1 porquê',
+      zero: '$at porquês',
     );
     return '$_temp0 de $of';
   }
@@ -5491,6 +5602,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'Deste $n passos em direção às provas.',
       one: 'Deste 1 passo em direção às provas.',
+      zero: 'Deste $n passos em direção às provas.',
     );
     return '$_temp0';
   }
@@ -5590,6 +5702,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'faltam $n',
       one: 'falta 1',
+      zero: 'faltam $n',
     );
     return '$_temp0';
   }
@@ -5655,6 +5768,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'Faltam $s segundos',
       one: 'Falta 1 segundo',
+      zero: 'Faltam $s segundos',
     );
     return '$_temp0';
   }
@@ -5685,6 +5799,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n cartas hoje',
       one: '1 carta hoje',
+      zero: '$n cartas hoje',
     );
     return '$_temp0';
   }
@@ -5699,6 +5814,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n pontos',
       one: '1 ponto',
+      zero: '$n pontos',
     );
     return '$_temp0';
   }
@@ -5779,6 +5895,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n anos de diferença no total.',
       one: '1 ano de diferença no total.',
+      zero: '$n anos de diferença no total.',
     );
     return '$_temp0';
   }
@@ -5801,6 +5918,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n anos de diferença',
       one: '1 ano de diferença',
+      zero: '$n anos de diferença',
     );
     return '$_temp0';
   }
@@ -5812,6 +5930,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n anos antes',
       one: '1 ano antes',
+      zero: '$n anos antes',
     );
     return '$_temp0';
   }
@@ -5823,6 +5942,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n anos depois',
       one: '1 ano depois',
+      zero: '$n anos depois',
     );
     return '$_temp0';
   }
@@ -5871,6 +5991,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n pares hoje',
       one: '1 par hoje',
+      zero: '$n pares hoje',
     );
     return '$_temp0';
   }
@@ -6080,6 +6201,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'Certo: ganhas $n pontos.',
       one: 'Certo: ganhas 1 ponto.',
+      zero: 'Certo: ganhas $n pontos.',
     );
     return '$_temp0';
   }
@@ -6091,6 +6213,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'Errado: perdes $n pontos.',
       one: 'Errado: perdes 1 ponto.',
+      zero: 'Errado: perdes $n pontos.',
     );
     return '$_temp0';
   }
@@ -6405,6 +6528,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'de $n cartas que perguntaram',
       one: 'de 1 carta que perguntou',
+      zero: 'de $n cartas que perguntaram',
     );
     return '$_temp0';
   }
@@ -6416,6 +6540,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n já sabias',
       one: '1 já sabias',
+      zero: '$n já sabias',
     );
     return '$_temp0';
   }
@@ -6464,6 +6589,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'Nas respostas dadas com certeza, acertaste $n vezes em 10.',
       one: 'Nas respostas dadas com certeza, acertaste 1 vez em 10.',
+      zero: 'Nas respostas dadas com certeza, acertaste $n vezes em 10.',
     );
     return '$_temp0';
   }
@@ -6596,6 +6722,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'Melhor série: $n dias',
       one: 'Melhor série: 1 dia',
+      zero: 'Melhor série: $n dias',
     );
     return '$_temp0';
   }
@@ -6607,6 +6734,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n cartas lidas',
       one: '1 carta lida',
+      zero: '$n cartas lidas',
     );
     return '$_temp0';
   }
@@ -6624,6 +6752,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n cartas novas no topo',
       one: '1 carta nova no topo',
+      zero: '$n cartas novas no topo',
     );
     return '$_temp0';
   }
@@ -6723,6 +6852,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n dias seguidos',
       one: '1 dia seguido',
+      zero: '$n dias seguidos',
     );
     return '$_temp0';
   }
@@ -6774,6 +6904,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n órgãos',
       one: '1 órgão',
+      zero: '$n órgãos',
     );
     return '$_temp0';
   }
@@ -6892,6 +7023,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n ideias',
       one: '1 ideia',
+      zero: '$n ideias',
     );
     return '$_temp0';
   }
@@ -6977,6 +7109,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: '$n livros',
       one: '1 livro',
+      zero: '$n livros',
     );
     return '$_temp0';
   }
@@ -7063,6 +7196,7 @@ class AppLocalizationsPt extends AppLocalizations {
       locale: localeName,
       other: 'Enviamos-te uma notificação: faltam $days dias.',
       one: 'Enviamos-te uma notificação: falta 1 dia.',
+      zero: 'Enviamos-te uma notificação: faltam $days dias.',
     );
     return '$_temp0';
   }
@@ -7181,4 +7315,181 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Agora não';
+
+  @override
+  String get listenEntry => 'Ouve as cinco de hoje';
+
+  @override
+  String get listenEntryShort => 'Ouvir';
+
+  @override
+  String get listenTitle => 'As cinco de hoje';
+
+  @override
+  String get listenQuestion => 'Pergunta';
+
+  @override
+  String get listenThink => 'Pensa nisso…';
+
+  @override
+  String get listenAnswer => 'Resposta';
+
+  @override
+  String get listenPreparing => 'A preparar a voz…';
+
+  @override
+  String get listenWaiting => 'A próxima carta está a chegar…';
+
+  @override
+  String get listenFreeNote =>
+      'A primeira carta é grátis; as outras, com o Astute+.';
+
+  @override
+  String get listenOfferTitle => 'As outras cartas de hoje, lidas para ti';
+
+  @override
+  String get listenOfferLine =>
+      'Com o Astute+ ouves as cinco todos os dias, mesmo com o ecrã bloqueado.';
+
+  @override
+  String get listenNothing => 'Nada para ouvir nesta carta';
+
+  @override
+  String get listenCardUnavailable => 'Indisponível de momento';
+
+  @override
+  String get listenUnavailable =>
+      'Ouvir não está disponível de momento. Tenta mais tarde.';
+
+  @override
+  String get listenDone => 'Todas as cartas de hoje, ouvidas.';
+
+  @override
+  String get listenAgain => 'Ouvir outra vez';
+
+  @override
+  String get listenNextCard => 'Carta seguinte';
+
+  @override
+  String get inviteSection => 'Amigos';
+
+  @override
+  String get inviteRow => 'Convida um amigo';
+
+  @override
+  String get inviteRowLine => 'Uma semana de Astute+ para os dois';
+
+  @override
+  String get inviteCodeRow => 'Tens um código?';
+
+  @override
+  String get inviteCodeAccepted => 'Código aceite';
+
+  @override
+  String get inviteCodeAcceptedLine =>
+      'A tua semana começa quando terminares o primeiro dia';
+
+  @override
+  String get inviteSheetLine =>
+      'Envia o teu código a um amigo. Quando ele terminar o primeiro dia, as cinco cartas, cada um recebe uma semana de Astute+.';
+
+  @override
+  String get inviteYourCode => 'O teu código';
+
+  @override
+  String get inviteCopy => 'Copiar';
+
+  @override
+  String get inviteSend => 'Enviar o convite';
+
+  @override
+  String inviteRules(int cap) {
+    return 'Vale para uma conta nova que nunca teve Astute+. Recebes até $cap semanas por ano.';
+  }
+
+  @override
+  String inviteWeeksSoFar(int n, int cap) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n semanas de $cap este ano',
+      one: '1 semana de $cap este ano',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inviteCapped(int cap) {
+    return 'Já tiveste as $cap semanas deste ano. Os teus amigos continuam a receber a deles.';
+  }
+
+  @override
+  String inviteMessage(String code, String link) {
+    return 'Convido-te para o Astute: cinco cartas por dia para manter a mente afiada. Com o meu código $code, quando terminares o primeiro dia, cada um de nós recebe uma semana de Astute+.\n$link';
+  }
+
+  @override
+  String inviteMessageCapped(String code, String link) {
+    return 'Convido-te para o Astute: cinco cartas por dia para manter a mente afiada. Com o meu código $code, quando terminares o primeiro dia, recebes uma semana de Astute+ de oferta.\n$link';
+  }
+
+  @override
+  String get inviteCodeTitle => 'O código de um amigo';
+
+  @override
+  String get inviteCodeLine =>
+      'Escreve o código que um amigo te enviou. Quando terminares o primeiro dia, cada um recebe uma semana de Astute+.';
+
+  @override
+  String get inviteCodeUse => 'Usar o código';
+
+  @override
+  String get inviteCodeWaitingLine =>
+      'Termina o primeiro dia, as cinco cartas: aí começa a semana de Astute+, para ti e para o amigo que te convidou.';
+
+  @override
+  String get inviteRefusedUnknown =>
+      'Esse código não existe. Confirma os caracteres e tenta outra vez.';
+
+  @override
+  String get inviteRefusedOwn =>
+      'Esse é o teu próprio código: envia-o a um amigo.';
+
+  @override
+  String get inviteRefusedUsed => 'Já usaste o código de um amigo.';
+
+  @override
+  String get inviteRefusedLate =>
+      'Os códigos são para contas novas, na primeira semana.';
+
+  @override
+  String get inviteRefusedPlus =>
+      'Os códigos são para contas que nunca tiveram Astute+.';
+
+  @override
+  String get inviteSuccessTitle => 'Uma semana de Astute+, oferecida.';
+
+  @override
+  String get inviteSuccessPlan => 'Astute+ · uma semana';
+
+  @override
+  String inviteSuccessUntil(String date) {
+    return 'Até $date';
+  }
+
+  @override
+  String get inviteSuccessFoot =>
+      'Nada a pagar e nada a cancelar: depois voltas ao plano gratuito.';
+
+  @override
+  String inviteEarned(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n amigos terminaram o primeiro dia: $n semanas de Astute+ para ti.',
+      one: 'Um amigo terminou o primeiro dia: uma semana de Astute+ para ti.',
+    );
+    return '$_temp0';
+  }
 }

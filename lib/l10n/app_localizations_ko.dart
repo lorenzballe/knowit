@@ -2083,6 +2083,70 @@ class AppLocalizationsKo extends AppLocalizations {
   String get strengthsEmpty => '몇 번만 더 답하면 여기에서 강점을 볼 수 있어요.';
 
   @override
+  String get readTitle => '이미 날카로운 곳';
+
+  @override
+  String get readBlind => '나의 사각지대';
+
+  @override
+  String get readLocked => '사각지대를 위한 카드 다섯 장과 전체 프로필은 Astute+에서.';
+
+  @override
+  String get readEmpty => '몇 번만 더 답하면 여기에서 날카로운 곳과 그렇지 않은 곳을 볼 수 있어요.';
+
+  @override
+  String get readNoAim => '위에서 어디에서 더 날카로워지고 싶은지 고르세요. 답을 보면 이미 날카로운 곳이 드러나요.';
+
+  @override
+  String get readLine => '이 목표에 필요한 기술을 당신의 답에서 읽었어요. 날카로운 곳과 사각지대.';
+
+  @override
+  String get readOthers => '프로필의 나머지';
+
+  @override
+  String get focusTitle => '이번 주 집중';
+
+  @override
+  String get focusFromGoal => '목표에 맞춰 골랐어요. 매주 다른 기술이에요.';
+
+  @override
+  String get focusFromMisses => '당신의 답을 보고 골랐어요. 가장 자주 틀리는 곳이에요.';
+
+  @override
+  String get focusLine => '이것을 훈련하는 카드에는 표시가 붙어요. 일요일에 한 주 결과를 볼 수 있어요.';
+
+  @override
+  String focusLast(String skill) {
+    return '지난주: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return '월요일부터: $skill';
+  }
+
+  @override
+  String get focusResult => '한 주 결과';
+
+  @override
+  String get focusPlus => 'Astute+에서는 당신의 답이 집중할 곳을 골라요. 가장 자주 틀리는 곳이에요.';
+
+  @override
+  String get focusMarkBody =>
+      '이번 주에는 이 기술을 훈련해요. 이것을 훈련하는 카드에는 이 표시가 붙어요. 일요일에 결과를 볼 수 있어요.';
+
+  @override
+  String focusShelf(String skill) {
+    return '이번 주 집중: $skill';
+  }
+
+  @override
+  String get focusShelfLine => '이것을 훈련하는, 아직 읽지 않은 카드.';
+
+  @override
+  String get focusOpen => '나의 한 주';
+
+  @override
   String get scoreTitle => 'Astute 점수';
 
   @override
@@ -6866,4 +6930,170 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => '나중에';
+
+  @override
+  String get listenEntry => '오늘의 다섯 장 듣기';
+
+  @override
+  String get listenEntryShort => '듣기';
+
+  @override
+  String get listenTitle => '오늘의 다섯 장';
+
+  @override
+  String get listenQuestion => '질문';
+
+  @override
+  String get listenThink => '생각해 보세요…';
+
+  @override
+  String get listenAnswer => '답';
+
+  @override
+  String get listenPreparing => '목소리를 준비하는 중…';
+
+  @override
+  String get listenWaiting => '다음 카드가 오는 중…';
+
+  @override
+  String get listenFreeNote => '첫 카드는 무료, 나머지는 Astute+로.';
+
+  @override
+  String get listenOfferTitle => '오늘의 나머지 카드를 읽어 드려요';
+
+  @override
+  String get listenOfferLine =>
+      'Astute+와 함께라면 매일 다섯 장 모두를, 화면이 잠긴 채로도 들을 수 있어요.';
+
+  @override
+  String get listenNothing => '이 카드에는 들을 내용이 없어요';
+
+  @override
+  String get listenCardUnavailable => '지금은 이용할 수 없어요';
+
+  @override
+  String get listenUnavailable => '지금은 듣기를 이용할 수 없어요. 나중에 다시 시도해 주세요.';
+
+  @override
+  String get listenDone => '오늘의 카드를 모두 들었어요.';
+
+  @override
+  String get listenAgain => '다시 듣기';
+
+  @override
+  String get listenNextCard => '다음 카드';
+
+  @override
+  String get inviteSection => '친구';
+
+  @override
+  String get inviteRow => '친구 초대하기';
+
+  @override
+  String get inviteRowLine => '두 사람 모두 Astute+ 1주일';
+
+  @override
+  String get inviteCodeRow => '코드가 있나요?';
+
+  @override
+  String get inviteCodeAccepted => '코드가 확인됐어요';
+
+  @override
+  String get inviteCodeAcceptedLine => '첫날을 마치면 1주일이 시작돼요';
+
+  @override
+  String get inviteSheetLine =>
+      '친구에게 내 코드를 보내세요. 친구가 첫날의 카드 다섯 장을 마치면 두 사람 모두 Astute+를 1주일 받아요.';
+
+  @override
+  String get inviteYourCode => '내 코드';
+
+  @override
+  String get inviteCopy => '복사';
+
+  @override
+  String get inviteSend => '초대 보내기';
+
+  @override
+  String inviteRules(int cap) {
+    return 'Astute+를 사용한 적 없는 새 계정에 해당해요. 나는 1년에 최대 $cap주를 받을 수 있어요.';
+  }
+
+  @override
+  String inviteWeeksSoFar(int n, int cap) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '올해 $cap주 중 $n주',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inviteCapped(int cap) {
+    return '올해의 $cap주를 모두 받았어요. 친구는 그래도 1주일을 받아요.';
+  }
+
+  @override
+  String inviteMessage(String code, String link) {
+    return 'Astute에 초대할게요. 하루 다섯 장의 카드로 머리를 깨우는 앱이에요. 내 코드 $code로 첫날을 마치면 우리 둘 다 Astute+를 1주일 받아요.\n$link';
+  }
+
+  @override
+  String inviteMessageCapped(String code, String link) {
+    return 'Astute에 초대할게요. 하루 다섯 장의 카드로 머리를 깨우는 앱이에요. 내 코드 $code로 첫날을 마치면 Astute+를 1주일 받아요.\n$link';
+  }
+
+  @override
+  String get inviteCodeTitle => '친구의 코드';
+
+  @override
+  String get inviteCodeLine =>
+      '친구가 보낸 코드를 입력하세요. 첫날을 마치면 두 사람 모두 Astute+를 1주일 받아요.';
+
+  @override
+  String get inviteCodeUse => '코드 사용하기';
+
+  @override
+  String get inviteCodeWaitingLine =>
+      '첫날의 카드 다섯 장을 마치세요. 그러면 Astute+ 1주일이 시작돼요. 나와 나를 초대한 친구 모두에게요.';
+
+  @override
+  String get inviteRefusedUnknown => '존재하지 않는 코드예요. 글자를 확인하고 다시 시도하세요.';
+
+  @override
+  String get inviteRefusedOwn => '내 코드예요. 친구에게 보내세요.';
+
+  @override
+  String get inviteRefusedUsed => '이미 친구의 코드를 사용했어요.';
+
+  @override
+  String get inviteRefusedLate => '코드는 만든 지 1주일이 안 된 새 계정에만 쓸 수 있어요.';
+
+  @override
+  String get inviteRefusedPlus => '코드는 Astute+를 사용한 적 없는 계정에만 쓸 수 있어요.';
+
+  @override
+  String get inviteSuccessTitle => '친구가 선물한 Astute+ 1주일.';
+
+  @override
+  String get inviteSuccessPlan => 'Astute+ · 1주일';
+
+  @override
+  String inviteSuccessUntil(String date) {
+    return '$date까지';
+  }
+
+  @override
+  String get inviteSuccessFoot => '결제도 해지도 필요 없어요. 이후에는 무료 요금제로 돌아가요.';
+
+  @override
+  String inviteEarned(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '친구 $n명이 첫날을 마쳤어요. 나에게 Astute+ $n주.',
+    );
+    return '$_temp0';
+  }
 }

@@ -6,7 +6,7 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/pill_card_stack.dart';
-import '../widgets/learn_looks.dart' show markedSkills;
+import '../widgets/learn_looks.dart' show markedSkills, scoredSkills;
 import '../widgets/share_sheet.dart';
 import '../widgets/skill_score.dart' show todayMoveOf;
 
@@ -160,7 +160,7 @@ class _FirstCardScreenState extends State<FirstCardScreen> {
                   moveOf: (pill) => todayMoveOf(
                     app,
                     pill,
-                    skillMarkOf(pill, markedSkills(app)),
+                    skillMarkOf(pill, scoredSkills(app)),
                   ),
                   // Nothing on the screen says how the card is sent on, so
                   // the card shows it, as Today's first card does.

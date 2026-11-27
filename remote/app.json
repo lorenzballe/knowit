@@ -5,7 +5,9 @@
   "offer.firstWeek": true,
   "offer.firstMonth": true,
   "cardAi": true,
-  "share.challenge": true
+  "share.challenge": true,
+  "listen": false,
+  "invite": false
  },
  "tunables": {"review.streakDays": 3},
  "experiments": {"push.firstAsk": {"variants": ["firstDay"]}}

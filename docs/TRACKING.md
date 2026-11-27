@@ -18,6 +18,10 @@ will find in six months.
 - **Dove va.** Tutto a PostHog (server UE). Una parte, in forma corta,
   anche nella *traccia* del lettore su Firestore, che il server usa per
   scegliere le carte del giorno e gli scaffali.
+- **Invita un amico** (spento finché il server non lo accende): l'invito
+  mandato (`invite sent`), il codice di un amico usato e com'è andata
+  (`invite code redeemed`), la settimana data, all'amico o a chi invita
+  (`invite reward granted`). Mai il codice. §6.14.
 - **Cosa non va mai da nessuna parte:** quello che il lettore scrive o
   cerca, il nome, l'email, i codici amico. Nelle registrazioni di PostHog
   tutto il testo è nascosto. L'interruttore *Profilo → Dati di utilizzo*
@@ -61,6 +65,10 @@ will find in six months.
   prova) e quando parte la prova (`first offer trial started`); gli acquisti
   partiti da lì hanno `source` `first week` o `first month`. Tre eventi per
   pagina al massimo, e ogni pagina si apre una volta sola.
+- **Dove vuoi vederci più chiaro.** Quando il lettore sceglie dal profilo
+  l'area in cui vuole vederci più chiaro, `goal set` dice quale (`goal`),
+  quale c'era prima (`before`) e da dove (`from`: `profile`). Un evento per
+  scelta; niente se tocca quella già scelta.
 - **Aggiungere un evento:** sezione [9](#9-adding-an-event-or-a-screen).
 
 ## 1. Rules
@@ -290,7 +298,9 @@ behind `offer.firstWeek` and `offer.firstMonth`; §6.8); `deck viewer`, `pill
 detail`, `archive`, `saved`, `liked`,
 `journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`,
 `story` (a true story played from Explore); `update gate`, `pause` (the
-update gate's full screens, over everything, §6.13).
+update gate's full screens, over everything, §6.13); `invite week` **new**
+(the purchase's own screen, for a week of Astute+ a friend's invitation
+gave, §6.14).
 
 ### 6.3 The day on Today
 
@@ -308,6 +318,10 @@ update gate's full screens, over everything, §6.13).
 | `streak broken` | the streak is found broken | `streak_lost`, `best_streak`, `days_missed`, `freezes_left`, `is_plus` | | P |
 | `streak frozen`, `freeze earned` | a freeze covers a missed day; one is earned | `days_covered`, `freezes_left`, `freezes`, `streak_days` | | P |
 | `plus gate reached`, `plus gate left` | a reader on the free plan meets something of Astute+ | `source`, `is_plus`, `unlocked` | | P |
+| `listen started` **new** | Listen's player opens on today's five (lib/listen/, behind `listen`) | `cards`, `is_plus`, `from` (`today`) | whether the day read aloud is used, and on which plan | P |
+| `listen card heard` **new** | a card is read aloud to the end of its answer | card facts, `position`, `of`, `free` (bool: the free plan's one card of the day) | which cards are heard, and how far into the five | P |
+| `listen finished` **new** | every card that could be heard was | `heard`, `nothing` (cards with nothing to read aloud, passed over), `unavailable`, `is_plus`, `ms_listening` | | P |
+| `listen stopped` **new** | the player is closed before the end | `heard`, `at`, `of`, `phase` (`question`, `think`, `answer`, `turn`, `waiting`, `offer`, `unavailable`), `is_plus`, `ms_listening`, `why` (when nothing could be heard: `credit`, `spent`, `busy`, `storage`, `not-configured`, `later`, `audio`) | where listeners stop; `phase: offer` is the free card heard and the rest not taken. The paywall it opens says `plus gate reached` with `source: listen` | P |
 
 ### 6.4 How a card was read: `card closed` and the read facts
 
@@ -420,6 +434,7 @@ is in its card facts.
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
 | `theme set` | | `theme` | P |
+| `goal set` **new** | where the reader wants to see more clearly, picked on the profile (`lib/widgets/aim_picker.dart`); nothing for a tap on the one already picked | `goal` (`money`, `business`, `people`, `news`, `health`, `decide`), `before` (the goal it replaces, absent where there was none), `from` (`profile`) | P |
 | `music sound switched` | the music cards' sound, off until turned on: Profile's switch, or Turn on after a card's Listen | `on`, `from` (`profile`, `card`) | P |
 | `usage sharing switched` | the reader's switch | `on` | P |
 | `usage sharing answered` | the first event after a yes: the intro's question or the sheet's (a no sends nothing) | `on`, `from` (`intro`, `sheet`) | P |
@@ -477,6 +492,24 @@ up, the update gate it closed, the experiments it put the reader in.
 | `experiment exposed` | an experiment gives the reader a variant, at the moment its variants part ways; once a sitting for each experiment and variant | `experiment` (its name, `push.firstAsk`), `variant`, `remote_hash` | the denominator of every experiment; the variant is also stamped on every later event and on the profile as `experiment_<name>` (§3, §4) | P |
 
 Nothing here reaches the trace: the dealer has no use for it.
+
+### 6.14 Invita un amico **new**
+
+Behind the server's switch `invite` (docs/REMOTE.md), off as built. The code
+is never sent, in any event or property: what happened, never with which
+code (§1, no friend code). The weeks themselves are the server's
+(functions/src/invite.ts) and RevenueCat's; these say what the phone saw.
+
+| Event | When | Properties | Why | Where |
+| --- | --- | --- | --- | --- |
+| `invite sent` | the invitation's sheet sent its message: through the share sheet (`as`: `link`), or copied where there was none (`copied`) | `as`, `weeks` (the weeks friends earned the reader in the last 365 days), `friends` (who finished a first day with the code, ever), `capped` (the year's eight are given: the message promised the friend's week alone) | how many invitations leave, and from whom | P |
+| `invite code redeemed` | a friend's code used, typed (`from`: `typed`) or brought by its link (`link`) | `from`, `outcome` (`waiting`: taken, the week waits on the first day; `granted`: the first day was already read, both weeks given; `granting`; `refused`; `unavailable`: no answer, or invitations not set up), `reason` (refused only: `unknown`, `own`, `used`, `late`, `plus`) | the funnel from a link to a new reader | P |
+| `invite reward granted` | a week given: the friend's (`side`: `friend`), heard from the server when it is given or at the next ask; or the inviter's (`inviter`), when the app sees weeks it had not seen before | `side`; for the inviter `weeks`, `new_weeks`, `capped` | how many weeks invitations give, each side | P |
+| `app opened from link` **extended** | an invitation's link opened the app | `invite` (true) — never the code | | P |
+
+The site counts its page as it counts every page (`$pageview` on
+`/invito`, `store clicked` with the page `invito`); the page takes the code
+out of the address before anything is counted.
 
 ## 7. The trace: codes and fields
 
@@ -564,6 +597,9 @@ once each, one paywall.
 | Paywall, reminder, other | 4 | 4 | |
 | `$set` | 7 | 3 | coalesced, written only where changed |
 | **Total** | **99** | **141** | +42% |
+
+Listen adds two to six events to a day it is used on: started, a card heard
+per card (one on the free plan, five on Astute+), and finished or stopped.
 
 Where the reader lives adds nothing to a day: a handful of events per reader
 in all — at most two sheets of the app's own and their answers, one system

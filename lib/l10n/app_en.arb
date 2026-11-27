@@ -2327,6 +2327,97 @@
  "@strengthsEmpty": {
   "description": "Look C: where the ranking stands before any skill has enough answers behind it."
  },
+ "readTitle": "Where you're already sharp",
+ "@readTitle": {
+  "description": "Look D, the profile: heading of the box under 'Where do you want to be sharper?', echoing it: where the reader's answers say they already see clearly, in the skills their goal takes."
+ },
+ "readBlind": "Your blind spot",
+ "@readBlind": {
+  "description": "Look D: small label over the skill the reader gets most wrong among the ones their goal takes: their blind spot."
+ },
+ "readLocked": "Five cards on your blind spot, and your whole profile, with Astute+.",
+ "@readLocked": {
+  "description": "Look D, the profile on the free plan: what Astute+ adds under the two lines: five cards to practise the blind spot, and every skill ranked."
+ },
+ "readEmpty": "A few more answers, and this will show where you're sharp and where you're not.",
+ "@readEmpty": {
+  "description": "Look D: where the box stands before the goal's skills have enough answers behind them."
+ },
+ "readNoAim": "Pick above where you want to be sharper, and your answers will show where you already are.",
+ "@readNoAim": {
+  "description": "Look D, the profile: in the box when the reader has not picked where they want to be sharper, in the section just above."
+ },
+ "readLine": "The skills this goal takes, read from your answers: where you're sharp, and your blind spot.",
+ "@readLine": {
+  "description": "Look D, Your journey: the line under the reader's goal, over its skills ranked by right answers."
+ },
+ "readOthers": "The rest of your profile",
+ "@readOthers": {
+  "description": "Look D, Your journey: heading over the skills the goal does not take, ranked the same way."
+ },
+ "focusTitle": "This week's focus",
+ "@focusTitle": {
+  "description": "Look E: the one skill the reader trains this week, Monday to Sunday. Heading on the profile and in Your journey."
+ },
+ "focusFromGoal": "Picked from your goal: a different skill each week.",
+ "@focusFromGoal": {
+  "description": "Look E, free plan: how this week's skill was chosen: in turn from the skills the reader's goal takes."
+ },
+ "focusFromMisses": "Picked from your answers: where you slip most.",
+ "@focusFromMisses": {
+  "description": "Look E, Astute+: how this week's skill was chosen: the one the reader got most wrong before the week began."
+ },
+ "focusLine": "Cards that train it carry its mark. On Sunday, how the week went.",
+ "@focusLine": {
+  "description": "Look E, Your journey: under this week's skill. Cards that train it carry its small mark; on Sunday the week's result is shown."
+ },
+ "focusLast": "Last week: {skill}",
+ "@focusLast": {
+  "description": "Look E: last week's skill, before how its answers went on the line under it.",
+  "placeholders": {
+   "skill": {
+    "type": "String"
+   }
+  }
+ },
+ "focusNext": "From Monday: {skill}",
+ "@focusNext": {
+  "description": "Look E, on Sunday: the skill of the week that starts on Monday.",
+  "placeholders": {
+   "skill": {
+    "type": "String"
+   }
+  }
+ },
+ "focusResult": "How the week went",
+ "@focusResult": {
+  "description": "Look E, on Sunday: small heading over the week's result, its right answers out of those given."
+ },
+ "focusPlus": "With Astute+, your answers pick the focus: where you slip most.",
+ "@focusPlus": {
+  "description": "Look E, the profile on the free plan: what Astute+ changes: the week's skill is the one the reader slips on most."
+ },
+ "focusMarkBody": "This week you're training this skill: cards that train it carry this mark. On Sunday you'll see how it went.",
+ "@focusMarkBody": {
+  "description": "Look E: the sheet a card's small mark opens, under the skill's name: what the mark means."
+ },
+ "focusShelf": "This week's focus: {skill}",
+ "@focusShelf": {
+  "description": "Look E, Explore: a shelf of cards that train this week's skill. skill is its name.",
+  "placeholders": {
+   "skill": {
+    "type": "String"
+   }
+  }
+ },
+ "focusShelfLine": "Cards that train it, not read yet.",
+ "@focusShelfLine": {
+  "description": "Look E, Explore: the line under the shelf of this week's skill."
+ },
+ "focusOpen": "Your week",
+ "@focusOpen": {
+  "description": "Look E: the button on the sheet a card's mark opens, to Your journey where the week is shown day by day."
+ },
  "scoreTitle": "Astute score",
  "@scoreTitle": {
   "description": "The reader's score in all the skills together: a number with no top, moved by every answer on a card (like a chess rating). Its name; Astute is the app's name."
@@ -8049,5 +8140,233 @@
  "firstOfferNotNow": "Not now",
  "@firstOfferNotNow": {
   "description": "The first week's and the first month's page: the button that closes it, for good; a button as plain as the one that starts the trial."
+ },
+ "listenEntry": "Listen to today's five",
+ "@listenEntry": {
+  "description": "Today, at the end of the row with the day's name, while the five are read: opens Listen, the day's cards read aloud. Also said to a screen reader. The full words, where the row has room."
+ },
+ "listenEntryShort": "Listen",
+ "@listenEntryShort": {
+  "description": "The same button where the row is short: one word, beside a headphones mark. Also the eyebrow over the player."
+ },
+ "listenTitle": "Today's five",
+ "@listenTitle": {
+  "description": "The player's title: the day's five cards, read aloud one after another."
+ },
+ "listenQuestion": "Question",
+ "@listenQuestion": {
+  "description": "Beside the card being read, while its question is read aloud."
+ },
+ "listenThink": "Think it over…",
+ "@listenThink": {
+  "description": "Beside the card being read, during the pause of about four seconds after its question, with a soft tone: the moment to think of the answer."
+ },
+ "listenAnswer": "Answer",
+ "@listenAnswer": {
+  "description": "Beside the card being read, while its answer and why are read aloud."
+ },
+ "listenPreparing": "Getting the voice ready…",
+ "@listenPreparing": {
+  "description": "In the player while the first card's voice is fetched (or made, the first time anyone hears it)."
+ },
+ "listenWaiting": "The next card is on its way…",
+ "@listenWaiting": {
+  "description": "In the player when the next card's voice is still being fetched."
+ },
+ "listenFreeNote": "The first card is free; the rest come with Astute+.",
+ "@listenFreeNote": {
+  "description": "Under the player's buttons, on the free plan: the first card of the day is heard free, the others with Astute+."
+ },
+ "listenOfferTitle": "The rest of today's cards, read to you",
+ "@listenOfferTitle": {
+  "description": "On the free plan, once the free card has been heard: the headline of the offer of the rest, read aloud."
+ },
+ "listenOfferLine": "With Astute+ you hear all five every day, even with the screen locked.",
+ "@listenOfferLine": {
+  "description": "Under it: what Astute+ gives here, all five read aloud every day, and it goes on with the phone locked."
+ },
+ "listenNothing": "Nothing to hear on this card",
+ "@listenNothing": {
+  "description": "On a card in the player's list that is passed over: its words are about a drawing on its page, and mean nothing heard."
+ },
+ "listenCardUnavailable": "Not available right now",
+ "@listenCardUnavailable": {
+  "description": "On a card in the player's list that could not be had right now (the voice's limits, or the network): passed over."
+ },
+ "listenUnavailable": "Listening isn't available right now. Try again later.",
+ "@listenUnavailable": {
+  "description": "In the player when nothing can be heard right now. Calm: it is not the reader's doing."
+ },
+ "listenDone": "All of today's cards, heard.",
+ "@listenDone": {
+  "description": "In the player once every card that could be heard was."
+ },
+ "listenAgain": "Listen again",
+ "@listenAgain": {
+  "description": "Under it: plays the day's cards again from the first."
+ },
+ "listenNextCard": "Next card",
+ "@listenNextCard": {
+  "description": "Said to a screen reader on the player's button that goes on to the next card."
+ },
+ "inviteSection": "Friends",
+ "@inviteSection": {
+  "description": "Profile: the name over the box with the invitation's two rows (Invita un amico)."
+ },
+ "inviteRow": "Invite a friend",
+ "@inviteRow": {
+  "description": "Profile: the row that sends a friend a link with the reader's code."
+ },
+ "inviteRowLine": "A week of Astute+ for you both",
+ "@inviteRowLine": {
+  "description": "Profile: under 'Invite a friend', what it gives; also the title of the invitation's sheet. Keep 'Astute+' exactly."
+ },
+ "inviteCodeRow": "Have a code?",
+ "@inviteCodeRow": {
+  "description": "Profile: the row where a new reader types a friend's code. The site's invitation page names it (tool/site/invito_page.py)."
+ },
+ "inviteCodeAccepted": "Code accepted",
+ "@inviteCodeAccepted": {
+  "description": "Profile and the code's sheet: a friend's code taken, its week waiting on the reader's first day."
+ },
+ "inviteCodeAcceptedLine": "Your week starts when you finish your first day",
+ "@inviteCodeAcceptedLine": {
+  "description": "Profile: under 'Code accepted', when the week starts."
+ },
+ "inviteSheetLine": "Send a friend your code. When they finish their first day, the five cards, you each get a week of Astute+.",
+ "@inviteSheetLine": {
+  "description": "The invitation's sheet: how it works, under its title."
+ },
+ "inviteYourCode": "Your code",
+ "@inviteYourCode": {
+  "description": "The invitation's sheet: the small label over the reader's code."
+ },
+ "inviteCopy": "Copy",
+ "@inviteCopy": {
+  "description": "The invitation's sheet: the button beside the code that copies it."
+ },
+ "inviteSend": "Send the invitation",
+ "@inviteSend": {
+  "description": "The invitation's sheet: the button that opens the system's share sheet with the message."
+ },
+ "inviteRules": "For a new account that has never had Astute+. You get up to {cap} weeks a year.",
+ "@inviteRules": {
+  "description": "The invitation's sheet: the rules in small print. cap is the most weeks an inviter gets in a year, 8.",
+  "placeholders": {
+   "cap": {
+    "type": "int"
+   }
+  }
+ },
+ "inviteWeeksSoFar": "{n, plural, =1{1 week of {cap} this year} other{{n} weeks of {cap} this year}}",
+ "@inviteWeeksSoFar": {
+  "description": "The invitation's sheet and the profile's row: the weeks friends earned the reader in the last year, of the most there may be (cap, 8).",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "cap": {
+    "type": "int"
+   }
+  }
+ },
+ "inviteCapped": "You’ve had this year’s {cap} weeks. Your friends still get theirs.",
+ "@inviteCapped": {
+  "description": "The invitation's sheet: the reader has had the year's weeks (cap, 8); a friend still gets theirs.",
+  "placeholders": {
+   "cap": {
+    "type": "int"
+   }
+  }
+ },
+ "inviteMessage": "Join me on Astute: five cards a day to keep your mind sharp. With my code {code}, once you finish your first day we each get a week of Astute+.\n{link}",
+ "@inviteMessage": {
+  "description": "The message the invitation sends through the share sheet: the line, then the link on a line of its own. code is the reader's code (six characters), link the site's page with it.",
+  "placeholders": {
+   "code": {
+    "type": "String"
+   },
+   "link": {
+    "type": "String"
+   }
+  }
+ },
+ "inviteMessageCapped": "Join me on Astute: five cards a day to keep your mind sharp. With my code {code}, once you finish your first day you get a week of Astute+.\n{link}",
+ "@inviteMessageCapped": {
+  "description": "The same message once the reader has had the year's weeks: it promises the friend's week alone.",
+  "placeholders": {
+   "code": {
+    "type": "String"
+   },
+   "link": {
+    "type": "String"
+   }
+  }
+ },
+ "inviteCodeTitle": "A friend’s code",
+ "@inviteCodeTitle": {
+  "description": "The code's sheet: its title, over the field where a friend's code is typed."
+ },
+ "inviteCodeLine": "Type the code a friend sent you. When you finish your first day, you each get a week of Astute+.",
+ "@inviteCodeLine": {
+  "description": "The code's sheet: what the code does, under its title."
+ },
+ "inviteCodeUse": "Use the code",
+ "@inviteCodeUse": {
+  "description": "The code's sheet: the button that uses the code."
+ },
+ "inviteCodeWaitingLine": "Finish your first day, the five cards: then the week of Astute+ starts, for you and for the friend who invited you.",
+ "@inviteCodeWaitingLine": {
+  "description": "The code's sheet, once the code is taken: what happens next."
+ },
+ "inviteRefusedUnknown": "That code doesn’t exist. Check the letters and try again.",
+ "@inviteRefusedUnknown": {
+  "description": "The code's sheet: no such code."
+ },
+ "inviteRefusedOwn": "That’s your own code: send it to a friend.",
+ "@inviteRefusedOwn": {
+  "description": "The code's sheet: the reader typed their own code."
+ },
+ "inviteRefusedUsed": "You’ve already used a friend’s code.",
+ "@inviteRefusedUsed": {
+  "description": "The code's sheet: the reader has used a friend's code already; one per account."
+ },
+ "inviteRefusedLate": "Codes are for new accounts, in their first week.",
+ "@inviteRefusedLate": {
+  "description": "The code's sheet: the account is more than a week old."
+ },
+ "inviteRefusedPlus": "Codes are for accounts that have never had Astute+.",
+ "@inviteRefusedPlus": {
+  "description": "The code's sheet: the account has held Astute+, a trial, a plan or a week."
+ },
+ "inviteSuccessTitle": "A week of Astute+, on a friend.",
+ "@inviteSuccessTitle": {
+  "description": "The screen a friend's week opens on (the purchase's own screen): its title. Free time, never a purchase."
+ },
+ "inviteSuccessPlan": "Astute+ · one week",
+ "@inviteSuccessPlan": {
+  "description": "That screen: the plan's name on its card."
+ },
+ "inviteSuccessUntil": "Until {date}",
+ "@inviteSuccessUntil": {
+  "description": "That screen: under the plan's name, when the week ends. date is a day and a month, as the phone writes them.",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "inviteSuccessFoot": "Nothing to pay and nothing to cancel: then you’re back on the free plan.",
+ "@inviteSuccessFoot": {
+  "description": "That screen: the small line under its button."
+ },
+ "inviteEarned": "{n, plural, =1{A friend finished their first day: a week of Astute+ for you.} other{{n} friends finished their first day: {n} weeks of Astute+ for you.}}",
+ "@inviteEarned": {
+  "description": "Profile, once: friends finished their first day with the reader's code, and n weeks of Astute+ were given the reader.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
  }
 }

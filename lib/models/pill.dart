@@ -891,6 +891,61 @@ class Pill {
     this.book,
   });
 
+  /// The same card drawn in other colours: [color] its ground, [ink] what is
+  /// written and drawn on it, [tint] its colour laid on black. A hard card
+  /// ringed (lib/widgets/hard_ring.dart) is drawn so, dark, and everything
+  /// a card draws in its own colours follows. Every other field is the
+  /// card's own; one added to the card is added here too.
+  Pill withColours({required Color color, required Color ink, Color? tint}) =>
+      Pill(
+        id: id,
+        topic: topic,
+        color: color,
+        ink: ink,
+        tint: tint ?? this.tint,
+        question: question,
+        answer: answer,
+        barMove: barMove,
+        ask: ask,
+        both: both,
+        endsOnAsk: endsOnAsk,
+        source: source,
+        challenge: challenge,
+        hint: hint,
+        trap: trap,
+        steps: steps,
+        simply: simply,
+        counterpoint: counterpoint,
+        difficulty: difficulty,
+        principle: principle,
+        genre: genre,
+        strand: strand,
+        also: also,
+        keywords: keywords,
+        era: era,
+        region: region,
+        hook: hook,
+        mood: mood,
+        numeracy: numeracy,
+        abstraction: abstraction,
+        shelfLife: shelfLife,
+        mature: mature,
+        language: language,
+        buildsOn: buildsOn,
+        figure: figure,
+        diagram: diagram,
+        scene: scene,
+        place: place,
+        web: web,
+        sureOdds: sureOdds,
+        reacts: reacts,
+        reference: reference,
+        sourceKind: sourceKind,
+        why: why,
+        views: views,
+        book: book,
+      );
+
   /// Whether the card carries its tags. Every card in the bank does; a card
   /// built in a test, or from a bundle older than the tags, may not.
   bool get isTagged => era.isNotEmpty;

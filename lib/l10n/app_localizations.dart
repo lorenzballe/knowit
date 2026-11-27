@@ -2952,6 +2952,120 @@ abstract class AppLocalizations {
   /// **'A few more answers, and this will show where you\'re strong.'**
   String get strengthsEmpty;
 
+  /// Look D, the profile: heading of the box under 'Where do you want to be sharper?', echoing it: where the reader's answers say they already see clearly, in the skills their goal takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you\'re already sharp'**
+  String get readTitle;
+
+  /// Look D: small label over the skill the reader gets most wrong among the ones their goal takes: their blind spot.
+  ///
+  /// In en, this message translates to:
+  /// **'Your blind spot'**
+  String get readBlind;
+
+  /// Look D, the profile on the free plan: what Astute+ adds under the two lines: five cards to practise the blind spot, and every skill ranked.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards on your blind spot, and your whole profile, with Astute+.'**
+  String get readLocked;
+
+  /// Look D: where the box stands before the goal's skills have enough answers behind them.
+  ///
+  /// In en, this message translates to:
+  /// **'A few more answers, and this will show where you\'re sharp and where you\'re not.'**
+  String get readEmpty;
+
+  /// Look D, the profile: in the box when the reader has not picked where they want to be sharper, in the section just above.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick above where you want to be sharper, and your answers will show where you already are.'**
+  String get readNoAim;
+
+  /// Look D, Your journey: the line under the reader's goal, over its skills ranked by right answers.
+  ///
+  /// In en, this message translates to:
+  /// **'The skills this goal takes, read from your answers: where you\'re sharp, and your blind spot.'**
+  String get readLine;
+
+  /// Look D, Your journey: heading over the skills the goal does not take, ranked the same way.
+  ///
+  /// In en, this message translates to:
+  /// **'The rest of your profile'**
+  String get readOthers;
+
+  /// Look E: the one skill the reader trains this week, Monday to Sunday. Heading on the profile and in Your journey.
+  ///
+  /// In en, this message translates to:
+  /// **'This week\'s focus'**
+  String get focusTitle;
+
+  /// Look E, free plan: how this week's skill was chosen: in turn from the skills the reader's goal takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Picked from your goal: a different skill each week.'**
+  String get focusFromGoal;
+
+  /// Look E, Astute+: how this week's skill was chosen: the one the reader got most wrong before the week began.
+  ///
+  /// In en, this message translates to:
+  /// **'Picked from your answers: where you slip most.'**
+  String get focusFromMisses;
+
+  /// Look E, Your journey: under this week's skill. Cards that train it carry its small mark; on Sunday the week's result is shown.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards that train it carry its mark. On Sunday, how the week went.'**
+  String get focusLine;
+
+  /// Look E: last week's skill, before how its answers went on the line under it.
+  ///
+  /// In en, this message translates to:
+  /// **'Last week: {skill}'**
+  String focusLast(String skill);
+
+  /// Look E, on Sunday: the skill of the week that starts on Monday.
+  ///
+  /// In en, this message translates to:
+  /// **'From Monday: {skill}'**
+  String focusNext(String skill);
+
+  /// Look E, on Sunday: small heading over the week's result, its right answers out of those given.
+  ///
+  /// In en, this message translates to:
+  /// **'How the week went'**
+  String get focusResult;
+
+  /// Look E, the profile on the free plan: what Astute+ changes: the week's skill is the one the reader slips on most.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+, your answers pick the focus: where you slip most.'**
+  String get focusPlus;
+
+  /// Look E: the sheet a card's small mark opens, under the skill's name: what the mark means.
+  ///
+  /// In en, this message translates to:
+  /// **'This week you\'re training this skill: cards that train it carry this mark. On Sunday you\'ll see how it went.'**
+  String get focusMarkBody;
+
+  /// Look E, Explore: a shelf of cards that train this week's skill. skill is its name.
+  ///
+  /// In en, this message translates to:
+  /// **'This week\'s focus: {skill}'**
+  String focusShelf(String skill);
+
+  /// Look E, Explore: the line under the shelf of this week's skill.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards that train it, not read yet.'**
+  String get focusShelfLine;
+
+  /// Look E: the button on the sheet a card's mark opens, to Your journey where the week is shown day by day.
+  ///
+  /// In en, this message translates to:
+  /// **'Your week'**
+  String get focusOpen;
+
   /// The reader's score in all the skills together: a number with no top, moved by every answer on a card (like a chess rating). Its name; Astute is the app's name.
   ///
   /// In en, this message translates to:
@@ -9875,6 +9989,282 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not now'**
   String get firstOfferNotNow;
+
+  /// Today, at the end of the row with the day's name, while the five are read: opens Listen, the day's cards read aloud. Also said to a screen reader. The full words, where the row has room.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to today\'s five'**
+  String get listenEntry;
+
+  /// The same button where the row is short: one word, beside a headphones mark. Also the eyebrow over the player.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen'**
+  String get listenEntryShort;
+
+  /// The player's title: the day's five cards, read aloud one after another.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s five'**
+  String get listenTitle;
+
+  /// Beside the card being read, while its question is read aloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Question'**
+  String get listenQuestion;
+
+  /// Beside the card being read, during the pause of about four seconds after its question, with a soft tone: the moment to think of the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Think it over…'**
+  String get listenThink;
+
+  /// Beside the card being read, while its answer and why are read aloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer'**
+  String get listenAnswer;
+
+  /// In the player while the first card's voice is fetched (or made, the first time anyone hears it).
+  ///
+  /// In en, this message translates to:
+  /// **'Getting the voice ready…'**
+  String get listenPreparing;
+
+  /// In the player when the next card's voice is still being fetched.
+  ///
+  /// In en, this message translates to:
+  /// **'The next card is on its way…'**
+  String get listenWaiting;
+
+  /// Under the player's buttons, on the free plan: the first card of the day is heard free, the others with Astute+.
+  ///
+  /// In en, this message translates to:
+  /// **'The first card is free; the rest come with Astute+.'**
+  String get listenFreeNote;
+
+  /// On the free plan, once the free card has been heard: the headline of the offer of the rest, read aloud.
+  ///
+  /// In en, this message translates to:
+  /// **'The rest of today\'s cards, read to you'**
+  String get listenOfferTitle;
+
+  /// Under it: what Astute+ gives here, all five read aloud every day, and it goes on with the phone locked.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ you hear all five every day, even with the screen locked.'**
+  String get listenOfferLine;
+
+  /// On a card in the player's list that is passed over: its words are about a drawing on its page, and mean nothing heard.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to hear on this card'**
+  String get listenNothing;
+
+  /// On a card in the player's list that could not be had right now (the voice's limits, or the network): passed over.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available right now'**
+  String get listenCardUnavailable;
+
+  /// In the player when nothing can be heard right now. Calm: it is not the reader's doing.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening isn\'t available right now. Try again later.'**
+  String get listenUnavailable;
+
+  /// In the player once every card that could be heard was.
+  ///
+  /// In en, this message translates to:
+  /// **'All of today\'s cards, heard.'**
+  String get listenDone;
+
+  /// Under it: plays the day's cards again from the first.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen again'**
+  String get listenAgain;
+
+  /// Said to a screen reader on the player's button that goes on to the next card.
+  ///
+  /// In en, this message translates to:
+  /// **'Next card'**
+  String get listenNextCard;
+
+  /// Profile: the name over the box with the invitation's two rows (Invita un amico).
+  ///
+  /// In en, this message translates to:
+  /// **'Friends'**
+  String get inviteSection;
+
+  /// Profile: the row that sends a friend a link with the reader's code.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a friend'**
+  String get inviteRow;
+
+  /// Profile: under 'Invite a friend', what it gives; also the title of the invitation's sheet. Keep 'Astute+' exactly.
+  ///
+  /// In en, this message translates to:
+  /// **'A week of Astute+ for you both'**
+  String get inviteRowLine;
+
+  /// Profile: the row where a new reader types a friend's code. The site's invitation page names it (tool/site/invito_page.py).
+  ///
+  /// In en, this message translates to:
+  /// **'Have a code?'**
+  String get inviteCodeRow;
+
+  /// Profile and the code's sheet: a friend's code taken, its week waiting on the reader's first day.
+  ///
+  /// In en, this message translates to:
+  /// **'Code accepted'**
+  String get inviteCodeAccepted;
+
+  /// Profile: under 'Code accepted', when the week starts.
+  ///
+  /// In en, this message translates to:
+  /// **'Your week starts when you finish your first day'**
+  String get inviteCodeAcceptedLine;
+
+  /// The invitation's sheet: how it works, under its title.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a friend your code. When they finish their first day, the five cards, you each get a week of Astute+.'**
+  String get inviteSheetLine;
+
+  /// The invitation's sheet: the small label over the reader's code.
+  ///
+  /// In en, this message translates to:
+  /// **'Your code'**
+  String get inviteYourCode;
+
+  /// The invitation's sheet: the button beside the code that copies it.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get inviteCopy;
+
+  /// The invitation's sheet: the button that opens the system's share sheet with the message.
+  ///
+  /// In en, this message translates to:
+  /// **'Send the invitation'**
+  String get inviteSend;
+
+  /// The invitation's sheet: the rules in small print. cap is the most weeks an inviter gets in a year, 8.
+  ///
+  /// In en, this message translates to:
+  /// **'For a new account that has never had Astute+. You get up to {cap} weeks a year.'**
+  String inviteRules(int cap);
+
+  /// The invitation's sheet and the profile's row: the weeks friends earned the reader in the last year, of the most there may be (cap, 8).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 week of {cap} this year} other{{n} weeks of {cap} this year}}'**
+  String inviteWeeksSoFar(int n, int cap);
+
+  /// The invitation's sheet: the reader has had the year's weeks (cap, 8); a friend still gets theirs.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ve had this year’s {cap} weeks. Your friends still get theirs.'**
+  String inviteCapped(int cap);
+
+  /// The message the invitation sends through the share sheet: the line, then the link on a line of its own. code is the reader's code (six characters), link the site's page with it.
+  ///
+  /// In en, this message translates to:
+  /// **'Join me on Astute: five cards a day to keep your mind sharp. With my code {code}, once you finish your first day we each get a week of Astute+.\n{link}'**
+  String inviteMessage(String code, String link);
+
+  /// The same message once the reader has had the year's weeks: it promises the friend's week alone.
+  ///
+  /// In en, this message translates to:
+  /// **'Join me on Astute: five cards a day to keep your mind sharp. With my code {code}, once you finish your first day you get a week of Astute+.\n{link}'**
+  String inviteMessageCapped(String code, String link);
+
+  /// The code's sheet: its title, over the field where a friend's code is typed.
+  ///
+  /// In en, this message translates to:
+  /// **'A friend’s code'**
+  String get inviteCodeTitle;
+
+  /// The code's sheet: what the code does, under its title.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the code a friend sent you. When you finish your first day, you each get a week of Astute+.'**
+  String get inviteCodeLine;
+
+  /// The code's sheet: the button that uses the code.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the code'**
+  String get inviteCodeUse;
+
+  /// The code's sheet, once the code is taken: what happens next.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish your first day, the five cards: then the week of Astute+ starts, for you and for the friend who invited you.'**
+  String get inviteCodeWaitingLine;
+
+  /// The code's sheet: no such code.
+  ///
+  /// In en, this message translates to:
+  /// **'That code doesn’t exist. Check the letters and try again.'**
+  String get inviteRefusedUnknown;
+
+  /// The code's sheet: the reader typed their own code.
+  ///
+  /// In en, this message translates to:
+  /// **'That’s your own code: send it to a friend.'**
+  String get inviteRefusedOwn;
+
+  /// The code's sheet: the reader has used a friend's code already; one per account.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ve already used a friend’s code.'**
+  String get inviteRefusedUsed;
+
+  /// The code's sheet: the account is more than a week old.
+  ///
+  /// In en, this message translates to:
+  /// **'Codes are for new accounts, in their first week.'**
+  String get inviteRefusedLate;
+
+  /// The code's sheet: the account has held Astute+, a trial, a plan or a week.
+  ///
+  /// In en, this message translates to:
+  /// **'Codes are for accounts that have never had Astute+.'**
+  String get inviteRefusedPlus;
+
+  /// The screen a friend's week opens on (the purchase's own screen): its title. Free time, never a purchase.
+  ///
+  /// In en, this message translates to:
+  /// **'A week of Astute+, on a friend.'**
+  String get inviteSuccessTitle;
+
+  /// That screen: the plan's name on its card.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute+ · one week'**
+  String get inviteSuccessPlan;
+
+  /// That screen: under the plan's name, when the week ends. date is a day and a month, as the phone writes them.
+  ///
+  /// In en, this message translates to:
+  /// **'Until {date}'**
+  String inviteSuccessUntil(String date);
+
+  /// That screen: the small line under its button.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to pay and nothing to cancel: then you’re back on the free plan.'**
+  String get inviteSuccessFoot;
+
+  /// Profile, once: friends finished their first day with the reader's code, and n weeks of Astute+ were given the reader.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{A friend finished their first day: a week of Astute+ for you.} other{{n} friends finished their first day: {n} weeks of Astute+ for you.}}'**
+  String inviteEarned(int n);
 }
 
 class _AppLocalizationsDelegate

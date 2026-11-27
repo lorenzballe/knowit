@@ -37,12 +37,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <!-- A card's link on the site, astutetheapp.com/c/<id>, opens the
-                 card in the app, as a post's link opens the post. Verified
-                 against site/.well-known/assetlinks.json; until the site
-                 vouches for this app, the link opens the site. Only the
-                 site's own host: www has no certificate of its own, and
-                 before Android 12 one host that fails to verify leaves
-                 every link of the app unverified. -->
+                 card in the app, as a post's link opens the post; and an
+                 invitation's, astutetheapp.com/invito?c=<code>, opens the
+                 app on the code (Invita un amico). Verified against
+                 site/.well-known/assetlinks.json; until the site vouches
+                 for this app, the link opens the site. Only the site's own
+                 host: www has no certificate of its own, and before
+                 Android 12 one host that fails to verify leaves every link
+                 of the app unverified. -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -50,6 +52,7 @@
                 <data android:scheme="https"/>
                 <data android:host="astutetheapp.com"/>
                 <data android:pathPrefix="/c/"/>
+                <data android:path="/invito"/>
             </intent-filter>
             <!-- The app reads its links itself (MainActivity); left on,
                  Flutter would also push each as a named route the app does

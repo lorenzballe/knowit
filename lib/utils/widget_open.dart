@@ -5,7 +5,7 @@
 /// one of today's five, or a card of today's shelf at the top of Explore.
 /// The app opens exactly that card (see `AstutoShell`).
 class WidgetOpen {
-  const WidgetOpen({required this.from, this.card, this.place});
+  const WidgetOpen({required this.from, this.card, this.place, this.code});
 
   /// Which widget, as "kind.family": `card.systemSmall`, `five.home`,
   /// `shelf.systemLarge`.
@@ -14,8 +14,12 @@ class WidgetOpen {
   /// The card tapped, by id, when the tap landed on one.
   final String? card;
 
-  /// Where that card lives: [today] or [shelf].
+  /// Where that card lives: [today] or [shelf]; or [link], or [invite].
   final String? place;
+
+  /// The code an invitation's link carries, as the phone handed it over:
+  /// read (readInviteCode, lib/sync/invite.dart) before it is used.
+  final String? code;
 
   /// One of today's five.
   static const String today = 'today';
@@ -28,6 +32,33 @@ class WidgetOpen {
   /// post opens from its link: the phone hands the link to the app when it
   /// is installed, and the card opens on its own.
   static const String link = 'link';
+
+  /// An invitation's link, `astutetheapp.com/invito?c=<code>` (Invita un
+  /// amico), tapped in a chat: the phone hands it to the app, which takes
+  /// the code. The phones read it as [inviteCodeOfLink] does
+  /// (ios/Runner/AppDelegate.swift, MainActivity.kt), and the site says the
+  /// app may open it (site/.well-known/).
+  static const String invite = 'invite';
+
+  /// The code an invitation's link carries, as the phone reads it:
+  /// `https://astutetheapp.com/invito?c=<code>`, with or without `.html`
+  /// and `www.`; null for any other address, or one with no code.
+  static String? inviteCodeOfLink(Uri url) {
+    if (url.scheme != 'https' && url.scheme != 'http') return null;
+    final String host = url.host.toLowerCase();
+    if (host != 'astutetheapp.com' && host != 'www.astutetheapp.com') {
+      return null;
+    }
+    final List<String> parts = url.pathSegments
+        .where((s) => s.isNotEmpty)
+        .toList();
+    if (parts.length != 1 ||
+        (parts[0] != 'invito' && parts[0] != 'invito.html')) {
+      return null;
+    }
+    final String? code = url.queryParameters['c'];
+    return code == null || code.isEmpty ? null : code;
+  }
 
   /// The card a card's link names: `https://astutetheapp.com/c/<id>`, with
   /// or without `.html`, `www.` and a query; null for any other address.
@@ -64,10 +95,17 @@ class WidgetOpen {
     final String? card = text('card');
     final String? place = text('in');
     final String? from = text('from');
-    if (from == null && card == null) return null;
-    return WidgetOpen(from: from ?? 'unknown', card: card, place: place);
+    final String? code = text('code');
+    if (from == null && card == null && code == null) return null;
+    return WidgetOpen(
+      from: from ?? 'unknown',
+      card: card,
+      place: place,
+      code: code,
+    );
   }
 
   @override
-  String toString() => 'WidgetOpen($from, card: $card, in: $place)';
+  String toString() =>
+      'WidgetOpen($from, card: $card, in: $place${code == null ? '' : ', code'})';
 }

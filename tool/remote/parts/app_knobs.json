@@ -8,7 +8,9 @@
   "offer.firstWeek": {"default": false},
   "offer.firstMonth": {"default": false},
   "cardAi": {"default": false},
-  "share.challenge": {"default": false}
+  "share.challenge": {"default": false},
+  "listen": {"default": false},
+  "invite": {"default": false}
  },
  "tunables": {
   "push.askGapDays": {"type": "count", "default": 3, "min": 1, "max": 30},

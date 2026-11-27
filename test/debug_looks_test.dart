@@ -352,31 +352,41 @@ void main() {
   });
 
   test(
-    'What to learn\'s look: kept on the phone, read back at the next '
-    'start, kept through the wipe, and never read without the tools',
+    'What to learn\'s looks, every one: kept on the phone, read back at the '
+    'next start, kept through the wipe, and never read without the tools',
     () async {
+      for (final LearnLook look in LearnLook.values) {
+        SharedPreferences.setMockInitialValues(_finished());
+        DebugLooks.reset();
+        debugToolsOn = true;
+        await DebugLooks.setLearn(look);
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        expect(prefs.getString('knowit.debug.learn'), look.name);
+
+        DebugLooks.reset();
+        final AppState app = AppState();
+        await app.init();
+        expect(DebugLooks.learn.value, look, reason: look.name);
+        expect(DebugLooks.learnPicked, look, reason: look.name);
+
+        await app.signOut();
+        expect(prefs.getBool('knowit.onboarded'), isNull);
+        expect(
+          prefs.getString('knowit.debug.learn'),
+          look == LearnLook.today ? isNull : look.name,
+          reason: look.name,
+        );
+        expect(DebugLooks.learn.value, look, reason: look.name);
+
+        debugToolsOn = false;
+        expect(DebugLooks.learnPicked, LearnLook.today, reason: look.name);
+      }
+
+      // As it ships, the look of a phone that kept none.
       SharedPreferences.setMockInitialValues(_finished());
-      debugToolsOn = true;
-      await DebugLooks.setLearn(LearnLook.aim);
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      expect(prefs.getString('knowit.debug.learn'), 'aim');
-
       DebugLooks.reset();
-      final AppState app = AppState();
-      await app.init();
-      expect(DebugLooks.learn.value, LearnLook.aim);
-      expect(DebugLooks.learnPicked, LearnLook.aim);
-
-      await app.signOut();
-      expect(prefs.getBool('knowit.onboarded'), isNull);
-      expect(prefs.getString('knowit.debug.learn'), 'aim');
-
-      debugToolsOn = false;
-      expect(DebugLooks.learnPicked, LearnLook.today);
-
       debugToolsOn = true;
-      await DebugLooks.setLearn(LearnLook.today);
-      DebugLooks.load(prefs);
+      DebugLooks.load(await SharedPreferences.getInstance());
       expect(DebugLooks.learn.value, LearnLook.today);
     },
   );
@@ -420,20 +430,45 @@ void main() {
     expect(strengths, findsOneWidget);
     expect(skills, findsNothing);
 
-    // B: the reader's aim.
+    // D: the aim read, where the reader sees clearly and their blind spot.
+    await _scrollTo(
+      tester,
+      find.byKey(const ValueKey('debug-learn-aimProfile')),
+    );
+    await tester.tap(find.byKey(const ValueKey('debug-learn-aimProfile')));
+    await _settle(tester);
+    expect(DebugLooks.learn.value, LearnLook.aimProfile);
+    final Finder read = find.byKey(const ValueKey('profile-read'));
+    await tester.scrollUntilVisible(read, -400, scrollable: _profileList);
+    expect(read, findsOneWidget);
+    expect(strengths, findsNothing);
+
+    // E: the week's skill, and its mark on the day's cards that train it.
+    await _scrollTo(tester, find.byKey(const ValueKey('debug-learn-weekly')));
+    await tester.tap(find.byKey(const ValueKey('debug-learn-weekly')));
+    await _settle(tester);
+    expect(DebugLooks.learn.value, LearnLook.weekly);
+    final Finder focus = find.byKey(const ValueKey('profile-focus'));
+    await tester.scrollUntilVisible(focus, -400, scrollable: _profileList);
+    expect(focus, findsOneWidget);
+    expect(read, findsNothing);
+
+    // B: the aim alone, nothing under the question.
     await _scrollTo(tester, find.byKey(const ValueKey('debug-learn-aim')));
     await tester.tap(find.byKey(const ValueKey('debug-learn-aim')));
     await _settle(tester);
-    final Finder aim = find.byKey(const ValueKey('profile-aim'));
-    await tester.scrollUntilVisible(aim, -400, scrollable: _profileList);
-    expect(aim, findsOneWidget);
+    expect(DebugLooks.learn.value, LearnLook.aim);
+    expect(focus, findsNothing);
+    expect(read, findsNothing);
+    expect(skills, findsNothing);
 
     // A: nothing under the subjects, and no card carries a skill's mark.
     await _scrollTo(tester, find.byKey(const ValueKey('debug-learn-score')));
     await tester.tap(find.byKey(const ValueKey('debug-learn-score')));
     await _settle(tester);
-    expect(find.byKey(const ValueKey('profile-aim')), findsNothing);
+    expect(DebugLooks.learn.value, LearnLook.score);
     expect(find.byKey(const ValueKey('profile-strengths')), findsNothing);
+    expect(focus, findsNothing);
     await tester.tap(find.byKey(const ValueKey('tab-Today')));
     await _settle(tester);
     expect(marks, findsNothing);
@@ -570,5 +605,83 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tab-Today')));
     await _settle(tester);
     expect(notes().values, isNot(contains(whyTitle)));
+  });
+
+  test('the share picture and the hard cards: kept on the phone, read back '
+      'at the next start, kept through the wipe, and never read without the '
+      'tools', () async {
+    SharedPreferences.setMockInitialValues(_finished());
+    debugToolsOn = true;
+    expect(DebugLooks.sharePicture.value, DebugLooks.sharePictureShips);
+    expect(DebugLooks.hardCards.value, HardCardLook.today);
+    await DebugLooks.setSharePicture(SharePictureLook.a);
+    await DebugLooks.setHardCards(HardCardLook.ringed);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('knowit.debug.sharePicture'), 'a');
+    expect(prefs.getString('knowit.debug.hardCards'), 'ringed');
+
+    DebugLooks.reset();
+    expect(DebugLooks.sharePicture.value, DebugLooks.sharePictureShips);
+    expect(DebugLooks.hardCards.value, HardCardLook.today);
+    final AppState app = AppState();
+    await app.init();
+    expect(DebugLooks.sharePicture.value, SharePictureLook.a);
+    expect(DebugLooks.hardCards.value, HardCardLook.ringed);
+    expect(DebugLooks.sharePicturePicked, SharePictureLook.a);
+    expect(DebugLooks.hardCardsPicked, HardCardLook.ringed);
+
+    await app.signOut();
+    expect(prefs.getBool('knowit.onboarded'), isNull);
+    expect(prefs.getString('knowit.debug.sharePicture'), 'a');
+    expect(prefs.getString('knowit.debug.hardCards'), 'ringed');
+
+    debugToolsOn = false;
+    expect(DebugLooks.sharePicturePicked, DebugLooks.sharePictureShips);
+    expect(DebugLooks.hardCardsPicked, HardCardLook.today);
+
+    debugToolsOn = true;
+    await DebugLooks.setSharePicture(SharePictureLook.b);
+    await DebugLooks.setHardCards(HardCardLook.today);
+    DebugLooks.load(prefs);
+    expect(DebugLooks.sharePicture.value, SharePictureLook.b);
+    expect(DebugLooks.hardCards.value, HardCardLook.today);
+  });
+
+  testWidgets('picked in the debug section: the share picture, each letter '
+      'lit and kept, and the hard cards ringed and back', (tester) async {
+    debugToolsOn = true;
+    SharedPreferences.setMockInitialValues(_finished());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await _settle(tester);
+
+    for (final String look in const ['a', 'b', 'c']) {
+      final Finder choice = find.byKey(ValueKey('debug-share-picture-$look'));
+      await _scrollTo(tester, choice);
+      await tester.tap(choice);
+      await _settle(tester);
+      expect(DebugLooks.sharePicture.value.name, look);
+      expect(
+        (await SharedPreferences.getInstance()).getString(
+          'knowit.debug.sharePicture',
+        ),
+        look,
+      );
+    }
+
+    for (final String look in const ['ringed', 'today']) {
+      final Finder choice = find.byKey(ValueKey('debug-hard-cards-$look'));
+      await _scrollTo(tester, choice);
+      await tester.tap(choice);
+      await _settle(tester);
+      expect(DebugLooks.hardCards.value.name, look);
+      expect(
+        (await SharedPreferences.getInstance()).getString(
+          'knowit.debug.hardCards',
+        ),
+        look,
+      );
+    }
   });
 }

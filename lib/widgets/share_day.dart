@@ -15,6 +15,7 @@ import '../explore/blocks/bets/three.dart' show fiveRightToday;
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../theme.dart';
 import '../utils/share_image.dart';
 import '../utils/share_link.dart';
@@ -22,10 +23,14 @@ import '../utils/share_origin.dart';
 import 'balanced_text.dart';
 import 'card_edge.dart' show cardHairline;
 import 'glass_round.dart';
+import 'scaled_text.dart';
 import 'subject_icon.dart';
 import 'ui.dart';
 import 'web/card_thumb.dart';
 import 'web/web_card_page.dart' show groundOf;
+import '../l10n/dates.dart';
+
+part 'share_looks.dart';
 
 /// The day, sent to a friend: a picture of the five cards that came out, and
 /// a line under it.
@@ -34,9 +39,10 @@ import 'web/web_card_page.dart' show groundOf;
 /// sent. But the day is not a match: most cards are read or argued rather
 /// than got right, and a score in a chat says "look how I did" when what
 /// makes a friend open the app is the cards themselves. So the picture is
-/// the five — each card's drawing, and its question whole, never its answer
-/// — under the day's date, with how to get the app. The streak stays,
-/// small: it says the habit, not a result.
+/// the five — each card by its subject's mark in its colour, and its
+/// question whole, never its answer — under the day's date, with how to get
+/// the app ([DayPicture]). The streak stays, small: it says the habit, not a
+/// result.
 class ShareDay extends StatelessWidget {
   const ShareDay({super.key, required this.app, required this.from});
 
@@ -143,7 +149,11 @@ class ShareDay extends StatelessWidget {
     DayLayout layout,
   ) async {
     final List<Future<void>> coming = [
-      for (final ImageProvider p in DayPicture.picturesOf(five, layout))
+      for (final ImageProvider p in DayPicture.picturesOf(
+        five,
+        layout,
+        look: DebugLooks.sharePicturePicked,
+      ))
         precacheImage(p, context, onError: (_, _) {}),
     ];
     await Future.wait(coming)
@@ -269,6 +279,7 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
       for (final ImageProvider picture in DayPicture.picturesOf(
         _five,
         layout,
+        look: DebugLooks.sharePicturePicked,
       )) {
         precacheImage(picture, context, onError: (_, _) {});
       }
@@ -622,11 +633,17 @@ class DayPicturePreview extends StatelessWidget {
                     child: MediaQuery(
                       data: MediaQuery.of(context)
                           .copyWith(textScaler: TextScaler.noScaling),
-                      child: DayPicture(
-                        summary: app.daySummary,
-                        five: app.todaysDeck.take(kPillsPerDay).toList(),
-                        day: app.today,
-                        layout: layout,
+                      // The look picked in the developer tools, drawn again
+                      // the moment another is picked.
+                      child: ValueListenableBuilder<SharePictureLook>(
+                        valueListenable: DebugLooks.sharePicture,
+                        builder: (context, _, _) => DayPicture(
+                          summary: app.daySummary,
+                          five: app.todaysDeck.take(kPillsPerDay).toList(),
+                          day: app.today,
+                          layout: layout,
+                          look: DebugLooks.sharePicturePicked,
+                        ),
                       ),
                     ),
                   ),
@@ -734,13 +751,18 @@ enum DayLayout {
 
 /// The picture of the day.
 ///
-/// The five cards that came out, in the order they were dealt, each as its
-/// drawing — the card's own picture, cut down to the drawing under its
-/// question — or, on a card in words, its colour and its subject's mark;
-/// and each with its question whole, never its answer: a friend reads five
-/// questions and wants the answers, which is the reason to send it. No
-/// score. Over them the day's name and date; under them what this is, where
-/// to get it, and the streak, small.
+/// The five cards that came out, in the order they were dealt, each with
+/// its question whole, never its answer: a friend reads five questions and
+/// wants the answers, which is the reason to send it. No score. Over them
+/// the day's name and date; under them what this is, where to get it, and
+/// the streak, small.
+///
+/// Drawn one of three ways ([look]). C, which ships, and B are in
+/// share_looks.dart: C every card its subject's mark on black lit by the
+/// day's colours, B the first drawn card whole. A, drawn here, is the
+/// picture as it was: each card as its drawing — the card's own picture,
+/// cut down to the drawing under its question — or, on a card in words, its
+/// colour and its subject's mark.
 ///
 /// Nothing is ever cut with an ellipsis. The type is set as large as the
 /// room allows and comes down, a step at a time, to a size still read with
@@ -753,12 +775,18 @@ class DayPicture extends StatelessWidget {
     required this.five,
     required this.day,
     this.layout = DayPicture.recommended,
+    this.look = DebugLooks.sharePictureShips,
   });
 
   final DaySummary summary;
   final List<Pill> five;
   final DateTime day;
   final DayLayout layout;
+
+  /// Which of the ways to draw it (lib/widgets/share_looks.dart): C, light,
+  /// as it ships; A, the picture as it was, and B, the cards, in the
+  /// developer tools.
+  final SharePictureLook look;
 
   /// The shape the sheet opens on: the cover, whose drawing is the largest
   /// a chat shows, and which a chat shows whole.
@@ -789,17 +817,26 @@ class DayPicture extends StatelessWidget {
     return five.first;
   }
 
-  /// The pictures [layout] draws of [five]: each drawn card's front, and the
-  /// large one of the card set large.
-  static List<ImageProvider> picturesOf(List<Pill> five, DayLayout layout) {
+  /// The pictures [layout] draws of [five] in [look]: in A and on B's list
+  /// each drawn card's front, and the large one of the card set large; on
+  /// B's cover and story the card set large, small and large; none in C,
+  /// which draws no picture.
+  static List<ImageProvider> picturesOf(
+    List<Pill> five,
+    DayLayout layout, {
+    SharePictureLook look = DebugLooks.sharePictureShips,
+  }) {
+    if (look == SharePictureLook.c) return const [];
     final Pill? hero = layout == DayLayout.list ? null : heroOf(five);
+    final bool onlyHero = look == SharePictureLook.b && hero != null;
     return [
       for (final Pill pill in five)
-        if (CardThumb.refOf(pill, CardSide.front) case final String ref) ...[
-          CardThumb.image(CardThumb.urlOf(ref)),
-          if (identical(pill, hero))
-            CardThumb.image(CardThumb.urlOf(CardThumb.largeOf(ref))),
-        ],
+        if (!onlyHero || identical(pill, hero))
+          if (CardThumb.refOf(pill, CardSide.front) case final String ref) ...[
+            CardThumb.image(CardThumb.urlOf(ref)),
+            if (identical(pill, hero))
+              CardThumb.image(CardThumb.urlOf(CardThumb.largeOf(ref))),
+          ],
     ];
   }
 
@@ -808,9 +845,27 @@ class DayPicture extends StatelessWidget {
     final String locale = Localizations.localeOf(context).toString();
     String date;
     try {
-      date = DateFormat('EEEE d MMMM', locale).format(day);
+      date = formatDay(DateFormat('EEEE d MMMM', locale), day);
     } catch (_) {
       date = DateFormat('EEEE d MMMM', 'en').format(day);
+    }
+    final Widget? drawn = switch (look) {
+      SharePictureLook.a => null,
+      SharePictureLook.b => _CardLook(
+        summary: summary,
+        five: five,
+        date: date,
+        layout: layout,
+      ),
+      SharePictureLook.c => _LightLook(
+        summary: summary,
+        five: five,
+        date: date,
+        layout: layout,
+      ),
+    };
+    if (drawn != null) {
+      return AspectRatio(aspectRatio: layout.aspect, child: drawn);
     }
     final bool tall = layout == DayLayout.story;
     final _Head head = _Head(date: date, edition: summary.edition, tall: tall);

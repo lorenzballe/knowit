@@ -1,7 +1,8 @@
 // Photographs a pick being taken on a card in words, frame by frame, as the
 // owner checks it on his phone: the finger on True, True taken, the step
 // that asks how sure under it, the level taken, the card turning, its back.
-// And the same card when it does not ask how sure, turning at once.
+// And the same card when it does not ask how sure, turning at once; a
+// number typed and a mark set on an estimate's ruler, taken the same way.
 //
 //   flutter test tool/tap_shots.dart --update-goldens \
 //     --dart-define=TAP_DIR=/some/folder
@@ -18,6 +19,7 @@ import 'package:astuto/data/card_json.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/place_it.dart' show RulerPainter;
 import 'package:astuto/widgets/pill_card_stack.dart';
 
 import '../test/explore/core_harness.dart' show loadFonts;
@@ -126,6 +128,54 @@ void main() {
     await _shot(tester, 'b3-gira');
     await tester.pumpAndSettle();
     await _shot(tester, 'b4-retro');
+  });
+
+  testWidgets('a number, asking how sure', (tester) async {
+    addTearDown(tester.view.reset);
+    final Pill pill = _card('art', 'art-darkroom-3');
+    final Map<String, Answer> given = {};
+    await tester.pumpWidget(_host(pill, given));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), '12');
+    await tester.pump();
+    await _shot(tester, 'd1-numero-scritto');
+    final Finder go = find.byIcon(Icons.arrow_forward_rounded);
+    final TestGesture finger = await tester.startGesture(tester.getCenter(go));
+    await tester.pump(const Duration(milliseconds: 60));
+    await _shot(tester, 'd2-dito-giu');
+    await finger.up();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 80));
+    await _shot(tester, 'd3-preso');
+    await tester.pumpAndSettle();
+    await _shot(tester, 'd4-quanto-sicuro');
+  });
+
+  testWidgets('a mark on the ruler, asking how sure', (tester) async {
+    addTearDown(tester.view.reset);
+    final Pill pill = _card('art', 'art-marble-3');
+    final Map<String, Answer> given = {};
+    await tester.pumpWidget(_host(pill, given));
+    await tester.pumpAndSettle();
+    final Finder ruler = find.byWidgetPredicate(
+      (w) => w is CustomPaint && w.painter is RulerPainter,
+    );
+    final Rect r = tester.getRect(ruler);
+    await tester.tapAt(Offset(r.left + r.width * 0.3, r.center.dy));
+    await tester.pumpAndSettle();
+    await _shot(tester, 'e1-segno-messo');
+    final Finder lock = find.text('Conferma');
+    final TestGesture finger = await tester.startGesture(
+      tester.getCenter(lock),
+    );
+    await tester.pump(const Duration(milliseconds: 60));
+    await _shot(tester, 'e2-dito-giu');
+    await finger.up();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 80));
+    await _shot(tester, 'e3-preso');
+    await tester.pumpAndSettle();
+    await _shot(tester, 'e4-quanto-sicuro');
   });
 
   testWidgets('a side taken on a debate, then why', (tester) async {

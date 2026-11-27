@@ -1967,6 +1967,73 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('strengthsEmpty') ?? _base.strengthsEmpty;
 
   @override
+  String get readTitle => _words.text('readTitle') ?? _base.readTitle;
+
+  @override
+  String get readBlind => _words.text('readBlind') ?? _base.readBlind;
+
+  @override
+  String get readLocked => _words.text('readLocked') ?? _base.readLocked;
+
+  @override
+  String get readEmpty => _words.text('readEmpty') ?? _base.readEmpty;
+
+  @override
+  String get readNoAim => _words.text('readNoAim') ?? _base.readNoAim;
+
+  @override
+  String get readLine => _words.text('readLine') ?? _base.readLine;
+
+  @override
+  String get readOthers => _words.text('readOthers') ?? _base.readOthers;
+
+  @override
+  String get focusTitle => _words.text('focusTitle') ?? _base.focusTitle;
+
+  @override
+  String get focusFromGoal =>
+      _words.text('focusFromGoal') ?? _base.focusFromGoal;
+
+  @override
+  String get focusFromMisses =>
+      _words.text('focusFromMisses') ?? _base.focusFromMisses;
+
+  @override
+  String get focusLine => _words.text('focusLine') ?? _base.focusLine;
+
+  @override
+  String focusLast(String skill) =>
+      _words.format('focusLast', localeName, {'skill': skill}) ??
+      _base.focusLast(skill);
+
+  @override
+  String focusNext(String skill) =>
+      _words.format('focusNext', localeName, {'skill': skill}) ??
+      _base.focusNext(skill);
+
+  @override
+  String get focusResult => _words.text('focusResult') ?? _base.focusResult;
+
+  @override
+  String get focusPlus => _words.text('focusPlus') ?? _base.focusPlus;
+
+  @override
+  String get focusMarkBody =>
+      _words.text('focusMarkBody') ?? _base.focusMarkBody;
+
+  @override
+  String focusShelf(String skill) =>
+      _words.format('focusShelf', localeName, {'skill': skill}) ??
+      _base.focusShelf(skill);
+
+  @override
+  String get focusShelfLine =>
+      _words.text('focusShelfLine') ?? _base.focusShelfLine;
+
+  @override
+  String get focusOpen => _words.text('focusOpen') ?? _base.focusOpen;
+
+  @override
   String get scoreTitle => _words.text('scoreTitle') ?? _base.scoreTitle;
 
   @override
@@ -6724,4 +6791,192 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get firstOfferNotNow =>
       _words.text('firstOfferNotNow') ?? _base.firstOfferNotNow;
+
+  @override
+  String get listenEntry => _words.text('listenEntry') ?? _base.listenEntry;
+
+  @override
+  String get listenEntryShort =>
+      _words.text('listenEntryShort') ?? _base.listenEntryShort;
+
+  @override
+  String get listenTitle => _words.text('listenTitle') ?? _base.listenTitle;
+
+  @override
+  String get listenQuestion =>
+      _words.text('listenQuestion') ?? _base.listenQuestion;
+
+  @override
+  String get listenThink => _words.text('listenThink') ?? _base.listenThink;
+
+  @override
+  String get listenAnswer => _words.text('listenAnswer') ?? _base.listenAnswer;
+
+  @override
+  String get listenPreparing =>
+      _words.text('listenPreparing') ?? _base.listenPreparing;
+
+  @override
+  String get listenWaiting =>
+      _words.text('listenWaiting') ?? _base.listenWaiting;
+
+  @override
+  String get listenFreeNote =>
+      _words.text('listenFreeNote') ?? _base.listenFreeNote;
+
+  @override
+  String get listenOfferTitle =>
+      _words.text('listenOfferTitle') ?? _base.listenOfferTitle;
+
+  @override
+  String get listenOfferLine =>
+      _words.text('listenOfferLine') ?? _base.listenOfferLine;
+
+  @override
+  String get listenNothing =>
+      _words.text('listenNothing') ?? _base.listenNothing;
+
+  @override
+  String get listenCardUnavailable =>
+      _words.text('listenCardUnavailable') ?? _base.listenCardUnavailable;
+
+  @override
+  String get listenUnavailable =>
+      _words.text('listenUnavailable') ?? _base.listenUnavailable;
+
+  @override
+  String get listenDone => _words.text('listenDone') ?? _base.listenDone;
+
+  @override
+  String get listenAgain => _words.text('listenAgain') ?? _base.listenAgain;
+
+  @override
+  String get listenNextCard =>
+      _words.text('listenNextCard') ?? _base.listenNextCard;
+
+  @override
+  String get inviteSection =>
+      _words.text('inviteSection') ?? _base.inviteSection;
+
+  @override
+  String get inviteRow => _words.text('inviteRow') ?? _base.inviteRow;
+
+  @override
+  String get inviteRowLine =>
+      _words.text('inviteRowLine') ?? _base.inviteRowLine;
+
+  @override
+  String get inviteCodeRow =>
+      _words.text('inviteCodeRow') ?? _base.inviteCodeRow;
+
+  @override
+  String get inviteCodeAccepted =>
+      _words.text('inviteCodeAccepted') ?? _base.inviteCodeAccepted;
+
+  @override
+  String get inviteCodeAcceptedLine =>
+      _words.text('inviteCodeAcceptedLine') ?? _base.inviteCodeAcceptedLine;
+
+  @override
+  String get inviteSheetLine =>
+      _words.text('inviteSheetLine') ?? _base.inviteSheetLine;
+
+  @override
+  String get inviteYourCode =>
+      _words.text('inviteYourCode') ?? _base.inviteYourCode;
+
+  @override
+  String get inviteCopy => _words.text('inviteCopy') ?? _base.inviteCopy;
+
+  @override
+  String get inviteSend => _words.text('inviteSend') ?? _base.inviteSend;
+
+  @override
+  String inviteRules(int cap) =>
+      _words.format('inviteRules', localeName, {'cap': cap}) ??
+      _base.inviteRules(cap);
+
+  @override
+  String inviteWeeksSoFar(int n, int cap) =>
+      _words.format('inviteWeeksSoFar', localeName, {'n': n, 'cap': cap}) ??
+      _base.inviteWeeksSoFar(n, cap);
+
+  @override
+  String inviteCapped(int cap) =>
+      _words.format('inviteCapped', localeName, {'cap': cap}) ??
+      _base.inviteCapped(cap);
+
+  @override
+  String inviteMessage(String code, String link) =>
+      _words.format('inviteMessage', localeName, {
+        'code': code,
+        'link': link,
+      }) ??
+      _base.inviteMessage(code, link);
+
+  @override
+  String inviteMessageCapped(String code, String link) =>
+      _words.format('inviteMessageCapped', localeName, {
+        'code': code,
+        'link': link,
+      }) ??
+      _base.inviteMessageCapped(code, link);
+
+  @override
+  String get inviteCodeTitle =>
+      _words.text('inviteCodeTitle') ?? _base.inviteCodeTitle;
+
+  @override
+  String get inviteCodeLine =>
+      _words.text('inviteCodeLine') ?? _base.inviteCodeLine;
+
+  @override
+  String get inviteCodeUse =>
+      _words.text('inviteCodeUse') ?? _base.inviteCodeUse;
+
+  @override
+  String get inviteCodeWaitingLine =>
+      _words.text('inviteCodeWaitingLine') ?? _base.inviteCodeWaitingLine;
+
+  @override
+  String get inviteRefusedUnknown =>
+      _words.text('inviteRefusedUnknown') ?? _base.inviteRefusedUnknown;
+
+  @override
+  String get inviteRefusedOwn =>
+      _words.text('inviteRefusedOwn') ?? _base.inviteRefusedOwn;
+
+  @override
+  String get inviteRefusedUsed =>
+      _words.text('inviteRefusedUsed') ?? _base.inviteRefusedUsed;
+
+  @override
+  String get inviteRefusedLate =>
+      _words.text('inviteRefusedLate') ?? _base.inviteRefusedLate;
+
+  @override
+  String get inviteRefusedPlus =>
+      _words.text('inviteRefusedPlus') ?? _base.inviteRefusedPlus;
+
+  @override
+  String get inviteSuccessTitle =>
+      _words.text('inviteSuccessTitle') ?? _base.inviteSuccessTitle;
+
+  @override
+  String get inviteSuccessPlan =>
+      _words.text('inviteSuccessPlan') ?? _base.inviteSuccessPlan;
+
+  @override
+  String inviteSuccessUntil(String date) =>
+      _words.format('inviteSuccessUntil', localeName, {'date': date}) ??
+      _base.inviteSuccessUntil(date);
+
+  @override
+  String get inviteSuccessFoot =>
+      _words.text('inviteSuccessFoot') ?? _base.inviteSuccessFoot;
+
+  @override
+  String inviteEarned(int n) =>
+      _words.format('inviteEarned', localeName, {'n': n}) ??
+      _base.inviteEarned(n);
 }

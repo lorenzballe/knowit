@@ -18,6 +18,12 @@ against the same Firestore the app writes to.
                      and the cards readers say are untrue held out of the deal
     src/daily.ts     the day's games: a play judged as the phone judges it,
                      and counted once with everybody's who played its cards
+    src/listen.ts    the day's five read aloud: what a card says, ElevenLabs,
+                     the clips kept in Storage by hash, the characters it may
+                     read, and who may hear what
+    src/invite.ts    Invita un amico: a reader's code, a friend's code used,
+                     and a week of Astute+ each through RevenueCat once the
+                     friend has finished a first day
     src/serve.ts     one reader against Firestore: read, deal, write, forget
     src/index.ts     the functions themselves, and when they run
     src/*.test.ts    node:test, against the bundled bank; no project needed
@@ -31,13 +37,17 @@ against the same Firestore the app writes to.
 | `playDaily`       | a phone asks (callable)  | a play of Today's five or a subject's three, each answer judged by its card; added once to `daily/{day~game~cards}` (how many played, each score in tens, each card's rights, picks and guesses, nothing about who), the reader's mark at `readers/{uid}/daily/{day~game}`; the counts returned |
 | `nightly`         | every hour               | every reader here in the last 14 days: their local today (and from 17:00 their tomorrow) dealt if missing; their own shelf once a day; the trace older than 21 days, and the marks of the day's games older than 3, cleared |
 | `buildExplore`    | every hour at :05        | `explore/latest` from the counts: today's shelf, the top of the week and month (closed days), loved since the start — real readers' counts only, each list empty until it is worth showing, and `readersOnly: true` to say so |
-| `onReaderDeleted` | `readers/{uid}` deleted  | everything under it and `presence/{uid}` deleted                     |
+| `onReaderDeleted` | `readers/{uid}` deleted  | everything under it, `presence/{uid}`, and the reader's invitations (`invites/{uid}`, their code, `invited/{uid}`) deleted |
 | `scorecard`       | every day at 04:20 UTC   | the closed days of everybody's trace added to each card's totals; reports read; flags and the quarantine written to `quality/latest`, readers' notes to `quality/notes` |
 | `cardStats`       | HTTPS GET                | `quality/latest` as JSON — numbers per card, nothing about who — for `tool/quality/` |
+| `listenCard`      | a phone asks (callable)  | a card of the reader's day read aloud: the addresses of its two clips (question, answer) in Storage, made by ElevenLabs the first time anyone asks and kept under the hash of their words (`listen/{hash}`); the first card of a day for everybody (`readers/{uid}/listen/{date}`), the rest Astute+'s; "not configured" without a key, "unavailable" (and why) when the characters are spent or ElevenLabs will not read |
+| `listenAhead`     | 03:35 and 18:35 UTC      | the readers who listened in the last week (`listeners/{uid}`): their today and tomorrow, as dealt, made ahead (all five on Astute+, the free card otherwise), a quarter of the day's characters at most |
+| `inviteState`     | a phone asks (callable)  | Invita un amico for the caller: their code (`make: true` makes it), the weeks friends earned them in the last 365 days and the cap, and whether a friend's code may still be used or where the one used stands — the two weeks given here, once the first day it waited for is in the backup; `{ none: 'unconfigured' }` without RevenueCat's key |
+| `redeemInvite`    | a phone asks (callable)  | a friend's code used: refused with the reason (`unknown`, `own`, `used`, `late`, `plus`), or taken, waiting on the first day, and given at once when that day is already done; `{ none: 'unconfigured' }` without the key |
 
 The rules (`../firestore.rules`) let no phone write a day, a profile,
-Explore or the day's games' counts. What the server dealt is what the
-server dealt.
+Explore or the day's games' counts, nor read or write anything of the
+invitations. What the server dealt is what the server dealt.
 
 ## What it reads
 
@@ -50,10 +60,23 @@ server dealt.
 - `presence/{uid}` — when the reader was last here, their clock's offset,
   whether they hold Astute+.
 - `tallies/{day}`, `totals/{shard}` — the counts, for Explore.
+- `listeners/{uid}` — when a reader last listened, written by `listenCard`;
+  what `listenAhead` reads to know whose next days to make.
 - `readers/{uid}/reports/{card}` — what a reader said is wrong with a card
   (`lib/sync/reports.dart`): a reason, and a note if they wrote one.
 - The bank: `data/bank.json`, copied from `web/cards/cards.json` at build,
   and the site's newer one when `cards/version.json` names it.
+- For an invitation: `invites/{uid}` (the reader's code, the weeks friends
+  earned them, when the last week ends), `inviteCodes/{code}` (whose it is),
+  `invited/{uid}` (the code the reader came with and where its week stands),
+  the account's creation time from Firebase Auth, `completedDates` alone from
+  the backup, and from RevenueCat whether the customer holds or ever held
+  `astuto_pro` (REST API v1, `GET /subscribers/{uid}`). It writes the three
+  collections, and grants each week with `POST
+  /subscribers/{uid}/entitlements/astuto_pro/promotional` and `end_time_ms`:
+  the end, rather than RevenueCat's own `duration`, because a week given
+  while another runs must start where that one ends, and because an end sent
+  twice is taken as the same.
 
 ## Running it
 
@@ -88,6 +111,9 @@ ones that shape a reader's day:
 | deal.ts      | `localCard`, one a day  | the card about where the reader lives (docs/PLACES.md §5): city, then region, then country, never one read; it takes a slot at random, or on Astute+ the last of the reader's own |
 | serve.ts     | `TRACE_DAYS` 21, `ACTIVE_DAYS` 14, `PREPARE_TOMORROW_FROM` 17 | three weeks of trace kept, two weeks of absence before a reader is left alone, tomorrow dealt from five in the afternoon |
 | explore.ts   | `LIST_READERS` 3, `LIST_CARDS` 5 | a list for everybody is real readers' counts alone: a card is on it from three readers, and the list is shown from five such cards; until then it goes out empty and the phone shows Astute's picks, said to be Astute's. The phone's `Tallies.listReaders` and `listCards` (`lib/sync/tally.dart`) |
+| invite.ts    | `CODE_LENGTH` 6 of `CODE_ALPHABET` (28) | a code read out or typed: no vowel, so no word, and nothing that reads as another; some 480 million codes |
+| invite.ts    | `NEW_FOR_DAYS` 7       | a friend's account is new for its first week: a code is for someone arriving, not a reader of a year |
+| invite.ts    | `WEEK_MS` 7 days, `WEEKS_A_YEAR` 8 | each of the two is given a week, starting where the Astute+ they hold ends; an inviter at most eight in any 365 days, and past that the friend still has theirs |
 
 The draw itself is an exponential race (`-ln(u) / weight`), so every card
 keeps a chance in proportion to its weight and no two readers with the same
@@ -105,12 +131,28 @@ account on the project (Firebase console → Project settings → Service
 accounts → *Generate new private key* gives the default one, which has
 enough), then run *Cloud deploy* from the Actions tab. It runs the tests
 first and deploys the functions, the rules and the indexes; nothing
-deploys on a push.
+deploys on a push. Invita un amico wants one more, optional:
+`REVENUECAT_SECRET_KEY`, a RevenueCat secret key (`sk_…`, API version V1,
+from *Project settings → API keys → + New secret API key*), which each
+deploy keeps in Secret Manager as it keeps `ANTHROPIC_API_KEY`. Without it
+the deploy goes on, keeps a stand-in there (a function cannot be deployed
+naming a secret Secret Manager has never had), and the two invitation
+functions answer "not configured", so every phone hides the invitation.
+
+Listen reads with `ELEVENLABS_API_KEY`, another repository secret: the
+workflow checks it by reading three characters in Listen's own voice, keeps
+it in Secret Manager, and says in the run's summary what ElevenLabs made of
+it (works, no credit yet, or not a key). Without it, or with a key that is
+not one, a stand-in is kept in its place so the deploy goes on, and the
+functions answer "not configured". Listen keeps its clips in the project's
+Storage bucket: if the console's Storage page offers *Get started*, press it
+once; the Storage rules (`../storage.rules`) are deployed after the rest, and
+a project without Storage gets a warning, not a failed deploy.
 
 **From a machine** that is logged in (`firebase login`):
 
     npm --prefix functions run build
-    firebase deploy --only functions,firestore:rules,firestore:indexes
+    firebase deploy --only functions,firestore:rules,firestore:indexes,storage
 
 `firebase.json` at the root names the codebase, the runtime and the rules.
 The first deploy of a scheduled function also creates its Cloud Scheduler
@@ -162,11 +204,19 @@ Firestore; at a hundred thousand, a few hundred. Nothing here reads the
 whole reader base except the hourly `presence` query, which is one query.
 
 The AI (the morning's news, the questions about a card, the coach's notes)
-has one budget for all of it, set in `src/limits.ts`: $90 a month and $3 a
-day. Every call holds back the most it could cost before it is made and is
+has one budget for all of it, set in `src/limits.ts`: $15 a month and $1 a
+day, the least that keeps it working on Claude Haiku. Every call holds back the most it could cost before it is made and is
 counted after, in `ai/spend-{month}` and `ai/spend-{day}`; once either is
 spent, the news keeps the paper it has and the rest say "not available
 right now" until the day or the month turns.
+
+Listen is held the same way in characters, which is how ElevenLabs charges
+($0.08 a thousand on Eleven v4): `LISTEN_MONTH_CHARS` (250,000, under the
+Creator plan's 275,000) and `LISTEN_DAY_CHARS` (25,000), counted in
+`listenSpend/{month}` and `listenSpend/{day}`. A card's two clips are held
+together, both or neither. A clip is made once for everybody, so what is
+spent is new cards, not readers: about 390 characters a card, the whole live
+bank about 2.2 million. `LISTEN_CARDS_PER_DAY` (15) bounds one reader.
 
 ## What it does not do yet
 

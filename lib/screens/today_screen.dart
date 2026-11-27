@@ -12,6 +12,8 @@ import '../state/debug_looks.dart';
 import '../theme.dart';
 import '../data/skill_levels.dart';
 import '../data/why.dart';
+import '../listen/listen_sheet.dart';
+import '../sync/listen_client.dart';
 import '../widgets/magic_card.dart';
 import '../data/pills_repository.dart';
 import '../widgets/pill_card_stack.dart';
@@ -19,12 +21,15 @@ import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/skill_mark.dart';
 import '../widgets/skill_score.dart' show todayMoveOf;
+import '../sync/invite.dart';
+import '../widgets/invite_sheet.dart' show showInviteWeekIfDue;
 import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/day_moment.dart' show showDayMomentIfDue;
 import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
-import '../widgets/learn_looks.dart' show goalUnsaid, markedSkills;
+import '../widgets/learn_looks.dart'
+    show goalUnsaid, markedSkills, scoredSkills;
 import 'paywall_screen.dart' show showFirstOfferIfDue;
 import 'today_done_view.dart';
 
@@ -166,7 +171,12 @@ class _TodayScreenState extends State<TodayScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       HapticFeedback.heavyImpact();
     });
-    if (!widget.app.isPlus) _magic = true;
+    // A friend's code taken, its week waiting on this very day: the server
+    // is asked now, and the card after the fifth does not offer Astute+ on
+    // the evening a week of it is being given.
+    final bool inviteWeek = widget.app.inviteOn && Invites.instance.waiting;
+    if (inviteWeek) Invites.instance.settle();
+    if (!widget.app.isPlus && !inviteWeek) _magic = true;
     _levelDue = true;
     _momentDue = true;
     _landOnDay = true;
@@ -187,6 +197,10 @@ class _TodayScreenState extends State<TodayScreen> {
     Future<void>.delayed(const Duration(milliseconds: 650), () async {
       if (!mounted || !widget.app.todayCompleted || _magic) return;
       if (!(ModalRoute.of(context)?.isCurrent ?? true)) return;
+      // A week a friend's code gave, once this first day is read: the
+      // evening is its own (lib/widgets/invite_sheet.dart).
+      if (await showInviteWeekIfDue(context, widget.app)) return;
+      if (!mounted) return;
       final bool rose = await showLevelUpIfDue(context, widget.app);
       if (rose || !mounted) return;
       // The first week's page or the first month's, when one is due
@@ -213,9 +227,6 @@ class _TodayScreenState extends State<TodayScreen> {
 
   /// How the card just thrown was read, until the day moves past it.
   CardStint? _thrown;
-
-  /// True once the deck has shown how a card is sent on, until one is.
-  bool _hinting = false;
 
   /// The first of the day's own cards, on a Sunday that has one more of
   /// them than other days; null on any other day.
@@ -307,16 +318,29 @@ class _TodayScreenState extends State<TodayScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _ReadingHeader(
-            streak: app.liveStreak,
-            frozen: app.streakWasFrozen,
-            onBack: widget.onBack,
-            // Said beside the day's name — the one place on the screen with
-            // room to spare on a first morning, which has no streak to show
-            // there — so the deck below never moves to make room for it.
-            hint: _hinting && app.pillsRead == 0
-                ? context.l10n.swipeForTheNextOne
-                : null,
+          ValueListenableBuilder<bool>(
+            // The server's word that it has no key takes Listen away at
+            // once (lib/listen/listen_sheet.dart).
+            valueListenable: ListenClient.unconfigured,
+            builder: (context, _, _) => _ReadingHeader(
+              streak: app.liveStreak,
+              frozen: app.streakWasFrozen,
+              onBack: widget.onBack,
+              // Said beside the day's name — the one place on the screen
+              // with room to spare on a first morning, which has no streak
+              // to show there — so the deck below never moves to make room
+              // for it. From the first card's arrival: said only once the
+              // card had leaned, seconds after its back, it came late, and
+              // never on a drawn card, whose back is its own and never tells
+              // the deck it came round.
+              hint: app.pillsRead == 0 ? context.l10n.swipeForTheNextOne : null,
+              // The day's five read aloud, quietly at the end of the same
+              // row, near the cards and costing the deck nothing; the swipe
+              // hint has the place on the one morning it is said.
+              onListen: listenOffered(app)
+                  ? () => showListenSheet(context, app)
+                  : null,
+            ),
           ),
           const SizedBox(height: 16),
           _ProgressBars(total: app.todaysDeck.length, index: app.todayIndex),
@@ -372,13 +396,9 @@ class _TodayScreenState extends State<TodayScreen> {
               onMotion: widget.onCardMotion,
               // The card about where the reader lives says so on its front.
               home: app.place,
-              // Nothing else on the screen says how card two is reached,
-              // so the first card shows it, once, to a reader who has never
-              // sent a card on.
+              // Beside the words in the header, the first card shows how card
+              // two is reached, once, to a reader who has never sent a card on.
               swipeHint: app.pillsRead == 0,
-              onSwipeHint: () {
-                if (mounted) setState(() => _hinting = true);
-              },
               reviewIds: app.reviewIdsToday,
               // Which cards are the reader's own, on the day that has
               // others: Astute+ has no others to tell them from.
@@ -435,7 +455,7 @@ class _TodayScreenState extends State<TodayScreen> {
               skillOf: (pill) => skillMarkOf(pill, markedSkills(app)),
               // The score the answer moved, beside its verdict.
               moveOf: (pill) =>
-                  todayMoveOf(app, pill, skillMarkOf(pill, markedSkills(app))),
+                  todayMoveOf(app, pill, skillMarkOf(pill, scoredSkills(app))),
               onSkill: (pill, skill) =>
                   showSkillMarkSheet(context, app, skill, cardId: pill.id),
               answerFor: app.answerFor,
@@ -543,85 +563,135 @@ class _ReadingHeader extends StatelessWidget {
 
   /// How the card is sent on, once, at the far end of the row.
   final String? hint;
+
+  /// Opens Listen, from its entry at the far end of the row; null where
+  /// Listen is not offered.
+  final VoidCallback? onListen;
   const _ReadingHeader({
     required this.streak,
     this.frozen = false,
     this.onBack,
     this.hint,
+    this.onListen,
   });
 
   @override
   Widget build(BuildContext context) {
+    // A long date and a streak badge do not both fit on a narrow handset.
+    // The date gives way by a point or two rather than being clipped, or
+    // overflowing, which is what it did.
+    final Widget title = FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: Alignment.centerLeft,
+      child: Text(
+        context.l10n.tabToday,
+        maxLines: 1,
+        style: AppText.display(
+          size: 20,
+          weight: FontWeight.w600,
+          spacing: -0.4,
+          color: context.p.ink,
+        ),
+      ),
+    );
+    // Nothing until there is something. A badge reading "0 days" on the
+    // morning somebody installs the app is a worse first impression than no
+    // badge at all.
+    final Widget? badge = streak <= 0
+        ? null
+        : Container(
+            padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
+            decoration: BoxDecoration(
+              color: frozen
+                  ? context.p.link.withValues(alpha: 0.22)
+                  : context.p.line,
+              borderRadius: BorderRadius.circular(999),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: frozen ? context.p.link : context.p.inverse,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  context.l10n.streakDays(streak),
+                  style: AppText.body(
+                    size: 12,
+                    weight: FontWeight.w600,
+                    color: context.p.ink,
+                  ),
+                ),
+              ],
+            ),
+          );
+    final List<Widget> back = [
+      if (onBack != null) ...[
+        BackCircle(onPressed: onBack!),
+        const SizedBox(width: 12),
+      ],
+    ];
+    // Listen, at the far end of the row: the day's name and its badge as
+    // wide as they are (at most three fifths of the row, past which the name
+    // gives way), and everything after them the entry's, which says all its
+    // words where they fit and one where they do not.
+    if (hint == null && onListen != null) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 6),
+        child: LayoutBuilder(
+          builder: (context, box) => Row(
+            children: [
+              ...back,
+              ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: box.maxWidth * 0.6),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(child: title),
+                    const SizedBox(width: 10),
+                    ?badge,
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: ListenEntry(onPressed: onListen!),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6),
       child: Row(
         children: [
-          if (onBack != null) ...[
-            BackCircle(onPressed: onBack!),
-            const SizedBox(width: 12),
-          ],
-          // A long date and a streak badge do not both fit on a narrow
-          // handset. The date gives way by a point or two rather than being
-          // clipped, or overflowing, which is what it did.
-          Flexible(
-            flex: 2,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                context.l10n.tabToday,
-                maxLines: 1,
-                style: AppText.display(
-                  size: 20,
-                  weight: FontWeight.w600,
-                  spacing: -0.4,
-                  color: context.p.ink,
-                ),
-              ),
-            ),
-          ),
+          ...back,
+          Flexible(flex: 2, child: title),
           const SizedBox(width: 10),
-          // Nothing until there is something. A badge reading "0 days" on the
-          // morning somebody installs the app is a worse first impression
-          // than no badge at all.
-          if (streak > 0)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
-              decoration: BoxDecoration(
-                color: frozen
-                    ? context.p.link.withValues(alpha: 0.22)
-                    : context.p.line,
-                borderRadius: BorderRadius.circular(999),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 6,
-                    height: 6,
-                    decoration: BoxDecoration(
-                      color: frozen ? context.p.link : context.p.inverse,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    context.l10n.streakDays(streak),
-                    style: AppText.body(
-                      size: 12,
-                      weight: FontWeight.w600,
-                      color: context.p.ink,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          ?badge,
           if (hint != null) ...[
             const SizedBox(width: 12),
             // Three parts of the row's room to the day's name's two: the
             // name keeps its size in every language, and the hint, which
             // gives way, rarely has to.
-            Expanded(flex: 3, child: _SwipeHint(text: hint!)),
+            Expanded(
+              flex: 3,
+              child: SizedBox(
+                // While Listen is offered the row keeps its entry's height,
+                // so the hint taking its place moves nothing below.
+                height: onListen == null ? null : ListenEntry.height,
+                child: _SwipeHint(text: hint!),
+              ),
+            ),
           ],
         ],
       ),
@@ -630,8 +700,9 @@ class _ReadingHeader extends StatelessWidget {
 }
 
 /// How a card is sent on, said once: a hand's mark and a few words, quiet,
-/// flush to the far end of the header. It comes in as the card leans, and
-/// goes as the first card does. One line, given way by a point or two
+/// flush to the far end of the header, in the muted ink a line meant to be
+/// read takes (the faint one was missed). It comes in with the first card
+/// and goes as the first card does. One line, given way by a point or two
 /// rather than wrapped, so the header never grows under it.
 class _SwipeHint extends StatelessWidget {
   const _SwipeHint({required this.text});
@@ -641,7 +712,7 @@ class _SwipeHint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool still = MediaQuery.disableAnimationsOf(context);
-    final Color ink = context.p.inkFaint;
+    final Color ink = context.p.inkMuted;
     return TweenAnimationBuilder<double>(
       key: const ValueKey('swipe-hint'),
       tween: Tween(begin: 0, end: 1),

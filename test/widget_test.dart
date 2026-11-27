@@ -2644,6 +2644,28 @@ void main() {
     expect(again.center.dy, closeTo(line.center.dy, 1.5));
     expect(again.left, greaterThan(line.right));
     expect(again.right, lessThanOrEqualTo(share.left));
+    // Each answers where it is drawn, its face edge to edge, and not a
+    // finger's width over it (on the web the two answered well above).
+    for (final String key in ['shelf-share-day', 'shelf-see-again']) {
+      final Finder button = find.byKey(ValueKey(key));
+      final Rect face = tester.getRect(
+        find.descendant(of: button, matching: find.byType(DecoratedBox)),
+      );
+      bool reaches(Offset at) => tester
+          .hitTestOnBinding(at)
+          .path
+          .any((e) => e.target == tester.renderObject(button));
+      for (final Offset at in [
+        face.center,
+        face.topCenter + const Offset(0, 2),
+        face.bottomCenter - const Offset(0, 2),
+        face.centerLeft + const Offset(2, 0),
+        face.centerRight - const Offset(2, 0),
+      ]) {
+        expect(reaches(at), isTrue, reason: '$key at $at');
+      }
+      expect(reaches(face.topCenter - const Offset(0, 15)), isFalse);
+    }
     _expectAtFront(tester, 1);
 
     // Each card by its question, as it came in the deck, with the line to
@@ -3586,6 +3608,7 @@ void main() {
       top,
       'APPEARANCE',
       'YOUR TOPICS',
+      'WHERE DO YOU WANT TO BE SHARPER?',
       'DAILY NUDGE',
       'YOUR CARDS',
       'ACCOUNT',
@@ -3596,6 +3619,9 @@ void main() {
       top,
       'APPEARANCE',
       'YOUR TOPICS',
+      // Where the reader wants to see more clearly, beside the subjects:
+      // both decide what they are dealt.
+      'WHERE DO YOU WANT TO BE SHARPER?',
       'DAILY NUDGE',
       'YOUR CARDS',
       'ACCOUNT',

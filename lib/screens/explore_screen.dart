@@ -12,6 +12,7 @@ import '../data/pills_repository.dart';
 import '../data/topics.dart' show inkOn, kThinkingWhite;
 import '../data/video_cards.dart';
 import '../explore/blocks/bets/bet_host.dart';
+import '../explore/blocks/core/goal_block.dart' show withAimShelf;
 import '../explore/blocks/core/shelves.dart';
 import '../explore/explore_block.dart';
 import '../models/pill.dart';
@@ -28,7 +29,6 @@ import '../widgets/explore/first_shelves.dart' show CardRow;
 import '../widgets/explore/search_start.dart';
 import '../widgets/explore/section_page.dart';
 import '../widgets/explore/story_player.dart';
-import '../widgets/learn_looks.dart' show withAimShelf;
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
@@ -543,11 +543,13 @@ class ExploreScreenState extends State<ExploreScreen>
       listenable: Listenable.merge([
         Tallies.instance,
         Served.instance,
+        // The reader's goal among it: picked on the profile, its shelf is
+        // here at once (withAimShelf).
         widget.app,
-        Remote.revision,
-        // What to learn's look, as the developer tools pick it: B adds the
-        // shelf of the reader's aim (lib/widgets/learn_looks.dart).
+        // What to learn's look, as the developer tools pick it: E's shelf
+        // of the week's skill comes and goes with it.
         DebugLooks.learn,
+        Remote.revision,
       ]),
       builder: (context, _) => _sections(
         context,

@@ -12,6 +12,26 @@
 # are asked of Claude with ANTHROPIC_API_KEY, the same Actions secret the
 # card factory uses: each deploy keeps it in Secret Manager, where the
 # function reads it, so the service account needs Secret Manager Admin too.
+#
+# The day's five read aloud (Listen: listenCard and listenAhead,
+# functions/src/listen.ts) are read by ElevenLabs with ELEVENLABS_API_KEY,
+# kept in Secret Manager the same way. It never stops a deploy: without it
+# (or with a key ElevenLabs says is not a key) a stand-in is kept in its
+# place, the functions answer "not configured", and the phones hide Listen.
+# A real key is checked by reading three characters in Listen's own voice,
+# and kept even when the account has no credit yet, so buying the plan is
+# all it then takes; the summary says which.
+#
+# The Storage rules (storage.rules: the clips, read by signed-in readers,
+# written only by the functions) go out after the rest, and a project whose
+# Storage was never set up gets a warning, not a failed deploy.
+#
+# Invita un amico (functions/src/invite.ts) gives a friend's week of Astute+
+# through RevenueCat with REVENUECAT_SECRET_KEY, an Actions secret of the
+# same name: a RevenueCat secret key (sk_…, API version V1), kept in Secret
+# Manager the same way. It is optional and never stops a deploy: without it
+# the functions answer "not configured" and every phone hides the
+# invitation, and the step summary says how to add it.
 name: Cloud deploy
 
 on:
@@ -19,7 +39,7 @@ on:
     inputs:
       only:
         description: What to deploy
-        default: functions,firestore:rules,firestore:indexes
+        default: functions,firestore:rules,firestore:indexes,storage
         required: true
 
 jobs:
@@ -44,6 +64,8 @@ jobs:
         env:
           KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           ANTHROPIC: ${{ secrets.ANTHROPIC_API_KEY }}
+          ELEVENLABS: ${{ secrets.ELEVENLABS_API_KEY }}
+          REVENUECAT: ${{ secrets.REVENUECAT_SECRET_KEY }}
         run: |
           test -n "$KEY" || { echo "FIREBASE_SERVICE_ACCOUNT is not set"; exit 1; }
           printf '%s' "$KEY" > "$RUNNER_TEMP/sa.json"
@@ -79,5 +101,145 @@ jobs:
                 echo "Make a new key at console.anthropic.com → API keys, and put it in GitHub under Settings → Environments → production → ANTHROPIC_API_KEY, then deploy again. Until then the functions keep the key they have."
               } >> "$GITHUB_STEP_SUMMARY"
             fi
+            # The key Invita un amico gives a friend's week with
+            # (functions/src/invite.ts): RevenueCat's secret key, kept in
+            # Secret Manager like the one above. Optional, and it never stops
+            # the deploy: without it the functions answer "not configured" and
+            # every phone keeps the invitation hidden. A function that names
+            # a secret Secret Manager has never had cannot be deployed, so
+            # until the key is added a stand-in is kept there, which the
+            # functions take as no key at all.
+            rc_kept=no
+            case "$REVENUECAT" in
+              "") ;;
+              sk_*)
+                umask 077
+                printf '%s' "$REVENUECAT" > "$RUNNER_TEMP/rc"
+                if npx --yes firebase-tools@15 functions:secrets:set REVENUECAT_SECRET_KEY --data-file "$RUNNER_TEMP/rc" --project astuto-3d398 --non-interactive --force; then
+                  rc_kept=yes
+                  echo "RevenueCat's secret key is kept for the invitations."
+                else
+                  echo "::warning::REVENUECAT_SECRET_KEY could not be kept in Secret Manager."
+                fi
+                rm -f "$RUNNER_TEMP/rc"
+                ;;
+              *)
+                echo "::warning::REVENUECAT_SECRET_KEY is not a RevenueCat secret key (those start sk_; an app's public key cannot give a week), so it is not kept."
+                ;;
+            esac
+            if [ "$rc_kept" = no ]; then
+              if npx --yes firebase-tools@15 functions:secrets:get REVENUECAT_SECRET_KEY --project astuto-3d398 --non-interactive > /dev/null 2>&1; then
+                echo "::notice::The invitations keep the RevenueCat key Secret Manager already holds."
+              else
+                printf 'unset' > "$RUNNER_TEMP/rc"
+                npx --yes firebase-tools@15 functions:secrets:set REVENUECAT_SECRET_KEY --data-file "$RUNNER_TEMP/rc" --project astuto-3d398 --non-interactive --force \
+                  || echo "::warning::No stand-in could be kept for REVENUECAT_SECRET_KEY."
+                rm -f "$RUNNER_TEMP/rc"
+                echo "::notice::No RevenueCat key is kept, so Invita un amico stays hidden on every phone until one is. Nothing else is affected."
+                {
+                  echo "### Invita un amico is not set up"
+                  echo
+                  echo "The invitations give a week of Astute+ through RevenueCat, with a secret key Secret Manager does not hold yet. Until it does, the functions answer \"not configured\" and the app hides the invitation; nothing else is affected."
+                  echo
+                  echo "In RevenueCat: Project settings → API keys → + New secret API key, API version V1. In GitHub: Settings → Secrets and variables → Actions → New repository secret, named REVENUECAT_SECRET_KEY. Then run this deploy again."
+                } >> "$GITHUB_STEP_SUMMARY"
+              fi
+            fi
           ;; esac
-          npx --yes firebase-tools@15 deploy --only "${{ inputs.only }}" --project astuto-3d398 --non-interactive --force
+          # The key Listen reads the cards aloud with. Whatever it is, the
+          # deploy goes on.
+          case "${{ inputs.only }}" in *functions*)
+            umask 077
+            # The functions name the secret, and a deploy stops on a secret
+            # Secret Manager has never held: while there is no key, a
+            # stand-in is kept in its place, which the functions read as
+            # "not configured" (NOT_CONFIGURED in functions/src/listen.ts).
+            # A key kept before stays as it is.
+            standin() {
+              if ! npx --yes firebase-tools@15 functions:secrets:get ELEVENLABS_API_KEY --project astuto-3d398 --non-interactive > /dev/null 2>&1; then
+                printf '%s' 'not-configured' > "$RUNNER_TEMP/el"
+                npx --yes firebase-tools@15 functions:secrets:set ELEVENLABS_API_KEY --data-file "$RUNNER_TEMP/el" --project astuto-3d398 --non-interactive --force
+                rm -f "$RUNNER_TEMP/el"
+              fi
+            }
+            if [ -z "$ELEVENLABS" ]; then
+              echo "::notice::ELEVENLABS_API_KEY is not set, so Listen stays off. Add it in GitHub under Settings → Secrets and variables → Actions, then deploy again."
+              standin
+              {
+                echo "### Listen is off: there is no ElevenLabs key"
+                echo
+                echo "Make a key at elevenlabs.io → Developers → API keys, with Text to Speech allowed, and put it in GitHub under Settings → Secrets and variables → Actions → ELEVENLABS_API_KEY, then deploy again. Until then the app hides Listen."
+              } >> "$GITHUB_STEP_SUMMARY"
+            else
+              # Three characters read in Listen's own voice and model
+              # (checkKey, functions/src/listen.ts, built by the tests
+              # above) say what ElevenLabs makes of the key.
+              check="$(cd functions && node --input-type=module -e 'import { checkKey } from "./lib/listen.js"; console.log(JSON.stringify(await checkKey(process.env.ELEVENLABS)));' 2>/dev/null || echo '{"keep": true, "verdict": "unreachable", "status": 0, "said": "the check did not run"}')"
+              field() { printf '%s' "$check" | python3 -c "import sys, json; print(str(json.load(sys.stdin).get('$1', '')).replace('\n', ' '))" 2>/dev/null || true; }
+              verdict="$(field verdict)"
+              status="$(field status)"
+              said="$(field said)"
+              keep="$(field keep)"
+              # A check that said nothing readable says nothing against the key.
+              if [ -z "$verdict" ]; then verdict=unreachable; keep=True; fi
+              if [ "$keep" = "True" ]; then
+                printf '%s' "$ELEVENLABS" > "$RUNNER_TEMP/el"
+                npx --yes firebase-tools@15 functions:secrets:set ELEVENLABS_API_KEY --data-file "$RUNNER_TEMP/el" --project astuto-3d398 --non-interactive --force
+                rm -f "$RUNNER_TEMP/el"
+              else
+                standin
+              fi
+              case "$verdict" in
+                works)
+                  echo "ElevenLabs takes the key: Listen can read the cards."
+                  ;;
+                credit)
+                  echo "::notice::ElevenLabs takes the key, but the account has no credit for Listen yet (HTTP $status: $said). The key is kept; Listen says it is not available until a plan is bought."
+                  {
+                    echo "### Listen: the key is in, the credit is not"
+                    echo
+                    echo "ElevenLabs takes the key but will not read yet (HTTP $status): $said"
+                    echo
+                    echo "The key is kept. Buy a plan at elevenlabs.io → Subscription (Creator, \$22 a month, holds what Listen may spend; Starter, \$6, is enough to try it): Listen's voice comes from the Voice Library, which the free plan cannot use through the API. Nothing needs deploying again: the first card read after the plan is bought just works. Until then a reader who taps Listen is told, calmly, that it is not available right now."
+                  } >> "$GITHUB_STEP_SUMMARY"
+                  ;;
+                key)
+                  echo "::warning::ElevenLabs turned the ELEVENLABS_API_KEY secret away (HTTP $status: $said). Listen stays off."
+                  {
+                    echo "### ElevenLabs turned the key away (HTTP $status)"
+                    echo
+                    echo "$said"
+                    echo
+                    echo "Make a new key at elevenlabs.io → Developers → API keys, with Text to Speech allowed, put it in GitHub under Settings → Secrets and variables → Actions → ELEVENLABS_API_KEY, and deploy again. Until then the app hides Listen."
+                  } >> "$GITHUB_STEP_SUMMARY"
+                  ;;
+                *)
+                  echo "::warning::ElevenLabs could not be asked about the key (HTTP $status: $said). The key is kept; Listen says it is not available while this lasts."
+                  {
+                    echo "### ElevenLabs did not read the test (HTTP $status)"
+                    echo
+                    echo "$said"
+                    echo
+                    echo "The key is kept. If this says the voice was not found, open the Voice Library at elevenlabs.io, find Finley (Articulate Anchor) and add it to My Voices, then nothing else is needed."
+                  } >> "$GITHUB_STEP_SUMMARY"
+                  ;;
+              esac
+            fi
+          ;; esac
+          # Everything asked for but the Storage rules, then those apart: a
+          # project whose Storage was never set up says so and goes on.
+          only="${{ inputs.only }}"
+          rest="$(printf '%s' "$only" | tr ',' '\n' | grep -vx 'storage' | paste -sd, - || true)"
+          if [ -n "$rest" ]; then
+            npx --yes firebase-tools@15 deploy --only "$rest" --project astuto-3d398 --non-interactive --force
+          fi
+          case ",$only," in *,storage,*)
+            if ! npx --yes firebase-tools@15 deploy --only storage --project astuto-3d398 --non-interactive --force; then
+              echo "::warning::The Storage rules (storage.rules) were not deployed. If Storage was never set up, open the Firebase console → Storage → Get started, then deploy again."
+              {
+                echo "### The Storage rules were not deployed"
+                echo
+                echo "Listen keeps its clips in Firebase Storage. If the console's Storage page offers *Get started*, press it (the default location is fine), then run this deploy again. Until then a card that was never read aloud is not available."
+              } >> "$GITHUB_STEP_SUMMARY"
+            fi
+          ;; esac

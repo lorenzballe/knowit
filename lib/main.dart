@@ -32,8 +32,8 @@ import 'screens/mix_screen.dart';
 import 'screens/paywall_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
-import 'state/debug_looks.dart' show LearnLook;
 import 'sync/account.dart';
+import 'sync/invite.dart';
 import 'sync/place_finder.dart';
 import 'sync/push.dart';
 import 'sync/reports.dart';
@@ -59,8 +59,9 @@ import 'store_links.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
 import 'widgets/hand_glass.dart';
+import 'widgets/invite_sheet.dart';
 import 'widgets/tab_zoom.dart';
-import 'widgets/learn_looks.dart' show AimScreen, learnLook;
+import 'widgets/learn_looks.dart' show AimScreen, learnAsksAim;
 
 Future<void> main() async {
   Analytics.launched();
@@ -452,6 +453,9 @@ class _AstutoRootState extends State<AstutoRoot> {
   void initState() {
     super.initState();
     _account.watch(_app);
+    // Invita un amico: before the server is asked whether a first day is
+    // done, the backup goes up with it.
+    Invites.instance.beforeSettle = _account.flush;
     _lifecycle = AppLifecycleListener(
       onPause: () {
         // The sitting, said once as it ends: how long the app was open this
@@ -567,9 +571,16 @@ class _AstutoRootState extends State<AstutoRoot> {
     final Subscription store = Subscription.instance
       ..addListener(_onEntitlementChanged);
     final Future<void> storeStarted = store.start(accountId: _account.uid);
+    final Future<void> invites = Invites.instance.restore();
     await _account.ensureAnonymous(_app);
     if (!mounted) return;
     _identify();
+    // A friend's code taken whose week waited on a first day read in an
+    // earlier sitting, and whose answer never came: asked again now.
+    await invites;
+    if (Invites.instance.waiting && _app.inviteOn) {
+      unawaited(Invites.instance.settle());
+    }
     // Signed in, even anonymously, is what the counts ask of a reader.
     Tallies.instance.refresh();
     // And what a report waits for, when one was made before there was an
@@ -588,7 +599,14 @@ class _AstutoRootState extends State<AstutoRoot> {
   Future<void> _takeWidgetOpen() async {
     final WidgetOpen? open = await takeWidgetOpen();
     if (open == null || !mounted) return;
-    if (open.place == WidgetOpen.link) {
+    if (open.place == WidgetOpen.invite) {
+      // An invitation's link: the code kept until it is used, which can be
+      // after the first run, or once the server has invitations on. Never
+      // measured with the code.
+      Session.instance.cameFrom('link');
+      Analytics.capture('app opened from link', {'invite': true});
+      Invites.instance.hold(open.code);
+    } else if (open.place == WidgetOpen.link) {
       // A card's link, tapped somewhere else on the phone.
       Session.instance.cameFrom('link');
       Analytics.capture('app opened from link', {
@@ -1283,13 +1301,13 @@ class _AstutoRootState extends State<AstutoRoot> {
   /// already the reader's, not put today, the store's year on sale with
   /// free days for this reader), one real card comes first, and the offer
   /// after it.
-  /// The first run's end, after one more question in What to learn's look
-  /// B, as the developer tools try it (lib/widgets/learn_looks.dart): where
-  /// the reader wants to be sharper, one aim, or Skip. Laid over the first
-  /// run rather than made a step of it, so the funnel's steps are as they
-  /// were.
+  /// The first run's end, after one more question in the looks of What to
+  /// learn built on the reader's aim (B, D and E), as the developer tools
+  /// try them (lib/widgets/learn_looks.dart): where the reader wants to be
+  /// sharper, one aim, or Skip. Laid over the first run rather than made a
+  /// step of it, so the funnel's steps are as they were.
   Future<void> _endOnboardingAsked() async {
-    if (learnLook == LearnLook.aim) {
+    if (learnAsksAim) {
       await Navigator.of(context).push(
         MaterialPageRoute<void>(
           builder: (_) => AimScreen(app: _app, firstRun: true),
@@ -1658,6 +1676,16 @@ class _AstutoShellState extends State<AstutoShell>
     final String? id = open.card;
     // Whatever was open over the tabs gives way to the card asked for.
     Navigator.of(context).popUntil((route) => route.isFirst);
+
+    // An invitation's link: the friend's code in its sheet, ready to use,
+    // while the server has invitations on; otherwise kept for when it does.
+    if (open.place == WidgetOpen.invite) {
+      final String? code = Invites.instance.held;
+      if (code != null && inviteShown(app)) {
+        showInviteCodeSheet(context, app, code: code, from: 'link');
+      }
+      return;
+    }
 
     // A card's link: the card, on its own, over the tab the reader was on,
     // as a post opens from its link. One this build does not have yet (a

@@ -2,7 +2,12 @@
 // each on the free plan and on Astute+; the top each plan opens on by itself
 // (profile-free, profile-plus); the debug section's looks, as a TestFlight
 // build shows them (profile-debug), and with the card's foot D picked
-// (profile-debug-d); and the way back to Today from its tile, frame by frame.
+// (profile-debug-d); the way back to Today from its tile, frame by frame;
+// and where the reader wants to see more clearly (lib/widgets/aim_picker.dart)
+// under the subjects at night and on paper, its one row; the sheet of the
+// six it opens and a pick there on its way (profile-aim-pick-1 to 5); and on
+// the 320-wide phone in German, the row and the sheet, at the ordinary text
+// size and at 1.6×.
 //
 //   SHOTS=/some/folder LANG_SHOT=it flutter test tool/profile_shots.dart --update-goldens
 //
@@ -254,6 +259,93 @@ void main() {
     await settle(tester);
     await shoot('profile-debug-d');
   });
+
+  // Where the reader wants to see more clearly, under the subjects: its
+  // head high on the screen, a little of the chips over it, or [from]'s top
+  // [at] points down. The reader has picked Everyday decisions.
+  Future<void> openAim(
+    WidgetTester tester, {
+    required String theme,
+    String from = 'profile-aim-section',
+    double? at,
+  }) async {
+    _prefs({
+      ..._reader(plus: false),
+      'knowit.theme': theme,
+      'knowit.goals': ['decide'],
+    });
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await settle(tester);
+    final Finder list = find
+        .descendant(
+          of: find.byType(ProfileScreen),
+          matching: find.byType(Scrollable),
+        )
+        .first;
+    final Finder top = find.byKey(ValueKey(from));
+    await tester.scrollUntilVisible(top, 300, scrollable: list);
+    await settle(tester);
+    final ScrollPosition position = tester
+        .state<ScrollableState>(list)
+        .position;
+    final double view = tester.view.physicalSize.height / 3;
+    position.jumpTo(
+      position.pixels + tester.getRect(top).top - (at ?? view * 0.13),
+    );
+    await settle(tester);
+  }
+
+  // The profile from the subjects down, the row with the pick under them,
+  // at night and on paper.
+  for (final String theme in ['dark', 'light']) {
+    testWidgets('profile-aim-$theme', (tester) async {
+      await openAim(tester, theme: theme, from: 'profile-topics', at: 110);
+      await shoot('profile-aim-$theme');
+    });
+  }
+
+  // The row tapped: the sheet on its way up and up; Money and shopping
+  // picked there, the colour halfway over; and the sheet gone, the row the
+  // new pick.
+  testWidgets('profile-aim-pick', (tester) async {
+    await openAim(tester, theme: Platform.environment['THEME'] ?? 'dark');
+    await shoot('profile-aim-pick-1');
+    await tester.tap(find.byKey(const ValueKey('profile-aim-open')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 120));
+    await shoot('profile-aim-pick-2');
+    await settle(tester);
+    await shoot('profile-aim-pick-3');
+    await tester.tap(find.byKey(const ValueKey('profile-aim-money')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 90));
+    await shoot('profile-aim-pick-4');
+    await settle(tester);
+    await shoot('profile-aim-pick-5');
+  });
+
+  // The 320-wide phone, no notch, in German: at the ordinary text size,
+  // and at 1.6×.
+  for (final double text in [1, 1.6]) {
+    final String name = 'profile-aim-de-small${text == 1 ? '' : '-large'}';
+    testWidgets(name, (tester) async {
+      final dispatcher = tester.platformDispatcher;
+      tester.view.physicalSize = const Size(320, 568) * 3;
+      tester.view.padding = const FakeViewPadding(top: 20 * 3);
+      tester.view.viewPadding = const FakeViewPadding(top: 20 * 3);
+      dispatcher.localeTestValue = const Locale('de');
+      dispatcher.localesTestValue = [const Locale('de')];
+      dispatcher.textScaleFactorTestValue = text;
+      addTearDown(dispatcher.clearTextScaleFactorTestValue);
+      await openAim(tester, theme: Platform.environment['THEME'] ?? 'dark');
+      await shoot('$name-row');
+      await tester.tap(find.byKey(const ValueKey('profile-aim-open')));
+      await settle(tester);
+      await shoot(name);
+    });
+  }
 
   testWidgets('back to Today, out of the tile', (tester) async {
     _prefs(_reader(plus: false));

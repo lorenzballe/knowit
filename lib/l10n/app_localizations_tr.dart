@@ -2139,6 +2139,78 @@ class AppLocalizationsTr extends AppLocalizations {
       'Birkaç cevap daha, sonra burada güçlü olduğun yerleri göreceksin.';
 
   @override
+  String get readTitle => 'Zaten net gördüğün yerler';
+
+  @override
+  String get readBlind => 'Kör noktan';
+
+  @override
+  String get readLocked =>
+      'Kör noktan için beş kart ve profilinin tamamı Astute+ ile.';
+
+  @override
+  String get readEmpty =>
+      'Birkaç cevap daha, sonra burada nerede net görüp nerede görmediğini göreceksin.';
+
+  @override
+  String get readNoAim =>
+      'Yukarıdan nerede daha net görmek istediğini seç: cevapların nerede zaten net gördüğünü gösterecek.';
+
+  @override
+  String get readLine =>
+      'Bu hedefin gerektirdiği beceriler, cevaplarından okundu: nerede net gördüğün ve kör noktan.';
+
+  @override
+  String get readOthers => 'Profilinin geri kalanı';
+
+  @override
+  String get focusTitle => 'Haftanın odağı';
+
+  @override
+  String get focusFromGoal =>
+      'Hedefine göre seçildi: her hafta farklı bir beceri.';
+
+  @override
+  String get focusFromMisses =>
+      'Cevaplarına göre seçildi: en çok yanıldığın yer.';
+
+  @override
+  String get focusLine =>
+      'Onu çalıştıran kartlarda işareti olur. Pazar günü haftanın nasıl geçtiğini görürsün.';
+
+  @override
+  String focusLast(String skill) {
+    return 'Geçen hafta: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'Pazartesiden itibaren: $skill';
+  }
+
+  @override
+  String get focusResult => 'Hafta nasıl geçti';
+
+  @override
+  String get focusPlus =>
+      'Astute+ ile odağı cevapların seçer: en çok yanıldığın yer.';
+
+  @override
+  String get focusMarkBody =>
+      'Bu hafta bu beceriyi çalışıyorsun: onu çalıştıran kartlarda bu işaret olur. Pazar günü nasıl geçtiğini göreceksin.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'Haftanın odağı: $skill';
+  }
+
+  @override
+  String get focusShelfLine => 'Onu çalıştıran, henüz okunmamış kartlar.';
+
+  @override
+  String get focusOpen => 'Haftan';
+
+  @override
   String get scoreTitle => 'Astute puanı';
 
   @override
@@ -7044,4 +7116,175 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Şimdi değil';
+
+  @override
+  String get listenEntry => 'Bugünkü beşi dinle';
+
+  @override
+  String get listenEntryShort => 'Dinle';
+
+  @override
+  String get listenTitle => 'Bugünkü beş kart';
+
+  @override
+  String get listenQuestion => 'Soru';
+
+  @override
+  String get listenThink => 'Bir düşün…';
+
+  @override
+  String get listenAnswer => 'Cevap';
+
+  @override
+  String get listenPreparing => 'Ses hazırlanıyor…';
+
+  @override
+  String get listenWaiting => 'Sonraki kart yolda…';
+
+  @override
+  String get listenFreeNote => 'İlk kart ücretsiz; gerisi Astute+ ile.';
+
+  @override
+  String get listenOfferTitle => 'Bugünkü diğer kartlar, senin için okunuyor';
+
+  @override
+  String get listenOfferLine =>
+      'Astute+ ile her gün beşini de dinlersin, ekran kilitliyken bile.';
+
+  @override
+  String get listenNothing => 'Bu kartta dinlenecek bir şey yok';
+
+  @override
+  String get listenCardUnavailable => 'Şu anda kullanılamıyor';
+
+  @override
+  String get listenUnavailable =>
+      'Dinleme şu anda kullanılamıyor. Daha sonra tekrar dene.';
+
+  @override
+  String get listenDone => 'Bugünkü kartların hepsi dinlendi.';
+
+  @override
+  String get listenAgain => 'Yeniden dinle';
+
+  @override
+  String get listenNextCard => 'Sonraki kart';
+
+  @override
+  String get inviteSection => 'Arkadaşlar';
+
+  @override
+  String get inviteRow => 'Bir arkadaşını davet et';
+
+  @override
+  String get inviteRowLine => 'İkinize de bir hafta Astute+';
+
+  @override
+  String get inviteCodeRow => 'Kodun var mı?';
+
+  @override
+  String get inviteCodeAccepted => 'Kod kabul edildi';
+
+  @override
+  String get inviteCodeAcceptedLine => 'Haftan, ilk gününü bitirdiğinde başlar';
+
+  @override
+  String get inviteSheetLine =>
+      'Kodunu bir arkadaşına gönder. İlk gününü, yani beş kartı bitirdiğinde ikiniz de bir hafta Astute+ alırsınız.';
+
+  @override
+  String get inviteYourCode => 'Kodun';
+
+  @override
+  String get inviteCopy => 'Kopyala';
+
+  @override
+  String get inviteSend => 'Daveti gönder';
+
+  @override
+  String inviteRules(int cap) {
+    return 'Daha önce hiç Astute+ almamış yeni bir hesap için geçerli. Yılda en fazla $cap hafta alırsın.';
+  }
+
+  @override
+  String inviteWeeksSoFar(int n, int cap) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bu yıl $cap haftanın $n haftası',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inviteCapped(int cap) {
+    return 'Bu yılın $cap haftasını aldın. Arkadaşların yine de kendi haftasını alır.';
+  }
+
+  @override
+  String inviteMessage(String code, String link) {
+    return 'Seni Astute’a davet ediyorum: zihnini keskin tutmak için günde beş kart. $code kodumla ilk gününü bitirdiğinde ikimiz de bir hafta Astute+ alıyoruz.\n$link';
+  }
+
+  @override
+  String inviteMessageCapped(String code, String link) {
+    return 'Seni Astute’a davet ediyorum: zihnini keskin tutmak için günde beş kart. $code kodumla ilk gününü bitirdiğinde bir hafta Astute+ hediye.\n$link';
+  }
+
+  @override
+  String get inviteCodeTitle => 'Bir arkadaşının kodu';
+
+  @override
+  String get inviteCodeLine =>
+      'Bir arkadaşının gönderdiği kodu yaz. İlk gününü bitirdiğinde ikiniz de bir hafta Astute+ alırsınız.';
+
+  @override
+  String get inviteCodeUse => 'Kodu kullan';
+
+  @override
+  String get inviteCodeWaitingLine =>
+      'İlk gününü, yani beş kartı bitir: sonra Astute+ haftası başlar, hem senin hem de seni davet eden arkadaşının.';
+
+  @override
+  String get inviteRefusedUnknown =>
+      'Böyle bir kod yok. Karakterleri kontrol edip tekrar dene.';
+
+  @override
+  String get inviteRefusedOwn => 'Bu senin kendi kodun: bir arkadaşına gönder.';
+
+  @override
+  String get inviteRefusedUsed => 'Bir arkadaşının kodunu zaten kullandın.';
+
+  @override
+  String get inviteRefusedLate =>
+      'Kodlar yeni hesaplar içindir, ilk haftalarında.';
+
+  @override
+  String get inviteRefusedPlus =>
+      'Kodlar daha önce hiç Astute+ almamış hesaplar içindir.';
+
+  @override
+  String get inviteSuccessTitle => 'Bir hafta Astute+, hediye.';
+
+  @override
+  String get inviteSuccessPlan => 'Astute+ · bir hafta';
+
+  @override
+  String inviteSuccessUntil(String date) {
+    return '$date tarihine kadar';
+  }
+
+  @override
+  String get inviteSuccessFoot =>
+      'Ödenecek ya da iptal edilecek bir şey yok: sonra ücretsiz plana dönersin.';
+
+  @override
+  String inviteEarned(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n arkadaşın ilk gününü bitirdi: sana $n hafta Astute+.',
+    );
+    return '$_temp0';
+  }
 }

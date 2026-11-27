@@ -1,15 +1,19 @@
 // Photographs What to learn as it ships and as the developer tools try it
-// (lib/state/debug_looks.dart, LearnLook): the profile, Your journey, a card
-// in the day's deck, its back once answered, and each look's own screens,
-// for a reader two weeks in on the free plan and on Astute+.
+// (lib/state/debug_looks.dart, LearnLook), the same pictures for every look
+// so they can be laid side by side: the profile where the look's box sits
+// under the question of the aim, Your journey's head, a card of the day and
+// a card's back once answered, and Explore's first shelves; for a reader two
+// weeks in, on the free plan and on Astute+, whose aim is everyday
+// decisions.
 //
 //   SHOTS=/some/folder LOOK=today flutter test tool/learn_shots.dart \
 //     --update-goldens
 //
 // A camera, not a check: it lives outside test/ so CI never runs it. The
 // real app, on a 390 × 844 phone at night, in Italian unless LANG_SHOT says
-// otherwise. LOOK is one of today, score, aim, profile (all of them when
-// not given); TEXT=1.3 sets the phone's text size.
+// otherwise. LOOK is one of today, score, aim, profile, aimProfile, weekly
+// (all of them when not given); TEXT=1.3 sets the phone's text size and
+// THEME=light the day's paper.
 //
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 import 'dart:convert';
@@ -23,6 +27,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/goals.dart';
+import 'package:astuto/data/learn_reading.dart';
+import 'package:astuto/data/levels.dart' show LevelMemory;
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/data/skill_levels.dart';
@@ -32,11 +38,13 @@ import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/remote/remote.dart';
+import 'package:astuto/screens/journey_screen.dart';
 import 'package:astuto/screens/profile_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/state/debug_looks.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/learn_looks.dart' show AimScreen;
+import 'package:astuto/widgets/level_up.dart' show levelStandingOf;
 import 'package:astuto/widgets/web/card_thumb.dart';
 
 Future<void> _loadFonts() async {
@@ -59,38 +67,63 @@ Future<void> _loadFonts() async {
 /// The skills the reader picked on What to learn, in the order picked.
 const List<String> _picked = ['decisions', 'money', 'fakes'];
 
+/// The reader's aim, picked on the profile: every look has it now.
+const String _aim = 'decide';
+
 /// Cards that ask, have no page of their own and are a pick of one.
 List<Pill> _asking() => [
   for (final Pill p in PillBank.cards)
     if (p.isGraded && p.challenge is PickOne && !p.hasPage) p,
 ];
 
-/// Today's five: two answered before the camera arrives, a card that tells,
-/// then the one in front of the free reader, which trains the first skill
-/// picked as closely as a card can, then one more.
-List<Pill> _todayDeck() {
+/// The cards today's five are made from, kept out of the weeks before so
+/// the weeks are the same whichever five are dealt: for every skill the two
+/// that ask and train it as closely as a card can, one of the everyday
+/// decisions area's own besides, and a card that tells.
+({Map<Skill, List<Pill>> closest, Pill decide, Pill told}) _kept() {
   final List<Pill> asking = _asking();
-  Pill closest(Skill s, Set<String> not) =>
-      asking.firstWhere((p) => !not.contains(p.id) && s.fitOf(p) == 0);
   final Set<String> used = {};
-  final Pill money = closest(Skill.money, used);
-  used.add(money.id);
-  final Pill fakes = closest(Skill.fakes, used);
-  used.add(fakes.id);
+  final Map<Skill, List<Pill>> closest = {};
+  for (final Skill s in Skill.values) {
+    final List<Pill> two = [
+      for (final Pill p in asking)
+        if (!used.contains(p.id) && s.fitOf(p) == 0) p,
+    ].take(2).toList();
+    used.addAll(two.map((p) => p.id));
+    closest[s] = two;
+  }
   // One of the decisions skill's own that is also one of the everyday
-  // decisions area's (lib/data/goals.dart): look B's aim names it.
+  // decisions area's (lib/data/goals.dart): the aim names it.
   final Pill decide = asking.firstWhere(
     (p) =>
         !used.contains(p.id) &&
         Skill.decisions.fitOf(p) == 0 &&
         (Goal.decide.fitOf(p) ?? 2) < 2,
   );
-  used.add(decide.id);
   final Pill told = PillBank.cards.firstWhere((p) => !p.isGraded && !p.hasPage);
-  final Pill last = asking.firstWhere(
-    (p) => !used.contains(p.id) && Skill.critical.fitOf(p) == 0,
-  );
-  return [money, fakes, told, decide, last];
+  return (closest: closest, decide: decide, told: told);
+}
+
+/// Today's five: two answered before the camera arrives, a card that tells,
+/// then the one in front of the free reader, then one more. As it ships, a
+/// card of money first and one of the aim in front; in E, where the week's
+/// skill has a mark, a card of that skill first and in front.
+List<Pill> _todayDeck({Skill? focus}) {
+  final kept = _kept();
+  final Pill fakes = kept.closest[Skill.fakes]!.first;
+  final Pill critical = kept.closest[Skill.critical]!.first;
+  if (focus != null) {
+    final List<Pill> two = kept.closest[focus]!;
+    final Pill other = focus == Skill.fakes ? critical : fakes;
+    return [two.first, other, kept.told, two.last, kept.decide];
+  }
+  return [
+    kept.closest[Skill.money]!.first,
+    fakes,
+    kept.told,
+    kept.decide,
+    critical,
+  ];
 }
 
 /// A reader two weeks in: thirteen days before today, two of them missed,
@@ -98,7 +131,11 @@ List<Pill> _todayDeck() {
 /// over half the time at first and two in three by now, the cards harder as
 /// they go. On the free plan three of today's five are read; on Astute+ all
 /// five.
-Map<String, Object> _reader({required bool plus, required String look}) {
+Map<String, Object> _reader({
+  required bool plus,
+  required String look,
+  required List<Pill> deck,
+}) {
   final rand = math.Random(14);
   final DateTime now = DateTime.now();
   final DateTime today = DateTime(now.year, now.month, now.day);
@@ -106,8 +143,13 @@ Map<String, Object> _reader({required bool plus, required String look}) {
   const Set<int> missed = {4, 9};
   const int first = 13;
 
-  final List<Pill> deck = _todayDeck();
-  final Set<String> todays = {for (final Pill p in deck) p.id};
+  final kept = _kept();
+  final Set<String> todays = {
+    for (final List<Pill> two in kept.closest.values)
+      for (final Pill p in two) p.id,
+    kept.decide.id,
+    kept.told.id,
+  };
   final List<Pill> asking = [
     for (final Pill p in _asking())
       if (!todays.contains(p.id)) p,
@@ -202,9 +244,7 @@ Map<String, Object> _reader({required bool plus, required String look}) {
     if (!plus) 'knowit.todayOwnIds': [deck[0].id, deck[3].id],
     'knowit.readDays': jsonEncode(readDays),
     'knowit.skills': _picked,
-    // Look B's aim: the area of the first skill picked, as a reader coming
-    // from the skills would find it.
-    if (look == 'aim') 'knowit.goals': ['decide'],
+    'knowit.goals': [_aim],
     'knowit.theme': Platform.environment['THEME'] ?? 'dark',
     'knowit.debug.learn': look,
   };
@@ -265,12 +305,47 @@ void main() {
     matchesGoldenFile('$out/$name.png'),
   );
 
+  /// The week's skill this reader would have, on [plus] or not: worked out
+  /// by the app itself from the weeks before, which no five change.
+  Future<Skill> focusOf(WidgetTester tester, {required bool plus}) async {
+    SharedPreferences.setMockInitialValues(
+      _reader(plus: plus, look: 'weekly', deck: _todayDeck()),
+    );
+    final AppState app = AppState();
+    await tester.runAsync(app.init);
+    return weekFocusOf(app).skill;
+  }
+
+  /// The reader for [look], with the level their score stands at told
+  /// already: the journey shows the level the score is at, and no level
+  /// rises over it as it opens.
+  Future<Map<String, Object>> readerFor(
+    WidgetTester tester, {
+    required bool plus,
+    required String look,
+  }) async {
+    final Skill? focus = look == LearnLook.weekly.name
+        ? await focusOf(tester, plus: plus)
+        : null;
+    final Map<String, Object> prefs = _reader(
+      plus: plus,
+      look: look,
+      deck: _todayDeck(focus: focus),
+    );
+    SharedPreferences.setMockInitialValues(prefs);
+    final AppState app = AppState();
+    await tester.runAsync(app.init);
+    return {...prefs, LevelMemory.key: levelStandingOf(app, null).at};
+  }
+
   Future<void> open(
     WidgetTester tester, {
     required bool plus,
     required String look,
   }) async {
-    SharedPreferences.setMockInitialValues(_reader(plus: plus, look: look));
+    SharedPreferences.setMockInitialValues(
+      await readerFor(tester, plus: plus, look: look),
+    );
     await tester.pumpWidget(const AstutoApp());
     await settle(tester);
   }
@@ -305,102 +380,142 @@ void main() {
     await settle(tester);
   }
 
+  /// Explore's page, under its head.
+  Finder explorePage() => find
+      .descendant(
+        of: find.byKey(const ValueKey('explore-refresh')),
+        matching: find.byType(Scrollable),
+      )
+      .first;
+
   for (final String look in looks) {
     for (final bool plus in [false, true]) {
       final String who = plus ? 'plus' : 'free';
 
-      testWidgets('$look $who profile', (tester) async {
+      // The profile where the look's box is: the question of the aim, its
+      // last rows with the aim picked, and under it the box, or the next
+      // section where the look has none. Then, on Astute+, Your journey's
+      // head (on the free plan its door is the plans).
+      testWidgets('$look $who profile and journey', (tester) async {
         await open(tester, plus: plus, look: look);
         await tester.tap(find.byKey(const ValueKey('tab-Profile')));
         await settle(tester);
-        await shoot('$look-$who-1-profilo-alto');
-        // Where the skills were, under the subjects.
-        await profileAt(tester, 'profile-topics', from: 90);
-        await shoot('$look-$who-2-profilo');
+        await profileAt(tester, 'profile-aim-health', from: 64);
+        await shoot('$look-$who-1-profilo');
+        if (!plus) return;
+        final ScrollPosition position = tester
+            .state<ScrollableState>(profileList())
+            .position;
+        position.jumpTo(0);
+        await settle(tester);
+        await tester.tap(find.byKey(const ValueKey('profile-journey')));
+        await settle(tester, 24);
+        await shoot('$look-$who-2-viaggio');
       });
 
+      // The card in front of the reader, as Today shows it.
       testWidgets('$look $who today', (tester) async {
         await open(tester, plus: plus, look: look);
         await shoot('$look-$who-3-oggi');
       });
-
-      testWidgets('$look $who journey', (tester) async {
-        await open(tester, plus: plus, look: look);
-        await tester.tap(find.byKey(const ValueKey('tab-Profile')));
-        await settle(tester);
-        await tester.tap(find.byKey(const ValueKey('profile-journey')));
-        await settle(tester, 24);
-        await shoot('$look-$who-4-viaggio');
-        if (!plus) return;
-        // The rest of the journey's first chapter, under the fold.
-        final Finder page = find
-            .descendant(
-              of: find.byKey(const ValueKey('journey-page')),
-              matching: find.byType(Scrollable),
-            )
-            .first;
-        tester.state<ScrollableState>(page).position.jumpTo(560);
-        await settle(tester);
-        await shoot('$look-$who-5-viaggio-sotto');
-      });
     }
 
     // The day read again on Astute+, its first card turned over: the verdict
-    // and how far the answer moved a score beside it.
+    // and what the answer moved beside it.
     testWidgets('$look plus back', (tester) async {
       await open(tester, plus: true, look: look);
       await tester.tap(find.byKey(const ValueKey('shelf-see-again')));
       await settle(tester, 20);
+      final Skill? focus = look == LearnLook.weekly.name
+          ? await focusOf(tester, plus: true)
+          : null;
       // The card on top, by its id: a tap turns it over.
-      final Finder card = find.byKey(ValueKey(_todayDeck().first.id)).last;
+      final Finder card = find
+          .byKey(ValueKey(_todayDeck(focus: focus).first.id))
+          .last;
       final Rect at = tester.getRect(card);
       await tester.tapAt(Offset(at.center.dx, at.top + at.height * 0.62));
       await settle(tester, 24);
-      await shoot('$look-plus-6-retro');
+      await shoot('$look-plus-4-retro');
     });
   }
 
-  // What to learn as it ships: the picker, and the sheet a card's mark opens;
-  // and where the developer tools pick the look, at the foot of the profile.
-  if (looks.contains(LearnLook.today.name)) {
-    testWidgets('today free debug', (tester) async {
-      await open(tester, plus: false, look: 'today');
-      await tester.tap(find.byKey(const ValueKey('tab-Profile')));
-      await settle(tester);
-      await profileAt(tester, 'debug-learn', from: 300);
-      await shoot('today-free-9-debug');
-    });
+  // E's own: Explore's first shelves with the week's skill over the aim's,
+  // on either plan; the sheet a card's mark opens; and its Sunday, the
+  // week's result, in Your journey.
+  if (looks.contains(LearnLook.weekly.name)) {
+    for (final bool plus in [false, true]) {
+      final String who = plus ? 'plus' : 'free';
+      testWidgets('weekly $who explore', (tester) async {
+        await open(tester, plus: plus, look: 'weekly');
+        await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+        await settle(tester, 20);
+        final Finder shelf = find.byKey(const ValueKey('focus-shelf-mark'));
+        await tester.scrollUntilVisible(shelf, 400, scrollable: explorePage());
+        await settle(tester);
+        final ScrollPosition position = tester
+            .state<ScrollableState>(explorePage())
+            .position;
+        position.jumpTo(position.pixels + tester.getRect(shelf).top - 150);
+        await settle(tester, 20);
+        await shoot('weekly-$who-5-esplora');
+      });
+    }
 
-    testWidgets('today free picker', (tester) async {
-      await open(tester, plus: false, look: 'today');
-      await tester.tap(find.byKey(const ValueKey('tab-Profile')));
-      await settle(tester);
-      await profileAt(tester, 'profile-skills');
-      await tester.tap(find.byKey(const ValueKey('profile-skills')));
-      await settle(tester, 20);
-      await shoot('today-free-7-cosa-imparare');
-    });
-
-    testWidgets('today free mark sheet', (tester) async {
-      await open(tester, plus: false, look: 'today');
-      await tester.tap(
-        find.byKey(const ValueKey('skill-mark-decisions')).hitTestable().first,
+    testWidgets('weekly free mark sheet', (tester) async {
+      await open(tester, plus: false, look: 'weekly');
+      final Finder mark = find.byWidgetPredicate(
+        (w) =>
+            w.key is ValueKey<String> &&
+            (w.key! as ValueKey<String>).value.startsWith('skill-mark-'),
       );
+      await tester.tap(mark.hitTestable().first);
       await settle(tester, 20);
-      await shoot('today-free-8-segno');
+      await shoot('weekly-free-6-segno');
+    });
+
+    testWidgets('weekly plus sunday', (tester) async {
+      // The Sunday of this week, at night, the five done.
+      final DateTime now = DateTime.now();
+      final DateTime sunday = DateTime(
+        now.year,
+        now.month,
+        now.day + (DateTime.sunday - now.weekday),
+        21,
+      );
+      SharedPreferences.setMockInitialValues(
+        await readerFor(tester, plus: true, look: 'weekly'),
+      );
+      final AppState app = AppState(clock: () => sunday);
+      await tester.runAsync(app.init);
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(
+            Platform.environment['THEME'] == 'light'
+                ? Brightness.light
+                : Brightness.dark,
+          ),
+          debugShowCheckedModeBanner: false,
+          home: JourneyScreen(app: app, onBack: () {}),
+        ),
+      );
+      await settle(tester, 24);
+      await shoot('weekly-plus-7-domenica');
     });
   }
 
-  // B: the question at the end of the first run, Explore's shelf of the
-  // aim, and the aim's own page from the profile.
+  // B: the question at the end of the first run, in B, D and E.
   if (looks.contains(LearnLook.aim.name)) {
     testWidgets('aim free question', (tester) async {
       SharedPreferences.setMockInitialValues({
-        ..._reader(plus: false, look: 'aim'),
+        ..._reader(plus: false, look: 'aim', deck: _todayDeck()),
         'knowit.goals': <String>[],
       });
       final AppState app = AppState();
-      await app.init();
+      await tester.runAsync(app.init);
       await tester.pumpWidget(
         MaterialApp(
           locale: locale,
@@ -412,77 +527,18 @@ void main() {
         ),
       );
       await settle(tester);
-      await shoot('aim-free-7-domanda');
-      await tester.tap(find.byKey(const ValueKey('aim-money')));
-      await settle(tester);
-      await shoot('aim-free-7b-domanda-scelta');
-    });
-
-    testWidgets('aim free explore', (tester) async {
-      await open(tester, plus: false, look: 'aim');
-      await tester.tap(find.byKey(const ValueKey('tab-Explore')));
-      await settle(tester, 20);
-      final Finder page = find
-          .descendant(
-            of: find.byKey(const ValueKey('explore-refresh')),
-            matching: find.byType(Scrollable),
-          )
-          .first;
-      final Finder shelf = find.byKey(const ValueKey('goal-see-all'));
-      await tester.scrollUntilVisible(shelf, 400, scrollable: page);
-      await settle(tester);
-      final ScrollPosition position = tester
-          .state<ScrollableState>(page)
-          .position;
-      position.jumpTo(position.pixels + tester.getRect(shelf).top - 160);
-      await settle(tester, 20);
-      await shoot('aim-free-8-esplora');
-    });
-
-    testWidgets('aim free page', (tester) async {
-      await open(tester, plus: false, look: 'aim');
-      await tester.tap(find.byKey(const ValueKey('tab-Profile')));
-      await settle(tester);
-      await profileAt(tester, 'profile-aim-card');
-      await tester.tap(find.byKey(const ValueKey('profile-aim-card')));
-      await settle(tester, 20);
-      await shoot('aim-free-9-pagina');
+      await shoot('aim-free-6-domanda');
     });
   }
 
-  // C: the free reader's door from the profile, and the weakest skill to
-  // practise on Astute+.
-  if (looks.contains(LearnLook.profile.name)) {
-    testWidgets('profile free door', (tester) async {
-      await open(tester, plus: false, look: 'profile');
+  // Where the developer tools pick the look, at the foot of the profile.
+  if (looks.contains(LearnLook.today.name)) {
+    testWidgets('today free debug', (tester) async {
+      await open(tester, plus: false, look: 'today');
       await tester.tap(find.byKey(const ValueKey('tab-Profile')));
       await settle(tester);
-      await profileAt(tester, 'profile-strengths');
-      await tester.tap(find.byKey(const ValueKey('profile-strengths-locked')));
-      await settle(tester, 20);
-      await shoot('profile-free-7-porta');
-    });
-
-    testWidgets('profile plus practice', (tester) async {
-      await open(tester, plus: true, look: 'profile');
-      await tester.tap(find.byKey(const ValueKey('tab-Profile')));
-      await settle(tester);
-      await tester.tap(find.byKey(const ValueKey('profile-journey')));
-      await settle(tester, 24);
-      final Finder page = find
-          .descendant(
-            of: find.byKey(const ValueKey('journey-page')),
-            matching: find.byType(Scrollable),
-          )
-          .first;
-      final Finder practice = find.byKey(
-        const ValueKey('journey-strengths-practice'),
-      );
-      await tester.scrollUntilVisible(practice, 300, scrollable: page);
-      await settle(tester);
-      await tester.tap(practice);
-      await settle(tester, 24);
-      await shoot('profile-plus-7-allenati');
+      await profileAt(tester, 'debug-learn', from: 300);
+      await shoot('today-free-9-debug');
     });
   }
 }

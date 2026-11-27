@@ -1,0 +1,24 @@
+rules_version = '2';
+
+// Astute keeps one kind of file in Storage: the cards read aloud (Listen,
+// functions/src/listen.ts), one MP3 per question and per answer, named by
+// the hash of what it says, the same for every reader. Any signed-in reader
+// may read them; only the functions write them, with admin rights, which
+// these rules do not reach. The phone plays a clip from the address the
+// function gives it, which carries the clip's own token.
+//
+// Deploy with:  firebase deploy --only storage
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    match /listen/{clip} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // Anything not named above is closed.
+    match /{all=**} {
+      allow read, write: if false;
+    }
+  }
+}

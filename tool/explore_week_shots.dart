@@ -55,8 +55,18 @@ const String _looks = String.fromEnvironment(
 /// The look the news is drawn in on the pages; none keeps the document's.
 const String _pageLook = String.fromEnvironment('WEEK_LOOK');
 
-const Size _phone = Size(390, 844);
+/// The phone, 390 points wide unless WEEK_WIDTH says otherwise (375 for an
+/// SE, 430 for a Pro Max); its language (WEEK_LANG, Italian by default) and
+/// its light (WEEK_THEME=light for the day). WEEK_DIR is where the pictures
+/// go, WEEK_TALL how tall a whole page is drawn.
+const int _width = int.fromEnvironment('WEEK_WIDTH', defaultValue: 390);
+final Size _phone = Size(_width.toDouble(), 844);
 const EdgeInsets _insets = EdgeInsets.only(top: 47, bottom: 34);
+const String _lang = String.fromEnvironment('WEEK_LANG', defaultValue: 'it');
+const bool _light = String.fromEnvironment('WEEK_THEME') == 'light';
+const String _dirGiven = String.fromEnvironment('WEEK_DIR');
+const String _dir = _dirGiven == '' ? 'shots/explore-tour/week' : _dirGiven;
+const int _tall = int.fromEnvironment('WEEK_TALL', defaultValue: 16000);
 
 /// Half past eight in Rome on the paper's morning.
 final DateTime _morning = DateTime.utc(2026, 11, 26, 7, 30);
@@ -280,15 +290,22 @@ Future<void> _open(
     bottom: _insets.bottom * ratio,
   );
   view.viewPadding = view.padding;
-  tester.platformDispatcher.localesTestValue = [const Locale('it')];
-  tester.platformDispatcher.localeTestValue = const Locale('it');
+  tester.platformDispatcher.localesTestValue = [const Locale(_lang)];
+  tester.platformDispatcher.localeTestValue = const Locale(_lang);
+  tester.platformDispatcher.platformBrightnessTestValue = _light
+      ? Brightness.light
+      : Brightness.dark;
   addTearDown(() {
+    tester.platformDispatcher.clearPlatformBrightnessTestValue();
     view.reset();
     tester.platformDispatcher.clearLocalesTestValue();
     tester.platformDispatcher.clearLocaleTestValue();
   });
   // ignore: invalid_use_of_visible_for_testing_member
-  SharedPreferences.setMockInitialValues(_twoWeeksIn());
+  SharedPreferences.setMockInitialValues({
+    ..._twoWeeksIn(),
+    if (_light) 'knowit.theme': 'light',
+  });
   // ignore: invalid_use_of_visible_for_testing_member
   Served.useForTest(
     Served(
@@ -321,7 +338,7 @@ Map<String, Object?> _measure(WidgetTester tester) {
     out.add({
       'id': s.id,
       'block': s.block,
-      'title': s.title('it'),
+      'title': s.title(_lang),
       'top': r.top + gap,
       'height': r.height - gap,
     });
@@ -337,12 +354,14 @@ Future<void> _take(WidgetTester tester, String name) async {
   await _decodeShown(tester);
   await expectLater(
     find.byType(MaterialApp).first,
-    matchesGoldenFile('shots/explore-tour/week/$name.png'),
+    matchesGoldenFile('$_dir/$name.png'),
   );
 }
 
 void _write(String name, Object json) {
-  final File file = File('tool/shots/explore-tour/week/$name.json');
+  final File file = File(
+    _dir.startsWith('/') ? '$_dir/$name.json' : 'tool/$_dir/$name.json',
+  );
   file.parent.createSync(recursive: true);
   file.writeAsStringSync(const JsonEncoder.withIndent(' ').convert(json));
 }
@@ -365,7 +384,12 @@ void main() {
         debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
         _paper();
         _adopt(weekday, look: _pageLook);
-        await _open(tester, height: 16000, ratio: 2, subject: _subject);
+        await _open(
+          tester,
+          height: _tall.toDouble(),
+          ratio: 2,
+          subject: _subject,
+        );
         _write(name, _measure(tester));
         await _take(tester, name);
         debugDefaultTargetPlatformOverride = null;

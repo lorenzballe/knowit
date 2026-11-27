@@ -18,7 +18,8 @@
 //   not hold it; a card about a place answers only a reader who lives there.
 // - `onReaderDeleted`: when a reader deletes their account and the phone
 //   removes readers/{uid}, everything under it — the trace, the days, the
-//   profile, the shelf, the reports — and their presence go with it.
+//   profile, the shelf, the reports — their presence and their
+//   invitations go with it.
 // - `scorecard` (every day, 04:20 UTC): how every card does with the
 //   readers, added up from the trace and the reports (scorecard.ts). Cards
 //   enough readers say are untrue go into quarantine, and everything above
@@ -31,11 +32,24 @@
 // - `playDaily` (callable): a play of Today's five or a subject's three,
 //   judged here and added once to the counts of everybody who played the
 //   same cards that day (daily.ts), which the phone shows on the result.
+// - `listenCard` (callable): a card of the reader's day read aloud by
+//   ElevenLabs (listen.ts): its question and its answer as two clips in
+//   Storage, made once for everybody and kept under the hash of their
+//   words. The first card of a day for everyone, the rest for Astute+.
+// - `listenAhead` (twice a day, 03:35 and 18:35 UTC): the next days' cards
+//   of the readers who listen, made before they ask, so playing is instant.
+// - `inviteState` and `redeemInvite` (callable): Invita un amico
+//   (invite.ts). A reader's code, made when they first send it; a friend's
+//   code used, on an account that is new and never held Astute+; and, once
+//   that friend has finished a first day, a week of Astute+ each, given
+//   through RevenueCat with REVENUECAT_SECRET_KEY. Without the key both
+//   answer `{ none: 'unconfigured' }` and the phones hide the invitation.
 //
 // Every call to the model (the news, the questions, the coach's notes) is
 // held to one budget, so much a month and so much a day (limits.ts), counted
 // in ai/spend-{month} and ai/spend-{day} (budget.ts): once either is spent,
-// nothing asks the model until it turns.
+// nothing asks the model until it turns. What the voice reads is held to
+// characters the same way, in listenSpend/{month} and listenSpend/{day}.
 //
 // The rules (firestore.rules) let no phone write a day, a profile,
 // Explore or the day's games' counts: what the server dealt is what the
@@ -43,7 +57,9 @@
 
 import Anthropic from '@anthropic-ai/sdk';
 import { initializeApp } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 import { FieldValue, getFirestore } from 'firebase-admin/firestore';
+import { getStorage } from 'firebase-admin/storage';
 import { defineSecret } from 'firebase-functions/params';
 import { setGlobalOptions } from 'firebase-functions/v2';
 import { HttpsError, onCall, onRequest } from 'firebase-functions/v2/https';
@@ -52,11 +68,26 @@ import { onDocumentDeleted } from 'firebase-functions/v2/firestore';
 import { logger } from 'firebase-functions';
 
 import { ALL_PER_DAY, MODEL, PER_DAY, SHARED, answer as answerAsk, askWorst, cacheKey, readAsk } from './ask.js';
-import { Bank, currentBank, dateKey, parseDate } from './bank.js';
+import { Bank, currentBank, dateKey, localDate, parseDate, shiftDate } from './bank.js';
 import { BudgetSpent, firestoreLedger, spendDay, withinBudget, type Usage } from './budget.js';
 import { coachNote, coachWorst, readCoach } from './coach.js';
 import { countPlay, readPlay } from './daily.js';
+import { backupHasADay, inviteState as invitesOf, redeem as redeemCode, storeFor, type Reader } from './invite.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
+import {
+  AHEAD_DAYS,
+  type Ahead,
+  type Shelf,
+  aheadCards,
+  configured,
+  elevenLabs,
+  firestoreCharLedger,
+  firestoreClaims,
+  listenTo,
+  makeAhead,
+  readListen,
+  storageShelf,
+} from './listen.js';
 import { NEWS_LATEST_DAYS, NEWS_MODEL, askModel, fetchText, makePaper } from './news.js';
 import { search as searchBank } from './search.js';
 import { ACTIVE_DAYS, askableDate, datesToPrepare, forgetReader, pruneReader, readPlace, readReader, serveDay, serveExplore } from './serve.js';
@@ -341,6 +372,167 @@ export const playDaily = onCall({ enforceAppCheck: false, maxInstances: 10 }, as
     throw new HttpsError('unavailable', 'Try again in a moment.');
   }
 });
+
+// ── The day's five, read aloud ───────────────────────────────────────────
+
+/** The key the cards are read aloud with, kept in Secret Manager. Without
+ * one, the deploy keeps a stand-in there (cloud-deploy.yml) and Listen says
+ * it is not configured. */
+const elevenKey = defineSecret('ELEVENLABS_API_KEY');
+
+/** The characters the voice may read, so many a month and a day (limits.ts). */
+const listenLedger = firestoreCharLedger(db);
+const listenClaims = firestoreClaims(db);
+
+/** Where the clips are kept: the project's own bucket, once it is asked for. */
+let shelf: Shelf | null = null;
+const listenShelf = (): Shelf => (shelf ??= storageShelf(db, getStorage().bucket()));
+
+export const listenCard = onCall(
+  { enforceAppCheck: false, secrets: [elevenKey], maxInstances: 10, timeoutSeconds: 60, memory: '256MiB' },
+  async (request) => {
+    const uid = request.auth?.uid;
+    if (!uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
+    const ask = readListen(request.data);
+    if (!ask) throw new HttpsError('invalid-argument', 'A card, and its day.');
+    const key = elevenKey.value();
+    if (!configured(key)) return { none: 'not-configured' };
+    const nowMs = Date.now();
+    // The reader's today, give or take a day: the free card is one a day,
+    // and a phone may not make up days to hear more.
+    if (!askableDate(ask.date, ask.tz, nowMs)) throw new HttpsError('invalid-argument', 'A day near today.');
+    const [presence, bank] = await Promise.all([db.collection('presence').doc(uid).get(), dealingBank()]);
+    // The plan as the phone last said it (presence), as askCard reads it:
+    // the cards a reader may hear in a day bound what a phone that lied
+    // could cost.
+    const plus = presence.get('plus') === true;
+    let out: Awaited<ReturnType<typeof listenTo>>;
+    try {
+      out = await listenTo(uid, plus, bank.byId.get(ask.card), ask, {
+        configured: true,
+        claims: listenClaims,
+        shelf: listenShelf(),
+        ledger: listenLedger,
+        voice: elevenLabs(key),
+        day: spendDay(nowMs),
+      });
+    } catch (e) {
+      logger.error('listen failed', { card: ask.card, error: String(e) });
+      throw new HttpsError('unavailable', 'Try again in a moment.');
+    }
+    if (out === 'plus') throw new HttpsError('permission-denied', 'Astute+ only.');
+    if (out === 'enough') throw new HttpsError('resource-exhausted', 'Enough for today.');
+    if ('none' in out && out.none !== 'nothing') {
+      // Said once in the log with its reason: a key turned away, or an
+      // account with no credit yet, is the owner's to put right.
+      logger.warn('listen not available', { card: ask.card, none: out.none, why: 'why' in out ? out.why : undefined });
+    } else {
+      logger.info('listened', { card: ask.card, plus, heard: 'question' in out });
+    }
+    return out;
+  },
+);
+
+// Twice a day, after the evening's tomorrows are dealt in Europe (nightly,
+// from 17:00 local) and after the Americas': every reader who listened in
+// the last week, their days still to come, made before they ask for them.
+// A quarter of the day's characters at most, so a reader asking on the spot
+// always finds room.
+export const listenAhead = onSchedule(
+  { schedule: '35 3,18 * * *', timeZone: 'Etc/UTC', timeoutSeconds: 540, maxInstances: 1, memory: '512MiB', secrets: [elevenKey] },
+  async () => {
+    const key = elevenKey.value();
+    if (!configured(key)) return;
+    const nowMs = Date.now();
+    const recent = await db.collection('listeners').where('at', '>=', nowMs - AHEAD_DAYS * 86_400_000).get();
+    const readers: Ahead[] = [];
+    const uids = recent.docs.map((d) => d.id);
+    for (let i = 0; i < uids.length; i += 8) {
+      await Promise.all(
+        uids.slice(i, i + 8).map(async (uid) => {
+          try {
+            const presence = await db.collection('presence').doc(uid).get();
+            const tz = typeof presence.get('tz') === 'number' ? (presence.get('tz') as number) : 0;
+            const today = localDate(nowMs, tz);
+            const days = db.collection('readers').doc(uid).collection('days');
+            const dealt = await db.getAll(days.doc(today), days.doc(shiftDate(today, 1)));
+            readers.push({
+              plus: presence.get('plus') === true,
+              days: dealt.map((d) => (Array.isArray(d.get('cards')) ? (d.get('cards') as unknown[]).filter((c): c is string => typeof c === 'string') : [])),
+            });
+          } catch (error) {
+            logger.warn('could not read a listener', { uid, error: String(error) });
+          }
+        }),
+      );
+    }
+    const bank = await dealingBank();
+    const cards = aheadCards(readers, bank);
+    const run = await makeAhead(cards, { shelf: listenShelf(), ledger: listenLedger, voice: elevenLabs(key), day: spendDay(nowMs) });
+    logger.info('listen ahead', { listeners: uids.length, cards: cards.length, ...run });
+  },
+);
+
+// ── Invita un amico ──────────────────────────────────────────────────────
+
+/** RevenueCat's secret key, kept in Secret Manager: what gives a friend's
+ * week. The deploy keeps a stand-in there until the owner adds the key
+ * (.github/workflows/cloud-deploy.yml); with it, invitations are not set up. */
+const revenuecatKey = defineSecret('REVENUECAT_SECRET_KEY');
+
+/** What an invitation needs to know of a reader beyond Firestore: when the
+ * account was made, as Firebase Auth has it, and whether their backup has a
+ * finished day. */
+const invitations: Reader = {
+  async madeAt(uid) {
+    try {
+      const made = Date.parse((await getAuth().getUser(uid)).metadata.creationTime);
+      return Number.isFinite(made) ? made : null;
+    } catch (e) {
+      if ((e as { code?: unknown }).code === 'auth/user-not-found') return null;
+      throw e;
+    }
+  },
+  readADay: (uid) => backupHasADay(db, uid),
+};
+
+export const inviteState = onCall(
+  { enforceAppCheck: false, secrets: [revenuecatKey], maxInstances: 10, memory: '256MiB' },
+  async (request) => {
+    const uid = request.auth?.uid;
+    if (!uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
+    const store = storeFor(revenuecatKey.value());
+    if (!store) return { none: 'unconfigured' };
+    const make = (request.data as { make?: unknown } | null)?.make === true;
+    try {
+      const state = await invitesOf(db, store, uid, Date.now(), invitations, make);
+      if (state.granted) logger.info('invite weeks given', { uid, until: state.until });
+      return state;
+    } catch (e) {
+      logger.error('invite state failed', { uid, error: String(e) });
+      throw new HttpsError('unavailable', 'Try again in a moment.');
+    }
+  },
+);
+
+export const redeemInvite = onCall(
+  { enforceAppCheck: false, secrets: [revenuecatKey], maxInstances: 10, memory: '256MiB' },
+  async (request) => {
+    const uid = request.auth?.uid;
+    if (!uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
+    const store = storeFor(revenuecatKey.value());
+    if (!store) return { none: 'unconfigured' };
+    const code = (request.data as { code?: unknown } | null)?.code;
+    try {
+      const out = await redeemCode(db, store, uid, code, Date.now(), invitations);
+      logger.info('invite code used', { uid, ...('refused' in out ? { refused: out.refused } : { state: out.state, granted: out.granted === true }) });
+      return out;
+    } catch (e) {
+      logger.error('invite code failed', { uid, error: String(e) });
+      throw new HttpsError('unavailable', 'Try again in a moment.');
+    }
+  },
+);
 
 // ── The pool, asked a question ───────────────────────────────────────────
 
