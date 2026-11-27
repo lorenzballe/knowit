@@ -155,8 +155,15 @@ class NewsOutlets extends StatelessWidget {
       builder: (context, box) {
         int named = names.length;
         for (; named > 1; named--) {
+          // Measured as it is drawn: inside the page's own text style,
+          // whose letter spacing the line inherits. Without it the line
+          // measured a few points short, and on a 430-point phone "+4"
+          // gave way to "…".
           final TextPainter painter = TextPainter(
-            text: line(named),
+            text: TextSpan(
+              style: DefaultTextStyle.of(context).style,
+              children: [line(named)],
+            ),
             maxLines: 1,
             textDirection: Directionality.of(context),
             textScaler: MediaQuery.textScalerOf(context),
