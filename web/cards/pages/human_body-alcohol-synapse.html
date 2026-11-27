@@ -200,7 +200,7 @@ const Turn = {
     const said = M.map((m, i) => `${m.id} ${guess[i] > 0 ? 'more' : 'less'}`).join(', ');
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${right} of 4 right`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   function tap(i) {
     if (locked) return;

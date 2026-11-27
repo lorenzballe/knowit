@@ -338,6 +338,63 @@ const Kit = (() => {
     shown = true; onEnter[card.id]?.();
   }
 
+  // What was just taken, locked in as a native card locks it (lib/widgets/pill_card.dart, _PickGroup), so a
+  // card that asks how sure before it answers still says what was taken: the option the card marked picked
+  // (class on, the one so marked in its row) gets a small press and a tick where the tick clears its words,
+  // the others in its row dim, nothing in the row takes a tap, and a light tap is felt if the card sent none.
+  // It comes with the row of how sure (on()). Once the answer is in (grade(), Kit.answer()) the row takes taps
+  // again, its look kept until the card turns or hides it; reset() undoes it all. A pick the card does not
+  // mark, a slider, a drag, a set of several is left as the card has it. From November 2026.
+  let tapped = null, tappedAt = 0, felt = -1e9, locked = null;
+  document.addEventListener('click', e => { tapped = e.target; tappedAt = performance.now(); }, true);
+  function took() {
+    if (!tapped || !card || performance.now() - tappedAt > 900 || !tapped.closest) return null;
+    const b = tapped.closest('button,[role=button],[role=radio]');
+    if (!b || !card.contains(b) || b.closest('.sure,.grade') || !b.parentElement) return null;
+    const kind = x => (x.getAttribute('class') || '').trim().split(/\s+/)[0];
+    const row = [...b.parentElement.children].filter(x => x.tagName === b.tagName && kind(x) === kind(b));
+    const marked = row.filter(x => x.classList.contains('on'));
+    return row.length > 1 && marked.length === 1 && marked[0] === b ? {b, row} : null;
+  }
+  // Room at the end of the option for the tick, clear of its words, and no ::after of the card's own there.
+  function tickFits(b) {
+    const own = getComputedStyle(b, '::after').content;
+    if (own && own !== 'none' && own !== 'normal') return false;
+    const r = b.getBoundingClientRect(), range = document.createRange(); range.selectNodeContents(b);
+    const words = range.getBoundingClientRect(), size = Math.max(14, Math.min(20, r.height * .4));
+    b.style.setProperty('--kit-tick', size + 'px');
+    return r.height >= size + 6 && r.right - words.right >= size + 16;
+  }
+  function lock() {
+    if (locked) return;
+    const t = took(); if (!t) return;
+    const {b, row} = t, moves = has() && !calm();
+    locked = row.map(x => ({x, op: x.style.opacity, pe: x.style.pointerEvents, pos: x.style.position}));
+    for (const x of row) {
+      x.style.pointerEvents = 'none';
+      if (x === b) continue;
+      if (moves) gsap.to(x, {opacity: .38, duration: .14, ease: 'power1.out', overwrite: 'auto'}); else x.style.opacity = '.38';
+    }
+    if (getComputedStyle(b).position === 'static') b.style.position = 'relative';
+    b.classList.add('kit-took'); if (tickFits(b)) b.classList.add('kit-tick');
+    const tf = b.style.transform;
+    if (moves) gsap.fromTo(b, {scale: .95}, {scale: 1, duration: .34, ease: 'back.out(3)', overwrite: 'auto', onComplete: () => { if (!tf) gsap.set(b, {clearProps: 'transform'}); }});
+    if (performance.now() - felt > 150) haptic('light');
+  }
+  // The answer is in: the row takes taps again, as the card left it, and keeps its look.
+  function freeRow() { if (locked) for (const {x, pe} of locked) x.style.pointerEvents = pe; }
+  // Undone, for a row asked again.
+  function unlock() {
+    if (!locked) return;
+    for (const {x, op, pe, pos} of locked) {
+      x.classList.remove('kit-took', 'kit-tick');
+      x.style.pointerEvents = pe; x.style.position = pos;
+      if (has()) gsap.killTweensOf(x, 'opacity');
+      x.style.opacity = op;
+    }
+    locked = null;
+  }
+
   // How sure: a row of the app's five levels under the reader's answer, off until there is an answer
   // to be sure of (on()), then the verdict in its place (grade()). From the new formats of October 2026.
   const LEVELS = [50, 60, 70, 80, 90];
@@ -358,10 +415,11 @@ const Kit = (() => {
     });
     return {
       get asks() { return asks(); },
-      on() { if (!asks()) { onPick(null); return; } host.classList.remove('off'); },
+      on() { lock(); if (!asks()) { onPick(null); return; } host.classList.remove('off'); },
       ask(q) { const e = host.querySelector('.sq'); if (e) e.textContent = q; },
-      reset: build,
+      reset() { unlock(); build(); },
       grade(ok, pct, note) {
+        freeRow();
         host.className = 'grade ' + (ok ? 'ok' : 'no');
         const verdict = note || (ok ? w.right : w.wrong);
         host.innerHTML = `<i>${ok ? MARK.yes : MARK.no}</i><span>${pct == null ? verdict : verdict + ' · ' + w.said(pct)}</span>`;
@@ -422,10 +480,10 @@ const Kit = (() => {
   // answer: {choice: what the reader said, in a few words (or the option's index on a card whose
   // kind is pickOne or debate); correct: true, false, or null where nothing is right or wrong;
   // sure: how sure they said they were, 50 to 90, or null}.
-  function answer(a) { answered = {choice: String(a.choice ?? ''), correct: a.correct ?? null, sure: a.sure ?? null}; if (bridge()) bridge().answer(answered); Kit.answered = answered; }
+  function answer(a) { freeRow(); answered = {choice: String(a.choice ?? ''), correct: a.correct ?? null, sure: a.sure ?? null}; if (bridge()) bridge().answer(answered); Kit.answered = answered; }
   const flip = () => bridge() ? bridge().flip() : (Kit.flipped = true);
   const done = () => bridge() ? bridge().done() : (Kit.finished = true);
-  const haptic = kind => bridge()?.haptic(kind || 'light');
+  const haptic = kind => { felt = performance.now(); bridge()?.haptic(kind || 'light'); };
   const open = url => bridge() ? bridge().open(url) : window.open(url, '_blank', 'noopener');
   // A file of the kit's own, as a URL this page can load: beside the kit standing alone, and in the
   // app the bytes the app put inside the page (data-kit-url, lib/widgets/web/card_kit.dart).

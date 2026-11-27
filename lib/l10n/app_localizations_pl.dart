@@ -2159,6 +2159,83 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'Gdzie chcesz widzieć jaśniej?';
+
+  @override
+  String get aimLine =>
+      'Wybierz jedno. Codziennie będą do tego karty, a zmienisz to, kiedy zechcesz.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'W tym tygodniu $n karty do tego',
+      many: 'W tym tygodniu $n kart do tego',
+      few: 'W tym tygodniu $n karty do tego',
+      one: 'W tym tygodniu 1 karta do tego',
+      zero: 'W tym tygodniu brak kart do tego',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right z $n poprawnie',
+      one: '1 z $n poprawnie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Wszystko dla tego celu';
+
+  @override
+  String get aimPlus =>
+      'Z Astute+: wszystkie ścieżki w całości i trener, który pracuje nad tym z tobą.';
+
+  @override
+  String get aimNone =>
+      'Wybierz, gdzie chcesz widzieć jaśniej: codziennie będą do tego karty.';
+
+  @override
+  String get aimPick => 'Wybierz cel';
+
+  @override
+  String get strengthsTitle => 'Twoje mocne strony';
+
+  @override
+  String get strengthsLine =>
+      'Z twoich odpowiedzi, nie z wyboru: gdzie trafiasz najczęściej, a gdzie się mylisz.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Jeszcze za mało odpowiedzi: $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return 'Ćwicz: $skill';
+  }
+
+  @override
+  String get strengthsBest => 'Twoja mocna strona';
+
+  @override
+  String get strengthsWeak => 'Gdzie mylisz się najczęściej';
+
+  @override
+  String get strengthsLocked =>
+      'Gdzie mylisz się najczęściej i cała reszta – z Astute+.';
+
+  @override
+  String get strengthsEmpty =>
+      'Jeszcze kilka odpowiedzi, a zobaczysz tu swoje mocne strony.';
+
+  @override
   String get scoreTitle => 'Wynik Astute';
 
   @override
@@ -3097,15 +3174,23 @@ class AppLocalizationsPl extends AppLocalizations {
   String get themePuzzlesLine => 'Zagadki na długopis i minutę';
 
   @override
-  String get weekRecapCaps => 'W TYM TYGODNIU ZAPYTAŁEŚ SIEBIE';
-
-  @override
-  String get weekRecapLine => 'Pytania, które zostawiły ci twoje karty';
-
-  @override
   String weekRecapMore(int n) {
-    return 'Jeszcze $n z twojego tygodnia z Plus';
+    return 'Jeszcze $n z twojego tygodnia z Astute+';
   }
+
+  @override
+  String get weekReviewTitle => 'Powtórz tydzień';
+
+  @override
+  String get weekReviewLine =>
+      'Pytania z twoich kart z tego tygodnia. Odpowiedz na nie jeszcze raz: tak zostają w głowie.';
+
+  @override
+  String get weekReviewGo => 'Powtórz';
+
+  @override
+  String get weekReviewNone =>
+      'Karty przeczytane w tym tygodniu wracają tutaj do powtórki.';
 
   @override
   String get plusInTheApp =>
@@ -3553,9 +3638,6 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => 'Liczone od dziś';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return 'punktów obok, wcześniej $was';
   }
@@ -3574,10 +3656,21 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => 'Jeszcze żadnej odpowiedzi na 80% lub więcej';
+  String get journeyMovesTitle => 'Wyłapane chwyty';
 
   @override
-  String get journeyMovesTitle => 'Wyłapane chwyty';
+  String get journeySureEmpty => 'Pojawi się, gdy odpowiesz na 80% lub więcej.';
+
+  @override
+  String get journeyMovesEmpty =>
+      'Pojawi się, gdy wyłapiesz chwyt na dwóch kartach.';
+
+  @override
+  String get journeyMissedEmpty =>
+      'Sześć odpowiedzi w drugiej dziedzinie i jest zmierzona.';
+
+  @override
+  String get journeyFillsAsYouRead => 'Wypełnia się, gdy czytasz.';
 
   @override
   String journeyOfN(int n) {
@@ -3588,9 +3681,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String journeyNewest(String name) {
     return 'Najnowszy: $name';
   }
-
-  @override
-  String get journeyNoneYet => 'Jeszcze brak';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3701,9 +3791,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => 'jeszcze nic z datą';
-
-  @override
   String get journeyInPlace => 'Na świecie';
 
   @override
@@ -3741,9 +3828,6 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => 'Bliski Wschód';
-
-  @override
-  String get journeyNoPlace => 'jeszcze brak miejsc';
 
   @override
   String get journeyTopics => 'Wątki';
@@ -6291,6 +6375,15 @@ class AppLocalizationsPl extends AppLocalizations {
   String get yourFiveFromToday => 'Twoja dzisiejsza piątka';
 
   @override
+  String get dayMomentTitle => 'Dzień ukończony.';
+
+  @override
+  String get dayMomentLater => 'Później';
+
+  @override
+  String get yourDayCard => 'Twój dzień';
+
+  @override
   String get tuneTitle => 'Dostrój swój miks';
 
   @override
@@ -6492,10 +6585,6 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet =>
-      'Sześć odpowiedzi w dziedzinie i jest zmierzona.';
-
-  @override
   String get journeyChangedMind => 'Zmiana zdania';
 
   @override
@@ -6599,6 +6688,39 @@ class AppLocalizationsPl extends AppLocalizations {
       few: '$n przeczytane karty. Tu zaczyna się droga.',
       one: 'Jedna przeczytana karta. Tu zaczyna się droga.',
       zero: 'Twoja pierwsza karta czeka.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n przeczytanej karty',
+      many: '$n przeczytanych kart',
+      few: '$n przeczytane karty',
+      one: 'Jedna przeczytana karta',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '$week w tym tygodniu.',
+      one: 'jedna w tym tygodniu.',
+      zero: 'w tym tygodniu jeszcze żadna.',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n przeczytanej karty, wszystkie w tym tygodniu.',
+      many: '$n przeczytanych kart, wszystkie w tym tygodniu.',
+      few: '$n przeczytane karty, wszystkie w tym tygodniu.',
+      one: 'Na razie jedna przeczytana karta.',
     );
     return '$_temp0';
   }
@@ -7176,4 +7298,56 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get trialOfferFree => 'Kontynuuj za darmo';
+
+  @override
+  String get paywallStepFree => 'Wszystko za darmo';
+
+  @override
+  String get paywallStepRemind => 'Przypominamy ci';
+
+  @override
+  String get paywallChargedToday => 'Płatność dziś · Anuluj, kiedy chcesz';
+
+  @override
+  String paywallGoalTitle(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'Dla tych, którzy chcą lepiej decydować.',
+      'money': 'Dla tych, których w sprawach pieniędzy nikt nie nabierze.',
+      'people': 'Dla tych, którzy chcą rozumieć ludzi.',
+      'news': 'Dla tych, którzy nie łapią się na nagłówki.',
+      'health': 'Dla tych, którzy w sprawach zdrowia chcą dowodów.',
+      'business': 'Dla tych, którzy w pracy chcą widzieć jasno.',
+      'other': 'Dla tych, którzy chcą widzieć jasno.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallGoalMark(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'decydować.',
+      'money': 'pieniędzy',
+      'people': 'ludzi.',
+      'news': 'nagłówki.',
+      'health': 'dowodów.',
+      'business': 'jasno.',
+      'other': 'jasno.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallMadeLine(String subjects) {
+    return 'Pięć kart dziennie na twoim poziomie, z tematów: $subjects. Te, w których się mylisz, wracają, aż zostaną w głowie. I widzisz, jak się zmieniasz, tydzień po tygodniu.';
+  }
+
+  @override
+  String subjectsTwo(String a, String b) {
+    return '$a i $b';
+  }
+
+  @override
+  String subjectsThree(String a, String b, String c) {
+    return '$a, $b i $c';
+  }
 }

@@ -136,15 +136,16 @@ Duration betMotion(BuildContext context, int ms) =>
 // ── Words ────────────────────────────────────────────────────────────────
 
 /// The first lines of a card's answer, under a verdict: a number checked
-/// is a number explained, and the rest of the why is a tap away.
-String firstLines(String answer, {int max = 150}) {
+/// is a number explained, and the rest of the why is a tap away. Whole
+/// sentences, cut short at [max] characters only where one is given.
+String firstLines(String answer, {int? max = 150}) {
   final String text = answer.trim();
   final List<String> parts = text.split(
     RegExp(r'(?<=[.!?])\s+(?=[A-Z0-9"“‘(])'),
   );
   String out = parts.first;
   if (out.length < 60 && parts.length > 1) out = '$out ${parts[1]}';
-  if (out.length > max) {
+  if (max != null && out.length > max) {
     final String cut = out.substring(0, max);
     final int space = cut.lastIndexOf(' ');
     out = '${cut.substring(0, space > 0 ? space : max)}…';
@@ -616,7 +617,9 @@ class BetVerdict extends StatelessWidget {
   }
 }
 
-/// The first lines of the card's answer, under a verdict.
+/// The first lines of the card's answer, under a verdict: whole sentences,
+/// wrapped as long as they run. Cut at three lines with an ellipsis, the
+/// why stopped mid-sentence ("…then rose…"), and nothing in a game is cut.
 class BetWhy extends StatelessWidget {
   const BetWhy(this.pill, {super.key, required this.ink});
 
@@ -628,9 +631,7 @@ class BetWhy extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 6),
       child: Text(
-        firstLines(pill.answer),
-        maxLines: 3,
-        overflow: TextOverflow.ellipsis,
+        firstLines(pill.answer, max: null),
         style: AppText.body(
           size: 12,
           weight: FontWeight.w500,

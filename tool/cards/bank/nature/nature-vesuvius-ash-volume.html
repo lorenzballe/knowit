@@ -213,7 +213,7 @@ const Turn = {
     Kit.answer({choice: fmt(v), correct: ok, sure: pct});
     sure.grade(ok, pct, `${fmt(v)}, ${ok ? 'close' : v > 245e6 ? 'too big' : 'too small'}`);
     front();
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back: the least the pile could be, beside the same volcano, your cube over it ----------

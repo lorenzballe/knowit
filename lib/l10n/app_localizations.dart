@@ -2838,6 +2838,102 @@ abstract class AppLocalizations {
   /// **'{n, plural, =1{and 1 more} other{and {n} more}}'**
   String trainingMore(int n);
 
+  /// What to learn, look B (developer tools): the question at the end of the first run and on the profile, where the reader picks one aim, one of the six areas the cards name on their backs.
+  ///
+  /// In en, this message translates to:
+  /// **'Where do you want to be sharper?'**
+  String get aimTitle;
+
+  /// Under aimTitle: pick one; every day there are cards for it (Explore's shelf of it, the cards dealt for it); it can be changed at any time.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one. Every day there are cards for it, and you can change it whenever you like.'**
+  String get aimLine;
+
+  /// Look B, the reader's aim on the profile and in Your journey: how many cards of it they read in the last seven days.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No cards for it this week} =1{1 card for it this week} other{{n} cards for it this week}}'**
+  String aimWeek(int n);
+
+  /// How many of the answers given on some cards were right: 'right' right out of 'n' given. After aimWeek (look B), and beside a skill (look C).
+  ///
+  /// In en, this message translates to:
+  /// **'{right, plural, =1{1 of {n} right} other{{right} of {n} right}}'**
+  String answersRightOf(int right, int n);
+
+  /// Look B, Your journey: link under the reader's aim that opens its page (its paths, the moves it trains, more of its cards).
+  ///
+  /// In en, this message translates to:
+  /// **'Everything for this goal'**
+  String get aimOpen;
+
+  /// Look B, on the free plan, under the reader's aim on the profile beside a small Astute+ tag: what Astute+ adds for it. Opens the plans.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+: every path for it, whole, and a coach who works on it with you.'**
+  String get aimPlus;
+
+  /// Look B: where the reader's aim stands when they have not picked one: what an aim does.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick where you want to be sharper, and every day there will be cards for it.'**
+  String get aimNone;
+
+  /// Look B: button that opens the question of the reader's aim.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a goal'**
+  String get aimPick;
+
+  /// What to learn, look C (developer tools): the name of the skills read from the reader's answers, strongest first, on the profile and in Your journey. Nothing is picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you\'re strong'**
+  String get strengthsTitle;
+
+  /// Look C, Your journey: under strengthsTitle, what the ranking is: read from the reader's answers, not chosen by them.
+  ///
+  /// In en, this message translates to:
+  /// **'Read from your answers, not picked: where you get the most right, and where you slip.'**
+  String get strengthsLine;
+
+  /// Look C, Your journey: at the foot of the ranking, the skills with too few answers to rank yet. skills is their names, joined with commas.
+  ///
+  /// In en, this message translates to:
+  /// **'Too few answers yet: {skills}.'**
+  String strengthsFew(String skills);
+
+  /// Look C, Your journey: button under the ranking that opens five cards of the reader's weakest skill to answer. skill is the skill's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Practise {skill}'**
+  String strengthsPractice(String skill);
+
+  /// Look C, on the profile: small capitals over the reader's strongest skill.
+  ///
+  /// In en, this message translates to:
+  /// **'Your strong point'**
+  String get strengthsBest;
+
+  /// Look C, on the profile (Astute+): small capitals over the skill the reader gets wrong most.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you slip most'**
+  String get strengthsWeak;
+
+  /// Look C, on the profile (free plan), beside a lock under the strongest skill: the weakest skill and the whole ranking are in Your journey, with Astute+. The box opens the plans.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you slip most, and the rest, with Astute+.'**
+  String get strengthsLocked;
+
+  /// Look C: where the ranking stands before any skill has enough answers behind it.
+  ///
+  /// In en, this message translates to:
+  /// **'A few more answers, and this will show where you\'re strong.'**
+  String get strengthsEmpty;
+
   /// The reader's score in all the skills together: a number with no top, moved by every answer on a card (like a chess rating). Its name; Astute is the app's name.
   ///
   /// In en, this message translates to:
@@ -4278,23 +4374,35 @@ abstract class AppLocalizations {
   /// **'Puzzles you can solve with a pen and a minute'**
   String get themePuzzlesLine;
 
-  /// No description provided for @weekRecapCaps.
+  /// Your journey, Review the week, on the free plan: under its button, how many of the week's cards are past the first five, and the way to Astute+.
   ///
   /// In en, this message translates to:
-  /// **'THIS WEEK YOU ASKED YOURSELF'**
-  String get weekRecapCaps;
-
-  /// No description provided for @weekRecapLine.
-  ///
-  /// In en, this message translates to:
-  /// **'The questions your cards left you with'**
-  String get weekRecapLine;
-
-  /// No description provided for @weekRecapMore.
-  ///
-  /// In en, this message translates to:
-  /// **'{n} more from your week with Plus'**
+  /// **'{n, plural, =1{1 more from your week with Astute+} other{{n} more from your week with Astute+}}'**
   String weekRecapMore(int n);
+
+  /// Your journey: the name of its last chapter, set in capitals after the chapter's number. The week's cards gone over again, each card that asks asked once more.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the week'**
+  String get weekReviewTitle;
+
+  /// Your journey, Review the week: the line under the chapter's name, over two or three of the week's questions.
+  ///
+  /// In en, this message translates to:
+  /// **'The questions from your cards this week. Answer them again: that\'s how they stay.'**
+  String get weekReviewLine;
+
+  /// Your journey, Review the week: the button that plays the week's cards again, full size, from the first.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get weekReviewGo;
+
+  /// Your journey, Review the week, before any card has been read this week (Monday on).
+  ///
+  /// In en, this message translates to:
+  /// **'The cards you read this week come back here, to go over again.'**
+  String get weekReviewNone;
 
   /// No description provided for @plusInTheApp.
   ///
@@ -4830,12 +4938,6 @@ abstract class AppLocalizations {
   /// **'{m} min this week'**
   String journeyMinThisWeek(int m);
 
-  /// Under a dash: the app has started timing the cards today.
-  ///
-  /// In en, this message translates to:
-  /// **'Counted from today'**
-  String get journeyTimedFromToday;
-
   /// Beside the points off: what they were at the start.
   ///
   /// In en, this message translates to:
@@ -4860,17 +4962,35 @@ abstract class AppLocalizations {
   /// **'From {v} in {month}'**
   String journeyFromIn(String v, String month);
 
-  /// Under a dash, before any answer at 80% sure or more.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing said at 80% or more yet'**
-  String get journeySureNone;
-
   /// Tile title: the reasoning moves the reader has down.
   ///
   /// In en, this message translates to:
   /// **'Moves you can spot'**
   String get journeyMovesTitle;
+
+  /// Your journey, the tile Right when sure: in place of its figure, before any answer said 80% sure or more.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows once you answer 80% sure or more.'**
+  String get journeySureEmpty;
+
+  /// Your journey, the tile Moves you can spot: in place of its figure, before any move counts as spotted (met on two cards or more, right on at least half).
+  ///
+  /// In en, this message translates to:
+  /// **'Shows once you spot a move on two cards.'**
+  String get journeyMovesEmpty;
+
+  /// Your journey, the tile Most missed: in place of a subject, while only one subject has six answers.
+  ///
+  /// In en, this message translates to:
+  /// **'Six answers in a second subject, and it is measured.'**
+  String get journeyMissedEmpty;
+
+  /// Your journey: in place of the figure on a tile with nothing to show yet (reading time, in time, in place, topics, words).
+  ///
+  /// In en, this message translates to:
+  /// **'Fills in as you read.'**
+  String get journeyFillsAsYouRead;
 
   /// Beside the moves: out of how many there are.
   ///
@@ -4883,12 +5003,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Newest: {name}'**
   String journeyNewest(String name);
-
-  /// Under the moves, before the first.
-  ///
-  /// In en, this message translates to:
-  /// **'None yet'**
-  String get journeyNoneYet;
 
   /// Beside the big number of cards held: no number in it.
   ///
@@ -4992,12 +5106,6 @@ abstract class AppLocalizations {
   /// **'2000'**
   String get journeyEraRecent;
 
-  /// Under a dash in the In time tile.
-  ///
-  /// In en, this message translates to:
-  /// **'nothing dated yet'**
-  String get journeyNothingDated;
-
   /// Tile title: where in the world the cards read are set.
   ///
   /// In en, this message translates to:
@@ -5051,12 +5159,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'the Middle East'**
   String get journeyRegionMiddleEast;
-
-  /// Under a dash in the In place tile.
-  ///
-  /// In en, this message translates to:
-  /// **'no place yet'**
-  String get journeyNoPlace;
 
   /// Tile title: the topics inside the subjects that the reader has met.
   ///
@@ -8418,6 +8520,24 @@ abstract class AppLocalizations {
   /// **'Your five from today'**
   String get yourFiveFromToday;
 
+  /// The screen that rises once, right after the day's five are read, with the day's picture and the way to send it (tried from the developer tools): its headline. Short, plain, never a cheer.
+  ///
+  /// In en, this message translates to:
+  /// **'Day complete.'**
+  String get dayMomentTitle;
+
+  /// The screen that rises once the day's five are read: the quiet way past it, under the button that sends the day. Nothing is asked again that day.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get dayMomentLater;
+
+  /// Today, once the five are read (tried from the developer tools): the card after the five on the shelf, which shows the day's picture and sends it. Its name, over the picture, and what a screen reader says for its dot.
+  ///
+  /// In en, this message translates to:
+  /// **'Your day'**
+  String get yourDayCard;
+
   /// The screen under the topics editor, and the row that opens it: how much of each subject, and which parts of each.
   ///
   /// In en, this message translates to:
@@ -8748,12 +8868,6 @@ abstract class AppLocalizations {
   /// **'{pct} right'**
   String journeyRightShare(String pct);
 
-  /// Your journey: shown under the two subject tiles before any subject has six answers.
-  ///
-  /// In en, this message translates to:
-  /// **'Six answers in a subject, and it is measured.'**
-  String get journeySubjectsNotYet;
-
   /// Your journey: the label over how many cards changed the reader's mind, in the reader's own word on cards that ask what they did for them.
   ///
   /// In en, this message translates to:
@@ -8885,6 +8999,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =0{Your first card is waiting.} =1{One card read. The journey starts here.} other{{n} cards read. The journey starts here.}}'**
   String storyHeadlineRead(int n);
+
+  /// Your journey, This week: the headline past the reader's first day, when the week is told in cards read: every card read so far, then those first read this week (Monday on).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One card read} other{{n} cards read}}, {week, plural, =0{none yet this week.} =1{one this week.} other{{week} this week.}}'**
+  String storyHeadlineReadWeek(int n, int week);
+
+  /// Your journey, This week: the headline past the reader's first day, when every card they have read was read this week (Monday on).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One card read so far.} other{{n} cards read, all this week.}}'**
+  String storyHeadlineReadAllWeek(int n);
 
   /// Your journey as a story (the version on trial under the tiles): storySaidRight
   ///
@@ -9629,6 +9755,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue for free'**
   String get trialOfferFree;
+
+  /// A prototype of the paywall (developer tools only, for now): the free trial as a short timeline over the button, three stops on one line. Under the first stop, 'Today': everything Astute+ adds opens, and nothing is paid. Two or three words: it sits in a third of the screen's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything, free'**
+  String get paywallStepFree;
+
+  /// On that timeline, under the date of the second stop: the app sends the reader a notification before the trial ends. Two or three words: it sits in a third of the screen's width.
+  ///
+  /// In en, this message translates to:
+  /// **'We remind you'**
+  String get paywallStepRemind;
+
+  /// In that prototype, in the timeline's place when the plan picked starts with no free days (the month, or a reader the store gives no trial to): the plan is charged today, and it can be cancelled at any time. One short line; the price is on the button beside it.
+  ///
+  /// In en, this message translates to:
+  /// **'Charged today · Cancel any time'**
+  String get paywallChargedToday;
+
+  /// A prototype of the paywall's headline that opens on what the reader said they want to get better at (their area of life, lib/data/goals.dart): 'for people who want to …'. Calm, plain, no price and no number. paywallGoalMark must appear in it word for word: that part is painted in the paywall's three colours.
+  ///
+  /// In en, this message translates to:
+  /// **'{goal, select, decide{For people who want to decide better.} money{For people who see through a deal.} people{For people who want to read people.} news{For people who don’t fall for headlines.} health{For people who check the evidence on health.} business{For people who want to see clearly at work.} other{For people who want to see clearly.}}'**
+  String paywallGoalTitle(String goal);
+
+  /// The part of paywallGoalTitle painted in the three colours, for the same goal: the words it leans on, with the full stop when the title ends on them. It must be copied from paywallGoalTitle exactly.
+  ///
+  /// In en, this message translates to:
+  /// **'{goal, select, decide{better.} money{deal.} people{people.} news{headlines.} health{health.} business{work.} other{clearly.}}'**
+  String paywallGoalMark(String goal);
+
+  /// Under that headline: the paywall's usual line, naming the subjects the reader leaned towards when they set their mix ({subjects} is two or three subject names already joined by subjectsTwo or subjectsThree). Five cards a day at their level, the ones they miss come back, and they see themselves change.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards a day from {subjects}, at your level. The ones you miss come back until they stick. And you see yourself change, week by week.'**
+  String paywallMadeLine(String subjects);
+
+  /// Two subject names joined, as they are read inside a sentence: 'Psychology and Economics'.
+  ///
+  /// In en, this message translates to:
+  /// **'{a} and {b}'**
+  String subjectsTwo(String a, String b);
+
+  /// Three subject names joined, as they are read inside a sentence: 'Psychology, Economics and Science'.
+  ///
+  /// In en, this message translates to:
+  /// **'{a}, {b} and {c}'**
+  String subjectsThree(String a, String b, String c);
 }
 
 class _AppLocalizationsDelegate

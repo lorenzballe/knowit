@@ -1993,6 +1993,73 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => '你想在哪些方面看得更清楚？';
+
+  @override
+  String get aimLine => '选一个。每天都有为它准备的卡片，随时可以更改。';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '本周这方面的卡片：$n 张',
+      zero: '本周还没有这方面的卡片',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$n 题答对 $right 题',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => '这个目标的全部内容';
+
+  @override
+  String get aimPlus => '有了 Astute+：这方面的全部路径完整开放，还有一位陪你练习的教练。';
+
+  @override
+  String get aimNone => '选出你想看得更清楚的方面：每天都有为它准备的卡片。';
+
+  @override
+  String get aimPick => '选择目标';
+
+  @override
+  String get strengthsTitle => '你的强项';
+
+  @override
+  String get strengthsLine => '不是你选的，而是从你的回答中看出：你在哪里答对最多，在哪里出错。';
+
+  @override
+  String strengthsFew(String skills) {
+    return '回答还太少：$skills';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return '练习：$skill';
+  }
+
+  @override
+  String get strengthsBest => '你最强的一项';
+
+  @override
+  String get strengthsWeak => '你最常出错的地方';
+
+  @override
+  String get strengthsLocked => '你最常出错的地方和其余内容，需要 Astute+。';
+
+  @override
+  String get strengthsEmpty => '再多答几题，这里就会显示你的强项。';
+
+  @override
   String get scoreTitle => 'Astute 分数';
 
   @override
@@ -2885,15 +2952,21 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themePuzzlesLine => '一支笔一分钟就能解的谜';
 
   @override
-  String get weekRecapCaps => '这周你问过自己';
-
-  @override
-  String get weekRecapLine => '你的卡片留给你的问题';
-
-  @override
   String weekRecapMore(int n) {
-    return '用 Plus 再看本周 $n 条';
+    return '用 Astute+ 再看本周 $n 张';
   }
+
+  @override
+  String get weekReviewTitle => '复习本周';
+
+  @override
+  String get weekReviewLine => '本周卡片里的问题。再答一遍：这样才能记住。';
+
+  @override
+  String get weekReviewGo => '复习';
+
+  @override
+  String get weekReviewNone => '本周读过的卡片会回到这里，供你复习。';
 
   @override
   String get plusInTheApp =>
@@ -3297,9 +3370,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => '从今天开始计时';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return '分偏差，起初 $was';
   }
@@ -3318,10 +3388,19 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => '还没有 80% 及以上的回答';
+  String get journeyMovesTitle => '能识破的套路';
 
   @override
-  String get journeyMovesTitle => '能识破的套路';
+  String get journeySureEmpty => '当你以 80% 及以上的把握作答后显示。';
+
+  @override
+  String get journeyMovesEmpty => '在两张卡片上识破同一个套路后显示。';
+
+  @override
+  String get journeyMissedEmpty => '第二个科目答满六题即可测出。';
+
+  @override
+  String get journeyFillsAsYouRead => '读得越多，这里越满。';
 
   @override
   String journeyOfN(int n) {
@@ -3332,9 +3411,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String journeyNewest(String name) {
     return '最新：$name';
   }
-
-  @override
-  String get journeyNoneYet => '还没有';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3420,9 +3496,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => '还没有带年代的卡片';
-
-  @override
   String get journeyInPlace => '地域';
 
   @override
@@ -3457,9 +3530,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => '中东';
-
-  @override
-  String get journeyNoPlace => '还没有地点';
 
   @override
   String get journeyTopics => '话题';
@@ -5813,6 +5883,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yourFiveFromToday => '你今天的五张卡片';
 
   @override
+  String get dayMomentTitle => '今天的五张，完成。';
+
+  @override
+  String get dayMomentLater => '稍后';
+
+  @override
+  String get yourDayCard => '你的一天';
+
+  @override
   String get tuneTitle => '调整你的组合';
 
   @override
@@ -6000,9 +6079,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet => '一个科目答满六题即可测出。';
-
-  @override
   String get journeyChangedMind => '改变了看法';
 
   @override
@@ -6102,6 +6178,28 @@ class AppLocalizationsZh extends AppLocalizations {
       locale: localeName,
       other: '已读 $n 张卡片。旅程从这里开始。',
       zero: '你的第一张卡片在等你。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '已读 $n 张卡片，本周 $week 张。',
+      zero: '已读 $n 张卡片，本周还没有。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已读 $n 张卡片，全在本周。',
+      one: '目前已读 1 张卡片。',
     );
     return '$_temp0';
   }
@@ -6626,4 +6724,56 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get trialOfferFree => '继续免费使用';
+
+  @override
+  String get paywallStepFree => '全部免费';
+
+  @override
+  String get paywallStepRemind => '我们会提醒你';
+
+  @override
+  String get paywallChargedToday => '今天扣款 · 随时可取消';
+
+  @override
+  String paywallGoalTitle(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': '给想做出更好决定的人。',
+      'money': '给在钱上不被忽悠的人。',
+      'people': '给想读懂人的人。',
+      'news': '给不被标题骗到的人。',
+      'health': '给在健康上要证据的人。',
+      'business': '给想在工作中看清楚的人。',
+      'other': '给想看清楚的人。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallGoalMark(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': '更好决定',
+      'money': '在钱上',
+      'people': '读懂人',
+      'news': '标题',
+      'health': '证据',
+      'business': '看清楚',
+      'other': '看清楚',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallMadeLine(String subjects) {
+    return '每天五张，来自$subjects，匹配你的水平。答错的会一再回来，直到你记住。你还会看到自己一周一周地变化。';
+  }
+
+  @override
+  String subjectsTwo(String a, String b) {
+    return '$a和$b';
+  }
+
+  @override
+  String subjectsThree(String a, String b, String c) {
+    return '$a、$b和$c';
+  }
 }

@@ -167,7 +167,7 @@ const Turn = {
     const ok = guess >= KEEP;
     Kit.answer({choice: verdict(), correct: ok, sure: pct});
     sure.grade(ok, pct, verdict());
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back: same frame, the staircase so far and where it goes ----------

@@ -11,6 +11,9 @@ class FlipCard extends StatefulWidget {
   final Widget back;
   final Duration duration;
 
+  /// Told each time a turn has ended, either way.
+  final VoidCallback? onTurned;
+
   const FlipCard({
     super.key,
     required this.showBack,
@@ -19,6 +22,7 @@ class FlipCard extends StatefulWidget {
     // Four hundred and sixty was a card turning over at its leisure. The
     // gesture is a tap: the answer should arrive with it, not after it.
     this.duration = const Duration(milliseconds: 300),
+    this.onTurned,
   });
 
   @override
@@ -37,6 +41,17 @@ class _FlipCardState extends State<FlipCard>
     parent: _controller,
     curve: Curves.easeInOutCubic,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed ||
+          status == AnimationStatus.dismissed) {
+        widget.onTurned?.call();
+      }
+    });
+  }
 
   @override
   void didUpdateWidget(covariant FlipCard old) {

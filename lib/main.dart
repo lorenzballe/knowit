@@ -32,6 +32,7 @@ import 'screens/mix_screen.dart';
 import 'screens/paywall_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
+import 'state/debug_looks.dart' show LearnLook;
 import 'sync/account.dart';
 import 'sync/place_finder.dart';
 import 'sync/push.dart';
@@ -59,6 +60,7 @@ import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
 import 'widgets/hand_glass.dart';
 import 'widgets/tab_zoom.dart';
+import 'widgets/learn_looks.dart' show AimScreen, learnLook;
 
 Future<void> main() async {
   Analytics.launched();
@@ -1281,6 +1283,23 @@ class _AstutoRootState extends State<AstutoRoot> {
   /// already the reader's, not put today, the store's year on sale with
   /// free days for this reader), one real card comes first, and the offer
   /// after it.
+  /// The first run's end, after one more question in What to learn's look
+  /// B, as the developer tools try it (lib/widgets/learn_looks.dart): where
+  /// the reader wants to be sharper, one aim, or Skip. Laid over the first
+  /// run rather than made a step of it, so the funnel's steps are as they
+  /// were.
+  Future<void> _endOnboardingAsked() async {
+    if (learnLook == LearnLook.aim) {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => AimScreen(app: _app, firstRun: true),
+        ),
+      );
+      if (!mounted) return;
+    }
+    await _endOnboarding();
+  }
+
   Future<void> _endOnboarding() async {
     final Pill? card = trialOfferDue(_app) ? _app.firstRunCard : null;
     if (card == null) return _finishOnboarding();
@@ -1375,7 +1394,7 @@ class _AstutoRootState extends State<AstutoRoot> {
           // first day: there is nothing to narrow in a mix nobody set.
           onSkip: () {
             _noteSkipped(_Stage.subjects);
-            _endOnboarding();
+            _endOnboardingAsked();
           },
         );
 
@@ -1391,11 +1410,11 @@ class _AstutoRootState extends State<AstutoRoot> {
           app: _app,
           onDone: (genresOff, strandsOff) async {
             await _app.setGenresOff(genresOff, strandsOff);
-            if (mounted) await _endOnboarding();
+            if (mounted) await _endOnboardingAsked();
           },
           onSkip: () {
             _noteSkipped(_Stage.genres);
-            _endOnboarding();
+            _endOnboardingAsked();
           },
         );
 

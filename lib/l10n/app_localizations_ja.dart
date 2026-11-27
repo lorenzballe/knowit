@@ -2000,6 +2000,73 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'どこでもっと見抜けるようになりたい？';
+
+  @override
+  String get aimLine => 'ひとつ選んでください。毎日そのためのカードがあり、いつでも変えられます。';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今週このためのカード $n 枚',
+      zero: '今週はこのためのカードなし',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$n 問中 $right 問正解',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'この目標のためのすべて';
+
+  @override
+  String get aimPlus => 'Astute+ なら：このテーマのパスをすべて最後まで、そして一緒に取り組むコーチ。';
+
+  @override
+  String get aimNone => 'どこでもっと見抜けるようになりたいか選ぶと、毎日そのためのカードが届きます。';
+
+  @override
+  String get aimPick => '目標を選ぶ';
+
+  @override
+  String get strengthsTitle => 'あなたの得意分野';
+
+  @override
+  String get strengthsLine => '選んだものではなく、あなたの答えから：どこでよく正解し、どこでつまずくか。';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'まだ答えが少ないもの：$skills';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return '$skillを練習する';
+  }
+
+  @override
+  String get strengthsBest => 'あなたの強み';
+
+  @override
+  String get strengthsWeak => 'いちばんつまずくところ';
+
+  @override
+  String get strengthsLocked => 'いちばんつまずくところと、残りのすべては Astute+ で。';
+
+  @override
+  String get strengthsEmpty => 'あと少し答えると、ここに得意分野が表示されます。';
+
+  @override
   String get scoreTitle => 'Astuteスコア';
 
   @override
@@ -2887,15 +2954,21 @@ class AppLocalizationsJa extends AppLocalizations {
   String get themePuzzlesLine => 'ペンと1分で解ける謎';
 
   @override
-  String get weekRecapCaps => '今週あなたが自分に問いかけたこと';
-
-  @override
-  String get weekRecapLine => 'カードが残してくれた問い';
-
-  @override
   String weekRecapMore(int n) {
-    return 'Plusで今週のあと$n件';
+    return 'Astute+で今週のカードをあと$n枚';
   }
+
+  @override
+  String get weekReviewTitle => '今週の復習';
+
+  @override
+  String get weekReviewLine => '今週のカードの問いです。もう一度答えてみましょう。そうして記憶に残ります。';
+
+  @override
+  String get weekReviewGo => '復習する';
+
+  @override
+  String get weekReviewNone => '今週読んだカードは、ここで復習できます。';
 
   @override
   String get plusInTheApp =>
@@ -3296,9 +3369,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => '今日から計測';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return 'ポイントのずれ、最初は$was';
   }
@@ -3317,10 +3387,19 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => '80%以上の回答はまだなし';
+  String get journeyMovesTitle => '見抜ける型';
 
   @override
-  String get journeyMovesTitle => '見抜ける型';
+  String get journeySureEmpty => '80%以上の確信で答えると表示されます。';
+
+  @override
+  String get journeyMovesEmpty => '2枚のカードで型を見抜くと表示されます。';
+
+  @override
+  String get journeyMissedEmpty => '2つ目の分野で6回答えると測れます。';
+
+  @override
+  String get journeyFillsAsYouRead => '読むほどに埋まっていきます。';
 
   @override
   String journeyOfN(int n) {
@@ -3331,9 +3410,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String journeyNewest(String name) {
     return '最新：$name';
   }
-
-  @override
-  String get journeyNoneYet => 'まだありません';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3419,9 +3495,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => '年代のわかるカードはまだなし';
-
-  @override
   String get journeyInPlace => '地域';
 
   @override
@@ -3452,9 +3525,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => '中東';
-
-  @override
-  String get journeyNoPlace => 'まだ場所なし';
 
   @override
   String get journeyTopics => 'トピック';
@@ -5820,6 +5890,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get yourFiveFromToday => '今日のあなたの5枚';
 
   @override
+  String get dayMomentTitle => '今日の5枚、完了。';
+
+  @override
+  String get dayMomentLater => 'あとで';
+
+  @override
+  String get yourDayCard => 'あなたの今日';
+
+  @override
   String get tuneTitle => 'ミックスを調整';
 
   @override
@@ -6009,9 +6088,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet => '1つの分野で6回答えると測れます。';
-
-  @override
   String get journeyChangedMind => '考えが変わった';
 
   @override
@@ -6112,6 +6188,28 @@ class AppLocalizationsJa extends AppLocalizations {
       locale: localeName,
       other: '$n枚のカードを読みました。ここから始まります。',
       zero: '最初のカードが待っています。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: 'これまでに$n枚、今週は$week枚読みました。',
+      zero: 'これまでに$n枚読みました。今週はまだです。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n枚読みました。すべて今週です。',
+      one: 'これまでに1枚読みました。',
     );
     return '$_temp0';
   }
@@ -6628,4 +6726,56 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get trialOfferFree => '無料で続ける';
+
+  @override
+  String get paywallStepFree => 'すべて無料';
+
+  @override
+  String get paywallStepRemind => 'お知らせします';
+
+  @override
+  String get paywallChargedToday => '本日請求 · いつでもキャンセル可能';
+
+  @override
+  String paywallGoalTitle(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'もっと良い決断をしたい人へ。',
+      'money': 'お金でだまされたくない人へ。',
+      'people': '人を理解したい人へ。',
+      'news': '見出しにだまされない人へ。',
+      'health': '健康について根拠を求める人へ。',
+      'business': '仕事で物事をはっきり見たい人へ。',
+      'other': '物事をはっきり見たい人へ。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallGoalMark(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': '良い決断',
+      'money': 'お金',
+      'people': '人を理解',
+      'news': '見出し',
+      'health': '根拠',
+      'business': 'はっきり',
+      'other': 'はっきり',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallMadeLine(String subjects) {
+    return '$subjectsから、あなたのレベルで毎日5枚。間違えたカードは、身につくまで戻ってきます。そして、週ごとに自分の変化が見えます。';
+  }
+
+  @override
+  String subjectsTwo(String a, String b) {
+    return '$aと$b';
+  }
+
+  @override
+  String subjectsThree(String a, String b, String c) {
+    return '$a、$b、$c';
+  }
 }

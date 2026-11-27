@@ -1893,6 +1893,67 @@ class RemoteLocalizations extends AppLocalizations {
       _base.trainingMore(n);
 
   @override
+  String get aimTitle => _words.text('aimTitle') ?? _base.aimTitle;
+
+  @override
+  String get aimLine => _words.text('aimLine') ?? _base.aimLine;
+
+  @override
+  String aimWeek(int n) =>
+      _words.format('aimWeek', localeName, {'n': n}) ?? _base.aimWeek(n);
+
+  @override
+  String answersRightOf(int right, int n) =>
+      _words.format('answersRightOf', localeName, {'right': right, 'n': n}) ??
+      _base.answersRightOf(right, n);
+
+  @override
+  String get aimOpen => _words.text('aimOpen') ?? _base.aimOpen;
+
+  @override
+  String get aimPlus => _words.text('aimPlus') ?? _base.aimPlus;
+
+  @override
+  String get aimNone => _words.text('aimNone') ?? _base.aimNone;
+
+  @override
+  String get aimPick => _words.text('aimPick') ?? _base.aimPick;
+
+  @override
+  String get strengthsTitle =>
+      _words.text('strengthsTitle') ?? _base.strengthsTitle;
+
+  @override
+  String get strengthsLine =>
+      _words.text('strengthsLine') ?? _base.strengthsLine;
+
+  @override
+  String strengthsFew(String skills) =>
+      _words.format('strengthsFew', localeName, {'skills': skills}) ??
+      _base.strengthsFew(skills);
+
+  @override
+  String strengthsPractice(String skill) =>
+      _words.format('strengthsPractice', localeName, {'skill': skill}) ??
+      _base.strengthsPractice(skill);
+
+  @override
+  String get strengthsBest =>
+      _words.text('strengthsBest') ?? _base.strengthsBest;
+
+  @override
+  String get strengthsWeak =>
+      _words.text('strengthsWeak') ?? _base.strengthsWeak;
+
+  @override
+  String get strengthsLocked =>
+      _words.text('strengthsLocked') ?? _base.strengthsLocked;
+
+  @override
+  String get strengthsEmpty =>
+      _words.text('strengthsEmpty') ?? _base.strengthsEmpty;
+
+  @override
   String get scoreTitle => _words.text('scoreTitle') ?? _base.scoreTitle;
 
   @override
@@ -2850,17 +2911,24 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('themePuzzlesLine') ?? _base.themePuzzlesLine;
 
   @override
-  String get weekRecapCaps =>
-      _words.text('weekRecapCaps') ?? _base.weekRecapCaps;
-
-  @override
-  String get weekRecapLine =>
-      _words.text('weekRecapLine') ?? _base.weekRecapLine;
-
-  @override
   String weekRecapMore(int n) =>
       _words.format('weekRecapMore', localeName, {'n': n}) ??
       _base.weekRecapMore(n);
+
+  @override
+  String get weekReviewTitle =>
+      _words.text('weekReviewTitle') ?? _base.weekReviewTitle;
+
+  @override
+  String get weekReviewLine =>
+      _words.text('weekReviewLine') ?? _base.weekReviewLine;
+
+  @override
+  String get weekReviewGo => _words.text('weekReviewGo') ?? _base.weekReviewGo;
+
+  @override
+  String get weekReviewNone =>
+      _words.text('weekReviewNone') ?? _base.weekReviewNone;
 
   @override
   String get plusInTheApp => _words.text('plusInTheApp') ?? _base.plusInTheApp;
@@ -3249,10 +3317,6 @@ class RemoteLocalizations extends AppLocalizations {
       _base.journeyMinThisWeek(m);
 
   @override
-  String get journeyTimedFromToday =>
-      _words.text('journeyTimedFromToday') ?? _base.journeyTimedFromToday;
-
-  @override
   String journeyPointsOffFrom(int was) =>
       _words.format('journeyPointsOffFrom', localeName, {'was': was}) ??
       _base.journeyPointsOffFrom(was);
@@ -3272,12 +3336,24 @@ class RemoteLocalizations extends AppLocalizations {
       _base.journeyFromIn(v, month);
 
   @override
-  String get journeySureNone =>
-      _words.text('journeySureNone') ?? _base.journeySureNone;
-
-  @override
   String get journeyMovesTitle =>
       _words.text('journeyMovesTitle') ?? _base.journeyMovesTitle;
+
+  @override
+  String get journeySureEmpty =>
+      _words.text('journeySureEmpty') ?? _base.journeySureEmpty;
+
+  @override
+  String get journeyMovesEmpty =>
+      _words.text('journeyMovesEmpty') ?? _base.journeyMovesEmpty;
+
+  @override
+  String get journeyMissedEmpty =>
+      _words.text('journeyMissedEmpty') ?? _base.journeyMissedEmpty;
+
+  @override
+  String get journeyFillsAsYouRead =>
+      _words.text('journeyFillsAsYouRead') ?? _base.journeyFillsAsYouRead;
 
   @override
   String journeyOfN(int n) =>
@@ -3287,10 +3363,6 @@ class RemoteLocalizations extends AppLocalizations {
   String journeyNewest(String name) =>
       _words.format('journeyNewest', localeName, {'name': name}) ??
       _base.journeyNewest(name);
-
-  @override
-  String get journeyNoneYet =>
-      _words.text('journeyNoneYet') ?? _base.journeyNoneYet;
 
   @override
   String journeyStillWithYou(int n) =>
@@ -3380,10 +3452,6 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('journeyEraRecent') ?? _base.journeyEraRecent;
 
   @override
-  String get journeyNothingDated =>
-      _words.text('journeyNothingDated') ?? _base.journeyNothingDated;
-
-  @override
   String get journeyInPlace =>
       _words.text('journeyInPlace') ?? _base.journeyInPlace;
 
@@ -3420,10 +3488,6 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get journeyRegionMiddleEast =>
       _words.text('journeyRegionMiddleEast') ?? _base.journeyRegionMiddleEast;
-
-  @override
-  String get journeyNoPlace =>
-      _words.text('journeyNoPlace') ?? _base.journeyNoPlace;
 
   @override
   String get journeyTopics =>
@@ -5747,6 +5811,17 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('yourFiveFromToday') ?? _base.yourFiveFromToday;
 
   @override
+  String get dayMomentTitle =>
+      _words.text('dayMomentTitle') ?? _base.dayMomentTitle;
+
+  @override
+  String get dayMomentLater =>
+      _words.text('dayMomentLater') ?? _base.dayMomentLater;
+
+  @override
+  String get yourDayCard => _words.text('yourDayCard') ?? _base.yourDayCard;
+
+  @override
   String get tuneTitle => _words.text('tuneTitle') ?? _base.tuneTitle;
 
   @override
@@ -5957,10 +6032,6 @@ class RemoteLocalizations extends AppLocalizations {
       _base.journeyRightShare(pct);
 
   @override
-  String get journeySubjectsNotYet =>
-      _words.text('journeySubjectsNotYet') ?? _base.journeySubjectsNotYet;
-
-  @override
   String get journeyChangedMind =>
       _words.text('journeyChangedMind') ?? _base.journeyChangedMind;
 
@@ -6051,6 +6122,19 @@ class RemoteLocalizations extends AppLocalizations {
   String storyHeadlineRead(int n) =>
       _words.format('storyHeadlineRead', localeName, {'n': n}) ??
       _base.storyHeadlineRead(n);
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) =>
+      _words.format('storyHeadlineReadWeek', localeName, {
+        'n': n,
+        'week': week,
+      }) ??
+      _base.storyHeadlineReadWeek(n, week);
+
+  @override
+  String storyHeadlineReadAllWeek(int n) =>
+      _words.format('storyHeadlineReadAllWeek', localeName, {'n': n}) ??
+      _base.storyHeadlineReadAllWeek(n);
 
   @override
   String storySaidRight(String sure, String right) =>
@@ -6551,4 +6635,41 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get trialOfferFree =>
       _words.text('trialOfferFree') ?? _base.trialOfferFree;
+
+  @override
+  String get paywallStepFree =>
+      _words.text('paywallStepFree') ?? _base.paywallStepFree;
+
+  @override
+  String get paywallStepRemind =>
+      _words.text('paywallStepRemind') ?? _base.paywallStepRemind;
+
+  @override
+  String get paywallChargedToday =>
+      _words.text('paywallChargedToday') ?? _base.paywallChargedToday;
+
+  @override
+  String paywallGoalTitle(String goal) =>
+      _words.format('paywallGoalTitle', localeName, {'goal': goal}) ??
+      _base.paywallGoalTitle(goal);
+
+  @override
+  String paywallGoalMark(String goal) =>
+      _words.format('paywallGoalMark', localeName, {'goal': goal}) ??
+      _base.paywallGoalMark(goal);
+
+  @override
+  String paywallMadeLine(String subjects) =>
+      _words.format('paywallMadeLine', localeName, {'subjects': subjects}) ??
+      _base.paywallMadeLine(subjects);
+
+  @override
+  String subjectsTwo(String a, String b) =>
+      _words.format('subjectsTwo', localeName, {'a': a, 'b': b}) ??
+      _base.subjectsTwo(a, b);
+
+  @override
+  String subjectsThree(String a, String b, String c) =>
+      _words.format('subjectsThree', localeName, {'a': a, 'b': b, 'c': c}) ??
+      _base.subjectsThree(a, b, c);
 }

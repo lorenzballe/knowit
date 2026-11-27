@@ -163,7 +163,7 @@ const Turn = {
     const ok = hrs >= 48, s = said(hrs);
     Kit.answer({choice: s, correct: ok, sure: v});
     sure.grade(ok, v, `${s}, ${ok ? 'right' : 'too soon'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   sure.on();
 

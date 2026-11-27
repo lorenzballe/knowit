@@ -1,7 +1,7 @@
 {
  "format": 1,
- "version": 202611260026,
- "built": "2026-11-26T00:26:11Z",
+ "version": 202611270212,
+ "built": "2026-11-27T02:12:50Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -235200,7 +235200,8 @@
   "484": "thinking-z14",
   "485": "thinking-7",
   "486": "thinking-4",
-  "487": "thinking-z11"
+  "487": "thinking-z11",
+  "488": "thinking-book-the-black-swan-3"
  },
  "commons": {
   "1": [
@@ -239924,6 +239925,12 @@
    "pop_culture-brand-loyalty-3",
    "weird_facts-book-a-short-history-of-nearly-everything-1",
    "art-myths-about-genius-1"
+  ],
+  "488": [
+   "medicine-questions-to-ask-1",
+   "music-hearing-4",
+   "food-future-food-1",
+   "thinking-book-the-black-swan-4"
   ]
  }
 }

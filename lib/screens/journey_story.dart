@@ -17,6 +17,8 @@ class StoryHeadline {
   const StoryHeadline(
     this.kind, {
     this.n = 0,
+    this.week = 0,
+    this.firstDay = false,
     this.better,
     this.subject,
     this.share = 0,
@@ -26,6 +28,13 @@ class StoryHeadline {
 
   /// Right in ten when sure; the days in a row; the cards read.
   final int n;
+
+  /// Of the cards read, those first read this week ([weekCards]).
+  final int week;
+
+  /// Whether the reader's record starts today: then the cards read are
+  /// where the journey starts, and the week has nothing to add.
+  final bool firstDay;
 
   /// Against last week, when there is a last week to say it against and the
   /// difference means something; null otherwise.
@@ -39,7 +48,10 @@ class StoryHeadline {
 /// The strongest true thing to say about the reader this week. First, how
 /// often they were right when they said they were sure, once five such
 /// answers are in, said in tens the way a person counts; then a run of days;
-/// then the subject they are strongest in; then simply what they have read.
+/// then the subject they are strongest in; then simply what they have read,
+/// and, past the first day, how much of it this week: "32 cards read, 9
+/// this week." It used to say the journey starts here to a reader with 32
+/// cards behind them.
 @visibleForTesting
 StoryHeadline storyHeadline(AppState app) {
   final DateTime monday = mondayOf(app.today);
@@ -82,7 +94,28 @@ StoryHeadline storyHeadline(AppState app) {
       share: best.share,
     );
   }
-  return StoryHeadline(StoryHeadlineKind.read, n: app.seenIds.length);
+  final JourneyRecord record = app.record;
+  return StoryHeadline(
+    StoryHeadlineKind.read,
+    n: app.seenIds.length,
+    week: weekCards(app, record).length,
+    firstDay: record.daysIn <= 1,
+  );
+}
+
+/// The cards first read this week, Monday to today, in the order they were
+/// read, wherever they were read: what the week's headline counts, and what
+/// Review the week plays again. [record] is [app]'s, where it is at hand.
+@visibleForTesting
+List<Pill> weekCards(AppState app, [JourneyRecord? record]) {
+  record ??= app.record;
+  return [
+    for (final String id in record.readBetween(
+      dateKey(record.monday),
+      record.todayKey,
+    ))
+      ?pillById(id),
+  ];
 }
 
 class _Headline extends StatelessWidget {
@@ -103,7 +136,14 @@ class _Headline extends StatelessWidget {
           _percent(context, h.share),
         ),
       ),
-      StoryHeadlineKind.read => l.storyHeadlineRead(h.n),
+      // The day the record starts, the cards read are where the journey
+      // starts; past it, every card read and how many of them this week.
+      StoryHeadlineKind.read =>
+        h.firstDay || h.n == 0
+            ? l.storyHeadlineRead(h.n)
+            : h.week >= h.n
+            ? l.storyHeadlineReadAllWeek(h.n)
+            : l.storyHeadlineReadWeek(h.n, h.week),
     };
     final String? after = switch (h.better) {
       true => l.storyBetter,

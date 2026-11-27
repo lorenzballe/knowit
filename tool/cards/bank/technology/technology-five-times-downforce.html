@@ -191,7 +191,7 @@ const Turn = {
     const ok = Math.abs(N - TRUE) <= 1;
     Kit.answer({choice: '×' + N, correct: ok, sure: pct});
     sure.grade(ok, pct, `×${N}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back: fan off and fan on, the same mouse at the same scale ----------

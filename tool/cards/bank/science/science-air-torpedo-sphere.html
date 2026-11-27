@@ -217,7 +217,7 @@ const Turn = {
     Kit.$('reply').textContent = REPLY[pick](pct);
     Kit.answer({choice: NAMES[pick], correct: ok, sure: pct});
     sure.grade(ok, pct, `${NAMES[pick]}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   svg.addEventListener('click', e => {
     const t = e.target.closest('[data-i]'); if (!t || pick >= 0) return;

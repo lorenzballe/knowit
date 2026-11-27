@@ -1606,10 +1606,10 @@ class _DailyRow extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 5),
+                            // The whole question, however many lines it
+                            // takes: nothing in the game is cut.
                             Text(
                               pill.question,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
                               style: AppText.body(
                                 size: 13.5,
                                 weight: FontWeight.w700,

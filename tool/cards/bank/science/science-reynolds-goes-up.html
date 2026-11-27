@@ -203,7 +203,7 @@ const Turn = {
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, ok ? 'Right: it turns chaotic' : 'Not quite: it turns chaotic');
     Kit.hide('say');
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   Kit.$('sure').classList.add('wait');
   Kit.$('opts').addEventListener('click', e => {

@@ -209,6 +209,11 @@ class _PillCardStackState extends State<PillCardStack>
   /// can be turned back and forth after it has been answered again.
   bool _answeredHere = false;
 
+  /// True from an answer until the card it turned has finished turning:
+  /// a tap meanwhile, a second on the level just taken, is no tap. It
+  /// turned the card straight back to its question.
+  bool _turning = false;
+
   @override
   void initState() {
     super.initState();
@@ -299,6 +304,7 @@ class _PillCardStackState extends State<PillCardStack>
       _drag = Offset.zero;
       _flipped = false;
       _answeredHere = false;
+      _turning = false;
       _upAt = DateTime.now();
       _hintTimer?.cancel();
     }
@@ -702,6 +708,7 @@ class _PillCardStackState extends State<PillCardStack>
       setState(() {
         _drag = Offset.zero;
         _flipped = false;
+        _turning = false;
       });
     }
     // The card now on top stands, face up, once the deck is built with it
@@ -807,7 +814,7 @@ class _PillCardStackState extends State<PillCardStack>
   /// puts two of them in the arena, and a still finger then wins nothing at
   /// all. It is a tap, so it is on the tap.
   void _turnOver() {
-    if (!mounted) return;
+    if (!mounted || _turning) return;
     // The card after the deck has no back.
     if (widget.index >= widget.deck.length) return;
     // A card that asks turns over when the reader commits, not on a stray
@@ -987,6 +994,7 @@ class _PillCardStackState extends State<PillCardStack>
           ? widget.trailing!
           : FlipCard(
               showBack: isTop && _flipped,
+              onTurned: isTop ? () => _turning = false : null,
               front: PillCard(
                 pill: pill,
                 flipped: false,
@@ -1036,6 +1044,7 @@ class _PillCardStackState extends State<PillCardStack>
                         setState(() {
                           _answeredHere = true;
                           _flipped = true;
+                          _turning = true;
                         });
                         _read?.turned(toBack: true);
                         _hintIn(_hintAfterBack);
