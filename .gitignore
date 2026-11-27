@@ -64,6 +64,8 @@ tool/shots/draw/
 tool/shots/gallery/
 # The reader's own screens (tool/edit_shots.dart): looked at, not kept
 tool/shots/edit/
+# The top edge of the long pages, the way back gone and come back (tool/edge_shots.dart): looked at, not kept
+tool/shots/edge/
 # The paywall on three phones (tool/paywall_shots.dart): looked at, not kept
 tool/shots/paywall/
 # The screen a purchase ends on, waiting and on yes (tool/purchase_shots.dart): looked at, not kept

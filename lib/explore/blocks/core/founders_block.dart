@@ -32,6 +32,7 @@ import '../../../legal.dart' show openLink;
 import '../../../models/pill.dart';
 import '../../../state/app_state.dart';
 import '../../../theme.dart';
+import '../../../widgets/top_edge.dart' show SoftTop;
 import '../../../widgets/ui.dart' show BackCircle;
 import '../../explore_block.dart';
 import 'books_block.dart';
@@ -531,96 +532,98 @@ class FounderScreen extends StatelessWidget {
       ),
       body: ListenableBuilder(
         listenable: app,
-        builder: (context, _) => ListView(
-          key: ValueKey('founder-page-${f.id}'),
-          padding: EdgeInsets.fromLTRB(
-            20,
-            4,
-            20,
-            MediaQuery.paddingOf(context).bottom + 28,
-          ),
-          children: [
-            Center(child: FounderFace(founder: f, size: 112)),
-            const SizedBox(height: 18),
-            Semantics(
-              header: true,
-              child: Text(
-                f.name,
-                textAlign: TextAlign.center,
-                style: AppText.display(
-                  size: 30,
-                  weight: FontWeight.w600,
-                  height: 1.1,
-                  spacing: -0.7,
-                  color: p.ink,
-                ),
-              ),
+        builder: (context, _) => SoftTop(
+          child: ListView(
+            key: ValueKey('founder-page-${f.id}'),
+            padding: EdgeInsets.fromLTRB(
+              20,
+              4,
+              20,
+              MediaQuery.paddingOf(context).bottom + 28,
             ),
-            const SizedBox(height: 6),
-            Text(
-              l.roleOf(f),
-              textAlign: TextAlign.center,
-              style: AppText.body(size: 15, height: 1.35, color: p.inkMuted),
-            ),
-            const SizedBox(height: 12),
-            // How much there is to read: the books, and their ideas.
-            Text(
-              '${l.founderBookCount(shelf.books.length)} · ${l.bookIdeas(ideas)}',
-              key: const ValueKey('founder-count'),
-              textAlign: TextAlign.center,
-              style: AppText.body(
-                size: 13.5,
-                weight: FontWeight.w700,
-                color: p.ink.withValues(alpha: 0.55),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Text(
-                l.founderTheirBooks.toUpperCase(),
-                style: AppText.body(
-                  size: 11,
-                  weight: FontWeight.w800,
-                  spacing: 1.3,
-                  color: p.ink.withValues(alpha: 0.5),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            for (final (BookPick pick, CardBook book) in shelf.books)
-              FounderPickCard(
-                key: ValueKey('founder-book-${book.id}'),
-                app: app,
-                book: book,
-                pick: pick,
-                weekly: weekly,
-                who: f,
-                from: 'founder',
-              ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Recommended in public, not to Astute: nothing on the
-                  // page reads as their word for the app.
-                  Text(
-                    l.founderAbout(f.name),
-                    key: const ValueKey('founder-about'),
-                    style: AppText.body(
-                      size: 12.5,
-                      height: 1.4,
-                      color: p.inkMuted,
-                    ),
+            children: [
+              Center(child: FounderFace(founder: f, size: 112)),
+              const SizedBox(height: 18),
+              Semantics(
+                header: true,
+                child: Text(
+                  f.name,
+                  textAlign: TextAlign.center,
+                  style: AppText.display(
+                    size: 30,
+                    weight: FontWeight.w600,
+                    height: 1.1,
+                    spacing: -0.7,
+                    color: p.ink,
                   ),
-                  const SizedBox(height: 8),
-                  FounderPhotoCredit(founder: f),
-                ],
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 6),
+              Text(
+                l.roleOf(f),
+                textAlign: TextAlign.center,
+                style: AppText.body(size: 15, height: 1.35, color: p.inkMuted),
+              ),
+              const SizedBox(height: 12),
+              // How much there is to read: the books, and their ideas.
+              Text(
+                '${l.founderBookCount(shelf.books.length)} · ${l.bookIdeas(ideas)}',
+                key: const ValueKey('founder-count'),
+                textAlign: TextAlign.center,
+                style: AppText.body(
+                  size: 13.5,
+                  weight: FontWeight.w700,
+                  color: p.ink.withValues(alpha: 0.55),
+                ),
+              ),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Text(
+                  l.founderTheirBooks.toUpperCase(),
+                  style: AppText.body(
+                    size: 11,
+                    weight: FontWeight.w800,
+                    spacing: 1.3,
+                    color: p.ink.withValues(alpha: 0.5),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              for (final (BookPick pick, CardBook book) in shelf.books)
+                FounderPickCard(
+                  key: ValueKey('founder-book-${book.id}'),
+                  app: app,
+                  book: book,
+                  pick: pick,
+                  weekly: weekly,
+                  who: f,
+                  from: 'founder',
+                ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Recommended in public, not to Astute: nothing on the
+                    // page reads as their word for the app.
+                    Text(
+                      l.founderAbout(f.name),
+                      key: const ValueKey('founder-about'),
+                      style: AppText.body(
+                        size: 12.5,
+                        height: 1.4,
+                        color: p.inkMuted,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    FounderPhotoCredit(founder: f),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

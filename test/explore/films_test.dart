@@ -294,12 +294,28 @@ void main() {
     );
 
     // The card beside it opens among the feed's cards, the film not one.
-    final Finder other = find.byWidgetPredicate(
-      (w) =>
-          w.key is ValueKey<String> &&
-          (w.key! as ValueKey<String>).value.startsWith('explore-') &&
-          (w.key! as ValueKey<String>).value != 'explore-$_film',
-    );
+    // A card's tile, not the head, the search or the refresh, which carry
+    // the same prefix.
+    final Finder other = find.byWidgetPredicate((w) {
+      final Key? key = w.key;
+      if (key is! ValueKey<String>) return false;
+      final String k = key.value;
+      return k.startsWith('explore-') &&
+          k != 'explore-$_film' &&
+          PillBank.byId(k.substring('explore-'.length)) != null;
+    });
+    // Which card sits beside the film depends on the day's deal, and some
+    // days the film's band fills the screen: scroll the feed to the first
+    // card that can be touched.
+    final Finder page = find
+        .byWidgetPredicate(
+          (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+        )
+        .first;
+    for (int i = 0; i < 12 && other.hitTestable().evaluate().isEmpty; i++) {
+      await tester.drag(page, const Offset(0, -300));
+      await tester.pumpAndSettle();
+    }
     await tester.tap(other.hitTestable().first);
     await tester.pumpAndSettle();
     final DeckViewerScreen viewer = tester.widget(
@@ -307,6 +323,9 @@ void main() {
     );
     expect(_ids(viewer.deck), isNot(contains(_film)));
     tester.state<NavigatorState>(find.byType(Navigator).first).pop();
+    await tester.pumpAndSettle();
+    // Back to the top, where the film is.
+    await tester.drag(page, const Offset(0, 6000));
     await tester.pumpAndSettle();
 
     await tester.tap(film);

@@ -12,6 +12,7 @@ import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/skill_score.dart';
+import '../widgets/top_edge.dart' show SoftTop;
 import '../widgets/ui.dart' show BackCircle, ScreenView;
 
 /// What the reader wants to learn, picked from the profile, and how far they
@@ -214,7 +215,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
       ],
     );
     if (fits) return Align(alignment: Alignment.topCenter, child: page);
-    return SingleChildScrollView(child: page);
+    return SoftTop(child: SingleChildScrollView(child: page));
   }
 }
 

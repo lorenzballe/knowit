@@ -11,7 +11,6 @@ import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/fit_text.dart';
 import '../widgets/quick_return.dart';
-import '../widgets/top_edge.dart';
 import '../widgets/ui.dart';
 import 'genres_screen.dart';
 import 'mix_screen.dart';
@@ -36,13 +35,13 @@ import 'mix_screen.dart';
 /// One page, scrolled whole, the title and the way back with it, as
 /// Instagram's pages are: going down, the way back goes up and away with
 /// the page; going back up even a little, it comes straight back over it,
-/// the page fading under it there ([QuickReturn]). The button stays at the
-/// foot, as on the topics page, with the page fading into it: saving is a
-/// tap away wherever the reader is, and the way back, which keeps nothing,
-/// is never the only way off the page. The first time the parts of the
-/// subjects come to rest on screen, the first of them shows what holding
-/// one does: pressed, it opens what is inside under it, says so in a line,
-/// and folds again.
+/// the page going soft and dark under it there ([QuickReturn]). The button
+/// stays at the foot, as on the topics page, with the page fading into it:
+/// saving is a tap away wherever the reader is, and the way back, which
+/// keeps nothing, is never the only way off the page. The first time the
+/// parts of the subjects come to rest on screen, the first of them shows
+/// what holding one does: pressed, it opens what is inside under it, says
+/// so in a line, and folds again.
 class TuneScreen extends StatefulWidget {
   const TuneScreen({super.key, required this.app, required this.picked});
 
@@ -330,11 +329,11 @@ class _TuneScreenState extends State<TuneScreen>
                 children: [
                   // The way back is part of the page, as Instagram's is: it
                   // goes up and away with the page, and comes straight back
-                  // the moment the reader goes back up, the page fading under
-                  // it there; at the top it stands beside the title. On iOS 26
-                  // it is Apple's own glass button, a native view, and never
-                  // laid inside the list, where one is drawn away from its
-                  // place.
+                  // the moment the reader goes back up, the page going soft
+                  // and dark under it as it does under the status bar; at the
+                  // top it stands beside the title. On iOS 26 it is Apple's
+                  // own glass button, a native view, and never laid inside
+                  // the list, where one is drawn away from its place.
                   Positioned.fill(
                     child: QuickReturn(
                       clip: false,
@@ -494,18 +493,6 @@ class _TuneScreenState extends State<TuneScreen>
                         ),
                       ),
                     ),
-                  ),
-                  // Under the status bar, where the page runs under the time
-                  // and the battery once the way back has gone up: it goes
-                  // soft and dissolves into the page, as on Your journey, and
-                  // so does the way back on its way up.
-                  Positioned(
-                    key: const ValueKey('tune-top-edge'),
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    height: safe.top,
-                    child: IgnorePointer(child: TopEdge(ground: p.surface)),
                   ),
                 ],
               ),

@@ -1,12 +1,15 @@
 // The way back of a page that scrolls whole, as Instagram keeps its own
 // (lib/widgets/quick_return.dart): part of the page going down, straight
 // back going up, in its place at the top; still for whoever asked for less
-// motion, and always there with a screen reader on.
+// motion, and always there with a screen reader on. Under it, once it is
+// back over the page, the page goes soft and dark (lib/widgets/top_edge.dart),
+// never a band of colour.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/quick_return.dart';
+import 'package:astuto/widgets/top_edge.dart';
 
 /// A page as long as a journey under a way back and a small header, 56
 /// points tall: 8 over the ring, 4 under it. A row of its own that
@@ -21,6 +24,7 @@ Widget _host({
   int lines = 80,
   Brightness brightness = Brightness.dark,
   VoidCallback? onBack,
+  bool underStatusBar = false,
 }) => MaterialApp(
   theme: buildAstutoTheme(brightness),
   home: Builder(
@@ -29,8 +33,14 @@ Widget _host({
           .copyWith(disableAnimations: still, accessibleNavigation: reader),
       child: Scaffold(
         body: QuickReturn(
+          clip: !underStatusBar,
           header: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
+            padding: EdgeInsets.fromLTRB(
+              20,
+              underStatusBar ? 47 + 8 : 8,
+              20,
+              4,
+            ),
             child: Row(
               children: [
                 GestureDetector(
@@ -53,7 +63,7 @@ Widget _host({
                     parent: BouncingScrollPhysics(),
                   )
                 : const ClampingScrollPhysics(),
-            padding: const EdgeInsets.only(top: 56 + 12),
+            padding: EdgeInsets.only(top: (underStatusBar ? 47 : 0) + 56 + 12),
             children: [
               const SizedBox(height: 40, child: Text('Title')),
               SizedBox(
@@ -82,7 +92,7 @@ final Finder _page = find.byKey(const ValueKey('page'));
 
 /// The header's height and what it shows under it: how far it goes up to
 /// be gone.
-const double _gone = 56 + QuickReturn.shade;
+const double _away = 56 + QuickReturn.shade;
 
 ScrollPosition _scrolled(WidgetTester tester) => tester
     .state<ScrollableState>(
@@ -90,13 +100,34 @@ ScrollPosition _scrolled(WidgetTester tester) => tester
     )
     .position;
 
-double _ground(WidgetTester tester) => tester
-    .widget<Opacity>(find.byKey(const ValueKey('quick-return-ground')))
+/// How much of the deeper edge shows under the header: none while it
+/// stands in its own place, all once it is back over the page.
+double _edge(WidgetTester tester) => tester
+    .widget<TopEdge>(find.byKey(const ValueKey('quick-return-edge')))
+    .strength;
+
+/// How much of the header shows.
+double _shown(WidgetTester tester) => tester
+    .widget<Opacity>(find.byKey(const ValueKey('quick-return-header')))
     .opacity;
 
-Future<void> _phone(WidgetTester tester, Widget page) async {
+/// Out of sight: unseen, untouchable, waiting in its own place for Apple's
+/// glass, which iOS would push down if it were put back on the screen under
+/// the status bar.
+void _gone(WidgetTester tester, {Offset place = const Offset(20, 8)}) {
+  expect(_shown(tester), QuickReturn.unseen);
+  expect(tester.getTopLeft(_back), place);
+  expect(_back.hitTestable(), findsNothing);
+}
+
+Future<void> _phone(
+  WidgetTester tester,
+  Widget page, {
+  bool statusBar = false,
+}) async {
   tester.view.physicalSize = const Size(390, 844);
   tester.view.devicePixelRatio = 1;
+  if (statusBar) tester.view.padding = const FakeViewPadding(top: 47);
   addTearDown(tester.view.reset);
   await tester.pumpWidget(page);
   await tester.pumpAndSettle();
@@ -113,19 +144,18 @@ void main() {
     const Offset place = Offset(20, 8);
     expect(tester.getTopLeft(_back), place);
     expect(_back.hitTestable(), findsOneWidget);
-    expect(_ground(tester), 0);
+    expect(_edge(tester), 0);
 
     await tester.drag(_page, const Offset(0, -30));
     await tester.pumpAndSettle();
     expect(tester.getTopLeft(_back), place - const Offset(0, 30));
     // Part of the page: nothing laid behind it.
-    expect(_ground(tester), 0);
+    expect(_edge(tester), 0);
 
     await tester.drag(_page, const Offset(0, -500));
     await tester.pumpAndSettle();
     expect(_scrolled(tester).pixels, closeTo(530, 0.5));
-    expect(tester.getRect(_back).bottom, lessThanOrEqualTo(0));
-    expect(_back.hitTestable(), findsNothing);
+    _gone(tester);
 
     // Scrolled back up less than a finger's width: straight back, softly,
     // the page hardly moved.
@@ -133,14 +163,20 @@ void main() {
     await tester.pump();
     await tester.pump(QuickReturn.comeBack ~/ 3);
     final double halfway = tester.getTopLeft(_back).dy;
-    expect(halfway, greaterThan(place.dy - _gone));
+    expect(halfway, greaterThan(place.dy - _away));
     expect(halfway, lessThan(place.dy - 1));
     await tester.pumpAndSettle();
     expect(_scrolled(tester).pixels, closeTo(510, 0.5));
     expect(tester.getTopLeft(_back), place);
     expect(_back.hitTestable(), findsOneWidget);
-    // Over the page now: its colour laid behind it, so nothing runs through.
-    expect(_ground(tester), 1);
+    expect(_shown(tester), 1);
+    // Over the page now: the page soft and dark under it, as deep as its
+    // foot and a little more.
+    expect(_edge(tester), 1);
+    expect(
+      tester.getSize(find.byKey(const ValueKey('quick-return-edge'))).height,
+      56 + QuickReturn.reach,
+    );
     await tester.tap(_back);
     expect(backs, 1);
 
@@ -149,36 +185,52 @@ void main() {
     await tester.pumpAndSettle();
     expect(_scrolled(tester).pixels, 0);
     expect(tester.getTopLeft(_back), place);
-    expect(_ground(tester), 0);
+    expect(_edge(tester), 0);
   });
 
-  testWidgets('back over the page, what lies behind it is the page\'s own '
-      'colour, fading out under it: light on a light page, dark on a dark '
-      'one', (tester) async {
+  testWidgets('back over the page, what lies behind it is the page itself, '
+      'blurred and in its own colour, light on a light page and dark on a '
+      'dark one: never a band of colour, and gone by the end', (tester) async {
     for (final Brightness b in Brightness.values) {
       await tester.pumpWidget(const SizedBox());
       await _phone(tester, _host(brightness: b));
-      expect(_ground(tester), 0);
+      expect(_edge(tester), 0);
       await tester.drag(_page, const Offset(0, -500));
       await tester.pumpAndSettle();
       await tester.drag(_page, const Offset(0, 20));
       await tester.pumpAndSettle();
       expect(tester.getTopLeft(_back), const Offset(20, 8));
-      expect(_ground(tester), 1);
+      expect(_edge(tester), 1);
+      final Finder edge = find.byKey(const ValueKey('quick-return-edge'));
       final Color page = buildAstutoTheme(b).extension<Palette>()!.surface;
+      expect(tester.widget<TopEdge>(edge).ground, page);
       final Gradient fade =
           (tester
                       .widget<DecoratedBox>(
                         find.descendant(
-                          of: find.byKey(const ValueKey('quick-return-ground')),
+                          of: edge,
                           matching: find.byType(DecoratedBox),
                         ),
                       )
                       .decoration
                   as BoxDecoration)
               .gradient!;
-      expect(fade.colors.first, page);
+      // Never the whole colour, even at the top: the page shows through.
+      expect(fade.colors.first, page.withValues(alpha: TopEdge.most));
       expect(fade.colors.last, page.withValues(alpha: 0));
+      for (final Color c in fade.colors) {
+        expect(c.a, lessThanOrEqualTo(TopEdge.most + 1e-6));
+      }
+      // The page under it blurred, softest at the top and less further
+      // down.
+      final List<double> soft = [
+        for (final BackdropFilter f in tester.widgetList<BackdropFilter>(
+          find.descendant(of: edge, matching: find.byType(BackdropFilter)),
+        ))
+          (f.filter as dynamic).sigmaX as double,
+      ];
+      expect(soft.length, greaterThan(4));
+      expect(soft.first, greaterThan(soft.last));
     }
   });
 
@@ -196,7 +248,7 @@ void main() {
     await tester.pump();
     expect(tester.getTopLeft(_back).dy, closeTo(8 - 20, 0.5));
     await tester.pumpAndSettle();
-    expect(tester.getRect(_back).bottom, lessThanOrEqualTo(0));
+    _gone(tester);
 
     // From the top, as far as the title has gone and no further.
     await tester.drag(_page, const Offset(0, 900));
@@ -218,8 +270,7 @@ void main() {
     expect(page.pixels, greaterThan(page.maxScrollExtent));
     await tester.pumpAndSettle();
     expect(page.pixels, closeTo(page.maxScrollExtent, 0.5));
-    expect(tester.getRect(_back).bottom, lessThanOrEqualTo(0));
-    expect(_back.hitTestable(), findsNothing);
+    _gone(tester);
   });
 
   testWidgets('on a page shorter than the screen, pulled up and let go, it '
@@ -255,14 +306,13 @@ void main() {
     // Down far enough for the way back to be gone, the row still on screen.
     await tester.drag(_page, const Offset(0, -120));
     await tester.pumpAndSettle();
-    expect(tester.getRect(_back).bottom, lessThanOrEqualTo(0));
+    _gone(tester);
     final Finder row = find.byKey(const ValueKey('row'));
     await tester.drag(row, const Offset(-300, 0));
     await tester.pumpAndSettle();
     await tester.drag(row, const Offset(200, 0));
     await tester.pumpAndSettle();
-    expect(tester.getRect(_back).bottom, lessThanOrEqualTo(0));
-    expect(_back.hitTestable(), findsNothing);
+    _gone(tester);
   });
 
   testWidgets('for whoever asked for less motion it never slides: it fades '
@@ -290,13 +340,23 @@ void main() {
     expect(shown(), 0);
     expect(_back.hitTestable(), findsNothing);
     await tester.pumpAndSettle();
+    // The deeper edge gone with it, where it stood: nothing moved.
+    expect(_edge(tester), 0);
 
     await tester.drag(_page, const Offset(0, 20));
     await tester.pump();
     expect(tester.getTopLeft(_back), place);
     expect(shown(), 1);
+    // The deeper edge fading in with it, as deep as ever.
+    await tester.pump(QuickReturn.fade ~/ 2);
+    expect(_edge(tester), inExclusiveRange(0, 1));
+    expect(
+      tester.getSize(find.byKey(const ValueKey('quick-return-edge'))).height,
+      56 + QuickReturn.reach,
+    );
     await tester.pumpAndSettle();
     expect(_back.hitTestable(), findsOneWidget);
+    expect(_edge(tester), 1);
   });
 
   testWidgets('with a screen reader on it stays where it is, always there to '
@@ -306,7 +366,45 @@ void main() {
     await tester.pumpAndSettle();
     expect(tester.getTopLeft(_back), const Offset(20, 8));
     expect(_back.hitTestable(), findsOneWidget);
-    // Over the page, with its colour behind it.
-    expect(_ground(tester), 1);
+    // Over the page, the page soft and dark under it.
+    expect(_edge(tester), 1);
+  });
+
+  testWidgets('on a page laid under the status bar, the edge is the status '
+      'bar\'s room at the top; going up with the page the way back fades as '
+      'it goes under it; coming back it brings the edge down with it, past '
+      'its foot, out of the status bar\'s', (tester) async {
+    await _phone(tester, _host(underStatusBar: true), statusBar: true);
+    const Offset place = Offset(20, 47 + 8);
+    final Finder edge = find.byKey(const ValueKey('quick-return-edge'));
+    expect(tester.getTopLeft(_back), place);
+    expect(tester.getSize(edge).height, 47);
+    expect(_edge(tester), 0);
+    expect(_shown(tester), 1);
+
+    // Its middle gone up under the status bar: fading, as the page there.
+    await tester.drag(_page, const Offset(0, -50));
+    await tester.pumpAndSettle();
+    expect(tester.getTopLeft(_back), place - const Offset(0, 50));
+    expect(_shown(tester), inExclusiveRange(QuickReturn.unseen, 1));
+    expect(tester.getSize(edge).height, 47);
+
+    await tester.drag(_page, const Offset(0, -500));
+    await tester.pumpAndSettle();
+    _gone(tester, place: place);
+    expect(tester.getSize(edge).height, 47);
+
+    // On its way back, from under the status bar, the edge coming down with
+    // it; then back, the edge past its foot.
+    await tester.drag(_page, const Offset(0, 20));
+    await tester.pump();
+    await tester.pump(QuickReturn.comeBack ~/ 3);
+    final double foot = tester.getRect(_back).bottom + 4;
+    expect(tester.getSize(edge).height, closeTo(foot + QuickReturn.reach, 1));
+    await tester.pumpAndSettle();
+    expect(tester.getTopLeft(_back), place);
+    expect(_shown(tester), 1);
+    expect(_edge(tester), 1);
+    expect(tester.getSize(edge).height, 47 + 56 + QuickReturn.reach);
   });
 }

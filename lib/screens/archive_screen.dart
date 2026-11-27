@@ -11,6 +11,7 @@ import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/motion.dart';
 import '../widgets/premium.dart';
+import '../widgets/top_edge.dart' show SoftTop;
 import '../widgets/ui.dart';
 import 'pill_detail_screen.dart';
 import '../analytics.dart';
@@ -230,73 +231,82 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                 child: asking
                     ? (results.isEmpty
                           ? _NoResults(query: _query)
-                          : ListView.builder(
-                              keyboardDismissBehavior:
-                                  ScrollViewKeyboardDismissBehavior.onDrag,
-                              padding: const EdgeInsets.fromLTRB(22, 6, 22, 24),
-                              itemCount: results.length,
-                              itemBuilder: (context, i) => RiseIn.staggered(
-                                i,
-                                step: const Duration(milliseconds: 34),
-                                child: _ResultRow(
-                                  pill: results[i],
-                                  saved: widget.app.isSaved(results[i].id),
-                                  onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => PillDetailScreen(
-                                        pill: results[i],
-                                        app: widget.app,
-                                        among: results,
+                          : SoftTop(
+                              child: ListView.builder(
+                                keyboardDismissBehavior:
+                                    ScrollViewKeyboardDismissBehavior.onDrag,
+                                padding: const EdgeInsets.fromLTRB(
+                                  22,
+                                  6,
+                                  22,
+                                  24,
+                                ),
+                                itemCount: results.length,
+                                itemBuilder: (context, i) => RiseIn.staggered(
+                                  i,
+                                  step: const Duration(milliseconds: 34),
+                                  child: _ResultRow(
+                                    pill: results[i],
+                                    saved: widget.app.isSaved(results[i].id),
+                                    onTap: () => Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => PillDetailScreen(
+                                          pill: results[i],
+                                          app: widget.app,
+                                          among: results,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
                             ))
-                    : ListView(
-                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
-                        children: [
-                          for (final day in _days)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: _Day(
-                                day: day,
-                                cards: _deckOf(day),
-                                open:
-                                    (_openDay ?? dateKey(_days.first)) ==
-                                    dateKey(day),
-                                onToggle: () => setState(() {
-                                  _openDay =
+                    : SoftTop(
+                        child: ListView(
+                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
+                          children: [
+                            for (final day in _days)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: _Day(
+                                  day: day,
+                                  cards: _deckOf(day),
+                                  open:
                                       (_openDay ?? dateKey(_days.first)) ==
-                                          dateKey(day)
-                                      ? ''
-                                      : dateKey(day);
-                                }),
-                                onOpen: (pill) => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => PillDetailScreen(
-                                      pill: pill,
-                                      app: widget.app,
-                                      among: _deckOf(day),
+                                      dateKey(day),
+                                  onToggle: () => setState(() {
+                                    _openDay =
+                                        (_openDay ?? dateKey(_days.first)) ==
+                                            dateKey(day)
+                                        ? ''
+                                        : dateKey(day);
+                                  }),
+                                  onOpen: (pill) => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => PillDetailScreen(
+                                        pill: pill,
+                                        app: widget.app,
+                                        among: _deckOf(day),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          // The days the free plan is not showing, named,
-                          // with the lock on them. The archive does not end
-                          // a week back; the plan does.
-                          if (_hidden > 0)
-                            _LockedDays(
-                              count: _hidden,
-                              onTap: () => requirePlus(
-                                context,
-                                widget.app,
-                                () => setState(() {}),
-                                source: 'archive',
+                            // The days the free plan is not showing, named,
+                            // with the lock on them. The archive does not end
+                            // a week back; the plan does.
+                            if (_hidden > 0)
+                              _LockedDays(
+                                count: _hidden,
+                                onTap: () => requirePlus(
+                                  context,
+                                  widget.app,
+                                  () => setState(() {}),
+                                  source: 'archive',
+                                ),
                               ),
-                            ),
-                        ],
+                          ],
+                        ),
                       ),
               ),
             ],

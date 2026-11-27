@@ -21,6 +21,7 @@ import 'package:astuto/screens/tune_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/quick_return.dart';
+import 'package:astuto/widgets/top_edge.dart';
 import 'package:astuto/widgets/ui.dart' show BackCircle;
 
 import 'explore/core_harness.dart';
@@ -202,8 +203,8 @@ void main() {
       final Offset backAt = tester.getTopLeft(back);
       final double titleTop = tester.getTopLeft(title).dy;
       double ground() => tester
-          .widget<Opacity>(find.byKey(const ValueKey('quick-return-ground')))
-          .opacity;
+          .widget<TopEdge>(find.byKey(const ValueKey('quick-return-edge')))
+          .strength;
       // At the top, the title stands beside the way back, with nothing laid
       // behind it.
       expect(
@@ -226,15 +227,20 @@ void main() {
       expect(tester.getTopLeft(back).dy, closeTo(backAt.dy - 30, 0.5));
       expect(ground(), 0);
 
-      // Further down, gone with the page; the button where it was.
+      // Further down, gone with the page, unseen; the button where it was.
       _page(tester).jumpTo(400);
       await tester.pump();
-      expect(tester.getRect(back).bottom, lessThanOrEqualTo(0));
+      expect(
+        tester
+            .widget<Opacity>(find.byKey(const ValueKey('quick-return-header')))
+            .opacity,
+        QuickReturn.unseen,
+      );
       expect(back.hitTestable(), findsNothing);
       expect(tester.getRect(save), button);
 
       // A little way back up, it comes straight back where it stood, the
-      // page fading under it there; the button where it was.
+      // page going soft and dark under it there; the button where it was.
       _page(tester).jumpTo(380);
       await tester.pump();
       await tester.pump(QuickReturn.comeBack);

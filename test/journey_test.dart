@@ -17,7 +17,9 @@ import 'package:astuto/state/app_state.dart';
 import 'package:astuto/state/journey_record.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/move_words.dart' show moveName;
+import 'package:astuto/widgets/quick_return.dart';
 import 'package:astuto/widgets/skill_score.dart' show scoreBookOf;
+import 'package:astuto/widgets/top_edge.dart';
 import 'package:astuto/widgets/ui.dart' show BackCircle;
 
 /// Answers said how sure, level by level: (count, right) before the last
@@ -992,8 +994,10 @@ void main() {
       final Finder title = find.text('Your journey');
       final Offset backAt = tester.getTopLeft(back);
       final double titleAt = tester.getCenter(title).dy;
-      double ground() => tester
-          .widget<Opacity>(find.byKey(const ValueKey('quick-return-ground')))
+      final Finder edge = find.byKey(const ValueKey('quick-return-edge'));
+      double deeper() => tester.widget<TopEdge>(edge).strength;
+      double shown() => tester
+          .widget<Opacity>(find.byKey(const ValueKey('quick-return-header')))
           .opacity;
 
       // At the top, everything where it stood: the title beside the way
@@ -1002,11 +1006,8 @@ void main() {
       expect(backAt.dy, greaterThanOrEqualTo(47));
       expect((titleAt - tester.getCenter(back).dy).abs(), lessThan(4));
       expect(back.hitTestable(), findsOneWidget);
-      expect(ground(), 0);
-      expect(
-        tester.getSize(find.byKey(const ValueKey('journey-top-edge'))).height,
-        47,
-      );
+      expect(deeper(), 0);
+      expect(tester.getSize(edge).height, 47);
 
       // A little way down, the way back goes up with the title, point for
       // point: it is part of the page.
@@ -1014,14 +1015,17 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.getCenter(title).dy, closeTo(titleAt - 40, 1));
       expect(tester.getTopLeft(back).dy, closeTo(backAt.dy - 40, 1));
-      expect(ground(), 0);
+      expect(deeper(), 0);
 
       // Further down it has gone with the page: the page is all content.
+      // Out of sight, it waits unseen in its place, where Apple's glass is
+      // never put back on the screen under the status bar.
       await tester.drag(page, const Offset(0, -600));
       await tester.pumpAndSettle();
       expect(scrolled(tester).pixels, closeTo(640, 1));
-      expect(tester.getRect(back).bottom, lessThanOrEqualTo(0));
+      expect(shown(), QuickReturn.unseen);
       expect(back.hitTestable(), findsNothing);
+      expect(tester.getSize(edge).height, 47);
 
       // A little way back up, it comes straight back where it stood, over
       // the page, softly: on its way a moment after, then in its place.
@@ -1037,9 +1041,14 @@ void main() {
       expect(scrolled(tester).pixels, inInclusiveRange(600, 634));
       expect(tester.getTopLeft(back), backAt);
       expect(back.hitTestable(), findsOneWidget);
-      // The page fades under it there, as under iOS 26's bar: it never
-      // sits on the words.
-      expect(ground(), 1);
+      expect(shown(), 1);
+      // The page goes soft and dark under it there, past its foot, as under
+      // iOS 26's floating controls: it never sits on sharp words.
+      expect(deeper(), 1);
+      expect(
+        tester.getSize(edge).height,
+        tester.getRect(back).bottom + QuickReturn.reach,
+      );
       // Still the way back, over whatever runs under it.
       await tester.tap(back);
       expect(backs, hasLength(1));

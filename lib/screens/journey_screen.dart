@@ -39,7 +39,6 @@ import '../widgets/learn_looks.dart';
 import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/move_words.dart';
 import '../widgets/skill_score.dart' show scoreUp, signedNumber;
-import '../widgets/top_edge.dart';
 import '../widgets/training.dart';
 
 part 'journey_story.dart';
@@ -317,55 +316,29 @@ class _JourneyScreenState extends State<JourneyScreen> {
         backgroundColor: context.p.surface,
         body: LastSeenScope(
           seen: _seen,
-          child: Stack(
-            children: [
-              // The way back is part of the page, as Instagram's is: it goes
-              // up and away with the chapters, and the moment the reader
-              // goes back up it comes back over them, the page fading under
-              // it there so it never sits on the words; at the top it stands
-              // beside the title.
-              Positioned.fill(
-                child: QuickReturn(
-                  clip: false,
-                  header: Padding(
-                    padding: EdgeInsets.only(left: 20, top: top + 8),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: BackCircle(
-                        onPressed: widget.onBack,
-                        floating: true,
-                      ),
-                    ),
-                  ),
-                  child: MediaQuery.removePadding(
-                    context: context,
-                    removeTop: true,
-                    child: ListView(
-                      key: const ValueKey('journey-page'),
-                      padding: EdgeInsets.fromLTRB(
-                        16,
-                        top + 8,
-                        16,
-                        30 + safe.bottom,
-                      ),
-                      children: page,
-                    ),
-                  ),
-                ),
+          // The way back is part of the page, as Instagram's is: it goes up
+          // and away with the chapters, and the moment the reader goes back
+          // up it comes back over them, the chapters going soft and dark
+          // under it, as they do under the status bar, Explore's shelves
+          // too ([TopEdge]); at the top it stands beside the title.
+          child: QuickReturn(
+            clip: false,
+            header: Padding(
+              padding: EdgeInsets.only(left: 20, top: top + 8),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: BackCircle(onPressed: widget.onBack, floating: true),
               ),
-              // Under the status bar, where the chapters run under the time
-              // and the battery: they go soft and dissolve into the page,
-              // as Explore's shelves do, and so does the way back on its
-              // way up.
-              Positioned(
-                key: const ValueKey('journey-top-edge'),
-                left: 0,
-                right: 0,
-                top: 0,
-                height: top,
-                child: IgnorePointer(child: TopEdge(ground: context.p.surface)),
+            ),
+            child: MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: ListView(
+                key: const ValueKey('journey-page'),
+                padding: EdgeInsets.fromLTRB(16, top + 8, 16, 30 + safe.bottom),
+                children: page,
               ),
-            ],
+            ),
           ),
         ),
       ),
