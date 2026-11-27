@@ -27,6 +27,12 @@
 // a card that is not one of the day's, with no Why this card to open, as on Explore.
 //
 //   FOOT=links LANG_SHOT=it node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html [out-dir]
+//
+// With HARD=1 it is a hard card ringed, as the app tries it (lib/widgets/hard_ring.dart): the page is told the
+// colours to draw itself in (env.hard: the night ground, its subject's colour as its ink, the question in the
+// light ink, HARD beside the name), and its photographs carry the ring. HARD=day is the same on the day paper.
+//
+//   HARD=1 node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html [out-dir]
 const path = require('path'), fs = require('fs');
 let pw; try { pw = require('playwright'); } catch { pw = require('/opt/node22/lib/node_modules/playwright'); }
 const file = path.resolve(process.argv[2]); const out = path.resolve(process.argv[3] || path.join(path.dirname(file), 'check'));
@@ -168,6 +174,22 @@ async function single() {
   const arb = l => path.join(__dirname, '../../lib/l10n', `app_${l}.arb`);
   const words = JSON.parse(fs.readFileSync(fs.existsSync(arb(lang)) ? arb(lang) : arb('en'), 'utf8'));
   const subjectName = (String(words.subjectName || '').match(new RegExp(`(?:^|\\s)${topic}\\{([^}]*)\\}`)) || [])[1];
+  // A hard card ringed, in the colours the app gives it (lib/widgets/hard_ring.dart, HardRing.pageOf): on the night
+  // paper its ground night black, its ink its subject's colour (a deep one lifted until small words read in it), its
+  // question the light ink; on the day paper the raised paper, a pale colour's darker tone, the dark ink.
+  const hardDay = process.env.HARD === 'day';
+  const hard = (() => {
+    if (!process.env.HARD) return null;
+    const kit = fs.readFileSync(path.join(KIT, 'astute-card.js'), 'utf8');
+    const colour = (kit.match(new RegExp(`\\b${topic}: \\['[^']*', '(#[0-9A-Fa-f]{6})'`)) || [])[1] || '#F2F1EC';
+    const rgb = colour.slice(1).match(/../g).map(h => parseInt(h, 16));
+    const lin = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+    const lum = 0.2126 * lin(rgb[0]) + 0.7152 * lin(rgb[1]) + 0.0722 * lin(rgb[2]);
+    const hex = c => '#' + c.map(v => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0')).join('');
+    const accent = hardDay && lum > 0.45 ? hex(rgb.map(v => v * 0.62)) : colour;
+    const ink = !hardDay && lum < 0.16 ? hex(rgb.map(v => v + (255 - v) * 0.4)) : accent;
+    return {c: hardDay ? '#ffffff' : '#0b0b0d', k: ink, q: hardDay ? '#131316' : '#f2f1ec', edge: accent, label: (words.hardBadge || 'Hard').toUpperCase()};
+  })();
   const ORIGIN = 'https://card.astute/';
   const browser = await pw.chromium.launch({executablePath});
   let problems = 0;
@@ -181,11 +203,12 @@ async function single() {
     // the source, and Why this card beside it, in the reader's words. With stack the app says why on the front of
     // every card of the day instead, the line under the head: the sheet's own name, as on a card dealt at its
     // reader's level (lib/widgets/why_sheet.dart, cardNote).
-    const env = {mode: 'app', theme: opts.theme || 'dark', lang, calm: !!opts.calm, sound: false, touch: web.touch || 'taps', platform: 'ios', shown: true,
+    const env = {mode: 'app', theme: opts.theme || (hardDay ? 'light' : 'dark'), lang, calm: !!opts.calm, sound: false, touch: web.touch || 'taps', platform: 'ios', shown: true,
       size: {w: vp.width, h: vp.height}, safe: {top: 0, right: 0, bottom: 0, left: 0}, corner: CORNER,
       subject: subjectName ? {key: topic, name: subjectName} : {key: topic},
       note: foot === 'stack' && day ? words.whyTitle : null,
-      foot, deeper: words.deeperTitle, why: day ? words.whyTitle : null};
+      foot, deeper: words.deeperTitle, why: day ? words.whyTitle : null,
+      ...(hard ? {hard} : {})};
     await page.addInitScript(([e, b]) => { window.ASTUTE_ENV = e; window.ASTUTE_SEND = t => window.__astuteHeard(t); (0, eval)(b); }, [env, bridge]);
     page.on('pageerror', e => errors.push(e.message));
     page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
@@ -276,15 +299,17 @@ async function single() {
         }).map(() => 'what to keep is shown but invisible (a second fade left it at opacity 0)'))));
         // The photograph is the card as the app draws it: its corners rounded and the save and share
         // in theirs, so it can be looked at as a reader would see it.
-        if (!process.env.BARE) await p.evaluate(controls => {
+        if (!process.env.BARE) await p.evaluate(([controls, ring, page]) => {
           if (document.getElementById('__frame')) return;
           const f = document.createElement('div'); f.id = '__frame';
-          f.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:2147483647;border-radius:34px;box-shadow:0 0 0 40px #000';
-          const ink = getComputedStyle(document.querySelector('.card')).getPropertyValue('--k') || '#000';
-          f.innerHTML = `<div style="position:absolute;right:${controls.right}px;bottom:${controls.bottom}px;display:flex;gap:4px;opacity:.62;color:${ink}">` +
+          f.style.cssText = `position:fixed;inset:0;pointer-events:none;z-index:2147483647;border-radius:34px;box-shadow:0 0 0 40px ${page}`;
+          // On a hard card ringed the save and share are in the light ink, as the app draws them on the dark.
+          const ink = ring ? getComputedStyle(document.querySelector('.card')).getPropertyValue('--kit-q') || getComputedStyle(document.documentElement).getPropertyValue('--kit-q') : getComputedStyle(document.querySelector('.card')).getPropertyValue('--k') || '#000';
+          f.innerHTML = (ring ? `<div style="position:absolute;inset:0;border-radius:34px;border:2px solid ${ring}"></div>` : '') +
+            `<div style="position:absolute;right:${controls.right}px;bottom:${controls.bottom}px;display:flex;gap:4px;opacity:.62;color:${ink}">` +
             ['M6 3h12v18l-6-4-6 4z', 'M12 3v12M7 8l5-5 5 5M5 14v6h14v-6'].map(d => `<svg width="44" height="44" viewBox="-10 -10 44 44"><path d="${d}" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>`).join('') + '</div>';
           document.body.appendChild(f);
-        }, CONTROLS);
+        }, [CONTROLS, hard ? hard.edge : null, hardDay ? '#f5f3ee' : '#000']);
         await p.screenshot({path: path.join(out, `${name}-${tag}-${stage}.png`)});
         await p.evaluate(() => document.getElementById('__frame')?.remove());
         say(`${where} (${stage})`, [...r.issues, ...more]);
