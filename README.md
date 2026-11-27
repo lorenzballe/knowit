@@ -84,6 +84,18 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   back to today's and says so. The app does not claim the address, so a
   friend with the app installed plays on the page too, where the two scores
   are.
+- `/invito` is where a friend lands from "Invita un amico", written by
+  `tool/site/invito_page.py` when the site is put together: the link,
+  `invito?c=K7MQ2P`, carries the reader's code and nothing else. The page
+  says, in Italian or in English as the browser asks, what the friend gets
+  (a week of Astute+, theirs and the inviter's, once the first day is read)
+  and how: get the app, then open the link again from the message, where the
+  phone hands it to the app, or type the code in Profile under "Have a
+  code?". It shows the code with a button to copy it, and on Android one
+  more that opens the app on the code, or Google Play when it is not there.
+  The code leaves the address before anything is counted. Unlike `/sfida`,
+  the app claims this address (`site/.well-known/`, the manifest), so a
+  friend who has the app opens it there.
 - `/privacy`, `/terms` and `/support` — the pages the stores ask for — share
   its nav, footer and `site/assets/site.css`: night paper, cream ink,
   Fraunces and Figtree served from the site itself, and on a wide screen a
@@ -1179,6 +1191,63 @@ backup (`friendCodes`), shown nowhere. A board an older build published
 stays at `boards/{code}` in Firestore (the code is `friendCodeOf`, six
 letters worked from the account id) until its reader deletes the account,
 which still takes it down.
+
+## Invita un amico
+
+A reader sends a friend a week of Astute+ and has one too, once the friend
+has read a first day. It is behind the server's switch `invite`, off as
+built and off in `remote/app.json` until RevenueCat's secret key is
+deployed; even on, nothing shows while the server answers "not configured",
+nor on a build that cannot show Astute+ (the web app).
+
+- **Inviting.** In the profile, a box of its own between the reader's cards
+  and the account: *Invite a friend — a week of Astute+ for you both*. It
+  opens a sheet with the reader's code, made on the server the first time,
+  the year's weeks so far, and *Send the invitation*: the system's share
+  sheet with a line in the reader's language and
+  `astutetheapp.com/invito?c=<code>` (copied where there is no sheet). The
+  code is six characters drawn at random from digits and consonants with no
+  vowel and nothing that reads as another (no 0/O, 1/I/L, U/V): it spells no
+  word and says nothing about anyone.
+- **Using a code.** The phone hands the link to the app on iPhone and Android
+  (the site's `apple-app-site-association` and the manifest name `/invito`;
+  `ios/Runner/AppDelegate.swift` and `MainActivity.kt` read the code as
+  `WidgetOpen.inviteCodeOfLink` does), and the code waits, kept on the phone,
+  for the first run to end and the switch to be on; then its sheet rises with
+  the code in it. Or it is typed under *Have a code?*, which the profile shows
+  to an account the server calls new that has never held Astute+.
+- **The rules** (`functions/src/invite.ts`): one code per account, never
+  one's own, an account made in the last week that has never held Astute+ in
+  RevenueCat; nothing given until the friend's backup has a finished day;
+  then a week each, through RevenueCat's REST API v1 as a promotional
+  `astuto_pro`, each starting where the Astute+ already held ends, so a
+  second friend's week is a week more. An inviter has eight weeks in any 365
+  days; past that the friend still has theirs and the inviter's message says
+  so. The friend's week is the evening's moment, on the purchase's own
+  screen in its own words (given, until when, nothing to pay or cancel), and
+  the card after the fifth offers nothing that evening; the inviter is told
+  on the profile the next time it asks. The customer is read again at once
+  (`Subscription.refreshCustomerInfo`), so Astute+ shows without waiting.
+- **What is kept**: the code and its weeks (`invites/{uid}`), whose code it is
+  (`inviteCodes/{code}`), the code a reader came with (`invited/{uid}`),
+  written only by the functions and read by no phone, all of it gone with the
+  account. Never in PostHog: the events say what happened, not with which
+  code (docs/TRACKING.md §6.14).
+- **To turn it on**: the owner makes a RevenueCat secret key (Project settings
+  → API keys → + New secret API key, API version V1) and adds it in GitHub
+  as the Actions secret `REVENUECAT_SECRET_KEY`; the *Cloud deploy* workflow
+  keeps it in Secret Manager. Then `"invite": true` in `remote/app.json`, or
+  for Android first `{"on": true, "audience": {"platforms": ["android"]}}`.
+- **Apple.** The reward is free time and nothing else — no money, nothing
+  asked about ratings or reviews — and the copy says so. But a code that
+  opens Astute+ is close to what guideline 3.1.1 forbids ("their own
+  mechanisms to unlock content or functionality, such as license keys"),
+  which is why Google Play's reviewers' code is never offered on an iPhone
+  (*Selling Astute+*). Referral weeks are common on the App Store; if App
+  Review objects, the switch's audience turns it off for iPhone alone.
+
+`tool/invite_shots.dart` photographs it in the app; the page is
+`tool/site/invito_page.py`.
 
 ## The home-screen widgets
 

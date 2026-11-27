@@ -2575,6 +2575,17 @@ class AppState extends ChangeNotifier {
   /// Whether today's five can be sent to a friend as a challenge.
   bool get shareChallengeOn => kShareChallengeFlag.on(_here);
 
+  /// Invita un amico (`invite`): in the profile, a link with the reader's
+  /// code to send a friend, and "Have a code?" for a friend's; a week of
+  /// Astute+ for each of the two once the friend has finished a first day
+  /// (lib/sync/invite.dart, functions/src/invite.ts). Off as built, and off
+  /// on the server until RevenueCat's key is in place; even on, nothing
+  /// shows where the server says invitations are not set up.
+  static const RemoteFlag kInviteFlag = RemoteFlag('invite', fallback: false);
+
+  /// Whether the server has invitations on for this reader.
+  bool get inviteOn => kInviteFlag.on(_here);
+
   /// Whether the first run plays a card and offers the trial after it.
   bool get firstRunTrialOn => kFirstRunTrialFlag.on(_here);
 

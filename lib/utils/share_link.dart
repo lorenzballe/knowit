@@ -96,3 +96,11 @@ String fiveChallengeLink(String day, {int? score}) {
   final bool scored = score != null && score >= 0 && score <= 5;
   return 'https://$kSiteHost/sfida?d=$day${scored ? '&s=$score' : ''}';
 }
+
+/// Where a friend is invited (Invita un amico, lib/widgets/invite_sheet.dart):
+/// the site's page for it, with the reader's code and nothing else — no
+/// name, no id, no ref: the page is named for the invitation, and the site
+/// counts it by its page, never by the code (tool/site/invito_page.py).
+/// `astutetheapp.com/invito?c=K7MQ2P`. On a phone with the app the phone
+/// hands the link to the app, which takes the code (WidgetOpen.invite).
+String inviteLink(String code) => 'https://$kSiteHost/invito?c=$code';

@@ -7444,4 +7444,126 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Не сейчас';
+
+  @override
+  String get inviteSection => 'Друзья';
+
+  @override
+  String get inviteRow => 'Пригласить друга';
+
+  @override
+  String get inviteRowLine => 'Неделя Astute+ вам обоим';
+
+  @override
+  String get inviteCodeRow => 'Есть код?';
+
+  @override
+  String get inviteCodeAccepted => 'Код принят';
+
+  @override
+  String get inviteCodeAcceptedLine =>
+      'Неделя начнётся, когда ты закончишь первый день';
+
+  @override
+  String get inviteSheetLine =>
+      'Отправь другу свой код. Когда он закончит первый день — пять карточек, — каждый из вас получит неделю Astute+.';
+
+  @override
+  String get inviteYourCode => 'Твой код';
+
+  @override
+  String get inviteCopy => 'Копировать';
+
+  @override
+  String get inviteSend => 'Отправить приглашение';
+
+  @override
+  String inviteRules(int cap) {
+    return 'Для нового аккаунта, у которого никогда не было Astute+. Ты получаешь до $cap недель в год.';
+  }
+
+  @override
+  String inviteWeeksSoFar(int n, int cap) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n из $cap недель в этом году',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inviteCapped(int cap) {
+    return 'Ты уже получил $cap недель за этот год. Друзья всё равно получат свою.';
+  }
+
+  @override
+  String inviteMessage(String code, String link) {
+    return 'Приглашаю тебя в Astute: пять карточек в день, чтобы голова оставалась острой. С моим кодом $code, когда ты закончишь первый день, мы оба получим неделю Astute+.\n$link';
+  }
+
+  @override
+  String inviteMessageCapped(String code, String link) {
+    return 'Приглашаю тебя в Astute: пять карточек в день, чтобы голова оставалась острой. С моим кодом $code, когда ты закончишь первый день, ты получишь неделю Astute+ в подарок.\n$link';
+  }
+
+  @override
+  String get inviteCodeTitle => 'Код от друга';
+
+  @override
+  String get inviteCodeLine =>
+      'Введи код, который прислал тебе друг. Когда ты закончишь первый день, каждый из вас получит неделю Astute+.';
+
+  @override
+  String get inviteCodeUse => 'Применить код';
+
+  @override
+  String get inviteCodeWaitingLine =>
+      'Закончи первый день — пять карточек: тогда начнётся неделя Astute+, для тебя и для друга, который тебя пригласил.';
+
+  @override
+  String get inviteRefusedUnknown =>
+      'Такого кода нет. Проверь символы и попробуй ещё раз.';
+
+  @override
+  String get inviteRefusedOwn => 'Это твой собственный код: отправь его другу.';
+
+  @override
+  String get inviteRefusedUsed => 'Ты уже использовал код друга.';
+
+  @override
+  String get inviteRefusedLate =>
+      'Коды действуют для новых аккаунтов, в их первую неделю.';
+
+  @override
+  String get inviteRefusedPlus =>
+      'Коды действуют для аккаунтов, у которых никогда не было Astute+.';
+
+  @override
+  String get inviteSuccessTitle => 'Неделя Astute+ в подарок.';
+
+  @override
+  String get inviteSuccessPlan => 'Astute+ · неделя';
+
+  @override
+  String inviteSuccessUntil(String date) {
+    return 'До $date';
+  }
+
+  @override
+  String get inviteSuccessFoot =>
+      'Ничего платить и ничего отменять не нужно: потом ты вернёшься на бесплатный план.';
+
+  @override
+  String inviteEarned(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n друга закончили первый день: $n недели Astute+ для тебя.',
+      many: '$n друзей закончили первый день: $n недель Astute+ для тебя.',
+      few: '$n друга закончили первый день: $n недели Astute+ для тебя.',
+      one: '$n друг закончил первый день: $n неделя Astute+ для тебя.',
+    );
+    return '$_temp0';
+  }
 }

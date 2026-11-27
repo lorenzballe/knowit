@@ -7182,4 +7182,127 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Niet nu';
+
+  @override
+  String get inviteSection => 'Vrienden';
+
+  @override
+  String get inviteRow => 'Nodig een vriend uit';
+
+  @override
+  String get inviteRowLine => 'Een week Astute+ voor jullie allebei';
+
+  @override
+  String get inviteCodeRow => 'Heb je een code?';
+
+  @override
+  String get inviteCodeAccepted => 'Code geaccepteerd';
+
+  @override
+  String get inviteCodeAcceptedLine =>
+      'Je week begint als je je eerste dag afmaakt';
+
+  @override
+  String get inviteSheetLine =>
+      'Stuur een vriend je code. Als die zijn eerste dag afmaakt, de vijf kaarten, krijgen jullie allebei een week Astute+.';
+
+  @override
+  String get inviteYourCode => 'Je code';
+
+  @override
+  String get inviteCopy => 'Kopiëren';
+
+  @override
+  String get inviteSend => 'Uitnodiging versturen';
+
+  @override
+  String inviteRules(int cap) {
+    return 'Geldt voor een nieuw account dat nooit Astute+ had. Je krijgt tot $cap weken per jaar.';
+  }
+
+  @override
+  String inviteWeeksSoFar(int n, int cap) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n van $cap weken dit jaar',
+      one: '1 van $cap weken dit jaar',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inviteCapped(int cap) {
+    return 'Je hebt de $cap weken van dit jaar gehad. Je vrienden krijgen hun week nog steeds.';
+  }
+
+  @override
+  String inviteMessage(String code, String link) {
+    return 'Doe mee met Astute: vijf kaarten per dag om scherp te blijven. Met mijn code $code krijgen we allebei een week Astute+ zodra je je eerste dag afmaakt.\n$link';
+  }
+
+  @override
+  String inviteMessageCapped(String code, String link) {
+    return 'Doe mee met Astute: vijf kaarten per dag om scherp te blijven. Met mijn code $code krijg je een week Astute+ cadeau zodra je je eerste dag afmaakt.\n$link';
+  }
+
+  @override
+  String get inviteCodeTitle => 'De code van een vriend';
+
+  @override
+  String get inviteCodeLine =>
+      'Typ de code die een vriend je stuurde. Als je je eerste dag afmaakt, krijgen jullie allebei een week Astute+.';
+
+  @override
+  String get inviteCodeUse => 'Code gebruiken';
+
+  @override
+  String get inviteCodeWaitingLine =>
+      'Maak je eerste dag af, de vijf kaarten: dan begint de week Astute+, voor jou en voor de vriend die je uitnodigde.';
+
+  @override
+  String get inviteRefusedUnknown =>
+      'Die code bestaat niet. Controleer de tekens en probeer het opnieuw.';
+
+  @override
+  String get inviteRefusedOwn =>
+      'Dat is je eigen code: stuur hem naar een vriend.';
+
+  @override
+  String get inviteRefusedUsed => 'Je hebt al de code van een vriend gebruikt.';
+
+  @override
+  String get inviteRefusedLate =>
+      'Codes zijn voor nieuwe accounts, in hun eerste week.';
+
+  @override
+  String get inviteRefusedPlus =>
+      'Codes zijn voor accounts die nooit Astute+ hadden.';
+
+  @override
+  String get inviteSuccessTitle => 'Een week Astute+, cadeau.';
+
+  @override
+  String get inviteSuccessPlan => 'Astute+ · één week';
+
+  @override
+  String inviteSuccessUntil(String date) {
+    return 'Tot $date';
+  }
+
+  @override
+  String get inviteSuccessFoot =>
+      'Niets te betalen en niets op te zeggen: daarna heb je weer het gratis abonnement.';
+
+  @override
+  String inviteEarned(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n vrienden maakten hun eerste dag af: $n weken Astute+ voor jou.',
+      one: 'Een vriend maakte zijn eerste dag af: een week Astute+ voor jou.',
+    );
+    return '$_temp0';
+  }
 }

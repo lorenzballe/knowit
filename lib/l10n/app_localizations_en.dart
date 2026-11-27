@@ -7135,4 +7135,126 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Not now';
+
+  @override
+  String get inviteSection => 'Friends';
+
+  @override
+  String get inviteRow => 'Invite a friend';
+
+  @override
+  String get inviteRowLine => 'A week of Astute+ for you both';
+
+  @override
+  String get inviteCodeRow => 'Have a code?';
+
+  @override
+  String get inviteCodeAccepted => 'Code accepted';
+
+  @override
+  String get inviteCodeAcceptedLine =>
+      'Your week starts when you finish your first day';
+
+  @override
+  String get inviteSheetLine =>
+      'Send a friend your code. When they finish their first day, the five cards, you each get a week of Astute+.';
+
+  @override
+  String get inviteYourCode => 'Your code';
+
+  @override
+  String get inviteCopy => 'Copy';
+
+  @override
+  String get inviteSend => 'Send the invitation';
+
+  @override
+  String inviteRules(int cap) {
+    return 'For a new account that has never had Astute+. You get up to $cap weeks a year.';
+  }
+
+  @override
+  String inviteWeeksSoFar(int n, int cap) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n weeks of $cap this year',
+      one: '1 week of $cap this year',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inviteCapped(int cap) {
+    return 'You’ve had this year’s $cap weeks. Your friends still get theirs.';
+  }
+
+  @override
+  String inviteMessage(String code, String link) {
+    return 'Join me on Astute: five cards a day to keep your mind sharp. With my code $code, once you finish your first day we each get a week of Astute+.\n$link';
+  }
+
+  @override
+  String inviteMessageCapped(String code, String link) {
+    return 'Join me on Astute: five cards a day to keep your mind sharp. With my code $code, once you finish your first day you get a week of Astute+.\n$link';
+  }
+
+  @override
+  String get inviteCodeTitle => 'A friend’s code';
+
+  @override
+  String get inviteCodeLine =>
+      'Type the code a friend sent you. When you finish your first day, you each get a week of Astute+.';
+
+  @override
+  String get inviteCodeUse => 'Use the code';
+
+  @override
+  String get inviteCodeWaitingLine =>
+      'Finish your first day, the five cards: then the week of Astute+ starts, for you and for the friend who invited you.';
+
+  @override
+  String get inviteRefusedUnknown =>
+      'That code doesn’t exist. Check the letters and try again.';
+
+  @override
+  String get inviteRefusedOwn => 'That’s your own code: send it to a friend.';
+
+  @override
+  String get inviteRefusedUsed => 'You’ve already used a friend’s code.';
+
+  @override
+  String get inviteRefusedLate =>
+      'Codes are for new accounts, in their first week.';
+
+  @override
+  String get inviteRefusedPlus =>
+      'Codes are for accounts that have never had Astute+.';
+
+  @override
+  String get inviteSuccessTitle => 'A week of Astute+, on a friend.';
+
+  @override
+  String get inviteSuccessPlan => 'Astute+ · one week';
+
+  @override
+  String inviteSuccessUntil(String date) {
+    return 'Until $date';
+  }
+
+  @override
+  String get inviteSuccessFoot =>
+      'Nothing to pay and nothing to cancel: then you’re back on the free plan.';
+
+  @override
+  String inviteEarned(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n friends finished their first day: $n weeks of Astute+ for you.',
+      one: 'A friend finished their first day: a week of Astute+ for you.',
+    );
+    return '$_temp0';
+  }
 }

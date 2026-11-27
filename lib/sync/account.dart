@@ -8,6 +8,7 @@ import '../cloud.dart';
 import '../state/app_state.dart';
 import 'board.dart';
 import 'identity.dart';
+import 'invite.dart';
 import 'reader_snapshot.dart';
 import 'reports.dart';
 import 'served.dart';
@@ -449,6 +450,7 @@ class Account extends ChangeNotifier {
     await Trace.instance.reset();
     await Served.instance.reset();
     await Reports.instance.reset();
+    await Invites.instance.reset();
     await _firebase?.signOut();
     notifyListeners();
   }
@@ -534,6 +536,9 @@ class Account extends ChangeNotifier {
       }
       await auth?.signOut();
       await Subscription.instance.logOut();
+      // The server forgets the invitations with the backup (onReaderDeleted);
+      // the phone forgets its own word of them here.
+      await Invites.instance.reset();
       // Where the reader lived leaves PostHog's profile too, while that
       // profile is still theirs: the wipe below forgets who they were. Not
       // before the sign-in has gone, or the change would be backed up into

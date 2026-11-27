@@ -48,7 +48,10 @@ class MainActivity : FlutterActivity() {
 
     /// A card's link on the site, astutetheapp.com/c/<id>, tapped in a chat
     /// or a browser: the card the app is to open on its own, said the way a
-    /// widget's tap says one ("from" link, "in" link).
+    /// widget's tap says one ("from" link, "in" link). And an invitation's,
+    /// astutetheapp.com/invito?c=<code> (Invita un amico): the code the app
+    /// is to take ("from" link, "in" invite, "code"), read as Dart reads it
+    /// (WidgetOpen.inviteCodeOfLink).
     private fun noteLink(intent: Intent?): Boolean {
         val i = intent ?: return false
         if (i.action != Intent.ACTION_VIEW) return false
@@ -56,6 +59,14 @@ class MainActivity : FlutterActivity() {
         val host = url.host?.lowercase() ?: return false
         if (host != "astutetheapp.com" && host != "www.astutetheapp.com") return false
         val parts = url.pathSegments.filter { it.isNotEmpty() }
+        if (parts.size == 1 && (parts[0] == "invito" || parts[0] == "invito.html")) {
+            val code = url.getQueryParameter("c")
+            if (code.isNullOrEmpty()) return false
+            widgetOpen = mapOf("from" to "link", "in" to "invite", "code" to code)
+            // Said once: a recreated activity must not take the same code again.
+            i.data = null
+            return true
+        }
         if (parts.size != 2 || parts[0] != "c") return false
         val id = parts[1].removeSuffix(".html")
         if (id.isEmpty()) return false

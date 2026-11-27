@@ -169,7 +169,7 @@ class KnobsTest(unittest.TestCase):
     def test_the_list_is_well_formed(self):
         spec = app.knobs()
         self.assertEqual(set(spec), {"flags", "tunables", "experiments"})
-        self.assertTrue(8 <= sum(len(v) for v in spec.values()) <= 15)
+        self.assertTrue(8 <= sum(len(v) for v in spec.values()) <= 30)
         for name, flag in spec["flags"].items():
             self.assertIsInstance(flag["default"], bool, name)
         for name, t in spec["tunables"].items():
