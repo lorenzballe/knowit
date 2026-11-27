@@ -295,6 +295,32 @@ void main() {
         await shoot(tester, 'written-4');
       });
 
+      // The top of the sheet as a reader scrolls the parts up over the
+      // head, in three steps: the first part reaching the question, the
+      // question leaving, the parts going under the sheet's top edge.
+      testWidgets('top edge, $tag', (tester) async {
+        debugToolsOn = true;
+        addTearDown(() => debugToolsOn = false);
+        final app = await _app(plus: true);
+        await open(tester, app, bare());
+        await raise(tester);
+        for (final int step in [1, 2, 3]) {
+          final ScrollableState list = tester.state<ScrollableState>(
+            find
+                .descendant(
+                  of: find.byType(DeeperSheet),
+                  matching: find.byType(Scrollable),
+                )
+                .first,
+          );
+          list.position.jumpTo(step * 80.0);
+          for (int i = 0; i < 8; i++) {
+            await tester.pump(_frame);
+          }
+          await shoot(tester, 'top-$step');
+        }
+      });
+
       testWidgets('style, $tag', (tester) async {
         debugToolsOn = true;
         addTearDown(() => debugToolsOn = false);

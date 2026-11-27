@@ -42,7 +42,8 @@ import '../state/app_state.dart';
 import '../sync/card_ask.dart';
 import '../theme.dart';
 import 'chunky.dart' show VerdictColours, chunkyEdge;
-import 'deeper/app_style.dart' show AppWhole, ReportHeight, appBath;
+import 'deeper/app_style.dart'
+    show AppWhole, ReportHeight, TopDissolve, appBath;
 import 'deeper/art.dart';
 import 'deeper/editorial.dart';
 import 'deeper/header.dart';
@@ -133,9 +134,29 @@ class _DeeperSheetState extends State<DeeperSheet>
       if (!mounted) return;
       final double now = _bodyHeight.value;
       if (_body != null && (now - _body!).abs() < 1) return;
+      // Taller than the most the sheet is drawn up to, before and after: the
+      // sheet stays as it is, and is not built again. A part growing as its
+      // answer comes in changes its height every frame; building the whole
+      // sheet each time made it stutter under the reader's thumb.
+      if (_body != null && _fillsMost(_body!) && _fillsMost(now)) {
+        _body = now;
+        return;
+      }
       setState(() => _body = now);
     });
   }
+
+  /// The screen's height and the room under the last part, as the sheet was
+  /// last laid out.
+  double _screen = 0;
+  double _foot = 0;
+
+  /// The most the sheet is drawn up to, as a share of the screen.
+  static const double _most = 0.95;
+
+  /// Whether a body [height] tall fills the sheet drawn up to its most.
+  bool _fillsMost(double height) =>
+      _screen > 0 && (height + _foot) / _screen >= _most;
 
   /// Whether the reader has read past the head since its lights last
   /// drifted: coming back up to it sets them going again.
@@ -486,9 +507,11 @@ class _DeeperSheetState extends State<DeeperSheet>
         // opens at no more than seven tenths of it, and gives way to a
         // drag down from no more than four.
         final double screen = room.maxHeight;
+        _screen = screen.isFinite ? screen : 0;
+        _foot = foot;
         final double most = _body == null || !screen.isFinite || screen <= 0
-            ? 0.95
-            : ((_body! + foot) / screen).clamp(0.2, 0.95);
+            ? _most
+            : ((_body! + foot) / screen).clamp(0.2, _most);
         final double first = math.min(0.72, most);
         return DraggableScrollableSheet(
           expand: false,
@@ -558,152 +581,158 @@ class _DeeperSheetState extends State<DeeperSheet>
                         ),
                       ),
                     ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      ReportHeight(
-                        height: _headHeight,
-                        child: DeeperHeader(
-                          key: const ValueKey('deeper-head'),
-                          pill: pill,
-                          look: bath != null ? world.quietOn(bath) : world,
-                          drift: _drift,
-                          scroll: _scroll,
-                          entrance: _entrance,
-                          still: deeperStill(context),
-                          overlap: _overlap,
-                          paintGround: bath == null,
+                  // The words and the parts go soft under the sheet's top
+                  // edge as they leave; the painting behind them stays.
+                  TopDissolve(
+                    scroll: _scroll,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ReportHeight(
+                          height: _headHeight,
+                          child: DeeperHeader(
+                            key: const ValueKey('deeper-head'),
+                            pill: pill,
+                            look: bath != null ? world.quietOn(bath) : world,
+                            drift: _drift,
+                            scroll: _scroll,
+                            entrance: _entrance,
+                            still: deeperStill(context),
+                            overlap: _overlap,
+                            paintGround: bath == null,
+                          ),
                         ),
-                      ),
-                      Transform.translate(
-                        offset: const Offset(0, -_overlap),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                // Set editorially, nothing lies over the head's foot:
-                                // it is let go into the sheet's ground instead, and the
-                                // parts start below it.
-                                if (deeperEditorial && bath == null)
-                                  ExcludeSemantics(
-                                    child: Container(
-                                      height: _overlap + 8,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            (bath ?? look.ground).withValues(
-                                              alpha: 0,
-                                            ),
-                                            bath ?? look.ground,
-                                          ],
-                                          stops: const [0, 0.75],
+                        Transform.translate(
+                          offset: const Offset(0, -_overlap),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  // Set editorially, nothing lies over the head's foot:
+                                  // it is let go into the sheet's ground instead, and the
+                                  // parts start below it.
+                                  if (deeperEditorial && bath == null)
+                                    ExcludeSemantics(
+                                      child: Container(
+                                        height: _overlap + 8,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              (bath ?? look.ground).withValues(
+                                                alpha: 0,
+                                              ),
+                                              bath ?? look.ground,
+                                            ],
+                                            stops: const [0, 0.75],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      for (
-                                        int i = 0;
-                                        i < parts.length;
-                                        i++
-                                      ) ...[
-                                        if (i > 0) SizedBox(height: deeperGap),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        for (
+                                          int i = 0;
+                                          i < parts.length;
+                                          i++
+                                        ) ...[
+                                          if (i > 0)
+                                            SizedBox(height: deeperGap),
+                                          DeeperArrive(
+                                            animation: _arrive(i),
+                                            child: EdFirst(
+                                              first: i == 0,
+                                              child: parts[i](_draw(i)),
+                                            ),
+                                          ),
+                                        ],
+                                        SizedBox(
+                                          height: parts.isEmpty
+                                              ? 8
+                                              : deeperEditorial
+                                              ? 44
+                                              : 34,
+                                        ),
                                         DeeperArrive(
-                                          animation: _arrive(i),
-                                          child: EdFirst(
-                                            first: i == 0,
-                                            child: parts[i](_draw(i)),
-                                          ),
-                                        ),
-                                      ],
-                                      SizedBox(
-                                        height: parts.isEmpty
-                                            ? 8
-                                            : deeperEditorial
-                                            ? 44
-                                            : 34,
-                                      ),
-                                      DeeperArrive(
-                                        animation: _arrive(parts.length),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 6,
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            children: [
-                                              DeeperSource(
-                                                key: const ValueKey(
-                                                  'deeper-source',
-                                                ),
-                                                look: look,
-                                                source: pill.source,
-                                                kind: sourceKindName(
-                                                  l,
-                                                  pill.sourceKind,
-                                                ),
-                                                draw: _draw(parts.length),
-                                                open: _original.isEmpty
-                                                    ? null
-                                                    : _openSource,
-                                              ),
-                                              // Being tried: reporting the
-                                              // card under the source it
-                                              // would be checked against
-                                              // (source_foot.dart), with A
-                                              // and with D.
-                                              if (sourceFoot ==
-                                                      SourceFoot.line ||
-                                                  sourceFoot ==
-                                                      SourceFoot.links) ...[
-                                                const SizedBox(height: 10),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional.only(
-                                                        start: 4,
-                                                      ),
-                                                  child: ReportLine(
-                                                    key: const ValueKey(
-                                                      'deeper-report',
-                                                    ),
-                                                    pill: pill,
+                                          animation: _arrive(parts.length),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 6,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
+                                              children: [
+                                                DeeperSource(
+                                                  key: const ValueKey(
+                                                    'deeper-source',
                                                   ),
+                                                  look: look,
+                                                  source: pill.source,
+                                                  kind: sourceKindName(
+                                                    l,
+                                                    pill.sourceKind,
+                                                  ),
+                                                  draw: _draw(parts.length),
+                                                  open: _original.isEmpty
+                                                      ? null
+                                                      : _openSource,
                                                 ),
+                                                // Being tried: reporting the
+                                                // card under the source it
+                                                // would be checked against
+                                                // (source_foot.dart), with A
+                                                // and with D.
+                                                if (sourceFoot ==
+                                                        SourceFoot.line ||
+                                                    sourceFoot ==
+                                                        SourceFoot.links) ...[
+                                                  const SizedBox(height: 10),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional.only(
+                                                          start: 4,
+                                                        ),
+                                                    child: ReportLine(
+                                                      key: const ValueKey(
+                                                        'deeper-report',
+                                                      ),
+                                                      pill: pill,
+                                                    ),
+                                                  ),
+                                                ],
                                               ],
-                                            ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      if (ai) ...[
-                                        const SizedBox(height: 26),
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: 6,
+                                        if (ai) ...[
+                                          const SizedBox(height: 26),
+                                          const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 6,
+                                            ),
+                                            child: DeeperAiNote(),
                                           ),
-                                          child: DeeperAiNote(),
-                                        ),
+                                        ],
                                       ],
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
