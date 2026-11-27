@@ -44,14 +44,16 @@ class SkillTally {
 /// Every skill as the reader's answers have it, the ranked first, strongest
 /// first (of two as strong, the one with more answers, then What to learn's
 /// order), and after them the ones with too few answers, in that order.
-/// Only the answers made before [before], a date key, when it is given.
-List<SkillTally> skillTallies(AppState app, {String? before}) {
+/// Only the answers made before [before] and from [from] on, date keys, when
+/// they are given; an answer kept without its day is from before them all.
+List<SkillTally> skillTallies(AppState app, {String? before, String? from}) {
   final Map<Skill, int> answers = {for (final Skill s in Skill.values) s: 0};
   final Map<Skill, int> right = {for (final Skill s in Skill.values) s: 0};
   for (final Judgement j in app.judgements) {
     final String? id = j.pillId;
     if (id == null) continue;
     if (before != null && (j.on ?? '').compareTo(before) >= 0) continue;
+    if (from != null && (j.on ?? '').compareTo(from) < 0) continue;
     final Pill? p = PillBank.byId(id);
     if (p == null || !p.isGraded) continue;
     for (final Skill s in Skill.values) {
@@ -247,7 +249,7 @@ class WeekFocus {
   final DateTime start;
 
   /// Whether the reader's answers chose it: the aim's skill they got most
-  /// wrong before the week began.
+  /// wrong in the two weeks before this one.
   final bool chosen;
 
   /// The week before.
@@ -259,10 +261,11 @@ class WeekFocus {
 
 /// The week's skill for the week of [on] (today unless given). On the free
 /// plan the aim's four in turn, a week each, the same for every reader with
-/// that aim; on Astute+ the one of them the reader got most wrong before
-/// the week began, once one has enough answers behind it, and the turn
-/// until then. Worked out from answers made before the week, so it holds
-/// still all week.
+/// that aim; on Astute+ the one of them the reader got most wrong in the two
+/// weeks before, so a week trained well lets the next weakest have its
+/// turn; with too few answers in them, in all the weeks before; with too few
+/// in those, the turn. Worked out from answers made before the week, so it
+/// holds still all week.
 WeekFocus weekFocusOf(AppState app, {DateTime? on}) {
   final DateTime start = weekStartOf(on ?? app.today);
   final String key =
@@ -272,13 +275,24 @@ WeekFocus weekFocusOf(AppState app, {DateTime? on}) {
   final List<Skill> turn = aimSkills(Goal.of(app.goal));
   WeekFocus? found;
   if (app.isPlus) {
-    final List<SkillTally> ranked = [
-      for (final SkillTally t in skillTallies(app, before: dateKey(start)))
-        if (t.ranked && turn.contains(t.skill)) t,
-    ];
-    // Ranked strongest first: the weakest is the last.
-    if (ranked.length > 1) {
-      found = WeekFocus(ranked.last.skill, start: start, chosen: true);
+    final String before = dateKey(start);
+    final String twoWeeks = dateKey(
+      DateTime(start.year, start.month, start.day - 14),
+    );
+    for (final String? from in [twoWeeks, null]) {
+      final List<SkillTally> ranked = [
+        for (final SkillTally t in skillTallies(
+          app,
+          before: before,
+          from: from,
+        ))
+          if (t.ranked && turn.contains(t.skill)) t,
+      ];
+      // Ranked strongest first: the weakest is the last.
+      if (ranked.length > 1) {
+        found = WeekFocus(ranked.last.skill, start: start, chosen: true);
+        break;
+      }
     }
   }
   found ??= WeekFocus(
@@ -361,7 +375,9 @@ const double kFocusLean = 0.8;
 
 /// [lean], the dealer's lean on the cards' tags, with E's week's skill in
 /// it: its genres leaned towards, so the day's own cards lean into the
-/// week. As it ships, and in every other look, [lean] as it was.
+/// week wherever the phone deals them (a day the server dealt is the
+/// server's, which does not know the week's skill). As it ships, and in
+/// every other look, [lean] as it was.
 Map<String, double> withFocusLean(AppState app, Map<String, double> lean) {
   if (DebugLooks.learnPicked != LearnLook.weekly) return lean;
   final Skill skill = weekFocusOf(app).skill;

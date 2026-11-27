@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/goals.dart';
 import '../../../data/learn_reading.dart';
 import '../../../data/skills.dart';
 import '../../../l10n/l10n.dart';
@@ -35,7 +36,17 @@ class FocusBlock extends ExploreBlock with SectionLayout {
     final AppState app = host.app;
     final l = context.l10n;
     final Skill skill = weekFocusOf(app).skill;
-    final List<Pill> cards = practiceCards(app, skill, count: 10);
+    // Not the cards the goal's shelf under it shows: the week's skill and
+    // the goal often share cards, and one card twice in two rows reads as
+    // a slip.
+    final Set<String> aimShows = {
+      if (Goal.of(app.goal) case final Goal aim)
+        for (final Pill p in aim.cardsFor(app.today, app.seenIds)) p.id,
+    };
+    final List<Pill> cards = [
+      for (final Pill p in practiceCards(app, skill, count: 20))
+        if (!aimShows.contains(p.id)) p,
+    ].take(10).toList();
     if (cards.isEmpty) return null;
     return ShelfFrame(
       title: l.focusShelf(l.skillName(skill.name)),
