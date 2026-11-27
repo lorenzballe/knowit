@@ -12,6 +12,14 @@
 // in tool/shots/site/ unless SHOTS says otherwise, to be looked at and not
 // kept.
 //
+// The cards in them are drawn ones where a card is shown, from the bank's
+// most beautiful drawings (tool/site/README.md): Today opens on the bridge
+// at Eshima; the answer is a drawn card turned over, the Gulf's idle ships;
+// the finished day's shelf leads with Etna's flank falling into the sea.
+// Explore is the document the build bundles, as it is on the day the
+// camera runs: Today's five at its top, and the latest news as cards, a
+// story to a card.
+//
 // Nothing in them is made up about other readers: no crowd's counts, no top
 // list (Explore shows Astute's own picks, as it does until real readers make
 // a list), and no news but the fixture written from one morning's real
@@ -71,12 +79,18 @@ final DateTime _now = DateTime.now();
 String _back(int days) =>
     dateKey(DateTime(_now.year, _now.month, _now.day - days));
 
-/// The first of a day's five, drawn: the dam poured as blocks.
-const String _drawn = 'technology-hoover-dam-blocks';
+/// The first of a day's five, drawn, from the bank's most beautiful drawings
+/// (tool/site/README.md): the steep bridge at Eshima.
+const String _drawn = 'technology-eshima-rigid-frame';
 
 /// A card in words, to be answered and turned over: what a 30% chance of
 /// rain is a chance of.
 const String _words = 'nature-forecasting-3';
+
+/// A drawn card answered: the page turned to its back, its drawing as it
+/// ends, the answer and the line to keep — the thousand ships idle in the
+/// Gulf, and what they are worth.
+const String _answered = 'economics-gulf-idle-fleet';
 
 /// A morning's five, drawn and in words, each of another subject.
 const List<String> _five = [
@@ -87,15 +101,18 @@ const List<String> _five = [
   'history-weighing-the-air',
 ];
 
-/// The five of a day already read, the first a drawing of the sea at a
-/// sunken town.
+/// The five of a day already read, all drawn, the first half of Etna's
+/// flank falling into the sea.
 const List<String> _readFive = [
-  'science-bradyseism-breathing-ground',
-  'psychology-stroop-other-way',
-  'maths-knot-tricolorability',
-  _words,
   'nature-half-mountain-tsunami',
+  'thinking-hidden-popcorn',
+  'technology-hoover-dam-blocks',
+  'history-wet-sand-sled',
+  'science-bradyseism-breathing-ground',
 ];
+
+/// The drawn cards shown turned over: their page's back, as its picture.
+final Set<String> _turned = {};
 
 /// A card whose Go deeper is written in full: its idea said simply and why
 /// it matters, from Books in pills.
@@ -140,13 +157,14 @@ void _drawnPages() {
   WebSurfaces.debugUse(
     () => FakeWebSurface(
       face: (surface) {
-        final String? id = RegExp(
-          r'<!-- site-shot ([^ ]+) -->',
-        ).firstMatch(surface.html ?? '')?.group(1);
-        final File front = File('web/cards/thumbs/large/$id-front.webp');
-        if (id == null || !front.existsSync()) return const SizedBox();
+        final String? id = RegExp(r'<!-- site-shot ([^ ]+) -->')
+            .firstMatch(surface.html ?? '')
+            ?.group(1);
+        final String side = _turned.contains(id) ? 'back' : 'front';
+        final File face = File('web/cards/thumbs/large/$id-$side.webp');
+        if (id == null || !face.existsSync()) return const SizedBox();
         return Image(
-          image: _picture(Uri.parse('/cards/thumbs/large/$id-front.webp')),
+          image: _picture(Uri.parse('/cards/thumbs/large/$id-$side.webp')),
           fit: BoxFit.fill,
         );
       },
@@ -568,6 +586,38 @@ Map<String, Object> _threeWeeks() {
   );
 }
 
+/// The morning's real paper, as the pipeline wrote it from that day's
+/// reports (tool/news/paper.json, a fixture), read at half past eight in
+/// Rome on its morning.
+void _paperOfTheMorning() {
+  final Map<String, Object?> paper = jsonDecode(
+    File('tool/news/paper.json').readAsStringSync(),
+  ) as Map<String, Object?>;
+  NewsPaper.clock = () => DateTime.utc(2026, 11, 26, 7, 30);
+  NewsPaper.adopt(paper['date'] as String?, paper['cards']! as List<Object?>);
+}
+
+/// Explore scrolled until the section keyed [key] stands [top] points under
+/// the top of the screen.
+Future<void> _scrollTo(WidgetTester tester, Key key, double top) async {
+  final Finder down = find
+      .byWidgetPredicate(
+        (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+      )
+      .first;
+  final Finder section = find.byKey(key);
+  await tester.scrollUntilVisible(section, 300, scrollable: down);
+  await _settle(tester, 6);
+  final ScrollableState list = tester.state(down);
+  list.position.jumpTo(
+    (list.position.pixels + tester.getRect(section.first).top - top).clamp(
+      0,
+      list.position.maxScrollExtent,
+    ),
+  );
+  await _settle(tester, 20);
+}
+
 void main() {
   final String out = Platform.environment['SHOTS'] ?? 'shots/site';
 
@@ -610,6 +660,14 @@ void main() {
     await shoot(tester, 'today');
   });
 
+  testWidgets('the answer: a drawn card, answered and turned', (tester) async {
+    _turned.add(_answered);
+    addTearDown(_turned.clear);
+    await open(tester, _day([_answered, ..._five.skip(1)]));
+    await _settle(tester, 10);
+    await shoot(tester, 'answer');
+  });
+
   testWidgets('the answer: a card in words, answered and turned', (
     tester,
   ) async {
@@ -629,7 +687,7 @@ void main() {
       await _settle(tester, 20);
     }
     await _settle(tester, 20);
-    await shoot(tester, 'answer');
+    await shoot(tester, 'answer-words');
   });
 
   testWidgets('go deeper: what is below the card', (tester) async {
@@ -657,6 +715,35 @@ void main() {
     await shoot(tester, 'explore');
   });
 
+  // The latest news as the app lays it now, a story to a card across the
+  // page, turned to the story of the camera's other picture of the news.
+  testWidgets('explore, at the news: a story to a card', (tester) async {
+    _paperOfTheMorning();
+    await open(tester, _day(_five, read: 2));
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')).first);
+    await _settle(tester, 24);
+    const Key news = ValueKey('section-news-today');
+    await _scrollTo(tester, news, 74);
+    final Finder pager = find
+        .descendant(
+          of: find.byKey(news),
+          matching: find.byWidgetPredicate(
+            (w) => w is Scrollable && w.axisDirection == AxisDirection.right,
+          ),
+        )
+        .first;
+    for (
+      int i = 0;
+      i < 12 &&
+          find.textContaining('Asteroid').hitTestable().evaluate().isEmpty;
+      i++
+    ) {
+      await tester.drag(pager, const Offset(-260, 0));
+      await _settle(tester, 10);
+    }
+    await shoot(tester, 'explore-news');
+  });
+
   testWidgets('explore, at the challenges', (tester) async {
     await open(tester, _day(_five, read: 2));
     await tester.tap(find.byKey(const ValueKey('tab-Explore')).first);
@@ -677,9 +764,9 @@ void main() {
 
   testWidgets('the news: a story\'s page', (tester) async {
     _hold(tester);
-    final Map<String, Object?> paper =
-        jsonDecode(File('tool/news/paper.json').readAsStringSync())
-            as Map<String, Object?>;
+    final Map<String, Object?> paper = jsonDecode(
+      File('tool/news/paper.json').readAsStringSync(),
+    ) as Map<String, Object?>;
     NewsPaper.clock = () => DateTime.utc(2026, 11, 26, 7, 30);
     NewsPaper.adopt(paper['date'] as String?, paper['cards']! as List<Object?>);
     final Pill story = NewsPaper.byId(_story)!;
@@ -773,9 +860,8 @@ void main() {
                 key: const ValueKey('picture'),
                 child: Builder(
                   builder: (context) => MediaQuery(
-                    data: MediaQuery.of(
-                      context,
-                    ).copyWith(textScaler: TextScaler.noScaling),
+                    data: MediaQuery.of(context)
+                        .copyWith(textScaler: TextScaler.noScaling),
                     child: DayPicture(
                       summary: summary,
                       five: five,
@@ -792,10 +878,7 @@ void main() {
     );
     await tester.runAsync(() async {
       final BuildContext context = tester.element(find.byType(DayPicture));
-      for (final ImageProvider picture in DayPicture.picturesOf(
-        five,
-        layout,
-      )) {
+      for (final ImageProvider picture in DayPicture.picturesOf(five, layout)) {
         await precacheImage(
           picture,
           context,

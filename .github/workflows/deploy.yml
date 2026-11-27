@@ -126,9 +126,13 @@ jobs:
           grep -o 'main.js?v=[0-9a-f]*' _site/privacy.html | head -1
 
       # The question of the day for the next two months, where the iPhone
-      # widget looks when the app has not handed it anything yet.
-      - name: Publish the widget's days
-        run: WIDGET_DAYS_OUT=_site/widget/days.json flutter test tool/widget_days.dart
+      # widget looks when the app has not handed it anything yet; and Today's
+      # five for the landing page, the five questions at the top of Explore,
+      # dealt by the app's own deal for the next four hundred days
+      # (five/days.json, and five/cards/<id>.json for what the page shows of
+      # each card). One run of the test runner for both.
+      - name: Publish the widget's days and Today's five
+        run: WIDGET_DAYS_OUT=_site/widget/days.json TODAYS_FIVE_OUT=_site/five flutter test tool/widget_days.dart tool/todays_five.dart
 
       - uses: actions/upload-pages-artifact@v3
         with:

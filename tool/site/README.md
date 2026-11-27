@@ -40,3 +40,41 @@ copy them into `site/assets/` at the size and quality the page uses:
     python3 tool/site/shots.py /some/folder
 
 The camera says in its header what each picture shows.
+
+# The cards on the first screen
+
+The phone on the landing page holds five of the bank's drawn cards on its
+shelf, going on by themselves, and four more stand around it. They are a
+new nine every day, the same for everyone that day, never a card two days
+running: the page's own script (`site/index.html`, after the phone) deals
+them from the date, out of a pool written into it, and `site/assets/main.js`
+moves them.
+
+The pool is the bank's most beautiful drawings, chosen by eye in November
+2026 from two lists: the ranking every drawn card was given against the
+owner's lessons on drawings (docs/cards/ESEMPI.md, lessons 3, 5 and 6: of
+934, one excellent and 34 good), and the cards redrawn in the waves that
+followed it, which the owner set as the level. Of those, the ones whose
+front shows the real thing big, at a glance, in the house style; then a few
+of the acceptable ones, for subjects the drawn cards rarely reach (space,
+food, sport). Cards on war, drugs or politics were left out of the first
+screen. Each entry is the card's id and a few words on what its drawing
+shows, which the page reads out to whoever cannot see it.
+
+`test/web/site_hero_test.dart` checks that every card of the pool is in the
+bank, dealt, drawn, with its pictures and its page on the site, and named
+for its subject as the page expects. To change the pool, change the list in
+the page; a card taken out of the bank fails the test until it is taken out
+of the list too.
+
+# Today's five
+
+Under the first screen the site shows Today's five: the five questions at
+the top of Explore in the app, the same on every phone that day. The deploy
+deals them with the app's own deal (`DailyDeal.five`) for every day from the
+day before it to four hundred days after, `flutter test tool/todays_five.dart`
+writing `five/days.json` (each day's five ids and its edition) and
+`five/cards/<id>.json` (what the page shows of each card). The page picks the
+reader's own date and links each question to its card's page (`/c/<id>`).
+`test/web/todays_five_test.dart` checks what the script writes against the
+deal itself, date by date.

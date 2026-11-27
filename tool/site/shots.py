@@ -30,7 +30,7 @@ SHOTS = {
     'done': ('app-day-done', PHONE),
     'explore': ('app-explore', PHONE),
     'challenges': ('app-challenges', PHONE),
-    'news': ('app-news', PHONE),
+    'explore-news': ('app-news', PHONE),
     'journey': ('app-journey', PHONE),
     'level': ('app-level', PHONE),
     'profile': ('app-profile', PHONE),
