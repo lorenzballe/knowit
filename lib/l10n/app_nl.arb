@@ -1603,5 +1603,13 @@
   "trialStepReminderLine": "{days, plural, =1{We sturen je een melding: nog 1 dag.} other{We sturen je een melding: nog {days} dagen.}}",
   "trialStepChargeLine": "Wordt elk jaar verlengd. Zeg minstens 24 uur van tevoren op en je betaalt niets.",
   "trialOfferStart": "Start de proefperiode",
-  "trialOfferFree": "Gratis doorgaan"
+  "trialOfferFree": "Gratis doorgaan",
+  "paywallStepFree": "Alles gratis",
+  "paywallStepRemind": "We herinneren je eraan",
+  "paywallChargedToday": "Vandaag afgeschreven · Altijd opzegbaar",
+  "paywallGoalTitle": "{goal, select, decide{Voor wie betere beslissingen wil nemen.} money{Voor wie zich met geld niet laat beetnemen.} people{Voor wie mensen wil begrijpen.} news{Voor wie niet intrapt op koppen.} health{Voor wie bewijs wil over gezondheid.} business{Voor wie op het werk helder wil zien.} other{Voor wie helder wil zien.}}",
+  "paywallGoalMark": "{goal, select, decide{beslissingen} money{geld} people{mensen} news{koppen.} health{gezondheid.} business{helder} other{helder}}",
+  "paywallMadeLine": "Vijf kaarten per dag uit {subjects}, op jouw niveau. Wat je mist, komt terug tot het blijft hangen. En je ziet jezelf veranderen, week na week.",
+  "subjectsTwo": "{a} en {b}",
+  "subjectsThree": "{a}, {b} en {c}"
 }

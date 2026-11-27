@@ -6702,4 +6702,56 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get trialOfferFree => '继续免费使用';
+
+  @override
+  String get paywallStepFree => '全部免费';
+
+  @override
+  String get paywallStepRemind => '我们会提醒你';
+
+  @override
+  String get paywallChargedToday => '今天扣款 · 随时可取消';
+
+  @override
+  String paywallGoalTitle(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': '给想做出更好决定的人。',
+      'money': '给在钱上不被忽悠的人。',
+      'people': '给想读懂人的人。',
+      'news': '给不被标题骗到的人。',
+      'health': '给在健康上要证据的人。',
+      'business': '给想在工作中看清楚的人。',
+      'other': '给想看清楚的人。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallGoalMark(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': '更好决定',
+      'money': '在钱上',
+      'people': '读懂人',
+      'news': '标题',
+      'health': '证据',
+      'business': '看清楚',
+      'other': '看清楚',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallMadeLine(String subjects) {
+    return '每天五张，来自$subjects，匹配你的水平。答错的会一再回来，直到你记住。你还会看到自己一周一周地变化。';
+  }
+
+  @override
+  String subjectsTwo(String a, String b) {
+    return '$a和$b';
+  }
+
+  @override
+  String subjectsThree(String a, String b, String c) {
+    return '$a、$b和$c';
+  }
 }

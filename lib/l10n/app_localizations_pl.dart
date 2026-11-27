@@ -7262,4 +7262,56 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get trialOfferFree => 'Kontynuuj za darmo';
+
+  @override
+  String get paywallStepFree => 'Wszystko za darmo';
+
+  @override
+  String get paywallStepRemind => 'Przypominamy ci';
+
+  @override
+  String get paywallChargedToday => 'Płatność dziś · Anuluj, kiedy chcesz';
+
+  @override
+  String paywallGoalTitle(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'Dla tych, którzy chcą lepiej decydować.',
+      'money': 'Dla tych, których w sprawach pieniędzy nikt nie nabierze.',
+      'people': 'Dla tych, którzy chcą rozumieć ludzi.',
+      'news': 'Dla tych, którzy nie łapią się na nagłówki.',
+      'health': 'Dla tych, którzy w sprawach zdrowia chcą dowodów.',
+      'business': 'Dla tych, którzy w pracy chcą widzieć jasno.',
+      'other': 'Dla tych, którzy chcą widzieć jasno.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallGoalMark(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'decydować.',
+      'money': 'pieniędzy',
+      'people': 'ludzi.',
+      'news': 'nagłówki.',
+      'health': 'dowodów.',
+      'business': 'jasno.',
+      'other': 'jasno.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallMadeLine(String subjects) {
+    return 'Pięć kart dziennie na twoim poziomie, z tematów: $subjects. Te, w których się mylisz, wracają, aż zostaną w głowie. I widzisz, jak się zmieniasz, tydzień po tygodniu.';
+  }
+
+  @override
+  String subjectsTwo(String a, String b) {
+    return '$a i $b';
+  }
+
+  @override
+  String subjectsThree(String a, String b, String c) {
+    return '$a, $b i $c';
+  }
 }

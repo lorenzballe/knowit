@@ -7034,4 +7034,56 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get trialOfferFree => 'Kostenlos weiter';
+
+  @override
+  String get paywallStepFree => 'Alles gratis';
+
+  @override
+  String get paywallStepRemind => 'Wir erinnern dich';
+
+  @override
+  String get paywallChargedToday => 'Abbuchung heute · Jederzeit kündbar';
+
+  @override
+  String paywallGoalTitle(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'Für alle, die besser entscheiden wollen.',
+      'money': 'Für alle, die sich beim Geld nicht reinlegen lassen.',
+      'people': 'Für alle, die Menschen verstehen wollen.',
+      'news': 'Für alle, die auf keine Schlagzeile hereinfallen.',
+      'health': 'Für alle, die bei Gesundheit Belege wollen.',
+      'business': 'Für alle, die bei der Arbeit klar sehen wollen.',
+      'other': 'Für alle, die klar sehen wollen.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallGoalMark(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'besser',
+      'money': 'Geld',
+      'people': 'Menschen',
+      'news': 'Schlagzeile',
+      'health': 'Belege',
+      'business': 'klar',
+      'other': 'klar',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallMadeLine(String subjects) {
+    return 'Fünf Karten am Tag aus $subjects, auf deinem Niveau. Was du falsch hast, kommt wieder, bis es sitzt. Und du siehst dich verändern, Woche für Woche.';
+  }
+
+  @override
+  String subjectsTwo(String a, String b) {
+    return '$a und $b';
+  }
+
+  @override
+  String subjectsThree(String a, String b, String c) {
+    return '$a, $b und $c';
+  }
 }

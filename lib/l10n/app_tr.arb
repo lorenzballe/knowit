@@ -1603,5 +1603,13 @@
   "trialStepReminderLine": "{days, plural, other{Sana bir bildirim göndeririz: {days} gün kaldı.}}",
   "trialStepChargeLine": "Her yıl yenilenir. En az 24 saat önce iptal edersen hiçbir şey ödemezsin.",
   "trialOfferStart": "Ücretsiz denemeyi başlat",
-  "trialOfferFree": "Ücretsiz devam et"
+  "trialOfferFree": "Ücretsiz devam et",
+  "paywallStepFree": "Her şey ücretsiz",
+  "paywallStepRemind": "Sana hatırlatırız",
+  "paywallChargedToday": "Bugün ücretlendirilir · İstediğin zaman iptal et",
+  "paywallGoalTitle": "{goal, select, decide{Daha iyi karar vermek isteyenler için.} money{Para konusunda kandırılmayanlar için.} people{İnsanları anlamak isteyenler için.} news{Manşetlere kanmayanlar için.} health{Sağlıkta kanıt isteyenler için.} business{İşte net görmek isteyenler için.} other{Net görmek isteyenler için.}}",
+  "paywallGoalMark": "{goal, select, decide{karar} money{Para} people{İnsanları} news{Manşetlere} health{kanıt} business{net} other{Net}}",
+  "paywallMadeLine": "{subjects} konularından, seviyende günde beş kart. Kaçırdıkların, akılda kalana kadar geri gelir. Ve hafta hafta değiştiğini görürsün.",
+  "subjectsTwo": "{a} ve {b}",
+  "subjectsThree": "{a}, {b} ve {c}"
 }

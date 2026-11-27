@@ -1603,5 +1603,13 @@
   "trialStepReminderLine": "{days, plural, other{通知でお知らせします：残り{days}日。}}",
   "trialStepChargeLine": "毎年自動で更新されます。24時間前までにキャンセルすれば、料金はかかりません。",
   "trialOfferStart": "無料トライアルを始める",
-  "trialOfferFree": "無料で続ける"
+  "trialOfferFree": "無料で続ける",
+  "paywallStepFree": "すべて無料",
+  "paywallStepRemind": "お知らせします",
+  "paywallChargedToday": "本日請求 · いつでもキャンセル可能",
+  "paywallGoalTitle": "{goal, select, decide{もっと良い決断をしたい人へ。} money{お金でだまされたくない人へ。} people{人を理解したい人へ。} news{見出しにだまされない人へ。} health{健康について根拠を求める人へ。} business{仕事で物事をはっきり見たい人へ。} other{物事をはっきり見たい人へ。}}",
+  "paywallGoalMark": "{goal, select, decide{良い決断} money{お金} people{人を理解} news{見出し} health{根拠} business{はっきり} other{はっきり}}",
+  "paywallMadeLine": "{subjects}から、あなたのレベルで毎日5枚。間違えたカードは、身につくまで戻ってきます。そして、週ごとに自分の変化が見えます。",
+  "subjectsTwo": "{a}と{b}",
+  "subjectsThree": "{a}、{b}、{c}"
 }

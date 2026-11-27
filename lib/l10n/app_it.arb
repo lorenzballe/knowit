@@ -1603,5 +1603,13 @@
   "trialStepReminderLine": "{days, plural, =1{Ti mandiamo una notifica: manca 1 giorno.} other{Ti mandiamo una notifica: mancano {days} giorni.}}",
   "trialStepChargeLine": "Si rinnova ogni anno. Disdici almeno 24 ore prima e non paghi nulla.",
   "trialOfferStart": "Inizia la prova",
-  "trialOfferFree": "Continua gratis"
+  "trialOfferFree": "Continua gratis",
+  "paywallStepFree": "Tutto gratis",
+  "paywallStepRemind": "Te lo ricordiamo",
+  "paywallChargedToday": "Addebito oggi · Disdici quando vuoi",
+  "paywallGoalTitle": "{goal, select, decide{Per chi vuole decidere meglio.} money{Per chi non si fa fregare sui soldi.} people{Per chi vuole capire le persone.} news{Per chi non abbocca ai titoli.} health{Per chi sulla salute vuole le prove.} business{Per chi al lavoro vuole vederci chiaro.} other{Per chi vuole vederci chiaro.}}",
+  "paywallGoalMark": "{goal, select, decide{meglio.} money{soldi.} people{persone.} news{titoli.} health{prove.} business{chiaro.} other{chiaro.}}",
+  "paywallMadeLine": "Cinque carte al giorno di {subjects}, al tuo livello. Quelle che sbagli tornano finché non restano. E vedi come cambi, settimana per settimana.",
+  "subjectsTwo": "{a} e {b}",
+  "subjectsThree": "{a}, {b} e {c}"
 }

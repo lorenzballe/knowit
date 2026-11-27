@@ -42,6 +42,25 @@ enum ShareDayPick {
   d,
 }
 
+/// Which paywall the developer tools put on screen, by the letter the owner
+/// knows it by (lib/screens/paywall_looks.dart): A as it ships, or one of
+/// the three prototypes.
+enum PaywallLook {
+  /// The paywall as it ships.
+  a,
+
+  /// A, with the product in it: real cards in place of the drawn marks, the
+  /// free days as the days they go by, and the plans.
+  b,
+
+  /// B, opening on what the reader said they want and the subjects they
+  /// chose.
+  c,
+
+  /// B in two steps: what Astute+ is, then the plans over it.
+  d,
+}
+
 /// What to learn, three other ways, as the developer tools try them beside
 /// the one that ships (lib/widgets/learn_looks.dart): the owner did not
 /// believe in twelve skills, each with a score, a mark on the cards and a
@@ -72,9 +91,9 @@ enum LearnLook {
 /// Looks the developer tools let a phone try on, so the owner can compare
 /// on his own phone what only pictures showed him before: the finished day
 /// with no row over its card, the profile's other tops, where the day is
-/// sent from, and What to learn three other ways. Changed from the debug
-/// section at the foot of the profile, kept on the phone, and listened to
-/// where each is drawn, so a change shows at once.
+/// sent from, What to learn three other ways, and the paywall's prototypes.
+/// Changed from the debug section at the foot of the profile, kept on the
+/// phone, and listened to where each is drawn, so a change shows at once.
 ///
 /// Read only while the tools are on ([debugToolsOn]): a look kept by a
 /// TestFlight build is still on the phone when the App Store build is
@@ -83,6 +102,7 @@ abstract final class DebugLooks {
   static const String _kNoTopRow = 'knowit.debug.todayNoTopRow';
   static const String _kProfileTop = 'knowit.debug.profileTop';
   static const String _kShareDay = 'knowit.debug.shareDay';
+  static const String _kPaywall = 'knowit.debug.paywallLook';
   static const String _kLearn = 'knowit.debug.learn';
 
   /// The finished day with no row over its shelf, as kept.
@@ -95,6 +115,11 @@ abstract final class DebugLooks {
   /// Where the finished day is sent from, as kept.
   static final ValueNotifier<ShareDayPick> shareDay =
       ValueNotifier<ShareDayPick>(ShareDayPick.a);
+
+  /// The paywall, as kept.
+  static final ValueNotifier<PaywallLook> paywall = ValueNotifier<PaywallLook>(
+    PaywallLook.a,
+  );
 
   /// What to learn's look, as kept.
   static final ValueNotifier<LearnLook> learn = ValueNotifier<LearnLook>(
@@ -114,6 +139,11 @@ abstract final class DebugLooks {
   static ShareDayPick get shareDayPicked =>
       debugToolsOn ? shareDay.value : ShareDayPick.a;
 
+  /// The paywall as picked for this run: A, as it ships, unless the tools
+  /// are on and a prototype was picked.
+  static PaywallLook get paywallPicked =>
+      debugToolsOn ? paywall.value : PaywallLook.a;
+
   /// What to learn's look for this run: as it ships, unless the tools are
   /// on and another was picked.
   static LearnLook get learnPicked =>
@@ -128,9 +158,19 @@ abstract final class DebugLooks {
     shareDay.value =
         ShareDayPick.values.asNameMap()[prefs.getString(_kShareDay)] ??
         ShareDayPick.a;
+    paywall.value =
+        PaywallLook.values.asNameMap()[prefs.getString(_kPaywall)] ??
+        PaywallLook.a;
     learn.value =
         LearnLook.values.asNameMap()[prefs.getString(_kLearn)] ??
         LearnLook.today;
+  }
+
+  /// Picks the paywall, and keeps it so.
+  static Future<void> setPaywall(PaywallLook look) async {
+    paywall.value = look;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_kPaywall, look.name);
   }
 
   /// Turns the finished day's top row off, or back on, and keeps it so.
@@ -172,6 +212,9 @@ abstract final class DebugLooks {
     if (shareDay.value != ShareDayPick.a) {
       await prefs.setString(_kShareDay, shareDay.value.name);
     }
+    if (paywall.value != PaywallLook.a) {
+      await prefs.setString(_kPaywall, paywall.value.name);
+    }
     if (learn.value != LearnLook.today) {
       await prefs.setString(_kLearn, learn.value.name);
     }
@@ -183,6 +226,7 @@ abstract final class DebugLooks {
     noTopRow.value = false;
     profileTop.value = ProfileTopPick.auto;
     shareDay.value = ShareDayPick.a;
+    paywall.value = PaywallLook.a;
     learn.value = LearnLook.today;
   }
 }

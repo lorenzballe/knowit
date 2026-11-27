@@ -6900,4 +6900,57 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get trialOfferFree => 'Ücretsiz devam et';
+
+  @override
+  String get paywallStepFree => 'Her şey ücretsiz';
+
+  @override
+  String get paywallStepRemind => 'Sana hatırlatırız';
+
+  @override
+  String get paywallChargedToday =>
+      'Bugün ücretlendirilir · İstediğin zaman iptal et';
+
+  @override
+  String paywallGoalTitle(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'Daha iyi karar vermek isteyenler için.',
+      'money': 'Para konusunda kandırılmayanlar için.',
+      'people': 'İnsanları anlamak isteyenler için.',
+      'news': 'Manşetlere kanmayanlar için.',
+      'health': 'Sağlıkta kanıt isteyenler için.',
+      'business': 'İşte net görmek isteyenler için.',
+      'other': 'Net görmek isteyenler için.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallGoalMark(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'karar',
+      'money': 'Para',
+      'people': 'İnsanları',
+      'news': 'Manşetlere',
+      'health': 'kanıt',
+      'business': 'net',
+      'other': 'Net',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallMadeLine(String subjects) {
+    return '$subjects konularından, seviyende günde beş kart. Kaçırdıkların, akılda kalana kadar geri gelir. Ve hafta hafta değiştiğini görürsün.';
+  }
+
+  @override
+  String subjectsTwo(String a, String b) {
+    return '$a ve $b';
+  }
+
+  @override
+  String subjectsThree(String a, String b, String c) {
+    return '$a, $b ve $c';
+  }
 }
