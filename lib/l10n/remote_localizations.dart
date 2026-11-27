@@ -6724,4 +6724,66 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get firstOfferNotNow =>
       _words.text('firstOfferNotNow') ?? _base.firstOfferNotNow;
+
+  @override
+  String get listenEntry => _words.text('listenEntry') ?? _base.listenEntry;
+
+  @override
+  String get listenEntryShort =>
+      _words.text('listenEntryShort') ?? _base.listenEntryShort;
+
+  @override
+  String get listenTitle => _words.text('listenTitle') ?? _base.listenTitle;
+
+  @override
+  String get listenQuestion =>
+      _words.text('listenQuestion') ?? _base.listenQuestion;
+
+  @override
+  String get listenThink => _words.text('listenThink') ?? _base.listenThink;
+
+  @override
+  String get listenAnswer => _words.text('listenAnswer') ?? _base.listenAnswer;
+
+  @override
+  String get listenPreparing =>
+      _words.text('listenPreparing') ?? _base.listenPreparing;
+
+  @override
+  String get listenWaiting =>
+      _words.text('listenWaiting') ?? _base.listenWaiting;
+
+  @override
+  String get listenFreeNote =>
+      _words.text('listenFreeNote') ?? _base.listenFreeNote;
+
+  @override
+  String get listenOfferTitle =>
+      _words.text('listenOfferTitle') ?? _base.listenOfferTitle;
+
+  @override
+  String get listenOfferLine =>
+      _words.text('listenOfferLine') ?? _base.listenOfferLine;
+
+  @override
+  String get listenNothing =>
+      _words.text('listenNothing') ?? _base.listenNothing;
+
+  @override
+  String get listenCardUnavailable =>
+      _words.text('listenCardUnavailable') ?? _base.listenCardUnavailable;
+
+  @override
+  String get listenUnavailable =>
+      _words.text('listenUnavailable') ?? _base.listenUnavailable;
+
+  @override
+  String get listenDone => _words.text('listenDone') ?? _base.listenDone;
+
+  @override
+  String get listenAgain => _words.text('listenAgain') ?? _base.listenAgain;
+
+  @override
+  String get listenNextCard =>
+      _words.text('listenNextCard') ?? _base.listenNextCard;
 }

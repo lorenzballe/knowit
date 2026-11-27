@@ -6837,4 +6837,55 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => '暂不';
+
+  @override
+  String get listenEntry => '收听今天的五张';
+
+  @override
+  String get listenEntryShort => '收听';
+
+  @override
+  String get listenTitle => '今天的五张';
+
+  @override
+  String get listenQuestion => '问题';
+
+  @override
+  String get listenThink => '想一想…';
+
+  @override
+  String get listenAnswer => '答案';
+
+  @override
+  String get listenPreparing => '正在准备声音…';
+
+  @override
+  String get listenWaiting => '下一张卡片马上就到…';
+
+  @override
+  String get listenFreeNote => '第一张免费，其余的需要 Astute+。';
+
+  @override
+  String get listenOfferTitle => '今天其余的卡片，读给你听';
+
+  @override
+  String get listenOfferLine => '有了 Astute+，每天五张都能听，锁屏时也可以。';
+
+  @override
+  String get listenNothing => '这张卡片没有可以收听的内容';
+
+  @override
+  String get listenCardUnavailable => '暂时不可用';
+
+  @override
+  String get listenUnavailable => '暂时无法收听，请稍后再试。';
+
+  @override
+  String get listenDone => '今天的卡片都听完了。';
+
+  @override
+  String get listenAgain => '再听一遍';
+
+  @override
+  String get listenNextCard => '下一张卡片';
 }

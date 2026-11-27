@@ -1625,5 +1625,22 @@
   "firstOfferBestWhy": "{why, select, said{L’hai raccontata a qualcuno.} liked{Ti è piaciuta.} saved{L’hai salvata.} changed{Ti ha fatto cambiare idea.} other{L’hai tenuta.}}",
   "firstOfferTrialTitle": "{days, plural, =1{Astute+, gratis per un giorno} other{Astute+, gratis per {days} giorni}}",
   "firstOfferPlusLine": "Cinque carte tutte tue ogni giorno, ogni percorso e ogni libro, e i tuoi numeri settimana per settimana.",
-  "firstOfferNotNow": "Non ora"
+  "firstOfferNotNow": "Non ora",
+  "listenEntry": "Ascolta le cinque di oggi",
+  "listenEntryShort": "Ascolta",
+  "listenTitle": "Le cinque di oggi",
+  "listenQuestion": "Domanda",
+  "listenThink": "Pensaci…",
+  "listenAnswer": "Risposta",
+  "listenPreparing": "Preparo la voce…",
+  "listenWaiting": "La prossima carta sta arrivando…",
+  "listenFreeNote": "La prima carta è gratis; le altre con Astute+.",
+  "listenOfferTitle": "Le altre carte di oggi, lette per te",
+  "listenOfferLine": "Con Astute+ ascolti tutte e cinque ogni giorno, anche a schermo bloccato.",
+  "listenNothing": "Niente da ascoltare in questa carta",
+  "listenCardUnavailable": "Non disponibile adesso",
+  "listenUnavailable": "L’ascolto non è disponibile adesso. Riprova più tardi.",
+  "listenDone": "Tutte le carte di oggi, ascoltate.",
+  "listenAgain": "Ascolta di nuovo",
+  "listenNextCard": "Carta successiva"
 }

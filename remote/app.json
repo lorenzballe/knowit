@@ -5,7 +5,8 @@
   "offer.firstWeek": true,
   "offer.firstMonth": true,
   "cardAi": true,
-  "share.challenge": true
+  "share.challenge": true,
+  "listen": false
  },
  "tunables": {},
  "experiments": {}

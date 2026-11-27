@@ -7222,4 +7222,58 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Pas maintenant';
+
+  @override
+  String get listenEntry => 'Écoute les cinq du jour';
+
+  @override
+  String get listenEntryShort => 'Écouter';
+
+  @override
+  String get listenTitle => 'Les cinq du jour';
+
+  @override
+  String get listenQuestion => 'Question';
+
+  @override
+  String get listenThink => 'Réfléchis…';
+
+  @override
+  String get listenAnswer => 'Réponse';
+
+  @override
+  String get listenPreparing => 'La voix se prépare…';
+
+  @override
+  String get listenWaiting => 'La carte suivante arrive…';
+
+  @override
+  String get listenFreeNote =>
+      'La première carte est gratuite ; les autres, avec Astute+.';
+
+  @override
+  String get listenOfferTitle => 'Les autres cartes du jour, lues pour toi';
+
+  @override
+  String get listenOfferLine =>
+      'Avec Astute+, tu écoutes les cinq chaque jour, même écran verrouillé.';
+
+  @override
+  String get listenNothing => 'Rien à écouter sur cette carte';
+
+  @override
+  String get listenCardUnavailable => 'Indisponible pour l\'instant';
+
+  @override
+  String get listenUnavailable =>
+      'L\'écoute n\'est pas disponible pour l\'instant. Réessaie plus tard.';
+
+  @override
+  String get listenDone => 'Toutes les cartes du jour, écoutées.';
+
+  @override
+  String get listenAgain => 'Réécouter';
+
+  @override
+  String get listenNextCard => 'Carte suivante';
 }

@@ -107,6 +107,14 @@ dependencies:
   # Video cards: a card that is a short film, opened to the whole screen and
   # played from the site (lib/widgets/video_card.dart).
   video_player: ^2.14.1
+  # Listen: the day's five read aloud (lib/listen/). just_audio plays the
+  # day as one queue the phone itself walks through, question, pause, answer,
+  # so it goes on with the screen locked, where audioplayers above plays one
+  # sound at a time and the gap between two is when iOS stops an app in the
+  # background. audio_session tells the phone it is speech, to be played on
+  # behind the lock screen as a podcast is.
+  just_audio: ^0.10.6
+  audio_session: ^0.2.4
 
 dev_dependencies:
   flutter_test:
@@ -164,6 +172,9 @@ flutter:
     # The first frame of each video card, so its card is there at once
     # (lib/data/video_cards.dart).
     - assets/video/
+    # Listen's pause to think and its breath between cards, a few kilobytes
+    # each (tool/media/listen_tones.py).
+    - assets/audio/
     # The card kit, for free cards: the frame, the helpers, the bridge, the
     # fonts and every library a card may use, so a card's page is put
     # together on the phone and needs nothing from the network

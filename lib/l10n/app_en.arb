@@ -8049,5 +8049,73 @@
  "firstOfferNotNow": "Not now",
  "@firstOfferNotNow": {
   "description": "The first week's and the first month's page: the button that closes it, for good; a button as plain as the one that starts the trial."
+ },
+ "listenEntry": "Listen to today's five",
+ "@listenEntry": {
+  "description": "Today, at the end of the row with the day's name, while the five are read: opens Listen, the day's cards read aloud. Also said to a screen reader. The full words, where the row has room."
+ },
+ "listenEntryShort": "Listen",
+ "@listenEntryShort": {
+  "description": "The same button where the row is short: one word, beside a headphones mark. Also the eyebrow over the player."
+ },
+ "listenTitle": "Today's five",
+ "@listenTitle": {
+  "description": "The player's title: the day's five cards, read aloud one after another."
+ },
+ "listenQuestion": "Question",
+ "@listenQuestion": {
+  "description": "Beside the card being read, while its question is read aloud."
+ },
+ "listenThink": "Think it over…",
+ "@listenThink": {
+  "description": "Beside the card being read, during the pause of about four seconds after its question, with a soft tone: the moment to think of the answer."
+ },
+ "listenAnswer": "Answer",
+ "@listenAnswer": {
+  "description": "Beside the card being read, while its answer and why are read aloud."
+ },
+ "listenPreparing": "Getting the voice ready…",
+ "@listenPreparing": {
+  "description": "In the player while the first card's voice is fetched (or made, the first time anyone hears it)."
+ },
+ "listenWaiting": "The next card is on its way…",
+ "@listenWaiting": {
+  "description": "In the player when the next card's voice is still being fetched."
+ },
+ "listenFreeNote": "The first card is free; the rest come with Astute+.",
+ "@listenFreeNote": {
+  "description": "Under the player's buttons, on the free plan: the first card of the day is heard free, the others with Astute+."
+ },
+ "listenOfferTitle": "The rest of today's cards, read to you",
+ "@listenOfferTitle": {
+  "description": "On the free plan, once the free card has been heard: the headline of the offer of the rest, read aloud."
+ },
+ "listenOfferLine": "With Astute+ you hear all five every day, even with the screen locked.",
+ "@listenOfferLine": {
+  "description": "Under it: what Astute+ gives here, all five read aloud every day, and it goes on with the phone locked."
+ },
+ "listenNothing": "Nothing to hear on this card",
+ "@listenNothing": {
+  "description": "On a card in the player's list that is passed over: its words are about a drawing on its page, and mean nothing heard."
+ },
+ "listenCardUnavailable": "Not available right now",
+ "@listenCardUnavailable": {
+  "description": "On a card in the player's list that could not be had right now (the voice's limits, or the network): passed over."
+ },
+ "listenUnavailable": "Listening isn't available right now. Try again later.",
+ "@listenUnavailable": {
+  "description": "In the player when nothing can be heard right now. Calm: it is not the reader's doing."
+ },
+ "listenDone": "All of today's cards, heard.",
+ "@listenDone": {
+  "description": "In the player once every card that could be heard was."
+ },
+ "listenAgain": "Listen again",
+ "@listenAgain": {
+  "description": "Under it: plays the day's cards again from the first."
+ },
+ "listenNextCard": "Next card",
+ "@listenNextCard": {
+  "description": "Said to a screen reader on the player's button that goes on to the next card."
  }
 }

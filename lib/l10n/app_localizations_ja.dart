@@ -6839,4 +6839,55 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => '今はしない';
+
+  @override
+  String get listenEntry => '今日の5枚を聴く';
+
+  @override
+  String get listenEntryShort => '聴く';
+
+  @override
+  String get listenTitle => '今日の5枚';
+
+  @override
+  String get listenQuestion => '問い';
+
+  @override
+  String get listenThink => '考えてみて…';
+
+  @override
+  String get listenAnswer => '答え';
+
+  @override
+  String get listenPreparing => '音声を準備しています…';
+
+  @override
+  String get listenWaiting => '次のカードを準備中…';
+
+  @override
+  String get listenFreeNote => '最初の1枚は無料。残りはAstute+で。';
+
+  @override
+  String get listenOfferTitle => '今日の残りのカードを、読み上げで';
+
+  @override
+  String get listenOfferLine => 'Astute+なら毎日5枚すべてを、画面をロックしたままでも聴けます。';
+
+  @override
+  String get listenNothing => 'このカードには聴ける内容がありません';
+
+  @override
+  String get listenCardUnavailable => '今は利用できません';
+
+  @override
+  String get listenUnavailable => '今は聴くことができません。後でもう一度お試しください。';
+
+  @override
+  String get listenDone => '今日のカードをすべて聴きました。';
+
+  @override
+  String get listenAgain => 'もう一度聴く';
+
+  @override
+  String get listenNextCard => '次のカード';
 }

@@ -1625,5 +1625,22 @@
   "firstOfferBestWhy": "{why, select, said{誰かに話したカードです。} liked{気に入ったカードです。} saved{保存したカードです。} changed{考えが変わったカードです。} other{手元に残したカードです。}}",
   "firstOfferTrialTitle": "{days, plural, other{Astute+を{days}日間無料で}}",
   "firstOfferPlusLine": "毎日あなただけの5枚、すべてのパスと本、そして週ごとのあなたの数字。",
-  "firstOfferNotNow": "今はしない"
+  "firstOfferNotNow": "今はしない",
+  "listenEntry": "今日の5枚を聴く",
+  "listenEntryShort": "聴く",
+  "listenTitle": "今日の5枚",
+  "listenQuestion": "問い",
+  "listenThink": "考えてみて…",
+  "listenAnswer": "答え",
+  "listenPreparing": "音声を準備しています…",
+  "listenWaiting": "次のカードを準備中…",
+  "listenFreeNote": "最初の1枚は無料。残りはAstute+で。",
+  "listenOfferTitle": "今日の残りのカードを、読み上げで",
+  "listenOfferLine": "Astute+なら毎日5枚すべてを、画面をロックしたままでも聴けます。",
+  "listenNothing": "このカードには聴ける内容がありません",
+  "listenCardUnavailable": "今は利用できません",
+  "listenUnavailable": "今は聴くことができません。後でもう一度お試しください。",
+  "listenDone": "今日のカードをすべて聴きました。",
+  "listenAgain": "もう一度聴く",
+  "listenNextCard": "次のカード"
 }

@@ -7444,4 +7444,58 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Не сейчас';
+
+  @override
+  String get listenEntry => 'Послушай сегодняшние пять';
+
+  @override
+  String get listenEntryShort => 'Слушать';
+
+  @override
+  String get listenTitle => 'Пять карточек за сегодня';
+
+  @override
+  String get listenQuestion => 'Вопрос';
+
+  @override
+  String get listenThink => 'Подумай…';
+
+  @override
+  String get listenAnswer => 'Ответ';
+
+  @override
+  String get listenPreparing => 'Готовлю голос…';
+
+  @override
+  String get listenWaiting => 'Следующая карточка уже в пути…';
+
+  @override
+  String get listenFreeNote =>
+      'Первая карточка бесплатно, остальные — с Astute+.';
+
+  @override
+  String get listenOfferTitle => 'Остальные карточки дня, прочитанные для тебя';
+
+  @override
+  String get listenOfferLine =>
+      'С Astute+ ты слушаешь все пять каждый день, даже с заблокированным экраном.';
+
+  @override
+  String get listenNothing => 'В этой карточке нечего слушать';
+
+  @override
+  String get listenCardUnavailable => 'Сейчас недоступно';
+
+  @override
+  String get listenUnavailable =>
+      'Прослушивание сейчас недоступно. Попробуй позже.';
+
+  @override
+  String get listenDone => 'Все карточки дня прослушаны.';
+
+  @override
+  String get listenAgain => 'Послушать ещё раз';
+
+  @override
+  String get listenNextCard => 'Следующая карточка';
 }

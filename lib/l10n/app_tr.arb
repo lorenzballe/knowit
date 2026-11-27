@@ -1625,5 +1625,22 @@
   "firstOfferBestWhy": "{why, select, said{Birine anlattın.} liked{Beğendin.} saved{Kaydettin.} changed{Fikrini değiştirdi.} other{Sakladın.}}",
   "firstOfferTrialTitle": "{days, plural, =1{Astute+ bir gün ücretsiz} other{Astute+ {days} gün ücretsiz}}",
   "firstOfferPlusLine": "Her gün sana ait beş kart, her yol ve her kitap, bir de hafta hafta senin sayıların.",
-  "firstOfferNotNow": "Şimdi değil"
+  "firstOfferNotNow": "Şimdi değil",
+  "listenEntry": "Bugünkü beşi dinle",
+  "listenEntryShort": "Dinle",
+  "listenTitle": "Bugünkü beş kart",
+  "listenQuestion": "Soru",
+  "listenThink": "Bir düşün…",
+  "listenAnswer": "Cevap",
+  "listenPreparing": "Ses hazırlanıyor…",
+  "listenWaiting": "Sonraki kart yolda…",
+  "listenFreeNote": "İlk kart ücretsiz; gerisi Astute+ ile.",
+  "listenOfferTitle": "Bugünkü diğer kartlar, senin için okunuyor",
+  "listenOfferLine": "Astute+ ile her gün beşini de dinlersin, ekran kilitliyken bile.",
+  "listenNothing": "Bu kartta dinlenecek bir şey yok",
+  "listenCardUnavailable": "Şu anda kullanılamıyor",
+  "listenUnavailable": "Dinleme şu anda kullanılamıyor. Daha sonra tekrar dene.",
+  "listenDone": "Bugünkü kartların hepsi dinlendi.",
+  "listenAgain": "Yeniden dinle",
+  "listenNextCard": "Sonraki kart"
 }

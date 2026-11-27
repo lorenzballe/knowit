@@ -7135,4 +7135,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Not now';
+
+  @override
+  String get listenEntry => 'Listen to today\'s five';
+
+  @override
+  String get listenEntryShort => 'Listen';
+
+  @override
+  String get listenTitle => 'Today\'s five';
+
+  @override
+  String get listenQuestion => 'Question';
+
+  @override
+  String get listenThink => 'Think it over…';
+
+  @override
+  String get listenAnswer => 'Answer';
+
+  @override
+  String get listenPreparing => 'Getting the voice ready…';
+
+  @override
+  String get listenWaiting => 'The next card is on its way…';
+
+  @override
+  String get listenFreeNote =>
+      'The first card is free; the rest come with Astute+.';
+
+  @override
+  String get listenOfferTitle => 'The rest of today\'s cards, read to you';
+
+  @override
+  String get listenOfferLine =>
+      'With Astute+ you hear all five every day, even with the screen locked.';
+
+  @override
+  String get listenNothing => 'Nothing to hear on this card';
+
+  @override
+  String get listenCardUnavailable => 'Not available right now';
+
+  @override
+  String get listenUnavailable =>
+      'Listening isn\'t available right now. Try again later.';
+
+  @override
+  String get listenDone => 'All of today\'s cards, heard.';
+
+  @override
+  String get listenAgain => 'Listen again';
+
+  @override
+  String get listenNextCard => 'Next card';
 }

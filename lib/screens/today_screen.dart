@@ -12,6 +12,8 @@ import '../state/debug_looks.dart';
 import '../theme.dart';
 import '../data/skill_levels.dart';
 import '../data/why.dart';
+import '../listen/listen_sheet.dart';
+import '../sync/listen_client.dart';
 import '../widgets/magic_card.dart';
 import '../data/pills_repository.dart';
 import '../widgets/pill_card_stack.dart';
@@ -307,16 +309,28 @@ class _TodayScreenState extends State<TodayScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _ReadingHeader(
-            streak: app.liveStreak,
-            frozen: app.streakWasFrozen,
-            onBack: widget.onBack,
-            // Said beside the day's name — the one place on the screen with
-            // room to spare on a first morning, which has no streak to show
-            // there — so the deck below never moves to make room for it.
-            hint: _hinting && app.pillsRead == 0
-                ? context.l10n.swipeForTheNextOne
-                : null,
+          ValueListenableBuilder<bool>(
+            // The server's word that it has no key takes Listen away at
+            // once (lib/listen/listen_sheet.dart).
+            valueListenable: ListenClient.unconfigured,
+            builder: (context, _, _) => _ReadingHeader(
+              streak: app.liveStreak,
+              frozen: app.streakWasFrozen,
+              onBack: widget.onBack,
+              // Said beside the day's name — the one place on the screen
+              // with room to spare on a first morning, which has no streak
+              // to show there — so the deck below never moves to make room
+              // for it.
+              hint: _hinting && app.pillsRead == 0
+                  ? context.l10n.swipeForTheNextOne
+                  : null,
+              // The day's five read aloud, quietly at the end of the same
+              // row, near the cards and costing the deck nothing; the swipe
+              // hint has the place on the one morning it is said.
+              onListen: listenOffered(app)
+                  ? () => showListenSheet(context, app)
+                  : null,
+            ),
           ),
           const SizedBox(height: 16),
           _ProgressBars(total: app.todaysDeck.length, index: app.todayIndex),
@@ -543,85 +557,135 @@ class _ReadingHeader extends StatelessWidget {
 
   /// How the card is sent on, once, at the far end of the row.
   final String? hint;
+
+  /// Opens Listen, from its entry at the far end of the row; null where
+  /// Listen is not offered.
+  final VoidCallback? onListen;
   const _ReadingHeader({
     required this.streak,
     this.frozen = false,
     this.onBack,
     this.hint,
+    this.onListen,
   });
 
   @override
   Widget build(BuildContext context) {
+    // A long date and a streak badge do not both fit on a narrow handset.
+    // The date gives way by a point or two rather than being clipped, or
+    // overflowing, which is what it did.
+    final Widget title = FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: Alignment.centerLeft,
+      child: Text(
+        context.l10n.tabToday,
+        maxLines: 1,
+        style: AppText.display(
+          size: 20,
+          weight: FontWeight.w600,
+          spacing: -0.4,
+          color: context.p.ink,
+        ),
+      ),
+    );
+    // Nothing until there is something. A badge reading "0 days" on the
+    // morning somebody installs the app is a worse first impression than no
+    // badge at all.
+    final Widget? badge = streak <= 0
+        ? null
+        : Container(
+            padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
+            decoration: BoxDecoration(
+              color: frozen
+                  ? context.p.link.withValues(alpha: 0.22)
+                  : context.p.line,
+              borderRadius: BorderRadius.circular(999),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: frozen ? context.p.link : context.p.inverse,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  context.l10n.streakDays(streak),
+                  style: AppText.body(
+                    size: 12,
+                    weight: FontWeight.w600,
+                    color: context.p.ink,
+                  ),
+                ),
+              ],
+            ),
+          );
+    final List<Widget> back = [
+      if (onBack != null) ...[
+        BackCircle(onPressed: onBack!),
+        const SizedBox(width: 12),
+      ],
+    ];
+    // Listen, at the far end of the row: the day's name and its badge as
+    // wide as they are (at most three fifths of the row, past which the name
+    // gives way), and everything after them the entry's, which says all its
+    // words where they fit and one where they do not.
+    if (hint == null && onListen != null) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 6),
+        child: LayoutBuilder(
+          builder: (context, box) => Row(
+            children: [
+              ...back,
+              ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: box.maxWidth * 0.6),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(child: title),
+                    const SizedBox(width: 10),
+                    ?badge,
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: ListenEntry(onPressed: onListen!),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6),
       child: Row(
         children: [
-          if (onBack != null) ...[
-            BackCircle(onPressed: onBack!),
-            const SizedBox(width: 12),
-          ],
-          // A long date and a streak badge do not both fit on a narrow
-          // handset. The date gives way by a point or two rather than being
-          // clipped, or overflowing, which is what it did.
-          Flexible(
-            flex: 2,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                context.l10n.tabToday,
-                maxLines: 1,
-                style: AppText.display(
-                  size: 20,
-                  weight: FontWeight.w600,
-                  spacing: -0.4,
-                  color: context.p.ink,
-                ),
-              ),
-            ),
-          ),
+          ...back,
+          Flexible(flex: 2, child: title),
           const SizedBox(width: 10),
-          // Nothing until there is something. A badge reading "0 days" on the
-          // morning somebody installs the app is a worse first impression
-          // than no badge at all.
-          if (streak > 0)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
-              decoration: BoxDecoration(
-                color: frozen
-                    ? context.p.link.withValues(alpha: 0.22)
-                    : context.p.line,
-                borderRadius: BorderRadius.circular(999),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 6,
-                    height: 6,
-                    decoration: BoxDecoration(
-                      color: frozen ? context.p.link : context.p.inverse,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    context.l10n.streakDays(streak),
-                    style: AppText.body(
-                      size: 12,
-                      weight: FontWeight.w600,
-                      color: context.p.ink,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          ?badge,
           if (hint != null) ...[
             const SizedBox(width: 12),
             // Three parts of the row's room to the day's name's two: the
             // name keeps its size in every language, and the hint, which
             // gives way, rarely has to.
-            Expanded(flex: 3, child: _SwipeHint(text: hint!)),
+            Expanded(
+              flex: 3,
+              child: SizedBox(
+                // While Listen is offered the row keeps its entry's height,
+                // so the hint taking its place moves nothing below.
+                height: onListen == null ? null : ListenEntry.height,
+                child: _SwipeHint(text: hint!),
+              ),
+            ),
           ],
         ],
       ),
