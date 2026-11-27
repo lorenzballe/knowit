@@ -1102,12 +1102,20 @@ void main() {
       // The row opens the six, and a pick there is told.
       await tester.tap(find.byKey(const ValueKey('profile-aim-open')));
       await tester.pumpAndSettle();
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('profile-aim-money')),
+      );
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('profile-aim-money')));
       await tester.pumpAndSettle();
       expect(sink.all('goal set'), [
         {'goal': 'money', 'before': 'decide', 'from': 'profile'},
       ]);
       await tester.tap(find.byKey(const ValueKey('profile-aim-open')));
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('profile-aim-money')),
+      );
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('profile-aim-money')));
       await tester.pumpAndSettle();

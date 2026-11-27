@@ -253,8 +253,9 @@ bool _forAim(Goal aim, Pill p) => (aim.fitOf(p) ?? 2) < 2;
   return (cards: math.max(cards, answers), answers: answers, right: right);
 }
 
-/// Opens the aim's own page: its paths, the moves it trains, more of it.
-void _openAimPage(BuildContext context, AppState app, Goal aim) {
+/// Opens the aim's own page: its paths, the moves it trains, more of it;
+/// from the profile's sheet too (lib/widgets/aim_picker.dart).
+void openAimPage(BuildContext context, AppState app, Goal aim) {
   HapticFeedback.selectionClick();
   Navigator.of(context).push(
     MaterialPageRoute<void>(
@@ -433,7 +434,7 @@ class AimBox extends StatelessWidget {
         const SizedBox(height: 11),
         _ProfileCard(
           key: const ValueKey('profile-aim-card'),
-          onTap: () => _openAimPage(context, app, aim),
+          onTap: () => openAimPage(context, app, aim),
           child: _AimSummary(app: app, aim: aim, size: 21),
         ),
         if (!app.isPlus) ...[
@@ -551,7 +552,7 @@ class _AimPlus extends StatelessWidget {
         onTap: () => requirePlus(
           context,
           app,
-          () => _openAimPage(context, app, aim),
+          () => openAimPage(context, app, aim),
           source: 'paths',
         ),
         child: Padding(
@@ -652,7 +653,7 @@ class AimPanel extends StatelessWidget {
             GestureDetector(
               key: const ValueKey('journey-aim-open'),
               behavior: HitTestBehavior.opaque,
-              onTap: () => _openAimPage(context, app, aim),
+              onTap: () => openAimPage(context, app, aim),
               child: Row(
                 children: [
                   Flexible(
