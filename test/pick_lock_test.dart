@@ -15,6 +15,8 @@ import 'package:astuto/models/pill.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 
+import 'explore/core_harness.dart' show loadFonts;
+
 /// A card of the bank as the app reads it, asking how sure always ([sure]
 /// null) or never (0).
 Pill _card(String topic, String id, {double? sure}) {
@@ -120,6 +122,53 @@ void main() {
     for (final String level in ['60%', '70%', '80%', '90%']) {
       expect(tester.getCenter(find.text(level)).dy, row, reason: level);
     }
+  });
+
+  testWidgets('on a 375-point phone the five still stand in one row; where '
+      'they must wrap, at a larger text size, the step starts where the '
+      'option kept starts', (tester) async {
+    // The app's own type: whether five fit is a question of its widths.
+    await tester.runAsync(loadFonts);
+    tester.view.physicalSize = const Size(375, 667);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final Pill pill = _card('cinema', 'cinema-destroyed-4');
+    Widget phone() => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kDeckMargin),
+      child: _host(pill, {}),
+    );
+    await tester.pumpWidget(phone());
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('True'));
+    await tester.pumpAndSettle();
+    final double row = tester.getCenter(find.text('50%')).dy;
+    for (final String level in ['60%', '70%', '80%', '90%']) {
+      expect(tester.getCenter(find.text(level)).dy, row, reason: level);
+    }
+
+    tester.platformDispatcher.textScaleFactorTestValue = 1.35;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpWidget(phone());
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('True'));
+    await tester.pumpAndSettle();
+    expect(
+      tester.getCenter(find.text('90%')).dy,
+      greaterThan(tester.getCenter(find.text('50%')).dy),
+      reason: 'wrapped, at this size',
+    );
+    final double option = tester
+        .getTopLeft(
+          find
+              .ancestor(of: find.text('True'), matching: find.byType(Container))
+              .first,
+        )
+        .dx;
+    expect(
+      tester.getTopLeft(find.text('How sure are you?')).dx,
+      moreOrLessEquals(option, epsilon: 1),
+    );
   });
 
   testWidgets('a card that does not ask turns at once, the option filled', (

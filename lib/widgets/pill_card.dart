@@ -1651,10 +1651,12 @@ class _PickGroup extends StatelessWidget {
     return most;
   }
 
-  /// [child] shown to [height] of its own, from its top, and at [fade].
+  /// [child] shown to [height] of its own, from its top, and at [fade];
+  /// against the start of the card, where the option kept stands, however
+  /// narrow it sets (levels that wrap were centred, an indent of their own).
   static Widget _part(Widget child, double height, double fade) => ClipRect(
     child: Align(
-      alignment: Alignment.topCenter,
+      alignment: AlignmentDirectional.topStart,
       heightFactor: height.clamp(0.0, 1.0),
       child: Opacity(opacity: fade.clamp(0.0, 1.0), child: child),
     ),
@@ -2133,7 +2135,9 @@ class _ConfidenceStep extends StatelessWidget {
   }
 
   /// Whether the levels stand in one row at [width]: each as wide as the
-  /// others, with room either side of its words.
+  /// others, with room either side of its words. Six points a side, as the
+  /// kit's row keeps none of its own: at twenty, a 375-point phone broke the
+  /// five into three and two, with a hole on the right of the card.
   static bool oneRow(BuildContext context, double width, TextScaler scaler) {
     final int n = kConfidenceLevels.length;
     final double each = (width - _gap * (n - 1)) / n;
@@ -2141,7 +2145,7 @@ class _ConfidenceStep extends StatelessWidget {
     for (final int level in kConfidenceLevels) {
       widest = math.max(widest, _wordsWidth(context, level, scaler));
     }
-    return widest + 20 <= each;
+    return widest + 12 <= each;
   }
 
   /// How tall the step sets at [width]: the question, and the levels in a
