@@ -1143,11 +1143,17 @@ class LevelPicture extends StatelessWidget {
         borderRadius: BorderRadius.circular(26),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: _ground,
+            // The glow already laid on the black: a decoration with a
+            // gradient paints no colour, so a glow fading to nothing left
+            // cream words on the white of a sheet on paper, and on whatever
+            // a chat puts behind a picture sent.
             gradient: RadialGradient(
               center: const Alignment(0, -0.25),
               radius: 0.95,
-              colors: [_ink.withValues(alpha: 0.11), _ground.withAlpha(0)],
+              colors: [
+                Color.alphaBlend(_ink.withValues(alpha: 0.11), _ground),
+                _ground,
+              ],
             ),
           ),
           child: Padding(

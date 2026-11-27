@@ -332,6 +332,36 @@ void main() {
       gain: 34,
     );
 
+    testWidgets('the picture a level is sent as is its own black, whatever '
+        'is behind it: no part of its ground lets the page through', (
+      tester,
+    ) async {
+      // On paper, where a glow fading to nothing left cream on white.
+      await tester.pumpWidget(
+        _host(
+          SizedBox(
+            width: LevelPicture.width,
+            child: LevelPicture(moment: moment, day: DateTime(2026, 11, 27)),
+          ),
+        ),
+      );
+      await tester.pump();
+      final List<Color> ground = [
+        for (final DecoratedBox box in tester.widgetList<DecoratedBox>(
+          find.descendant(
+            of: find.byType(LevelPicture),
+            matching: find.byType(DecoratedBox),
+          ),
+        ))
+          if (box.decoration case BoxDecoration(:final Gradient gradient))
+            ...gradient.colors,
+      ];
+      expect(ground, isNotEmpty);
+      for (final Color c in ground) {
+        expect(c.a, 1.0, reason: '$c');
+      }
+    });
+
     testWidgets('the score counts up to where it stands, the name of the '
         'level, and what got the reader there', (tester) async {
       await tester.pumpWidget(_host(const LevelUpScreen(moment: moment)));
