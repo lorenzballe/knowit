@@ -245,7 +245,11 @@ void main() {
     position.jumpTo(position.pixels + tester.getRect(looks).top - 250);
     await settle(tester);
     await shoot('profile-debug');
-    // The card's foot picked: D, lit at once and kept.
+    // The card's foot, high on the screen with Profile top over it, and D
+    // picked: lit at once and kept.
+    final Finder foot = find.byKey(const ValueKey('debug-card-foot'));
+    position.jumpTo(position.pixels + tester.getRect(foot).top - 330);
+    await settle(tester);
     await tester.tap(find.byKey(const ValueKey('debug-card-foot-d')));
     await settle(tester);
     await shoot('profile-debug-d');
