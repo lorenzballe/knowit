@@ -157,7 +157,7 @@ const Turn = {
     const w = word(t);
     Kit.answer({choice: w, correct: null, sure: pct});
     Kit.$('lean').textContent = `You said: ${w}, ${pct}% sure. Nothing here is right or wrong. Here is the best of both sides.`;
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

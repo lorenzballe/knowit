@@ -180,7 +180,7 @@ const Turn = {
   const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
     if (answered) return; answered = true;
     Kit.answer({choice: choice(), correct: null, sure: pct});
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back ----------

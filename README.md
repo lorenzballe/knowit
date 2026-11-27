@@ -1674,7 +1674,12 @@ to re-earn. Debates never return: there is nothing to get right.
 ## Calibration
 
 After committing to a graded answer the card asks one more thing: how sure
-are you? Five levels, 50 to 90. Each of those is appended to a judgement log
+are you? Five levels, 50 to 90, in one row where they fit. The answer taken
+stays on the card while it asks: filled with the card's ink the instant it
+is tapped, with a tick, a press and a light tap felt, the other options
+dimmed and then folded away, nothing more taken until the card turns, which
+it does as soon as the level is said. A drawn card does the same through
+the kit (`Kit.sure`, docs/cards/kit). Each level said is appended to a judgement log
 that is never rewritten — calibration is a track record, so answering a card
 again months later is another data point, not a correction of the first. The
 profile reports the only number in the app that says something about the

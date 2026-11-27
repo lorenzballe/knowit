@@ -166,7 +166,7 @@ const Turn = {
     Kit.answer({choice, correct: null, sure});
     Kit.$('mine').textContent = `You stood: ${choice.toLowerCase()}. Here is the best case on each side.`;
     Kit.haptic('success');
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back: four people, sorted two ways ----------

@@ -158,7 +158,7 @@ gsap.registerPlugin(DrawSVGPlugin);
     const ok = p >= .8, said = word(p);
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${said[0].toUpperCase() + said.slice(1)}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

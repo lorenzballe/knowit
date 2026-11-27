@@ -221,7 +221,7 @@ const Turn = {
     const strong = document.createElement('b');
     strong.textContent = 'Quakes and ground deformation, which signal the magma rising, come only in the last 1–2 weeks.';
     pay.append(lead, strong);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back ----------

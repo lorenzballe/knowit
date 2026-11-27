@@ -169,7 +169,7 @@ const Turn = {
     const shape = ok ? 'a sudden step' : 'a gradual change';
     Kit.answer({choice: shape, correct: ok, sure: pct});
     sure.grade(ok, pct, `You drew ${shape}: ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back ----------

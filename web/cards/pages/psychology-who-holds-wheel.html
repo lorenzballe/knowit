@@ -170,7 +170,7 @@ const Turn = {
   const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
     if (locked) return; locked = true;
     Kit.answer({choice: `${towardYes()}% toward “it shows I steer my life”`, correct: null, sure: pct});
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back: one track, until the paths split ----------

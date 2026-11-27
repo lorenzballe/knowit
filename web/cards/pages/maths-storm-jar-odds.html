@@ -133,7 +133,7 @@ const Turn = {
     const ok = Math.abs(g - 64) <= 10;
     Kit.answer({choice: `${g}%`, correct: ok, sure: pct});
     sure.grade(ok, pct, `${g}%, ${ok ? 'close' : 'off'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back: 48 runs of 16 years, falling into two bins ----------

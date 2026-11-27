@@ -212,7 +212,7 @@ const Turn = {
     const ok = pick.t === 'armR';
     Kit.answer({choice: ZN[pick.t], correct: ok, sure: pct});
     sure.grade(ok, pct, `${ZN[pick.t]}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   function verdict() {

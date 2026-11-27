@@ -239,7 +239,7 @@ const Turn = {
     const ok = g >= FAR;
     Kit.answer({choice: fmt(g) + ' as much heat', correct: ok, sure: pct});
     sure.grade(ok, pct, `${fmt(g)}: ${ok ? 'far more, yes' : 'only a little more'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back: the same rails, each with its real column of heat ----------

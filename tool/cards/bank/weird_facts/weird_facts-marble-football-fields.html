@@ -222,7 +222,7 @@ const Turn = {
     const N = n * n, ok = n >= 24 && n <= 29;
     Kit.answer({choice: `${N} fields`, correct: ok, sure: pct});
     sure.grade(ok, pct, `${N} fields, ${ok ? 'close' : 'off'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back: words ----------
