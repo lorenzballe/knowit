@@ -1616,5 +1616,14 @@
   "paywallGoalMark": "{goal, select, decide{melhor.} money{dinheiro.} people{pessoas.} news{títulos.} health{saúde.} business{trabalho.} other{claro.}}",
   "paywallMadeLine": "Cinco cartas por dia de {subjects}, ao teu nível. As que falhas voltam até ficarem. E vês-te mudar, semana a semana.",
   "subjectsTwo": "{a} e {b}",
-  "subjectsThree": "{a}, {b} e {c}"
+  "subjectsThree": "{a}, {b} e {c}",
+  "firstWeekTitle": "A tua primeira semana",
+  "firstMonthTitle": "O teu primeiro mês",
+  "firstOfferDays": "{n, plural, =1{Um dia de leitura} other{{n} dias de leitura}}",
+  "firstWeekBest": "A melhor carta da semana",
+  "firstMonthBest": "A melhor carta do mês",
+  "firstOfferBestWhy": "{why, select, said{Contaste-a a alguém.} liked{Gostaste dela.} saved{Guardaste-a.} changed{Fez-te mudar de ideias.} other{Ficaste com ela.}}",
+  "firstOfferTrialTitle": "{days, plural, =1{Astute+, grátis durante um dia} other{Astute+, grátis durante {days} dias}}",
+  "firstOfferPlusLine": "Cinco cartas tuas todos os dias, cada percurso e cada livro, e os teus números semana a semana.",
+  "firstOfferNotNow": "Agora não"
 }

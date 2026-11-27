@@ -7137,4 +7137,57 @@ class AppLocalizationsDe extends AppLocalizations {
   String subjectsThree(String a, String b, String c) {
     return '$a, $b und $c';
   }
+
+  @override
+  String get firstWeekTitle => 'Deine erste Woche';
+
+  @override
+  String get firstMonthTitle => 'Dein erster Monat';
+
+  @override
+  String firstOfferDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n Tage gelesen',
+      one: 'Ein Tag gelesen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstWeekBest => 'Die beste Karte der Woche';
+
+  @override
+  String get firstMonthBest => 'Die beste Karte des Monats';
+
+  @override
+  String firstOfferBestWhy(String why) {
+    String _temp0 = intl.Intl.selectLogic(why, {
+      'said': 'Du hast jemandem davon erzählt.',
+      'liked': 'Sie hat dir gefallen.',
+      'saved': 'Du hast sie gespeichert.',
+      'changed': 'Sie hat deine Meinung geändert.',
+      'other': 'Du hast sie behalten.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String firstOfferTrialTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+, $days Tage kostenlos',
+      one: 'Astute+, einen Tag kostenlos',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstOfferPlusLine =>
+      'Jeden Tag fünf eigene Karten, jeder Pfad und jedes Buch und deine Zahlen Woche für Woche.';
+
+  @override
+  String get firstOfferNotNow => 'Nicht jetzt';
 }

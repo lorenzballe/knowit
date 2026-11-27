@@ -2,6 +2,8 @@
  "gate": null,
  "flags": {
   "trial.firstRun": true,
+  "offer.firstWeek": true,
+  "offer.firstMonth": true,
   "cardAi": true,
   "share.challenge": true
  },

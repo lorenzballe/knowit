@@ -6,11 +6,13 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "50ec9041d0c59826",
+ "hash": "b9bfb63c5b145aef",
  "app": {
   "gate": null,
   "flags": {
    "trial.firstRun": true,
+   "offer.firstWeek": true,
+   "offer.firstMonth": true,
    "cardAi": true,
    "share.challenge": true
   },

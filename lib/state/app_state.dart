@@ -100,6 +100,11 @@ class AppState extends ChangeNotifier {
   /// The day the first run last offered the free trial (see
   /// [trialOfferedOn]).
   static const _kTrialOfferedOn = 'knowit.trialOfferedOn';
+
+  /// The days the first week's page and the first month's went up (see
+  /// [firstWeekOfferedOn]).
+  static const _kFirstWeekOfferedOn = 'knowit.firstWeekOfferedOn';
+  static const _kFirstMonthOfferedOn = 'knowit.firstMonthOfferedOn';
   static const _kTopics = 'knowit.topics';
   static const _kTopicWeights = 'knowit.topicWeights';
   static const _kGoal = 'knowit.goal';
@@ -640,6 +645,8 @@ class AppState extends ChangeNotifier {
 
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
     trialOfferedOn = _prefs.getString(_kTrialOfferedOn);
+    firstWeekOfferedOn = _prefs.getString(_kFirstWeekOfferedOn);
+    firstMonthOfferedOn = _prefs.getString(_kFirstMonthOfferedOn);
     // A reader not yet through the first run is new, and opens on the cards
     // chosen for a first impression; one who was through it before this
     // was kept is dealt as they always were.
@@ -2612,6 +2619,62 @@ class AppState extends ChangeNotifier {
     await markReadElsewhere(pillId);
   }
 
+  // ── The first week's page, and the first month's ──────────────────────
+
+  /// The first week's page (`offer.firstWeek`): at the end of the seventh
+  /// day the five are finished, a reader on the free plan who never had a
+  /// trial is shown what their first week came to, in their own numbers,
+  /// and offered the year's free days under them, once
+  /// (lib/state/first_offers.dart says when, lib/screens/first_offer.dart
+  /// shows it). Off as built: the finished day is what it always was.
+  static const RemoteFlag kFirstWeekOfferFlag = RemoteFlag(
+    'offer.firstWeek',
+    fallback: false,
+  );
+
+  /// Its twin a month after the install (`offer.firstMonth`), with the
+  /// month's numbers. Off as built.
+  static const RemoteFlag kFirstMonthOfferFlag = RemoteFlag(
+    'offer.firstMonth',
+    fallback: false,
+  );
+
+  /// Whether the server has the first week's page on for this reader.
+  bool get firstWeekOfferOn => kFirstWeekOfferFlag.on(_here);
+
+  /// Whether the server has the first month's page on for this reader.
+  bool get firstMonthOfferOn => kFirstMonthOfferFlag.on(_here);
+
+  /// The day the first week's page went up, as a date key; null when it
+  /// never has. Noted as it goes up, before any answer, and kept for the
+  /// phone through a sign-out, like [trialOfferedOn]: the page is put once
+  /// on a phone, and "Not now" closes it for good.
+  String? firstWeekOfferedOn;
+
+  /// The same for the first month's page.
+  String? firstMonthOfferedOn;
+
+  /// Whether the first week's page or the first month's went up today. A
+  /// day has one full-screen moment at most, and the evening one of them
+  /// rises asks nothing else: the account's, the place's and the widget's
+  /// sheets wait for another evening.
+  bool get firstOfferRoseToday {
+    final String day = dateKey(today);
+    return firstWeekOfferedOn == day || firstMonthOfferedOn == day;
+  }
+
+  /// Notes the first week's page as it goes up.
+  Future<void> notedFirstWeekOffered() async {
+    firstWeekOfferedOn = dateKey(today);
+    await _prefs.setString(_kFirstWeekOfferedOn, firstWeekOfferedOn!);
+  }
+
+  /// Notes the first month's page as it goes up.
+  Future<void> notedFirstMonthOffered() async {
+    firstMonthOfferedOn = dateKey(today);
+    await _prefs.setString(_kFirstMonthOfferedOn, firstMonthOfferedOn!);
+  }
+
   /// The first morning, dealt again now that the reader has said what they
   /// want. It was dealt when the app opened, before the first run asked
   /// anything, so every new reader of a date met the same five whatever
@@ -3654,6 +3717,12 @@ class AppState extends ChangeNotifier {
     // a day, whoever runs it.
     final String? offered = trialOfferedOn;
     if (offered != null) await _prefs.setString(_kTrialOfferedOn, offered);
+    // And the days the first week's page and the first month's went up:
+    // once each on this phone, whoever reads on it.
+    final String? week = firstWeekOfferedOn;
+    if (week != null) await _prefs.setString(_kFirstWeekOfferedOn, week);
+    final String? month = firstMonthOfferedOn;
+    if (month != null) await _prefs.setString(_kFirstMonthOfferedOn, month);
     // So do the looks the developer tools are trying on this phone.
     await DebugLooks.keep(_prefs);
     // The clear above took the reader's own answer to "measure this?" with
@@ -3866,9 +3935,14 @@ class AppState extends ChangeNotifier {
   /// accord: a day just finished, the [kWidgetAskDays]th or later, and the
   /// sheet never put. A widget on the home screen is the day's first card
   /// seen without opening anything, every morning; built, and never
-  /// offered, it was found only by readers who went looking.
+  /// offered, it was found only by readers who went looking. Not on the
+  /// evening the first week's page or the first month's rose
+  /// ([firstOfferRoseToday]): that evening asks nothing more.
   bool get shouldAskForWidget =>
-      !widgetAsked && dayClosed && completedDates.length >= kWidgetAskDays;
+      !widgetAsked &&
+      dayClosed &&
+      completedDates.length >= kWidgetAskDays &&
+      !firstOfferRoseToday;
 
   /// The days finished before the widget is offered: the second, once the
   /// first day's own questions — the reminder, the account — have had theirs.
@@ -3923,8 +3997,13 @@ class AppState extends ChangeNotifier {
   /// first hear an account exists. main.dart chooses the moment, after the
   /// reminder sheet, and only where a sign-in can run. The server can hold
   /// the offer back ([kAccountOfferFlag]); Profile's row is always there.
+  /// Not on the evening the first week's page or the first month's rose
+  /// ([firstOfferRoseToday]).
   bool get shouldOfferAccount =>
-      !accountOffered && cameBack && kAccountOfferFlag.on(_here);
+      !accountOffered &&
+      cameBack &&
+      !firstOfferRoseToday &&
+      kAccountOfferFlag.on(_here);
 
   /// The account's sheet, held back from the server (`account.offer`) —
   /// for a day the sign-in itself is down, say. On as built.
@@ -4028,10 +4107,12 @@ class AppState extends ChangeNotifier {
   /// reader has no place, has never been asked by the system, and has
   /// finished their second day — or said "Not now" once, has finished a
   /// seventh, and a day since — the two days as the server may move them.
-  /// main.dart chooses the moment.
+  /// main.dart chooses the moment. Not on the evening the first week's page
+  /// or the first month's rose ([firstOfferRoseToday]).
   bool get shouldAskForPlace {
     if (place != null || locationPermission != kLocationNotAsked) return false;
     if (!kPlaceAskFlag.on(_here)) return false;
+    if (firstOfferRoseToday) return false;
     final int days = completedDates.length;
     if (placeAsks == 0) return days >= kPlaceFirstAskKnob.value;
     if (placeAsks >= kPlaceAsksAllowed) return false;

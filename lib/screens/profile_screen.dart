@@ -15,6 +15,7 @@ import '../legal.dart';
 import '../models/place.dart';
 import '../state/app_state.dart';
 import '../state/debug_looks.dart';
+import '../state/first_offers.dart' show FirstOffer;
 import '../state/music_sound.dart';
 import '../state/progress.dart' show kCalibrationFloor;
 import '../sync/identity.dart';
@@ -804,6 +805,23 @@ class ProfileScreen extends StatelessWidget {
                 MaterialPageRoute<void>(
                   builder: (_) => PaywallScreen(app: app, source: 'debug'),
                 ),
+              ),
+            ),
+            // The first week's page and the first month's, with sample
+            // numbers, on any plan: only looked at, nothing kept or
+            // counted (lib/state/first_offers.dart says when they come).
+            _LinkRow(
+              key: const ValueKey('debug-first-week'),
+              label: 'Preview: your first week',
+              onTap: () => Navigator.of(context, rootNavigator: true).push(
+                FirstOfferScreen.route(app, FirstOffer.week, preview: true),
+              ),
+            ),
+            _LinkRow(
+              key: const ValueKey('debug-first-month'),
+              label: 'Preview: your first month',
+              onTap: () => Navigator.of(context, rootNavigator: true).push(
+                FirstOfferScreen.route(app, FirstOffer.month, preview: true),
               ),
             ),
             const SizedBox(height: 14),

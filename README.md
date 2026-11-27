@@ -288,6 +288,61 @@ store's own year with free days for this reader (`trialOfferDue`): no price
 written into the app stands in. `tool/trial_day_shots.dart` photographs it
 with a stand-in store at the owner's prices.
 
+**The first week, and the first month.** Readers of apps like this one start
+many trials late, a quarter of them a month or more after the install. So at
+the end of the seventh day the five are finished, a reader on the free plan
+who never had a trial sees, once, a page of their own: "Your first week",
+over the days read, and their own numbers from what the app already keeps —
+the cards read, how often they were right when they said 80% sure or more,
+the subject they answer best, the days in a row, and the week's best card if
+there is one (the card they told somebody about, else one they liked, saved,
+or that changed their mind). Under them, "Astute+, free for 14 days", what
+the free days open, and the days themselves as the paywall's rail shows
+them, each with its date — the reminder two days before the charge where the
+phone can show one, the year at the store's price — then two buttons of one
+size: the paywall's own "Try 14 days free, then €29.99/yr", so what pressing
+it costs is on what is pressed, and "Not now". It is one screen on every
+phone, made a little smaller where it nearly fits; the smallest leaves out
+the line on what the free days open, which the rail and the button say,
+rather than scroll the days out of sight. A month after the install comes
+its twin, "Your first month". Behind the server's switches `offer.firstWeek` and
+`offer.firstMonth` (off as built, on in `remote/app.json`; docs/REMOTE.md),
+and every rule in one place, `lib/state/first_offers.dart`, the page in
+`lib/screens/first_offer.dart`:
+
+- the week is seven days with the five finished, not seven in a row: the
+  streak is the crueller number, a missed day does not make a week less
+  read, and the rating prompt already waits for a week in a row. An evening
+  taken by something else moves it to the next day finished, up to the
+  tenth; past that it is gone;
+- the month is a day finished 30 to 44 days after the install, with seven
+  days of reading at least, and two weeks at least after the week's page;
+- right after the five, once the shelf has landed (`TodayScreen`), never
+  during them, and only the evening the day was finished on this phone;
+- never on Astute+, never to a reader the store ever held Astute+ for (a
+  trial or a plan, running or over: `Subscription.everHeldPlus`), and never
+  unless the store sells the year with free days to this reader. A reader the
+  store will not give them to sees no page at all, rather than the page
+  without its trial: at the end of a first week the page is an offer of free
+  days, and a price to pay today in their place would be a paywall wearing
+  the reader's numbers;
+- once each, kept for the phone through a sign-out
+  (`knowit.firstWeekOfferedOn`, `knowit.firstMonthOfferedOn`): "Not now"
+  closes it for good;
+- one full-screen moment a day: not on the day the first run offered the
+  trial, a level rose (`LevelMemory.roseOn`) or the other page rose. When a
+  level and the page fall on the same evening the level wins — it is the
+  reader's, the page is the app's, and the page can come the next day
+  finished — and a level reached later on a day the page rose waits for the
+  next calm moment;
+- one question an evening: never on the evening of the reminder sheet or the
+  store's rating prompt, and on its own evening the account's, the place's
+  and the widget's sheets wait for another.
+
+The debug section of the profile previews both pages with sample numbers
+("Preview: your first week", "Preview: your first month"), on any plan,
+counting nothing; `tool/first_offer_shots.dart` photographs them.
+
 ## Today, done
 
 The finished day is artboard 66a. The tab at rest is a shelf: the day's five
@@ -1647,7 +1702,10 @@ and *Card foot*, A line, B two lines, C buttons or D links
 (`lib/widgets/source_foot.dart`), on cards in words and on drawn ones,
 whose page is told it as `foot` as it was told the build's `SOURCE_FOOT`,
 which still sets the way when none is picked; A is the default.
-Each shows at once and is kept on the
+Under the looks, beside *Open the paywall*, *Preview: your first week* and
+*Preview: your first month* open those two pages with sample numbers, on
+either plan, keeping and counting nothing (`lib/screens/first_offer.dart`).
+Each look shows at once and is kept on the
 phone, through the wipe too; a build without the tools never reads them, so
 a look kept by a TestFlight build is nothing to the App Store build
 installed over it. It is needed in release builds, because TestFlight

@@ -7998,5 +7998,56 @@
     "type": "String"
    }
   }
+ },
+ "firstWeekTitle": "Your first week",
+ "@firstWeekTitle": {
+  "description": "The first week's page, after the five on a reader's seventh day of reading, on the free plan (offer.firstWeek): its title, over the reader's own numbers and the offer of the year's free days."
+ },
+ "firstMonthTitle": "Your first month",
+ "@firstMonthTitle": {
+  "description": "The first month's page, after the five on a day a month after the install, on the free plan (offer.firstMonth): its title."
+ },
+ "firstOfferDays": "{n, plural, =1{One day of reading} other{{n} days of reading}}",
+ "@firstOfferDays": {
+  "description": "The first week's and the first month's page: the line over the title, shown in capitals: how many days the reader finished their five.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "firstWeekBest": "The week's best card",
+ "@firstWeekBest": {
+  "description": "The first week's page, shown in capitals over one card: the card the reader did the most with this week (told somebody about it, liked it, saved it, or it changed their mind)."
+ },
+ "firstMonthBest": "The month's best card",
+ "@firstMonthBest": {
+  "description": "The first month's page: the same, for the month."
+ },
+ "firstOfferBestWhy": "{why, select, said{You told someone about it.} liked{You liked it.} saved{You saved it.} changed{It changed your mind.} other{You kept it.}}",
+ "@firstOfferBestWhy": {
+  "description": "Under that card's question: why it is the best. said: the reader marked it as said to somebody; liked: they liked it; saved: they saved it; changed: they said it changed their mind.",
+  "placeholders": {
+   "why": {
+    "type": "String"
+   }
+  }
+ },
+ "firstOfferTrialTitle": "{days, plural, =1{Astute+, free for a day} other{Astute+, free for {days} days}}",
+ "@firstOfferTrialTitle": {
+  "description": "The first week's and the first month's page: the line over the trial's days, under the reader's numbers. The word Astute+ is painted in the paywall's colours: keep it exactly 'Astute+'. days is the free days the store gives, 14.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "firstOfferPlusLine": "Five cards of your own every day, every path and book, and your numbers week by week.",
+ "@firstOfferPlusLine": {
+  "description": "Under it, one line on what Astute+ is: five cards of the reader's own every day, every path and book, and their numbers week by week."
+ },
+ "firstOfferNotNow": "Not now",
+ "@firstOfferNotNow": {
+  "description": "The first week's and the first month's page: the button that closes it, for good; a button as plain as the one that starts the trial."
  }
 }

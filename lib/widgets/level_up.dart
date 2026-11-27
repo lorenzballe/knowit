@@ -27,6 +27,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../data/levels.dart';
+import '../data/pills_repository.dart' show dateKey;
 import '../data/skills.dart';
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
@@ -63,6 +64,9 @@ bool _looking = false;
 Future<bool> showLevelUpIfDue(BuildContext context, AppState app) async {
   await _atRest(context);
   if (!context.mounted || _looking) return false;
+  // One full-screen moment a day: on the day the first week's page or the
+  // first month's rose, a level waits for the next calm moment.
+  if (app.firstOfferRoseToday) return false;
   _looking = true;
   try {
     final int? told = await LevelMemory.read();
@@ -75,6 +79,7 @@ Future<bool> showLevelUpIfDue(BuildContext context, AppState app) async {
       return false;
     }
     await LevelMemory.keep(due);
+    await LevelMemory.rose(dateKey(app.today));
     if (!context.mounted) return false;
     final LevelMoment found = LevelMoment.of(
       scoreBookOf(app),
