@@ -1011,7 +1011,12 @@ class _PillCardStackState extends State<PillCardStack>
                       },
                 skill: skill,
                 onSkill: onSkill,
-                given: controls ? given : null,
+                // A deck read again gives every card its answer, the ones
+                // under the top too: a card answered before rises already
+                // marked "yours", instead of coming up bare and getting its
+                // mark a frame later. A deck being answered keeps it to the
+                // top, where answering happens.
+                given: controls || !widget.answering ? given : null,
                 // The save and share, and the heart of a card liked, on every
                 // card in the deck, live only on the one being read: a card
                 // rises with them on it, instead of their popping in once it

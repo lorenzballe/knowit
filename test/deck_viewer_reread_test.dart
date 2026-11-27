@@ -58,6 +58,43 @@ void main() {
     expect(find.text('That was the only one'), findsOneWidget);
   });
 
+  testWidgets('read again, the card under the top shows the option taken '
+      'already, so it rises marked rather than gaining the mark a frame '
+      'late', (tester) async {
+    final List<Pill> two = PillBank.cards
+        .where((p) => !p.hasPage && p.challenge is PickOne)
+        .take(2)
+        .toList();
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    SharedPreferences.setMockInitialValues({
+      'knowit.onboarded': true,
+      'knowit.answersJson': jsonEncode({
+        for (final Pill p in two) p.id: {'r': '0', 'c': 80},
+      }),
+    });
+    final AppState app = AppState();
+    await app.init();
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.dark),
+        home: DeckViewerScreen(app: app, deck: two, title: 'Today'),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 400));
+    Finder yoursOn(Pill pill) => find.descendant(
+      of: find.byWidgetPredicate(
+        (w) => w is PillCard && w.pill.id == pill.id && !w.flipped,
+      ),
+      matching: find.text('YOURS'),
+    );
+    expect(yoursOn(two[0]), findsOneWidget);
+    expect(yoursOn(two[1]), findsOneWidget, reason: 'the card underneath');
+  });
+
   group('cards to answer again', () {
     // Two cards in words, the second read before: a book's ideas are
     // answered the way cards that came back are, and only one read before
