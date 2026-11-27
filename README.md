@@ -1554,7 +1554,7 @@ store through RevenueCat rather than from a bool the app wrote to itself.
 and restart, toggle the plan, and a readout of what the app knows about
 itself: whether Firebase started and why not, the account id, the last auth
 error, whether the store answered, and whether PostHog is sending, opted out
-or not running at all. At its head are three looks to try on the phone itself
+or not running at all. At its head are four looks to try on the phone itself
 (`lib/state/debug_looks.dart`): *Today, day read: no top row*, the finished
 day without the row over its card, so the card is bigger; *Today, day read:
 share the day*, where the finished day is sent from — A as it ships, See
@@ -1563,7 +1563,17 @@ moment, a black screen right after the five with the day's picture, "Share
 your day" and "Later", once a day and never over anything else asked that
 evening (`lib/widgets/day_moment.dart`), with a way to see it at once; D the
 day as a card after the five on the shelf, where the shelf lands the evening
-it is finished; and *Profile top*, Auto (A free · C Astute+), A, B or C.
+it is finished; *Profile top*, Auto (A free · C Astute+), A, B or C; and
+*What to learn*, three answers to the skills beside the way they ship
+(`lib/widgets/learn_looks.dart`) — A the Astute score alone, no picker, no
+marks, no skill scores, Your journey opening on the score and its level; B
+one aim, asked at the end of the first run and from the profile: where the
+reader wants to be sharper, one of the six areas the cards name on their
+backs, said in words and counts, with a shelf of it on Explore every day
+and a line on the cards dealt for it; C nothing to pick, the skills ranked
+in Your journey from the reader's answers, right answers out of those
+given, the weakest to practise on five cards, and on the free plan the
+strong point alone on the profile. The camera is `tool/learn_shots.dart`.
 Each shows at once and is kept on the
 phone, through the wipe too; a build without the tools never reads them, so
 a look kept by a TestFlight build is nothing to the App Store build

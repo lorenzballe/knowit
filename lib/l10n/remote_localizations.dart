@@ -1893,6 +1893,67 @@ class RemoteLocalizations extends AppLocalizations {
       _base.trainingMore(n);
 
   @override
+  String get aimTitle => _words.text('aimTitle') ?? _base.aimTitle;
+
+  @override
+  String get aimLine => _words.text('aimLine') ?? _base.aimLine;
+
+  @override
+  String aimWeek(int n) =>
+      _words.format('aimWeek', localeName, {'n': n}) ?? _base.aimWeek(n);
+
+  @override
+  String answersRightOf(int right, int n) =>
+      _words.format('answersRightOf', localeName, {'right': right, 'n': n}) ??
+      _base.answersRightOf(right, n);
+
+  @override
+  String get aimOpen => _words.text('aimOpen') ?? _base.aimOpen;
+
+  @override
+  String get aimPlus => _words.text('aimPlus') ?? _base.aimPlus;
+
+  @override
+  String get aimNone => _words.text('aimNone') ?? _base.aimNone;
+
+  @override
+  String get aimPick => _words.text('aimPick') ?? _base.aimPick;
+
+  @override
+  String get strengthsTitle =>
+      _words.text('strengthsTitle') ?? _base.strengthsTitle;
+
+  @override
+  String get strengthsLine =>
+      _words.text('strengthsLine') ?? _base.strengthsLine;
+
+  @override
+  String strengthsFew(String skills) =>
+      _words.format('strengthsFew', localeName, {'skills': skills}) ??
+      _base.strengthsFew(skills);
+
+  @override
+  String strengthsPractice(String skill) =>
+      _words.format('strengthsPractice', localeName, {'skill': skill}) ??
+      _base.strengthsPractice(skill);
+
+  @override
+  String get strengthsBest =>
+      _words.text('strengthsBest') ?? _base.strengthsBest;
+
+  @override
+  String get strengthsWeak =>
+      _words.text('strengthsWeak') ?? _base.strengthsWeak;
+
+  @override
+  String get strengthsLocked =>
+      _words.text('strengthsLocked') ?? _base.strengthsLocked;
+
+  @override
+  String get strengthsEmpty =>
+      _words.text('strengthsEmpty') ?? _base.strengthsEmpty;
+
+  @override
   String get scoreTitle => _words.text('scoreTitle') ?? _base.scoreTitle;
 
   @override

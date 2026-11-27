@@ -31,6 +31,7 @@ import '../data/topics.dart';
 import '../widgets/day_moment.dart';
 import '../widgets/share_day.dart';
 import '../widgets/share_sheet.dart';
+import '../widgets/learn_looks.dart' show markedSkills;
 import '../widgets/subject_icon.dart';
 import '../widgets/web/card_thumb.dart';
 import '../widgets/web/web_card_page.dart' show groundOf;
@@ -269,11 +270,12 @@ class _TodayDoneViewState extends State<TodayDoneView>
   @override
   void initState() {
     super.initState();
-    // The developer tools' "no top row", and where the day is sent from,
-    // show at once: this Today is kept alive beside the profile they are
-    // switched on.
+    // The developer tools' "no top row", where the day is sent from, and
+    // What to learn's look show at once: this Today is kept alive beside the
+    // profile they are switched on.
     DebugLooks.noTopRow.addListener(_looksChanged);
     DebugLooks.shareDay.addListener(_looksChanged);
+    DebugLooks.learn.addListener(_looksChanged);
   }
 
   void _looksChanged() {
@@ -299,6 +301,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
   void dispose() {
     DebugLooks.noTopRow.removeListener(_looksChanged);
     DebugLooks.shareDay.removeListener(_looksChanged);
+    DebugLooks.learn.removeListener(_looksChanged);
     _settle.dispose();
     super.dispose();
   }
@@ -809,7 +812,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
       glow: glow,
       saved: saved,
       liked: app.isLiked(pill.id),
-      skill: skillMarkOf(pill, app.skills),
+      skill: skillMarkOf(pill, markedSkills(app)),
       onSave: () {
         HapticFeedback.mediumImpact();
         app.toggleSaved(pill.id);
@@ -842,7 +845,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
     for (final Pill pill in deck) {
       if (pill.web == null || CardTags.knows(pill.id)) continue;
       if (!widget.app.isLiked(pill.id) &&
-          skillMarkOf(pill, widget.app.skills) == null) {
+          skillMarkOf(pill, markedSkills(widget.app)) == null) {
         continue;
       }
       CardTags.learn(pill).then((_) {

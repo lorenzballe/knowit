@@ -2084,6 +2084,80 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'Onde queres ver mais claro?';
+
+  @override
+  String get aimLine =>
+      'Escolhe um. Todos os dias há cartas para isso, e podes mudá-lo quando quiseres.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cartas para isto esta semana',
+      one: '1 carta para isto esta semana',
+      zero: 'Nenhuma carta para isto esta semana',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right certas em $n',
+      one: '1 certa em $n',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Tudo para este objetivo';
+
+  @override
+  String get aimPlus =>
+      'Com o Astute+: todos os percursos inteiros, e um treinador que trabalha nisso contigo.';
+
+  @override
+  String get aimNone =>
+      'Escolhe onde queres ver mais claro: todos os dias haverá cartas para isso.';
+
+  @override
+  String get aimPick => 'Escolher objetivo';
+
+  @override
+  String get strengthsTitle => 'Onde és forte';
+
+  @override
+  String get strengthsLine =>
+      'Dizem-no as tuas respostas, não uma escolha: onde acertas mais e onde falhas.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Ainda poucas respostas: $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return 'Pratica $skill';
+  }
+
+  @override
+  String get strengthsBest => 'O teu ponto forte';
+
+  @override
+  String get strengthsWeak => 'Onde falhas mais';
+
+  @override
+  String get strengthsLocked => 'Onde falhas mais, e o resto, com o Astute+.';
+
+  @override
+  String get strengthsEmpty =>
+      'Mais algumas respostas e verás aqui onde és forte.';
+
+  @override
   String get scoreTitle => 'Pontuação Astute';
 
   @override

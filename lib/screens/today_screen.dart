@@ -24,6 +24,7 @@ import '../widgets/day_moment.dart' show showDayMomentIfDue;
 import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
+import '../widgets/learn_looks.dart' show goalUnsaid, markedSkills;
 import 'today_done_view.dart';
 
 /// The card is the screen: dark chrome, and the deck filling everything
@@ -104,8 +105,10 @@ class _TodayScreenState extends State<TodayScreen> {
   void initState() {
     super.initState();
     // Where the day is sent from changes the shelf's count and its glow at
-    // once, from the debug section, with this Today kept alive beside it.
+    // once, from the debug section, with this Today kept alive beside it;
+    // What to learn's look, the mark on a card and the line under its head.
     DebugLooks.shareDay.addListener(_looksChanged);
+    DebugLooks.learn.addListener(_looksChanged);
   }
 
   void _looksChanged() {
@@ -115,6 +118,7 @@ class _TodayScreenState extends State<TodayScreen> {
   @override
   void dispose() {
     DebugLooks.shareDay.removeListener(_looksChanged);
+    DebugLooks.learn.removeListener(_looksChanged);
     super.dispose();
   }
 
@@ -386,7 +390,12 @@ class _TodayScreenState extends State<TodayScreen> {
                   if (cardNote(
                         context.l10n,
                         e.value,
-                        marked: skillMarkOf(e.value.pill, app.skills) != null,
+                        marked: goalUnsaid(
+                          app,
+                          marked:
+                              skillMarkOf(e.value.pill, markedSkills(app)) !=
+                              null,
+                        ),
                       )
                       case (final String line, _))
                     e.key: line,
@@ -397,7 +406,12 @@ class _TodayScreenState extends State<TodayScreen> {
                       cardNote(
                         context.l10n,
                         e.value,
-                        marked: skillMarkOf(e.value.pill, app.skills) != null,
+                        marked: goalUnsaid(
+                          app,
+                          marked:
+                              skillMarkOf(e.value.pill, markedSkills(app)) !=
+                              null,
+                        ),
                       )?.$2 ??
                       whyIcon(e.value.kind),
               },
@@ -409,10 +423,10 @@ class _TodayScreenState extends State<TodayScreen> {
               ),
               // A card that trains a skill the reader put in focus carries
               // its small mark beside the heart; a tap says what it means.
-              skillOf: (pill) => skillMarkOf(pill, app.skills),
+              skillOf: (pill) => skillMarkOf(pill, markedSkills(app)),
               // The score the answer moved, beside its verdict.
               moveOf: (pill) =>
-                  todayMoveOf(app, pill, skillMarkOf(pill, app.skills)),
+                  todayMoveOf(app, pill, skillMarkOf(pill, markedSkills(app))),
               onSkill: (pill, skill) =>
                   showSkillMarkSheet(context, app, skill, cardId: pill.id),
               answerFor: app.answerFor,

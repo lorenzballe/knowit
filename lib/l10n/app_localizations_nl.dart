@@ -2083,6 +2083,81 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'Waar wil je scherper zijn?';
+
+  @override
+  String get aimLine =>
+      'Kies er één. Elke dag zijn er kaarten voor, en je kunt het altijd wijzigen.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Deze week $n kaarten hiervoor',
+      one: 'Deze week 1 kaart hiervoor',
+      zero: 'Deze week nog geen kaart hiervoor',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right van $n goed',
+      one: '1 van $n goed',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Alles voor dit doel';
+
+  @override
+  String get aimPlus =>
+      'Met Astute+: elk pad hiervoor, compleet, en een coach die er met je aan werkt.';
+
+  @override
+  String get aimNone =>
+      'Kies waar je scherper wilt zijn: elke dag zijn er kaarten voor.';
+
+  @override
+  String get aimPick => 'Kies een doel';
+
+  @override
+  String get strengthsTitle => 'Waar je sterk bent';
+
+  @override
+  String get strengthsLine =>
+      'Uit je antwoorden, niet gekozen: waar je het vaakst goed zit en waar je misgaat.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Nog te weinig antwoorden: $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return 'Oefen $skill';
+  }
+
+  @override
+  String get strengthsBest => 'Je sterke punt';
+
+  @override
+  String get strengthsWeak => 'Waar je het vaakst misgaat';
+
+  @override
+  String get strengthsLocked =>
+      'Waar je het vaakst misgaat, en de rest, met Astute+.';
+
+  @override
+  String get strengthsEmpty =>
+      'Nog een paar antwoorden, dan zie je hier waar je sterk bent.';
+
+  @override
   String get scoreTitle => 'Astute-score';
 
   @override
