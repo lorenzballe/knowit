@@ -1625,5 +1625,22 @@
   "firstOfferBestWhy": "{why, select, said{누군가에게 이야기한 카드예요.} liked{마음에 든 카드예요.} saved{저장한 카드예요.} changed{생각을 바꿔 준 카드예요.} other{간직한 카드예요.}}",
   "firstOfferTrialTitle": "{days, plural, other{Astute+ {days}일 무료}}",
   "firstOfferPlusLine": "매일 나만의 카드 다섯 장, 모든 경로와 모든 책, 그리고 매주 쌓이는 나의 숫자.",
-  "firstOfferNotNow": "나중에"
+  "firstOfferNotNow": "나중에",
+  "listenEntry": "오늘의 다섯 장 듣기",
+  "listenEntryShort": "듣기",
+  "listenTitle": "오늘의 다섯 장",
+  "listenQuestion": "질문",
+  "listenThink": "생각해 보세요…",
+  "listenAnswer": "답",
+  "listenPreparing": "목소리를 준비하는 중…",
+  "listenWaiting": "다음 카드가 오는 중…",
+  "listenFreeNote": "첫 카드는 무료, 나머지는 Astute+로.",
+  "listenOfferTitle": "오늘의 나머지 카드를 읽어 드려요",
+  "listenOfferLine": "Astute+와 함께라면 매일 다섯 장 모두를, 화면이 잠긴 채로도 들을 수 있어요.",
+  "listenNothing": "이 카드에는 들을 내용이 없어요",
+  "listenCardUnavailable": "지금은 이용할 수 없어요",
+  "listenUnavailable": "지금은 듣기를 이용할 수 없어요. 나중에 다시 시도해 주세요.",
+  "listenDone": "오늘의 카드를 모두 들었어요.",
+  "listenAgain": "다시 듣기",
+  "listenNextCard": "다음 카드"
 }

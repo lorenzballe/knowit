@@ -1625,5 +1625,22 @@
   "firstOfferBestWhy": "{why, select, said{Ты рассказал о ней кому-то.} liked{Она тебе понравилась.} saved{Ты её сохранил.} changed{Она изменила твоё мнение.} other{Ты её сохранил.}}",
   "firstOfferTrialTitle": "{days, plural, one{Astute+ бесплатно на {days} день} few{Astute+ бесплатно на {days} дня} many{Astute+ бесплатно на {days} дней} other{Astute+ бесплатно на {days} дня}}",
   "firstOfferPlusLine": "Пять своих карточек каждый день, каждый путь и каждая книга, а ещё твои цифры неделя за неделей.",
-  "firstOfferNotNow": "Не сейчас"
+  "firstOfferNotNow": "Не сейчас",
+  "listenEntry": "Послушай сегодняшние пять",
+  "listenEntryShort": "Слушать",
+  "listenTitle": "Пять карточек за сегодня",
+  "listenQuestion": "Вопрос",
+  "listenThink": "Подумай…",
+  "listenAnswer": "Ответ",
+  "listenPreparing": "Готовлю голос…",
+  "listenWaiting": "Следующая карточка уже в пути…",
+  "listenFreeNote": "Первая карточка бесплатно, остальные — с Astute+.",
+  "listenOfferTitle": "Остальные карточки дня, прочитанные для тебя",
+  "listenOfferLine": "С Astute+ ты слушаешь все пять каждый день, даже с заблокированным экраном.",
+  "listenNothing": "В этой карточке нечего слушать",
+  "listenCardUnavailable": "Сейчас недоступно",
+  "listenUnavailable": "Прослушивание сейчас недоступно. Попробуй позже.",
+  "listenDone": "Все карточки дня прослушаны.",
+  "listenAgain": "Послушать ещё раз",
+  "listenNextCard": "Следующая карточка"
 }

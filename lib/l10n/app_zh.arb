@@ -1625,5 +1625,22 @@
   "firstOfferBestWhy": "{why, select, said{你把它讲给了别人。} liked{你喜欢这张卡片。} saved{你收藏了它。} changed{它改变了你的想法。} other{你留下了它。}}",
   "firstOfferTrialTitle": "{days, plural, other{Astute+ 免费 {days} 天}}",
   "firstOfferPlusLine": "每天五张属于你的卡片，每条路径和每本书，还有你每周的数字。",
-  "firstOfferNotNow": "暂不"
+  "firstOfferNotNow": "暂不",
+  "listenEntry": "收听今天的五张",
+  "listenEntryShort": "收听",
+  "listenTitle": "今天的五张",
+  "listenQuestion": "问题",
+  "listenThink": "想一想…",
+  "listenAnswer": "答案",
+  "listenPreparing": "正在准备声音…",
+  "listenWaiting": "下一张卡片马上就到…",
+  "listenFreeNote": "第一张免费，其余的需要 Astute+。",
+  "listenOfferTitle": "今天其余的卡片，读给你听",
+  "listenOfferLine": "有了 Astute+，每天五张都能听，锁屏时也可以。",
+  "listenNothing": "这张卡片没有可以收听的内容",
+  "listenCardUnavailable": "暂时不可用",
+  "listenUnavailable": "暂时无法收听，请稍后再试。",
+  "listenDone": "今天的卡片都听完了。",
+  "listenAgain": "再听一遍",
+  "listenNextCard": "下一张卡片"
 }

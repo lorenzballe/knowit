@@ -7182,4 +7182,58 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Niet nu';
+
+  @override
+  String get listenEntry => 'Luister naar de vijf van vandaag';
+
+  @override
+  String get listenEntryShort => 'Luisteren';
+
+  @override
+  String get listenTitle => 'De vijf van vandaag';
+
+  @override
+  String get listenQuestion => 'Vraag';
+
+  @override
+  String get listenThink => 'Denk even na…';
+
+  @override
+  String get listenAnswer => 'Antwoord';
+
+  @override
+  String get listenPreparing => 'De stem wordt klaargezet…';
+
+  @override
+  String get listenWaiting => 'De volgende kaart komt eraan…';
+
+  @override
+  String get listenFreeNote =>
+      'De eerste kaart is gratis; de rest hoort bij Astute+.';
+
+  @override
+  String get listenOfferTitle => 'De andere kaarten van vandaag, voorgelezen';
+
+  @override
+  String get listenOfferLine =>
+      'Met Astute+ hoor je elke dag alle vijf, ook met je scherm vergrendeld.';
+
+  @override
+  String get listenNothing => 'Op deze kaart valt niets te horen';
+
+  @override
+  String get listenCardUnavailable => 'Nu niet beschikbaar';
+
+  @override
+  String get listenUnavailable =>
+      'Luisteren is nu niet beschikbaar. Probeer het later opnieuw.';
+
+  @override
+  String get listenDone => 'Alle kaarten van vandaag, beluisterd.';
+
+  @override
+  String get listenAgain => 'Opnieuw luisteren';
+
+  @override
+  String get listenNextCard => 'Volgende kaart';
 }

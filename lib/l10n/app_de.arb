@@ -1625,5 +1625,22 @@
   "firstOfferBestWhy": "{why, select, said{Du hast jemandem davon erzählt.} liked{Sie hat dir gefallen.} saved{Du hast sie gespeichert.} changed{Sie hat deine Meinung geändert.} other{Du hast sie behalten.}}",
   "firstOfferTrialTitle": "{days, plural, =1{Astute+, einen Tag kostenlos} other{Astute+, {days} Tage kostenlos}}",
   "firstOfferPlusLine": "Jeden Tag fünf eigene Karten, jeder Pfad und jedes Buch und deine Zahlen Woche für Woche.",
-  "firstOfferNotNow": "Nicht jetzt"
+  "firstOfferNotNow": "Nicht jetzt",
+  "listenEntry": "Hör dir die fünf von heute an",
+  "listenEntryShort": "Anhören",
+  "listenTitle": "Die fünf von heute",
+  "listenQuestion": "Frage",
+  "listenThink": "Denk kurz nach…",
+  "listenAnswer": "Antwort",
+  "listenPreparing": "Die Stimme wird vorbereitet…",
+  "listenWaiting": "Die nächste Karte ist unterwegs…",
+  "listenFreeNote": "Die erste Karte ist gratis, die übrigen gibt es mit Astute+.",
+  "listenOfferTitle": "Die übrigen Karten von heute, vorgelesen",
+  "listenOfferLine": "Mit Astute+ hörst du jeden Tag alle fünf, auch bei gesperrtem Bildschirm.",
+  "listenNothing": "Auf dieser Karte gibt es nichts zu hören",
+  "listenCardUnavailable": "Gerade nicht verfügbar",
+  "listenUnavailable": "Vorlesen ist gerade nicht verfügbar. Versuch es später noch einmal.",
+  "listenDone": "Alle Karten von heute gehört.",
+  "listenAgain": "Noch einmal anhören",
+  "listenNextCard": "Nächste Karte"
 }

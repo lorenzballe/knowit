@@ -1625,5 +1625,22 @@
   "firstOfferBestWhy": "{why, select, said{Je hebt er iemand over verteld.} liked{Je vond hem goed.} saved{Je hebt hem bewaard.} changed{Hij veranderde je mening.} other{Je hebt hem gehouden.}}",
   "firstOfferTrialTitle": "{days, plural, =1{Astute+, een dag gratis} other{Astute+, {days} dagen gratis}}",
   "firstOfferPlusLine": "Elke dag vijf eigen kaarten, elk pad en elk boek, en je cijfers week na week.",
-  "firstOfferNotNow": "Niet nu"
+  "firstOfferNotNow": "Niet nu",
+  "listenEntry": "Luister naar de vijf van vandaag",
+  "listenEntryShort": "Luisteren",
+  "listenTitle": "De vijf van vandaag",
+  "listenQuestion": "Vraag",
+  "listenThink": "Denk even na…",
+  "listenAnswer": "Antwoord",
+  "listenPreparing": "De stem wordt klaargezet…",
+  "listenWaiting": "De volgende kaart komt eraan…",
+  "listenFreeNote": "De eerste kaart is gratis; de rest hoort bij Astute+.",
+  "listenOfferTitle": "De andere kaarten van vandaag, voorgelezen",
+  "listenOfferLine": "Met Astute+ hoor je elke dag alle vijf, ook met je scherm vergrendeld.",
+  "listenNothing": "Op deze kaart valt niets te horen",
+  "listenCardUnavailable": "Nu niet beschikbaar",
+  "listenUnavailable": "Luisteren is nu niet beschikbaar. Probeer het later opnieuw.",
+  "listenDone": "Alle kaarten van vandaag, beluisterd.",
+  "listenAgain": "Opnieuw luisteren",
+  "listenNextCard": "Volgende kaart"
 }

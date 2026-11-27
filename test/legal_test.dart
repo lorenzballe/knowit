@@ -23,6 +23,7 @@ void main() {
     for (final String processor in const [
       'Firebase',
       'Anthropic',
+      'ElevenLabs',
       'RevenueCat',
       'PostHog',
       'Apple',
@@ -111,6 +112,10 @@ void main() {
       '<p id="link">',
       '<p id="todays-five">',
       '<p id="cinque-di-oggi">',
+      // The day's cards read aloud (Listen): the card's own words go to
+      // ElevenLabs, nothing about the reader.
+      '<p id="listen">',
+      '<p id="ascolta">',
       'up to ${cap!.group(1)} characters',
       'fino a ${cap.group(1)} caratteri',
       'nothing that identifies you',

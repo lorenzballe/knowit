@@ -9875,6 +9875,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not now'**
   String get firstOfferNotNow;
+
+  /// Today, at the end of the row with the day's name, while the five are read: opens Listen, the day's cards read aloud. Also said to a screen reader. The full words, where the row has room.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to today\'s five'**
+  String get listenEntry;
+
+  /// The same button where the row is short: one word, beside a headphones mark. Also the eyebrow over the player.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen'**
+  String get listenEntryShort;
+
+  /// The player's title: the day's five cards, read aloud one after another.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s five'**
+  String get listenTitle;
+
+  /// Beside the card being read, while its question is read aloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Question'**
+  String get listenQuestion;
+
+  /// Beside the card being read, during the pause of about four seconds after its question, with a soft tone: the moment to think of the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Think it over…'**
+  String get listenThink;
+
+  /// Beside the card being read, while its answer and why are read aloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer'**
+  String get listenAnswer;
+
+  /// In the player while the first card's voice is fetched (or made, the first time anyone hears it).
+  ///
+  /// In en, this message translates to:
+  /// **'Getting the voice ready…'**
+  String get listenPreparing;
+
+  /// In the player when the next card's voice is still being fetched.
+  ///
+  /// In en, this message translates to:
+  /// **'The next card is on its way…'**
+  String get listenWaiting;
+
+  /// Under the player's buttons, on the free plan: the first card of the day is heard free, the others with Astute+.
+  ///
+  /// In en, this message translates to:
+  /// **'The first card is free; the rest come with Astute+.'**
+  String get listenFreeNote;
+
+  /// On the free plan, once the free card has been heard: the headline of the offer of the rest, read aloud.
+  ///
+  /// In en, this message translates to:
+  /// **'The rest of today\'s cards, read to you'**
+  String get listenOfferTitle;
+
+  /// Under it: what Astute+ gives here, all five read aloud every day, and it goes on with the phone locked.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ you hear all five every day, even with the screen locked.'**
+  String get listenOfferLine;
+
+  /// On a card in the player's list that is passed over: its words are about a drawing on its page, and mean nothing heard.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to hear on this card'**
+  String get listenNothing;
+
+  /// On a card in the player's list that could not be had right now (the voice's limits, or the network): passed over.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available right now'**
+  String get listenCardUnavailable;
+
+  /// In the player when nothing can be heard right now. Calm: it is not the reader's doing.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening isn\'t available right now. Try again later.'**
+  String get listenUnavailable;
+
+  /// In the player once every card that could be heard was.
+  ///
+  /// In en, this message translates to:
+  /// **'All of today\'s cards, heard.'**
+  String get listenDone;
+
+  /// Under it: plays the day's cards again from the first.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen again'**
+  String get listenAgain;
+
+  /// Said to a screen reader on the player's button that goes on to the next card.
+  ///
+  /// In en, this message translates to:
+  /// **'Next card'**
+  String get listenNextCard;
 }
 
 class _AppLocalizationsDelegate

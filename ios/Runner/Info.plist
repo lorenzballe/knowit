@@ -116,6 +116,13 @@
 	     the moment a reader taps it. -->
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Astute saves the images you choose to keep — your day, a card, your record — to your photos. It never looks at your library.</string>
+	<!-- Listen (lib/listen/): the day's five read aloud keep playing with
+	     the screen locked, as a podcast does. Audio only while the reader
+	     has started it; the app does nothing else in the background. -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 	<!-- PostHog is started from Dart, in lib/analytics.dart, because the key
 	     arrives as a dart-define at build time and this file cannot read
 	     one. Without

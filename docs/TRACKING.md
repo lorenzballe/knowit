@@ -312,6 +312,10 @@ update gate's full screens, over everything, §6.13).
 | `streak broken` | the streak is found broken | `streak_lost`, `best_streak`, `days_missed`, `freezes_left`, `is_plus` | | P |
 | `streak frozen`, `freeze earned` | a freeze covers a missed day; one is earned | `days_covered`, `freezes_left`, `freezes`, `streak_days` | | P |
 | `plus gate reached`, `plus gate left` | a reader on the free plan meets something of Astute+ | `source`, `is_plus`, `unlocked` | | P |
+| `listen started` **new** | Listen's player opens on today's five (lib/listen/, behind `listen`) | `cards`, `is_plus`, `from` (`today`) | whether the day read aloud is used, and on which plan | P |
+| `listen card heard` **new** | a card is read aloud to the end of its answer | card facts, `position`, `of`, `free` (bool: the free plan's one card of the day) | which cards are heard, and how far into the five | P |
+| `listen finished` **new** | every card that could be heard was | `heard`, `nothing` (cards with nothing to read aloud, passed over), `unavailable`, `is_plus`, `ms_listening` | | P |
+| `listen stopped` **new** | the player is closed before the end | `heard`, `at`, `of`, `phase` (`question`, `think`, `answer`, `turn`, `waiting`, `offer`, `unavailable`), `is_plus`, `ms_listening`, `why` (when nothing could be heard: `credit`, `spent`, `busy`, `storage`, `not-configured`, `later`, `audio`) | where listeners stop; `phase: offer` is the free card heard and the rest not taken. The paywall it opens says `plus gate reached` with `source: listen` | P |
 
 ### 6.4 How a card was read: `card closed` and the read facts
 
@@ -569,6 +573,9 @@ once each, one paywall.
 | Paywall, reminder, other | 4 | 4 | |
 | `$set` | 7 | 3 | coalesced, written only where changed |
 | **Total** | **99** | **141** | +42% |
+
+Listen adds two to six events to a day it is used on: started, a card heard
+per card (one on the free plan, five on Astute+), and finished or stopped.
 
 Where the reader lives adds nothing to a day: a handful of events per reader
 in all — at most two sheets of the app's own and their answers, one system

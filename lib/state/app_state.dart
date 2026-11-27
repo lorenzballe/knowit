@@ -2590,6 +2590,17 @@ class AppState extends ChangeNotifier {
   /// Whether today's five can be sent to a friend as a challenge.
   bool get shareChallengeOn => kShareChallengeFlag.on(_here);
 
+  /// Listen (`listen`): the day's five read aloud by ElevenLabs, from a
+  /// quiet entry at the end of Today's header while the five are read
+  /// (lib/listen/). The first card of a day for everybody, the rest for
+  /// Astute+. Off as built, and off in remote/app.json until the owner has
+  /// added the ElevenLabs key and its plan; a server without a key says
+  /// "not configured", and the app hides it then too.
+  static const RemoteFlag kListenFlag = RemoteFlag('listen', fallback: false);
+
+  /// Whether Listen is offered on Today, as far as the server's switch goes.
+  bool get listenOn => kListenFlag.on(_here);
+
   /// Whether the first run plays a card and offers the trial after it.
   bool get firstRunTrialOn => kFirstRunTrialFlag.on(_here);
 

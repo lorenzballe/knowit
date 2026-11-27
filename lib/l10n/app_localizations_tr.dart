@@ -7044,4 +7044,57 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => 'Şimdi değil';
+
+  @override
+  String get listenEntry => 'Bugünkü beşi dinle';
+
+  @override
+  String get listenEntryShort => 'Dinle';
+
+  @override
+  String get listenTitle => 'Bugünkü beş kart';
+
+  @override
+  String get listenQuestion => 'Soru';
+
+  @override
+  String get listenThink => 'Bir düşün…';
+
+  @override
+  String get listenAnswer => 'Cevap';
+
+  @override
+  String get listenPreparing => 'Ses hazırlanıyor…';
+
+  @override
+  String get listenWaiting => 'Sonraki kart yolda…';
+
+  @override
+  String get listenFreeNote => 'İlk kart ücretsiz; gerisi Astute+ ile.';
+
+  @override
+  String get listenOfferTitle => 'Bugünkü diğer kartlar, senin için okunuyor';
+
+  @override
+  String get listenOfferLine =>
+      'Astute+ ile her gün beşini de dinlersin, ekran kilitliyken bile.';
+
+  @override
+  String get listenNothing => 'Bu kartta dinlenecek bir şey yok';
+
+  @override
+  String get listenCardUnavailable => 'Şu anda kullanılamıyor';
+
+  @override
+  String get listenUnavailable =>
+      'Dinleme şu anda kullanılamıyor. Daha sonra tekrar dene.';
+
+  @override
+  String get listenDone => 'Bugünkü kartların hepsi dinlendi.';
+
+  @override
+  String get listenAgain => 'Yeniden dinle';
+
+  @override
+  String get listenNextCard => 'Sonraki kart';
 }

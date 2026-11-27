@@ -182,6 +182,21 @@ await check('the marks of the games a reader played are the server\'s alone, eve
   await assertFails(reader().collection('readers/anon-reader/daily').get());
 });
 
+await check('what a reader heard read aloud, and the clips, are the server\'s alone', async () => {
+  // The day's free card is what stops a second one: a phone that could
+  // write it could hear every card free.
+  const heard = `readers/anon-reader/listen/${today}`;
+  await assertFails(reader().doc(heard).set({ free: 'science-1', cards: ['science-1'] }));
+  await env.withSecurityRulesDisabled((ctx) => ctx.firestore().doc(heard).set({ free: 'science-1', cards: ['science-1'] }));
+  await assertFails(reader().doc(heard).get());
+  await assertFails(reader().doc(heard).delete());
+  await assertFails(reader().doc('listeners/anon-reader').set({ at: 1, plus: true }));
+  await assertFails(reader().doc(`listenSpend/${today}`).set({ chars: 0 }));
+  await assertFails(reader().doc(`listenSpend/${today}`).get());
+  await assertFails(reader().doc('listen/0a1b').set({ url: 'https://example.com/clip.mp3' }));
+  await assertFails(reader().doc('listen/0a1b').get());
+});
+
 await check('the rest of the rules still stand', async () => {
   await assertSucceeds(env.authenticatedContext('alice').firestore().doc('readers/alice').set({ a: 1 }));
   await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice').get());

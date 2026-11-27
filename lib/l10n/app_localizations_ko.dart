@@ -6866,4 +6866,56 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get firstOfferNotNow => '나중에';
+
+  @override
+  String get listenEntry => '오늘의 다섯 장 듣기';
+
+  @override
+  String get listenEntryShort => '듣기';
+
+  @override
+  String get listenTitle => '오늘의 다섯 장';
+
+  @override
+  String get listenQuestion => '질문';
+
+  @override
+  String get listenThink => '생각해 보세요…';
+
+  @override
+  String get listenAnswer => '답';
+
+  @override
+  String get listenPreparing => '목소리를 준비하는 중…';
+
+  @override
+  String get listenWaiting => '다음 카드가 오는 중…';
+
+  @override
+  String get listenFreeNote => '첫 카드는 무료, 나머지는 Astute+로.';
+
+  @override
+  String get listenOfferTitle => '오늘의 나머지 카드를 읽어 드려요';
+
+  @override
+  String get listenOfferLine =>
+      'Astute+와 함께라면 매일 다섯 장 모두를, 화면이 잠긴 채로도 들을 수 있어요.';
+
+  @override
+  String get listenNothing => '이 카드에는 들을 내용이 없어요';
+
+  @override
+  String get listenCardUnavailable => '지금은 이용할 수 없어요';
+
+  @override
+  String get listenUnavailable => '지금은 듣기를 이용할 수 없어요. 나중에 다시 시도해 주세요.';
+
+  @override
+  String get listenDone => '오늘의 카드를 모두 들었어요.';
+
+  @override
+  String get listenAgain => '다시 듣기';
+
+  @override
+  String get listenNextCard => '다음 카드';
 }
