@@ -8418,6 +8418,24 @@ abstract class AppLocalizations {
   /// **'Your five from today'**
   String get yourFiveFromToday;
 
+  /// The screen that rises once, right after the day's five are read, with the day's picture and the way to send it (tried from the developer tools): its headline. Short, plain, never a cheer.
+  ///
+  /// In en, this message translates to:
+  /// **'Day complete.'**
+  String get dayMomentTitle;
+
+  /// The screen that rises once the day's five are read: the quiet way past it, under the button that sends the day. Nothing is asked again that day.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get dayMomentLater;
+
+  /// Today, once the five are read (tried from the developer tools): the card after the five on the shelf, which shows the day's picture and sends it. Its name, over the picture, and what a screen reader says for its dot.
+  ///
+  /// In en, this message translates to:
+  /// **'Your day'**
+  String get yourDayCard;
+
   /// The screen under the topics editor, and the row that opens it: how much of each subject, and which parts of each.
   ///
   /// In en, this message translates to:

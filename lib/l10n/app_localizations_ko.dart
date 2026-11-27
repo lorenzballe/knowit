@@ -5834,6 +5834,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get yourFiveFromToday => '오늘의 내 카드 5장';
 
   @override
+  String get dayMomentTitle => '오늘의 다섯 장, 완료.';
+
+  @override
+  String get dayMomentLater => '나중에';
+
+  @override
+  String get yourDayCard => '당신의 하루';
+
+  @override
   String get tuneTitle => '믹스 조정';
 
   @override

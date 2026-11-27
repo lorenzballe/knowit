@@ -6088,6 +6088,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get yourFiveFromToday => 'As tuas cinco de hoje';
 
   @override
+  String get dayMomentTitle => 'Dia concluído.';
+
+  @override
+  String get dayMomentLater => 'Mais tarde';
+
+  @override
+  String get yourDayCard => 'O teu dia';
+
+  @override
   String get tuneTitle => 'Afina a tua mistura';
 
   @override

@@ -6309,6 +6309,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get yourFiveFromToday => 'Твои пять карточек за сегодня';
 
   @override
+  String get dayMomentTitle => 'День пройден.';
+
+  @override
+  String get dayMomentLater => 'Позже';
+
+  @override
+  String get yourDayCard => 'Твой день';
+
+  @override
   String get tuneTitle => 'Настрой свой микс';
 
   @override

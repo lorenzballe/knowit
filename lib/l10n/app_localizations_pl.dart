@@ -6291,6 +6291,15 @@ class AppLocalizationsPl extends AppLocalizations {
   String get yourFiveFromToday => 'Twoja dzisiejsza piątka';
 
   @override
+  String get dayMomentTitle => 'Dzień ukończony.';
+
+  @override
+  String get dayMomentLater => 'Później';
+
+  @override
+  String get yourDayCard => 'Twój dzień';
+
+  @override
   String get tuneTitle => 'Dostrój swój miks';
 
   @override

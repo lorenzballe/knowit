@@ -5974,6 +5974,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get yourFiveFromToday => 'Bugünkü beş kartın';
 
   @override
+  String get dayMomentTitle => 'Gün tamam.';
+
+  @override
+  String get dayMomentLater => 'Sonra';
+
+  @override
+  String get yourDayCard => 'Senin günün';
+
+  @override
   String get tuneTitle => 'Karışımını ayarla';
 
   @override
