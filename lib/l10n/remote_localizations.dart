@@ -1967,6 +1967,76 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('strengthsEmpty') ?? _base.strengthsEmpty;
 
   @override
+  String get readTitle => _words.text('readTitle') ?? _base.readTitle;
+
+  @override
+  String get readSharp => _words.text('readSharp') ?? _base.readSharp;
+
+  @override
+  String get readBlind => _words.text('readBlind') ?? _base.readBlind;
+
+  @override
+  String get readLocked => _words.text('readLocked') ?? _base.readLocked;
+
+  @override
+  String get readEmpty => _words.text('readEmpty') ?? _base.readEmpty;
+
+  @override
+  String get readNoAim => _words.text('readNoAim') ?? _base.readNoAim;
+
+  @override
+  String get readLine => _words.text('readLine') ?? _base.readLine;
+
+  @override
+  String get readOthers => _words.text('readOthers') ?? _base.readOthers;
+
+  @override
+  String get focusTitle => _words.text('focusTitle') ?? _base.focusTitle;
+
+  @override
+  String get focusFromGoal =>
+      _words.text('focusFromGoal') ?? _base.focusFromGoal;
+
+  @override
+  String get focusFromMisses =>
+      _words.text('focusFromMisses') ?? _base.focusFromMisses;
+
+  @override
+  String get focusLine => _words.text('focusLine') ?? _base.focusLine;
+
+  @override
+  String focusLast(String skill) =>
+      _words.format('focusLast', localeName, {'skill': skill}) ??
+      _base.focusLast(skill);
+
+  @override
+  String focusNext(String skill) =>
+      _words.format('focusNext', localeName, {'skill': skill}) ??
+      _base.focusNext(skill);
+
+  @override
+  String get focusResult => _words.text('focusResult') ?? _base.focusResult;
+
+  @override
+  String get focusPlus => _words.text('focusPlus') ?? _base.focusPlus;
+
+  @override
+  String get focusMarkBody =>
+      _words.text('focusMarkBody') ?? _base.focusMarkBody;
+
+  @override
+  String focusShelf(String skill) =>
+      _words.format('focusShelf', localeName, {'skill': skill}) ??
+      _base.focusShelf(skill);
+
+  @override
+  String get focusShelfLine =>
+      _words.text('focusShelfLine') ?? _base.focusShelfLine;
+
+  @override
+  String get focusOpen => _words.text('focusOpen') ?? _base.focusOpen;
+
+  @override
   String get scoreTitle => _words.text('scoreTitle') ?? _base.scoreTitle;
 
   @override

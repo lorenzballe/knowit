@@ -2083,6 +2083,73 @@ class AppLocalizationsKo extends AppLocalizations {
   String get strengthsEmpty => '몇 번만 더 답하면 여기에서 강점을 볼 수 있어요.';
 
   @override
+  String get readTitle => '이미 날카로운 곳';
+
+  @override
+  String get readSharp => '날카로운 곳';
+
+  @override
+  String get readBlind => '사각지대';
+
+  @override
+  String get readLocked => '사각지대를 위한 카드 다섯 장과 전체 프로필은 Astute+에서.';
+
+  @override
+  String get readEmpty => '몇 번만 더 답하면 여기에서 날카로운 곳과 그렇지 않은 곳을 볼 수 있어요.';
+
+  @override
+  String get readNoAim => '위에서 어디에서 더 날카로워지고 싶은지 고르세요. 답을 보면 이미 날카로운 곳이 드러나요.';
+
+  @override
+  String get readLine => '이 목표에 필요한 기술을 당신의 답에서 읽었어요. 날카로운 곳과 사각지대.';
+
+  @override
+  String get readOthers => '프로필의 나머지';
+
+  @override
+  String get focusTitle => '이번 주 집중';
+
+  @override
+  String get focusFromGoal => '목표에 맞춰 골랐어요. 매주 다른 기술이에요.';
+
+  @override
+  String get focusFromMisses => '당신의 답을 보고 골랐어요. 가장 자주 틀리는 곳이에요.';
+
+  @override
+  String get focusLine => '이것을 훈련하는 카드에는 표시가 붙어요. 일요일에 한 주 결과를 볼 수 있어요.';
+
+  @override
+  String focusLast(String skill) {
+    return '지난주: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return '월요일부터: $skill';
+  }
+
+  @override
+  String get focusResult => '한 주 결과';
+
+  @override
+  String get focusPlus => 'Astute+에서는 당신의 답이 집중할 곳을 골라요. 가장 자주 틀리는 곳이에요.';
+
+  @override
+  String get focusMarkBody =>
+      '이번 주에는 이 기술을 훈련해요. 이것을 훈련하는 카드에는 이 표시가 붙어요. 일요일에 결과를 볼 수 있어요.';
+
+  @override
+  String focusShelf(String skill) {
+    return '이번 주 집중: $skill';
+  }
+
+  @override
+  String get focusShelfLine => '이것을 훈련하는, 아직 읽지 않은 카드.';
+
+  @override
+  String get focusOpen => '나의 한 주';
+
+  @override
   String get scoreTitle => 'Astute 점수';
 
   @override

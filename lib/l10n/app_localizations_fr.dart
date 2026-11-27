@@ -2172,6 +2172,81 @@ class AppLocalizationsFr extends AppLocalizations {
       'Encore quelques réponses, et tu verras ici tes points forts.';
 
   @override
+  String get readTitle => 'Là où tu y vois déjà clair';
+
+  @override
+  String get readSharp => 'Tu y vois clair';
+
+  @override
+  String get readBlind => 'Angle mort';
+
+  @override
+  String get readLocked =>
+      'Cinq cartes sur ton angle mort, et ton profil entier, avec Astute+.';
+
+  @override
+  String get readEmpty =>
+      'Encore quelques réponses, et tu verras ici où tu y vois clair et où non.';
+
+  @override
+  String get readNoAim =>
+      'Choisis ci-dessus où tu veux y voir plus clair : tes réponses te diront où c’est déjà le cas.';
+
+  @override
+  String get readLine =>
+      'Les compétences que demande cet objectif, lues dans tes réponses : là où tu y vois clair, et ton angle mort.';
+
+  @override
+  String get readOthers => 'Le reste de ton profil';
+
+  @override
+  String get focusTitle => 'La priorité de la semaine';
+
+  @override
+  String get focusFromGoal =>
+      'Choisie d’après ton objectif : chaque semaine une compétence différente.';
+
+  @override
+  String get focusFromMisses =>
+      'Choisie d’après tes réponses : là où tu te trompes le plus.';
+
+  @override
+  String get focusLine =>
+      'Les cartes qui l’entraînent portent sa marque. Dimanche, le bilan de la semaine.';
+
+  @override
+  String focusLast(String skill) {
+    return 'La semaine dernière : $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'Dès lundi : $skill';
+  }
+
+  @override
+  String get focusResult => 'Le bilan de la semaine';
+
+  @override
+  String get focusPlus =>
+      'Avec Astute+, ce sont tes réponses qui choisissent la priorité : là où tu te trompes le plus.';
+
+  @override
+  String get focusMarkBody =>
+      'Cette semaine, tu entraînes cette compétence : les cartes qui l’entraînent portent cette marque. Dimanche, tu verras le bilan.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'Priorité de la semaine : $skill';
+  }
+
+  @override
+  String get focusShelfLine => 'Des cartes qui l’entraînent, pas encore lues.';
+
+  @override
+  String get focusOpen => 'Ta semaine';
+
+  @override
   String get scoreTitle => 'Score Astute';
 
   @override

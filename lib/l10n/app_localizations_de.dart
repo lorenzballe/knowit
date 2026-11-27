@@ -2169,6 +2169,81 @@ class AppLocalizationsDe extends AppLocalizations {
       'Noch ein paar Antworten, dann siehst du hier, wo du stark bist.';
 
   @override
+  String get readTitle => 'Wo du schon klar siehst';
+
+  @override
+  String get readSharp => 'Klarer Blick';
+
+  @override
+  String get readBlind => 'Blinder Fleck';
+
+  @override
+  String get readLocked =>
+      'Fünf Karten zu deinem blinden Fleck und dein ganzes Profil, mit Astute+.';
+
+  @override
+  String get readEmpty =>
+      'Noch ein paar Antworten, dann siehst du hier, wo du klar siehst und wo nicht.';
+
+  @override
+  String get readNoAim =>
+      'Wähl oben, wo du klarer sehen willst: Deine Antworten zeigen dir, wo du es schon tust.';
+
+  @override
+  String get readLine =>
+      'Die Fähigkeiten, die dieses Ziel braucht, aus deinen Antworten gelesen: wo du klar siehst, und dein blinder Fleck.';
+
+  @override
+  String get readOthers => 'Der Rest deines Profils';
+
+  @override
+  String get focusTitle => 'Der Fokus der Woche';
+
+  @override
+  String get focusFromGoal =>
+      'Aus deinem Ziel gewählt: jede Woche eine andere Fähigkeit.';
+
+  @override
+  String get focusFromMisses =>
+      'Aus deinen Antworten gewählt: wo du am häufigsten danebenliegst.';
+
+  @override
+  String get focusLine =>
+      'Karten, die ihn trainieren, tragen sein Zeichen. Am Sonntag: wie die Woche lief.';
+
+  @override
+  String focusLast(String skill) {
+    return 'Letzte Woche: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'Ab Montag: $skill';
+  }
+
+  @override
+  String get focusResult => 'Wie die Woche lief';
+
+  @override
+  String get focusPlus =>
+      'Mit Astute+ wählen deine Antworten den Fokus: wo du am häufigsten danebenliegst.';
+
+  @override
+  String get focusMarkBody =>
+      'Diese Woche trainierst du diese Fähigkeit: Karten, die sie trainieren, tragen dieses Zeichen. Am Sonntag siehst du, wie es lief.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'Fokus der Woche: $skill';
+  }
+
+  @override
+  String get focusShelfLine => 'Karten dafür, noch nicht gelesen.';
+
+  @override
+  String get focusOpen => 'Deine Woche';
+
+  @override
   String get scoreTitle => 'Astute-Punktzahl';
 
   @override
