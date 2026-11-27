@@ -470,10 +470,11 @@ class PillCard extends StatelessWidget {
                       onAnswer: onAnswer,
                       given: given,
                       corner: onSave != null,
-                      input: (commit) => _NumberInput(
+                      input: (commit, taken) => _NumberInput(
                         pill: pill,
                         unit: unit,
                         onAnswer: commit,
+                        taken: taken != InputTaken.no,
                       ),
                     ),
                     // Only a card with its page asks on its page; one that
@@ -486,10 +487,11 @@ class PillCard extends StatelessWidget {
                       given: given,
                       corner: onSave != null,
                       prompt: context.l10n.estimateCloseEnough,
-                      input: (commit) => PlaceItInput(
+                      input: (commit, taken) => PlaceItInput(
                         pill: pill,
                         estimate: estimate,
                         onAnswer: commit,
+                        taken: taken,
                       ),
                     ),
                   },
@@ -1062,9 +1064,10 @@ class _AskFace extends StatefulWidget {
   /// [_PickGroup]).
   final List<String>? options;
 
-  /// Built with the callback that reports a raw response: the input of a
-  /// card that is not a pick.
-  final Widget Function(ValueChanged<String>? commit)? input;
+  /// Built with the callback that reports a raw response, and whether the
+  /// response has been taken: the input of a card that is not a pick. Once
+  /// taken it takes nothing more, and says what it took.
+  final Widget Function(ValueChanged<String>? commit, InputTaken taken)? input;
   final void Function(String response, int? confidence, String? reason)?
   onAnswer;
 
@@ -1111,6 +1114,12 @@ class _AskFaceState extends State<_AskFace>
   /// The level of how sure just tapped, locked in the same way.
   int? _level;
 
+  /// The answer of an input that is not a pick (a number, a mark on a
+  /// ruler) just taken, locked in the same way: the press shows, and it
+  /// takes nothing more while the card turns, or while how sure comes in
+  /// under it.
+  bool _taken = false;
+
   /// The reason sent: the card turns on it, once.
   bool _sent = false;
 
@@ -1129,6 +1138,7 @@ class _AskFaceState extends State<_AskFace>
       _pending = null;
       _locked = null;
       _level = null;
+      _taken = false;
       _sent = false;
       _lock.value = 0;
     }
@@ -1142,22 +1152,34 @@ class _AskFaceState extends State<_AskFace>
 
   void _commit(String response) {
     // Taken already: nothing more is, until the card has turned.
-    if (_pending != null || _locked != null) return;
+    if (_pending != null || _locked != null || _taken) return;
     final bool pick = widget.options != null;
     // A graded card that does not ask how sure this time ([SureAsk]) is
     // answered as it is committed: right or wrong is kept all the same.
-    // It turns at once, the option filled with ink turning with it.
+    // It turns at once, the option filled with ink turning with it, or the
+    // number or the mark taken, locked.
     if (widget.pill.isGraded && !SureAsk.of(widget.pill)) {
-      if (pick) setState(() => _locked = int.tryParse(response));
+      setState(() {
+        if (pick) {
+          _locked = int.tryParse(response);
+        } else {
+          _taken = true;
+        }
+      });
       widget.onAnswer?.call(response, null, null);
       return;
     }
     // The card does not turn yet: how sure, or why, comes first. The tap
-    // is felt, and the option shows taken, before anything else moves.
-    if (pick) HapticFeedback.lightImpact();
+    // is felt, and the option, number or mark shows taken, before anything
+    // else moves.
+    HapticFeedback.lightImpact();
     setState(() {
       _pending = response;
-      if (pick) _locked = int.tryParse(response);
+      if (pick) {
+        _locked = int.tryParse(response);
+      } else {
+        _taken = true;
+      }
     });
     if (MediaQuery.disableAnimationsOf(context)) {
       _lock.value = 1;
@@ -1254,11 +1276,17 @@ class _AskFaceState extends State<_AskFace>
             Estimate() => PlaceItInput.heightFor(scaler),
             _ => 0,
           };
+    // What stays over the step once the answer is taken: the option kept,
+    // the number typed, or the figure the ruler was set to.
+    final double kept = options != null
+        ? _PickGroup.keptHeightFor(context, options, width, scaler)
+        : switch (pill.challenge) {
+            TypeNumber() => 54,
+            Estimate() => PlaceItInput.keptHeightFor(scaler),
+            _ => 0,
+          };
     final double step =
-        (options == null
-            ? 0
-            : _PickGroup.keptHeightFor(context, options, width, scaler) +
-                  _PickGroup.stepGap) +
+        (kept > 0 ? kept + _PickGroup.stepGap : 0) +
         (pill.isGraded
             ? _ConfidenceStep.heightFor(context, width, scaler)
             : _ReasonStep.heightFor(scaler));
@@ -1392,10 +1420,19 @@ class _AskFaceState extends State<_AskFace>
                     fold: _lock,
                     step: step,
                   )
-                else if (step == null)
-                  widget.input!(widget.onAnswer == null ? null : _commit)
                 else
-                  step,
+                  _InputGroup(
+                    input: widget.input!(
+                      widget.onAnswer == null || _taken ? null : _commit,
+                      !_taken
+                          ? InputTaken.no
+                          : step == null
+                          ? InputTaken.turning
+                          : InputTaken.kept,
+                    ),
+                    fold: _lock,
+                    step: step,
+                  ),
                 if (pill.hasHint && options == null && _pending == null)
                   _hint(context),
                 // Under a pick the nudge goes with the options the step
@@ -1522,6 +1559,45 @@ class _AskFaceState extends State<_AskFace>
             ),
           ),
       ],
+    );
+  }
+}
+
+/// The input of a card that is not a pick (a number, a mark on a ruler) and
+/// the step that comes under it once its answer is taken: the input stays,
+/// locked and saying what it took, as the option kept stays over a pick's
+/// step, and how sure comes in under it as it does there. Always the same
+/// column, so the input keeps what was typed or set as the step arrives.
+class _InputGroup extends StatelessWidget {
+  final Widget input;
+  final Animation<double> fold;
+  final Widget? step;
+
+  const _InputGroup({required this.input, required this.fold, this.step});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: fold,
+      builder: (context, child) {
+        final double f = step == null ? 0 : _PickGroup.foldOf(fold.value);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            child!,
+            if (step case final Widget step when f > 0)
+              _PickGroup._part(
+                Padding(
+                  padding: const EdgeInsets.only(top: _PickGroup.stepGap),
+                  child: step,
+                ),
+                f,
+                (f - 0.2) / 0.8,
+              ),
+          ],
+        );
+      },
+      child: KeyedSubtree(key: const ValueKey('ask-input'), child: input),
     );
   }
 }
@@ -1787,15 +1863,25 @@ class _Tick extends StatelessWidget {
 
 /// Type the number you worked out. Nothing is graded until you commit, and an
 /// empty box will not commit.
+///
+/// The arrow gives under the finger and, the moment it is pressed, the
+/// number is taken, as a pick is: the field fills with the card's ink, the
+/// number in the card's colour, the arrow turns to a tick, the keyboard goes
+/// down and nothing more is typed while the card turns, or while how sure
+/// comes in under it.
 class _NumberInput extends StatefulWidget {
   final Pill pill;
   final String unit;
   final ValueChanged<String>? onAnswer;
 
+  /// The number has been taken: shown so, and nothing more is typed.
+  final bool taken;
+
   const _NumberInput({
     required this.pill,
     required this.unit,
     required this.onAnswer,
+    this.taken = false,
   });
 
   @override
@@ -1837,10 +1923,12 @@ class _NumberInputState extends State<_NumberInput> {
   }
 
   /// Kept in plain form, so the answer is graded the same way whatever
-  /// language the reader typed it in.
+  /// language the reader typed it in. The keyboard goes down with it, so
+  /// what comes under the number is in sight.
   void _submit() {
     final String? reading = _reading;
-    if (reading == null || widget.onAnswer == null) return;
+    if (reading == null || widget.onAnswer == null || widget.taken) return;
+    FocusManager.instance.primaryFocus?.unfocus();
     widget.onAnswer!(reading);
   }
 
@@ -1848,6 +1936,9 @@ class _NumberInputState extends State<_NumberInput> {
   Widget build(BuildContext context) {
     final pill = widget.pill;
     final unit = widget.unit;
+    final bool taken = widget.taken;
+    // Filled at once, not faded in: a key that is down is down.
+    final Color words = taken ? pill.color : pill.ink;
 
     return Row(
       children: [
@@ -1856,9 +1947,9 @@ class _NumberInputState extends State<_NumberInput> {
             height: 54,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              color: pill.wash,
+              color: taken ? pill.ink : pill.wash,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: pill.washEdge),
+              border: Border.all(color: taken ? pill.ink : pill.washEdge),
             ),
             child: Row(
               children: [
@@ -1868,6 +1959,9 @@ class _NumberInputState extends State<_NumberInput> {
                       controller: _controller,
                       onChanged: _edited,
                       onSubmitted: (_) => _submit(),
+                      readOnly: taken || widget.onAnswer == null,
+                      showCursor: !taken,
+                      enableInteractiveSelection: !taken,
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                         signed: true,
@@ -1876,7 +1970,7 @@ class _NumberInputState extends State<_NumberInput> {
                       style: AppText.display(
                         size: 22,
                         weight: FontWeight.w600,
-                        color: pill.ink,
+                        color: words,
                       ),
                       decoration: InputDecoration(
                         isDense: true,
@@ -1911,7 +2005,7 @@ class _NumberInputState extends State<_NumberInput> {
                       overflow: TextOverflow.ellipsis,
                       style: AppText.body(
                         size: 14,
-                        color: pill.ink.withValues(alpha: 0.5),
+                        color: words.withValues(alpha: taken ? 0.75 : 0.5),
                       ),
                     ),
                   ),
@@ -1921,14 +2015,16 @@ class _NumberInputState extends State<_NumberInput> {
         ),
         const SizedBox(width: 10),
         Semantics(
-          button: true,
+          button: !taken,
+          selected: taken,
           label: context.l10n.checkMyAnswer,
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: _submit,
+          child: _Press(
+            onTap: !_ready || taken || widget.onAnswer == null ? null : _submit,
             child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 160),
-              opacity: _ready ? 1 : 0.35,
+              duration: MediaQuery.disableAnimationsOf(context)
+                  ? Duration.zero
+                  : const Duration(milliseconds: 160),
+              opacity: _ready || taken ? 1 : 0.35,
               child: Container(
                 width: 54,
                 height: 54,
@@ -1937,11 +2033,13 @@ class _NumberInputState extends State<_NumberInput> {
                   borderRadius: BorderRadius.circular(14),
                 ),
                 alignment: Alignment.center,
-                child: Icon(
-                  Icons.arrow_forward_rounded,
-                  size: 20,
-                  color: pill.color,
-                ),
+                child: taken
+                    ? _Tick(color: pill.color, size: 22)
+                    : Icon(
+                        Icons.arrow_forward_rounded,
+                        size: 20,
+                        color: pill.color,
+                      ),
               ),
             ),
           ),
