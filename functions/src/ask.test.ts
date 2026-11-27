@@ -91,9 +91,9 @@ test('an answer costs what its tokens cost, and the shared budget leaves room fo
   // A typical answer: about 800 tokens in, 400 out.
   const one = costOf({ input_tokens: 800, output_tokens: 400 });
   assert.ok(Math.abs(one - 0.00028) < 1e-9);
-  // Ten thousand such answers fit in one day's ceiling, and ten times that in the month.
-  assert.ok(DAY_BUDGET_USD / one > 10000);
-  assert.ok(MONTH_BUDGET_USD / one > 100000);
+  // Three thousand such answers fit in one day's ceiling, and fifty thousand in the month.
+  assert.ok(DAY_BUDGET_USD / one > 3000);
+  assert.ok(MONTH_BUDGET_USD / one > 50000);
   assert.equal(costOf({}), 0);
 });
 

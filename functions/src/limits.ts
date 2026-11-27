@@ -1,14 +1,15 @@
 // What the AI may spend, in US dollars, for every call to the model together:
 // the morning's news, the questions about a card and the coach's notes
-// (budget.ts keeps the count). The owner's credit is $100 a month: the month
-// stops at $90, and no day may spend more than $3. Once either is spent, the
-// news keeps the paper it has and the rest say "not available right now".
+// (budget.ts keeps the count). The owner wants the least spent while the app
+// only has to work: the month stops at $15, and no day may spend more than
+// $1, room for thousands of answers on Claude Haiku. Once either is spent,
+// the news keeps the paper it has and the rest say "not available right now".
 
 /** The most a calendar month (UTC) may spend. */
-export const MONTH_BUDGET_USD = 90;
+export const MONTH_BUDGET_USD = 15;
 
 /** The most a day (UTC) may spend. */
-export const DAY_BUDGET_USD = 3;
+export const DAY_BUDGET_USD = 1;
 
 // What the voice may read, in characters, for Listen (listen.ts): the day's
 // five read aloud by ElevenLabs, which charges by the character, $0.08 for a

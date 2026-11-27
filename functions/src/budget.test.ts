@@ -25,10 +25,10 @@ test('a call costs what its tokens cost: Haiku 5.5 up to 100,000 tokens read, fi
   assert.equal(PRICE.output, 0.5);
 });
 
-test("one budget for all the AI: $90 a month of the owner's $100, at most $3 a day", () => {
-  assert.equal(MONTH_BUDGET_USD, 90);
-  assert.equal(DAY_BUDGET_USD, 3);
-  assert.deepEqual(LIMITS, { day: 3, month: 90 });
+test('one budget for all the AI, the least that keeps it working: $15 a month, at most $1 a day', () => {
+  assert.equal(MONTH_BUDGET_USD, 15);
+  assert.equal(DAY_BUDGET_USD, 1);
+  assert.deepEqual(LIMITS, { day: 1, month: 15 });
   assert.ok(MONTH_BUDGET_USD < 100);
 });
 
