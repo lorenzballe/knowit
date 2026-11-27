@@ -6671,7 +6671,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get goalDecide => 'Alltagsentscheidungen';
+  String get goalDecide => 'Entscheidungen im Alltag';
 
   @override
   String get goalPeople => 'Menschen';

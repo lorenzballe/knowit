@@ -3,6 +3,7 @@
 // open, what the free plan opens, and that each fits a small phone in every
 // language.
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show RenderParagraph;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,6 +23,9 @@ import 'package:astuto/screens/subject_home_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/explore/search_start.dart';
+import 'package:astuto/widgets/fit_text.dart';
+
+import 'explore/core_harness.dart' show loadFonts;
 
 final AppLocalizations en = lookupAppLocalizations(const Locale('en'));
 final DateTime day = DateTime(2026, 11, 19, 9);
@@ -275,6 +279,58 @@ void main() {
         final List<Pill> cards = cardsOfKind(kind, day: day);
         expect(cards, isNotEmpty, reason: kind.name);
         expect(cards.every(kind.fits), isTrue, reason: kind.name);
+      }
+    });
+
+    testWidgets('on a 375-point phone in every language, each need says its '
+        'name in whole words and its line whole: never "Alltagsentschei / '
+        'dungen", never three dots', (tester) async {
+      await tester.runAsync(loadFonts);
+      for (final Locale locale in AppLocalizations.supportedLocales) {
+        await pump(
+          tester,
+          Scaffold(
+            body: SearchStart(
+              day: day,
+              onTry: (_) {},
+              onArea: (_) {},
+              onKind: (_) {},
+            ),
+          ),
+          locale: locale,
+          phone: const Size(375, 667),
+        );
+        for (final Goal g in Goal.values) {
+          final Finder need = find.byKey(ValueKey('search-need-${g.key}'));
+          await tester.scrollUntilVisible(
+            need,
+            120,
+            scrollable: find.byType(Scrollable).first,
+          );
+          for (final RenderParagraph p in tester.renderObjectList(
+            find.descendant(of: need, matching: find.byType(RichText)),
+          )) {
+            final String text = p.text.toPlainText();
+            expect(
+              p.didExceedMaxLines,
+              isFalse,
+              reason: '${locale.languageCode} $text',
+            );
+            final TextStyle? style = p.text.style;
+            if (style == null) continue;
+            expect(
+              FitText.wordsFit(
+                text,
+                style,
+                p.textScaler,
+                TextDirection.ltr,
+                p.size.width + 0.5,
+              ),
+              isTrue,
+              reason: '${locale.languageCode} $text',
+            );
+          }
+        }
       }
     });
 
