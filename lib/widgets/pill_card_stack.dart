@@ -314,6 +314,7 @@ class _PillCardStackState extends State<PillCardStack>
 
   @override
   void dispose() {
+    if (_dragging) WebSurfaces.watchRelease(null);
     _hintTimer?.cancel();
     _presence?.removeListener(_seen);
     MusicSound.on.removeListener(_queuePages);
@@ -460,6 +461,14 @@ class _PillCardStackState extends State<PillCardStack>
           case 'start':
             _read?.touched();
             _onPanStart(DragStartDetails());
+            // Let go where the page cannot hear it, over the card under it
+            // or over the app, the drag ends all the same.
+            if (_dragging) {
+              WebSurfaces.watchRelease(
+                () => _onPanEnd(DragEndDetails()),
+                over: _pages[pill.id]?.surface,
+              );
+            }
           case 'update':
             _onPanUpdate(
               DragUpdateDetails(globalPosition: Offset.zero, delta: delta),
@@ -609,16 +618,22 @@ class _PillCardStackState extends State<PillCardStack>
   Future<void> _onPanEnd(DragEndDetails d) async {
     if (!_dragging) return;
     _dragging = false;
+    // However it ended, a drag a page handed out is over.
+    WebSurfaces.watchRelease(null);
     widget.onMotion?.call(false);
 
     final Offset thrown = d.velocity.pixelsPerSecond;
+    // Out along the way it was sent — a card pushed up leaves upward. The
+    // throw decides the heading when there is one, otherwise the drag does.
+    final Offset heading = thrown.distance > 220 ? thrown : _drag;
+    // To the right is back, where every reader looks for the card before,
+    // and there is no going back in a deck: a card sent that way comes home
+    // rather than skipping on unread. Left, up and down still send it.
+    final bool back = heading.dx > 0 && heading.dx.abs() > heading.dy.abs();
     // Either carried far enough or thrown hard enough. Distance alone made a
     // quick flick do nothing, which is the gesture most people actually make.
-    final bool gone = _drag.distance > 78 || thrown.distance > 620;
+    final bool gone = !back && (_drag.distance > 78 || thrown.distance > 620);
     if (gone) {
-      // Out along the way it was sent — a card pushed up leaves upward. The
-      // throw decides the heading when there is one, otherwise the drag does.
-      final Offset heading = thrown.distance > 220 ? thrown : _drag;
       // Straight down, and thrown rather than carried: the one heading a
       // card is never sent in by accident, so it can mean something —
       // less like this. A drag that drifts downward on its way sideways

@@ -17,6 +17,7 @@ import '../../models/pill.dart';
 import '../../models/place.dart';
 import '../../theme.dart';
 import '../area_marks.dart';
+import '../fit_text.dart';
 
 /// A kind of card, to look through by: how it is played, not what it is
 /// about.
@@ -275,9 +276,15 @@ class _Need extends StatelessWidget {
                     child: Icon(goalIcon(area), size: 17, color: goalHue(area)),
                   ),
                   const SizedBox(width: 8),
+                  // Whole words, a point or two smaller where one would not
+                  // fit the half of a small phone: a name broken inside a
+                  // word ("Alltagsentschei / dungen") reads as a fault.
                   Expanded(
-                    child: Text(
+                    child: FitText(
                       goalName(l, area),
+                      maxLines: 2,
+                      minSize: 12,
+                      wholeWords: true,
                       style: AppText.body(
                         size: 14.5,
                         weight: FontWeight.w700,
@@ -289,10 +296,10 @@ class _Need extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 6),
+              // The whole line, never cut short with three dots: in German
+              // it takes a fourth line on a small phone.
               Text(
                 goalLine(l, area),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
                 style: AppText.body(size: 12, height: 1.3, color: p.inkMuted),
               ),
             ],

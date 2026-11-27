@@ -537,9 +537,10 @@ class _TrialRail extends StatelessWidget {
     final p = context.p;
     final List<Color> hues = p.isDark ? _perkHues : _perkHuesOnPaper;
     final String locale = Localizations.localeOf(context).toString();
-    String date(int after) =>
-        DateFormat.MMMd(locale)
-            .format(DateTime(from.year, from.month, from.day + after));
+    String date(int after) => formatDay(
+      DateFormat.MMMd(locale),
+      DateTime(from.year, from.month, from.day + after),
+    );
     const int warn = AppState.kTrialWarningDays;
     final List<({String day, String what, Color hue})> stops = [
       (day: l.trialStepToday, what: l.paywallStepFree, hue: hues[0]),

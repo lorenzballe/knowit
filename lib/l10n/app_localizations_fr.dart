@@ -35,7 +35,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n jours',
-      one: '1 jour',
+      one: '$n jour',
     );
     return '$_temp0';
   }
@@ -180,7 +180,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n résultats',
-      one: '1 résultat',
+      one: '$n résultat',
     );
     return '$_temp0';
   }
@@ -207,7 +207,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n cartes',
-      one: '1 carte',
+      one: '$n carte',
     );
     return '$_temp0';
   }
@@ -268,7 +268,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: '$days jours sur sept.',
-      one: '1 jour sur sept.',
+      one: '$days jour sur sept.',
     );
     return '$_temp0 Cinq, et la semaine est tenue.';
   }
@@ -757,7 +757,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: 'encore $n contextes à venir',
-      one: 'encore 1 contexte à venir',
+      one: 'encore $n contexte à venir',
     );
     return '$_temp0';
   }
@@ -772,7 +772,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n de plus suivis',
-      one: '1 de plus suivi',
+      one: '$n de plus suivi',
     );
     return '$_temp0';
   }
@@ -882,7 +882,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n cartes lues',
-      one: '1 carte lue',
+      one: '$n carte lue',
     );
     return '$_temp0';
   }
@@ -893,7 +893,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n semaines tenues',
-      one: '1 semaine tenue',
+      one: '$n semaine tenue',
     );
     return '$_temp0';
   }
@@ -909,7 +909,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n jokers en réserve',
-      one: '1 joker en réserve',
+      one: '$n joker en réserve',
     );
     return '$_temp0';
   }
@@ -948,7 +948,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n cartes que tu avais justes reviennent aujourd\'hui',
-      one: '1 carte que tu avais juste revient aujourd\'hui',
+      one: '$n carte que tu avais juste revient aujourd\'hui',
     );
     return '$_temp0';
   }
@@ -1296,7 +1296,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: 'Série de $n jours',
-      one: 'Série de 1 jour',
+      one: 'Série de $n jour',
     );
     return '$_temp0';
   }
@@ -1691,7 +1691,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n cartes',
-      one: '1 carte',
+      one: '$n carte',
     );
     return '$_temp0';
   }
@@ -1954,7 +1954,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: 'Pour l\'instant, $n joueurs aujourd\'hui.',
-      one: 'Pour l\'instant, 1 joueur aujourd\'hui.',
+      one: 'Pour l\'instant, $n joueur aujourd\'hui.',
     );
     return '$_temp0';
   }
@@ -2091,7 +2091,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: 'et $n autres',
-      one: 'et 1 autre',
+      one: 'et $n autre',
     );
     return '$_temp0';
   }
@@ -2193,7 +2193,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: 'sur $n réponses',
-      one: 'sur 1 réponse',
+      one: 'sur $n réponse',
     );
     return '$_temp0';
   }
@@ -2615,7 +2615,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n aimées aujourd\'hui',
-      one: '1 aimée aujourd\'hui',
+      one: '$n aimée aujourd\'hui',
     );
     return '$_temp0';
   }
@@ -2762,7 +2762,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n pièges',
-      one: '1 piège',
+      one: '$n piège',
     );
     return '$_temp0';
   }
@@ -2902,7 +2902,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n lecteurs',
-      one: '1 lecteur',
+      one: '$n lecteur',
     );
     return '$_temp0';
   }
@@ -3110,7 +3110,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n de plus de ta semaine avec Astute+',
-      one: '1 de plus de ta semaine avec Astute+',
+      one: '$n de plus de ta semaine avec Astute+',
     );
     return '$_temp0';
   }
@@ -3981,7 +3981,7 @@ class AppLocalizationsFr extends AppLocalizations {
       cards,
       locale: localeName,
       other: '$cards cartes',
-      one: '1 carte',
+      one: '$cards carte',
     );
     return '$_temp0 · $minutes min';
   }
@@ -5278,13 +5278,13 @@ class AppLocalizationsFr extends AppLocalizations {
       subjects,
       locale: localeName,
       other: 'Croise $subjects sujets',
-      one: 'Croise 1 sujet',
+      one: 'Croise $subjects sujet',
     );
     String _temp1 = intl.Intl.pluralLogic(
       cards,
       locale: localeName,
       other: 'dans $cards cartes',
-      one: 'dans 1 carte',
+      one: 'dans $cards carte',
     );
     return '$_temp0 $_temp1';
   }
@@ -5313,7 +5313,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n cartes y répondent',
-      one: '1 carte y répond',
+      one: '$n carte y répond',
     );
     return '$_temp0';
   }
@@ -5365,7 +5365,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n pourquoi de profondeur.',
-      one: '1 pourquoi de profondeur.',
+      one: '$n pourquoi de profondeur.',
     );
     return '$_temp0 Impossible de descendre plus bas.';
   }
@@ -5385,7 +5385,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n pourquoi',
-      one: '1 pourquoi',
+      one: '$n pourquoi',
     );
     return '$_temp0';
   }
@@ -5404,7 +5404,7 @@ class AppLocalizationsFr extends AppLocalizations {
       at,
       locale: localeName,
       other: '$at pourquoi',
-      one: '1 pourquoi',
+      one: '$at pourquoi',
     );
     return '$_temp0 sur $of';
   }
@@ -5508,7 +5508,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n crans de plus vers ce que disent les preuves.',
-      one: '1 cran de plus vers ce que disent les preuves.',
+      one: '$n cran de plus vers ce que disent les preuves.',
     );
     return '$_temp0';
   }
@@ -5607,7 +5607,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: 'encore $n',
-      one: 'encore 1',
+      one: 'encore $n',
     );
     return '$_temp0';
   }
@@ -6440,7 +6440,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: 'sur $n cartes qui le demandaient',
-      one: 'sur 1 carte qui le demandait',
+      one: 'sur $n carte qui le demandait',
     );
     return '$_temp0';
   }
@@ -6451,7 +6451,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n que tu savais déjà',
-      one: '1 que tu savais déjà',
+      one: '$n que tu savais déjà',
     );
     return '$_temp0';
   }
@@ -6634,7 +6634,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: 'Meilleure série : $n jours',
-      one: 'Meilleure série : 1 jour',
+      one: 'Meilleure série : $n jour',
     );
     return '$_temp0';
   }
@@ -6645,7 +6645,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n cartes lues',
-      one: '1 carte lue',
+      one: '$n carte lue',
     );
     return '$_temp0';
   }
@@ -6662,7 +6662,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n nouvelles cartes en haut',
-      one: '1 nouvelle carte en haut',
+      one: '$n nouvelle carte en haut',
     );
     return '$_temp0';
   }
@@ -6762,7 +6762,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n jours d\'affilée',
-      one: '1 jour d\'affilée',
+      one: '$n jour d\'affilée',
     );
     return '$_temp0';
   }
@@ -6814,7 +6814,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n médias',
-      one: '1 média',
+      one: '$n média',
     );
     return '$_temp0';
   }
@@ -6932,7 +6932,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n idées',
-      one: '1 idée',
+      one: '$n idée',
     );
     return '$_temp0';
   }
@@ -7017,7 +7017,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n livres',
-      one: '1 livre',
+      one: '$n livre',
     );
     return '$_temp0';
   }

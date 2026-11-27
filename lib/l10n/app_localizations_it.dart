@@ -1267,14 +1267,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String termsLine(String terms, String privacy) {
-    return 'Continuando accetti i $terms e la $privacy';
+    return 'Continuando accetti i $terms e l’$privacy';
   }
 
   @override
   String get termsLineTerms => 'Termini d’uso';
 
   @override
-  String get termsLinePrivacy => 'Privacy Policy';
+  String get termsLinePrivacy => 'Informativa sulla privacy';
 
   @override
   String get skip => 'Salta';

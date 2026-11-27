@@ -10,6 +10,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show RenderParagraph;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 
@@ -19,6 +20,7 @@ import 'package:astuto/data/video_cards.dart';
 import 'package:astuto/explore/blocks/core/shelves.dart';
 import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
+import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/remote/remote.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
@@ -247,6 +249,45 @@ void main() {
       ),
       isTrue,
     );
+  });
+
+  testWidgets("where the subject's name and how long the film runs do not "
+      'both fit in the head, the length gives way: the name is never cut '
+      '("GESCHICH…" on a small phone in German)', (tester) async {
+    await tester.runAsync(loadFonts);
+    Future<RenderParagraph> tile(String language) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: Locale(language),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          home: Scaffold(
+            body: Center(
+              // A tile of the feed's two columns on a 375-point phone.
+              child: BoxTile(
+                pill: videoPills(language).single,
+                box: const Size(163, 150),
+              ),
+            ),
+          ),
+        ),
+      );
+      final String name = lookupAppLocalizations(
+        Locale(language),
+      ).subjectOf(videoPills(language).single.topic).toUpperCase();
+      return tester.renderObject<RenderParagraph>(
+        find.descendant(of: find.text(name), matching: find.byType(RichText)),
+      );
+    }
+
+    // German: GESCHICHTE whole, the play mark alone beside it.
+    expect((await tile('de')).didExceedMaxLines, isFalse);
+    expect(find.byKey(const ValueKey('film-mark')), findsOneWidget);
+    expect(find.text('0:53'), findsNothing);
+    // Italian: STORIA and 0:53 both fit, and both are there.
+    expect((await tile('it')).didExceedMaxLines, isFalse);
+    expect(find.text('0:53'), findsOneWidget);
   });
 
   testWidgets('on Explore a tap on a film plays it out of its box, never as a '

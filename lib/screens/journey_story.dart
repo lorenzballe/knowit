@@ -765,7 +765,19 @@ class _Practice extends StatelessWidget {
 
   final AppState app;
 
-  void _open(BuildContext context, List<Pill> deck, String title, String what) {
+  /// The deck, each card that asks asked before it turns. Cards answered
+  /// before (the misses, the ones that changed the reader's mind) are asked
+  /// afresh for the reader alone ([records] false), as the week's review
+  /// asks them: recorded, a second answer to a card not yet due was dropped
+  /// and the back showed the first one, turned over, in place of a new card.
+  /// The blind spot's cards were never read, and their answers count.
+  void _open(
+    BuildContext context,
+    List<Pill> deck,
+    String title,
+    String what, {
+    bool records = false,
+  }) {
     if (deck.isEmpty) return;
     Analytics.capture('journey practice opened', {
       'what': what,
@@ -778,6 +790,7 @@ class _Practice extends StatelessWidget {
           deck: deck,
           title: title,
           answering: true,
+          records: records,
           source: 'journey practice',
         ),
       ),
@@ -853,6 +866,7 @@ class _Practice extends StatelessWidget {
               fresh,
               l.storyPracticeBlind(l.subjectOf(kTopics[weak.key]?.name ?? '')),
               'blind spot',
+              records: true,
             ),
             source: 'journey practice blind spot',
           ),

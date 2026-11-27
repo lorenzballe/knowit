@@ -214,9 +214,6 @@ class _TodayScreenState extends State<TodayScreen> {
   /// How the card just thrown was read, until the day moves past it.
   CardStint? _thrown;
 
-  /// True once the deck has shown how a card is sent on, until one is.
-  bool _hinting = false;
-
   /// The first of the day's own cards, on a Sunday that has one more of
   /// them than other days; null on any other day.
   static String? _sundaysOwn(AppState app) {
@@ -313,10 +310,11 @@ class _TodayScreenState extends State<TodayScreen> {
             onBack: widget.onBack,
             // Said beside the day's name — the one place on the screen with
             // room to spare on a first morning, which has no streak to show
-            // there — so the deck below never moves to make room for it.
-            hint: _hinting && app.pillsRead == 0
-                ? context.l10n.swipeForTheNextOne
-                : null,
+            // there — so the deck below never moves to make room for it. From
+            // the first card's arrival: said only once the card had leaned,
+            // seconds after its back, it came late, and never on a drawn card,
+            // whose back is its own and never tells the deck it came round.
+            hint: app.pillsRead == 0 ? context.l10n.swipeForTheNextOne : null,
           ),
           const SizedBox(height: 16),
           _ProgressBars(total: app.todaysDeck.length, index: app.todayIndex),
@@ -372,13 +370,9 @@ class _TodayScreenState extends State<TodayScreen> {
               onMotion: widget.onCardMotion,
               // The card about where the reader lives says so on its front.
               home: app.place,
-              // Nothing else on the screen says how card two is reached,
-              // so the first card shows it, once, to a reader who has never
-              // sent a card on.
+              // Beside the words in the header, the first card shows how card
+              // two is reached, once, to a reader who has never sent a card on.
               swipeHint: app.pillsRead == 0,
-              onSwipeHint: () {
-                if (mounted) setState(() => _hinting = true);
-              },
               reviewIds: app.reviewIdsToday,
               // Which cards are the reader's own, on the day that has
               // others: Astute+ has no others to tell them from.
@@ -630,8 +624,9 @@ class _ReadingHeader extends StatelessWidget {
 }
 
 /// How a card is sent on, said once: a hand's mark and a few words, quiet,
-/// flush to the far end of the header. It comes in as the card leans, and
-/// goes as the first card does. One line, given way by a point or two
+/// flush to the far end of the header, in the muted ink a line meant to be
+/// read takes (the faint one was missed). It comes in with the first card
+/// and goes as the first card does. One line, given way by a point or two
 /// rather than wrapped, so the header never grows under it.
 class _SwipeHint extends StatelessWidget {
   const _SwipeHint({required this.text});
@@ -641,7 +636,7 @@ class _SwipeHint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool still = MediaQuery.disableAnimationsOf(context);
-    final Color ink = context.p.inkFaint;
+    final Color ink = context.p.inkMuted;
     return TweenAnimationBuilder<double>(
       key: const ValueKey('swipe-hint'),
       tween: Tween(begin: 0, end: 1),

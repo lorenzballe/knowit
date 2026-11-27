@@ -34,6 +34,7 @@ import 'challenge_marks.dart';
 import 'challenges.dart';
 import 'game_feel.dart';
 import 'parts.dart' show upper;
+import '../../l10n/dates.dart';
 
 /// A challenge's screen, opened over Explore out of its tile: the page
 /// grows out of the tile's panel. With motion reduced it is there at once.
@@ -82,7 +83,7 @@ void announceGame(BuildContext context, String message) {
 String gameDate(BuildContext context) {
   final String locale = Localizations.localeOf(context).toString();
   try {
-    return DateFormat.MMMd(locale).format(DateTime.now());
+    return formatDay(DateFormat.MMMd(locale), DateTime.now());
   } catch (_) {
     return DateFormat.MMMd('en').format(DateTime.now());
   }

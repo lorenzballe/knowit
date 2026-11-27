@@ -482,53 +482,91 @@ class TileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final VideoCard? film = videoCardOf(pill);
-    // A film says so in the head's far corner: a play mark, and how long it
-    // runs where the head has words and the tile no foot to say it in.
-    final Widget? plays = film == null
-        ? null
-        : FilmMark(
-            ink: pill.ink,
-            ground: pill.color,
-            size: look.icon,
-            length: look.label && !look.foot ? filmClock(film.length) : null,
-            style: look.labelStyle(pill),
-          );
+    final String subject = context.l10n.subjectOf(pill.topic).toUpperCase();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: look.label
-              ? [
-                  CardMark(pill: pill, size: look.icon, ink: pill.ink),
-                  SizedBox(width: look.labelGap),
-                  // Beside a film's mark the name takes the room up to it,
-                  // whole wherever the room allows.
-                  Flexible(
-                    fit: plays == null ? FlexFit.loose : FlexFit.tight,
-                    child: Text(
-                      context.l10n.subjectOf(pill.topic).toUpperCase(),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: look.labelStyle(pill),
-                    ),
+        LayoutBuilder(
+          builder: (context, head) {
+            // A film says so in the head's far corner: a play mark, and how
+            // long it runs where the head has words and the tile no foot to
+            // say it in — unless the subject's name would be cut for it
+            // ("GESCHICH…" on a small phone in German): then the mark alone.
+            String? length = film != null && look.label && !look.foot
+                ? filmClock(film.length)
+                : null;
+            if (length != null) {
+              final TextScaler scaler = MediaQuery.textScalerOf(context);
+              double width(String text) {
+                final TextPainter t = TextPainter(
+                  // As it is drawn: inside the page's own text style.
+                  text: TextSpan(
+                    text: text,
+                    style: DefaultTextStyle.of(context).style
+                        .merge(look.labelStyle(pill)),
                   ),
-                  if (read) ...[
-                    const SizedBox(width: 6),
-                    ReadTick(pill: pill, color: pill.ink, size: look.tick),
-                  ],
-                  if (plays != null) ...[const SizedBox(width: 6), plays],
-                ]
-              : [
-                  CardMark(pill: pill, size: look.icon, ink: pill.ink),
-                  const Spacer(),
-                  if (read)
-                    ReadTick(pill: pill, color: pill.ink, size: look.tick),
-                  if (plays != null) ...[
-                    if (read) const SizedBox(width: 6),
-                    plays,
-                  ],
-                ],
+                  textDirection: Directionality.of(context),
+                  textScaler: scaler,
+                  maxLines: 1,
+                )..layout();
+                final double w = t.width;
+                t.dispose();
+                return w;
+              }
+
+              final double taken =
+                  look.icon +
+                  look.labelGap +
+                  (read ? 6 + look.tick : 0) +
+                  6 +
+                  look.icon * 1.4 +
+                  width(length);
+              if (width(subject) > head.maxWidth - taken) length = null;
+            }
+            final Widget? plays = film == null
+                ? null
+                : FilmMark(
+                    ink: pill.ink,
+                    ground: pill.color,
+                    size: look.icon,
+                    length: length,
+                    style: look.labelStyle(pill),
+                  );
+            return Row(
+              children: look.label
+                  ? [
+                      CardMark(pill: pill, size: look.icon, ink: pill.ink),
+                      SizedBox(width: look.labelGap),
+                      // Beside a film's mark the name takes the room up to
+                      // it, whole wherever the room allows.
+                      Flexible(
+                        fit: plays == null ? FlexFit.loose : FlexFit.tight,
+                        child: Text(
+                          subject,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: look.labelStyle(pill),
+                        ),
+                      ),
+                      if (read) ...[
+                        const SizedBox(width: 6),
+                        ReadTick(pill: pill, color: pill.ink, size: look.tick),
+                      ],
+                      if (plays != null) ...[const SizedBox(width: 6), plays],
+                    ]
+                  : [
+                      CardMark(pill: pill, size: look.icon, ink: pill.ink),
+                      const Spacer(),
+                      if (read)
+                        ReadTick(pill: pill, color: pill.ink, size: look.tick),
+                      if (plays != null) ...[
+                        if (read) const SizedBox(width: 6),
+                        plays,
+                      ],
+                    ],
+            );
+          },
         ),
         // The canvas was drawn around four-word questions and the pool is
         // not written to that length. Set to the space rather than cut with

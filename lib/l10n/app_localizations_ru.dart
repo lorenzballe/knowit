@@ -205,7 +205,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String searchNCards(int n) {
-    return 'Искать среди $n карточек';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Искать среди $n карточки',
+      many: 'Искать среди $n карточек',
+      few: 'Искать среди $n карточек',
+      one: 'Искать среди $n карточки',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -271,7 +279,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String keptDaysOfSeven(int days) {
-    return 'Засчитана — $days дней из семи.';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days дня',
+      many: '$days дней',
+      few: '$days дня',
+      one: '$days день',
+    );
+    return 'Засчитана — $_temp0 из семи.';
   }
 
   @override
@@ -311,17 +327,41 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String confidenceOff(int gap) {
-    return 'Твоя уверенность отклонялась на $gap пунктов от того, что ты знал на самом деле.';
+    String _temp0 = intl.Intl.pluralLogic(
+      gap,
+      locale: localeName,
+      other: '$gap пункта',
+      many: '$gap пунктов',
+      few: '$gap пункта',
+      one: '$gap пункт',
+    );
+    return 'Твоя уверенность отклонялась на $_temp0 от того, что ты знал на самом деле.';
   }
 
   @override
   String confidenceClosing(int gap, int before) {
-    return 'Уверенность отклонялась на $gap пунктов против $before на прошлой неделе. Разрыв сокращается.';
+    String _temp0 = intl.Intl.pluralLogic(
+      gap,
+      locale: localeName,
+      other: '$gap пункта',
+      many: '$gap пунктов',
+      few: '$gap пункта',
+      one: '$gap пункт',
+    );
+    return 'Уверенность отклонялась на $_temp0 против $before на прошлой неделе. Разрыв сокращается.';
   }
 
   @override
   String confidenceOpened(int gap, int before) {
-    return 'Уверенность отклонялась на $gap пунктов против $before на прошлой неделе. Разрыв вырос.';
+    String _temp0 = intl.Intl.pluralLogic(
+      gap,
+      locale: localeName,
+      other: '$gap пункта',
+      many: '$gap пунктов',
+      few: '$gap пункта',
+      one: '$gap пункт',
+    );
+    return 'Уверенность отклонялась на $_temp0 против $before на прошлой неделе. Разрыв вырос.';
   }
 
   @override
@@ -367,32 +407,80 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String stepRead(int n) {
-    return 'ещё $n карточек прочитать';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ещё $n карточки прочитать',
+      many: 'ещё $n карточек прочитать',
+      few: 'ещё $n карточки прочитать',
+      one: 'ещё $n карточку прочитать',
+    );
+    return '$_temp0';
   }
 
   @override
   String stepAnswer(int n) {
-    return 'ещё $n карточек ответить';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ещё на $n карточки ответить',
+      many: 'ещё на $n карточек ответить',
+      few: 'ещё на $n карточки ответить',
+      one: 'ещё на $n карточку ответить',
+    );
+    return '$_temp0';
   }
 
   @override
   String stepJudge(int n) {
-    return 'ещё $n ответов с оценкой уверенности';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ещё $n ответа с оценкой уверенности',
+      many: 'ещё $n ответов с оценкой уверенности',
+      few: 'ещё $n ответа с оценкой уверенности',
+      one: 'ещё $n ответ с оценкой уверенности',
+    );
+    return '$_temp0';
   }
 
   @override
   String stepHold(int n) {
-    return 'ещё $n карточек удержать';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ещё $n карточки удержать',
+      many: 'ещё $n карточек удержать',
+      few: 'ещё $n карточки удержать',
+      one: 'ещё $n карточку удержать',
+    );
+    return '$_temp0';
   }
 
   @override
   String stepGap(int gap, int target) {
-    return 'твоя уверенность отклоняется на $gap пунктов — хватит $target';
+    String _temp0 = intl.Intl.pluralLogic(
+      gap,
+      locale: localeName,
+      other: '$gap пункта',
+      many: '$gap пунктов',
+      few: '$gap пункта',
+      one: '$gap пункт',
+    );
+    return 'твоя уверенность отклоняется на $_temp0 — хватит $target';
   }
 
   @override
   String stepBeforeJudged(int n) {
-    return 'ещё $n ответов, прежде чем приложение оценит твою уверенность';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ещё $n ответа, прежде чем приложение оценит твою уверенность',
+      many: 'ещё $n ответов, прежде чем приложение оценит твою уверенность',
+      few: 'ещё $n ответа, прежде чем приложение оценит твою уверенность',
+      one: 'ещё $n ответ, прежде чем приложение оценит твою уверенность',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -741,7 +829,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String acrossNAnswersHowSure(int n) {
-    return 'В $n ответах ты отметил, насколько уверен. Вот что вышло.';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'В $n ответах ты отметил, насколько уверен. Вот что вышло.',
+      many: 'В $n ответах ты отметил, насколько уверен. Вот что вышло.',
+      few: 'В $n ответах ты отметил, насколько уверен. Вот что вышло.',
+      one: 'В $n ответе ты отметил, насколько уверен. Вот что вышло.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -757,12 +853,28 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String overconfidentBy(int points) {
-    return 'Ты переоцениваешь себя на $points пунктов';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '$points пункта',
+      many: '$points пунктов',
+      few: '$points пункта',
+      one: '$points пункт',
+    );
+    return 'Ты переоцениваешь себя на $_temp0';
   }
 
   @override
   String underconfidentBy(int points) {
-    return 'Ты недооцениваешь себя на $points пунктов';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '$points пункта',
+      many: '$points пунктов',
+      few: '$points пункта',
+      one: '$points пункт',
+    );
+    return 'Ты недооцениваешь себя на $_temp0';
   }
 
   @override
@@ -809,17 +921,41 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String lastCallsAgainstFirst(int n) {
-    return 'Твои последние $n оценок против первых $n';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Твои последние $n оценки против первых $n',
+      many: 'Твои последние $n оценок против первых $n',
+      few: 'Твои последние $n оценки против первых $n',
+      one: 'Твоя последняя $n оценка против первых $n',
+    );
+    return '$_temp0';
   }
 
   @override
   String closedByPoints(int n) {
-    return 'Сократился на $n пунктов';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n пункта',
+      many: '$n пунктов',
+      few: '$n пункта',
+      one: '$n пункт',
+    );
+    return 'Сократился на $_temp0';
   }
 
   @override
   String openedByPoints(int n) {
-    return 'Вырос на $n пунктов';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n пункта',
+      many: '$n пунктов',
+      few: '$n пункта',
+      one: '$n пункт',
+    );
+    return 'Вырос на $_temp0';
   }
 
   @override
@@ -859,7 +995,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String pointsOver(int n) {
-    return '$n лишних';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n лишних',
+      many: '$n лишних',
+      few: '$n лишних',
+      one: '$n лишний',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -943,7 +1087,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String nComingBack(int n) {
-    return '$n возвращаются';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n возвращаются',
+      many: '$n возвращаются',
+      few: '$n возвращаются',
+      one: '$n возвращается',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1160,7 +1312,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String subjectsInTheMix(int n, int total) {
-    return '$n из $total тем в миксе';
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total темы',
+      many: '$total тем',
+      few: '$total тем',
+      one: '$total темы',
+    );
+    return '$n из $_temp0 в миксе';
   }
 
   @override
@@ -1179,12 +1339,28 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String startWithNTopics(int n) {
-    return 'Начать с $n тем';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Начать с $n темы',
+      many: 'Начать с $n темами',
+      few: 'Начать с $n темами',
+      one: 'Начать с $n темой',
+    );
+    return '$_temp0';
   }
 
   @override
   String saveNTopics(int n) {
-    return 'Сохранить $n тем';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Сохранить $n темы',
+      many: 'Сохранить $n тем',
+      few: 'Сохранить $n темы',
+      one: 'Сохранить $n тему',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1565,7 +1741,7 @@ class AppLocalizationsRu extends AppLocalizations {
       other: '+$n очка',
       many: '+$n очков',
       few: '+$n очка',
-      one: '+1 очко',
+      one: '+$n очко',
       zero: 'Нет очков',
     );
     return '$_temp0';
@@ -1866,7 +2042,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String pathDeeperLine(int n) {
-    return 'Ещё $n карточек на ту же тему, сложнее.';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ещё $n карточки на ту же тему, сложнее.',
+      many: 'Ещё $n карточек на ту же тему, сложнее.',
+      few: 'Ещё $n карточки на ту же тему, сложнее.',
+      one: 'Ещё $n карточка на ту же тему, сложнее.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1877,7 +2061,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String subjectReadOf(int n, int total) {
-    return 'Прочитано $n из $total карточек';
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total карточки',
+      many: '$total карточек',
+      few: '$total карточек',
+      one: '$total карточки',
+    );
+    return 'Прочитано $n из $_temp0';
   }
 
   @override
@@ -2047,6 +2239,8 @@ class AppLocalizationsRu extends AppLocalizations {
       locale: localeName,
       other:
           'Среди первых $n игроков сегодня: пока слишком мало для сравнения.',
+      many: 'Среди первых $n игроков сегодня: пока слишком мало для сравнения.',
+      few: 'Среди первых $n игроков сегодня: пока слишком мало для сравнения.',
       one: 'Первый игрок сегодня: пока слишком мало игроков для сравнения.',
     );
     return '$_temp0';
@@ -2202,13 +2396,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String answersRightOf(int right, int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      right,
-      locale: localeName,
-      other: '$right из $n верно',
-      one: '1 из $n верно',
-    );
-    return '$_temp0';
+    return '$right из $n верно';
   }
 
   @override
@@ -2777,17 +2965,41 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String nudgeTwoWeeksTitle(int read) {
-    return 'Две недели назад вы прочли $read карточек';
+    String _temp0 = intl.Intl.pluralLogic(
+      read,
+      locale: localeName,
+      other: '$read карточки',
+      many: '$read карточек',
+      few: '$read карточки',
+      one: '$read карточку',
+    );
+    return 'Две недели назад вы прочли $_temp0';
   }
 
   @override
   String nudgeTwoWeeksBody(int gap, String question) {
-    return 'Ваша уверенность отклонялась на $gap пунктов. Сегодня: $question';
+    String _temp0 = intl.Intl.pluralLogic(
+      gap,
+      locale: localeName,
+      other: '$gap пункта',
+      many: '$gap пунктов',
+      few: '$gap пункта',
+      one: '$gap пункт',
+    );
+    return 'Ваша уверенность отклонялась на $_temp0. Сегодня: $question';
   }
 
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
-    return 'Пока $answered ответов. Сегодня: $question';
+    String _temp0 = intl.Intl.pluralLogic(
+      answered,
+      locale: localeName,
+      other: '$answered ответа',
+      many: '$answered ответов',
+      few: '$answered ответа',
+      one: '$answered ответ',
+    );
+    return 'Пока $_temp0. Сегодня: $question';
   }
 
   @override
@@ -2922,7 +3134,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String continueGenresOn(int on, int total) {
-    return 'Дальше · $on из $total жанров включено';
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total жанра',
+      many: '$total жанров',
+      few: '$total жанров',
+      one: '$total жанра',
+    );
+    return 'Дальше · $on из $_temp0 включено';
   }
 
   @override
@@ -4060,7 +4280,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String inRange(int pts, String said) {
-    return 'Попали: +$pts очков. Это $said.';
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: 'Попали: +$pts очка. Это $said.',
+      many: 'Попали: +$pts очков. Это $said.',
+      few: 'Попали: +$pts очка. Это $said.',
+      one: 'Попали: +$pts очко. Это $said.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5970,7 +6198,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String whatYearPoints(int n, int of) {
-    return '$n из $of очков';
+    String _temp0 = intl.Intl.pluralLogic(
+      of,
+      locale: localeName,
+      other: '$of очка',
+      many: '$of очков',
+      few: '$of очков',
+      one: '$of очка',
+    );
+    return '$n из $_temp0';
   }
 
   @override
@@ -6244,17 +6480,41 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String closerDoneSteps(String said, int right, int steps) {
-    return 'Это $said: верно $right из $steps шагов.';
+    String _temp0 = intl.Intl.pluralLogic(
+      steps,
+      locale: localeName,
+      other: '$steps шага',
+      many: '$steps шагов',
+      few: '$steps шагов',
+      one: '$steps шага',
+    );
+    return 'Это $said: верно $right из $_temp0.';
   }
 
   @override
   String closerExactSteps(String said, int right, int steps) {
-    return 'Это ровно $said: верно $right из $steps шагов.';
+    String _temp0 = intl.Intl.pluralLogic(
+      steps,
+      locale: localeName,
+      other: '$steps шага',
+      many: '$steps шагов',
+      few: '$steps шагов',
+      one: '$steps шага',
+    );
+    return 'Это ровно $said: верно $right из $_temp0.';
   }
 
   @override
   String closerStepsRight(int right, int steps) {
-    return 'Верно $right из $steps шагов.';
+    String _temp0 = intl.Intl.pluralLogic(
+      steps,
+      locale: localeName,
+      other: '$steps шага',
+      many: '$steps шагов',
+      few: '$steps шагов',
+      one: '$steps шага',
+    );
+    return 'Верно $right из $_temp0.';
   }
 
   @override
@@ -6583,7 +6843,8 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       off,
       locale: localeName,
-      other: 'ошибся на $off пунктов',
+      other: 'ошибся на $off пункта',
+      many: 'ошибся на $off пунктов',
       few: 'ошибся на $off пункта',
       one: 'ошибся на $off пункт',
       zero: 'попал точно',
@@ -6626,8 +6887,10 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'из $n карточек, которые спрашивали',
-      one: 'из 1 карточки, которая спрашивала',
+      other: 'из $n карточки, которые спрашивали',
+      many: 'из $n карточек, которые спрашивали',
+      few: 'из $n карточек, которые спрашивали',
+      one: 'из $n карточки, которая спрашивала',
     );
     return '$_temp0';
   }
@@ -6638,7 +6901,9 @@ class AppLocalizationsRu extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n уже знакомы',
-      one: '1 уже знакомо',
+      many: '$n уже знакомы',
+      few: '$n уже знакомы',
+      one: '$n уже знакомо',
     );
     return '$_temp0';
   }

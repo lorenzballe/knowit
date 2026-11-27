@@ -19,6 +19,7 @@ import '../widgets/card_edge.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/web/card_thumb.dart';
 import '../widgets/web/web_card_page.dart' show groundOf;
+import '../l10n/dates.dart';
 
 /// How many days back the free plan's archive goes. A week: long enough
 /// to find the card from Tuesday, short enough that the day before it is
@@ -471,10 +472,10 @@ class _Day extends StatelessWidget {
     final gap = _daysBefore(now, day);
     if (gap == 0) return context.l10n.tabToday;
     if (gap == 1) return context.l10n.yesterday;
-    return DateFormat(
-      'EEE d MMM',
-      Localizations.localeOf(context).toString(),
-    ).format(day).replaceAll('.', '');
+    return formatDay(
+      DateFormat('EEE d MMM', Localizations.localeOf(context).toString()),
+      day,
+    ).replaceAll('.', '');
   }
 
   @override

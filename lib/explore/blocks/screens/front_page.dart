@@ -29,6 +29,7 @@ import '../../../theme.dart';
 import '../../../widgets/balanced_text.dart';
 import '../../explore_block.dart';
 import 'parts.dart';
+import '../../../l10n/dates.dart';
 
 /// How many of Explore's cards a part deals from when the section names
 /// none: all of them, so that the day's deal can land on any card and does
@@ -139,7 +140,7 @@ List<Pill> frontColumns(
 String frontDate(BuildContext context, DateTime on) {
   final String locale = Localizations.localeOf(context).toString();
   try {
-    return intl.DateFormat.MMMMEEEEd(locale).format(on);
+    return formatDay(intl.DateFormat.MMMMEEEEd(locale), on);
   } catch (_) {
     return intl.DateFormat.MMMMEEEEd('en').format(on);
   }

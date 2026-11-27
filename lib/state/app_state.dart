@@ -47,6 +47,7 @@ import 'music_sound.dart';
 import 'progress.dart';
 import 'card_notes.dart';
 import 'reading_log.dart';
+import '../l10n/dates.dart';
 
 /// Which paid plan the paywall has selected. Purchases are not wired up.
 enum Plan { month, year }
@@ -730,7 +731,9 @@ class AppState extends ChangeNotifier {
     // time (SureAsk): kept, so a card asks or not the same way all day.
     String? sureSeed = _prefs.getString(_kSureSeed);
     if (sureSeed == null) {
-      sureSeed = math.Random().nextInt(1 << 32).toRadixString(36);
+      // 0x7fffffff, not 1 << 32: on the web build an int is a double
+      // and 1 << 32 is 0, which nextInt refuses.
+      sureSeed = math.Random().nextInt(0x7fffffff).toRadixString(36);
       _prefs.setString(_kSureSeed, sureSeed);
     }
     SureAsk.seed = sureSeed;
@@ -3152,7 +3155,7 @@ class AppState extends ChangeNotifier {
     // at launch can outrun; this loads them, and does nothing once loaded.
     unawaited(initializeDateFormatting());
     try {
-      return DateFormat.MMMMd(locale).format(day);
+      return formatDay(DateFormat.MMMMd(locale), day);
     } catch (_) {
       return DateFormat.MMMMd('en').format(day);
     }

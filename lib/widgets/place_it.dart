@@ -89,18 +89,35 @@ String _tick(double v) {
   return roughNumber(v);
 }
 
+/// Where the answer of an input that is not a pick stands: not taken yet;
+/// taken on a card that turns at once ([turning]); or taken on one that asks
+/// how sure first, the answer kept over that step ([kept]).
+enum InputTaken { no, turning, kept }
+
 /// The input: a big readout, the ruler, and a button to lock the guess.
+///
+/// The button gives under the finger and, the moment it is pressed, the
+/// guess is taken, as a pick is: the figure is ticked, the ruler takes no
+/// more marks, the button stays lit; and where how sure comes next, the
+/// ruler and its button fold away under the figure kept.
 class PlaceItInput extends StatefulWidget {
   final Pill pill;
   final Estimate estimate;
   final ValueChanged<String>? onAnswer;
+
+  /// Whether the guess has been taken, and kept over a step to come.
+  final InputTaken taken;
 
   const PlaceItInput({
     super.key,
     required this.pill,
     required this.estimate,
     required this.onAnswer,
+    this.taken = InputTaken.no,
   });
+
+  /// How tall the figure kept sets, the ruler folded away under it.
+  static double keptHeightFor(TextScaler scaler) => scaler.scale(34);
 
   /// About how tall the ruler sets at the reader's text size: the figure,
   /// the ruler, and the line with its button.
@@ -140,11 +157,12 @@ class _PlaceItInputState extends State<PlaceItInput> {
 
   @override
   Widget build(BuildContext context) {
-    final l = context.l10n;
     final pill = widget.pill;
     final value = _ruler.valueAt(_t);
     final unit = widget.estimate.unit;
-    final canLock = _moved && widget.onAnswer != null;
+    final bool taken = widget.taken != InputTaken.no;
+    final canLock = _moved && widget.onAnswer != null && !taken;
+    final bool still = MediaQuery.disableAnimationsOf(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,8 +204,40 @@ class _PlaceItInputState extends State<PlaceItInput> {
                 ),
               ),
             ],
+            // Taken: ticked at once, as a pick's option is.
+            if (taken) ...[
+              const SizedBox(width: 10),
+              Icon(Icons.check_rounded, size: 22, color: pill.ink),
+            ],
           ],
         ),
+        // The ruler and its button fold away under the figure kept once how
+        // sure comes next; on a card that turns at once they stay, locked.
+        AnimatedSize(
+          duration: still ? Duration.zero : const Duration(milliseconds: 300),
+          curve: Curves.easeInOutCubic,
+          alignment: Alignment.topCenter,
+          child: widget.taken == InputTaken.kept
+              ? const SizedBox(width: double.infinity)
+              : _ruled(context, value, canLock, taken, still),
+        ),
+      ],
+    );
+  }
+
+  /// The ruler, and the line with its button.
+  Widget _ruled(
+    BuildContext context,
+    double value,
+    bool canLock,
+    bool taken,
+    bool still,
+  ) {
+    final l = context.l10n;
+    final pill = widget.pill;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         const SizedBox(height: 12),
         LayoutBuilder(
           builder: (context, box) => Semantics(
@@ -208,7 +258,7 @@ class _PlaceItInputState extends State<PlaceItInput> {
             // again before it is locked in: the reader thinking twice,
             // counted for how the card was read, and nothing more.
             child: Listener(
-              onPointerDown: widget.onAnswer == null
+              onPointerDown: widget.onAnswer == null || taken
                   ? null
                   : (_) {
                       final CardRead? read = CardRead.of(context);
@@ -220,13 +270,13 @@ class _PlaceItInputState extends State<PlaceItInput> {
                     },
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onHorizontalDragStart: widget.onAnswer == null
+                onHorizontalDragStart: widget.onAnswer == null || taken
                     ? null
                     : (d) => _drag(d.localPosition.dx, box.maxWidth),
-                onHorizontalDragUpdate: widget.onAnswer == null
+                onHorizontalDragUpdate: widget.onAnswer == null || taken
                     ? null
                     : (d) => _drag(d.localPosition.dx, box.maxWidth),
-                onTapDown: widget.onAnswer == null
+                onTapDown: widget.onAnswer == null || taken
                     ? null
                     : (d) => _drag(d.localPosition.dx, box.maxWidth),
                 child: SizedBox(
@@ -261,19 +311,18 @@ class _PlaceItInputState extends State<PlaceItInput> {
               ),
             ),
             Semantics(
-              button: true,
+              button: !taken,
+              selected: taken,
               label: l.placeItLock,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
+              child: _Press(
                 onTap: canLock
-                    ? () {
-                        HapticFeedback.mediumImpact();
-                        widget.onAnswer!(value.toStringAsPrecision(3));
-                      }
+                    ? () => widget.onAnswer!(value.toStringAsPrecision(3))
                     : null,
                 child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 160),
-                  opacity: canLock ? 1 : 0.35,
+                  duration: still
+                      ? Duration.zero
+                      : const Duration(milliseconds: 160),
+                  opacity: canLock || taken ? 1 : 0.35,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 18,
@@ -283,14 +332,27 @@ class _PlaceItInputState extends State<PlaceItInput> {
                       color: pill.ink,
                       borderRadius: BorderRadius.circular(999),
                     ),
-                    child: Text(
-                      l.sceneLockIn,
-                      style: AppText.label(
-                        size: 11.5,
-                        weight: FontWeight.w800,
-                        spacing: 1.1,
-                        color: pill.color,
-                      ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          l.sceneLockIn,
+                          style: AppText.label(
+                            size: 11.5,
+                            weight: FontWeight.w800,
+                            spacing: 1.1,
+                            color: pill.color,
+                          ),
+                        ),
+                        if (taken) ...[
+                          const SizedBox(width: 6),
+                          Icon(
+                            Icons.check_rounded,
+                            size: 15,
+                            color: pill.color,
+                          ),
+                        ],
+                      ],
                     ),
                   ),
                 ),
@@ -299,6 +361,49 @@ class _PlaceItInputState extends State<PlaceItInput> {
           ],
         ),
       ],
+    );
+  }
+}
+
+/// Gives under the finger the instant it is touched and comes back with a
+/// little spring when let go, as a card's options do (pill_card.dart).
+class _Press extends StatefulWidget {
+  final VoidCallback? onTap;
+  final Widget child;
+
+  const _Press({required this.onTap, required this.child});
+
+  @override
+  State<_Press> createState() => _PressState();
+}
+
+class _PressState extends State<_Press> {
+  bool _down = false;
+
+  void _set(bool down) {
+    if (_down != down && mounted) setState(() => _down = down);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bool live = widget.onTap != null;
+    final bool still = MediaQuery.disableAnimationsOf(context);
+    return Listener(
+      onPointerDown: live ? (_) => _set(true) : null,
+      onPointerUp: (_) => _set(false),
+      onPointerCancel: (_) => _set(false),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: widget.onTap,
+        child: AnimatedScale(
+          scale: _down ? 0.965 : 1,
+          duration: still
+              ? Duration.zero
+              : Duration(milliseconds: _down ? 70 : 280),
+          curve: _down ? Curves.easeOut : Curves.easeOutBack,
+          child: widget.child,
+        ),
+      ),
     );
   }
 }

@@ -13,6 +13,7 @@ import '../../../utils/share_text.dart';
 import '../../../widgets/deeper_sheet.dart' show GoDeeper, cardAiOn;
 import '../../explore_block.dart';
 import 'layout.dart';
+import '../../../l10n/dates.dart';
 
 /// The problem of the day, on the Maths page of Explore: one problem a day
 /// from the maths cards that ask for an answer, the same for everyone, so a
@@ -157,7 +158,7 @@ class _Problem extends StatelessWidget {
     final Color deep = Color.lerp(jade, Colors.black, 0.45)!;
     String date() {
       try {
-        return DateFormat.MMMMd(host.language).format(app.today);
+        return formatDay(DateFormat.MMMMd(host.language), app.today);
       } catch (_) {
         return DateFormat.MMMMd('en').format(app.today);
       }

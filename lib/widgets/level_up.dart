@@ -41,6 +41,7 @@ import 'glass_round.dart';
 import 'skill_score.dart' show scoreBookOf, scoreNumber, scoreUp, signedNumber;
 import 'training.dart' show pickedSkills;
 import 'ui.dart' show PrimaryButton;
+import '../l10n/dates.dart';
 
 /// Where [app]'s reader stands on the levels, with [told] the highest level
 /// kept as told.
@@ -1131,10 +1132,10 @@ class LevelPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final String date = DateFormat(
-      'd MMMM y',
-      Localizations.localeOf(context).toString(),
-    ).format(day);
+    final String date = formatDay(
+      DateFormat('d MMMM y', Localizations.localeOf(context).toString()),
+      day,
+    );
     final TextStyle faint = AppText.label(
       size: 11,
       weight: FontWeight.w700,
@@ -1147,11 +1148,17 @@ class LevelPicture extends StatelessWidget {
         borderRadius: BorderRadius.circular(26),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: _ground,
+            // The glow already laid on the black: a decoration with a
+            // gradient paints no colour, so a glow fading to nothing left
+            // cream words on the white of a sheet on paper, and on whatever
+            // a chat puts behind a picture sent.
             gradient: RadialGradient(
               center: const Alignment(0, -0.25),
               radius: 0.95,
-              colors: [_ink.withValues(alpha: 0.11), _ground.withAlpha(0)],
+              colors: [
+                Color.alphaBlend(_ink.withValues(alpha: 0.11), _ground),
+                _ground,
+              ],
             ),
           ),
           child: Padding(
