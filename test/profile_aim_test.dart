@@ -288,9 +288,13 @@ void main() {
         whole(row(g), g.key);
       }
     }
-    // The longest of them, whole, at ×1.6: in the row and in the sheet.
-    expect(inSummary(find.text('Alltagsentscheidungen')), findsOneWidget);
-    expect(inSheet(find.text('Alltagsentscheidungen')), findsOneWidget);
+    // The one picked, whole, at ×1.6: in the row and in the sheet.
+    final String decide = goalName(
+      lookupAppLocalizations(const Locale('de')),
+      Goal.decide,
+    );
+    expect(inSummary(find.text(decide)), findsOneWidget);
+    expect(inSheet(find.text(decide)), findsOneWidget);
   });
 
   testWidgets('night and paper: each area\'s colour reads as a mark on its '
