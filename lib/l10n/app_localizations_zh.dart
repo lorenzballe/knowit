@@ -5813,6 +5813,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yourFiveFromToday => '你今天的五张卡片';
 
   @override
+  String get dayMomentTitle => '今天的五张，完成。';
+
+  @override
+  String get dayMomentLater => '稍后';
+
+  @override
+  String get yourDayCard => '你的一天';
+
+  @override
   String get tuneTitle => '调整你的组合';
 
   @override

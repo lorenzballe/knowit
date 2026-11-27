@@ -7,7 +7,7 @@ import '../l10n/l10n.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
-import '../data/pills_repository.dart' show dateKey;
+import '../data/pills_repository.dart' show dateKey, kPillsPerDay;
 import '../explore/blocks/core/your_five_block.dart' show openTodaysFive;
 import '../models/pill.dart';
 import '../data/daily.dart';
@@ -28,6 +28,7 @@ import '../widgets/motion.dart';
 import '../widgets/magic_card.dart';
 import '../widgets/premium.dart';
 import '../data/topics.dart';
+import '../widgets/day_moment.dart';
 import '../widgets/share_day.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
@@ -135,6 +136,42 @@ class TodayDoneView extends StatefulWidget {
       headForShots ??
       (DebugLooks.todayWithoutTopRow ? DoneHead.none : kDoneHead);
 
+  /// Where the finished day is sent from (DebugLooks.shareDay): as it
+  /// ships, A, "See again" and the share's mark at the end of the row; B,
+  /// the mark alone, the five again being Explore's; C, the mark alone
+  /// under the day's own moment (lib/widgets/day_moment.dart); D, nothing
+  /// at the end of the row and the day as a card after the five.
+  static ShareDayPick get share => DebugLooks.shareDayPicked;
+
+  /// Whether "See again" stands over the shelf.
+  static bool get seeAgainOn => share == ShareDayPick.a;
+
+  /// Whether the share's mark stands over the shelf.
+  static bool get shareMarkOn => share != ShareDayPick.d;
+
+  /// Whether the day's own card follows the five on the shelf ([DayCard]).
+  static bool get dayCardOn => share == ShareDayPick.d;
+
+  /// How many cards [app]'s shelf holds: the day's cards, the day's own
+  /// card where it is tried, and the offer on the free plan, where three of
+  /// the five came at random; never on Astute+, so nobody is sold what they
+  /// already have.
+  static int countOf(AppState app) =>
+      app.todaysDeck.length + (dayCardOn ? 1 : 0) + (app.isPlus ? 0 : 1);
+
+  /// The colour the tab glows in with the card at [at] in front: a card's
+  /// own; the day's card's, that of the card its picture sets large; and
+  /// the offer's, which has no subject, the spectrum's violet.
+  static Color glowOf(AppState app, int at) {
+    final List<Pill> deck = app.todaysDeck;
+    if (at < deck.length) return deck[at].color;
+    if (dayCardOn && at == deck.length) {
+      return DayPicture.heroOf(deck.take(kPillsPerDay).toList())?.color ??
+          kSpectrum[9];
+    }
+    return kSpectrum[9];
+  }
+
   const TodayDoneView({
     super.key,
     required this.app,
@@ -193,13 +230,13 @@ class _TodayDoneViewState extends State<TodayDoneView>
   double _cardWidth = _artWidth;
   double _cardHeight = _artHeight;
 
-  /// Whether the shelf ends on the card that offers the rest of the day.
-  /// It does on the free plan, where three of the five came at random,
-  /// and never on Astute+, so nobody is sold what they already have.
-  bool get _offer => !widget.app.isPlus;
+  /// How many cards the shelf holds: the deck, the day's own card where it
+  /// is tried, and the offer after them ([TodayDoneView.countOf]).
+  int _count(List<Pill> deck) => TodayDoneView.countOf(widget.app);
 
-  /// How many cards the shelf holds: the deck, and the offer after it.
-  int _count(List<Pill> deck) => deck.length + (_offer ? 1 : 0);
+  /// Whether the card at [k] is the day's own, after the five (D).
+  bool _isDayCard(List<Pill> deck, int k) =>
+      TodayDoneView.dayCardOn && k == deck.length;
 
   /// The offer: the paywall.
   Future<void> _sell() =>
@@ -232,9 +269,11 @@ class _TodayDoneViewState extends State<TodayDoneView>
   @override
   void initState() {
     super.initState();
-    // The developer tools' "no top row" shows at once: this Today is kept
-    // alive beside the profile it is switched on.
+    // The developer tools' "no top row", and where the day is sent from,
+    // show at once: this Today is kept alive beside the profile they are
+    // switched on.
     DebugLooks.noTopRow.addListener(_looksChanged);
+    DebugLooks.shareDay.addListener(_looksChanged);
   }
 
   void _looksChanged() {
@@ -259,6 +298,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
   @override
   void dispose() {
     DebugLooks.noTopRow.removeListener(_looksChanged);
+    DebugLooks.shareDay.removeListener(_looksChanged);
     _settle.dispose();
     super.dispose();
   }
@@ -416,8 +456,14 @@ class _TodayDoneViewState extends State<TodayDoneView>
       style: eyebrowStyle,
     );
     // Sent once the day is closed: the squares are the closed day's. Until
-    // then its room is kept, so the name stands where it will stand.
-    final Widget share = app.dayClosed
+    // then its room is kept, so the name stands where it will stand. Where
+    // the day is a card of its own on the shelf (D), it is sent from there
+    // alone, and the end of the row is empty.
+    final bool marked = TodayDoneView.shareMarkOn;
+    final bool again = TodayDoneView.seeAgainOn;
+    final Widget share = !marked
+        ? const SizedBox(width: _ShareDayButton.width)
+        : app.dayClosed
         ? _ShareDayButton(app: app)
         : const SizedBox(width: _ShareDayButton.width);
     switch (head) {
@@ -437,7 +483,15 @@ class _TodayDoneViewState extends State<TodayDoneView>
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                height: _ShareDayButton.height,
+                // The mark's height, and taller only where the reader's
+                // text size sets the name taller than that: at the largest
+                // the name ran out of its row, and the card over its foot.
+                height: math.max(
+                  _ShareDayButton.height,
+                  heading == null
+                      ? _textHeight(context, eyebrowText, eyebrowStyle)
+                      : _textHeight(context, heading.line, name),
+                ),
                 child: LayoutBuilder(
                   builder: (context, box) {
                     // The name is never cut for the pill. Where the two do
@@ -452,11 +506,12 @@ class _TodayDoneViewState extends State<TodayDoneView>
                             name.copyWith(fontSize: _leastName),
                           );
                     final bool compact =
+                        again &&
                         lead +
-                            12 +
-                            _SeeAgainButton.widthOf(context) +
-                            _ShareDayButton.width >
-                        box.maxWidth;
+                                12 +
+                                _SeeAgainButton.widthOf(context) +
+                                _ShareDayButton.width >
+                            box.maxWidth;
                     return Row(
                       children: [
                         Expanded(
@@ -474,8 +529,10 @@ class _TodayDoneViewState extends State<TodayDoneView>
                                 ),
                         ),
                         const SizedBox(width: 12),
-                        _SeeAgainButton(app: app, compact: compact),
-                        share,
+                        // "See again" as it ships (A); where it is tried
+                        // away, the five again are Explore's alone.
+                        if (again) _SeeAgainButton(app: app, compact: compact),
+                        if (marked) share,
                       ],
                     );
                   },
@@ -557,8 +614,17 @@ class _TodayDoneViewState extends State<TodayDoneView>
   /// what the row held at the two ends of theirs, "See again" at the start
   /// and the day sent at the end, the dots kept in the middle.
   Widget _dots(List<Pill> deck, int count, int at, DoneHead head) {
-    final Widget dots = _Dots(deck: deck, count: count, at: at, onPick: _goTo);
+    final Widget dots = _Dots(
+      deck: deck,
+      count: count,
+      at: at,
+      onPick: _goTo,
+      dayCard: TodayDoneView.dayCardOn,
+    );
     if (head != DoneHead.none) return dots;
+    // Where the day is a card of its own (D), nothing stands at either end.
+    final bool again = TodayDoneView.seeAgainOn;
+    if (!TodayDoneView.shareMarkOn) return dots;
     final AppState app = widget.app;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -568,26 +634,31 @@ class _TodayDoneViewState extends State<TodayDoneView>
           // the middle of the screen. The pill stands as far in from its
           // end as the share's round mark does from the other. Where that
           // leaves the dots too little room, "See again" keeps its mark
-          // alone.
+          // alone. Without it (B, C), the start keeps the share's room.
           const double inset =
               (_ShareDayButton.width - _ShareDayButton.face) / 2;
           double end(bool compact) => math.max(
-            inset + _SeeAgainButton.widthOf(context, compact: compact),
+            again
+                ? inset + _SeeAgainButton.widthOf(context, compact: compact)
+                : 0,
             _ShareDayButton.width,
           );
           final bool compact =
+              again &&
               2 * end(false) + _Dots.widthOf(count) + 16 > box.maxWidth;
           return Row(
             children: [
               SizedBox(
                 width: end(compact),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.only(start: inset),
-                  child: Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: _SeeAgainButton(app: app, compact: compact),
-                  ),
-                ),
+                child: again
+                    ? Padding(
+                        padding: const EdgeInsetsDirectional.only(start: inset),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: _SeeAgainButton(app: app, compact: compact),
+                        ),
+                      )
+                    : null,
               ),
               Expanded(child: dots),
               SizedBox(
@@ -658,15 +729,23 @@ class _TodayDoneViewState extends State<TodayDoneView>
                 child: CardDim(
                   amount: dist * 0.5,
                   ground: context.p.surface,
-                  // The day's cards at the shelf's scale, and the card
-                  // after them at the deck's.
-                  radius: k < deck.length ? 34 * _cardWidth / _artWidth : 34,
+                  // The day's cards, and its own card, at the shelf's
+                  // scale; the offer after them at the deck's.
+                  radius: k < deck.length || _isDayCard(deck, k)
+                      ? 34 * _cardWidth / _artWidth
+                      : 34,
                   child: ExcludeSemantics(
                     excluding: !front,
                     child: IgnorePointer(
                       ignoring: !front,
                       child: k < deck.length
                           ? _card(k, deck[k], glow: 1 - dist, front: front)
+                          : _isDayCard(deck, k)
+                          ? DayCard(
+                              app: widget.app,
+                              width: _cardWidth,
+                              height: _cardHeight,
+                            )
                           : _sixth(context),
                     ),
                   ),
@@ -1718,15 +1797,21 @@ class _Dots extends StatelessWidget {
     required this.count,
     required this.at,
     required this.onPick,
+    this.dayCard = false,
   });
 
   final List<Pill> deck;
 
-  /// The dots to draw: one per card, and one more for the offer after
-  /// them, which takes every colour rather than one.
+  /// The dots to draw: one per card, one for the day's own card where it
+  /// follows them, and one more for the offer after them, which takes every
+  /// colour rather than one.
   final int count;
   final int at;
   final ValueChanged<int> onPick;
+
+  /// Whether the dot after the five is the day's own card's (D), drawn in
+  /// the page's ink.
+  final bool dayCard;
 
   /// 14 above the dots and 8 below them, on the canvas.
   static const double height = 28;
@@ -1739,6 +1824,14 @@ class _Dots extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool still = MediaQuery.disableAnimationsOf(context);
     final Color faint = context.p.ink.withValues(alpha: 0.18);
+    bool isDay(int k) => dayCard && k == deck.length;
+    // A card's dot in its colour; the day's in the page's ink; the offer's
+    // a gradient.
+    Color? plain(int k) => k < deck.length
+        ? (k == at ? deck[k].color : faint)
+        : isDay(k)
+        ? (k == at ? context.p.ink : faint)
+        : null;
     return SizedBox(
       height: height,
       child: Row(
@@ -1750,6 +1843,8 @@ class _Dots extends StatelessWidget {
               selected: k == at,
               label: k < deck.length
                   ? context.l10n.cardOf(k + 1, deck.length)
+                  : isDay(k)
+                  ? context.l10n.yourDayCard
                   : context.l10n.plusNameCaps,
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
@@ -1767,16 +1862,14 @@ class _Dots extends StatelessWidget {
                       width: k == at ? 22 : 6,
                       height: 6,
                       decoration: BoxDecoration(
-                        color: k < deck.length
-                            ? (k == at ? deck[k].color : faint)
-                            : null,
+                        color: plain(k),
                         // The offer's dot is every colour when it is the
                         // one, and grey as a gradient of greys when it is
                         // not, so the change is each grey turning into its
                         // colour, as quick as the other dots. Grey as a
                         // plain colour, the dot faded the rainbow in from
                         // nothing and arrived half a second late.
-                        gradient: k < deck.length
+                        gradient: k < deck.length || isDay(k)
                             ? null
                             : LinearGradient(
                                 colors: k == at
@@ -2134,6 +2227,23 @@ double _textWidth(BuildContext context, String text, TextStyle style) {
   return width;
 }
 
+/// How tall [text] sets in [style] on one line, as a Text on this screen
+/// sets it.
+double _textHeight(BuildContext context, String text, TextStyle style) {
+  final TextPainter painter = TextPainter(
+    text: TextSpan(
+      text: text,
+      style: DefaultTextStyle.of(context).style.merge(style),
+    ),
+    textDirection: Directionality.of(context),
+    textScaler: MediaQuery.textScalerOf(context),
+    maxLines: 1,
+  )..layout();
+  final double height = painter.height;
+  painter.dispose();
+  return height;
+}
+
 /// The small line under the day's name: the freeze spent, which is said
 /// here and nowhere else, or, until the reader has liked a card, how to. A
 /// liked card says so on itself, with the heart in its corner, rather than
@@ -2149,25 +2259,30 @@ class _Aside extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool still = MediaQuery.disableAnimationsOf(context);
     final String? text = this.text;
+    final Widget line = text == null
+        ? const SizedBox(width: double.infinity)
+        : FitText(
+            text,
+            key: const ValueKey('shelf-aside'),
+            maxLines: 2,
+            minSize: 11,
+            textAlign: centred ? TextAlign.center : TextAlign.start,
+            style: AppText.body(
+              size: 12,
+              weight: FontWeight.w500,
+              height: 1.25,
+              color: context.p.ink.withValues(alpha: 0.42),
+            ),
+          );
+    // For a reader who asked for less motion, the shelf closes up at once:
+    // an AnimatedSize of no duration relaid itself out in the middle of its
+    // own layout.
+    if (still) return line;
     return AnimatedSize(
-      duration: Duration(milliseconds: still ? 0 : 260),
+      duration: const Duration(milliseconds: 260),
       curve: Curves.easeOut,
       alignment: centred ? Alignment.topCenter : Alignment.topLeft,
-      child: text == null
-          ? const SizedBox(width: double.infinity)
-          : FitText(
-              text,
-              key: const ValueKey('shelf-aside'),
-              maxLines: 2,
-              minSize: 11,
-              textAlign: centred ? TextAlign.center : TextAlign.start,
-              style: AppText.body(
-                size: 12,
-                weight: FontWeight.w500,
-                height: 1.25,
-                color: context.p.ink.withValues(alpha: 0.42),
-              ),
-            ),
+      child: line,
     );
   }
 }

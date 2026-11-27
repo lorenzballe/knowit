@@ -5820,6 +5820,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get yourFiveFromToday => '今日のあなたの5枚';
 
   @override
+  String get dayMomentTitle => '今日の5枚、完了。';
+
+  @override
+  String get dayMomentLater => 'あとで';
+
+  @override
+  String get yourDayCard => 'あなたの今日';
+
+  @override
   String get tuneTitle => 'ミックスを調整';
 
   @override
