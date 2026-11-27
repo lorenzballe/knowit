@@ -612,13 +612,17 @@ class _PillCardStackState extends State<PillCardStack>
     widget.onMotion?.call(false);
 
     final Offset thrown = d.velocity.pixelsPerSecond;
+    // Out along the way it was sent — a card pushed up leaves upward. The
+    // throw decides the heading when there is one, otherwise the drag does.
+    final Offset heading = thrown.distance > 220 ? thrown : _drag;
+    // To the right is back, where every reader looks for the card before,
+    // and there is no going back in a deck: a card sent that way comes home
+    // rather than skipping on unread. Left, up and down still send it.
+    final bool back = heading.dx > 0 && heading.dx.abs() > heading.dy.abs();
     // Either carried far enough or thrown hard enough. Distance alone made a
     // quick flick do nothing, which is the gesture most people actually make.
-    final bool gone = _drag.distance > 78 || thrown.distance > 620;
+    final bool gone = !back && (_drag.distance > 78 || thrown.distance > 620);
     if (gone) {
-      // Out along the way it was sent — a card pushed up leaves upward. The
-      // throw decides the heading when there is one, otherwise the drag does.
-      final Offset heading = thrown.distance > 220 ? thrown : _drag;
       // Straight down, and thrown rather than carried: the one heading a
       // card is never sent in by accident, so it can mean something —
       // less like this. A drag that drifts downward on its way sideways
