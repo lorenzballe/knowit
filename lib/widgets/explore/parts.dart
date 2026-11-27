@@ -184,8 +184,10 @@ class SideRow extends StatelessWidget {
 }
 
 /// A rounded button, filled: the canvas's flat one rather than the app's
-/// chunky one, because a shelf is not a commitment screen.
-class FlatButton extends StatelessWidget {
+/// chunky one, because a shelf is not a commitment screen. It gives under the
+/// finger the instant it is touched, as a challenge's own button does
+/// (GameButton): a lock pressed on a shelf shows pressed.
+class FlatButton extends StatefulWidget {
   const FlatButton({
     super.key,
     required this.label,
@@ -212,7 +214,30 @@ class FlatButton extends StatelessWidget {
   final bool expand;
 
   @override
+  State<FlatButton> createState() => _FlatButtonState();
+}
+
+class _FlatButtonState extends State<FlatButton> {
+  bool _down = false;
+
+  void _press(bool down) {
+    if (widget.onTap == null || _down == down || !mounted) return;
+    setState(() => _down = down);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final String label = widget.label;
+    final Color background = widget.background;
+    final Color foreground = widget.foreground;
+    final VoidCallback? onTap = widget.onTap;
+    final Widget? icon = widget.icon;
+    final double height = widget.height;
+    final double radius = widget.radius;
+    final double size = widget.size;
+    final EdgeInsets padding = widget.padding;
+    final bool expand = widget.expand;
+    final bool calm = MediaQuery.disableAnimationsOf(context);
     final Widget text = Text(
       label,
       maxLines: 1,
@@ -230,28 +255,36 @@ class FlatButton extends StatelessWidget {
       enabled: onTap != null,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
+        onTapDown: (_) => _press(true),
+        onTapUp: (_) => _press(false),
+        onTapCancel: () => _press(false),
         onTap: onTap,
-        // No alignment: a container with one stretches to every width it is
-        // offered, and a button that is not told to expand keeps to its
-        // words. The fixed height already centres the row in it.
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          height: height,
-          padding: padding,
-          decoration: BoxDecoration(
-            color: background,
-            borderRadius: BorderRadius.circular(radius),
-          ),
-          child: Row(
-            mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (icon != null) ...[icon!, const SizedBox(width: 7)],
-              // Flexible either way: a button that keeps to its words still
-              // gives way, with an ellipsis, when its words are wider than
-              // the room it was given (a long label in a narrow card).
-              Flexible(child: text),
-            ],
+        child: AnimatedScale(
+          scale: _down ? 0.97 : 1,
+          duration: calm ? Duration.zero : const Duration(milliseconds: 110),
+          curve: Curves.easeOut,
+          // No alignment: a container with one stretches to every width it
+          // is offered, and a button that is not told to expand keeps to its
+          // words. The fixed height already centres the row in it.
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            height: height,
+            padding: padding,
+            decoration: BoxDecoration(
+              color: background,
+              borderRadius: BorderRadius.circular(radius),
+            ),
+            child: Row(
+              mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (icon != null) ...[icon, const SizedBox(width: 7)],
+                // Flexible either way: a button that keeps to its words still
+                // gives way, with an ellipsis, when its words are wider than
+                // the room it was given (a long label in a narrow card).
+                Flexible(child: text),
+              ],
+            ),
           ),
         ),
       ),
