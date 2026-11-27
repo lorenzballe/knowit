@@ -6778,4 +6778,54 @@ class AppLocalizationsJa extends AppLocalizations {
   String subjectsThree(String a, String b, String c) {
     return '$a、$b、$c';
   }
+
+  @override
+  String get firstWeekTitle => '最初の1週間';
+
+  @override
+  String get firstMonthTitle => '最初の1か月';
+
+  @override
+  String firstOfferDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n日間の読書',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstWeekBest => 'この1週間のベストカード';
+
+  @override
+  String get firstMonthBest => 'この1か月のベストカード';
+
+  @override
+  String firstOfferBestWhy(String why) {
+    String _temp0 = intl.Intl.selectLogic(why, {
+      'said': '誰かに話したカードです。',
+      'liked': '気に入ったカードです。',
+      'saved': '保存したカードです。',
+      'changed': '考えが変わったカードです。',
+      'other': '手元に残したカードです。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String firstOfferTrialTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+を$days日間無料で',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstOfferPlusLine => '毎日あなただけの5枚、すべてのパスと本、そして週ごとのあなたの数字。';
+
+  @override
+  String get firstOfferNotNow => '今はしない';
 }

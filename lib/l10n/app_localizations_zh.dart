@@ -6776,4 +6776,54 @@ class AppLocalizationsZh extends AppLocalizations {
   String subjectsThree(String a, String b, String c) {
     return '$a、$b和$c';
   }
+
+  @override
+  String get firstWeekTitle => '你的第一周';
+
+  @override
+  String get firstMonthTitle => '你的第一个月';
+
+  @override
+  String firstOfferDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '阅读了 $n 天',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstWeekBest => '这一周的最佳卡片';
+
+  @override
+  String get firstMonthBest => '这个月的最佳卡片';
+
+  @override
+  String firstOfferBestWhy(String why) {
+    String _temp0 = intl.Intl.selectLogic(why, {
+      'said': '你把它讲给了别人。',
+      'liked': '你喜欢这张卡片。',
+      'saved': '你收藏了它。',
+      'changed': '它改变了你的想法。',
+      'other': '你留下了它。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String firstOfferTrialTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ 免费 $days 天',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstOfferPlusLine => '每天五张属于你的卡片，每条路径和每本书，还有你每周的数字。';
+
+  @override
+  String get firstOfferNotNow => '暂不';
 }

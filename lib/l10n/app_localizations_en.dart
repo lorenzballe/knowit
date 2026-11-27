@@ -7069,4 +7069,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String subjectsThree(String a, String b, String c) {
     return '$a, $b and $c';
   }
+
+  @override
+  String get firstWeekTitle => 'Your first week';
+
+  @override
+  String get firstMonthTitle => 'Your first month';
+
+  @override
+  String firstOfferDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n days of reading',
+      one: 'One day of reading',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstWeekBest => 'The week\'s best card';
+
+  @override
+  String get firstMonthBest => 'The month\'s best card';
+
+  @override
+  String firstOfferBestWhy(String why) {
+    String _temp0 = intl.Intl.selectLogic(why, {
+      'said': 'You told someone about it.',
+      'liked': 'You liked it.',
+      'saved': 'You saved it.',
+      'changed': 'It changed your mind.',
+      'other': 'You kept it.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String firstOfferTrialTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+, free for $days days',
+      one: 'Astute+, free for a day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstOfferPlusLine =>
+      'Five cards of your own every day, every path and book, and your numbers week by week.';
+
+  @override
+  String get firstOfferNotNow => 'Not now';
 }

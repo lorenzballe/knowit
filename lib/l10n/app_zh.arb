@@ -1613,5 +1613,14 @@
   "paywallGoalMark": "{goal, select, decide{更好决定} money{在钱上} people{读懂人} news{标题} health{证据} business{看清楚} other{看清楚}}",
   "paywallMadeLine": "每天五张，来自{subjects}，匹配你的水平。答错的会一再回来，直到你记住。你还会看到自己一周一周地变化。",
   "subjectsTwo": "{a}和{b}",
-  "subjectsThree": "{a}、{b}和{c}"
+  "subjectsThree": "{a}、{b}和{c}",
+  "firstWeekTitle": "你的第一周",
+  "firstMonthTitle": "你的第一个月",
+  "firstOfferDays": "{n, plural, other{阅读了 {n} 天}}",
+  "firstWeekBest": "这一周的最佳卡片",
+  "firstMonthBest": "这个月的最佳卡片",
+  "firstOfferBestWhy": "{why, select, said{你把它讲给了别人。} liked{你喜欢这张卡片。} saved{你收藏了它。} changed{它改变了你的想法。} other{你留下了它。}}",
+  "firstOfferTrialTitle": "{days, plural, other{Astute+ 免费 {days} 天}}",
+  "firstOfferPlusLine": "每天五张属于你的卡片，每条路径和每本书，还有你每周的数字。",
+  "firstOfferNotNow": "暂不"
 }

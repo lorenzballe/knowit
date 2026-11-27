@@ -421,6 +421,7 @@ class _TrialDays extends StatelessWidget {
     required this.days,
     required this.price,
     required this.remind,
+    this.dense = false,
   });
 
   /// The day the trial would start.
@@ -434,6 +435,10 @@ class _TrialDays extends StatelessWidget {
 
   /// Whether the reminder before the charge can reach the reader.
   final bool remind;
+
+  /// Set closer, for a page with more above it than the first run's offer
+  /// (lib/screens/first_offer.dart): the same days, the same words.
+  final bool dense;
 
   @override
   Widget build(BuildContext context) {
@@ -471,7 +476,9 @@ class _TrialDays extends StatelessWidget {
       ),
     ];
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 16, 18, 16),
+      padding: dense
+          ? const EdgeInsets.fromLTRB(14, 12, 16, 12)
+          : const EdgeInsets.fromLTRB(16, 16, 18, 16),
       decoration: BoxDecoration(
         color: p.surfaceRaised,
         borderRadius: BorderRadius.circular(24),
@@ -486,6 +493,7 @@ class _TrialDays extends StatelessWidget {
               step: step,
               first: i == 0,
               last: i == steps.length - 1,
+              dense: dense,
             ),
         ],
       ),
@@ -519,11 +527,13 @@ class _TrialStepRow extends StatelessWidget {
     required this.step,
     required this.first,
     required this.last,
+    this.dense = false,
   });
 
   final _TrialStep step;
   final bool first;
   final bool last;
+  final bool dense;
 
   @override
   Widget build(BuildContext context) {
@@ -561,7 +571,10 @@ class _TrialStepRow extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.only(start: 26, bottom: last ? 0 : 16),
+          padding: EdgeInsetsDirectional.only(
+            start: 26,
+            bottom: last ? 0 : (dense ? 10 : 16),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -599,7 +612,7 @@ class _TrialStepRow extends StatelessWidget {
                           maxLines: 1,
                           minSize: 18,
                           style: AppText.display(
-                            size: 27,
+                            size: dense ? 24 : 27,
                             weight: FontWeight.w600,
                             height: 1,
                             spacing: -0.8,
@@ -621,11 +634,13 @@ class _TrialStepRow extends StatelessWidget {
                   ),
                 ),
               Padding(
-                padding: EdgeInsets.only(top: step.price == null ? 3 : 7),
+                padding: EdgeInsets.only(
+                  top: step.price == null ? 3 : (dense ? 5 : 7),
+                ),
                 child: Text(
                   step.line,
                   style: AppText.body(
-                    size: 13.5,
+                    size: dense ? 13 : 13.5,
                     height: 1.35,
                     color: p.ink.withValues(alpha: 0.6),
                   ),

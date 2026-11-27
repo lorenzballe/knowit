@@ -1613,5 +1613,14 @@
   "paywallGoalMark": "{goal, select, decide{karar} money{Para} people{İnsanları} news{Manşetlere} health{kanıt} business{net} other{Net}}",
   "paywallMadeLine": "{subjects} konularından, seviyende günde beş kart. Kaçırdıkların, akılda kalana kadar geri gelir. Ve hafta hafta değiştiğini görürsün.",
   "subjectsTwo": "{a} ve {b}",
-  "subjectsThree": "{a}, {b} ve {c}"
+  "subjectsThree": "{a}, {b} ve {c}",
+  "firstWeekTitle": "İlk haftan",
+  "firstMonthTitle": "İlk ayın",
+  "firstOfferDays": "{n, plural, =1{Bir günlük okuma} other{{n} günlük okuma}}",
+  "firstWeekBest": "Haftanın en iyi kartı",
+  "firstMonthBest": "Ayın en iyi kartı",
+  "firstOfferBestWhy": "{why, select, said{Birine anlattın.} liked{Beğendin.} saved{Kaydettin.} changed{Fikrini değiştirdi.} other{Sakladın.}}",
+  "firstOfferTrialTitle": "{days, plural, =1{Astute+ bir gün ücretsiz} other{Astute+ {days} gün ücretsiz}}",
+  "firstOfferPlusLine": "Her gün sana ait beş kart, her yol ve her kitap, bir de hafta hafta senin sayıların.",
+  "firstOfferNotNow": "Şimdi değil"
 }

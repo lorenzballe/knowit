@@ -1613,5 +1613,14 @@
   "paywallGoalMark": "{goal, select, decide{лучше.} money{деньгами.} people{людей.} news{заголовкам.} health{доказательства.} business{ясности} other{ясности.}}",
   "paywallMadeLine": "Пять карточек в день на твоём уровне, темы: {subjects}. Те, где ты ошибаешься, возвращаются, пока не запомнятся. И ты видишь, как меняешься, неделя за неделей.",
   "subjectsTwo": "{a} и {b}",
-  "subjectsThree": "{a}, {b} и {c}"
+  "subjectsThree": "{a}, {b} и {c}",
+  "firstWeekTitle": "Твоя первая неделя",
+  "firstMonthTitle": "Твой первый месяц",
+  "firstOfferDays": "{n, plural, one{{n} день чтения} few{{n} дня чтения} many{{n} дней чтения} other{{n} дня чтения}}",
+  "firstWeekBest": "Лучшая карточка недели",
+  "firstMonthBest": "Лучшая карточка месяца",
+  "firstOfferBestWhy": "{why, select, said{Ты рассказал о ней кому-то.} liked{Она тебе понравилась.} saved{Ты её сохранил.} changed{Она изменила твоё мнение.} other{Ты её сохранил.}}",
+  "firstOfferTrialTitle": "{days, plural, one{Astute+ бесплатно на {days} день} few{Astute+ бесплатно на {days} дня} many{Astute+ бесплатно на {days} дней} other{Astute+ бесплатно на {days} дня}}",
+  "firstOfferPlusLine": "Пять своих карточек каждый день, каждый путь и каждая книга, а ещё твои цифры неделя за неделей.",
+  "firstOfferNotNow": "Не сейчас"
 }

@@ -7350,4 +7350,61 @@ class AppLocalizationsPl extends AppLocalizations {
   String subjectsThree(String a, String b, String c) {
     return '$a, $b i $c';
   }
+
+  @override
+  String get firstWeekTitle => 'Twój pierwszy tydzień';
+
+  @override
+  String get firstMonthTitle => 'Twój pierwszy miesiąc';
+
+  @override
+  String firstOfferDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dnia czytania',
+      many: '$n dni czytania',
+      few: '$n dni czytania',
+      one: 'Jeden dzień czytania',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstWeekBest => 'Najlepsza karta tygodnia';
+
+  @override
+  String get firstMonthBest => 'Najlepsza karta miesiąca';
+
+  @override
+  String firstOfferBestWhy(String why) {
+    String _temp0 = intl.Intl.selectLogic(why, {
+      'said': 'Opowiedziałeś o niej komuś.',
+      'liked': 'Spodobała ci się.',
+      'saved': 'Zapisałeś ją.',
+      'changed': 'Zmieniła twoje zdanie.',
+      'other': 'Zachowałeś ją.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String firstOfferTrialTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ za darmo przez $days dnia',
+      many: 'Astute+ za darmo przez $days dni',
+      few: 'Astute+ za darmo przez $days dni',
+      one: 'Astute+ za darmo przez jeden dzień',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstOfferPlusLine =>
+      'Pięć własnych kart każdego dnia, każda ścieżka i każda książka, a do tego twoje liczby tydzień po tygodniu.';
+
+  @override
+  String get firstOfferNotNow => 'Nie teraz';
 }

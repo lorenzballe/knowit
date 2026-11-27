@@ -6803,4 +6803,55 @@ class AppLocalizationsKo extends AppLocalizations {
   String subjectsThree(String a, String b, String c) {
     return '$a, $b, $c';
   }
+
+  @override
+  String get firstWeekTitle => '첫 일주일';
+
+  @override
+  String get firstMonthTitle => '첫 한 달';
+
+  @override
+  String firstOfferDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '읽은 날 $n일',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstWeekBest => '첫 주의 베스트 카드';
+
+  @override
+  String get firstMonthBest => '첫 달의 베스트 카드';
+
+  @override
+  String firstOfferBestWhy(String why) {
+    String _temp0 = intl.Intl.selectLogic(why, {
+      'said': '누군가에게 이야기한 카드예요.',
+      'liked': '마음에 든 카드예요.',
+      'saved': '저장한 카드예요.',
+      'changed': '생각을 바꿔 준 카드예요.',
+      'other': '간직한 카드예요.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String firstOfferTrialTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ $days일 무료',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstOfferPlusLine =>
+      '매일 나만의 카드 다섯 장, 모든 경로와 모든 책, 그리고 매주 쌓이는 나의 숫자.';
+
+  @override
+  String get firstOfferNotNow => '나중에';
 }
