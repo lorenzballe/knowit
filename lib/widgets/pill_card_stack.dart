@@ -16,6 +16,7 @@ import '../measure/card_read.dart';
 import '../measure/screens.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
+import '../state/debug_looks.dart';
 import '../state/music_sound.dart';
 import '../sync/served.dart';
 import '../sync/trace.dart';
@@ -217,6 +218,15 @@ class _PillCardStackState extends State<PillCardStack>
     );
     _upAt = DateTime.now();
     MusicSound.on.addListener(_queuePages);
+    DebugLooks.cardFoot.addListener(_footChanged);
+  }
+
+  /// The foot picked in the developer tools: the cards in words drawn again
+  /// with it, and the pages told it, at once.
+  void _footChanged() {
+    if (!mounted) return;
+    setState(() {});
+    _queuePages();
   }
 
   /// The free cards' pages this deck keeps alive: the card on top, and the
@@ -301,6 +311,7 @@ class _PillCardStackState extends State<PillCardStack>
     _hintTimer?.cancel();
     _presence?.removeListener(_seen);
     MusicSound.on.removeListener(_queuePages);
+    DebugLooks.cardFoot.removeListener(_footChanged);
     final CardRead? read = _read;
     if (read != null) _close(read, 'gone');
     _pages.dispose();

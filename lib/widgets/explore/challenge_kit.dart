@@ -578,11 +578,15 @@ class GameClose extends StatelessWidget {
   final String id;
   final VoidCallback onTap;
 
+  /// The square it stands in, the same on every screen: its centre level
+  /// with the middle of the head's line.
+  static const double box = 48;
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
-    return GlassRound(
+    final Widget round = GlassRound(
       symbol: GlassRound.close,
       label: l.closeLabel,
       onPressed: onTap,
@@ -596,7 +600,7 @@ class GameClose extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: onTap,
           child: SizedBox.square(
-            dimension: 48,
+            dimension: box,
             child: Center(
               child: Container(
                 width: 38,
@@ -613,6 +617,13 @@ class GameClose extends StatelessWidget {
           ),
         ),
       ),
+    );
+    // Apple's glass is 44 across, the app's own target 48: either stands
+    // in the same square, so the cross is in the same place on every
+    // screen and every phone.
+    return SizedBox.square(
+      dimension: box,
+      child: Center(child: round),
     );
   }
 }
@@ -1140,10 +1151,27 @@ class ChallengeFigures extends StatelessWidget {
 /// is short enough for rows of a good height — and its name, and a turn
 /// already taken its verdict.
 class ChallengeDeck extends StatelessWidget {
-  const ChallengeDeck({super.key, required this.rounds, this.marks = const []});
+  const ChallengeDeck({
+    super.key,
+    required this.rounds,
+    this.marks = const [],
+    this.row,
+  });
 
   final List<List<Pill>> rounds;
   final List<bool?> marks;
+
+  /// Each row's height, where the page has measured it; else the round's
+  /// own.
+  final double? row;
+
+  /// The size a round of [n] names its subjects at: larger where there are
+  /// few of them.
+  static double textSize(int n) => n <= 4
+      ? 16
+      : n <= 6
+      ? 15.5
+      : 15;
 
   @override
   Widget build(BuildContext context) {
@@ -1158,10 +1186,10 @@ class ChallengeDeck extends StatelessWidget {
     final double tile = n <= 3
         ? 38
         : n <= 4
-        ? 30
+        ? 32
         : n <= 6
-        ? 24
-        : 13;
+        ? 26
+        : 14;
     final double pad = n <= 3
         ? 15
         : n <= 4
@@ -1169,13 +1197,20 @@ class ChallengeDeck extends StatelessWidget {
         : n <= 6
         ? 8
         : 8.5;
+    final double? row = this.row;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (int i = 0; i < rounds.length; i++) ...[
           Container(height: 1, color: p.line),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: pad),
+          Container(
+            constraints: row == null
+                ? null
+                : BoxConstraints(minHeight: row),
+            alignment: AlignmentDirectional.centerStart,
+            padding: row == null
+                ? EdgeInsets.symmetric(vertical: pad)
+                : EdgeInsets.zero,
             child: Row(
               children: [
                 SizedBox(
@@ -1200,8 +1235,8 @@ class ChallengeDeck extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: pill.color,
-                      borderRadius: BorderRadius.circular(tile > 20 ? 8 : 3),
-                      border: cardHairline(pill.color, p.surfaceRaised),
+                      borderRadius: BorderRadius.circular(tile > 20 ? 8 : 3.5),
+                      border: cardHairline(pill.color, p.surface),
                     ),
                     child: tile > 20
                         ? SubjectIcon(
@@ -1224,7 +1259,7 @@ class ChallengeDeck extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     textScaler: scaler,
                     style: AppText.body(
-                      size: 14.5,
+                      size: textSize(n),
                       weight: FontWeight.w600,
                       height: 1.25,
                       color: p.ink,
@@ -1536,19 +1571,39 @@ class GameReviewItem {
   final VoidCallback? onTap;
 }
 
-/// The cards of a round again, on a card of the page's own: each its
-/// verdict, its words, what it is in a tag — a tap from its card.
+/// The cards of a round again: each its verdict, its words, what it is in
+/// a tag — a tap from its card. On a card of the page's own, or [bare], on
+/// the page itself, a hairline over each row, as the report sets it.
 class GameReview extends StatelessWidget {
-  const GameReview({super.key, required this.items, this.label});
+  const GameReview({
+    super.key,
+    required this.items,
+    this.label,
+    this.bare = false,
+  });
 
   final List<GameReviewItem> items;
 
   /// The card's name, over its rows.
   final String? label;
+  final bool bare;
 
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
+    final String? name = label;
+    if (bare) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (name != null) ...[GameLabel(name), const SizedBox(height: 8)],
+          for (final GameReviewItem item in items) ...[
+            Container(height: 1, color: p.line),
+            _row(context, p, item),
+          ],
+        ],
+      );
+    }
     return ChallengePanel(
       label: label,
       padding: label == null

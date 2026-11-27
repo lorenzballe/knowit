@@ -90,9 +90,13 @@ Map<String, Object> _prefs({bool plus = false, int read = 3}) {
 Future<AppState> _app(
   WidgetTester tester, {
   bool plus = false,
+  int read = 3,
   Map<String, Object> more = const {},
 }) async {
-  SharedPreferences.setMockInitialValues({..._prefs(plus: plus), ...more});
+  SharedPreferences.setMockInitialValues({
+    ..._prefs(plus: plus, read: read),
+    ...more,
+  });
   final AppState app = AppState();
   await app.init();
   await tester.pump();
@@ -339,6 +343,32 @@ void main() {
     final Finder tile = find.byKey(const ValueKey('profile-today'));
     await tester.tap(tile);
     expect(asked, tester.getRect(tile));
+  });
+
+  testWidgets('the five read: the tile says nothing more, no See again, on '
+      'every top, and still opens Today out of itself', (tester) async {
+    addTearDown(() => profileTopForShots = null);
+    for (final ProfileTop top in ProfileTop.values) {
+      profileTopForShots = top;
+      final AppState app = await _app(tester, plus: true, read: 5);
+      Rect? asked;
+      await tester.pumpWidget(_host(app, onToday: (at) => asked = at));
+      await _settle(tester);
+      final Finder tile = find.byKey(const ValueKey('profile-today'));
+      expect(tile, findsOneWidget, reason: top.name);
+      expect(find.text('See again'), findsNothing, reason: top.name);
+      expect(find.byIcon(Icons.play_arrow_rounded), findsNothing);
+      expect(find.byKey(const ValueKey('profile-today-count')), findsNothing);
+      expect(
+        find.descendant(of: tile, matching: find.text("Today's five")),
+        findsOneWidget,
+        reason: top.name,
+      );
+      // Said whole to a screen reader: the five, and that they are read.
+      expect(tester.getSemantics(tile).label, "Today's five, all read");
+      await tester.tap(tile);
+      expect(asked, tester.getRect(tile), reason: top.name);
+    }
   });
 
   testWidgets('every top lays out, free and Astute+, in long languages', (

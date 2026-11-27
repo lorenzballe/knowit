@@ -7,6 +7,7 @@ import '../data/goals.dart';
 import '../measure/card_read.dart';
 import '../measure/screens.dart' show seenOf;
 import '../models/pill.dart';
+import '../state/debug_looks.dart';
 import '../sync/reports.dart';
 import '../theme.dart';
 import 'area_marks.dart' show goalIcon, goalName;
@@ -1620,6 +1621,24 @@ class CardReveal extends StatefulWidget {
 enum _Aside { none, scene, picture, working, simply, counter }
 
 class _CardRevealState extends State<CardReveal> {
+  @override
+  void initState() {
+    super.initState();
+    // The foot picked in the developer tools shows on a back already
+    // turned over, at once.
+    DebugLooks.cardFoot.addListener(_footChanged);
+  }
+
+  @override
+  void dispose() {
+    DebugLooks.cardFoot.removeListener(_footChanged);
+    super.dispose();
+  }
+
+  void _footChanged() {
+    if (mounted) setState(() {});
+  }
+
   /// A tap on the foot: Go deeper (deeper_sheet.dart).
   void _deeper() {
     CardRead.of(context)?.opened('deeper');

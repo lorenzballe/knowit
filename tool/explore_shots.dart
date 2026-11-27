@@ -559,6 +559,23 @@ void main() {
     'CHALLENGES_DIR',
     defaultValue: 'shots/gallery/challenges/$label',
   );
+  // The phone's language, English unless the camera is asked for another:
+  //
+  //   flutter test tool/explore_shots.dart --plain-name "challenge:" \
+  //     --update-goldens --dart-define=CHALLENGES_LANG=de
+  const String challengesLang = String.fromEnvironment(
+    'CHALLENGES_LANG',
+    defaultValue: 'en',
+  );
+  void speak(WidgetTester tester) {
+    tester.platformDispatcher.localeTestValue = const Locale(challengesLang);
+    tester.platformDispatcher.localesTestValue = const [
+      Locale(challengesLang),
+    ];
+    addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+  }
+
   // Each phone with the room its status bar and its home bar take.
   const Map<String, (Size, EdgeInsets)> challengePhones = {
     '360x740': (Size(360, 740), EdgeInsets.only(top: 24, bottom: 16)),
@@ -576,6 +593,7 @@ void main() {
         );
         final (Size logical, EdgeInsets safe) = phone.value;
         size(logical, 3);
+        speak(tester);
         tester.view.padding = FakeViewPadding(
           top: safe.top * 3,
           bottom: safe.bottom * 3,
@@ -803,6 +821,7 @@ void main() {
           );
           final (Size logical, EdgeInsets safe) = phone.value;
           size(logical, 3);
+          speak(tester);
           tester.view.padding = FakeViewPadding(
             top: safe.top * 3,
             bottom: safe.bottom * 3,

@@ -31,6 +31,7 @@ import '../widgets/profile_menu.dart';
 import '../widgets/profile_top.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/sign_in_sheet.dart';
+import '../widgets/source_foot.dart' show builtSourceFoot, footPickOf;
 import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
@@ -1423,8 +1424,9 @@ class _PlusCard extends StatelessWidget {
 }
 
 /// The looks the developer tools try on this phone ([DebugLooks]): the
-/// finished day without the row over its card, and which top the profile
-/// opens on. English, as the rest of the section is.
+/// finished day without the row over its card, which top the profile opens
+/// on, and how a card's foot is set. English, as the rest of the section
+/// is.
 class _DebugLooksPanel extends StatelessWidget {
   const _DebugLooksPanel();
 
@@ -1480,6 +1482,44 @@ class _DebugLooksPanel extends StatelessWidget {
                 ValueListenableBuilder<ProfileTopPick>(
                   valueListenable: DebugLooks.profileTop,
                   builder: (context, pick, _) => _ProfileTopPicker(pick: pick),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            key: const ValueKey('debug-card-foot'),
+            padding: const EdgeInsets.fromLTRB(0, 14, 0, 16),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: p.line)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Card foot',
+                  style: AppText.body(
+                    size: 14,
+                    weight: FontWeight.w500,
+                    color: p.ink,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  'How the back of a card ends: Go deeper and its source, '
+                  'and Why this card. On cards in words and drawn ones. '
+                  'A is how the app ships.',
+                  style: AppText.body(
+                    size: 12,
+                    height: 1.35,
+                    color: p.inkFaint,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ValueListenableBuilder<CardFootPick?>(
+                  valueListenable: DebugLooks.cardFoot,
+                  builder: (context, pick, _) => _CardFootPicker(
+                    pick: pick ?? footPickOf(builtSourceFoot),
+                  ),
                 ),
               ],
             ),
@@ -1552,19 +1592,33 @@ class _DebugSwitchRow extends StatelessWidget {
   }
 }
 
-/// Auto, A, B or C, as the profile's top: a segmented control like the
-/// appearance's, each choice with what it is under its letter.
-class _ProfileTopPicker extends StatelessWidget {
-  const _ProfileTopPicker({required this.pick});
+/// One choice of a debug picker: what it picks, its letter or name, what
+/// it is under it, how a screen reader says it, and how much of the row it
+/// takes.
+typedef _DebugChoice<T> = ({
+  T pick,
+  String name,
+  String note,
+  String said,
+  int flex,
+});
 
-  final ProfileTopPick pick;
+/// A segmented control like the appearance's, each choice with what it is
+/// under its letter: the debug section's way of picking one look of a few.
+class _DebugPicker<T> extends StatelessWidget {
+  const _DebugPicker({
+    required this.choices,
+    required this.picked,
+    required this.keyOf,
+    required this.onPick,
+  });
 
-  static const _options = [
-    (pick: ProfileTopPick.auto, name: 'Auto', note: 'A free · C Astute+'),
-    (pick: ProfileTopPick.a, name: 'A', note: 'score'),
-    (pick: ProfileTopPick.b, name: 'B', note: 'week'),
-    (pick: ProfileTopPick.c, name: 'C', note: 'board'),
-  ];
+  final List<_DebugChoice<T>> choices;
+  final T picked;
+
+  /// Each choice's key: `debug-profile-top-a`, `debug-card-foot-d`.
+  final String Function(T pick) keyOf;
+  final ValueChanged<T> onPick;
 
   @override
   Widget build(BuildContext context) {
@@ -1574,27 +1628,24 @@ class _ProfileTopPicker extends StatelessWidget {
       radius: 16,
       child: Row(
         children: [
-          for (final option in _options)
+          for (final _DebugChoice<T> choice in choices)
             Expanded(
-              // Auto carries the most words.
-              flex: option.pick == ProfileTopPick.auto ? 2 : 1,
+              flex: choice.flex,
               child: Builder(
                 builder: (context) {
-                  final bool selected = option.pick == pick;
+                  final bool selected = choice.pick == picked;
                   return Semantics(
                     button: true,
                     selected: selected,
-                    label: option.pick == ProfileTopPick.auto
-                        ? 'Auto (${option.note})'
-                        : '${option.name}, ${option.note}',
+                    label: choice.said,
                     excludeSemantics: true,
                     child: GestureDetector(
-                      key: ValueKey('debug-profile-top-${option.pick.name}'),
+                      key: ValueKey(keyOf(choice.pick)),
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
                         if (selected) return;
                         HapticFeedback.selectionClick();
-                        DebugLooks.setProfileTop(option.pick);
+                        onPick(choice.pick);
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
@@ -1612,7 +1663,7 @@ class _ProfileTopPicker extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              option.name,
+                              choice.name,
                               maxLines: 1,
                               style: AppText.body(
                                 size: 13.5,
@@ -1622,7 +1673,7 @@ class _ProfileTopPicker extends StatelessWidget {
                             ),
                             const SizedBox(height: 1),
                             Text(
-                              option.note,
+                              choice.note,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: AppText.body(
@@ -1644,6 +1695,69 @@ class _ProfileTopPicker extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Auto, A, B or C, as the profile's top. Auto carries the most words.
+class _ProfileTopPicker extends StatelessWidget {
+  const _ProfileTopPicker({required this.pick});
+
+  final ProfileTopPick pick;
+
+  static const List<_DebugChoice<ProfileTopPick>> _choices = [
+    (
+      pick: ProfileTopPick.auto,
+      name: 'Auto',
+      note: 'A free · C Astute+',
+      said: 'Auto (A free · C Astute+)',
+      flex: 2,
+    ),
+    (pick: ProfileTopPick.a, name: 'A', note: 'score', said: 'A, score', flex: 1),
+    (pick: ProfileTopPick.b, name: 'B', note: 'week', said: 'B, week', flex: 1),
+    (pick: ProfileTopPick.c, name: 'C', note: 'board', said: 'C, board', flex: 1),
+  ];
+
+  @override
+  Widget build(BuildContext context) => _DebugPicker<ProfileTopPick>(
+    choices: _choices,
+    picked: pick,
+    keyOf: (pick) => 'debug-profile-top-${pick.name}',
+    onPick: DebugLooks.setProfileTop,
+  );
+}
+
+/// A, B, C or D, as the foot of a card's back (source_foot.dart): the one
+/// picked, or the build's own while none is.
+class _CardFootPicker extends StatelessWidget {
+  const _CardFootPicker({required this.pick});
+
+  final CardFootPick pick;
+
+  static const List<_DebugChoice<CardFootPick>> _choices = [
+    (pick: CardFootPick.a, name: 'A', note: 'line', said: 'A, line', flex: 1),
+    (
+      pick: CardFootPick.b,
+      name: 'B',
+      note: 'two lines',
+      said: 'B, two lines',
+      flex: 1,
+    ),
+    (
+      pick: CardFootPick.c,
+      name: 'C',
+      note: 'buttons',
+      said: 'C, buttons',
+      flex: 1,
+    ),
+    (pick: CardFootPick.d, name: 'D', note: 'links', said: 'D, links', flex: 1),
+  ];
+
+  @override
+  Widget build(BuildContext context) => _DebugPicker<CardFootPick>(
+    choices: _choices,
+    picked: pick,
+    keyOf: (pick) => 'debug-card-foot-${pick.name}',
+    onPick: DebugLooks.setCardFoot,
+  );
 }
 
 /// One fact about the running app, for the debug section.

@@ -8,6 +8,7 @@ import '../measure/card_read.dart';
 import '../measure/session.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../theme.dart';
 import '../data/skill_levels.dart';
 import '../data/topics.dart';
@@ -65,6 +66,24 @@ class TodayScreen extends StatefulWidget {
 }
 
 class _TodayScreenState extends State<TodayScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // The foot picked in the developer tools decides whether a card says
+    // Why this card on its front (cardNote): drawn again at once.
+    DebugLooks.cardFoot.addListener(_footChanged);
+  }
+
+  @override
+  void dispose() {
+    DebugLooks.cardFoot.removeListener(_footChanged);
+    super.dispose();
+  }
+
+  void _footChanged() {
+    if (mounted) setState(() {});
+  }
+
   /// Whether the day was done at the last build — null before the first,
   /// so opening the app onto a finished day is not mistaken for finishing it.
   bool? _wasDone;

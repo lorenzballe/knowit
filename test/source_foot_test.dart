@@ -14,10 +14,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/card_json.dart';
+import 'package:astuto/debug_flags.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/state/debug_looks.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/deeper_sheet.dart';
 import 'package:astuto/widgets/pill_card.dart';
@@ -335,5 +338,102 @@ void main() {
     expect(json['why'], 'Perché questa carta');
     expect(env.copyWith(shown: true).toJson()['why'], 'Perché questa carta');
     expect(const PageEnv().toJson().containsKey('why'), isFalse);
+  });
+
+  // The four feet on the owner's own phone: picked in the developer tools
+  // (Profile → Debug, "Card foot"), shown at once on a back already turned
+  // over, the same name a drawn card's page is told; A as the app ships;
+  // and never read by a build without the tools.
+  group('picked in the developer tools', () {
+    late bool tools;
+    setUp(() => tools = debugToolsOn);
+    tearDown(() {
+      debugToolsOn = tools;
+      DebugLooks.reset();
+    });
+
+    testWidgets('each foot at once on a back already turned over', (
+      tester,
+    ) async {
+      debugToolsOn = true;
+      SharedPreferences.setMockInitialValues({});
+      final Pill pill = _card();
+      await tester.pumpWidget(_back(pill, onWhy: () {}));
+      await tester.pumpAndSettle();
+      final Finder foot = find.byKey(ValueKey('card-foot-${pill.id}'));
+      final Finder door = find.byKey(ValueKey('card-why-${pill.id}'));
+      Rect go() => tester.getRect(
+        find
+            .descendant(
+              of: foot,
+              matching: find.textContaining('Go deeper', findRichText: true),
+            )
+            .first,
+      );
+
+      for (final (CardFootPick pick, SourceFoot way) in const [
+        (CardFootPick.b, SourceFoot.stack),
+        (CardFootPick.c, SourceFoot.pill),
+        (CardFootPick.d, SourceFoot.links),
+        (CardFootPick.a, SourceFoot.line),
+      ]) {
+        await DebugLooks.setCardFoot(pick);
+        await tester.pump();
+        expect(sourceFoot, way, reason: pick.name);
+        // What a drawn card's page is told, from the same pick.
+        expect(PageEnv(foot: sourceFoot.name).toJson()['foot'], way.name);
+        switch (way) {
+          // B says Why this card on the front: none on the back.
+          case SourceFoot.stack:
+            expect(door, findsNothing);
+          // C: Go deeper in a pill, Why this card in an outlined one.
+          case SourceFoot.pill:
+            expect(door, findsOneWidget);
+            final Container outlined = tester.widget(
+              find.descendant(of: door, matching: find.byType(Container)),
+            );
+            expect(outlined.foregroundDecoration, isNotNull);
+          // D: the two on one line.
+          case SourceFoot.links:
+            expect(door, findsOneWidget);
+            final Rect answer = tester.getRect(
+              find
+                  .descendant(
+                    of: door,
+                    matching: find.textContaining(
+                      'Why this card',
+                      findRichText: true,
+                    ),
+                  )
+                  .last,
+            );
+            expect((answer.center.dy - go().center.dy).abs(), lessThan(1));
+            expect(answer.left, greaterThan(go().right));
+          // A: Why this card on the row under Go deeper and the source.
+          case SourceFoot.line:
+            expect(door, findsOneWidget);
+            expect(tester.getRect(door).top, greaterThan(go().bottom));
+        }
+        expect(tester.takeException(), isNull, reason: pick.name);
+      }
+    });
+
+    test('A as the app ships, and none read without the tools', () async {
+      debugToolsOn = true;
+      DebugLooks.reset();
+      expect(sourceFoot, builtSourceFoot);
+      expect(footPickOf(builtSourceFoot), switch (builtSourceFoot) {
+        SourceFoot.line => CardFootPick.a,
+        SourceFoot.stack => CardFootPick.b,
+        SourceFoot.pill => CardFootPick.c,
+        SourceFoot.links => CardFootPick.d,
+      });
+      SharedPreferences.setMockInitialValues({});
+      await DebugLooks.setCardFoot(CardFootPick.d);
+      expect(sourceFoot, SourceFoot.links);
+      debugToolsOn = false;
+      expect(DebugLooks.cardFootPicked, isNull);
+      expect(sourceFoot, builtSourceFoot);
+    });
   });
 }

@@ -434,15 +434,21 @@ keeps its empty places.
 Every challenge is taken on a screen of its own
 (`lib/widgets/explore/challenge_screen.dart`, one screen for all): the
 tile's panel grows into the page and back, calmly, and the challenge is
-taken there in three moments — what it is (the rule and the skill, the
-name, a sentence or two on what it measures and why it matters, the
-reader's figures between hairlines, Begin in the challenge's tone — or
-Continue on a round begun), the round (a running head in small capitals,
-a fine rule under it, the content set as a page, precise flat controls,
-each answer told by a calm colour and a word), and a short report (the
-score, accuracy and the time where it counts, a measured line read
-against chance, "Personal best" in words, the cards again, the next
-challenge, another round or when the next comes, and the score to send).
+taken there in three moments, each one composition the height of the
+screen, with the X in the screen's corner inside the safe area (Apple's
+glass on iOS 26) and the head one line level with it — never a card
+floating in the screen, never a band of nothing (the owner, November
+2026). What it is: the skill at the head, the name large, a sentence or
+two on what it measures and why it matters, then the day's round a turn
+to a row and the reader's figures between hairlines, over Begin — or
+Continue on a round begun — the type and the rows set to the room the
+phone has. The round: the name and how far along at the head, a fine rule
+under it, the content set as a page, precise flat controls, each answer
+told by a calm colour and a word. A short report on the page itself: the
+score large, accuracy and the time where it counts, a measured line read
+against chance, "Personal best" in words, the cards again under
+hairlines, the next challenge, another round or when the next comes, and
+the score to send.
 No confetti, no exclamation marks; motion is fades and short slides of
 150 to 250 ms; haptics light and rare. Sixty seconds and In order are set
 this way in full; the other challenges' rounds still deal their cards of

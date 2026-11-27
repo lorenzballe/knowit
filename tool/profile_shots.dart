@@ -1,8 +1,8 @@
 // Photographs the top of the profile three ways (lib/widgets/profile_top.dart),
 // each on the free plan and on Astute+; the top each plan opens on by itself
 // (profile-free, profile-plus); the debug section's looks, as a TestFlight
-// build shows them (profile-debug); and the way back to Today from its
-// tile, frame by frame.
+// build shows them (profile-debug), and with the card's foot D picked
+// (profile-debug-d); and the way back to Today from its tile, frame by frame.
 //
 //   SHOTS=/some/folder LANG_SHOT=it flutter test tool/profile_shots.dart --update-goldens
 //
@@ -245,6 +245,10 @@ void main() {
     position.jumpTo(position.pixels + tester.getRect(looks).top - 250);
     await settle(tester);
     await shoot('profile-debug');
+    // The card's foot picked: D, lit at once and kept.
+    await tester.tap(find.byKey(const ValueKey('debug-card-foot-d')));
+    await settle(tester);
+    await shoot('profile-debug-d');
   });
 
   testWidgets('back to Today, out of the tile', (tester) async {

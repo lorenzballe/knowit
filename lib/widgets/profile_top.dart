@@ -936,8 +936,9 @@ class _TodayTap extends StatelessWidget {
 
 /// Today's five at the head of what goes to them, and where the day is:
 /// how many read of five, how many to read before any, and once all five
-/// are read nothing more about it, only the way back to them. With [bars],
-/// the five as five short bars before it.
+/// are read nothing more about it. The tile is the way back to them, its
+/// chevron says so; a "See again" beside it said it twice (the owner,
+/// November 2026). With [bars], the five as five short bars before it.
 class _TodayHead extends StatelessWidget {
   const _TodayHead({required this.app, this.bars = false});
 
@@ -975,24 +976,14 @@ class _TodayHead extends StatelessWidget {
           const SizedBox(width: 12),
         ] else
           const SizedBox(width: 10),
-        if (dealt)
-          done
-              ? Row(
-                  key: const ValueKey('profile-today-again'),
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.play_arrow_rounded, size: 17, color: p.inkMuted),
-                    const SizedBox(width: 2),
-                    Text(l.todaySeeAgain, style: side),
-                  ],
-                )
-              : Text(
-                  read == 0
-                      ? l.profileTodayToRead(kPillsPerDay)
-                      : l.profileTodayOf(read, kPillsPerDay),
-                  key: const ValueKey('profile-today-count'),
-                  style: side,
-                ),
+        if (dealt && !done)
+          Text(
+            read == 0
+                ? l.profileTodayToRead(kPillsPerDay)
+                : l.profileTodayOf(read, kPillsPerDay),
+            key: const ValueKey('profile-today-count'),
+            style: side,
+          ),
         Icon(Icons.chevron_right_rounded, size: 22, color: p.inkFaint),
       ],
     );
