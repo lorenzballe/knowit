@@ -16,6 +16,7 @@ import '../models/place.dart';
 import '../sync/served.dart';
 import '../theme.dart';
 import 'card_edge.dart';
+import 'hard_ring.dart';
 import 'hold_to_keep.dart';
 import 'liked_mark.dart';
 import 'motion.dart';
@@ -112,7 +113,37 @@ class PillCard extends StatelessWidget {
     this.page,
     this.onPageMessage,
     this.controlsLive = true,
-  });
+  }) : _accent = null;
+
+  /// [of], drawn ringed (hard_ring.dart): [dressed], its card in the ringed
+  /// colours, its subject's mark and name in the ring's colour, and HARD
+  /// beside them.
+  PillCard._ringed(PillCard of, Pill dressed, Color this._accent)
+    : pill = dressed,
+      indexLabel = of.indexLabel,
+      flipped = of.flipped,
+      given = of.given,
+      onAnswer = of.onAnswer,
+      isReview = of.isReview,
+      isOwn = of.isOwn,
+      home = of.home,
+      note = of.note,
+      noteIcon = of.noteIcon,
+      onNote = of.onNote,
+      skill = of.skill,
+      onSkill = of.onSkill,
+      move = of.move,
+      saved = of.saved,
+      onSave = of.onSave,
+      liked = of.liked,
+      onLike = of.onLike,
+      onShare = of.onShare,
+      page = of.page,
+      onPageMessage = of.onPageMessage,
+      controlsLive = of.controlsLive;
+
+  /// The ring's colour, on a hard card drawn ringed; null on every other.
+  final Color? _accent;
 
   /// Whether the save and share on the card can be pressed, and read out:
   /// not on a card waiting under the one being read. They are drawn there
@@ -142,7 +173,17 @@ class PillCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget card = Stack(
+    // A hard card, where the developer tools ring it, is the same card
+    // drawn again in the ringed colours.
+    if (_accent == null && HardRing.on(pill)) {
+      final Palette p = context.p;
+      return PillCard._ringed(
+        this,
+        HardRing.dressed(pill, p),
+        HardRing.accentOf(pill, p),
+      );
+    }
+    Widget card = Stack(
       children: [
         _face(context),
         if (skill != null) _skillMark(context, skill!),
@@ -180,6 +221,9 @@ class PillCard extends StatelessWidget {
           ),
       ],
     );
+    if (_accent case final Color ring) {
+      card = HardRingEdge(colour: ring, radius: 34, child: card);
+    }
     // Held, the whole card is the button. Built round every card, the one
     // waiting under the card being read too, which cannot be liked yet: a
     // card given a new parent as it rises is built again from nothing, and a
@@ -233,6 +277,8 @@ class PillCard extends StatelessWidget {
         middle: right,
         subject: context.l10n.subjectOf(pill.topic),
         chip: chip,
+        // A hard card ringed carries HARD in its head too.
+        extra: _accent == null ? 0 : 9 + 44,
         scaler: drawn ? TextScaler.noScaling : MediaQuery.textScalerOf(context),
       )) {
         return const SizedBox.shrink();
@@ -361,17 +407,23 @@ class PillCard extends StatelessWidget {
               Row(
                 children: [
                   // The subject's own mark beside its name, as on the shelf
-                  // the card ends the day on: one card, drawn one way.
-                  CardMark(pill: pill, size: 16, ink: pill.ink),
+                  // the card ends the day on: one card, drawn one way. On a
+                  // hard card ringed, both in the ring's colour, and HARD
+                  // after them, as Explore's shelf of the hardest has them.
+                  CardMark(pill: pill, size: 16, ink: _accent ?? pill.ink),
                   const SizedBox(width: 8),
                   Text(
                     context.l10n.subjectOf(pill.topic).toUpperCase(),
                     style: AppText.label(
                       size: 11,
                       spacing: 1.4,
-                      color: pill.ink.withValues(alpha: 0.72),
+                      color: _accent ?? pill.ink.withValues(alpha: 0.72),
                     ),
                   ),
+                  if (_accent case final Color accent) ...[
+                    const SizedBox(width: 9),
+                    HardTag(accent: accent, ground: pill.color),
+                  ],
                   if (isReview || isOwn) ...[
                     const SizedBox(width: 9),
                     Container(

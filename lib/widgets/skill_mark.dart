@@ -83,6 +83,7 @@ class SkillMark extends StatelessWidget {
     required double middle,
     required String subject,
     String? chip,
+    double extra = 0,
     TextScaler scaler = TextScaler.noScaling,
   }) {
     double measure(String text, double size, double spacing) {
@@ -107,7 +108,7 @@ class SkillMark extends StatelessWidget {
 
     double left = CardTags.margin + 16 + 8 + measure(subject, 11, 1.4);
     if (chip != null) left += 9 + measure(chip, 9.5, 1) + 16;
-    return width - middle - size / 2 - gap >= left;
+    return width - middle - size / 2 - gap >= left + extra;
   }
 
   @override

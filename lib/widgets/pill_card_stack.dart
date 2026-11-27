@@ -23,6 +23,7 @@ import '../sync/trace.dart';
 import '../theme.dart';
 import 'card_edge.dart';
 import 'flip_card.dart';
+import 'hard_ring.dart';
 import 'pill_card.dart';
 import 'place_line.dart';
 import 'source_foot.dart';
@@ -224,10 +225,11 @@ class _PillCardStackState extends State<PillCardStack>
     _upAt = DateTime.now();
     MusicSound.on.addListener(_queuePages);
     DebugLooks.cardFoot.addListener(_footChanged);
+    DebugLooks.hardCards.addListener(_footChanged);
   }
 
-  /// The foot picked in the developer tools: the cards in words drawn again
-  /// with it, and the pages told it, at once.
+  /// The foot, or the hard cards ringed, picked in the developer tools: the
+  /// cards in words drawn again with it, and the pages told it, at once.
   void _footChanged() {
     if (!mounted) return;
     setState(() {});
@@ -318,6 +320,7 @@ class _PillCardStackState extends State<PillCardStack>
     _presence?.removeListener(_seen);
     MusicSound.on.removeListener(_queuePages);
     DebugLooks.cardFoot.removeListener(_footChanged);
+    DebugLooks.hardCards.removeListener(_footChanged);
     final CardRead? read = _read;
     if (read != null) _close(read, 'gone');
     _pages.dispose();
@@ -420,6 +423,9 @@ class _PillCardStackState extends State<PillCardStack>
     foot: sourceFoot.name,
     deeper: context.l10n.deeperTitle,
     why: widget.onNote == null ? null : context.l10n.whyTitle,
+    // A hard card ringed, where the developer tools try it: the colours
+    // its page draws itself in, and its tag (hard_ring.dart).
+    hard: HardRing.pageOf(context, pill),
   );
 
   /// Whether a free card has lost its page — a later kit, no WebView, a
