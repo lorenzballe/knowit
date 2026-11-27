@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../../l10n/l10n.dart';
 import '../../models/scene.dart';
 import '../../theme.dart';
+import '../press_scale.dart';
 import '../place_it.dart' show roughNumber;
 
 /// Plays a [DrawScene]: the reader draws the line they expect, locks it in,
@@ -601,25 +602,28 @@ class _LockButton extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: onTap ?? () {},
         child: ExcludeSemantics(
-          child: AnimatedContainer(
-            duration: MediaQuery.disableAnimationsOf(context)
-                ? Duration.zero
-                : const Duration(milliseconds: 220),
-            curve: Curves.easeOut,
-            height: 44,
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: on ? ink : ink.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(22),
-            ),
-            child: Text(
-              label,
-              style: AppText.label(
-                size: 12,
-                weight: FontWeight.w800,
-                spacing: 1.1,
-                color: on ? ground : ink.withValues(alpha: 0.45),
+          child: PressScale(
+            live: on,
+            child: AnimatedContainer(
+              duration: MediaQuery.disableAnimationsOf(context)
+                  ? Duration.zero
+                  : const Duration(milliseconds: 220),
+              curve: Curves.easeOut,
+              height: 44,
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: on ? ink : ink.withValues(alpha: 0.14),
+                borderRadius: BorderRadius.circular(22),
+              ),
+              child: Text(
+                label,
+                style: AppText.label(
+                  size: 12,
+                  weight: FontWeight.w800,
+                  spacing: 1.1,
+                  color: on ? ground : ink.withValues(alpha: 0.45),
+                ),
               ),
             ),
           ),
