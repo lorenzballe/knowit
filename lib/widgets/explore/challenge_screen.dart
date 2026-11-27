@@ -508,34 +508,43 @@ class _ChallengeScreenState extends State<ChallengeScreen>
               container: true,
               label: out.label,
               excludeSemantics: true,
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: out.score,
-                      style: AppText.display(
-                        size: out.score.length > 3 ? 76 : 104,
-                        weight: FontWeight.w600,
-                        height: 1,
-                        spacing: -2.5,
-                        color: p.ink,
-                      ),
-                    ),
-                    if (of != null)
+              child: _ScoreCount(
+                score: out.score,
+                calm: kit.calm,
+                builder: (shown) => Text.rich(
+                  TextSpan(
+                    children: [
                       TextSpan(
-                        text: ' / $of',
-                        style: AppText.display(
-                          size: 36,
-                          weight: FontWeight.w600,
-                          height: 1,
-                          spacing: -0.5,
-                          color: p.inkMuted,
-                        ),
+                        text: shown,
+                        style:
+                            AppText.display(
+                              size: out.score.length > 3 ? 76 : 104,
+                              weight: FontWeight.w600,
+                              height: 1,
+                              spacing: -2.5,
+                              color: p.ink,
+                            ).copyWith(
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
                       ),
-                  ],
+                      if (of != null)
+                        TextSpan(
+                          text: ' / $of',
+                          style: AppText.display(
+                            size: 36,
+                            weight: FontWeight.w600,
+                            height: 1,
+                            spacing: -0.5,
+                            color: p.inkMuted,
+                          ),
+                        ),
+                    ],
+                  ),
+                  key: ValueKey('$_id-score'),
+                  textScaler: scaler.clamp(maxScaleFactor: 1.2),
                 ),
-                key: ValueKey('$_id-score'),
-                textScaler: scaler.clamp(maxScaleFactor: 1.2),
               ),
             ),
             const SizedBox(width: 12),
@@ -634,6 +643,36 @@ class _ChallengeScreenState extends State<ChallengeScreen>
           ),
         ),
       ],
+    );
+  }
+}
+
+/// The score, counted up to once as the report comes in: briefly, slowing
+/// as it lands, and at once for a reader who asked for less motion. A
+/// score that is not a whole number is shown as it is.
+class _ScoreCount extends StatelessWidget {
+  const _ScoreCount({
+    required this.score,
+    required this.calm,
+    required this.builder,
+  });
+
+  final String score;
+  final bool calm;
+  final Widget Function(String shown) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    final Match? m = RegExp(r'^([+\u2212-]?)(\d{1,4})$').firstMatch(score);
+    if (m == null || calm) return builder(score);
+    final String sign = m.group(1)!;
+    final int to = int.parse(m.group(2)!);
+    if (to == 0) return builder(score);
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: to.toDouble()),
+      duration: Duration(milliseconds: (420 + 40 * to).clamp(420, 900)),
+      curve: Curves.easeOutCubic,
+      builder: (context, v, _) => builder('$sign${v.round()}'),
     );
   }
 }
@@ -777,19 +816,43 @@ class ChallengeRunningHead extends StatelessWidget {
         height: room.head - room.top,
         child: Row(
           children: [
+            // The name whole: a long one ("Platziere deinen Einsatz" beside
+            // "1 von 4" on a small phone) gives way by a size or two rather
+            // than lose its end to an ellipsis.
             Expanded(
-              child: Text(
-                title ?? '',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textScaler: scaler,
-                style: AppText.display(
-                  size: 22,
-                  weight: FontWeight.w600,
-                  height: 1.1,
-                  spacing: -0.4,
-                  color: p.ink,
-                ),
+              child: LayoutBuilder(
+                builder: (context, box) {
+                  final String name = title ?? '';
+                  TextStyle style(double size) => AppText.display(
+                    size: size,
+                    weight: FontWeight.w600,
+                    height: 1.1,
+                    spacing: -0.4 * size / 22,
+                    color: p.ink,
+                  );
+                  final TextPainter t = TextPainter(
+                    text: TextSpan(
+                      text: name,
+                      style: DefaultTextStyle.of(context).style
+                          .merge(style(22)),
+                    ),
+                    textDirection: Directionality.of(context),
+                    textScaler: scaler,
+                    maxLines: 1,
+                  )..layout();
+                  final double wide = t.width;
+                  t.dispose();
+                  final double size = wide <= box.maxWidth || wide == 0
+                      ? 22
+                      : (22 * box.maxWidth / wide * 0.98).clamp(16.0, 22.0);
+                  return Text(
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textScaler: scaler,
+                    style: style(size),
+                  );
+                },
               ),
             ),
             if (count != null) ...[
@@ -888,8 +951,7 @@ class ChallengeSpring extends StatelessWidget {
   final double min;
 
   @override
-  Widget build(BuildContext context) =>
-      Expanded(child: SizedBox(height: min));
+  Widget build(BuildContext context) => Expanded(child: SizedBox(height: min));
 }
 
 /// What a moment shows under its head, the height of the room it has: set
@@ -1080,7 +1142,10 @@ class _IntroFit {
       for (final String word in title.split(RegExp(r'\s+'))) {
         if (word.isEmpty) continue;
         final TextPainter t = TextPainter(
-          text: TextSpan(text: word, style: inherited.merge(titleStyle(size, ink))),
+          text: TextSpan(
+            text: word,
+            style: inherited.merge(titleStyle(size, ink)),
+          ),
           textDirection: direction,
           textScaler: titleScaler,
           maxLines: 1,

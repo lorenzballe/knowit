@@ -11,7 +11,6 @@
 library;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../data/explore_mix.dart';
 import '../../l10n/l10n.dart';
@@ -20,6 +19,7 @@ import '../../state/explore_play.dart';
 import '../../utils/share_link.dart';
 import 'challenge_kit.dart';
 import 'challenge_screen.dart';
+import 'game_feel.dart';
 import 'spot_the_false.dart';
 
 /// Spot the false one, as its screen plays it.
@@ -173,7 +173,7 @@ class _SpotPlayState extends State<_SpotPlay>
 
   void _choose(Pill p) {
     if (_game.over) return;
-    HapticFeedback.selectionClick();
+    GameFeel.tick();
     setState(() => _chosen = _chosen == p.id ? null : p.id);
   }
 
@@ -183,11 +183,7 @@ class _SpotPlayState extends State<_SpotPlay>
     final Pill pill = _game.spot.cards.firstWhere((p) => p.id == id);
     _game.pick(pill);
     final bool right = _game.right;
-    if (right) {
-      HapticFeedback.lightImpact();
-    } else {
-      HapticFeedback.heavyImpact();
-    }
+    GameFeel.verdict(right);
     final l = context.l10n;
     widget.kit.say(right ? l.spotGotIt : l.spotMissedIt);
     if (widget.kit.calm) {

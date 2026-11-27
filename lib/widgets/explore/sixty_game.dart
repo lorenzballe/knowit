@@ -15,7 +15,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 
 import '../../data/explore_mix.dart';
 import '../../l10n/l10n.dart';
@@ -24,6 +23,7 @@ import '../../theme.dart';
 import '../../utils/share_link.dart';
 import 'challenge_kit.dart';
 import 'challenge_screen.dart';
+import 'game_feel.dart';
 import 'challenges.dart';
 import 'sixty_seconds.dart';
 
@@ -163,7 +163,7 @@ class SixtyChallenge extends ChallengeGame {
 
   void _ticked(AnimationStatus status) {
     if (status == AnimationStatus.completed && round.running) {
-      HapticFeedback.lightImpact();
+      GameFeel.commit();
       _finish();
     }
   }
@@ -359,7 +359,7 @@ class _SixtyPlayState extends State<_SixtyPlay> with TickerProviderStateMixin {
     _saidAt = now;
     final int at = _game.round.answers!.length;
     final (bool right, _) = _game.say(sayTrue);
-    HapticFeedback.selectionClick();
+    GameFeel.verdict(right);
     widget.kit.say(right ? context.l10n.gameRight : context.l10n.gameWrong);
     _back.stop();
     setState(() {

@@ -32,6 +32,7 @@ import '../scaled_text.dart';
 import '../subject_icon.dart' show CardMark, SubjectIcon;
 import 'challenge_marks.dart';
 import 'challenges.dart';
+import 'game_feel.dart';
 import 'parts.dart' show upper;
 
 /// A challenge's screen, opened over Explore out of its tile: the page
@@ -262,9 +263,8 @@ class SubjectHead extends StatelessWidget {
             upper(context, context.l10n.subjectOf(pill.topic)),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            textScaler: MediaQuery.textScalerOf(
-              context,
-            ).clamp(maxScaleFactor: 1.4),
+            textScaler: MediaQuery.textScalerOf(context)
+                .clamp(maxScaleFactor: 1.4),
             style: AppText.label(
               size: small ? 10 : 11,
               spacing: small ? 1.2 : 1.4,
@@ -401,9 +401,8 @@ class SubjectTold extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color ink = pill.ink;
     final String keep = pill.barMove.trim();
-    final TextScaler scaler = MediaQuery.textScalerOf(
-      context,
-    ).clamp(maxScaleFactor: 1.4);
+    final TextScaler scaler = MediaQuery.textScalerOf(context)
+        .clamp(maxScaleFactor: 1.4);
     final TextStyle asked = AppText.display(
       size: 18,
       weight: FontWeight.w600,
@@ -518,11 +517,8 @@ class SubjectTold extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: ScaledText(
+              child: _WhyFit(
                 text: why.trim(),
-                min: 13.5,
-                max: 20,
-                alignment: Alignment.topLeft,
                 styleFor: (size) => AppText.body(
                   size: size,
                   weight: FontWeight.w500,
@@ -565,6 +561,69 @@ class SubjectTold extends StatelessWidget {
       },
     );
   }
+}
+
+/// Why, on a card told: as large as its room takes, between [least] and
+/// [most]; where even the least is taller than the room — a long why on a
+/// small phone, in a long language — at the least, as many lines as the
+/// room holds and an ellipsis after them, rather than shrunk past reading
+/// and cut at the card's foot. The whole why is a tap away, on the card
+/// itself, from the report.
+class _WhyFit extends StatelessWidget {
+  const _WhyFit({required this.text, required this.styleFor});
+
+  final String text;
+  final TextStyle Function(double size) styleFor;
+
+  static const double least = 13.5, most = 20;
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, box) {
+      final TextScaler scaler = MediaQuery.textScalerOf(context);
+      final TextDirection direction = Directionality.of(context);
+      final TextStyle inherited = DefaultTextStyle.of(context).style;
+      TextPainter laid(double size) => TextPainter(
+        text: TextSpan(text: text, style: inherited.merge(styleFor(size))),
+        textDirection: direction,
+        textScaler: scaler,
+      )..layout(maxWidth: box.maxWidth);
+      bool fits(double size) {
+        final TextPainter t = laid(size);
+        final bool ok = t.height <= box.maxHeight;
+        t.dispose();
+        return ok;
+      }
+
+      if (!box.hasBoundedHeight || fits(most)) {
+        return Text(text, style: styleFor(most), textScaler: scaler);
+      }
+      if (fits(least)) {
+        double lo = least, hi = most;
+        while (hi - lo > 0.25) {
+          final double mid = (lo + hi) / 2;
+          if (fits(mid)) {
+            lo = mid;
+          } else {
+            hi = mid;
+          }
+        }
+        return Text(text, style: styleFor(lo), textScaler: scaler);
+      }
+      final TextPainter t = laid(least);
+      final double line = t.preferredLineHeight;
+      t.dispose();
+      final int lines = (box.maxHeight / line).floor();
+      if (lines < 1) return const SizedBox.shrink();
+      return Text(
+        text,
+        maxLines: lines,
+        overflow: TextOverflow.ellipsis,
+        textScaler: scaler,
+        style: styleFor(least),
+      );
+    },
+  );
 }
 
 // ── The page's own controls ─────────────────────────────────────────────
@@ -630,14 +689,16 @@ class GameClose extends StatelessWidget {
 
 /// The page's plain face for a control: a shade off the night's black, or
 /// white on the day's paper, with a hairline round it.
-Color _plainFace(Palette p) => p.isDark ? const Color(0xFF1A1A1E) : Colors.white;
+Color _plainFace(Palette p) =>
+    p.isDark ? const Color(0xFF1A1A1E) : Colors.white;
 Color _plainLine(Palette p) =>
     p.isDark ? const Color(0x1AFFFFFF) : const Color(0x14000000);
 
 /// One of the app's pill buttons: [primary], the inverse one — Begin, Next,
 /// Bet, Lock in — or plain, the page's own with a hairline — an answer,
-/// the score sent on. It dims a little under the finger; with no [onTap]
-/// it stands faded: not yet.
+/// the score sent on. Under the finger it gives a little and dims, at
+/// once, and the tap is felt ([GameFeel]); with no [onTap] it stands
+/// faded: not yet.
 class GameButton extends StatefulWidget {
   const GameButton({
     super.key,
@@ -709,6 +770,13 @@ class _GameButtonState extends State<GameButton> {
     if (_down != down) setState(() => _down = down);
   }
 
+  void _tap() {
+    final VoidCallback? onTap = widget.onTap;
+    if (onTap == null) return;
+    onTap();
+    GameFeel.tick();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
@@ -721,49 +789,54 @@ class _GameButtonState extends State<GameButton> {
       enabled: on,
       label: widget.semantics ?? widget.label,
       excludeSemantics: true,
-      onTap: widget.onTap,
+      onTap: on ? _tap : null,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: (_) => _press(true),
         onTapUp: (_) => _press(false),
         onTapCancel: () => _press(false),
-        onTap: widget.onTap,
-        child: AnimatedOpacity(
-          opacity: !on ? 0.42 : (_down ? 0.8 : 1),
-          duration: calm ? Duration.zero : const Duration(milliseconds: 120),
+        onTap: on ? _tap : null,
+        child: AnimatedScale(
+          scale: _down ? 0.97 : 1,
+          duration: calm ? Duration.zero : const Duration(milliseconds: 110),
           curve: Curves.easeOut,
-          child: Container(
-            height: widget.height,
-            decoration: BoxDecoration(
-              color: face,
-              borderRadius: BorderRadius.circular(999),
-              border: widget.primary
-                  ? null
-                  : Border.all(color: _plainLine(p), width: 0.8),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            alignment: Alignment.center,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (widget.icon != null) ...[
-                    Icon(widget.icon, size: widget.size + 2, color: ink),
-                    const SizedBox(width: 8),
-                  ],
-                  Text(
-                    widget.label,
-                    maxLines: 1,
-                    style: AppText.body(
-                      size: widget.size,
-                      weight: FontWeight.w700,
-                      height: 1,
-                      spacing: 0.1,
-                      color: ink,
+          child: AnimatedOpacity(
+            opacity: !on ? 0.42 : (_down ? 0.82 : 1),
+            duration: calm ? Duration.zero : const Duration(milliseconds: 110),
+            curve: Curves.easeOut,
+            child: Container(
+              height: widget.height,
+              decoration: BoxDecoration(
+                color: face,
+                borderRadius: BorderRadius.circular(999),
+                border: widget.primary
+                    ? null
+                    : Border.all(color: _plainLine(p), width: 0.8),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              alignment: Alignment.center,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (widget.icon != null) ...[
+                      Icon(widget.icon, size: widget.size + 2, color: ink),
+                      const SizedBox(width: 8),
+                    ],
+                    Text(
+                      widget.label,
+                      maxLines: 1,
+                      style: AppText.body(
+                        size: widget.size,
+                        weight: FontWeight.w700,
+                        height: 1,
+                        spacing: 0.1,
+                        color: ink,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -815,6 +888,13 @@ class _GameOptionState extends State<GameOption> {
     if (_down != down) setState(() => _down = down);
   }
 
+  void _tap() {
+    final VoidCallback? onTap = widget.onTap;
+    if (onTap == null) return;
+    onTap();
+    GameFeel.tick();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
@@ -839,55 +919,95 @@ class _GameOptionState extends State<GameOption> {
       selected: widget.selected,
       label: widget.semantics ?? widget.label,
       excludeSemantics: true,
-      onTap: widget.onTap,
+      onTap: on ? _tap : null,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: (_) => _press(true),
         onTapUp: (_) => _press(false),
         onTapCancel: () => _press(false),
-        onTap: widget.onTap,
-        child: AnimatedOpacity(
-          opacity: quiet ? 0.45 : (_down ? 0.8 : 1),
-          duration: calm ? Duration.zero : const Duration(milliseconds: 120),
-          child: AnimatedContainer(
-            duration: calm ? Duration.zero : const Duration(milliseconds: 160),
-            height: widget.height,
-            decoration: BoxDecoration(
-              color: face,
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(
-                color: told != null
-                    ? told.withValues(alpha: 0.6)
-                    : widget.selected
-                    ? p.inverse
-                    : _plainLine(p),
-                width: told != null ? 1.2 : 0.8,
+        onTap: on ? _tap : null,
+        child: AnimatedScale(
+          scale: _down ? 0.96 : 1,
+          duration: calm ? Duration.zero : const Duration(milliseconds: 110),
+          curve: Curves.easeOut,
+          child: AnimatedOpacity(
+            opacity: quiet ? 0.45 : (_down ? 0.82 : 1),
+            duration: calm ? Duration.zero : const Duration(milliseconds: 110),
+            child: AnimatedContainer(
+              duration: calm
+                  ? Duration.zero
+                  : const Duration(milliseconds: 160),
+              height: widget.height,
+              decoration: BoxDecoration(
+                color: face,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: told != null
+                      ? told.withValues(alpha: 0.6)
+                      : widget.selected
+                      ? p.inverse
+                      : _plainLine(p),
+                  width: told != null ? 1.2 : 0.8,
+                ),
               ),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            alignment: Alignment.center,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (v != null) ...[
-                    GameVerdictGlyph(right: v, colour: ink, size: 13),
-                    const SizedBox(width: 6),
-                  ],
-                  Text(
-                    widget.label,
-                    maxLines: 1,
-                    style: AppText.body(
-                      size: widget.size,
-                      weight: FontWeight.w700,
-                      height: 1,
-                      color: ink,
-                    ).copyWith(
-                      fontFeatures: const [FontFeature.tabularFigures()],
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              alignment: Alignment.center,
+              child: LayoutBuilder(
+                builder: (context, box) {
+                  // A narrow option keeps its figure's size once told: its
+                  // mark goes to the corner, not beside the figure.
+                  final bool narrow = box.maxWidth < 64;
+                  final bool corner = v != null && narrow;
+                  final Widget label = Padding(
+                    padding: EdgeInsets.symmetric(horizontal: narrow ? 2 : 6),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (v != null && !corner) ...[
+                            GameVerdictGlyph(right: v, colour: ink, size: 13),
+                            const SizedBox(width: 6),
+                          ],
+                          Text(
+                            widget.label,
+                            maxLines: 1,
+                            style:
+                                AppText.body(
+                                  size: widget.size,
+                                  weight: FontWeight.w700,
+                                  height: 1,
+                                  color: ink,
+                                ).copyWith(
+                                  fontFeatures: const [
+                                    FontFeature.tabularFigures(),
+                                  ],
+                                ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  );
+                  if (!corner) return label;
+                  return SizedBox(
+                    width: box.maxWidth,
+                    height: box.maxHeight,
+                    child: Stack(
+                      children: [
+                        Center(child: label),
+                        Positioned(
+                          top: 6,
+                          right: 2,
+                          child: GameVerdictGlyph(
+                            right: v,
+                            colour: ink,
+                            size: 9,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
           ),
@@ -910,41 +1030,55 @@ class GameStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     final Palette p = context.p;
     final bool? v = verdict;
-    final TextScaler scaler = MediaQuery.textScalerOf(
-      context,
-    ).clamp(maxScaleFactor: 1.4);
-    return Semantics(
-      liveRegion: v != null,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (v != null) ...[
-            Padding(
-              padding: EdgeInsets.only(top: scaler.scale(4)),
-              child: GameVerdictGlyph(
-                right: v,
-                colour: v ? challengeRight(p) : challengeWrong(p),
-                size: scaler.scale(15),
-              ),
-            ),
-            const SizedBox(width: 9),
-          ],
-          Expanded(
-            child: Text(
-              text,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              textScaler: scaler,
-              style: AppText.display(
-                size: 19,
-                weight: FontWeight.w600,
-                height: 1.2,
-                spacing: -0.25,
-                color: p.ink,
-              ),
+    final TextScaler scaler = MediaQuery.textScalerOf(context)
+        .clamp(maxScaleFactor: 1.4);
+    final bool calm = MediaQuery.disableAnimationsOf(context);
+    final Widget line = Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (v != null) ...[
+          Padding(
+            padding: EdgeInsets.only(top: scaler.scale(4)),
+            child: GameVerdictGlyph(
+              right: v,
+              colour: v ? challengeRight(p) : challengeWrong(p),
+              size: scaler.scale(15),
             ),
           ),
+          const SizedBox(width: 9),
         ],
+        Expanded(
+          child: Text(
+            text,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            textScaler: scaler,
+            style: AppText.display(
+              size: 19,
+              weight: FontWeight.w600,
+              height: 1.2,
+              spacing: -0.25,
+              color: p.ink,
+            ),
+          ),
+        ),
+      ],
+    );
+    return Semantics(
+      liveRegion: v != null,
+      child: TweenAnimationBuilder<double>(
+        key: ValueKey('$text|$v'),
+        tween: Tween(begin: calm ? 1 : 0, end: 1),
+        duration: calm ? Duration.zero : const Duration(milliseconds: 260),
+        curve: Curves.easeOutCubic,
+        builder: (context, t, child) => Opacity(
+          opacity: t,
+          child: Transform.translate(
+            offset: Offset(0, (1 - t) * 5),
+            child: child,
+          ),
+        ),
+        child: line,
       ),
     );
   }
@@ -987,9 +1121,8 @@ class GameFigureRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
-    final TextScaler scaler = MediaQuery.textScalerOf(
-      context,
-    ).clamp(maxScaleFactor: 1.3);
+    final TextScaler scaler = MediaQuery.textScalerOf(context)
+        .clamp(maxScaleFactor: 1.3);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1008,19 +1141,19 @@ class GameFigureRow extends StatelessWidget {
                     figures[i].value,
                     maxLines: 1,
                     textScaler: scaler,
-                    style: AppText.display(
-                      size: 34,
-                      weight: FontWeight.w600,
-                      height: 1.05,
-                      spacing: -0.8,
-                      color: figures[i].answer ? challengeRight(p) : p.ink,
-                    ).copyWith(
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
+                    style:
+                        AppText.display(
+                          size: 34,
+                          weight: FontWeight.w600,
+                          height: 1.05,
+                          spacing: -0.8,
+                          color: figures[i].answer ? challengeRight(p) : p.ink,
+                        ).copyWith(
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
                   ),
                 ),
-                if (figures[i].unit case final String unit
-                    when unit.isNotEmpty)
+                if (figures[i].unit case final String unit when unit.isNotEmpty)
                   Text(
                     unit,
                     maxLines: 2,
@@ -1177,9 +1310,8 @@ class ChallengeDeck extends StatelessWidget {
   Widget build(BuildContext context) {
     final Palette p = context.p;
     final l = context.l10n;
-    final TextScaler scaler = MediaQuery.textScalerOf(
-      context,
-    ).clamp(maxScaleFactor: 1.5);
+    final TextScaler scaler = MediaQuery.textScalerOf(context)
+        .clamp(maxScaleFactor: 1.5);
     // A short round's rows are a finger's height, each subject's mark on
     // its tile; a long one's are closer, the tile a square of colour.
     final int n = rounds.length;
@@ -1204,9 +1336,7 @@ class ChallengeDeck extends StatelessWidget {
         for (int i = 0; i < rounds.length; i++) ...[
           Container(height: 1, color: p.line),
           Container(
-            constraints: row == null
-                ? null
-                : BoxConstraints(minHeight: row),
+            constraints: row == null ? null : BoxConstraints(minHeight: row),
             alignment: AlignmentDirectional.centerStart,
             padding: row == null
                 ? EdgeInsets.symmetric(vertical: pad)
@@ -1218,14 +1348,15 @@ class ChallengeDeck extends StatelessWidget {
                   child: Text(
                     '${i + 1}',
                     textScaler: scaler,
-                    style: AppText.body(
-                      size: 13,
-                      weight: FontWeight.w700,
-                      height: 1.2,
-                      color: p.inkMuted,
-                    ).copyWith(
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
+                    style:
+                        AppText.body(
+                          size: 13,
+                          weight: FontWeight.w700,
+                          height: 1.2,
+                          color: p.inkMuted,
+                        ).copyWith(
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
                   ),
                 ),
                 for (final Pill pill in rounds[i]) ...[
@@ -1251,10 +1382,8 @@ class ChallengeDeck extends StatelessWidget {
                 const SizedBox(width: 6),
                 Expanded(
                   child: Text(
-                    [
-                      for (final Pill pill in rounds[i])
-                        l.subjectOf(pill.topic),
-                    ].join(' · '),
+                    [for (final Pill pill in rounds[i]) l.subjectOf(pill.topic)]
+                        .join(' · '),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textScaler: scaler,
@@ -1348,36 +1477,83 @@ class GameSegments extends StatelessWidget {
 
 /// A round as small squares, one a card: the calm green right, the calm
 /// red wrong, an empty one not answered. What the score is sent as, too.
-class GameSquares extends StatelessWidget {
+/// They come in one after another, as the round was played; at once for a
+/// reader who asked for less motion.
+class GameSquares extends StatefulWidget {
   const GameSquares({super.key, required this.marks});
 
   final List<bool?> marks;
 
   @override
+  State<GameSquares> createState() => _GameSquaresState();
+}
+
+class _GameSquaresState extends State<GameSquares>
+    with SingleTickerProviderStateMixin {
+  /// After the score has counted, a square each this far apart.
+  static const int _wait = 280, _each = 55, _one = 220;
+
+  late final AnimationController _in = AnimationController(
+    vsync: this,
+    duration: Duration(
+      milliseconds: _wait + _each * widget.marks.length + _one,
+    ),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _in.value = 1;
+    } else if (_in.value == 0 && !_in.isAnimating) {
+      _in.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _in.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
+    final List<bool?> marks = widget.marks;
+    final double total = (_in.duration?.inMilliseconds ?? 1).toDouble();
     return ExcludeSemantics(
-      child: Wrap(
-        spacing: 5,
-        runSpacing: 5,
-        children: [
-          for (int i = 0; i < marks.length; i++)
-            Container(
-              width: 16,
-              height: 16,
-              decoration: BoxDecoration(
-                color: switch (marks[i]) {
-                  true => challengeRight(p),
-                  false => challengeWrong(p),
-                  null => Colors.transparent,
-                },
-                borderRadius: BorderRadius.circular(3),
-                border: marks[i] == null
-                    ? Border.all(color: p.lineStrong)
-                    : null,
+      child: AnimatedBuilder(
+        animation: _in,
+        builder: (context, _) => Wrap(
+          spacing: 5,
+          runSpacing: 5,
+          children: [
+            for (int i = 0; i < marks.length; i++)
+              Opacity(
+                opacity: Curves.easeOut.transform(
+                  ((_in.value * total - _wait - _each * i) / _one).clamp(
+                    0.0,
+                    1.0,
+                  ),
+                ),
+                child: Container(
+                  width: 16,
+                  height: 16,
+                  decoration: BoxDecoration(
+                    color: switch (marks[i]) {
+                      true => challengeRight(p),
+                      false => challengeWrong(p),
+                      null => Colors.transparent,
+                    },
+                    borderRadius: BorderRadius.circular(3),
+                    border: marks[i] == null
+                        ? Border.all(color: p.lineStrong)
+                        : null,
+                  ),
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -1747,7 +1923,7 @@ class GameSure extends StatelessWidget {
       height: 52,
       size: 15,
       onTap: () {
-        HapticFeedback.selectionClick();
+        GameFeel.tick();
         onPick(pct);
       },
     );

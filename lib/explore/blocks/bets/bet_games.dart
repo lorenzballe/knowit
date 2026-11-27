@@ -22,7 +22,6 @@ library;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
@@ -31,6 +30,7 @@ import '../../../utils/share_link.dart';
 import '../../../widgets/explore/challenge_kit.dart';
 import '../../../widgets/explore/challenge_screen.dart';
 import '../../../widgets/explore/challenges.dart';
+import '../../../widgets/explore/game_feel.dart';
 import '../../explore_block.dart';
 import 'answers.dart';
 import 'bets_day.dart';
@@ -280,7 +280,7 @@ class _BetPlayState extends State<_BetPlay> {
       widget.kit.finish();
       return;
     }
-    HapticFeedback.selectionClick();
+    GameFeel.tick();
     setState(() => _at = next);
     _game.shown(_at);
   }
@@ -763,7 +763,7 @@ class CloserChallenge extends BetChallenge {
         _told(kit, after.right == after.taken, _message(context, i, after));
       } else {
         kit.say(_message(context, i, after));
-        if (said == truth) HapticFeedback.lightImpact();
+        if (said == truth) GameFeel.verdict(true);
       }
     }
 

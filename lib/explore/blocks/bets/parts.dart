@@ -7,13 +7,13 @@ library;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
 import '../../../theme.dart';
 import '../../../widgets/balanced_text.dart';
 import '../../../widgets/card_edge.dart';
+import '../../../widgets/explore/game_feel.dart';
 import '../../../widgets/explore/parts.dart'
     show CardHead, FlatButton, fillOn, hairOn, subOn, upper;
 import 'bets_day.dart';
@@ -117,13 +117,13 @@ Color betWin(BuildContext context) =>
 /// when it comes in. Never a heavy one: a bet lost is not an error.
 abstract final class BetFeel {
   /// A step passed: a tenth of a track, a stepper's step, a choice.
-  static void tick() => HapticFeedback.selectionClick();
+  static void tick() => GameFeel.tick();
 
   /// A bet laid, or a number locked.
-  static void lay() => HapticFeedback.mediumImpact();
+  static void lay() => GameFeel.commit();
 
   /// A bet that came in.
-  static void won() => HapticFeedback.lightImpact();
+  static void won() => GameFeel.verdict(true);
 }
 
 /// [ms], or nothing for a reader who asked for less motion: what a move
