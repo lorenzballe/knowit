@@ -712,7 +712,9 @@ class AppState extends ChangeNotifier {
     // time (SureAsk): kept, so a card asks or not the same way all day.
     String? sureSeed = _prefs.getString(_kSureSeed);
     if (sureSeed == null) {
-      sureSeed = math.Random().nextInt(1 << 32).toRadixString(36);
+      // 0x7fffffff, not 1 << 32: on the web build an int is a double
+      // and 1 << 32 is 0, which nextInt refuses.
+      sureSeed = math.Random().nextInt(0x7fffffff).toRadixString(36);
       _prefs.setString(_kSureSeed, sureSeed);
     }
     SureAsk.seed = sureSeed;
