@@ -427,7 +427,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await settle(tester);
 
-    final plans = find.text('SEE THE PLANS');
+    final plans = find.text('See the plans');
     expect(plans, findsOneWidget, reason: 'the way into the paywall moved');
     await tester.tap(plans);
     await settle(tester);

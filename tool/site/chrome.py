@@ -35,6 +35,21 @@ has.
 Astute is on Google Play too (since November 2026): with GOOGLE_PLAY_OPEN set,
 Google's badge stands beside Apple's and leads to the listing. Unset, it is
 marked "Coming soon" and leads nowhere.
+
+The App Store listing is made but not live yet: apps.apple.com answers 404
+for it in every storefront. Until APP_STORE_OPEN below says it is live, no
+one is sent there unwarned. Apple's badge keeps its link, so it works the
+day the listing does, but it is marked "Coming soon", as a store not open
+yet is. Every Download button (the links marked data-store, which the
+site's script points at Google Play on Android and at the code to scan on
+a computer) leads to /get instead of the App Store: /get sends an Android
+phone on to Google Play, and keeps an iPhone on a page that says the app is
+on its way (/*@appstore*/false/*/@appstore*/ in its script). And the words
+that say where the app is say it as it is, free on Android and coming to
+iPhone, wherever a page carries them, between <!-- @where -->…<!-- /@where -->
+(a line) and <!-- @where-faq -->…<!-- /@where-faq --> (the question's
+answer). Set APP_STORE_OPEN to True the day the listing is live, run this
+script, and every page offers both stores again.
 """
 import re
 import sys
@@ -48,6 +63,35 @@ APP_STORE = 'https://apps.apple.com/app/id6806852300'
 GOOGLE_PLAY = 'https://play.google.com/store/apps/details?id=com.astuto.app'
 GOOGLE_PLAY_OPEN = True
 
+# Whether the App Store listing is live. The one line to change at launch:
+# set it to True the day apps.apple.com stops answering 404 for the app,
+# run this script (python3 tool/site/chrome.py) and commit what it rewrites.
+# The challenge pages (tool/cards/challenge_pages.py) read it too.
+APP_STORE_OPEN = False
+
+
+def where(sentence: bool = False) -> str:
+    """Where the app can be had: the stores that are live, as a line or,
+    with [sentence], as words that read inside one."""
+    if APP_STORE_OPEN and GOOGLE_PLAY_OPEN:
+        return 'Free on iPhone and Android'
+    if GOOGLE_PLAY_OPEN:
+        return 'Free on Android, and coming to iPhone' if sentence else 'Free on Android · coming to iPhone'
+    return 'Free on iPhone, and coming to Android' if sentence else 'Free on iPhone · coming to Android'
+
+
+def where_faq() -> str:
+    """The answer to "Is it on iPhone and Android?", as the stores stand."""
+    if APP_STORE_OPEN and GOOGLE_PLAY_OPEN:
+        return ('<p class="faq-a">Yes. Astute is on the App Store for iPhone and on Google Play '
+                'for Android, with the same cards every morning.</p>')
+    if GOOGLE_PLAY_OPEN:
+        return ('<p class="faq-a">On Android, yes: Astute is on Google Play. The iPhone app is on its '
+                'way to the App Store, with the same cards every morning; until it is there, the '
+                'App Store has no page for it.</p>')
+    return ('<p class="faq-a">On iPhone, yes: Astute is on the App Store. The Android app is on its '
+            'way to Google Play, with the same cards every morning.</p>')
+
 # Apple's campaign links carry the account's provider token (pt) beside the
 # campaign (ct). With it, App Store Connect counts what each campaign the site
 # sends brings in; without it the ct is ignored and the links are plain ones.
@@ -60,6 +104,10 @@ APP_STORE_PROVIDER_TOKEN = ''
 APP_STORE_LINK = APP_STORE + (
     f'?pt={APP_STORE_PROVIDER_TOKEN}&mt=8' if APP_STORE_PROVIDER_TOKEN else ''
 )
+
+# Where a Download button leads as written, before the site's script picks
+# the visitor's store: the App Store once it is live, /get until then.
+DOWNLOAD = APP_STORE_LINK if APP_STORE_OPEN else '/get'
 
 # Each badge: the store's file, the frame of the artwork in it, and what the
 # badge says, for whoever cannot see it. Apple's file is framed on its badge;
@@ -136,9 +184,21 @@ def coming(key):
             f'<use href="#badge-{key}"/></svg><span class="soon" aria-hidden="true">Coming soon</span></span>')
 
 
+def soon(key, href):
+    """A badge for a store whose listing is made but not live: the artwork
+    and its link, as they will be, quieter and marked, so that nobody follows
+    it to the store's empty page without being told."""
+    _, frame, label = BADGE_ART[key]
+    _, _, w, h = (float(n) for n in frame.split())
+    return (f'<a class="store store-{key} store-soon" href="{href}" aria-label="{label}: coming soon">'
+            f'<svg viewBox="{frame}" width="{round(52 * w / h)}" height="52" aria-hidden="true" focusable="false">'
+            f'<use href="#badge-{key}"/></svg><span class="soon" aria-hidden="true">Coming soon</span></a>')
+
+
 def stores():
+    apple = badge('app-store', APP_STORE_LINK) if APP_STORE_OPEN else soon('app-store', APP_STORE_LINK)
     play = badge('google-play', GOOGLE_PLAY) if GOOGLE_PLAY_OPEN else coming('google-play')
-    return badge('app-store', APP_STORE_LINK) + play
+    return apple + play
 
 
 def header(p, home):
@@ -153,25 +213,27 @@ def header(p, home):
     </a>
     <div class="nav-links" data-hide-mobile>
       <a href="{p}#how">How it works</a>
+      <a href="{p}#explore">Explore</a>
       <a href="{p}#science">The science</a>
       <a href="{p}#pricing">Pricing</a>
       <a href="{p}#faq">FAQ</a>
     </div>
     <div class="nav-actions">
-      <a class="btn-download" href="{APP_STORE_LINK}" data-store>Download</a>
+      <a class="btn-download" href="{DOWNLOAD}" data-store>Download</a>
       <button class="menu-toggle" id="menu-toggle" type="button" data-hide-desktop aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu"><i></i></button>
     </div>
   </nav>
   <div id="mobile-menu" data-hide-desktop hidden>
     <div class="menu-links">
       <a href="{p}#how">How it works</a>
+      <a href="{p}#explore">Explore</a>
       <a href="{p}#science">The science</a>
       <a href="{p}#pricing">Pricing</a>
       <a href="{p}#faq">FAQ</a>
       <a href="/support">Support</a>
     </div>
     <div class="menu-foot">
-      <p>Free on iPhone and Android · App in 13 languages · No ads</p>
+      <p>{where()} · App in 13 languages · No ads</p>
       <div class="stores small">{stores()}</div>
     </div>
   </div>
@@ -189,13 +251,14 @@ def footer(p, home):
           <img src="/assets/icon.webp" width="30" height="30" alt="" loading="lazy">
           <span>Astute</span>
         </a>
-        <p>Five cards a day. A little sharper. Free on iPhone and Android, the app in thirteen languages, and no ads.</p>
+        <p>Five cards a day. A little sharper. {where(sentence=True)}. The app in thirteen languages, and no ads.</p>
         <div class="stores small">{stores()}</div>
       </div>
       <nav class="foot-cols" aria-label="Footer">
         <div>
           <h3>Product</h3>
           <a href="{p}#how">How it works</a>
+          <a href="{p}#explore">Explore</a>
           <a href="{p}#science">The science</a>
           <a href="{p}#pricing">Pricing</a>
           <a href="{p}#faq">FAQ</a>
@@ -234,7 +297,17 @@ def stamp(text, landing):
     text = re.sub(r'<!-- @header -->.*?<!-- /@header -->', lambda m: header(p, home), text, flags=re.S)
     text = re.sub(r'<!-- @footer -->.*?<!-- /@footer -->', lambda m: footer(p, home), text, flags=re.S)
     text = re.sub(r'<!-- @stores -->.*?<!-- /@stores -->', lambda m: '<!-- @stores -->' + stores() + '<!-- /@stores -->', text, flags=re.S)
-    return APP_STORE_ANY.sub(lambda m: APP_STORE_LINK, text)
+    text = re.sub(r'<!-- @where -->.*?<!-- /@where -->', lambda m: '<!-- @where -->' + where() + '<!-- /@where -->', text, flags=re.S)
+    text = re.sub(r'<!-- @where-faq -->.*?<!-- /@where-faq -->', lambda m: '<!-- @where-faq -->' + where_faq() + '<!-- /@where-faq -->', text, flags=re.S)
+    text = re.sub(r'/\*@appstore\*/(?:true|false)/\*/@appstore\*/', lambda m: '/*@appstore*/' + ('true' if APP_STORE_OPEN else 'false') + '/*/@appstore*/', text)
+    # What the page tells search engines the app runs on: the stores live.
+    systems = ', '.join(s for s, live in (('Android', GOOGLE_PLAY_OPEN), ('iOS', APP_STORE_OPEN)) if live)
+    text = re.sub(r'"operatingSystem": "[^"]*"', f'"operatingSystem": "{systems}"', text)
+    text = APP_STORE_ANY.sub(lambda m: APP_STORE_LINK, text)
+    # Every Download button, in the chrome and in the page, to DOWNLOAD.
+    return re.sub(r'<a\b[^>]*\bdata-store\b[^>]*>',
+                  lambda m: re.sub(r'href="[^"]*"', lambda _: f'href="{DOWNLOAD}"', m.group(0), count=1),
+                  text)
 
 
 def main():

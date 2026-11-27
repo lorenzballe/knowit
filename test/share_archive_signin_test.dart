@@ -871,12 +871,12 @@ void main() {
       await _settle(tester);
 
       expect(find.textContaining('Almost everyone'), findsNothing);
-      // The verdict runs into what was picked, what it is, and how sure:
-      // one paragraph, its first words set large.
+      // The verdict runs into what was picked, quoted, how sure, and what
+      // is right: one paragraph, its first words set large, each said once.
       expect(
         find.text(
-          'Not quite.  You said ${challenge.options[wrong]} · '
-          'it is ${challenge.correctOption} · you said 70% sure',
+          'Not quite.  You said “${challenge.options[wrong]}”, '
+          '70%\u00A0sure\u00A0· Right: “${challenge.correctOption}”',
         ),
         findsOneWidget,
       );

@@ -7,6 +7,7 @@ import 'app_localizations.dart';
 import 'remote_localizations.dart';
 
 export 'app_localizations.dart';
+export 'elision.dart';
 
 /// The app's strings, in the language the phone is set to — with the
 /// server's words in place of the build's wherever the remote document has
@@ -58,4 +59,11 @@ extension SubjectNames on AppLocalizations {
     final String? key = topicKeyForName(name);
     return key == null ? name : subjectName(key);
   }
+}
+
+/// Words of a card's — an option, an answer — quoted inside the app's own
+/// sentence, in this language's quotation marks, so the card's language
+/// never runs on into the reader's: «Smoke filmed at high speed».
+extension Quoting on AppLocalizations {
+  String quoted(String text) => screensQuoted(text);
 }

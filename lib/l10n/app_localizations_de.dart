@@ -243,7 +243,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get keepTheOnesYoullUse => 'Behalte die, die du wirklich brauchst';
 
   @override
-  String get backToTodaysFive => 'ZURÜCK ZU DEN FÜNF VON HEUTE';
+  String get backToTodaysFive => 'Zurück zu den Fünf von heute';
 
   @override
   String get archive => 'Archiv';
@@ -315,7 +315,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String youSaidPercentSure(int n) {
-    return 'Du sagtest $n % sicher';
+    return 'Du warst dir zu $n % sicher';
   }
 
   @override
@@ -742,12 +742,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String saidPercent(int n) {
-    return 'Gesagt: $n %';
+    return 'Gesagt: $n %';
   }
 
   @override
   String rightPercentOf(int pct, int right, int count) {
-    return 'richtig: $pct % ($right von $count)';
+    return 'richtig: $pct % ($right von $count)';
   }
 
   @override
@@ -777,7 +777,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get shareMyRecord => 'MEINE BILANZ TEILEN';
+  String get shareMyRecord => 'Meine Bilanz teilen';
 
   @override
   String lastCallsAgainstFirst(int n) {
@@ -848,7 +848,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get seeThePlans => 'TARIFE ANSEHEN';
+  String get seeThePlans => 'Tarife ansehen';
 
   @override
   String get recordStartsToday => 'Deine Bilanz beginnt heute.';
@@ -1400,17 +1400,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String paywallRecordOver(int sure, int right) {
-    return 'Du sagst $sure % sicher und liegst in $right % der Fälle richtig. Astute+ zeigt, ob sich diese Lücke schließt, und die Züge, die du immer wieder verpasst.';
+    return 'Du sagst $sure % sicher und liegst in $right % der Fälle richtig. Astute+ zeigt, ob sich diese Lücke schließt, und die Züge, die du immer wieder verpasst.';
   }
 
   @override
   String paywallRecordUnder(int sure, int right) {
-    return 'Du sagst $sure % sicher und liegst in $right % der Fälle richtig: Du weißt mehr, als du denkst. Astute+ zeigt, ob sich diese Lücke schließt.';
+    return 'Du sagst $sure % sicher und liegst in $right % der Fälle richtig: Du weißt mehr, als du denkst. Astute+ zeigt, ob sich diese Lücke schließt.';
   }
 
   @override
   String paywallRecordEven(int sure, int right) {
-    return 'Du sagst $sure % sicher und liegst in $right % der Fälle richtig: fast deckungsgleich. Astute+ zeigt, ob es dabei bleibt, und die Züge, die du immer wieder verpasst.';
+    return 'Du sagst $sure % sicher und liegst in $right % der Fälle richtig: fast deckungsgleich. Astute+ zeigt, ob es dabei bleibt, und die Züge, die du immer wieder verpasst.';
   }
 
   @override
@@ -1908,11 +1908,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return 'Du: $said. Richtig: $truth.';
-  }
-
-  @override
   String get fiveTitle => 'Die fünf von heute';
 
   @override
@@ -1928,12 +1923,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String dailyPickRight(String answer) {
-    return 'Richtig: $answer.';
+    return 'Richtig: $answer';
   }
 
   @override
   String dailyPickWrong(String answer) {
-    return 'Nicht ganz: Es ist $answer.';
+    return 'Nicht ganz. Richtig: $answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return 'Deine Antwort: $answer';
   }
 
   @override
@@ -1941,7 +1941,7 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Besser als $pct % der $n Spieler von heute.',
+      other: 'Besser als $pct % der $n Spieler von heute.',
     );
     return '$_temp0';
   }
@@ -1985,7 +1985,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String dailyItemRight(int pct) {
-    return '$pct % der Spieler von heute lagen richtig';
+    return '$pct % der Spieler von heute lagen richtig';
   }
 
   @override
@@ -2267,7 +2267,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String savePercent(int n) {
-    return 'SPARE $n %';
+    return 'SPARE $n %';
   }
 
   @override
@@ -2307,21 +2307,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tapToReveal => 'Tippen zum Aufdecken';
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return 'Du sagtest $given · es ist $answer, und $band zählt';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return 'Du sagtest $given · es ist $answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · du sagtest $pct % sicher';
-  }
-
-  @override
   String get verdictRight => 'Richtig.';
 
   @override
@@ -2332,7 +2317,27 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String verdictSure(int pct) {
-    return 'Du warst dir zu $pct % sicher.';
+    return 'Du warst dir zu $pct % sicher.';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return 'Du sagtest $given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return 'Du sagtest $given, zu $pct % sicher';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return 'Richtig: $answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return 'Richtig: $answer ($low bis $high zählte)';
   }
 
   @override
@@ -2417,7 +2422,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String atPercentSure(int n) {
-    return ' mit $n % Sicherheit';
+    return ' mit $n % Sicherheit';
   }
 
   @override
@@ -2491,7 +2496,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String saidSure(int sure) {
-    return '$sure % sicher';
+    return '$sure % sicher';
   }
 
   @override
@@ -2581,7 +2586,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String nudgeSureBody(String question, int sure) {
-    return '$question — du hast $sure % gesagt.';
+    return '$question — du hast $sure % gesagt.';
   }
 
   @override
@@ -3110,7 +3115,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get revealShowWorking => 'Rechenweg zeigen';
 
   @override
-  String get sceneLockIn => 'FESTLEGEN';
+  String get sceneLockIn => 'Bestätigen';
+
+  @override
+  String get placeItDrag => 'Zieh am Lineal entlang.';
+
+  @override
+  String get placeItHappy => 'Passt das so?';
+
+  @override
+  String get placeItEstimate => 'Deine Schätzung';
+
+  @override
+  String get placeItNotSet => 'noch nicht gesetzt';
+
+  @override
+  String get placeItLock => 'Meine Schätzung bestätigen';
 
   @override
   String get sceneYou => 'DU';
@@ -3411,7 +3431,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String journeyMinAWeek(int now, int was) {
-    return '$now Min pro Woche, anfangs $was';
+    return '$now Min pro Woche, anfangs $was Min';
   }
 
   @override
@@ -4476,7 +4496,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String purposeThinLine(int percent, String subject) {
-    return '$percent % von $subject gelesen, dein geringster Anteil';
+    return '$percent % von $subject gelesen, dein geringster Anteil';
   }
 
   @override
@@ -4790,7 +4810,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String betsSlipSure(int right, int n, int pct) {
-    return '$right von $n richtig, bei durchschnittlich $pct % Sicherheit.';
+    return '$right von $n richtig, bei durchschnittlich $pct % Sicherheit.';
   }
 
   @override
@@ -4851,7 +4871,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String betsYouWereSure(int pct) {
-    return 'Du warst dir zu $pct % sicher.';
+    return 'Du warst dir zu $pct % sicher.';
   }
 
   @override
@@ -4890,7 +4910,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Stell sie ein, leg sie fest, sieh, wie weit du daneben lagst';
 
   @override
-  String get betsLock => 'Fest';
+  String get betsLock => 'Bestätigen';
 
   @override
   String get betsSpotOn => 'Genau getroffen.';
@@ -5042,7 +5062,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get betsDayLine =>
-      'Leg deine Schätzung fest und sieh, wie weit du daneben lagst';
+      'Bestätige deine Schätzung und sieh, wie weit du daneben lagst';
 
   @override
   String get betsDayTag => 'Wette des Tages';
@@ -5051,7 +5071,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get betsDayTagSame => 'Wette des Tages · für alle dieselbe';
 
   @override
-  String get betsLockIn => 'Festlegen';
+  String get betsLockIn => 'Bestätigen';
 
   @override
   String betsItIs(String said) {
@@ -6665,11 +6685,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get newsBehind => 'Hinter der Nachricht';
 
   @override
+  String get newsMeansForYou => 'Was es für dich bedeutet';
+
+  @override
+  String get newsMeans => 'Was es bedeutet';
+
+  @override
+  String get newsHappenedBefore => 'Das gab es schon einmal';
+
+  @override
   String get newsSources => 'Quellen';
 
   @override
   String get newsMadeFrom =>
       'Von Astute aus diesen Berichten geschrieben und an ihnen geprüft.';
+
+  @override
+  String get newsWhyItMatters => 'Warum es zählt';
 
   @override
   String get deeperDeclined => 'Darauf kann sie nicht antworten.';
@@ -6825,6 +6857,35 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get founderTheirBooks => 'Empfohlene Bücher';
+
+  @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': 'Mitgründer von Microsoft',
+      'warren_buffett': 'Der Investor, der Berkshire Hathaway groß gemacht hat',
+      'mark_zuckerberg': 'Gründer von Facebook',
+      'charlie_munger': 'Warren Buffetts Partner bei Berkshire Hathaway',
+      'marc_andreessen': 'Mitgründer von Netscape und Andreessen Horowitz',
+      'tobi_lutke': 'Gründer von Shopify',
+      'naval_ravikant': 'Mitgründer von AngelList',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes, seine Bücher für den Sommer',
+      'berkshire_meeting': 'Hauptversammlung von Berkshire Hathaway',
+      'berkshire_letter': 'sein Brief an die Aktionäre von Berkshire Hathaway',
+      'year_of_books': 'A Year of Books, auf Facebook',
+      'publisher_praise': 'sein Lob für das Buch, beim Verlag',
+      'ferriss_five': 'The Tim Ferriss Show, unter den fünf besten Büchern, die er gelesen hat',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
 
   @override
   String founderAbout(String name) {

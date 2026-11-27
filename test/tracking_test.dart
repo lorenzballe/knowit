@@ -523,7 +523,7 @@ void main() {
       await tester.pump();
       await tester.tapAt(at.centerRight - const Offset(30, 0));
       await tester.pump();
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await _settle(tester);
       await tester.tap(find.text('70%'));
       await _settle(tester);

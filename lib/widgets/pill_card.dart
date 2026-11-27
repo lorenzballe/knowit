@@ -922,26 +922,32 @@ class _Verdict extends StatelessWidget {
       : context.l10n.verdictRight;
 
   /// What was said, when it was not what the card says: the reader's
-  /// answer, and the card's.
-  String? _said(BuildContext context) {
+  /// answer, how sure they were when [sure] is given, and the card's — "Hai
+  /// detto «About one in twelve», sicuro al 60% · Giusta: «More than four
+  /// in five»". A card's words are quoted, so they never run on into the
+  /// app's; a number is said as it is. The dot is held to the words before
+  /// it, so a line never starts with it.
+  String? _said(BuildContext context, int? sure) {
     if (right) return null;
+    final l = context.l10n;
+    String yours(String said) => sure == null
+        ? l.verdictYouSaid(said)
+        : l.verdictYouSaidSure(said, sure);
     return switch (pill.challenge) {
-      Estimate(:final answerLabel, :final band) =>
-        context.l10n.youSaidItIsCounted(given, answerLabel, band),
-      TypeNumber(:final answerLabel) => context.l10n.youSaidItIs(
-        given,
-        answerLabel,
-      ),
+      Estimate(:final answerLabel, :final low, :final high) =>
+        '${yours(given)}\u00A0· '
+            '${l.verdictRightWithin(answerLabel, '$low', '$high')}',
+      TypeNumber(:final answerLabel) =>
+        '${yours(given)}\u00A0· ${l.verdictRightIs(answerLabel)}',
       // A wrong pick is said the way a wrong number is: what was picked,
       // and what it is. It used to be "almost everyone gets this wrong",
       // which is a claim about other readers that nothing on the phone can
       // back — how each card is answered is counted on the server, for the
       // tools that check cards (functions/src/scorecard.ts), and none of it
       // reaches a card's back.
-      PickOne(:final correctOption) => context.l10n.youSaidItIs(
-        given,
-        correctOption,
-      ),
+      PickOne(:final correctOption) =>
+        '${yours(l.quoted(given))}\u00A0· '
+            '${l.verdictRightIs(l.quoted(correctOption))}',
       // Never marked, so never given a verdict: the back says the reader's
       // own line instead. A page marks its own and has said what was right
       // already; the answer under the verdict says why.
@@ -962,17 +968,20 @@ class _Verdict extends StatelessWidget {
   }
 
   /// What runs on after the verdict: what was said, how sure, and how the
-  /// other readers did.
+  /// other readers did, each said once.
   String? _detail(BuildContext context) {
     if (room == _Room.verdictOnly) return null;
-    final String? said = _said(context);
+    final l = context.l10n;
     final int? sure = room == _Room.all ? confidence : null;
-    final String? own = said == null
-        ? (sure == null ? null : context.l10n.verdictSure(sure))
-        : (sure == null ? said : context.l10n.lineYouSaidSure(said, sure));
+    final String? own =
+        _said(context, sure) ?? (sure == null ? null : l.verdictSure(sure));
     final String? crowd = room == _Room.all ? _crowd(context) : null;
-    if (crowd == null) return own;
-    return own == null ? crowd : '$own · $crowd';
+    final String? line = crowd == null
+        ? own
+        : own == null
+        ? crowd
+        : '$own\u00A0· $crowd';
+    return line == null ? null : l.elided(line);
   }
 
   InlineSpan _span(BuildContext context) {

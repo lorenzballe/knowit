@@ -496,9 +496,11 @@ class _PillCardStackState extends State<PillCardStack>
     final double? wrong = Served.instance.lastExplore?.wrongShare(pill.id);
     if (wrong == null || !mounted) return;
     final l = context.l10n;
-    final String line = right
-        ? l.crowdGotRight(((1 - wrong) * 100).round())
-        : l.crowdGotWrong((wrong * 100).round());
+    final String line = l.elided(
+      right
+          ? l.crowdGotRight(((1 - wrong) * 100).round())
+          : l.crowdGotWrong((wrong * 100).round()),
+    );
     final messenger = ScaffoldMessenger.maybeOf(context);
     if (messenger == null) return;
     messenger

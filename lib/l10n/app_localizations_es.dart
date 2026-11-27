@@ -158,7 +158,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String nothingForYet(String query) {
-    return 'Todavía nada para \"$query\".';
+    return 'Todavía nada para «$query».';
   }
 
   @override
@@ -219,7 +219,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String nothingForTryTopic(String query) {
-    return 'Nada para \"$query\". Prueba con un tema.';
+    return 'Nada para «$query». Prueba con un tema.';
   }
 
   @override
@@ -243,7 +243,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get keepTheOnesYoullUse => 'Guarda las que de verdad vas a usar';
 
   @override
-  String get backToTodaysFive => 'VOLVER A LAS CINCO DE HOY';
+  String get backToTodaysFive => 'Volver a las cinco de hoy';
 
   @override
   String get archive => 'Archivo';
@@ -316,7 +316,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String youSaidPercentSure(int n) {
-    return 'Dijiste $n% seguro';
+    return 'Estabas seguro al $n%';
   }
 
   @override
@@ -776,7 +776,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get shareMyRecord => 'COMPARTIR MI HISTORIAL';
+  String get shareMyRecord => 'Compartir mi historial';
 
   @override
   String lastCallsAgainstFirst(int n) {
@@ -847,7 +847,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get seeThePlans => 'VER LOS PLANES';
+  String get seeThePlans => 'Ver los planes';
 
   @override
   String get recordStartsToday => 'Tu historial empieza hoy.';
@@ -1909,11 +1909,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return 'Dijiste $said. Es $truth.';
-  }
-
-  @override
   String get fiveTitle => 'Las cinco de hoy';
 
   @override
@@ -1929,12 +1924,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String dailyPickRight(String answer) {
-    return 'Correcto: $answer.';
+    return 'Correcta: $answer';
   }
 
   @override
   String dailyPickWrong(String answer) {
-    return 'No exactamente: es $answer.';
+    return 'No exactamente. Correcta: $answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return 'La tuya: $answer';
   }
 
   @override
@@ -1942,7 +1942,7 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Mejor que el $pct % de los $n jugadores de hoy.',
+      other: 'Mejor que el $pct % de los $n jugadores de hoy.',
     );
     return '$_temp0';
   }
@@ -1986,7 +1986,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String dailyItemRight(int pct) {
-    return 'El $pct % de los jugadores de hoy acertó';
+    return 'El $pct % de los jugadores de hoy acertó';
   }
 
   @override
@@ -2309,21 +2309,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tapToReveal => 'Toca para descubrir';
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return 'Dijiste $given · es $answer, y $band cuenta';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return 'Dijiste $given · es $answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · dijiste $pct% seguro';
-  }
-
-  @override
   String get verdictRight => 'Correcto.';
 
   @override
@@ -2334,7 +2319,27 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String verdictSure(int pct) {
-    return 'Estabas seguro al $pct%.';
+    return 'Estabas seguro al $pct%.';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return 'Dijiste $given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return 'Dijiste $given, seguro al $pct%';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return 'Correcta: $answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return 'Correcta: $answer (valía de $low a $high)';
   }
 
   @override
@@ -3113,7 +3118,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get revealShowWorking => 'Ver el razonamiento';
 
   @override
-  String get sceneLockIn => 'CONFIRMAR';
+  String get sceneLockIn => 'Confirmar';
+
+  @override
+  String get placeItDrag => 'Desliza por la regla.';
+
+  @override
+  String get placeItHappy => '¿Te convence?';
+
+  @override
+  String get placeItEstimate => 'Tu estimación';
+
+  @override
+  String get placeItNotSet => 'sin fijar';
+
+  @override
+  String get placeItLock => 'Confirmar mi estimación';
 
   @override
   String get sceneYou => 'TÚ';
@@ -3414,7 +3434,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String journeyMinAWeek(int now, int was) {
-    return '$now min a la semana, antes $was';
+    return '$now min a la semana, al principio $was min';
   }
 
   @override
@@ -4486,7 +4506,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String purposeThinLine(int percent, String subject) {
-    return 'Has leído el $percent % de $subject, lo que menos';
+    return 'Has leído el $percent % de $subject, lo que menos';
   }
 
   @override
@@ -4894,7 +4914,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get betsNumberLine => 'Ajústalo, fíjalo y mira cuánto te desviaste';
 
   @override
-  String get betsLock => 'Fijar';
+  String get betsLock => 'Confirmar';
 
   @override
   String get betsSpotOn => 'Exacto.';
@@ -5042,7 +5062,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get betsDayTitle => 'La apuesta del día';
 
   @override
-  String get betsDayLine => 'Fija tu estimación y mira cuánto te desviaste';
+  String get betsDayLine => 'Confirma tu estimación y mira cuánto te desviaste';
 
   @override
   String get betsDayTag => 'Apuesta del día';
@@ -5051,7 +5071,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get betsDayTagSame => 'Apuesta del día · la misma para todos';
 
   @override
-  String get betsLockIn => 'Fijar';
+  String get betsLockIn => 'Confirmar';
 
   @override
   String betsItIs(String said) {
@@ -6659,11 +6679,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get newsBehind => 'Detrás de la noticia';
 
   @override
+  String get newsMeansForYou => 'Qué significa para ti';
+
+  @override
+  String get newsMeans => 'Qué significa';
+
+  @override
+  String get newsHappenedBefore => 'Ya pasó antes';
+
+  @override
   String get newsSources => 'Fuentes';
 
   @override
   String get newsMadeFrom =>
       'Escrito por Astute a partir de estas noticias, y contrastado con ellas.';
+
+  @override
+  String get newsWhyItMatters => 'Por qué importa';
 
   @override
   String get deeperDeclined => 'A esta no puede responder.';
@@ -6820,6 +6852,36 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get founderTheirBooks => 'Los libros que ha recomendado';
+
+  @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': 'Cofundador de Microsoft',
+      'warren_buffett': 'El inversor que construyó Berkshire Hathaway',
+      'mark_zuckerberg': 'Fundador de Facebook',
+      'charlie_munger': 'Socio de Warren Buffett en Berkshire Hathaway',
+      'marc_andreessen': 'Cofundador de Netscape y de Andreessen Horowitz',
+      'tobi_lutke': 'Fundador de Shopify',
+      'naval_ravikant': 'Cofundador de AngelList',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes, sus libros para el verano',
+      'berkshire_meeting': 'la junta anual de Berkshire Hathaway',
+      'berkshire_letter': 'su carta a los accionistas de Berkshire Hathaway',
+      'year_of_books': 'A Year of Books, en Facebook',
+      'publisher_praise': 'su elogio del libro, en la web de la editorial',
+      'ferriss_five':
+          'The Tim Ferriss Show, entre los cinco mejores libros que ha leído',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
 
   @override
   String founderAbout(String name) {

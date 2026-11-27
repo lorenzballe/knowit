@@ -1,5 +1,5 @@
 {
-  "_": "Explore as the owner and the app agreed it in November: what is new today (the cover, the day's challenge, the news), what the reader started and left (Continue: a path read partway, a book stopped at an idea), what is the reader's (for you, where you live), one surprise a day of the week (a different shelf each weekday), then the depth (paths, the challenges, books and what the founders read, and after them, every other day from the third, Astute+ for a reader on the free plan), the top list, what a card is useful for, and the endless feed. The day's challenge and the challenges are for Explore of every subject only; a subject's page is that subject's cards. Builds 54 and older keep the shelves they knew.",
+  "_": "Explore as a weekly schedule, like a newspaper (prototype 2, 26 November 2026). The top is the same every day, so a reader learns where things are: the day's challenge, the same for everyone, then the reader's own five once read and what they started and left (Continue), the news (look: lead, one story large with why it matters and two more as rows; front is the page as it was, pager a story to a card) and the line of the day. The middle changes with the day of the week: the cover, the day's cards in a mosaic, on Monday and Saturday only, heading the middle so the top stays where it is; then one feature a day, all seven days: true stories on Monday, did you know on Tuesday, charts that mislead on Wednesday, where it came from on Thursday, for the sharpest on Friday, surprise me on Saturday, a few cards on Sunday. Then every day the challenges, the top list, books, what the founders read (Explore for every subject only) and where the reader lives, under the books. Then one door to Astute+ a day: the offer on Monday, Wednesday, Friday and Sunday, for a reader on the free plan from the third day; the ten-card paths on Tuesday, Thursday and Saturday. Then the endless feed, which leaves out the cards the cover laid and never opens in its shape, and deals the films as cards. Cards to watch and what a card is useful for are gone: a film is a card in the feed and on the shelves now. Prototype 1 is remote/examples/explore-lean-v1.json, the page before it remote/examples/explore-long.json: either, copied over this file and bundled, is back. The day's challenge and the challenges are for Explore of every subject only. Builds 54 and older keep the shelves they knew.",
   "sections": [
     {
       "id": "nothing",
@@ -40,52 +40,6 @@
       }
     },
     {
-      "id": "cover",
-      "block": "cover",
-      "gap": 6,
-      "source": {
-        "query": {
-          "unread": true,
-          "perSubject": 1,
-          "limit": 40
-        }
-      }
-    },
-    {
-      "id": "videos",
-      "block": "video-cards",
-      "title": {
-        "en": "Cards to watch",
-        "it": "Carte da guardare",
-        "es": "Cartas para ver",
-        "fr": "Cartes à regarder",
-        "de": "Karten zum Anschauen",
-        "pt": "Cartas para ver",
-        "nl": "Kaarten om te kijken",
-        "pl": "Karty do obejrzenia",
-        "ru": "Карточки-видео",
-        "tr": "İzlenecek kartlar",
-        "ja": "見るカード",
-        "ko": "보는 카드",
-        "zh": "可以看的卡片"
-      },
-      "subtitle": {
-        "en": "About a minute each. Tap the card, then tap it again to play.",
-        "it": "Circa un minuto ciascuna. Tocca la carta, poi toccala di nuovo e parte.",
-        "es": "Cerca de un minuto cada una. Toca la carta y vuelve a tocarla para verla.",
-        "fr": "Environ une minute chacune. Touchez la carte, puis touchez-la encore pour la lancer.",
-        "de": "Je etwa eine Minute. Tippe auf die Karte und dann noch einmal, um sie abzuspielen.",
-        "pt": "Cerca de um minuto cada. Toque na carta e toque de novo para ver.",
-        "nl": "Ongeveer een minuut per kaart. Tik op de kaart en tik nog eens om af te spelen.",
-        "pl": "Około minuty każda. Dotknij karty, a potem jeszcze raz, by ją obejrzeć.",
-        "ru": "Около минуты каждая. Коснитесь карточки, затем ещё раз, чтобы смотреть.",
-        "tr": "Her biri yaklaşık bir dakika. Karta dokun, izlemek için bir kez daha dokun.",
-        "ja": "どれも約1分。カードをタップして、もう一度タップすると再生します。",
-        "ko": "각 1분 정도예요. 카드를 누른 뒤 한 번 더 누르면 재생돼요.",
-        "zh": "每张约一分钟。点开卡片，再点一下就开始播放。"
-      }
-    },
-    {
       "id": "news-today",
       "block": "news-today",
       "title": {
@@ -117,7 +71,8 @@
         "ja": "この数日のニュースと、その理由。",
         "ko": "요 며칠의 이야기와 그 이유.",
         "zh": "这几天的新闻，以及背后的原因。"
-      }
+      },
+      "look": "pager"
     },
     {
       "id": "line-of-day",
@@ -188,8 +143,37 @@
       }
     },
     {
-      "id": "where-you-live",
-      "block": "where-you-live"
+      "id": "cover",
+      "block": "cover",
+      "gap": 32,
+      "title": {
+        "en": "On the cover today",
+        "it": "Oggi in copertina",
+        "de": "Heute auf dem Titel",
+        "es": "Hoy en portada",
+        "fr": "En couverture aujourd’hui",
+        "pt": "Hoje na capa",
+        "nl": "Vandaag op de cover",
+        "pl": "Dziś na okładce",
+        "ru": "Сегодня на обложке",
+        "tr": "Bugün kapakta",
+        "ja": "今日の表紙",
+        "ko": "오늘의 표지",
+        "zh": "今日封面"
+      },
+      "source": {
+        "query": {
+          "unread": true,
+          "perSubject": 1,
+          "limit": 40
+        }
+      },
+      "audience": {
+        "weekdays": [
+          1,
+          6
+        ]
+      }
     },
     {
       "id": "surprise-mon",
@@ -374,40 +358,6 @@
       }
     },
     {
-      "id": "paths",
-      "block": "paths",
-      "title": {
-        "en": "Ten-card paths",
-        "it": "Percorsi da 10 carte",
-        "de": "Pfade aus zehn Karten",
-        "es": "Recorridos de 10 cartas",
-        "fr": "Parcours de 10 cartes",
-        "ja": "10枚のコース",
-        "ko": "10장 코스",
-        "nl": "Paden van tien kaarten",
-        "pl": "Ścieżki z 10 kart",
-        "pt": "Percursos de 10 cartas",
-        "ru": "Маршруты из 10 карточек",
-        "tr": "10 kartlık yollar",
-        "zh": "十张卡片之路"
-      },
-      "subtitle": {
-        "en": "One theme, from the easiest card to the hardest.",
-        "it": "Un tema, dalla carta più facile alla più difficile.",
-        "de": "Ein Thema, von der leichtesten Karte bis zur schwersten.",
-        "es": "Un tema, de la carta más fácil a la más difícil.",
-        "fr": "Un thème, de la carte la plus facile à la plus difficile.",
-        "ja": "ひとつのテーマを、やさしいカードから難しいカードへ。",
-        "ko": "하나의 주제를 가장 쉬운 카드부터 가장 어려운 카드까지.",
-        "nl": "Eén thema, van de makkelijkste kaart tot de moeilijkste.",
-        "pl": "Jeden temat, od najłatwiejszej karty do najtrudniejszej.",
-        "pt": "Um tema, da carta mais fácil à mais difícil.",
-        "ru": "Одна тема — от самой лёгкой карточки до самой трудной.",
-        "tr": "Tek bir konu, en kolay karttan en zoruna.",
-        "zh": "一个主题，从最简单的卡片到最难的。"
-      }
-    },
-    {
       "id": "quick-games",
       "block": "quick-games",
       "title": {
@@ -453,6 +403,10 @@
           }
         ]
       }
+    },
+    {
+      "id": "top",
+      "block": "top"
     },
     {
       "id": "books",
@@ -520,7 +474,12 @@
         "ja": "公の場ですすめた本を、本人の言葉と、それを語った場所とともに。",
         "ko": "공개적으로 추천한 책을, 그들의 말과 그 말을 한 곳과 함께.",
         "zh": "他们公开推荐过的书，附上原话和说话的出处。"
-      }
+      },
+      "subjectPages": false
+    },
+    {
+      "id": "where-you-live",
+      "block": "where-you-live"
     },
     {
       "id": "plus-offer",
@@ -560,30 +519,44 @@
       }
     },
     {
-      "id": "top",
-      "block": "top"
-    },
-    {
-      "id": "goal",
-      "block": "goal",
+      "id": "paths",
+      "block": "paths",
       "title": {
-        "en": "Useful for",
-        "it": "Ti serve per"
+        "en": "Ten-card paths",
+        "it": "Percorsi da 10 carte",
+        "de": "Pfade aus zehn Karten",
+        "es": "Recorridos de 10 cartas",
+        "fr": "Parcours de 10 cartes",
+        "ja": "10枚のコース",
+        "ko": "10장 코스",
+        "nl": "Paden van tien kaarten",
+        "pl": "Ścieżki z 10 kart",
+        "pt": "Percursos de 10 cartas",
+        "ru": "Маршруты из 10 карточек",
+        "tr": "10 kartlık yollar",
+        "zh": "十张卡片之路"
       },
       "subtitle": {
-        "en": "Pick one: Explore and your coach will lean that way.",
-        "it": "Scegline uno: Esplora e il tuo coach andranno in quella direzione.",
-        "de": "Wähle eins: Entdecken und dein Coach richten sich danach.",
-        "es": "Elige uno: Explorar y tu coach irán en esa dirección.",
-        "fr": "Choisis-en un : Explorer et ton coach iront dans ce sens.",
-        "pt": "Escolhe um: o Explorar e o teu coach vão nessa direção.",
-        "nl": "Kies er één: Ontdek en je coach gaan die kant op.",
-        "pl": "Wybierz jeden: Odkrywaj i twój coach pójdą w tę stronę.",
-        "ru": "Выбери одно: Обзор и твой коуч подстроятся под это.",
-        "tr": "Birini seç: Keşfet ve koçun o yöne yönelecek.",
-        "ja": "ひとつ選んでください。「探す」とコーチがその方向に合わせます。",
-        "ko": "하나를 고르세요. 탐색과 코치가 그쪽으로 맞춰 줘요.",
-        "zh": "选一个：探索页和你的教练会朝这个方向调整。"
+        "en": "One theme, from the easiest card to the hardest.",
+        "it": "Un tema, dalla carta più facile alla più difficile.",
+        "de": "Ein Thema, von der leichtesten Karte bis zur schwersten.",
+        "es": "Un tema, de la carta más fácil a la más difícil.",
+        "fr": "Un thème, de la carte la plus facile à la plus difficile.",
+        "ja": "ひとつのテーマを、やさしいカードから難しいカードへ。",
+        "ko": "하나의 주제를 가장 쉬운 카드부터 가장 어려운 카드까지.",
+        "nl": "Eén thema, van de makkelijkste kaart tot de moeilijkste.",
+        "pl": "Jeden temat, od najłatwiejszej karty do najtrudniejszej.",
+        "pt": "Um tema, da carta mais fácil à mais difícil.",
+        "ru": "Одна тема — от самой лёгкой карточки до самой трудной.",
+        "tr": "Tek bir konu, en kolay karttan en zoruna.",
+        "zh": "一个主题，从最简单的卡片到最难的。"
+      },
+      "audience": {
+        "weekdays": [
+          2,
+          4,
+          6
+        ]
       }
     },
     {

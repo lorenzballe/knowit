@@ -257,7 +257,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get keepTheOnesYoullUse => 'Сохраняй те, что правда пригодятся';
 
   @override
-  String get backToTodaysFive => 'К СЕГОДНЯШНЕЙ ПЯТЁРКЕ';
+  String get backToTodaysFive => 'К сегодняшней пятёрке';
 
   @override
   String get archive => 'Архив';
@@ -805,7 +805,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get shareMyRecord => 'ПОДЕЛИТЬСЯ ИСТОРИЕЙ';
+  String get shareMyRecord => 'Поделиться историей';
 
   @override
   String lastCallsAgainstFirst(int n) {
@@ -884,7 +884,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get seeThePlans => 'ПОСМОТРЕТЬ ТАРИФЫ';
+  String get seeThePlans => 'Посмотреть тарифы';
 
   @override
   String get recordStartsToday => 'Твоя история начинается сегодня.';
@@ -1986,11 +1986,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return 'Твой ответ: $said. Верно: $truth.';
-  }
-
-  @override
   String get fiveTitle => 'Пять вопросов дня';
 
   @override
@@ -2006,12 +2001,17 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String dailyPickRight(String answer) {
-    return 'Верно: $answer.';
+    return 'Верный ответ: $answer';
   }
 
   @override
   String dailyPickWrong(String answer) {
-    return 'Не совсем: верно $answer.';
+    return 'Не совсем. Верный ответ: $answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return 'Твой ответ: $answer';
   }
 
   @override
@@ -2396,21 +2396,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tapToReveal => 'Нажми, чтобы открыть';
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return 'Ты сказал $given · это $answer, и $band засчитано';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return 'Ты сказал $given · это $answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · ты был уверен на $pct%';
-  }
-
-  @override
   String get verdictRight => 'Верно.';
 
   @override
@@ -2421,7 +2406,27 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String verdictSure(int pct) {
-    return 'Ты был уверен на $pct%.';
+    return 'Ты был уверен на $pct%.';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return 'Твой ответ: $given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return 'Твой ответ: $given, уверенность $pct%';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return 'Верный ответ: $answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return 'Верный ответ: $answer (засчитывалось от $low до $high)';
   }
 
   @override
@@ -3207,7 +3212,22 @@ class AppLocalizationsRu extends AppLocalizations {
   String get revealShowWorking => 'Показать решение';
 
   @override
-  String get sceneLockIn => 'ГОТОВО';
+  String get sceneLockIn => 'Готово';
+
+  @override
+  String get placeItDrag => 'Проведи по линейке.';
+
+  @override
+  String get placeItHappy => 'Так и оставить?';
+
+  @override
+  String get placeItEstimate => 'Твоя оценка';
+
+  @override
+  String get placeItNotSet => 'ещё не задана';
+
+  @override
+  String get placeItLock => 'Подтвердить мою оценку';
 
   @override
   String get sceneYou => 'ВЫ';
@@ -3534,7 +3554,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String journeyMinAWeek(int now, int was) {
-    return '$now мин в неделю, было $was';
+    return '$now мин в неделю, сначала $was мин';
   }
 
   @override
@@ -5229,7 +5249,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get betsDayTitle => 'Ставка дня';
 
   @override
-  String get betsDayLine => 'Зафиксируй догадку и посмотри, насколько ошибся';
+  String get betsDayLine => 'Подтверди догадку и посмотри, насколько ошибся';
 
   @override
   String get betsDayTag => 'Ставка дня';
@@ -5238,7 +5258,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get betsDayTagSame => 'Ставка дня · одна для всех';
 
   @override
-  String get betsLockIn => 'Зафиксировать';
+  String get betsLockIn => 'Подтвердить';
 
   @override
   String betsItIs(String said) {
@@ -6906,11 +6926,23 @@ class AppLocalizationsRu extends AppLocalizations {
   String get newsBehind => 'За новостью';
 
   @override
+  String get newsMeansForYou => 'Что это значит для тебя';
+
+  @override
+  String get newsMeans => 'Что это значит';
+
+  @override
+  String get newsHappenedBefore => 'Такое уже было';
+
+  @override
   String get newsSources => 'Источники';
 
   @override
   String get newsMadeFrom =>
       'Написано Astute по этим материалам и сверено с ними.';
+
+  @override
+  String get newsWhyItMatters => 'Почему это важно';
 
   @override
   String get deeperDeclined => 'На это ИИ ответить не может.';
@@ -7072,6 +7104,36 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get founderTheirBooks => 'Рекомендованные книги';
+
+  @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': 'Сооснователь Microsoft',
+      'warren_buffett': 'Инвестор, который построил Berkshire Hathaway',
+      'mark_zuckerberg': 'Основатель Facebook',
+      'charlie_munger': 'Партнёр Уоррена Баффета по Berkshire Hathaway',
+      'marc_andreessen': 'Сооснователь Netscape и Andreessen Horowitz',
+      'tobi_lutke': 'Основатель Shopify',
+      'naval_ravikant': 'Сооснователь AngelList',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes, его книги на лето',
+      'berkshire_meeting': 'годовое собрание акционеров Berkshire Hathaway',
+      'berkshire_letter': 'его письмо акционерам Berkshire Hathaway',
+      'year_of_books': 'A Year of Books, в Facebook',
+      'publisher_praise': 'его отзыв о книге на сайте издательства',
+      'ferriss_five':
+          'The Tim Ferriss Show, среди пяти лучших прочитанных им книг',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
 
   @override
   String founderAbout(String name) {

@@ -165,7 +165,9 @@ class _Stop extends StatelessWidget {
     if (parts.length != 3 || parts.contains(null)) return null;
     final date = DateTime(parts[0]!, parts[1]!, parts[2]!);
     final String locale = Localizations.localeOf(context).toString();
-    return context.l10n.reachedOn(DateFormat.MMMd(locale).format(date));
+    return context.l10n.elided(
+      context.l10n.reachedOn(DateFormat.MMMd(locale).format(date)),
+    );
   }
 
   @override

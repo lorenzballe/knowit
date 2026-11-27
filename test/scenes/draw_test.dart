@@ -293,7 +293,7 @@ void main() {
 
         // Half a line is not a guess yet.
         await _sweep(tester, (u) => u * 0.3, from: 0.12, to: 0.6);
-        await tester.tap(find.text('LOCK IT IN'));
+        await tester.tap(find.text('Lock it in'));
         await tester.pump();
         expect(find.text('Too low.'), findsNothing);
 
@@ -302,7 +302,7 @@ void main() {
         expect(taps, 0, reason: 'a stroke in the chart is not a tap');
         expect(pans, 0, reason: 'a stroke in the chart does not swipe');
 
-        await tester.tap(find.text('LOCK IT IN'));
+        await tester.tap(find.text('Lock it in'));
         await _settle(tester);
         expect(find.text('Too low.'), findsOneWidget);
         expect(find.text('×1,845'), findsOneWidget);
@@ -337,7 +337,7 @@ void main() {
         (u) => u < 0.8 ? u * 0.05 : (u - 0.8) / 0.2 * 0.95,
         from: 0.12,
       );
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pump();
       expect(find.text('Close.'), findsOneWidget);
     });
@@ -361,8 +361,8 @@ void main() {
           ),
         );
         await _sweep(tester, (u) => 0.4, from: 0.12);
-        expect(find.text('LOCK IT IN'), findsOneWidget);
-        await tester.tap(find.text('LOCK IT IN'));
+        expect(find.text('Lock it in'), findsOneWidget);
+        await tester.tap(find.text('Lock it in'));
         await tester.pump();
         expect(tester.takeException(), isNull);
       }
@@ -388,7 +388,7 @@ void main() {
         await tester.pump();
       }
       expect(tester.getSemantics(chart).value, startsWith('Yr 5: ×'));
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pump();
       expect(find.bySemanticsLabel(RegExp(r'TRUTH: ×1,845')), findsOneWidget);
       handle.dispose();
@@ -404,7 +404,7 @@ void main() {
         ),
       );
       await _sweep(tester, (u) => u, from: 0.02);
-      await tester.tap(find.text('LOCK IT IN'));
+      await tester.tap(find.text('Lock it in'));
       await tester.pump();
       expect(find.text('×1,845'), findsOneWidget);
     });
@@ -445,7 +445,7 @@ void main() {
             from: x0,
           );
           await shoot('drawn');
-          await tester.tap(find.text('LOCK IT IN'));
+          await tester.tap(find.text('Lock it in'));
           await tester.pump(const Duration(milliseconds: 700));
           await shoot('drawing');
           await _settle(tester);

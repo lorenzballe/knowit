@@ -1133,8 +1133,8 @@ class BeforeAfterChallenge extends TimeChallenge {
                 : saidAt(i) == null
                 ? null
                 : saidAt(i)!
-                ? l.beforeAfterSaidAfter('${lines[i - 1].year}')
-                : l.beforeAfterSaidBefore('${lines[i - 1].year}'),
+                ? l.elided(l.beforeAfterSaidAfter('${lines[i - 1].year}'))
+                : l.elided(l.beforeAfterSaidBefore('${lines[i - 1].year}')),
             semantics: '${lines[i].year}. ${lines[i].statement}',
             onTap: () => onOpen(pills, lines[i].pill),
           ),
@@ -1229,9 +1229,13 @@ class _BeforeAfterPlayState extends State<_BeforeAfterPlay> {
       // The question, naming the year above; once said, what was so.
       status: GameStatus(
         switch (right) {
-          null => l.beforeAfterAsk('${above.year}'),
-          true => l.beforeAfterRight(side, '${here.year}', '${above.year}'),
-          false => l.beforeAfterWrong(side, '${here.year}', '${above.year}'),
+          null => l.elided(l.beforeAfterAsk('${above.year}')),
+          true => l.elided(
+            l.beforeAfterRight(side, '${here.year}', '${above.year}'),
+          ),
+          false => l.elided(
+            l.beforeAfterWrong(side, '${here.year}', '${above.year}'),
+          ),
         },
         key: const ValueKey('before-after-ask'),
         verdict: right,
