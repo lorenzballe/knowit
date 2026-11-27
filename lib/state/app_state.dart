@@ -19,6 +19,7 @@ import '../data/genres.dart';
 import '../data/local_cards.dart';
 import '../data/books.dart';
 import '../data/goals.dart';
+import '../data/learn_reading.dart' show withFocusLean;
 import '../data/skills.dart';
 import '../data/news_paper.dart';
 import '../data/pill_bank.dart';
@@ -989,9 +990,13 @@ class AppState extends ChangeNotifier {
   }) {
     final int day = dayNumberOf(date);
     final Map<String, double> weights = profile.weightsOn(day, leanedWeights);
-    final Map<String, double> lean = isPlus
-        ? profile.tasteWith(taste)
-        : profile.lean;
+    // In What to learn's look E, as the developer tools try it, the reader's
+    // own cards lean into the week's skill too (lib/data/learn_reading.dart);
+    // as it ships, the lean is the reader's alone.
+    final Map<String, double> lean = withFocusLean(
+      this,
+      isPlus ? profile.tasteWith(taste) : profile.lean,
+    );
     final List<Pill> due = isPlus ? reviews : const [];
     if (firstDays && day < kOpeningDays) {
       final Deal? opening = dealOpening(

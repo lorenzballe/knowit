@@ -1599,10 +1599,13 @@ class _DebugLooksPanel extends StatelessWidget {
                 const SizedBox(height: 3),
                 Text(
                   'Now is as it ships: skills picked, a score in each, their '
-                  'mark on cards. A: the Astute score alone. B: one aim, '
-                  'asked at the end of the first run too (wipe to see it), '
-                  'its week under the profile\'s question. C: no picking; '
-                  'where the answers say you are strong, in Your journey.',
+                  'mark on cards. A: the Astute score alone. B: the aim '
+                  'alone, asked at the end of the first run too (wipe to see '
+                  'it), its week in Your journey. C: no picking; where the '
+                  'answers say you are strong. D: the aim read: where you '
+                  'see clearly and your blind spot, under the question. E: '
+                  'one of the aim\'s skills a week, its mark on cards, a '
+                  'shelf on Explore, and Sunday\'s result.',
                   style: AppText.body(
                     size: 12,
                     height: 1.35,
@@ -1658,8 +1661,10 @@ class _DebugLooksPanel extends StatelessWidget {
   }
 }
 
-/// Now, A, B or C, as What to learn's look: a segmented control like the
-/// profile top's, each choice with what it is under its letter.
+/// Now, A, B, C, D or E, as What to learn's look: a segmented control like
+/// the profile top's, each choice with what it is under its letter, in two
+/// rows of three, where six in one would leave each too narrow for its
+/// word.
 class _LearnPicker extends StatelessWidget {
   const _LearnPicker({required this.look});
 
@@ -1668,82 +1673,96 @@ class _LearnPicker extends StatelessWidget {
   static const _options = [
     (look: LearnLook.today, name: 'Now', note: 'skills'),
     (look: LearnLook.score, name: 'A', note: 'score'),
-    (look: LearnLook.aim, name: 'B', note: 'one aim'),
+    (look: LearnLook.aim, name: 'B', note: 'the aim'),
     (look: LearnLook.profile, name: 'C', note: 'strengths'),
+    (look: LearnLook.aimProfile, name: 'D', note: 'aim, read'),
+    (look: LearnLook.weekly, name: 'E', note: 'a week'),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final p = context.p;
     return PaperCard(
       padding: const EdgeInsets.all(5),
       radius: 16,
-      child: Row(
+      child: Column(
         children: [
-          for (final option in _options)
-            Expanded(
-              child: Builder(
-                builder: (context) {
-                  final bool selected = option.look == look;
-                  return Semantics(
-                    button: true,
-                    selected: selected,
-                    label: '${option.name}, ${option.note}',
-                    excludeSemantics: true,
-                    child: GestureDetector(
-                      key: ValueKey('debug-learn-${option.look.name}'),
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        if (selected) return;
-                        HapticFeedback.selectionClick();
-                        DebugLooks.setLearn(option.look);
-                      },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        constraints: const BoxConstraints(minHeight: 48),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 4,
-                          vertical: 7,
-                        ),
-                        decoration: BoxDecoration(
-                          color: selected ? p.inverse : Colors.transparent,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              option.name,
-                              maxLines: 1,
-                              style: AppText.body(
-                                size: 13.5,
-                                weight: FontWeight.w700,
-                                color: selected ? p.onInverse : p.ink,
-                              ),
-                            ),
-                            const SizedBox(height: 1),
-                            Text(
-                              option.note,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppText.body(
-                                size: 10.5,
-                                weight: FontWeight.w500,
-                                color: (selected ? p.onInverse : p.inkMuted)
-                                    .withValues(alpha: 0.75),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+          for (int row = 0; row < _options.length; row += 3)
+            _row(context, _options.sublist(row, row + 3)),
         ],
       ),
+    );
+  }
+
+  Widget _row(
+    BuildContext context,
+    List<({LearnLook look, String name, String note})> options,
+  ) {
+    final p = context.p;
+    return Row(
+      children: [
+        for (final option in options)
+          Expanded(
+            child: Builder(
+              builder: (context) {
+                final bool selected = option.look == look;
+                return Semantics(
+                  button: true,
+                  selected: selected,
+                  label: '${option.name}, ${option.note}',
+                  excludeSemantics: true,
+                  child: GestureDetector(
+                    key: ValueKey('debug-learn-${option.look.name}'),
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      if (selected) return;
+                      HapticFeedback.selectionClick();
+                      DebugLooks.setLearn(option.look);
+                    },
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      constraints: const BoxConstraints(minHeight: 48),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 7,
+                      ),
+                      decoration: BoxDecoration(
+                        color: selected ? p.inverse : Colors.transparent,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            option.name,
+                            maxLines: 1,
+                            style: AppText.body(
+                              size: 13.5,
+                              weight: FontWeight.w700,
+                              color: selected ? p.onInverse : p.ink,
+                            ),
+                          ),
+                          const SizedBox(height: 1),
+                          Text(
+                            option.note,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppText.body(
+                              size: 10.5,
+                              weight: FontWeight.w500,
+                              color: (selected ? p.onInverse : p.inkMuted)
+                                  .withValues(alpha: 0.75),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+      ],
     );
   }
 }

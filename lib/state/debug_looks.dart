@@ -62,10 +62,13 @@ enum PaywallLook {
   d,
 }
 
-/// What to learn, three other ways, as the developer tools try them beside
+/// What to learn, five other ways, as the developer tools try them beside
 /// the one that ships (lib/widgets/learn_looks.dart): the owner did not
 /// believe in twelve skills, each with a score, a mark on the cards and a
 /// chapter of Your journey, and asked for it to be thought through again.
+/// Where the reader wants to see more clearly, their aim, is now asked on
+/// the profile in every look (lib/widgets/aim_picker.dart); the looks are
+/// what becomes of the skills beside it.
 enum LearnLook {
   /// As it ships: the skills picked on What to learn, a score with no top
   /// in each, their mark on the cards, Your training at the head of Your
@@ -76,10 +79,9 @@ enum LearnLook {
   /// picker, no marks, no scores but the one.
   score,
 
-  /// B. One aim, asked once at the end of the first run and changed from
-  /// the profile: where the reader wants to be sharper, one of the six
-  /// areas the cards already name on their backs, in words and counts, with
-  /// a shelf of it on Explore every day.
+  /// B. The aim alone: no skills, no box under the question; asked at the
+  /// end of the first run too, said on the cards dealt for it, and its week
+  /// in words and counts at the head of Your journey.
   aim,
 
   /// C. Measured, not picked: nothing to choose, the skills read from the
@@ -87,6 +89,18 @@ enum LearnLook {
   /// right answers out of answers given, with the weakest to practise; on
   /// the free plan the strongest only, the rest with Astute+.
   profile,
+
+  /// D. The aim, read: the four skills the reader's aim takes, ranked from
+  /// their answers, where they see clearly and their blind spot, under the
+  /// question on every plan; the whole profile and five cards on the blind
+  /// spot with Astute+.
+  aimProfile,
+
+  /// E. A focus a week: one of the aim's skills, Monday to Sunday, its mark
+  /// on the cards that train it, a shelf of it on Explore and the day's
+  /// own cards leaning to it, and on Sunday how the week went. Chosen in
+  /// turn on the free plan, from the reader's answers on Astute+.
+  weekly,
 }
 
 /// How a card's foot is set, as the developer tools pick it: one of the
@@ -109,7 +123,7 @@ enum CardFootPick {
 /// Looks the developer tools let a phone try on, so the owner can compare
 /// on his own phone what only pictures showed him before: the finished day
 /// with no row over its card, the profile's other tops, where the day is
-/// sent from, What to learn three other ways, the paywall's prototypes, and
+/// sent from, What to learn five other ways, the paywall's prototypes, and
 /// the four feet of a card.
 /// Changed from the debug section at the foot of the profile, kept on the
 /// phone, and listened to where each is drawn, so a change shows at once.

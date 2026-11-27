@@ -18,6 +18,7 @@ import '../explore/explore_block.dart';
 import '../models/pill.dart';
 import '../remote/remote.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../state/explore_play.dart';
 import '../sync/served.dart';
 import '../sync/tally.dart';
@@ -545,6 +546,9 @@ class ExploreScreenState extends State<ExploreScreen>
         // The reader's goal among it: picked on the profile, its shelf is
         // here at once (withAimShelf).
         widget.app,
+        // What to learn's look, as the developer tools pick it: E's shelf
+        // of the week's skill comes and goes with it.
+        DebugLooks.learn,
         Remote.revision,
       ]),
       builder: (context, _) => _sections(

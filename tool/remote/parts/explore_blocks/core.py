@@ -476,6 +476,10 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     # (lib/data/day_lines.dart): it picks its own.
     "line-of-day": shelf(),
     "goal": shelf(),
+    # The week's skill, in What to learn's look E the developer tools try
+    # (lib/widgets/learn_looks.dart): cards that train it. Works out its
+    # own; in every other look, no section.
+    "focus": shelf(),
     # Cards that are short films (lib/data/video_cards.dart), opened to the
     # whole screen and played with a second tap: they are its own.
     "video-cards": shelf(),
