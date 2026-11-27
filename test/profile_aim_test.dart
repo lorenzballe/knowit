@@ -36,6 +36,12 @@ void main() {
   setUpAll(loadFonts);
   setUp(PillBank.reset);
 
+  /// A tap on the profile's row, and the sheet of the six up.
+  Future<void> openSheet(WidgetTester tester) async {
+    await tester.tap(find.byKey(const ValueKey('profile-aim-open')));
+    await tester.pumpAndSettle();
+  }
+
   /// The section alone, as the profile lays it: a column [size] wide less
   /// the profile's gutters, at night or on paper, in [language], at [text]
   /// times the text.
@@ -46,35 +52,44 @@ void main() {
     String language = 'en',
     double text = 1,
     bool paper = false,
+    bool open = true,
   }) async {
     tester.view.physicalSize = size;
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(
       MaterialApp(
+        // A tree of its own each time, so a sheet left open never carries
+        // over.
+        key: UniqueKey(),
         locale: Locale(language),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         theme: buildAstutoTheme(paper ? Brightness.light : Brightness.dark),
-        home: Builder(
-          builder: (context) => MediaQuery(
-            data: MediaQuery.of(context)
-                .copyWith(textScaler: TextScaler.linear(text)),
-            child: Scaffold(
-              body: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(22, 20, 22, 20),
-                child: ProfileAim(app: app),
-              ),
-            ),
+        // Over every route, as the phone's own text size is: the sheet the
+        // row opens is a route of its own.
+        builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: TextScaler.linear(text)),
+          child: child!,
+        ),
+        home: Scaffold(
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(22, 20, 22, 20),
+            child: ProfileAim(app: app),
           ),
         ),
       ),
     );
-    // The theme eases from night to paper, as the app's does.
     await tester.pumpAndSettle();
+    if (open) await openSheet(tester);
   }
 
   Finder row(Goal g) => find.byKey(ValueKey('profile-aim-${g.key}'));
+  final Finder summary = find.byKey(const ValueKey('profile-aim-open'));
+  final Finder sheet = find.byKey(const ValueKey('profile-aim-sheet'));
+  Finder inSheet(Finder f) => find.descendant(of: sheet, matching: f);
+  Finder inSummary(Finder f) => find.descendant(of: summary, matching: f);
 
   /// The areas shown as picked.
   List<Goal> picked(WidgetTester tester) => [
@@ -90,13 +105,24 @@ void main() {
         'knowit.goals': ['people'],
       }),
     ) as AppState;
-    await show(tester, said);
+    // On the profile, the question and one row with the pick: the six
+    // stay behind a tap.
+    await show(tester, said, open: false);
     expect(find.text(l.aimTitle.toUpperCase()), findsOneWidget);
-    expect(find.text(l.aimLine), findsOneWidget);
+    expect(inSummary(find.text(goalName(l, Goal.people))), findsOneWidget);
+    expect(inSummary(find.text(goalLine(l, Goal.people))), findsOneWidget);
+    expect(sheet, findsNothing);
+    for (final Goal g in Goal.values) {
+      expect(row(g), findsNothing, reason: g.key);
+    }
+    // The tap brings up the sheet: the question, what a pick does, the six.
+    await openSheet(tester);
+    expect(inSheet(find.text(l.aimTitle)), findsOneWidget);
+    expect(inSheet(find.text(l.aimLine)), findsOneWidget);
     for (final Goal g in Goal.values) {
       expect(row(g), findsOneWidget, reason: g.key);
-      expect(find.text(goalName(l, g)), findsOneWidget, reason: g.key);
-      expect(find.text(goalLine(l, g)), findsOneWidget, reason: g.key);
+      expect(inSheet(find.text(goalName(l, g))), findsOneWidget, reason: g.key);
+      expect(inSheet(find.text(goalLine(l, g))), findsOneWidget, reason: g.key);
     }
     expect(picked(tester), [Goal.people]);
 
@@ -109,12 +135,16 @@ void main() {
     await show(tester, skilled);
     expect(picked(tester), [Goal.decide]);
 
+    // Before a pick, the row is the way to make one.
     final AppState none = await tester.runAsync(readyApp) as AppState;
-    await show(tester, none);
+    await show(tester, none, open: false);
+    expect(inSummary(find.text(l.aimPick)), findsOneWidget);
+    expect(inSummary(find.text(l.aimNone)), findsOneWidget);
+    await openSheet(tester);
     expect(picked(tester), isEmpty);
 
     // Asked in Turkish, its capitals keep the dot on the i.
-    await show(tester, said, language: 'tr');
+    await show(tester, said, language: 'tr', open: false);
     expect(find.text('NEREDE DAHA NET GÖRMEK İSTERSİN?'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
@@ -139,6 +169,10 @@ void main() {
     await tester.tap(row(Goal.money));
     await tester.pumpAndSettle();
     expect(app.goals, ['money']);
+    // The pick closes the sheet, and the row on the profile is the new one.
+    expect(sheet, findsNothing);
+    expect(inSummary(find.text(goalName(l, Goal.money))), findsOneWidget);
+    await openSheet(tester);
     expect(picked(tester), [Goal.money]);
     final SharedPreferences prefs = await tester.runAsync(
       SharedPreferences.getInstance,
@@ -171,11 +205,14 @@ void main() {
     expect(find.text(l.goalShelf(l.goalHealth)), findsOneWidget);
     expect(find.text(l.goalShelf(l.goalMoney)), findsNothing);
 
-    // The one picked, tapped, is still the one, and nothing else.
+    // The one picked, tapped, is still the one, and nothing else: the
+    // sheet goes down as it came.
     await show(tester, app);
     await tester.tap(row(Goal.health));
     await tester.pumpAndSettle();
     expect(app.goals, ['health']);
+    expect(sheet, findsNothing);
+    await openSheet(tester);
     expect(picked(tester), [Goal.health]);
     expect(tester.takeException(), isNull);
   });
@@ -206,24 +243,16 @@ void main() {
       }),
     ) as AppState;
     for (final double text in [1, 1.6]) {
-      await show(
-        tester,
-        app,
-        size: const Size(320, 568),
-        language: 'de',
-        text: text,
-      );
-      expect(tester.takeException(), isNull, reason: '×$text');
       final TextScaler scaler = TextScaler.linear(text);
-      for (final Goal g in Goal.values) {
-        final Rect box = tester.getRect(row(g));
-        expect(box.left, greaterThanOrEqualTo(0), reason: '${g.key} ×$text');
-        expect(box.right, lessThanOrEqualTo(320), reason: '${g.key} ×$text');
-        // Each word of the name and of the line fits a line of its own
-        // in the width it was laid out in: none is broken across two.
+      // Each word of a name and of a line fits a line of its own in the
+      // width it was laid out in: none is broken across two.
+      void whole(Finder box, String what) {
+        final Rect rect = tester.getRect(box);
+        expect(rect.left, greaterThanOrEqualTo(0), reason: '$what ×$text');
+        expect(rect.right, lessThanOrEqualTo(320), reason: '$what ×$text');
         for (final Element e
             in find
-                .descendant(of: row(g), matching: find.byType(Text))
+                .descendant(of: box, matching: find.byType(Text))
                 .evaluate()) {
           final Text t = e.widget as Text;
           final double width = e.size!.width;
@@ -236,13 +265,32 @@ void main() {
               width + 0.5,
             ),
             isTrue,
-            reason: '"${t.data}" at ×$text in $width',
+            reason: '$what: "${t.data}" at ×$text in $width',
           );
         }
       }
+
+      // The row on the profile, with the longest name of the six picked.
+      await show(
+        tester,
+        app,
+        size: const Size(320, 568),
+        language: 'de',
+        text: text,
+        open: false,
+      );
+      expect(tester.takeException(), isNull, reason: 'row ×$text');
+      whole(summary, 'the row');
+      // And the six it opens.
+      await openSheet(tester);
+      expect(tester.takeException(), isNull, reason: '×$text');
+      for (final Goal g in Goal.values) {
+        whole(row(g), g.key);
+      }
     }
-    // The longest of them, whole, at ×1.6.
-    expect(find.text('Alltagsentscheidungen'), findsOneWidget);
+    // The longest of them, whole, at ×1.6: in the row and in the sheet.
+    expect(inSummary(find.text('Alltagsentscheidungen')), findsOneWidget);
+    expect(inSheet(find.text('Alltagsentscheidungen')), findsOneWidget);
   });
 
   testWidgets('night and paper: each area\'s colour reads as a mark on its '
@@ -289,6 +337,13 @@ void main() {
 
       await show(tester, app, paper: paper);
       final Color money = goalTone(Goal.money, p);
+      // The row on the profile wears the pick's colour too: its ring and
+      // its glyph.
+      expect(
+        tester.widgetList<Icon>(inSummary(find.byType(Icon))).first.color,
+        money,
+        reason: page,
+      );
       final Iterable<Icon> icons = tester.widgetList<Icon>(
         find.descendant(of: row(Goal.money), matching: find.byType(Icon)),
       );

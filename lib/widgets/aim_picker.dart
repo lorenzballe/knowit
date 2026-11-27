@@ -11,12 +11,10 @@
 /// their heads, Explore has a shelf of it every day after Today's five
 /// (withAimShelf), the coach writes towards it, and the paywall opens on it.
 ///
-/// Down the page rather than in a row that turns sideways: the six lines
+/// On the profile the pick is one row; a tap opens the six in a sheet, one
+/// under another rather than in a row that turns sideways: the six lines
 /// are what a reader chooses by, and a sideways row would show one and a
-/// half of them, the one picked perhaps out of sight; the profile scrolls
-/// already, so the six cost only height, and they grow with the text
-/// instead of being cut at a tile's edge. And the tabs slide under the
-/// finger: a row of its own to swipe would fight them for it.
+/// half of them, the one picked perhaps out of sight.
 ///
 /// Each area has a colour of its own, its subject's (goalTone): on its mark,
 /// a glyph in a thin ring of the colour, and on the row picked, washed in
@@ -38,7 +36,11 @@ import 'area_marks.dart';
 import 'fit_text.dart';
 import 'ui.dart' show Eyebrow;
 
-/// The profile's section: the question, what a pick does, and the six.
+/// The profile's section: the question, and one row with the reader's pick
+/// (or, before there is one, the way to make it). A tap on the row opens
+/// the six in a sheet that rises from the foot, and a pick there closes it:
+/// the owner wanted the choice behind a tap, never the six laid out down
+/// the page.
 class ProfileAim extends StatelessWidget {
   const ProfileAim({super.key, required this.app});
 
@@ -58,32 +60,205 @@ class ProfileAim extends StatelessWidget {
     await app.setGoals([g.key]);
   }
 
+  Future<void> _open(BuildContext context) => showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    barrierColor: const Color(0x8C141416),
+    builder: (sheet) => AimSheet(
+      app: app,
+      onPick: (g) async {
+        await _pick(g);
+        if (sheet.mounted) Navigator.of(sheet).pop();
+      },
+    ),
+  );
+
   @override
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: app,
     builder: (context, _) {
       final l = context.l10n;
-      final p = context.p;
       return Column(
         key: const ValueKey('profile-aim-section'),
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Semantics(header: true, child: Eyebrow(l.aimTitle)),
-          const SizedBox(height: 6),
-          Text(
-            l.aimLine,
-            style: AppText.body(size: 13, height: 1.38, color: p.inkMuted),
-          ),
-          const SizedBox(height: 12),
-          AimRows(
-            picked: Goal.of(app.goal),
-            keyPrefix: 'profile-aim-',
-            onPick: _pick,
-          ),
+          const SizedBox(height: 10),
+          AimSummary(goal: Goal.of(app.goal), onTap: () => _open(context)),
         ],
       );
     },
   );
+}
+
+/// The row on the profile: the reader's pick, its mark in its ring and its
+/// line, and the turn that says a tap opens the six; before a pick, the
+/// invitation to make one.
+class AimSummary extends StatelessWidget {
+  const AimSummary({super.key, required this.goal, required this.onTap});
+
+  final Goal? goal;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.p;
+    final Goal? g = goal;
+    final Color tone = g == null ? p.inkMuted : goalTone(g, p);
+    final String name = g == null ? l.aimPick : goalName(l, g);
+    final String line = g == null ? l.aimNone : goalLine(l, g);
+    return Semantics(
+      button: true,
+      label: '${l.aimTitle} $name',
+      excludeSemantics: true,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          key: const ValueKey('profile-aim-open'),
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: Ink(
+            padding: const EdgeInsets.fromLTRB(13.5, 12, 10, 12),
+            decoration: BoxDecoration(
+              color: g == null
+                  ? Colors.transparent
+                  : tone.withValues(alpha: p.isDark ? 0.08 : 0.06),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: g == null ? p.line : tone.withValues(alpha: 0.55),
+                width: g == null ? 1 : 1.2,
+              ),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: tone, width: 1.2),
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(
+                    g == null ? Icons.add_rounded : goalIcon(g),
+                    size: 18,
+                    color: tone,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Down from the six's own sizes until each word fits
+                      // a line of its own: "Alltagsentscheidungen" on the
+                      // narrowest phone at large text never breaks in two.
+                      FitText(
+                        name,
+                        style: AimRow.nameStyle(AimRow.largestName)
+                            .copyWith(color: p.ink),
+                        minSize: 9,
+                        wholeWords: true,
+                      ),
+                      const SizedBox(height: 2),
+                      FitText(
+                        line,
+                        style: AimRow.lineStyle(AimRow.largestLine)
+                            .copyWith(color: p.inkMuted),
+                        maxLines: 3,
+                        minSize: 8,
+                        wholeWords: true,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Icon(Icons.expand_more_rounded, size: 22, color: p.inkMuted),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The sheet the row opens: the question, what a pick does, and the six.
+class AimSheet extends StatelessWidget {
+  const AimSheet({super.key, required this.app, required this.onPick});
+
+  final AppState app;
+  final ValueChanged<Goal> onPick;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.p;
+    return Container(
+      key: const ValueKey('profile-aim-sheet'),
+      decoration: BoxDecoration(
+        color: p.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        18,
+        12,
+        18,
+        MediaQuery.paddingOf(context).bottom + 16,
+      ),
+      child: SafeArea(
+        top: false,
+        bottom: false,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: Container(
+                  width: 38,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: p.inkMuted.withValues(alpha: 0.35),
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 18),
+              Semantics(
+                header: true,
+                child: Text(
+                  l.aimTitle,
+                  style: AppText.display(
+                    size: 24,
+                    weight: FontWeight.w600,
+                    height: 1.15,
+                    color: p.ink,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                l.aimLine,
+                style: AppText.body(size: 13.5, height: 1.4, color: p.inkMuted),
+              ),
+              const SizedBox(height: 16),
+              ListenableBuilder(
+                listenable: app,
+                builder: (context, _) => AimRows(
+                  picked: Goal.of(app.goal),
+                  keyPrefix: 'profile-aim-',
+                  onPick: onPick,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 /// The six areas, one row under another, their names at one size and their

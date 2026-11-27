@@ -4,9 +4,10 @@
 // build shows them (profile-debug), and with the card's foot D picked
 // (profile-debug-d); the way back to Today from its tile, frame by frame;
 // and where the reader wants to see more clearly (lib/widgets/aim_picker.dart)
-// under the subjects at night and on paper, on a phone drawn long enough to
-// hold both, a pick on its way (profile-aim-pick-1 to 3), and on the
-// 320-wide phone in German, at the ordinary text size and at 1.6×.
+// under the subjects at night and on paper, its one row; the sheet of the
+// six it opens and a pick there on its way (profile-aim-pick-1 to 5); and on
+// the 320-wide phone in German, the row and the sheet, at the ordinary text
+// size and at 1.6×.
 //
 //   SHOTS=/some/folder LANG_SHOT=it flutter test tool/profile_shots.dart --update-goldens
 //
@@ -296,27 +297,33 @@ void main() {
     await settle(tester);
   }
 
-  // The profile from the subjects to the training under the six, on a
-  // phone drawn long enough to hold them, at night and on paper.
+  // The profile from the subjects down, the row with the pick under them,
+  // at night and on paper.
   for (final String theme in ['dark', 'light']) {
     testWidgets('profile-aim-$theme', (tester) async {
-      tester.view.physicalSize = const Size(390, 1500) * 3;
       await openAim(tester, theme: theme, from: 'profile-topics', at: 110);
       await shoot('profile-aim-$theme');
     });
   }
 
-  // A pick on its way: Money and shopping tapped, the frame the tap lands
-  // on, the colour halfway over, and where it settles.
+  // The row tapped: the sheet on its way up and up; Money and shopping
+  // picked there, the colour halfway over; and the sheet gone, the row the
+  // new pick.
   testWidgets('profile-aim-pick', (tester) async {
     await openAim(tester, theme: Platform.environment['THEME'] ?? 'dark');
     await shoot('profile-aim-pick-1');
-    await tester.tap(find.byKey(const ValueKey('profile-aim-money')));
+    await tester.tap(find.byKey(const ValueKey('profile-aim-open')));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 90));
+    await tester.pump(const Duration(milliseconds: 120));
     await shoot('profile-aim-pick-2');
     await settle(tester);
     await shoot('profile-aim-pick-3');
+    await tester.tap(find.byKey(const ValueKey('profile-aim-money')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 90));
+    await shoot('profile-aim-pick-4');
+    await settle(tester);
+    await shoot('profile-aim-pick-5');
   });
 
   // The 320-wide phone, no notch, in German: at the ordinary text size,
@@ -333,6 +340,9 @@ void main() {
       dispatcher.textScaleFactorTestValue = text;
       addTearDown(dispatcher.clearTextScaleFactorTestValue);
       await openAim(tester, theme: Platform.environment['THEME'] ?? 'dark');
+      await shoot('$name-row');
+      await tester.tap(find.byKey(const ValueKey('profile-aim-open')));
+      await settle(tester);
       await shoot(name);
     });
   }
