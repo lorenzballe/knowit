@@ -1780,7 +1780,10 @@ void main() {
     if (await _scrollBy(
       tester,
       _phone.height * 0.6,
-      list: _keyed('search-start'),
+      list: find.descendant(
+        of: _keyed('search-start'),
+        matching: find.byType(Scrollable),
+      ),
     )) {
       await roll.take(tester, 'cerca-giu', 'Cerca: aperta, più giù');
     }
