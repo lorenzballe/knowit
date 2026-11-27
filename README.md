@@ -208,9 +208,32 @@ genres under it, which is where the onboarding ends), Today with
 the card stack and, once the five are done, the shelf, Explore (shelves of
 cards nobody dealt you, with a search over the whole pool), Saved with its
 empty state, Profile (the Astute score with the way into the journey under
-it, the week that goes back to Today's five, appearance, topics, how well you
-know yourself, daily nudge), the come-back screen
-after a lapsed streak, and the disclosure page on how pills are written.
+it, the week that goes back to Today's five, appearance, topics, where you
+want to see more clearly, how well you know yourself, daily nudge), the
+come-back screen after a lapsed streak, and the disclosure page on how pills
+are written.
+
+**Where you want to see more clearly.** Under the subjects on the profile,
+for every reader, the question B first asked at the end of the first run
+(`lib/widgets/aim_picker.dart`): *Dove vuoi vederci più chiaro?* and the six
+areas a card can be useful for, each a row with its mark, its name and what
+it covers, one of them picked. Down the page rather than in a row that turns
+sideways: the lines are what a reader chooses by, a sideways row would show
+one and a half of them with the pick perhaps out of sight, and the tabs
+already slide under the finger. Each area has its subject's colour
+(`goalTone`): its glyph in a thin ring of it, and the row picked washed,
+edged and ticked in it; the rest is the page's ink. On paper the six hues
+are deepened to one lightness, so Economics' yellow and Life's peach still
+read on white. The pick is the reader's goal (`setGoals`), which everything
+that leans to a goal reads, so each follows at once: the cards dealt for
+the reader lean to its subjects and say so, Explore has its shelf every day
+after Today's five (`withAimShelf`), the coach writes towards it, and the
+paywall that ships opens on it. The profile is the one place it is picked:
+the skills on What to learn give their areas as the goal only until the
+reader picks one here, and B's question uses the same rows. The six names
+are set at one size and so are the six lines, the largest at which no word
+breaks; on the 320-wide phone at a large text size the words go under the
+mark rather than shrink. A pick is `goal set` (docs/TRACKING.md).
 
 **Astute+** — three things, all delivered, and everything else the same on
 both plans. **Five cards a day, all yours**: on the free plan two of the
@@ -1691,10 +1714,12 @@ it is finished; *Profile top*, Auto (A free · C Astute+), A, B or C; and
 *What to learn*, three answers to the skills beside the way they ship
 (`lib/widgets/learn_looks.dart`) — A the Astute score alone, no picker, no
 marks, no skill scores, Your journey opening on the score and its level; B
-one aim, asked at the end of the first run and from the profile: where the
-reader wants to be sharper, one of the six areas the cards name on their
-backs, said in words and counts, with a shelf of it on Explore every day
-and a line on the cards dealt for it; C nothing to pick, the skills ranked
+one aim, asked at the end of the first run too, in the profile's own rows:
+where the reader wants to be sharper, one of the six areas the cards name on
+their backs, said in words and counts, its week under the profile's question
+and in Your journey, and a line on the cards dealt for it (the question
+itself, and the aim's shelf on Explore, now ship to everybody, above); C
+nothing to pick, the skills ranked
 in Your journey from the reader's answers, right answers out of those
 given, the weakest to practise on five cards, and on the free plan the
 strong point alone on the profile. The camera is `tool/learn_shots.dart`;

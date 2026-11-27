@@ -321,6 +321,9 @@ class AppState extends ChangeNotifier {
 
   /// What the reader wants to get better at (lib/data/goals.dart), by key,
   /// in the order they picked: up to [kMostGoals], none until they say.
+  /// The profile asks for one, where they want to see more clearly
+  /// (lib/widgets/aim_picker.dart); until it is answered there, the areas
+  /// of the skills picked on What to learn stand for it ([setSkills]).
   List<String> goals = const [];
 
   /// The first of [goals], or null.
@@ -341,8 +344,13 @@ class AppState extends ChangeNotifier {
   }.take(kMostGoals).toList();
 
   /// Says what the reader wants to learn: the skills this build knows, each
-  /// once, in the order given; their areas become the reader's goals.
+  /// once, in the order given; their areas become the reader's goals, while
+  /// the goals are still the skills' own. Once the reader has said on the
+  /// profile where they want to see more clearly
+  /// (lib/widgets/aim_picker.dart), that stands: the profile is the one
+  /// place the goal is picked, and a skill picked after it does not move it.
   Future<void> setSkills(List<String> keys) async {
+    final bool theirs = listEquals(goals, areasOf(skills));
     skills = List.unmodifiable(<String>{
       for (final String k in keys)
         if (Skill.of(k) case final Skill s) s.name,
@@ -351,7 +359,11 @@ class AppState extends ChangeNotifier {
     Analytics.person(
       set: {'skills': skills.join(','), 'skills_count': skills.length},
     );
-    await setGoals(areasOf(skills));
+    if (theirs) {
+      await setGoals(areasOf(skills));
+    } else {
+      notifyListeners();
+    }
   }
 
   /// Whether the reader has been asked what they want to get better at: on

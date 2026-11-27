@@ -61,6 +61,10 @@ will find in six months.
   prova) e quando parte la prova (`first offer trial started`); gli acquisti
   partiti da lì hanno `source` `first week` o `first month`. Tre eventi per
   pagina al massimo, e ogni pagina si apre una volta sola.
+- **Dove vuoi vederci più chiaro.** Quando il lettore sceglie dal profilo
+  l'area in cui vuole vederci più chiaro, `goal set` dice quale (`goal`),
+  quale c'era prima (`before`) e da dove (`from`: `profile`). Un evento per
+  scelta; niente se tocca quella già scelta.
 - **Aggiungere un evento:** sezione [9](#9-adding-an-event-or-a-screen).
 
 ## 1. Rules
@@ -420,6 +424,7 @@ is in its card facts.
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
 | `theme set` | | `theme` | P |
+| `goal set` **new** | where the reader wants to see more clearly, picked on the profile (`lib/widgets/aim_picker.dart`); nothing for a tap on the one already picked | `goal` (`money`, `business`, `people`, `news`, `health`, `decide`), `before` (the goal it replaces, absent where there was none), `from` (`profile`) | P |
 | `music sound switched` | the music cards' sound, off until turned on: Profile's switch, or Turn on after a card's Listen | `on`, `from` (`profile`, `card`) | P |
 | `usage sharing switched` | the reader's switch | `on` | P |
 | `usage sharing answered` | the first event after a yes: the intro's question or the sheet's (a no sends nothing) | `on`, `from` (`intro`, `sheet`) | P |

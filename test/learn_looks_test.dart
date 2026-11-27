@@ -222,12 +222,15 @@ void main() {
       expect(find.byKey(const ValueKey('profile-aim-card')), findsOneWidget);
       expect(find.byKey(const ValueKey('profile-aim-plus')), findsNothing);
 
-      // With no aim, what one does, and the way to pick it.
+      // With no aim, nothing: the section over it, every reader's, asks
+      // (lib/widgets/aim_picker.dart), and the box has no picker of its own.
+      expect(find.byKey(const ValueKey('profile-aim-edit')), findsNothing);
       final AppState none = await tester.runAsync(
         () => readyApp({'knowit.debug.learn': 'aim'}),
       ) as AppState;
       await show(tester, LearnProfileBox(app: none));
-      expect(find.text(l.aimNone), findsOneWidget);
+      expect(find.byKey(const ValueKey('profile-aim')), findsNothing);
+      expect(find.text(l.aimNone), findsNothing);
       expect(tester.takeException(), isNull);
     });
   });
