@@ -6628,4 +6628,56 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get trialOfferFree => '無料で続ける';
+
+  @override
+  String get paywallStepFree => 'すべて無料';
+
+  @override
+  String get paywallStepRemind => 'お知らせします';
+
+  @override
+  String get paywallChargedToday => '本日請求 · いつでもキャンセル可能';
+
+  @override
+  String paywallGoalTitle(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'もっと良い決断をしたい人へ。',
+      'money': 'お金でだまされたくない人へ。',
+      'people': '人を理解したい人へ。',
+      'news': '見出しにだまされない人へ。',
+      'health': '健康について根拠を求める人へ。',
+      'business': '仕事で物事をはっきり見たい人へ。',
+      'other': '物事をはっきり見たい人へ。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallGoalMark(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': '良い決断',
+      'money': 'お金',
+      'people': '人を理解',
+      'news': '見出し',
+      'health': '根拠',
+      'business': 'はっきり',
+      'other': 'はっきり',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallMadeLine(String subjects) {
+    return '$subjectsから、あなたのレベルで毎日5枚。間違えたカードは、身につくまで戻ってきます。そして、週ごとに自分の変化が見えます。';
+  }
+
+  @override
+  String subjectsTwo(String a, String b) {
+    return '$aと$b';
+  }
+
+  @override
+  String subjectsThree(String a, String b, String c) {
+    return '$a、$b、$c';
+  }
 }

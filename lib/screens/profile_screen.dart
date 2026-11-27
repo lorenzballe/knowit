@@ -789,6 +789,17 @@ class ProfileScreen extends StatelessWidget {
             // section, where they are found: each shows at once and is kept
             // on the phone (DebugLooks).
             const _DebugLooksPanel(),
+            // The paywall the look picked above shows, on any plan: a phone
+            // already on Astute+ has no locked door left to open it by.
+            _LinkRow(
+              key: const ValueKey('debug-open-paywall'),
+              label: 'Open the paywall',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => PaywallScreen(app: app, source: 'debug'),
+                ),
+              ),
+            ),
             const SizedBox(height: 14),
             // What the app actually knows about itself. "Nothing happens"
             // is the least useful bug report there is, so it is replaced
@@ -1029,7 +1040,7 @@ class _LinkRow extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
 
-  const _LinkRow({required this.label, required this.onTap});
+  const _LinkRow({super.key, required this.label, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -1423,8 +1434,8 @@ class _PlusCard extends StatelessWidget {
 }
 
 /// The looks the developer tools try on this phone ([DebugLooks]): the
-/// finished day without the row over its card, and which top the profile
-/// opens on. English, as the rest of the section is.
+/// finished day without the row over its card, which top the profile
+/// opens on, and which paywall. English, as the rest of the section is.
 class _DebugLooksPanel extends StatelessWidget {
   const _DebugLooksPanel();
 
@@ -1484,6 +1495,131 @@ class _DebugLooksPanel extends StatelessWidget {
               ],
             ),
           ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(0, 14, 0, 16),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: p.line)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Paywall',
+                  style: AppText.body(
+                    size: 14,
+                    weight: FontWeight.w500,
+                    color: p.ink,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  'A is the paywall as it ships. B: real cards for the marks '
+                  'and the free days on a line. C: B opening on the reader\'s '
+                  'goal and subjects. D: B in two steps, the plans in a sheet.',
+                  style: AppText.body(
+                    size: 12,
+                    height: 1.35,
+                    color: p.inkFaint,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ValueListenableBuilder<PaywallLook>(
+                  valueListenable: DebugLooks.paywall,
+                  builder: (context, look, _) => _PaywallLookPicker(look: look),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A, B, C or D, as the paywall: a segmented control like the profile
+/// top's, each choice with what it is under its letter.
+class _PaywallLookPicker extends StatelessWidget {
+  const _PaywallLookPicker({required this.look});
+
+  final PaywallLook look;
+
+  static const _options = [
+    (look: PaywallLook.a, name: 'A', note: 'as it ships'),
+    (look: PaywallLook.b, name: 'B', note: 'cards, days'),
+    (look: PaywallLook.c, name: 'C', note: 'for you'),
+    (look: PaywallLook.d, name: 'D', note: 'two steps'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.p;
+    return PaperCard(
+      padding: const EdgeInsets.all(5),
+      radius: 16,
+      child: Row(
+        children: [
+          for (final option in _options)
+            Expanded(
+              child: Builder(
+                builder: (context) {
+                  final bool selected = option.look == look;
+                  return Semantics(
+                    button: true,
+                    selected: selected,
+                    label: 'Paywall ${option.name}, ${option.note}',
+                    excludeSemantics: true,
+                    child: GestureDetector(
+                      key: ValueKey('debug-paywall-${option.look.name}'),
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        if (selected) return;
+                        HapticFeedback.selectionClick();
+                        DebugLooks.setPaywall(option.look);
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        constraints: const BoxConstraints(minHeight: 48),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 7,
+                        ),
+                        decoration: BoxDecoration(
+                          color: selected ? p.inverse : Colors.transparent,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              option.name,
+                              maxLines: 1,
+                              style: AppText.body(
+                                size: 13.5,
+                                weight: FontWeight.w700,
+                                color: selected ? p.onInverse : p.ink,
+                              ),
+                            ),
+                            const SizedBox(height: 1),
+                            Text(
+                              option.note,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppText.body(
+                                size: 10.5,
+                                weight: FontWeight.w500,
+                                color: (selected ? p.onInverse : p.inkMuted)
+                                    .withValues(alpha: 0.75),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
         ],
       ),
     );

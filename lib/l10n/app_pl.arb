@@ -1584,5 +1584,13 @@
   "trialStepReminderLine": "{days, plural, =1{Wysyłamy ci powiadomienie: został 1 dzień.} few{Wysyłamy ci powiadomienie: zostały {days} dni.} many{Wysyłamy ci powiadomienie: zostało {days} dni.} other{Wysyłamy ci powiadomienie: zostało {days} dni.}}",
   "trialStepChargeLine": "Odnawia się co roku. Anuluj co najmniej 24 godziny wcześniej, a nic nie zapłacisz.",
   "trialOfferStart": "Zacznij okres próbny",
-  "trialOfferFree": "Kontynuuj za darmo"
+  "trialOfferFree": "Kontynuuj za darmo",
+  "paywallStepFree": "Wszystko za darmo",
+  "paywallStepRemind": "Przypominamy ci",
+  "paywallChargedToday": "Płatność dziś · Anuluj, kiedy chcesz",
+  "paywallGoalTitle": "{goal, select, decide{Dla tych, którzy chcą lepiej decydować.} money{Dla tych, których w sprawach pieniędzy nikt nie nabierze.} people{Dla tych, którzy chcą rozumieć ludzi.} news{Dla tych, którzy nie łapią się na nagłówki.} health{Dla tych, którzy w sprawach zdrowia chcą dowodów.} business{Dla tych, którzy w pracy chcą widzieć jasno.} other{Dla tych, którzy chcą widzieć jasno.}}",
+  "paywallGoalMark": "{goal, select, decide{decydować.} money{pieniędzy} people{ludzi.} news{nagłówki.} health{dowodów.} business{jasno.} other{jasno.}}",
+  "paywallMadeLine": "Pięć kart dziennie na twoim poziomie, z tematów: {subjects}. Te, w których się mylisz, wracają, aż zostaną w głowie. I widzisz, jak się zmieniasz, tydzień po tygodniu.",
+  "subjectsTwo": "{a} i {b}",
+  "subjectsThree": "{a}, {b} i {c}"
 }

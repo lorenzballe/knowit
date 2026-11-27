@@ -6551,4 +6551,41 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get trialOfferFree =>
       _words.text('trialOfferFree') ?? _base.trialOfferFree;
+
+  @override
+  String get paywallStepFree =>
+      _words.text('paywallStepFree') ?? _base.paywallStepFree;
+
+  @override
+  String get paywallStepRemind =>
+      _words.text('paywallStepRemind') ?? _base.paywallStepRemind;
+
+  @override
+  String get paywallChargedToday =>
+      _words.text('paywallChargedToday') ?? _base.paywallChargedToday;
+
+  @override
+  String paywallGoalTitle(String goal) =>
+      _words.format('paywallGoalTitle', localeName, {'goal': goal}) ??
+      _base.paywallGoalTitle(goal);
+
+  @override
+  String paywallGoalMark(String goal) =>
+      _words.format('paywallGoalMark', localeName, {'goal': goal}) ??
+      _base.paywallGoalMark(goal);
+
+  @override
+  String paywallMadeLine(String subjects) =>
+      _words.format('paywallMadeLine', localeName, {'subjects': subjects}) ??
+      _base.paywallMadeLine(subjects);
+
+  @override
+  String subjectsTwo(String a, String b) =>
+      _words.format('subjectsTwo', localeName, {'a': a, 'b': b}) ??
+      _base.subjectsTwo(a, b);
+
+  @override
+  String subjectsThree(String a, String b, String c) =>
+      _words.format('subjectsThree', localeName, {'a': a, 'b': b, 'c': c}) ??
+      _base.subjectsThree(a, b, c);
 }

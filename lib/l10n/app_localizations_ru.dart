@@ -7200,4 +7200,56 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get trialOfferFree => 'Продолжить бесплатно';
+
+  @override
+  String get paywallStepFree => 'Всё бесплатно';
+
+  @override
+  String get paywallStepRemind => 'Мы напомним';
+
+  @override
+  String get paywallChargedToday => 'Списание сегодня · Отмена в любой момент';
+
+  @override
+  String paywallGoalTitle(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'Для тех, кто хочет решать лучше.',
+      'money': 'Для тех, кого не провести с деньгами.',
+      'people': 'Для тех, кто хочет понимать людей.',
+      'news': 'Для тех, кто не верит заголовкам.',
+      'health': 'Для тех, кому о здоровье нужны доказательства.',
+      'business': 'Для тех, кто хочет ясности в работе.',
+      'other': 'Для тех, кто хочет ясности.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallGoalMark(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'лучше.',
+      'money': 'деньгами.',
+      'people': 'людей.',
+      'news': 'заголовкам.',
+      'health': 'доказательства.',
+      'business': 'ясности',
+      'other': 'ясности.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallMadeLine(String subjects) {
+    return 'Пять карточек в день на твоём уровне, темы: $subjects. Те, где ты ошибаешься, возвращаются, пока не запомнятся. И ты видишь, как меняешься, неделя за неделей.';
+  }
+
+  @override
+  String subjectsTwo(String a, String b) {
+    return '$a и $b';
+  }
+
+  @override
+  String subjectsThree(String a, String b, String c) {
+    return '$a, $b и $c';
+  }
 }

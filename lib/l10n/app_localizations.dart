@@ -9629,6 +9629,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue for free'**
   String get trialOfferFree;
+
+  /// A prototype of the paywall (developer tools only, for now): the free trial as a short timeline over the button, three stops on one line. Under the first stop, 'Today': everything Astute+ adds opens, and nothing is paid. Two or three words: it sits in a third of the screen's width.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything, free'**
+  String get paywallStepFree;
+
+  /// On that timeline, under the date of the second stop: the app sends the reader a notification before the trial ends. Two or three words: it sits in a third of the screen's width.
+  ///
+  /// In en, this message translates to:
+  /// **'We remind you'**
+  String get paywallStepRemind;
+
+  /// In that prototype, in the timeline's place when the plan picked starts with no free days (the month, or a reader the store gives no trial to): the plan is charged today, and it can be cancelled at any time. One short line; the price is on the button beside it.
+  ///
+  /// In en, this message translates to:
+  /// **'Charged today · Cancel any time'**
+  String get paywallChargedToday;
+
+  /// A prototype of the paywall's headline that opens on what the reader said they want to get better at (their area of life, lib/data/goals.dart): 'for people who want to …'. Calm, plain, no price and no number. paywallGoalMark must appear in it word for word: that part is painted in the paywall's three colours.
+  ///
+  /// In en, this message translates to:
+  /// **'{goal, select, decide{For people who want to decide better.} money{For people who see through a deal.} people{For people who want to read people.} news{For people who don’t fall for headlines.} health{For people who check the evidence on health.} business{For people who want to see clearly at work.} other{For people who want to see clearly.}}'**
+  String paywallGoalTitle(String goal);
+
+  /// The part of paywallGoalTitle painted in the three colours, for the same goal: the words it leans on, with the full stop when the title ends on them. It must be copied from paywallGoalTitle exactly.
+  ///
+  /// In en, this message translates to:
+  /// **'{goal, select, decide{better.} money{deal.} people{people.} news{headlines.} health{health.} business{work.} other{clearly.}}'**
+  String paywallGoalMark(String goal);
+
+  /// Under that headline: the paywall's usual line, naming the subjects the reader leaned towards when they set their mix ({subjects} is two or three subject names already joined by subjectsTwo or subjectsThree). Five cards a day at their level, the ones they miss come back, and they see themselves change.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards a day from {subjects}, at your level. The ones you miss come back until they stick. And you see yourself change, week by week.'**
+  String paywallMadeLine(String subjects);
+
+  /// Two subject names joined, as they are read inside a sentence: 'Psychology and Economics'.
+  ///
+  /// In en, this message translates to:
+  /// **'{a} and {b}'**
+  String subjectsTwo(String a, String b);
+
+  /// Three subject names joined, as they are read inside a sentence: 'Psychology, Economics and Science'.
+  ///
+  /// In en, this message translates to:
+  /// **'{a}, {b} and {c}'**
+  String subjectsThree(String a, String b, String c);
 }
 
 class _AppLocalizationsDelegate
