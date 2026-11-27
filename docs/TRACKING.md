@@ -18,6 +18,10 @@ will find in six months.
 - **Dove va.** Tutto a PostHog (server UE). Una parte, in forma corta,
   anche nella *traccia* del lettore su Firestore, che il server usa per
   scegliere le carte del giorno e gli scaffali.
+- **Invita un amico** (spento finché il server non lo accende): l'invito
+  mandato (`invite sent`), il codice di un amico usato e com'è andata
+  (`invite code redeemed`), la settimana data, all'amico o a chi invita
+  (`invite reward granted`). Mai il codice. §6.14.
 - **Cosa non va mai da nessuna parte:** quello che il lettore scrive o
   cerca, il nome, l'email, i codici amico. Nelle registrazioni di PostHog
   tutto il testo è nascosto. L'interruttore *Profilo → Dati di utilizzo*
@@ -294,7 +298,9 @@ behind `offer.firstWeek` and `offer.firstMonth`; §6.8); `deck viewer`, `pill
 detail`, `archive`, `saved`, `liked`,
 `journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`,
 `story` (a true story played from Explore); `update gate`, `pause` (the
-update gate's full screens, over everything, §6.13).
+update gate's full screens, over everything, §6.13); `invite week` **new**
+(the purchase's own screen, for a week of Astute+ a friend's invitation
+gave, §6.14).
 
 ### 6.3 The day on Today
 
@@ -486,6 +492,24 @@ up, the update gate it closed, the experiments it put the reader in.
 | `experiment exposed` | an experiment gives the reader a variant, at the moment its variants part ways; once a sitting for each experiment and variant | `experiment` (its name, `push.firstAsk`), `variant`, `remote_hash` | the denominator of every experiment; the variant is also stamped on every later event and on the profile as `experiment_<name>` (§3, §4) | P |
 
 Nothing here reaches the trace: the dealer has no use for it.
+
+### 6.14 Invita un amico **new**
+
+Behind the server's switch `invite` (docs/REMOTE.md), off as built. The code
+is never sent, in any event or property: what happened, never with which
+code (§1, no friend code). The weeks themselves are the server's
+(functions/src/invite.ts) and RevenueCat's; these say what the phone saw.
+
+| Event | When | Properties | Why | Where |
+| --- | --- | --- | --- | --- |
+| `invite sent` | the invitation's sheet sent its message: through the share sheet (`as`: `link`), or copied where there was none (`copied`) | `as`, `weeks` (the weeks friends earned the reader in the last 365 days), `friends` (who finished a first day with the code, ever), `capped` (the year's eight are given: the message promised the friend's week alone) | how many invitations leave, and from whom | P |
+| `invite code redeemed` | a friend's code used, typed (`from`: `typed`) or brought by its link (`link`) | `from`, `outcome` (`waiting`: taken, the week waits on the first day; `granted`: the first day was already read, both weeks given; `granting`; `refused`; `unavailable`: no answer, or invitations not set up), `reason` (refused only: `unknown`, `own`, `used`, `late`, `plus`) | the funnel from a link to a new reader | P |
+| `invite reward granted` | a week given: the friend's (`side`: `friend`), heard from the server when it is given or at the next ask; or the inviter's (`inviter`), when the app sees weeks it had not seen before | `side`; for the inviter `weeks`, `new_weeks`, `capped` | how many weeks invitations give, each side | P |
+| `app opened from link` **extended** | an invitation's link opened the app | `invite` (true) — never the code | | P |
+
+The site counts its page as it counts every page (`$pageview` on
+`/invito`, `store clicked` with the page `invito`); the page takes the code
+out of the address before anything is counted.
 
 ## 7. The trace: codes and fields
 

@@ -2,7 +2,8 @@
 
 `firestore.rules` run against the Firestore emulator: what a reader may do
 to their own record, a friend's board and the day's counts, and — the part
-worth a test — everything they may not. Needs Node and Java.
+worth a test — everything they may not, the invitations among it: no phone
+reads or writes a code or a week, its own included. Needs Node and Java.
 
     cd tool/rules && npm install && npm test
 

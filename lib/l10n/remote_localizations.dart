@@ -6786,4 +6786,130 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get listenNextCard =>
       _words.text('listenNextCard') ?? _base.listenNextCard;
+
+  @override
+  String get inviteSection =>
+      _words.text('inviteSection') ?? _base.inviteSection;
+
+  @override
+  String get inviteRow => _words.text('inviteRow') ?? _base.inviteRow;
+
+  @override
+  String get inviteRowLine =>
+      _words.text('inviteRowLine') ?? _base.inviteRowLine;
+
+  @override
+  String get inviteCodeRow =>
+      _words.text('inviteCodeRow') ?? _base.inviteCodeRow;
+
+  @override
+  String get inviteCodeAccepted =>
+      _words.text('inviteCodeAccepted') ?? _base.inviteCodeAccepted;
+
+  @override
+  String get inviteCodeAcceptedLine =>
+      _words.text('inviteCodeAcceptedLine') ?? _base.inviteCodeAcceptedLine;
+
+  @override
+  String get inviteSheetLine =>
+      _words.text('inviteSheetLine') ?? _base.inviteSheetLine;
+
+  @override
+  String get inviteYourCode =>
+      _words.text('inviteYourCode') ?? _base.inviteYourCode;
+
+  @override
+  String get inviteCopy => _words.text('inviteCopy') ?? _base.inviteCopy;
+
+  @override
+  String get inviteSend => _words.text('inviteSend') ?? _base.inviteSend;
+
+  @override
+  String inviteRules(int cap) =>
+      _words.format('inviteRules', localeName, {'cap': cap}) ??
+      _base.inviteRules(cap);
+
+  @override
+  String inviteWeeksSoFar(int n, int cap) =>
+      _words.format('inviteWeeksSoFar', localeName, {'n': n, 'cap': cap}) ??
+      _base.inviteWeeksSoFar(n, cap);
+
+  @override
+  String inviteCapped(int cap) =>
+      _words.format('inviteCapped', localeName, {'cap': cap}) ??
+      _base.inviteCapped(cap);
+
+  @override
+  String inviteMessage(String code, String link) =>
+      _words.format('inviteMessage', localeName, {
+        'code': code,
+        'link': link,
+      }) ??
+      _base.inviteMessage(code, link);
+
+  @override
+  String inviteMessageCapped(String code, String link) =>
+      _words.format('inviteMessageCapped', localeName, {
+        'code': code,
+        'link': link,
+      }) ??
+      _base.inviteMessageCapped(code, link);
+
+  @override
+  String get inviteCodeTitle =>
+      _words.text('inviteCodeTitle') ?? _base.inviteCodeTitle;
+
+  @override
+  String get inviteCodeLine =>
+      _words.text('inviteCodeLine') ?? _base.inviteCodeLine;
+
+  @override
+  String get inviteCodeUse =>
+      _words.text('inviteCodeUse') ?? _base.inviteCodeUse;
+
+  @override
+  String get inviteCodeWaitingLine =>
+      _words.text('inviteCodeWaitingLine') ?? _base.inviteCodeWaitingLine;
+
+  @override
+  String get inviteRefusedUnknown =>
+      _words.text('inviteRefusedUnknown') ?? _base.inviteRefusedUnknown;
+
+  @override
+  String get inviteRefusedOwn =>
+      _words.text('inviteRefusedOwn') ?? _base.inviteRefusedOwn;
+
+  @override
+  String get inviteRefusedUsed =>
+      _words.text('inviteRefusedUsed') ?? _base.inviteRefusedUsed;
+
+  @override
+  String get inviteRefusedLate =>
+      _words.text('inviteRefusedLate') ?? _base.inviteRefusedLate;
+
+  @override
+  String get inviteRefusedPlus =>
+      _words.text('inviteRefusedPlus') ?? _base.inviteRefusedPlus;
+
+  @override
+  String get inviteSuccessTitle =>
+      _words.text('inviteSuccessTitle') ?? _base.inviteSuccessTitle;
+
+  @override
+  String get inviteSuccessPlan =>
+      _words.text('inviteSuccessPlan') ?? _base.inviteSuccessPlan;
+
+  @override
+  String inviteSuccessUntil(String date) =>
+      _words.format('inviteSuccessUntil', localeName, {'date': date}) ??
+      _base.inviteSuccessUntil(date);
+
+  @override
+  String get inviteSuccessFoot =>
+      _words.text('inviteSuccessFoot') ?? _base.inviteSuccessFoot;
+
+  @override
+  String inviteEarned(int n) =>
+      _words.format('inviteEarned', localeName, {'n': n}) ??
+      _base.inviteEarned(n);
 }

@@ -5,11 +5,16 @@
       {
         "appID": "7XXWUW8T7U.com.astuto.app",
         "appIDs": ["7XXWUW8T7U.com.astuto.app"],
-        "paths": ["/c/*"],
+        "paths": ["/c/*", "/invito"],
         "components": [
           {
             "/": "/c/*",
             "comment": "A card's own page: on a phone with the app, the card in the app."
+          },
+          {
+            "/": "/invito",
+            "?": { "c": "?*" },
+            "comment": "An invitation with its code: on a phone with the app, the code in the app."
           }
         ]
       }

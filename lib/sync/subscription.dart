@@ -622,6 +622,19 @@ class Subscription extends ChangeNotifier {
     }
   }
 
+  /// Reads the customer again from RevenueCat, past the SDK's cache: Astute+
+  /// given on the server — a week a friend's invitation earned
+  /// (lib/sync/invite.dart) — shows at once, not at the next launch.
+  Future<void> refreshCustomerInfo() async {
+    if (_key.isEmpty || !_configured) return;
+    try {
+      await Purchases.invalidateCustomerInfoCache();
+      _apply(await Purchases.getCustomerInfo());
+    } catch (error) {
+      debugPrint('Could not read the customer again: $error');
+    }
+  }
+
   /// Apple requires a way to get back what you already paid for, and a reader
   /// on a new phone needs it before they will believe the first one. It
   /// needs no offering, so it is there whether or not the plans have come.

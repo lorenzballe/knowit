@@ -192,6 +192,7 @@ The knobs this build reads:
 | `cardAi` | switch | off | — | the answers by Claude, Astute+'s: the assistant in Go deeper and the weekly coach in Your journey (a free reader sees them locked); the developer tools have them on regardless | `cardAiOn` (lib/widgets/deeper_sheet.dart) |
 | `share.challenge` | switch | off | — | "Challenge a friend" on today's five: at the end of the five on Explore, in place of the score as squares, and under the finished day's share, a line and a link to `astutetheapp.com/sfida`, where a friend plays the same five in a browser and sees both scores (on in `remote/app.json`) | `AppState.shareChallengeOn` (lib/explore/blocks/bets/three.dart, lib/widgets/share_day.dart) |
 | `listen` | switch | off | — | Listen: the day's five read aloud by ElevenLabs (question, a pause to think, answer and why), from a quiet entry at the end of Today's header while the five are read; the first card of a day for everybody, the rest Astute+'s (`requirePlus`, source `listen`). Off in `remote/app.json` until the ElevenLabs key and a plan are in; a server without a key answers "not configured" and the app hides it then too (functions/src/listen.ts) | `AppState.listenOn` (lib/listen/listen_sheet.dart) |
+| `invite` | switch | off | — | Invita un amico: in the profile, "Invite a friend" (a link with the reader's code, through the share sheet, to `astutetheapp.com/invito`) and "Have a code?" for a new reader; a week of Astute+ for each of the two once the friend has finished a first day (functions/src/invite.ts). Off in `remote/app.json` until RevenueCat's key is in place; even on, nothing shows while the server answers "not configured" | `AppState.inviteOn` (lib/screens/profile_screen.dart, lib/widgets/invite_sheet.dart) |
 | `push.askGapDays` | number | 3 | 1 to 30 | the days a "Not now" holds the reminder sheet back | `AppState.shouldAskForPush` |
 | `push.deferralsAllowed` | number | 3 | 1 to 10 | how many "Not now"s the sheet takes before it stops coming | `AppState.shouldAskForPush` |
 | `push.times` | three times | 08:30, 12:30, 19:00 | 05:00–11:00, 11:00–15:00, 17:00–23:00 (the last minute out) | the times the reminder sheet offers, each where its word ("Morning", "Lunchtime", "Evening") stays true | `lib/widgets/reminder_ask.dart` |
@@ -209,6 +210,8 @@ Changing them from the server:
   `"flags": {"trial.firstRun": {"on": true, "audience": {"platforms": ["ios"], "rollout": 50}}}`;
 - the first week's page for everybody, the first month's held back:
   `"flags": {"offer.firstWeek": true, "offer.firstMonth": false}`;
+- Invita un amico on Android first, once RevenueCat's key is deployed:
+  `"flags": {"invite": {"on": true, "audience": {"platforms": ["android"]}}}`;
 - the first-evening reminder for a fifth of readers, half and half:
   `"experiments": {"push.firstAsk": {"variants": ["cameBack", "firstDay"], "audience": {"rollout": 20}}}`.
 

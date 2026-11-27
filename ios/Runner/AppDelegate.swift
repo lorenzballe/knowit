@@ -147,13 +147,23 @@ final class WidgetOpens: NSObject, FlutterSceneLifeCycleDelegate {
 
   /// Keeps a card's link on the site, astutetheapp.com/c/<id>, tapped in a
   /// chat or a browser: the card the app is to open on its own, said the way
-  /// a widget's tap says one ("from" link, "in" link).
+  /// a widget's tap says one ("from" link, "in" link). And an invitation's,
+  /// astutetheapp.com/invito?c=<code> (Invita un amico): the code the app is
+  /// to take ("from" link, "in" invite, "code"), read as Dart reads it
+  /// (WidgetOpen.inviteCodeOfLink).
   @discardableResult
   static func noteLink(_ url: URL) -> Bool {
     guard let host = url.host?.lowercased(),
       host == "astutetheapp.com" || host == "www.astutetheapp.com"
     else { return false }
     let parts = url.pathComponents.filter { $0 != "/" && !$0.isEmpty }
+    if parts.count == 1, parts[0] == "invito" || parts[0] == "invito.html" {
+      let items = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems ?? []
+      guard let code = items.first(where: { $0.name == "c" })?.value, !code.isEmpty
+      else { return false }
+      pending = ["from": "link", "in": "invite", "code": code]
+      return true
+    }
     guard parts.count == 2, parts[0] == "c" else { return false }
     var id = parts[1]
     if id.hasSuffix(".html") { id = String(id.dropLast(5)) }

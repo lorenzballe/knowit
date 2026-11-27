@@ -73,6 +73,17 @@ abstract final class ProfileMarks {
       'M7 3h7l4.5 4.5V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z '
       'M14 3v4.5h4.5 M8.5 12.5h7 M8.5 16h5';
 
+  /// Inviting a friend: a letter, its flap folded down.
+  static const String letter =
+      'M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v10a1.5 1.5 0 0 1-1.5 1.5H5'
+      'A1.5 1.5 0 0 1 3.5 17V7A1.5 1.5 0 0 1 5 5.5z M4 7l8 6 8-6';
+
+  /// A friend's code: a ticket, notched on either side, with its stub.
+  static const String ticket =
+      'M5 6h14a1.5 1.5 0 0 1 1.5 1.5v2.75a1.75 1.75 0 0 0 0 3.5V16.5'
+      'a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-2.75a1.75 1.75 0 0 0 0-3.5'
+      'V7.5A1.5 1.5 0 0 1 5 6z M14.5 6v2 M14.5 11v2 M14.5 16v2';
+
   /// Where a row goes.
   static const String chevron = 'M9 6l6 6-6 6';
 }

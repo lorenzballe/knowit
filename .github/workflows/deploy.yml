@@ -42,6 +42,7 @@ jobs:
           python3 -m unittest discover -s tool/quality -p "test_*.py"
           python3 tool/site/chrome.py --check
           python3 tool/site/subjects_rows.py --check
+          python3 -m unittest discover -s tool/site -p "test_*.py"
           python3 tool/remote/check.py
           python3 tool/remote/bundle.py --check
           python3 tool/remote/gen_strings.py --check
@@ -111,6 +112,9 @@ jobs:
           # The challenge on today's five (/sfida): a friend plays the five
           # a reader sent, from five/ below, and sees both scores.
           python3 tool/cards/sfida_page.py _site
+          # Invita un amico (/invito): what a friend invited gets, the code
+          # from the link, and how to use it.
+          python3 tool/site/invito_page.py _site
           ls -la _site
 
       # The site's own stylesheets and script are asked for at the same URL

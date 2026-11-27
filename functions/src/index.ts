@@ -18,7 +18,8 @@
 //   not hold it; a card about a place answers only a reader who lives there.
 // - `onReaderDeleted`: when a reader deletes their account and the phone
 //   removes readers/{uid}, everything under it — the trace, the days, the
-//   profile, the shelf, the reports — and their presence go with it.
+//   profile, the shelf, the reports — their presence and their
+//   invitations go with it.
 // - `scorecard` (every day, 04:20 UTC): how every card does with the
 //   readers, added up from the trace and the reports (scorecard.ts). Cards
 //   enough readers say are untrue go into quarantine, and everything above
@@ -37,6 +38,12 @@
 //   words. The first card of a day for everyone, the rest for Astute+.
 // - `listenAhead` (twice a day, 03:35 and 18:35 UTC): the next days' cards
 //   of the readers who listen, made before they ask, so playing is instant.
+// - `inviteState` and `redeemInvite` (callable): Invita un amico
+//   (invite.ts). A reader's code, made when they first send it; a friend's
+//   code used, on an account that is new and never held Astute+; and, once
+//   that friend has finished a first day, a week of Astute+ each, given
+//   through RevenueCat with REVENUECAT_SECRET_KEY. Without the key both
+//   answer `{ none: 'unconfigured' }` and the phones hide the invitation.
 //
 // Every call to the model (the news, the questions, the coach's notes) is
 // held to one budget, so much a month and so much a day (limits.ts), counted
@@ -50,6 +57,7 @@
 
 import Anthropic from '@anthropic-ai/sdk';
 import { initializeApp } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 import { FieldValue, getFirestore } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
 import { defineSecret } from 'firebase-functions/params';
@@ -64,6 +72,7 @@ import { Bank, currentBank, dateKey, localDate, parseDate, shiftDate } from './b
 import { BudgetSpent, firestoreLedger, spendDay, withinBudget, type Usage } from './budget.js';
 import { coachNote, coachWorst, readCoach } from './coach.js';
 import { countPlay, readPlay } from './daily.js';
+import { backupHasADay, inviteState as invitesOf, redeem as redeemCode, storeFor, type Reader } from './invite.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
 import {
   AHEAD_DAYS,
@@ -461,6 +470,67 @@ export const listenAhead = onSchedule(
     const cards = aheadCards(readers, bank);
     const run = await makeAhead(cards, { shelf: listenShelf(), ledger: listenLedger, voice: elevenLabs(key), day: spendDay(nowMs) });
     logger.info('listen ahead', { listeners: uids.length, cards: cards.length, ...run });
+  },
+);
+
+// ── Invita un amico ──────────────────────────────────────────────────────
+
+/** RevenueCat's secret key, kept in Secret Manager: what gives a friend's
+ * week. The deploy keeps a stand-in there until the owner adds the key
+ * (.github/workflows/cloud-deploy.yml); with it, invitations are not set up. */
+const revenuecatKey = defineSecret('REVENUECAT_SECRET_KEY');
+
+/** What an invitation needs to know of a reader beyond Firestore: when the
+ * account was made, as Firebase Auth has it, and whether their backup has a
+ * finished day. */
+const invitations: Reader = {
+  async madeAt(uid) {
+    try {
+      const made = Date.parse((await getAuth().getUser(uid)).metadata.creationTime);
+      return Number.isFinite(made) ? made : null;
+    } catch (e) {
+      if ((e as { code?: unknown }).code === 'auth/user-not-found') return null;
+      throw e;
+    }
+  },
+  readADay: (uid) => backupHasADay(db, uid),
+};
+
+export const inviteState = onCall(
+  { enforceAppCheck: false, secrets: [revenuecatKey], maxInstances: 10, memory: '256MiB' },
+  async (request) => {
+    const uid = request.auth?.uid;
+    if (!uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
+    const store = storeFor(revenuecatKey.value());
+    if (!store) return { none: 'unconfigured' };
+    const make = (request.data as { make?: unknown } | null)?.make === true;
+    try {
+      const state = await invitesOf(db, store, uid, Date.now(), invitations, make);
+      if (state.granted) logger.info('invite weeks given', { uid, until: state.until });
+      return state;
+    } catch (e) {
+      logger.error('invite state failed', { uid, error: String(e) });
+      throw new HttpsError('unavailable', 'Try again in a moment.');
+    }
+  },
+);
+
+export const redeemInvite = onCall(
+  { enforceAppCheck: false, secrets: [revenuecatKey], maxInstances: 10, memory: '256MiB' },
+  async (request) => {
+    const uid = request.auth?.uid;
+    if (!uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
+    const store = storeFor(revenuecatKey.value());
+    if (!store) return { none: 'unconfigured' };
+    const code = (request.data as { code?: unknown } | null)?.code;
+    try {
+      const out = await redeemCode(db, store, uid, code, Date.now(), invitations);
+      logger.info('invite code used', { uid, ...('refused' in out ? { refused: out.refused } : { state: out.state, granted: out.granted === true }) });
+      return out;
+    } catch (e) {
+      logger.error('invite code failed', { uid, error: String(e) });
+      throw new HttpsError('unavailable', 'Try again in a moment.');
+    }
   },
 );
 

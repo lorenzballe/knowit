@@ -9977,6 +9977,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next card'**
   String get listenNextCard;
+
+  /// Profile: the name over the box with the invitation's two rows (Invita un amico).
+  ///
+  /// In en, this message translates to:
+  /// **'Friends'**
+  String get inviteSection;
+
+  /// Profile: the row that sends a friend a link with the reader's code.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a friend'**
+  String get inviteRow;
+
+  /// Profile: under 'Invite a friend', what it gives; also the title of the invitation's sheet. Keep 'Astute+' exactly.
+  ///
+  /// In en, this message translates to:
+  /// **'A week of Astute+ for you both'**
+  String get inviteRowLine;
+
+  /// Profile: the row where a new reader types a friend's code. The site's invitation page names it (tool/site/invito_page.py).
+  ///
+  /// In en, this message translates to:
+  /// **'Have a code?'**
+  String get inviteCodeRow;
+
+  /// Profile and the code's sheet: a friend's code taken, its week waiting on the reader's first day.
+  ///
+  /// In en, this message translates to:
+  /// **'Code accepted'**
+  String get inviteCodeAccepted;
+
+  /// Profile: under 'Code accepted', when the week starts.
+  ///
+  /// In en, this message translates to:
+  /// **'Your week starts when you finish your first day'**
+  String get inviteCodeAcceptedLine;
+
+  /// The invitation's sheet: how it works, under its title.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a friend your code. When they finish their first day, the five cards, you each get a week of Astute+.'**
+  String get inviteSheetLine;
+
+  /// The invitation's sheet: the small label over the reader's code.
+  ///
+  /// In en, this message translates to:
+  /// **'Your code'**
+  String get inviteYourCode;
+
+  /// The invitation's sheet: the button beside the code that copies it.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get inviteCopy;
+
+  /// The invitation's sheet: the button that opens the system's share sheet with the message.
+  ///
+  /// In en, this message translates to:
+  /// **'Send the invitation'**
+  String get inviteSend;
+
+  /// The invitation's sheet: the rules in small print. cap is the most weeks an inviter gets in a year, 8.
+  ///
+  /// In en, this message translates to:
+  /// **'For a new account that has never had Astute+. You get up to {cap} weeks a year.'**
+  String inviteRules(int cap);
+
+  /// The invitation's sheet and the profile's row: the weeks friends earned the reader in the last year, of the most there may be (cap, 8).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 week of {cap} this year} other{{n} weeks of {cap} this year}}'**
+  String inviteWeeksSoFar(int n, int cap);
+
+  /// The invitation's sheet: the reader has had the year's weeks (cap, 8); a friend still gets theirs.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ve had this year’s {cap} weeks. Your friends still get theirs.'**
+  String inviteCapped(int cap);
+
+  /// The message the invitation sends through the share sheet: the line, then the link on a line of its own. code is the reader's code (six characters), link the site's page with it.
+  ///
+  /// In en, this message translates to:
+  /// **'Join me on Astute: five cards a day to keep your mind sharp. With my code {code}, once you finish your first day we each get a week of Astute+.\n{link}'**
+  String inviteMessage(String code, String link);
+
+  /// The same message once the reader has had the year's weeks: it promises the friend's week alone.
+  ///
+  /// In en, this message translates to:
+  /// **'Join me on Astute: five cards a day to keep your mind sharp. With my code {code}, once you finish your first day you get a week of Astute+.\n{link}'**
+  String inviteMessageCapped(String code, String link);
+
+  /// The code's sheet: its title, over the field where a friend's code is typed.
+  ///
+  /// In en, this message translates to:
+  /// **'A friend’s code'**
+  String get inviteCodeTitle;
+
+  /// The code's sheet: what the code does, under its title.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the code a friend sent you. When you finish your first day, you each get a week of Astute+.'**
+  String get inviteCodeLine;
+
+  /// The code's sheet: the button that uses the code.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the code'**
+  String get inviteCodeUse;
+
+  /// The code's sheet, once the code is taken: what happens next.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish your first day, the five cards: then the week of Astute+ starts, for you and for the friend who invited you.'**
+  String get inviteCodeWaitingLine;
+
+  /// The code's sheet: no such code.
+  ///
+  /// In en, this message translates to:
+  /// **'That code doesn’t exist. Check the letters and try again.'**
+  String get inviteRefusedUnknown;
+
+  /// The code's sheet: the reader typed their own code.
+  ///
+  /// In en, this message translates to:
+  /// **'That’s your own code: send it to a friend.'**
+  String get inviteRefusedOwn;
+
+  /// The code's sheet: the reader has used a friend's code already; one per account.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ve already used a friend’s code.'**
+  String get inviteRefusedUsed;
+
+  /// The code's sheet: the account is more than a week old.
+  ///
+  /// In en, this message translates to:
+  /// **'Codes are for new accounts, in their first week.'**
+  String get inviteRefusedLate;
+
+  /// The code's sheet: the account has held Astute+, a trial, a plan or a week.
+  ///
+  /// In en, this message translates to:
+  /// **'Codes are for accounts that have never had Astute+.'**
+  String get inviteRefusedPlus;
+
+  /// The screen a friend's week opens on (the purchase's own screen): its title. Free time, never a purchase.
+  ///
+  /// In en, this message translates to:
+  /// **'A week of Astute+, on a friend.'**
+  String get inviteSuccessTitle;
+
+  /// That screen: the plan's name on its card.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute+ · one week'**
+  String get inviteSuccessPlan;
+
+  /// That screen: under the plan's name, when the week ends. date is a day and a month, as the phone writes them.
+  ///
+  /// In en, this message translates to:
+  /// **'Until {date}'**
+  String inviteSuccessUntil(String date);
+
+  /// That screen: the small line under its button.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to pay and nothing to cancel: then you’re back on the free plan.'**
+  String get inviteSuccessFoot;
+
+  /// Profile, once: friends finished their first day with the reader's code, and n weeks of Astute+ were given the reader.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{A friend finished their first day: a week of Astute+ for you.} other{{n} friends finished their first day: {n} weeks of Astute+ for you.}}'**
+  String inviteEarned(int n);
 }
 
 class _AppLocalizationsDelegate

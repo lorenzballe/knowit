@@ -6888,4 +6888,115 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get listenNextCard => '下一张卡片';
+
+  @override
+  String get inviteSection => '朋友';
+
+  @override
+  String get inviteRow => '邀请朋友';
+
+  @override
+  String get inviteRowLine => '你们俩各得一周 Astute+';
+
+  @override
+  String get inviteCodeRow => '有邀请码？';
+
+  @override
+  String get inviteCodeAccepted => '邀请码已接受';
+
+  @override
+  String get inviteCodeAcceptedLine => '读完第一天，这一周就开始';
+
+  @override
+  String get inviteSheetLine => '把你的邀请码发给朋友。朋友读完第一天的五张卡片后，你们俩各得一周 Astute+。';
+
+  @override
+  String get inviteYourCode => '你的邀请码';
+
+  @override
+  String get inviteCopy => '复制';
+
+  @override
+  String get inviteSend => '发送邀请';
+
+  @override
+  String inviteRules(int cap) {
+    return '适用于从未开通过 Astute+ 的新账户。你每年最多可得 $cap 周。';
+  }
+
+  @override
+  String inviteWeeksSoFar(int n, int cap) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今年 $n/$cap 周',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inviteCapped(int cap) {
+    return '今年的 $cap 周你已全部获得。朋友仍会得到他们的一周。';
+  }
+
+  @override
+  String inviteMessage(String code, String link) {
+    return '邀请你来 Astute：每天五张卡片，让头脑保持敏锐。用我的邀请码 $code，你读完第一天后，我们各得一周 Astute+。\n$link';
+  }
+
+  @override
+  String inviteMessageCapped(String code, String link) {
+    return '邀请你来 Astute：每天五张卡片，让头脑保持敏锐。用我的邀请码 $code，你读完第一天后，可免费获得一周 Astute+。\n$link';
+  }
+
+  @override
+  String get inviteCodeTitle => '朋友的邀请码';
+
+  @override
+  String get inviteCodeLine => '输入朋友发给你的邀请码。读完第一天后，你们俩各得一周 Astute+。';
+
+  @override
+  String get inviteCodeUse => '使用邀请码';
+
+  @override
+  String get inviteCodeWaitingLine => '读完第一天的五张卡片，Astute+ 的一周就开始了，你和邀请你的朋友都有。';
+
+  @override
+  String get inviteRefusedUnknown => '这个邀请码不存在。请检查字符后再试一次。';
+
+  @override
+  String get inviteRefusedOwn => '这是你自己的邀请码：发给朋友吧。';
+
+  @override
+  String get inviteRefusedUsed => '你已经用过朋友的邀请码了。';
+
+  @override
+  String get inviteRefusedLate => '邀请码仅适用于注册第一周内的新账户。';
+
+  @override
+  String get inviteRefusedPlus => '邀请码仅适用于从未开通过 Astute+ 的账户。';
+
+  @override
+  String get inviteSuccessTitle => '朋友送你一周 Astute+。';
+
+  @override
+  String get inviteSuccessPlan => 'Astute+ · 一周';
+
+  @override
+  String inviteSuccessUntil(String date) {
+    return '有效期至 $date';
+  }
+
+  @override
+  String get inviteSuccessFoot => '无需付费，也无需取消：之后自动回到免费方案。';
+
+  @override
+  String inviteEarned(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 位朋友读完了第一天：你获得 $n 周 Astute+。',
+    );
+    return '$_temp0';
+  }
 }

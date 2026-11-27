@@ -19,6 +19,7 @@ import '../state/first_offers.dart' show FirstOffer;
 import '../state/music_sound.dart';
 import '../state/progress.dart' show kCalibrationFloor;
 import '../sync/identity.dart';
+import '../sync/invite.dart';
 import '../sync/place_finder.dart';
 import '../sync/served.dart';
 import '../sync/trace.dart';
@@ -46,6 +47,7 @@ import '../widgets/learn_looks.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
 import '../widgets/hand_glass.dart';
+import '../widgets/invite_sheet.dart';
 
 class ProfileScreen extends StatelessWidget {
   final AppState app;
@@ -657,6 +659,9 @@ class ProfileScreen extends StatelessWidget {
               const _SoundRow(),
             ],
           ),
+          // Invita un amico, while the server has it on: a week of Astute+
+          // for the reader and a friend, and the row for a friend's code.
+          _InviteBox(app: app),
           ProfileHeader(context.l10n.accountSection),
           // The account changes under this screen — a sign-in that lands, a
           // sheet still up — and none of it is worth leaving the profile to
@@ -923,6 +928,116 @@ class ProfileScreen extends StatelessWidget {
           ],
         ],
       ),
+    );
+  }
+}
+
+/// Invita un amico (lib/sync/invite.dart): "Invite a friend", which opens
+/// the sheet with the reader's code and sends it; and, for a new reader who
+/// has never held Astute+, "Have a code?" — or, once a code is taken, that
+/// its week starts with the first day. Nothing at all while the server has
+/// the switch off, the build cannot take part, or the server says
+/// invitations are not set up. Asks the server once as it is first shown,
+/// and says once, here, the weeks friends earned the reader since.
+class _InviteBox extends StatefulWidget {
+  const _InviteBox({required this.app});
+
+  final AppState app;
+
+  @override
+  State<_InviteBox> createState() => _InviteBoxState();
+}
+
+class _InviteBoxState extends State<_InviteBox> {
+  @override
+  void initState() {
+    super.initState();
+    Invites.instance.addListener(_heard);
+    if (inviteShown(widget.app)) Invites.instance.refresh();
+  }
+
+  @override
+  void dispose() {
+    Invites.instance.removeListener(_heard);
+    super.dispose();
+  }
+
+  /// Weeks friends earned the reader since the profile last said so: said
+  /// once, quietly, at the foot of the screen.
+  void _heard() {
+    final int weeks = Invites.instance.newWeeks;
+    if (weeks == 0 || !mounted || !inviteShown(widget.app)) return;
+    Invites.instance.saidNewWeeks();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+        SnackBar(
+          content: Text(context.l10n.inviteEarned(weeks)),
+          duration: const Duration(seconds: 6),
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: Listenable.merge([Invites.instance, Subscription.instance]),
+      builder: (context, _) {
+        final AppState app = widget.app;
+        if (!inviteShown(app)) return const SizedBox.shrink();
+        final Invites invites = Invites.instance;
+        final InviteRedeem? redeem = invites.state?.redeem;
+        final Subscription store = Subscription.instance;
+        // A code of a friend's is for an account the server calls new, that
+        // has never held Astute+ — the store's word, once it has spoken —
+        // or one a link has brought, which the server judges when it is used.
+        final bool neverPlus =
+            !app.isPlus && !(store.ready && store.everHeldPlus);
+        final bool codeOpen =
+            neverPlus &&
+            (redeem == InviteRedeem.open ||
+                (redeem == null && invites.held != null));
+        final bool accepted =
+            redeem == InviteRedeem.waiting || redeem == InviteRedeem.granting;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ProfileHeader(context.l10n.inviteSection),
+            ProfileBox(
+              children: [
+                ProfileRow(
+                  key: const ValueKey('profile-invite'),
+                  mark: ProfileMarks.letter,
+                  label: context.l10n.inviteRow,
+                  value: context.l10n.inviteRowLine,
+                  onTap: () => showInviteSheet(context, app),
+                ),
+                if (codeOpen)
+                  ProfileRow(
+                    key: const ValueKey('profile-invite-code'),
+                    mark: ProfileMarks.ticket,
+                    label: context.l10n.inviteCodeRow,
+                    onTap: () => showInviteCodeSheet(
+                      context,
+                      app,
+                      code: invites.held,
+                      from: invites.held == null ? 'typed' : 'link',
+                    ),
+                  )
+                else if (accepted)
+                  ProfileRow(
+                    key: const ValueKey('profile-invite-accepted'),
+                    mark: ProfileMarks.ticket,
+                    label: context.l10n.inviteCodeAccepted,
+                    value: context.l10n.inviteCodeAcceptedLine,
+                    chevron: false,
+                  ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }

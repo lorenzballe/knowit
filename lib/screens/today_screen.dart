@@ -21,6 +21,8 @@ import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/skill_mark.dart';
 import '../widgets/skill_score.dart' show todayMoveOf;
+import '../sync/invite.dart';
+import '../widgets/invite_sheet.dart' show showInviteWeekIfDue;
 import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/day_moment.dart' show showDayMomentIfDue;
 import '../widgets/web/card_thumb.dart';
@@ -168,7 +170,12 @@ class _TodayScreenState extends State<TodayScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       HapticFeedback.heavyImpact();
     });
-    if (!widget.app.isPlus) _magic = true;
+    // A friend's code taken, its week waiting on this very day: the server
+    // is asked now, and the card after the fifth does not offer Astute+ on
+    // the evening a week of it is being given.
+    final bool inviteWeek = widget.app.inviteOn && Invites.instance.waiting;
+    if (inviteWeek) Invites.instance.settle();
+    if (!widget.app.isPlus && !inviteWeek) _magic = true;
     _levelDue = true;
     _momentDue = true;
     _landOnDay = true;
@@ -189,6 +196,10 @@ class _TodayScreenState extends State<TodayScreen> {
     Future<void>.delayed(const Duration(milliseconds: 650), () async {
       if (!mounted || !widget.app.todayCompleted || _magic) return;
       if (!(ModalRoute.of(context)?.isCurrent ?? true)) return;
+      // A week a friend's code gave, once this first day is read: the
+      // evening is its own (lib/widgets/invite_sheet.dart).
+      if (await showInviteWeekIfDue(context, widget.app)) return;
+      if (!mounted) return;
       final bool rose = await showLevelUpIfDue(context, widget.app);
       if (rose || !mounted) return;
       // The first week's page or the first month's, when one is due
