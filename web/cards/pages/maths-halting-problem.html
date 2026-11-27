@@ -238,7 +238,7 @@ function feed() {
   tl.to(gh, {attr: {x: S.x, y: S.y, width: S.w, height: S.h, rx: 3}, duration: .7, ease: 'power3.inOut'}, 0)
     .to(gh, {opacity: 0, duration: .2}, .62)
     .from(svg.querySelectorAll('.L2'), {opacity: 0, duration: .35, stagger: .08}, .55)
-    .fromTo(svg.querySelector('.sheet'), {scale: 1.3}, {scale: 1, transformOrigin: '50% 50%', duration: .35, ease: 'back.out(3)', immediateRender: false}, .62);
+    .fromTo(svg.querySelector('.sheet'), {transformOrigin: '50% 50%', scale: 1.3}, {scale: 1, transformOrigin: '50% 50%', duration: .35, ease: 'back.out(3)', immediateRender: false}, .62);
   tws.push(tl);
 }
 function reveal() {
@@ -259,12 +259,12 @@ function verdict(v) {
   busy = true;
   const c = P.chips[v], q = s => svg.querySelector(s);
   const tl = gsap.timeline({onComplete: () => { busy = false; if (pend) draw(); }});
-  tl.fromTo(q('#lt-' + v), {scale: 0}, {scale: 1, transformOrigin: '50% 50%', duration: .25, ease: 'back.out(3)'}, 0);
+  tl.fromTo(q('#lt-' + v), {transformOrigin: '50% 50%', scale: 0}, {scale: 1, transformOrigin: '50% 50%', duration: .25, ease: 'back.out(3)'}, 0);
   drawIn([q('#stub-' + v)], tl, 0, .15);
   tl.call(() => { c.r.setAttribute('class', 'ln fk'); c.t.setAttribute('class', 'inv'); }, null, .15);
-  tl.fromTo(c.g, {scale: .86}, {scale: 1, transformOrigin: '50% 50%', duration: .3, ease: 'back.out(3)', immediateRender: false}, .15);
+  tl.fromTo(c.g, {transformOrigin: '50% 50%', scale: .86}, {scale: 1, transformOrigin: '50% 50%', duration: .3, ease: 'back.out(3)', immediateRender: false}, .15);
   drawIn([q('#w-' + v)], tl, .35, .55);
-  tl.fromTo(q('#e-' + v), {opacity: .3, scale: .6}, {opacity: 1, scale: 1, transformOrigin: '50% 50%', duration: .3, ease: 'back.out(2.5)'}, .85);
+  tl.fromTo(q('#e-' + v), {transformOrigin: '50% 50%', opacity: .3, scale: .6}, {opacity: 1, scale: 1, transformOrigin: '50% 50%', duration: .3, ease: 'back.out(2.5)'}, .85);
   tl.call(() => { c.r.setAttribute('class', 'ln fc'); c.t.removeAttribute('class'); }, null, 1.25);
   drawIn([q('#x-' + v)], tl, 1.25, .3);
   if (both) tl.to({}, {duration: .7});

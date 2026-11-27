@@ -297,7 +297,7 @@
     stamp.setAttribute('opacity', 0);
     panes[0].style.fill = DARK;
     requestAnimationFrame(() => { panes[0].style.fill = PALE; wave(); });
-    gsap.fromTo(stamp, {opacity: 0, scale: 1.6}, {opacity: 1, scale: 1, svgOrigin: '150 62', duration: .28, ease: 'power3.in', delay: .8, onComplete: () => rattle(3)});
+    gsap.fromTo(stamp, {svgOrigin: '150 62', opacity: 0, scale: 1.6}, {opacity: 1, scale: 1, svgOrigin: '150 62', duration: .28, ease: 'power3.in', delay: .8, onComplete: () => rattle(3)});
     gsap.fromTo('#why > *', {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: .55, stagger: .12, ease: 'power3.out', delay: .5});
   }
 

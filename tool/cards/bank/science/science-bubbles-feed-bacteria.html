@@ -129,7 +129,7 @@ function tap() {
   // wake bacteria
   bugs.forEach((b, j) => {
     gsap.to(b.body, {attr: {fill: '#7be08a', stroke: '#1f7a3e'}, duration: Kit.calm ? 0 : .4, delay: dl});
-    if (!Kit.calm) gsap.fromTo(b.body, {scale: 1}, {scale: 1.3, yoyo: true, repeat: 1, duration: .2, delay: dl + .1 + j * .03, transformOrigin: '50% 50%'});
+    if (!Kit.calm) gsap.fromTo(b.body, {transformOrigin: '50% 50%', scale: 1}, {scale: 1.3, yoyo: true, repeat: 1, duration: .2, delay: dl + .1 + j * .03, transformOrigin: '50% 50%'});
   });
   G.status.textContent = done ? 'Clean water: matter oxidized' : 'Oxygen in: bacteria at work';
   // feed

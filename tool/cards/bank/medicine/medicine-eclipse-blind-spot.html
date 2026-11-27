@@ -306,7 +306,7 @@
     if (done) return; dragging = true;
     try { svg.setPointerCapture(e.pointerId); } catch (_) {}
     Kit.haptic('selection');
-    gsap.fromTo(E.pinG, {scale: 1}, {scale: 1.18, transformOrigin: '50% 100%', duration: .12, ease: 'power3.out'});
+    gsap.fromTo(E.pinG, {transformOrigin: '50% 100%', scale: 1}, {scale: 1.18, transformOrigin: '50% 100%', duration: .12, ease: 'power3.out'});
     setU((xOf(e) - X0) / (X1 - X0));
   });
   svg.addEventListener('pointermove', e => { if (dragging) setU((xOf(e) - X0) / (X1 - X0)); });

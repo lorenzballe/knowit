@@ -195,7 +195,7 @@ const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
 Kit.onShow.card = () => { L = Kit.fitSvg(svg); render(); };
 Kit.onEnter.card = () => {
   if (Kit.calm || moved) return;
-  gsap.fromTo('#handle', {scale: 1}, {scale: 1.3, transformOrigin: '50% 50%', duration: .45, yoyo: true, repeat: 3, ease: 'sine.inOut'});
+  gsap.fromTo('#handle', {transformOrigin: '50% 50%', scale: 1}, {scale: 1.3, transformOrigin: '50% 50%', duration: .45, yoyo: true, repeat: 3, ease: 'sine.inOut'});
 };
 Kit.play.card = async () => {
   const rect = svg.getBoundingClientRect();

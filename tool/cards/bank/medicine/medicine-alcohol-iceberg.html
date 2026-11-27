@@ -268,7 +268,7 @@
     Kit.show('keep');
     if (Kit.calm) { tipCoral = true; relayoutNow(true); return; }
     if (HAS_SPLIT) { const sp = new SplitText(k, {type: 'chars'}); gsap.from(sp.chars, {opacity: 0, y: -10, rotationX: -90, stagger: .025, duration: .55, ease: 'back.out(2.2)'}); }
-    gsap.fromTo(Kit.$('cnt'), {scale: 1.25}, {scale: 1, duration: .9, ease: 'elastic.out(1,.45)', transformOrigin: '50% 60%'});
+    gsap.fromTo(Kit.$('cnt'), {transformOrigin: '50% 60%', scale: 1.25}, {scale: 1, duration: .9, ease: 'elastic.out(1,.45)', transformOrigin: '50% 60%'});
     // let the stage settle to its new size, then play the light show on the fresh drawing
     gsap.delayedCall(.45, () => {
       relayoutNow();

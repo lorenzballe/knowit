@@ -148,8 +148,13 @@
     const b0 = [X(1.5), Y(pv(1.5))], b1 = [X(10.5), Y(pv(10.5))], ang = Math.atan2(b1[1] - b0[1], b1[0] - b0[0]) * 180 / Math.PI;
     const bm = [(b0[0] + b1[0]) / 2, (b0[1] + b1[1]) / 2 + fs * 1.25];
     txt(names, bm[0], bm[1], 'boiling line', Object.assign({'font-size': fs, 'font-weight': 700, 'font-style': 'italic', 'text-anchor': 'middle', transform: `rotate(${ang} ${bm[0]} ${bm[1]})`, 'fill-opacity': .8}, ring));
-    txt(names, X(TC) + fs * .7, Y(PC) + fs * 1.35, 'critical point', Object.assign({'font-size': fs, 'font-weight': 800}, ring));
-    txt(names, X(TC) + fs * .7, Y(PC) + fs * 2.7, '31 °C · 74 bar', Object.assign({'font-size': fs, 'font-weight': 600, 'fill-opacity': .75}, ring));
+    const cpName = txt(names, X(TC) + fs * .7, Y(PC) + fs * 1.35, 'critical point', Object.assign({'font-size': fs, 'font-weight': 800}, ring));
+    const cpVals = txt(names, X(TC) + fs * .7, Y(PC) + fs * 2.7, '31 °C · 74 bar', Object.assign({'font-size': fs, 'font-weight': 600, 'fill-opacity': .75}, ring));
+    // Most ways come down just past the point, through its name: they pass under it, on a patch of
+    // the card's own colour, rather than showing between its words and numbers.
+    const nb1 = cpName.getBBox(), nb2 = cpVals.getBBox(), np = fs * .25;
+    const nx0 = Math.min(nb1.x, nb2.x) - np, nx1 = Math.max(nb1.x + nb1.width, nb2.x + nb2.width) + np;
+    names.insertBefore(Kit.mk('rect', {x: nx0, y: nb1.y - np, width: nx1 - nx0, height: nb2.y + nb2.height - nb1.y + 2 * np, rx: np, fill: ground}, names), cpName);
     // The ways tried before, and where they boiled; then this one.
     const line = pts => 'M' + pts.map(([T, P]) => `${X(T)},${Y(P)}`).join('L');
     for (const g of ghosts) Kit.mk('path', {d: line(g), fill: 'none', stroke: INK, 'stroke-opacity': .38, 'stroke-width': 2, 'stroke-dasharray': '2 5', 'stroke-linecap': 'round'}, ways);

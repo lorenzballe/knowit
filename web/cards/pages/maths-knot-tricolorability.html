@@ -98,7 +98,7 @@ function win() {
   ringEls.forEach(r => gsap.killTweensOf(r));
   Kit.hide('say'); Kit.hide('stat'); Kit.show('why'); Kit.show('keep');
   if (!Kit.calm && G) {
-    gsap.fromTo(G, {rotation: 0}, {rotation: 120, duration: 1.4, ease: 'power2.inOut', svgOrigin: G.dataset.o});
+    gsap.fromTo(G, {svgOrigin: G.dataset.o, rotation: 0}, {rotation: 120, duration: 1.4, ease: 'power2.inOut', svgOrigin: G.dataset.o});
     gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .12, duration: .45, delay: .2});
   }
 }

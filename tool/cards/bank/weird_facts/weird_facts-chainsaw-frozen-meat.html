@@ -222,7 +222,7 @@ Kit.onEnter.card = () => {
   gsap.from(G.wrap, {y:-20, opacity:0, duration:.5, ease:'power3.out'});
   gsap.from(G.tools.map(t => t.art), {opacity:0, duration:.4, stagger:.08, delay:.2});
   const saw = G.tools[2];
-  gsap.fromTo(saw.art, {rotation:0}, {rotation:-4, svgOrigin:'0 0', duration:.12, yoyo:true, repeat:5, delay:1.1, ease:'sine.inOut'});
+  gsap.fromTo(saw.art, {svgOrigin: '0 0', rotation:0}, {rotation:-4, svgOrigin:'0 0', duration:.12, yoyo:true, repeat:5, delay:1.1, ease:'sine.inOut'});
 };
 Kit.play.card = async () => {
   const wait = ms => new Promise(r => setTimeout(r, ms));

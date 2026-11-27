@@ -130,7 +130,7 @@ function draw() {
   const n = S.p.filter(v => v > 0.4).length;
   if (n !== shown) {
     shown = n; Kit.$('n').textContent = n;
-    if (!Kit.calm) gsap.fromTo('#n', {scale: 1.35}, {scale: 1, duration: .35, ease: 'back.out(3)', transformOrigin: '50% 60%'});
+    if (!Kit.calm) gsap.fromTo('#n', {transformOrigin: '50% 60%', scale: 1.35}, {scale: 1, duration: .35, ease: 'back.out(3)', transformOrigin: '50% 60%'});
   }
 }
 function tick() { update(); draw(); }

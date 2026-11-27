@@ -281,7 +281,7 @@
 
   function readout(anim) {
     const [L, S] = cnt(n);
-    const bump = (e, v) => { if (e.textContent !== v) { e.textContent = v; if (anim && !Kit.calm) gsap.fromTo(e, {scale: 1.15}, {scale: 1, duration: .35, ease: 'power3.out', transformOrigin: '0% 100%'}); } };
+    const bump = (e, v) => { if (e.textContent !== v) { e.textContent = v; if (anim && !Kit.calm) gsap.fromTo(e, {transformOrigin: '0% 100%', scale: 1.15}, {scale: 1, duration: .35, ease: 'power3.out', transformOrigin: '0% 100%'}); } };
     bump(els.L, String(L)); bump(els.S, String(S));
     if (els.R) els.R.textContent = rPre + (S ? (L / S).toFixed(3) : '—');
     ladder(L, S, anim);
@@ -365,7 +365,7 @@
     if (done) return;
     dragging = true; hideHint(); svg.setPointerCapture(e.pointerId);
     Kit.haptic('selection');
-    if (!Kit.calm) gsap.fromTo(els.knob, {scale: 1.25}, {scale: 1, duration: .4, ease: 'back.out(3)', transformOrigin: '50% 50%'});
+    if (!Kit.calm) gsap.fromTo(els.knob, {transformOrigin: '50% 50%', scale: 1.25}, {scale: 1, duration: .4, ease: 'back.out(3)', transformOrigin: '50% 50%'});
     setN(nAt(p.y));
   });
   svg.addEventListener('pointermove', e => { if (!built) return; const p = local(e); par(p); if (dragging) setN(nAt(p.y)); });

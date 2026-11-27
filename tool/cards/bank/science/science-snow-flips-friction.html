@@ -274,7 +274,7 @@
     setTimeout(() => {
       gsap.fromTo(tiles.map(t => t.hi), {opacity: .95}, {opacity: .22, duration: .6, stagger: .04, ease: 'power3.out', overwrite: true});
       gsap.fromTo(tiles.map(t => t.g), {opacity: .5}, {opacity: 1, duration: .5, stagger: .04, ease: 'power2.out'});
-      gsap.fromTo(els.body, {scale: 1.25}, {scale: 1, duration: .9, ease: 'elastic.out(1,.45)', transformOrigin: '50% 50%'});
+      gsap.fromTo(els.body, {transformOrigin: '50% 50%', scale: 1.25}, {scale: 1, duration: .9, ease: 'elastic.out(1,.45)', transformOrigin: '50% 50%'});
       burst();
     }, 520);
   }

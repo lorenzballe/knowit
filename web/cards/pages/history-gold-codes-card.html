@@ -354,8 +354,8 @@
     tl.fromTo(G.flash, {attr: {opacity: .6}}, {attr: {opacity: 0}, duration: .8, ease: 'power2.out'}, T);
     tl.fromTo(G.ring, {attr: {r: 4, 'stroke-width': 5}, opacity: 1}, {attr: {r: R, 'stroke-width': .6}, opacity: 0, duration: 1.1, ease: 'expo.out'}, T);
     tl.fromTo(G.ring2, {attr: {r: 2}, opacity: .9}, {attr: {r: R * .7}, opacity: 0, duration: 1.2, ease: 'expo.out'}, T + .12);
-    tl.fromTo(G.cardIn, {scale: 1}, {scale: 1.05, transformOrigin: '50% 50%', yoyo: true, repeat: 1, duration: .2, ease: 'power2.out'}, T);
-    tl.fromTo(G.codeT, {scale: 1}, {scale: 1.08, transformOrigin: '50% 50%', yoyo: true, repeat: 1, duration: .2, ease: 'power2.out'}, T);
+    tl.fromTo(G.cardIn, {transformOrigin: '50% 50%', scale: 1}, {scale: 1.05, transformOrigin: '50% 50%', yoyo: true, repeat: 1, duration: .2, ease: 'power2.out'}, T);
+    tl.fromTo(G.codeT, {transformOrigin: '50% 50%', scale: 1}, {scale: 1.08, transformOrigin: '50% 50%', yoyo: true, repeat: 1, duration: .2, ease: 'power2.out'}, T);
     tl.call(() => {
       G.fx.setAttribute('visibility', 'hidden'); G.ring.setAttribute('r', 1); G.ring2.setAttribute('r', 1);
     }, null, T + 1.35);

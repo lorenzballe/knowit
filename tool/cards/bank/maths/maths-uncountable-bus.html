@@ -153,7 +153,7 @@ function draw() {
   tell('names', t);
   for (let r = 0; r < N; r++) {
     tl.fromTo(L[r], {opacity: 0, y: -.4 * s}, {opacity: 1, y: 0, duration: .22, stagger: .028, ease: 'power2.out'}, t);
-    tl.fromTo(dots[r], {scale: 1}, {scale: 1.16, duration: .1, yoyo: true, repeat: 1, ease: 'power1.inOut', transformOrigin: '50% 50%'}, t);
+    tl.fromTo(dots[r], {transformOrigin: '50% 50%', scale: 1}, {scale: 1.16, duration: .1, yoyo: true, repeat: 1, ease: 'power1.inOut', transformOrigin: '50% 50%'}, t);
     tl.to(ells[r], {opacity: 1, duration: .2}, t + .2);
     t += .18;
   }
@@ -164,11 +164,11 @@ function draw() {
   tell('flip', t);
   t += .9;
   for (let k = 0; k < N; k++) {
-    tl.fromTo(rings[k], {opacity: 0, scale: 1.7}, {opacity: 1, scale: 1, duration: .2, ease: 'power2.out', transformOrigin: '50% 50%'}, t);
-    tl.fromTo(tiles[k], {autoAlpha: 0, scale: .6}, {autoAlpha: 1, scale: 1, duration: .12, ease: 'power2.out', transformOrigin: '50% 50%'}, t + .1);
+    tl.fromTo(rings[k], {transformOrigin: '50% 50%', opacity: 0, scale: 1.7}, {opacity: 1, scale: 1, duration: .2, ease: 'power2.out', transformOrigin: '50% 50%'}, t);
+    tl.fromTo(tiles[k], {transformOrigin: '50% 50%', autoAlpha: 0, scale: .6}, {autoAlpha: 1, scale: 1, duration: .12, ease: 'power2.out', transformOrigin: '50% 50%'}, t + .1);
     tl.to(tiles[k], {y: yNo - ry(k), duration: .26, ease: 'power2.in'}, t + .22);
     tl.to(tiles[k], {scaleY: 0, duration: .08, ease: 'power1.in'}, t + .48);
-    tl.fromTo(ncell[k], {scaleY: 0}, {scaleY: 1, duration: .12, ease: 'power1.out', transformOrigin: '50% 50%'}, t + .56);
+    tl.fromTo(ncell[k], {transformOrigin: '50% 50%', scaleY: 0}, {scaleY: 1, duration: .12, ease: 'power1.out', transformOrigin: '50% 50%'}, t + .56);
     tl.set(tiles[k], {autoAlpha: 0}, t + .6);
     tl.call(() => Kit.haptic('selection'), null, t + .56);
     t += .5;
@@ -176,7 +176,7 @@ function draw() {
   t += .2;
   tell('none', t);
   tl.to([noEll, diag], {opacity: 1, duration: .25}, t);
-  tl.fromTo(noG, {scale: 1}, {scale: 1.04, duration: .16, yoyo: true, repeat: 1, ease: 'power1.inOut', transformOrigin: '50% 50%'}, t + .15);
+  tl.fromTo(noG, {transformOrigin: '50% 50%', scale: 1}, {scale: 1.04, duration: .16, yoyo: true, repeat: 1, ease: 'power1.inOut', transformOrigin: '50% 50%'}, t + .15);
   tl.to({}, {duration: .01}, t + 1.2);
   tl.timeScale(speed);
   tl.progress(p, true);

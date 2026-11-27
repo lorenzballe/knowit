@@ -253,7 +253,7 @@
     }
   }
   function land(p) {
-    track(gsap.fromTo(p.inner, {scaleX: 1.35, scaleY: .7}, {scaleX: 1, scaleY: 1, duration: .6, ease: 'elastic.out(1,.4)', transformOrigin: '50% 50%'}));
+    track(gsap.fromTo(p.inner, {transformOrigin: '50% 50%', scaleX: 1.35, scaleY: .7}, {scaleX: 1, scaleY: 1, duration: .6, ease: 'elastic.out(1,.4)', transformOrigin: '50% 50%'}));
     const ring = Kit.mk('circle', {cx: p.to[0], cy: p.to[1], r: pr, fill: 'none', stroke: p.zone === 'bio' ? P.red : P.ink, 'stroke-width': 1.4}, L.fx);
     track(gsap.to(ring, {attr: {r: pr * 2.6}, opacity: 0, duration: .55, ease: 'power2.out', onComplete: () => ring.remove()}));
   }

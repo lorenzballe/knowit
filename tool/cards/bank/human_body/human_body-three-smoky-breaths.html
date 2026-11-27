@@ -68,7 +68,7 @@ Kit.$('breathe').addEventListener('click', () => {
   busy = true; n++; Kit.haptic('light');
   const d = Kit.calm ? 0 : 1;
   if (!Kit.calm) {
-    gsap.fromTo(R.inner, {scale: 1}, {scale: 1.07, yoyo: true, repeat: 1, duration: .45, transformOrigin: '50% 50%', ease: 'sine.inOut'});
+    gsap.fromTo(R.inner, {transformOrigin: '50% 50%', scale: 1}, {scale: 1.07, yoyo: true, repeat: 1, duration: .45, transformOrigin: '50% 50%', ease: 'sine.inOut'});
     R.puffs.forEach((p, i) => gsap.fromTo(p, {attr: {cy: -6 + i * 2}, opacity: 0}, {attr: {cy: 40}, opacity: 1, duration: .7, delay: i * .08, ease: 'power1.in', onComplete: () => gsap.set(p, {opacity: 0})}));
   }
   apply(true);

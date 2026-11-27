@@ -159,7 +159,7 @@ function finish() {
   done = true;
   Kit.haptic('success');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  requestAnimationFrame(() => { if (!Kit.calm && G) gsap.fromTo(G.skIn, {scale: 1}, {scale: 1.18, yoyo: true, repeat: 3, duration: .22, transformOrigin: '50% 50%'}); });
+  requestAnimationFrame(() => { if (!Kit.calm && G) gsap.fromTo(G.skIn, {transformOrigin: '50% 50%', scale: 1}, {scale: 1.18, yoyo: true, repeat: 3, duration: .22, transformOrigin: '50% 50%'}); });
   if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
 }
 
