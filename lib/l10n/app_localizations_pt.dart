@@ -1000,6 +1000,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get reminderAskOther => 'Outra hora';
 
   @override
+  String get reminderAskPick => 'Tu escolhes';
+
+  @override
   String get reminderAskUsual => 'Quando costumas ler';
 
   @override

@@ -944,6 +944,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reminderAskOther => '其他时间';
 
   @override
+  String get reminderAskPick => '你来选';
+
+  @override
   String get reminderAskUsual => '你平时阅读的时间';
 
   @override

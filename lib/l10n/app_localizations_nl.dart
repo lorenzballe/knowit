@@ -988,6 +988,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get reminderAskOther => 'Ander tijdstip';
 
   @override
+  String get reminderAskPick => 'Jij kiest';
+
+  @override
   String get reminderAskUsual => 'Wanneer je meestal leest';
 
   @override
