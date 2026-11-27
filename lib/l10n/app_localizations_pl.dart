@@ -114,7 +114,9 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       days,
       locale: localeName,
-      other: '$days dni',
+      other: '$days dnia',
+      many: '$days dni',
+      few: '$days dni',
       one: '$days dzień',
     );
     return 'Wypróbuj $_temp0 za darmo';
@@ -171,7 +173,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String matching(int n) {
-    return '$n pasujących';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n pasującej',
+      many: '$n pasujących',
+      few: '$n pasujące',
+      one: '$n pasująca',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -195,7 +205,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String cardsTapADay(int n) {
-    return '$n kart. Dotknij dnia, żeby go otworzyć.';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n karty. Dotknij dnia, żeby go otworzyć.',
+      many: '$n kart. Dotknij dnia, żeby go otworzyć.',
+      few: '$n karty. Dotknij dnia, żeby go otworzyć.',
+      one: '$n karta. Dotknij dnia, żeby go otworzyć.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -203,7 +221,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String searchNCards(int n) {
-    return 'Szukaj wśród $n kart';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Szukaj wśród $n karty',
+      many: 'Szukaj wśród $n kart',
+      few: 'Szukaj wśród $n kart',
+      one: 'Szukaj wśród $n karty',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -269,7 +295,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String keptDaysOfSeven(int days) {
-    return 'Zaliczony — $days dni z siedmiu.';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dnia',
+      many: '$days dni',
+      few: '$days dni',
+      one: '$days dzień',
+    );
+    return 'Zaliczony — $_temp0 z siedmiu.';
   }
 
   @override
@@ -300,7 +334,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String ofNRight(int n) {
-    return 'z $n trafnych';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'z $n trafnych',
+      many: 'z $n trafnych',
+      few: 'z $n trafnych',
+      one: 'z $n trafnej',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -309,17 +351,41 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String confidenceOff(int gap) {
-    return 'Twoja pewność była o $gap punktów od tego, co naprawdę wiedziałeś.';
+    String _temp0 = intl.Intl.pluralLogic(
+      gap,
+      locale: localeName,
+      other: '$gap punktu',
+      many: '$gap punktów',
+      few: '$gap punkty',
+      one: '$gap punkt',
+    );
+    return 'Twoja pewność była o $_temp0 od tego, co naprawdę wiedziałeś.';
   }
 
   @override
   String confidenceClosing(int gap, int before) {
-    return 'Twoja pewność rozminęła się o $gap punktów, wobec $before w zeszłym tygodniu. Luka się domyka.';
+    String _temp0 = intl.Intl.pluralLogic(
+      gap,
+      locale: localeName,
+      other: '$gap punktu',
+      many: '$gap punktów',
+      few: '$gap punkty',
+      one: '$gap punkt',
+    );
+    return 'Twoja pewność rozminęła się o $_temp0, wobec $before w zeszłym tygodniu. Luka się domyka.';
   }
 
   @override
   String confidenceOpened(int gap, int before) {
-    return 'Twoja pewność rozminęła się o $gap punktów, wobec $before w zeszłym tygodniu. Luka się otworzyła.';
+    String _temp0 = intl.Intl.pluralLogic(
+      gap,
+      locale: localeName,
+      other: '$gap punktu',
+      many: '$gap punktów',
+      few: '$gap punkty',
+      one: '$gap punkt',
+    );
+    return 'Twoja pewność rozminęła się o $_temp0, wobec $before w zeszłym tygodniu. Luka się otworzyła.';
   }
 
   @override
@@ -364,32 +430,80 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String stepRead(int n) {
-    return 'jeszcze $n kart do przeczytania';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'jeszcze $n karty do przeczytania',
+      many: 'jeszcze $n kart do przeczytania',
+      few: 'jeszcze $n karty do przeczytania',
+      one: 'jeszcze $n karta do przeczytania',
+    );
+    return '$_temp0';
   }
 
   @override
   String stepAnswer(int n) {
-    return 'jeszcze $n kart do odpowiedzi';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'jeszcze $n karty do odpowiedzi',
+      many: 'jeszcze $n kart do odpowiedzi',
+      few: 'jeszcze $n karty do odpowiedzi',
+      one: 'jeszcze $n karta do odpowiedzi',
+    );
+    return '$_temp0';
   }
 
   @override
   String stepJudge(int n) {
-    return 'jeszcze $n odpowiedzi z twoją pewnością';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'jeszcze $n odpowiedzi z twoją pewnością',
+      many: 'jeszcze $n odpowiedzi z twoją pewnością',
+      few: 'jeszcze $n odpowiedzi z twoją pewnością',
+      one: 'jeszcze $n odpowiedź z twoją pewnością',
+    );
+    return '$_temp0';
   }
 
   @override
   String stepHold(int n) {
-    return 'jeszcze $n kart do utrzymania';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'jeszcze $n karty do utrzymania',
+      many: 'jeszcze $n kart do utrzymania',
+      few: 'jeszcze $n karty do utrzymania',
+      one: 'jeszcze $n karta do utrzymania',
+    );
+    return '$_temp0';
   }
 
   @override
   String stepGap(int gap, int target) {
-    return 'twoja pewność rozmija się o $gap punktów — wystarczy $target';
+    String _temp0 = intl.Intl.pluralLogic(
+      gap,
+      locale: localeName,
+      other: '$gap punktu',
+      many: '$gap punktów',
+      few: '$gap punkty',
+      one: '$gap punkt',
+    );
+    return 'twoja pewność rozmija się o $_temp0 — wystarczy $target';
   }
 
   @override
   String stepBeforeJudged(int n) {
-    return 'jeszcze $n odpowiedzi, zanim aplikacja oceni twoją pewność';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'jeszcze $n odpowiedzi, zanim aplikacja oceni twoją pewność',
+      many: 'jeszcze $n odpowiedzi, zanim aplikacja oceni twoją pewność',
+      few: 'jeszcze $n odpowiedzi, zanim aplikacja oceni twoją pewność',
+      one: 'jeszcze $n odpowiedź, zanim aplikacja oceni twoją pewność',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -740,7 +854,19 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String acrossNAnswersHowSure(int n) {
-    return 'W $n odpowiedziach powiedziałeś, jak bardzo jesteś pewien. Oto, co z tego wyszło.';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'W $n odpowiedziach powiedziałeś, jak bardzo jesteś pewien. Oto, co z tego wyszło.',
+      many:
+          'W $n odpowiedziach powiedziałeś, jak bardzo jesteś pewien. Oto, co z tego wyszło.',
+      few:
+          'W $n odpowiedziach powiedziałeś, jak bardzo jesteś pewien. Oto, co z tego wyszło.',
+      one:
+          'W $n odpowiedzi powiedziałeś, jak bardzo jesteś pewien. Oto, co z tego wyszło.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -756,12 +882,28 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String overconfidentBy(int points) {
-    return 'Jesteś zbyt pewny o $points punktów';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '$points punktu',
+      many: '$points punktów',
+      few: '$points punkty',
+      one: '$points punkt',
+    );
+    return 'Jesteś zbyt pewny o $_temp0';
   }
 
   @override
   String underconfidentBy(int points) {
-    return 'Jesteś zbyt niepewny o $points punktów';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '$points punktu',
+      many: '$points punktów',
+      few: '$points punkty',
+      one: '$points punkt',
+    );
+    return 'Jesteś zbyt niepewny o $_temp0';
   }
 
   @override
@@ -808,17 +950,41 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String lastCallsAgainstFirst(int n) {
-    return 'Twoje ostatnie $n ocen, kontra pierwsze $n';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Twoje ostatnie $n oceny, kontra pierwsze $n',
+      many: 'Twoje ostatnie $n ocen, kontra pierwsze $n',
+      few: 'Twoje ostatnie $n oceny, kontra pierwsze $n',
+      one: 'Twoja ostatnia $n ocena, kontra pierwsza $n',
+    );
+    return '$_temp0';
   }
 
   @override
   String closedByPoints(int n) {
-    return 'Domknięta o $n punktów';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n punktu',
+      many: '$n punktów',
+      few: '$n punkty',
+      one: '$n punkt',
+    );
+    return 'Domknięta o $_temp0';
   }
 
   @override
   String openedByPoints(int n) {
-    return 'Otwarta o $n punktów';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n punktu',
+      many: '$n punktów',
+      few: '$n punkty',
+      one: '$n punkt',
+    );
+    return 'Otwarta o $_temp0';
   }
 
   @override
@@ -874,7 +1040,9 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       days,
       locale: localeName,
-      other: '$days dni',
+      other: '$days dnia',
+      many: '$days dni',
+      few: '$days dni',
       one: '$days dzień',
     );
     return '$_temp0 za darmo';
@@ -940,7 +1108,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String nComingBack(int n) {
-    return '$n wraca';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n wracają',
+      many: '$n wraca',
+      few: '$n wracają',
+      one: '$n wraca',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1158,7 +1334,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String subjectsInTheMix(int n, int total) {
-    return '$n z $total tematów w miksie';
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total tematu',
+      many: '$total tematów',
+      few: '$total tematów',
+      one: '$total tematu',
+    );
+    return '$n z $_temp0 w miksie';
   }
 
   @override
@@ -1177,12 +1361,28 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String startWithNTopics(int n) {
-    return 'Zacznij z $n tematami';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Zacznij z $n tematu',
+      many: 'Zacznij z $n tematami',
+      few: 'Zacznij z $n tematami',
+      one: 'Zacznij z $n tematem',
+    );
+    return '$_temp0';
   }
 
   @override
   String saveNTopics(int n) {
-    return 'Zapisz $n tematów';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Zapisz $n tematu',
+      many: 'Zapisz $n tematów',
+      few: 'Zapisz $n tematy',
+      one: 'Zapisz $n temat',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1435,7 +1635,9 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       days,
       locale: localeName,
-      other: '$days dni',
+      other: '$days dnia',
+      many: '$days dni',
+      few: '$days dni',
       one: '$days dzień',
     );
     return '$_temp0 gratis, potem $price$suffix';
@@ -1558,7 +1760,8 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '+$n punktów',
+      other: '+$n punktu',
+      many: '+$n punktów',
       few: '+$n punkty',
       one: '+1 punkt',
       zero: 'Brak punktów',
@@ -1861,7 +2064,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String pathDeeperLine(int n) {
-    return 'Jeszcze $n kart na ten sam temat, trudniejszych.';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Jeszcze $n karty na ten sam temat, trudniejsze.',
+      many: 'Jeszcze $n kart na ten sam temat, trudniejszych.',
+      few: 'Jeszcze $n karty na ten sam temat, trudniejsze.',
+      one: 'Jeszcze $n karta na ten sam temat, trudniejsza.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -2017,6 +2228,9 @@ class AppLocalizationsPl extends AppLocalizations {
       n,
       locale: localeName,
       other: 'Lepiej niż $pct% z $n dzisiejszych graczy.',
+      many: 'Lepiej niż $pct% z $n dzisiejszych graczy.',
+      few: 'Lepiej niż $pct% z $n dzisiejszych graczy.',
+      one: 'Lepiej niż $pct% z $n dzisiejszego gracza.',
     );
     return '$_temp0';
   }
@@ -2040,6 +2254,8 @@ class AppLocalizationsPl extends AppLocalizations {
       n,
       locale: localeName,
       other: 'Wśród pierwszych $n graczy dzisiaj: wciąż za mało, by porównać.',
+      many: 'Wśród pierwszych $n graczy dzisiaj: wciąż za mało, by porównać.',
+      few: 'Wśród pierwszych $n graczy dzisiaj: wciąż za mało, by porównać.',
       one: 'Pierwszy gracz dzisiaj: wciąż za mało graczy, by porównać.',
     );
     return '$_temp0';
@@ -2754,17 +2970,41 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String nudgeTwoWeeksTitle(int read) {
-    return 'Dwa tygodnie temu miałeś przeczytane $read kart';
+    String _temp0 = intl.Intl.pluralLogic(
+      read,
+      locale: localeName,
+      other: '$read karty',
+      many: '$read kart',
+      few: '$read karty',
+      one: '$read kartę',
+    );
+    return 'Dwa tygodnie temu miałeś za sobą $_temp0';
   }
 
   @override
   String nudgeTwoWeeksBody(int gap, String question) {
-    return 'Twoja pewność była o $gap punktów obok. Dziś: $question';
+    String _temp0 = intl.Intl.pluralLogic(
+      gap,
+      locale: localeName,
+      other: '$gap punktu',
+      many: '$gap punktów',
+      few: '$gap punkty',
+      one: '$gap punkt',
+    );
+    return 'Twoja pewność była o $_temp0 obok. Dziś: $question';
   }
 
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
-    return 'Dotąd $answered odpowiedzi. Dziś: $question';
+    String _temp0 = intl.Intl.pluralLogic(
+      answered,
+      locale: localeName,
+      other: '$answered odpowiedzi',
+      many: '$answered odpowiedzi',
+      few: '$answered odpowiedzi',
+      one: '$answered odpowiedź',
+    );
+    return 'Dotąd $_temp0. Dziś: $question';
   }
 
   @override
@@ -2775,7 +3015,9 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       days,
       locale: localeName,
-      other: 'Od ostatniej wizyty, $days dni temu',
+      other: 'Od ostatniej wizyty, $days dnia temu',
+      many: 'Od ostatniej wizyty, $days dni temu',
+      few: 'Od ostatniej wizyty, $days dni temu',
       one: 'Od ostatniej wizyty, wczoraj',
       zero: 'Od ostatniej wizyty, dziś',
     );
@@ -2805,7 +3047,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String nRead(int n) {
-    return '$n przeczytanych';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n przeczytanej',
+      many: '$n przeczytanych',
+      few: '$n przeczytane',
+      one: '$n przeczytana',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -2898,7 +3148,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String continueGenresOn(int on, int total) {
-    return 'Dalej · $on z $total gatunków włączonych';
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total gatunku włączonego',
+      many: '$total gatunków włączonych',
+      few: '$total gatunków włączonych',
+      one: '$total gatunku włączonego',
+    );
+    return 'Dalej · $on z $_temp0';
   }
 
   @override
@@ -4201,6 +4459,7 @@ class AppLocalizationsPl extends AppLocalizations {
       other: '$n karty',
       many: '$n kart',
       few: '$n karty',
+      one: '$n karta',
     );
     return '$_temp0 · około $m min';
   }
@@ -5049,6 +5308,7 @@ class AppLocalizationsPl extends AppLocalizations {
       other: 'Obstawiaj wąsko, gdy jesteś pewien: płaci $times razy więcej.',
       many: 'Obstawiaj wąsko, gdy jesteś pewien: płaci $times razy więcej.',
       few: 'Obstawiaj wąsko, gdy jesteś pewien: płaci $times razy więcej.',
+      one: 'Obstawiaj wąsko, gdy jesteś pewien: płaci $times raz więcej.',
     );
     return '$_temp0';
   }
@@ -5092,7 +5352,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String betsStakeLine(int points) {
-    return '$points punktów dziennie. Wygrasz, a stawka się podwoi';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '$points punktu dziennie. Wygrasz, a stawka się podwoi',
+      many: '$points punktów dziennie. Wygrasz, a stawka się podwoi',
+      few: '$points punkty dziennie. Wygrasz, a stawka się podwoi',
+      one: '$points punkt dziennie. Wygrasz, a stawka się podwoi',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5413,12 +5681,16 @@ class AppLocalizationsPl extends AppLocalizations {
       subjects,
       locale: localeName,
       other: 'Łączy się z $subjects tematami',
+      many: 'Łączy się z $subjects tematami',
+      few: 'Łączy się z $subjects tematami',
       one: 'Łączy się z 1 tematem',
     );
     String _temp1 = intl.Intl.pluralLogic(
       cards,
       locale: localeName,
       other: 'w $cards kartach',
+      many: 'w $cards kartach',
+      few: 'w $cards kartach',
       one: 'w 1 karcie',
     );
     return '$_temp0 $_temp1';
@@ -5939,7 +6211,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String whatYearPoints(int n, int of) {
-    return '$n z $of punktów';
+    String _temp0 = intl.Intl.pluralLogic(
+      of,
+      locale: localeName,
+      other: '$of punktu',
+      many: '$of punktów',
+      few: '$of punktów',
+      one: '$of punktu',
+    );
+    return '$n z $_temp0';
   }
 
   @override
@@ -6213,17 +6493,41 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String closerDoneSteps(String said, int right, int steps) {
-    return 'To $said: dobrze w $right z $steps kroków.';
+    String _temp0 = intl.Intl.pluralLogic(
+      steps,
+      locale: localeName,
+      other: '$steps kroku',
+      many: '$steps kroków',
+      few: '$steps kroków',
+      one: '$steps kroku',
+    );
+    return 'To $said: dobrze w $right z $_temp0.';
   }
 
   @override
   String closerExactSteps(String said, int right, int steps) {
-    return 'To dokładnie $said: dobrze w $right z $steps kroków.';
+    String _temp0 = intl.Intl.pluralLogic(
+      steps,
+      locale: localeName,
+      other: '$steps kroku',
+      many: '$steps kroków',
+      few: '$steps kroków',
+      one: '$steps kroku',
+    );
+    return 'To dokładnie $said: dobrze w $right z $_temp0.';
   }
 
   @override
   String closerStepsRight(int right, int steps) {
-    return 'Dobrze w $right z $steps kroków.';
+    String _temp0 = intl.Intl.pluralLogic(
+      steps,
+      locale: localeName,
+      other: '$steps kroku',
+      many: '$steps kroków',
+      few: '$steps kroków',
+      one: '$steps kroku',
+    );
+    return 'Dobrze w $right z $_temp0.';
   }
 
   @override
@@ -6552,7 +6856,8 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       off,
       locale: localeName,
-      other: 'pomyliłem się o $off punktów',
+      other: 'pomyliłem się o $off punktu',
+      many: 'pomyliłem się o $off punktów',
       few: 'pomyliłem się o $off punkty',
       one: 'pomyliłem się o 1 punkt',
       zero: 'trafiłem w punkt',
@@ -6595,7 +6900,9 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'z $n kart, które pytały',
+      other: 'z $n karty, które pytały',
+      many: 'z $n kart, które pytały',
+      few: 'z $n kart, które pytały',
       one: 'z 1 karty, która pytała',
     );
     return '$_temp0';
@@ -6670,7 +6977,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String storyHeadlineStreak(int n) {
-    return '$n dni z rzędu. Nie zgub wątku.';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dnia z rzędu. Nie zgub wątku.',
+      many: '$n dni z rzędu. Nie zgub wątku.',
+      few: '$n dni z rzędu. Nie zgub wątku.',
+      one: '$n dzień z rzędu. Nie zgub wątku.',
+    );
+    return '$_temp0';
   }
 
   @override
