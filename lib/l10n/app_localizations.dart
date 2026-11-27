@@ -2952,6 +2952,120 @@ abstract class AppLocalizations {
   /// **'A few more answers, and this will show where you\'re strong.'**
   String get strengthsEmpty;
 
+  /// Look D, the profile: heading of the box under 'Where do you want to be sharper?', echoing it: where the reader's answers say they already see clearly, in the skills their goal takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you\'re already sharp'**
+  String get readTitle;
+
+  /// Look D: small label over the skill the reader gets most wrong among the ones their goal takes: their blind spot.
+  ///
+  /// In en, this message translates to:
+  /// **'Your blind spot'**
+  String get readBlind;
+
+  /// Look D, the profile on the free plan: what Astute+ adds under the two lines: five cards to practise the blind spot, and every skill ranked.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards on your blind spot, and your whole profile, with Astute+.'**
+  String get readLocked;
+
+  /// Look D: where the box stands before the goal's skills have enough answers behind them.
+  ///
+  /// In en, this message translates to:
+  /// **'A few more answers, and this will show where you\'re sharp and where you\'re not.'**
+  String get readEmpty;
+
+  /// Look D, the profile: in the box when the reader has not picked where they want to be sharper, in the section just above.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick above where you want to be sharper, and your answers will show where you already are.'**
+  String get readNoAim;
+
+  /// Look D, Your journey: the line under the reader's goal, over its skills ranked by right answers.
+  ///
+  /// In en, this message translates to:
+  /// **'The skills this goal takes, read from your answers: where you\'re sharp, and your blind spot.'**
+  String get readLine;
+
+  /// Look D, Your journey: heading over the skills the goal does not take, ranked the same way.
+  ///
+  /// In en, this message translates to:
+  /// **'The rest of your profile'**
+  String get readOthers;
+
+  /// Look E: the one skill the reader trains this week, Monday to Sunday. Heading on the profile and in Your journey.
+  ///
+  /// In en, this message translates to:
+  /// **'This week\'s focus'**
+  String get focusTitle;
+
+  /// Look E, free plan: how this week's skill was chosen: in turn from the skills the reader's goal takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Picked from your goal: a different skill each week.'**
+  String get focusFromGoal;
+
+  /// Look E, Astute+: how this week's skill was chosen: the one the reader got most wrong before the week began.
+  ///
+  /// In en, this message translates to:
+  /// **'Picked from your answers: where you slip most.'**
+  String get focusFromMisses;
+
+  /// Look E, Your journey: under this week's skill. Cards that train it carry its small mark; on Sunday the week's result is shown.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards that train it carry its mark. On Sunday, how the week went.'**
+  String get focusLine;
+
+  /// Look E: last week's skill, before how its answers went on the line under it.
+  ///
+  /// In en, this message translates to:
+  /// **'Last week: {skill}'**
+  String focusLast(String skill);
+
+  /// Look E, on Sunday: the skill of the week that starts on Monday.
+  ///
+  /// In en, this message translates to:
+  /// **'From Monday: {skill}'**
+  String focusNext(String skill);
+
+  /// Look E, on Sunday: small heading over the week's result, its right answers out of those given.
+  ///
+  /// In en, this message translates to:
+  /// **'How the week went'**
+  String get focusResult;
+
+  /// Look E, the profile on the free plan: what Astute+ changes: the week's skill is the one the reader slips on most.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+, your answers pick the focus: where you slip most.'**
+  String get focusPlus;
+
+  /// Look E: the sheet a card's small mark opens, under the skill's name: what the mark means.
+  ///
+  /// In en, this message translates to:
+  /// **'This week you\'re training this skill: cards that train it carry this mark. On Sunday you\'ll see how it went.'**
+  String get focusMarkBody;
+
+  /// Look E, Explore: a shelf of cards that train this week's skill. skill is its name.
+  ///
+  /// In en, this message translates to:
+  /// **'This week\'s focus: {skill}'**
+  String focusShelf(String skill);
+
+  /// Look E, Explore: the line under the shelf of this week's skill.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards that train it, not read yet.'**
+  String get focusShelfLine;
+
+  /// Look E: the button on the sheet a card's mark opens, to Your journey where the week is shown day by day.
+  ///
+  /// In en, this message translates to:
+  /// **'Your week'**
+  String get focusOpen;
+
   /// The reader's score in all the skills together: a number with no top, moved by every answer on a card (like a chess rating). Its name; Astute is the app's name.
   ///
   /// In en, this message translates to:

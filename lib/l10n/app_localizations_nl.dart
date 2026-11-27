@@ -2171,6 +2171,78 @@ class AppLocalizationsNl extends AppLocalizations {
       'Nog een paar antwoorden, dan zie je hier waar je sterk bent.';
 
   @override
+  String get readTitle => 'Waar je al scherp bent';
+
+  @override
+  String get readBlind => 'Je blinde vlek';
+
+  @override
+  String get readLocked =>
+      'Vijf kaarten over je blinde vlek, en je hele profiel, met Astute+.';
+
+  @override
+  String get readEmpty =>
+      'Nog een paar antwoorden, dan zie je hier waar je scherp bent en waar niet.';
+
+  @override
+  String get readNoAim =>
+      'Kies hierboven waar je scherper wilt zijn: je antwoorden laten zien waar je dat al bent.';
+
+  @override
+  String get readLine =>
+      'De vaardigheden die dit doel vraagt, gelezen uit je antwoorden: waar je scherp bent, en je blinde vlek.';
+
+  @override
+  String get readOthers => 'De rest van je profiel';
+
+  @override
+  String get focusTitle => 'De focus van de week';
+
+  @override
+  String get focusFromGoal =>
+      'Gekozen uit je doel: elke week een andere vaardigheid.';
+
+  @override
+  String get focusFromMisses =>
+      'Gekozen uit je antwoorden: waar je het vaakst misgaat.';
+
+  @override
+  String get focusLine =>
+      'Kaarten die hierop trainen dragen het teken. Op zondag: hoe de week ging.';
+
+  @override
+  String focusLast(String skill) {
+    return 'Vorige week: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'Vanaf maandag: $skill';
+  }
+
+  @override
+  String get focusResult => 'Hoe de week ging';
+
+  @override
+  String get focusPlus =>
+      'Met Astute+ kiezen je antwoorden de focus: waar je het vaakst misgaat.';
+
+  @override
+  String get focusMarkBody =>
+      'Deze week train je deze vaardigheid: kaarten die haar trainen dragen dit teken. Op zondag zie je hoe het ging.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'Focus van de week: $skill';
+  }
+
+  @override
+  String get focusShelfLine => 'Kaarten hiervoor, nog niet gelezen.';
+
+  @override
+  String get focusOpen => 'Jouw week';
+
+  @override
   String get scoreTitle => 'Astute-score';
 
   @override

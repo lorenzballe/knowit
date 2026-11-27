@@ -46,11 +46,22 @@ part 'journey_story.dart';
 
 /// The journey's first chapter, as What to learn's look has it
 /// (DebugLooks.learn): as it ships, Your training, the Astute score and the
-/// skills picked with theirs; in A, the score alone, under its own name; in
-/// B, the score and the reader's aim, in words; in C, the score and the
-/// skills as the reader's answers rank them.
+/// skills picked with theirs; in A, the score alone, under its own name. In
+/// the others, what the look is about first and the Astute score under it:
+/// in B the reader's aim and its week, in words; in C the skills as the
+/// reader's answers rank them; in D the skills the aim takes, ranked, with
+/// the blind spot, and the rest of the profile; in E the week's skill, day
+/// by day.
 Widget _learnChapter(BuildContext context, AppState app, int n) {
   final l = context.l10n;
+  Widget overScore(Widget first) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      first,
+      const SizedBox(height: 8),
+      TrainingChapter(app: app, skills: false),
+    ],
+  );
   return switch (learnLook) {
     LearnLook.today => _Chapter(
       n: n,
@@ -65,28 +76,25 @@ Widget _learnChapter(BuildContext context, AppState app, int n) {
     ),
     LearnLook.aim => _Chapter(
       n: n,
-      title: l.trainingTitle,
+      title: l.whyGoalRow,
       trailing: AimPanel.change(context, app),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TrainingChapter(app: app, skills: false),
-          const SizedBox(height: 8),
-          AimPanel(app: app),
-        ],
-      ),
+      child: overScore(AimPanel(app: app, label: false)),
     ),
     LearnLook.profile => _Chapter(
       n: n,
-      title: l.trainingTitle,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TrainingChapter(app: app, skills: false),
-          const SizedBox(height: 8),
-          StrengthsPanel(app: app),
-        ],
-      ),
+      title: l.strengthsTitle,
+      child: overScore(StrengthsPanel(app: app, label: false)),
+    ),
+    LearnLook.aimProfile => _Chapter(
+      n: n,
+      title: l.whyGoalRow,
+      trailing: AimPanel.change(context, app),
+      child: overScore(AimReadPanel(app: app)),
+    ),
+    LearnLook.weekly => _Chapter(
+      n: n,
+      title: l.focusTitle,
+      child: overScore(FocusPanel(app: app)),
     ),
   };
 }
@@ -223,8 +231,9 @@ class _JourneyScreenState extends State<JourneyScreen> {
       // What the reader is training first: their Astute score, the one
       // number the journey keeps, and the skills they picked with theirs;
       // or, in the looks of What to learn the developer tools try, the
-      // score alone, the score and the reader's aim, or the score and where
-      // their answers say they are strong (lib/widgets/learn_looks.dart).
+      // score alone, or what the look is about over the score: the aim,
+      // where the answers say they are strong, the aim read, or the week's
+      // skill (lib/widgets/learn_looks.dart).
       _learnChapter(context, app, ++n),
       chapterGap,
       // What to do now, under the number it moves.

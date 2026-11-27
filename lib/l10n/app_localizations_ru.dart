@@ -2445,6 +2445,79 @@ class AppLocalizationsRu extends AppLocalizations {
       'Ещё несколько ответов — и здесь появятся твои сильные стороны.';
 
   @override
+  String get readTitle => 'Где ты уже видишь ясно';
+
+  @override
+  String get readBlind => 'Твоё слепое пятно';
+
+  @override
+  String get readLocked =>
+      'Пять карточек на твоё слепое пятно и весь профиль — с Astute+.';
+
+  @override
+  String get readEmpty =>
+      'Ещё несколько ответов — и здесь будет видно, где ты видишь ясно, а где нет.';
+
+  @override
+  String get readNoAim =>
+      'Выбери выше, где ты хочешь видеть яснее: твои ответы покажут, где ты уже видишь ясно.';
+
+  @override
+  String get readLine =>
+      'Навыки, которые нужны для этой цели, по твоим ответам: где ты видишь ясно и твоё слепое пятно.';
+
+  @override
+  String get readOthers => 'Остальной профиль';
+
+  @override
+  String get focusTitle => 'Фокус недели';
+
+  @override
+  String get focusFromGoal =>
+      'Выбран по твоей цели: каждую неделю другой навык.';
+
+  @override
+  String get focusFromMisses =>
+      'Выбран по твоим ответам: здесь ты ошибаешься чаще всего.';
+
+  @override
+  String get focusLine =>
+      'Карточки, которые его тренируют, отмечены его знаком. В воскресенье — итоги недели.';
+
+  @override
+  String focusLast(String skill) {
+    return 'На прошлой неделе: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'С понедельника: $skill';
+  }
+
+  @override
+  String get focusResult => 'Итоги недели';
+
+  @override
+  String get focusPlus =>
+      'С Astute+ фокус выбирают твои ответы: там, где ты ошибаешься чаще всего.';
+
+  @override
+  String get focusMarkBody =>
+      'На этой неделе ты тренируешь этот навык: карточки, которые его тренируют, отмечены этим знаком. В воскресенье увидишь, как всё прошло.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'Фокус недели: $skill';
+  }
+
+  @override
+  String get focusShelfLine =>
+      'Карточки, которые его тренируют, ещё не прочитанные.';
+
+  @override
+  String get focusOpen => 'Твоя неделя';
+
+  @override
   String get scoreTitle => 'Рейтинг Astute';
 
   @override

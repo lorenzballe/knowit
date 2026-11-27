@@ -28,7 +28,8 @@ import '../widgets/day_moment.dart' show showDayMomentIfDue;
 import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
-import '../widgets/learn_looks.dart' show goalUnsaid, markedSkills;
+import '../widgets/learn_looks.dart'
+    show goalUnsaid, markedSkills, scoredSkills;
 import 'paywall_screen.dart' show showFirstOfferIfDue;
 import 'today_done_view.dart';
 
@@ -454,7 +455,7 @@ class _TodayScreenState extends State<TodayScreen> {
               skillOf: (pill) => skillMarkOf(pill, markedSkills(app)),
               // The score the answer moved, beside its verdict.
               moveOf: (pill) =>
-                  todayMoveOf(app, pill, skillMarkOf(pill, markedSkills(app))),
+                  todayMoveOf(app, pill, skillMarkOf(pill, scoredSkills(app))),
               onSkill: (pill, skill) =>
                   showSkillMarkSheet(context, app, skill, cardId: pill.id),
               answerFor: app.answerFor,

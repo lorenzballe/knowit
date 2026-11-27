@@ -2071,6 +2071,69 @@ class AppLocalizationsZh extends AppLocalizations {
   String get strengthsEmpty => '再多答几题，这里就会显示你的强项。';
 
   @override
+  String get readTitle => '你已经看得清楚的地方';
+
+  @override
+  String get readBlind => '你的盲点';
+
+  @override
+  String get readLocked => '针对你盲点的五张卡片和完整画像，需要 Astute+。';
+
+  @override
+  String get readEmpty => '再多答几题，这里就会显示你在哪里看得清楚、在哪里没有。';
+
+  @override
+  String get readNoAim => '在上面选出你想在哪方面看得更清楚：你的答题会告诉你，哪里已经看清了。';
+
+  @override
+  String get readLine => '这个目标需要的能力，从你的答题中读出：哪里看得清楚，以及你的盲点。';
+
+  @override
+  String get readOthers => '你画像的其余部分';
+
+  @override
+  String get focusTitle => '本周专注';
+
+  @override
+  String get focusFromGoal => '根据你的目标选出：每周换一项能力。';
+
+  @override
+  String get focusFromMisses => '根据你的答题选出：这是你最常出错的地方。';
+
+  @override
+  String get focusLine => '训练它的卡片会带有它的标记。周日，看看这一周的结果。';
+
+  @override
+  String focusLast(String skill) {
+    return '上周：$skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return '从周一起：$skill';
+  }
+
+  @override
+  String get focusResult => '这一周的结果';
+
+  @override
+  String get focusPlus => '有了 Astute+，由你的答题来选专注项：你最常出错的地方。';
+
+  @override
+  String get focusMarkBody => '本周你在训练这项能力：训练它的卡片都带有这个标记。周日你会看到结果。';
+
+  @override
+  String focusShelf(String skill) {
+    return '本周专注：$skill';
+  }
+
+  @override
+  String get focusShelfLine => '训练它、你还没读过的卡片。';
+
+  @override
+  String get focusOpen => '你的一周';
+
+  @override
   String get scoreTitle => 'Astute 分数';
 
   @override

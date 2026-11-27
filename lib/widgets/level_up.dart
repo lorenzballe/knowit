@@ -87,17 +87,18 @@ Future<bool> showLevelUpIfDue(BuildContext context, AppState app) async {
       due,
       picked: pickedSkills(app),
     );
-    // In the looks of What to learn with no skills to show (A and B,
-    // lib/widgets/learn_looks.dart), the level says the answers behind it,
-    // not a skill the reader never sees.
+    // In the looks of What to learn with no skills to show, or with one a
+    // week and no score in it (A, B and E, lib/widgets/learn_looks.dart),
+    // the level says the answers behind it, not a skill's score the reader
+    // never sees.
     final LevelMoment moment = switch (DebugLooks.learnPicked) {
-      LearnLook.score || LearnLook.aim => LevelMoment(
+      LearnLook.score || LearnLook.aim || LearnLook.weekly => LevelMoment(
         level: found.level,
         score: found.score,
         from: found.from,
         answers: found.answers,
       ),
-      LearnLook.today || LearnLook.profile => found,
+      LearnLook.today || LearnLook.profile || LearnLook.aimProfile => found,
     };
     unawaited(
       Navigator.of(

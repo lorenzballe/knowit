@@ -2078,6 +2078,70 @@ class AppLocalizationsJa extends AppLocalizations {
   String get strengthsEmpty => 'あと少し答えると、ここに得意分野が表示されます。';
 
   @override
+  String get readTitle => 'もう見抜けているところ';
+
+  @override
+  String get readBlind => 'あなたの盲点';
+
+  @override
+  String get readLocked => '盲点を鍛える5枚のカードと、プロフィールのすべては Astute+ で。';
+
+  @override
+  String get readEmpty => 'あと少し答えると、見抜けているところとそうでないところがここに表示されます。';
+
+  @override
+  String get readNoAim =>
+      '上で、どこでもっと見抜けるようになりたいかを選んでください。答えから、もう見抜けているところがわかります。';
+
+  @override
+  String get readLine => 'この目標に必要なスキルを、あなたの答えから読み取りました。見抜けているところと、盲点。';
+
+  @override
+  String get readOthers => 'プロフィールのほかの部分';
+
+  @override
+  String get focusTitle => '今週のフォーカス';
+
+  @override
+  String get focusFromGoal => 'あなたの目標から選びました。毎週ちがうスキルです。';
+
+  @override
+  String get focusFromMisses => 'あなたの答えから選びました。いちばんつまずくところです。';
+
+  @override
+  String get focusLine => 'これを鍛えるカードには印がつきます。日曜日に、今週の結果がわかります。';
+
+  @override
+  String focusLast(String skill) {
+    return '先週：$skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return '月曜日から：$skill';
+  }
+
+  @override
+  String get focusResult => '今週の結果';
+
+  @override
+  String get focusPlus => 'Astute+ なら、あなたの答えがフォーカスを選びます。いちばんつまずくところです。';
+
+  @override
+  String get focusMarkBody => '今週はこのスキルを鍛えます。これを鍛えるカードにはこの印がつきます。日曜日に結果がわかります。';
+
+  @override
+  String focusShelf(String skill) {
+    return '今週のフォーカス：$skill';
+  }
+
+  @override
+  String get focusShelfLine => 'これを鍛える、まだ読んでいないカード。';
+
+  @override
+  String get focusOpen => 'あなたの一週間';
+
+  @override
   String get scoreTitle => 'Astuteスコア';
 
   @override

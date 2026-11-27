@@ -11,7 +11,7 @@ import '../widgets/ui.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/path_door.dart';
 import '../widgets/share_sheet.dart';
-import '../widgets/learn_looks.dart' show markedSkills;
+import '../widgets/learn_looks.dart' show markedSkills, scoredSkills;
 import '../widgets/skill_mark.dart';
 import '../widgets/skill_score.dart' show todayMoveOf;
 import '../widgets/glass_round.dart';
@@ -398,7 +398,7 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                         ? (pill) => todayMoveOf(
                             widget.app,
                             pill,
-                            skillMarkOf(pill, markedSkills(widget.app)),
+                            skillMarkOf(pill, scoredSkills(widget.app)),
                           )
                         : null,
                     onSkill: (pill, skill) => showSkillMarkSheet(

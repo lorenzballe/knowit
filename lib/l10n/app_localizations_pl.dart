@@ -2465,6 +2465,79 @@ class AppLocalizationsPl extends AppLocalizations {
       'Jeszcze kilka odpowiedzi, a zobaczysz tu swoje mocne strony.';
 
   @override
+  String get readTitle => 'Gdzie już widzisz jasno';
+
+  @override
+  String get readBlind => 'Twój martwy punkt';
+
+  @override
+  String get readLocked =>
+      'Pięć kart na twój martwy punkt i cały profil – z Astute+.';
+
+  @override
+  String get readEmpty =>
+      'Jeszcze kilka odpowiedzi, a zobaczysz tu, gdzie widzisz jasno, a gdzie nie.';
+
+  @override
+  String get readNoAim =>
+      'Wybierz wyżej, gdzie chcesz widzieć jaśniej: twoje odpowiedzi pokażą, gdzie już tak jest.';
+
+  @override
+  String get readLine =>
+      'Umiejętności, których wymaga ten cel, odczytane z twoich odpowiedzi: gdzie widzisz jasno i twój martwy punkt.';
+
+  @override
+  String get readOthers => 'Reszta twojego profilu';
+
+  @override
+  String get focusTitle => 'Priorytet tygodnia';
+
+  @override
+  String get focusFromGoal =>
+      'Wybrany na podstawie twojego celu: co tydzień inna umiejętność.';
+
+  @override
+  String get focusFromMisses =>
+      'Wybrany na podstawie twoich odpowiedzi: tam mylisz się najczęściej.';
+
+  @override
+  String get focusLine =>
+      'Karty, które go ćwiczą, mają jego znak. W niedzielę: jak minął tydzień.';
+
+  @override
+  String focusLast(String skill) {
+    return 'W zeszłym tygodniu: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'Od poniedziałku: $skill';
+  }
+
+  @override
+  String get focusResult => 'Jak minął tydzień';
+
+  @override
+  String get focusPlus =>
+      'Z Astute+ priorytet wybierają twoje odpowiedzi: tam, gdzie mylisz się najczęściej.';
+
+  @override
+  String get focusMarkBody =>
+      'W tym tygodniu ćwiczysz tę umiejętność: karty, które ją ćwiczą, mają ten znak. W niedzielę zobaczysz, jak poszło.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'Priorytet tygodnia: $skill';
+  }
+
+  @override
+  String get focusShelfLine =>
+      'Karty, które go ćwiczą, jeszcze nieprzeczytane.';
+
+  @override
+  String get focusOpen => 'Twój tydzień';
+
+  @override
   String get scoreTitle => 'Wynik Astute';
 
   @override

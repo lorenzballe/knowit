@@ -29,13 +29,14 @@ import 'package:flutter/services.dart';
 
 import '../analytics.dart';
 import '../data/goals.dart';
+import '../data/learn_reading.dart' show aimTally;
 import '../data/topics.dart' show inkOn;
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import 'area_marks.dart';
 import 'fit_text.dart';
-import 'learn_looks.dart' show aimTally, openAimPage;
+import 'learn_looks.dart' show openAimPage;
 import 'premium.dart' show requirePlus;
 import 'ui.dart' show Eyebrow;
 

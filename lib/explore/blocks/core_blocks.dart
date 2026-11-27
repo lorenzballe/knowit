@@ -11,6 +11,7 @@ import 'core/card_blocks.dart';
 import 'core/continue_block.dart';
 import 'core/cover_block.dart';
 import 'core/feed_block.dart';
+import 'core/focus_block.dart';
 import 'core/founders_block.dart';
 import 'core/goal_block.dart';
 import 'core/like_saved_block.dart';
@@ -46,5 +47,6 @@ const List<ExploreBlock> blocks = [
   NewsBlock(),
   LineOfDayBlock(),
   GoalBlock(),
+  FocusBlock(),
   VideoCardsBlock(),
 ];

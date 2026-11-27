@@ -5,6 +5,7 @@ import '../../../data/goals.dart';
 import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
 import '../../../state/app_state.dart';
+import '../../../state/debug_looks.dart';
 import '../../../widgets/area_marks.dart';
 import '../../../widgets/explore/card_tiles.dart';
 import '../../../widgets/explore/first_shelves.dart';
@@ -78,16 +79,24 @@ class GoalBlock extends ExploreBlock with SectionLayout {
 /// where they want to see more clearly was told there would be cards for it
 /// every day, and this is where they are. With no goal, or with the block
 /// already placed by the server, the sections as the server sent them.
+///
+/// In What to learn's look E, as the developer tools try it, the week's
+/// skill has its shelf there too, over the goal's (FocusBlock).
 List<ExploreSection> withAimShelf(AppState app, List<ExploreSection> sections) {
-  if (Goal.of(app.goal) == null) return sections;
-  if (sections.any((s) => s.block == 'goal')) return sections;
+  final bool aim =
+      Goal.of(app.goal) != null && !sections.any((s) => s.block == 'goal');
+  final bool focus =
+      DebugLooks.learnPicked == LearnLook.weekly &&
+      !sections.any((s) => s.block == 'focus');
+  if (!aim && !focus) return sections;
   var at = 0;
   for (final (int i, ExploreSection s) in sections.indexed) {
     if (s.id == 'your-five' || s.id == 'continue') at = i + 1;
   }
   return [
     ...sections.take(at),
-    const ExploreSection(id: 'goal', block: 'goal'),
+    if (focus) const ExploreSection(id: 'focus', block: 'focus'),
+    if (aim) const ExploreSection(id: 'goal', block: 'goal'),
     ...sections.skip(at),
   ];
 }

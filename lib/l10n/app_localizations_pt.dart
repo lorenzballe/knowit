@@ -2186,6 +2186,78 @@ class AppLocalizationsPt extends AppLocalizations {
       'Mais algumas respostas e verás aqui onde és forte.';
 
   @override
+  String get readTitle => 'Onde já vês claro';
+
+  @override
+  String get readBlind => 'O teu ponto cego';
+
+  @override
+  String get readLocked =>
+      'Cinco cartas sobre o teu ponto cego, e o teu perfil inteiro, com o Astute+.';
+
+  @override
+  String get readEmpty =>
+      'Mais algumas respostas e verás aqui onde vês claro e onde não.';
+
+  @override
+  String get readNoAim =>
+      'Escolhe acima onde queres ver mais claro: as tuas respostas vão dizer-te onde já vês.';
+
+  @override
+  String get readLine =>
+      'As competências que este objetivo pede, lidas nas tuas respostas: onde vês claro, e o teu ponto cego.';
+
+  @override
+  String get readOthers => 'O resto do teu perfil';
+
+  @override
+  String get focusTitle => 'O foco da semana';
+
+  @override
+  String get focusFromGoal =>
+      'Escolhido a partir do teu objetivo: cada semana uma competência diferente.';
+
+  @override
+  String get focusFromMisses =>
+      'Escolhido a partir das tuas respostas: onde falhas mais.';
+
+  @override
+  String get focusLine =>
+      'As cartas que o treinam têm a sua marca. No domingo, como correu a semana.';
+
+  @override
+  String focusLast(String skill) {
+    return 'Na semana passada: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'A partir de segunda: $skill';
+  }
+
+  @override
+  String get focusResult => 'Como correu a semana';
+
+  @override
+  String get focusPlus =>
+      'Com o Astute+, o foco é escolhido pelas tuas respostas: onde falhas mais.';
+
+  @override
+  String get focusMarkBody =>
+      'Esta semana treinas esta competência: as cartas que a treinam têm esta marca. No domingo vês como correu.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'Foco da semana: $skill';
+  }
+
+  @override
+  String get focusShelfLine => 'Cartas que o treinam, ainda por ler.';
+
+  @override
+  String get focusOpen => 'A tua semana';
+
+  @override
   String get scoreTitle => 'Pontuação Astute';
 
   @override

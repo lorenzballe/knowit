@@ -2159,6 +2159,78 @@ class AppLocalizationsEn extends AppLocalizations {
       'A few more answers, and this will show where you\'re strong.';
 
   @override
+  String get readTitle => 'Where you\'re already sharp';
+
+  @override
+  String get readBlind => 'Your blind spot';
+
+  @override
+  String get readLocked =>
+      'Five cards on your blind spot, and your whole profile, with Astute+.';
+
+  @override
+  String get readEmpty =>
+      'A few more answers, and this will show where you\'re sharp and where you\'re not.';
+
+  @override
+  String get readNoAim =>
+      'Pick above where you want to be sharper, and your answers will show where you already are.';
+
+  @override
+  String get readLine =>
+      'The skills this goal takes, read from your answers: where you\'re sharp, and your blind spot.';
+
+  @override
+  String get readOthers => 'The rest of your profile';
+
+  @override
+  String get focusTitle => 'This week\'s focus';
+
+  @override
+  String get focusFromGoal =>
+      'Picked from your goal: a different skill each week.';
+
+  @override
+  String get focusFromMisses =>
+      'Picked from your answers: where you slip most.';
+
+  @override
+  String get focusLine =>
+      'Cards that train it carry its mark. On Sunday, how the week went.';
+
+  @override
+  String focusLast(String skill) {
+    return 'Last week: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'From Monday: $skill';
+  }
+
+  @override
+  String get focusResult => 'How the week went';
+
+  @override
+  String get focusPlus =>
+      'With Astute+, your answers pick the focus: where you slip most.';
+
+  @override
+  String get focusMarkBody =>
+      'This week you\'re training this skill: cards that train it carry this mark. On Sunday you\'ll see how it went.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'This week\'s focus: $skill';
+  }
+
+  @override
+  String get focusShelfLine => 'Cards that train it, not read yet.';
+
+  @override
+  String get focusOpen => 'Your week';
+
+  @override
   String get scoreTitle => 'Astute score';
 
   @override

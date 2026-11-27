@@ -2139,6 +2139,78 @@ class AppLocalizationsTr extends AppLocalizations {
       'Birkaç cevap daha, sonra burada güçlü olduğun yerleri göreceksin.';
 
   @override
+  String get readTitle => 'Zaten net gördüğün yerler';
+
+  @override
+  String get readBlind => 'Kör noktan';
+
+  @override
+  String get readLocked =>
+      'Kör noktan için beş kart ve profilinin tamamı Astute+ ile.';
+
+  @override
+  String get readEmpty =>
+      'Birkaç cevap daha, sonra burada nerede net görüp nerede görmediğini göreceksin.';
+
+  @override
+  String get readNoAim =>
+      'Yukarıdan nerede daha net görmek istediğini seç: cevapların nerede zaten net gördüğünü gösterecek.';
+
+  @override
+  String get readLine =>
+      'Bu hedefin gerektirdiği beceriler, cevaplarından okundu: nerede net gördüğün ve kör noktan.';
+
+  @override
+  String get readOthers => 'Profilinin geri kalanı';
+
+  @override
+  String get focusTitle => 'Haftanın odağı';
+
+  @override
+  String get focusFromGoal =>
+      'Hedefine göre seçildi: her hafta farklı bir beceri.';
+
+  @override
+  String get focusFromMisses =>
+      'Cevaplarına göre seçildi: en çok yanıldığın yer.';
+
+  @override
+  String get focusLine =>
+      'Onu çalıştıran kartlarda işareti olur. Pazar günü haftanın nasıl geçtiğini görürsün.';
+
+  @override
+  String focusLast(String skill) {
+    return 'Geçen hafta: $skill';
+  }
+
+  @override
+  String focusNext(String skill) {
+    return 'Pazartesiden itibaren: $skill';
+  }
+
+  @override
+  String get focusResult => 'Hafta nasıl geçti';
+
+  @override
+  String get focusPlus =>
+      'Astute+ ile odağı cevapların seçer: en çok yanıldığın yer.';
+
+  @override
+  String get focusMarkBody =>
+      'Bu hafta bu beceriyi çalışıyorsun: onu çalıştıran kartlarda bu işaret olur. Pazar günü nasıl geçtiğini göreceksin.';
+
+  @override
+  String focusShelf(String skill) {
+    return 'Haftanın odağı: $skill';
+  }
+
+  @override
+  String get focusShelfLine => 'Onu çalıştıran, henüz okunmamış kartlar.';
+
+  @override
+  String get focusOpen => 'Haftan';
+
+  @override
   String get scoreTitle => 'Astute puanı';
 
   @override
