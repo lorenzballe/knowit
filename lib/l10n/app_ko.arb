@@ -435,6 +435,9 @@
   "dailyItemFew": "아직 비교할 만큼 답이 모이지 않았어요",
   "fiveYesterday": "어제의 5문제: {score} / 500.",
   "fiveShareHead": "Astute · 오늘의 5문제 · {date}",
+  "fiveChallengeLine": "Astute 오늘의 5문제에서 {right}개 맞혔어. 나를 이길 수 있어?",
+  "fiveChallengeAll": "Astute 오늘의 5문제를 다 맞혔어. 너도 할 수 있어?",
+  "fiveChallengeInvite": "Astute 오늘의 5문제: 모두에게 같은 다섯 문제. 몇 개나 맞힐 수 있어?",
   "threeShareHeadIn": "Astute · 오늘의 3문제 · {subject} · {date}",
   "dailyShareScore": "{score} / {max} · {day}일째",
   "dailyShareScoreAlone": "{score} / {max}",
@@ -1613,5 +1616,14 @@
   "paywallGoalMark": "{goal, select, decide{더 나은 결정} money{돈 앞에서} people{사람을 이해} news{헤드라인} health{근거} business{분명하게} other{분명하게}}",
   "paywallMadeLine": "{subjects}에서, 당신의 수준에 맞는 카드 매일 다섯 장. 틀린 카드는 몸에 밸 때까지 다시 옵니다. 그리고 매주 달라지는 자신을 보게 됩니다.",
   "subjectsTwo": "{a}, {b}",
-  "subjectsThree": "{a}, {b}, {c}"
+  "subjectsThree": "{a}, {b}, {c}",
+  "firstWeekTitle": "첫 일주일",
+  "firstMonthTitle": "첫 한 달",
+  "firstOfferDays": "{n, plural, other{읽은 날 {n}일}}",
+  "firstWeekBest": "첫 주의 베스트 카드",
+  "firstMonthBest": "첫 달의 베스트 카드",
+  "firstOfferBestWhy": "{why, select, said{누군가에게 이야기한 카드예요.} liked{마음에 든 카드예요.} saved{저장한 카드예요.} changed{생각을 바꿔 준 카드예요.} other{간직한 카드예요.}}",
+  "firstOfferTrialTitle": "{days, plural, other{Astute+ {days}일 무료}}",
+  "firstOfferPlusLine": "매일 나만의 카드 다섯 장, 모든 경로와 모든 책, 그리고 매주 쌓이는 나의 숫자.",
+  "firstOfferNotNow": "나중에"
 }

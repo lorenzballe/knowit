@@ -235,7 +235,7 @@
     gsap.to(ang, {v: target(i), duration: Kit.calm ? 0 : .6, ease: 'back.out(2.2)', onUpdate: setArrow});
     gsap.to(el.on[1 - i], {opacity: .4, duration: Kit.calm ? 0 : .35, ease: 'power2.out'});
     if (!Kit.calm) {
-      gsap.fromTo(el.tube[i], {scale: 1}, {scale: 1.06, duration: .12, yoyo: true, repeat: 1, transformOrigin: '50% 50%', ease: 'power2.out'});
+      gsap.fromTo(el.tube[i], {transformOrigin: '50% 50%', scale: 1}, {scale: 1.06, duration: .12, yoyo: true, repeat: 1, transformOrigin: '50% 50%', ease: 'power2.out'});
       gsap.fromTo(el.spill[i], {opacity: .8}, {opacity: 1, duration: .15, yoyo: true, repeat: 1});
     }
     say.innerHTML = `You pointed Switzerland at the <b>${i ? 'dove' : 'shield'}</b>.`;
@@ -258,7 +258,7 @@
       .set(el.inv, {autoAlpha: 1}, 1.55)
       .fromTo(el.invP, {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: .45, ease: 'power3.in'}, 1.55)
       .add(() => Kit.haptic('success'), 2)
-      .fromTo(el.tube[0], {scale: 1}, {scale: 1.1, duration: .12, yoyo: true, repeat: 1, transformOrigin: '50% 50%', ease: 'power2.out'}, 2)
+      .fromTo(el.tube[0], {transformOrigin: '50% 50%', scale: 1}, {scale: 1.1, duration: .12, yoyo: true, repeat: 1, transformOrigin: '50% 50%', ease: 'power2.out'}, 2)
       .fromTo(el.spill[0], {opacity: .8}, {opacity: 1, duration: .12, yoyo: true, repeat: 1}, 2)
       .fromTo(el.sparks, {autoAlpha: 1, scale: .3, svgOrigin: `${G.ix} ${G.iy}`}, {autoAlpha: 0, scale: 1.5, svgOrigin: `${G.ix} ${G.iy}`, duration: .7, ease: 'expo.out'}, 2)
       .to(el.invP, {drawSVG: '0% 0%', duration: .5, ease: 'power3.out'}, 2.02)

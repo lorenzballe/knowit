@@ -321,7 +321,7 @@ Wow: at 48 h the chalky, bumpy shell morphs (MorphSVG) into a smooth membrane. T
 
   function reveal() {
     const {ecx, ecy, ry} = geo;
-    gsap.fromTo(E.yolk, {scale: .8}, {scale: 1, transformOrigin: '50% 50%', duration: 1, ease: 'elastic.out(1,.4)'});
+    gsap.fromTo(E.yolk, {transformOrigin: '50% 50%', scale: .8}, {scale: 1, transformOrigin: '50% 50%', duration: 1, ease: 'elastic.out(1,.4)'});
     gsap.timeline()
       .to(E.egg, {scaleY: .84, scaleX: 1.1, svgOrigin: `${ecx} ${ecy + ry}`, duration: .16, ease: 'power2.in'})
       .to(E.egg, {scaleY: 1, scaleX: 1, svgOrigin: `${ecx} ${ecy + ry}`, duration: 1.1, ease: 'elastic.out(1,.3)'});

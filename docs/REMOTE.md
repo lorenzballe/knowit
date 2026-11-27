@@ -187,7 +187,10 @@ The knobs this build reads:
 | `place.ask` | switch | on | — | the place's sheet after a finished day (Explore and Profile still ask when the reader asks them to) | `AppState.shouldAskForPlace` |
 | `review.ask` | switch | on | — | the store's rating prompt | `AppState.shouldAskForReview` |
 | `trial.firstRun` | switch | off | — | the first run's free trial: after the onboarding, one real card, then the offer of the year's free days, then the day's five (never to a reader with Astute+, never twice a day, never without the store's own year on sale) | `trialOfferDue` (lib/screens/trial_offer.dart) |
+| `offer.firstWeek` | switch | off | — | the first week's page: after the five on the seventh day the five are finished (up to the tenth), a reader on the free plan who never had a trial sees what the week came to in their own numbers, and the year's free days under them; once, never on Astute+, never without the store's year with free days for this reader, never on a day with another full-screen moment (a level wins), never on the evening of the reminder sheet or the rating prompt | `firstOfferDue` (lib/state/first_offers.dart) |
+| `offer.firstMonth` | switch | off | — | its twin: after the five on a day 30 to 44 days after the install, with seven days of reading at least and two weeks at least after the week's page, "Your first month", with the month's numbers; the same rules | `firstOfferDue` (lib/state/first_offers.dart) |
 | `cardAi` | switch | off | — | the answers by Claude, Astute+'s: the assistant in Go deeper and the weekly coach in Your journey (a free reader sees them locked); the developer tools have them on regardless | `cardAiOn` (lib/widgets/deeper_sheet.dart) |
+| `share.challenge` | switch | off | — | "Challenge a friend" on today's five: at the end of the five on Explore, in place of the score as squares, and under the finished day's share, a line and a link to `astutetheapp.com/sfida`, where a friend plays the same five in a browser and sees both scores (on in `remote/app.json`) | `AppState.shareChallengeOn` (lib/explore/blocks/bets/three.dart, lib/widgets/share_day.dart) |
 | `push.askGapDays` | number | 3 | 1 to 30 | the days a "Not now" holds the reminder sheet back | `AppState.shouldAskForPush` |
 | `push.deferralsAllowed` | number | 3 | 1 to 10 | how many "Not now"s the sheet takes before it stops coming | `AppState.shouldAskForPush` |
 | `push.times` | three times | 08:30, 12:30, 19:00 | 05:00–11:00, 11:00–15:00, 17:00–23:00 (the last minute out) | the times the reminder sheet offers, each where its word ("Morning", "Lunchtime", "Evening") stays true | `lib/widgets/reminder_ask.dart` |
@@ -203,6 +206,8 @@ Changing them from the server:
   `"tunables": {"push.askGapDays": 2, "push.times": ["07:45", "12:30", "19:00"]}`;
 - the first run's free trial for half of new readers on iPhone:
   `"flags": {"trial.firstRun": {"on": true, "audience": {"platforms": ["ios"], "rollout": 50}}}`;
+- the first week's page for everybody, the first month's held back:
+  `"flags": {"offer.firstWeek": true, "offer.firstMonth": false}`;
 - the first-evening reminder for a fifth of readers, half and half:
   `"experiments": {"push.firstAsk": {"variants": ["cameBack", "firstDay"], "audience": {"rollout": 20}}}`.
 

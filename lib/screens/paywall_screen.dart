@@ -15,13 +15,17 @@ import '../legal.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../data/goals.dart' show Goal;
+import '../data/levels.dart' show LevelMemory;
 import '../data/pill_bank.dart' show PillBank;
-import '../data/pills_repository.dart' show dealableOn;
+import '../data/pills_repository.dart' show dateKey, dealableOn;
 import '../data/topics.dart' show TopicStyle, kTopicOrder, kTopics;
 import '../data/video_cards.dart' show videoCardOf;
+import '../measure/screens.dart' show ScreenPresence;
 import '../models/pill.dart' show Pill;
 import '../state/app_state.dart';
 import '../state/debug_looks.dart';
+import '../state/first_offers.dart';
+import '../state/journey_record.dart' show Tally;
 import '../state/progress.dart' show kCalibrationFloor;
 import '../store_links.dart'
     show kAppStoreSubscriptionsUrl, kGooglePlaySubscriptionsUrl;
@@ -29,6 +33,7 @@ import '../sync/review_access.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
 import '../utils/reminders.dart' show remindersSupported;
+import '../widgets/card_edge.dart' show cardFace;
 import '../widgets/chunky.dart';
 import '../widgets/deeper_sheet.dart' show cardAiOn;
 import '../widgets/explore/card_tiles.dart'
@@ -41,6 +46,7 @@ import 'purchase_success_screen.dart';
 import '../widgets/glass_round.dart';
 
 part 'trial_offer.dart';
+part 'first_offer.dart';
 part 'paywall_looks.dart';
 
 /// What Astute+ costs, in cents, so the saving can be worked out rather than

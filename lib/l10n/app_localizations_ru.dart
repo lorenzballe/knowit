@@ -2091,6 +2091,19 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String fiveChallengeLine(int right) {
+    return 'В «Пяти вопросах дня» Astute у меня $right из 5. Сможешь лучше?';
+  }
+
+  @override
+  String get fiveChallengeAll =>
+      'В «Пяти вопросах дня» Astute у меня 5 из 5. Повторишь?';
+
+  @override
+  String get fiveChallengeInvite =>
+      '«Пять вопросов дня» в Astute: одни и те же пять вопросов для всех. Сколько ответишь верно?';
+
+  @override
   String threeShareHeadIn(String subject, String date) {
     return 'Astute · Три вопроса дня · $subject · $date';
   }
@@ -7374,4 +7387,61 @@ class AppLocalizationsRu extends AppLocalizations {
   String subjectsThree(String a, String b, String c) {
     return '$a, $b и $c';
   }
+
+  @override
+  String get firstWeekTitle => 'Твоя первая неделя';
+
+  @override
+  String get firstMonthTitle => 'Твой первый месяц';
+
+  @override
+  String firstOfferDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n дня чтения',
+      many: '$n дней чтения',
+      few: '$n дня чтения',
+      one: '$n день чтения',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstWeekBest => 'Лучшая карточка недели';
+
+  @override
+  String get firstMonthBest => 'Лучшая карточка месяца';
+
+  @override
+  String firstOfferBestWhy(String why) {
+    String _temp0 = intl.Intl.selectLogic(why, {
+      'said': 'Ты рассказал о ней кому-то.',
+      'liked': 'Она тебе понравилась.',
+      'saved': 'Ты её сохранил.',
+      'changed': 'Она изменила твоё мнение.',
+      'other': 'Ты её сохранил.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String firstOfferTrialTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ бесплатно на $days дня',
+      many: 'Astute+ бесплатно на $days дней',
+      few: 'Astute+ бесплатно на $days дня',
+      one: 'Astute+ бесплатно на $days день',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstOfferPlusLine =>
+      'Пять своих карточек каждый день, каждый путь и каждая книга, а ещё твои цифры неделя за неделей.';
+
+  @override
+  String get firstOfferNotNow => 'Не сейчас';
 }

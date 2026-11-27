@@ -1977,6 +1977,19 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String fiveChallengeLine(int right) {
+    return 'Astute\'ta bugünün beşlisinde 5\'te $right yaptım. Beni geçebilir misin?';
+  }
+
+  @override
+  String get fiveChallengeAll =>
+      'Astute\'ta bugünün beşlisinde 5\'te 5 yaptım. Sen de yapabilir misin?';
+
+  @override
+  String get fiveChallengeInvite =>
+      'Astute\'ta bugünün beşlisi: herkese aynı beş soru. Kaçını bilebilirsin?';
+
+  @override
   String threeShareHeadIn(String subject, String date) {
     return 'Astute · Bugünün üçlüsü · $subject · $date';
   }
@@ -6978,4 +6991,57 @@ class AppLocalizationsTr extends AppLocalizations {
   String subjectsThree(String a, String b, String c) {
     return '$a, $b ve $c';
   }
+
+  @override
+  String get firstWeekTitle => 'İlk haftan';
+
+  @override
+  String get firstMonthTitle => 'İlk ayın';
+
+  @override
+  String firstOfferDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n günlük okuma',
+      one: 'Bir günlük okuma',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstWeekBest => 'Haftanın en iyi kartı';
+
+  @override
+  String get firstMonthBest => 'Ayın en iyi kartı';
+
+  @override
+  String firstOfferBestWhy(String why) {
+    String _temp0 = intl.Intl.selectLogic(why, {
+      'said': 'Birine anlattın.',
+      'liked': 'Beğendin.',
+      'saved': 'Kaydettin.',
+      'changed': 'Fikrini değiştirdi.',
+      'other': 'Sakladın.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String firstOfferTrialTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ $days gün ücretsiz',
+      one: 'Astute+ bir gün ücretsiz',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get firstOfferPlusLine =>
+      'Her gün sana ait beş kart, her yol ve her kitap, bir de hafta hafta senin sayıların.';
+
+  @override
+  String get firstOfferNotNow => 'Şimdi değil';
 }

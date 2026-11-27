@@ -151,7 +151,7 @@ Kit.onShow.card = () => draw();
 Kit.onEnter.card = () => {
   if (Kit.calm || !E.knob) return;
   gsap.fromTo(S, {v: 0}, {v: S.g, duration: .9, ease: 'power3.out', onUpdate: update});
-  gsap.fromTo(E.knob, {scale: 1}, {scale: 1.25, transformOrigin: 'center', yoyo: true, repeat: 3, duration: .35, delay: .9});
+  gsap.fromTo(E.knob, {transformOrigin: 'center', scale: 1}, {scale: 1.25, transformOrigin: 'center', yoyo: true, repeat: 3, duration: .35, delay: .9});
 };
 Kit.play.card = async () => {
   const svg = Kit.$('th'), rc = svg.getBoundingClientRect();

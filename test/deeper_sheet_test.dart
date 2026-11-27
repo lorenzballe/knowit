@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ShaderMaskLayer;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +14,7 @@ import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/card_ask.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/deeper/app_style.dart' show TopDissolve;
 import 'package:astuto/widgets/deeper/editorial.dart' show deeperEditorial;
 import 'package:astuto/widgets/deeper/look.dart';
 import 'package:astuto/widgets/deeper/pieces.dart' show splitView;
@@ -589,6 +591,67 @@ void main() {
     );
     expect(find.bySemanticsLabel('VS'), findsNothing);
     semantics.dispose();
+  });
+
+  group('scrolled on a phone', () {
+    Future<ScrollableState> raised(WidgetTester tester) async {
+      debugToolsOn = true;
+      await _open(
+        tester,
+        await _app(plus: true),
+        _card(full: false),
+        theme: Brightness.dark,
+        size: const Size(390, 844),
+      );
+      // Drawn up to its full height by the reader's thumb.
+      await tester.dragFrom(const Offset(195, 700), const Offset(0, -400));
+      await tester.pumpAndSettle();
+      return tester.state<ScrollableState>(
+        find
+            .descendant(
+              of: find.byType(DeeperSheet),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
+    }
+
+    testWidgets('the parts never run over the question as they go up', (
+      tester,
+    ) async {
+      final ScrollableState list = await raised(tester);
+      for (final double at in [0, 40, 80, 120, 160, 200, 240]) {
+        list.position.jumpTo(at);
+        await tester.pump();
+        final double question = tester
+            .getBottomLeft(find.text('Why do rare illnesses fool good tests?'))
+            .dy;
+        final double part = tester
+            .getTopLeft(find.byKey(const ValueKey('deeper-simple-ai')))
+            .dy;
+        expect(question, lessThan(part), reason: 'scrolled $at');
+      }
+    });
+
+    testWidgets('what scrolls dissolves under the top edge, and only once '
+        'it moves; nothing blurs what lies behind a part', (tester) async {
+      final ScrollableState list = await raised(tester);
+      final RenderObject edge = tester.renderObject(find.byType(TopDissolve));
+      list.position.jumpTo(0);
+      await tester.pump();
+      expect(edge.debugLayer, isNull, reason: 'at rest, whole');
+      list.position.jumpTo(120);
+      await tester.pump();
+      expect(edge.debugLayer, isA<ShaderMaskLayer>());
+      // A blur under every part, redone each frame, made the sheet stutter.
+      expect(
+        find.descendant(
+          of: find.byType(DeeperSheet),
+          matching: find.byType(BackdropFilter),
+        ),
+        findsNothing,
+      );
+    });
   });
 }
 

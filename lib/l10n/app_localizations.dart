@@ -2730,6 +2730,24 @@ abstract class AppLocalizations {
   /// **'Astute · Today\'s five · {date}'**
   String fiveShareHead(String date);
 
+  /// Challenge a friend, from today's five: the line sent before the link to the site, where the friend plays the same five questions. It says how many of today's five the reader got right, from 0 to 4 (fiveChallengeAll says all five), then asks the friend, briefly, to do better. Plain, never a boast.
+  ///
+  /// In en, this message translates to:
+  /// **'I got {right} of today\'s 5 on Astute. Can you beat me?'**
+  String fiveChallengeLine(int right);
+
+  /// Challenge a friend, from today's five, when the reader got all five right: the line sent before the link to the site, where the friend plays the same five questions. Asks the friend to do as well. Plain, never a boast or a cheer.
+  ///
+  /// In en, this message translates to:
+  /// **'I got all of today\'s 5 on Astute. Can you match it?'**
+  String get fiveChallengeAll;
+
+  /// Challenge a friend, before the reader has played today's five: the line sent before the link to the site, where the friend plays the five questions that are the same for everyone today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s five on Astute: the same five questions for everyone. How many can you get?'**
+  String get fiveChallengeInvite;
+
   /// First line of the message a subject's three is sent in.
   ///
   /// In en, this message translates to:
@@ -9803,6 +9821,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{a}, {b} and {c}'**
   String subjectsThree(String a, String b, String c);
+
+  /// The first week's page, after the five on a reader's seventh day of reading, on the free plan (offer.firstWeek): its title, over the reader's own numbers and the offer of the year's free days.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first week'**
+  String get firstWeekTitle;
+
+  /// The first month's page, after the five on a day a month after the install, on the free plan (offer.firstMonth): its title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first month'**
+  String get firstMonthTitle;
+
+  /// The first week's and the first month's page: the line over the title, shown in capitals: how many days the reader finished their five.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One day of reading} other{{n} days of reading}}'**
+  String firstOfferDays(int n);
+
+  /// The first week's page, shown in capitals over one card: the card the reader did the most with this week (told somebody about it, liked it, saved it, or it changed their mind).
+  ///
+  /// In en, this message translates to:
+  /// **'The week\'s best card'**
+  String get firstWeekBest;
+
+  /// The first month's page: the same, for the month.
+  ///
+  /// In en, this message translates to:
+  /// **'The month\'s best card'**
+  String get firstMonthBest;
+
+  /// Under that card's question: why it is the best. said: the reader marked it as said to somebody; liked: they liked it; saved: they saved it; changed: they said it changed their mind.
+  ///
+  /// In en, this message translates to:
+  /// **'{why, select, said{You told someone about it.} liked{You liked it.} saved{You saved it.} changed{It changed your mind.} other{You kept it.}}'**
+  String firstOfferBestWhy(String why);
+
+  /// The first week's and the first month's page: the line over the trial's days, under the reader's numbers. The word Astute+ is painted in the paywall's colours: keep it exactly 'Astute+'. days is the free days the store gives, 14.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{Astute+, free for a day} other{Astute+, free for {days} days}}'**
+  String firstOfferTrialTitle(int days);
+
+  /// Under it, one line on what Astute+ is: five cards of the reader's own every day, every path and book, and their numbers week by week.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards of your own every day, every path and book, and your numbers week by week.'**
+  String get firstOfferPlusLine;
+
+  /// The first week's and the first month's page: the button that closes it, for good; a button as plain as the one that starts the trial.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get firstOfferNotNow;
 }
 
 class _AppLocalizationsDelegate

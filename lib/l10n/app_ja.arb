@@ -435,6 +435,9 @@
   "dailyItemFew": "比べるにはまだ回答が少なすぎます",
   "fiveYesterday": "昨日の5問: {score} / 500",
   "fiveShareHead": "Astute · 今日の5問 · {date}",
+  "fiveChallengeLine": "Astuteの今日の5問で{right}問正解。私に勝てる？",
+  "fiveChallengeAll": "Astuteの今日の5問で全問正解。あなたもできる？",
+  "fiveChallengeInvite": "Astuteの今日の5問：みんな同じ5問。何問正解できる？",
   "threeShareHeadIn": "Astute · 今日の3問 · {subject} · {date}",
   "dailyShareScore": "{score} / {max} · {day}日目",
   "dailyShareScoreAlone": "{score} / {max}",
@@ -1613,5 +1616,14 @@
   "paywallGoalMark": "{goal, select, decide{良い決断} money{お金} people{人を理解} news{見出し} health{根拠} business{はっきり} other{はっきり}}",
   "paywallMadeLine": "{subjects}から、あなたのレベルで毎日5枚。間違えたカードは、身につくまで戻ってきます。そして、週ごとに自分の変化が見えます。",
   "subjectsTwo": "{a}と{b}",
-  "subjectsThree": "{a}、{b}、{c}"
+  "subjectsThree": "{a}、{b}、{c}",
+  "firstWeekTitle": "最初の1週間",
+  "firstMonthTitle": "最初の1か月",
+  "firstOfferDays": "{n, plural, other{{n}日間の読書}}",
+  "firstWeekBest": "この1週間のベストカード",
+  "firstMonthBest": "この1か月のベストカード",
+  "firstOfferBestWhy": "{why, select, said{誰かに話したカードです。} liked{気に入ったカードです。} saved{保存したカードです。} changed{考えが変わったカードです。} other{手元に残したカードです。}}",
+  "firstOfferTrialTitle": "{days, plural, other{Astute+を{days}日間無料で}}",
+  "firstOfferPlusLine": "毎日あなただけの5枚、すべてのパスと本、そして週ごとのあなたの数字。",
+  "firstOfferNotNow": "今はしない"
 }

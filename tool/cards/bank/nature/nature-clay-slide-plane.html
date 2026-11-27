@@ -237,7 +237,7 @@ const Turn = {
     pick = i; paintPick(); Kit.haptic('selection');
     if (!Kit.calm) {
       gsap.fromTo(F.leaders[i], {drawSVG: '0%'}, {drawSVG: '100%', duration: .45, ease: 'power2.out'});
-      gsap.fromTo(F.tickIn, {scale: .3}, {scale: 1, svgOrigin: '0 0', duration: .3, ease: 'back.out(2.5)'});
+      gsap.fromTo(F.tickIn, {svgOrigin: '0 0', scale: .3}, {scale: 1, svgOrigin: '0 0', duration: .3, ease: 'back.out(2.5)'});
     }
     Kit.$('say').innerHTML = `<b>${NAMES[i]}</b>. Now, how sure?`;
     if (!sureOn) { sureOn = true; Kit.$('sure').classList.remove('wait'); sure.on(); }

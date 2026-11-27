@@ -131,7 +131,7 @@ function draw(prev) {
       .to(fly, {x: tx * .55, y: ty - fh * .25, duration: .28, ease: 'power2.out'})
       .to(fly, {x: tx, y: ty, rotation: 70, transformOrigin: '50% 50%', duration: .22, ease: 'power1.in'})
       .to(fly, {opacity: 0, duration: .12}, '-=.06');
-    gsap.fromTo(glow, {scale: 1}, {scale: 1.35, transformOrigin: '50% 100%', duration: .2, delay: .5, yoyo: true, repeat: 1});
+    gsap.fromTo(glow, {transformOrigin: '50% 100%', scale: 1}, {scale: 1.35, transformOrigin: '50% 100%', duration: .2, delay: .5, yoyo: true, repeat: 1});
     if (fresh) gsap.from(fresh, {x: mx - s.x - cw / 2, y: y0 - ch - s.y, scale: .4, transformOrigin: '50% 100%', opacity: 0, duration: .45, delay: .62, ease: 'back.out(1.6)'});
     const [dx, dy, k] = PUFFS[prev], ghost = mk('circle', {cx: ccx + dx * R, cy: ccy + dy * R, r: k * R, fill: CO2, stroke: INK, 'stroke-width': 2.2}, g);
     gsap.to(ghost, {attr: {r: k * R * 1.25}, opacity: 0, duration: .5, delay: .55, ease: 'power1.out', onComplete: () => ghost.remove()});

@@ -250,7 +250,7 @@ function ignite() {
   gsap.to(ash, {opacity: 1, duration: .5, delay: .15});
   gsap.fromTo(flame, {opacity: 0}, {opacity: 1, duration: .08});
   gsap.to(flame, {opacity: 0, duration: .5, delay: 1.25});
-  if (!Kit.calm) gsap.fromTo(flick, {scaleY: .78, scaleX: 1.1}, {scaleY: 1.08, scaleX: .92, duration: .09, repeat: 17, yoyo: true, ease: 'sine.inOut', transformOrigin: '50% 100%'});
+  if (!Kit.calm) gsap.fromTo(flick, {transformOrigin: '50% 100%', scaleY: .78, scaleX: 1.1}, {scaleY: 1.08, scaleX: .92, duration: .09, repeat: 17, yoyo: true, ease: 'sine.inOut', transformOrigin: '50% 100%'});
 }
 function finish() {
   const tr = {pts: S.pts, dur: S.tNear !== null ? S.tNear : S.tUp !== null ? S.tUp : S.t, fired: S.fired, tIgn: S.tIgn};

@@ -258,7 +258,7 @@ function say(s) {
   if (!Kit.calm) gsap.fromTo(n, {opacity: 0, y: 4}, {opacity: 1, y: 0, duration: .35});
 }
 function pop(t, node) {
-  t.fromTo(node, {autoAlpha: 0, scale: 1.9}, {autoAlpha: 1, scale: 1, duration: .28, ease: 'back.out(2.2)', transformOrigin: '50% 50%'});
+  t.fromTo(node, {transformOrigin: '50% 50%', autoAlpha: 0, scale: 1.9}, {autoAlpha: 1, scale: 1, duration: .28, ease: 'back.out(2.2)', transformOrigin: '50% 50%'});
 }
 // The drawing answers: in "has a proof" the card is false yet proved, and the system cracks;
 // in "has no proof" the card is simply true. A consistent system can only leave it there.

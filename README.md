@@ -70,6 +70,20 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   provider token, `APP_STORE_PROVIDER_TOKEN` in `tool/site/chrome.py`, which
   is empty until the owner sets it; the comment there says where it is. The
   web app under `/app/` has its own PostHog, below, and none of this.
+- `/sfida` is the challenge on today's five, written by
+  `tool/cards/sfida_page.py` when the site is put together: a friend sent
+  "Challenge a friend" from the app opens `sfida?d=2026-11-27&s=4` — the day
+  the five were dealt and how many the reader got right, nothing else — and
+  plays the same five in the browser, one at a time, each in its subject's
+  colour, then sees "You 3 · Your friend 4" with every answer, the right one
+  and its why, and "Five new ones tomorrow" over the stores as they stand.
+  It reads `five/` as the landing page does, and judges each answer from the
+  card's file there, which says what the app judges by: a pick's right
+  option, and for a share every guess on the track the card counts right. A
+  link without a score is the five alone; a day the site no longer has falls
+  back to today's and says so. The app does not claim the address, so a
+  friend with the app installed plays on the page too, where the two scores
+  are.
 - `/privacy`, `/terms` and `/support` — the pages the stores ask for — share
   its nav, footer and `site/assets/site.css`: night paper, cream ink,
   Fraunces and Figtree served from the site itself, and on a wide screen a
@@ -273,6 +287,61 @@ before the card, after it, and while the offer is up), and never without the
 store's own year with free days for this reader (`trialOfferDue`): no price
 written into the app stands in. `tool/trial_day_shots.dart` photographs it
 with a stand-in store at the owner's prices.
+
+**The first week, and the first month.** Readers of apps like this one start
+many trials late, a quarter of them a month or more after the install. So at
+the end of the seventh day the five are finished, a reader on the free plan
+who never had a trial sees, once, a page of their own: "Your first week",
+over the days read, and their own numbers from what the app already keeps —
+the cards read, how often they were right when they said 80% sure or more,
+the subject they answer best, the days in a row, and the week's best card if
+there is one (the card they told somebody about, else one they liked, saved,
+or that changed their mind). Under them, "Astute+, free for 14 days", what
+the free days open, and the days themselves as the paywall's rail shows
+them, each with its date — the reminder two days before the charge where the
+phone can show one, the year at the store's price — then two buttons of one
+size: the paywall's own "Try 14 days free, then €29.99/yr", so what pressing
+it costs is on what is pressed, and "Not now". It is one screen on every
+phone, made a little smaller where it nearly fits; the smallest leaves out
+the line on what the free days open, which the rail and the button say,
+rather than scroll the days out of sight. A month after the install comes
+its twin, "Your first month". Behind the server's switches `offer.firstWeek` and
+`offer.firstMonth` (off as built, on in `remote/app.json`; docs/REMOTE.md),
+and every rule in one place, `lib/state/first_offers.dart`, the page in
+`lib/screens/first_offer.dart`:
+
+- the week is seven days with the five finished, not seven in a row: the
+  streak is the crueller number, a missed day does not make a week less
+  read, and the rating prompt already waits for a week in a row. An evening
+  taken by something else moves it to the next day finished, up to the
+  tenth; past that it is gone;
+- the month is a day finished 30 to 44 days after the install, with seven
+  days of reading at least, and two weeks at least after the week's page;
+- right after the five, once the shelf has landed (`TodayScreen`), never
+  during them, and only the evening the day was finished on this phone;
+- never on Astute+, never to a reader the store ever held Astute+ for (a
+  trial or a plan, running or over: `Subscription.everHeldPlus`), and never
+  unless the store sells the year with free days to this reader. A reader the
+  store will not give them to sees no page at all, rather than the page
+  without its trial: at the end of a first week the page is an offer of free
+  days, and a price to pay today in their place would be a paywall wearing
+  the reader's numbers;
+- once each, kept for the phone through a sign-out
+  (`knowit.firstWeekOfferedOn`, `knowit.firstMonthOfferedOn`): "Not now"
+  closes it for good;
+- one full-screen moment a day: not on the day the first run offered the
+  trial, a level rose (`LevelMemory.roseOn`) or the other page rose. When a
+  level and the page fall on the same evening the level wins — it is the
+  reader's, the page is the app's, and the page can come the next day
+  finished — and a level reached later on a day the page rose waits for the
+  next calm moment;
+- one question an evening: never on the evening of the reminder sheet or the
+  store's rating prompt, and on its own evening the account's, the place's
+  and the widget's sheets wait for another.
+
+The debug section of the profile previews both pages with sample numbers
+("Preview: your first week", "Preview: your first month"), on any plan,
+counting nothing; `tool/first_offer_shots.dart` photographs them.
 
 ## Today, done
 
@@ -1068,6 +1137,19 @@ as its link alone. It used to go as a picture with the whole answer under
 it, the steps, the other side, the bar move and the source: in a chat, a
 wall of words that spoiled the one thing worth sending.
 
+**Challenge a friend.** Today's five on Explore are the one thing every
+reader shares that day, and the site has them too, so they can be a
+challenge for two without an account or a board: a line in the reader's
+language — "I got 4 of today's 5 on Astute. Can you beat me?" — and a link
+to `/sfida`, where the friend plays the same five in a browser and sees both
+scores (see *The site, and the live preview*). It is sent from the end of
+the five, in place of the score as squares, and under the finished day's
+share, where before the five are played it sends them alone, without a
+score. The score is the five's own count of right answers, each card's test
+as the game kept it; the site judges the friend's from the same rule. Behind
+`share.challenge` (docs/REMOTE.md), off as built and on from the server;
+counted as `five challenge shared`.
+
 The archive keeps what each day was actually dealt: the calendar is
 re-dealt from the start whenever the pool grows, and a day dealt again from
 the same date is only most of the truth.
@@ -1620,7 +1702,10 @@ and *Card foot*, A line, B two lines, C buttons or D links
 (`lib/widgets/source_foot.dart`), on cards in words and on drawn ones,
 whose page is told it as `foot` as it was told the build's `SOURCE_FOOT`,
 which still sets the way when none is picked; A is the default.
-Each shows at once and is kept on the
+Under the looks, beside *Open the paywall*, *Preview: your first week* and
+*Preview: your first month* open those two pages with sample numbers, on
+either plan, keeping and counting nothing (`lib/screens/first_offer.dart`).
+Each look shows at once and is kept on the
 phone, through the wipe too; a build without the tools never reads them, so
 a look kept by a TestFlight build is nothing to the App Store build
 installed over it. It is needed in release builds, because TestFlight

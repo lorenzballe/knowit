@@ -259,8 +259,8 @@
     if (E.tape) E.tape.setAttribute('opacity', 1);
     if (hasG && !Kit.calm) {
       const o = `${geo.cx} ${geo.cy}`;
-      gsap.fromTo(E.ring, {opacity: 1, scale: 1}, {opacity: 0, scale: 1.75, duration: 1.2, ease: 'expo.out', svgOrigin: o});
-      gsap.fromTo(E.diag, {scale: 1.04}, {scale: 1, duration: 1, ease: 'elastic.out(1,.4)', svgOrigin: o});
+      gsap.fromTo(E.ring, {svgOrigin: o, opacity: 1, scale: 1}, {opacity: 0, scale: 1.75, duration: 1.2, ease: 'expo.out', svgOrigin: o});
+      gsap.fromTo(E.diag, {svgOrigin: o, scale: 1.04}, {scale: 1, duration: 1, ease: 'elastic.out(1,.4)', svgOrigin: o});
     }
     setTimeout(reveal, Kit.calm ? 0 : 1300);
   }

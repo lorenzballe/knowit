@@ -2,8 +2,11 @@
  "gate": null,
  "flags": {
   "trial.firstRun": true,
-  "cardAi": true
+  "offer.firstWeek": true,
+  "offer.firstMonth": true,
+  "cardAi": true,
+  "share.challenge": true
  },
- "tunables": {},
- "experiments": {}
+ "tunables": {"review.streakDays": 3},
+ "experiments": {"push.firstAsk": {"variants": ["firstDay"]}}
 }

@@ -435,6 +435,9 @@
   "dailyItemFew": "Aún hay pocas respuestas para comparar",
   "fiveYesterday": "Las cinco de ayer: {score} de 500.",
   "fiveShareHead": "Astute · Las cinco de hoy · {date}",
+  "fiveChallengeLine": "He acertado {right} de las cinco de hoy en Astute. ¿Me superas?",
+  "fiveChallengeAll": "He acertado las cinco de hoy en Astute. ¿Me igualas?",
+  "fiveChallengeInvite": "Las cinco de hoy en Astute: las mismas cinco preguntas para todos. ¿Cuántas aciertas?",
   "threeShareHeadIn": "Astute · Las tres de hoy · {subject} · {date}",
   "dailyShareScore": "{score} de {max} · día {day}",
   "dailyShareScoreAlone": "{score} de {max}",
@@ -1613,5 +1616,14 @@
   "paywallGoalMark": "{goal, select, decide{mejor.} money{dinero.} people{gente.} news{titulares.} health{salud.} business{trabajo.} other{claro.}}",
   "paywallMadeLine": "Cinco tarjetas al día de {subjects}, a tu nivel. Las que fallas vuelven hasta que se te quedan. Y te ves cambiar, semana a semana.",
   "subjectsTwo": "{a} y {b}",
-  "subjectsThree": "{a}, {b} y {c}"
+  "subjectsThree": "{a}, {b} y {c}",
+  "firstWeekTitle": "Tu primera semana",
+  "firstMonthTitle": "Tu primer mes",
+  "firstOfferDays": "{n, plural, =1{Un día de lectura} other{{n} días de lectura}}",
+  "firstWeekBest": "La mejor tarjeta de la semana",
+  "firstMonthBest": "La mejor tarjeta del mes",
+  "firstOfferBestWhy": "{why, select, said{Se la contaste a alguien.} liked{Te gustó.} saved{La guardaste.} changed{Te hizo cambiar de idea.} other{Te la quedaste.}}",
+  "firstOfferTrialTitle": "{days, plural, =1{Astute+, gratis durante un día} other{Astute+, gratis durante {days} días}}",
+  "firstOfferPlusLine": "Cinco tarjetas tuyas cada día, cada ruta y cada libro, y tus números semana a semana.",
+  "firstOfferNotNow": "Ahora no"
 }

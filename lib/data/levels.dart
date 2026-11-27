@@ -283,4 +283,19 @@ abstract final class LevelMemory {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt(key, level);
   }
+
+  /// The day a level last rose on screen, as a date key: a day has one
+  /// full-screen moment at most, and the first week's page and the first
+  /// month's wait for a day no level rose on (lib/state/first_offers.dart).
+  static const String roseKey = 'knowit.levelRoseOn';
+
+  static Future<String?> roseOn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(roseKey);
+  }
+
+  static Future<void> rose(String day) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(roseKey, day);
+  }
 }

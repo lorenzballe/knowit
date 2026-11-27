@@ -173,12 +173,12 @@ void main() {
     // Back as they ship.
     await DebugLooks.setNoTopRow(false);
     await DebugLooks.setProfileTop(ProfileTopPick.auto);
-    await DebugLooks.setPaywall(PaywallLook.a);
+    await DebugLooks.setPaywall(DebugLooks.paywallShips);
     await DebugLooks.setCardFoot(CardFootPick.a);
     DebugLooks.load(prefs);
     expect(DebugLooks.noTopRow.value, isFalse);
     expect(DebugLooks.profileTop.value, ProfileTopPick.auto);
-    expect(DebugLooks.paywall.value, PaywallLook.a);
+    expect(DebugLooks.paywall.value, DebugLooks.paywallShips);
     expect(DebugLooks.cardFoot.value, CardFootPick.a);
     expect(sourceFoot, SourceFoot.line);
   });
@@ -196,7 +196,7 @@ void main() {
     debugToolsOn = false;
     expect(DebugLooks.todayWithoutTopRow, isFalse);
     expect(DebugLooks.profileTopPicked, ProfileTopPick.auto);
-    expect(DebugLooks.paywallPicked, PaywallLook.a);
+    expect(DebugLooks.paywallPicked, DebugLooks.paywallShips);
     expect(TodayDoneView.head, kDoneHead);
     expect(DebugLooks.cardFootPicked, isNull);
     expect(sourceFoot, builtSourceFoot);
@@ -287,7 +287,11 @@ void main() {
     await _scrollTo(tester, find.text('Firebase'));
     final double readoutsAt =
         tester.getRect(find.text('Firebase')).top + list.pixels;
-    expect(rowAt, lessThan(readoutsAt), reason: 'the looks before the readouts');
+    expect(
+      rowAt,
+      lessThan(readoutsAt),
+      reason: 'the looks before the readouts',
+    );
     await tester.scrollUntilVisible(row, -400, scrollable: _profileList);
     await _settle(tester);
     await tester.tap(row);
@@ -492,9 +496,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
     expect(find.byType(PillCardStack), findsOneWidget);
-    final String whyTitle = lookupAppLocalizations(
-      const Locale('en'),
-    ).whyTitle;
+    final String whyTitle = lookupAppLocalizations(const Locale('en')).whyTitle;
     Map<String, String> notes() =>
         tester.widget<PillCardStack>(find.byType(PillCardStack)).notes;
     expect(notes().values, isNot(contains(whyTitle)));

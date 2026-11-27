@@ -206,7 +206,7 @@ Kit.onEnter.card = () => {
   if (Kit.calm || !G.found) return;
   gsap.from(G.found.dots, {attr: {r: 0}, stagger: .012, duration: .35, ease: 'back.out(2)'});
   gsap.from(G.fresh.dots, {attr: {r: 0}, stagger: .012, delay: .25, duration: .35, ease: 'back.out(2)'});
-  if (G.knob) gsap.fromTo(G.knob, {scale: 1}, {scale: 1.15, yoyo: true, repeat: 3, duration: .3, delay: .9, transformOrigin: '50% 50%', ease: 'sine.inOut'});
+  if (G.knob) gsap.fromTo(G.knob, {transformOrigin: '50% 50%', scale: 1}, {scale: 1.15, yoyo: true, repeat: 3, duration: .3, delay: .9, transformOrigin: '50% 50%', ease: 'sine.inOut'});
 };
 Kit.play.card = async () => {
   const r = pic.getBoundingClientRect();

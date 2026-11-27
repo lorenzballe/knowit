@@ -409,8 +409,8 @@
     gsap.fromTo('#pic .draw', {attr: {'stroke-dashoffset': 1}}, {attr: {'stroke-dashoffset': 0}, duration: 1.3, stagger: .12, ease: 'power2.inOut'});
     gsap.from('#pic .plate', {opacity: 0, duration: .5, ease: 'power2.out'});
     const ks = mols.filter(m => m.on).map(m => m.k);
-    gsap.fromTo(ks, {scale: 0}, {scale: 1, duration: .7, stagger: .09, delay: .5, ease: 'back.out(3)', svgOrigin: '0 0'});
-    gsap.fromTo(G.kin, {scale: 0}, {scale: 1, duration: 1, delay: .8, ease: 'elastic.out(1,.4)', svgOrigin: '0 0'});
+    gsap.fromTo(ks, {svgOrigin: '0 0', scale: 0}, {scale: 1, duration: .7, stagger: .09, delay: .5, ease: 'back.out(3)', svgOrigin: '0 0'});
+    gsap.fromTo(G.kin, {svgOrigin: '0 0', scale: 0}, {scale: 1, duration: 1, delay: .8, ease: 'elastic.out(1,.4)', svgOrigin: '0 0'});
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 60 : ms));

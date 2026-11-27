@@ -435,6 +435,9 @@
   "dailyItemFew": "Encore trop peu de réponses pour comparer",
   "fiveYesterday": "Les cinq d'hier : {score} sur 500.",
   "fiveShareHead": "Astute · Les cinq du jour · {date}",
+  "fiveChallengeLine": "Aux cinq du jour sur Astute, j'ai eu {right} sur 5. Tu fais mieux ?",
+  "fiveChallengeAll": "Aux cinq du jour sur Astute, j'ai eu 5 sur 5. Tu fais aussi bien ?",
+  "fiveChallengeInvite": "Les cinq du jour sur Astute : les cinq mêmes questions pour tout le monde. Tu en auras combien ?",
   "threeShareHeadIn": "Astute · Les trois du jour · {subject} · {date}",
   "dailyShareScore": "{score} sur {max} · jour {day}",
   "dailyShareScoreAlone": "{score} sur {max}",
@@ -1613,5 +1616,14 @@
   "paywallGoalMark": "{goal, select, decide{décider.} money{l’argent.} people{gens.} news{titres.} health{santé.} business{travail.} other{clair.}}",
   "paywallMadeLine": "Cinq cartes par jour en {subjects}, à ton niveau. Celles que tu rates reviennent jusqu’à ce qu’elles restent. Et tu te vois changer, semaine après semaine.",
   "subjectsTwo": "{a} et {b}",
-  "subjectsThree": "{a}, {b} et {c}"
+  "subjectsThree": "{a}, {b} et {c}",
+  "firstWeekTitle": "Ta première semaine",
+  "firstMonthTitle": "Ton premier mois",
+  "firstOfferDays": "{n, plural, =1{Un jour de lecture} other{{n} jours de lecture}}",
+  "firstWeekBest": "La meilleure carte de la semaine",
+  "firstMonthBest": "La meilleure carte du mois",
+  "firstOfferBestWhy": "{why, select, said{Tu l’as racontée à quelqu’un.} liked{Tu l’as aimée.} saved{Tu l’as enregistrée.} changed{Elle t’a fait changer d’avis.} other{Tu l’as gardée.}}",
+  "firstOfferTrialTitle": "{days, plural, =1{Astute+, gratuit pendant un jour} other{Astute+, gratuit pendant {days} jours}}",
+  "firstOfferPlusLine": "Cinq cartes à toi chaque jour, chaque parcours et chaque livre, et tes chiffres semaine après semaine.",
+  "firstOfferNotNow": "Pas maintenant"
 }

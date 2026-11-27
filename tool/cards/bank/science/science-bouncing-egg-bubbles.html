@@ -251,7 +251,7 @@
     gsap.to(ring, {attr: {rx, ry: fs * (big ? 1 : .6)}, opacity: 0, duration: big ? .9 : .6, ease: 'expo.out', onComplete: () => ring.remove()});
     if (big) {
       gsap.fromTo(L.rings, {opacity: 1}, {opacity: .45, duration: .12, yoyo: true, repeat: 3, ease: 'power1.inOut'});
-      gsap.fromTo(L.gauge, {scale: 1}, {scale: 1.06, svgOrigin: '0 0', duration: .25, yoyo: true, repeat: 1, ease: 'power3.out'});
+      gsap.fromTo(L.gauge, {svgOrigin: '0 0', scale: 1}, {scale: 1.06, svgOrigin: '0 0', duration: .25, yoyo: true, repeat: 1, ease: 'power3.out'});
     }
   }
 

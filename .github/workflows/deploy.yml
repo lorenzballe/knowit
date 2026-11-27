@@ -108,6 +108,9 @@ jobs:
           # friend sent a card to play it in a browser (/c/<id>.html).
           cp -r docs/cards/kit _site/cards/pages/kit
           python3 tool/cards/challenge_pages.py _site
+          # The challenge on today's five (/sfida): a friend plays the five
+          # a reader sent, from five/ below, and sees both scores.
+          python3 tool/cards/sfida_page.py _site
           ls -la _site
 
       # The site's own stylesheets and script are asked for at the same URL

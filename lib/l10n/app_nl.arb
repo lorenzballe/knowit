@@ -435,6 +435,9 @@
   "dailyItemFew": "Nog te weinig antwoorden om te vergelijken",
   "fiveYesterday": "De vijf van gisteren: {score} van 500.",
   "fiveShareHead": "Astute · De vijf van vandaag · {date}",
+  "fiveChallengeLine": "Ik had {right} van de vijf van vandaag goed op Astute. Kun jij het beter?",
+  "fiveChallengeAll": "Ik had de vijf van vandaag op Astute allemaal goed. Kun jij dat ook?",
+  "fiveChallengeInvite": "De vijf van vandaag op Astute: voor iedereen dezelfde vijf vragen. Hoeveel heb jij er goed?",
   "threeShareHeadIn": "Astute · De drie van vandaag · {subject} · {date}",
   "dailyShareScore": "{score} van {max} · dag {day}",
   "dailyShareScoreAlone": "{score} van {max}",
@@ -1613,5 +1616,14 @@
   "paywallGoalMark": "{goal, select, decide{beslissingen} money{geld} people{mensen} news{koppen.} health{gezondheid.} business{helder} other{helder}}",
   "paywallMadeLine": "Vijf kaarten per dag uit {subjects}, op jouw niveau. Wat je mist, komt terug tot het blijft hangen. En je ziet jezelf veranderen, week na week.",
   "subjectsTwo": "{a} en {b}",
-  "subjectsThree": "{a}, {b} en {c}"
+  "subjectsThree": "{a}, {b} en {c}",
+  "firstWeekTitle": "Je eerste week",
+  "firstMonthTitle": "Je eerste maand",
+  "firstOfferDays": "{n, plural, =1{Eén dag gelezen} other{{n} dagen gelezen}}",
+  "firstWeekBest": "De beste kaart van de week",
+  "firstMonthBest": "De beste kaart van de maand",
+  "firstOfferBestWhy": "{why, select, said{Je hebt er iemand over verteld.} liked{Je vond hem goed.} saved{Je hebt hem bewaard.} changed{Hij veranderde je mening.} other{Je hebt hem gehouden.}}",
+  "firstOfferTrialTitle": "{days, plural, =1{Astute+, een dag gratis} other{Astute+, {days} dagen gratis}}",
+  "firstOfferPlusLine": "Elke dag vijf eigen kaarten, elk pad en elk boek, en je cijfers week na week.",
+  "firstOfferNotNow": "Niet nu"
 }

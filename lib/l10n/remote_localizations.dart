@@ -1812,6 +1812,19 @@ class RemoteLocalizations extends AppLocalizations {
       _base.fiveShareHead(date);
 
   @override
+  String fiveChallengeLine(int right) =>
+      _words.format('fiveChallengeLine', localeName, {'right': right}) ??
+      _base.fiveChallengeLine(right);
+
+  @override
+  String get fiveChallengeAll =>
+      _words.text('fiveChallengeAll') ?? _base.fiveChallengeAll;
+
+  @override
+  String get fiveChallengeInvite =>
+      _words.text('fiveChallengeInvite') ?? _base.fiveChallengeInvite;
+
+  @override
   String threeShareHeadIn(String subject, String date) =>
       _words.format('threeShareHeadIn', localeName, {
         'subject': subject,
@@ -6672,4 +6685,43 @@ class RemoteLocalizations extends AppLocalizations {
   String subjectsThree(String a, String b, String c) =>
       _words.format('subjectsThree', localeName, {'a': a, 'b': b, 'c': c}) ??
       _base.subjectsThree(a, b, c);
+
+  @override
+  String get firstWeekTitle =>
+      _words.text('firstWeekTitle') ?? _base.firstWeekTitle;
+
+  @override
+  String get firstMonthTitle =>
+      _words.text('firstMonthTitle') ?? _base.firstMonthTitle;
+
+  @override
+  String firstOfferDays(int n) =>
+      _words.format('firstOfferDays', localeName, {'n': n}) ??
+      _base.firstOfferDays(n);
+
+  @override
+  String get firstWeekBest =>
+      _words.text('firstWeekBest') ?? _base.firstWeekBest;
+
+  @override
+  String get firstMonthBest =>
+      _words.text('firstMonthBest') ?? _base.firstMonthBest;
+
+  @override
+  String firstOfferBestWhy(String why) =>
+      _words.format('firstOfferBestWhy', localeName, {'why': why}) ??
+      _base.firstOfferBestWhy(why);
+
+  @override
+  String firstOfferTrialTitle(int days) =>
+      _words.format('firstOfferTrialTitle', localeName, {'days': days}) ??
+      _base.firstOfferTrialTitle(days);
+
+  @override
+  String get firstOfferPlusLine =>
+      _words.text('firstOfferPlusLine') ?? _base.firstOfferPlusLine;
+
+  @override
+  String get firstOfferNotNow =>
+      _words.text('firstOfferNotNow') ?? _base.firstOfferNotNow;
 }

@@ -587,7 +587,8 @@ void main() {
       expect(find.text('Couldn’t reach the App Store'), findsOneWidget);
       store.answerForTest(offering: _yearAt('\$29.99'));
       await tester.pump();
-      expect(find.text('Cancel any time'), findsOneWidget);
+      // A year with no free days: charged today, and said so.
+      expect(find.text('Charged today · Cancel any time'), findsOneWidget);
       expect(find.textContaining('Settings ›'), findsNothing);
     }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
 

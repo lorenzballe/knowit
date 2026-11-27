@@ -186,7 +186,7 @@
         const x = x0 + cw * (k + .3 + rng() * .4) / n, y = cY0 + (cY1 - cY0) * (.25 + rng() * .5), sc = fs * (.28 + rng() * .2);
         const o = mk('g', {transform: `translate(${x.toFixed(1)},${y.toFixed(1)})`}, col);
         const p = mk('path', {d: SPARK, transform: `scale(${sc.toFixed(2)})`, fill: '#eefaff', stroke: INK, 'stroke-width': .9 / sc}, o);
-        if (!Kit.calm) twinkles.push(gsap.fromTo(p, {scale: sc * .25, rotation: 0}, {scale: sc, rotation: 45, duration: .7 + rng() * .5, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: rng() * 1.2, svgOrigin: '0 0'}));
+        if (!Kit.calm) twinkles.push(gsap.fromTo(p, {svgOrigin: '0 0', scale: sc * .25, rotation: 0}, {scale: sc, rotation: 45, duration: .7 + rng() * .5, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: rng() * 1.2, svgOrigin: '0 0'}));
       }
     }
     mk('rect', {x: x0, y: yTop, width: cw, height: ch, fill: 'url(#shade)', 'pointer-events': 'none'}, col);
@@ -277,7 +277,7 @@
     capG.setAttribute('transform', `translate(${cx},${cy})`);
     if (touched && zone && z !== zone) {
       Kit.haptic('selection');
-      if (!Kit.calm) gsap.fromTo(capIn, {scale: .7}, {scale: 1, duration: .35, ease: 'back.out(3)', transformOrigin: '50% 50%'});
+      if (!Kit.calm) gsap.fromTo(capIn, {transformOrigin: '50% 50%', scale: .7}, {scale: 1, duration: .35, ease: 'back.out(3)', transformOrigin: '50% 50%'});
     }
     zone = z;
   }

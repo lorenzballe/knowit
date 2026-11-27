@@ -272,7 +272,7 @@
     });
     const toks = L.tray.querySelectorAll('.tok');
     if (Kit.calm) gsap.set(toks, {opacity: 1});
-    else { gsap.to(toks, {opacity: 1, duration: .4, stagger: .08, delay: .55}); gsap.fromTo(toks, {scale: .7}, {scale: 1, duration: .8, ease: 'elastic.out(1,.5)', stagger: .08, delay: .55, transformOrigin: '50% 50%'}); }
+    else { gsap.to(toks, {opacity: 1, duration: .4, stagger: .08, delay: .55}); gsap.fromTo(toks, {transformOrigin: '50% 50%', scale: .7}, {scale: 1, duration: .8, ease: 'elastic.out(1,.5)', stagger: .08, delay: .55, transformOrigin: '50% 50%'}); }
     say.innerHTML = 'The Strip is left to the Palestinians… or is it? <b>Try handing Gaza each tab in the tray.</b>';
   }
 

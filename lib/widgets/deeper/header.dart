@@ -2,8 +2,10 @@
 /// slow lights that drift across it, the subject's mark and name as the
 /// card wears them, and the card's question set large in the display face.
 ///
-/// As the sheet scrolls, the head moves slower than the parts sliding up
-/// over it, so they read as lying on top of it.
+/// As the sheet scrolls, the head's colour moves slower than the parts
+/// sliding up over it, so they read as lying on top of it. Its words keep
+/// nearly to the parts' pace, so a part never runs over the question: they
+/// fade, and dissolve under the sheet's top edge (TopDissolve).
 library;
 
 import 'dart:math' as math;
@@ -218,7 +220,7 @@ class DeeperHeader extends StatelessWidget {
           _Lag(
             scroll: scroll,
             still: still,
-            factor: 0.42,
+            factor: 0.12,
             fade: true,
             child: words,
           ),
@@ -288,7 +290,7 @@ class _Lag extends StatelessWidget {
       builder: (context, child) {
         final double s = scroll.value.clamp(0.0, 600.0);
         return Opacity(
-          opacity: fade ? (1 - s / 300).clamp(0.0, 1.0) : 1,
+          opacity: fade ? (1 - s / 260).clamp(0.0, 1.0) : 1,
           child: Transform.translate(
             offset: Offset(0, s * factor),
             child: child,

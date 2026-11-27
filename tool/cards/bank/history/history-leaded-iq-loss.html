@@ -323,7 +323,7 @@ ${compact ? '' : `<text class="lb" x="${fs * .9}" y="${H - fs * .7}" fill="${INK
     const final = E.dt.textContent;
     gsap.to(E.dt, {duration: .9, scrambleText: {text: final, chars: '0123456789,+', speed: .6}, onComplete: () => { delete E.dt.dataset.scr; update(); }});
     gsap.fromTo(E.g3, {opacity: 0, x: 10}, {opacity: 1, x: 0, duration: .6, ease: 'back.out(2.2)', delay: .25});
-    gsap.fromTo(E.gh, {scale: 1}, {scale: 1.35, duration: .25, yoyo: true, repeat: 1, ease: 'power2.out', transformOrigin: '0% 50%', delay: .2});
+    gsap.fromTo(E.gh, {transformOrigin: '0% 50%', scale: 1}, {scale: 1.35, duration: .25, yoyo: true, repeat: 1, ease: 'power2.out', transformOrigin: '0% 50%', delay: .2});
   }
 
   new ResizeObserver(() => { if (built) layout(); }).observe(Kit.$('stage'));

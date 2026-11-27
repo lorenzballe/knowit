@@ -402,7 +402,7 @@
     E.glowTw && E.glowTw.kill();
     gsap.to(E.fanGlow, {opacity: 0, duration: .6, ease: 'power2.out'});
     gsap.to(E.blur, {opacity: .16, duration: 1.2, ease: 'power2.in'});
-    gsap.fromTo(E.rotor, {scale: 1}, {scale: 1.15, svgOrigin: '0 0', duration: .12, yoyo: true, repeat: 1, ease: 'power2.out'});
+    gsap.fromTo(E.rotor, {svgOrigin: '0 0', scale: 1}, {scale: 1.15, svgOrigin: '0 0', duration: .12, yoyo: true, repeat: 1, ease: 'power2.out'});
     E.fanTw && gsap.to(E.fanTw, {timeScale: 5, duration: 1.4, ease: 'power2.in'});
     gsap.to(amb, {sp: 4, duration: 1.2, ease: 'power2.inOut'});
     ring(cx1, cy1, r1 * .35, r1 * .98, K, lw * 2, 1.1);

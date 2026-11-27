@@ -53,7 +53,7 @@ function paintDot(d, animate) {
   const ok = right.has(d);
   el.style.fill = ok ? INK : DIM;
   el.style.stroke = 'none';
-  if (animate && !Kit.calm) gsap.fromTo(el, {scale: ok ? 1.9 : 1.3}, {scale: 1, duration: ok ? .45 : .25, ease: 'back.out(3)', transformOrigin: 'center', svgOrigin: el.getAttribute('cx') + ' ' + el.getAttribute('cy')});
+  if (animate && !Kit.calm) gsap.fromTo(el, {transformOrigin: 'center', scale: ok ? 1.9 : 1.3}, {scale: 1, duration: ok ? .45 : .25, ease: 'back.out(3)', transformOrigin: 'center', svgOrigin: el.getAttribute('cx') + ' ' + el.getAttribute('cy')});
 }
 
 function update() {

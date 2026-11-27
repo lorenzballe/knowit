@@ -14,7 +14,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart' show RenderProxyBox;
+import 'package:flutter/rendering.dart'
+    show PipelineOwner, RenderProxyBox, ShaderMaskLayer;
 import 'package:flutter/services.dart' show HapticFeedback;
 
 import '../../l10n/l10n.dart';
@@ -107,6 +108,97 @@ class _ReportHeight extends RenderProxyBox {
   void performLayout() {
     super.performLayout();
     height.value = size.height;
+  }
+}
+
+/// What scrolls in the sheet goes soft and dissolves as it passes under the
+/// sheet's top edge, as every page of the app does under its bar, instead of
+/// being cut by the edge. Only the words and the parts dissolve: the
+/// painting behind them stays whole, so they fade into the card's colour.
+///
+/// [scroll] is how far the sheet has scrolled. The child lies at the top of
+/// what scrolls, so the edge is [scroll] down from the child's top. At rest
+/// nothing dissolves; the edge comes in over the first [depth] of scrolling,
+/// so the head is whole until the reader moves it.
+class TopDissolve extends SingleChildRenderObjectWidget {
+  const TopDissolve({
+    super.key,
+    required this.scroll,
+    this.depth = 44,
+    super.child,
+  });
+
+  final ValueListenable<double> scroll;
+  final double depth;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _TopDissolve(scroll, depth);
+
+  @override
+  void updateRenderObject(BuildContext context, _TopDissolve render) => render
+    ..scroll = scroll
+    ..depth = depth;
+}
+
+class _TopDissolve extends RenderProxyBox {
+  _TopDissolve(this._scroll, this._depth);
+
+  ValueListenable<double> _scroll;
+  set scroll(ValueListenable<double> value) {
+    if (identical(value, _scroll)) return;
+    if (attached) {
+      _scroll.removeListener(markNeedsPaint);
+      value.addListener(markNeedsPaint);
+    }
+    _scroll = value;
+    markNeedsPaint();
+  }
+
+  double _depth;
+  set depth(double value) {
+    if (value == _depth) return;
+    _depth = value;
+    markNeedsPaint();
+  }
+
+  @override
+  void attach(PipelineOwner owner) {
+    super.attach(owner);
+    _scroll.addListener(markNeedsPaint);
+  }
+
+  @override
+  void detach() {
+    _scroll.removeListener(markNeedsPaint);
+    super.detach();
+  }
+
+  @override
+  bool get alwaysNeedsCompositing => child != null;
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    final RenderBox? child = this.child;
+    if (child == null) return;
+    final double at = math.max(0, _scroll.value);
+    final double strength = _depth <= 0 ? 0 : (at / _depth).clamp(0.0, 1.0);
+    if (strength == 0) {
+      // At rest: drawn as it is, with no layer of its own to pay for.
+      layer = null;
+      context.paintChild(child, offset);
+      return;
+    }
+    final ShaderMaskLayer mask = layer as ShaderMaskLayer? ?? ShaderMaskLayer();
+    mask
+      ..shader = ui.Gradient.linear(Offset(0, at), Offset(0, at + _depth), [
+        Color.fromRGBO(0, 0, 0, 1 - strength),
+        const Color(0xFF000000),
+      ])
+      ..maskRect = offset & size
+      ..blendMode = BlendMode.dstIn;
+    layer = mask;
+    context.pushLayer(mask, super.paint, offset);
   }
 }
 
@@ -580,10 +672,10 @@ class AppSection extends StatelessWidget {
     final Palette p = context.p;
     final bool dark = p.isDark;
     const BorderRadius round = BorderRadius.all(Radius.circular(22));
-    // A card of frosted glass over the light: the colour beneath shows
-    // through, blurred, under a fill dense enough for the words to read as
-    // on any of the app's cards; a hairline of light along its top edge,
-    // and two soft shadows, one near and one far, lifting it off.
+    // A card over the light: the colour beneath shows through a fill dense
+    // enough for the words to read as on any of the app's cards; a hairline
+    // of light along its top edge, and two soft shadows, one near and one
+    // far, lifting it off.
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: round,
@@ -603,55 +695,53 @@ class AppSection extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: round,
-        child: BackdropFilter(
-          filter: ui.ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+        // No blur of what lies behind: the painting under a part is soft
+        // already, so the fill alone looks the same, and a blur under every
+        // part, redone each frame the sheet moved, made the sheet stutter.
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: round,
+            color: dark
+                ? const Color(0xFF121215).withValues(alpha: 0.84)
+                : Colors.white.withValues(alpha: 0.86),
+          ),
           child: DecoratedBox(
             decoration: BoxDecoration(
               borderRadius: round,
-              color: dark
-                  ? const Color(0xFF121215).withValues(alpha: 0.84)
-                  : Colors.white.withValues(alpha: 0.86),
-            ),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: round,
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.white.withValues(alpha: dark ? 0.035 : 0.25),
-                    Colors.white.withValues(alpha: 0),
-                  ],
-                  stops: const [0, 0.4],
-                ),
-                border: Border.all(
-                  color: dark
-                      ? const Color(0x12FFFFFF)
-                      : const Color(0x0D000000),
-                ),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.white.withValues(alpha: dark ? 0.035 : 0.25),
+                  Colors.white.withValues(alpha: 0),
+                ],
+                stops: const [0, 0.4],
               ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 0,
-                    left: 24,
-                    right: 24,
-                    child: Container(
-                      height: 1,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.white.withValues(alpha: 0),
-                            Colors.white.withValues(alpha: dark ? 0.16 : 0.9),
-                            Colors.white.withValues(alpha: 0),
-                          ],
-                        ),
+              border: Border.all(
+                color: dark ? const Color(0x12FFFFFF) : const Color(0x0D000000),
+              ),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 24,
+                  right: 24,
+                  child: Container(
+                    height: 1,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.white.withValues(alpha: 0),
+                          Colors.white.withValues(alpha: dark ? 0.16 : 0.9),
+                          Colors.white.withValues(alpha: 0),
+                        ],
                       ),
                     ),
                   ),
-                  _body(p),
-                ],
-              ),
+                ),
+                _body(p),
+              ],
             ),
           ),
         ),

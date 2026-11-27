@@ -52,7 +52,10 @@ final List<Object> _declared = [
   AppState.kPlaceAskFlag,
   AppState.kReviewAskFlag,
   AppState.kFirstRunTrialFlag,
+  AppState.kFirstWeekOfferFlag,
+  AppState.kFirstMonthOfferFlag,
   AppState.kCardAiFlag,
+  AppState.kShareChallengeFlag,
   AppState.kPushAskGapKnob,
   AppState.kPushDeferralsKnob,
   kReminderTimesKnob,
@@ -580,6 +583,31 @@ void main() {
       expect(neverAsked.shouldAskForReview, isTrue);
     });
 
+    test('the first week\'s page and the first month\'s: off as built, each '
+        'on only where the server says', () async {
+      final AppState app = await _app({});
+      expect(app.firstWeekOfferOn, isFalse);
+      expect(app.firstMonthOfferOn, isFalse);
+      _take({
+        'flags': {'offer.firstWeek': true},
+      });
+      expect(app.firstWeekOfferOn, isTrue);
+      expect(app.firstMonthOfferOn, isFalse);
+      _take({
+        'flags': {
+          'offer.firstWeek': true,
+          'offer.firstMonth': {'on': true},
+        },
+      });
+      expect(app.firstWeekOfferOn, isTrue);
+      expect(app.firstMonthOfferOn, isTrue);
+      _take({
+        'flags': {'offer.firstWeek': 'yes', 'offer.firstMonth': true},
+      });
+      expect(app.firstWeekOfferOn, isFalse, reason: 'written wrong: as built');
+      expect(app.firstMonthOfferOn, isTrue);
+    });
+
     test('the account\'s offer, held back', () async {
       final Map<String, Object> back = {
         'knowit.lastCompletionDate': _day(0),
@@ -622,6 +650,30 @@ void main() {
         'tunables': {'place.lastAskDay': 5},
       });
       expect((await _app(five)).shouldAskForPlace, isTrue);
+    });
+
+    test('the challenge on today\'s five: off as built, on where the '
+        'document says, and on in the one the server publishes', () async {
+      expect((await _app({})).shareChallengeOn, isFalse);
+      _take({
+        'flags': {'share.challenge': true},
+      });
+      expect((await _app({})).shareChallengeOn, isTrue);
+      _take({
+        'flags': {
+          'share.challenge': {
+            'on': true,
+            'audience': {
+              'platforms': ['ios'],
+            },
+          },
+        },
+      });
+      expect((await _app({})).shareChallengeOn, isFalse, reason: 'android');
+      final Map<String, Object?> published = jsonDecode(
+        File('remote/app.json').readAsStringSync(),
+      ) as Map<String, Object?>;
+      expect((published['flags']! as Map)['share.challenge'], isTrue);
     });
   });
 }

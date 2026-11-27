@@ -306,7 +306,7 @@
     gsap.to(w, {a: -360, duration: 1.2, delay: .1, ease: 'power2.inOut', onUpdate: () => { const r = `rotate(${w.a})`; arm.setAttribute('transform', r); sp.setAttribute('transform', r); }});
     gsap.fromTo(E.starRays, {opacity: 1, scale: .5, transformOrigin: '50% 50%'}, {opacity: 0, scale: 1.8, duration: 1.2, ease: 'expo.out'});
     gsap.fromTo(E.starGlow, {opacity: .8}, {opacity: 0, duration: 1.4, ease: 'power2.out'});
-    gsap.fromTo(E.gS, {scale: 1}, {scale: 1.45, transformOrigin: '50% 50%', duration: .25, ease: 'power2.out', yoyo: true, repeat: 1, stagger: .12});
+    gsap.fromTo(E.gS, {transformOrigin: '50% 50%', scale: 1}, {scale: 1.45, transformOrigin: '50% 50%', duration: .25, ease: 'power2.out', yoyo: true, repeat: 1, stagger: .12});
     gsap.fromTo(E.plus, {opacity: 0, scale: 0, transformOrigin: '0% 80%'}, {opacity: 1, scale: 1, duration: 1.1, ease: 'elastic.out(1,.4)', delay: .3});
     const strike = E.marks.S[D];
     gsap.fromTo(strike, {opacity: 0}, {opacity: 1, duration: .15, repeat: 3, yoyo: true, ease: 'power1.inOut', onComplete: () => strike.setAttribute('opacity', 1)});
