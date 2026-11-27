@@ -55,4 +55,18 @@ void main() {
     expect(pl.threePoints(3), '+3 punkty');
     expect(pl.threePoints(25), '+25 punktów');
   });
+
+  // French and Portuguese give their "one" to 0 as well as 1: a "1 carte"
+  // written for one read "1 carte" for none.
+  test('French and Portuguese: none is never said as one', () {
+    final AppLocalizations fr = lookupAppLocalizations(const Locale('fr'));
+    final AppLocalizations pt = lookupAppLocalizations(const Locale('pt'));
+    expect(fr.nCards(0), '0 carte');
+    expect(fr.nCards(1), '1 carte');
+    expect(fr.nCards(2), '2 cartes');
+    expect(fr.results(0), '0 résultat');
+    expect(pt.nCards(0), '0 cartas');
+    expect(pt.nCards(1), '1 carta');
+    expect(pt.results(0), '0 resultados');
+  });
 }
