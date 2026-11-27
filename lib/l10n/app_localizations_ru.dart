@@ -2091,6 +2091,19 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String fiveChallengeLine(int right) {
+    return 'В «Пяти вопросах дня» Astute у меня $right из 5. Сможешь лучше?';
+  }
+
+  @override
+  String get fiveChallengeAll =>
+      'В «Пяти вопросах дня» Astute у меня 5 из 5. Повторишь?';
+
+  @override
+  String get fiveChallengeInvite =>
+      '«Пять вопросов дня» в Astute: одни и те же пять вопросов для всех. Сколько ответишь верно?';
+
+  @override
   String threeShareHeadIn(String subject, String date) {
     return 'Astute · Три вопроса дня · $subject · $date';
   }

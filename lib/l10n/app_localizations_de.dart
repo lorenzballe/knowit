@@ -2007,6 +2007,19 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String fiveChallengeLine(int right) {
+    return 'Bei den fünf von heute auf Astute hatte ich $right von 5 richtig. Schaffst du mehr?';
+  }
+
+  @override
+  String get fiveChallengeAll =>
+      'Bei den fünf von heute auf Astute hatte ich alle 5 richtig. Schaffst du das auch?';
+
+  @override
+  String get fiveChallengeInvite =>
+      'Die fünf von heute auf Astute: dieselben fünf Fragen für alle. Wie viele schaffst du?';
+
+  @override
   String threeShareHeadIn(String subject, String date) {
     return 'Astute · Die drei von heute · $subject · $date';
   }

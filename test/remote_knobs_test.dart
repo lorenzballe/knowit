@@ -53,6 +53,7 @@ final List<Object> _declared = [
   AppState.kReviewAskFlag,
   AppState.kFirstRunTrialFlag,
   AppState.kCardAiFlag,
+  AppState.kShareChallengeFlag,
   AppState.kPushAskGapKnob,
   AppState.kPushDeferralsKnob,
   kReminderTimesKnob,
@@ -622,6 +623,30 @@ void main() {
         'tunables': {'place.lastAskDay': 5},
       });
       expect((await _app(five)).shouldAskForPlace, isTrue);
+    });
+
+    test('the challenge on today\'s five: off as built, on where the '
+        'document says, and on in the one the server publishes', () async {
+      expect((await _app({})).shareChallengeOn, isFalse);
+      _take({
+        'flags': {'share.challenge': true},
+      });
+      expect((await _app({})).shareChallengeOn, isTrue);
+      _take({
+        'flags': {
+          'share.challenge': {
+            'on': true,
+            'audience': {
+              'platforms': ['ios'],
+            },
+          },
+        },
+      });
+      expect((await _app({})).shareChallengeOn, isFalse, reason: 'android');
+      final Map<String, Object?> published = jsonDecode(
+        File('remote/app.json').readAsStringSync(),
+      ) as Map<String, Object?>;
+      expect((published['flags']! as Map)['share.challenge'], isTrue);
     });
   });
 }

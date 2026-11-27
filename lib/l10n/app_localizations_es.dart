@@ -2008,6 +2008,19 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String fiveChallengeLine(int right) {
+    return 'He acertado $right de las cinco de hoy en Astute. ¿Me superas?';
+  }
+
+  @override
+  String get fiveChallengeAll =>
+      'He acertado las cinco de hoy en Astute. ¿Me igualas?';
+
+  @override
+  String get fiveChallengeInvite =>
+      'Las cinco de hoy en Astute: las mismas cinco preguntas para todos. ¿Cuántas aciertas?';
+
+  @override
   String threeShareHeadIn(String subject, String date) {
     return 'Astute · Las tres de hoy · $subject · $date';
   }

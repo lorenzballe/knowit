@@ -70,6 +70,20 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   provider token, `APP_STORE_PROVIDER_TOKEN` in `tool/site/chrome.py`, which
   is empty until the owner sets it; the comment there says where it is. The
   web app under `/app/` has its own PostHog, below, and none of this.
+- `/sfida` is the challenge on today's five, written by
+  `tool/cards/sfida_page.py` when the site is put together: a friend sent
+  "Challenge a friend" from the app opens `sfida?d=2026-11-27&s=4` — the day
+  the five were dealt and how many the reader got right, nothing else — and
+  plays the same five in the browser, one at a time, each in its subject's
+  colour, then sees "You 3 · Your friend 4" with every answer, the right one
+  and its why, and "Five new ones tomorrow" over the stores as they stand.
+  It reads `five/` as the landing page does, and judges each answer from the
+  card's file there, which says what the app judges by: a pick's right
+  option, and for a share every guess on the track the card counts right. A
+  link without a score is the five alone; a day the site no longer has falls
+  back to today's and says so. The app does not claim the address, so a
+  friend with the app installed plays on the page too, where the two scores
+  are.
 - `/privacy`, `/terms` and `/support` — the pages the stores ask for — share
   its nav, footer and `site/assets/site.css`: night paper, cream ink,
   Fraunces and Figtree served from the site itself, and on a wide screen a
@@ -1067,6 +1081,19 @@ as a picture, for a story or a feed — its question, never its answer — or
 as its link alone. It used to go as a picture with the whole answer under
 it, the steps, the other side, the bar move and the source: in a chat, a
 wall of words that spoiled the one thing worth sending.
+
+**Challenge a friend.** Today's five on Explore are the one thing every
+reader shares that day, and the site has them too, so they can be a
+challenge for two without an account or a board: a line in the reader's
+language — "I got 4 of today's 5 on Astute. Can you beat me?" — and a link
+to `/sfida`, where the friend plays the same five in a browser and sees both
+scores (see *The site, and the live preview*). It is sent from the end of
+the five, in place of the score as squares, and under the finished day's
+share, where before the five are played it sends them alone, without a
+score. The score is the five's own count of right answers, each card's test
+as the game kept it; the site judges the friend's from the same rule. Behind
+`share.challenge` (docs/REMOTE.md), off as built and on from the server;
+counted as `five challenge shared`.
 
 The archive keeps what each day was actually dealt: the calendar is
 re-dealt from the start whenever the pool grows, and a day dealt again from

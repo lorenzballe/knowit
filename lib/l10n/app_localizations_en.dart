@@ -1997,6 +1997,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String fiveChallengeLine(int right) {
+    return 'I got $right of today\'s 5 on Astute. Can you beat me?';
+  }
+
+  @override
+  String get fiveChallengeAll =>
+      'I got all of today\'s 5 on Astute. Can you match it?';
+
+  @override
+  String get fiveChallengeInvite =>
+      'Today\'s five on Astute: the same five questions for everyone. How many can you get?';
+
+  @override
   String threeShareHeadIn(String subject, String date) {
     return 'Astute · Today\'s three · $subject · $date';
   }

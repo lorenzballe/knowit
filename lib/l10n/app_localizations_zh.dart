@@ -1923,6 +1923,17 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String fiveChallengeLine(int right) {
+    return 'Astute 今日五题，我答对了 $right 道。你能超过我吗？';
+  }
+
+  @override
+  String get fiveChallengeAll => 'Astute 今日五题，我全部答对。你也能做到吗？';
+
+  @override
+  String get fiveChallengeInvite => 'Astute 今日五题：每个人都是同样的五道题。你能答对几道？';
+
+  @override
   String threeShareHeadIn(String subject, String date) {
     return 'Astute · 今日三题 · $subject · $date';
   }

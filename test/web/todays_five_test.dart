@@ -10,6 +10,13 @@
 // year, the end of February and the nights the clocks change in Europe and
 // in America. Every card a day names is in the published bank and dealt, so
 // its page (/c/<id>, tool/cards/challenge_pages.py) is on the site.
+//
+// The challenge on today's five (/sfida, tool/cards/sfida_page.py) plays the
+// same five from the same files, and judges a friend's answers from what
+// each card's file says: so each file must say exactly what the app judges
+// by — a pick's options and its right one, and for a share every guess on
+// the track the card itself counts right — and the line of the answer the
+// app shows under a card once it is locked in.
 
 import 'dart:convert';
 import 'dart:io';
@@ -19,7 +26,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:astuto/data/daily.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart' show dateKey;
+import 'package:astuto/explore/blocks/bets/answers.dart' show plainResponse;
 import 'package:astuto/explore/blocks/bets/daily_deal.dart';
+import 'package:astuto/explore/blocks/bets/deal.dart' show answerOf;
+import 'package:astuto/explore/blocks/bets/parts.dart' show firstLines;
 import 'package:astuto/models/pill.dart';
 
 import '../../tool/todays_five.dart';
@@ -135,6 +145,124 @@ void main() {
       ) as Map<String, Object?>;
       expect(shown, todaysFiveCard(PillBank.byId(id)!));
       expect(shown['question'], card['question']);
+    }
+  });
+
+  /// Every card the file names, by id.
+  Set<String> named() => {
+    for (final Object? day in days.values)
+      for (final Object? id in (day! as Map)['five'] as List<Object?>)
+        id! as String,
+  };
+
+  Map<String, Object?> shownOf(String id) =>
+      jsonDecode(File('${out.path}/cards/$id.json').readAsStringSync())
+          as Map<String, Object?>;
+
+  test('the challenge plays the files the deploy writes', () {
+    final String page = File('tool/cards/sfida_page.py').readAsStringSync();
+    expect(page, contains("'/five/days.json'"));
+    expect(page, contains("'/five/cards/'"));
+    final String deploy = File('.github/workflows/deploy.yml')
+        .readAsStringSync();
+    expect(deploy, contains('python3 tool/cards/sfida_page.py _site'));
+  });
+
+  test('every card is judged on the site as the app judges it: a pick on '
+      'its right option, a share on every guess the card counts right', () {
+    int picks = 0, shares = 0;
+    for (final String id in named()) {
+      final Pill p = PillBank.byId(id)!;
+      final Map<String, Object?> shown = shownOf(id);
+      switch (dailyKindOf(p)) {
+        case DailyKind.pick:
+          picks++;
+          final PickOne pick = p.challenge as PickOne;
+          expect(shown['kind'], 'pick', reason: id);
+          expect(shown['options'], pick.options, reason: id);
+          // The page counts the option at `correct` right, and no other:
+          // what the app's game keeps as the bet's `right`.
+          for (int i = 0; i < pick.options.length; i++) {
+            expect(
+              i == shown['correct'],
+              p.challenge.accepts('$i'),
+              reason: '$id, option $i',
+            );
+          }
+        case DailyKind.share:
+          shares++;
+          expect(shown['kind'], 'share', reason: id);
+          expect(shown['value'], answerOf(p)!.value, reason: id);
+          final List<Object?>? right = shown['right'] as List<Object?>?;
+          // The track is set in whole points, from nought to a hundred: the
+          // page counts a guess right between the two it is given, and the
+          // app the guess its card accepts, in the form the game keeps it.
+          for (int g = 0; g <= 100; g++) {
+            final bool page =
+                right != null &&
+                g >= (right[0]! as num) &&
+                g <= (right[1]! as num);
+            expect(
+              page,
+              p.challenge.accepts(plainResponse(g.toDouble())),
+              reason: '$id at $g',
+            );
+          }
+        case null:
+          fail('$id is not a card the five can play');
+      }
+      // The why under each answer: the line the app shows under the card.
+      expect(shown['why'], firstLines(p.answer, max: null), reason: id);
+      expect(shown['why'], isNotEmpty, reason: id);
+    }
+    // Over four hundred days both kinds come round.
+    expect(picks, greaterThan(100));
+    expect(shares, greaterThan(0));
+  });
+
+  test('a friend\'s score is the app\'s: five answers judged on the files '
+      'count as many right as the same five locked in in the app', () {
+    for (final DateTime date in dates) {
+      final List<Pill> five = DailyDeal.five(date);
+      // Every way of being right and wrong a day can be played: a pick
+      // right or one along, a share on its answer or forty points off.
+      for (int mask = 0; mask < 32; mask++) {
+        int app = 0, site = 0;
+        for (final (int i, Pill p) in five.indexed) {
+          final bool aimRight = mask & (1 << i) != 0;
+          final Map<String, Object?> shown = shownOf(p.id);
+          final String said;
+          switch (p.challenge) {
+            case PickOne(:final correct, :final options):
+              final int pick = aimRight
+                  ? correct
+                  : (correct + 1) % options.length;
+              said = '$pick';
+              if (pick == shown['correct']) site++;
+            default:
+              final double truth = answerOf(p)!.value;
+              final int guess = (aimRight ? truth : (truth + 40) % 100)
+                  .round()
+                  .clamp(0, 100);
+              said = plainResponse(guess.toDouble());
+              final List<Object?>? right = shown['right'] as List<Object?>?;
+              if (right != null &&
+                  guess >= (right[0]! as num) &&
+                  guess <= (right[1]! as num)) {
+                site++;
+              }
+          }
+          if (p.challenge.accepts(said)) app++;
+        }
+        expect(site, app, reason: '${dateKey(date)}, $mask');
+      }
+    }
+  });
+
+  test('each card\'s file stays small', () {
+    for (final String id in named()) {
+      final int bytes = File('${out.path}/cards/$id.json').lengthSync();
+      expect(bytes, lessThan(2500), reason: id);
     }
   });
 }

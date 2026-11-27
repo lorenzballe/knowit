@@ -1812,6 +1812,19 @@ class RemoteLocalizations extends AppLocalizations {
       _base.fiveShareHead(date);
 
   @override
+  String fiveChallengeLine(int right) =>
+      _words.format('fiveChallengeLine', localeName, {'right': right}) ??
+      _base.fiveChallengeLine(right);
+
+  @override
+  String get fiveChallengeAll =>
+      _words.text('fiveChallengeAll') ?? _base.fiveChallengeAll;
+
+  @override
+  String get fiveChallengeInvite =>
+      _words.text('fiveChallengeInvite') ?? _base.fiveChallengeInvite;
+
+  @override
   String threeShareHeadIn(String subject, String date) =>
       _words.format('threeShareHeadIn', localeName, {
         'subject': subject,
