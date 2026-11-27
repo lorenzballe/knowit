@@ -211,29 +211,27 @@ void main() {
       .text
       .toPlainText();
 
-  test('A is the paywall as it ships, and a look kept by a build with the '
-      'tools is never read by one without them', () async {
-    SharedPreferences.setMockInitialValues({'knowit.debug.paywallLook': 'c'});
+  test('C is the paywall as it ships, the owner\'s choice, and a look kept '
+      'by a build with the tools is never read by one without them', () async {
+    expect(DebugLooks.paywallShips, PaywallLook.c);
+    SharedPreferences.setMockInitialValues({'knowit.debug.paywallLook': 'a'});
     DebugLooks.load(await SharedPreferences.getInstance());
-    expect(DebugLooks.paywall.value, PaywallLook.c);
+    expect(DebugLooks.paywall.value, PaywallLook.a);
     debugToolsOn = false;
-    expect(DebugLooks.paywallPicked, PaywallLook.a);
-    debugToolsOn = true;
     expect(DebugLooks.paywallPicked, PaywallLook.c);
-    DebugLooks.reset();
+    debugToolsOn = true;
     expect(DebugLooks.paywallPicked, PaywallLook.a);
+    DebugLooks.reset();
+    expect(DebugLooks.paywallPicked, PaywallLook.c);
   });
 
-  testWidgets('without the tools, a kept look still opens on A', (
-    tester,
-  ) async {
+  testWidgets('without the tools, a kept look still opens on the one that '
+      'ships, C', (tester) async {
     debugToolsOn = false;
-    await open(tester, PaywallLook.b);
-    expect(features, findsNothing);
-    expect(rail, findsNothing);
-    // A's own list: the day's five is there whatever the AI switch says
-    // (the assistant and the coach show only where it is on).
-    expect(find.byKey(const ValueKey('paywall-feature-five')), findsOneWidget);
+    await open(tester, PaywallLook.a);
+    // C's list of what Astute+ holds, with real cards as its marks: A has
+    // none of it.
+    expect(features, findsOneWidget);
     expect(buy, findsOneWidget);
   });
 

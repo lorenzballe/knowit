@@ -43,10 +43,11 @@ enum ShareDayPick {
 }
 
 /// Which paywall the developer tools put on screen, by the letter the owner
-/// knows it by (lib/screens/paywall_looks.dart): A as it ships, or one of
-/// the three prototypes.
+/// knows it by (lib/screens/paywall_looks.dart). The owner chose C on 27
+/// November 2026, and C ships ([DebugLooks.paywallShips]); the tools still
+/// show the others.
 enum PaywallLook {
-  /// The paywall as it ships.
+  /// The paywall as it shipped until C was chosen.
   a,
 
   /// A, with the product in it: real cards in place of the drawn marks, the
@@ -54,7 +55,7 @@ enum PaywallLook {
   b,
 
   /// B, opening on what the reader said they want and the subjects they
-  /// chose.
+  /// chose. The one that ships.
   c,
 
   /// B in two steps: what Astute+ is, then the plans over it.
@@ -135,9 +136,12 @@ abstract final class DebugLooks {
   static final ValueNotifier<ShareDayPick> shareDay =
       ValueNotifier<ShareDayPick>(ShareDayPick.a);
 
+  /// The paywall that ships: the owner's choice.
+  static const PaywallLook paywallShips = PaywallLook.c;
+
   /// The paywall, as kept.
   static final ValueNotifier<PaywallLook> paywall = ValueNotifier<PaywallLook>(
-    PaywallLook.a,
+    paywallShips,
   );
 
   /// What to learn's look, as kept.
@@ -163,10 +167,10 @@ abstract final class DebugLooks {
   static ShareDayPick get shareDayPicked =>
       debugToolsOn ? shareDay.value : ShareDayPick.a;
 
-  /// The paywall as picked for this run: A, as it ships, unless the tools
-  /// are on and a prototype was picked.
+  /// The paywall as picked for this run: the one that ships, unless the
+  /// tools are on and another was picked.
   static PaywallLook get paywallPicked =>
-      debugToolsOn ? paywall.value : PaywallLook.a;
+      debugToolsOn ? paywall.value : paywallShips;
 
   /// What to learn's look for this run: as it ships, unless the tools are
   /// on and another was picked.
@@ -189,13 +193,12 @@ abstract final class DebugLooks {
         ShareDayPick.a;
     paywall.value =
         PaywallLook.values.asNameMap()[prefs.getString(_kPaywall)] ??
-        PaywallLook.a;
+        paywallShips;
     learn.value =
         LearnLook.values.asNameMap()[prefs.getString(_kLearn)] ??
         LearnLook.today;
-    cardFoot.value = CardFootPick.values.asNameMap()[prefs.getString(
-      _kCardFoot,
-    )];
+    cardFoot.value = CardFootPick.values
+        .asNameMap()[prefs.getString(_kCardFoot)];
   }
 
   /// Picks the paywall, and keeps it so.
@@ -251,7 +254,7 @@ abstract final class DebugLooks {
     if (shareDay.value != ShareDayPick.a) {
       await prefs.setString(_kShareDay, shareDay.value.name);
     }
-    if (paywall.value != PaywallLook.a) {
+    if (paywall.value != paywallShips) {
       await prefs.setString(_kPaywall, paywall.value.name);
     }
     if (learn.value != LearnLook.today) {
@@ -268,7 +271,7 @@ abstract final class DebugLooks {
     noTopRow.value = false;
     profileTop.value = ProfileTopPick.auto;
     shareDay.value = ShareDayPick.a;
-    paywall.value = PaywallLook.a;
+    paywall.value = paywallShips;
     learn.value = LearnLook.today;
     cardFoot.value = null;
   }

@@ -1731,9 +1731,9 @@ class _PaywallLookPicker extends StatelessWidget {
   final PaywallLook look;
 
   static const _options = [
-    (look: PaywallLook.a, name: 'A', note: 'as it ships'),
+    (look: PaywallLook.a, name: 'A', note: 'the old one'),
     (look: PaywallLook.b, name: 'B', note: 'cards, days'),
-    (look: PaywallLook.c, name: 'C', note: 'for you'),
+    (look: PaywallLook.c, name: 'C', note: 'for you, ships'),
     (look: PaywallLook.d, name: 'D', note: 'two steps'),
   ];
 

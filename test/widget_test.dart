@@ -2430,14 +2430,14 @@ void main() {
     // The saving is worked out from the two prices rather than asserted.
     expect(find.text('SAVE 37%'), findsOneWidget);
 
-    // The month has no free week, so it does not promise one, and the line
-    // under the button is the same.
+    // The month has no free days, so it does not promise any, and the line
+    // under the button says the charge is today (the paywall that ships, C,
+    // says so where A did not).
     await tester.tap(find.text('Monthly'));
     await _settle(tester);
     expect(find.text('Subscribe for €3,99/mo'), findsOneWidget);
     expect(find.textContaining('Try 14 days free'), findsNothing);
-    expect(find.text('Cancel any time'), findsOneWidget);
-    expect(find.textContaining('charged today'), findsNothing);
+    expect(find.text('Charged today · Cancel any time'), findsOneWidget);
   });
 
   testWidgets('the paywall links the terms and the privacy policy', (
