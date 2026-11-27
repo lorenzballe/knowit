@@ -1970,9 +1970,6 @@ class RemoteLocalizations extends AppLocalizations {
   String get readTitle => _words.text('readTitle') ?? _base.readTitle;
 
   @override
-  String get readSharp => _words.text('readSharp') ?? _base.readSharp;
-
-  @override
   String get readBlind => _words.text('readBlind') ?? _base.readBlind;
 
   @override

@@ -2074,10 +2074,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get readTitle => '你已经看得清楚的地方';
 
   @override
-  String get readSharp => '看得清楚';
-
-  @override
-  String get readBlind => '盲点';
+  String get readBlind => '你的盲点';
 
   @override
   String get readLocked => '针对你盲点的五张卡片和完整画像，需要 Astute+。';

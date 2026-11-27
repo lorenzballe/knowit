@@ -304,7 +304,7 @@ void main() {
       ) as AppState;
       await show(tester, LearnProfileBox(app: free));
       expect(find.text(l.readTitle.toUpperCase()), findsOneWidget);
-      expect(find.text(l.readSharp.toUpperCase()), findsOneWidget);
+      expect(find.text(l.strengthsBest.toUpperCase()), findsOneWidget);
       expect(find.byKey(const ValueKey('profile-read-blind')), findsOneWidget);
       expect(find.text(l.skillName('persuade')), findsOneWidget);
       expect(find.byKey(const ValueKey('profile-read-locked')), findsOneWidget);

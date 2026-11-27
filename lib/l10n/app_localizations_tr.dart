@@ -2142,10 +2142,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get readTitle => 'Zaten net gördüğün yerler';
 
   @override
-  String get readSharp => 'Net görüyorsun';
-
-  @override
-  String get readBlind => 'Kör nokta';
+  String get readBlind => 'Kör noktan';
 
   @override
   String get readLocked =>

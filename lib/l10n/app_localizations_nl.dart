@@ -2174,10 +2174,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get readTitle => 'Waar je al scherp bent';
 
   @override
-  String get readSharp => 'Scherp';
-
-  @override
-  String get readBlind => 'Blinde vlek';
+  String get readBlind => 'Je blinde vlek';
 
   @override
   String get readLocked =>

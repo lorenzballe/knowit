@@ -2174,10 +2174,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get readTitle => 'Onde já vês claro';
 
   @override
-  String get readSharp => 'Vês claro';
-
-  @override
-  String get readBlind => 'Ponto cego';
+  String get readBlind => 'O teu ponto cego';
 
   @override
   String get readLocked =>

@@ -2086,10 +2086,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get readTitle => '이미 날카로운 곳';
 
   @override
-  String get readSharp => '날카로운 곳';
-
-  @override
-  String get readBlind => '사각지대';
+  String get readBlind => '나의 사각지대';
 
   @override
   String get readLocked => '사각지대를 위한 카드 다섯 장과 전체 프로필은 Astute+에서.';

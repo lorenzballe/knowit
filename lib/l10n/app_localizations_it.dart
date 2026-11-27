@@ -2172,10 +2172,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get readTitle => 'Dove ci vedi già chiaro';
 
   @override
-  String get readSharp => 'Ci vedi chiaro';
-
-  @override
-  String get readBlind => 'Punto cieco';
+  String get readBlind => 'Il tuo punto cieco';
 
   @override
   String get readLocked =>

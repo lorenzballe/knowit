@@ -2081,10 +2081,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get readTitle => 'もう見抜けているところ';
 
   @override
-  String get readSharp => '見抜けている';
-
-  @override
-  String get readBlind => '盲点';
+  String get readBlind => 'あなたの盲点';
 
   @override
   String get readLocked => '盲点を鍛える5枚のカードと、プロフィールのすべては Astute+ で。';

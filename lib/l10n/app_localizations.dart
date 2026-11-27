@@ -2958,16 +2958,10 @@ abstract class AppLocalizations {
   /// **'Where you\'re already sharp'**
   String get readTitle;
 
-  /// Look D: small label over the skill the reader gets most right among the ones their goal takes.
-  ///
-  /// In en, this message translates to:
-  /// **'Sharpest'**
-  String get readSharp;
-
   /// Look D: small label over the skill the reader gets most wrong among the ones their goal takes: their blind spot.
   ///
   /// In en, this message translates to:
-  /// **'Blind spot'**
+  /// **'Your blind spot'**
   String get readBlind;
 
   /// Look D, the profile on the free plan: what Astute+ adds under the two lines: five cards to practise the blind spot, and every skill ranked.

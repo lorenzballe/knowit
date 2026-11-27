@@ -2162,10 +2162,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readTitle => 'Where you\'re already sharp';
 
   @override
-  String get readSharp => 'Sharpest';
-
-  @override
-  String get readBlind => 'Blind spot';
+  String get readBlind => 'Your blind spot';
 
   @override
   String get readLocked =>

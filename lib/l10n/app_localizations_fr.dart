@@ -2175,10 +2175,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get readTitle => 'Là où tu y vois déjà clair';
 
   @override
-  String get readSharp => 'Tu y vois clair';
-
-  @override
-  String get readBlind => 'Angle mort';
+  String get readBlind => 'Ton angle mort';
 
   @override
   String get readLocked =>

@@ -2331,11 +2331,7 @@
  "@readTitle": {
   "description": "Look D, the profile: heading of the box under 'Where do you want to be sharper?', echoing it: where the reader's answers say they already see clearly, in the skills their goal takes."
  },
- "readSharp": "Sharpest",
- "@readSharp": {
-  "description": "Look D: small label over the skill the reader gets most right among the ones their goal takes."
- },
- "readBlind": "Blind spot",
+ "readBlind": "Your blind spot",
  "@readBlind": {
   "description": "Look D: small label over the skill the reader gets most wrong among the ones their goal takes: their blind spot."
  },

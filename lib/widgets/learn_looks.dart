@@ -1158,7 +1158,7 @@ class AimReadBox extends StatelessWidget {
       inside = Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _StrengthLine(kicker: l.readSharp, tally: reading.sharpest!),
+          _StrengthLine(kicker: l.strengthsBest, tally: reading.sharpest!),
           if (blind != null) ...[
             const SizedBox(height: 14),
             _rule(context),

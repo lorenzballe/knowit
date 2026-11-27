@@ -2260,10 +2260,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get readTitle => 'Где ты уже видишь ясно';
 
   @override
-  String get readSharp => 'Видишь ясно';
-
-  @override
-  String get readBlind => 'Слепое пятно';
+  String get readBlind => 'Твоё слепое пятно';
 
   @override
   String get readLocked =>

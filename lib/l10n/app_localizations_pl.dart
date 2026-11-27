@@ -2252,10 +2252,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get readTitle => 'Gdzie już widzisz jasno';
 
   @override
-  String get readSharp => 'Widzisz jasno';
-
-  @override
-  String get readBlind => 'Martwy punkt';
+  String get readBlind => 'Twój martwy punkt';
 
   @override
   String get readLocked =>
