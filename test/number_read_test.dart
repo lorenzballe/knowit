@@ -93,7 +93,9 @@ void main() {
     await tester.enterText(find.byType(TextField), '9,455');
     await tester.pump();
     await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
-    await tester.pump();
+    // The number is taken at once; how sure comes in under it, as it does
+    // under a pick.
+    await tester.pumpAndSettle();
     await tester.tap(find.text('70%'));
     await tester.pump();
     expect(kept, '9455');
