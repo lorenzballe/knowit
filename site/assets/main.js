@@ -2,10 +2,10 @@
 // framework. Every page reads without it; this adds the menu, the nav that
 // frosts and its progress line, things coming into view, the numbers that
 // count up, the light that follows the pointer across a card, the phone that
-// turns and plays a day's cards, today's question and the time to the next
-// one, the rows that scroll, the calibration chart, the cards that flip, the
-// plan picker, the questions that open, and the rail beside a long page —
-// and it counts the pages read and the store buttons pressed.
+// turns and goes through today's cards on its shelf, Today's five and the
+// time to the next, the rows that scroll, the calibration chart, the cards
+// that flip, the plan picker, the questions that open, and the rail beside a
+// long page — and it counts the pages read and the store buttons pressed.
 (() => {
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => Array.from(root.querySelectorAll(s));
@@ -107,6 +107,16 @@
       posthog = ph;
       waiting.splice(0).forEach(([event, properties, options]) => ph.capture(event, properties, options));
     }).catch(() => {});
+  }
+
+  // Today's edition in the first screen, counted from the date as the app
+  // counts it (lib/data/daily.dart, editionOf): the first of September 2026
+  // was the first, and every day since one more.
+  const kicker = $('#hero-kicker');
+  if (kicker) {
+    const d = new Date();
+    const edition = Math.round((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(2026, 8, 1)) / 864e5) + 1;
+    if (edition > 0) kicker.textContent = 'Edition ' + edition + ' \u00b7 out this morning';
   }
 
   // The nav frosts once the page has moved; a line along the top shows how
@@ -355,284 +365,187 @@
     demo.addEventListener('focusin', () => phone.classList.add('facing'));
     demo.addEventListener('focusout', e => { if (!demo.contains(e.relatedTarget) && !demo.matches(':hover')) phone.classList.remove('facing'); });
   }
-  // The phone holds a real card from the app, drawn and alive: the most beautiful ones, one after another.
-  const live = demo && $('[data-live]', demo);
-  if (live) {
-    const LIVE = ['space-apollo-slingshot', 'economics-hormuz-pipeline-shortfall', 'human_body-egg-breaks-spell', 'maths-mercator-russia', 'history-vajont-four-minutes', 'life-inch-of-pay'];
-    const frame = $('iframe', live), bars = $$('.app-bars i', demo), next = $('.phone-next');
-    let at = 0;
-    const show = k => {
-      at = (k + LIVE.length) % LIVE.length;
-      live.classList.add('turning');
-      setTimeout(() => { frame.src = '/cards/pages/' + LIVE[at] + '.html'; }, 180);
-      bars.forEach((b, j) => b.classList.toggle('on', j <= at % bars.length));
-    };
-    frame.addEventListener('load', () => live.classList.remove('turning'));
-    if (next) next.addEventListener('click', () => show(at + 1));
-  }
-  if (demo && $('[data-pill]', demo)) {
-    const deck = $('.deck', demo);
-    const cards = $$('.pill', demo);
-    const bars = $$('.app-bars i', demo);
+  // The phone's shelf: today's five cards, dealt by the page's own script
+  // (index.html) from the bank's most beautiful drawings, one in front and
+  // the next showing at each edge. It goes on by itself, as the app's shelf
+  // goes on under a thumb: a card every few seconds, its bar filling the
+  // while, the light behind the phone taking its colour. It waits while it is
+  // out of sight, while its page is hidden, while the pointer is on the phone
+  // and while a card is being played; the button under it stops it, and
+  // back and on step by hand. Asked for less motion, it stands still and
+  // steps only by hand. Where there is a pointer, the card in front is its
+  // own page from the site, live, put in once it has come to rest; on a
+  // touch screen, once it is tapped.
+  const shelf = demo && $('[data-shelf]', demo);
+  const shelfCards = shelf ? $$('.shelf-card', shelf) : [];
+  if (shelf && shelfCards.length > 1) {
+    const n = shelfCards.length;
+    const DWELL = 6500;
+    const bars = $$('.app-bars i', demo).slice(0, n);
     const stage = demo.closest('.hero-stage');
-    const hint = $('.phone-hint');
-    const hintText = hint && $('span', hint);
-    const SPECTRUM = ['#FFE600', '#A6FF00', '#00D451', '#00D9D9', '#2B5CFF', '#9B5CFF', '#E040FB', '#FF3D7F', '#FF7A1A', '#FFB000'];
-    let at = 0;
-    let touched = false;
-    let tally = [];
+    const playBtn = $('[data-shelf-play]');
+    const holds = new Set();
+    let at = 0, elapsed = 0, last = 0, raf = 0, stopped = still;
+    let live = null, liveTimer = 0, idleTimer = 0;
 
-    // The answer arrives a word at a time: each word its own span, counted,
-    // so the words can come in one after another.
-    cards.forEach(card => {
-      const a = $('.pill-a', card);
-      if (!a) return;
-      let i = 0;
-      const split = node => {
-        Array.from(node.childNodes).forEach(child => {
-          if (child.nodeType === 1) { split(child); return; }
-          if (child.nodeType !== 3) return;
-          const bits = child.textContent.split(/(\s+)/);
-          const frag = document.createDocumentFragment();
-          bits.forEach(bit => {
-            if (!bit) return;
-            if (/^\s+$/.test(bit)) { frag.appendChild(document.createTextNode(bit)); return; }
-            const w = document.createElement('span');
-            w.className = 'wd';
-            w.style.setProperty('--i', i++);
-            w.textContent = bit;
-            frag.appendChild(w);
-          });
-          child.replaceWith(frag);
-        });
-      };
-      split(a);
-      // What follows the answer waits for its last word.
-      const after = 240 + i * 12;
-      $$('.pill-trap', card).forEach(el => el.style.setProperty('--rd', after + 120 + 'ms'));
-      $$('.pill-move', card).forEach(el => { el.style.setProperty('--rd', after + 260 + 'ms'); el.style.setProperty('--sd', after + 900 + 'ms'); });
-      $$('.pill-src', card).forEach(el => el.style.setProperty('--rd', after + 400 + 'ms'));
-      $$('.pill-next', card).forEach(el => el.style.setProperty('--rd', after + 560 + 'ms'));
-      $$('.pill-q2', card).forEach(el => el.style.setProperty('--rd', '140ms'));
-    });
-
-    const say = text => {
-      if (!hint || !hintText) return;
-      if (!text) { hint.classList.add('gone'); return; }
-      hintText.textContent = text;
-      hint.classList.remove('gone');
+    const glow = hex => {
+      const h = parseInt(String(hex).slice(1), 16) || 0x2B5CFF;
+      return ((h >> 16) & 255) + ' ' + ((h >> 8) & 255) + ' ' + (h & 255) + ' / .42';
     };
-    const place = () => {
-      cards.forEach((card, i) => {
-        const d = i - at;
-        card.dataset.depth = d < 0 ? 'gone' : d === 0 ? '0' : d === 1 ? '1' : 'far';
-        card.inert = d !== 0;
+    const fill = p => {
+      const bar = bars[at] && bars[at].firstElementChild;
+      if (bar) bar.style.setProperty('--p', p.toFixed(4));
+    };
+    // Each card at its place from the one in front: the one just gone at -1,
+    // the rest waiting off to the right. A card that would cross the screen
+    // to get to its place (the one gone, coming round to the back) goes
+    // there at once, unseen.
+    const place = all => {
+      shelfCards.forEach((card, i) => {
+        let o = (i - at + n) % n;
+        if (o === n - 1) o = -1;
+        const was = parseFloat(card.style.getPropertyValue('--o'));
+        card.classList.toggle('jump', all || !(Math.abs(o - was) <= 1));
+        card.style.setProperty('--o', o);
+        card.classList.toggle('front', o === 0);
+        card.setAttribute('aria-hidden', String(o !== 0));
       });
-      bars.forEach((bar, i) => bar.classList.toggle('on', i <= at));
-      if (stage && cards[at]) stage.style.setProperty('--glow', cards[at].dataset.glow);
-    };
-
-    const pick = (card, i, auto) => {
-      if (card.dataset.step !== 'pick') return;
-      const opts = $$('.pill-opt', card);
-      opts[i].classList.add('taken');
-      card.dataset.taken = i;
-      say('');
-      // Focus follows the answer only where it was: a reader on the keys
-      // goes on to how sure, and is not dropped back at the top of the page
-      // when the answers they were on stop taking input.
-      const held = !auto && card.contains(document.activeElement);
-      setTimeout(() => {
-        card.dataset.step = 'sure';
-        $('.pill-sure', card).inert = false;
-        const on = () => {
-          if (held) $('.pill-levels button', card).focus({ preventScroll: true });
-          $('.pill-pick', card).inert = true;
-        };
-        // The step shows on the next frame, and nothing hidden takes focus.
-        if (held) requestAnimationFrame(() => requestAnimationFrame(on));
-        else on();
-      }, still ? 0 : 200);
-    };
-
-    const sure = (card, level, auto) => {
-      if (card.dataset.step !== 'sure') return;
-      const right = Number(card.dataset.taken) === Number(card.dataset.answer);
-      $$('.pill-levels button', card).forEach(b => b.classList.toggle('taken', Number(b.dataset.level) === level));
-      card.classList.toggle('right', right);
-      if (!auto) tally.push({ right, level });
-      const icon = $('.v-icon', card);
-      $$('.spark', icon).forEach(s => s.remove());
-      if (right && !still) {
-        for (let k = 0; k < 12; k++) {
-          const s = document.createElement('i');
-          s.className = 'spark';
-          s.style.setProperty('--a', k * 30 + 'deg');
-          s.style.setProperty('--h', SPECTRUM[k % SPECTRUM.length]);
-          icon.appendChild(s);
-        }
-      }
-      const held = !auto && card.contains(document.activeElement);
-      setTimeout(() => {
-        card.dataset.step = 'turned';
-        const back = $('.pill-back', card);
-        back.inert = false;
-        if (held) $('.pill-next', card).focus({ preventScroll: true });
-        $('.pill-front', card).inert = true;
-        // Written once the back can be read, so that it is announced. The
-        // app's own line: right, or what was picked beside what it is — and
-        // never a claim about how other readers did, which nothing here
-        // could back.
-        const opts = $$('.pill-opt', card);
-        const said = right ? 'You got it' : 'You said ' + opts[Number(card.dataset.taken)].textContent + ' · it is ' + opts[Number(card.dataset.answer)].textContent;
-        $('.v-line', card).textContent = said + ' · you said ' + level + '% sure';
-        setTimeout(() => back.classList.add('in'), still ? 0 : 380);
-        say(at === 0 ? 'Tap the card for the next one' : '');
-      }, still ? 0 : 160);
-    };
-
-    const score = () => {
-      const end = $('[data-end]', demo);
-      if (!end) return;
-      const n = tally.length;
-      const sureAvg = n ? Math.round(tally.reduce((t, a) => t + a.level, 0) / n) : 0;
-      const rightPct = n ? Math.round(100 * tally.filter(a => a.right).length / n) : 0;
-      $('[data-sure]', end).textContent = sureAvg + '%';
-      $('[data-right]', end).textContent = rightPct + '%';
-      const even = Math.abs(sureAvg - rightPct) <= 5;
-      $('[data-gap]', end).hidden = even;
-      $('[data-even]', end).hidden = !even;
-    };
-
-    const next = () => {
-      if (at >= cards.length - 1) return;
-      const held = cards[at].contains(document.activeElement);
-      at += 1;
-      place();
-      if (cards[at].hasAttribute('data-end')) score();
-      say('');
-      if (held) $('.pill-opt, .end-cta', cards[at]).focus({ preventScroll: true });
-    };
-
-    const again = () => {
-      deck.classList.add('reset');
-      cards.forEach(card => {
-        card.dataset.step = 'pick';
-        card.classList.remove('right');
-        $$('.taken', card).forEach(el => el.classList.remove('taken'));
-        const back = $('.pill-back', card);
-        if (back) { back.classList.remove('in'); back.inert = true; }
-        const front = $('.pill-front', card);
-        if (front) front.inert = false;
-        const pickEl = $('.pill-pick', card);
-        if (pickEl) pickEl.inert = false;
-        const sureEl = $('.pill-sure', card);
-        if (sureEl) sureEl.inert = true;
+      void shelf.offsetWidth;
+      shelfCards.forEach(card => card.classList.remove('jump'));
+      bars.forEach((bar, i) => {
+        bar.classList.toggle('done', i < at);
+        if (bar.firstElementChild) bar.firstElementChild.style.setProperty('--p', i < at ? 1 : 0);
       });
-      tally = [];
-      at = 0;
-      place();
-      void deck.offsetWidth;
-      deck.classList.remove('reset');
-      const first = $('.pill-opt', cards[0]);
-      if (first) first.focus({ preventScroll: true });
+      if (stopped && still) fill(1);
+      if (stage) stage.style.setProperty('--glow', glow(shelfCards[at].dataset.colour));
     };
 
-    demo.addEventListener('click', e => {
-      const card = e.target.closest('.pill');
-      if (!card || card.dataset.depth !== '0') return;
-      touched = true;
-      const opt = e.target.closest('.pill-opt');
-      const level = e.target.closest('.pill-levels button');
-      if (opt) pick(card, $$('.pill-opt', card).indexOf(opt), false);
-      else if (level) sure(card, Number(level.dataset.level), false);
-      else if (e.target.closest('.end-again')) again();
-      else if (card.dataset.step === 'turned' && !e.target.closest('a')) next();
-    });
-    demo.addEventListener('pointerdown', () => { touched = true; });
-    demo.addEventListener('keydown', () => { touched = true; });
-    place();
+    const running = () => !stopped && holds.size === 0;
+    const tick = now => {
+      raf = 0;
+      if (!running()) { last = 0; return; }
+      if (last) elapsed += Math.min(now - last, 100);
+      last = now;
+      fill(Math.min(1, elapsed / DWELL));
+      if (elapsed >= DWELL) go(at + 1);
+      raf = requestAnimationFrame(tick);
+    };
+    const kick = () => { if (running() && !raf) { last = 0; raf = requestAnimationFrame(tick); } };
+    const hold = why => holds.add(why);
+    const release = why => { holds.delete(why); kick(); };
 
-    // Once, if nobody has touched it: the first card plays itself, the
-    // answer most people give, and how sure they are of it.
-    if (!still && 'IntersectionObserver' in window) {
-      let timer = 0;
-      const ghost = (el, then) => {
-        el.classList.remove('ghost');
-        void el.offsetWidth;
-        el.classList.add('ghost');
-        setTimeout(then, 420);
-        setTimeout(() => el.classList.remove('ghost'), 850);
-      };
-      const play = () => {
-        const card = cards[0];
-        if (touched || at !== 0 || card.dataset.step !== 'pick') return;
-        ghost($$('.pill-opt', card)[0], () => {
-          if (touched) return;
-          pick(card, 0, true);
-          setTimeout(() => {
-            if (touched) return;
-            const eighty = $('.pill-levels [data-level="80"]', card);
-            ghost(eighty, () => { if (!touched) sure(card, 80, true); });
-          }, 1100);
-        });
-      };
-      const seen = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          clearTimeout(timer);
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) timer = setTimeout(play, 2600);
-        });
-      }, { threshold: [0, 0.6] });
-      seen.observe(demo);
-    }
-  }
-
-  // Today's question, from the same file the home-screen widget reads, and
-  // the time until tomorrow's: the day turns at midnight, the phone's.
-  const today = $('#today');
-  if (today && window.fetch) {
-    fetch('/widget/days.json', { cache: 'no-cache' })
-      .then(r => (r.ok ? r.json() : null))
-      .then(data => {
-        const now = new Date();
-        const key = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-        const day = data && data.days && data.days[key];
-        if (!day || !day.question) return;
-        if (/^#[0-9a-f]{6}$/i.test(day.color)) today.style.setProperty('--bg', day.color);
-        // The ink as the cards take it, three channels, so the subject's name
-        // can be set in it at three quarters.
-        if (/^#[0-9a-f]{6}$/i.test(day.ink)) today.style.setProperty('--ink', [1, 3, 5].map(i => parseInt(day.ink.slice(i, i + 2), 16)).join(' '));
-        $('#today-topic').textContent = day.topic || '';
-        // The subject's own mark, by its name: Pop culture is #subject-pop-culture.
-        $('#today-mark').setAttribute('href', '#subject-' + String(day.topic || '').toLowerCase().replace(/[^a-z]+/g, '-'));
-        $('#today-question span').textContent = day.question;
-        $('#today-edition').textContent = day.edition ? 'Edition ' + day.edition : '';
-        $('#today-date').textContent = new Intl.DateTimeFormat('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }).format(now);
-        const kicker = $('#hero-kicker');
-        if (kicker && day.edition) kicker.textContent = 'Edition ' + day.edition + ' · out this morning';
-        const next = $('#today-next');
-        if (next) {
-          const tick = () => {
-            const t = new Date();
-            const midnight = new Date(t);
-            midnight.setHours(24, 0, 0, 0);
-            const ms = midnight - t;
-            const h = Math.floor(ms / 3600000), m = Math.floor((ms % 3600000) / 60000);
-            next.textContent = ms < 60000 ? 'Next edition any minute' : 'Next edition in ' + (h ? h + 'h ' : '') + m + 'm';
+    // The page of the card in front, over its picture: laid out at the app's
+    // size, shown once its drawing has come in, so that it takes the
+    // picture's place without being seen to. Played with, it holds the
+    // shelf until it has been left alone for a while.
+    const dropLive = () => {
+      clearTimeout(liveTimer);
+      clearTimeout(idleTimer);
+      holds.delete('play');
+      shelfCards.forEach(card => card.classList.remove('live'));
+      if (!live) return;
+      const frame = live;
+      live = null;
+      frame.classList.remove('on');
+      setTimeout(() => frame.remove(), 450);
+    };
+    // Asked for with a tap, it shows at once, coming in as it does in the app.
+    const makeLive = asked => {
+      const card = shelfCards[at];
+      if (!card || live) return;
+      const frame = document.createElement('iframe');
+      frame.className = 'shelf-live';
+      frame.title = (card.querySelector('img') || {}).alt || 'A card from Astute';
+      frame.src = '/cards/pages/' + encodeURIComponent(card.dataset.id) + '.html';
+      frame.addEventListener('load', () => {
+        if (live !== frame) return;
+        // The page draws on its card's colour, as the app's frame gives it:
+        // its picture goes as the page comes.
+        setTimeout(() => {
+          if (live !== frame) return;
+          frame.classList.add('on');
+          card.classList.add('live');
+        }, still || asked === true ? 0 : 1300);
+        try {
+          const played = () => {
+            hold('play');
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => release('play'), 15000);
           };
-          tick();
-          setInterval(tick, 30000);
-        }
-        today.hidden = false;
-        fitQuestion($('#today-question'));
-      })
-      .catch(() => {});
+          ['pointerdown', 'keydown', 'wheel'].forEach(t => frame.contentDocument.addEventListener(t, played, { passive: true }));
+        } catch (e) { /* a page that is not the site's own says nothing */ }
+      });
+      live = frame;
+      shelf.appendChild(frame);
+    };
+    const soonLive = () => {
+      clearTimeout(liveTimer);
+      if (finePointer) liveTimer = setTimeout(makeLive, still ? 0 : 1100);
+    };
+
+    function go(to) {
+      dropLive();
+      at = ((to % n) + n) % n;
+      elapsed = 0;
+      place(still);
+      soonLive();
+    }
+
+    const say = () => {
+      if (!playBtn) return;
+      playBtn.setAttribute('aria-pressed', String(stopped));
+      playBtn.setAttribute('aria-label', stopped ? 'Play the cards' : 'Pause the cards');
+      shelf.setAttribute('aria-live', stopped ? 'polite' : 'off');
+    };
+    if (playBtn) playBtn.addEventListener('click', () => {
+      stopped = !stopped;
+      say();
+      kick();
+    });
+    $$('[data-shelf-go]').forEach(b => b.addEventListener('click', () => go(at + Number(b.dataset.shelfGo))));
+
+    // A card at the edge brings itself to the front; a tap on the one in
+    // front, on a touch screen, puts its page in to be played; a swipe goes
+    // back or on.
+    let down = null;
+    shelf.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY, id: e.pointerId }; });
+    shelf.addEventListener('pointerup', e => {
+      if (!down || down.id !== e.pointerId) return;
+      const dx = e.clientX - down.x, dy = e.clientY - down.y;
+      down = null;
+      if (Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy) * 1.2) { go(at + (dx < 0 ? 1 : -1)); return; }
+      if (Math.abs(dx) > 8 || Math.abs(dy) > 8) return;
+      const card = e.target.closest && e.target.closest('.shelf-card');
+      if (!card) return;
+      const o = parseFloat(card.style.getPropertyValue('--o'));
+      if (o === 1 || o === -1) go(at + o);
+      else if (o === 0 && !live) {
+        makeLive(true);
+        hold('play');
+        idleTimer = setTimeout(() => release('play'), 15000);
+      }
+    });
+    shelf.addEventListener('pointercancel', () => { down = null; });
+
+    demo.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') hold('hover'); });
+    demo.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') release('hover'); });
+    document.addEventListener('visibilitychange', () => (document.hidden ? hold('hidden') : release('hidden')));
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => entries.forEach(en => (en.isIntersecting ? release('away') : hold('away'))), { threshold: 0.25 }).observe(demo);
+    }
+
+    place(true);
+    say();
+    // The clock starts once the phone has risen into place.
+    hold('rising');
+    setTimeout(() => release('rising'), still ? 0 : 1300);
+    soonLive();
   }
 
   // A row that scrolls sideways: arrows on a wide screen, soft edges where
   // there is more, dots that say where in it the reader is, and dragging
   // with a mouse.
-  $$('[data-scroll-row]').forEach(row => {
+  const scrollRow = row => {
     const scope = row.closest('section') || document;
     const prev = $('[data-row="prev"]', scope);
     const next = $('[data-row="next"]', scope);
@@ -643,8 +556,11 @@
       const max = row.scrollWidth - row.clientWidth;
       row.style.setProperty('--fl', row.scrollLeft > 4 ? '56px' : '0px');
       row.style.setProperty('--fr', row.scrollLeft < max - 4 ? '56px' : '0px');
+      // A row that fits has nowhere to go: no arrows, no dots.
+      if (prev && prev.parentElement.classList.contains('row-nav')) prev.parentElement.style.visibility = max > 4 ? '' : 'hidden';
       if (prev) prev.disabled = row.scrollLeft <= 4;
       if (next) next.disabled = row.scrollLeft >= max - 4;
+      if (dots) dots.hidden = max <= 4;
       if (dots) {
         const left = row.getBoundingClientRect().left + parseFloat(getComputedStyle(row).paddingLeft);
         let at = 0, best = Infinity;
@@ -689,7 +605,63 @@
         }
       });
     }
-  });
+  };
+  $$('[data-scroll-row]').forEach(scrollRow);
+
+  // Today's five: the five questions at the top of Explore in the app, the
+  // same on every phone today. The deploy deals them with the app's own deal
+  // for the next four hundred days (tool/todays_five.dart): five/days.json
+  // names each day's five, and each card's own file says what to show of
+  // it. The day is the reader's own and turns at their midnight; each card
+  // opens its page (/c/<id>), where it can be answered. Until it has all
+  // five, the section stays hidden.
+  const five = $('#today');
+  const fiveRow = $('#five-row');
+  if (five && fiveRow && window.fetch) {
+    const now = new Date();
+    const key = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+    const json = url => fetch(url).then(r => (r.ok ? r.json() : null));
+    const triplet = hex => (/^#[0-9a-f]{6}$/i.test(hex) ? [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16)).join(' ') : '16 16 12');
+    const esc = s => String(s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
+    json('/five/days.json')
+      .then(data => {
+        const day = data && data.days && data.days[key];
+        if (!day || !Array.isArray(day.five) || day.five.length !== 5) return null;
+        return Promise.all(day.five.map(id => json('/five/cards/' + encodeURIComponent(id) + '.json'))).then(cards => ({ day, cards }));
+      })
+      .then(got => {
+        if (!got || got.cards.some(c => !c || !c.id || !c.question)) return;
+        fiveRow.innerHTML = got.cards.map((c, i) => {
+          const mark = 'subject-' + String(c.topic || '').toLowerCase().replace(/[^a-z]+/g, '-');
+          return '<li class="five-item">'
+            + '<a class="five-card paper" href="/c/' + encodeURIComponent(c.id) + '" style="--c:' + esc(c.color) + '; --ink:' + triplet(c.ink) + '">'
+            + '<span class="label"><svg class="mark" aria-hidden="true"><use href="#' + esc(mark) + '"/></svg><span>' + esc(c.topic) + '</span><span class="five-n">' + (i + 1) + '/5</span></span>'
+            + '<span class="five-q" data-fit="19 27"><span>' + esc(c.question) + '</span></span>'
+            + '<span class="five-go">Answer it <b aria-hidden="true">&rarr;</b></span>'
+            + '</a></li>';
+        }).join('');
+        const date = $('#five-date');
+        if (date) date.textContent = new Intl.DateTimeFormat('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }).format(now);
+        const next = $('#five-next');
+        if (next) {
+          const tick = () => {
+            const t = new Date();
+            const midnight = new Date(t);
+            midnight.setHours(24, 0, 0, 0);
+            const ms = midnight - t;
+            const h = Math.floor(ms / 3600000), m = Math.floor((ms % 3600000) / 60000);
+            next.textContent = ms < 60000 ? 'New five any minute' : 'New five in ' + (h ? h + 'h ' : '') + m + 'm';
+          };
+          tick();
+          setInterval(tick, 30000);
+        }
+        five.hidden = false;
+        scrollRow(fiveRow);
+        $$('[data-fit]', fiveRow).forEach(fitQuestion);
+        if (still || !('IntersectionObserver' in window)) $$('[data-reveal]', five).forEach(reveal);
+      })
+      .catch(() => {});
+  }
 
   // Calibration: how sure you said you were, against how often you were
   // right at that number. The numbers are an example, and the page says so;
