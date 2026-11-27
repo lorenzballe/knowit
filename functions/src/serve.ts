@@ -127,9 +127,10 @@ export const KEEP_TRACE_DAYS = TRACE_DAYS;
 
 /**
  * Clears the reader's trace older than [KEEP_TRACE_DAYS], the days dealt
- * more than a month ago, and the marks of the day's games once they stop
- * nothing (daily.ts): the profile reads three weeks, so nothing older says
- * anything, and the privacy policy promises it is cleared.
+ * more than a month ago, and the marks of the day's games and of the cards
+ * asked to hear read aloud once they stop nothing (daily.ts, listen.ts): the
+ * profile reads three weeks, so nothing older says anything, and the privacy
+ * policy promises it is cleared.
  */
 export async function pruneReader(db: Firestore, uid: string, nowMs: number): Promise<number> {
   const ref = db.collection('readers').doc(uid);
@@ -137,12 +138,15 @@ export async function pruneReader(db: Firestore, uid: string, nowMs: number): Pr
   const daysBefore = new Date(nowMs - 31 * 86_400_000).toISOString().slice(0, 10);
   // A mark is named from its day, `2026-11-25~five`, so it sorts by it.
   const marksBefore = new Date(nowMs - KEEP_MARK_DAYS * 86_400_000).toISOString().slice(0, 10);
-  const [oldTrace, oldDays, oldMarks] = await Promise.all([
+  const [oldTrace, oldDays, oldMarks, oldListens] = await Promise.all([
     ref.collection('activity').where('__name__', '<', traceBefore).limit(60).get(),
     ref.collection('days').where('__name__', '<', daysBefore).limit(60).get(),
     ref.collection('daily').where('__name__', '<', marksBefore).limit(60).get(),
+    // The cards asked to hear on a day (listen.ts): named by the day, and
+    // nothing once the day is past.
+    ref.collection('listen').where('__name__', '<', marksBefore).limit(60).get(),
   ]);
-  const docs = [...oldTrace.docs, ...oldDays.docs, ...oldMarks.docs];
+  const docs = [...oldTrace.docs, ...oldDays.docs, ...oldMarks.docs, ...oldListens.docs];
   if (docs.length === 0) return 0;
   const batch = db.batch();
   for (const d of docs) batch.delete(d.ref);
@@ -150,10 +154,12 @@ export async function pruneReader(db: Firestore, uid: string, nowMs: number): Pr
   return docs.length;
 }
 
-/** Every trace, day, profile and shelf a reader had: gone with their account. */
+/** Every trace, day, profile and shelf a reader had, and when they last
+ * listened (listen.ts): gone with their account. */
 export async function forgetReader(db: Firestore, uid: string): Promise<void> {
   await db.recursiveDelete(db.collection('readers').doc(uid));
   await db.collection('presence').doc(uid).delete().catch(() => undefined);
+  await db.collection('listeners').doc(uid).delete().catch(() => undefined);
 }
 
 export { FieldValue };

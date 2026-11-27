@@ -18,6 +18,9 @@ against the same Firestore the app writes to.
                      and the cards readers say are untrue held out of the deal
     src/daily.ts     the day's games: a play judged as the phone judges it,
                      and counted once with everybody's who played its cards
+    src/listen.ts    the day's five read aloud: what a card says, ElevenLabs,
+                     the clips kept in Storage by hash, the characters it may
+                     read, and who may hear what
     src/serve.ts     one reader against Firestore: read, deal, write, forget
     src/index.ts     the functions themselves, and when they run
     src/*.test.ts    node:test, against the bundled bank; no project needed
@@ -34,6 +37,8 @@ against the same Firestore the app writes to.
 | `onReaderDeleted` | `readers/{uid}` deleted  | everything under it and `presence/{uid}` deleted                     |
 | `scorecard`       | every day at 04:20 UTC   | the closed days of everybody's trace added to each card's totals; reports read; flags and the quarantine written to `quality/latest`, readers' notes to `quality/notes` |
 | `cardStats`       | HTTPS GET                | `quality/latest` as JSON — numbers per card, nothing about who — for `tool/quality/` |
+| `listenCard`      | a phone asks (callable)  | a card of the reader's day read aloud: the addresses of its two clips (question, answer) in Storage, made by ElevenLabs the first time anyone asks and kept under the hash of their words (`listen/{hash}`); the first card of a day for everybody (`readers/{uid}/listen/{date}`), the rest Astute+'s; "not configured" without a key, "unavailable" (and why) when the characters are spent or ElevenLabs will not read |
+| `listenAhead`     | 03:35 and 18:35 UTC      | the readers who listened in the last week (`listeners/{uid}`): their today and tomorrow, as dealt, made ahead (all five on Astute+, the free card otherwise), a quarter of the day's characters at most |
 
 The rules (`../firestore.rules`) let no phone write a day, a profile,
 Explore or the day's games' counts. What the server dealt is what the
@@ -50,6 +55,8 @@ server dealt.
 - `presence/{uid}` — when the reader was last here, their clock's offset,
   whether they hold Astute+.
 - `tallies/{day}`, `totals/{shard}` — the counts, for Explore.
+- `listeners/{uid}` — when a reader last listened, written by `listenCard`;
+  what `listenAhead` reads to know whose next days to make.
 - `readers/{uid}/reports/{card}` — what a reader said is wrong with a card
   (`lib/sync/reports.dart`): a reason, and a note if they wrote one.
 - The bank: `data/bank.json`, copied from `web/cards/cards.json` at build,
@@ -107,10 +114,20 @@ enough), then run *Cloud deploy* from the Actions tab. It runs the tests
 first and deploys the functions, the rules and the indexes; nothing
 deploys on a push.
 
+Listen reads with `ELEVENLABS_API_KEY`, another repository secret: the
+workflow checks it by reading three characters in Listen's own voice, keeps
+it in Secret Manager, and says in the run's summary what ElevenLabs made of
+it (works, no credit yet, or not a key). Without it, or with a key that is
+not one, a stand-in is kept in its place so the deploy goes on, and the
+functions answer "not configured". Listen keeps its clips in the project's
+Storage bucket: if the console's Storage page offers *Get started*, press it
+once; the Storage rules (`../storage.rules`) are deployed after the rest, and
+a project without Storage gets a warning, not a failed deploy.
+
 **From a machine** that is logged in (`firebase login`):
 
     npm --prefix functions run build
-    firebase deploy --only functions,firestore:rules,firestore:indexes
+    firebase deploy --only functions,firestore:rules,firestore:indexes,storage
 
 `firebase.json` at the root names the codebase, the runtime and the rules.
 The first deploy of a scheduled function also creates its Cloud Scheduler
@@ -167,6 +184,14 @@ day. Every call holds back the most it could cost before it is made and is
 counted after, in `ai/spend-{month}` and `ai/spend-{day}`; once either is
 spent, the news keeps the paper it has and the rest say "not available
 right now" until the day or the month turns.
+
+Listen is held the same way in characters, which is how ElevenLabs charges
+($0.08 a thousand on Eleven v4): `LISTEN_MONTH_CHARS` (250,000, under the
+Creator plan's 275,000) and `LISTEN_DAY_CHARS` (25,000), counted in
+`listenSpend/{month}` and `listenSpend/{day}`. A card's two clips are held
+together, both or neither. A clip is made once for everybody, so what is
+spent is new cards, not readers: about 390 characters a card, the whole live
+bank about 2.2 million. `LISTEN_CARDS_PER_DAY` (15) bounds one reader.
 
 ## What it does not do yet
 

@@ -104,6 +104,14 @@ service cloud.firestore {
         allow read, write: if false;
       }
 
+      // The cards the reader asked to hear read aloud on a day, and on the
+      // free plan which one was the day's free card (functions/src/
+      // listen.ts): all that stops a second free card. Server's alone,
+      // like the marks above.
+      match /listen/{day} {
+        allow read, write: if false;
+      }
+
       // What the reader said is wrong with a card: one document per card,
       // the last thing they said (see lib/sync/reports.dart). Theirs to
       // write and to read back; the server's nightly scorecard reads them
@@ -255,6 +263,12 @@ service cloud.firestore {
         allow read, update, delete: if false;
       }
     }
+
+    // The cards read aloud, the server's alone: where each clip is
+    // (listen/{hash}), the characters read this day and month
+    // (listenSpend/{period}), and when each reader last listened
+    // (listeners/{uid}), which goes with the account. Closed to every
+    // phone by the rule below; named here so nobody opens them by mistake.
 
     // Anything not named above is closed, including reads of other readers.
     match /{document=**} {
