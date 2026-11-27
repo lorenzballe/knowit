@@ -34,10 +34,20 @@ import 'subject_icon.dart';
 
 /// The door: a pill under the card.
 class PathDoor extends StatelessWidget {
-  const PathDoor({super.key, required this.app, required this.pill});
+  const PathDoor({
+    super.key,
+    required this.app,
+    required this.pill,
+    this.place = true,
+  });
 
   final AppState app;
   final Pill pill;
+
+  /// Whether it says where in its path the card is ("1/10"). Not where
+  /// the screen already counts the cards being read ("1/6"): one count on
+  /// a screen, never two that disagree. A screen reader hears it always.
+  final bool place;
 
   /// Goes on with [path] after card [at]: at the next card not read, or,
   /// where that card is past what the free plan opens, or every card is
@@ -78,7 +88,7 @@ class PathDoor extends StatelessWidget {
     final TopicStyle style = kTopics[path.topicKey]!;
     final Color tint = p.isDark ? style.color : style.ink;
     final String theme = l.themeOf(path.genre);
-    final String place = '${where.at + 1}/${path.cards.length}';
+    final String at = '${where.at + 1}/${path.cards.length}';
     return Semantics(
       button: true,
       label:
@@ -103,7 +113,7 @@ class PathDoor extends StatelessWidget {
                   SubjectIcon(subject: style.name, size: 14, ink: tint),
                   const SizedBox(width: 8),
                   Text(
-                    '$theme · $place',
+                    place ? '$theme · $at' : theme,
                     maxLines: 1,
                     style: AppText.body(
                       size: 12.5,

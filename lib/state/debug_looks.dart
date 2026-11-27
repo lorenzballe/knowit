@@ -20,11 +20,61 @@ enum ProfileTopPick {
   c,
 }
 
+/// Where the finished day is sent from, as the developer tools pick it: the
+/// four ways drawn for the owner, by the letter he knows each by
+/// (lib/screens/today_done_view.dart, lib/widgets/day_moment.dart).
+enum ShareDayPick {
+  /// As it ships: "See again" and the day's share mark at the end of the
+  /// row over the shelf.
+  a,
+
+  /// The share mark alone at the end of the row; the five again from
+  /// Explore's "Your five from today".
+  b,
+
+  /// The day closed on a screen of its own, once, right after the five: its
+  /// picture, the way to send it, and "Later". The shelf after it has the
+  /// share mark alone, as in [b].
+  c,
+
+  /// The day as a card of its own after the five on the shelf, its picture
+  /// and the way to send it; nothing at the end of the row.
+  d,
+}
+
+/// What to learn, three other ways, as the developer tools try them beside
+/// the one that ships (lib/widgets/learn_looks.dart): the owner did not
+/// believe in twelve skills, each with a score, a mark on the cards and a
+/// chapter of Your journey, and asked for it to be thought through again.
+enum LearnLook {
+  /// As it ships: the skills picked on What to learn, a score with no top
+  /// in each, their mark on the cards, Your training at the head of Your
+  /// journey and a box on the profile.
+  today,
+
+  /// A. The Astute score alone: no skills anywhere the reader looks, no
+  /// picker, no marks, no scores but the one.
+  score,
+
+  /// B. One aim, asked once at the end of the first run and changed from
+  /// the profile: where the reader wants to be sharper, one of the six
+  /// areas the cards already name on their backs, in words and counts, with
+  /// a shelf of it on Explore every day.
+  aim,
+
+  /// C. Measured, not picked: nothing to choose, the skills read from the
+  /// reader's answers as a profile in Your journey, strongest first, in
+  /// right answers out of answers given, with the weakest to practise; on
+  /// the free plan the strongest only, the rest with Astute+.
+  profile,
+}
+
 /// Looks the developer tools let a phone try on, so the owner can compare
 /// on his own phone what only pictures showed him before: the finished day
-/// with no row over its card, and the profile's other tops. Changed from
-/// the debug section at the foot of the profile, kept on the phone, and
-/// listened to where each is drawn, so a change shows at once.
+/// with no row over its card, the profile's other tops, where the day is
+/// sent from, and What to learn three other ways. Changed from the debug
+/// section at the foot of the profile, kept on the phone, and listened to
+/// where each is drawn, so a change shows at once.
 ///
 /// Read only while the tools are on ([debugToolsOn]): a look kept by a
 /// TestFlight build is still on the phone when the App Store build is
@@ -32,6 +82,8 @@ enum ProfileTopPick {
 abstract final class DebugLooks {
   static const String _kNoTopRow = 'knowit.debug.todayNoTopRow';
   static const String _kProfileTop = 'knowit.debug.profileTop';
+  static const String _kShareDay = 'knowit.debug.shareDay';
+  static const String _kLearn = 'knowit.debug.learn';
 
   /// The finished day with no row over its shelf, as kept.
   static final ValueNotifier<bool> noTopRow = ValueNotifier<bool>(false);
@@ -39,6 +91,15 @@ abstract final class DebugLooks {
   /// The profile's top, as kept.
   static final ValueNotifier<ProfileTopPick> profileTop =
       ValueNotifier<ProfileTopPick>(ProfileTopPick.auto);
+
+  /// Where the finished day is sent from, as kept.
+  static final ValueNotifier<ShareDayPick> shareDay =
+      ValueNotifier<ShareDayPick>(ShareDayPick.a);
+
+  /// What to learn's look, as kept.
+  static final ValueNotifier<LearnLook> learn = ValueNotifier<LearnLook>(
+    LearnLook.today,
+  );
 
   /// Whether the finished day goes without its top row in this run.
   static bool get todayWithoutTopRow => debugToolsOn && noTopRow.value;
@@ -48,12 +109,28 @@ abstract final class DebugLooks {
   static ProfileTopPick get profileTopPicked =>
       debugToolsOn ? profileTop.value : ProfileTopPick.auto;
 
+  /// Where the day is sent from in this run: as it ships, unless the tools
+  /// are on and another way was picked.
+  static ShareDayPick get shareDayPicked =>
+      debugToolsOn ? shareDay.value : ShareDayPick.a;
+
+  /// What to learn's look for this run: as it ships, unless the tools are
+  /// on and another was picked.
+  static LearnLook get learnPicked =>
+      debugToolsOn ? learn.value : LearnLook.today;
+
   /// Reads what this phone keeps. Nothing kept is the app as it ships.
   static void load(SharedPreferences prefs) {
     noTopRow.value = prefs.getBool(_kNoTopRow) ?? false;
     profileTop.value =
         ProfileTopPick.values.asNameMap()[prefs.getString(_kProfileTop)] ??
         ProfileTopPick.auto;
+    shareDay.value =
+        ShareDayPick.values.asNameMap()[prefs.getString(_kShareDay)] ??
+        ShareDayPick.a;
+    learn.value =
+        LearnLook.values.asNameMap()[prefs.getString(_kLearn)] ??
+        LearnLook.today;
   }
 
   /// Turns the finished day's top row off, or back on, and keeps it so.
@@ -70,6 +147,20 @@ abstract final class DebugLooks {
     await prefs.setString(_kProfileTop, pick.name);
   }
 
+  /// Picks where the day is sent from, and keeps it so.
+  static Future<void> setShareDay(ShareDayPick pick) async {
+    shareDay.value = pick;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_kShareDay, pick.name);
+  }
+
+  /// Picks What to learn's look, and keeps it so.
+  static Future<void> setLearn(LearnLook look) async {
+    learn.value = look;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_kLearn, look.name);
+  }
+
   /// Writes the looks back once the profile's wipe has cleared the phone:
   /// they belong to the phone being tried, as the experiment's draws do,
   /// not to the reader the wipe forgets.
@@ -78,12 +169,20 @@ abstract final class DebugLooks {
     if (profileTop.value != ProfileTopPick.auto) {
       await prefs.setString(_kProfileTop, profileTop.value.name);
     }
+    if (shareDay.value != ShareDayPick.a) {
+      await prefs.setString(_kShareDay, shareDay.value.name);
+    }
+    if (learn.value != LearnLook.today) {
+      await prefs.setString(_kLearn, learn.value.name);
+    }
   }
 
-  /// The app as it ships, for a test that changed either.
+  /// The app as it ships, for a test that changed any of them.
   @visibleForTesting
   static void reset() {
     noTopRow.value = false;
     profileTop.value = ProfileTopPick.auto;
+    shareDay.value = ShareDayPick.a;
+    learn.value = LearnLook.today;
   }
 }

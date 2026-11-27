@@ -26,6 +26,7 @@ import '../sync/subscription.dart';
 import '../utils/reminders.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
+import '../widgets/day_moment.dart' show DayMoment, DayMomentMemory;
 import '../widgets/place_ask.dart';
 import '../widgets/profile_menu.dart';
 import '../widgets/profile_top.dart';
@@ -37,7 +38,7 @@ import 'archive_screen.dart';
 import 'saved_screen.dart';
 import 'how_screen.dart';
 import 'paywall_screen.dart';
-import '../widgets/training.dart';
+import '../widgets/learn_looks.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
 import '../widgets/hand_glass.dart';
@@ -429,9 +430,10 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           // What the reader is training, under what they read: not a second
-          // wall of coloured pills, but the skills picked with their levels.
-          const SizedBox(height: 22),
-          ProfileTraining(app: app),
+          // wall of coloured pills, but the skills picked with their levels;
+          // or what What to learn's look the developer tools try puts here
+          // (lib/widgets/learn_looks.dart), with the gap above it.
+          LearnProfileBox(app: app),
           // Nothing to cover until something has been read: a list of
           // twenty subjects all reading zero is the same wall of nothing
           // the four tiles used to be. Under the topics, because it is the
@@ -788,7 +790,7 @@ class ProfileScreen extends StatelessWidget {
             // Looks to set side by side on the phone itself, first in the
             // section, where they are found: each shows at once and is kept
             // on the phone (DebugLooks).
-            const _DebugLooksPanel(),
+            _DebugLooksPanel(app: app),
             const SizedBox(height: 14),
             // What the app actually knows about itself. "Nothing happens"
             // is the least useful bug report there is, so it is replaced
@@ -1423,10 +1425,14 @@ class _PlusCard extends StatelessWidget {
 }
 
 /// The looks the developer tools try on this phone ([DebugLooks]): the
-/// finished day without the row over its card, and which top the profile
-/// opens on. English, as the rest of the section is.
+/// finished day without the row over its card, where the day is sent from,
+/// which top the profile opens on, and What to learn's look. English, as
+/// the rest of the section is.
 class _DebugLooksPanel extends StatelessWidget {
-  const _DebugLooksPanel();
+  const _DebugLooksPanel({required this.app});
+
+  /// For the day's moment, shown from here to be looked at.
+  final AppState app;
 
   @override
   Widget build(BuildContext context) {
@@ -1448,6 +1454,17 @@ class _DebugLooksPanel extends StatelessWidget {
                   'bigger. See again and Share go to the ends of the dots.',
               value: on,
               onChanged: DebugLooks.setNoTopRow,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(0, 14, 0, 16),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: p.line)),
+            ),
+            child: ValueListenableBuilder<ShareDayPick>(
+              valueListenable: DebugLooks.shareDay,
+              builder: (context, pick, _) =>
+                  _ShareDayLook(app: app, pick: pick),
             ),
           ),
           Container(
@@ -1484,6 +1501,134 @@ class _DebugLooksPanel extends StatelessWidget {
               ],
             ),
           ),
+          Container(
+            key: const ValueKey('debug-learn'),
+            padding: const EdgeInsets.fromLTRB(0, 14, 0, 16),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: p.line)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'What to learn',
+                  style: AppText.body(
+                    size: 14,
+                    weight: FontWeight.w500,
+                    color: p.ink,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  'Now is as it ships: skills picked, a score in each, their '
+                  'mark on cards. A: the Astute score alone. B: one aim, '
+                  'asked at the end of the first run (wipe to see it) and on '
+                  'the profile. C: no picking; where the answers say you are '
+                  'strong, in Your journey.',
+                  style: AppText.body(
+                    size: 12,
+                    height: 1.35,
+                    color: p.inkFaint,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ValueListenableBuilder<LearnLook>(
+                  valueListenable: DebugLooks.learn,
+                  builder: (context, look, _) => _LearnPicker(look: look),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Now, A, B or C, as What to learn's look: a segmented control like the
+/// profile top's, each choice with what it is under its letter.
+class _LearnPicker extends StatelessWidget {
+  const _LearnPicker({required this.look});
+
+  final LearnLook look;
+
+  static const _options = [
+    (look: LearnLook.today, name: 'Now', note: 'skills'),
+    (look: LearnLook.score, name: 'A', note: 'score'),
+    (look: LearnLook.aim, name: 'B', note: 'one aim'),
+    (look: LearnLook.profile, name: 'C', note: 'strengths'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.p;
+    return PaperCard(
+      padding: const EdgeInsets.all(5),
+      radius: 16,
+      child: Row(
+        children: [
+          for (final option in _options)
+            Expanded(
+              child: Builder(
+                builder: (context) {
+                  final bool selected = option.look == look;
+                  return Semantics(
+                    button: true,
+                    selected: selected,
+                    label: '${option.name}, ${option.note}',
+                    excludeSemantics: true,
+                    child: GestureDetector(
+                      key: ValueKey('debug-learn-${option.look.name}'),
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        if (selected) return;
+                        HapticFeedback.selectionClick();
+                        DebugLooks.setLearn(option.look);
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        constraints: const BoxConstraints(minHeight: 48),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 7,
+                        ),
+                        decoration: BoxDecoration(
+                          color: selected ? p.inverse : Colors.transparent,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              option.name,
+                              maxLines: 1,
+                              style: AppText.body(
+                                size: 13.5,
+                                weight: FontWeight.w700,
+                                color: selected ? p.onInverse : p.ink,
+                              ),
+                            ),
+                            const SizedBox(height: 1),
+                            Text(
+                              option.note,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppText.body(
+                                size: 10.5,
+                                weight: FontWeight.w500,
+                                color: (selected ? p.onInverse : p.inkMuted)
+                                    .withValues(alpha: 0.75),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
         ],
       ),
     );
@@ -1642,6 +1787,183 @@ class _ProfileTopPicker extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+/// Where the finished day is sent from, A to D, the four ways drawn for the
+/// owner (DebugLooks.shareDay): a segmented control like the profile top's,
+/// what the one picked does under it, and, for the day's moment, a way to
+/// see it now rather than at the end of tomorrow's five.
+class _ShareDayLook extends StatelessWidget {
+  const _ShareDayLook({required this.app, required this.pick});
+
+  final AppState app;
+  final ShareDayPick pick;
+
+  static const _options = [
+    (
+      pick: ShareDayPick.a,
+      name: 'A',
+      note: 'today',
+      says:
+          'As it ships: See again and the share mark at the end of the '
+          '"Day 4" row.',
+    ),
+    (
+      pick: ShareDayPick.b,
+      name: 'B',
+      note: 'mark',
+      says:
+          'See again leaves Today (Explore keeps "Your five from today"); '
+          'only the share mark stays at the end of the row.',
+    ),
+    (
+      pick: ShareDayPick.c,
+      name: 'C',
+      note: 'moment',
+      says:
+          'Right after the five, a screen of its own: the day\'s picture, '
+          '"Share your day" and "Later". Once a day, only when the day is '
+          'finished in that sitting, never on the evening of a new level, '
+          'and no more after three Laters in a row. The shelf after it has '
+          'the share mark alone.',
+    ),
+    (
+      pick: ShareDayPick.d,
+      name: 'D',
+      note: 'card',
+      says:
+          'The day as a card after the five on the shelf, "Your day": its '
+          'picture and Share. The shelf lands on it the evening the day is '
+          'finished. Nothing at the end of the row.',
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.p;
+    final String says = _options.firstWhere((o) => o.pick == pick).says;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          'Today, day read: share the day',
+          style: AppText.body(size: 14, weight: FontWeight.w500, color: p.ink),
+        ),
+        const SizedBox(height: 3),
+        Text(
+          'Where the finished day is sent from. A is the app as it ships.',
+          style: AppText.body(size: 12, height: 1.35, color: p.inkFaint),
+        ),
+        const SizedBox(height: 10),
+        PaperCard(
+          padding: const EdgeInsets.all(5),
+          radius: 16,
+          child: Row(
+            children: [
+              for (final option in _options)
+                Expanded(
+                  child: Builder(
+                    builder: (context) {
+                      final bool selected = option.pick == pick;
+                      return Semantics(
+                        button: true,
+                        selected: selected,
+                        label: '${option.name}, ${option.note}',
+                        excludeSemantics: true,
+                        child: GestureDetector(
+                          key: ValueKey('debug-share-day-${option.pick.name}'),
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            if (selected) return;
+                            HapticFeedback.selectionClick();
+                            DebugLooks.setShareDay(option.pick);
+                            // Picked again, the moment is as new: the owner
+                            // trying it is not a reader who said Later.
+                            if (option.pick == ShareDayPick.c) {
+                              DayMomentMemory.forget();
+                            }
+                          },
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            constraints: const BoxConstraints(minHeight: 48),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 4,
+                              vertical: 7,
+                            ),
+                            decoration: BoxDecoration(
+                              color: selected ? p.inverse : Colors.transparent,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  option.name,
+                                  maxLines: 1,
+                                  style: AppText.body(
+                                    size: 13.5,
+                                    weight: FontWeight.w700,
+                                    color: selected ? p.onInverse : p.ink,
+                                  ),
+                                ),
+                                const SizedBox(height: 1),
+                                Text(
+                                  option.note,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppText.body(
+                                    size: 10.5,
+                                    weight: FontWeight.w500,
+                                    color: (selected ? p.onInverse : p.inkMuted)
+                                        .withValues(alpha: 0.75),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          says,
+          key: const ValueKey('debug-share-day-says'),
+          style: AppText.body(size: 12, height: 1.35, color: p.inkFaint),
+        ),
+        if (pick == ShareDayPick.c) ...[
+          const SizedBox(height: 6),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: GestureDetector(
+              key: const ValueKey('debug-share-day-moment'),
+              behavior: HitTestBehavior.opaque,
+              onTap: () => Navigator.of(
+                context,
+                rootNavigator: true,
+              ).push(DayMoment.route(app, preview: true)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  'Show the moment now  →',
+                  style: AppText.body(
+                    size: 13,
+                    weight: FontWeight.w600,
+                    color: p.link,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

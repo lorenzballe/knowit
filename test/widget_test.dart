@@ -23,6 +23,7 @@ import 'package:astuto/screens/explore_screen.dart';
 import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/models/reminder.dart';
+import 'package:astuto/remote/remote.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/screens/paywall_screen.dart';
@@ -2356,6 +2357,24 @@ void main() {
   });
 
   testWidgets('the paywall sells only what it delivers', (tester) async {
+    // The answers by Claude on, as the document the app ships with has
+    // them (remote/app.json): the assistant and the coach are sold only
+    // then (paywall_doors_test.dart switches them off).
+    Remote.adopt(
+      RemoteConfig.parse(
+        jsonEncode({
+          'schema': 1,
+          'hash': 'widget-card-ai-on',
+          'app': {
+            'flags': {'cardAi': true},
+          },
+          'strings': <String, Object?>{},
+          'explore': null,
+          'looks': null,
+        }),
+      ),
+    );
+    addTearDown(Remote.reset);
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);

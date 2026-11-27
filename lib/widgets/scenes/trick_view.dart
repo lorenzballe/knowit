@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import '../../l10n/l10n.dart';
 import '../../models/scene.dart';
 import '../../theme.dart';
+import 'chart_numbers.dart';
 
 /// Plays a [TrickScene]: find the trick in a chart, then watch it undone.
 ///
@@ -170,23 +171,51 @@ class _TrickSceneViewState extends State<TrickSceneView>
         final tight = box.maxHeight < 340;
         final footerH = tight ? 78.0 : 92.0;
         final gap = tight ? 8.0 : 12.0;
-        final panelH = math.max(0.0, box.maxHeight - footerH - gap);
+        // The clipping as small as it gets, with the most said under it:
+        // its axis is cut into as many steps at every size it takes, so
+        // the marks never change as it grows and gives way.
+        final Size least = Size(
+          box.maxWidth,
+          math.max(0.0, box.maxHeight - footerH - gap),
+        );
+        final Widget footer = SizedBox(
+          width: box.maxWidth,
+          child: AnimatedBuilder(
+            animation: _reveal,
+            builder: (context, _) => _footer(tight),
+          ),
+        );
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: panelH,
-              width: box.maxWidth,
-              child: _panel(Size(box.maxWidth, panelH), tight),
+            // The clipping takes what the line under it leaves: everything
+            // but a line while the reader is asked, then less, softly, as
+            // there is more to say. It kept the room the longest line
+            // could need, and a band of nothing stood under a line of one.
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, panel) => SizedBox(
+                  width: panel.maxWidth,
+                  height: panel.maxHeight,
+                  child: _panel(
+                    Size(panel.maxWidth, panel.maxHeight),
+                    tight,
+                    least: least,
+                  ),
+                ),
+              ),
             ),
             SizedBox(height: gap),
-            SizedBox(
-              height: footerH,
-              width: box.maxWidth,
-              child: AnimatedBuilder(
-                animation: _reveal,
-                builder: (context, _) => _footer(tight),
-              ),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: footerH),
+              child: _still
+                  ? footer
+                  : AnimatedSize(
+                      duration: const Duration(milliseconds: 320),
+                      curve: Curves.easeOutCubic,
+                      alignment: Alignment.topLeft,
+                      child: footer,
+                    ),
             ),
           ],
         );
@@ -196,18 +225,21 @@ class _TrickSceneViewState extends State<TrickSceneView>
 
   // ---- the clipping ----
 
-  Widget _panel(Size size, bool tight) {
+  Widget _panel(Size size, bool tight, {required Size least}) {
     final s = widget.scene;
     final ink = widget.ink;
     final scaler = MediaQuery.textScalerOf(context);
-    final layout = _TrickLayout.of(
+    _TrickLayout at(Size size, {int? parts}) => _TrickLayout.of(
       scene: s,
       size: size,
       tight: tight,
       scaler: scaler,
       texts: _texts,
       ink: ink,
+      locale: context.l10n.localeName,
+      parts: parts,
     );
+    final layout = at(size, parts: at(least).parts);
 
     return Stack(
       children: [
@@ -234,6 +266,9 @@ class _TrickSceneViewState extends State<TrickSceneView>
                     final frame = _TrickFrame(
                       morph: m,
                       nudge: _nudge.value,
+                      rest: _still || _tried.isNotEmpty
+                          ? 1
+                          : ((_nudge.value - .78) / .22).clamp(0.0, 1.0),
                       pop: _pop.value,
                       tried: List.unmodifiable(_tried),
                       last: _last,
@@ -379,7 +414,7 @@ class _TrickSceneViewState extends State<TrickSceneView>
   /// What a part says to a screen reader: its content, never its shape.
   String _speak(TrickSceneRegion r) {
     final s = widget.scene;
-    final f = _TrickFormat(s);
+    final f = _TrickFormat(s, context.l10n.localeName);
     final after = _solved;
     switch (r) {
       case TrickSceneRegion.headline:
@@ -537,8 +572,11 @@ class _TrickSceneViewState extends State<TrickSceneView>
           ),
           const SizedBox(width: 10),
           Expanded(
+            // What there is to do, where the card says nothing of its own:
+            // find the trick, among the parts outlined on the clipping.
+            // "Tap your pick" offered a choice the reader could not see.
             child: Text(
-              s.ask.isEmpty ? l10n.sceneTapToPick : s.ask,
+              s.ask.isEmpty ? l10n.purposeSpotTrick : s.ask,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: AppText.display(
@@ -572,9 +610,11 @@ class _TrickSceneViewState extends State<TrickSceneView>
           alignment: Alignment.topLeft,
           children: [...previous, ?current],
         ),
+        // As tall as what it says, no taller: the clipping takes the rest.
         child: Align(
           key: ValueKey(key),
           alignment: Alignment.topLeft,
+          heightFactor: 1,
           child: child,
         ),
       ),
@@ -584,29 +624,21 @@ class _TrickSceneViewState extends State<TrickSceneView>
 
 // ---- numbers ----
 
-/// How the chart writes its numbers.
+/// How the chart writes its numbers: in the reader's language, as Explore's
+/// shelf writes the same chart's (chart_numbers.dart).
 class _TrickFormat {
   final TrickScene scene;
-  const _TrickFormat(this.scene);
 
-  static String plain(double v, int decimals) {
-    final fixed = v.abs().toStringAsFixed(decimals);
-    final parts = fixed.split('.');
-    final whole = parts[0].replaceAllMapped(
-      RegExp(r'\B(?=(\d{3})+(?!\d))'),
-      (_) => ',',
-    );
-    return '${v < 0 ? '−' : ''}$whole${parts.length > 1 ? '.${parts[1]}' : ''}';
-  }
+  /// The reader's language, whose decimal mark and grouping the numbers
+  /// take.
+  final String locale;
 
-  static String withUnit(String n, String unit) {
-    if (unit.isEmpty) return n;
-    if (const {'€', r'$', '£', '¥'}.contains(unit)) {
-      return n.startsWith('−') ? '−$unit${n.substring(1)}' : '$unit$n';
-    }
-    if (unit == '%' || unit.startsWith('°')) return '$n$unit';
-    return '$n $unit';
-  }
+  const _TrickFormat(this.scene, this.locale);
+
+  String plain(double v, int decimals) =>
+      chartNumber(v, decimals, locale: locale);
+
+  static String withUnit(String n, String unit) => chartUnit(n, unit);
 
   /// A value as printed on a bar or a point.
   String value(double v, {required bool honest}) {
@@ -619,8 +651,9 @@ class _TrickFormat {
     );
   }
 
-  /// A mark on the value axis: as many decimals as the step needs, large
-  /// numbers shortened, the unit only when it is short enough to sit there.
+  /// A mark on the value axis: as many decimals as the step needs, the
+  /// same on every mark, large numbers shortened, the unit only when it is
+  /// short enough to sit there.
   String tick(
     double v,
     TrickSceneRange range, [
@@ -651,13 +684,7 @@ class _TrickFormat {
     return short ? withUnit(n, unit) : n;
   }
 
-  static int _decimalsOf(double step) {
-    for (var d = 0; d < 4; d++) {
-      final f = step * math.pow(10, d);
-      if ((f - f.roundToDouble()).abs() < 1e-6) return d;
-    }
-    return 3;
-  }
+  static int _decimalsOf(double step) => decimalsNeeded(step, 3);
 }
 
 // ---- layout ----
@@ -693,6 +720,9 @@ class _TrickLayout {
   /// its labels never crowd.
   final int parts;
 
+  /// The reader's language, whose decimal mark the numbers take.
+  final String locale;
+
   _TrickLayout._({
     required this.scene,
     required this.size,
@@ -709,6 +739,7 @@ class _TrickLayout {
     required this.regions,
     required this.boxes,
     required this.parts,
+    required this.locale,
   });
 
   static const pad = EdgeInsets.fromLTRB(14, 12, 14, 10);
@@ -742,6 +773,8 @@ class _TrickLayout {
     required TextScaler scaler,
     required _TrickTextCache texts,
     required Color ink,
+    required String locale,
+    int? parts,
   }) {
     final s = scene;
     final inner = pad.deflateRect(Offset.zero & size);
@@ -787,7 +820,7 @@ class _TrickLayout {
     y = label.bottom + (tight ? 6 : 9);
     final chart = Rect.fromLTRB(inner.left, y, inner.right, inner.bottom);
 
-    final f = _TrickFormat(s);
+    final f = _TrickFormat(s, locale);
     final style = tickStyle(ink);
     double widest(Iterable<String> labels) {
       var w = 0.0;
@@ -960,7 +993,8 @@ class _TrickLayout {
       rows: rows,
       regions: regions,
       boxes: boxes,
-      parts: chart.height < 150 ? 2 : 4,
+      parts: parts ?? (chart.height < 150 ? 2 : 4),
+      locale: locale,
     );
   }
 
@@ -1034,6 +1068,11 @@ class _TrickFrame {
   /// Arrival: each part outlined once in turn.
   final double nudge;
 
+  /// 0 → 1 as the arrival ends: from then on, until the trick is found,
+  /// every part still to try keeps a faint dashed outline, so the choices
+  /// are there to be seen, not only once as the card comes.
+  final double rest;
+
   /// The last box popping in or shaking.
   final double pop;
   final List<TrickSceneRegion> tried;
@@ -1047,6 +1086,7 @@ class _TrickFrame {
   const _TrickFrame({
     required this.morph,
     required this.nudge,
+    this.rest = 0,
     required this.pop,
     required this.tried,
     required this.last,
@@ -1060,6 +1100,7 @@ class _TrickFrame {
       other is _TrickFrame &&
       other.morph == morph &&
       other.nudge == nudge &&
+      other.rest == rest &&
       other.pop == pop &&
       other.tried.length == tried.length &&
       other.last == last &&
@@ -1068,8 +1109,17 @@ class _TrickFrame {
       other.settle == settle;
 
   @override
-  int get hashCode =>
-      Object.hash(morph, nudge, pop, tried.length, last, solved, found, settle);
+  int get hashCode => Object.hash(
+    morph,
+    nudge,
+    rest,
+    pop,
+    tried.length,
+    last,
+    solved,
+    found,
+    settle,
+  );
 }
 
 // ---- the chart ----
@@ -1148,7 +1198,7 @@ class _TrickChartPainter extends CustomPainter {
   void _xy(Canvas canvas) {
     final s = scene;
     final plot = layout.plot;
-    final f = _TrickFormat(s);
+    final f = _TrickFormat(s, layout.locale);
     final m = frame.morph;
     final bars = s.form == TrickSceneForm.bars;
     final tickStyle = _TrickLayout.tickStyle(ink.withValues(alpha: 0.7));
@@ -1595,7 +1645,7 @@ class _TrickChartPainter extends CustomPainter {
 
   void _pie(Canvas canvas) {
     final s = scene;
-    final f = _TrickFormat(s);
+    final f = _TrickFormat(s, layout.locale);
     final m = frame.morph;
     final drain = _ease(m / .5);
     final fill = _ease((m - .45) / .55);
@@ -1757,6 +1807,14 @@ class _TrickBoxPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    // At rest, the parts still to try, dashed and faint: what there is to
+    // choose from. A part tried is drawn crossed below instead.
+    if (!frame.solved && frame.rest > 0) {
+      for (final r in scene.regions) {
+        if (frame.tried.contains(r) || !layout.boxes.containsKey(r)) continue;
+        _dashed(canvas, _box(r), ink.withValues(alpha: 0.2 * frame.rest));
+      }
+    }
     // Arrival: each part outlined in turn, dashed and light.
     if (!frame.solved &&
         frame.tried.isEmpty &&

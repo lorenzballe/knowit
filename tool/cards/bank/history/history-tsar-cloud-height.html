@@ -190,7 +190,7 @@ const Turn = {
     const g = Math.round(guess), ok = Math.abs(g - TOP) <= 8;
     Kit.answer({choice: `${g} km`, correct: ok, sure: pct});
     sure.grade(ok, pct, `${g} km; it rose to 64 km`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   const pic = Kit.$('pic');

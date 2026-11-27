@@ -177,7 +177,7 @@ const Turn = {
     const ok = final >= 50 && final <= 200;
     Kit.answer({choice: `${fmt(final)} kg`, correct: ok, sure: pct});
     sure.grade(ok, pct, `${fmt(final)} kg, ${ok ? 'close' : 'far off'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back: the pale charge, the real block in its corner, your guess beside ----------

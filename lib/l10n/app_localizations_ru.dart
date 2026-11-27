@@ -2167,6 +2167,83 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'Где ты хочешь видеть яснее?';
+
+  @override
+  String get aimLine =>
+      'Выбери одно. Каждый день будут карточки для этого, а поменять можно когда угодно.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'На этой неделе $n карточки для этого',
+      many: 'На этой неделе $n карточек для этого',
+      few: 'На этой неделе $n карточки для этого',
+      one: 'На этой неделе $n карточка для этого',
+      zero: 'На этой неделе карточек для этого нет',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right из $n верно',
+      one: '1 из $n верно',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Всё для этой цели';
+
+  @override
+  String get aimPlus =>
+      'С Astute+: все пути по этой теме целиком и тренер, который работает над этим с тобой.';
+
+  @override
+  String get aimNone =>
+      'Выбери, где ты хочешь видеть яснее: каждый день будут карточки для этого.';
+
+  @override
+  String get aimPick => 'Выбрать цель';
+
+  @override
+  String get strengthsTitle => 'Твои сильные стороны';
+
+  @override
+  String get strengthsLine =>
+      'По твоим ответам, а не по выбору: где ты чаще отвечаешь верно, а где ошибаешься.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Пока мало ответов: $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return 'Потренироваться: $skill';
+  }
+
+  @override
+  String get strengthsBest => 'Твоя сильная сторона';
+
+  @override
+  String get strengthsWeak => 'Где ты ошибаешься чаще всего';
+
+  @override
+  String get strengthsLocked =>
+      'Где ты ошибаешься чаще всего, и всё остальное — с Astute+.';
+
+  @override
+  String get strengthsEmpty =>
+      'Ещё несколько ответов — и здесь появятся твои сильные стороны.';
+
+  @override
   String get scoreTitle => 'Рейтинг Astute';
 
   @override
@@ -6307,6 +6384,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get yourFiveFromToday => 'Твои пять карточек за сегодня';
+
+  @override
+  String get dayMomentTitle => 'День пройден.';
+
+  @override
+  String get dayMomentLater => 'Позже';
+
+  @override
+  String get yourDayCard => 'Твой день';
 
   @override
   String get tuneTitle => 'Настрой свой микс';

@@ -247,7 +247,7 @@ const Turn = {
     const ok = pick === RIGHT;
     Kit.answer({choice: SHORT[pick], correct: ok, sure: pct});
     sure.grade(ok, pct, `${SHORT[pick]}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   Kit.$('opts').addEventListener('click', e => {
     const b = e.target.closest('.opt'); if (!b || pick >= 0) return;

@@ -194,7 +194,7 @@ const Turn = {
       : crisp ? `You were ${pct}% sure it would stay crisp.` : `You were ${pct}% sure of a curve unlike this.`;
     Kit.answer({choice: ok ? 'stretched, rounded pulses' : crisp ? 'a crisp copy' : 'a curve unlike what arrived', correct: ok, sure: pct});
     sure.grade(ok, pct, ok ? 'Your curve: close to what arrived' : 'Your curve: not what arrived');
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

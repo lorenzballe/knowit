@@ -2071,6 +2071,81 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'Where do you want to be sharper?';
+
+  @override
+  String get aimLine =>
+      'Pick one. Every day there are cards for it, and you can change it whenever you like.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cards for it this week',
+      one: '1 card for it this week',
+      zero: 'No cards for it this week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right of $n right',
+      one: '1 of $n right',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Everything for this goal';
+
+  @override
+  String get aimPlus =>
+      'With Astute+: every path for it, whole, and a coach who works on it with you.';
+
+  @override
+  String get aimNone =>
+      'Pick where you want to be sharper, and every day there will be cards for it.';
+
+  @override
+  String get aimPick => 'Pick a goal';
+
+  @override
+  String get strengthsTitle => 'Where you\'re strong';
+
+  @override
+  String get strengthsLine =>
+      'Read from your answers, not picked: where you get the most right, and where you slip.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Too few answers yet: $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return 'Practise $skill';
+  }
+
+  @override
+  String get strengthsBest => 'Your strong point';
+
+  @override
+  String get strengthsWeak => 'Where you slip most';
+
+  @override
+  String get strengthsLocked =>
+      'Where you slip most, and the rest, with Astute+.';
+
+  @override
+  String get strengthsEmpty =>
+      'A few more answers, and this will show where you\'re strong.';
+
+  @override
   String get scoreTitle => 'Astute score';
 
   @override
@@ -6039,6 +6114,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yourFiveFromToday => 'Your five from today';
+
+  @override
+  String get dayMomentTitle => 'Day complete.';
+
+  @override
+  String get dayMomentLater => 'Later';
+
+  @override
+  String get yourDayCard => 'Your day';
 
   @override
   String get tuneTitle => 'Tune your mix';

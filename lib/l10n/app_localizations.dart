@@ -2838,6 +2838,102 @@ abstract class AppLocalizations {
   /// **'{n, plural, =1{and 1 more} other{and {n} more}}'**
   String trainingMore(int n);
 
+  /// What to learn, look B (developer tools): the question at the end of the first run and on the profile, where the reader picks one aim, one of the six areas the cards name on their backs.
+  ///
+  /// In en, this message translates to:
+  /// **'Where do you want to be sharper?'**
+  String get aimTitle;
+
+  /// Under aimTitle: pick one; every day there are cards for it (Explore's shelf of it, the cards dealt for it); it can be changed at any time.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one. Every day there are cards for it, and you can change it whenever you like.'**
+  String get aimLine;
+
+  /// Look B, the reader's aim on the profile and in Your journey: how many cards of it they read in the last seven days.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No cards for it this week} =1{1 card for it this week} other{{n} cards for it this week}}'**
+  String aimWeek(int n);
+
+  /// How many of the answers given on some cards were right: 'right' right out of 'n' given. After aimWeek (look B), and beside a skill (look C).
+  ///
+  /// In en, this message translates to:
+  /// **'{right, plural, =1{1 of {n} right} other{{right} of {n} right}}'**
+  String answersRightOf(int right, int n);
+
+  /// Look B, Your journey: link under the reader's aim that opens its page (its paths, the moves it trains, more of its cards).
+  ///
+  /// In en, this message translates to:
+  /// **'Everything for this goal'**
+  String get aimOpen;
+
+  /// Look B, on the free plan, under the reader's aim on the profile beside a small Astute+ tag: what Astute+ adds for it. Opens the plans.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+: every path for it, whole, and a coach who works on it with you.'**
+  String get aimPlus;
+
+  /// Look B: where the reader's aim stands when they have not picked one: what an aim does.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick where you want to be sharper, and every day there will be cards for it.'**
+  String get aimNone;
+
+  /// Look B: button that opens the question of the reader's aim.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a goal'**
+  String get aimPick;
+
+  /// What to learn, look C (developer tools): the name of the skills read from the reader's answers, strongest first, on the profile and in Your journey. Nothing is picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you\'re strong'**
+  String get strengthsTitle;
+
+  /// Look C, Your journey: under strengthsTitle, what the ranking is: read from the reader's answers, not chosen by them.
+  ///
+  /// In en, this message translates to:
+  /// **'Read from your answers, not picked: where you get the most right, and where you slip.'**
+  String get strengthsLine;
+
+  /// Look C, Your journey: at the foot of the ranking, the skills with too few answers to rank yet. skills is their names, joined with commas.
+  ///
+  /// In en, this message translates to:
+  /// **'Too few answers yet: {skills}.'**
+  String strengthsFew(String skills);
+
+  /// Look C, Your journey: button under the ranking that opens five cards of the reader's weakest skill to answer. skill is the skill's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Practise {skill}'**
+  String strengthsPractice(String skill);
+
+  /// Look C, on the profile: small capitals over the reader's strongest skill.
+  ///
+  /// In en, this message translates to:
+  /// **'Your strong point'**
+  String get strengthsBest;
+
+  /// Look C, on the profile (Astute+): small capitals over the skill the reader gets wrong most.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you slip most'**
+  String get strengthsWeak;
+
+  /// Look C, on the profile (free plan), beside a lock under the strongest skill: the weakest skill and the whole ranking are in Your journey, with Astute+. The box opens the plans.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you slip most, and the rest, with Astute+.'**
+  String get strengthsLocked;
+
+  /// Look C: where the ranking stands before any skill has enough answers behind it.
+  ///
+  /// In en, this message translates to:
+  /// **'A few more answers, and this will show where you\'re strong.'**
+  String get strengthsEmpty;
+
   /// The reader's score in all the skills together: a number with no top, moved by every answer on a card (like a chess rating). Its name; Astute is the app's name.
   ///
   /// In en, this message translates to:
@@ -8417,6 +8513,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your five from today'**
   String get yourFiveFromToday;
+
+  /// The screen that rises once, right after the day's five are read, with the day's picture and the way to send it (tried from the developer tools): its headline. Short, plain, never a cheer.
+  ///
+  /// In en, this message translates to:
+  /// **'Day complete.'**
+  String get dayMomentTitle;
+
+  /// The screen that rises once the day's five are read: the quiet way past it, under the button that sends the day. Nothing is asked again that day.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get dayMomentLater;
+
+  /// Today, once the five are read (tried from the developer tools): the card after the five on the shelf, which shows the day's picture and sends it. Its name, over the picture, and what a screen reader says for its dot.
+  ///
+  /// In en, this message translates to:
+  /// **'Your day'**
+  String get yourDayCard;
 
   /// The screen under the topics editor, and the row that opens it: how much of each subject, and which parts of each.
   ///

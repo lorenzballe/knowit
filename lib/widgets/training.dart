@@ -318,9 +318,23 @@ class _SkillCell extends StatelessWidget {
 /// owner asked for the one number to stay large and the rest to be smaller
 /// and tighter.
 class TrainingChapter extends StatelessWidget {
-  const TrainingChapter({super.key, required this.app});
+  const TrainingChapter({
+    super.key,
+    required this.app,
+    this.skills = true,
+    this.label = true,
+  });
 
   final AppState app;
+
+  /// Whether the skills follow the score: false for the looks of What to
+  /// learn that have none (lib/widgets/learn_looks.dart), where the chapter
+  /// is the Astute score, its line over the month and its level.
+  final bool skills;
+
+  /// Whether the score carries its name over it: false where the chapter's
+  /// head already says it.
+  final bool label;
 
   /// The link at the end of the chapter's head: to What to learn.
   static Widget change(BuildContext context, AppState app) => Semantics(
@@ -357,21 +371,31 @@ class TrainingChapter extends StatelessWidget {
       height: 1,
       color: p.ink.withValues(alpha: 0.08),
     );
+    // The one number is every reader's, skills picked or not, and its line
+    // over the month; under it, the level it has reached and how far the
+    // next one is, on the panel's own ground (lib/widgets/level_up.dart).
+    final List<Widget> score = [
+      _Overall(score: book.overall, label: label),
+      if (book.overall.answers > 0) ...[
+        const SizedBox(height: 12),
+        ScoreSpark(values: book.overall.days, colour: p.ink, height: 40),
+      ],
+      const SizedBox(height: 16),
+      LevelLine(app: app, framed: false),
+    ];
+    if (!skills) {
+      return _Panel(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: score,
+        ),
+      );
+    }
     final Widget top = _Panel(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // The one number is every reader's, skills picked or not, and
-          // its line over the month.
-          _Overall(score: book.overall),
-          if (book.overall.answers > 0) ...[
-            const SizedBox(height: 12),
-            ScoreSpark(values: book.overall.days, colour: p.ink, height: 40),
-          ],
-          // Under it, the level it has reached and how far the next one is,
-          // on the panel's own ground (lib/widgets/level_up.dart).
-          const SizedBox(height: 16),
-          LevelLine(app: app, framed: false),
+          ...score,
           if (picked.isNotEmpty) ...[
             const SizedBox(height: 14),
             Text(
@@ -476,9 +500,12 @@ class TrainingChapter extends StatelessWidget {
 /// large, the mark of how far it went since the reader last looked at its
 /// shoulder, and how far it moved this week.
 class _Overall extends StatelessWidget {
-  const _Overall({required this.score});
+  const _Overall({required this.score, this.label = true});
 
   final SkillScore score;
+
+  /// Whether its name stands over it.
+  final bool label;
 
   @override
   Widget build(BuildContext context) {
@@ -487,16 +514,18 @@ class _Overall extends StatelessWidget {
       key: const ValueKey('training-score'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          _caps(context, context.l10n.scoreTitle),
-          style: AppText.body(
-            size: 9.5,
-            weight: FontWeight.w700,
-            spacing: 1.3,
-            color: p.ink.withValues(alpha: 0.45),
+        if (label) ...[
+          Text(
+            _caps(context, context.l10n.scoreTitle),
+            style: AppText.body(
+              size: 9.5,
+              weight: FontWeight.w700,
+              spacing: 1.3,
+              color: p.ink.withValues(alpha: 0.45),
+            ),
           ),
-        ),
-        const SizedBox(height: 6),
+          const SizedBox(height: 6),
+        ],
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [

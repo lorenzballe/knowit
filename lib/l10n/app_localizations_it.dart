@@ -2081,6 +2081,81 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'Dove vuoi vederci più chiaro?';
+
+  @override
+  String get aimLine =>
+      'Scegline uno. Ogni giorno trovi carte per questo, e lo cambi quando vuoi.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n carte per questo, questa settimana',
+      one: '1 carta per questo, questa settimana',
+      zero: 'Nessuna carta per questo, questa settimana',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right giuste su $n',
+      one: '1 giusta su $n',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Tutto per questo obiettivo';
+
+  @override
+  String get aimPlus =>
+      'Con Astute+: tutti i percorsi interi su questo, e un coach che ci lavora con te.';
+
+  @override
+  String get aimNone =>
+      'Scegli dove vuoi vederci più chiaro: ogni giorno troverai carte per questo.';
+
+  @override
+  String get aimPick => 'Scegli l’obiettivo';
+
+  @override
+  String get strengthsTitle => 'Dove sei forte';
+
+  @override
+  String get strengthsLine =>
+      'Lo dicono le tue risposte, non una scelta: dove indovini di più, e dove sbagli.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Ancora poche risposte: $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return 'Allenati su $skill';
+  }
+
+  @override
+  String get strengthsBest => 'Il tuo punto forte';
+
+  @override
+  String get strengthsWeak => 'Dove sbagli di più';
+
+  @override
+  String get strengthsLocked =>
+      'Dove sbagli di più, e tutto il resto, con Astute+.';
+
+  @override
+  String get strengthsEmpty =>
+      'Ancora qualche risposta, e qui vedrai dove sei forte.';
+
+  @override
   String get scoreTitle => 'Punteggio Astute';
 
   @override
@@ -6083,6 +6158,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get yourFiveFromToday => 'Le tue cinque di oggi';
+
+  @override
+  String get dayMomentTitle => 'Giornata completa.';
+
+  @override
+  String get dayMomentLater => 'Più tardi';
+
+  @override
+  String get yourDayCard => 'La tua giornata';
 
   @override
   String get tuneTitle => 'Regola il tuo mix';

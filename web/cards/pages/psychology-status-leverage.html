@@ -200,7 +200,7 @@ const Turn = {
     Kit.answer({choice: `${side()} (${Math.round(t * 100)}% toward "only what they can give")`, correct: null, sure: pct});
     writeMine();
     say.innerHTML = 'Now the best case for it, and against it.';
-    setTimeout(() => Turn.over(), Kit.calm ? 80 : 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- BACK ----------

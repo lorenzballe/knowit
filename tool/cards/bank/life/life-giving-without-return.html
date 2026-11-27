@@ -186,7 +186,7 @@ const Turn = {
     if (done || !touched) return; done = true; Kit.haptic('selection');
     const side = t <= .38 ? 'agree' : t >= .62 ? 'disagree' : 'in between';
     Kit.answer({choice: `${side} (${Math.round((1 - t) * 100)}% agree)`, correct: null, sure: null});
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   document.addEventListener('turned', () => { turned = true; drawBack(true); });
 

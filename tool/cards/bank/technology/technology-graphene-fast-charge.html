@@ -168,7 +168,7 @@ const Turn = {
     const ok = guess <= 10, said = fmt(guess);
     Kit.answer({choice: said, correct: ok, sure: p});
     sure.grade(ok, p, `${said}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- BACK ----------

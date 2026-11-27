@@ -38,7 +38,6 @@ import '../analytics.dart';
 import '../debug_flags.dart';
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
-import '../remote/knobs.dart';
 import '../state/app_state.dart';
 import '../sync/card_ask.dart';
 import '../theme.dart';
@@ -65,8 +64,7 @@ abstract final class GoDeeper {
 /// TestFlight installs), and for everyone the remote switch `cardAi` lets
 /// in, once it is turned on.
 bool cardAiOn(AppState app, String language) =>
-    debugToolsOn ||
-    AppState.kCardAiFlag.on(app.remoteContext(language));
+    debugToolsOn || AppState.kCardAiFlag.on(app.remoteContext(language));
 
 /// Opens Go deeper on [pill].
 Future<void> showDeeperSheet(BuildContext context, AppState app, Pill pill) {
@@ -121,6 +119,24 @@ class _DeeperSheetState extends State<DeeperSheet>
   /// How far the sheet has scrolled, for the head to lag behind.
   final ValueNotifier<double> _scroll = ValueNotifier<double>(0);
 
+  /// How tall all the sheet holds is, as it is laid out, and that height
+  /// kept once a frame has shown it: the sheet is drawn up no higher than
+  /// what it holds. Drawn up to nine tenths of the screen whatever it held,
+  /// a card with little to say left a band of nothing under its last line.
+  final ValueNotifier<double> _bodyHeight = ValueNotifier<double>(0);
+  double? _body;
+
+  void _measured() {
+    if (_body != null && (_bodyHeight.value - _body!).abs() < 1) return;
+    // Told during layout: kept once the frame is drawn.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final double now = _bodyHeight.value;
+      if (_body != null && (now - _body!).abs() < 1) return;
+      setState(() => _body = now);
+    });
+  }
+
   /// Whether the reader has read past the head since its lights last
   /// drifted: coming back up to it sets them going again.
   bool _away = false;
@@ -130,6 +146,12 @@ class _DeeperSheetState extends State<DeeperSheet>
 
   Pill get pill => widget.pill;
   AppState get app => widget.app;
+
+  @override
+  void initState() {
+    super.initState();
+    _bodyHeight.addListener(_measured);
+  }
 
   @override
   void didChangeDependencies() {
@@ -159,6 +181,9 @@ class _DeeperSheetState extends State<DeeperSheet>
     _drift.dispose();
     _scroll.dispose();
     _headHeight.dispose();
+    _bodyHeight
+      ..removeListener(_measured)
+      ..dispose();
     _take.dispose();
     _ask.dispose();
     super.dispose();
@@ -449,26 +474,67 @@ class _DeeperSheetState extends State<DeeperSheet>
         ),
     ];
     const BorderRadius top = BorderRadius.vertical(top: Radius.circular(30));
-    return DraggableScrollableSheet(
-      expand: false,
-      initialChildSize: 0.72,
-      minChildSize: 0.4,
-      maxChildSize: 0.95,
-      builder: (context, scroll) => DecoratedBox(
-        decoration: BoxDecoration(color: look.ground, borderRadius: top),
-        child: ClipRRect(
-          borderRadius: top,
-          child: NotificationListener<ScrollNotification>(
-            onNotification: _onScroll,
-            child: SingleChildScrollView(
-              controller: scroll,
-              padding: EdgeInsets.only(
-                bottom:
-                    MediaQuery.paddingOf(context).bottom +
-                    MediaQuery.viewInsetsOf(context).bottom +
-                    34 -
-                    _overlap,
-              ),
+    // Under the last of it: the home bar, a keyboard, and a little room.
+    final double foot =
+        MediaQuery.paddingOf(context).bottom +
+        MediaQuery.viewInsetsOf(context).bottom +
+        34 -
+        _overlap;
+    return LayoutBuilder(
+      builder: (context, room) {
+        // As high as what it holds, at most nine tenths of the screen; it
+        // opens at no more than seven tenths of it, and gives way to a
+        // drag down from no more than four.
+        final double screen = room.maxHeight;
+        final double most = _body == null || !screen.isFinite || screen <= 0
+            ? 0.95
+            : ((_body! + foot) / screen).clamp(0.2, 0.95);
+        final double first = math.min(0.72, most);
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: first,
+          minChildSize: math.min(0.4, first),
+          maxChildSize: most,
+          builder: (context, scroll) => _sheet(
+            context,
+            scroll: scroll,
+            foot: foot,
+            top: top,
+            look: look,
+            world: world,
+            bath: bath,
+            parts: parts,
+            ai: ai,
+          ),
+        );
+      },
+    );
+  }
+
+  /// The sheet itself: its ground and corners, and what scrolls in it.
+  Widget _sheet(
+    BuildContext context, {
+    required ScrollController scroll,
+    required double foot,
+    required BorderRadius top,
+    required DeeperLook look,
+    required DeeperLook world,
+    required Color? bath,
+    required List<Widget Function(Animation<double> draw)> parts,
+    required bool ai,
+  }) {
+    final l = context.l10n;
+    return DecoratedBox(
+      decoration: BoxDecoration(color: look.ground, borderRadius: top),
+      child: ClipRRect(
+        borderRadius: top,
+        child: NotificationListener<ScrollNotification>(
+          onNotification: _onScroll,
+          child: SingleChildScrollView(
+            controller: scroll,
+            padding: EdgeInsets.only(bottom: foot),
+            child: ReportHeight(
+              height: _bodyHeight,
               child: Stack(
                 children: [
                   // In the app's style head and body are one painting

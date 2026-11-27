@@ -170,7 +170,7 @@ const Turn = {
     const d = Math.round(S.depth / 10) * 10, ok = d >= 400 && d <= 700; S.guess = d; S.pct = pct;
     Kit.answer({choice: `${fmt(d)} m`, correct: ok, sure: pct});
     sure.grade(ok, pct, `${fmt(d)} m, ${ok ? 'right' : 'off'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

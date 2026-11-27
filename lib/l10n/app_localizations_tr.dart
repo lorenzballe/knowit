@@ -2051,6 +2051,81 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'Nerede daha net görmek istersin?';
+
+  @override
+  String get aimLine =>
+      'Birini seç. Her gün bunun için kartlar olacak; istediğin zaman değiştirebilirsin.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bu hafta bunun için $n kart',
+      one: 'Bu hafta bunun için 1 kart',
+      zero: 'Bu hafta bunun için kart yok',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$n sorudan $right doğru',
+      one: '$n sorudan 1 doğru',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Bu hedef için her şey';
+
+  @override
+  String get aimPlus =>
+      'Astute+ ile: bunun bütün yolları eksiksiz ve seninle bunun üzerine çalışan bir koç.';
+
+  @override
+  String get aimNone =>
+      'Nerede daha net görmek istediğini seç: her gün bunun için kartlar olacak.';
+
+  @override
+  String get aimPick => 'Hedef seç';
+
+  @override
+  String get strengthsTitle => 'Güçlü olduğun yerler';
+
+  @override
+  String get strengthsLine =>
+      'Bir seçimden değil, cevaplarından: en çok nerede bildiğin ve nerede yanıldığın.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Henüz az cevap var: $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return '$skill üzerine çalış';
+  }
+
+  @override
+  String get strengthsBest => 'Güçlü yanın';
+
+  @override
+  String get strengthsWeak => 'En çok yanıldığın yer';
+
+  @override
+  String get strengthsLocked =>
+      'En çok yanıldığın yer ve geri kalanı Astute+ ile.';
+
+  @override
+  String get strengthsEmpty =>
+      'Birkaç cevap daha, sonra burada güçlü olduğun yerleri göreceksin.';
+
+  @override
   String get scoreTitle => 'Astute puanı';
 
   @override
@@ -5972,6 +6047,15 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get yourFiveFromToday => 'Bugünkü beş kartın';
+
+  @override
+  String get dayMomentTitle => 'Gün tamam.';
+
+  @override
+  String get dayMomentLater => 'Sonra';
+
+  @override
+  String get yourDayCard => 'Senin günün';
 
   @override
   String get tuneTitle => 'Karışımını ayarla';

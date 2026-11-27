@@ -17,6 +17,7 @@ import '../explore/explore_block.dart';
 import '../models/pill.dart';
 import '../remote/remote.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../state/explore_play.dart';
 import '../sync/served.dart';
 import '../sync/tally.dart';
@@ -27,6 +28,7 @@ import '../widgets/explore/first_shelves.dart' show CardRow;
 import '../widgets/explore/search_start.dart';
 import '../widgets/explore/section_page.dart';
 import '../widgets/explore/story_player.dart';
+import '../widgets/learn_looks.dart' show withAimShelf;
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
@@ -543,6 +545,9 @@ class ExploreScreenState extends State<ExploreScreen>
         Served.instance,
         widget.app,
         Remote.revision,
+        // What to learn's look, as the developer tools pick it: B adds the
+        // shelf of the reader's aim (lib/widgets/learn_looks.dart).
+        DebugLooks.learn,
       ]),
       builder: (context, _) => _sections(
         context,
@@ -589,7 +594,7 @@ class ExploreScreenState extends State<ExploreScreen>
       slots = exploreSlots(
         context,
         this,
-        exploreSections(Remote.config),
+        withAimShelf(widget.app, exploreSections(Remote.config)),
         widget.app.remoteContext(language),
       );
     } finally {
