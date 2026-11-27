@@ -7,6 +7,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show RenderParagraph;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,11 +18,13 @@ import 'package:astuto/explore/blocks/bets/answers.dart';
 import 'package:astuto/explore/blocks/bets/bets_day.dart';
 import 'package:astuto/explore/blocks/bets/daily_deal.dart';
 import 'package:astuto/explore/blocks/bets/deal.dart' show BetSection, answerOf;
+import 'package:astuto/explore/blocks/bets/five_challenge.dart';
 import 'package:astuto/explore/blocks/bets/three.dart';
 import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/l10n/l10n.dart' show Quoting;
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/remote/remote.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/daily_crowd.dart';
 import 'package:astuto/sync/served.dart';
@@ -775,5 +778,101 @@ void main() {
       expect(tester.takeException(), isNull, reason: '$b');
       expect(find.byKey(const ValueKey('three-spread')), findsOneWidget);
     }
+  });
+
+  group('challenge a friend, while the server says so (share.challenge)', () {
+    int docs = 0;
+    void challengesOn() => Remote.adopt(
+      RemoteConfig.parse(
+        jsonEncode({
+          'schema': 1,
+          'hash': 'three-challenge-${docs++}',
+          'app': {
+            'flags': {'share.challenge': true},
+          },
+          'strings': <String, Object?>{},
+          'explore': null,
+          'looks': null,
+        }),
+      ),
+    );
+
+    tearDown(() {
+      Remote.reset();
+      sendText = shareText;
+    });
+
+    testWidgets('the five go on as a challenge: how many were right, the '
+        'site\'s page for the day, never the answers', (tester) async {
+      challengesOn();
+      final List<String> sent = [];
+      sendText = (text) async {
+        sent.add(text);
+        return true;
+      };
+      final BetsTestHost host = await start(tester);
+      await show(tester, host);
+      final List<String> ids = await play(tester, right: (i) => i != 1);
+      // Right as the game kept each card: the card's own test.
+      final int right = [
+        for (final String id in ids)
+          if (BetsDay.instance.betOn(kDailyBet, id)!.right) id,
+      ].length;
+      expect(fiveRightToday(), right);
+      expect(find.byKey(const ValueKey('three-send')), findsNothing);
+      expect(find.byKey(const ValueKey('three-why')), findsOneWidget);
+      // The challenge first, the why under it, each the card's width.
+      final Rect challenge = tester.getRect(
+        find.byKey(const ValueKey('three-challenge')),
+      );
+      final Rect why = tester.getRect(find.byKey(const ValueKey('three-why')));
+      expect(why.top, greaterThan(challenge.bottom));
+      expect(challenge.width, why.width);
+      await tapKey(tester, 'three-challenge');
+      expect(sent, [
+        fiveChallengeText(l, day: dateKey(sunday), right: right),
+      ]);
+      expect(sent.single, endsWith('/sfida?d=2026-10-18&s=$right'));
+      for (final Pill p in DailyDeal.five(sunday)) {
+        if (p.challenge case PickOne(:final correctOption)) {
+          expect(sent.single.contains(correctOption), isFalse);
+        }
+      }
+    });
+
+    testWidgets('a subject\'s three, which the site does not have, goes as '
+        'squares still; and so does the five without the server', (
+      tester,
+    ) async {
+      challengesOn();
+      BetsTestHost host = await start(tester, subject: 'Science');
+      await show(tester, host);
+      await play(tester, count: 3);
+      expect(find.byKey(const ValueKey('three-send')), findsOneWidget);
+      expect(find.byKey(const ValueKey('three-challenge')), findsNothing);
+
+      Remote.reset();
+      host = await start(tester);
+      await show(tester, host);
+      await play(tester);
+      expect(find.byKey(const ValueKey('three-send')), findsOneWidget);
+      expect(find.byKey(const ValueKey('three-challenge')), findsNothing);
+    });
+
+    testWidgets('its words go onto a second line rather than be cut, at '
+        'twice the text size on the smallest phone', (tester) async {
+      challengesOn();
+      final BetsTestHost host = await start(tester);
+      await show(tester, host, text: 2, width: 320);
+      await play(tester);
+      expect(tester.takeException(), isNull);
+      final Finder words = find.descendant(
+        of: find.byKey(const ValueKey('three-challenge')),
+        matching: find.text(l.challengeFriend),
+      );
+      expect(words, findsOneWidget);
+      final RenderParagraph paragraph = tester.renderObject(words);
+      expect(paragraph.didExceedMaxLines, isFalse);
+    });
   });
 }

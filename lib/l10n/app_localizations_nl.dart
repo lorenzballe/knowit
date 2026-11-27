@@ -2009,6 +2009,19 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String fiveChallengeLine(int right) {
+    return 'Ik had $right van de vijf van vandaag goed op Astute. Kun jij het beter?';
+  }
+
+  @override
+  String get fiveChallengeAll =>
+      'Ik had de vijf van vandaag op Astute allemaal goed. Kun jij dat ook?';
+
+  @override
+  String get fiveChallengeInvite =>
+      'De vijf van vandaag op Astute: voor iedereen dezelfde vijf vragen. Hoeveel heb jij er goed?';
+
+  @override
   String threeShareHeadIn(String subject, String date) {
     return 'Astute · De drie van vandaag · $subject · $date';
   }

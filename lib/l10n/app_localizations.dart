@@ -2730,6 +2730,24 @@ abstract class AppLocalizations {
   /// **'Astute · Today\'s five · {date}'**
   String fiveShareHead(String date);
 
+  /// Challenge a friend, from today's five: the line sent before the link to the site, where the friend plays the same five questions. It says how many of today's five the reader got right, from 0 to 4 (fiveChallengeAll says all five), then asks the friend, briefly, to do better. Plain, never a boast.
+  ///
+  /// In en, this message translates to:
+  /// **'I got {right} of today\'s 5 on Astute. Can you beat me?'**
+  String fiveChallengeLine(int right);
+
+  /// Challenge a friend, from today's five, when the reader got all five right: the line sent before the link to the site, where the friend plays the same five questions. Asks the friend to do as well. Plain, never a boast or a cheer.
+  ///
+  /// In en, this message translates to:
+  /// **'I got all of today\'s 5 on Astute. Can you match it?'**
+  String get fiveChallengeAll;
+
+  /// Challenge a friend, before the reader has played today's five: the line sent before the link to the site, where the friend plays the five questions that are the same for everyone today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s five on Astute: the same five questions for everyone. How many can you get?'**
+  String get fiveChallengeInvite;
+
   /// First line of the message a subject's three is sent in.
   ///
   /// In en, this message translates to:

@@ -2114,6 +2114,23 @@
    }
   }
  },
+ "fiveChallengeLine": "I got {right} of today's 5 on Astute. Can you beat me?",
+ "@fiveChallengeLine": {
+  "description": "Challenge a friend, from today's five: the line sent before the link to the site, where the friend plays the same five questions. It says how many of today's five the reader got right, from 0 to 4 (fiveChallengeAll says all five), then asks the friend, briefly, to do better. Plain, never a boast.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   }
+  }
+ },
+ "fiveChallengeAll": "I got all of today's 5 on Astute. Can you match it?",
+ "@fiveChallengeAll": {
+  "description": "Challenge a friend, from today's five, when the reader got all five right: the line sent before the link to the site, where the friend plays the same five questions. Asks the friend to do as well. Plain, never a boast or a cheer."
+ },
+ "fiveChallengeInvite": "Today's five on Astute: the same five questions for everyone. How many can you get?",
+ "@fiveChallengeInvite": {
+  "description": "Challenge a friend, before the reader has played today's five: the line sent before the link to the site, where the friend plays the five questions that are the same for everyone today."
+ },
  "threeShareHeadIn": "Astute · Today's three · {subject} · {date}",
  "@threeShareHeadIn": {
   "description": "First line of the message a subject's three is sent in.",

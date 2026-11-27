@@ -1929,6 +1929,17 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String fiveChallengeLine(int right) {
+    return 'Astuteの今日の5問で$right問正解。私に勝てる？';
+  }
+
+  @override
+  String get fiveChallengeAll => 'Astuteの今日の5問で全問正解。あなたもできる？';
+
+  @override
+  String get fiveChallengeInvite => 'Astuteの今日の5問：みんな同じ5問。何問正解できる？';
+
+  @override
   String threeShareHeadIn(String subject, String date) {
     return 'Astute · 今日の3問 · $subject · $date';
   }

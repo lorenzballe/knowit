@@ -2083,6 +2083,19 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
+  String fiveChallengeLine(int right) {
+    return 'W dzisiejszej piątce Astute mam $right na 5. Pobijesz mnie?';
+  }
+
+  @override
+  String get fiveChallengeAll =>
+      'W dzisiejszej piątce Astute mam 5 na 5. Wyrównasz?';
+
+  @override
+  String get fiveChallengeInvite =>
+      'Dzisiejsza piątka w Astute: te same pięć pytań dla wszystkich. Ile z nich trafisz?';
+
+  @override
   String threeShareHeadIn(String subject, String date) {
     return 'Astute · Dzisiejsza trójka · $subject · $date';
   }

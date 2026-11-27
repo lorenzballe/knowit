@@ -1977,6 +1977,19 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String fiveChallengeLine(int right) {
+    return 'Astute\'ta bugünün beşlisinde 5\'te $right yaptım. Beni geçebilir misin?';
+  }
+
+  @override
+  String get fiveChallengeAll =>
+      'Astute\'ta bugünün beşlisinde 5\'te 5 yaptım. Sen de yapabilir misin?';
+
+  @override
+  String get fiveChallengeInvite =>
+      'Astute\'ta bugünün beşlisi: herkese aynı beş soru. Kaçını bilebilirsin?';
+
+  @override
   String threeShareHeadIn(String subject, String date) {
     return 'Astute · Bugünün üçlüsü · $subject · $date';
   }

@@ -17,6 +17,7 @@ library;
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,6 +43,7 @@ import 'bets_day.dart';
 import 'block.dart';
 import 'daily_deal.dart';
 import 'deal.dart';
+import 'five_challenge.dart';
 import 'parts.dart';
 
 /// What a guess is worth: a hundred for the answer itself, three fewer for
@@ -933,6 +935,25 @@ void sendDaily(DailyGame game, List<Pill> cards) {
   );
 }
 
+/// How many of today's five the reader got right, as a challenge carries
+/// it (five_challenge.dart): once all five are locked in today, and only
+/// when they are the five the site has for the day — null before then, or
+/// for a five the server named instead. Read from the day's bets, which
+/// are read once Explore has shown a shelf of bets; [BetsDay.load] first
+/// where that may not have happened yet.
+int? fiveRightToday() {
+  final BetsDay day = BetsDay.instance;
+  final List<Pill> five = DailyDeal.five(day.now);
+  if (five.length != 5) return null;
+  int right = 0;
+  for (final Pill p in five) {
+    final Bet? b = day.betOn(kDailyBet, p.id);
+    if (b == null || b.facts['game'] != DailyGameKind.five.name) return null;
+    if (b.right) right++;
+  }
+  return right;
+}
+
 /// The result: the score, where it stands among today's players, and card
 /// by card what the reader said, what it is, and how everybody did.
 class DailyResult extends StatefulWidget {
@@ -1150,33 +1171,38 @@ class _DailyResultState extends State<DailyResult> {
                       widget.host.open(widget.shelf.section, widget.cards, c),
                 ),
               const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    child: BetButton(
-                      key: const ValueKey('three-send'),
-                      label: l.threeSend,
-                      ink: ink,
-                      height: 50,
-                      expand: true,
-                      onTap: () => _send(context, total),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _OutlineButton(
-                      key: const ValueKey('three-why'),
-                      label: l.threeWhy,
-                      ink: ink,
-                      onTap: () => widget.host.open(
-                        widget.shelf.section,
-                        widget.cards,
-                        widget.cards.first,
+              // Today's five, where the server says so, goes on as a
+              // challenge: the same five for a friend, on the site, with
+              // the score to beat. Each button on a line of its own, as
+              // "Challenge a friend" is long in most languages and is never
+              // cut. Otherwise, and for a subject's three, the score as
+              // squares.
+              if (_challenges)
+                _OutlineButton(
+                  key: const ValueKey('three-challenge'),
+                  label: l.challengeFriend,
+                  ink: ink,
+                  filled: true,
+                  onTap: () => _challenge(context, right),
+                )
+              else
+                Row(
+                  children: [
+                    Expanded(
+                      child: BetButton(
+                        key: const ValueKey('three-send'),
+                        label: l.threeSend,
+                        ink: ink,
+                        height: 50,
+                        expand: true,
+                        onTap: () => _send(context, total),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(width: 10),
+                    Expanded(child: _why(l, ink)),
+                  ],
+                ),
+              if (_challenges) ...[const SizedBox(height: 10), _why(l, ink)],
             ],
           ),
         ),
@@ -1196,6 +1222,50 @@ class _DailyResultState extends State<DailyResult> {
         ],
       ],
     );
+  }
+
+  /// The cards again, from the first, where each answer is explained.
+  Widget _why(AppLocalizations l, BetInk ink) => _OutlineButton(
+    key: const ValueKey('three-why'),
+    label: l.threeWhy,
+    ink: ink,
+    onTap: () => widget.host.open(
+      widget.shelf.section,
+      widget.cards,
+      widget.cards.first,
+    ),
+  );
+
+  /// Whether the result sends the game on as a challenge: today's five,
+  /// while the server says so, and only the five the site has for the day,
+  /// which the friend will be played.
+  bool get _challenges =>
+      widget.game.kind == DailyGameKind.five &&
+      widget.host.app.shareChallengeOn &&
+      isSitesFive(BetsDay.instance.now, widget.cards);
+
+  /// Sent on as a challenge: a line with how many of the five were right,
+  /// and the site's page where a friend plays the same five. Never the
+  /// answers.
+  Future<void> _challenge(BuildContext context, int right) async {
+    final l = context.l10n;
+    final ScaffoldMessengerState? messenger = ScaffoldMessenger.maybeOf(
+      context,
+    );
+    final bool shared = await sendFiveChallenge(
+      l,
+      from: 'five result',
+      day: widget.game.day,
+      right: right,
+    );
+    if (!shared) {
+      messenger?.showSnackBar(
+        SnackBar(
+          content: Text(l.copiedToClipboard),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   /// Sent on: the game, the day, the score, a square for each card, and
@@ -1681,11 +1751,17 @@ class _OutlineButton extends StatelessWidget {
     required this.label,
     required this.ink,
     required this.onTap,
+    this.filled = false,
   });
 
   final String label;
   final BetInk ink;
   final VoidCallback onTap;
+
+  /// Filled in the ink, as the first of the two: "Challenge a friend",
+  /// whose words, long in most languages, go onto a second line at a large
+  /// text size rather than be cut.
+  final bool filled;
 
   @override
   Widget build(BuildContext context) => Semantics(
@@ -1697,11 +1773,15 @@ class _OutlineButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         constraints: BoxConstraints(
-          minHeight: MediaQuery.textScalerOf(context).scale(12.5) + 34,
+          minHeight: math.max(
+            filled ? 50 : 0,
+            MediaQuery.textScalerOf(context).scale(12.5) + 34,
+          ),
         ),
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
+          color: filled ? ink.ink : null,
           borderRadius: BorderRadius.circular(99),
           border: Border.all(color: ink.ink, width: 1.6),
         ),
@@ -1711,7 +1791,7 @@ class _OutlineButton extends StatelessWidget {
           style: AppText.body(
             size: 14,
             weight: FontWeight.w700,
-            color: ink.ink,
+            color: filled ? ink.onInk : ink.ink,
           ),
         ),
       ),

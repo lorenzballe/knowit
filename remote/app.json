@@ -2,7 +2,8 @@
  "gate": null,
  "flags": {
   "trial.firstRun": true,
-  "cardAi": true
+  "cardAi": true,
+  "share.challenge": true
  },
  "tunables": {},
  "experiments": {}

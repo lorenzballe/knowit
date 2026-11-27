@@ -2554,6 +2554,20 @@ class AppState extends ChangeNotifier {
   /// (cardAiOn, lib/widgets/deeper_sheet.dart).
   static const RemoteFlag kCardAiFlag = RemoteFlag('cardAi', fallback: false);
 
+  /// "Challenge a friend" on today's five (`share.challenge`): at the end
+  /// of the five on Explore, in place of sending the score as squares, and
+  /// in the finished day's share, a link to the site's page where a friend
+  /// plays the same five in a browser and sees both scores
+  /// (lib/explore/blocks/bets/five_challenge.dart). Off as built; the
+  /// server turns it on.
+  static const RemoteFlag kShareChallengeFlag = RemoteFlag(
+    'share.challenge',
+    fallback: false,
+  );
+
+  /// Whether today's five can be sent to a friend as a challenge.
+  bool get shareChallengeOn => kShareChallengeFlag.on(_here);
+
   /// Whether the first run plays a card and offers the trial after it.
   bool get firstRunTrialOn => kFirstRunTrialFlag.on(_here);
 

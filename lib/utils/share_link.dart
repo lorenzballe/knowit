@@ -16,7 +16,10 @@ const String kSiteHost = 'astutetheapp.com';
 /// distribution the app has, and a bare address could not say which of the
 /// three brought anybody back. So every shared link carries one of these,
 /// and they live here, together, so that the site and the app agree on the
-/// spelling and a new share cannot leave without one.
+/// spelling and a new share cannot leave without one. The one exception is
+/// the challenge on today's five ([fiveChallengeLink]): its page is named
+/// for it, so the site counts it by its page, and its link carries the day
+/// and the score and nothing else.
 enum ShareRef {
   /// The day as five squares (`ShareDay`).
   day('share_day'),
@@ -71,3 +74,25 @@ enum ShareRef {
 String cardLink(String cardId) => cardId.startsWith('news-')
     ? ShareRef.card.link
     : 'https://$kSiteHost/c/$cardId?ref=${ShareRef.card.ref}';
+
+/// Where a friend is challenged on today's five ("Challenge a friend"): the
+/// site's page for it, where the same five are played in a browser, with
+/// or without the app, and the two scores are set side by side
+/// (tool/cards/sfida_page.py writes it).
+///
+/// The link carries the day the five were dealt, `yyyy-mm-dd` on the
+/// reader's calendar, so the friend plays the very cards even a day later
+/// or in another time zone; and, once the reader has played them, how many
+/// of the five were right, 0 to 5. Nothing else: no name, no id, no ref —
+/// the page is named for the challenge, and the site counts it by its page.
+/// `astutetheapp.com/sfida?d=2026-11-27&s=4`. A day the site no longer has
+/// falls back, on the page, to the site's own today.
+///
+/// Not a link the app opens: on a phone with the app the page still opens
+/// in the browser, where the two scores can be compared
+/// (site/.well-known/ names `/c/*` alone).
+String fiveChallengeLink(String day, {int? score}) {
+  assert(RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(day), day);
+  final bool scored = score != null && score >= 0 && score <= 5;
+  return 'https://$kSiteHost/sfida?d=$day${scored ? '&s=$score' : ''}';
+}

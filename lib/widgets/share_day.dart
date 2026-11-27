@@ -9,6 +9,9 @@ import 'package:intl/intl.dart' show DateFormat;
 
 import '../analytics.dart';
 import '../data/pills_repository.dart' show kPillsPerDay;
+import '../explore/blocks/bets/bets_day.dart' show BetsDay;
+import '../explore/blocks/bets/five_challenge.dart';
+import '../explore/blocks/bets/three.dart' show fiveRightToday;
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
@@ -341,6 +344,25 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
     if (mounted) _say(l.copiedToClipboard);
   }
 
+  /// Today's five, the same for everyone, sent to a friend to play on the
+  /// site (lib/explore/blocks/bets/five_challenge.dart): with how many of
+  /// them the reader got right on Explore, once they have played them, and
+  /// as the five alone before. Not the day's own cards, which are the
+  /// reader's and nobody else's.
+  Future<void> _challenge() async {
+    final l = context.l10n;
+    // The day's bets are read once Explore has shown them; a reader who
+    // went straight from the five to here may not have opened it yet.
+    await BetsDay.instance.load();
+    final bool shared = await sendFiveChallenge(
+      l,
+      from: widget.from,
+      day: BetsDay.instance.today,
+      right: fiveRightToday(),
+    );
+    if (!shared && mounted) _say(l.copiedToClipboard);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -462,6 +484,16 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
                 ),
               ],
             ),
+            // A second way out, quieter than the day's picture: today's
+            // five, the same for everyone, as a challenge for a friend.
+            if (app.shareChallengeOn) ...[
+              const SizedBox(height: 10),
+              _ChallengeButton(
+                key: const ValueKey('share-day-challenge'),
+                label: l.challengeFriend,
+                onTap: _challenge,
+              ),
+            ],
           ],
         ),
       ),
@@ -474,6 +506,66 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
         DayLayout.list => l.shareFormatList,
         DayLayout.story => l.shareFormatStory,
       };
+}
+
+/// "Challenge a friend", under the day's own buttons: drawn in an outline,
+/// as the second of two ways is, the whole width, so its words are never
+/// cut, and as tall as the reader's text size needs.
+class _ChallengeButton extends StatelessWidget {
+  const _ChallengeButton({
+    super.key,
+    required this.label,
+    required this.onTap,
+  });
+
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    return Semantics(
+      button: true,
+      label: label,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+          constraints: BoxConstraints(
+            minHeight: math.max(
+              50,
+              MediaQuery.textScalerOf(context).scale(14.5) * 1.3 + 24,
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: p.lineStrong),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.compare_arrows_rounded, size: 18, color: p.ink),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: AppText.body(
+                    size: 14.5,
+                    weight: FontWeight.w700,
+                    height: 1.3,
+                    color: p.ink,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 /// The day's picture as a screen shows it, in the room it is given: laid
