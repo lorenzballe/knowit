@@ -210,7 +210,7 @@ const Turn = {
       value: 'Your jug pours a yellow layer into every glass. It floats on the rumor, which stays underneath at the same height in all five.',
       mid: 'Your jug fills the first glass and pours a thinner yellow layer into the others. The rumor stays underneath.'})[kind()]);
     Kit.hide('go'); Kit.$('say').textContent = 'Noted. Now the best case each way.';
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back ----------

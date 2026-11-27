@@ -96,8 +96,19 @@ void main() {
     final TrickScene s = scene(p);
     final AppLocalizations l = await card(tester, p);
     final String said = unmaskTrickSaid(l, s);
-    // Where the cut axis starts, as the mark on it says it.
-    expect(said, contains(unmaskFigure(s.shown.lo, s.decimals, s.unit)));
+    // Where the cut axis starts, as the mark on it says it: with the one
+    // precision every mark on that axis has.
+    expect(
+      said,
+      contains(
+        unmaskFigure(
+          s.shown.lo,
+          unmaskAxisDecimals(s.shown.lo, s.shown.hi),
+          s.unit,
+          trim: false,
+        ),
+      ),
+    );
     // The two charts' names, which show only once there are two charts.
     final Finder before = find.text(l.unmaskOriginal.toUpperCase());
     final Finder after = find.text(l.unmaskCorrected.toUpperCase());

@@ -25,6 +25,7 @@ library;
 
 import 'dart:math' as math;
 
+import 'package:flutter/rendering.dart' show RenderProxyBox;
 import 'package:flutter/widgets.dart';
 
 import '../theme.dart';
@@ -84,7 +85,10 @@ class _QuickReturnState extends State<QuickReturn>
   /// How far the page has scrolled.
   final ValueNotifier<double> _scrolled = ValueNotifier(0);
 
-  final GlobalKey _header = GlobalKey();
+  /// How tall the header was laid out, kept as it is laid out: the page
+  /// tells of its scrolling while it is being laid out itself, when the
+  /// header's own size may not be asked for.
+  final _HeaderHeight _headerHeight = _HeaderHeight();
 
   /// How far the page has gone back up since it last went down.
   double _rising = 0;
@@ -107,9 +111,8 @@ class _QuickReturnState extends State<QuickReturn>
   /// How far up the header goes to be out of sight: its own height and
   /// whatever it shows under it.
   double get _gone {
-    final RenderObject? box = _header.currentContext?.findRenderObject();
-    if (box is! RenderBox || !box.hasSize) return 0;
-    return box.size.height + QuickReturn.shade;
+    final double? height = _headerHeight.value;
+    return height == null ? 0 : height + QuickReturn.shade;
   }
 
   bool get _returning => _up.isAnimating && _to == 0;
@@ -196,7 +199,7 @@ class _QuickReturnState extends State<QuickReturn>
           top: 0,
           child: AnimatedBuilder(
             animation: Listenable.merge([_up, _scrolled]),
-            child: KeyedSubtree(key: _header, child: widget.header),
+            child: _KeepHeight(keep: _headerHeight, child: widget.header),
             builder: (context, header) {
               final double gone = _gone;
               final double up = _stays ? 0 : _up.value;
@@ -255,6 +258,38 @@ class _QuickReturnState extends State<QuickReturn>
       ],
     );
     return widget.clip ? ClipRect(child: room) : room;
+  }
+}
+
+/// Where the header's height is kept.
+class _HeaderHeight {
+  double? value;
+}
+
+/// Keeps its child's height in [keep] each time the child is laid out.
+class _KeepHeight extends SingleChildRenderObjectWidget {
+  const _KeepHeight({required this.keep, super.child});
+
+  final _HeaderHeight keep;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _RenderKeepHeight(keep);
+
+  @override
+  void updateRenderObject(BuildContext context, _RenderKeepHeight render) =>
+      render.keep = keep;
+}
+
+class _RenderKeepHeight extends RenderProxyBox {
+  _RenderKeepHeight(this.keep);
+
+  _HeaderHeight keep;
+
+  @override
+  void performLayout() {
+    super.performLayout();
+    keep.value = size.height;
   }
 }
 

@@ -460,6 +460,13 @@ leave both out and stay as they are.
   `grade(ok, null)` says right or wrong alone. **A page must work with a
   null pct**: never print it, never branch on it without a fallback.
   Right or wrong is kept either way.
+  **The option picked carries class `on`**, the only one so marked in its
+  row, and the row of how sure comes on at the tap (`sure.on()`): the kit
+  then locks the pick in as a native card does, a tick where it clears the
+  words, the others dimmed, no second tap, until the answer is in. A page
+  that turns itself over after its answer waits only for the verdict to
+  come in: `setTimeout(() => Turn.over(), Kit.calm ? 0 : 350)`, never the
+  700 ms the first pages copied.
 - **`reacts: true`, on a card with nothing right or wrong in it** (a read,
   a debate, a page that marks nothing): once read, it asks what it did for
   the reader, in three words that are theirs: *New to me · Changed my mind ·

@@ -151,6 +151,12 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
   /// Where the reader is in the deck, as the header says it.
   String get _count => '${_index + 1}/$_total';
 
+  /// Whether the door under the card counts instead of the header: a card
+  /// read on its own ("1/1" says nothing) whose path's door says where in
+  /// the path it is. Wherever the header counts the cards being read, the
+  /// door does not count its path as well: one count on the screen.
+  bool get _doorCounts => _door != null && _total == 1;
+
   TextStyle _countStyle(BuildContext context) => AppText.body(
     size: 13.5,
     weight: FontWeight.w600,
@@ -259,7 +265,7 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                     SizedBox(
                       width: _side(context),
                       child: Text(
-                        _atEnd ? '' : _count,
+                        _atEnd || _doorCounts ? '' : _count,
                         textAlign: TextAlign.right,
                         maxLines: 1,
                         softWrap: false,
@@ -353,6 +359,7 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                     key: ValueKey('path-door-${pill.id}'),
                     app: widget.app,
                     pill: pill,
+                    place: _doorCounts,
                   ),
                 )
               else

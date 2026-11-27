@@ -199,7 +199,7 @@ const Turn = {
     const d = USE - guess, ok = Math.abs(d) <= 15;
     Kit.answer({choice: String(guess), correct: ok, sure: pct});
     sure.grade(ok, pct, ok ? `${guess} years: close` : d > 0 ? `${guess} years: too short` : `${guess} years: too long`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back ----------

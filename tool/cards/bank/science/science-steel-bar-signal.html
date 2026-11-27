@@ -246,7 +246,7 @@ const Turn = {
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'not quite'}`);
     setVerdict(pct);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   sureEl.classList.add('locked');
   const relabel = t => {

@@ -23,6 +23,7 @@ import '../sync/subscription.dart';
 import '../theme.dart';
 import '../utils/reminders.dart' show remindersSupported;
 import '../widgets/chunky.dart';
+import '../widgets/deeper_sheet.dart' show cardAiOn;
 import '../widgets/fit_text.dart';
 import '../widgets/ambient.dart';
 import '../widgets/motion.dart';
@@ -61,11 +62,18 @@ int get kYearlySavingPercent {
 // new; then the day of the reader's own cards, the paths and the books, the
 // record, the archive. The door a reader came through puts its own thing
 // first, so the first line under the headline is what they reached for.
+// The assistant and the coach only where the answers by Claude are on for
+// this reader ([ai], cardAiOn): the paywall never sells what is switched
+// off.
 //
 // Each is marked by a small drawing in one of the headline's colours, in
 // the line weight of the app's own marks: a speech bubble, a chart going
 // up, cards in a fan, a book, two lines meeting, a clock turned back.
-List<_Feature> _features(AppLocalizations l, PaywallVariant variant) {
+List<_Feature> _features(
+  AppLocalizations l,
+  PaywallVariant variant, {
+  required bool ai,
+}) {
   final _Feature ask = (
     glyph: _Glyph.ask,
     title: l.perkAskTitle,
@@ -102,7 +110,13 @@ List<_Feature> _features(AppLocalizations l, PaywallVariant variant) {
     sub: l.perkReadShort,
     fresh: false,
   );
-  final List<_Feature> all = [ask, coach, five, shelves, gap, read];
+  final List<_Feature> all = [
+    if (ai) ...[ask, coach],
+    five,
+    shelves,
+    gap,
+    read,
+  ];
   final _Feature? first = switch (variant) {
     PaywallVariant.record => gap,
     PaywallVariant.five => five,
@@ -401,6 +415,11 @@ class PaywallScreen extends StatefulWidget {
 class _PaywallScreenState extends State<PaywallScreen> {
   late Plan _plan = widget.app.plan;
 
+  /// Whether the answers by Claude are on for this reader: the assistant
+  /// and the coach are offered only then.
+  bool get _ai =>
+      cardAiOn(widget.app, Localizations.localeOf(context).languageCode);
+
   /// How long the offer was on screen, how it was left, and how often the
   /// reader went between the plans — the three things a paywall's own
   /// numbers are made of.
@@ -624,6 +643,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
           if (!mounted) return;
         }
     }
+    if (!mounted) return;
     switch (outcome) {
       case PurchaseOutcome.bought:
         return;
@@ -975,7 +995,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
                                         ...opener,
                                         SizedBox(height: short ? 12 : 16),
                                         _FeatureList(
-                                          features: _features(l, _variant),
+                                          features: _features(
+                                            l,
+                                            _variant,
+                                            ai: _ai,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -1008,7 +1032,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
                               children: [
                                 ...opener,
                                 const SizedBox(height: 22),
-                                _FeatureList(features: _features(l, _variant)),
+                                _FeatureList(
+                                  features: _features(l, _variant, ai: _ai),
+                                ),
                                 const SizedBox(height: 6),
                                 ...foot,
                               ],

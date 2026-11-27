@@ -245,7 +245,7 @@ const Turn = {
     const ok = guess <= 8;
     Kit.answer({choice: `${Math.round(guess)}%`, correct: ok, sure: pct});
     sure.grade(ok, pct, `${Math.round(guess)}%, ${ok ? 'right' : 'off'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   sure.on();
   document.addEventListener('turned', () => {

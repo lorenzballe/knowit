@@ -151,7 +151,7 @@ const Turn = {
     const pct = Math.round(P * 100), side = pct < 40 ? 'leans to blending in' : pct > 60 ? 'leans to showing it' : 'in between';
     Kit.answer({choice: `Door ${pct}% open (${side})`, correct: null});
     go.disabled = true; say.innerHTML = `You’d open it <b>${pct}%</b>. Now see who stays.`;
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

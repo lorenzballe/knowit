@@ -2,7 +2,6 @@ import 'dart:math' as math;
 import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' show NumberFormat;
 
 import '../../analytics.dart';
 import '../../l10n/l10n.dart';
@@ -10,6 +9,7 @@ import '../../models/pill.dart';
 import '../../theme.dart';
 import 'parts.dart';
 import '../card_edge.dart';
+import '../scenes/chart_numbers.dart';
 
 /// Charts that mislead — artboard 138d, drawn from the bank's own charts.
 ///
@@ -58,47 +58,34 @@ enum UnmaskLook {
 /// to [decimals] (exactly [decimals] when not [trim]med, as a bar's own
 /// number), the language's own decimal mark, a minus sign rather than a
 /// hyphen, and [unit] where it goes — so the trick said over a chart
-/// quotes the number on its axis, as the reader writes numbers.
+/// quotes the number on its axis, as the reader writes numbers. Written as
+/// a card that plays the same chart writes it (scenes/chart_numbers.dart).
 String unmaskFigure(
   double v,
   int decimals,
   String unit, {
   String locale = 'en',
   bool trim = true,
-}) {
-  String n = _numbers(locale, trim ? 0 : decimals, decimals).format(v.abs());
-  if (v < 0 && RegExp('[1-9]').hasMatch(n)) n = '−$n';
-  if (unit.isEmpty) return n;
-  if (const {'€', r'$', '£', '¥'}.contains(unit)) {
-    return n.startsWith('−') ? '−$unit${n.substring(1)}' : '$unit$n';
-  }
-  if (unit == '%' || unit.startsWith('°')) return '$n$unit';
-  return '$n $unit';
-}
+}) => chartFigure(v, decimals, unit, locale: locale, trim: trim);
 
-/// The formats [unmaskFigure] writes with, made once each: a chart is
-/// drawn again on every frame of its turn.
-final Map<String, NumberFormat> _formats = {};
+/// The marks of a value axis running from [lo] to [hi], as the shelf draws
+/// them: its foot, its middle and its top.
+List<double> unmaskMarks(double lo, double hi) => [lo, (lo + hi) / 2, hi];
 
-NumberFormat _numbers(String locale, int least, int most) =>
-    _formats.putIfAbsent('$locale $least $most', () {
-      NumberFormat f;
-      try {
-        f = NumberFormat.decimalPattern(locale);
-      } catch (_) {
-        f = NumberFormat.decimalPattern('en');
-      }
-      return f
-        ..minimumFractionDigits = least
-        ..maximumFractionDigits = most;
-    });
+/// The decimals every mark of an axis from [lo] to [hi] is written with,
+/// and the trick said over it quotes its numbers with: one precision for
+/// the whole axis, as on the card ("0,30 · 0,55 · 0,80°C").
+int unmaskAxisDecimals(double lo, double hi) =>
+    axisDecimals(unmaskMarks(lo, hi));
 
 /// The trick [s] plays, said plainly in the reader's language, with the
 /// chart's own numbers in it: where the cut axis starts, how far the
 /// stretched one runs, which years the window kept.
 String unmaskTrickSaid(AppLocalizations l, TrickScene s) {
+  // Its numbers as the axis under it writes them.
+  final int dp = unmaskAxisDecimals(s.shown.lo, s.shown.hi);
   String n(double v) =>
-      unmaskFigure(v, s.decimals, s.unit, locale: l.localeName);
+      unmaskFigure(v, dp, s.unit, locale: l.localeName, trim: false);
   final String said;
   switch (s.trick) {
     case TrickSceneKind.truncated:
@@ -293,6 +280,7 @@ class _ChartCardState extends State<_ChartCard>
                       ink: p.ink,
                       faint: hairOn(p),
                       tone: shade(p.color, 0.82),
+                      locale: context.l10n.localeName,
                     ),
                   ),
                 ),
@@ -881,21 +869,21 @@ class _ChartPainter extends CustomPainter {
   /// leaves the gridlines to run behind them.
   final Color? ground;
 
-  String _fmt(double v, {required bool honest, bool axis = false}) {
+  /// [v] as the chart writes it, in [locale]: a bar's own number with the
+  /// scene's decimals; a mark on the axis, set [tidy], with [axis] decimals,
+  /// one precision for every mark on it, as a card that plays the same
+  /// chart writes its marks (scenes/chart_numbers.dart).
+  String _fmt(double v, {required bool honest, int? axis}) {
     final TrickScene s = scene;
     final bool rate = honest && s.trick == TrickSceneKind.totals;
     final int dp = rate ? s.honestDecimals : s.decimals;
     final String unit = rate ? s.honestUnit : s.unit;
-    if (tidy) {
-      return axis
-          ? unmaskFigure(v, 2, unit, locale: locale)
-          : unmaskFigure(v, dp, unit, locale: locale, trim: false);
-    }
-    final String n = v.toStringAsFixed(dp);
-    if (unit.isEmpty) return n;
-    if (const {'€', r'$', '£', '¥'}.contains(unit)) return '$unit$n';
-    if (unit == '%') return '$n%';
-    return '$n $unit';
+    return chartFigure(
+      v,
+      tidy && axis != null ? axis : dp,
+      unit,
+      locale: locale,
+    );
   }
 
   void _text(
@@ -951,13 +939,15 @@ class _ChartPainter extends CustomPainter {
     // The value axis, sliding from the published range to the fair one.
     final double lo = lerpDouble(s.shown.lo, s.fair.lo, t)!;
     final double hi = lerpDouble(s.shown.hi, s.fair.hi, t)!;
+    // One precision for every mark on it.
+    final int axis = unmaskAxisDecimals(lo, hi);
 
     // As wide as its widest number, so "43.0 °C" is not cut to "43.0 …".
     double widest = 0;
     for (int m = 0; m <= 2; m++) {
       final TextPainter tp = TextPainter(
         text: TextSpan(
-          text: _fmt(lo + (hi - lo) * m / 2, honest: honest, axis: true),
+          text: _fmt(lo + (hi - lo) * m / 2, honest: honest, axis: axis),
           style: AppText.body(size: 9 * k, weight: FontWeight.w600, height: 1),
         ),
         textDirection: TextDirection.ltr,
@@ -1004,7 +994,7 @@ class _ChartPainter extends CustomPainter {
       final double value = lo + (hi - lo) * nv;
       _text(
         canvas,
-        _fmt(value, honest: honest, axis: true),
+        _fmt(value, honest: honest, axis: axis),
         Offset(axisW - 6, gy - 5 * k),
         align: TextAlign.right,
         maxWidth: axisW - 4,

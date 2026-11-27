@@ -182,7 +182,7 @@ const Turn = {
     const ok = pick === 'squeezed';
     Kit.answer({choice: `skin ${pick}`, correct: ok, sure: pct});
     sure.grade(ok, pct, `Skin ${pick}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

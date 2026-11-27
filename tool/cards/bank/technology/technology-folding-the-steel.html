@@ -308,7 +308,7 @@ const Turn = {
     const v = document.createElement('span'); v.className = 'verdict'; v.textContent = `You said ${pct}% — ${hits} of 2 right. ${word}`; you.append(v);
     score = `${hits} OF 2 RIGHT`;
     drawBack();
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   sureEl.classList.add('locked');
   opts.addEventListener('click', e => {
