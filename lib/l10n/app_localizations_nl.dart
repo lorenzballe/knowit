@@ -3012,15 +3012,23 @@ class AppLocalizationsNl extends AppLocalizations {
   String get themePuzzlesLine => 'Raadsels voor een pen en een minuut';
 
   @override
-  String get weekRecapCaps => 'DEZE WEEK VROEG JE JEZELF AF';
-
-  @override
-  String get weekRecapLine => 'De vragen die je kaarten je meegaven';
-
-  @override
   String weekRecapMore(int n) {
-    return 'Nog $n uit je week met Plus';
+    return 'Nog $n uit je week met Astute+';
   }
+
+  @override
+  String get weekReviewTitle => 'Herhaal de week';
+
+  @override
+  String get weekReviewLine =>
+      'De vragen van je kaarten van deze week. Beantwoord ze opnieuw: zo blijven ze hangen.';
+
+  @override
+  String get weekReviewGo => 'Herhalen';
+
+  @override
+  String get weekReviewNone =>
+      'De kaarten die je deze week leest, komen hier terug om te herhalen.';
 
   @override
   String get plusInTheApp =>
@@ -3443,9 +3451,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => 'Geteld vanaf vandaag';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return 'punten ernaast, was $was';
   }
@@ -3464,10 +3469,22 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => 'Nog geen antwoord met 80% of meer';
+  String get journeyMovesTitle => 'Trucs die je herkent';
 
   @override
-  String get journeyMovesTitle => 'Trucs die je herkent';
+  String get journeySureEmpty =>
+      'Verschijnt zodra je met 80% of meer antwoordt.';
+
+  @override
+  String get journeyMovesEmpty =>
+      'Verschijnt zodra je een truc op twee kaarten herkent.';
+
+  @override
+  String get journeyMissedEmpty =>
+      'Zes antwoorden in een tweede vak, en het wordt gemeten.';
+
+  @override
+  String get journeyFillsAsYouRead => 'Vult zich terwijl je leest.';
 
   @override
   String journeyOfN(int n) {
@@ -3478,9 +3495,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String journeyNewest(String name) {
     return 'Nieuwste: $name';
   }
-
-  @override
-  String get journeyNoneYet => 'Nog niets';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3575,9 +3589,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => 'nog niets met een datum';
-
-  @override
   String get journeyInPlace => 'Over de wereld';
 
   @override
@@ -3613,9 +3624,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => 'Midden-Oosten';
-
-  @override
-  String get journeyNoPlace => 'nog geen plek';
 
   @override
   String get journeyTopics => 'Onderwerpen';
@@ -6289,10 +6297,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet =>
-      'Zes antwoorden in een vak, en het wordt gemeten.';
-
-  @override
   String get journeyChangedMind => 'Van mening veranderd';
 
   @override
@@ -6393,6 +6397,35 @@ class AppLocalizationsNl extends AppLocalizations {
       other: '$n kaarten gelezen. Hier begint de reis.',
       one: 'Eén kaart gelezen. Hier begint de reis.',
       zero: 'Je eerste kaart wacht.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kaarten gelezen',
+      one: 'Eén kaart gelezen',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '$week deze week.',
+      one: 'één deze week.',
+      zero: 'deze week nog geen.',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kaarten gelezen, allemaal deze week.',
+      one: 'Tot nu toe één kaart gelezen.',
     );
     return '$_temp0';
   }

@@ -346,14 +346,39 @@ and when most are read. And how far it reaches: **in time** (from the
 oldest era a card read is set in to this year), **in place** (the regions
 of the world), **topics** (the strands inside the subjects) and **words**
 (the terms the bank uses on three cards or more, the three met last).
+A tile with nothing to show yet says, in one line, what will be there and
+how it comes, in place of a dash or a nought set large over an empty chart;
+a pair of tiles with nothing at all is left out, and so is a chapter left
+with none. The thirteen weeks of days wait until the record is longer than
+the two weeks the days in a row already show.
+
+**Review the week** ends the page: the cards first read this week, Monday
+on, played again full size in the viewer from the first, each card that
+asks asked again before it turns. Over its one button stand the first three
+of the week's questions; on the free plan the first five are gone over, and
+the rest of the week is behind Astute+, said under the button. With nothing
+read since Monday, a line says the week's cards come back there. What is
+answered in it is the reader's alone (`DeckViewerScreen.records` false):
+the back says how this answer went, and the record never hears of it, so a
+card's first answer, its place on the review ladder and when it is due back
+stand as they were. `recordAnswer` would not do: it drops a second answer
+to a card not yet due, and the back would show the first; and it would take
+one to a card that is due, or was never answered, as its real answer, out
+of turn. It replaced the week's questions listed under the week's headline,
+which asked nothing of anybody. That headline, when the week is told in
+cards read, counts them with the week past the first day: "32 cards read,
+9 this week."
 Once the day is done, the day as five squares to send sits at the foot (the
 finished day sends it too, on either plan).
 
 Everything is counted from what the app writes down, with a date where it
 has one (`JourneyRecord`, in `lib/state/journey_record.dart`):
 `readDays`, the cards first read each day, and `dayLog`, what each day came
-to — the score at its end, the seconds on its cards (a card counts for five
-minutes at most) and the cards read in each part of the day. Both travel in
+to — the score at its end, the seconds on its cards (a card of the day from
+coming up to being thrown, a card read in the viewer while it is in sight;
+five minutes at most a card) and the cards read in each part of the day.
+Time on a card read in Explore, a path, a book or the week's review used to
+count for nothing. Both travel in
 the snapshot: a card was first read on whichever phone read it first, and a
 day's counts are the larger of each. A phone that read before this was
 written down gets its days from what each day dealt (`deckHistory`), and the
@@ -1732,8 +1757,8 @@ lit while they run, the number in the streak's orange with its flame
 (`widgets/profile_top.dart`, `profileTopFor`, where the third top is kept for
 comparison).
 Lower down it keeps how well you know yourself: the level, the moves you keep
-missing, whether the gap is closing and the week in questions are all the
-journey's.
+missing, whether the gap is closing and the week to go over again are all
+the journey's.
 
 **Weeks kept.** Five days out of seven keeps a week, and the record counts
 the weeks in a row. The daily streak is the sharper number and the crueller

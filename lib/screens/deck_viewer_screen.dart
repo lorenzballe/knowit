@@ -41,6 +41,18 @@ class DeckViewerScreen extends StatefulWidget {
   /// answer until the reader commits, the way it did the first time.
   final bool answering;
 
+  /// False when the cards are answered again for the reader's own sake and
+  /// nothing else: the week gone over from the journey (Review the week).
+  /// Each card that asks is asked as [answering] asks it, its back says how
+  /// this answer went, and the answer is forgotten when the viewer closes.
+  /// The record never hears of it: a card's first answer stands, and so do
+  /// its place on the review ladder, when it comes due, the score and how
+  /// sure against how right. [AppState.recordAnswer] would not do: it drops
+  /// a second answer to a card not yet due, and the back then shows the
+  /// first; and it takes one to a card that is due, or was never answered,
+  /// as that card's real answer, out of turn.
+  final bool records;
+
   /// True when these are cards nobody dealt the reader — Explore's — so a
   /// card turned past, or the one open when the viewer closes, counts as
   /// read (see [AppState.markReadElsewhere]).
@@ -65,6 +77,7 @@ class DeckViewerScreen extends StatefulWidget {
     required this.title,
     this.initialIndex = 0,
     this.answering = false,
+    this.records = true,
     this.countsAsRead = false,
     this.source = 'viewer',
     this.of,
@@ -84,7 +97,10 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
   /// they have been read, and its first idea is never "again" the first
   /// time. Taken once, so a card read here does not turn "again" while it
   /// is still on the table.
-  late final Set<String> _again = widget.answering
+  ///
+  /// None in a deck answered only for the reader ([records] false): every
+  /// card in it was read before, and a mark on every card says nothing.
+  late final Set<String> _again = widget.answering && widget.records
       ? {
           for (final Pill p in widget.deck)
             if (widget.app.seenIds.contains(p.id) ||
@@ -92,6 +108,36 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
               p.id,
         }
       : const {};
+
+  /// What was answered here, by card, when the answers are not written
+  /// down ([records] false): the back of each card says how it went, until
+  /// the viewer closes or the deck starts again from the first.
+  final Map<String, Answer> _here = {};
+
+  /// The answer a card shows: the reader's own, from the record; or, in a
+  /// deck answered only for the reader, the one given here, if any — never
+  /// the first, which would turn the card over with its answer already in.
+  Answer? _answerFor(String id) =>
+      widget.records ? widget.app.answerFor(id) : _here[id];
+
+  void _answer(String id, String response, int? confidence, String? reason) {
+    if (!widget.records) {
+      setState(
+        () => _here[id] = Answer(
+          response,
+          confidence: confidence,
+          reason: reason,
+        ),
+      );
+      return;
+    }
+    widget.app.recordAnswer(
+      id,
+      response,
+      confidence: confidence,
+      reason: reason,
+    );
+  }
 
   /// Past the last card: the card that says the deck is done is on top.
   bool get _atEnd => _index >= widget.deck.length;
@@ -314,20 +360,18 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                             key: const ValueKey('deck-end'),
                             deck: widget.deck,
                             onClose: () => Navigator.of(context).maybePop(),
-                            onAgain: () => setState(() => _index = 0),
+                            // Round again from the first: asked afresh.
+                            onAgain: () => setState(() {
+                              _index = 0;
+                              _here.clear();
+                            }),
                           )
                         : null,
                     reviewIds: _again,
                     answering: widget.answering,
-                    answerFor: widget.app.answerFor,
+                    answerFor: _answerFor,
                     onReact: widget.app.react,
-                    onAnswer: (id, response, confidence, reason) =>
-                        widget.app.recordAnswer(
-                          id,
-                          response,
-                          confidence: confidence,
-                          reason: reason,
-                        ),
+                    onAnswer: _answer,
                     isSaved: widget.app.isSaved,
                     onSave: (pill) {
                       widget.app.toggleSaved(pill.id);
@@ -340,12 +384,15 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                     },
                     onShare: (pill) => showShareSheet(context, pill),
                     skillOf: (pill) => skillMarkOf(pill, widget.app.skills),
-                    // The score the answer moved, beside its verdict.
-                    moveOf: (pill) => todayMoveOf(
-                      widget.app,
-                      pill,
-                      skillMarkOf(pill, widget.app.skills),
-                    ),
+                    // The score the answer moved, beside its verdict: none,
+                    // for an answer the record never hears of.
+                    moveOf: widget.records
+                        ? (pill) => todayMoveOf(
+                            widget.app,
+                            pill,
+                            skillMarkOf(pill, widget.app.skills),
+                          )
+                        : null,
                     onSkill: (pill, skill) => showSkillMarkSheet(
                       context,
                       widget.app,

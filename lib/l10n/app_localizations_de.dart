@@ -3009,16 +3009,29 @@ class AppLocalizationsDe extends AppLocalizations {
   String get themePuzzlesLine => 'Rätsel für einen Stift und eine Minute';
 
   @override
-  String get weekRecapCaps => 'DIESE WOCHE HAST DU DICH GEFRAGT';
-
-  @override
-  String get weekRecapLine =>
-      'Die Fragen, die deine Karten dir hinterlassen haben';
-
-  @override
   String weekRecapMore(int n) {
-    return '$n weitere aus deiner Woche mit Plus';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n weitere aus deiner Woche mit Astute+',
+      one: '1 weitere aus deiner Woche mit Astute+',
+    );
+    return '$_temp0';
   }
+
+  @override
+  String get weekReviewTitle => 'Die Woche wiederholen';
+
+  @override
+  String get weekReviewLine =>
+      'Die Fragen deiner Karten aus dieser Woche. Beantworte sie noch einmal: So bleiben sie.';
+
+  @override
+  String get weekReviewGo => 'Wiederholen';
+
+  @override
+  String get weekReviewNone =>
+      'Die Karten, die du diese Woche liest, kommen hier zum Wiederholen zurück.';
 
   @override
   String get plusInTheApp =>
@@ -3440,9 +3453,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => 'Gezählt ab heute';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return 'Punkte daneben, anfangs $was';
   }
@@ -3461,10 +3471,22 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => 'Noch keine Antwort mit 80 % oder mehr';
+  String get journeyMovesTitle => 'Erkannte Muster';
 
   @override
-  String get journeyMovesTitle => 'Erkannte Muster';
+  String get journeySureEmpty =>
+      'Erscheint, sobald du mit 80 % oder mehr antwortest.';
+
+  @override
+  String get journeyMovesEmpty =>
+      'Erscheint, sobald du ein Muster auf zwei Karten erkennst.';
+
+  @override
+  String get journeyMissedEmpty =>
+      'Sechs Antworten in einem zweiten Fach, dann wird es gemessen.';
+
+  @override
+  String get journeyFillsAsYouRead => 'Füllt sich, während du liest.';
 
   @override
   String journeyOfN(int n) {
@@ -3475,9 +3497,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String journeyNewest(String name) {
     return 'Neuestes: $name';
   }
-
-  @override
-  String get journeyNoneYet => 'Noch keine';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3572,9 +3591,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => 'noch nichts mit Datum';
-
-  @override
   String get journeyInPlace => 'Rund um die Welt';
 
   @override
@@ -3610,9 +3626,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => 'Nahost';
-
-  @override
-  String get journeyNoPlace => 'noch kein Ort';
 
   @override
   String get journeyTopics => 'Themen';
@@ -6290,10 +6303,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet =>
-      'Sechs Antworten in einem Fach, dann wird es gemessen.';
-
-  @override
   String get journeyChangedMind => 'Meinung geändert';
 
   @override
@@ -6394,6 +6403,35 @@ class AppLocalizationsDe extends AppLocalizations {
       other: '$n Karten gelesen. Hier beginnt die Reise.',
       one: 'Eine Karte gelesen. Hier beginnt die Reise.',
       zero: 'Deine erste Karte wartet.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n Karten gelesen',
+      one: 'Eine Karte gelesen',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '$week diese Woche.',
+      one: 'eine diese Woche.',
+      zero: 'diese Woche noch keine.',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n Karten gelesen, alle diese Woche.',
+      one: 'Bisher eine Karte gelesen.',
     );
     return '$_temp0';
   }

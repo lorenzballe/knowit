@@ -2887,15 +2887,21 @@ class AppLocalizationsJa extends AppLocalizations {
   String get themePuzzlesLine => 'ペンと1分で解ける謎';
 
   @override
-  String get weekRecapCaps => '今週あなたが自分に問いかけたこと';
-
-  @override
-  String get weekRecapLine => 'カードが残してくれた問い';
-
-  @override
   String weekRecapMore(int n) {
-    return 'Plusで今週のあと$n件';
+    return 'Astute+で今週のカードをあと$n枚';
   }
+
+  @override
+  String get weekReviewTitle => '今週の復習';
+
+  @override
+  String get weekReviewLine => '今週のカードの問いです。もう一度答えてみましょう。そうして記憶に残ります。';
+
+  @override
+  String get weekReviewGo => '復習する';
+
+  @override
+  String get weekReviewNone => '今週読んだカードは、ここで復習できます。';
 
   @override
   String get plusInTheApp =>
@@ -3296,9 +3302,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => '今日から計測';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return 'ポイントのずれ、最初は$was';
   }
@@ -3317,10 +3320,19 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => '80%以上の回答はまだなし';
+  String get journeyMovesTitle => '見抜ける型';
 
   @override
-  String get journeyMovesTitle => '見抜ける型';
+  String get journeySureEmpty => '80%以上の確信で答えると表示されます。';
+
+  @override
+  String get journeyMovesEmpty => '2枚のカードで型を見抜くと表示されます。';
+
+  @override
+  String get journeyMissedEmpty => '2つ目の分野で6回答えると測れます。';
+
+  @override
+  String get journeyFillsAsYouRead => '読むほどに埋まっていきます。';
 
   @override
   String journeyOfN(int n) {
@@ -3331,9 +3343,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String journeyNewest(String name) {
     return '最新：$name';
   }
-
-  @override
-  String get journeyNoneYet => 'まだありません';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3419,9 +3428,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => '年代のわかるカードはまだなし';
-
-  @override
   String get journeyInPlace => '地域';
 
   @override
@@ -3452,9 +3458,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => '中東';
-
-  @override
-  String get journeyNoPlace => 'まだ場所なし';
 
   @override
   String get journeyTopics => 'トピック';
@@ -6009,9 +6012,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet => '1つの分野で6回答えると測れます。';
-
-  @override
   String get journeyChangedMind => '考えが変わった';
 
   @override
@@ -6112,6 +6112,28 @@ class AppLocalizationsJa extends AppLocalizations {
       locale: localeName,
       other: '$n枚のカードを読みました。ここから始まります。',
       zero: '最初のカードが待っています。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: 'これまでに$n枚、今週は$week枚読みました。',
+      zero: 'これまでに$n枚読みました。今週はまだです。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n枚読みました。すべて今週です。',
+      one: 'これまでに1枚読みました。',
     );
     return '$_temp0';
   }

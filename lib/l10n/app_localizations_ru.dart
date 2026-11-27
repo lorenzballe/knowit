@@ -3107,15 +3107,23 @@ class AppLocalizationsRu extends AppLocalizations {
   String get themePuzzlesLine => 'Задачки на ручку и минуту';
 
   @override
-  String get weekRecapCaps => 'НА ЭТОЙ НЕДЕЛЕ ТЫ СПРАШИВАЛ СЕБЯ';
-
-  @override
-  String get weekRecapLine => 'Вопросы, которые оставили тебе карточки';
-
-  @override
   String weekRecapMore(int n) {
-    return 'Ещё $n за неделю с Plus';
+    return 'Ещё $n за неделю с Astute+';
   }
+
+  @override
+  String get weekReviewTitle => 'Повтори неделю';
+
+  @override
+  String get weekReviewLine =>
+      'Вопросы твоих карточек за эту неделю. Ответь на них ещё раз: так они запоминаются.';
+
+  @override
+  String get weekReviewGo => 'Повторить';
+
+  @override
+  String get weekReviewNone =>
+      'Карточки, которые ты прочитаешь на этой неделе, вернутся сюда для повторения.';
 
   @override
   String get plusInTheApp =>
@@ -3563,9 +3571,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => 'Отсчёт с сегодняшнего дня';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return 'пунктов отклонения, было $was';
   }
@@ -3584,10 +3589,21 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => 'Пока нет ответов на 80% и выше';
+  String get journeyMovesTitle => 'Замеченные приёмы';
 
   @override
-  String get journeyMovesTitle => 'Замеченные приёмы';
+  String get journeySureEmpty => 'Появится, когда ответишь на 80% и выше.';
+
+  @override
+  String get journeyMovesEmpty =>
+      'Появится, когда заметишь приём на двух карточках.';
+
+  @override
+  String get journeyMissedEmpty =>
+      'Шесть ответов по второй теме — и она измерена.';
+
+  @override
+  String get journeyFillsAsYouRead => 'Заполняется по мере чтения.';
 
   @override
   String journeyOfN(int n) {
@@ -3598,9 +3614,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String journeyNewest(String name) {
     return 'Последний: $name';
   }
-
-  @override
-  String get journeyNoneYet => 'Пока нет';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3711,9 +3724,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => 'пока без дат';
-
-  @override
   String get journeyInPlace => 'По миру';
 
   @override
@@ -3751,9 +3761,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => 'Ближний Восток';
-
-  @override
-  String get journeyNoPlace => 'пока нигде';
 
   @override
   String get journeyTopics => 'Подтемы';
@@ -6510,9 +6517,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet => 'Шесть ответов по теме — и она измерена.';
-
-  @override
   String get journeyChangedMind => 'Смена мнения';
 
   @override
@@ -6624,6 +6628,38 @@ class AppLocalizationsRu extends AppLocalizations {
       few: '$n карточки прочитаны. Путь начинается здесь.',
       one: '$n карточка прочитана. Путь начинается здесь.',
       zero: 'Твоя первая карточка ждёт.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки прочитано',
+      many: '$n карточек прочитано',
+      few: '$n карточки прочитаны',
+      one: '$n карточка прочитана',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '$week на этой неделе.',
+      zero: 'на этой неделе пока ни одной.',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки прочитано, все на этой неделе.',
+      many: '$n карточек прочитано, все на этой неделе.',
+      few: '$n карточки прочитаны, все на этой неделе.',
+      one: '$n карточка прочитана, все на этой неделе.',
     );
     return '$_temp0';
   }

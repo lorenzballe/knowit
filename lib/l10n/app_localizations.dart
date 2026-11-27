@@ -4278,23 +4278,35 @@ abstract class AppLocalizations {
   /// **'Puzzles you can solve with a pen and a minute'**
   String get themePuzzlesLine;
 
-  /// No description provided for @weekRecapCaps.
+  /// Your journey, Review the week, on the free plan: under its button, how many of the week's cards are past the first five, and the way to Astute+.
   ///
   /// In en, this message translates to:
-  /// **'THIS WEEK YOU ASKED YOURSELF'**
-  String get weekRecapCaps;
-
-  /// No description provided for @weekRecapLine.
-  ///
-  /// In en, this message translates to:
-  /// **'The questions your cards left you with'**
-  String get weekRecapLine;
-
-  /// No description provided for @weekRecapMore.
-  ///
-  /// In en, this message translates to:
-  /// **'{n} more from your week with Plus'**
+  /// **'{n, plural, =1{1 more from your week with Astute+} other{{n} more from your week with Astute+}}'**
   String weekRecapMore(int n);
+
+  /// Your journey: the name of its last chapter, set in capitals after the chapter's number. The week's cards gone over again, each card that asks asked once more.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the week'**
+  String get weekReviewTitle;
+
+  /// Your journey, Review the week: the line under the chapter's name, over two or three of the week's questions.
+  ///
+  /// In en, this message translates to:
+  /// **'The questions from your cards this week. Answer them again: that\'s how they stay.'**
+  String get weekReviewLine;
+
+  /// Your journey, Review the week: the button that plays the week's cards again, full size, from the first.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get weekReviewGo;
+
+  /// Your journey, Review the week, before any card has been read this week (Monday on).
+  ///
+  /// In en, this message translates to:
+  /// **'The cards you read this week come back here, to go over again.'**
+  String get weekReviewNone;
 
   /// No description provided for @plusInTheApp.
   ///
@@ -4830,12 +4842,6 @@ abstract class AppLocalizations {
   /// **'{m} min this week'**
   String journeyMinThisWeek(int m);
 
-  /// Under a dash: the app has started timing the cards today.
-  ///
-  /// In en, this message translates to:
-  /// **'Counted from today'**
-  String get journeyTimedFromToday;
-
   /// Beside the points off: what they were at the start.
   ///
   /// In en, this message translates to:
@@ -4860,17 +4866,35 @@ abstract class AppLocalizations {
   /// **'From {v} in {month}'**
   String journeyFromIn(String v, String month);
 
-  /// Under a dash, before any answer at 80% sure or more.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing said at 80% or more yet'**
-  String get journeySureNone;
-
   /// Tile title: the reasoning moves the reader has down.
   ///
   /// In en, this message translates to:
   /// **'Moves you can spot'**
   String get journeyMovesTitle;
+
+  /// Your journey, the tile Right when sure: in place of its figure, before any answer said 80% sure or more.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows once you answer 80% sure or more.'**
+  String get journeySureEmpty;
+
+  /// Your journey, the tile Moves you can spot: in place of its figure, before any move counts as spotted (met on two cards or more, right on at least half).
+  ///
+  /// In en, this message translates to:
+  /// **'Shows once you spot a move on two cards.'**
+  String get journeyMovesEmpty;
+
+  /// Your journey, the tile Most missed: in place of a subject, while only one subject has six answers.
+  ///
+  /// In en, this message translates to:
+  /// **'Six answers in a second subject, and it is measured.'**
+  String get journeyMissedEmpty;
+
+  /// Your journey: in place of the figure on a tile with nothing to show yet (reading time, in time, in place, topics, words).
+  ///
+  /// In en, this message translates to:
+  /// **'Fills in as you read.'**
+  String get journeyFillsAsYouRead;
 
   /// Beside the moves: out of how many there are.
   ///
@@ -4883,12 +4907,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Newest: {name}'**
   String journeyNewest(String name);
-
-  /// Under the moves, before the first.
-  ///
-  /// In en, this message translates to:
-  /// **'None yet'**
-  String get journeyNoneYet;
 
   /// Beside the big number of cards held: no number in it.
   ///
@@ -4992,12 +5010,6 @@ abstract class AppLocalizations {
   /// **'2000'**
   String get journeyEraRecent;
 
-  /// Under a dash in the In time tile.
-  ///
-  /// In en, this message translates to:
-  /// **'nothing dated yet'**
-  String get journeyNothingDated;
-
   /// Tile title: where in the world the cards read are set.
   ///
   /// In en, this message translates to:
@@ -5051,12 +5063,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'the Middle East'**
   String get journeyRegionMiddleEast;
-
-  /// Under a dash in the In place tile.
-  ///
-  /// In en, this message translates to:
-  /// **'no place yet'**
-  String get journeyNoPlace;
 
   /// Tile title: the topics inside the subjects that the reader has met.
   ///
@@ -8748,12 +8754,6 @@ abstract class AppLocalizations {
   /// **'{pct} right'**
   String journeyRightShare(String pct);
 
-  /// Your journey: shown under the two subject tiles before any subject has six answers.
-  ///
-  /// In en, this message translates to:
-  /// **'Six answers in a subject, and it is measured.'**
-  String get journeySubjectsNotYet;
-
   /// Your journey: the label over how many cards changed the reader's mind, in the reader's own word on cards that ask what they did for them.
   ///
   /// In en, this message translates to:
@@ -8885,6 +8885,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =0{Your first card is waiting.} =1{One card read. The journey starts here.} other{{n} cards read. The journey starts here.}}'**
   String storyHeadlineRead(int n);
+
+  /// Your journey, This week: the headline past the reader's first day, when the week is told in cards read: every card read so far, then those first read this week (Monday on).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One card read} other{{n} cards read}}, {week, plural, =0{none yet this week.} =1{one this week.} other{{week} this week.}}'**
+  String storyHeadlineReadWeek(int n, int week);
+
+  /// Your journey, This week: the headline past the reader's first day, when every card they have read was read this week (Monday on).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One card read so far.} other{{n} cards read, all this week.}}'**
+  String storyHeadlineReadAllWeek(int n);
 
   /// Your journey as a story (the version on trial under the tiles): storySaidRight
   ///

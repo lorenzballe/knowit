@@ -2885,15 +2885,21 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themePuzzlesLine => '一支笔一分钟就能解的谜';
 
   @override
-  String get weekRecapCaps => '这周你问过自己';
-
-  @override
-  String get weekRecapLine => '你的卡片留给你的问题';
-
-  @override
   String weekRecapMore(int n) {
-    return '用 Plus 再看本周 $n 条';
+    return '用 Astute+ 再看本周 $n 张';
   }
+
+  @override
+  String get weekReviewTitle => '复习本周';
+
+  @override
+  String get weekReviewLine => '本周卡片里的问题。再答一遍：这样才能记住。';
+
+  @override
+  String get weekReviewGo => '复习';
+
+  @override
+  String get weekReviewNone => '本周读过的卡片会回到这里，供你复习。';
 
   @override
   String get plusInTheApp =>
@@ -3297,9 +3303,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => '从今天开始计时';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return '分偏差，起初 $was';
   }
@@ -3318,10 +3321,19 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => '还没有 80% 及以上的回答';
+  String get journeyMovesTitle => '能识破的套路';
 
   @override
-  String get journeyMovesTitle => '能识破的套路';
+  String get journeySureEmpty => '当你以 80% 及以上的把握作答后显示。';
+
+  @override
+  String get journeyMovesEmpty => '在两张卡片上识破同一个套路后显示。';
+
+  @override
+  String get journeyMissedEmpty => '第二个科目答满六题即可测出。';
+
+  @override
+  String get journeyFillsAsYouRead => '读得越多，这里越满。';
 
   @override
   String journeyOfN(int n) {
@@ -3332,9 +3344,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String journeyNewest(String name) {
     return '最新：$name';
   }
-
-  @override
-  String get journeyNoneYet => '还没有';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3420,9 +3429,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => '还没有带年代的卡片';
-
-  @override
   String get journeyInPlace => '地域';
 
   @override
@@ -3457,9 +3463,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => '中东';
-
-  @override
-  String get journeyNoPlace => '还没有地点';
 
   @override
   String get journeyTopics => '话题';
@@ -6000,9 +6003,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet => '一个科目答满六题即可测出。';
-
-  @override
   String get journeyChangedMind => '改变了看法';
 
   @override
@@ -6102,6 +6102,28 @@ class AppLocalizationsZh extends AppLocalizations {
       locale: localeName,
       other: '已读 $n 张卡片。旅程从这里开始。',
       zero: '你的第一张卡片在等你。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '已读 $n 张卡片，本周 $week 张。',
+      zero: '已读 $n 张卡片，本周还没有。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已读 $n 张卡片，全在本周。',
+      one: '目前已读 1 张卡片。',
     );
     return '$_temp0';
   }
