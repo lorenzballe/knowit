@@ -22,11 +22,11 @@ Questo file serve a riprendere il lavoro dopo un'interruzione: chi riparte legge
 - [x] 0. Preparazione (questo file, driver)
 - [x] 1. Scheda Google Play
 - [x] 2. Sito
-- [ ] 3. App da nuovo utente (en-US, it-IT, giorno 2 e 3, stati limite)
-- [ ] 4. Inventario dal codice
-- [ ] 5. Dati reali da PostHog
-- [ ] 6. Strategia
-- [ ] 7. Report, pagina con screenshot, pulizia delle attività programmate
+- [x] 3. App da nuovo utente (en-US, it-IT, giorno 2 e 3, stati limite)
+- [x] 4. Inventario dal codice
+- [x] 5. Dati reali da PostHog
+- [x] 6. Strategia
+- [x] 7. Report, pagina con screenshot, pulizia delle attività programmate
 
 ## Appunti per fase
 
@@ -54,5 +54,7 @@ Questo file serve a riprendere il lavoro dopo un'interruzione: chi riparte legge
 - Supporto su indirizzo Gmail (thebalecompany@gmail.com). /account è un segnaposto "Not connected yet" (non linkato).
 - Lighthouse non eseguito (comando rifiutato dal controllo permessi): tempi e accessibilità misurati con Playwright + axe.
 
-### 3. App (in corso)
+### 3–7. Completate il 27/11/2026
+
+L'analisi è finita. Questo repository è pubblico: per questo il report completo (app schermata per schermata, dati d'uso, difetti, strategia) non è qui ma in una pagina privata consegnata al proprietario in chat. Qui restano solo gli appunti su ciò che chiunque può vedere da fuori (scheda Play e sito) e gli script usati.
 
