@@ -217,7 +217,7 @@ const Turn = {
     const ok = guess >= 1 && guess <= 2;
     Kit.answer({choice: `${pct(guess)} of bone mass a month`, correct: ok, sure: p});
     sure.grade(ok, p, `${pct(guess)} a month, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back ----------

@@ -194,7 +194,7 @@ const Turn = {
     const ok = tons >= 2000 && tons <= 4000;
     Kit.answer({choice: `${fmt(tons)} t`, correct: ok, sure: pct});
     sure.grade(ok, pct, `${fmt(tons)} t, ${ok ? 'close' : 'off'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

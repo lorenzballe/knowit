@@ -161,7 +161,7 @@ const Turn = {
     Kit.answer({choice: `${n} kg`, correct: ok, sure: pct});
     chips.forEach(c => c.disabled = true); go.disabled = true;
     say.textContent = `Locked in: ${n} kg, ${pct}% sure.`;
-    setTimeout(() => Turn.over(), 600);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back: the same slab, as it really went ----------

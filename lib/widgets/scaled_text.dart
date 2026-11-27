@@ -42,7 +42,10 @@ class ScaledText extends StatelessWidget {
   /// Measured at a text size of one, the size chosen fitted the box only
   /// for a reader who never touched the setting: a step or two up, the
   /// question was drawn larger than it had been measured and was cut off
-  /// in its own box.
+  /// in its own box. Measured without the style the words inherit
+  /// ([inherited]), words in a style that leaves its spacing to the page
+  /// were drawn wider than measured, ran a line longer, and were cut the
+  /// same way.
   bool _fits(
     double size,
     double width,
@@ -50,8 +53,9 @@ class ScaledText extends StatelessWidget {
     TextScaler scaler,
     TextDirection direction,
     String longest,
+    TextStyle inherited,
   ) {
-    final TextStyle style = styleFor(size);
+    final TextStyle style = inherited.merge(styleFor(size));
     final painter = TextPainter(
       text: TextSpan(text: text, style: style),
       textDirection: direction,
@@ -74,12 +78,12 @@ class ScaledText extends StatelessWidget {
   }
 
   /// The longest word, as it sets: the one a narrow box breaks first.
-  String _longestWord(TextDirection direction) {
+  String _longestWord(TextDirection direction, TextStyle inherited) {
     String longest = '';
     double widest = 0;
     for (final String w in text.split(RegExp(r'\s+'))) {
       final painter = TextPainter(
-        text: TextSpan(text: w, style: styleFor(max)),
+        text: TextSpan(text: w, style: inherited.merge(styleFor(max))),
         textDirection: direction,
         maxLines: 1,
       )..layout();
@@ -104,12 +108,13 @@ class ScaledText extends StatelessWidget {
     required double width,
     required TextScaler scaler,
     required TextDirection direction,
+    TextStyle inherited = const TextStyle(),
   }) => ScaledText(
     text: text,
     styleFor: styleFor,
     min: min,
     max: max,
-  )._fit(width, double.maxFinite, scaler, direction);
+  )._fit(width, double.maxFinite, scaler, direction, inherited);
 
   /// Largest size that still fits, to within a tenth of a point.
   ///
@@ -122,6 +127,7 @@ class ScaledText extends StatelessWidget {
     double height,
     TextScaler scaler,
     TextDirection direction,
+    TextStyle inherited,
   ) {
     if (!width.isFinite || !height.isFinite || width <= 0 || height <= 0) {
       return min;
@@ -130,9 +136,9 @@ class ScaledText extends StatelessWidget {
     // quarters of it: a long question at the largest text sizes did not fit
     // even at [min] and was cut, which no size should buy.
     final double floor = math.min(min, min * min / scaler.scale(min)) * 0.75;
-    final String longest = _longestWord(direction);
+    final String longest = _longestWord(direction, inherited);
     bool fits(double size) =>
-        _fits(size, width, height, scaler, direction, longest);
+        _fits(size, width, height, scaler, direction, longest, inherited);
     if (fits(max)) return max;
     var lo = floor;
     var hi = max;
@@ -156,6 +162,7 @@ class ScaledText extends StatelessWidget {
           constraints.maxHeight,
           MediaQuery.textScalerOf(context),
           Directionality.of(context),
+          DefaultTextStyle.of(context).style,
         );
         // Measured against the bounded box, then rendered in a scroll view:
         // when it fits there is nothing to scroll, and when even [min] was

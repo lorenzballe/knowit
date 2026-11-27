@@ -2199,7 +2199,7 @@ void main() {
     }
     await tester.tap(_keyed('tab-Profile').first);
     await _settle(tester, 16);
-    final Finder plans = find.text('VEDI I PIANI');
+    final Finder plans = find.text('Vedi i piani');
     if (_has(plans)) {
       await Scrollable.ensureVisible(
         tester.element(plans.first),

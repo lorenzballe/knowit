@@ -20,7 +20,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
-import 'package:flutter/services.dart';
 
 import '../../analytics.dart';
 import '../../data/dated_lines.dart';
@@ -31,6 +30,7 @@ import '../../theme.dart';
 import '../../utils/share_link.dart';
 import 'challenge_kit.dart';
 import 'challenge_screen.dart';
+import 'game_feel.dart';
 import 'challenges.dart';
 
 /// What the three games share: the day's deal, the round in play, and the
@@ -322,7 +322,7 @@ class _InOrderPlayState extends State<_InOrderPlay> {
 
   void _tap(DatedLine d) {
     if (_told) return;
-    HapticFeedback.selectionClick();
+    GameFeel.tick();
     setState(() {
       if (!_picks.remove(d.pill.id)) _picks.add(d.pill.id);
     });
@@ -332,7 +332,7 @@ class _InOrderPlayState extends State<_InOrderPlay> {
     if (_told || _picks.length != _game.lines.length) return;
     setState(() => _told = true);
     _game.answer([..._picks]);
-    HapticFeedback.lightImpact();
+    GameFeel.verdict(_game.right == _game.lines.length);
     widget.kit.say(context.l10n.nOfM(_game.right, _game.lines.length));
     widget.kit.finish(after: const Duration(milliseconds: 1900));
   }
@@ -665,7 +665,6 @@ class _WhatYearPlayState extends State<_WhatYearPlay> {
 
   void _lock() {
     if (_told) return;
-    HapticFeedback.mediumImpact();
     setState(() => _told = true);
     _game.answer(_year);
     final int pts = _game.pointsAt(_at);
@@ -673,7 +672,7 @@ class _WhatYearPlayState extends State<_WhatYearPlay> {
     widget.kit.say(
       '${_game.lines[_at].year}. ${l.whatYearSaid('$_year', pts)}',
     );
-    if (pts >= 5) HapticFeedback.lightImpact();
+    GameFeel.verdict(pts >= 5);
   }
 
   void _next() {
@@ -681,7 +680,7 @@ class _WhatYearPlayState extends State<_WhatYearPlay> {
       widget.kit.finish();
       return;
     }
-    HapticFeedback.selectionClick();
+    GameFeel.tick();
     setState(() {
       _at++;
       _told = false;
@@ -811,7 +810,7 @@ class _WhatYearPlayState extends State<_WhatYearPlay> {
                     onTap: _told
                         ? null
                         : () {
-                            HapticFeedback.selectionClick();
+                            GameFeel.tick();
                             _set(_year + by);
                           },
                   ),
@@ -891,7 +890,7 @@ class _YearDialState extends State<YearDial>
     setState(() => _at = held);
     final int now = held.round();
     if (now != was) {
-      if (now % 10 == 0) HapticFeedback.selectionClick();
+      if (now % 10 == 0) GameFeel.tick();
       widget.onChanged?.call(now);
     }
   }
@@ -1133,8 +1132,8 @@ class BeforeAfterChallenge extends TimeChallenge {
                 : saidAt(i) == null
                 ? null
                 : saidAt(i)!
-                ? l.beforeAfterSaidAfter('${lines[i - 1].year}')
-                : l.beforeAfterSaidBefore('${lines[i - 1].year}'),
+                ? l.elided(l.beforeAfterSaidAfter('${lines[i - 1].year}'))
+                : l.elided(l.beforeAfterSaidBefore('${lines[i - 1].year}')),
             semantics: '${lines[i].year}. ${lines[i].statement}',
             onTap: () => onOpen(pills, lines[i].pill),
           ),
@@ -1183,11 +1182,7 @@ class _BeforeAfterPlayState extends State<_BeforeAfterPlay> {
     if (_told) return;
     _game.answer(after);
     final bool right = _game.rightAt(_at) ?? false;
-    if (right) {
-      HapticFeedback.lightImpact();
-    } else {
-      HapticFeedback.heavyImpact();
-    }
+    GameFeel.verdict(right);
     final l = context.l10n;
     widget.kit.say(
       '${right ? l.gameRight : l.gameWrong}. ${_game.lines[_at].year}.',
@@ -1229,9 +1224,13 @@ class _BeforeAfterPlayState extends State<_BeforeAfterPlay> {
       // The question, naming the year above; once said, what was so.
       status: GameStatus(
         switch (right) {
-          null => l.beforeAfterAsk('${above.year}'),
-          true => l.beforeAfterRight(side, '${here.year}', '${above.year}'),
-          false => l.beforeAfterWrong(side, '${here.year}', '${above.year}'),
+          null => l.elided(l.beforeAfterAsk('${above.year}')),
+          true => l.elided(
+            l.beforeAfterRight(side, '${here.year}', '${above.year}'),
+          ),
+          false => l.elided(
+            l.beforeAfterWrong(side, '${here.year}', '${above.year}'),
+          ),
         },
         key: const ValueKey('before-after-ask'),
         verdict: right,

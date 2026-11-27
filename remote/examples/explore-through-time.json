@@ -5,7 +5,7 @@
       "block": "through-time",
       "subtitle": {
         "en": "From the first light to this year. Drag to travel",
-        "it": "Dalla prima luce a quest'anno. Trascina per viaggiare"
+        "it": "Dalla prima luce a quest’anno. Trascina per viaggiare"
       },
       "stop": "asteroid",
       "stops": [
@@ -26,7 +26,7 @@
         {
           "id": "asteroid",
           "ago": 66000000,
-          "label": {"en": "The asteroid", "it": "L'asteroide"},
+          "label": {"en": "The asteroid", "it": "L’asteroide"},
           "when": {"en": "66 million years ago", "it": "66 milioni di anni fa"},
           "source": {"ids": ["nature-dinosaurs-2", "nature-dinosaurs-1"]}
         },

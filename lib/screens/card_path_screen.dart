@@ -81,7 +81,10 @@ class CardPathScreen extends StatelessWidget {
       name: 'path page',
       child: Scaffold(
         backgroundColor: context.p.surface,
+        // Not under the status bar: the page runs on under it, and goes
+        // soft and dark there ([QuickReturn]).
         body: SafeArea(
+          top: false,
           child: ListenableBuilder(
             listenable: app,
             builder: (context, _) => _page(context),
@@ -157,6 +160,8 @@ class CardPathScreen extends StatelessWidget {
       );
     }
 
+    // The status bar's room, which the page runs on under.
+    final double top = MediaQuery.paddingOf(context).top;
     // The way on stays in sight at the foot, the ten scrolling above it.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -168,8 +173,9 @@ class CardPathScreen extends StatelessWidget {
         // a native button is drawn away from its place.
         Expanded(
           child: QuickReturn(
+            clip: false,
             header: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
+              padding: EdgeInsets.fromLTRB(20, top + 8, 20, 4),
               child: SizedBox(
                 height: 44,
                 child: Row(
@@ -195,30 +201,34 @@ class CardPathScreen extends StatelessWidget {
                 ),
               ),
             ),
-            child: ListView(
-              // Under the way back and its line, as tall as they stand.
-              padding: const EdgeInsets.fromLTRB(20, 8 + 44 + 4 + 12, 20, 20),
-              children: [
-                _Head(path: path, style: style, read: read),
-                const SizedBox(height: 14),
-                for (int i = 0; i < path.cards.length; i++)
-                  _Row(
-                    key: ValueKey('path-card-$i'),
-                    index: i,
-                    pill: path.cards[i],
-                    style: style,
-                    read: read[i],
-                    open: open(i),
-                    next: i == next,
-                    free: !plus && i < kPathFree,
-                    onTap: () => _read(context, i),
-                  ),
-                // The theme goes on: the next part, from here on either plan.
-                if (deeper != null && (next != null || !plus)) ...[
-                  const SizedBox(height: 12),
-                  _Deeper(app: app, path: deeper, style: style),
+            child: MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: ListView(
+                // Under the way back and its line, as tall as they stand.
+                padding: EdgeInsets.fromLTRB(20, top + 8 + 44 + 4 + 12, 20, 20),
+                children: [
+                  _Head(path: path, style: style, read: read),
+                  const SizedBox(height: 14),
+                  for (int i = 0; i < path.cards.length; i++)
+                    _Row(
+                      key: ValueKey('path-card-$i'),
+                      index: i,
+                      pill: path.cards[i],
+                      style: style,
+                      read: read[i],
+                      open: open(i),
+                      next: i == next,
+                      free: !plus && i < kPathFree,
+                      onTap: () => _read(context, i),
+                    ),
+                  // The theme goes on: the next part, from here on either plan.
+                  if (deeper != null && (next != null || !plus)) ...[
+                    const SizedBox(height: 12),
+                    _Deeper(app: app, path: deeper, style: style),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),

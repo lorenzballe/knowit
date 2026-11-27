@@ -14,6 +14,7 @@ import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart' show LearnLook;
 import '../state/journey_record.dart';
 import '../state/progress.dart';
 import '../theme.dart';
@@ -34,13 +35,60 @@ import '../widgets/count_since.dart';
 import '../widgets/premium.dart';
 import '../widgets/quick_return.dart';
 import '../widgets/area_marks.dart' show goalName;
+import '../widgets/learn_looks.dart';
 import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/move_words.dart';
 import '../widgets/skill_score.dart' show scoreUp, signedNumber;
-import '../widgets/top_edge.dart';
 import '../widgets/training.dart';
 
 part 'journey_story.dart';
+
+/// The journey's first chapter, as What to learn's look has it
+/// (DebugLooks.learn): as it ships, Your training, the Astute score and the
+/// skills picked with theirs; in A, the score alone, under its own name; in
+/// B, the score and the reader's aim, in words; in C, the score and the
+/// skills as the reader's answers rank them.
+Widget _learnChapter(BuildContext context, AppState app, int n) {
+  final l = context.l10n;
+  return switch (learnLook) {
+    LearnLook.today => _Chapter(
+      n: n,
+      title: l.trainingTitle,
+      trailing: TrainingChapter.change(context, app),
+      child: TrainingChapter(app: app),
+    ),
+    LearnLook.score => _Chapter(
+      n: n,
+      title: l.scoreTitle,
+      child: TrainingChapter(app: app, skills: false, label: false),
+    ),
+    LearnLook.aim => _Chapter(
+      n: n,
+      title: l.trainingTitle,
+      trailing: AimPanel.change(context, app),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TrainingChapter(app: app, skills: false),
+          const SizedBox(height: 8),
+          AimPanel(app: app),
+        ],
+      ),
+    ),
+    LearnLook.profile => _Chapter(
+      n: n,
+      title: l.trainingTitle,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TrainingChapter(app: app, skills: false),
+          const SizedBox(height: 8),
+          StrengthsPanel(app: app),
+        ],
+      ),
+    ),
+  };
+}
 
 /// Your journey, as artboard 137a: tiles, two to a row.
 ///
@@ -49,7 +97,7 @@ part 'journey_story.dart';
 /// most missed, what has stayed, how far the reading reaches in time, in
 /// place, in topics and in words, how sure against how right, the moves,
 /// the days in a row, the time, the days, what the reading is worth and how
-/// hard; and the story so far.
+/// hard; the story so far; and, last, the week to go over again.
 ///
 /// Everything on it is counted from what the app writes down, with a date
 /// where it has one ([JourneyRecord]). What it never wrote down is not
@@ -119,6 +167,44 @@ class _JourneyScreenState extends State<JourneyScreen> {
     // the page starts under it and runs on under it once scrolled.
     final EdgeInsets safe = MediaQuery.paddingOf(context);
     final double top = math.max(safe.top, 12);
+    final List<Pill> week = weekCards(app, record);
+
+    // The tiles of each chapter of numbers. A tile with nothing to show yet
+    // says, in one calm line, what will be there and how it comes; a pair of
+    // them with nothing at all is left out, and so is a chapter left with
+    // no tile, until there is something to say. A reader's first day used
+    // to be a page of dashes and noughts.
+    final bool read = app.seenIds.isNotEmpty;
+    final Set<Principle> spotted = _MovesTile.spottedBy(app);
+    final List<Widget> know = [
+      if (read) _SubjectsTile(app: app, record: record),
+      // Strongest and most missed, once a subject is measured.
+      if (subjectShares(app).isNotEmpty)
+        _Pair(
+          _SpotTile(app: app, strongest: true),
+          _SpotTile(app: app, strongest: false),
+        ),
+      // What has stayed: the cards still with the reader, and how they
+      // held when they came back. Part of what they know, once something
+      // has stayed; it was a chapter of its own near the end, its bars of
+      // then and now hard to read.
+      if (app.heldCards > 0) _MemoryTile(app: app, record: record),
+      if (_InTimeTile.oldestOf(app) != null || _InPlaceTile.anyIn(app))
+        _Pair(_InTimeTile(app: app), _InPlaceTile(app: app)),
+      if (_TopicsTile.anyIn(app) || _WordsTile.anyIn(app))
+        _Pair(_TopicsTile(app: app), _WordsTile(app: app, record: record)),
+    ];
+    final List<Widget> habits = [
+      if (!_InARowTile.isEmpty(app) || !_ReadingTimeTile.isEmpty(record))
+        _Pair(
+          _InARowTile(app: app, record: record),
+          _ReadingTimeTile(record: record),
+        ),
+      // The thirteen weeks, once the record is longer than the two that the
+      // days in a row already show.
+      if (record.daysIn > _DaysTile.after) _DaysTile(record: record),
+      if (read) _Pair(_WorthTile(app: app), _HowHardTile(record: record)),
+    ];
 
     final List<Widget> page = [
       // The title, beside where the way back stands, and gone with the
@@ -134,13 +220,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
       // practise first, then the week, then the numbers behind them,
       // grouped by what they are about, and the story so far at the end.
       // What the reader is training first: their Astute score, the one
-      // number the journey keeps, and the skills they picked with theirs.
-      _Chapter(
-        n: ++n,
-        title: l.trainingTitle,
-        trailing: TrainingChapter.change(context, app),
-        child: TrainingChapter(app: app),
-      ),
+      // number the journey keeps, and the skills they picked with theirs;
+      // or, in the looks of What to learn the developer tools try, the
+      // score alone, the score and the reader's aim, or the score and where
+      // their answers say they are strong (lib/widgets/learn_looks.dart).
+      _learnChapter(context, app, ++n),
       chapterGap,
       // What to do now, under the number it moves.
       _Chapter(
@@ -149,22 +233,13 @@ class _JourneyScreenState extends State<JourneyScreen> {
         child: _Practice(app: app),
       ),
       chapterGap,
-      // The week in one sentence, and the questions it left the reader
-      // with, each a tap from its card.
+      // The week in one sentence. The questions its cards left stood under
+      // it, a list to read and nothing to do with it; they are at the foot
+      // of the page now, to be answered again (Review the week).
       _Chapter(
         n: ++n,
         title: l.storyChapterWeek,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _Headline(app: app),
-            if (_WeekAsksTile.asksOf(app, record.today)
-                case final List<Pill> asks when asks.isNotEmpty) ...[
-              const SizedBox(height: 18),
-              _WeekAsksTile(app: app, asks: asks),
-            ],
-          ],
-        ),
+        child: _Headline(app: app),
       ),
       if (cardAiOn(app, language)) ...[
         chapterGap,
@@ -174,25 +249,10 @@ class _JourneyScreenState extends State<JourneyScreen> {
           child: _Coach(app: app),
         ),
       ],
-      chapterGap,
-      _Chapter(
-        n: ++n,
-        title: l.journeyChapterKnow,
-        child: _Stack([
-          _SubjectsTile(app: app, record: record),
-          _Pair(
-            _SpotTile(app: app, strongest: true),
-            _SpotTile(app: app, strongest: false),
-          ),
-          // What has stayed: the cards still with the reader, and how they
-          // held when they came back. Part of what they know, once
-          // something has stayed; it was a chapter of its own near the end,
-          // its bars of then and now hard to read.
-          if (app.heldCards > 0) _MemoryTile(app: app, record: record),
-          _Pair(_InTimeTile(app: app), _InPlaceTile(app: app)),
-          _Pair(_TopicsTile(app: app), _WordsTile(app: app, record: record)),
-        ]),
-      ),
+      if (know.isNotEmpty) ...[
+        chapterGap,
+        _Chapter(n: ++n, title: l.journeyChapterKnow, child: _Stack(know)),
+      ],
       chapterGap,
       _Chapter(
         n: ++n,
@@ -204,10 +264,13 @@ class _JourneyScreenState extends State<JourneyScreen> {
           // and an empty chart said it again.
           if (app.calibratedAnswers >= kCalibrationFloor)
             _PointsOffTile(app: app, record: record),
-          _Pair(
-            _SureTile(record: record),
-            _MovesTile(app: app, record: record),
-          ),
+          // Right when sure and the moves spotted, once either has
+          // something: until then the line above says what it takes.
+          if (!_SureTile.isEmpty(record) || spotted.isNotEmpty)
+            _Pair(
+              _SureTile(record: record),
+              _MovesTile(app: app, record: record, have: spotted),
+            ),
           if (_MissingTile.missed(app).isNotEmpty) _MissingTile(app: app),
           // What the cards that ask did for the reader, in their own
           // word; nothing until one has asked.
@@ -218,24 +281,23 @@ class _JourneyScreenState extends State<JourneyScreen> {
             ),
         ]),
       ),
-      chapterGap,
-      _Chapter(
-        n: ++n,
-        title: l.journeyChapterHabits,
-        child: _Stack([
-          _Pair(
-            _InARowTile(app: app, record: record),
-            _ReadingTimeTile(record: record),
-          ),
-          _DaysTile(record: record),
-          _Pair(_WorthTile(app: app), _HowHardTile(record: record)),
-        ]),
-      ),
+      if (habits.isNotEmpty) ...[
+        chapterGap,
+        _Chapter(n: ++n, title: l.journeyChapterHabits, child: _Stack(habits)),
+      ],
       chapterGap,
       _Chapter(
         n: ++n,
         title: l.storyChapterStory,
         child: _YourStory(app: app),
+      ),
+      // Last, the week gone over again: the cards first read this week,
+      // each that asks asked once more, from the first.
+      chapterGap,
+      _Chapter(
+        n: ++n,
+        title: l.weekReviewTitle,
+        child: _WeekReview(app: app, cards: week),
       ),
       // The day, sent as five squares, once it is done: the way the app
       // travels, kept at the foot of the journey. The finished day sends
@@ -254,55 +316,29 @@ class _JourneyScreenState extends State<JourneyScreen> {
         backgroundColor: context.p.surface,
         body: LastSeenScope(
           seen: _seen,
-          child: Stack(
-            children: [
-              // The way back is part of the page, as Instagram's is: it goes
-              // up and away with the chapters, and the moment the reader
-              // goes back up it comes back over them, the page fading under
-              // it there so it never sits on the words; at the top it stands
-              // beside the title.
-              Positioned.fill(
-                child: QuickReturn(
-                  clip: false,
-                  header: Padding(
-                    padding: EdgeInsets.only(left: 20, top: top + 8),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: BackCircle(
-                        onPressed: widget.onBack,
-                        floating: true,
-                      ),
-                    ),
-                  ),
-                  child: MediaQuery.removePadding(
-                    context: context,
-                    removeTop: true,
-                    child: ListView(
-                      key: const ValueKey('journey-page'),
-                      padding: EdgeInsets.fromLTRB(
-                        16,
-                        top + 8,
-                        16,
-                        30 + safe.bottom,
-                      ),
-                      children: page,
-                    ),
-                  ),
-                ),
+          // The way back is part of the page, as Instagram's is: it goes up
+          // and away with the chapters, and the moment the reader goes back
+          // up it comes back over them, the chapters going soft and dark
+          // under it, as they do under the status bar, Explore's shelves
+          // too ([TopEdge]); at the top it stands beside the title.
+          child: QuickReturn(
+            clip: false,
+            header: Padding(
+              padding: EdgeInsets.only(left: 20, top: top + 8),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: BackCircle(onPressed: widget.onBack, floating: true),
               ),
-              // Under the status bar, where the chapters run under the time
-              // and the battery: they go soft and dissolve into the page,
-              // as Explore's shelves do, and so does the way back on its
-              // way up.
-              Positioned(
-                key: const ValueKey('journey-top-edge'),
-                left: 0,
-                right: 0,
-                top: 0,
-                height: top,
-                child: IgnorePointer(child: TopEdge(ground: context.p.surface)),
+            ),
+            child: MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: ListView(
+                key: const ValueKey('journey-page'),
+                padding: EdgeInsets.fromLTRB(16, top + 8, 16, 30 + safe.bottom),
+                children: page,
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -683,6 +719,10 @@ class _BigLine extends StatelessWidget {
 /// A half tile: what it is, the number, a line under it, and a picture at
 /// the foot. The number is [value] as it stands, or [fig], counting from
 /// where the reader last saw it.
+///
+/// Until there is a number, [empty]: one calm line in its place, saying
+/// what will be here and how it comes, and no picture. A dash or a nought
+/// set large, over a chart with nothing on it, read as a fault.
 class _Half extends StatelessWidget {
   const _Half({
     super.key,
@@ -693,7 +733,17 @@ class _Half extends StatelessWidget {
     this.sub,
     this.foot,
     this.size = 30,
-  }) : assert(value != null || fig != null);
+  }) : empty = null,
+       assert(value != null || fig != null);
+
+  const _Half.empty({required this.label, required String line})
+    : empty = line,
+      value = null,
+      fig = null,
+      unit = null,
+      sub = null,
+      foot = null,
+      size = 30;
 
   final String label;
   final String? value;
@@ -702,11 +752,13 @@ class _Half extends StatelessWidget {
   final String? sub;
   final Widget? foot;
   final double size;
+  final String? empty;
 
   @override
   Widget build(BuildContext context) {
     final Color ink = context.p.ink;
     final _Fig? fig = this.fig;
+    final String? empty = this.empty;
     return _Box(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -724,31 +776,44 @@ class _Half extends StatelessWidget {
               color: ink.withValues(alpha: 0.55),
             ),
           ),
-          const SizedBox(height: 6),
-          if (fig == null)
-            _BigLine(value!, unit: unit, size: size)
-          else
-            _count(
-              fig,
-              (context, _, text, mark) =>
-                  _BigLine(text, unit: unit, mark: mark, size: size),
-            ),
-          if (sub != null) ...[
-            const SizedBox(height: 6),
+          if (empty != null) ...[
+            const SizedBox(height: 10),
             Text(
-              sub!,
+              empty,
               style: AppText.body(
-                size: 11,
+                size: 14,
                 weight: FontWeight.w500,
-                height: 1.3,
-                color: ink.withValues(alpha: 0.45),
+                height: 1.35,
+                color: ink.withValues(alpha: 0.72),
               ),
             ),
-          ],
-          if (foot != null) ...[
-            const Spacer(),
-            const SizedBox(height: 16),
-            foot!,
+          ] else ...[
+            const SizedBox(height: 6),
+            if (fig == null)
+              _BigLine(value!, unit: unit, size: size)
+            else
+              _count(
+                fig,
+                (context, _, text, mark) =>
+                    _BigLine(text, unit: unit, mark: mark, size: size),
+              ),
+            if (sub != null) ...[
+              const SizedBox(height: 6),
+              Text(
+                sub!,
+                style: AppText.body(
+                  size: 11,
+                  weight: FontWeight.w500,
+                  height: 1.3,
+                  color: ink.withValues(alpha: 0.45),
+                ),
+              ),
+            ],
+            if (foot != null) ...[
+              const Spacer(),
+              const SizedBox(height: 16),
+              foot!,
+            ],
           ],
         ],
       ),
@@ -958,7 +1023,7 @@ class _WorthTile extends StatelessWidget {
       ),
       sub: books == 0
           ? l.journeyToFirstBook(perBook - n)
-          : l.journeyOrDocumentaries((n * 3 / 60).round()),
+          : l.elided(l.journeyOrDocumentaries((n * 3 / 60).round())),
       foot: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -997,10 +1062,17 @@ class _InARowTile extends StatelessWidget {
   final AppState app;
   final JourneyRecord record;
 
+  /// Before any day's five were finished: no run, and none ever.
+  static bool isEmpty(AppState app) =>
+      app.liveStreak == 0 && app.bestStreak == 0;
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Color ink = context.p.ink;
+    if (isEmpty(app)) {
+      return _Half.empty(label: l.journeyInARow, line: l.widgetStreakStart);
+    }
     final int active = record.activeDays
         .where(
           (d) =>
@@ -1050,7 +1122,12 @@ class _InARowTile extends StatelessWidget {
             app.liveStreak.toDouble(),
             (v) => l.journeyDays(v.round()),
           ),
-          sub: l.journeyBestActive(app.bestStreak, active, record.daysIn),
+          // The best run and the days read of the days since the first,
+          // once there is more than the one day: "Best 1 · 1 of 1" said
+          // nothing.
+          sub: record.daysIn <= 1
+              ? null
+              : l.journeyBestActive(app.bestStreak, active, record.daysIn),
           foot: Column(children: [row(0), const SizedBox(height: 3), row(7)]),
         ),
       ),
@@ -1392,45 +1469,69 @@ class _HowHardTile extends StatelessWidget {
     ];
     final NumberFormat one = NumberFormat('0.0', _locale(context));
 
+    if (now == null) {
+      return _Half.empty(
+        label: l.journeyHowHard,
+        line: l.journeyFillsAsYouRead,
+      );
+    }
+
     return _Half(
       label: l.journeyHowHard,
-      value: now == null ? '—' : null,
-      fig: now == null
-          ? null
-          : _Fig(
-              'hard',
-              now,
-              (v) => one.format(v),
-              mark: (context, was, now) {
-                final double d =
-                    double.parse(one.format(now).replaceAll(',', '.')) -
-                    double.parse(one.format(was).replaceAll(',', '.'));
-                return '${d >= 0 ? '+' : '\u2212'}${one.format(d.abs())}';
-              },
-            ),
+      fig: _Fig(
+        'hard',
+        now,
+        (v) => one.format(v),
+        mark: (context, was, now) {
+          final double d =
+              double.parse(one.format(now).replaceAll(',', '.')) -
+              double.parse(one.format(was).replaceAll(',', '.'));
+          return '${d >= 0 ? '+' : '\u2212'}${one.format(d.abs())}';
+        },
+      ),
       unit: l.journeyOfThree,
       sub: then == null
           ? l.journeyHardNow
           : l.journeyHardThen(one.format(then), _month(context, month!.first)),
-      foot: _Spark(values: weekly, height: 34, lo: 1, hi: 3),
+      // A line once there are two weeks to draw it between: one week was
+      // a lone dot in a corner.
+      foot: weekly.length < 2
+          ? null
+          : _Spark(values: weekly, height: 34, lo: 1, hi: 3),
     );
   }
 }
 
 /// Time on the cards, as far as the app has timed it: the total, minutes a
 /// week lately against the start, and the last weeks as bars.
+///
+/// The time is what [AppState] writes into each day: a card of the day's
+/// from coming up to being thrown, a card read in the viewer while it is in
+/// sight, at most five minutes a card. Until it comes to a minute, the tile
+/// says so rather than "0 min" over an empty bar.
 class _ReadingTimeTile extends StatelessWidget {
   const _ReadingTimeTile({required this.record});
 
   final JourneyRecord record;
 
+  static int _minutes(JourneyRecord record) =>
+      (record.secondsBetween('0000-00-00', '9999-99-99') / 60).round();
+
+  /// Less than a minute timed, all told.
+  static bool isEmpty(JourneyRecord record) => _minutes(record) == 0;
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Color ink = context.p.ink;
-    final String? timed = record.firstTimed;
-    final int seconds = record.secondsBetween('0000-00-00', '9999-99-99');
-    final int minutes = (seconds / 60).round();
+    final int minutes = _minutes(record);
+    if (minutes == 0) {
+      return _Half.empty(
+        label: l.journeyReadingTime,
+        line: l.journeyFillsAsYouRead,
+      );
+    }
+    final String timed = record.firstTimed!;
     final List<JourneyWeek> weeks = record.weeks(most: 13);
     final List<int> perWeek = [
       for (final w in weeks)
@@ -1438,7 +1539,7 @@ class _ReadingTimeTile extends StatelessWidget {
     ];
     final List<int> full = [
       for (final w in record.weeks())
-        if (!w.current && timed != null && w.last.compareTo(timed) >= 0)
+        if (!w.current && w.last.compareTo(timed) >= 0)
           (record.secondsBetween(w.first, w.last) / 60).round(),
     ];
     final int most = math.max(1, perWeek.fold(0, math.max));
@@ -1447,9 +1548,7 @@ class _ReadingTimeTile extends StatelessWidget {
         ? l.journeyMinutes(m)
         : l.journeyHoursMinutes(m ~/ 60, (m % 60).toString().padLeft(2, '0'));
     final String sub;
-    if (timed == null) {
-      sub = l.journeyTimedFromToday;
-    } else if (full.length >= 2) {
+    if (full.length >= 2) {
       final int span = math.min(4, full.length ~/ 2);
       int mean(Iterable<int> m) => (m.fold(0, (a, b) => a + b) / span).round();
       sub = l.journeyMinAWeek(
@@ -1462,41 +1561,41 @@ class _ReadingTimeTile extends StatelessWidget {
 
     return _Half(
       label: l.journeyReadingTime,
-      value: timed == null ? '—' : null,
-      fig: timed == null
-          ? null
-          : _Fig(
-              'minutes',
-              minutes.toDouble(),
-              (v) => time(v.round()),
-              mark: (context, was, now) =>
-                  '+${time(math.max(0, now.round() - was.round()))}',
-            ),
-      sub: sub,
-      foot: SizedBox(
-        height: 34,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            for (var i = 0; i < perWeek.length; i++) ...[
-              if (i > 0) const SizedBox(width: 3),
-              Expanded(
-                child: Container(
-                  height: math.max(3, perWeek[i] / most * 34),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(2),
-                    color: i == perWeek.length - 1
-                        ? ink.withValues(alpha: 0.25)
-                        : i >= perWeek.length - 5
-                        ? ink
-                        : ink.withValues(alpha: 0.45),
-                  ),
-                ),
-              ),
-            ],
-          ],
-        ),
+      fig: _Fig(
+        'minutes',
+        minutes.toDouble(),
+        (v) => time(v.round()),
+        mark: (context, was, now) =>
+            '+${time(math.max(0, now.round() - was.round()))}',
       ),
+      sub: sub,
+      // The weeks as bars, once there are two: one was a slab.
+      foot: perWeek.length < 2
+          ? null
+          : SizedBox(
+              height: 34,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  for (var i = 0; i < perWeek.length; i++) ...[
+                    if (i > 0) const SizedBox(width: 3),
+                    Expanded(
+                      child: Container(
+                        height: math.max(3, perWeek[i] / most * 34),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2),
+                          color: i == perWeek.length - 1
+                              ? ink.withValues(alpha: 0.25)
+                              : i >= perWeek.length - 5
+                              ? ink
+                              : ink.withValues(alpha: 0.45),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
     );
   }
 }
@@ -1679,9 +1778,19 @@ class _SureTile extends StatelessWidget {
   Tally _window(String day) =>
       record.sureBetween(JourneyRecord.before(day, 27), day);
 
+  /// Before any answer said 80% sure or more.
+  static bool isEmpty(JourneyRecord record) =>
+      record.sureBy(record.todayKey).of == 0;
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    if (isEmpty(record)) {
+      return _Half.empty(
+        label: l.journeyRightWhenSure,
+        line: l.journeySureEmpty,
+      );
+    }
     final Tally lately = _window(record.todayKey);
     final Tally ever = record.sureBy(record.todayKey);
     final Tally now = lately.of >= _sureFloor ? lately : ever;
@@ -1701,29 +1810,25 @@ class _SureTile extends StatelessWidget {
         ? 80
         : math.max(80, (values.reduce(math.max) / 10).ceil() * 10.0);
 
-    String? sub;
-    if (now.share == null) {
-      sub = l.journeySureNone;
-    } else if (weekly.length >= 2) {
-      sub = l.journeyFromIn(
-        _percent(context, weekly.first.$2),
-        _month(context, dayOfKey(weekly.first.$1.last)),
-      );
-    }
+    final String? sub = weekly.length >= 2
+        ? l.journeyFromIn(
+            _percent(context, weekly.first.$2),
+            _month(context, dayOfKey(weekly.first.$1.last)),
+          )
+        : null;
 
     return _Half(
       label: l.journeyRightWhenSure,
-      value: now.share == null ? '—' : null,
-      fig: now.share == null
-          ? null
-          : _Fig(
-              'sure',
-              now.share!,
-              (v) => _percent(context, v),
-              mark: _pointsMark,
-            ),
+      fig: _Fig(
+        'sure',
+        now.share!,
+        (v) => _percent(context, v),
+        mark: _pointsMark,
+      ),
       sub: sub,
-      foot: _Spark(values: values, height: 40, lo: lo, hi: hi),
+      foot: values.length < 2
+          ? null
+          : _Spark(values: values, height: 40, lo: lo, hi: hi),
     );
   }
 }
@@ -1731,18 +1836,30 @@ class _SureTile extends StatelessWidget {
 /// The moves the reader can spot, out of all of them, the newest, and how
 /// the count has climbed week by week.
 class _MovesTile extends StatelessWidget {
-  const _MovesTile({required this.app, required this.record});
+  const _MovesTile({
+    required this.app,
+    required this.record,
+    required this.have,
+  });
 
   final AppState app;
   final JourneyRecord record;
 
+  /// The moves the reader can spot ([spottedBy]).
+  final Set<Principle> have;
+
+  /// The moves met on two cards or more and right on half of them.
+  static Set<Principle> spottedBy(AppState app) => {
+    for (final m in app.masteryByWeakness)
+      if (m.isSettled && m.share >= 0.5) m.principle,
+  };
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final Set<Principle> have = {
-      for (final m in app.masteryByWeakness)
-        if (m.isSettled && m.share >= 0.5) m.principle,
-    };
+    if (have.isEmpty) {
+      return _Half.empty(label: l.journeyMovesTitle, line: l.journeyMovesEmpty);
+    }
     final int all = Principle.values.where((p) => p.isReal).length;
     final Principle? newest = record.newestMove(have);
     final List<JourneyWeek> weeks = record.weeks();
@@ -1756,12 +1873,10 @@ class _MovesTile extends StatelessWidget {
       label: l.journeyMovesTitle,
       fig: _Fig('moves', have.length.toDouble(), (v) => '${v.round()}'),
       unit: l.journeyOfN(all),
-      sub: have.isEmpty
-          ? l.journeyNoneYet
-          : newest == null
+      sub: newest == null ? null : l.journeyNewest(moveName(l, newest)),
+      foot: weekly.length < 2
           ? null
-          : l.journeyNewest(newest.label),
-      foot: _Spark(values: weekly, height: 40, lo: 0, hi: top, steps: true),
+          : _Spark(values: weekly, height: 40, lo: 0, hi: top, steps: true),
     );
   }
 }
@@ -1860,109 +1975,166 @@ class _MissingTile extends StatelessWidget {
   }
 }
 
-// ── The week in questions ─────────────────────────────────────────────────
+// ── Review the week ───────────────────────────────────────────────────────
 
-/// The week, told back as the questions it left the reader with.
+/// The week gone over again, at the foot of the journey: the cards first
+/// read this week, Monday on, played again full size from the first, each
+/// card that asks asked once more before it turns.
 ///
-/// Every card ends on one question to carry into the day. Seven days of
-/// them, side by side, are a record of what the reader has been thinking
-/// about rather than of how much they read: the part of a habit a person
-/// would recognise as their own. Each opens the card it came from.
-class _WeekAsksTile extends StatelessWidget {
-  const _WeekAsksTile({required this.app, required this.asks});
+/// It was the week's questions, listed under the week's headline: the
+/// question each card leaves the reader with, a tap from its card. Read as
+/// a list, it asked nothing of anybody. Answering a card again a few days
+/// on is what keeps it, so the week now ends the page on that: a line, the
+/// first of its questions, and one button.
+///
+/// What is answered here is the reader's alone ([DeckViewerScreen.records]
+/// false): the back of each card says how this answer went, and the record
+/// never hears of it — a card's first answer, its place on the review
+/// ladder and when it is due back stand as they were.
+///
+/// On the free plan the first five are gone over, a day's worth, and the
+/// rest of the week is behind Astute+, said under the button.
+class _WeekReview extends StatelessWidget {
+  const _WeekReview({required this.app, required this.cards});
 
   final AppState app;
-  final List<Pill> asks;
 
-  /// The asks of the cards read in the seven days up to [now], newest
-  /// first, one per card, at most seven.
-  static List<Pill> asksOf(AppState app, DateTime now) {
-    final out = <Pill>[];
-    for (int back = 0; back < 7 && out.length < 7; back++) {
-      final DateTime day = DateTime(now.year, now.month, now.day - back);
-      for (final id in app.deckHistory[dateKey(day)] ?? const <String>[]) {
-        final Pill? p = pillById(id);
-        if (p != null &&
-            p.ask.isNotEmpty &&
-            app.seenIds.contains(id) &&
-            !out.contains(p)) {
-          out.add(p);
-        }
-        if (out.length == 7) break;
-      }
-    }
-    return out;
-  }
+  /// The cards first read this week, in the order they were read
+  /// ([weekCards]).
+  final List<Pill> cards;
+
+  /// How many of the week the free plan goes over again.
+  static const int free = 5;
+
+  /// How many of the week's questions stand over the button.
+  static const int shown = 3;
+
+  void _open(BuildContext context, List<Pill> deck, {int from = 0}) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => DeckViewerScreen(
+            app: app,
+            deck: deck,
+            title: context.l10n.weekReviewTitle,
+            initialIndex: from,
+            answering: true,
+            records: false,
+            source: 'journey',
+          ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final Color ink = context.p.ink;
+    final Palette p = context.p;
+    final Color ink = p.ink;
+    final TextStyle line = AppText.body(
+      size: 14.5,
+      height: 1.4,
+      color: ink.withValues(alpha: 0.72),
+    );
+    // Nothing read since Monday: what will be here, and nothing to press.
+    if (cards.isEmpty) {
+      return _Box(
+        key: const ValueKey('journey-week-review'),
+        padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+        child: Text(l.weekReviewNone, style: line),
+      );
+    }
+    final List<Pill> deck = app.isPlus ? cards : cards.take(free).toList();
+    final int more = cards.length - deck.length;
+    // The shortest of the questions the review asks, so each is read
+    // whole, in the order they come.
+    final List<Pill> shortest = [
+      for (final Pill pill in deck)
+        if (pill.question.isNotEmpty) pill,
+    ]..sort((a, b) => a.question.length.compareTo(b.question.length));
+    final Set<Pill> picked = shortest.take(shown).toSet();
+    final List<Pill> asks = [
+      for (final Pill pill in deck)
+        if (picked.contains(pill)) pill,
+    ];
     return _Box(
-      key: const ValueKey('journey-week-asks'),
+      key: const ValueKey('journey-week-review'),
+      padding: const EdgeInsets.fromLTRB(18, 18, 18, 16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            _upper(context, l.weekRecapCaps),
-            style: AppText.body(
-              size: 11.5,
-              weight: FontWeight.w600,
-              height: 1,
-              spacing: 0.6,
-              color: ink.withValues(alpha: 0.55),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            l.weekRecapLine,
-            style: AppText.body(
-              size: 12,
-              height: 1.3,
-              color: ink.withValues(alpha: 0.45),
-            ),
-          ),
-          for (final (int i, Pill pill) in asks.indexed) ...[
-            const SizedBox(height: 12),
-            Semantics(
-              button: true,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => DeckViewerScreen(
-                      app: app,
-                      deck: asks,
-                      title: l.yourJourney,
-                      initialIndex: i,
-                      source: 'journey',
-                    ),
+          Text(l.weekReviewLine, style: line),
+          // A few of the week's questions, each beside its card's colour.
+          for (final Pill pill in asks) ...[
+            const SizedBox(height: 14),
+            ExcludeSemantics(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 3,
+                    height: 36,
+                    margin: const EdgeInsets.only(right: 12, top: 2),
+                    decoration: cardFace(context, pill.color, radius: 2),
                   ),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 3,
-                      height: 36,
-                      margin: const EdgeInsets.only(right: 12, top: 2),
-                      decoration: cardFace(context, pill.color, radius: 2),
-                    ),
-                    Expanded(
-                      child: Text(
-                        pill.ask,
-                        style: AppText.display(
-                          size: 15.5,
-                          height: 1.25,
-                          color: ink,
-                        ),
+                  Expanded(
+                    child: Text(
+                      pill.question,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.display(
+                        size: 16,
+                        height: 1.25,
+                        color: ink,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
+          const SizedBox(height: 20),
+          PrimaryButton(
+            key: const ValueKey('journey-week-review-go'),
+            label: l.weekReviewGo,
+            onPressed: () => _open(context, deck),
+          ),
+          // The rest of the week, on the free plan: the door to Astute+,
+          // and straight on with the week's sixth card once it is open.
+          if (more > 0)
+            Semantics(
+              button: true,
+              child: GestureDetector(
+                key: const ValueKey('journey-week-review-more'),
+                behavior: HitTestBehavior.opaque,
+                onTap: () => requirePlus(
+                  context,
+                  app,
+                  () => _open(context, cards, from: deck.length),
+                  source: 'recap',
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 14, bottom: 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.lock_rounded, size: 14, color: p.link),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: Text(
+                          l.weekRecapMore(more),
+                          textAlign: TextAlign.center,
+                          style: AppText.body(
+                            size: 13,
+                            weight: FontWeight.w600,
+                            height: 1.3,
+                            color: p.link,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -2178,33 +2350,37 @@ class _SpotTile extends StatelessWidget {
         ? null
         : shares.reduce((a, b) => worse(b, a) ? b : a);
     final TopicStyle? style = spot == null ? null : kTopics[spot.key];
+    // The page shows the two once a subject is measured, so the strongest
+    // is always there; the most missed waits for a second subject.
+    if (spot == null || style == null) {
+      return _Half.empty(
+        label: strongest ? l.journeyStrongest : l.journeyMostMissed,
+        line: l.journeyMissedEmpty,
+      );
+    }
     return _Half(
       label: strongest ? l.journeyStrongest : l.journeyMostMissed,
-      value: style == null ? '—' : l.subjectOf(style.name),
+      value: l.subjectOf(style.name),
       size: 24,
-      sub: spot == null
-          ? l.journeySubjectsNotYet
-          : l.journeyRightShare(_percent(context, spot.share)),
-      foot: spot == null || style == null
-          ? null
-          : ClipRRect(
-              key: ValueKey('journey-spot-${spot.key}'),
-              borderRadius: BorderRadius.circular(99),
-              child: SizedBox(
-                height: 6,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    ColoredBox(color: context.p.line),
-                    FractionallySizedBox(
-                      alignment: AlignmentDirectional.centerStart,
-                      widthFactor: spot.share.clamp(0.0, 1.0),
-                      child: ColoredBox(color: style.color),
-                    ),
-                  ],
-                ),
+      sub: l.journeyRightShare(_percent(context, spot.share)),
+      foot: ClipRRect(
+        key: ValueKey('journey-spot-${spot.key}'),
+        borderRadius: BorderRadius.circular(99),
+        child: SizedBox(
+          height: 6,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              ColoredBox(color: context.p.line),
+              FractionallySizedBox(
+                alignment: AlignmentDirectional.centerStart,
+                widthFactor: spot.share.clamp(0.0, 1.0),
+                child: ColoredBox(color: style.color),
               ),
-            ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -2242,10 +2418,17 @@ class _ReactionTile extends StatelessWidget {
 // ── The days ──────────────────────────────────────────────────────────────
 
 /// The last thirteen weeks, a square a day, as dark as the cards read on it.
+///
+/// Shown once the record is longer than [after] days: before, the days in a
+/// row show every day there is, and this was "1 of 1 days" over a grid with
+/// one square in its corner.
 class _DaysTile extends StatelessWidget {
   const _DaysTile({required this.record});
 
   final JourneyRecord record;
+
+  /// The days the days in a row show as squares.
+  static const int after = 14;
 
   @override
   Widget build(BuildContext context) {
@@ -2389,22 +2572,23 @@ class _InTimeTile extends StatelessWidget {
 
   final AppState app;
 
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
+  /// The oldest era a card read is set in, by tag; null before one is.
+  static String? oldestOf(AppState app) {
     String? oldest;
     for (final p in _readCards(app)) {
       final int? from = _eraStarts[p.era];
       if (from == null) continue;
       if (oldest == null || from < _eraStarts[oldest]!) oldest = p.era;
     }
+    return oldest;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final String? oldest = oldestOf(app);
     if (oldest == null) {
-      return _Half(
-        label: l.journeyInTime,
-        value: '—',
-        sub: l.journeyNothingDated,
-        size: 24,
-      );
+      return _Half.empty(label: l.journeyInTime, line: l.journeyFillsAsYouRead);
     }
     final int years = app.today.year - _eraStarts[oldest]!;
     // To the hundred, past a hundred, at every step of a count too.
@@ -2440,6 +2624,20 @@ class _InPlaceTile extends StatelessWidget {
 
   final AppState app;
 
+  /// The regions the tile names.
+  static const Set<String> _named = {
+    'americas',
+    'europe',
+    'asia',
+    'oceania',
+    'africa',
+    'middle_east',
+  };
+
+  /// Whether a card read is set in a region the tile names.
+  static bool anyIn(AppState app) =>
+      _readCards(app).any((p) => _named.contains(p.region));
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -2468,11 +2666,9 @@ class _InPlaceTile extends StatelessWidget {
         ?name(e.key),
     ];
     if (named.isEmpty) {
-      return _Half(
+      return _Half.empty(
         label: l.journeyInPlace,
-        value: '—',
-        sub: l.journeyNoPlace,
-        size: 24,
+        line: l.journeyFillsAsYouRead,
       );
     }
     final String joined = named.take(3).join(', ');
@@ -2497,6 +2693,10 @@ class _TopicsTile extends StatelessWidget {
 
   final AppState app;
 
+  /// Whether a card read sits on a topic.
+  static bool anyIn(AppState app) =>
+      _readCards(app).any((p) => p.strand.isNotEmpty);
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -2508,12 +2708,7 @@ class _TopicsTile extends StatelessWidget {
       bySubject.putIfAbsent(p.topic, () => {}).add(p.strand);
     }
     if (strands.isEmpty) {
-      return _Half(
-        label: l.journeyTopics,
-        value: '—',
-        sub: l.journeyNoneYet,
-        size: 24,
-      );
+      return _Half.empty(label: l.journeyTopics, line: l.journeyFillsAsYouRead);
     }
     final MapEntry<String, Set<String>> most = bySubject.entries.reduce(
       (a, b) => b.value.length > a.value.length ? b : a,
@@ -2525,7 +2720,7 @@ class _TopicsTile extends StatelessWidget {
         strands.length.toDouble(),
         (v) => l.journeyMet(v.round()),
       ),
-      sub: l.journeyTopicsMost(most.value.length, most.key),
+      sub: l.journeyTopicsMost(most.value.length, l.subjectOf(most.key)),
       size: 24,
     );
   }
@@ -2558,6 +2753,13 @@ class _WordsTile extends StatelessWidget {
     return _inBank!;
   }
 
+  /// Whether a card read carries a term the bank uses on three cards.
+  static bool anyIn(AppState app) {
+    final Map<String, int> bank = inBank;
+    return _readCards(app)
+        .any((p) => p.keywords.any((k) => (bank[k] ?? 0) >= 3));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -2570,12 +2772,7 @@ class _WordsTile extends StatelessWidget {
           if (term(k)) k,
     };
     if (met.isEmpty) {
-      return _Half(
-        label: l.journeyWords,
-        value: '—',
-        sub: l.journeyNoneYet,
-        size: 24,
-      );
+      return _Half.empty(label: l.journeyWords, line: l.journeyFillsAsYouRead);
     }
     final latest = <String>[];
     for (final day

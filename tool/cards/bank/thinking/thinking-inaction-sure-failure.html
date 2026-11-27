@@ -152,7 +152,7 @@ const Turn = {
     if (!moved || done) return; done = true; go.disabled = true;
     Kit.answer({choice: choice(p), correct: null, sure: Math.round(Math.abs(p - .5) * 200)});
     Kit.haptic('success');
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

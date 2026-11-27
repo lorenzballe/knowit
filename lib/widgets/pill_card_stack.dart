@@ -16,6 +16,7 @@ import '../measure/card_read.dart';
 import '../measure/screens.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
+import '../state/debug_looks.dart';
 import '../state/music_sound.dart';
 import '../sync/served.dart';
 import '../sync/trace.dart';
@@ -208,6 +209,11 @@ class _PillCardStackState extends State<PillCardStack>
   /// can be turned back and forth after it has been answered again.
   bool _answeredHere = false;
 
+  /// True from an answer until the card it turned has finished turning:
+  /// a tap meanwhile, a second on the level just taken, is no tap. It
+  /// turned the card straight back to its question.
+  bool _turning = false;
+
   @override
   void initState() {
     super.initState();
@@ -217,6 +223,15 @@ class _PillCardStackState extends State<PillCardStack>
     );
     _upAt = DateTime.now();
     MusicSound.on.addListener(_queuePages);
+    DebugLooks.cardFoot.addListener(_footChanged);
+  }
+
+  /// The foot picked in the developer tools: the cards in words drawn again
+  /// with it, and the pages told it, at once.
+  void _footChanged() {
+    if (!mounted) return;
+    setState(() {});
+    _queuePages();
   }
 
   /// The free cards' pages this deck keeps alive: the card on top, and the
@@ -289,6 +304,7 @@ class _PillCardStackState extends State<PillCardStack>
       _drag = Offset.zero;
       _flipped = false;
       _answeredHere = false;
+      _turning = false;
       _upAt = DateTime.now();
       _hintTimer?.cancel();
     }
@@ -301,6 +317,7 @@ class _PillCardStackState extends State<PillCardStack>
     _hintTimer?.cancel();
     _presence?.removeListener(_seen);
     MusicSound.on.removeListener(_queuePages);
+    DebugLooks.cardFoot.removeListener(_footChanged);
     final CardRead? read = _read;
     if (read != null) _close(read, 'gone');
     _pages.dispose();
@@ -490,9 +507,11 @@ class _PillCardStackState extends State<PillCardStack>
     final double? wrong = Served.instance.lastExplore?.wrongShare(pill.id);
     if (wrong == null || !mounted) return;
     final l = context.l10n;
-    final String line = right
-        ? l.crowdGotRight(((1 - wrong) * 100).round())
-        : l.crowdGotWrong((wrong * 100).round());
+    final String line = l.elided(
+      right
+          ? l.crowdGotRight(((1 - wrong) * 100).round())
+          : l.crowdGotWrong((wrong * 100).round()),
+    );
     final messenger = ScaffoldMessenger.maybeOf(context);
     if (messenger == null) return;
     messenger
@@ -689,6 +708,7 @@ class _PillCardStackState extends State<PillCardStack>
       setState(() {
         _drag = Offset.zero;
         _flipped = false;
+        _turning = false;
       });
     }
     // The card now on top stands, face up, once the deck is built with it
@@ -794,7 +814,7 @@ class _PillCardStackState extends State<PillCardStack>
   /// puts two of them in the arena, and a still finger then wins nothing at
   /// all. It is a tap, so it is on the tap.
   void _turnOver() {
-    if (!mounted) return;
+    if (!mounted || _turning) return;
     // The card after the deck has no back.
     if (widget.index >= widget.deck.length) return;
     // A card that asks turns over when the reader commits, not on a stray
@@ -974,6 +994,7 @@ class _PillCardStackState extends State<PillCardStack>
           ? widget.trailing!
           : FlipCard(
               showBack: isTop && _flipped,
+              onTurned: isTop ? () => _turning = false : null,
               front: PillCard(
                 pill: pill,
                 flipped: false,
@@ -1023,6 +1044,7 @@ class _PillCardStackState extends State<PillCardStack>
                         setState(() {
                           _answeredHere = true;
                           _flipped = true;
+                          _turning = true;
                         });
                         _read?.turned(toBack: true);
                         _hintIn(_hintAfterBack);

@@ -162,7 +162,10 @@ class SubjectHomeScreen extends StatelessWidget {
       name: 'subject home',
       child: Scaffold(
         backgroundColor: context.p.surface,
+        // Not under the status bar: the page runs on under it, and goes
+        // soft and dark there ([QuickReturn]).
         body: SafeArea(
+          top: false,
           child: ListenableBuilder(
             listenable: app,
             builder: (context, _) => _page(context),
@@ -204,9 +207,12 @@ class SubjectHomeScreen extends StatelessWidget {
     // the moment the reader goes back up ([QuickReturn]). Apple's glass is a
     // layer over the page, never laid inside the list, where a native button
     // is drawn away from its place.
+    // The status bar's room, which the page runs on under.
+    final double top = MediaQuery.paddingOf(context).top;
     return QuickReturn(
+      clip: false,
       header: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
+        padding: EdgeInsets.fromLTRB(20, top + 8, 20, 4),
         child: SizedBox(
           height: 44,
           child: Row(
@@ -230,86 +236,92 @@ class SubjectHomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      child: ListView(
-        // Under the way back and its line, as tall as they stand.
-        padding: const EdgeInsets.fromLTRB(20, 8 + 44 + 4 + 12, 20, 32),
-        children: [
-          _Head(home: home, style: style, name: name),
-          if (home.next case final Pill next) ...[
-            const SizedBox(height: 26),
-            Text(
-              l.subjectNext,
-              style: AppText.display(
-                size: 22,
-                weight: FontWeight.w600,
-                spacing: -0.5,
-                color: p.ink,
+      child: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView(
+          // Under the way back and its line, as tall as they stand.
+          padding: EdgeInsets.fromLTRB(20, top + 8 + 44 + 4 + 12, 20, 32),
+          children: [
+            _Head(home: home, style: style, name: name),
+            if (home.next case final Pill next) ...[
+              const SizedBox(height: 26),
+              Text(
+                l.subjectNext,
+                style: AppText.display(
+                  size: 22,
+                  weight: FontWeight.w600,
+                  spacing: -0.5,
+                  color: p.ink,
+                ),
               ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              l.subjectNextLine,
-              style: AppText.body(size: 13.5, color: p.inkMuted),
-            ),
-            const SizedBox(height: 12),
-            _NextCard(
-              pill: next,
-              style: style,
-              onTap: () {
-                Analytics.capture('subject next opened', {'subject': topicKey});
-                _openCards(context, [next], 0, name, 'subject next');
-              },
-            ),
-          ],
-          if (home.themes.isNotEmpty) ...[
-            const SizedBox(height: 26),
-            Text(
-              l.subjectInside(name),
-              style: AppText.display(
-                size: 22,
-                weight: FontWeight.w600,
-                spacing: -0.5,
-                color: p.ink,
+              const SizedBox(height: 2),
+              Text(
+                l.subjectNextLine,
+                style: AppText.body(size: 13.5, color: p.inkMuted),
               ),
-            ),
-            const SizedBox(height: 12),
-            for (final t in home.themes)
-              _Theme(
-                key: ValueKey('subject-theme-${t.genre.id}'),
-                label: context.l10n.themeOf(t.genre),
-                read: t.read,
-                total: t.cards.length,
+              const SizedBox(height: 12),
+              _NextCard(
+                pill: next,
                 style: style,
                 onTap: () {
-                  final List<CardPath> parts = partsOf(
-                    t.genre,
-                    topicKey,
-                    PillBank.live,
-                  );
-                  if (parts.isNotEmpty) {
-                    CardPathScreen.open(
-                      context,
-                      app,
-                      currentPart(parts, app.seenIds),
-                      from: 'subject',
-                    );
-                    return;
-                  }
-                  final List<Pill> unread = [
-                    ...t.cards.where((c) => !app.seenIds.contains(c.id)),
-                    ...t.cards.where((c) => app.seenIds.contains(c.id)),
-                  ];
-                  _openCards(
-                    context,
-                    unread,
-                    0,
-                    context.l10n.themeOf(t.genre),
-                    'subject theme',
-                  );
+                  Analytics.capture('subject next opened', {
+                    'subject': topicKey,
+                  });
+                  _openCards(context, [next], 0, name, 'subject next');
                 },
               ),
+            ],
+            if (home.themes.isNotEmpty) ...[
+              const SizedBox(height: 26),
+              Text(
+                l.subjectInside(name),
+                style: AppText.display(
+                  size: 22,
+                  weight: FontWeight.w600,
+                  spacing: -0.5,
+                  color: p.ink,
+                ),
+              ),
+              const SizedBox(height: 12),
+              for (final t in home.themes)
+                _Theme(
+                  key: ValueKey('subject-theme-${t.genre.id}'),
+                  label: context.l10n.themeOf(t.genre),
+                  read: t.read,
+                  total: t.cards.length,
+                  style: style,
+                  onTap: () {
+                    final List<CardPath> parts = partsOf(
+                      t.genre,
+                      topicKey,
+                      PillBank.live,
+                    );
+                    if (parts.isNotEmpty) {
+                      CardPathScreen.open(
+                        context,
+                        app,
+                        currentPart(parts, app.seenIds),
+                        from: 'subject',
+                      );
+                      return;
+                    }
+                    final List<Pill> unread = [
+                      ...t.cards.where((c) => !app.seenIds.contains(c.id)),
+                      ...t.cards.where((c) => app.seenIds.contains(c.id)),
+                    ];
+                    _openCards(
+                      context,
+                      unread,
+                      0,
+                      context.l10n.themeOf(t.genre),
+                      'subject theme',
+                    );
+                  },
+                ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

@@ -173,7 +173,7 @@ const Turn = {
     Kit.answer({choice: said, correct: null, sure: Math.round(Math.abs(S.p - .5) * 200)});
     Kit.haptic('success');
     paintFront();
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back ----------

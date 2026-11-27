@@ -235,7 +235,7 @@ const Turn = {
     const ok = Math.abs(n * 100 - TRUTH * 100) <= 300, said = `${fmt(n * 100)} hp`;
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${said}, ${ok ? 'close' : 'off'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   function wake() {
     sureOn = true; sure.on(); Kit.$('sure').classList.add('live');

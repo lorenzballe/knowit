@@ -174,7 +174,7 @@ const Turn = {
     const ok = r < 1, said = `Russia ${r.toFixed(1)}× Africa`;
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${said}: ${ok ? 'right, it is smaller' : 'wrong, it is smaller'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   Kit.$('sure').addEventListener('click', e => {
     const b = e.target.closest && e.target.closest('[data-v]'); if (!b || !touched) return;

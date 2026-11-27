@@ -78,6 +78,95 @@ class ShareDay extends StatelessWidget {
     ].join('\n');
   }
 
+  /// Counts the day sent, as [as] (`image`, `text` when the words went
+  /// instead, `copied`), from [from], laid out as [layout].
+  static void counted(
+    AppState app, {
+    required String as,
+    required String from,
+    required DayLayout layout,
+  }) => Analytics.capture('day shared', {
+    'streak_days': app.streak,
+    'edition': app.daySummary.edition,
+    'as': as,
+    'from': from,
+    'format': layout == DayLayout.story ? 'story' : 'post',
+    'layout': layout.name,
+  });
+
+  /// Sends the day's picture as it is drawn under [picture] (a
+  /// [DayPicturePreview]'s), laid out as [layout], with its words: through
+  /// the platform's sheet, or, where nothing takes a picture — a browser, a
+  /// desktop — the words alone, on the clipboard, one paste from the same
+  /// chat. Counted from [from]. Says how it went: `image`, or `text` for
+  /// the words copied instead, which the caller says over its own screen.
+  ///
+  /// The one way the day's picture leaves: from the sheet, and, where the
+  /// developer tools try them, from the day's own moment and its card.
+  static Future<String> sendPicture(
+    BuildContext context,
+    AppState app, {
+    required GlobalKey picture,
+    required DayLayout layout,
+    required String from,
+  }) async {
+    final String words = text(context, app);
+    final List<Pill> five = app.todaysDeck.take(kPillsPerDay).toList();
+    final Uint8List? bytes = await _capture(context, picture, five, layout);
+    final bool shared =
+        bytes != null &&
+        await shareImage(
+          bytes,
+          'astute-${app.daySummary.edition}.png',
+          words,
+          // The system sheet points from this one, as a card's does.
+          context.mounted ? shareOrigin(context) : null,
+        );
+    // A share that fell back to the words is counted apart from a copy
+    // asked for, as a card's is: both used to be "copied", and the numbers
+    // could not say whether the sheet had failed.
+    final String as = shared ? 'image' : 'text';
+    counted(app, as: as, from: from, layout: layout);
+    if (!shared) await Clipboard.setData(ClipboardData(text: words));
+    return as;
+  }
+
+  /// Every picture [layout] draws of [five], come — or given up on — and
+  /// drawn, before the picture is made: a card still on its way would
+  /// otherwise leave as its colour alone.
+  static Future<void> _ready(
+    BuildContext context,
+    List<Pill> five,
+    DayLayout layout,
+  ) async {
+    final List<Future<void>> coming = [
+      for (final ImageProvider p in DayPicture.picturesOf(five, layout))
+        precacheImage(p, context, onError: (_, _) {}),
+    ];
+    await Future.wait(coming)
+        .timeout(const Duration(seconds: 4), onTimeout: () => const []);
+    if (!context.mounted) return;
+    await WidgetsBinding.instance.endOfFrame;
+  }
+
+  /// The picture under [picture] at three times its size: 1080 across, a
+  /// chat's or a story's own width.
+  static Future<Uint8List?> _capture(
+    BuildContext context,
+    GlobalKey picture,
+    List<Pill> five,
+    DayLayout layout,
+  ) async {
+    await _ready(context, five, layout);
+    final boundary =
+        picture.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+    if (boundary == null) return null;
+    final image = await boundary.toImage(pixelRatio: 3);
+    final data = await image.toByteData(format: ui.ImageByteFormat.png);
+    image.dispose();
+    return data?.buffer.asUint8List();
+  }
+
   /// Opens the sheet that sends the day, from [from].
   static Future<void> send(
     BuildContext context,
@@ -225,68 +314,21 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
     });
   }
 
-  void _counted(String as) => Analytics.capture('day shared', {
-    'streak_days': app.streak,
-    'edition': app.daySummary.edition,
-    'as': as,
-    'from': widget.from,
-    'format': _layout == DayLayout.story ? 'story' : 'post',
-    'layout': _layout.name,
-  });
-
-  /// Every picture the layout draws, come — or given up on — and drawn,
-  /// before the picture is made: a card still on its way would otherwise
-  /// leave as its colour alone.
-  Future<void> _ready() async {
-    final List<Future<void>> coming = [
-      for (final ImageProvider picture in DayPicture.picturesOf(_five, _layout))
-        precacheImage(picture, context, onError: (_, _) {}),
-    ];
-    await Future.wait(coming)
-        .timeout(const Duration(seconds: 4), onTimeout: () => const []);
-    if (!mounted) return;
-    setState(() {});
-    await WidgetsBinding.instance.endOfFrame;
-  }
-
-  /// The picture at three times its size: 1080 across, a chat's or a
-  /// story's own width.
-  Future<Uint8List?> _capture() async {
-    await _ready();
-    final boundary =
-        _picture.currentContext?.findRenderObject() as RenderRepaintBoundary?;
-    if (boundary == null) return null;
-    final image = await boundary.toImage(pixelRatio: 3);
-    final data = await image.toByteData(format: ui.ImageByteFormat.png);
-    image.dispose();
-    return data?.buffer.asUint8List();
-  }
+  void _counted(String as) =>
+      ShareDay.counted(app, as: as, from: widget.from, layout: _layout);
 
   Future<void> _share() async {
     final l = context.l10n;
-    final String words = ShareDay.text(context, app);
     setState(() => _busy = true);
     try {
-      final Uint8List? bytes = await _capture();
-      final bool shared =
-          bytes != null &&
-          await ShareDay.shareImage(
-            bytes,
-            'astute-${app.daySummary.edition}.png',
-            words,
-            // The system sheet points from this one, as a card's does.
-            mounted ? shareOrigin(context) : null,
-          );
-      // A share that fell back to the words is counted apart from a copy
-      // asked for, as a card's is: both used to be "copied", and the
-      // numbers could not say whether the sheet had failed.
-      _counted(shared ? 'image' : 'text');
-      if (!shared) {
-        // No sheet to take the picture — a browser, a desktop — so the
-        // words go on the clipboard, one paste from the same chat.
-        await Clipboard.setData(ClipboardData(text: words));
-        if (mounted) _say(l.textCopiedInstead);
-      }
+      final String as = await ShareDay.sendPicture(
+        context,
+        app,
+        picture: _picture,
+        layout: _layout,
+        from: widget.from,
+      );
+      if (as == 'text' && mounted) _say(l.textCopiedInstead);
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -378,62 +420,10 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
             // the same picture wherever it is made, and shown shrunk to the
             // room there is.
             Flexible(
-              child: LayoutBuilder(
-                builder: (context, box) {
-                  const double w = DayPicture.width;
-                  final double h = DayPicture.heightOf(_layout);
-                  final double fit = math.min(
-                    box.maxWidth / w,
-                    box.maxHeight / h,
-                  );
-                  // As tall as the picture, not as the room: the sheet ends
-                  // under the post's shape as it does under the story.
-                  return Center(
-                    heightFactor: 1,
-                    child: Container(
-                      width: w * fit,
-                      height: h * fit,
-                      // On the night sheet, black on black, the picture
-                      // had no edge: a hairline says where what is sent
-                      // ends. Drawn on the sheet, never on the picture.
-                      foregroundDecoration: context.p.isDark
-                          ? BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(color: context.p.line),
-                            )
-                          : null,
-                      // Rounded here, on the sheet, and square as it is
-                      // sent: a chat rounds a picture itself, and corners
-                      // cut out of the picture showed as the chat's own
-                      // white round a black card.
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: FittedBox(
-                          child: SizedBox(
-                            width: w,
-                            height: h,
-                            child: RepaintBoundary(
-                              key: _picture,
-                              // A picture, not a screen: set at one size
-                              // whatever the reader's text size, or a large
-                              // setting would crop it for somebody else.
-                              child: MediaQuery(
-                                data: MediaQuery.of(context)
-                                    .copyWith(textScaler: TextScaler.noScaling),
-                                child: DayPicture(
-                                  summary: app.daySummary,
-                                  five: _five,
-                                  day: app.today,
-                                  layout: _layout,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
+              child: DayPicturePreview(
+                app: app,
+                picture: _picture,
+                layout: _layout,
               ),
             ),
             const SizedBox(height: 20),
@@ -484,6 +474,82 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
         DayLayout.list => l.shareFormatList,
         DayLayout.story => l.shareFormatStory,
       };
+}
+
+/// The day's picture as a screen shows it, in the room it is given: laid
+/// out at its one size whatever the phone, as it is sent, and shrunk to fit.
+/// As tall as the picture, not as the room, so what is under it follows it.
+/// [picture] keys what [ShareDay.sendPicture] makes it from.
+class DayPicturePreview extends StatelessWidget {
+  const DayPicturePreview({
+    super.key,
+    required this.app,
+    required this.picture,
+    this.layout = DayPicture.recommended,
+    this.radius = 20,
+  });
+
+  final AppState app;
+  final GlobalKey picture;
+  final DayLayout layout;
+
+  /// Its corners on the screen; it is sent square.
+  final double radius;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) {
+        const double w = DayPicture.width;
+        final double h = DayPicture.heightOf(layout);
+        final double fit = math.min(box.maxWidth / w, box.maxHeight / h);
+        return Center(
+          heightFactor: 1,
+          child: Container(
+            width: w * fit,
+            height: h * fit,
+            // On the night page, black on black, the picture had no edge:
+            // a hairline says where what is sent ends. Drawn on the screen,
+            // never on the picture.
+            foregroundDecoration: context.p.isDark
+                ? BoxDecoration(
+                    borderRadius: BorderRadius.circular(radius),
+                    border: Border.all(color: context.p.line),
+                  )
+                : null,
+            // Rounded here, on the screen, and square as it is sent: a
+            // chat rounds a picture itself, and corners cut out of the
+            // picture showed as the chat's own white round a black card.
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(radius),
+              child: FittedBox(
+                child: SizedBox(
+                  width: w,
+                  height: h,
+                  child: RepaintBoundary(
+                    key: picture,
+                    // A picture, not a screen: set at one size whatever the
+                    // reader's text size, or a large setting would crop it
+                    // for somebody else.
+                    child: MediaQuery(
+                      data: MediaQuery.of(context)
+                          .copyWith(textScaler: TextScaler.noScaling),
+                      child: DayPicture(
+                        summary: app.daySummary,
+                        five: app.todaysDeck.take(kPillsPerDay).toList(),
+                        day: app.today,
+                        layout: layout,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
 /// A word laid over the sheet for a moment, drawn as the app's snack bars

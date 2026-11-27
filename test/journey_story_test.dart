@@ -88,6 +88,104 @@ void main() {
       expect(storyHeadline(fresh).kind, StoryHeadlineKind.read);
       expect(storyHeadline(fresh).n, 0);
     });
+
+    group('what was read, past the first day, with the week', () {
+      final DateTime now = DateTime.now();
+      String ago(int d) => dateKey(DateTime(now.year, now.month, now.day - d));
+      // A day of the week before this one, whatever today is.
+      final String lastWeek = ago(now.weekday + 2);
+      final List<String> ids = PillBank.live.take(13).map((p) => p.id).toList();
+      Future<AppState> reading(
+        Map<String, List<String>> days, {
+        Map<String, Object> also = const {},
+      }) => _app({
+        'knowit.seenIds': [for (final d in days.values) ...d],
+        'knowit.readDays': jsonEncode(days),
+        ...also,
+      });
+
+      test('this week\'s share of it, all of it, or none yet; on the first '
+          'day, where the journey starts', () async {
+        // Ten last week, three today.
+        final some = await reading({
+          lastWeek: ids.take(10).toList(),
+          ago(0): ids.skip(10).toList(),
+        });
+        StoryHeadline h = storyHeadline(some);
+        expect(h.kind, StoryHeadlineKind.read);
+        expect([h.n, h.week, h.firstDay], [13, 3, false]);
+        expect(weekCards(some).map((p) => p.id), ids.skip(10));
+
+        // Ten last week, none since.
+        h = storyHeadline(await reading({lastWeek: ids.take(10).toList()}));
+        expect([h.n, h.week, h.firstDay], [10, 0, false]);
+
+        // Three today, on a record that started last week.
+        h = storyHeadline(
+          await reading(
+            {ago(0): ids.take(3).toList()},
+            also: {
+              'knowit.dayLog': jsonEncode({
+                lastWeek: [0, 0, 0, 0, 0, 0],
+              }),
+            },
+          ),
+        );
+        expect([h.n, h.week, h.firstDay], [3, 3, false]);
+
+        // Three today, and nothing before: the first day.
+        h = storyHeadline(await reading({ago(0): ids.take(3).toList()}));
+        expect([h.n, h.firstDay], [3, true]);
+      });
+
+      test('said so in the reader\'s language', () {
+        final AppLocalizations en = lookupAppLocalizations(const Locale('en'));
+        final AppLocalizations it = lookupAppLocalizations(const Locale('it'));
+        expect(en.storyHeadlineReadWeek(32, 9), '32 cards read, 9 this week.');
+        expect(
+          it.storyHeadlineReadWeek(32, 9),
+          '32 carte lette, 9 questa settimana.',
+        );
+        expect(
+          it.storyHeadlineReadWeek(32, 0),
+          '32 carte lette, nessuna ancora questa settimana.',
+        );
+        expect(
+          it.storyHeadlineReadWeek(32, 1),
+          '32 carte lette, una questa settimana.',
+        );
+        expect(
+          it.storyHeadlineReadAllWeek(12),
+          '12 carte lette, tutte questa settimana.',
+        );
+        // The first day keeps its line.
+        expect(
+          it.storyHeadlineRead(5),
+          '5 carte lette. Il percorso comincia qui.',
+        );
+      });
+
+      testWidgets('the headline on the page', (tester) async {
+        tester.view.physicalSize = const Size(402, 2000);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        final app = await reading({
+          lastWeek: ids.take(10).toList(),
+          ago(0): ids.skip(10).toList(),
+        });
+        await tester.pumpWidget(
+          MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme: buildAstutoTheme(Brightness.dark),
+            home: JourneyScreen(app: app, onBack: () {}),
+          ),
+        );
+        await tester.pump();
+        expect(find.text('13 cards read, 3 this week.'), findsOneWidget);
+        expect(find.textContaining('starts here'), findsNothing);
+      });
+    });
   });
 
   test('where the reader trusts themselves too much: the subject whose said '
@@ -159,16 +257,19 @@ void main() {
   });
 
   testWidgets('the journey reads in chapters: the one number, what to '
-      'practise and the week first, the story last; on the free plan the line Astute+ '
-      'shows sits behind glass with the way through', (tester) async {
+      'practise and the week first, then the story, and the week to go '
+      'over again last; on the free plan the line Astute+ shows sits behind '
+      'glass with the way through', (tester) async {
     tester.view.physicalSize = const Size(402, 9000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
+    final List<Map<String, Object>> said = [
+      ..._said(topic, 6, sure: 90, right: 3),
+      ..._said(PillBank.live.last.topic, 6, sure: 70, right: 6),
+    ];
     final app = await _app({
-      'knowit.judgements': jsonEncode([
-        ..._said(topic, 6, sure: 90, right: 3),
-        ..._said(PillBank.live.last.topic, 6, sure: 70, right: 6),
-      ]),
+      'knowit.seenIds': [for (final j in said) j['p']! as String],
+      'knowit.judgements': jsonEncode(said),
       'knowit.reactions': jsonEncode({PillBank.live.first.id: 'changed'}),
     });
     await tester.pumpWidget(
@@ -197,6 +298,7 @@ void main() {
       '6  ·  YOUR HABITS',
       if (stays) '7  ·  WHAT STAYS WITH YOU',
       stays ? '8  ·  YOUR STORY' : '7  ·  YOUR STORY',
+      stays ? '9  ·  REVIEW THE WEEK' : '8  ·  REVIEW THE WEEK',
     ];
     double last = -1;
     for (final String c in chapters) {

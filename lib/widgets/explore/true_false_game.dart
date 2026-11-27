@@ -14,7 +14,6 @@ library;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../data/explore_mix.dart';
 import '../../l10n/l10n.dart';
@@ -22,6 +21,7 @@ import '../../models/pill.dart';
 import '../../utils/share_link.dart';
 import 'challenge_kit.dart';
 import 'challenge_screen.dart';
+import 'game_feel.dart';
 
 /// True or false, as its screen plays it.
 class TrueFalseChallenge extends ChallengeGame {
@@ -203,11 +203,7 @@ class _TrueFalsePlayState extends State<_TrueFalsePlay> {
   void _say(bool sayTrue) {
     if (_told) return;
     final bool right = _game.say(_at, sayTrue);
-    if (right) {
-      HapticFeedback.lightImpact();
-    } else {
-      HapticFeedback.heavyImpact();
-    }
+    GameFeel.verdict(right);
     final l = context.l10n;
     final String side = '${trueOrFalseAnswer(_game.pills[_at])}';
     widget.kit.say(right ? l.tfRightIs(side) : l.tfWrongIs(side));
@@ -220,7 +216,7 @@ class _TrueFalsePlayState extends State<_TrueFalsePlay> {
       widget.kit.finish();
       return;
     }
-    HapticFeedback.selectionClick();
+    GameFeel.tick();
     setState(() {
       _at = next;
       _told = false;

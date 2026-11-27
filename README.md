@@ -143,16 +143,33 @@ subject's home, an area, a path, a news story) keep their way back as
 Instagram keeps its own (`widgets/quick_return.dart`). It is part of the
 page: going down, it goes up and away with the page, point for point, with
 the small line beside it where there is one, and the page is all content;
-going back up even a little, it comes straight back over the page, softly,
-with the page's colour laid behind it and fading out under it, as iOS 26
-fades a page under its bar, so it never sits on the words; at the top it
-stands where it always stood, with nothing behind it. What has to stay, Save at the foot of
-Tune your mix and a path's way on, stays. With less motion asked for nothing
-slides: it fades out where it stands and back in. With a screen reader on it
-stays put. It reads only the page's own scrolling and takes no touch, so the
-swipe back from the edge of the screen works whatever it is doing; and it is
-never laid inside the list, where Apple's own glass button, a native view on
-iOS 26, is drawn away from its place.
+going back up even a little, it comes straight back over the page, softly;
+at the top it stands where it always stood, with nothing behind it. What has
+to stay, Save at the foot of Tune your mix and a path's way on, stays. With
+less motion asked for nothing slides: it fades out where it stands and back
+in. With a screen reader on it stays put. It reads only the page's own
+scrolling and takes no touch, so the swipe back from the edge of the screen
+works whatever it is doing; and it is never laid inside the list, where
+Apple's own glass button, a native view on iOS 26, is drawn away from its
+place. Out of sight it waits in its own place, unseen: iOS lays that button
+out in the safe area of wherever it is put on the screen, and put back under
+the status bar it is drawn a status bar lower.
+
+Every one of those pages runs on under the status bar, as Explore does, and
+has one top edge (`widgets/top_edge.dart`), the scroll edge of iOS 26: what
+passes under it is blurred, most at the top of the screen and less and less
+further down, under the page's own colour, nearly whole at the top and gone
+at the foot. The page goes soft and dissolves rather than being cut by a
+line, and it is never a band of colour: the page always shows through. At
+rest the edge is the status bar's room; when the way back comes back it
+grows down with it, past its foot, strong enough behind it that the way back
+and the words beside it are read on the page, and back up when it goes. The
+blur is a handful of thin slices sharing one picture of the page, so it is
+one backdrop for the whole edge. The screens whose bar stays where it is
+(the archive, the shelves, the week, the path, the notes, how the cards are
+written, the skills, the topics, a card's page, a game's page, a book, the
+library, a founder) let what scrolls up dissolve the same way as it comes to
+the bar, and the profile runs on under the status bar as Explore does.
 
 ## One palette
 
@@ -346,14 +363,39 @@ and when most are read. And how far it reaches: **in time** (from the
 oldest era a card read is set in to this year), **in place** (the regions
 of the world), **topics** (the strands inside the subjects) and **words**
 (the terms the bank uses on three cards or more, the three met last).
+A tile with nothing to show yet says, in one line, what will be there and
+how it comes, in place of a dash or a nought set large over an empty chart;
+a pair of tiles with nothing at all is left out, and so is a chapter left
+with none. The thirteen weeks of days wait until the record is longer than
+the two weeks the days in a row already show.
+
+**Review the week** ends the page: the cards first read this week, Monday
+on, played again full size in the viewer from the first, each card that
+asks asked again before it turns. Over its one button stand the first three
+of the week's questions; on the free plan the first five are gone over, and
+the rest of the week is behind Astute+, said under the button. With nothing
+read since Monday, a line says the week's cards come back there. What is
+answered in it is the reader's alone (`DeckViewerScreen.records` false):
+the back says how this answer went, and the record never hears of it, so a
+card's first answer, its place on the review ladder and when it is due back
+stand as they were. `recordAnswer` would not do: it drops a second answer
+to a card not yet due, and the back would show the first; and it would take
+one to a card that is due, or was never answered, as its real answer, out
+of turn. It replaced the week's questions listed under the week's headline,
+which asked nothing of anybody. That headline, when the week is told in
+cards read, counts them with the week past the first day: "32 cards read,
+9 this week."
 Once the day is done, the day as five squares to send sits at the foot (the
 finished day sends it too, on either plan).
 
 Everything is counted from what the app writes down, with a date where it
 has one (`JourneyRecord`, in `lib/state/journey_record.dart`):
 `readDays`, the cards first read each day, and `dayLog`, what each day came
-to — the score at its end, the seconds on its cards (a card counts for five
-minutes at most) and the cards read in each part of the day. Both travel in
+to — the score at its end, the seconds on its cards (a card of the day from
+coming up to being thrown, a card read in the viewer while it is in sight;
+five minutes at most a card) and the cards read in each part of the day.
+Time on a card read in Explore, a path, a book or the week's review used to
+count for nothing. Both travel in
 the snapshot: a card was first read on whichever phone read it first, and a
 day's counts are the larger of each. A phone that read before this was
 written down gets its days from what each day dealt (`deckHistory`), and the
@@ -1554,10 +1596,31 @@ store through RevenueCat rather than from a bool the app wrote to itself.
 and restart, toggle the plan, and a readout of what the app knows about
 itself: whether Firebase started and why not, the account id, the last auth
 error, whether the store answered, and whether PostHog is sending, opted out
-or not running at all. At its head are two looks to try on the phone itself
+or not running at all. At its head are five looks to try on the phone itself
 (`lib/state/debug_looks.dart`): *Today, day read: no top row*, the finished
-day without the row over its card, so the card is bigger; and *Profile top*,
-Auto (A free · C Astute+), A, B or C. Each shows at once and is kept on the
+day without the row over its card, so the card is bigger; *Today, day read:
+share the day*, where the finished day is sent from — A as it ships, See
+again and the share's mark over the shelf; B the mark alone; C the day's own
+moment, a black screen right after the five with the day's picture, "Share
+your day" and "Later", once a day and never over anything else asked that
+evening (`lib/widgets/day_moment.dart`), with a way to see it at once; D the
+day as a card after the five on the shelf, where the shelf lands the evening
+it is finished; *Profile top*, Auto (A free · C Astute+), A, B or C; and
+*What to learn*, three answers to the skills beside the way they ship
+(`lib/widgets/learn_looks.dart`) — A the Astute score alone, no picker, no
+marks, no skill scores, Your journey opening on the score and its level; B
+one aim, asked at the end of the first run and from the profile: where the
+reader wants to be sharper, one of the six areas the cards name on their
+backs, said in words and counts, with a shelf of it on Explore every day
+and a line on the cards dealt for it; C nothing to pick, the skills ranked
+in Your journey from the reader's answers, right answers out of those
+given, the weakest to practise on five cards, and on the free plan the
+strong point alone on the profile. The camera is `tool/learn_shots.dart`;
+and *Card foot*, A line, B two lines, C buttons or D links
+(`lib/widgets/source_foot.dart`), on cards in words and on drawn ones,
+whose page is told it as `foot` as it was told the build's `SOURCE_FOOT`,
+which still sets the way when none is picked; A is the default.
+Each shows at once and is kept on the
 phone, through the wipe too; a build without the tools never reads them, so
 a look kept by a TestFlight build is nothing to the App Store build
 installed over it. It is needed in release builds, because TestFlight
@@ -1667,7 +1730,12 @@ to re-earn. Debates never return: there is nothing to get right.
 ## Calibration
 
 After committing to a graded answer the card asks one more thing: how sure
-are you? Five levels, 50 to 90. Each of those is appended to a judgement log
+are you? Five levels, 50 to 90, in one row where they fit. The answer taken
+stays on the card while it asks: filled with the card's ink the instant it
+is tapped, with a tick, a press and a light tap felt, the other options
+dimmed and then folded away, nothing more taken until the card turns, which
+it does as soon as the level is said. A drawn card does the same through
+the kit (`Kit.sure`, docs/cards/kit). Each level said is appended to a judgement log
 that is never rewritten — calibration is a track record, so answering a card
 again months later is another data point, not a correction of the first. The
 profile reports the only number in the app that says something about the
@@ -1732,8 +1800,8 @@ lit while they run, the number in the streak's orange with its flame
 (`widgets/profile_top.dart`, `profileTopFor`, where the third top is kept for
 comparison).
 Lower down it keeps how well you know yourself: the level, the moves you keep
-missing, whether the gap is closing and the week in questions are all the
-journey's.
+missing, whether the gap is closing and the week to go over again are all
+the journey's.
 
 **Weeks kept.** Five days out of seven keeps a week, and the record counts
 the weeks in a row. The daily streak is the sharper number and the crueller

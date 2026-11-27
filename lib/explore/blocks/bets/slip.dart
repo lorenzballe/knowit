@@ -189,7 +189,7 @@ class BetSlip extends StatelessWidget {
       final int right = sure.where((b) => b.right).length;
       final int mean = (sure.fold(0, (n, b) => n + b.confidence!) / sure.length)
           .round();
-      return l.betsSlipSure(right, sure.length, mean);
+      return l.elided(l.betsSlipSure(right, sure.length, mean));
     }
     return null;
   }

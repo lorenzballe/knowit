@@ -10,12 +10,14 @@ import '../data/card_pages.dart';
 import '../data/local_cards.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart' show inkOn, kThinkingWhite;
+import '../data/video_cards.dart';
 import '../explore/blocks/bets/bet_host.dart';
 import '../explore/blocks/core/shelves.dart';
 import '../explore/explore_block.dart';
 import '../models/pill.dart';
 import '../remote/remote.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../state/explore_play.dart';
 import '../sync/served.dart';
 import '../sync/tally.dart';
@@ -26,6 +28,7 @@ import '../widgets/explore/first_shelves.dart' show CardRow;
 import '../widgets/explore/search_start.dart';
 import '../widgets/explore/section_page.dart';
 import '../widgets/explore/story_player.dart';
+import '../widgets/learn_looks.dart' show withAimShelf;
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
@@ -37,6 +40,7 @@ import '../measure/screens.dart';
 import '../measure/shelves.dart';
 import '../widgets/hand_glass.dart';
 import '../widgets/top_edge.dart';
+import '../widgets/video_card.dart' show openVideoCard, videoHeroTag;
 
 /// Cards nobody dealt you — artboard 72a.
 ///
@@ -190,7 +194,7 @@ class ExploreScreenState extends State<ExploreScreen>
         .where((s) => s.block == 'feed')
         .firstOrNull;
     if (feed == null) return 0;
-    shelves.begin(subject: _subject);
+    shelves.begin(subject: _subject, language: language);
     return shelves
         .cardsFor(feed)
         .where((p) => !isRead(p) && reachesReader(p, widget.app.place))
@@ -285,7 +289,7 @@ class ExploreScreenState extends State<ExploreScreen>
   void openFromWidget(String pillId) {
     _sight.forgetTouch();
     showBest();
-    shelves.begin(subject: _subject);
+    shelves.begin(subject: _subject, language: language);
     final List<Pill> shelf = shelves.today;
     final int at = shelf.indexWhere((p) => p.id == pillId);
     final Pill? card = at >= 0
@@ -352,9 +356,17 @@ class ExploreScreenState extends State<ExploreScreen>
   @override
   bool isRead(Pill pill) => widget.app.seenIds.contains(pill.id);
 
+  /// A card opened from a shelf; a film played out of its tile on the
+  /// shelf it was tapped on.
   @override
-  void open(ExploreSection section, List<Pill> shelf, Pill pill) =>
-      _open(shelf, pill);
+  void open(ExploreSection section, List<Pill> shelf, Pill pill) {
+    final VideoCard? film = videoCardOf(pill);
+    if (film != null) {
+      _playFilm(film, pill, from: videoHeroTag(film, section.id));
+      return;
+    }
+    _open(shelf, pill);
+  }
 
   @override
   void openDue(ExploreSection section, List<Pill> shelf, Pill pill) =>
@@ -533,6 +545,9 @@ class ExploreScreenState extends State<ExploreScreen>
         Served.instance,
         widget.app,
         Remote.revision,
+        // What to learn's look, as the developer tools pick it: B adds the
+        // shelf of the reader's aim (lib/widgets/learn_looks.dart).
+        DebugLooks.learn,
       ]),
       builder: (context, _) => _sections(
         context,
@@ -571,7 +586,7 @@ class ExploreScreenState extends State<ExploreScreen>
   }) {
     // Every shelf is worked out afresh for this build, and looked at again
     // once laid out: counts arriving can move every one of them.
-    shelves.begin(subject: _subject);
+    shelves.begin(subject: _subject, language: language);
     _sight.measureSoon();
     final List<ExploreSlot> slots;
     _probing = true;
@@ -579,7 +594,7 @@ class ExploreScreenState extends State<ExploreScreen>
       slots = exploreSlots(
         context,
         this,
-        exploreSections(Remote.config),
+        withAimShelf(widget.app, exploreSections(Remote.config)),
         widget.app.remoteContext(language),
       );
     } finally {
@@ -891,15 +906,36 @@ class ExploreScreenState extends State<ExploreScreen>
     );
   }
 
+  /// A video card, played on the whole screen: out of its tile where the
+  /// tile is one a film grows from ([from], videoHeroTag), as it always
+  /// was. Watching it is reading the card, as opening a card from any shelf
+  /// is: its tile is ticked, and the feed deals it no more.
+  void _playFilm(VideoCard film, Pill pill, {Object? from}) {
+    _sight.opened();
+    widget.app.markReadElsewhere(pill.id);
+    openVideoCard(context, film, language: language, heroTag: from);
+  }
+
   void _open(List<Pill> shelf, Pill pill) {
+    final VideoCard? film = videoCardOf(pill);
+    if (film != null) {
+      _playFilm(film, pill);
+      return;
+    }
     // Opened from the shelf a finger was last on, which the shelf counts.
     _sight.opened();
+    // A film among the cards is played from its tile, never swiped to as
+    // a card with nothing on it.
+    final List<Pill> cards = [
+      for (final Pill p in shelf)
+        if (videoCardOf(p) == null) p,
+    ];
     openDeckViewer(
       context,
       widget.app,
-      shelf,
+      cards,
       _subject ?? context.l10n.tabExplore,
-      initialIndex: shelf.indexOf(pill),
+      initialIndex: cards.indexOf(pill),
       // Nothing here was dealt: a card read here is read.
       countsAsRead: true,
       source: 'explore',

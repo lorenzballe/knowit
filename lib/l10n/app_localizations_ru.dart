@@ -257,7 +257,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get keepTheOnesYoullUse => 'Сохраняй те, что правда пригодятся';
 
   @override
-  String get backToTodaysFive => 'К СЕГОДНЯШНЕЙ ПЯТЁРКЕ';
+  String get backToTodaysFive => 'К сегодняшней пятёрке';
 
   @override
   String get archive => 'Архив';
@@ -805,7 +805,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get shareMyRecord => 'ПОДЕЛИТЬСЯ ИСТОРИЕЙ';
+  String get shareMyRecord => 'Поделиться историей';
 
   @override
   String lastCallsAgainstFirst(int n) {
@@ -884,7 +884,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get seeThePlans => 'ПОСМОТРЕТЬ ТАРИФЫ';
+  String get seeThePlans => 'Посмотреть тарифы';
 
   @override
   String get recordStartsToday => 'Твоя история начинается сегодня.';
@@ -1986,11 +1986,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return 'Твой ответ: $said. Верно: $truth.';
-  }
-
-  @override
   String get fiveTitle => 'Пять вопросов дня';
 
   @override
@@ -2006,12 +2001,17 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String dailyPickRight(String answer) {
-    return 'Верно: $answer.';
+    return 'Верный ответ: $answer';
   }
 
   @override
   String dailyPickWrong(String answer) {
-    return 'Не совсем: верно $answer.';
+    return 'Не совсем. Верный ответ: $answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return 'Твой ответ: $answer';
   }
 
   @override
@@ -2165,6 +2165,83 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get aimTitle => 'Где ты хочешь видеть яснее?';
+
+  @override
+  String get aimLine =>
+      'Выбери одно. Каждый день будут карточки для этого, а поменять можно когда угодно.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'На этой неделе $n карточки для этого',
+      many: 'На этой неделе $n карточек для этого',
+      few: 'На этой неделе $n карточки для этого',
+      one: 'На этой неделе $n карточка для этого',
+      zero: 'На этой неделе карточек для этого нет',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right из $n верно',
+      one: '1 из $n верно',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Всё для этой цели';
+
+  @override
+  String get aimPlus =>
+      'С Astute+: все пути по этой теме целиком и тренер, который работает над этим с тобой.';
+
+  @override
+  String get aimNone =>
+      'Выбери, где ты хочешь видеть яснее: каждый день будут карточки для этого.';
+
+  @override
+  String get aimPick => 'Выбрать цель';
+
+  @override
+  String get strengthsTitle => 'Твои сильные стороны';
+
+  @override
+  String get strengthsLine =>
+      'По твоим ответам, а не по выбору: где ты чаще отвечаешь верно, а где ошибаешься.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Пока мало ответов: $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return 'Потренироваться: $skill';
+  }
+
+  @override
+  String get strengthsBest => 'Твоя сильная сторона';
+
+  @override
+  String get strengthsWeak => 'Где ты ошибаешься чаще всего';
+
+  @override
+  String get strengthsLocked =>
+      'Где ты ошибаешься чаще всего, и всё остальное — с Astute+.';
+
+  @override
+  String get strengthsEmpty =>
+      'Ещё несколько ответов — и здесь появятся твои сильные стороны.';
 
   @override
   String get scoreTitle => 'Рейтинг Astute';
@@ -2396,21 +2473,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tapToReveal => 'Нажми, чтобы открыть';
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return 'Ты сказал $given · это $answer, и $band засчитано';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return 'Ты сказал $given · это $answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · ты был уверен на $pct%';
-  }
-
-  @override
   String get verdictRight => 'Верно.';
 
   @override
@@ -2421,7 +2483,27 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String verdictSure(int pct) {
-    return 'Ты был уверен на $pct%.';
+    return 'Ты был уверен на $pct%.';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return 'Твой ответ: $given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return 'Твой ответ: $given, уверенность $pct%';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return 'Верный ответ: $answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return 'Верный ответ: $answer (засчитывалось от $low до $high)';
   }
 
   @override
@@ -3102,15 +3184,23 @@ class AppLocalizationsRu extends AppLocalizations {
   String get themePuzzlesLine => 'Задачки на ручку и минуту';
 
   @override
-  String get weekRecapCaps => 'НА ЭТОЙ НЕДЕЛЕ ТЫ СПРАШИВАЛ СЕБЯ';
-
-  @override
-  String get weekRecapLine => 'Вопросы, которые оставили тебе карточки';
-
-  @override
   String weekRecapMore(int n) {
-    return 'Ещё $n за неделю с Plus';
+    return 'Ещё $n за неделю с Astute+';
   }
+
+  @override
+  String get weekReviewTitle => 'Повтори неделю';
+
+  @override
+  String get weekReviewLine =>
+      'Вопросы твоих карточек за эту неделю. Ответь на них ещё раз: так они запоминаются.';
+
+  @override
+  String get weekReviewGo => 'Повторить';
+
+  @override
+  String get weekReviewNone =>
+      'Карточки, которые ты прочитаешь на этой неделе, вернутся сюда для повторения.';
 
   @override
   String get plusInTheApp =>
@@ -3207,7 +3297,22 @@ class AppLocalizationsRu extends AppLocalizations {
   String get revealShowWorking => 'Показать решение';
 
   @override
-  String get sceneLockIn => 'ГОТОВО';
+  String get sceneLockIn => 'Готово';
+
+  @override
+  String get placeItDrag => 'Проведи по линейке.';
+
+  @override
+  String get placeItHappy => 'Так и оставить?';
+
+  @override
+  String get placeItEstimate => 'Твоя оценка';
+
+  @override
+  String get placeItNotSet => 'ещё не задана';
+
+  @override
+  String get placeItLock => 'Подтвердить мою оценку';
 
   @override
   String get sceneYou => 'ВЫ';
@@ -3534,16 +3639,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String journeyMinAWeek(int now, int was) {
-    return '$now мин в неделю, было $was';
+    return '$now мин в неделю, сначала $was мин';
   }
 
   @override
   String journeyMinThisWeek(int m) {
     return '$m мин на этой неделе';
   }
-
-  @override
-  String get journeyTimedFromToday => 'Отсчёт с сегодняшнего дня';
 
   @override
   String journeyPointsOffFrom(int was) {
@@ -3564,10 +3666,21 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => 'Пока нет ответов на 80% и выше';
+  String get journeyMovesTitle => 'Замеченные приёмы';
 
   @override
-  String get journeyMovesTitle => 'Замеченные приёмы';
+  String get journeySureEmpty => 'Появится, когда ответишь на 80% и выше.';
+
+  @override
+  String get journeyMovesEmpty =>
+      'Появится, когда заметишь приём на двух карточках.';
+
+  @override
+  String get journeyMissedEmpty =>
+      'Шесть ответов по второй теме — и она измерена.';
+
+  @override
+  String get journeyFillsAsYouRead => 'Заполняется по мере чтения.';
 
   @override
   String journeyOfN(int n) {
@@ -3578,9 +3691,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String journeyNewest(String name) {
     return 'Последний: $name';
   }
-
-  @override
-  String get journeyNoneYet => 'Пока нет';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3691,9 +3801,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => 'пока без дат';
-
-  @override
   String get journeyInPlace => 'По миру';
 
   @override
@@ -3731,9 +3838,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => 'Ближний Восток';
-
-  @override
-  String get journeyNoPlace => 'пока нигде';
 
   @override
   String get journeyTopics => 'Подтемы';
@@ -5229,7 +5333,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get betsDayTitle => 'Ставка дня';
 
   @override
-  String get betsDayLine => 'Зафиксируй догадку и посмотри, насколько ошибся';
+  String get betsDayLine => 'Подтверди догадку и посмотри, насколько ошибся';
 
   @override
   String get betsDayTag => 'Ставка дня';
@@ -5238,7 +5342,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get betsDayTagSame => 'Ставка дня · одна для всех';
 
   @override
-  String get betsLockIn => 'Зафиксировать';
+  String get betsLockIn => 'Подтвердить';
 
   @override
   String betsItIs(String said) {
@@ -6289,6 +6393,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get yourFiveFromToday => 'Твои пять карточек за сегодня';
 
   @override
+  String get dayMomentTitle => 'День пройден.';
+
+  @override
+  String get dayMomentLater => 'Позже';
+
+  @override
+  String get yourDayCard => 'Твой день';
+
+  @override
   String get tuneTitle => 'Настрой свой микс';
 
   @override
@@ -6490,9 +6603,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet => 'Шесть ответов по теме — и она измерена.';
-
-  @override
   String get journeyChangedMind => 'Смена мнения';
 
   @override
@@ -6604,6 +6714,38 @@ class AppLocalizationsRu extends AppLocalizations {
       few: '$n карточки прочитаны. Путь начинается здесь.',
       one: '$n карточка прочитана. Путь начинается здесь.',
       zero: 'Твоя первая карточка ждёт.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки прочитано',
+      many: '$n карточек прочитано',
+      few: '$n карточки прочитаны',
+      one: '$n карточка прочитана',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '$week на этой неделе.',
+      zero: 'на этой неделе пока ни одной.',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки прочитано, все на этой неделе.',
+      many: '$n карточек прочитано, все на этой неделе.',
+      few: '$n карточки прочитаны, все на этой неделе.',
+      one: '$n карточка прочитана, все на этой неделе.',
     );
     return '$_temp0';
   }
@@ -6906,11 +7048,23 @@ class AppLocalizationsRu extends AppLocalizations {
   String get newsBehind => 'За новостью';
 
   @override
+  String get newsMeansForYou => 'Что это значит для тебя';
+
+  @override
+  String get newsMeans => 'Что это значит';
+
+  @override
+  String get newsHappenedBefore => 'Такое уже было';
+
+  @override
   String get newsSources => 'Источники';
 
   @override
   String get newsMadeFrom =>
       'Написано Astute по этим материалам и сверено с ними.';
+
+  @override
+  String get newsWhyItMatters => 'Почему это важно';
 
   @override
   String get deeperDeclined => 'На это ИИ ответить не может.';
@@ -7074,6 +7228,36 @@ class AppLocalizationsRu extends AppLocalizations {
   String get founderTheirBooks => 'Рекомендованные книги';
 
   @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': 'Сооснователь Microsoft',
+      'warren_buffett': 'Инвестор, который построил Berkshire Hathaway',
+      'mark_zuckerberg': 'Основатель Facebook',
+      'charlie_munger': 'Партнёр Уоррена Баффета по Berkshire Hathaway',
+      'marc_andreessen': 'Сооснователь Netscape и Andreessen Horowitz',
+      'tobi_lutke': 'Основатель Shopify',
+      'naval_ravikant': 'Сооснователь AngelList',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes, его книги на лето',
+      'berkshire_meeting': 'годовое собрание акционеров Berkshire Hathaway',
+      'berkshire_letter': 'его письмо акционерам Berkshire Hathaway',
+      'year_of_books': 'A Year of Books, в Facebook',
+      'publisher_praise': 'его отзыв о книге на сайте издательства',
+      'ferriss_five':
+          'The Tim Ferriss Show, среди пяти лучших прочитанных им книг',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String founderAbout(String name) {
     return 'Это книги, рекомендованные публично, в приведённых словах и с указанием, где это было сказано. $name не имеет никакого отношения к Astute.';
   }
@@ -7138,4 +7322,56 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get trialOfferFree => 'Продолжить бесплатно';
+
+  @override
+  String get paywallStepFree => 'Всё бесплатно';
+
+  @override
+  String get paywallStepRemind => 'Мы напомним';
+
+  @override
+  String get paywallChargedToday => 'Списание сегодня · Отмена в любой момент';
+
+  @override
+  String paywallGoalTitle(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'Для тех, кто хочет решать лучше.',
+      'money': 'Для тех, кого не провести с деньгами.',
+      'people': 'Для тех, кто хочет понимать людей.',
+      'news': 'Для тех, кто не верит заголовкам.',
+      'health': 'Для тех, кому о здоровье нужны доказательства.',
+      'business': 'Для тех, кто хочет ясности в работе.',
+      'other': 'Для тех, кто хочет ясности.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallGoalMark(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': 'лучше.',
+      'money': 'деньгами.',
+      'people': 'людей.',
+      'news': 'заголовкам.',
+      'health': 'доказательства.',
+      'business': 'ясности',
+      'other': 'ясности.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallMadeLine(String subjects) {
+    return 'Пять карточек в день на твоём уровне, темы: $subjects. Те, где ты ошибаешься, возвращаются, пока не запомнятся. И ты видишь, как меняешься, неделя за неделей.';
+  }
+
+  @override
+  String subjectsTwo(String a, String b) {
+    return '$a и $b';
+  }
+
+  @override
+  String subjectsThree(String a, String b, String c) {
+    return '$a, $b и $c';
+  }
 }

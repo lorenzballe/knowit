@@ -1367,8 +1367,22 @@ class AppState extends ChangeNotifier {
   /// left standing for another tab, a pushed screen or the background, and
   /// every card read in the viewer, however it left. [where] is where it was
   /// read — `today`, or the screen the viewer was opened from.
+  ///
+  /// A card read in the viewer adds its time in sight to the day's reading
+  /// time, as a card of the day adds its own when it is thrown ([advance]);
+  /// one of the day's left standing is timed then, so not here as well. The
+  /// journey's reading time used to count the day's five alone: a reader
+  /// who read in Explore, a path or a book, or went over the week again,
+  /// saw none of it.
   void cardClosed(CardStint stint, {required String where}) {
     _logRead(stint.pill.id, stint.facts, thrown: stint.thrown);
+    if (where != 'today') {
+      unawaited(
+        _noteDay(
+          seconds: (stint.msOn / 1000).round().clamp(0, kMostSecondsACard),
+        ),
+      );
+    }
     Analytics.capture('card closed', {
       // In sight in this stint, first: the trace keeps one duration per
       // event, and for this one it is how long the card held the reader.
@@ -2960,11 +2974,13 @@ class AppState extends ChangeNotifier {
       id: kTrialWarningId,
       when: when,
       title: l.trialWarningTitle(_daysBetween(when, ends)),
-      body: l.trialWarningBody(
-        _longDate(l.localeName, ends),
-        price,
-        // The way out, named exactly as the tab and the row are named.
-        '${l.tabProfile} → ${l.manageSubscription}',
+      body: l.elided(
+        l.trialWarningBody(
+          _longDate(l.localeName, ends),
+          price,
+          // The way out, named exactly as the tab and the row are named.
+          '${l.tabProfile} → ${l.manageSubscription}',
+        ),
       ),
     );
   }

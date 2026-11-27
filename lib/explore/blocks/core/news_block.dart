@@ -5,14 +5,19 @@ import '../../../data/news_paper.dart';
 import '../../../models/pill.dart';
 import '../../../theme.dart';
 import '../../../widgets/news/news_front.dart';
+import '../../../widgets/news/news_looks.dart';
 import '../../../widgets/news/news_story_page.dart';
 import '../../explore_block.dart';
 import 'layout.dart';
 
-/// The latest news, reasoned (lib/data/news_paper.dart): set as a paper sets
-/// its front page (lib/widgets/news/news_front.dart), the lead story on a
-/// panel of its own and the rest listed under it, each a headline, two lines
-/// under it and the outlets that report it; a tap opens the story's page
+/// The latest news, reasoned (lib/data/news_paper.dart), in the look the
+/// section names with `look` (lib/widgets/news/news_looks.dart): `front`,
+/// the default, set as a paper sets its front page
+/// (lib/widgets/news/news_front.dart), the lead story on a panel of its own
+/// and the rest listed under it, each a headline, two lines under it and the
+/// outlets that report it; `lead`, one story large with why it matters, and
+/// two more as compact rows; `pager`, a story to a card across the page, the
+/// next a swipe away. A tap opens the story's page
 /// (lib/widgets/news/news_story_page.dart), which counts it as read.
 ///
 /// On Explore for every subject, the newest paper's front page: the world's
@@ -37,6 +42,17 @@ class NewsBlock extends ExploreBlock with SectionLayout {
         : NewsPaper.ofSubject(subject);
     if (stories.isEmpty) return null;
     final DateTime paper = (stories.first.scene as NewsScene).date;
+    void open(Pill pill) {
+      Analytics.capture('news opened', {
+        'pill_id': pill.id,
+        'place': stories.indexOf(pill),
+        'paper': NewsPaper.date,
+      });
+      host.app.markReadElsewhere(pill.id);
+      NewsStoryPage.open(context, pill);
+    }
+
+    void shown(Pill pill) => host.seen(section, pill);
     return SectionFrame(
       title: section.title(host.language),
       line: section.subtitle(host.language),
@@ -47,20 +63,26 @@ class NewsBlock extends ExploreBlock with SectionLayout {
             .toUpperCase(),
         style: AppText.label(size: 11, spacing: 1.1, color: context.p.inkFaint),
       ),
-      child: NewsFront(
-        stories: stories,
-        isRead: host.isRead,
-        onShown: (pill) => host.seen(section, pill),
-        onOpen: (pill) {
-          Analytics.capture('news opened', {
-            'pill_id': pill.id,
-            'place': stories.indexOf(pill),
-            'paper': NewsPaper.date,
-          });
-          host.app.markReadElsewhere(pill.id);
-          NewsStoryPage.open(context, pill);
-        },
-      ),
+      child: switch (NewsLook.of(section.get<String>('look'))) {
+        NewsLook.front => NewsFront(
+          stories: stories,
+          isRead: host.isRead,
+          onShown: shown,
+          onOpen: open,
+        ),
+        NewsLook.lead => NewsLead(
+          stories: stories,
+          isRead: host.isRead,
+          onShown: shown,
+          onOpen: open,
+        ),
+        NewsLook.pager => NewsPager(
+          stories: stories,
+          isRead: host.isRead,
+          onShown: shown,
+          onOpen: open,
+        ),
+      },
     );
   }
 }

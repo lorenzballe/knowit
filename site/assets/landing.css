@@ -1,6 +1,6 @@
 /* astutetheapp.com — the landing page, section by section. What every
    page shares is in site.css; this is the rest: the first screen and its
-   phone, today's question, the day's row, the two cream sheets, the cards
+   phone, Today's five, the day's row, the two cream sheets, the cards
    that flip, Explore, Your journey, the subjects, the screens, the
    widgets, the plans, the questions and the last word. Every state the script switches is on
    an attribute, not an inline style, so the page reads the same without
@@ -167,7 +167,7 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
   gap: 40px;
   align-items: center;
-  padding-top: clamp(40px, 6vw, 84px);
+  padding-top: clamp(36px, 4.6vw, 64px);
   padding-bottom: clamp(88px, 10vw, 136px);
 }
 .hero-copy { max-width: 580px; }
@@ -217,18 +217,20 @@
 .facts { list-style: none; margin: 34px 0 0; padding: 24px 0 0; border-top: 1px solid var(--hairline); display: flex; flex-wrap: wrap; gap: 14px 30px; }
 .facts li { display: flex; align-items: baseline; gap: 8px; font: 500 13px/1.2 var(--font-text); color: var(--cream-60); }
 .facts b { font: 500 28px/1 var(--font-display); font-variation-settings: 'opsz' 144; letter-spacing: -.02em; color: var(--cream); font-variant-numeric: tabular-nums; }
-@media (max-width: 480px) { .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; } }
+/* On a phone the four stand in one row, each number over its words, so the
+   phone below comes into the first screen sooner. */
+@media (max-width: 480px) { .facts { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 8px; margin-top: 28px; padding-top: 20px; } .facts li { flex-direction: column; align-items: flex-start; gap: 6px; font-size: 12px; } .facts b { font-size: 26px; } }
 
 /* The stage beside the words: an iPhone with a card on it that can be
    played, and four hard cards around it. The light behind takes the colour
    of the card on top, as the app's own room does. */
 @property --glow-c { syntax: '<color>'; inherits: false; initial-value: rgb(43 92 255 / .42); }
-.hero-stage { --w: 300; --u: calc(var(--w) * 1px / 432); --glow: 43 92 255 / .42; --k: 1; --shift: 0px; position: relative; width: min(100%, 560px); height: calc(740px * var(--k)); margin: 0 auto; justify-self: center; translate: var(--shift) 0; }
+.hero-stage { --w: 300; --u: calc(var(--w) * 1px / 432); --glow: 43 92 255 / .42; --k: 1; --shift: 0px; position: relative; width: min(100%, 560px); height: calc(790px * var(--k)); margin: 0 auto; justify-self: center; translate: var(--shift) 0; }
 /* The whole stage is drawn at one size and scaled as a piece, so the cards
    keep their places round the phone at every width. Where the page is two
    columns, the scale and a nudge keep the cards clear of the words on one
    side and of the window's edge on the other. */
-.stage-inner { position: absolute; left: 50%; top: 0; width: 560px; height: 740px; margin-left: -280px; transform: scale(var(--k)); transform-origin: 50% 0; }
+.stage-inner { position: absolute; left: 50%; top: 0; width: 560px; height: 790px; margin-left: -280px; transform: scale(var(--k)); transform-origin: 50% 0; }
 @media (min-width: 1400px) { .hero-stage { --shift: 32px; } }
 @media (min-width: 1280px) and (max-width: 1399px) { .hero-stage { --k: .88; } }
 @media (min-width: 1180px) and (max-width: 1279px) { .hero-stage { --k: .8; --shift: -10px; } }
@@ -260,8 +262,8 @@
    corners, showing what they are, and two stand behind it lower down,
    showing only their colour. */
 @media (max-width: 599px) {
-  .hero-stage { height: calc(830px * var(--k)); }
-  .stage-inner { height: 830px; }
+  .hero-stage { height: calc(866px * var(--k)); }
+  .stage-inner { height: 866px; }
   .hero-device { top: 104px; }
   .orb.o1 { --x: -84px; --y: -14px; --r: -11deg; }
   .orb.o3 { --x: 84px; --y: -22px; --r: 10deg; }
@@ -610,59 +612,49 @@
 .scroll-cue.gone { opacity: 0; pointer-events: none; }
 @media (max-width: 1023px), (max-height: 820px) { .scroll-cue { display: none; } }
 
-/* ── Today's question, live from the widget's own file ──────────────── */
+/* ── Today's five, live: the five questions at the top of Explore ────── */
 
-.today { padding: clamp(56px, 7vw, 96px) var(--gutter) 0; }
-.today-wrap { position: relative; max-width: 860px; margin: 0 auto; }
-.today-wrap::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 30%;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, var(--bg, #2B5CFF), transparent 70%);
-  opacity: .28;
-  pointer-events: none;
-}
-.today-when {
+.five { position: relative; padding-top: clamp(64px, 8vw, 112px); }
+.five-when {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 0 0 22px;
+  gap: 8px 10px;
+  margin: 0 0 20px;
   font: 700 11px/1.4 var(--font-text);
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--cream-60);
-  text-align: center;
 }
-.today-when .sep { opacity: .5; }
-.today-when #today-next { color: var(--cream-50); font-variant-numeric: tabular-nums; }
-.today-card {
+.five-when .sep { opacity: .5; }
+@media (max-width: 599px) { .five-when { gap: 6px 14px; } .five-when .sep { display: none; } }
+.five-when #five-next { color: var(--cream-50); font-variant-numeric: tabular-nums; }
+.five-row { margin: 0; padding-top: 34px; list-style: none; }
+.five-item { flex: 0 0 min(76vw, 268px); display: flex; scroll-snap-align: start; }
+@media (min-width: 1100px) { .five-item { flex: 1 1 0; min-width: 0; } }
+.five-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  min-height: clamp(280px, 30vw, 360px);
-  padding: clamp(24px, 3.4vw, 40px);
-  border-radius: 32px;
-  background-color: var(--bg, #F2F1EC);
-  color: rgb(var(--ink, 16 16 12));
+  width: 100%;
+  min-height: 330px;
+  padding: 20px 20px 18px;
+  border-radius: 28px;
+  background-color: var(--c);
+  color: rgb(var(--ink));
   text-decoration: none;
-  box-shadow: 0 50px 90px -45px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .22);
+  transition: translate .35s var(--ease), box-shadow .35s var(--ease);
 }
-.today-card:hover, .today-card:focus-visible { color: rgb(var(--ink, 16 16 12)); }
-.today-q { flex: 1 1 0; }
-.today-q.spill { flex-basis: auto; }
-.today-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 0; font: 600 15px/1.2 var(--font-text); }
-.today-foot .go { display: inline-flex; align-items: center; gap: 8px; }
-.today-foot .go b { font-weight: 600; transition: translate .25s ease; }
-.today-card:hover .go b { translate: 4px 0; }
-.today-foot .ed { opacity: .6; font-weight: 500; font-variant-numeric: tabular-nums; }
-.today-note { margin: 20px 0 0; text-align: center; font: 400 15px/1.5 var(--font-text); color: var(--cream-50); }
+.five-card:hover, .five-card:focus-visible { color: rgb(var(--ink)); }
+@media (hover: hover) { .five-card:hover { translate: 0 -6px; } }
+.five-card:focus-visible { outline: 2px solid var(--cream); outline-offset: 3px; }
+.five-n { margin-left: auto; font-variant-numeric: tabular-nums; }
+.five-q { flex: 1 1 0; margin: 14px 0 16px; }
+.five-q.spill { flex-basis: auto; }
+.five-go { display: inline-flex; align-items: center; gap: 8px; font: 650 14px/1.2 var(--font-text); }
+.five-go b { font-weight: 600; transition: translate .25s ease; }
+.five-card:hover .five-go b { translate: 4px 0; }
+.five-note { margin-top: 22px; font: 400 15px/1.55 var(--font-text); color: var(--cream-50); text-wrap: pretty; }
 
 /* ── The day's row ──────────────────────────────────────────────────── */
 
@@ -1080,12 +1072,71 @@
   [data-tilt] { transform: none; }
 }
 
-/* The phone holds a real card from the app, and the cards around it are real ones too. */
-.deck.live { margin-top: 10px; border-radius: 22px; overflow: hidden; transition: opacity .18s ease; }
-.deck.live.turning { opacity: 0; }
-.live-card { display: block; width: 100%; height: 100%; border: 0; background: transparent; }
+/* The phone holds today's cards from the app, on its shelf, and the cards
+   around it are real ones too. The shelf is drawn in the app's points, as
+   the screen is: a card 340 across at the proportion the app gives it on
+   Today (366 by 606), its neighbours showing at either edge. Each card
+   stands at --o places from the one in front, and moves there. */
 .orb-pic { padding: 0; overflow: hidden; background: var(--c); }
 .orb-pic img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; display: block; }
 .orb-pic.orb-back > * { opacity: 1; transform: none; }
-.phone-next { display: flex; align-items: center; gap: 8px; margin: 18px auto 0; padding: 10px 18px; border-radius: 999px; border: 1px solid currentColor; background: transparent; color: inherit; font: 600 15px/1 inherit; font-family: inherit; cursor: pointer; position: relative; z-index: 3; }
-.phone-next:hover { background: rgba(127,127,127,.12); }
+.shelf { position: relative; flex: none; height: 563px; margin: 18px -18px 0; touch-action: pan-y; }
+.shelf-card {
+  --step: 352px;
+  position: absolute;
+  left: 31px;
+  top: 0;
+  width: 340px;
+  height: 563px;
+  margin: 0;
+  border-radius: 30px;
+  overflow: hidden;
+  background: var(--c);
+  box-shadow: 0 26px 60px -18px rgba(0, 0, 0, .7);
+  transform: translateX(calc(var(--o, 0) * var(--step))) scale(.93);
+  filter: brightness(.6) saturate(.9);
+  transition: transform 1s cubic-bezier(.2, .75, .15, 1), filter 1s ease;
+}
+.shelf-card.front { transform: translateX(0) scale(1); filter: none; }
+.shelf-card.jump { transition: none; }
+.shelf-card img { display: block; width: 100%; height: 100%; object-fit: cover; transition: opacity .45s ease; }
+.shelf-card.live img { opacity: 0; }
+.shelf-card::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07); pointer-events: none; }
+/* The card in front, live: its page from the site, laid out at the app's
+   own size and shown at the shelf's. */
+.shelf-live {
+  position: absolute;
+  z-index: 2;
+  left: 31px;
+  top: 0;
+  width: 366px;
+  height: 606px;
+  border: 0;
+  border-radius: 32px;
+  background: transparent;
+  transform: scale(.929);
+  transform-origin: 0 0;
+  opacity: 0;
+  transition: opacity .45s ease;
+}
+.shelf-live.on { opacity: 1; }
+/* The bars over the shelf are the day's five: the one on screen fills as
+   its time goes by, as a story's does. */
+.app-bars i { position: relative; overflow: hidden; }
+.app-bars i b { position: absolute; inset: 0; border-radius: inherit; background: #F2F1EC; transform: scaleX(var(--p, 0)); transform-origin: 0 50%; }
+.app-bars i.done b { --p: 1; }
+/* Under the phone: back, pause and on. */
+.phone-controls { position: relative; z-index: 3; display: flex; justify-content: center; gap: 6px; margin: 18px auto 0; width: max-content; padding: 4px; border-radius: 999px; border: 1px solid rgba(242, 241, 236, .14); background: rgba(20, 20, 22, .55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+html:not(.js) .phone-controls { display: none; }
+.pc { display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--cream); cursor: pointer; transition: background-color .2s ease; }
+.pc:hover { background: rgba(242, 241, 236, .1); }
+.pc:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
+.pc svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pc .i-play { fill: currentColor; stroke-width: 1.5; }
+.pc-play .i-play, .pc-play[aria-pressed="true"] .i-pause { display: none; }
+.pc-play[aria-pressed="true"] .i-play { display: block; }
+.phone-note { margin: 10px 0 0; text-align: center; font: 500 12.5px/1.45 var(--font-text); color: var(--cream-50); }
+@media (prefers-reduced-motion: reduce) {
+  .shelf-card, .shelf-live { transition: none; }
+  .pc-play { display: none; }
+}

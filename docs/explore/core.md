@@ -211,7 +211,10 @@ of the first cards dealt, every card is of a subject of its own where the
 source gives enough, a small tile takes only a question it holds whole, and
 a group that cannot be laid whole is left out. The first time
 Explore opens it comes up a tile at a time (still for a reader who asked
-for less motion); after that it is simply there.
+for less motion); after that it is simply there. The feed under it leaves
+out the cards it laid, and does not open in its shape: a page never shows
+the same mosaic of the same cards twice. A film among its cards
+(`video-cards`, below) plays out of its tile.
 
 Fields: `title`, `subtitle` (neither by default: the cards are the cover),
 and a `source`.
@@ -229,9 +232,13 @@ reader — in a mosaic of two columns that goes on for as long as the reader
 scrolls: one card across, two side by side, a tall one beside two, two, two
 beside a tall one, two, and round again. A card read already is left out,
 and one about a place reaches only the readers who live there, as on every
-shelf. It is built a band at a time as each band comes near the screen, so
+shelf. Under a cover, the cover's cards are left out too, and the first band
+is never in the cover's shape. The films are cards of the feed like the
+others, each a tile with its play mark; the day's film, one a day of those
+the reader has not watched, opens the feed, and a film watched is a card
+read. It is built a band at a time as each band comes near the screen, so
 the whole bank costs what the screen shows; a tap opens a card among the
-ones laid so far.
+ones laid so far, and a film plays out of its box.
 
 It stands last: the checker refuses a section after it, which could never be
 reached. A build that meets a feed anywhere else draws its first round of
@@ -427,15 +434,21 @@ keeps its empty places.
 Every challenge is taken on a screen of its own
 (`lib/widgets/explore/challenge_screen.dart`, one screen for all): the
 tile's panel grows into the page and back, calmly, and the challenge is
-taken there in three moments — what it is (the rule and the skill, the
-name, a sentence or two on what it measures and why it matters, the
-reader's figures between hairlines, Begin in the challenge's tone — or
-Continue on a round begun), the round (a running head in small capitals,
-a fine rule under it, the content set as a page, precise flat controls,
-each answer told by a calm colour and a word), and a short report (the
-score, accuracy and the time where it counts, a measured line read
-against chance, "Personal best" in words, the cards again, the next
-challenge, another round or when the next comes, and the score to send).
+taken there in three moments, each one composition the height of the
+screen, with the X in the screen's corner inside the safe area (Apple's
+glass on iOS 26) and the head one line level with it — never a card
+floating in the screen, never a band of nothing (the owner, November
+2026). What it is: the skill at the head, the name large, a sentence or
+two on what it measures and why it matters, then the day's round a turn
+to a row and the reader's figures between hairlines, over Begin — or
+Continue on a round begun — the type and the rows set to the room the
+phone has. The round: the name and how far along at the head, a fine rule
+under it, the content set as a page, precise flat controls, each answer
+told by a calm colour and a word. A short report on the page itself: the
+score large, accuracy and the time where it counts, a measured line read
+against chance, "Personal best" in words, the cards again under
+hairlines, the next challenge, another round or when the next comes, and
+the score to send.
 No confetti, no exclamation marks; motion is fades and short slides of
 150 to 250 ms; haptics light and rare. Sixty seconds and In order are set
 this way in full; the other challenges' rounds still deal their cards of
@@ -673,6 +686,54 @@ Fields: `title`, `subtitle`.
 ```json
 {"id": "line-of-day", "block": "line-of-day",
  "title": {"en": "Line of the day", "it": "La frase del giorno"}}
+```
+
+### `news-today`
+
+The latest news, reasoned: the paper the server writes each morning
+(functions/src/news.ts, lib/data/news_paper.dart). On Explore for every
+subject, the newest paper's front page, the world's most important stories
+of the morning, five at most; on a subject's page, the subject's own stories
+of the week. A tap on a story opens its page (lib/widgets/news/
+news_story_page.dart) and counts it read. No story, no section. The day of
+the paper stands by the title, as a paper dates its front.
+
+`look` lays it out (lib/widgets/news/news_looks.dart), black and quiet, the
+only colour each story's subject:
+
+| `look` | The news |
+|---|---|
+| `front` (the default) | a front page: the lead story on a panel of its own, its headline, its two lines and the outlets that report it, named and counted; every other story under it, the same, a hairline between |
+| `lead` | one story leads, large: its headline, why it matters (the story's own step of what it means, beside a rule in its subject's colour) and its outlets; then two more as compact rows, where each is filed, how many outlets report it and when, over its headline |
+| `pager` | a story to a card, each across the page and as tall as the tallest, the next a swipe away, dots under them that say how many: its headline, its two lines, why it matters and its outlets at its foot |
+
+Fields: `title`, `subtitle`, `look`.
+
+```json
+{"id": "news-today", "block": "news-today", "look": "lead",
+ "title": {"en": "Latest news", "it": "Ultime notizie"}}
+```
+
+### `video-cards`
+
+Cards that are short films (lib/data/video_cards.dart), in a section of
+their own: one large across the page, its first frame, or more in a row;
+a tap opens one to the whole screen and plays it (lib/widgets/
+video_card.dart). On a subject's page, that subject's.
+
+A film is also a card like any other, without this section: the feed deals
+it, the day's film first, and so do the shelves that lay any card as a tile
+from a query that names no kinds of question nor levels (`cover`,
+`carousel`, `grid`, `bento`, `hero`, `pair`, `stack`, `ticker`). Its tile
+is its subject's colour with its question in the reader's language, a play
+mark in its corner and how long it runs where the tile has room; a tap plays
+it out of its tile, never opens it as a card to read, and counts it read.
+
+Fields: `title`, `subtitle`.
+
+```json
+{"id": "videos", "block": "video-cards",
+ "title": {"en": "Cards to watch", "it": "Carte da guardare"}}
 ```
 
 ## The shelves Explore always had

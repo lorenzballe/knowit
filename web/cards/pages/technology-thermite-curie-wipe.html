@@ -190,7 +190,7 @@ const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   Kit.answer({choice: said, correct: ok, sure: pct});
   sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: you said “${said}”`);
   Kit.$('verdict').innerHTML = `<b>You said: ${NAMES[pick]}.</b> ${pct}% sure. ${TAILS[pick]}`;
-  setTimeout(() => Turn.over(), 700);
+  setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
 });
 Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || pick >= 0) return;

@@ -5,6 +5,7 @@ import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../state/progress.dart';
 import '../theme.dart';
+import '../widgets/top_edge.dart' show SoftTop;
 import '../widgets/ui.dart';
 import 'progress_text.dart';
 import 'week_screen.dart';
@@ -58,47 +59,49 @@ class PathScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(22, 24, 22, 32),
-                  children: [
-                    _Trail(app: app),
-                    const SizedBox(height: 22),
-                    // The week is the same question at another distance.
-                    Semantics(
-                      button: true,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (routeContext) => WeekScreen(
-                              app: app,
-                              onBack: () => Navigator.of(routeContext).pop(),
+                child: SoftTop(
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(22, 24, 22, 32),
+                    children: [
+                      _Trail(app: app),
+                      const SizedBox(height: 22),
+                      // The week is the same question at another distance.
+                      Semantics(
+                        button: true,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (routeContext) => WeekScreen(
+                                app: app,
+                                onBack: () => Navigator.of(routeContext).pop(),
+                              ),
                             ),
                           ),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              l.yourWeek,
-                              style: AppText.body(
-                                size: 14,
-                                weight: FontWeight.w600,
-                                color: context.p.link,
+                          child: Row(
+                            children: [
+                              Text(
+                                l.yourWeek,
+                                style: AppText.body(
+                                  size: 14,
+                                  weight: FontWeight.w600,
+                                  color: context.p.link,
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              '→',
-                              style: AppText.body(
-                                size: 14,
-                                color: context.p.link,
+                              const SizedBox(width: 6),
+                              Text(
+                                '→',
+                                style: AppText.body(
+                                  size: 14,
+                                  color: context.p.link,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -165,7 +168,9 @@ class _Stop extends StatelessWidget {
     if (parts.length != 3 || parts.contains(null)) return null;
     final date = DateTime(parts[0]!, parts[1]!, parts[2]!);
     final String locale = Localizations.localeOf(context).toString();
-    return context.l10n.reachedOn(DateFormat.MMMd(locale).format(date));
+    return context.l10n.elided(
+      context.l10n.reachedOn(DateFormat.MMMd(locale).format(date)),
+    );
   }
 
   @override

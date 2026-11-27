@@ -14,7 +14,14 @@ import '../legal.dart';
 
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+import '../data/goals.dart' show Goal;
+import '../data/pill_bank.dart' show PillBank;
+import '../data/pills_repository.dart' show dealableOn;
+import '../data/topics.dart' show TopicStyle, kTopicOrder, kTopics;
+import '../data/video_cards.dart' show videoCardOf;
+import '../models/pill.dart' show Pill;
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../state/progress.dart' show kCalibrationFloor;
 import '../store_links.dart'
     show kAppStoreSubscriptionsUrl, kGooglePlaySubscriptionsUrl;
@@ -23,6 +30,9 @@ import '../sync/subscription.dart';
 import '../theme.dart';
 import '../utils/reminders.dart' show remindersSupported;
 import '../widgets/chunky.dart';
+import '../widgets/deeper_sheet.dart' show cardAiOn;
+import '../widgets/explore/card_tiles.dart'
+    show BoxTile, TileLook, questionFits;
 import '../widgets/fit_text.dart';
 import '../widgets/ambient.dart';
 import '../widgets/motion.dart';
@@ -31,6 +41,7 @@ import 'purchase_success_screen.dart';
 import '../widgets/glass_round.dart';
 
 part 'trial_offer.dart';
+part 'paywall_looks.dart';
 
 /// What Astute+ costs, in cents, so the saving can be worked out rather than
 /// asserted. A hardcoded "save 37%" is a number that quietly stops being true
@@ -61,11 +72,18 @@ int get kYearlySavingPercent {
 // new; then the day of the reader's own cards, the paths and the books, the
 // record, the archive. The door a reader came through puts its own thing
 // first, so the first line under the headline is what they reached for.
+// The assistant and the coach only where the answers by Claude are on for
+// this reader ([ai], cardAiOn): the paywall never sells what is switched
+// off.
 //
 // Each is marked by a small drawing in one of the headline's colours, in
 // the line weight of the app's own marks: a speech bubble, a chart going
 // up, cards in a fan, a book, two lines meeting, a clock turned back.
-List<_Feature> _features(AppLocalizations l, PaywallVariant variant) {
+List<_Feature> _features(
+  AppLocalizations l,
+  PaywallVariant variant, {
+  required bool ai,
+}) {
   final _Feature ask = (
     glyph: _Glyph.ask,
     title: l.perkAskTitle,
@@ -102,7 +120,13 @@ List<_Feature> _features(AppLocalizations l, PaywallVariant variant) {
     sub: l.perkReadShort,
     fresh: false,
   );
-  final List<_Feature> all = [ask, coach, five, shelves, gap, read];
+  final List<_Feature> all = [
+    if (ai) ...[ask, coach],
+    five,
+    shelves,
+    gap,
+    read,
+  ];
   final _Feature? first = switch (variant) {
     PaywallVariant.record => gap,
     PaywallVariant.five => five,
@@ -202,12 +226,11 @@ enum PaywallVariant {
       // a match, and only past that is the reader over or under.
       (:final int sure, :final int right, :final double gap)
           when gap.abs().round() <= 5 =>
-        l.paywallRecordEven(sure, right),
+        l.elided(l.paywallRecordEven(sure, right)),
       (:final int sure, :final int right, :final double gap) when gap > 0 =>
-        l.paywallRecordOver(sure, right),
-      (:final int sure, :final int right, gap: _) => l.paywallRecordUnder(
-        sure,
-        right,
+        l.elided(l.paywallRecordOver(sure, right)),
+      (:final int sure, :final int right, gap: _) => l.elided(
+        l.paywallRecordUnder(sure, right),
       ),
       null => l.paywallRecordLine,
     },
@@ -353,12 +376,16 @@ Future<void> showPurchaseSuccess(
         planName: l.successPlanName(
           bought == Plan.year ? l.planYearly : l.planMonthly,
         ),
-        planLine: end != null
-            ? l.successFreeUntil(end, price, suffix)
-            : l.successRenewsLine(day(renew), price, suffix),
-        foot: end != null
-            ? l.successFootFirstCharge(end)
-            : l.successFootRenews(day(renew)),
+        planLine: l.elided(
+          end != null
+              ? l.successFreeUntil(end, price, suffix)
+              : l.successRenewsLine(day(renew), price, suffix),
+        ),
+        foot: l.elided(
+          end != null
+              ? l.successFootFirstCharge(end)
+              : l.successFootRenews(day(renew)),
+        ),
         onReceipt: () => openLink(
           iOS ? kAppStoreSubscriptionsUrl : kGooglePlaySubscriptionsUrl,
         ),
@@ -401,6 +428,11 @@ class PaywallScreen extends StatefulWidget {
 class _PaywallScreenState extends State<PaywallScreen> {
   late Plan _plan = widget.app.plan;
 
+  /// Whether the answers by Claude are on for this reader: the assistant
+  /// and the coach are offered only then.
+  bool get _ai =>
+      cardAiOn(widget.app, Localizations.localeOf(context).languageCode);
+
   /// How long the offer was on screen, how it was left, and how often the
   /// reader went between the plans — the three things a paywall's own
   /// numbers are made of.
@@ -422,6 +454,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   /// That screen, until it closes.
   Future<void>? _waited;
+
+  /// D's second step, the plans over the page, is up.
+  bool _plansUp = false;
 
   Subscription get _store => Subscription.instance;
 
@@ -624,6 +659,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
           if (!mounted) return;
         }
     }
+    if (!mounted) return;
     switch (outcome) {
       case PurchaseOutcome.bought:
         return;
@@ -750,34 +786,20 @@ class _PaywallScreenState extends State<PaywallScreen> {
   Widget build(BuildContext context) => ScreenView(
     name: 'paywall',
     // The store can answer while the screen is open — a try after a wait,
-    // Try again — and the plans come in when it does.
+    // Try again — and the plans come in when it does. A look picked in the
+    // developer tools shows at once.
     child: ListenableBuilder(
-      listenable: _store,
+      listenable: Listenable.merge([_store, DebugLooks.paywall]),
       builder: (context, _) => _page(context),
     ),
   );
 
-  Widget _page(BuildContext context) {
+  /// The badge, and the way out.
+  Widget _topRow(BuildContext context) {
     final l = context.l10n;
     final p = context.p;
     final bool dark = p.isDark;
-    final double homeBar = MediaQuery.viewPaddingOf(context).bottom;
-    final opening = _opening(l, _variant, widget.app);
-    final double scale = MediaQuery.textScalerOf(context).scale(100) / 100;
-    // One screen with nothing to scroll, up to a little past the default
-    // text size. Past that the words need more than one screen has, and
-    // the page scrolls, everything at its full size, rather than cut the
-    // price, the terms or the way out.
-    final bool oneScreen = scale <= 1.2;
-    // A short phone — an SE, or a test's 800 by 600 — sets the headline and
-    // the air around it a size smaller, so the perks keep room for all three
-    // under the line the door adds and the trial's days over the links.
-    final bool short =
-        MediaQuery.sizeOf(context).height -
-            MediaQuery.paddingOf(context).vertical <
-        700;
-
-    final Widget top = Row(
+    return Row(
       children: [
         GestureDetector(
           // Google Play's reviewers get in here with the code Play Console
@@ -849,6 +871,65 @@ class _PaywallScreenState extends State<PaywallScreen> {
         ),
       ],
     );
+  }
+
+  /// What Apple requires beside a subscription, always on screen: a way
+  /// back to something already paid for — which needs no plans, so it is
+  /// there while the store is not — and the terms and the privacy policy.
+  /// The web has no store to restore from.
+  Widget _links(BuildContext context, {required bool short}) {
+    final l = context.l10n;
+    return Padding(
+      padding: EdgeInsets.only(top: short ? 6 : 10),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          if (!kIsWeb) ...[
+            _SmallLink(
+              l.restorePurchases,
+              key: const ValueKey('paywall-restore'),
+              onTap: _restore,
+              link: false,
+            ),
+            _SmallLink.dot(context),
+          ],
+          _SmallLink(
+            l.termsOfUse,
+            onTap: () => _openLink('terms', termsUrlFor(defaultTargetPlatform)),
+          ),
+          _SmallLink.dot(context),
+          _SmallLink(
+            l.privacyPolicy,
+            onTap: () => _openLink('privacy', kPrivacyUrl),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _page(BuildContext context) {
+    final PaywallLook look = DebugLooks.paywallPicked;
+    if (look != PaywallLook.a) return _lookPage(context, look);
+    final l = context.l10n;
+    final p = context.p;
+    final double homeBar = MediaQuery.viewPaddingOf(context).bottom;
+    final opening = _opening(l, _variant, widget.app);
+    final double scale = MediaQuery.textScalerOf(context).scale(100) / 100;
+    // One screen with nothing to scroll, up to a little past the default
+    // text size. Past that the words need more than one screen has, and
+    // the page scrolls, everything at its full size, rather than cut the
+    // price, the terms or the way out.
+    final bool oneScreen = scale <= 1.2;
+    // A short phone — an SE, or a test's 800 by 600 — sets the headline and
+    // the air around it a size smaller, so the perks keep room for all three
+    // under the line the door adds and the trial's days over the links.
+    final bool short =
+        MediaQuery.sizeOf(context).height -
+            MediaQuery.paddingOf(context).vertical <
+        700;
+
+    final Widget top = _topRow(context);
 
     final List<Widget> opener = [
       // Ten less than the air under the row used to be, now that the way
@@ -886,38 +967,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
         stacked: scale >= 1.6,
         oneScreen: oneScreen,
       ),
-      // What Apple requires beside a subscription, always on screen: a way
-      // back to something already paid for — which needs no plans, so it is
-      // there while the store is not — and the terms and the privacy
-      // policy. The web has no store to restore from.
-      Padding(
-        padding: EdgeInsets.only(top: short ? 6 : 10),
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            if (!kIsWeb) ...[
-              _SmallLink(
-                l.restorePurchases,
-                key: const ValueKey('paywall-restore'),
-                onTap: _restore,
-                link: false,
-              ),
-              _SmallLink.dot(context),
-            ],
-            _SmallLink(
-              l.termsOfUse,
-              onTap: () =>
-                  _openLink('terms', termsUrlFor(defaultTargetPlatform)),
-            ),
-            _SmallLink.dot(context),
-            _SmallLink(
-              l.privacyPolicy,
-              onTap: () => _openLink('privacy', kPrivacyUrl),
-            ),
-          ],
-        ),
-      ),
+      _links(context, short: short),
     ];
 
     final EdgeInsets padding = EdgeInsets.fromLTRB(
@@ -975,7 +1025,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
                                         ...opener,
                                         SizedBox(height: short ? 12 : 16),
                                         _FeatureList(
-                                          features: _features(l, _variant),
+                                          features: _features(
+                                            l,
+                                            _variant,
+                                            ai: _ai,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -1008,7 +1062,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
                               children: [
                                 ...opener,
                                 const SizedBox(height: 22),
-                                _FeatureList(features: _features(l, _variant)),
+                                _FeatureList(
+                                  features: _features(l, _variant, ai: _ai),
+                                ),
                                 const SizedBox(height: 6),
                                 ...foot,
                               ],
@@ -1033,8 +1089,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
     required bool oneScreen,
   }) {
     final l = context.l10n;
-    final p = context.p;
-    final bool dark = p.isDark;
     final _Offer offer = _offer;
     if (offer != _Offer.plans && offer != _Offer.preview) {
       return [
@@ -1046,38 +1100,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
         ),
       ];
     }
-    final List<Plan> sale = _plansOnSale;
-    final Plan shown = _shown;
-    final List<Widget> tiles = [
-      for (final Plan plan in sale)
-        plan == Plan.year
-            ? _PlanTile(
-                label: l.planYearly,
-                price: _priceFor(Plan.year),
-                per: l.perYearShort,
-                note: l.aMonth(
-                  yearPerMonth(
-                    locale: Localizations.localeOf(context).toString(),
-                  ),
-                ),
-                badge: sale.length < 2
-                    ? null
-                    : switch (yearlySaving()) {
-                        final int saving => l.savePercent(saving),
-                        null => null,
-                      },
-                selected: shown == Plan.year,
-                onTap: () => _pick(Plan.year),
-              )
-            : _PlanTile(
-                label: l.planMonthly,
-                price: _priceFor(Plan.month),
-                per: l.perMonthShort,
-                note: l.billedMonthly,
-                selected: shown == Plan.month,
-                onTap: () => _pick(Plan.month),
-              ),
-    ];
+    final List<Widget> tiles = _planTiles(context);
     return [
       // Side by side, the same height on their own: three lines each, every
       // line fitted to the tile's width. At the largest text sizes, one
@@ -1097,60 +1120,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
           ],
         ),
       SizedBox(height: short ? 10 : 18),
-      // Sixty high on a five-point edge: the face and its edge together
-      // are sixty-five — five less on a short phone, where the small print
-      // under it needs the room.
-      // Now and then a glint crosses the button, in the headline's three
-      // colours: the one thing on the screen that moves on its own after
-      // the opening, and it moves on the thing to press.
-      _Sheen(
-        on: !(widget.app.isPlus || _buying),
-        face: (short ? 60 : 65) - 5,
-        radius: 22,
-        colours: dark ? _perkHues : _perkHuesOnPaper,
-        child: ChunkyButton(
-          key: const ValueKey('paywall-buy'),
-          label: _cta,
-          height: short ? 60 : 65,
-          depth: 5,
-          radius: 22,
-          labelSize: 16.5,
-          labelSpacing: 0.3,
-          fill: p.inverse,
-          ink: p.onInverse,
-          edge: dark ? const Color(0xFFA8A59D) : null,
-          shadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: dark ? 0.45 : 0.15),
-              blurRadius: 34,
-              offset: const Offset(0, 16),
-            ),
-          ],
-          onPressed: widget.app.isPlus || _buying ? null : _start,
-        ),
-      ),
+      _buyButton(context, short: short),
       // A reader already on Astute+ is sent to the store's own place for
       // their plan. This used to say "Cancel the trial" and turn a flag off
       // on the phone, while the store went on and charged them.
       if (widget.app.isPlus)
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            Analytics.capture('manage subscription opened', {
-              'is_plus': true,
-              'from': 'paywall',
-            });
-            Subscription.instance.presentCustomerCenter();
-          },
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Text(
-              l.manageSubscription,
-              textAlign: TextAlign.center,
-              style: _smallPrintStyle(context),
-            ),
-          ),
-        )
+        _manageLink(context)
       else
         // Under the button, one line. The price and the plan are on the
         // button and on the tiles, the store's own sheet says the rest
@@ -1182,6 +1157,480 @@ class _PaywallScreenState extends State<PaywallScreen> {
           ),
         ),
     ];
+  }
+
+  /// The plans on sale, each a tile: the year with what it comes to a
+  /// month and what it saves against the month, and the month.
+  List<Widget> _planTiles(BuildContext context) {
+    final l = context.l10n;
+    final List<Plan> sale = _plansOnSale;
+    final Plan shown = _shown;
+    return [
+      for (final Plan plan in sale)
+        plan == Plan.year
+            ? _PlanTile(
+                label: l.planYearly,
+                price: _priceFor(Plan.year),
+                per: l.perYearShort,
+                note: l.aMonth(
+                  yearPerMonth(
+                    locale: Localizations.localeOf(context).toString(),
+                  ),
+                ),
+                badge: sale.length < 2
+                    ? null
+                    : switch (yearlySaving()) {
+                        final int saving => l.savePercent(saving),
+                        null => null,
+                      },
+                selected: shown == Plan.year,
+                onTap: () => _pick(Plan.year),
+              )
+            : _PlanTile(
+                label: l.planMonthly,
+                price: _priceFor(Plan.month),
+                per: l.perMonthShort,
+                note: l.billedMonthly,
+                selected: shown == Plan.month,
+                onTap: () => _pick(Plan.month),
+              ),
+    ];
+  }
+
+  /// The button. Sixty high on a five-point edge: the face and its edge
+  /// together are sixty-five — five less on a short phone, where the small
+  /// print under it needs the room. Now and then a glint crosses it, in the
+  /// headline's three colours: the one thing on the screen that moves on
+  /// its own after the opening, and it moves on the thing to press.
+  Widget _buyButton(
+    BuildContext context, {
+    required bool short,
+    Key key = const ValueKey('paywall-buy'),
+    String? label,
+    VoidCallback? onPressed,
+  }) {
+    final p = context.p;
+    final bool dark = p.isDark;
+    final bool still = widget.app.isPlus || _buying;
+    return _Sheen(
+      on: !still,
+      face: (short ? 60 : 65) - 5,
+      radius: 22,
+      colours: dark ? _perkHues : _perkHuesOnPaper,
+      child: ChunkyButton(
+        key: key,
+        label: label ?? _cta,
+        height: short ? 60 : 65,
+        depth: 5,
+        radius: 22,
+        labelSize: 16.5,
+        labelSpacing: 0.3,
+        fill: p.inverse,
+        ink: p.onInverse,
+        edge: dark ? const Color(0xFFA8A59D) : null,
+        shadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: dark ? 0.45 : 0.15),
+            blurRadius: 34,
+            offset: const Offset(0, 16),
+          ),
+        ],
+        onPressed: still ? null : (onPressed ?? _start),
+      ),
+    );
+  }
+
+  /// Where a reader already on Astute+ is sent: the store's own place for
+  /// their plan.
+  Widget _manageLink(BuildContext context) => GestureDetector(
+    behavior: HitTestBehavior.opaque,
+    onTap: () {
+      Analytics.capture('manage subscription opened', {
+        'is_plus': true,
+        'from': 'paywall',
+      });
+      Subscription.instance.presentCustomerCenter();
+    },
+    child: Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Text(
+        context.l10n.manageSubscription,
+        textAlign: TextAlign.center,
+        style: _smallPrintStyle(context),
+      ),
+    ),
+  );
+
+  /// Whether the reminder before the charge can reach this reader: a phone
+  /// whose notifications are allowed, or not yet asked about. Promised only
+  /// then, as the first day's offer promises it.
+  bool get _canRemind =>
+      remindersSupported &&
+      (widget.app.notificationsAllowed || !widget.app.pushAsked);
+
+  /// A prototype the developer tools put in A's place
+  /// (lib/screens/paywall_looks.dart): A's page, with the app's own cards in
+  /// place of the drawn marks, and the free days laid out over the button;
+  /// in C opening on the reader's own goal and subjects; in D in two steps.
+  ///
+  /// Laid out as A is: one screen with nothing to scroll up to a little past
+  /// the default text size, the plans and the button always at the foot and
+  /// what is above them made a little smaller where it nearly fits, or
+  /// scrolling under them where it plainly does not; past that size, one
+  /// page that scrolls, everything at its full size.
+  Widget _lookPage(BuildContext context, PaywallLook look) {
+    final l = context.l10n;
+    final p = context.p;
+    final double homeBar = MediaQuery.viewPaddingOf(context).bottom;
+    final double scale = MediaQuery.textScalerOf(context).scale(100) / 100;
+    final bool oneScreen = scale <= 1.2;
+    final bool short =
+        MediaQuery.sizeOf(context).height -
+            MediaQuery.paddingOf(context).vertical <
+        700;
+    final bool twoSteps = look == PaywallLook.d;
+    final opening = look == PaywallLook.c
+        ? _madeFor(l, _variant, widget.app)
+        : _opening(l, _variant, widget.app);
+
+    // The cards: in C, of the subjects the reader leaned towards when there
+    // are some; otherwise of every subject they read, those first.
+    final List<String> leaning = leaningSubjects(widget.app);
+    final List<String> subjects = look == PaywallLook.c && leaning.isNotEmpty
+        ? leaning
+        : [
+            ...leaning,
+            for (final String k in _stripOrder)
+              if (widget.app.pickedTopics.contains(k) && !leaning.contains(k))
+                k,
+          ];
+    final List<_Feature> features = _features(l, _variant, ai: _ai);
+    // In B and C the cards are the features' marks, where A drew them, so
+    // the page keeps A's height and everything stays on one screen. D's
+    // first step has the plans' room as well: its cards drift across the
+    // page, large enough to be read.
+    final Size tile = short ? const Size(112, 140) : const Size(128, 160);
+    final List<Pill> cards = _previewCards(
+      context,
+      subjects: subjects,
+      tile: twoSteps ? tile : _thumbBase,
+      count: twoSteps
+          ? (subjects.length <= 3 ? 9 : 8)
+          : _PlainFeatures.cardsFor(features),
+    );
+
+    const EdgeInsets side = EdgeInsets.symmetric(horizontal: 22);
+    final List<Widget> above = [
+      SizedBox(height: short ? 2 : 6),
+      Padding(
+        padding: side,
+        child: _Headline(
+          key: const ValueKey('paywall-headline'),
+          text: opening.title,
+          mark: opening.mark,
+          size: short ? 31 : 35,
+        ),
+      ),
+      Padding(
+        padding: side.copyWith(top: short ? 6 : 8),
+        child: FitText(
+          opening.line,
+          key: const ValueKey('paywall-line'),
+          maxLines: 3,
+          minSize: 12.5,
+          style: AppText.body(
+            size: short ? 13.5 : 14.5,
+            height: 1.38,
+            color: p.ink.withValues(alpha: 0.62),
+          ),
+        ),
+      ),
+      if (twoSteps)
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: short ? 16 : 24),
+          child: _CardStrip(
+            key: const ValueKey('paywall-cards'),
+            cards: cards,
+            tile: tile,
+          ),
+        )
+      else
+        SizedBox(height: short ? 12 : 16),
+      Padding(
+        padding: side,
+        child: _PlainFeatures(
+          key: const ValueKey('paywall-features'),
+          features: features,
+          cards: twoSteps ? const [] : cards,
+          gap: short ? 7 : (twoSteps ? 14 : 8),
+        ),
+      ),
+    ];
+
+    final List<Widget> foot = [
+      SizedBox(height: short ? 8 : 12),
+      if (twoSteps)
+        ..._firstStep(context, short: short)
+      else
+        ..._lookOffer(
+          context,
+          short: short,
+          stacked: scale >= 1.6,
+          rail: oneScreen,
+        ),
+      _links(context, short: short),
+    ];
+
+    final Widget top = Padding(
+      padding: side.copyWith(top: 6),
+      child: _topRow(context),
+    );
+    final double bottom = homeBar > 0 ? 0 : 16;
+    final Widget page = oneScreen
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              top,
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, room) => _FadeFoot(
+                    child: SingleChildScrollView(
+                      key: const ValueKey('paywall-features-scroll'),
+                      child: _FitDown(
+                        height: room.maxHeight,
+                        fill: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 18),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: above,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: side.copyWith(bottom: bottom),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: foot,
+                ),
+              ),
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              top,
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(bottom: bottom + 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ...above,
+                      const SizedBox(height: 6),
+                      Padding(
+                        padding: side,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: foot,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+
+    return PopScope(
+      // D's plans come down before the paywall goes.
+      canPop: !(twoSteps && _plansUp),
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && _plansUp) setState(() => _plansUp = false);
+      },
+      child: Scaffold(
+        backgroundColor: p.surface,
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            const Positioned(
+              left: -80,
+              top: -60,
+              width: 560,
+              height: 380,
+              child: _Lights(),
+            ),
+            SafeArea(bottom: true, child: page),
+            if (twoSteps)
+              _PlansSheet(
+                up: _plansUp,
+                onDown: () => setState(() => _plansUp = false),
+                children: [
+                  ..._lookOffer(
+                    context,
+                    short: short,
+                    stacked: scale >= 1.6,
+                    rail: false,
+                    inSheet: true,
+                  ),
+                  _links(context, short: short),
+                ],
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// D's first step, at the foot: one button that brings the plans up, and
+  /// under it that the plan can be cancelled at any time. Where the store
+  /// has not put the plans on screen, why not, as on A.
+  List<Widget> _firstStep(BuildContext context, {required bool short}) {
+    final l = context.l10n;
+    final _Offer offer = _offer;
+    if (offer != _Offer.plans && offer != _Offer.preview) {
+      return [
+        _StorePanel(
+          key: const ValueKey('paywall-store'),
+          offer: offer,
+          storeName: _storeName,
+          onTryAgain: () => _store.reloadOffering(),
+        ),
+      ];
+    }
+    final bool trial = _freeDays(_shown) != null;
+    return [
+      _buyButton(
+        context,
+        short: short,
+        key: const ValueKey('paywall-next'),
+        label: widget.app.isPlus
+            ? l.plusIsActive
+            : trial
+            ? l.trialOfferStart
+            : l.seeThePlans,
+        onPressed: () => setState(() => _plansUp = true),
+      ),
+      if (widget.app.isPlus)
+        _manageLink(context)
+      else
+        Padding(
+          padding: EdgeInsets.only(top: short ? 8 : 10),
+          child: _CheckLine(l.cancelAnyTime),
+        ),
+    ];
+  }
+
+  /// A look's plans, the button and the line under it: in B and C the
+  /// tiles, then the free days on one line over the button they explain;
+  /// in D's sheet the free days day by day first, then the tiles and the
+  /// button. A plan that starts with no free days has no days to lay out:
+  /// the line under the button says it is charged today. Where the store
+  /// has not put the plans on screen, why not, as on A.
+  List<Widget> _lookOffer(
+    BuildContext context, {
+    required bool short,
+    required bool stacked,
+    required bool rail,
+    bool inSheet = false,
+  }) {
+    final l = context.l10n;
+    final _Offer offer = _offer;
+    if (offer != _Offer.plans && offer != _Offer.preview) {
+      return [
+        _StorePanel(
+          key: const ValueKey('paywall-store'),
+          offer: offer,
+          storeName: _storeName,
+          onTryAgain: () => _store.reloadOffering(),
+        ),
+      ];
+    }
+    final List<Widget> tiles = _planTiles(context);
+    final Plan shown = _shown;
+    final int? days = _freeDays(shown);
+    final bool plus = widget.app.isPlus;
+    final String price = _priceFor(shown);
+    final DateTime today = DateTime.now();
+    final Widget? timeline = days == null || plus
+        ? null
+        : rail || shown != Plan.year
+        ? _TrialRail(
+            key: const ValueKey('paywall-rail'),
+            from: today,
+            days: days,
+            price:
+                '$price${shown == Plan.year ? l.perYearShort : l.perMonthShort}',
+            remind: _canRemind,
+          )
+        : _TrialDays(
+            key: const ValueKey('paywall-days'),
+            from: today,
+            days: days,
+            price: price,
+            remind: _canRemind,
+          );
+    final Widget plans = stacked || tiles.length < 2
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (final (int i, Widget tile) in tiles.indexed) ...[
+                if (i > 0) const SizedBox(height: 14),
+                tile,
+              ],
+            ],
+          )
+        : Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: tiles[0]),
+              const SizedBox(width: 10),
+              Expanded(child: tiles[1]),
+            ],
+          );
+    // The days, where the plan picked has them, in and out as the plan is
+    // picked.
+    final Widget slot = AnimatedSize(
+      duration: const Duration(milliseconds: 220),
+      curve: Curves.ease,
+      alignment: Alignment.topCenter,
+      child: timeline == null
+          ? const SizedBox(width: double.infinity)
+          : Padding(
+              padding: inSheet
+                  ? const EdgeInsets.only(bottom: 26)
+                  : EdgeInsets.only(top: short ? 10 : 14),
+              child: timeline,
+            ),
+    );
+    final Widget under = plus
+        ? _manageLink(context)
+        : Padding(
+            padding: EdgeInsets.only(top: short ? 8 : 10),
+            child: _CheckLine(
+              days == null ? l.paywallChargedToday : l.cancelAnyTime,
+              key: const ValueKey('paywall-cancel'),
+            ),
+          );
+    return inSheet
+        ? [
+            slot,
+            plans,
+            SizedBox(height: short ? 14 : 18),
+            _buyButton(context, short: short),
+            under,
+          ]
+        : [
+            plans,
+            slot,
+            SizedBox(height: short ? 10 : 14),
+            _buyButton(context, short: short),
+            under,
+          ];
   }
 }
 
@@ -1664,9 +2113,18 @@ class _FadeFoot extends StatelessWidget {
 /// they would; where even that would not fit, at its own size again, taller
 /// than [height], for the scroll it is in to show the rest.
 class _FitDown extends SingleChildRenderObjectWidget {
-  const _FitDown({required this.height, required super.child});
+  const _FitDown({
+    required this.height,
+    required super.child,
+    this.fill = false,
+  });
 
   final double height;
+
+  /// Whether, once made small enough to fit, it is made as large again as
+  /// still fits: words that take fewer lines set wider can leave room under
+  /// them, and the prototypes give that room back to the words.
+  final bool fill;
 
   /// The smallest it is made: past this the words would be too small to
   /// read with ease, and scrolling them is the better way.
@@ -1674,20 +2132,28 @@ class _FitDown extends SingleChildRenderObjectWidget {
 
   @override
   RenderObject createRenderObject(BuildContext context) =>
-      _RenderFitDown(height);
+      _RenderFitDown(height, fill);
 
   @override
-  void updateRenderObject(BuildContext context, _RenderFitDown r) =>
-      r.height = height;
+  void updateRenderObject(BuildContext context, _RenderFitDown r) => r
+    ..height = height
+    ..fill = fill;
 }
 
 class _RenderFitDown extends RenderProxyBox {
-  _RenderFitDown(this._height);
+  _RenderFitDown(this._height, this._fill);
 
   double _height;
   set height(double value) {
     if (value == _height) return;
     _height = value;
+    markNeedsLayout();
+  }
+
+  bool _fill;
+  set fill(bool value) {
+    if (value == _fill) return;
+    _fill = value;
     markNeedsLayout();
   }
 
@@ -1720,6 +2186,9 @@ class _RenderFitDown extends RenderProxyBox {
     if (_height > 0 && natural > _height) {
       double fit = _height / natural;
       bool fits = false;
+      // Set wider by as much as it is made smaller, rather than as it is
+      // set at its own width.
+      bool wide = false;
       if (fit >= _FitDown.least) {
         // Set wider by as much as it is made smaller, so it keeps its width.
         // Words that size themselves to their width can take more room set
@@ -1728,6 +2197,7 @@ class _RenderFitDown extends RenderProxyBox {
           final double tall = lay(width / fit);
           if (tall * fit <= _height + 0.5) {
             fits = true;
+            wide = true;
             break;
           }
           fit = _height / tall;
@@ -1742,6 +2212,22 @@ class _RenderFitDown extends RenderProxyBox {
       } else if (lay(width / _FitDown.least) * _FitDown.least <= _height) {
         fit = _FitDown.least;
         fits = true;
+        wide = true;
+      }
+      if (fits && wide && _fill) {
+        // As large again as still fits, found in a few halvings.
+        double lo = fit;
+        double hi = 1;
+        for (int i = 0; i < 6; i++) {
+          final double mid = (lo + hi) / 2;
+          if (lay(width / mid) * mid <= _height + 0.5) {
+            lo = mid;
+          } else {
+            hi = mid;
+          }
+        }
+        fit = lo;
+        lay(width / fit);
       }
       if (fits) {
         _scale = fit;

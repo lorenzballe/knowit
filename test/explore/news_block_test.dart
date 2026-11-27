@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/data/news_paper.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
+import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/state/app_state.dart';
@@ -460,5 +461,134 @@ void main() {
     NewsPaper.reset();
     await pumpSections(tester, CoreHost(app), sections);
     expect(find.text('Latest news'), findsNothing);
+  });
+
+  /// The paper of 16 November with four stories of the world, ranked.
+  List<Map<String, Object?>> four() => [
+    _fresh,
+    for (final (int rank, String slug, String headline) in const [
+      (2, 'rates', 'Freedonia cuts its interest rate to 2%'),
+      (3, 'bridge', 'A bridge opens across the Firth after ten years'),
+      (4, 'vote', 'Sylvania votes on a new constitution'),
+    ])
+      _card(
+        'news-2026-11-16-$slug',
+        date: '2026-11-16',
+        expires: '2099-12-31',
+        headline: headline,
+        world: true,
+        rank: rank,
+      ),
+  ];
+
+  List<ExploreSection> looking(String look) => sectionsOf([
+    {
+      'id': 'news-today',
+      'block': 'news-today',
+      'title': {'en': 'Latest news'},
+      'look': look,
+    },
+  ]);
+
+  testWidgets('as a lead: one story large, why it matters and its outlets, '
+      'then two more as rows, each a tap from its page', (tester) async {
+    final app = await _app({});
+    NewsPaper.adopt('2026-11-16', four());
+    await pumpSections(
+      tester,
+      CoreHost(app),
+      looking('lead'),
+      size: const Size(390, 1400),
+    );
+    expect(find.text('Latest news'), findsOneWidget);
+    expect(
+      find.text('Egg prices hit a record as bird flu empties henhouses'),
+      findsOneWidget,
+    );
+    // Why it matters is the story's own step of what it means.
+    expect(find.text('WHY IT MATTERS'), findsOneWidget);
+    expect(
+      find.text(
+        "When buyers can't cut back, a small shortage doubles the price.",
+      ),
+      findsOneWidget,
+    );
+    expect(find.textContaining('3 outlets'), findsWidgets);
+    // Two rows under it, the fourth story left to the front page.
+    expect(find.text('Freedonia cuts its interest rate to 2%'), findsOneWidget);
+    expect(
+      find.text('A bridge opens across the Firth after ten years'),
+      findsOneWidget,
+    );
+    expect(find.text('Sylvania votes on a new constitution'), findsNothing);
+    // The lead's two lines are the front page's, not the lead's.
+    expect(find.textContaining('A dozen cost a record'), findsNothing);
+
+    await tester.tap(
+      find.byKey(const ValueKey('explore-news-2026-11-16-rates')),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(NewsStoryPage), findsOneWidget);
+    expect(app.seenIds, contains('news-2026-11-16-rates'));
+  });
+
+  testWidgets('as a pager: a story to a card across the page, every card as '
+      'tall as the tallest, the next a swipe away, dots under them', (
+    tester,
+  ) async {
+    final app = await _app({});
+    NewsPaper.adopt('2026-11-16', four());
+    await pumpSections(
+      tester,
+      CoreHost(app),
+      looking('pager'),
+      size: const Size(390, 1400),
+    );
+    final Finder first = find.byKey(
+      const ValueKey('explore-news-2026-11-16-eggs'),
+    );
+    final Finder second = find.byKey(
+      const ValueKey('explore-news-2026-11-16-rates'),
+    );
+    expect(first.hitTestable(), findsOneWidget);
+    expect(find.textContaining('A dozen cost a record'), findsWidgets);
+    expect(find.text('WHY IT MATTERS'), findsWidgets);
+    expect(find.byKey(const ValueKey('news-dots')), findsOneWidget);
+    for (int i = 0; i < 4; i++) {
+      expect(find.byKey(ValueKey('news-dot-$i')), findsOneWidget);
+    }
+    final double height = tester.getSize(first).height;
+
+    await tester.drag(first, const Offset(-300, 0));
+    await tester.pumpAndSettle();
+    expect(second.hitTestable(), findsOneWidget);
+    expect(tester.getSize(second).height, height);
+
+    await tester.tap(find.byKey(const ValueKey('news-dot-3')));
+    await tester.pumpAndSettle();
+    final Finder last = find.byKey(
+      const ValueKey('explore-news-2026-11-16-vote'),
+    );
+    expect(last.hitTestable(), findsOneWidget);
+    await tester.tap(last);
+    await tester.pumpAndSettle();
+    expect(find.byType(NewsStoryPage), findsOneWidget);
+    expect(app.seenIds, contains('news-2026-11-16-vote'));
+  });
+
+  testWidgets('a look the block does not know is the front page', (
+    tester,
+  ) async {
+    final app = await _app({});
+    NewsPaper.adopt('2026-11-16', four());
+    await pumpSections(
+      tester,
+      CoreHost(app),
+      looking('magazine'),
+      size: const Size(390, 1600),
+    );
+    expect(find.text('Sylvania votes on a new constitution'), findsOneWidget);
+    expect(find.text('WHY IT MATTERS'), findsNothing);
+    expect(find.textContaining('A dozen cost a record'), findsOneWidget);
   });
 }

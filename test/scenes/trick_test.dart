@@ -179,8 +179,10 @@ Widget _host(
   Color ground = const Color(0xFFFFE600),
   Color ink = const Color(0xFF10100C),
   bool still = false,
+  Locale? locale,
 }) => MaterialApp(
   debugShowCheckedModeBanner: false,
+  locale: locale,
   localizationsDelegates: AppLocalizations.localizationsDelegates,
   supportedLocales: AppLocalizations.supportedLocales,
   theme: buildAstutoTheme(Brightness.dark),
@@ -391,7 +393,8 @@ void main() {
         await _settle(tester);
         expect(tester.takeException(), isNull);
         expect(find.text('If Bush tax cuts expire'), findsOneWidget);
-        expect(find.text('Tap your pick'), findsOneWidget);
+        // What there is to do, and the parts to do it among, outlined.
+        expect(find.text('Spot the trick'), findsOneWidget);
         expect(find.text('Show me'), findsNothing);
         final slug = name.replaceAll(' ', '-');
         await _shoot(tester, 'play-$slug-0');
@@ -439,6 +442,24 @@ void main() {
         handle.dispose();
       });
     }
+
+    testWidgets('its numbers in the reader\'s language, as Explore\'s shelf '
+        'writes the same chart', (tester) async {
+      final handle = tester.ensureSemantics();
+      await _phone(tester, const Size(390, 844));
+      await tester.pumpWidget(
+        _host(_tax(), height: 420, locale: const Locale('it')),
+      );
+      await _settle(tester);
+      expect(tester.takeException(), isNull);
+      expect(find.text('Trova il trucco'), findsOneWidget);
+      // A decimal comma, never a point, on the bars as said.
+      expect(
+        find.bySemanticsLabel('Now 35,0%, Jan 1, 2013 39,6%'),
+        findsOneWidget,
+      );
+      handle.dispose();
+    });
 
     for (final (id, raw, spot, honest) in [
       (

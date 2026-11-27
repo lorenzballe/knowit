@@ -216,7 +216,7 @@ const Turn = {
     const ok = S.pick === RIGHT, said = OPTS[S.pick];
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   Kit.$('sure').classList.add('wait');
   Kit.$('opts').addEventListener('click', e => {

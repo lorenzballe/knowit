@@ -1826,11 +1826,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String threeRowSaid(String said, String truth) {
-    return '你猜 $said，答案 $truth。';
-  }
-
-  @override
   String get fiveTitle => '今日五题';
 
   @override
@@ -1846,12 +1841,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String dailyPickRight(String answer) {
-    return '答对了：$answer。';
+    return '正确答案：$answer';
   }
 
   @override
   String dailyPickWrong(String answer) {
-    return '差一点，答案是$answer。';
+    return '差一点。正确答案：$answer';
+  }
+
+  @override
+  String dailyYourPick(String answer) {
+    return '你的答案：$answer';
   }
 
   @override
@@ -1991,6 +1991,73 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get aimTitle => '你想在哪些方面看得更清楚？';
+
+  @override
+  String get aimLine => '选一个。每天都有为它准备的卡片，随时可以更改。';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '本周这方面的卡片：$n 张',
+      zero: '本周还没有这方面的卡片',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$n 题答对 $right 题',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => '这个目标的全部内容';
+
+  @override
+  String get aimPlus => '有了 Astute+：这方面的全部路径完整开放，还有一位陪你练习的教练。';
+
+  @override
+  String get aimNone => '选出你想看得更清楚的方面：每天都有为它准备的卡片。';
+
+  @override
+  String get aimPick => '选择目标';
+
+  @override
+  String get strengthsTitle => '你的强项';
+
+  @override
+  String get strengthsLine => '不是你选的，而是从你的回答中看出：你在哪里答对最多，在哪里出错。';
+
+  @override
+  String strengthsFew(String skills) {
+    return '回答还太少：$skills';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return '练习：$skill';
+  }
+
+  @override
+  String get strengthsBest => '你最强的一项';
+
+  @override
+  String get strengthsWeak => '你最常出错的地方';
+
+  @override
+  String get strengthsLocked => '你最常出错的地方和其余内容，需要 Astute+。';
+
+  @override
+  String get strengthsEmpty => '再多答几题，这里就会显示你的强项。';
 
   @override
   String get scoreTitle => 'Astute 分数';
@@ -2211,21 +2278,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tapToReveal => '点按揭晓';
 
   @override
-  String youSaidItIsCounted(String given, String answer, String band) {
-    return '你说 $given · 答案是 $answer，$band 之内算对';
-  }
-
-  @override
-  String youSaidItIs(String given, String answer) {
-    return '你说 $given · 答案是 $answer';
-  }
-
-  @override
-  String lineYouSaidSure(String line, int pct) {
-    return '$line · 你说有 $pct% 的把握';
-  }
-
-  @override
   String get verdictRight => '答对了。';
 
   @override
@@ -2237,6 +2289,26 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String verdictSure(int pct) {
     return '你当时有 $pct% 的把握。';
+  }
+
+  @override
+  String verdictYouSaid(String given) {
+    return '你的答案：$given';
+  }
+
+  @override
+  String verdictYouSaidSure(String given, int pct) {
+    return '你的答案：$given（$pct% 的把握）';
+  }
+
+  @override
+  String verdictRightIs(String answer) {
+    return '正确答案：$answer';
+  }
+
+  @override
+  String verdictRightWithin(String answer, String low, String high) {
+    return '正确答案：$answer（$low 到 $high 之间都算对）';
   }
 
   @override
@@ -2880,15 +2952,21 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themePuzzlesLine => '一支笔一分钟就能解的谜';
 
   @override
-  String get weekRecapCaps => '这周你问过自己';
-
-  @override
-  String get weekRecapLine => '你的卡片留给你的问题';
-
-  @override
   String weekRecapMore(int n) {
-    return '用 Plus 再看本周 $n 条';
+    return '用 Astute+ 再看本周 $n 张';
   }
+
+  @override
+  String get weekReviewTitle => '复习本周';
+
+  @override
+  String get weekReviewLine => '本周卡片里的问题。再答一遍：这样才能记住。';
+
+  @override
+  String get weekReviewGo => '复习';
+
+  @override
+  String get weekReviewNone => '本周读过的卡片会回到这里，供你复习。';
 
   @override
   String get plusInTheApp =>
@@ -2984,6 +3062,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get sceneLockIn => '确定';
+
+  @override
+  String get placeItDrag => '沿着刻度尺拖动。';
+
+  @override
+  String get placeItHappy => '就这样吗？';
+
+  @override
+  String get placeItEstimate => '你的估计';
+
+  @override
+  String get placeItNotSet => '未设置';
+
+  @override
+  String get placeItLock => '确定我的估计';
 
   @override
   String get sceneYou => '你';
@@ -3277,9 +3370,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => '从今天开始计时';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return '分偏差，起初 $was';
   }
@@ -3298,10 +3388,19 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => '还没有 80% 及以上的回答';
+  String get journeyMovesTitle => '能识破的套路';
 
   @override
-  String get journeyMovesTitle => '能识破的套路';
+  String get journeySureEmpty => '当你以 80% 及以上的把握作答后显示。';
+
+  @override
+  String get journeyMovesEmpty => '在两张卡片上识破同一个套路后显示。';
+
+  @override
+  String get journeyMissedEmpty => '第二个科目答满六题即可测出。';
+
+  @override
+  String get journeyFillsAsYouRead => '读得越多，这里越满。';
 
   @override
   String journeyOfN(int n) {
@@ -3312,9 +3411,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String journeyNewest(String name) {
     return '最新：$name';
   }
-
-  @override
-  String get journeyNoneYet => '还没有';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3400,9 +3496,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => '还没有带年代的卡片';
-
-  @override
   String get journeyInPlace => '地域';
 
   @override
@@ -3437,9 +3530,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => '中东';
-
-  @override
-  String get journeyNoPlace => '还没有地点';
 
   @override
   String get journeyTopics => '话题';
@@ -4687,7 +4777,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get betsNumberLine => '调好、锁定，看看差了多少';
 
   @override
-  String get betsLock => '锁定';
+  String get betsLock => '确定';
 
   @override
   String get betsSpotOn => '分毫不差。';
@@ -4823,7 +4913,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get betsDayTitle => '今日一赌';
 
   @override
-  String get betsDayLine => '锁定你的猜测，再看看差了多少';
+  String get betsDayLine => '确定你的猜测，再看看差了多少';
 
   @override
   String get betsDayTag => '今日一赌';
@@ -4832,7 +4922,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get betsDayTagSame => '今日一赌 · 人人同题';
 
   @override
-  String get betsLockIn => '锁定';
+  String get betsLockIn => '确定';
 
   @override
   String betsItIs(String said) {
@@ -5793,6 +5883,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yourFiveFromToday => '你今天的五张卡片';
 
   @override
+  String get dayMomentTitle => '今天的五张，完成。';
+
+  @override
+  String get dayMomentLater => '稍后';
+
+  @override
+  String get yourDayCard => '你的一天';
+
+  @override
   String get tuneTitle => '调整你的组合';
 
   @override
@@ -5980,9 +6079,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet => '一个科目答满六题即可测出。';
-
-  @override
   String get journeyChangedMind => '改变了看法';
 
   @override
@@ -6082,6 +6178,28 @@ class AppLocalizationsZh extends AppLocalizations {
       locale: localeName,
       other: '已读 $n 张卡片。旅程从这里开始。',
       zero: '你的第一张卡片在等你。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '已读 $n 张卡片，本周 $week 张。',
+      zero: '已读 $n 张卡片，本周还没有。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已读 $n 张卡片，全在本周。',
+      one: '目前已读 1 张卡片。',
     );
     return '$_temp0';
   }
@@ -6355,10 +6473,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get newsBehind => '新闻背后';
 
   @override
+  String get newsMeansForYou => '这对你意味着什么';
+
+  @override
+  String get newsMeans => '这意味着什么';
+
+  @override
+  String get newsHappenedBefore => '以前也发生过';
+
+  @override
   String get newsSources => '来源';
 
   @override
   String get newsMadeFrom => '由 Astute 根据这些报道撰写，并与报道逐一核对。';
+
+  @override
+  String get newsWhyItMatters => '为何重要';
 
   @override
   String get deeperDeclined => '这个问题无法回答。';
@@ -6507,6 +6637,35 @@ class AppLocalizationsZh extends AppLocalizations {
   String get founderTheirBooks => '推荐过的书';
 
   @override
+  String founderRole(String id, String role) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'bill_gates': '微软联合创始人',
+      'warren_buffett': '让伯克希尔·哈撒韦壮大的投资人',
+      'mark_zuckerberg': 'Facebook 创始人',
+      'charlie_munger': '沃伦·巴菲特在伯克希尔·哈撒韦的搭档',
+      'marc_andreessen': '网景和安德森·霍洛维茨的联合创始人',
+      'tobi_lutke': 'Shopify 创始人',
+      'naval_ravikant': 'AngelList 联合创始人',
+      'other': '$role',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String founderWhere(String id, String where) {
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gates_summer': 'GatesNotes，他的夏季书单',
+      'berkshire_meeting': '伯克希尔·哈撒韦股东大会',
+      'berkshire_letter': '他致伯克希尔·哈撒韦股东的信',
+      'year_of_books': 'Facebook 上的“A Year of Books”',
+      'publisher_praise': '他在出版社页面上的推荐语',
+      'ferriss_five': 'The Tim Ferriss Show，他读过的五本最好的书之一',
+      'other': '$where',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String founderAbout(String name) {
     return '这些是$name公开推荐过的书，附有原话和说话的出处。$name与 Astute 没有任何关系。';
   }
@@ -6565,4 +6724,56 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get trialOfferFree => '继续免费使用';
+
+  @override
+  String get paywallStepFree => '全部免费';
+
+  @override
+  String get paywallStepRemind => '我们会提醒你';
+
+  @override
+  String get paywallChargedToday => '今天扣款 · 随时可取消';
+
+  @override
+  String paywallGoalTitle(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': '给想做出更好决定的人。',
+      'money': '给在钱上不被忽悠的人。',
+      'people': '给想读懂人的人。',
+      'news': '给不被标题骗到的人。',
+      'health': '给在健康上要证据的人。',
+      'business': '给想在工作中看清楚的人。',
+      'other': '给想看清楚的人。',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallGoalMark(String goal) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'decide': '更好决定',
+      'money': '在钱上',
+      'people': '读懂人',
+      'news': '标题',
+      'health': '证据',
+      'business': '看清楚',
+      'other': '看清楚',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String paywallMadeLine(String subjects) {
+    return '每天五张，来自$subjects，匹配你的水平。答错的会一再回来，直到你记住。你还会看到自己一周一周地变化。';
+  }
+
+  @override
+  String subjectsTwo(String a, String b) {
+    return '$a和$b';
+  }
+
+  @override
+  String subjectsThree(String a, String b, String c) {
+    return '$a、$b和$c';
+  }
 }

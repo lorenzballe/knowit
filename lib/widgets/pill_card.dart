@@ -455,12 +455,7 @@ class PillCard extends StatelessWidget {
                       onAnswer: onAnswer,
                       given: given,
                       corner: onSave != null,
-                      input: (commit) => _PickInput(
-                        pill: pill,
-                        options: options,
-                        onAnswer: commit,
-                        taken: int.tryParse(given?.response ?? ''),
-                      ),
+                      options: options,
                     ),
                     TakeASide(:final positions) => _AskFace(
                       pill: pill,
@@ -468,12 +463,7 @@ class PillCard extends StatelessWidget {
                       given: given,
                       corner: onSave != null,
                       prompt: context.l10n.pickASideNoRightAnswer,
-                      input: (commit) => _PickInput(
-                        pill: pill,
-                        options: positions,
-                        onAnswer: commit,
-                        taken: int.tryParse(given?.response ?? ''),
-                      ),
+                      options: positions,
                     ),
                     TypeNumber(:final unit) => _AskFace(
                       pill: pill,
@@ -932,26 +922,32 @@ class _Verdict extends StatelessWidget {
       : context.l10n.verdictRight;
 
   /// What was said, when it was not what the card says: the reader's
-  /// answer, and the card's.
-  String? _said(BuildContext context) {
+  /// answer, how sure they were when [sure] is given, and the card's — "Hai
+  /// detto «About one in twelve», sicuro al 60% · Giusta: «More than four
+  /// in five»". A card's words are quoted, so they never run on into the
+  /// app's; a number is said as it is. The dot is held to the words before
+  /// it, so a line never starts with it.
+  String? _said(BuildContext context, int? sure) {
     if (right) return null;
+    final l = context.l10n;
+    String yours(String said) => sure == null
+        ? l.verdictYouSaid(said)
+        : l.verdictYouSaidSure(said, sure);
     return switch (pill.challenge) {
-      Estimate(:final answerLabel, :final band) =>
-        context.l10n.youSaidItIsCounted(given, answerLabel, band),
-      TypeNumber(:final answerLabel) => context.l10n.youSaidItIs(
-        given,
-        answerLabel,
-      ),
+      Estimate(:final answerLabel, :final low, :final high) =>
+        '${yours(given)}\u00A0· '
+            '${l.verdictRightWithin(answerLabel, '$low', '$high')}',
+      TypeNumber(:final answerLabel) =>
+        '${yours(given)}\u00A0· ${l.verdictRightIs(answerLabel)}',
       // A wrong pick is said the way a wrong number is: what was picked,
       // and what it is. It used to be "almost everyone gets this wrong",
       // which is a claim about other readers that nothing on the phone can
       // back — how each card is answered is counted on the server, for the
       // tools that check cards (functions/src/scorecard.ts), and none of it
       // reaches a card's back.
-      PickOne(:final correctOption) => context.l10n.youSaidItIs(
-        given,
-        correctOption,
-      ),
+      PickOne(:final correctOption) =>
+        '${yours(l.quoted(given))}\u00A0· '
+            '${l.verdictRightIs(l.quoted(correctOption))}',
       // Never marked, so never given a verdict: the back says the reader's
       // own line instead. A page marks its own and has said what was right
       // already; the answer under the verdict says why.
@@ -972,17 +968,20 @@ class _Verdict extends StatelessWidget {
   }
 
   /// What runs on after the verdict: what was said, how sure, and how the
-  /// other readers did.
+  /// other readers did, each said once.
   String? _detail(BuildContext context) {
     if (room == _Room.verdictOnly) return null;
-    final String? said = _said(context);
+    final l = context.l10n;
     final int? sure = room == _Room.all ? confidence : null;
-    final String? own = said == null
-        ? (sure == null ? null : context.l10n.verdictSure(sure))
-        : (sure == null ? said : context.l10n.lineYouSaidSure(said, sure));
+    final String? own =
+        _said(context, sure) ?? (sure == null ? null : l.verdictSure(sure));
     final String? crowd = room == _Room.all ? _crowd(context) : null;
-    if (crowd == null) return own;
-    return own == null ? crowd : '$own · $crowd';
+    final String? line = crowd == null
+        ? own
+        : own == null
+        ? crowd
+        : '$own\u00A0· $crowd';
+    return line == null ? null : l.elided(line);
   }
 
   InlineSpan _span(BuildContext context) {
@@ -1057,8 +1056,15 @@ class _Verdict extends StatelessWidget {
 class _AskFace extends StatefulWidget {
   final Pill pill;
 
-  /// Built with the callback that reports a raw response.
-  final Widget Function(ValueChanged<String>? commit) input;
+  /// What a pick offers, an option a tap: true or false, one of three, a
+  /// side. A pick is drawn here rather than by [input], because what
+  /// happens to the options once one is tapped is the face's own (see
+  /// [_PickGroup]).
+  final List<String>? options;
+
+  /// Built with the callback that reports a raw response: the input of a
+  /// card that is not a pick.
+  final Widget Function(ValueChanged<String>? commit)? input;
   final void Function(String response, int? confidence, String? reason)?
   onAnswer;
 
@@ -1076,36 +1082,94 @@ class _AskFace extends StatefulWidget {
 
   const _AskFace({
     required this.pill,
-    required this.input,
     required this.onAnswer,
+    this.options,
+    this.input,
     this.prompt,
     this.given,
     this.corner = false,
-  });
+  }) : assert(options != null || input != null);
 
   @override
   State<_AskFace> createState() => _AskFaceState();
 }
 
-class _AskFaceState extends State<_AskFace> {
+class _AskFaceState extends State<_AskFace>
+    with SingleTickerProviderStateMixin {
   bool _hintOpen = false;
 
   /// Held between answering and saying how sure you are.
   String? _pending;
 
+  /// The option just tapped, locked in: filled with the card's ink the
+  /// instant it is touched, and kept, ticked, over the step that follows,
+  /// so a card that does not turn at once still says what was taken. The
+  /// other options give way to it, and nothing more is taken until the
+  /// card has turned.
+  int? _locked;
+
+  /// The level of how sure just tapped, locked in the same way.
+  int? _level;
+
+  /// The reason sent: the card turns on it, once.
+  bool _sent = false;
+
+  /// From the tap to the step under the option kept: the others dimmed at
+  /// once, then folded away while the step comes in (see [_PickGroup]).
+  late final AnimationController _lock = AnimationController(
+    vsync: this,
+    duration: _PickGroup.lockTime,
+  );
+
+  @override
+  void didUpdateWidget(_AskFace old) {
+    super.didUpdateWidget(old);
+    // Another card in the same place starts untouched.
+    if (old.pill.id != widget.pill.id) {
+      _pending = null;
+      _locked = null;
+      _level = null;
+      _sent = false;
+      _lock.value = 0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _lock.dispose();
+    super.dispose();
+  }
+
   void _commit(String response) {
+    // Taken already: nothing more is, until the card has turned.
+    if (_pending != null || _locked != null) return;
+    final bool pick = widget.options != null;
     // A graded card that does not ask how sure this time ([SureAsk]) is
     // answered as it is committed: right or wrong is kept all the same.
+    // It turns at once, the option filled with ink turning with it.
     if (widget.pill.isGraded && !SureAsk.of(widget.pill)) {
+      if (pick) setState(() => _locked = int.tryParse(response));
       widget.onAnswer?.call(response, null, null);
       return;
     }
-    setState(() => _pending = response);
+    // The card does not turn yet: how sure, or why, comes first. The tap
+    // is felt, and the option shows taken, before anything else moves.
+    if (pick) HapticFeedback.lightImpact();
+    setState(() {
+      _pending = response;
+      if (pick) _locked = int.tryParse(response);
+    });
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _lock.value = 1;
+    } else {
+      _lock.forward(from: 0);
+    }
   }
 
   void _finish(int confidence) {
     final response = _pending;
-    if (response == null) return;
+    if (response == null || _level != null) return;
+    setState(() => _level = confidence);
     widget.onAnswer?.call(response, confidence, null);
   }
 
@@ -1114,7 +1178,8 @@ class _AskFaceState extends State<_AskFace> {
   /// be quietly rewritten to agree with whatever comes next.
   void _finishReason(String reason) {
     final response = _pending;
-    if (response == null) return;
+    if (response == null || _sent) return;
+    _sent = true;
     widget.onAnswer?.call(response, null, reason);
   }
 
@@ -1150,10 +1215,11 @@ class _AskFaceState extends State<_AskFace> {
     color: pill.ink.withValues(alpha: 0.55),
   );
 
-  /// The line under the input.
-  String _prompt(BuildContext context) {
+  /// The line under the input, before the reader has answered, or once
+  /// they have ([answered]).
+  String _prompt(BuildContext context, {bool? answered}) {
     final pill = widget.pill;
-    return _pending != null
+    return (answered ?? _pending != null)
         ? (pill.isGraded
               ? context.l10n.beingRightMattersLess
               : context.l10n.writeItBeforeTheirs)
@@ -1172,35 +1238,30 @@ class _AskFaceState extends State<_AskFace> {
 
   /// How tall the input is, or the step that takes its place once the
   /// reader has answered, whichever is taller: the question is sized once,
-  /// and does not jump when the step comes.
+  /// and does not jump when the step comes. Under a pick the step comes
+  /// below the option taken, which stays.
   double _inputHeight(BuildContext context, double width, TextScaler scaler) {
     final pill = widget.pill;
     // The option the reader took, marked as theirs on a card read again.
     final int? taken = widget.onAnswer == null
         ? int.tryParse(widget.given?.response ?? '')
         : null;
-    final double input = switch (pill.challenge) {
-      PickOne(:final options) => _PickInput.heightFor(
-        context,
-        options,
-        width,
-        scaler,
-        taken: taken,
-      ),
-      TakeASide(:final positions) => _PickInput.heightFor(
-        context,
-        positions,
-        width,
-        scaler,
-        taken: taken,
-      ),
-      TypeNumber() => 54,
-      Estimate() => PlaceItInput.heightFor(scaler),
-      NoChallenge() || PageJudged() => 0,
-    };
-    final double step = pill.isGraded
-        ? _ConfidenceStep.heightFor(context, width, scaler)
-        : _ReasonStep.heightFor(scaler);
+    final List<String>? options = widget.options;
+    final double input = options != null
+        ? _PickGroup.heightFor(context, options, width, scaler, taken: taken)
+        : switch (pill.challenge) {
+            TypeNumber() => 54,
+            Estimate() => PlaceItInput.heightFor(scaler),
+            _ => 0,
+          };
+    final double step =
+        (options == null
+            ? 0
+            : _PickGroup.keptHeightFor(context, options, width, scaler) +
+                  _PickGroup.stepGap) +
+        (pill.isGraded
+            ? _ConfidenceStep.heightFor(context, width, scaler)
+            : _ReasonStep.heightFor(scaler));
     return math.max(input, step);
   }
 
@@ -1260,13 +1321,41 @@ class _AskFaceState extends State<_AskFace> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final String prompt = _prompt(context);
+        final double promptWidth =
+            constraints.maxWidth - (widget.corner ? _CardControl.room : 0);
         final double promptHeight = _measure(
           context,
           prompt,
           _promptStyle(pill),
-          constraints.maxWidth - (widget.corner ? _CardControl.room : 0),
+          promptWidth,
           scaler,
         );
+        // The question is sized for the taller of the two lines the input
+        // has under it, before the answer and after, on a card that asks
+        // before it turns: it never moves when the reader answers.
+        final bool asks = !pill.isGraded || SureAsk.of(pill);
+        final double promptRoom = widget.onAnswer == null || !asks
+            ? promptHeight
+            : math.max(
+                promptHeight,
+                _measure(
+                  context,
+                  _prompt(context, answered: _pending == null),
+                  _promptStyle(pill),
+                  promptWidth,
+                  scaler,
+                ),
+              );
+        final List<String>? options = widget.options;
+        final Widget? step = _pending == null
+            ? null
+            : pill.isGraded
+            ? _ConfidenceStep(
+                pill: pill,
+                chosen: _level,
+                onPick: _level == null ? _finish : null,
+              )
+            : _ReasonStep(pill: pill, onSubmit: _finishReason);
         return SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: constraints.maxHeight),
@@ -1279,7 +1368,7 @@ class _AskFaceState extends State<_AskFace> {
                 // poster's line ([_questionMax]); the answers come at the
                 // foot.
                 SizedBox(
-                  height: _questionRoom(context, constraints, promptHeight),
+                  height: _questionRoom(context, constraints, promptRoom),
                   child: ScaledText(
                     text: pill.question,
                     min: 18,
@@ -1291,92 +1380,48 @@ class _AskFaceState extends State<_AskFace> {
                   ),
                 ),
                 const SizedBox(height: 22),
-                if (_pending == null)
-                  widget.input(widget.onAnswer == null ? null : _commit)
-                else if (pill.isGraded)
-                  _ConfidenceStep(pill: pill, onPick: _finish)
+                if (options != null)
+                  _PickGroup(
+                    pill: pill,
+                    options: options,
+                    onPick: widget.onAnswer == null ? null : _commit,
+                    taken: widget.onAnswer == null
+                        ? int.tryParse(widget.given?.response ?? '')
+                        : null,
+                    locked: _locked,
+                    fold: _lock,
+                    step: step,
+                  )
+                else if (step == null)
+                  widget.input!(widget.onAnswer == null ? null : _commit)
                 else
-                  _ReasonStep(pill: pill, onSubmit: _finishReason),
-                if (_pending == null && pill.hasHint) ...[
-                  const SizedBox(height: _hintGap),
-                  if (_hintOpen)
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.fromLTRB(14, 12, 14, 13),
-                      decoration: BoxDecoration(
-                        color: pill.wash,
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'HINT',
-                            style: AppText.label(
-                              size: 10.5,
-                              spacing: 1.2,
-                              color: pill.ink.withValues(alpha: 0.6),
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            pill.hint,
-                            style: AppText.body(
-                              size: 14,
-                              height: 1.4,
-                              color: pill.ink.withValues(alpha: 0.9),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  else
-                    // The words are the size of the line under the input;
-                    // the target round them is a finger's.
-                    Semantics(
-                      button: true,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          setState(() => _hintOpen = true);
-                          // Asked for help: a card that needed a hint sat
-                          // above the reader, and the dealer can hear that.
-                          Analytics.capture('hint shown', {
-                            'pill_id': widget.pill.id,
-                            'topic': widget.pill.topic,
-                          });
-                          CardRead.of(context)?.hinted();
-                        },
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            minHeight: _hintRow,
-                          ),
-                          child: Row(
-                            children: [
-                              ExcludeSemantics(
-                                child: Icon(
-                                  Icons.lightbulb_outline_rounded,
-                                  size: 15,
-                                  color: pill.ink.withValues(alpha: 0.65),
-                                ),
-                              ),
-                              const SizedBox(width: 7),
-                              Flexible(
-                                child: Text(
-                                  context.l10n.giveMeANudge,
-                                  style: AppText.body(
-                                    size: 13,
-                                    weight: FontWeight.w500,
-                                    color: pill.ink.withValues(alpha: 0.65),
-                                  ),
-                                ),
-                              ),
-                            ],
+                  step,
+                if (pill.hasHint && options == null && _pending == null)
+                  _hint(context),
+                // Under a pick the nudge goes with the options the step
+                // takes the place of, and is pressed no more once one is
+                // taken.
+                if (pill.hasHint && options != null)
+                  AnimatedBuilder(
+                    animation: _lock,
+                    builder: (context, child) {
+                      final double gone = _pending == null
+                          ? 0
+                          : _PickGroup.foldOf(_lock.value);
+                      if (gone >= 1) return const SizedBox.shrink();
+                      return IgnorePointer(
+                        ignoring: _locked != null,
+                        child: ClipRect(
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            heightFactor: 1 - gone,
+                            child: Opacity(opacity: 1 - gone, child: child),
                           ),
                         ),
-                      ),
-                    ),
-                ],
+                      );
+                    },
+                    child: _hint(context),
+                  ),
                 SizedBox(height: _footGapFor(promptHeight)),
                 // Kept clear of the corner where the card's save and share
                 // sit, so the line wraps rather than running under them.
@@ -1393,23 +1438,148 @@ class _AskFaceState extends State<_AskFace> {
       },
     );
   }
+
+  /// The nudge, under the input: a line to tap, then the hint itself.
+  Widget _hint(BuildContext context) {
+    final pill = widget.pill;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: _hintGap),
+        if (_hintOpen)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.fromLTRB(14, 12, 14, 13),
+            decoration: BoxDecoration(
+              color: pill.wash,
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'HINT',
+                  style: AppText.label(
+                    size: 10.5,
+                    spacing: 1.2,
+                    color: pill.ink.withValues(alpha: 0.6),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  pill.hint,
+                  style: AppText.body(
+                    size: 14,
+                    height: 1.4,
+                    color: pill.ink.withValues(alpha: 0.9),
+                  ),
+                ),
+              ],
+            ),
+          )
+        else
+          // The words are the size of the line under the input; the target
+          // round them is a finger's.
+          Semantics(
+            button: true,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                setState(() => _hintOpen = true);
+                // Asked for help: a card that needed a hint sat above the
+                // reader, and the dealer can hear that.
+                Analytics.capture('hint shown', {
+                  'pill_id': widget.pill.id,
+                  'topic': widget.pill.topic,
+                });
+                CardRead.of(context)?.hinted();
+              },
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: _hintRow),
+                child: Row(
+                  children: [
+                    ExcludeSemantics(
+                      child: Icon(
+                        Icons.lightbulb_outline_rounded,
+                        size: 15,
+                        color: pill.ink.withValues(alpha: 0.65),
+                      ),
+                    ),
+                    const SizedBox(width: 7),
+                    Flexible(
+                      child: Text(
+                        context.l10n.giveMeANudge,
+                        style: AppText.body(
+                          size: 13,
+                          weight: FontWeight.w500,
+                          color: pill.ink.withValues(alpha: 0.65),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
 }
 
-/// One tap per option — the answer is the option's index.
-class _PickInput extends StatelessWidget {
+/// The options of a pick, one tap each, the answer the option's index; and
+/// what becomes of them once one is taken.
+///
+/// The one tapped is filled with the card's ink and ticked the instant it
+/// is, and the others dim at once and are pressed no more: the reader sees
+/// at once what was taken. A card that turns at once turns with it so. One
+/// that asks first (how sure, or on a debate why) folds the others away
+/// while the step comes in under the option kept, which stays filled to the
+/// end: true or false, said once, is never left unsaid.
+class _PickGroup extends StatelessWidget {
   final Pill pill;
   final List<String> options;
-  final ValueChanged<String>? onAnswer;
+  final ValueChanged<String>? onPick;
 
   /// Which option was taken, on a card being re-read rather than answered.
   final int? taken;
 
-  const _PickInput({
+  /// The option just tapped, locked in.
+  final int? locked;
+
+  /// From the tap on, 0 to 1 over [lockTime]: see [foldOf].
+  final Animation<double> fold;
+
+  /// What comes under the option kept, once the card asks before it turns:
+  /// how sure, or why.
+  final Widget? step;
+
+  const _PickGroup({
     required this.pill,
     required this.options,
-    required this.onAnswer,
+    required this.onPick,
+    required this.fold,
     this.taken,
+    this.locked,
+    this.step,
   });
+
+  /// From the tap until the step is in.
+  static const Duration lockTime = Duration(milliseconds: 440);
+
+  /// How far the others have folded away and the step come in, at [t] of
+  /// [lockTime]: nothing for its first part, while the option taken fills
+  /// and the others dim, where the eye is; then as one smooth move.
+  static double foldOf(double t) => t >= 1
+      // Exactly done at the end, so what has folded away leaves the page
+      // (1 - 0.32, divided by 0.68, comes short of 1).
+      ? 1
+      : Curves.easeInOutCubic.transform(((t - 0.32) / 0.68).clamp(0.0, 1.0));
+
+  /// Between one option and the next.
+  static const double _gap = 10;
+
+  /// Between the option kept and the step under it.
+  static const double stepGap = 12;
 
   /// How tall the options set at [width], as [_ChoiceButton] lays them:
   /// each one's words, its padding and its edge, and the gap between. The
@@ -1450,25 +1620,165 @@ class _PickInput extends StatelessWidget {
     return total;
   }
 
-  /// Between one option and the next.
-  static const double _gap = 10;
+  /// The tallest any option sets as the one kept: its words firmer, beside
+  /// the tick.
+  static double keptHeightFor(
+    BuildContext context,
+    List<String> options,
+    double width,
+    TextScaler scaler,
+  ) {
+    const double edge = _ChoiceButton.edgeWidth;
+    final double words =
+        width -
+        2 * (_ChoiceButton.padX + edge) -
+        _ChoiceButton.tagGap -
+        _ChoiceButton.tick;
+    double most = 0;
+    for (final String option in options) {
+      most = math.max(
+        most,
+        _measure(
+              context,
+              option,
+              _ChoiceButton.labelStyle(const Color(0xFF000000), true),
+              words,
+              scaler,
+            ) +
+            2 * (_ChoiceButton.padY + edge),
+      );
+    }
+    return most;
+  }
+
+  /// [child] shown to [height] of its own, from its top, and at [fade].
+  static Widget _part(Widget child, double height, double fade) => ClipRect(
+    child: Align(
+      alignment: Alignment.topCenter,
+      heightFactor: height.clamp(0.0, 1.0),
+      child: Opacity(opacity: fade.clamp(0.0, 1.0), child: child),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(options.length, (i) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: i == options.length - 1 ? 0 : _gap),
-          child: _ChoiceButton(
+    final int? kept = locked;
+    return AnimatedBuilder(
+      animation: fold,
+      builder: (context, _) {
+        final double f = step == null ? 0 : foldOf(fold.value);
+        final List<Widget> rows = [];
+        for (int i = 0; i < options.length; i++) {
+          final bool other = kept != null && i != kept;
+          // Folded away for good: gone from the page.
+          if (other && f >= 1) continue;
+          final bool last = i == options.length - 1;
+          Widget row = _ChoiceButton(
             label: options[i],
             ink: pill.ink,
             fill: pill.wash,
             edge: pill.washEdge,
-            taken: onAnswer == null && taken == i,
-            onTap: onAnswer == null ? null : () => onAnswer!('$i'),
-          ),
+            ground: pill.color,
+            taken: onPick == null && taken == i,
+            locked: i == kept,
+            dimmed: other,
+            onTap: onPick == null || kept != null ? null : () => onPick!('$i'),
+          );
+          // The gap under it goes with it; under the one kept, it goes as
+          // the step comes, which brings its own.
+          final double gap = last ? 0 : (i == kept ? _gap * (1 - f) : _gap);
+          row = Padding(
+            padding: EdgeInsets.only(bottom: gap),
+            child: row,
+          );
+          rows.add(other ? _part(row, 1 - f, 1 - f) : row);
+        }
+        if (step case final Widget step when f > 0) {
+          rows.add(
+            _part(
+              Padding(
+                padding: const EdgeInsets.only(top: stepGap),
+                child: step,
+              ),
+              f,
+              (f - 0.2) / 0.8,
+            ),
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: rows,
         );
-      }),
+      },
+    );
+  }
+}
+
+/// Gives under the finger the instant it is touched, before the tap is even
+/// a tap, and comes back with a little spring when let go: the press every
+/// option and level of how sure has, on a card and in the card kit alike
+/// (docs/cards/kit/astute-card.js, kit-took).
+class _Press extends StatefulWidget {
+  final VoidCallback? onTap;
+  final Widget child;
+
+  const _Press({required this.onTap, required this.child});
+
+  @override
+  State<_Press> createState() => _PressState();
+}
+
+class _PressState extends State<_Press> {
+  bool _down = false;
+
+  void _set(bool down) {
+    if (_down != down && mounted) setState(() => _down = down);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bool live = widget.onTap != null;
+    final bool still = MediaQuery.disableAnimationsOf(context);
+    return Listener(
+      onPointerDown: live ? (_) => _set(true) : null,
+      onPointerUp: (_) => _set(false),
+      onPointerCancel: (_) => _set(false),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: widget.onTap,
+        child: AnimatedScale(
+          scale: _down ? 0.965 : 1,
+          duration: still
+              ? Duration.zero
+              : Duration(milliseconds: _down ? 70 : 280),
+          curve: _down ? Curves.easeOut : Curves.easeOutBack,
+          child: widget.child,
+        ),
+      ),
+    );
+  }
+}
+
+/// The tick at the end of what was just taken, coming in with a small pop.
+class _Tick extends StatelessWidget {
+  final Color color;
+  final double size;
+
+  const _Tick({required this.color, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget icon = Icon(Icons.check_rounded, size: size, color: color);
+    if (MediaQuery.disableAnimationsOf(context)) return icon;
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.4, end: 1),
+      duration: const Duration(milliseconds: 240),
+      curve: Curves.easeOutBack,
+      builder: (context, v, child) => Opacity(
+        opacity: ((v - 0.4) / 0.6).clamp(0.0, 1.0),
+        child: Transform.scale(scale: v, child: child),
+      ),
+      child: icon,
     );
   }
 }
@@ -1644,6 +1954,10 @@ class _ChoiceButton extends StatelessWidget {
   final Color ink;
   final Color fill;
   final Color edge;
+
+  /// The card's own colour: the words of the option just taken, set on its
+  /// ink.
+  final Color ground;
   final VoidCallback? onTap;
 
   /// True on the option this reader took, when the card is being looked at
@@ -1652,13 +1966,23 @@ class _ChoiceButton extends StatelessWidget {
   /// a re-read feel broken.
   final bool taken;
 
+  /// True on the option just tapped: filled with the card's ink the instant
+  /// it is, its words in the card's colour, a tick at its end.
+  final bool locked;
+
+  /// True on the options not taken, once one is: they dim at once.
+  final bool dimmed;
+
   const _ChoiceButton({
     required this.label,
     required this.ink,
     required this.fill,
     required this.edge,
+    required this.ground,
     required this.onTap,
     this.taken = false,
+    this.locked = false,
+    this.dimmed = false,
   });
 
   static TextStyle labelStyle(Color ink, bool taken) => AppText.body(
@@ -1674,8 +1998,12 @@ class _ChoiceButton extends StatelessWidget {
   /// Its edge, and the firmer one round the option a reader took.
   static const double edgeWidth = 1, takenEdgeWidth = 1.6;
 
-  /// Between the words and the word that marks the reader's own.
+  /// Between the words and the word that marks the reader's own, or the
+  /// tick of the option just taken.
   static const double tagGap = 10;
+
+  /// The tick's size.
+  static const double tick = 20;
 
   static TextStyle tagStyle(Color ink) =>
       AppText.label(size: 9, spacing: 1, color: ink.withValues(alpha: 0.6));
@@ -1699,31 +2027,52 @@ class _ChoiceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color words = locked ? ground : ink;
     return Semantics(
       button: onTap != null,
-      selected: taken,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: padX, vertical: padY),
-          decoration: BoxDecoration(
-            color: fill,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: taken ? ink.withValues(alpha: 0.55) : edge,
-              width: taken ? takenEdgeWidth : edgeWidth,
+      selected: taken || locked,
+      child: AnimatedOpacity(
+        opacity: dimmed ? 0.32 : 1,
+        duration: MediaQuery.disableAnimationsOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 140),
+        curve: Curves.easeOut,
+        child: _Press(
+          onTap: onTap,
+          // Filled at once, not faded in: a key that is down is down.
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(
+              horizontal: padX,
+              vertical: padY,
             ),
-          ),
-          child: Row(
-            children: [
-              Expanded(child: Text(label, style: labelStyle(ink, taken))),
-              if (taken) ...[
-                const SizedBox(width: tagGap),
-                Text('YOURS', style: tagStyle(ink)),
+            decoration: BoxDecoration(
+              color: locked ? ink : fill,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: locked
+                    ? ink
+                    : taken
+                    ? ink.withValues(alpha: 0.55)
+                    : edge,
+                width: taken ? takenEdgeWidth : edgeWidth,
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(label, style: labelStyle(words, taken || locked)),
+                ),
+                if (locked) ...[
+                  const SizedBox(width: tagGap),
+                  _Tick(color: words, size: tick),
+                ],
+                if (taken) ...[
+                  const SizedBox(width: tagGap),
+                  Text('YOURS', style: tagStyle(ink)),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),
@@ -1735,37 +2084,93 @@ class _ChoiceButton extends StatelessWidget {
 ///
 /// This is the part that makes the app worth keeping. Being right is a fact
 /// about one card; knowing how often you are right is a fact about you.
+///
+/// The five levels stand in one row, each as wide as the others, where five
+/// fit, as the card kit sets them (docs/cards/kit/astute-card.css, .sure):
+/// three and two, the second row ragged, left a hole on the right of the
+/// card. Where they do not fit, at a large text size, they wrap.
 class _ConfidenceStep extends StatelessWidget {
   final Pill pill;
-  final ValueChanged<int> onPick;
 
-  const _ConfidenceStep({required this.pill, required this.onPick});
+  /// The level just tapped: filled with the card's ink, the others dimmed,
+  /// while the card turns.
+  final int? chosen;
 
-  /// How tall the step sets at [width]: the question, and the levels as
-  /// they wrap.
+  /// Null once a level is chosen: nothing more is taken.
+  final ValueChanged<int>? onPick;
+
+  const _ConfidenceStep({
+    required this.pill,
+    required this.onPick,
+    this.chosen,
+  });
+
+  static TextStyle _chip(Color color) =>
+      AppText.body(size: 15, weight: FontWeight.w600, color: color);
+
+  /// Between one level and the next.
+  static const double _gap = 8;
+
+  /// How wide [level] sets.
+  static double _wordsWidth(
+    BuildContext context,
+    int level,
+    TextScaler scaler,
+  ) {
+    final TextPainter p = TextPainter(
+      text: TextSpan(
+        text: '$level%',
+        style: DefaultTextStyle.of(context).style
+            .merge(_chip(const Color(0xFF000000))),
+      ),
+      textDirection: Directionality.of(context),
+      textScaler: scaler,
+      maxLines: 1,
+    )..layout();
+    final double w = p.width;
+    p.dispose();
+    return w;
+  }
+
+  /// Whether the levels stand in one row at [width]: each as wide as the
+  /// others, with room either side of its words.
+  static bool oneRow(BuildContext context, double width, TextScaler scaler) {
+    final int n = kConfidenceLevels.length;
+    final double each = (width - _gap * (n - 1)) / n;
+    double widest = 0;
+    for (final int level in kConfidenceLevels) {
+      widest = math.max(widest, _wordsWidth(context, level, scaler));
+    }
+    return widest + 20 <= each;
+  }
+
+  /// How tall the step sets at [width]: the question, and the levels in a
+  /// row, or as they wrap.
   static double heightFor(
     BuildContext context,
     double width,
     TextScaler scaler,
   ) {
-    final TextStyle chip = AppText.body(size: 15, weight: FontWeight.w600);
     final double chipHeight =
-        _measure(context, '90%', chip, width, scaler) + 28;
-    double row = 0;
+        _measure(
+          context,
+          '90%',
+          _chip(const Color(0xFF000000)),
+          width,
+          scaler,
+        ) +
+        28;
     int rows = 1;
-    for (final int level in kConfidenceLevels) {
-      final TextPainter p = TextPainter(
-        text: TextSpan(text: '$level%', style: chip),
-        textDirection: Directionality.of(context),
-        textScaler: scaler,
-      )..layout();
-      final double w = p.width + 38;
-      p.dispose();
-      if (row > 0 && row + 9 + w > width) {
-        rows++;
-        row = w;
-      } else {
-        row += (row > 0 ? 9 : 0) + w;
+    if (!oneRow(context, width, scaler)) {
+      double row = 0;
+      for (final int level in kConfidenceLevels) {
+        final double w = _wordsWidth(context, level, scaler) + 38;
+        if (row > 0 && row + 9 + w > width) {
+          rows++;
+          row = w;
+        } else {
+          row += (row > 0 ? 9 : 0) + w;
+        }
       }
     }
     return _measure(
@@ -1780,55 +2185,88 @@ class _ConfidenceStep extends StatelessWidget {
         (rows - 1) * 9;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          context.l10n.howSureAreYou,
-          style: AppText.display(
-            size: 19,
-            weight: FontWeight.w600,
-            spacing: -0.4,
-            color: pill.ink,
+  /// A level: [padX] either side of its words where it sets its own width
+  /// (wrapped), none where a row of equal ones gives it its width.
+  Widget _level(BuildContext context, int level, {double padX = 18}) {
+    final bool on = chosen == level;
+    return Semantics(
+      button: onPick != null,
+      selected: on,
+      label: context.l10n.percentSure(level),
+      excludeSemantics: true,
+      child: AnimatedOpacity(
+        opacity: chosen != null && !on ? 0.32 : 1,
+        duration: MediaQuery.disableAnimationsOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 140),
+        child: _Press(
+          onTap: onPick == null ? null : () => onPick!(level),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: padX, vertical: 13),
+            alignment: padX == 0 ? Alignment.center : null,
+            decoration: BoxDecoration(
+              color: on ? pill.ink : pill.wash,
+              borderRadius: BorderRadius.circular(999),
+              border: Border.all(color: on ? pill.ink : pill.washEdge),
+            ),
+            child: Text(
+              '$level%',
+              maxLines: 1,
+              softWrap: false,
+              overflow: TextOverflow.visible,
+              style: _chip(on ? pill.color : pill.ink),
+            ),
           ),
         ),
-        const SizedBox(height: 14),
-        Wrap(
-          spacing: 9,
-          runSpacing: 9,
-          children: kConfidenceLevels.map((level) {
-            return Semantics(
-              button: true,
-              label: context.l10n.percentSure(level),
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => onPick(level),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                    vertical: 13,
-                  ),
-                  decoration: BoxDecoration(
-                    color: pill.wash,
-                    borderRadius: BorderRadius.circular(999),
-                    border: Border.all(color: pill.washEdge),
-                  ),
-                  child: Text(
-                    '$level%',
-                    style: AppText.body(
-                      size: 15,
-                      weight: FontWeight.w600,
-                      color: pill.ink,
-                    ),
-                  ),
-                ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) {
+        final bool row = oneRow(
+          context,
+          box.maxWidth,
+          MediaQuery.textScalerOf(context),
+        );
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              context.l10n.howSureAreYou,
+              style: AppText.display(
+                size: 19,
+                weight: FontWeight.w600,
+                spacing: -0.4,
+                color: pill.ink,
               ),
-            );
-          }).toList(),
-        ),
-      ],
+            ),
+            const SizedBox(height: 14),
+            if (row)
+              Row(
+                children: [
+                  for (int i = 0; i < kConfidenceLevels.length; i++) ...[
+                    if (i > 0) const SizedBox(width: _gap),
+                    Expanded(
+                      child: _level(context, kConfidenceLevels[i], padX: 0),
+                    ),
+                  ],
+                ],
+              )
+            else
+              Wrap(
+                spacing: 9,
+                runSpacing: 9,
+                children: [
+                  for (final int level in kConfidenceLevels)
+                    _level(context, level),
+                ],
+              ),
+          ],
+        );
+      },
     );
   }
 }

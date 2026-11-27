@@ -141,7 +141,7 @@
  },
  "somewhereToStart": "Somewhere to start that is not today",
  "searchEveryCard": "Search every card",
- "nothingForYet": "Nothing for \"{query}\" yet.",
+ "nothingForYet": "Nothing for “{query}” yet.",
  "@nothingForYet": {
   "placeholders": {
    "query": {
@@ -195,7 +195,7 @@
  },
  "yesterday": "Yesterday",
  "noPillsMatchFilter": "No cards match that filter yet.",
- "nothingForTryTopic": "Nothing for \"{query}\". Try a topic instead.",
+ "nothingForTryTopic": "Nothing for “{query}”. Try a topic instead.",
  "@nothingForTryTopic": {
   "placeholders": {
    "query": {
@@ -219,7 +219,7 @@
   }
  },
  "keepTheOnesYoullUse": "Keep the ones you'll actually use",
- "backToTodaysFive": "BACK TO TODAY'S FIVE",
+ "backToTodaysFive": "Back to today's five",
  "archive": "Archive",
  "yourWeek": "Your week",
  "nothingThisWeekYet": "Nothing this week yet. Five cards start it.",
@@ -290,7 +290,7 @@
    }
   }
  },
- "youSaidPercentSure": "You said {n}% sure",
+ "youSaidPercentSure": "You said {n}% sure",
  "@youSaidPercentSure": {
   "placeholders": {
    "n": {
@@ -718,7 +718,7 @@
    }
   }
  },
- "shareMyRecord": "SHARE MY RECORD",
+ "shareMyRecord": "Share my record",
  "lastCallsAgainstFirst": "Your last {n} calls, against your first {n}",
  "@lastCallsAgainstFirst": {
   "placeholders": {
@@ -791,7 +791,7 @@
    }
   }
  },
- "seeThePlans": "SEE THE PLANS",
+ "seeThePlans": "See the plans",
  "recordStartsToday": "Your record starts today.",
  "dayWord": "{n, plural, =1{day} other{days}}",
  "@dayWord": {
@@ -1969,18 +1969,6 @@
    }
   }
  },
- "threeRowSaid": "You said {said}. It is {truth}.",
- "@threeRowSaid": {
-  "description": "On the result, under a question answered with a share: the guess and the answer.",
-  "placeholders": {
-   "said": {
-    "type": "String"
-   },
-   "truth": {
-    "type": "String"
-   }
-  }
- },
  "fiveTitle": "Today's five",
  "@fiveTitle": {
   "description": "Today's five: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short."
@@ -2002,18 +1990,27 @@
    }
   }
  },
- "dailyPickRight": "Right: {answer}.",
+ "dailyPickRight": "Right: {answer}",
  "@dailyPickRight": {
-  "description": "After a pick is locked in, when it is right: the right answer.",
+  "description": "The right answer, quoted or as a number: after a pick is locked in, when it is right, and on the result under each card.",
   "placeholders": {
    "answer": {
     "type": "String"
    }
   }
  },
- "dailyPickWrong": "Not quite: it is {answer}.",
+ "dailyPickWrong": "Not quite. Right: {answer}",
  "@dailyPickWrong": {
-  "description": "After a pick is locked in, when it is wrong: the right answer.",
+  "description": "After a pick is locked in, when it is wrong: the right answer, quoted.",
+  "placeholders": {
+   "answer": {
+    "type": "String"
+   }
+  }
+ },
+ "dailyYourPick": "Yours: {answer}",
+ "@dailyYourPick": {
+  "description": "A card on the result of the day's game, answered wrong: the reader's answer, on a line of its own above the right one. The answer comes quoted, or as a number.",
   "placeholders": {
    "answer": {
     "type": "String"
@@ -2225,6 +2222,93 @@
     "type": "int"
    }
   }
+ },
+ "aimTitle": "Where do you want to be sharper?",
+ "@aimTitle": {
+  "description": "What to learn, look B (developer tools): the question at the end of the first run and on the profile, where the reader picks one aim, one of the six areas the cards name on their backs."
+ },
+ "aimLine": "Pick one. Every day there are cards for it, and you can change it whenever you like.",
+ "@aimLine": {
+  "description": "Under aimTitle: pick one; every day there are cards for it (Explore's shelf of it, the cards dealt for it); it can be changed at any time."
+ },
+ "aimWeek": "{n, plural, =0{No cards for it this week} =1{1 card for it this week} other{{n} cards for it this week}}",
+ "@aimWeek": {
+  "description": "Look B, the reader's aim on the profile and in Your journey: how many cards of it they read in the last seven days.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "answersRightOf": "{right, plural, =1{1 of {n} right} other{{right} of {n} right}}",
+ "@answersRightOf": {
+  "description": "How many of the answers given on some cards were right: 'right' right out of 'n' given. After aimWeek (look B), and beside a skill (look C).",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "aimOpen": "Everything for this goal",
+ "@aimOpen": {
+  "description": "Look B, Your journey: link under the reader's aim that opens its page (its paths, the moves it trains, more of its cards)."
+ },
+ "aimPlus": "With Astute+: every path for it, whole, and a coach who works on it with you.",
+ "@aimPlus": {
+  "description": "Look B, on the free plan, under the reader's aim on the profile beside a small Astute+ tag: what Astute+ adds for it. Opens the plans."
+ },
+ "aimNone": "Pick where you want to be sharper, and every day there will be cards for it.",
+ "@aimNone": {
+  "description": "Look B: where the reader's aim stands when they have not picked one: what an aim does."
+ },
+ "aimPick": "Pick a goal",
+ "@aimPick": {
+  "description": "Look B: button that opens the question of the reader's aim."
+ },
+ "strengthsTitle": "Where you're strong",
+ "@strengthsTitle": {
+  "description": "What to learn, look C (developer tools): the name of the skills read from the reader's answers, strongest first, on the profile and in Your journey. Nothing is picked."
+ },
+ "strengthsLine": "Read from your answers, not picked: where you get the most right, and where you slip.",
+ "@strengthsLine": {
+  "description": "Look C, Your journey: under strengthsTitle, what the ranking is: read from the reader's answers, not chosen by them."
+ },
+ "strengthsFew": "Too few answers yet: {skills}.",
+ "@strengthsFew": {
+  "description": "Look C, Your journey: at the foot of the ranking, the skills with too few answers to rank yet. skills is their names, joined with commas.",
+  "placeholders": {
+   "skills": {
+    "type": "String"
+   }
+  }
+ },
+ "strengthsPractice": "Practise {skill}",
+ "@strengthsPractice": {
+  "description": "Look C, Your journey: button under the ranking that opens five cards of the reader's weakest skill to answer. skill is the skill's name.",
+  "placeholders": {
+   "skill": {
+    "type": "String"
+   }
+  }
+ },
+ "strengthsBest": "Your strong point",
+ "@strengthsBest": {
+  "description": "Look C, on the profile: small capitals over the reader's strongest skill."
+ },
+ "strengthsWeak": "Where you slip most",
+ "@strengthsWeak": {
+  "description": "Look C, on the profile (Astute+): small capitals over the skill the reader gets wrong most."
+ },
+ "strengthsLocked": "Where you slip most, and the rest, with Astute+.",
+ "@strengthsLocked": {
+  "description": "Look C, on the profile (free plan), beside a lock under the strongest skill: the weakest skill and the whole ranking are in Your journey, with Astute+. The box opens the plans."
+ },
+ "strengthsEmpty": "A few more answers, and this will show where you're strong.",
+ "@strengthsEmpty": {
+  "description": "Look C: where the ranking stands before any skill has enough answers behind it."
  },
  "scoreTitle": "Astute score",
  "@scoreTitle": {
@@ -2474,42 +2558,6 @@
  "pickASideNoRightAnswer": "Pick a side. There is no right answer.",
  "estimateCloseEnough": "Estimate. Close enough counts.",
  "tapToReveal": "Tap to reveal",
- "youSaidItIsCounted": "You said {given} · it is {answer}, and {band} counted",
- "@youSaidItIsCounted": {
-  "placeholders": {
-   "given": {
-    "type": "String"
-   },
-   "answer": {
-    "type": "String"
-   },
-   "band": {
-    "type": "String"
-   }
-  }
- },
- "youSaidItIs": "You said {given} · it is {answer}",
- "@youSaidItIs": {
-  "placeholders": {
-   "given": {
-    "type": "String"
-   },
-   "answer": {
-    "type": "String"
-   }
-  }
- },
- "lineYouSaidSure": "{line} · you said {pct}% sure",
- "@lineYouSaidSure": {
-  "placeholders": {
-   "line": {
-    "type": "String"
-   },
-   "pct": {
-    "type": "int"
-   }
-  }
- },
  "verdictRight": "Right.",
  "@verdictRight": {
   "description": "The verdict on the back of a card answered right, set large."
@@ -2522,12 +2570,57 @@
  "@verdictWrong": {
   "description": "The verdict on the back of a card answered wrong, set large: kind, not a scolding."
  },
- "verdictSure": "You were {pct}% sure.",
+ "verdictSure": "You were {pct}% sure.",
  "@verdictSure": {
   "description": "Under the verdict: how sure the reader said they were. {pct} is 50 to 90.",
   "placeholders": {
    "pct": {
     "type": "int"
+   }
+  }
+ },
+ "verdictYouSaid": "You said {given}",
+ "@verdictYouSaid": {
+  "description": "A card's back, after the verdict, when the answer was wrong: what the reader said, quoted, or as a number. The right answer follows after a dot.",
+  "placeholders": {
+   "given": {
+    "type": "String"
+   }
+  }
+ },
+ "verdictYouSaidSure": "You said {given}, {pct}% sure",
+ "@verdictYouSaidSure": {
+  "description": "A card's back, after the verdict, when the answer was wrong: what the reader said, quoted or as a number, and how sure they were. The number and its words never part across lines.",
+  "placeholders": {
+   "given": {
+    "type": "String"
+   },
+   "pct": {
+    "type": "int"
+   }
+  }
+ },
+ "verdictRightIs": "Right: {answer}",
+ "@verdictRightIs": {
+  "description": "A card's back, after what the reader said when it was wrong: the right answer, quoted, or as a number.",
+  "placeholders": {
+   "answer": {
+    "type": "String"
+   }
+  }
+ },
+ "verdictRightWithin": "Right: {answer} ({low} to {high} counted)",
+ "@verdictRightWithin": {
+  "description": "A card's back, after what the reader said when an estimate was wrong: the right answer, and what counted as close enough.",
+  "placeholders": {
+   "answer": {
+    "type": "String"
+   },
+   "low": {
+    "type": "String"
+   },
+   "high": {
+    "type": "String"
    }
   }
  },
@@ -3038,15 +3131,30 @@
  "themeHowItWorksLine": "The mechanism behind something you see every day",
  "themePuzzles": "Work it out",
  "themePuzzlesLine": "Puzzles you can solve with a pen and a minute",
- "weekRecapCaps": "THIS WEEK YOU ASKED YOURSELF",
- "weekRecapLine": "The questions your cards left you with",
- "weekRecapMore": "{n} more from your week with Plus",
+ "weekRecapMore": "{n, plural, =1{1 more from your week with Astute+} other{{n} more from your week with Astute+}}",
  "@weekRecapMore": {
+  "description": "Your journey, Review the week, on the free plan: under its button, how many of the week's cards are past the first five, and the way to Astute+.",
   "placeholders": {
    "n": {
     "type": "int"
    }
   }
+ },
+ "weekReviewTitle": "Review the week",
+ "@weekReviewTitle": {
+  "description": "Your journey: the name of its last chapter, set in capitals after the chapter's number. The week's cards gone over again, each card that asks asked once more."
+ },
+ "weekReviewLine": "The questions from your cards this week. Answer them again: that's how they stay.",
+ "@weekReviewLine": {
+  "description": "Your journey, Review the week: the line under the chapter's name, over two or three of the week's questions."
+ },
+ "weekReviewGo": "Review",
+ "@weekReviewGo": {
+  "description": "Your journey, Review the week: the button that plays the week's cards again, full size, from the first."
+ },
+ "weekReviewNone": "The cards you read this week come back here, to go over again.",
+ "@weekReviewNone": {
+  "description": "Your journey, Review the week, before any card has been read this week (Monday on)."
  },
  "plusInTheApp": "Astute+ is in the app: download Astute on iPhone or Android to start your free trial.",
  "purchaseComplete": "Purchase complete.",
@@ -3197,9 +3305,29 @@
  "@showAllSteps": {
   "description": "Button under a worked solution: show every step at once."
  },
- "sceneLockIn": "LOCK IT IN",
+ "sceneLockIn": "Lock it in",
  "@sceneLockIn": {
   "description": "Label inside an interactive card scene."
+ },
+ "placeItDrag": "Drag along the ruler.",
+ "@placeItDrag": {
+  "description": "An estimate card, under its ruler, before the mark is moved: how to put it."
+ },
+ "placeItHappy": "Happy with that?",
+ "@placeItHappy": {
+  "description": "An estimate card, under its ruler, once the mark is moved, beside the button that confirms it."
+ },
+ "placeItEstimate": "Your estimate",
+ "@placeItEstimate": {
+  "description": "Said by a screen reader: the ruler an estimate is put on."
+ },
+ "placeItNotSet": "not set",
+ "@placeItNotSet": {
+  "description": "Said by a screen reader: the ruler's value before the mark is moved."
+ },
+ "placeItLock": "Lock in my estimate",
+ "@placeItLock": {
+  "description": "Said by a screen reader: the button that confirms an estimate."
  },
  "sceneYou": "YOU",
  "@sceneYou": {
@@ -3577,7 +3705,7 @@
    }
   }
  },
- "journeyMinAWeek": "{now} min a week, from {was}",
+ "journeyMinAWeek": "{now} min a week, from {was} min",
  "@journeyMinAWeek": {
   "description": "Under the reading time: minutes a week lately, and at the start.",
   "placeholders": {
@@ -3597,10 +3725,6 @@
     "type": "int"
    }
   }
- },
- "journeyTimedFromToday": "Counted from today",
- "@journeyTimedFromToday": {
-  "description": "Under a dash: the app has started timing the cards today."
  },
  "journeyPointsOffFrom": "points off, from {was}",
  "@journeyPointsOffFrom": {
@@ -3639,13 +3763,25 @@
    }
   }
  },
- "journeySureNone": "Nothing said at 80% or more yet",
- "@journeySureNone": {
-  "description": "Under a dash, before any answer at 80% sure or more."
- },
  "journeyMovesTitle": "Moves you can spot",
  "@journeyMovesTitle": {
   "description": "Tile title: the reasoning moves the reader has down."
+ },
+ "journeySureEmpty": "Shows once you answer 80% sure or more.",
+ "@journeySureEmpty": {
+  "description": "Your journey, the tile Right when sure: in place of its figure, before any answer said 80% sure or more."
+ },
+ "journeyMovesEmpty": "Shows once you spot a move on two cards.",
+ "@journeyMovesEmpty": {
+  "description": "Your journey, the tile Moves you can spot: in place of its figure, before any move counts as spotted (met on two cards or more, right on at least half)."
+ },
+ "journeyMissedEmpty": "Six answers in a second subject, and it is measured.",
+ "@journeyMissedEmpty": {
+  "description": "Your journey, the tile Most missed: in place of a subject, while only one subject has six answers."
+ },
+ "journeyFillsAsYouRead": "Fills in as you read.",
+ "@journeyFillsAsYouRead": {
+  "description": "Your journey: in place of the figure on a tile with nothing to show yet (reading time, in time, in place, topics, words)."
  },
  "journeyOfN": "of {n}",
  "@journeyOfN": {
@@ -3664,10 +3800,6 @@
     "type": "String"
    }
   }
- },
- "journeyNoneYet": "None yet",
- "@journeyNoneYet": {
-  "description": "Under the moves, before the first."
  },
  "journeyStillWithYou": "{n, plural, =1{card still with you} other{cards still with you}}",
  "@journeyStillWithYou": {
@@ -3783,10 +3915,6 @@
  "@journeyEraRecent": {
   "description": "An era, inside 'from … to this year': the year 2000."
  },
- "journeyNothingDated": "nothing dated yet",
- "@journeyNothingDated": {
-  "description": "Under a dash in the In time tile."
- },
  "journeyInPlace": "In place",
  "@journeyInPlace": {
   "description": "Tile title: where in the world the cards read are set."
@@ -3832,10 +3960,6 @@
  "journeyRegionMiddleEast": "the Middle East",
  "@journeyRegionMiddleEast": {
   "description": "A region of the world."
- },
- "journeyNoPlace": "no place yet",
- "@journeyNoPlace": {
-  "description": "Under a dash in the In place tile."
  },
  "journeyTopics": "Topics",
  "@journeyTopics": {
@@ -5435,7 +5559,7 @@
  },
  "screensQuoted": "“{text}”",
  "@screensQuoted": {
-  "description": "Words set in this language's own quotation marks: an expert's question on Explore's 'Think like an expert'.",
+  "description": "Words set in this language's own quotation marks: an expert's question on Explore's 'Think like an expert', and a card's words (an option, an answer) inside the app's own sentences.",
   "placeholders": {
    "text": {
     "type": "String"
@@ -6728,6 +6852,18 @@
  "@yourFiveFromToday": {
   "description": "Explore, near the top once the day's five are read: a small row that opens the reader's own five cards of today again, full size. It names the reader's own cards, so it is never taken for the day's challenge that is the same for everyone (\"Today's five\")."
  },
+ "dayMomentTitle": "Day complete.",
+ "@dayMomentTitle": {
+  "description": "The screen that rises once, right after the day's five are read, with the day's picture and the way to send it (tried from the developer tools): its headline. Short, plain, never a cheer."
+ },
+ "dayMomentLater": "Later",
+ "@dayMomentLater": {
+  "description": "The screen that rises once the day's five are read: the quiet way past it, under the button that sends the day. Nothing is asked again that day."
+ },
+ "yourDayCard": "Your day",
+ "@yourDayCard": {
+  "description": "Today, once the five are read (tried from the developer tools): the card after the five on the shelf, which shows the day's picture and sends it. Its name, over the picture, and what a screen reader says for its dot."
+ },
  "tuneTitle": "Tune your mix",
  "@tuneTitle": {
   "description": "The screen under the topics editor, and the row that opens it: how much of each subject, and which parts of each."
@@ -6992,10 +7128,6 @@
    }
   }
  },
- "journeySubjectsNotYet": "Six answers in a subject, and it is measured.",
- "@journeySubjectsNotYet": {
-  "description": "Your journey: shown under the two subject tiles before any subject has six answers."
- },
  "journeyChangedMind": "Changed your mind",
  "@journeyChangedMind": {
   "description": "Your journey: the label over how many cards changed the reader's mind, in the reader's own word on cards that ask what they did for them."
@@ -7111,6 +7243,27 @@
  "storyHeadlineRead": "{n, plural, =0{Your first card is waiting.} =1{One card read. The journey starts here.} other{{n} cards read. The journey starts here.}}",
  "@storyHeadlineRead": {
   "description": "Your journey as a story (the version on trial under the tiles): storyHeadlineRead",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "storyHeadlineReadWeek": "{n, plural, =1{One card read} other{{n} cards read}}, {week, plural, =0{none yet this week.} =1{one this week.} other{{week} this week.}}",
+ "@storyHeadlineReadWeek": {
+  "description": "Your journey, This week: the headline past the reader's first day, when the week is told in cards read: every card read so far, then those first read this week (Monday on).",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "week": {
+    "type": "int"
+   }
+  }
+ },
+ "storyHeadlineReadAllWeek": "{n, plural, =1{One card read so far.} other{{n} cards read, all this week.}}",
+ "@storyHeadlineReadAllWeek": {
+  "description": "Your journey, This week: the headline past the reader's first day, when every card they have read was read this week (Monday on).",
   "placeholders": {
    "n": {
     "type": "int"
@@ -7446,6 +7599,18 @@
  "@newsBehind": {
   "description": "A story of Explore's latest news, on its page: the heading over the question the story raises and its answer, the reasoning behind the news (set in small capitals)."
  },
+ "newsMeansForYou": "What it means for you",
+ "@newsMeansForYou": {
+  "description": "A news story's page, in small capitals: what the story means for the reader's own life (money, health, work, the everyday)."
+ },
+ "newsMeans": "What it means",
+ "@newsMeans": {
+  "description": "A news story's page, in small capitals: what the story means."
+ },
+ "newsHappenedBefore": "It happened before",
+ "@newsHappenedBefore": {
+  "description": "A news story's page, in small capitals: a past case with the same mechanism, with its year."
+ },
  "newsSources": "Sources",
  "@newsSources": {
   "description": "A story of Explore's latest news, on its page: the heading over the list of reports it was made from, each opened in the browser (set in small capitals)."
@@ -7453,6 +7618,10 @@
  "newsMadeFrom": "Written by Astute from these reports, and checked against them.",
  "@newsMadeFrom": {
   "description": "A story of Explore's latest news, at the foot of its page: how it was made. Plain and quiet."
+ },
+ "newsWhyItMatters": "Why it matters",
+ "@newsWhyItMatters": {
+  "description": "Explore's latest news, in the looks that lead with one story (a lead story, story cards): the heading, set in small capitals, over the one line that says what the story means for the reader, taken from the story's own step of what it means."
  },
  "deeperDeclined": "That's one it can't answer.",
  "@deeperDeclined": {
@@ -7635,6 +7804,30 @@
  "@founderTheirBooks": {
   "description": "What founders read, a person's own page: the label over the books they recommended in public. Without a pronoun where the language allows it."
  },
+ "founderRole": "{id, select, bill_gates{Co-founder of Microsoft} warren_buffett{The investor who built Berkshire Hathaway} mark_zuckerberg{Founder of Facebook} charlie_munger{Warren Buffett’s partner at Berkshire Hathaway} marc_andreessen{Co-founder of Netscape and Andreessen Horowitz} tobi_lutke{Founder of Shopify} naval_ravikant{Co-founder of AngelList} other{{role}}}",
+ "@founderRole": {
+  "description": "What a founder built, in a few words, under their name on Explore, their page and a book's page. One case per person, by their id (lib/data/founders.dart); any other is their role in English.",
+  "placeholders": {
+   "id": {
+    "type": "String"
+   },
+   "role": {
+    "type": "String"
+   }
+  }
+ },
+ "founderWhere": "{id, select, gates_summer{GatesNotes, his books for the summer} berkshire_meeting{Berkshire Hathaway’s annual meeting} berkshire_letter{his letter to Berkshire Hathaway’s shareholders} year_of_books{A Year of Books, on Facebook} publisher_praise{his praise for the book, at its publisher} ferriss_five{The Tim Ferriss Show, among the five best books he has read} other{{where}}}",
+ "@founderWhere": {
+  "description": "Where a founder recommended a book, as its source line says it, before the year (\"…, 2017\"); the first letter is set up in capitals when it starts the line. One case per place said as a phrase (lib/data/founders.dart); any other is a name kept as it is (\"GatesNotes\", \"Twitter\").",
+  "placeholders": {
+   "id": {
+    "type": "String"
+   },
+   "where": {
+    "type": "String"
+   }
+  }
+ },
  "founderAbout": "These are books {name} recommended in public, in the words quoted, each with where it was said. {name} has no connection with Astute.",
  "@founderAbout": {
   "description": "What founders read, at the foot of a person's own page: that these are books {name} (a famous founder or investor, e.g. 'Bill Gates') recommended in public, quoted, each with its source, and that {name} has no connection with the app, so nothing reads as an endorsement. Quiet and plain; use the name, not a pronoun, where the language would need a gender.",
@@ -7722,5 +7915,71 @@
  "trialOfferFree": "Continue for free",
  "@trialOfferFree": {
   "description": "The offer's way out, a button as plain as the other: the free plan, and the day's five cards."
+ },
+ "paywallStepFree": "Everything, free",
+ "@paywallStepFree": {
+  "description": "A prototype of the paywall (developer tools only, for now): the free trial as a short timeline over the button, three stops on one line. Under the first stop, 'Today': everything Astute+ adds opens, and nothing is paid. Two or three words: it sits in a third of the screen's width."
+ },
+ "paywallStepRemind": "We remind you",
+ "@paywallStepRemind": {
+  "description": "On that timeline, under the date of the second stop: the app sends the reader a notification before the trial ends. Two or three words: it sits in a third of the screen's width."
+ },
+ "paywallChargedToday": "Charged today · Cancel any time",
+ "@paywallChargedToday": {
+  "description": "In that prototype, in the timeline's place when the plan picked starts with no free days (the month, or a reader the store gives no trial to): the plan is charged today, and it can be cancelled at any time. One short line; the price is on the button beside it."
+ },
+ "paywallGoalTitle": "{goal, select, decide{For people who want to decide better.} money{For people who see through a deal.} people{For people who want to read people.} news{For people who don’t fall for headlines.} health{For people who check the evidence on health.} business{For people who want to see clearly at work.} other{For people who want to see clearly.}}",
+ "@paywallGoalTitle": {
+  "description": "A prototype of the paywall's headline that opens on what the reader said they want to get better at (their area of life, lib/data/goals.dart): 'for people who want to …'. Calm, plain, no price and no number. paywallGoalMark must appear in it word for word: that part is painted in the paywall's three colours.",
+  "placeholders": {
+   "goal": {
+    "type": "String"
+   }
+  }
+ },
+ "paywallGoalMark": "{goal, select, decide{better.} money{deal.} people{people.} news{headlines.} health{health.} business{work.} other{clearly.}}",
+ "@paywallGoalMark": {
+  "description": "The part of paywallGoalTitle painted in the three colours, for the same goal: the words it leans on, with the full stop when the title ends on them. It must be copied from paywallGoalTitle exactly.",
+  "placeholders": {
+   "goal": {
+    "type": "String"
+   }
+  }
+ },
+ "paywallMadeLine": "Five cards a day from {subjects}, at your level. The ones you miss come back until they stick. And you see yourself change, week by week.",
+ "@paywallMadeLine": {
+  "description": "Under that headline: the paywall's usual line, naming the subjects the reader leaned towards when they set their mix ({subjects} is two or three subject names already joined by subjectsTwo or subjectsThree). Five cards a day at their level, the ones they miss come back, and they see themselves change.",
+  "placeholders": {
+   "subjects": {
+    "type": "String"
+   }
+  }
+ },
+ "subjectsTwo": "{a} and {b}",
+ "@subjectsTwo": {
+  "description": "Two subject names joined, as they are read inside a sentence: 'Psychology and Economics'.",
+  "placeholders": {
+   "a": {
+    "type": "String"
+   },
+   "b": {
+    "type": "String"
+   }
+  }
+ },
+ "subjectsThree": "{a}, {b} and {c}",
+ "@subjectsThree": {
+  "description": "Three subject names joined, as they are read inside a sentence: 'Psychology, Economics and Science'.",
+  "placeholders": {
+   "a": {
+    "type": "String"
+   },
+   "b": {
+    "type": "String"
+   },
+   "c": {
+    "type": "String"
+   }
+  }
  }
 }

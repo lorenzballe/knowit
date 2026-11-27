@@ -930,7 +930,7 @@ class MovingBlock extends ExploreBlock {
         } catch (_) {
           date = DateFormat.MMMd('en').format(on);
         }
-        return l.purposeMovingUpdated(date);
+        return l.elided(l.purposeMovingUpdated(date));
       }
       return p.shelfLife == 'months'
           ? l.purposeMovingMonths

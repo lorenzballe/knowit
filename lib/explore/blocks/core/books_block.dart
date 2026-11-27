@@ -37,10 +37,11 @@ import '../../../screens/deck_viewer_screen.dart';
 import '../../../state/app_state.dart';
 import '../../../theme.dart';
 import '../../../widgets/premium.dart';
+import '../../../widgets/top_edge.dart' show SoftTop;
 import '../../../widgets/ui.dart' show BackCircle;
 import '../../../widgets/web/card_thumb.dart';
 import '../../explore_block.dart';
-import 'founders_block.dart' show FounderFace, FounderPhotoCredit;
+import 'founders_block.dart' show FounderFace, FounderPhotoCredit, FounderWords;
 import 'layout.dart';
 
 /// The block: see the library's own words.
@@ -793,104 +794,123 @@ class BookScreen extends StatelessWidget {
               child: BackCircle(onPressed: () => Navigator.of(context).pop()),
             ),
           ),
-          body: ListView(
-            padding: EdgeInsets.fromLTRB(
-              24,
-              4,
-              24,
-              MediaQuery.paddingOf(context).bottom + 28,
-            ),
-            children: [
-              Center(child: BookCover(book: book, width: 168)),
-              const SizedBox(height: 22),
-              Text(
-                book.book.title,
-                textAlign: TextAlign.center,
-                style: AppText.display(
-                  size: 26,
-                  weight: FontWeight.w600,
-                  height: 1.1,
-                  spacing: -0.6,
-                  color: p.ink,
+          body: SoftTop(
+            child: ListView(
+              padding: EdgeInsets.fromLTRB(
+                24,
+                4,
+                24,
+                MediaQuery.paddingOf(context).bottom + 28,
+              ),
+              children: [
+                Center(child: BookCover(book: book, width: 168)),
+                const SizedBox(height: 22),
+                Text(
+                  book.book.title,
+                  textAlign: TextAlign.center,
+                  style: AppText.display(
+                    size: 26,
+                    weight: FontWeight.w600,
+                    height: 1.1,
+                    spacing: -0.6,
+                    color: p.ink,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                '${book.book.author} · ${book.book.year}',
-                textAlign: TextAlign.center,
-                style: AppText.body(size: 15, color: p.inkMuted),
-              ),
-              if (book.book.badge.isNotEmpty) ...[
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.workspace_premium_rounded,
-                      size: 17,
-                      color: p.ink.withValues(alpha: 0.7),
-                    ),
-                    const SizedBox(width: 6),
-                    Flexible(
-                      child: Text(
-                        book.book.badge,
-                        textAlign: TextAlign.center,
-                        style: AppText.body(
-                          size: 13.5,
-                          weight: FontWeight.w600,
-                          color: p.ink.withValues(alpha: 0.8),
+                const SizedBox(height: 6),
+                Text(
+                  '${book.book.author} · ${book.book.year}',
+                  textAlign: TextAlign.center,
+                  style: AppText.body(size: 15, color: p.inkMuted),
+                ),
+                if (book.book.badge.isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.workspace_premium_rounded,
+                        size: 17,
+                        color: p.ink.withValues(alpha: 0.7),
+                      ),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: Text(
+                          book.book.badge,
+                          textAlign: TextAlign.center,
+                          style: AppText.body(
+                            size: 13.5,
+                            weight: FontWeight.w600,
+                            color: p.ink.withValues(alpha: 0.8),
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                ],
+                const SizedBox(height: 14),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 8,
+                  runSpacing: 6,
+                  children: [
+                    Text(
+                      '${l.bookIdeas(book.cards.length)} · '
+                      '${l.bookMinutes(bookMinutes(book))}',
+                      style: AppText.body(
+                        size: 13.5,
+                        weight: FontWeight.w700,
+                        color: p.inkMuted,
+                      ),
                     ),
+                    if (book.id == weekly)
+                      _Chip(
+                        text: l.bookFreeThisWeek,
+                        ground: p.inverse,
+                        ink: p.onInverse,
+                      ),
                   ],
                 ),
-              ],
-              const SizedBox(height: 14),
-              Wrap(
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 8,
-                runSpacing: 6,
-                children: [
-                  Text(
-                    '${l.bookIdeas(book.cards.length)} · '
-                    '${l.bookMinutes(bookMinutes(book))}',
-                    style: AppText.body(
-                      size: 13.5,
-                      weight: FontWeight.w700,
-                      color: p.inkMuted,
+                const SizedBox(height: 22),
+                SizedBox(
+                  height: 54,
+                  child: FilledButton(
+                    key: const ValueKey('book-go'),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: p.inverse,
+                      foregroundColor: p.onInverse,
+                      shape: const StadiumBorder(),
                     ),
-                  ),
-                  if (book.id == weekly)
-                    _Chip(
-                      text: l.bookFreeThisWeek,
-                      ground: p.inverse,
-                      ink: p.onInverse,
+                    onPressed: () => _openAt(context, next == -1 ? 0 : next),
+                    child: Text(
+                      go,
+                      style: AppText.body(size: 16, weight: FontWeight.w700),
                     ),
-                ],
-              ),
-              const SizedBox(height: 22),
-              SizedBox(
-                height: 54,
-                child: FilledButton(
-                  key: const ValueKey('book-go'),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: p.inverse,
-                    foregroundColor: p.onInverse,
-                    shape: const StadiumBorder(),
-                  ),
-                  onPressed: () => _openAt(context, next == -1 ? 0 : next),
-                  child: Text(
-                    go,
-                    style: AppText.body(size: 16, weight: FontWeight.w700),
                   ),
                 ),
-              ),
-              if (picksOf(book.id) case final List<(Founder, BookPick)> picks
-                  when picks.isNotEmpty) ...[
+                if (picksOf(book.id) case final List<(Founder, BookPick)> picks
+                    when picks.isNotEmpty) ...[
+                  const SizedBox(height: 28),
+                  Text(
+                    l.bookRecommendedBy.toUpperCase(),
+                    style: AppText.body(
+                      size: 11,
+                      weight: FontWeight.w800,
+                      spacing: 1.3,
+                      color: p.ink.withValues(alpha: 0.5),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  for (final (Founder who, BookPick pick) in picks)
+                    _PickRow(
+                      key: ValueKey('book-pick-${who.id}'),
+                      founder: who,
+                      pick: pick,
+                    ),
+                ],
                 const SizedBox(height: 28),
                 Text(
-                  l.bookRecommendedBy.toUpperCase(),
+                  l.bookTheIdeas.toUpperCase(),
                   style: AppText.body(
                     size: 11,
                     weight: FontWeight.w800,
@@ -898,40 +918,27 @@ class BookScreen extends StatelessWidget {
                     color: p.ink.withValues(alpha: 0.5),
                   ),
                 ),
-                const SizedBox(height: 10),
-                for (final (Founder who, BookPick pick) in picks)
-                  _PickRow(
-                    key: ValueKey('book-pick-${who.id}'),
-                    founder: who,
-                    pick: pick,
+                const SizedBox(height: 8),
+                for (int i = 0; i < book.cards.length; i++)
+                  _IdeaRow(
+                    key: ValueKey('book-idea-$i'),
+                    n: i + 1,
+                    question: book.cards[i].question,
+                    read: read[i],
+                    locked: !whole && i >= kBookFree,
+                    onTap: () => _openAt(context, i),
                   ),
+                const SizedBox(height: 18),
+                Text(
+                  l.bookRetold(book.book.title, book.book.author),
+                  style: AppText.body(
+                    size: 12.5,
+                    height: 1.4,
+                    color: p.inkFaint,
+                  ),
+                ),
               ],
-              const SizedBox(height: 28),
-              Text(
-                l.bookTheIdeas.toUpperCase(),
-                style: AppText.body(
-                  size: 11,
-                  weight: FontWeight.w800,
-                  spacing: 1.3,
-                  color: p.ink.withValues(alpha: 0.5),
-                ),
-              ),
-              const SizedBox(height: 8),
-              for (int i = 0; i < book.cards.length; i++)
-                _IdeaRow(
-                  key: ValueKey('book-idea-$i'),
-                  n: i + 1,
-                  question: book.cards[i].question,
-                  read: read[i],
-                  locked: !whole && i >= kBookFree,
-                  onTap: () => _openAt(context, i),
-                ),
-              const SizedBox(height: 18),
-              Text(
-                l.bookRetold(book.book.title, book.book.author),
-                style: AppText.body(size: 12.5, height: 1.4, color: p.inkFaint),
-              ),
-            ],
+            ),
           ),
         );
       },
@@ -986,7 +993,7 @@ class _PickRow extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        founder.role,
+                        context.l10n.roleOf(founder),
                         style: AppText.body(size: 13, color: p.inkMuted),
                       ),
                       if (pick.said.isNotEmpty) ...[
@@ -1005,7 +1012,7 @@ class _PickRow extends StatelessWidget {
                       // The arrow held to the last word by a space that
                       // does not break, never on a line of its own.
                       Text(
-                        '${pick.source}\u00A0↗',
+                        '${context.l10n.sourceOf(pick)}\u00A0↗',
                         style: AppText.body(
                           size: 12.5,
                           weight: FontWeight.w600,
@@ -1455,45 +1462,47 @@ class LibraryScreen extends StatelessWidget {
               final double width =
                   (box.maxWidth - side * 2 - gap * (across - 1)) / across;
               final int rows = (books.length + across - 1) ~/ across;
-              return ListView.builder(
-                key: const ValueKey('books-library'),
-                padding: EdgeInsets.fromLTRB(
-                  side,
-                  8,
-                  side,
-                  MediaQuery.paddingOf(context).bottom + 24,
-                ),
-                itemCount: rows,
-                itemBuilder: (context, r) => Padding(
-                  padding: const EdgeInsets.only(bottom: 14),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      for (int c = 0; c < across; c++) ...[
-                        if (c > 0) const SizedBox(width: gap),
-                        if (r * across + c < books.length)
-                          _BookTile(
-                            book: books[r * across + c],
-                            width: width,
-                            line: true,
-                            read: books[r * across + c].cards
-                                .where((p) => app.seenIds.contains(p.id))
-                                .length,
-                            weekly: books[r * across + c].id == weekly,
-                            locked:
-                                !app.isPlus &&
-                                books[r * across + c].id != weekly,
-                            onTap: () => openBookPage(
-                              context,
-                              app,
-                              books[r * across + c],
-                              weekly: weekly,
-                            ),
-                          )
-                        else
-                          SizedBox(width: width),
+              return SoftTop(
+                child: ListView.builder(
+                  key: const ValueKey('books-library'),
+                  padding: EdgeInsets.fromLTRB(
+                    side,
+                    8,
+                    side,
+                    MediaQuery.paddingOf(context).bottom + 24,
+                  ),
+                  itemCount: rows,
+                  itemBuilder: (context, r) => Padding(
+                    padding: const EdgeInsets.only(bottom: 14),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (int c = 0; c < across; c++) ...[
+                          if (c > 0) const SizedBox(width: gap),
+                          if (r * across + c < books.length)
+                            _BookTile(
+                              book: books[r * across + c],
+                              width: width,
+                              line: true,
+                              read: books[r * across + c].cards
+                                  .where((p) => app.seenIds.contains(p.id))
+                                  .length,
+                              weekly: books[r * across + c].id == weekly,
+                              locked:
+                                  !app.isPlus &&
+                                  books[r * across + c].id != weekly,
+                              onTap: () => openBookPage(
+                                context,
+                                app,
+                                books[r * across + c],
+                                weekly: weekly,
+                              ),
+                            )
+                          else
+                            SizedBox(width: width),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               );

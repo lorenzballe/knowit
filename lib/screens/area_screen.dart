@@ -61,7 +61,10 @@ class AreaScreen extends StatelessWidget {
       name: 'area',
       child: Scaffold(
         backgroundColor: context.p.surface,
+        // Not under the status bar: the page runs on under it, and goes
+        // soft and dark there ([QuickReturn]).
         body: SafeArea(
+          top: false,
           child: ListenableBuilder(
             listenable: app,
             builder: (context, _) => _page(context),
@@ -82,9 +85,12 @@ class AreaScreen extends StatelessWidget {
     // the moment the reader goes back up ([QuickReturn]). Apple's glass is a
     // layer over the page, never laid inside the list, where a native button
     // is drawn away from its place.
+    // The status bar's room, which the page runs on under.
+    final double top = MediaQuery.paddingOf(context).top;
     return QuickReturn(
+      clip: false,
       header: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
+        padding: EdgeInsets.fromLTRB(20, top + 8, 20, 4),
         child: SizedBox(
           height: 44,
           child: Row(
@@ -110,128 +116,136 @@ class AreaScreen extends StatelessWidget {
           ),
         ),
       ),
-      child: ListView(
-        // Under the way back and its line, as tall as they stand.
-        padding: const EdgeInsets.fromLTRB(0, 8 + 44 + 4 + 12, 0, 32),
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Semantics(
-                  header: true,
-                  child: Text(
-                    goalName(l, area),
-                    style: AppText.display(
-                      size: 34,
-                      weight: FontWeight.w600,
-                      height: 1.05,
-                      spacing: -1,
-                      color: p.ink,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  goalLine(l, area),
-                  style: AppText.body(size: 15, height: 1.4, color: p.inkMuted),
-                ),
-                if (paths.isNotEmpty) ...[
-                  const SizedBox(height: 24),
-                  Text(
-                    l.areaPaths(paths.length).toUpperCase(),
-                    style: AppText.label(
-                      size: 11.5,
-                      weight: FontWeight.w700,
-                      spacing: 1.3,
-                      color: p.inkMuted,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  for (final CardPath path in paths)
-                    _PathRow(
-                      key: ValueKey('area-path-${path.genre.id}'),
-                      app: app,
-                      path: path,
-                    ),
-                ],
-              ],
-            ),
-          ),
-          if (moves.isNotEmpty) ...[
-            const SizedBox(height: 26),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                l.areaMoves,
-                style: AppText.display(
-                  size: 22,
-                  weight: FontWeight.w600,
-                  spacing: -0.5,
-                  color: p.ink,
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            SizedBox(
-              height: 150,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemCount: moves.length,
-                separatorBuilder: (_, _) => const SizedBox(width: 10),
-                itemBuilder: (context, i) => _MoveTile(
-                  key: ValueKey('area-move-${moves[i].$1.name}'),
-                  move: moves[i].$1,
-                  pill: moves[i].$2,
-                  onTap: () => _openCards(
-                    context,
-                    [for (final m in moves) m.$2],
-                    i,
-                    moveName(l, moves[i].$1),
-                    'area move',
-                  ),
-                ),
-              ),
-            ),
-          ],
-          if (cards.isNotEmpty) ...[
-            const SizedBox(height: 26),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                l.areaMoreCards,
-                style: AppText.display(
-                  size: 22,
-                  weight: FontWeight.w600,
-                  spacing: -0.5,
-                  color: p.ink,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
+      child: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView(
+          // Under the way back and its line, as tall as they stand.
+          padding: EdgeInsets.fromLTRB(0, top + 8 + 44 + 4 + 12, 0, 32),
+          children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  for (final (int i, Pill c) in cards.indexed)
-                    _CardLine(
-                      key: ValueKey('area-card-${c.id}'),
-                      pill: c,
-                      onTap: () => _openCards(
-                        context,
-                        cards,
-                        i,
-                        goalName(l, area),
-                        'area card',
+                  Semantics(
+                    header: true,
+                    child: Text(
+                      goalName(l, area),
+                      style: AppText.display(
+                        size: 34,
+                        weight: FontWeight.w600,
+                        height: 1.05,
+                        spacing: -1,
+                        color: p.ink,
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    goalLine(l, area),
+                    style: AppText.body(
+                      size: 15,
+                      height: 1.4,
+                      color: p.inkMuted,
+                    ),
+                  ),
+                  if (paths.isNotEmpty) ...[
+                    const SizedBox(height: 24),
+                    Text(
+                      l.areaPaths(paths.length).toUpperCase(),
+                      style: AppText.label(
+                        size: 11.5,
+                        weight: FontWeight.w700,
+                        spacing: 1.3,
+                        color: p.inkMuted,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    for (final CardPath path in paths)
+                      _PathRow(
+                        key: ValueKey('area-path-${path.genre.id}'),
+                        app: app,
+                        path: path,
+                      ),
+                  ],
                 ],
               ),
             ),
+            if (moves.isNotEmpty) ...[
+              const SizedBox(height: 26),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  l.areaMoves,
+                  style: AppText.display(
+                    size: 22,
+                    weight: FontWeight.w600,
+                    spacing: -0.5,
+                    color: p.ink,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              SizedBox(
+                height: 150,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  itemCount: moves.length,
+                  separatorBuilder: (_, _) => const SizedBox(width: 10),
+                  itemBuilder: (context, i) => _MoveTile(
+                    key: ValueKey('area-move-${moves[i].$1.name}'),
+                    move: moves[i].$1,
+                    pill: moves[i].$2,
+                    onTap: () => _openCards(
+                      context,
+                      [for (final m in moves) m.$2],
+                      i,
+                      moveName(l, moves[i].$1),
+                      'area move',
+                    ),
+                  ),
+                ),
+              ),
+            ],
+            if (cards.isNotEmpty) ...[
+              const SizedBox(height: 26),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  l.areaMoreCards,
+                  style: AppText.display(
+                    size: 22,
+                    weight: FontWeight.w600,
+                    spacing: -0.5,
+                    color: p.ink,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    for (final (int i, Pill c) in cards.indexed)
+                      _CardLine(
+                        key: ValueKey('area-card-${c.id}'),
+                        pill: c,
+                        onTap: () => _openCards(
+                          context,
+                          cards,
+                          i,
+                          goalName(l, area),
+                          'area card',
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

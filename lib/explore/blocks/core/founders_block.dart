@@ -32,6 +32,7 @@ import '../../../legal.dart' show openLink;
 import '../../../models/pill.dart';
 import '../../../state/app_state.dart';
 import '../../../theme.dart';
+import '../../../widgets/top_edge.dart' show SoftTop;
 import '../../../widgets/ui.dart' show BackCircle;
 import '../../explore_block.dart';
 import 'books_block.dart';
@@ -364,7 +365,7 @@ class FounderTile extends StatelessWidget {
             14 +
             wordsHeight(context, s.founder.name, _nameStyle(p), inner) +
             6 +
-            wordsHeight(context, s.founder.role, _roleStyle(p), inner) +
+            wordsHeight(context, l.roleOf(s.founder), _roleStyle(p), inner) +
             10 +
             4 +
             14,
@@ -381,7 +382,7 @@ class FounderTile extends StatelessWidget {
     final int n = shelf.books.length;
     return Semantics(
       button: true,
-      label: '${f.name}, ${f.role}, ${l.founderBookCount(n)}',
+      label: '${f.name}, ${l.roleOf(f)}, ${l.founderBookCount(n)}',
       excludeSemantics: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -415,7 +416,7 @@ class FounderTile extends StatelessWidget {
               const Spacer(),
               Text(f.name, style: _nameStyle(p)),
               const SizedBox(height: 6),
-              Text(f.role, style: _roleStyle(p)),
+              Text(l.roleOf(f), style: _roleStyle(p)),
               const SizedBox(height: 10),
               // A step for each of their books, the ones read whole filled.
               ExcludeSemantics(
@@ -443,6 +444,29 @@ class FounderTile extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// A founder's words in the reader's language: what they built, and where
+/// they said a pick. The data (lib/data/founders.dart) keeps them in
+/// English, which is what a language without words for them says.
+extension FounderWords on AppLocalizations {
+  /// What [f] built, in a few words: "Cofondatore di Microsoft".
+  String roleOf(Founder f) => founderRole(f.id.replaceAll('-', '_'), f.role);
+
+  /// Where [k] was said: "l’assemblea annuale di Berkshire Hathaway".
+  String whereOf(BookPick k) {
+    final String? key = k.whereKey;
+    return key == null ? k.where : founderWhere(key, k.where);
+  }
+
+  /// Where and when, as a line of its own prints it, its first letter set
+  /// up: "GatesNotes, 2016", "L’assemblea annuale di Berkshire Hathaway,
+  /// 2008".
+  String sourceOf(BookPick k) {
+    final String place = whereOf(k);
+    if (place.isEmpty) return '${k.year}';
+    return '${place[0].toUpperCase()}${place.substring(1)}, ${k.year}';
   }
 }
 
@@ -508,96 +532,98 @@ class FounderScreen extends StatelessWidget {
       ),
       body: ListenableBuilder(
         listenable: app,
-        builder: (context, _) => ListView(
-          key: ValueKey('founder-page-${f.id}'),
-          padding: EdgeInsets.fromLTRB(
-            20,
-            4,
-            20,
-            MediaQuery.paddingOf(context).bottom + 28,
-          ),
-          children: [
-            Center(child: FounderFace(founder: f, size: 112)),
-            const SizedBox(height: 18),
-            Semantics(
-              header: true,
-              child: Text(
-                f.name,
-                textAlign: TextAlign.center,
-                style: AppText.display(
-                  size: 30,
-                  weight: FontWeight.w600,
-                  height: 1.1,
-                  spacing: -0.7,
-                  color: p.ink,
-                ),
-              ),
+        builder: (context, _) => SoftTop(
+          child: ListView(
+            key: ValueKey('founder-page-${f.id}'),
+            padding: EdgeInsets.fromLTRB(
+              20,
+              4,
+              20,
+              MediaQuery.paddingOf(context).bottom + 28,
             ),
-            const SizedBox(height: 6),
-            Text(
-              f.role,
-              textAlign: TextAlign.center,
-              style: AppText.body(size: 15, height: 1.35, color: p.inkMuted),
-            ),
-            const SizedBox(height: 12),
-            // How much there is to read: the books, and their ideas.
-            Text(
-              '${l.founderBookCount(shelf.books.length)} · ${l.bookIdeas(ideas)}',
-              key: const ValueKey('founder-count'),
-              textAlign: TextAlign.center,
-              style: AppText.body(
-                size: 13.5,
-                weight: FontWeight.w700,
-                color: p.ink.withValues(alpha: 0.55),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Text(
-                l.founderTheirBooks.toUpperCase(),
-                style: AppText.body(
-                  size: 11,
-                  weight: FontWeight.w800,
-                  spacing: 1.3,
-                  color: p.ink.withValues(alpha: 0.5),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            for (final (BookPick pick, CardBook book) in shelf.books)
-              FounderPickCard(
-                key: ValueKey('founder-book-${book.id}'),
-                app: app,
-                book: book,
-                pick: pick,
-                weekly: weekly,
-                who: f,
-                from: 'founder',
-              ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Recommended in public, not to Astute: nothing on the
-                  // page reads as their word for the app.
-                  Text(
-                    l.founderAbout(f.name),
-                    key: const ValueKey('founder-about'),
-                    style: AppText.body(
-                      size: 12.5,
-                      height: 1.4,
-                      color: p.inkMuted,
-                    ),
+            children: [
+              Center(child: FounderFace(founder: f, size: 112)),
+              const SizedBox(height: 18),
+              Semantics(
+                header: true,
+                child: Text(
+                  f.name,
+                  textAlign: TextAlign.center,
+                  style: AppText.display(
+                    size: 30,
+                    weight: FontWeight.w600,
+                    height: 1.1,
+                    spacing: -0.7,
+                    color: p.ink,
                   ),
-                  const SizedBox(height: 8),
-                  FounderPhotoCredit(founder: f),
-                ],
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 6),
+              Text(
+                l.roleOf(f),
+                textAlign: TextAlign.center,
+                style: AppText.body(size: 15, height: 1.35, color: p.inkMuted),
+              ),
+              const SizedBox(height: 12),
+              // How much there is to read: the books, and their ideas.
+              Text(
+                '${l.founderBookCount(shelf.books.length)} · ${l.bookIdeas(ideas)}',
+                key: const ValueKey('founder-count'),
+                textAlign: TextAlign.center,
+                style: AppText.body(
+                  size: 13.5,
+                  weight: FontWeight.w700,
+                  color: p.ink.withValues(alpha: 0.55),
+                ),
+              ),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Text(
+                  l.founderTheirBooks.toUpperCase(),
+                  style: AppText.body(
+                    size: 11,
+                    weight: FontWeight.w800,
+                    spacing: 1.3,
+                    color: p.ink.withValues(alpha: 0.5),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              for (final (BookPick pick, CardBook book) in shelf.books)
+                FounderPickCard(
+                  key: ValueKey('founder-book-${book.id}'),
+                  app: app,
+                  book: book,
+                  pick: pick,
+                  weekly: weekly,
+                  who: f,
+                  from: 'founder',
+                ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Recommended in public, not to Astute: nothing on the
+                    // page reads as their word for the app.
+                    Text(
+                      l.founderAbout(f.name),
+                      key: const ValueKey('founder-about'),
+                      style: AppText.body(
+                        size: 12.5,
+                        height: 1.4,
+                        color: p.inkMuted,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    FounderPhotoCredit(founder: f),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -666,8 +692,8 @@ class FounderPickCard extends StatelessWidget {
           // The arrow held to the last word by a space that does not break.
           child: Text(
             by == null
-                ? '${pick.source}\u00A0↗'
-                : '${by!.name} · ${pick.where}, ${pick.year}\u00A0↗',
+                ? '${l.sourceOf(pick)}\u00A0↗'
+                : '${by!.name} · ${l.whereOf(pick)}, ${pick.year}\u00A0↗',
             style: AppText.body(
               size: 12.5,
               weight: FontWeight.w600,

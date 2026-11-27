@@ -167,7 +167,7 @@ const Turn = {
     const said = dirName(), ok = said === 'the old way';
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `You pointed it ${said}: ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back: the same rock before and after the flip, then the guess ----------

@@ -162,7 +162,7 @@ const Turn = {
       ? `<svg viewBox="0 0 20 20" role="img" aria-label="right"><circle cx="10" cy="10" r="10" fill="${INK}"/><path d="M5.5 10.3l3 3 6-6.4" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
       : `<svg viewBox="0 0 20 20" role="img" aria-label="wrong"><circle cx="10" cy="10" r="10" fill="${ACC}"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>`;
     verdict.innerHTML = `${icon}<span>You picked: ${SHORT[pick]} · ${P}% sure</span>`;
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   opts.addEventListener('click', e => {
     const b = e.target.closest('.opt'); if (!b || pick >= 0) return;

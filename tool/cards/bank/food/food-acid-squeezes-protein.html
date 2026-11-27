@@ -210,7 +210,7 @@ const Turn = {
     [...Kit.$('opts').children].forEach(b => b.disabled = true);
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'not quite'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   Kit.$('opts').addEventListener('click', e => {
     const b = e.target.closest('.opt'); if (!b || answered) return;

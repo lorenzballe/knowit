@@ -169,7 +169,7 @@ const Turn = {
     const ok = pick === RIGHT;
     Kit.answer({choice: ZONE[pick], correct: ok, sure: pct});
     sure.grade(ok, pct, `${ZONE[pick][0].toUpperCase() + ZONE[pick].slice(1)}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back: the same cylinder, warm right through, pushing on its wall ----------

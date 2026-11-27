@@ -21,6 +21,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../data/explore_mix.dart' show minutesFor;
+import '../../data/video_cards.dart';
 import '../../l10n/l10n.dart';
 import '../../models/pill.dart';
 import '../../theme.dart';
@@ -28,6 +29,7 @@ import '../card_edge.dart';
 import '../scaled_text.dart';
 import '../subject_icon.dart';
 import '../web/card_thumb.dart';
+import '../video_card.dart' show filmClock;
 import '../web/web_card_page.dart' show groundOf;
 import 'first_shelves.dart' show ReadTick;
 
@@ -479,6 +481,18 @@ class TileBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final VideoCard? film = videoCardOf(pill);
+    // A film says so in the head's far corner: a play mark, and how long it
+    // runs where the head has words and the tile no foot to say it in.
+    final Widget? plays = film == null
+        ? null
+        : FilmMark(
+            ink: pill.ink,
+            ground: pill.color,
+            size: look.icon,
+            length: look.label && !look.foot ? filmClock(film.length) : null,
+            style: look.labelStyle(pill),
+          );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -488,7 +502,10 @@ class TileBody extends StatelessWidget {
               ? [
                   CardMark(pill: pill, size: look.icon, ink: pill.ink),
                   SizedBox(width: look.labelGap),
+                  // Beside a film's mark the name takes the room up to it,
+                  // whole wherever the room allows.
                   Flexible(
+                    fit: plays == null ? FlexFit.loose : FlexFit.tight,
                     child: Text(
                       context.l10n.subjectOf(pill.topic).toUpperCase(),
                       maxLines: 1,
@@ -500,12 +517,17 @@ class TileBody extends StatelessWidget {
                     const SizedBox(width: 6),
                     ReadTick(pill: pill, color: pill.ink, size: look.tick),
                   ],
+                  if (plays != null) ...[const SizedBox(width: 6), plays],
                 ]
               : [
                   CardMark(pill: pill, size: look.icon, ink: pill.ink),
                   const Spacer(),
                   if (read)
                     ReadTick(pill: pill, color: pill.ink, size: look.tick),
+                  if (plays != null) ...[
+                    if (read) const SizedBox(width: 6),
+                    plays,
+                  ],
                 ],
         ),
         // The canvas was drawn around four-word questions and the pool is
@@ -532,7 +554,11 @@ class TileBody extends StatelessWidget {
         // it takes. Printed under a question nobody had answered, it gave the
         // answer away from the shelf.
         if (look.foot)
-          if (read)
+          if (film != null)
+            // A film's foot is how long it runs, watched or not: it has no
+            // line to keep.
+            Text(filmClock(film.length), style: look.minutesStyle(pill))
+          else if (read)
             Text(
               pill.barMove,
               maxLines: look.footLines,
@@ -547,6 +573,58 @@ class TileBody extends StatelessWidget {
       ],
     );
   }
+}
+
+/// Whether the foot of a tile of [pill] says the line to keep, as a card
+/// read does, rather than how long it takes: never on a film, whose foot is
+/// how long it runs.
+bool footSaysMove(Pill pill, bool read) => read && videoCardOf(pill) == null;
+
+/// A film's mark in the corner of its tile: a disc of the card's ink with
+/// the play mark cut out of it in the card's colour, and how long it runs
+/// when [length] is given, set as the subject's name is ([style]). No
+/// taller than the subject's mark beside it.
+class FilmMark extends StatelessWidget {
+  const FilmMark({
+    super.key,
+    required this.ink,
+    required this.ground,
+    required this.size,
+    required this.style,
+    this.length,
+  });
+
+  final Color ink;
+
+  /// The card's own colour, which the play mark is cut out in.
+  final Color ground;
+
+  /// The height of the subject's mark in the same head.
+  final double size;
+
+  final TextStyle style;
+
+  /// How long the film runs, "0:53", or null for the mark alone.
+  final String? length;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    key: const ValueKey('film-mark'),
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(color: ink, shape: BoxShape.circle),
+        alignment: Alignment.center,
+        child: Icon(Icons.play_arrow_rounded, size: size * 0.8, color: ground),
+      ),
+      if (length case final String clock) ...[
+        SizedBox(width: size * 0.4),
+        Text(clock, maxLines: 1, style: style),
+      ],
+    ],
+  );
 }
 
 /// A row of cards at one step, sideways, at the margins every shelf keeps:
@@ -650,7 +728,7 @@ bool questionFits(
   );
   room -= look.questionGap * (look.foot ? 2 : 1);
   if (look.foot) {
-    if (read) {
+    if (footSaysMove(pill, read)) {
       final TextPainter move = TextPainter(
         text: TextSpan(text: pill.barMove, style: look.moveStyle(pill)),
         textDirection: direction,

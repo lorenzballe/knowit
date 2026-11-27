@@ -142,7 +142,7 @@ const Turn = {
     Kit.answer({choice: said, correct: ok, sure: pct});
     Kit.hide('say');
     sure.grade(ok, pct, ok ? 'Right: a shared layer' : 'Not that one');
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   Kit.$('opts').addEventListener('click', e => {
     const b = e.target.closest('.opt'); if (!b || pick >= 0) return;

@@ -198,7 +198,7 @@ const Turn = {
     const ok = pick === TRUE;
     Kit.answer({choice: NAMES[pick], correct: ok, sure: pct});
     sure.grade(ok, pct, `${NAMES[pick]}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- BACK ----------

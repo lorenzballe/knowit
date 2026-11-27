@@ -14,11 +14,32 @@ import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/legal.dart';
+import 'package:astuto/remote/remote.dart';
 import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/screens/purchase_success_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/subscription.dart';
 import 'package:astuto/theme.dart';
+
+int _docs = 0;
+
+/// The answers by Claude switched [on] or off by the server. On, as the
+/// document the app ships with has them (remote/app.json): the paywall
+/// offers the assistant and the coach only then.
+void _cardAi({required bool on}) => Remote.adopt(
+  RemoteConfig.parse(
+    jsonEncode({
+      'schema': 1,
+      'hash': 'paywall-card-ai-${_docs++}',
+      'app': {
+        'flags': {'cardAi': on},
+      },
+      'strings': <String, Object?>{},
+      'explore': null,
+      'looks': null,
+    }),
+  ),
+);
 
 /// [n] answers said [sure]% sure, the first [right] of them right.
 Map<String, Object> _judged(int n, {required int sure, required int right}) => {
@@ -130,6 +151,7 @@ void main() {
   setUpAll(_loadRealFonts);
 
   setUp(() {
+    _cardAi(on: true);
     sink = _Recorder();
     Analytics.useForTest(sink);
     // No store unless a test answers for one: the plans as sold.
@@ -140,6 +162,7 @@ void main() {
   tearDown(() {
     Analytics.useForTest(null);
     Subscription.useForTest(before);
+    Remote.reset();
   });
 
   /// The paywall as [source] opens it, on a phone, for a reader on the free
@@ -296,6 +319,31 @@ void main() {
       expect(find.text('NEW'), findsNWidgets(2));
       // Nothing the free plan already has, and nothing never delivered.
       expect(find.textContaining('freeze'), findsNothing);
+    });
+
+    testWidgets('the assistant and the coach only while the answers by '
+        'Claude are on: never sold when switched off', (tester) async {
+      // The server switches them off, as it may for a reader or a build.
+      _cardAi(on: false);
+      await open(tester, 'see the plans');
+      expect(find.text('Your assistant'), findsNothing);
+      expect(find.text('A coach every week'), findsNothing);
+      expect(find.text('NEW'), findsNothing);
+      // The rest of it, all of it.
+      for (final String title in [
+        'Five of your own cards',
+        'Every path and every book',
+        'Watch the gap close',
+        'What you\'ve read',
+      ]) {
+        expect(find.text(title), findsOneWidget, reason: title);
+      }
+
+      // Switched on, both are offered again, first.
+      _cardAi(on: true);
+      await open(tester, 'see the plans');
+      expect(find.text('Your assistant'), findsOneWidget);
+      expect(find.text('A coach every week'), findsOneWidget);
     });
 
     testWidgets('the door puts its own feature first', (tester) async {

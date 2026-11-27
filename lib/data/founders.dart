@@ -33,6 +33,7 @@ class BookPick {
     required this.where,
     required this.year,
     required this.url,
+    this.whereKey,
   });
 
   /// The book, by its id: "sapiens".
@@ -42,8 +43,14 @@ class BookPick {
   /// recommendation is a list with no words of its own.
   final String said;
 
-  /// Where they said it: "GatesNotes", "Berkshire Hathaway's 2013 letter".
+  /// Where they said it, in English: "GatesNotes", "Berkshire Hathaway’s
+  /// annual meeting".
   final String where;
+
+  /// [where] by name, when it is a phrase to say in the reader's language
+  /// (`founderWhere` in the arb files: "berkshire_meeting"); null where it
+  /// is a name every language keeps as it is: "GatesNotes", "Twitter".
+  final String? whereKey;
 
   /// The year they said it.
   final int year;
@@ -51,8 +58,9 @@ class BookPick {
   /// The page where anyone can read it.
   final String url;
 
-  /// Where and when, as a page prints it: "GatesNotes, 2016", its first
-  /// letter set up where the place is a phrase ("His letter to…").
+  /// Where and when, in English, as a page prints it: "GatesNotes, 2016",
+  /// its first letter set up where the place is a phrase ("His letter
+  /// to…"). A page says it in the reader's language (founders_block.dart).
   String get source {
     final String place = where.isEmpty
         ? where
@@ -98,7 +106,9 @@ class Founder {
   /// Who, as everybody knows them: "Bill Gates".
   final String name;
 
-  /// What they built, in a few words: "Co-founder of Microsoft".
+  /// What they built, in a few words, in English: "Co-founder of
+  /// Microsoft". A page says it in the reader's language, by [id]
+  /// (`founderRole` in the arb files).
   final String role;
 
   /// Their picks, the one they said most about first.
@@ -171,6 +181,7 @@ const List<Founder> kFounders = [
         book: 'how-not-to-be-wrong',
         said: '',
         where: 'GatesNotes, his books for the summer',
+        whereKey: 'gates_summer',
         year: 2016,
         url: 'https://www.gatesnotes.com/Summer-Books-2016',
       ),
@@ -199,6 +210,7 @@ const List<Founder> kFounders = [
             '… read The Intelligent Investor. That’s the book that gave me '
             'the philosophy that has taken me now for a lot of years.',
         where: _meeting,
+        whereKey: _meetingKey,
         year: 2008,
         url: 'https://buffett.cnbc.com/video/2008/05/03/morning-session---2008-berkshire-hathaway-annual-meeting.html',
       ),
@@ -208,6 +220,7 @@ const List<Founder> kFounders = [
             'The best book I read last year was Shoe Dog, by Nike’s Phil '
             'Knight.',
         where: 'his letter to Berkshire Hathaway’s shareholders',
+        whereKey: 'berkshire_letter',
         year: 2017,
         url: 'https://www.berkshirehathaway.com/letters/2016ltr.pdf',
       ),
@@ -217,6 +230,7 @@ const List<Founder> kFounders = [
             'I’ve been reading ‘A Short History of Nearly Everything.’ It’s '
             'very impressive',
         where: _meeting,
+        whereKey: _meetingKey,
         year: 2004,
         url: 'https://buffett.cnbc.com/video/2004/05/01/morning-session---2004-berkshire-hathaway-annual-meeting.html',
       ),
@@ -236,6 +250,7 @@ const List<Founder> kFounders = [
         book: 'sapiens',
         said: '',
         where: 'A Year of Books, on Facebook',
+        whereKey: 'year_of_books',
         year: 2015,
         url: 'https://www.facebook.com/zuck/posts/10102182252999291',
       ),
@@ -243,6 +258,7 @@ const List<Founder> kFounders = [
         book: 'the-structure-of-scientific-revolutions',
         said: '',
         where: 'A Year of Books, on Facebook',
+        whereKey: 'year_of_books',
         year: 2015,
         url: 'https://www.facebook.com/zuck/posts/10101977184917371',
       ),
@@ -272,6 +288,7 @@ const List<Founder> kFounders = [
             '‘Guns, Germs and Steel’ by Jared Diamond. And it’s a marvelous '
             'book.',
         where: _meeting,
+        whereKey: _meetingKey,
         year: 1998,
         url: 'https://buffett.cnbc.com/video/1998/05/04/morning-session---1998-berkshire-hathaway-annual-meeting.html',
       ),
@@ -281,6 +298,7 @@ const List<Founder> kFounders = [
             '… Dawkins, ‘The Selfish Gene’ and ‘The Blind Watchmaker’, I '
             'mean, these are marvelous books.',
         where: _meeting,
+        whereKey: _meetingKey,
         year: 1996,
         url: 'https://buffett.cnbc.com/video/1996/05/06/afternoon-session---1996-berkshire-hathaway-annual-meeting.html',
       ),
@@ -302,6 +320,7 @@ const List<Founder> kFounders = [
             'Zero to One is the first book any working or aspiring '
             'entrepreneur must read—period.',
         where: 'his praise for the book, at its publisher',
+        whereKey: 'publisher_praise',
         year: 2014,
         url: 'https://www.penguinrandomhouse.com/books/234730/zero-to-one-by-peter-thiel-with-blake-masters/',
       ),
@@ -337,6 +356,7 @@ const List<Founder> kFounders = [
         book: 'high-output-management',
         said: '',
         where: 'The Tim Ferriss Show, among the five best books he has read',
+        whereKey: 'ferriss_five',
         year: 2019,
         url: 'https://tim.blog/2019/02/11/the-tim-ferriss-show-transcripts-tobi-lutke/',
       ),
@@ -366,6 +386,7 @@ const List<Founder> kFounders = [
 ];
 
 const String _meeting = 'Berkshire Hathaway’s annual meeting';
+const String _meetingKey = 'berkshire_meeting';
 
 /// The person [id] names, or null.
 Founder? founderById(String id) {

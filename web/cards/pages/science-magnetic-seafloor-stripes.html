@@ -212,7 +212,7 @@ const Turn = {
     const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: ${said.toLowerCase()}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   Kit.$('opts').addEventListener('click', e => {
     const b = e.target.closest('.opt'); if (!b || done) return;

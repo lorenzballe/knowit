@@ -1,7 +1,11 @@
 /// A challenge on a screen of its own, opened from its tile among Explore's
 /// challenges: the tile's panel grows into the app's own page
 /// (challengeFlight), and the challenge is taken there in three moments,
-/// each the whole screen, set as a page is.
+/// each the whole screen, set as a page is: one composition the height of
+/// the phone, the way out in the screen's corner inside the safe area and
+/// the head one line level with it — never a card floating in the screen
+/// with the cross outside it and a band of nothing (the owner's iPhone,
+/// November 2026).
 ///
 /// - What it is: its mark, the skill it trains, the name, a sentence or two
 ///   on what it measures and why that matters, the reader's own figures,
@@ -436,124 +440,38 @@ class _ChallengeScreenState extends State<ChallengeScreen>
   Widget _intro(BuildContext context, ChallengeRoom room, Palette p) {
     final l = context.l10n;
     final ChallengeLook look = widget.look;
-    final TextScaler scaler = MediaQuery.textScalerOf(context);
     final (IconData, String)? note = _game.note(l);
     final List<ChallengeFigure> rows = [
       if (note != null) (label: note.$2, value: ''),
       ..._game.figures(l),
     ];
-    final List<List<Pill>> today = _game.today;
-    final String rules = _game.rules(l);
-    // The challenge on a card of the page's own, as a card of the day is
-    // set: its head, its name, what it asks and what it measures; at its
-    // foot the day's round, a turn to a row, and the reader's figures.
-    final Widget card = Container(
-      decoration: BoxDecoration(
-        color: p.surfaceRaised,
-        borderRadius: BorderRadius.circular(SubjectCard.radius),
-        border: p.isDark ? null : Border.all(color: p.line),
-      ),
-      padding: const EdgeInsets.fromLTRB(22, 20, 22, 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              ChallengeMarkView(mark: look.mark, colour: p.inkMuted, size: 15),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  upper(context, look.skill),
-                  key: ValueKey('$_id-skill'),
-                  textScaler: scaler.clamp(maxScaleFactor: 1.4),
-                  style: AppText.label(
-                    size: 11,
-                    spacing: 1.4,
-                    color: p.inkMuted,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 22),
-          Semantics(
-            header: true,
-            child: Text(
-              look.title,
-              textScaler: scaler.clamp(maxScaleFactor: 1.3),
-              style: AppText.display(
-                size: 40,
-                weight: FontWeight.w600,
-                height: 1.04,
-                spacing: -1,
-                color: p.ink,
-              ),
-            ),
-          ),
-          const SizedBox(height: 14),
-          Text(
-            rules,
-            key: ValueKey('$_id-rules'),
-            style: AppText.body(
-              // Short rules a little larger, so the card is not left
-              // with a band of nothing under a few lines.
-              size: rules.length < 140
-                  ? 20
-                  : rules.length < 190
-                  ? 19
-                  : 18,
-              weight: FontWeight.w500,
-              height: 1.45,
-              color: p.ink.withValues(alpha: 0.86),
-            ),
-          ),
-          const Spacer(),
-          const SizedBox(height: 24),
-          if (today.isNotEmpty) ...[
-            GameLabel(l.challengeToday),
-            const SizedBox(height: 8),
-            ChallengeDeck(
-              key: ValueKey('$_id-today'),
-              rounds: today,
-              marks: _game.todayMarks,
-            ),
-          ],
-          if (rows.isNotEmpty)
-            ChallengeFigures(
-              key: ValueKey('$_id-record'),
-              rows: rows,
-              bare: true,
-            ),
-        ],
-      ),
-    );
+    // One composition the height of the screen, as a page of a magazine
+    // is set: the skill at its head, level with the way out; the name
+    // large; what it asks and what it measures; then the day's round, a
+    // turn to a row, and the reader's figures, over Begin. No card inside
+    // the screen, and no band of nothing: the type and the rows take the
+    // room the phone has (_IntroFit).
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // The name is the card's: the head keeps the way out.
-        ChallengeRunningHead(id: _id, title: '', room: room),
-        // The card takes the room the screen has; where the words are more
-        // than the room, they scroll.
+        ChallengeRunningHead(
+          id: _id,
+          room: room,
+          skill: look.skill,
+          mark: look.mark,
+        ),
         Expanded(
-          child: LayoutBuilder(
-            builder: (context, box) => SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 2, 20, 0),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: box.maxHeight - 2),
-                child: IntrinsicHeight(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(child: card),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+          child: _IntroPage(
+            id: _id,
+            title: look.title,
+            rules: _game.rules(l),
+            today: _game.today,
+            marks: _game.todayMarks,
+            figures: rows,
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(20, 14, 20, room.foot),
+          padding: EdgeInsets.fromLTRB(20, 12, 20, room.foot),
           child: GameButton.primary(
             key: ValueKey('$_id-play'),
             label: _game.playLabel(l),
@@ -575,138 +493,128 @@ class _ChallengeScreenState extends State<ChallengeScreen>
     final String? of = out.of;
     final String? best = out.best;
     final TextScaler scaler = MediaQuery.textScalerOf(context);
+    // The score, large, on the page itself under the head: the skill it
+    // counts over it, how it went beside it where the round set a best,
+    // and the reading, the figures and the round at a glance under it.
+    final Widget score = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        GameLabel(widget.look.skill),
+        const SizedBox(height: 10),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Semantics(
+              container: true,
+              label: out.label,
+              excludeSemantics: true,
+              child: _ScoreCount(
+                score: out.score,
+                calm: kit.calm,
+                builder: (shown) => Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: shown,
+                        style:
+                            AppText.display(
+                              size: out.score.length > 3 ? 76 : 104,
+                              weight: FontWeight.w600,
+                              height: 1,
+                              spacing: -2.5,
+                              color: p.ink,
+                            ).copyWith(
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                      ),
+                      if (of != null)
+                        TextSpan(
+                          text: ' / $of',
+                          style: AppText.display(
+                            size: 36,
+                            weight: FontWeight.w600,
+                            height: 1,
+                            spacing: -0.5,
+                            color: p.inkMuted,
+                          ),
+                        ),
+                    ],
+                  ),
+                  key: ValueKey('$_id-score'),
+                  textScaler: scaler.clamp(maxScaleFactor: 1.2),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            if (best != null)
+              Expanded(
+                child: Align(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: _PersonalBest(
+                      key: ValueKey('$_id-best'),
+                      text: best,
+                      calm: kit.calm,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 14),
+        Text(
+          out.line,
+          key: ValueKey('$_id-line'),
+          textScaler: scaler.clamp(maxScaleFactor: 1.4),
+          style: AppText.display(
+            size: 19,
+            weight: FontWeight.w600,
+            height: 1.25,
+            spacing: -0.2,
+            color: p.ink.withValues(alpha: 0.9),
+          ),
+        ),
+        if (out.figures.isNotEmpty) ...[
+          const SizedBox(height: 14),
+          ChallengeFigures(rows: out.figures, bare: true),
+        ],
+        if (out.board case final Widget board) ...[
+          SizedBox(height: out.figures.isEmpty ? 18 : 6),
+          board,
+        ],
+      ],
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ChallengeRunningHead(id: _id, title: widget.look.title, room: room),
-        // The report fills the screen: where it is shorter than the room,
-        // the cards again take what is left, spread down their card; where
-        // it is longer, it scrolls.
+        // The report is the page: the score at its top, the cards again
+        // under it, a row each, and the next challenge; where it is
+        // shorter than the room, what is left goes between the score and
+        // the cards, and where it is longer, it scrolls under the head,
+        // fading at the edges rather than cut at a line.
         Expanded(
-          child: LayoutBuilder(
-            builder: (context, box) => SingleChildScrollView(
-              key: ValueKey('$_id-end'),
-              padding: const EdgeInsets.fromLTRB(20, 6, 20, 16),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: box.maxHeight - 22),
-                child: IntrinsicHeight(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // The score, as Your journey sets the reader's: on a card of
-                      // the page's own, large, what it is beside it.
-                      Expanded(
-                        child: ChallengePanel(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              GameLabel(widget.look.skill),
-                              const SizedBox(height: 14),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Semantics(
-                                    container: true,
-                                    label: out.label,
-                                    excludeSemantics: true,
-                                    child: Text.rich(
-                                      TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: out.score,
-                                            style: AppText.display(
-                                              size: out.score.length > 3
-                                                  ? 72
-                                                  : 96,
-                                              weight: FontWeight.w600,
-                                              height: 1,
-                                              spacing: -2,
-                                              color: p.ink,
-                                            ),
-                                          ),
-                                          if (of != null)
-                                            TextSpan(
-                                              text: ' / $of',
-                                              style: AppText.display(
-                                                size: 34,
-                                                weight: FontWeight.w600,
-                                                height: 1,
-                                                spacing: -0.5,
-                                                color: p.inkMuted,
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                      key: ValueKey('$_id-score'),
-                                      textScaler: scaler.clamp(
-                                        maxScaleFactor: 1.2,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  if (best != null)
-                                    Expanded(
-                                      child: Align(
-                                        alignment:
-                                            AlignmentDirectional.bottomEnd,
-                                        child: _PersonalBest(
-                                          key: ValueKey('$_id-best'),
-                                          text: best,
-                                          calm: kit.calm,
-                                        ),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                              const Spacer(),
-                              const SizedBox(height: 16),
-                              Text(
-                                out.line,
-                                key: ValueKey('$_id-line'),
-                                style: AppText.body(
-                                  size: 14.5,
-                                  weight: FontWeight.w600,
-                                  height: 1.35,
-                                  color: p.ink.withValues(alpha: 0.82),
-                                ),
-                              ),
-                              if (out.figures.isNotEmpty) ...[
-                                const SizedBox(height: 14),
-                                ChallengeFigures(rows: out.figures, bare: true),
-                              ],
-                              if (out.board case final Widget board) ...[
-                                const SizedBox(height: 16),
-                                board,
-                              ],
-                            ],
-                          ),
-                        ),
-                      ),
-                      if (out.review.isNotEmpty) ...[
-                        const SizedBox(height: 14),
-                        GameReview(
-                          items: out.review,
-                          label: out.reviewTitle ?? l.gameReview,
-                        ),
-                      ],
-                      if (next != null && widget.onNext != null) ...[
-                        const SizedBox(height: 22),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 4),
-                          child: GameLabel(l.gameNext),
-                        ),
-                        const SizedBox(height: 10),
-                        GameNextCard(
-                          id: _id,
-                          look: next,
-                          onTap: widget.onNext!,
-                        ),
-                      ],
-                    ],
-                  ),
+          child: ChallengeScroll(
+            scrollKey: ValueKey('$_id-end'),
+            children: [
+              score,
+              const ChallengeSpring(min: 28),
+              if (out.review.isNotEmpty)
+                GameReview(
+                  items: out.review,
+                  label: out.reviewTitle ?? l.gameReview,
+                  bare: true,
                 ),
-              ),
-            ),
+              if (next != null && widget.onNext != null) ...[
+                const SizedBox(height: 26),
+                GameLabel(l.gameNext),
+                const SizedBox(height: 10),
+                GameNextCard(id: _id, look: next, onTap: widget.onNext!),
+              ],
+            ],
           ),
         ),
         Container(
@@ -735,6 +643,36 @@ class _ChallengeScreenState extends State<ChallengeScreen>
           ),
         ),
       ],
+    );
+  }
+}
+
+/// The score, counted up to once as the report comes in: briefly, slowing
+/// as it lands, and at once for a reader who asked for less motion. A
+/// score that is not a whole number is shown as it is.
+class _ScoreCount extends StatelessWidget {
+  const _ScoreCount({
+    required this.score,
+    required this.calm,
+    required this.builder,
+  });
+
+  final String score;
+  final bool calm;
+  final Widget Function(String shown) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    final Match? m = RegExp(r'^([+\u2212-]?)(\d{1,4})$').firstMatch(score);
+    if (m == null || calm) return builder(score);
+    final String sign = m.group(1)!;
+    final int to = int.parse(m.group(2)!);
+    if (to == 0) return builder(score);
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: to.toDouble()),
+      duration: Duration(milliseconds: (420 + 40 * to).clamp(420, 900)),
+      curve: Curves.easeOutCubic,
+      builder: (context, v, _) => builder('$sign${v.round()}'),
     );
   }
 }
@@ -808,47 +746,113 @@ class _Tomorrow extends StatelessWidget {
   }
 }
 
-/// The head of a challenge's screen, as the app's pages carry theirs: the
-/// name in the app's serif, how far along, level with the close.
+/// The head of a challenge's screen, the same on every moment of every
+/// challenge: one line under the status bar, level with the way out in the
+/// screen's corner, never a band of its own. It carries the name in the
+/// app's serif and how far along, as the app's pages carry theirs; or,
+/// over a moment that sets the name large itself, the skill the challenge
+/// trains, in small capitals beside its mark.
 class ChallengeRunningHead extends StatelessWidget {
   const ChallengeRunningHead({
     super.key,
     required this.id,
-    required this.title,
     required this.room,
+    this.title,
     this.count,
+    this.skill,
+    this.mark,
   });
 
   final String id;
-  final String title;
   final ChallengeRoom room;
+  final String? title;
   final String? count;
+
+  /// The skill, where the head carries it instead of the name.
+  final String? skill;
+  final ChallengeMark? mark;
 
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
     final String? count = this.count;
+    final String? skill = this.skill;
+    final ChallengeMark? mark = this.mark;
     final TextScaler scaler = MediaQuery.textScalerOf(context)
         .clamp(maxScaleFactor: 1.3);
+    if (skill != null) {
+      return Padding(
+        padding: EdgeInsets.only(top: room.top, left: 20, right: 70),
+        child: SizedBox(
+          height: room.head - room.top,
+          child: Row(
+            children: [
+              if (mark != null) ...[
+                ChallengeMarkView(mark: mark, colour: p.inkMuted, size: 15),
+                const SizedBox(width: 8),
+              ],
+              Expanded(
+                child: Text(
+                  upper(context, skill),
+                  key: ValueKey('$id-skill'),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textScaler: scaler,
+                  style: AppText.label(
+                    size: 11,
+                    spacing: 1.4,
+                    color: p.inkMuted,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Padding(
       padding: EdgeInsets.only(top: room.top, left: 20, right: 70),
       child: SizedBox(
         height: room.head - room.top,
         child: Row(
           children: [
+            // The name whole: a long one ("Platziere deinen Einsatz" beside
+            // "1 von 4" on a small phone) gives way by a size or two rather
+            // than lose its end to an ellipsis.
             Expanded(
-              child: Text(
-                title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textScaler: scaler,
-                style: AppText.display(
-                  size: 22,
-                  weight: FontWeight.w600,
-                  height: 1.1,
-                  spacing: -0.4,
-                  color: p.ink,
-                ),
+              child: LayoutBuilder(
+                builder: (context, box) {
+                  final String name = title ?? '';
+                  TextStyle style(double size) => AppText.display(
+                    size: size,
+                    weight: FontWeight.w600,
+                    height: 1.1,
+                    spacing: -0.4 * size / 22,
+                    color: p.ink,
+                  );
+                  final TextPainter t = TextPainter(
+                    text: TextSpan(
+                      text: name,
+                      style: DefaultTextStyle.of(context).style
+                          .merge(style(22)),
+                    ),
+                    textDirection: Directionality.of(context),
+                    textScaler: scaler,
+                    maxLines: 1,
+                  )..layout();
+                  final double wide = t.width;
+                  t.dispose();
+                  final double size = wide <= box.maxWidth || wide == 0
+                      ? 22
+                      : (22 * box.maxWidth / wide * 0.98).clamp(16.0, 22.0);
+                  return Text(
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textScaler: scaler,
+                    style: style(size),
+                  );
+                },
               ),
             ),
             if (count != null) ...[
@@ -935,6 +939,400 @@ class GamePlayFrame extends StatelessWidget {
           ],
         ],
       ),
+    );
+  }
+}
+
+/// A flexible gap in a [ChallengeScroll]: at least [min], and the room the
+/// moment leaves on a phone it is shorter than.
+class ChallengeSpring extends StatelessWidget {
+  const ChallengeSpring({super.key, this.min = 0});
+
+  final double min;
+
+  @override
+  Widget build(BuildContext context) => Expanded(child: SizedBox(height: min));
+}
+
+/// What a moment shows under its head, the height of the room it has: set
+/// in a column whose [ChallengeSpring]s take what is left on a phone it is
+/// shorter than; on one it is longer than, it scrolls under the head,
+/// fading at its edges rather than cut at a line.
+class ChallengeScroll extends StatelessWidget {
+  const ChallengeScroll({
+    super.key,
+    required this.children,
+    this.scrollKey,
+    this.padding = const EdgeInsets.fromLTRB(20, 10, 20, 14),
+  });
+
+  final List<Widget> children;
+
+  /// The scrolling part's key: `<id>-end` on the report.
+  final Key? scrollKey;
+  final EdgeInsets padding;
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, box) => ShaderMask(
+      blendMode: BlendMode.dstIn,
+      shaderCallback: (r) => LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: const [
+          Color(0x00FFFFFF),
+          Colors.white,
+          Colors.white,
+          Color(0x00FFFFFF),
+        ],
+        stops: [
+          0,
+          (padding.top / r.height).clamp(0.0, 0.5),
+          1 - (padding.bottom / r.height).clamp(0.0, 0.5),
+          1,
+        ],
+      ).createShader(r),
+      child: SingleChildScrollView(
+        key: scrollKey,
+        padding: padding,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: (box.maxHeight - padding.vertical).clamp(
+              0.0,
+              double.infinity,
+            ),
+          ),
+          child: IntrinsicHeight(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: children,
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+/// How the first moment is set on the room it has: the name's size and
+/// the words', a row of the day's round, and what is left between the
+/// words and the round. Chosen the way a card of the day sets its question:
+/// the largest type that leaves the rows a comfortable height; then the
+/// rows grown to their most; then a pause between the words and the round,
+/// up to a measure; and only what is left after that above the name and
+/// under the round alike, so the page is composed, never a band of nothing
+/// in one place. Where even the least of it is taller than the room, it
+/// scrolls.
+@immutable
+class _IntroFit {
+  const _IntroFit({
+    required this.title,
+    required this.rules,
+    required this.row,
+    required this.gap,
+    required this.top,
+    required this.bottom,
+    required this.scrolls,
+  });
+
+  /// The name's size, and the words'.
+  final double title;
+  final double rules;
+
+  /// A row of the day's round.
+  final double row;
+
+  /// Between the words and the round.
+  final double gap;
+
+  /// Over the name, and under the round.
+  final double top;
+  final double bottom;
+  final bool scrolls;
+
+  /// The sizes tried for the name and the words, largest first.
+  static const List<(double, double)> sizes = [
+    (60, 22),
+    (56, 22),
+    (52, 22),
+    (48, 21.5),
+    (44, 21),
+    (40, 20),
+    (37, 19),
+    (34, 18),
+    (31, 17),
+  ];
+
+  /// Over the name, and under the round, at the least.
+  static const double topLeast = 4;
+  static const double bottomLeast = 6;
+
+  /// Between the name and the words.
+  static const double afterTitle = 14;
+
+  /// Between the words and the round: at the least, and at the most before
+  /// what is left goes above and below.
+  static const double gapLeast = 28;
+  static const double gapMost = 64;
+
+  static TextStyle titleStyle(double size, Color colour) => AppText.display(
+    size: size,
+    weight: FontWeight.w600,
+    height: 1.04,
+    spacing: -size * 0.024,
+    color: colour,
+  );
+
+  static TextStyle rulesStyle(double size, Color colour) => AppText.body(
+    size: size,
+    weight: FontWeight.w500,
+    height: 1.45,
+    color: colour,
+  );
+
+  /// A row of a round of [n] at its least, at ease, and at its most, never
+  /// shorter than its words ([text]) with room round them.
+  static (double, double, double) rows(int n, double text) {
+    final (double least, double ease, double most) = n >= 7
+        ? (36.0, 42.0, 50.0)
+        : n >= 5
+        ? (42.0, 50.0, 58.0)
+        : n == 4
+        ? (48.0, 56.0, 66.0)
+        : (54.0, 64.0, 76.0);
+    final double floor = text + 14;
+    return (
+      least < floor ? floor : least,
+      ease < floor ? floor : ease,
+      most < floor ? floor : most,
+    );
+  }
+
+  static _IntroFit of(
+    BuildContext context, {
+    required double width,
+    required double height,
+    required String title,
+    required String rules,
+    required int rounds,
+    required int figures,
+  }) {
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final TextScaler titleScaler = scaler.clamp(maxScaleFactor: 1.3);
+    final TextDirection direction = Directionality.of(context);
+    // Measured as the words are drawn: in the style they inherit, which
+    // carries its own spacing, under the one set for them.
+    final TextStyle inherited = DefaultTextStyle.of(context).style;
+    const Color ink = Color(0xFF000000);
+
+    double measure(String text, TextStyle style, TextScaler s) {
+      final TextPainter t = TextPainter(
+        text: TextSpan(text: text, style: inherited.merge(style)),
+        textDirection: direction,
+        textScaler: s,
+      )..layout(maxWidth: width);
+      final double h = t.height;
+      t.dispose();
+      return h;
+    }
+
+    // A name whose longest word is wider than the page is never set at
+    // that size: a word is not broken.
+    bool wordsFit(double size) {
+      for (final String word in title.split(RegExp(r'\s+'))) {
+        if (word.isEmpty) continue;
+        final TextPainter t = TextPainter(
+          text: TextSpan(
+            text: word,
+            style: inherited.merge(titleStyle(size, ink)),
+          ),
+          textDirection: direction,
+          textScaler: titleScaler,
+          maxLines: 1,
+        )..layout();
+        final double w = t.width;
+        t.dispose();
+        if (w > width) return false;
+      }
+      return true;
+    }
+
+    final double label = rounds > 0
+        ? scaler.clamp(maxScaleFactor: 1.4).scale(10.5) * 1.3 + 8
+        : 0;
+    final double figure = 22 + scaler.scale(15) * 1.3 + 1;
+    final double rowText =
+        scaler
+            .clamp(maxScaleFactor: 1.5)
+            .scale(ChallengeDeck.textSize(rounds)) *
+        1.25;
+    final (double least, double ease, double most) = rows(rounds, rowText);
+    double need(double titleH, double rulesH, double row) =>
+        topLeast +
+        titleH +
+        afterTitle +
+        rulesH +
+        gapLeast +
+        label +
+        rounds * (row + 1) +
+        figures * figure +
+        bottomLeast;
+
+    double titleSize = sizes.last.$1, rulesSize = sizes.last.$2;
+    double titleH = 0, rulesH = 0;
+    bool found = false;
+    for (final (double t, double r) in sizes) {
+      final bool last = t == sizes.last.$1;
+      if (!last && !wordsFit(t)) continue;
+      titleSize = t;
+      rulesSize = r;
+      titleH = measure(title, titleStyle(t, ink), titleScaler);
+      rulesH = measure(rules, rulesStyle(r, ink), scaler);
+      // The largest sizes only for a name of two lines at most.
+      final double lines = titleH / titleScaler.scale(t * 1.04);
+      if (!last && lines > (t > 52 ? 2.2 : 3.2)) continue;
+      if (need(titleH, rulesH, ease) <= height) {
+        found = true;
+        break;
+      }
+    }
+    double row = ease;
+    double spare = height - need(titleH, rulesH, row);
+    if (!found && spare < 0 && rounds > 0) {
+      // The rows give way first, down to their least.
+      final double give = (-spare / rounds).clamp(0.0, ease - least);
+      row = ease - give;
+      spare = height - need(titleH, rulesH, row);
+    }
+    if (spare < 0) {
+      return _IntroFit(
+        title: titleSize,
+        rules: rulesSize,
+        row: row,
+        gap: gapLeast,
+        top: topLeast,
+        bottom: bottomLeast,
+        scrolls: true,
+      );
+    }
+    if (rounds > 0) {
+      final double grow = (spare / rounds).clamp(0.0, most - row);
+      row += grow;
+      spare -= grow * rounds;
+    }
+    final double pause = spare.clamp(0.0, gapMost - gapLeast);
+    spare -= pause;
+    return _IntroFit(
+      title: titleSize,
+      rules: rulesSize,
+      row: row,
+      gap: gapLeast + pause,
+      top: topLeast + spare / 2,
+      bottom: bottomLeast + spare / 2,
+      scrolls: false,
+    );
+  }
+}
+
+/// The first moment's page under its head: the name, what it asks and
+/// what it measures, the day's round and the reader's figures, set as
+/// [_IntroFit] has them for the room.
+class _IntroPage extends StatelessWidget {
+  const _IntroPage({
+    required this.id,
+    required this.title,
+    required this.rules,
+    required this.today,
+    required this.marks,
+    required this.figures,
+  });
+
+  final String id;
+  final String title;
+  final String rules;
+  final List<List<Pill>> today;
+  final List<bool?> marks;
+  final List<ChallengeFigure> figures;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Palette p = context.p;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    return LayoutBuilder(
+      builder: (context, box) {
+        const double side = 20;
+        final _IntroFit fit = _IntroFit.of(
+          context,
+          width: box.maxWidth - 2 * side,
+          height: box.maxHeight,
+          title: title,
+          rules: rules,
+          rounds: today.length,
+          figures: figures.length,
+        );
+        final List<Widget> words = [
+          Semantics(
+            header: true,
+            child: Text(
+              title,
+              key: ValueKey('$id-title'),
+              textScaler: scaler.clamp(maxScaleFactor: 1.3),
+              style: _IntroFit.titleStyle(fit.title, p.ink),
+            ),
+          ),
+          const SizedBox(height: _IntroFit.afterTitle),
+          Text(
+            rules,
+            key: ValueKey('$id-rules'),
+            style: _IntroFit.rulesStyle(
+              fit.rules,
+              p.ink.withValues(alpha: 0.86),
+            ),
+          ),
+        ];
+        final List<Widget> round = [
+          if (today.isNotEmpty) ...[
+            GameLabel(l.challengeToday),
+            const SizedBox(height: 8),
+            ChallengeDeck(
+              key: ValueKey('$id-today'),
+              rounds: today,
+              marks: marks,
+              row: fit.row,
+            ),
+          ],
+          if (figures.isNotEmpty)
+            ChallengeFigures(
+              key: ValueKey('$id-record'),
+              rows: figures,
+              bare: true,
+            ),
+        ];
+        if (fit.scrolls) {
+          return ChallengeScroll(
+            padding: const EdgeInsets.fromLTRB(side, 4, side, 10),
+            children: [
+              ...words,
+              const ChallengeSpring(min: _IntroFit.gapLeast),
+              ...round,
+            ],
+          );
+        }
+        return Padding(
+          padding: EdgeInsets.fromLTRB(side, fit.top, side, fit.bottom),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ...words,
+              // The pause the measure chose; a word measured a hair short
+              // takes from it rather than push the round off the page.
+              Flexible(child: SizedBox(height: fit.gap)),
+              ...round,
+            ],
+          ),
+        );
+      },
     );
   }
 }

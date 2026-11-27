@@ -49,6 +49,7 @@ import 'package:flutter/services.dart' show HapticFeedback;
 
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
+import '../state/debug_looks.dart';
 import '../sync/reports.dart';
 import '../theme.dart';
 import 'report_sheet.dart';
@@ -86,7 +87,7 @@ enum SourceFoot {
   links,
 }
 
-/// The way being tried. `line` unless the build names another
+/// The way the build sets the foot. `line` unless the build names another
 /// (`--dart-define=SOURCE_FOOT=stack`, `pill` or `links`), which is how the
 /// camera, tool/source_shots.dart, photographs them all; changing the
 /// default here changes it for good.
@@ -94,13 +95,36 @@ const String _sourceFootName = String.fromEnvironment(
   'SOURCE_FOOT',
   defaultValue: 'line',
 );
-const SourceFoot sourceFoot = _sourceFootName == 'stack'
+const SourceFoot builtSourceFoot = _sourceFootName == 'stack'
     ? SourceFoot.stack
     : _sourceFootName == 'pill'
     ? SourceFoot.pill
     : _sourceFootName == 'links'
     ? SourceFoot.links
     : SourceFoot.line;
+
+/// The way being tried in this run: the one picked in the developer tools,
+/// so the owner can try the four on his own phone (Profile → Debug, "Card
+/// foot"); else the build's own. Read wherever the foot is drawn — a card
+/// in words, the sheets that carry the report, and a drawn card's page,
+/// which is told it as `foot` ([PageEnv]) — and listened to
+/// ([DebugLooks.cardFoot]) where a card is on the screen, so a change shows
+/// at once. A build without the tools never reads the pick.
+SourceFoot get sourceFoot => switch (DebugLooks.cardFootPicked) {
+  CardFootPick.a => SourceFoot.line,
+  CardFootPick.b => SourceFoot.stack,
+  CardFootPick.c => SourceFoot.pill,
+  CardFootPick.d => SourceFoot.links,
+  null => builtSourceFoot,
+};
+
+/// The pick in the developer tools that sets [foot].
+CardFootPick footPickOf(SourceFoot foot) => switch (foot) {
+  SourceFoot.line => CardFootPick.a,
+  SourceFoot.stack => CardFootPick.b,
+  SourceFoot.pill => CardFootPick.c,
+  SourceFoot.links => CardFootPick.d,
+};
 
 /// Opens "what's wrong with this card?" for [pill], and says it went:
 /// with a word at the foot of the screen when the sheet it was asked from

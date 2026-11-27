@@ -184,9 +184,11 @@ class Estimate extends Challenge {
 
   String get answerLabel => unit.isEmpty ? '$answer' : '$answer $unit';
 
-  /// What counted as close enough, for the reveal.
-  String get band =>
-      '${(answer / withinFactor).round()} to ${(answer * withinFactor).round()}';
+  /// The least that counted as close enough, for the reveal.
+  int get low => (answer / withinFactor).round();
+
+  /// The most that counted as close enough, for the reveal.
+  int get high => (answer * withinFactor).round();
 }
 
 /// Take a side. There is no right answer — the point is to commit, then meet

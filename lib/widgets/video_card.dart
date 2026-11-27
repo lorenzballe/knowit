@@ -57,6 +57,12 @@ String filmClock(Duration length) {
 
 Object _heroOf(VideoCard card) => 'video-card-${card.id}';
 
+/// What the film of [card] grows out of when it is opened from [where], a
+/// section of Explore that lays it as a card among cards ([VideoCardHero]):
+/// a section lays a card once, so the tag is the page's only one.
+Object videoHeroTag(VideoCard card, String where) =>
+    'video-card-${card.id}@$where';
+
 /// Where the row of controls ends, under the top of the screen's own inset:
 /// four points of air and a row as tall as the cross.
 const double _controls = 48;
@@ -310,6 +316,27 @@ class VideoCardTile extends StatelessWidget {
   }
 }
 
+/// A video card's tile wherever Explore lays it as a card among cards (the
+/// feed, the cover): the film grows out of it when it is opened with the
+/// same [tag] ([videoHeroTag], openVideoCard's `heroTag`), and goes back
+/// into it, as from the tile of its own first frame.
+class VideoCardHero extends StatelessWidget {
+  const VideoCardHero({super.key, required this.tag, required this.child});
+
+  final Object tag;
+
+  /// The tile: the card in words, with its play mark.
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Hero(
+    tag: tag,
+    createRectTween: _straight,
+    flightShuttleBuilder: _flight,
+    child: child,
+  );
+}
+
 /// A small dark pill laid over a film.
 class _Chip extends StatelessWidget {
   const _Chip({required this.children});
@@ -327,11 +354,14 @@ class _Chip extends StatelessWidget {
   );
 }
 
-/// Opens [card] to the whole screen, its tile's picture growing into it.
+/// Opens [card] to the whole screen, its tile's picture growing into it:
+/// the tile that carries [heroTag] ([VideoCardHero]), or the card's own
+/// tile ([VideoCardTile]) when none is given.
 Future<void> openVideoCard(
   BuildContext context,
   VideoCard card, {
   required String language,
+  Object? heroTag,
 }) {
   Analytics.capture('video card opened', {
     'card': card.id,
@@ -342,7 +372,8 @@ Future<void> openVideoCard(
       opaque: false,
       transitionDuration: const Duration(milliseconds: 420),
       reverseTransitionDuration: const Duration(milliseconds: 340),
-      pageBuilder: (_, _, _) => VideoCardScreen(card: card, language: language),
+      pageBuilder: (_, _, _) =>
+          VideoCardScreen(card: card, language: language, heroTag: heroTag),
     ),
   );
 }
@@ -356,10 +387,16 @@ class VideoCardScreen extends StatefulWidget {
     super.key,
     required this.card,
     required this.language,
+    this.heroTag,
   });
 
   final VideoCard card;
   final String language;
+
+  /// The tile the film grows out of and goes back into: its own
+  /// ([VideoCardTile]) when null, or the card laid among cards that
+  /// carries this tag ([VideoCardHero]).
+  final Object? heroTag;
 
   /// How a film's player is made: from the site, mixed with whatever else
   /// the phone is playing, since a card's film has no sound of its own.
@@ -716,7 +753,7 @@ class _VideoCardScreenState extends State<VideoCardScreen>
                           fit: StackFit.expand,
                           children: [
                             Hero(
-                              tag: _heroOf(card),
+                              tag: widget.heroTag ?? _heroOf(card),
                               createRectTween: _straight,
                               flightShuttleBuilder: _flight,
                               child: _Frame(

@@ -182,7 +182,7 @@ const Turn = {
     const ok = Math.abs(guess - TRUE) <= 20;
     Kit.answer({choice: `${guess} m lower`, correct: ok, sure: pct});
     sure.grade(ok, pct, `${guess} m, ${ok ? 'close' : 'not close'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back: the truth, measured coast to coast ----------

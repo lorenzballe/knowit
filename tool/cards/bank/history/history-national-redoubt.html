@@ -202,7 +202,7 @@ const Turn = {
     Kit.$('q2').textContent = ok ? V_OK : V_NO;
     Kit.answer({choice, correct: ok, sure: pct});
     sure.grade(ok, pct, `${choice}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------
