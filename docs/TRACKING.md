@@ -54,6 +54,13 @@ will find in six months.
 - **Cambiato:** `card flipped` non va più a PostHog (resta nella traccia):
   le girate ora sono dentro `card advanced` e `card closed`. Il profilo
   PostHog si scrive in un colpo solo, e solo dove è cambiato.
+- **La prima settimana, il primo mese.** La pagina che si apre una volta
+  sola dopo le cinque carte del settimo giorno di lettura, e la sua gemella
+  a un mese dall'installazione, dicono quando si aprono (`first offer
+  shown`), come si chiudono (`first offer closed`: "Non ora", indietro, la
+  prova) e quando parte la prova (`first offer trial started`); gli acquisti
+  partiti da lì hanno `source` `first week` o `first month`. Tre eventi per
+  pagina al massimo, e ogni pagina si apre una volta sola.
 - **Aggiungere un evento:** sezione [9](#9-adding-an-event-or-a-screen).
 
 ## 1. Rules
@@ -277,7 +284,10 @@ gone); `onboarding first card`, `onboarding trial` (the one card and the
 offer of the free trial that end the first run behind the server's switch
 `trial.firstRun`, off as built: measured by the steps' own `onboarding step
 done`, and the trial by the store's `entitlement changed`, with no event of
-their own); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
+their own); `first week`, `first month` (the page that rises once after the
+five on the seventh day of reading, and its twin a month after the install,
+behind `offer.firstWeek` and `offer.firstMonth`; §6.8); `deck viewer`, `pill
+detail`, `archive`, `saved`, `liked`,
 `journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`,
 `story` (a true story played from Explore); `update gate`, `pause` (the
 update gate's full screens, over everything, §6.13).
@@ -382,7 +392,10 @@ is in its card facts.
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
 | `paywall shown`, `paywall plan selected`, `paywall link opened`, `paywall closed` | the paywall, by the door that opened it (`sixth card`, `journey`, `archive`, `paths`, `see the plans`, `manage plan`, `explore offer` — the Astute+ card on Explore, the locked features' own; no longer `onboarding`) | `source`, `variant`, `has_number`, `plan_shown`, `store_answered`, `store` (`ready`, `asking`, `unreachable`), `plan`, `from`, `link`, `left_by` (`close`, `back`, `bought`, `pending`, `review access`, `unlocked without a store` in a debug build), `ms_open`, `plan_changes`, `is_plus` | P |
-| `purchase started`, `purchase ended`, `purchase success shown`, `purchases restored` | buying | `source`, `plan`, `has_package`, `outcome` (`bought`, `cancelled`, `pending`, `failed`; for a restore `restored`, `nothing`, `unreachable`), `product`, `price`, `currency`, `trial`, `found` | P |
+| `purchase started`, `purchase ended`, `purchase success shown`, `purchases restored` | buying; `source` is the paywall's door, or `first week` / `first month` for a trial started from those pages | `source`, `plan`, `has_package`, `outcome` (`bought`, `cancelled`, `pending`, `failed`; for a restore `restored`, `nothing`, `unreachable`), `product`, `price`, `currency`, `trial`, `found` | P |
+| `first offer shown` **new** | the first week's page or the first month's rises, once each per phone, after the five | `source` (`first week`, `first month`), `days_read`, `cards_read`, `streak_days`, `has_sure` (the right-when-sure figure was said), `has_strongest`, `best_card` (`said`, `liked`, `saved`, `changed`, absent with none), `trial_days` (the store's free days), `remind` (the reminder before the charge was promised) | P |
+| `first offer closed` **new** | that page goes | `source`, `left_by` (`not now`, `back`, `trial`, `pending`, `restored`, `plus already`, `no offer`), `ms_open`, `is_plus` | P |
+| `first offer trial started` **new** | the year's trial started from that page, as the store confirmed it | `source`, `product`, `trial`, `trial_days`, `ms_open` | P |
 | `store answered` | each time RevenueCat is asked for the offerings: at launch, then after 3 s, 10 s, 30 s and 2 min while nothing is on sale, on the paywall opening, on Try again and on a return to the app | `ms`, `try`, `offering`, `yearly_product`, `yearly_price`, `yearly_trial`, `monthly_product`, `monthly_price`, `currency`, `is_plus`, `error` | P |
 | `entitlement read`, `entitlement changed` | the subscription as the store holds it, at launch and on every change | `active`, `product`, `period_type`, `will_renew`, `store`, `sandbox`, `expires`, `unsubscribed`, `billing_issue` | P |
 | `trial started`, `plan changed` | the app's own plan | `is_plus` | P, T:`plan` (changed) |
