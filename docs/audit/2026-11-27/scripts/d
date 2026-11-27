@@ -1,0 +1,3 @@
+#!/bin/bash
+# Sends orders to the driver, one per line: ./d $'tap 200 700\nwait 800\nshot a01'
+curl -s --max-time 180 http://127.0.0.1:${PORT:-7717}/ --data-binary "$*"
