@@ -11,11 +11,13 @@ import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/flip_card.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 
-// Nothing on Today said how card two is reached. The first card now shows
-// it, once, to a reader who has never sent a card on: a few seconds after
-// its back comes round — or at once when the reader turns it back to its
-// front, looking for the way on — it leans aside and settles, and the
-// header says it in words. With motion reduced, the words are all there is.
+// Nothing on Today said how card two is reached. To a reader who has never
+// sent a card on, the header says it in words from the first card's arrival
+// (an outside reader found them small and late when they waited for the
+// lean), and the first card shows it, once: a few seconds after its back
+// comes round — or at once when the reader turns it back to its front,
+// looking for the way on — it leans aside and settles. With motion reduced,
+// the words are all there is.
 
 final List<Pill> _facts = PillBank.cards
     .where((p) => p.challenge is NoChallenge)
@@ -183,8 +185,8 @@ void main() {
     expect(hints, 0);
   });
 
-  testWidgets('on Today, the words sit beside the day\'s name until a card '
-      'is sent on, and never come again', (tester) async {
+  testWidgets('on Today, the words sit beside the day\'s name from the first '
+      'card until a card is sent on, and never come again', (tester) async {
     SharedPreferences.setMockInitialValues({
       'knowit.onboarded': true,
       'knowit.plus': false,
@@ -196,16 +198,8 @@ void main() {
 
     PillCardStack deck() => tester.widget(find.byType(PillCardStack));
     expect(deck().swipeHint, isTrue);
-    expect(find.text('Swipe for the next one'), findsNothing);
-    final Rect before = tester.getRect(find.byType(PillCardStack));
-
-    // The deck says it has shown the way; the header says it in words.
-    deck().onSwipeHint!();
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    // Said at once, without waiting for the card to lean.
     expect(find.text('Swipe for the next one'), findsOneWidget);
-    // Beside the day's name, so nothing under it moves to make room.
-    expect(tester.getRect(find.byType(PillCardStack)), before);
     expect(
       tester.getCenter(find.text('Swipe for the next one')).dy,
       moreOrLessEquals(
