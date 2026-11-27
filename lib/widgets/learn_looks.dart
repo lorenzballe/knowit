@@ -14,8 +14,9 @@
 ///   changed from the profile: where the reader wants to be sharper, one of
 ///   the six areas the cards already name on their backs ("Useful for:
 ///   Money and shopping", lib/data/goals.dart). Said in words and counts,
-///   never a score; a card dealt for it says so under its head; Explore's
-///   shelf of an area is the aim's every day; its page holds its paths.
+///   never a score; a card dealt for it says so under its head; its page
+///   holds its paths. Its shelf on Explore every day is now everybody's who
+///   has a goal (withAimShelf, lib/explore/blocks/core/goal_block.dart).
 /// - C, [LearnLook.profile]: nothing to pick. The skills are read from the
 ///   reader's answers, strongest first, each as right answers out of
 ///   answers given, with the weakest to practise: a chapter of Your journey
@@ -36,7 +37,6 @@ import '../data/pill_bank.dart';
 import '../data/pills_repository.dart' show dateKey, dealableOn;
 import '../data/skill_levels.dart';
 import '../data/skills.dart';
-import '../explore/explore_block.dart' show ExploreSection;
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../screens/area_screen.dart';
@@ -247,24 +247,6 @@ bool _forAim(Goal aim, Pill p) => (aim.fitOf(p) ?? 2) < 2;
     if (j.correct) right++;
   }
   return (cards: math.max(cards, answers), answers: answers, right: right);
-}
-
-/// Explore's sections, with B's shelf of the reader's aim among the first,
-/// after Today's five and what to continue: the area shelf Explore keeps
-/// for everybody's area of the day (GoalBlock), the aim's every day. In any
-/// other look, or with no aim, the sections as the server sent them.
-List<ExploreSection> withAimShelf(AppState app, List<ExploreSection> sections) {
-  if (learnLook != LearnLook.aim || aimOf(app) == null) return sections;
-  if (sections.any((s) => s.block == 'goal')) return sections;
-  var at = 0;
-  for (final (int i, ExploreSection s) in sections.indexed) {
-    if (s.id == 'your-five' || s.id == 'continue') at = i + 1;
-  }
-  return [
-    ...sections.take(at),
-    const ExploreSection(id: 'goal', block: 'goal'),
-    ...sections.skip(at),
-  ];
 }
 
 /// Opens the aim's own page: its paths, the moves it trains, more of it.
