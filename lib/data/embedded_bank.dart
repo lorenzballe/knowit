@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611271402,
- "built": "2026-11-27T14:02:53Z",
+ "version": 202611272338,
+ "built": "2026-11-27T23:38:18Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -280126,6 +280126,38 @@ const String kEmbeddedBank = r'''
    "food-future-food-1",
    "thinking-book-the-black-swan-4"
   ]
+ },
+ "summaries": {
+  "business-adventures": {
+   "file": "summaries/business-adventures.json?v=db3c356ef882",
+   "minutes": 15,
+   "parts": 8,
+   "words": 2196
+  },
+  "guns-germs-and-steel": {
+   "file": "summaries/guns-germs-and-steel.json?v=7272db9ce2f7",
+   "minutes": 15,
+   "parts": 8,
+   "words": 2228
+  },
+  "influence": {
+   "file": "summaries/influence.json?v=f612986c4483",
+   "minutes": 15,
+   "parts": 7,
+   "words": 2220
+  },
+  "sapiens": {
+   "file": "summaries/sapiens.json?v=03d9d8d437ff",
+   "minutes": 15,
+   "parts": 7,
+   "words": 2191
+  },
+  "the-structure-of-scientific-revolutions": {
+   "file": "summaries/the-structure-of-scientific-revolutions.json?v=b15db14d48af",
+   "minutes": 15,
+   "parts": 7,
+   "words": 2180
+  }
  }
 }
 ''';
