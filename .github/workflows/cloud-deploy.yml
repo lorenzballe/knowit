@@ -14,10 +14,12 @@
 # function reads it, so the service account needs Secret Manager Admin too.
 #
 # The day's five read aloud (Listen: listenCard and listenAhead,
-# functions/src/listen.ts) are read by ElevenLabs with ELEVENLABS_API_KEY,
+# functions/src/listen.ts) and the books' summaries read aloud (bookClip,
+# functions/src/books.ts) are read by ElevenLabs with ELEVENLABS_API_KEY,
 # kept in Secret Manager the same way. It never stops a deploy: without it
 # (or with a key ElevenLabs says is not a key) a stand-in is kept in its
-# place, the functions answer "not configured", and the phones hide Listen.
+# place, the functions answer "not configured", and the phones hide Listen
+# and the books' listening.
 # A real key is checked by reading three characters in Listen's own voice,
 # and kept even when the account has no credit yet, so buying the plan is
 # all it then takes; the summary says which.

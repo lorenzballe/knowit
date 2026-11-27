@@ -30,3 +30,20 @@ export const LISTEN_DAY_CHARS = 25_000;
 /** The most cards one reader may have read aloud in a day: today's five,
  * tomorrow's, and a few more. What bounds a phone that lies about its plan. */
 export const LISTEN_CARDS_PER_DAY = 15;
+
+// What the voice may read for books (books.ts): a book's summary read aloud,
+// a part a clip, by ElevenLabs on Eleven v4 Turbo, $0.04 for a thousand
+// characters, half of what v4 costs. Each part is read once for every reader
+// and kept, so what is spent is new or changed summaries, never readers: a
+// summary of about 2,200 words is about 13,500 characters, some 54 cents,
+// once. The plan the owner buys includes so many characters a month
+// (Starter, $6 a month: 150,000 on v4 Turbo); the month stops short of them,
+// so it is never overdrawn, and a book is begun only when every part of it
+// still to be read fits in what the month has left, so no book is left half
+// read. Once the month is spent nothing new is read until it turns; what was
+// read before still plays. The book audio's characters are counted apart
+// from Listen's (bookSpend/{yyyy-mm}); with Listen off, as it is, the plan is
+// the books' alone, and switching Listen on means a plan that holds both.
+
+/** The most a calendar month (UTC) may have read aloud for books. */
+export const BOOK_AUDIO_MONTH_CHARS = 120_000;
