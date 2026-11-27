@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "b9bfb63c5b145aef",
+ "hash": "76d2ec15f696a652",
  "app": {
   "gate": null,
   "flags": {
@@ -16,8 +16,16 @@ const String kEmbeddedRemote = r'''
    "cardAi": true,
    "share.challenge": true
   },
-  "tunables": {},
-  "experiments": {}
+  "tunables": {
+   "review.streakDays": 3
+  },
+  "experiments": {
+   "push.firstAsk": {
+    "variants": [
+     "firstDay"
+    ]
+   }
+  }
  },
  "strings": {},
  "explore": {

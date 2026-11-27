@@ -7,6 +7,6 @@
   "cardAi": true,
   "share.challenge": true
  },
- "tunables": {},
- "experiments": {}
+ "tunables": {"review.streakDays": 3},
+ "experiments": {"push.firstAsk": {"variants": ["firstDay"]}}
 }
