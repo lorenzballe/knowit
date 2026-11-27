@@ -829,9 +829,7 @@ void main() {
       expect(why.top, greaterThan(challenge.bottom));
       expect(challenge.width, why.width);
       await tapKey(tester, 'three-challenge');
-      expect(sent, [
-        fiveChallengeText(l, day: dateKey(sunday), right: right),
-      ]);
+      expect(sent, [fiveChallengeText(l, day: dateKey(sunday), right: right)]);
       expect(sent.single, endsWith('/sfida?d=2026-10-18&s=$right'));
       for (final Pill p in DailyDeal.five(sunday)) {
         if (p.challenge case PickOne(:final correctOption)) {

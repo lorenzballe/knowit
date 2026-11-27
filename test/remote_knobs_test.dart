@@ -643,9 +643,9 @@ void main() {
         },
       });
       expect((await _app({})).shareChallengeOn, isFalse, reason: 'android');
-      final Map<String, Object?> published =
-          jsonDecode(File('remote/app.json').readAsStringSync())
-              as Map<String, Object?>;
+      final Map<String, Object?> published = jsonDecode(
+        File('remote/app.json').readAsStringSync(),
+      ) as Map<String, Object?>;
       expect((published['flags']! as Map)['share.challenge'], isTrue);
     });
   });

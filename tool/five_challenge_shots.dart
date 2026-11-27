@@ -85,7 +85,12 @@ Future<void> _pictures(WidgetTester tester) async {
 }
 
 /// Holds the phone: its size in points, its status and home bars.
-void _phone(WidgetTester tester, Size size, {double top = 47, double bottom = 34}) {
+void _phone(
+  WidgetTester tester,
+  Size size, {
+  double top = 47,
+  double bottom = 34,
+}) {
   const double ratio = 3;
   tester.view.physicalSize = size * ratio;
   tester.view.devicePixelRatio = ratio;
@@ -179,11 +184,14 @@ void main() {
     CardThumb.image = _local;
   });
   setUp(() {
+    // ignore: invalid_use_of_visible_for_testing_member
     DailyCrowd.useForTest(null);
     _challengesOn();
   });
   tearDown(() {
+    // ignore: invalid_use_of_visible_for_testing_member
     DailyCrowd.useForTest(null, on: false);
+    // ignore: invalid_use_of_visible_for_testing_member
     Remote.reset();
   });
 
@@ -196,6 +204,7 @@ void main() {
     testWidgets('the end of the five on Explore, $lang', (tester) async {
       _phone(tester, size);
       final DateTime now = DateTime.now();
+      // ignore: invalid_use_of_visible_for_testing_member
       SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
       // ignore: invalid_use_of_visible_for_testing_member
       BetsDay.resetForTest(clock: () => now);
@@ -214,7 +223,10 @@ void main() {
               child: BetsPage(
                 host: host,
                 sections: [
-                  ExploreSection.fromJson(const {'id': 'three', 'block': 'three'}),
+                  ExploreSection.fromJson(const {
+                    'id': 'three',
+                    'block': 'three',
+                  }),
                 ],
               ),
             ),
@@ -257,6 +269,7 @@ void main() {
     });
     // ignore: invalid_use_of_visible_for_testing_member
     BetsDay.resetForTest();
+    // ignore: invalid_use_of_visible_for_testing_member
     SharedPreferences.setMockInitialValues(_finished());
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);

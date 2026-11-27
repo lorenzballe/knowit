@@ -512,11 +512,7 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
 /// as the second of two ways is, the whole width, so its words are never
 /// cut, and as tall as the reader's text size needs.
 class _ChallengeButton extends StatelessWidget {
-  const _ChallengeButton({
-    super.key,
-    required this.label,
-    required this.onTap,
-  });
+  const _ChallengeButton({super.key, required this.label, required this.onTap});
 
   final String label;
   final VoidCallback onTap;

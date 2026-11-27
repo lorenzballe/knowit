@@ -93,7 +93,11 @@ void _take(Map<String, Object?> flags) => Remote.adopt(
 
 /// Lays today's five as the game lays them (three.dart, lockIn): a bet of
 /// the day's games on each card, right where [right] says.
-void _played(List<Pill> five, bool Function(int i) right, {String game = 'five'}) {
+void _played(
+  List<Pill> five,
+  bool Function(int i) right, {
+  String game = 'five',
+}) {
   for (final (int i, Pill p) in five.indexed) {
     BetsDay.instance.place(
       Bet(
@@ -102,7 +106,12 @@ void _played(List<Pill> five, bool Function(int i) right, {String game = 'five'}
         pill: p.id,
         said: '0',
         right: right(i),
-        facts: {'pts': right(i) ? 100 : 0, 'step': i + 1, 'of': 5, 'game': game},
+        facts: {
+          'pts': right(i) ? 100 : 0,
+          'step': i + 1,
+          'of': 5,
+          'game': game,
+        },
       ),
     );
   }
@@ -166,13 +175,11 @@ void main() {
       expect(WidgetOpen.cardOfLink(link), isNull);
       // Neither phone hands it to the app: the two scores are compared on
       // the page, with or without the app.
-      final String apple = File(
-        'site/.well-known/apple-app-site-association',
-      ).readAsStringSync();
+      final String apple = File('site/.well-known/apple-app-site-association')
+          .readAsStringSync();
       expect(apple, isNot(contains('sfida')));
-      final String android = File(
-        'android/app/src/main/AndroidManifest.xml',
-      ).readAsStringSync();
+      final String android = File('android/app/src/main/AndroidManifest.xml')
+          .readAsStringSync();
       expect(android, contains('android:pathPrefix="/c/"'));
       expect(android, isNot(contains('sfida')));
       // The page the deploy writes, at the path the link names.
@@ -278,8 +285,11 @@ void main() {
 
     test('only the five\'s own bets count', () async {
       await BetsDay.instance.load();
-      _played(DailyDeal.five(BetsDay.instance.now), (i) => true,
-          game: 'three-science');
+      _played(
+        DailyDeal.five(BetsDay.instance.now),
+        (i) => true,
+        game: 'three-science',
+      );
       expect(fiveRightToday(), isNull);
     });
 
@@ -297,9 +307,10 @@ void main() {
   group('under the finished day\'s share', () {
     /// A reader whose day is read, and the day's share open.
     Future<void> openSheet(WidgetTester tester) async {
-      final List<String> deck = dealDay(
-        date: DateTime.now(),
-      ).cards.take(kPillsPerDay).map((p) => p.id).toList();
+      final List<String> deck = dealDay(date: DateTime.now()).cards
+          .take(kPillsPerDay)
+          .map((p) => p.id)
+          .toList();
       SharedPreferences.setMockInitialValues({
         'knowit.onboarded': true,
         'knowit.todayDate': today,
