@@ -205,7 +205,7 @@ const Turn = {
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${said}, ${ok ? 'close to his' : 'not his'}`);
     Kit.$('ans').textContent = ok ? 'Close to his 0.20 g/L. By luck: your body is not his.' : 'He read 0.20 g/L. Your body runs its own curve.';
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

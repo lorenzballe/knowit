@@ -1993,6 +1993,73 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => '你想在哪些方面看得更清楚？';
+
+  @override
+  String get aimLine => '选一个。每天都有为它准备的卡片，随时可以更改。';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '本周这方面的卡片：$n 张',
+      zero: '本周还没有这方面的卡片',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$n 题答对 $right 题',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => '这个目标的全部内容';
+
+  @override
+  String get aimPlus => '有了 Astute+：这方面的全部路径完整开放，还有一位陪你练习的教练。';
+
+  @override
+  String get aimNone => '选出你想看得更清楚的方面：每天都有为它准备的卡片。';
+
+  @override
+  String get aimPick => '选择目标';
+
+  @override
+  String get strengthsTitle => '你的强项';
+
+  @override
+  String get strengthsLine => '不是你选的，而是从你的回答中看出：你在哪里答对最多，在哪里出错。';
+
+  @override
+  String strengthsFew(String skills) {
+    return '回答还太少：$skills';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return '练习：$skill';
+  }
+
+  @override
+  String get strengthsBest => '你最强的一项';
+
+  @override
+  String get strengthsWeak => '你最常出错的地方';
+
+  @override
+  String get strengthsLocked => '你最常出错的地方和其余内容，需要 Astute+。';
+
+  @override
+  String get strengthsEmpty => '再多答几题，这里就会显示你的强项。';
+
+  @override
   String get scoreTitle => 'Astute 分数';
 
   @override
@@ -5814,6 +5881,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get yourFiveFromToday => '你今天的五张卡片';
+
+  @override
+  String get dayMomentTitle => '今天的五张，完成。';
+
+  @override
+  String get dayMomentLater => '稍后';
+
+  @override
+  String get yourDayCard => '你的一天';
 
   @override
   String get tuneTitle => '调整你的组合';

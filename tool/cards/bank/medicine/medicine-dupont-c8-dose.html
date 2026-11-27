@@ -200,7 +200,7 @@ const Turn = {
     const v = valOf(g), ok = v >= .75 && v <= 3, said = `${fmt(g)} mg/kg`;
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'off'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   sure.on();   // the starting guess is a real guess: the chips are live from the start
 

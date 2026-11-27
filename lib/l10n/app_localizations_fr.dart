@@ -2084,6 +2084,81 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'Où veux-tu y voir plus clair ?';
+
+  @override
+  String get aimLine =>
+      'Choisis-en un. Chaque jour, des cartes pour ça, et tu peux le changer quand tu veux.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cartes pour ça cette semaine',
+      one: '1 carte pour ça cette semaine',
+      zero: 'Aucune carte pour ça cette semaine',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right justes sur $n',
+      one: '1 juste sur $n',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Tout pour cet objectif';
+
+  @override
+  String get aimPlus =>
+      'Avec Astute+ : tous ses parcours en entier, et un coach qui y travaille avec toi.';
+
+  @override
+  String get aimNone =>
+      'Choisis où tu veux y voir plus clair : chaque jour, des cartes pour ça.';
+
+  @override
+  String get aimPick => 'Choisir un objectif';
+
+  @override
+  String get strengthsTitle => 'Tes points forts';
+
+  @override
+  String get strengthsLine =>
+      'Tiré de tes réponses, pas d’un choix : là où tu as le plus juste, et là où tu te trompes.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Encore trop peu de réponses : $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return 'S’entraîner : $skill';
+  }
+
+  @override
+  String get strengthsBest => 'Ton point fort';
+
+  @override
+  String get strengthsWeak => 'Là où tu te trompes le plus';
+
+  @override
+  String get strengthsLocked =>
+      'Là où tu te trompes le plus, et le reste, avec Astute+.';
+
+  @override
+  String get strengthsEmpty =>
+      'Encore quelques réponses, et tu verras ici tes points forts.';
+
+  @override
   String get scoreTitle => 'Score Astute';
 
   @override
@@ -6128,6 +6203,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get yourFiveFromToday => 'Tes cinq du jour';
+
+  @override
+  String get dayMomentTitle => 'Journée terminée.';
+
+  @override
+  String get dayMomentLater => 'Plus tard';
+
+  @override
+  String get yourDayCard => 'Ta journée';
 
   @override
   String get tuneTitle => 'Règle ton mélange';

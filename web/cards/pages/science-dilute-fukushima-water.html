@@ -210,7 +210,7 @@ const Turn = {
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'off'}`);
     Kit.$('you').textContent = youLine();
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

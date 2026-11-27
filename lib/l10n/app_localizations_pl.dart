@@ -2159,6 +2159,83 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'Gdzie chcesz widzieć jaśniej?';
+
+  @override
+  String get aimLine =>
+      'Wybierz jedno. Codziennie będą do tego karty, a zmienisz to, kiedy zechcesz.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'W tym tygodniu $n karty do tego',
+      many: 'W tym tygodniu $n kart do tego',
+      few: 'W tym tygodniu $n karty do tego',
+      one: 'W tym tygodniu 1 karta do tego',
+      zero: 'W tym tygodniu brak kart do tego',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right z $n poprawnie',
+      one: '1 z $n poprawnie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Wszystko dla tego celu';
+
+  @override
+  String get aimPlus =>
+      'Z Astute+: wszystkie ścieżki w całości i trener, który pracuje nad tym z tobą.';
+
+  @override
+  String get aimNone =>
+      'Wybierz, gdzie chcesz widzieć jaśniej: codziennie będą do tego karty.';
+
+  @override
+  String get aimPick => 'Wybierz cel';
+
+  @override
+  String get strengthsTitle => 'Twoje mocne strony';
+
+  @override
+  String get strengthsLine =>
+      'Z twoich odpowiedzi, nie z wyboru: gdzie trafiasz najczęściej, a gdzie się mylisz.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Jeszcze za mało odpowiedzi: $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return 'Ćwicz: $skill';
+  }
+
+  @override
+  String get strengthsBest => 'Twoja mocna strona';
+
+  @override
+  String get strengthsWeak => 'Gdzie mylisz się najczęściej';
+
+  @override
+  String get strengthsLocked =>
+      'Gdzie mylisz się najczęściej i cała reszta – z Astute+.';
+
+  @override
+  String get strengthsEmpty =>
+      'Jeszcze kilka odpowiedzi, a zobaczysz tu swoje mocne strony.';
+
+  @override
   String get scoreTitle => 'Wynik Astute';
 
   @override
@@ -6296,6 +6373,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get yourFiveFromToday => 'Twoja dzisiejsza piątka';
+
+  @override
+  String get dayMomentTitle => 'Dzień ukończony.';
+
+  @override
+  String get dayMomentLater => 'Później';
+
+  @override
+  String get yourDayCard => 'Twój dzień';
 
   @override
   String get tuneTitle => 'Dostrój swój miks';

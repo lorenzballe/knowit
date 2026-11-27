@@ -172,7 +172,7 @@ const Turn = {
     const ok = v >= 300 && v <= 550;
     Kit.answer({choice: '×' + v, correct: ok, sure: pct});
     sure.grade(ok, pct, `×${v}, ${ok ? 'close' : 'off'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

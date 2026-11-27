@@ -445,26 +445,32 @@ class GenreSubject extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 10),
                   child: _HintLine(line: hintLine!, colour: style.color),
                 ),
-              // What a hold opens unfolds into place, and folds away.
+              // What a hold opens unfolds into place, downwards only, and
+              // folds away. As wide as the row from the first frame: grown
+              // from nothing in width as well, it showed its words cut off
+              // at a slant ("DENTRO TRUCC") for the first part of the turn.
               AnimatedSize(
                 duration: MediaQuery.disableAnimationsOf(context)
                     ? Duration.zero
                     : const Duration(milliseconds: 260),
                 curve: Curves.easeOutCubic,
                 alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (final genre in genres)
-                      if (open.contains(genre.id))
-                        _Inside(
-                          genre: genre,
-                          colour: style.color,
-                          strandsOff: strandsOff,
-                          genreOff: genresOff.contains(genre.id),
-                          onTapStrand: onTapStrand,
-                        ),
-                  ],
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (final genre in genres)
+                        if (open.contains(genre.id))
+                          _Inside(
+                            genre: genre,
+                            colour: style.color,
+                            strandsOff: strandsOff,
+                            genreOff: genresOff.contains(genre.id),
+                            onTapStrand: onTapStrand,
+                          ),
+                    ],
+                  ),
                 ),
               ),
             ],

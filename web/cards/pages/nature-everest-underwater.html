@@ -150,7 +150,7 @@ gsap.registerPlugin(MotionPathPlugin);
     const ok = guess <= -1.5 && guess >= -2.6, said = readout.textContent;
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

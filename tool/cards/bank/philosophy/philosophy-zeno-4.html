@@ -175,7 +175,10 @@
   Kit.$('pick').addEventListener('click', e => {
     const b = e.target.closest('.pb'); if (!b || pick >= 0) return;
     pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
-    setTimeout(() => { Kit.hide('pick'); Kit.hide('say'); Kit.show('sure'); sure.ask(`${b.textContent}: how sure are you?`); sure.on(); }, Kit.calm ? 0 : 240);
+    // The row of how sure is on at the tap, so the kit shows True or False taken at once (the other dimmed, a
+    // tick) for the moment the row stays; then it gives way to the question, which says the pick again.
+    sure.ask(`${b.textContent}: how sure are you?`); sure.on();
+    setTimeout(() => { Kit.hide('pick'); Kit.hide('say'); Kit.show('sure'); }, Kit.calm ? 0 : 240);
   });
 
   Kit.onShow.card = draw;

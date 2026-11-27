@@ -190,7 +190,7 @@ const Turn = {
     sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: see why`);
     const tag = Kit.$('tag'); if (tag) tag.textContent = `${ok ? 'Correct' : 'Not quite'} · ${pct}% sure`;
     Kit.$('dek').textContent = `Your pick: ${SHORT[pick]}, ${pct}% sure.`;
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   Kit.$('sure').classList.add('locked');
   Kit.$('opts').addEventListener('click', e => {

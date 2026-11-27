@@ -140,7 +140,7 @@ const Turn = {
     const said = list.length ? `knock down wall${list.length > 1 ? 's' : ''} ${list.join(', ')} of 4` : 'knock down none';
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${list.length} of 4 marked, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------------- BACK ----------------

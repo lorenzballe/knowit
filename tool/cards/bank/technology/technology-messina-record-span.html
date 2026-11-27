@@ -178,7 +178,7 @@ const Turn = {
     const cal = ok ? (pick >= 70 ? 'Close, and rightly sure.' : 'Close: you could have been surer.')
                    : (pick >= 70 ? `Off by ${fmt(err)}: too sure for that miss.` : `Off by ${fmt(err)}, and your doubt was fair.`);
     Kit.$('keepTxt').textContent = `You guessed ${ratio(guess)} the record, ${pick}% sure; it is 1.7×. ${cal} Read any leap past a record as a ratio first.`;
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- back ----------

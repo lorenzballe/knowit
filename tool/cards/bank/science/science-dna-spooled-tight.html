@@ -178,7 +178,7 @@ const Turn = {
     const inPlace = picks.filter((k, i) => k === TRUE[i]).length;
     sure.grade(ok, pct, ok ? 'The real order' : `${inPlace} of 2 in place`);
     Kit.hide('say');
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   Kit.$('sure').classList.add('wait');
 

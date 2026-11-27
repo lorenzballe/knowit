@@ -1,9 +1,11 @@
 // The looks the developer tools let a phone try on (lib/state/debug_looks.dart),
 // set from the debug section at the foot of the profile: the finished day
 // with no row over its card, so the card is bigger, and which top the profile
-// opens on, Auto (A free, C Astute+), A, B or C. Kept on the phone and read
-// back at the next start, kept through the wipe, shown at once, and never
-// read by a build without the tools.
+// opens on, Auto (A free, C Astute+), A, B or C; and What to learn's look,
+// as it ships or one of the three answers to it (lib/widgets/
+// learn_looks.dart). Kept on the phone and read back at the next start,
+// kept through the wipe, shown at once, and never read by a build without
+// the tools.
 //
 //   flutter test test/debug_looks_test.dart
 import 'dart:io';
@@ -16,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/daily.dart' show dealDay;
 import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/data/skills.dart';
 import 'package:astuto/debug_flags.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
@@ -249,6 +252,104 @@ void main() {
     await _settle(tester);
     expect(name, findsOneWidget);
     expect(tester.getRect(card).height, closeTo(before.height, 0.5));
+  });
+
+  test(
+    'What to learn\'s look: kept on the phone, read back at the next '
+    'start, kept through the wipe, and never read without the tools',
+    () async {
+      SharedPreferences.setMockInitialValues(_finished());
+      debugToolsOn = true;
+      await DebugLooks.setLearn(LearnLook.aim);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      expect(prefs.getString('knowit.debug.learn'), 'aim');
+
+      DebugLooks.reset();
+      final AppState app = AppState();
+      await app.init();
+      expect(DebugLooks.learn.value, LearnLook.aim);
+      expect(DebugLooks.learnPicked, LearnLook.aim);
+
+      await app.signOut();
+      expect(prefs.getBool('knowit.onboarded'), isNull);
+      expect(prefs.getString('knowit.debug.learn'), 'aim');
+
+      debugToolsOn = false;
+      expect(DebugLooks.learnPicked, LearnLook.today);
+
+      debugToolsOn = true;
+      await DebugLooks.setLearn(LearnLook.today);
+      DebugLooks.load(prefs);
+      expect(DebugLooks.learn.value, LearnLook.today);
+    },
+  );
+
+  testWidgets('What to learn\'s look, picked in the debug section, shows at '
+      'once: the profile\'s box under the subjects, and the marks on the '
+      'day\'s cards', (tester) async {
+    debugToolsOn = true;
+    SharedPreferences.setMockInitialValues({
+      ..._finished(plus: true),
+      'knowit.skills': [for (final Skill s in Skill.values) s.name],
+    });
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+
+    // As it ships: the day's cards carry the marks of the skills picked.
+    final Finder marks = find.byWidgetPredicate(
+      (w) =>
+          w.key is ValueKey<String> &&
+          (w.key! as ValueKey<String>).value.startsWith('skill-mark-'),
+    );
+    expect(marks, findsWidgets);
+
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await _settle(tester);
+    final Finder skills = find.byKey(const ValueKey('profile-skills'));
+    await _scrollTo(tester, skills);
+    expect(skills, findsOneWidget);
+
+    // C: where the reader is strong, in place of the skills picked.
+    await _scrollTo(tester, find.byKey(const ValueKey('debug-learn-profile')));
+    await tester.tap(find.byKey(const ValueKey('debug-learn-profile')));
+    await _settle(tester);
+    expect(DebugLooks.learn.value, LearnLook.profile);
+    expect(
+      (await SharedPreferences.getInstance()).getString('knowit.debug.learn'),
+      'profile',
+    );
+    final Finder strengths = find.byKey(const ValueKey('profile-strengths'));
+    await tester.scrollUntilVisible(strengths, -400, scrollable: _profileList);
+    expect(strengths, findsOneWidget);
+    expect(skills, findsNothing);
+
+    // B: the reader's aim.
+    await _scrollTo(tester, find.byKey(const ValueKey('debug-learn-aim')));
+    await tester.tap(find.byKey(const ValueKey('debug-learn-aim')));
+    await _settle(tester);
+    final Finder aim = find.byKey(const ValueKey('profile-aim'));
+    await tester.scrollUntilVisible(aim, -400, scrollable: _profileList);
+    expect(aim, findsOneWidget);
+
+    // A: nothing under the subjects, and no card carries a skill's mark.
+    await _scrollTo(tester, find.byKey(const ValueKey('debug-learn-score')));
+    await tester.tap(find.byKey(const ValueKey('debug-learn-score')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('profile-aim')), findsNothing);
+    expect(find.byKey(const ValueKey('profile-strengths')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('tab-Today')));
+    await _settle(tester);
+    expect(marks, findsNothing);
+
+    // Now, as it ships, from the same row: the marks are back.
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await _settle(tester);
+    await _scrollTo(tester, find.byKey(const ValueKey('debug-learn-today')));
+    await tester.tap(find.byKey(const ValueKey('debug-learn-today')));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Today')));
+    await _settle(tester);
+    expect(marks, findsWidgets);
   });
 
   testWidgets('picked in the debug section, the profile opens on that top at '

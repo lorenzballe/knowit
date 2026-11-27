@@ -30,6 +30,7 @@ import '../data/levels.dart';
 import '../data/skills.dart';
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../theme.dart';
 import '../utils/share_image.dart';
 import '../utils/share_link.dart';
@@ -75,11 +76,23 @@ Future<bool> showLevelUpIfDue(BuildContext context, AppState app) async {
     }
     await LevelMemory.keep(due);
     if (!context.mounted) return false;
-    final LevelMoment moment = LevelMoment.of(
+    final LevelMoment found = LevelMoment.of(
       scoreBookOf(app),
       due,
       picked: pickedSkills(app),
     );
+    // In the looks of What to learn with no skills to show (A and B,
+    // lib/widgets/learn_looks.dart), the level says the answers behind it,
+    // not a skill the reader never sees.
+    final LevelMoment moment = switch (DebugLooks.learnPicked) {
+      LearnLook.score || LearnLook.aim => LevelMoment(
+        level: found.level,
+        score: found.score,
+        from: found.from,
+        answers: found.answers,
+      ),
+      LearnLook.today || LearnLook.profile => found,
+    };
     unawaited(
       Navigator.of(
         context,

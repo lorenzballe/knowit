@@ -195,7 +195,7 @@ const Turn = {
     const ok = n >= 5 && n <= 10;
     Kit.answer({choice: `${n} carbons`, correct: ok, sure: p});
     sure.grade(ok, p, `${n} carbons, ${ok ? 'in the range' : 'off'}`);
-    setTimeout(() => Turn.over(), 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
   sure.on();
 

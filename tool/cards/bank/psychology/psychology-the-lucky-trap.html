@@ -172,7 +172,7 @@ const Turn = {
     choice = names(p);
     Kit.answer({choice, correct: null, sure: pct});
     $('you').textContent = `You stood at “${choice}”, ${pct}% sure. Both walkers stood where you did.`;
-    setTimeout(() => Turn.over(), Kit.calm ? 30 : 700);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 350);
   });
 
   // ---------- the back: one storm, two ropes, one net ----------

@@ -14,6 +14,7 @@ import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart' show LearnLook;
 import '../state/journey_record.dart';
 import '../state/progress.dart';
 import '../theme.dart';
@@ -34,6 +35,7 @@ import '../widgets/count_since.dart';
 import '../widgets/premium.dart';
 import '../widgets/quick_return.dart';
 import '../widgets/area_marks.dart' show goalName;
+import '../widgets/learn_looks.dart';
 import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/move_words.dart';
 import '../widgets/skill_score.dart' show scoreUp, signedNumber;
@@ -41,6 +43,53 @@ import '../widgets/top_edge.dart';
 import '../widgets/training.dart';
 
 part 'journey_story.dart';
+
+/// The journey's first chapter, as What to learn's look has it
+/// (DebugLooks.learn): as it ships, Your training, the Astute score and the
+/// skills picked with theirs; in A, the score alone, under its own name; in
+/// B, the score and the reader's aim, in words; in C, the score and the
+/// skills as the reader's answers rank them.
+Widget _learnChapter(BuildContext context, AppState app, int n) {
+  final l = context.l10n;
+  return switch (learnLook) {
+    LearnLook.today => _Chapter(
+      n: n,
+      title: l.trainingTitle,
+      trailing: TrainingChapter.change(context, app),
+      child: TrainingChapter(app: app),
+    ),
+    LearnLook.score => _Chapter(
+      n: n,
+      title: l.scoreTitle,
+      child: TrainingChapter(app: app, skills: false, label: false),
+    ),
+    LearnLook.aim => _Chapter(
+      n: n,
+      title: l.trainingTitle,
+      trailing: AimPanel.change(context, app),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TrainingChapter(app: app, skills: false),
+          const SizedBox(height: 8),
+          AimPanel(app: app),
+        ],
+      ),
+    ),
+    LearnLook.profile => _Chapter(
+      n: n,
+      title: l.trainingTitle,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TrainingChapter(app: app, skills: false),
+          const SizedBox(height: 8),
+          StrengthsPanel(app: app),
+        ],
+      ),
+    ),
+  };
+}
 
 /// Your journey, as artboard 137a: tiles, two to a row.
 ///
@@ -172,13 +221,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
       // practise first, then the week, then the numbers behind them,
       // grouped by what they are about, and the story so far at the end.
       // What the reader is training first: their Astute score, the one
-      // number the journey keeps, and the skills they picked with theirs.
-      _Chapter(
-        n: ++n,
-        title: l.trainingTitle,
-        trailing: TrainingChapter.change(context, app),
-        child: TrainingChapter(app: app),
-      ),
+      // number the journey keeps, and the skills they picked with theirs;
+      // or, in the looks of What to learn the developer tools try, the
+      // score alone, the score and the reader's aim, or the score and where
+      // their answers say they are strong (lib/widgets/learn_looks.dart).
+      _learnChapter(context, app, ++n),
       chapterGap,
       // What to do now, under the number it moves.
       _Chapter(
