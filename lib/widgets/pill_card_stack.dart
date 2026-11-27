@@ -314,6 +314,7 @@ class _PillCardStackState extends State<PillCardStack>
 
   @override
   void dispose() {
+    if (_dragging) WebSurfaces.watchRelease(null);
     _hintTimer?.cancel();
     _presence?.removeListener(_seen);
     MusicSound.on.removeListener(_queuePages);
@@ -460,6 +461,14 @@ class _PillCardStackState extends State<PillCardStack>
           case 'start':
             _read?.touched();
             _onPanStart(DragStartDetails());
+            // Let go where the page cannot hear it, over the card under it
+            // or over the app, the drag ends all the same.
+            if (_dragging) {
+              WebSurfaces.watchRelease(
+                () => _onPanEnd(DragEndDetails()),
+                over: _pages[pill.id]?.surface,
+              );
+            }
           case 'update':
             _onPanUpdate(
               DragUpdateDetails(globalPosition: Offset.zero, delta: delta),
@@ -609,6 +618,8 @@ class _PillCardStackState extends State<PillCardStack>
   Future<void> _onPanEnd(DragEndDetails d) async {
     if (!_dragging) return;
     _dragging = false;
+    // However it ended, a drag a page handed out is over.
+    WebSurfaces.watchRelease(null);
     widget.onMotion?.call(false);
 
     final Offset thrown = d.velocity.pixelsPerSecond;

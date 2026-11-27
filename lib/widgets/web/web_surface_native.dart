@@ -22,6 +22,9 @@ WebSurface makePlatformSurface() =>
 /// Whether this platform has a WebView to show a page in.
 bool platformShowsPages() => WebViewPlatform.instance != null;
 
+/// Nothing to watch: a WebView hands no drag out ([WebSurfaces.watchRelease]).
+void platformWatchRelease(VoidCallback? onRelease, {WebSurface? over}) {}
+
 /// One WebView, set up for a card: JavaScript on, the bridge's channel
 /// open, no zoom, no scrolling, nothing that navigates, the system's text
 /// size kept out of a layout that has to fit.

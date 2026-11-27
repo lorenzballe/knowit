@@ -178,6 +178,7 @@ void main() {
   tearDown(() {
     CardKit.instance = CardKit();
     WebSurfaces.debugUse(null);
+    WebSurfaces.watching = null;
   });
 
   Future<void> settle(WidgetTester tester) async {
@@ -313,6 +314,46 @@ void main() {
     FakeWebSurface.made[1].say(const PageReady());
     await settle(tester);
     expect(_cardOpacity(tester), 1);
+  });
+
+  testWidgets('a card thrown from its page and let go where the page cannot '
+      'hear it, over the card under it or over the app, still ends its throw: '
+      'carried far it goes, a little it comes home', (tester) async {
+    await tester.pumpWidget(
+      _Deck(
+        deck: [
+          _card('a', challenge: const NoChallenge()),
+          _card('b'),
+          _card('c'),
+        ],
+        answers: [],
+        stints: [],
+      ),
+    );
+    await settle(tester);
+    final FakeWebSurface a = FakeWebSurface.made.first;
+    int index() => tester.state<_DeckState>(find.byType(_Deck)).index;
+    // The page hands the drag out (web build); the button comes up where
+    // only the app's window hears it.
+    Future<void> carryAndLetGo(double dx) async {
+      a.say(const PagePan('start'));
+      for (int i = 0; i < 10; i++) {
+        a.say(PagePan('update', delta: Offset(dx / 10, 0)));
+        await tester.pump(const Duration(milliseconds: 16));
+      }
+      expect(WebSurfaces.watching, isNotNull);
+      WebSurfaces.watching!();
+      await settle(tester);
+      await settle(tester);
+      expect(WebSurfaces.watching, isNull);
+    }
+
+    await carryAndLetGo(-40);
+    expect(index(), 0);
+    await carryAndLetGo(-260);
+    expect(index(), 1);
+    // The card under it is in front now, and its page is told so.
+    expect(FakeWebSurface.made[1].told.last, {'t': 'show'});
   });
 
   testWidgets('a card met with its page drawn is never held', (tester) async {
