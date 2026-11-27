@@ -2081,6 +2081,81 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'Wo willst du klarer sehen?';
+
+  @override
+  String get aimLine =>
+      'Wähl eins. Jeden Tag gibt es Karten dafür, und du kannst es jederzeit ändern.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Diese Woche $n Karten dafür',
+      one: 'Diese Woche 1 Karte dafür',
+      zero: 'Diese Woche keine Karte dafür',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right von $n richtig',
+      one: '1 von $n richtig',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Alles für dieses Ziel';
+
+  @override
+  String get aimPlus =>
+      'Mit Astute+: jeder Pfad dazu, ganz, und ein Coach, der mit dir daran arbeitet.';
+
+  @override
+  String get aimNone =>
+      'Wähl, wo du klarer sehen willst: Jeden Tag gibt es Karten dafür.';
+
+  @override
+  String get aimPick => 'Ziel wählen';
+
+  @override
+  String get strengthsTitle => 'Wo du stark bist';
+
+  @override
+  String get strengthsLine =>
+      'Aus deinen Antworten gelesen, nicht gewählt: wo du am meisten richtig hast und wo du danebenliegst.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Noch zu wenige Antworten: $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return '$skill üben';
+  }
+
+  @override
+  String get strengthsBest => 'Deine Stärke';
+
+  @override
+  String get strengthsWeak => 'Wo du am häufigsten danebenliegst';
+
+  @override
+  String get strengthsLocked =>
+      'Wo du am häufigsten danebenliegst, und der Rest, mit Astute+.';
+
+  @override
+  String get strengthsEmpty =>
+      'Noch ein paar Antworten, dann siehst du hier, wo du stark bist.';
+
+  @override
   String get scoreTitle => 'Astute-Punktzahl';
 
   @override

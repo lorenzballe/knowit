@@ -37,7 +37,7 @@ import 'archive_screen.dart';
 import 'saved_screen.dart';
 import 'how_screen.dart';
 import 'paywall_screen.dart';
-import '../widgets/training.dart';
+import '../widgets/learn_looks.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
 import '../widgets/hand_glass.dart';
@@ -429,9 +429,10 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           // What the reader is training, under what they read: not a second
-          // wall of coloured pills, but the skills picked with their levels.
-          const SizedBox(height: 22),
-          ProfileTraining(app: app),
+          // wall of coloured pills, but the skills picked with their levels;
+          // or what What to learn's look the developer tools try puts here
+          // (lib/widgets/learn_looks.dart), with the gap above it.
+          LearnProfileBox(app: app),
           // Nothing to cover until something has been read: a list of
           // twenty subjects all reading zero is the same wall of nothing
           // the four tiles used to be. Under the topics, because it is the
@@ -1484,6 +1485,134 @@ class _DebugLooksPanel extends StatelessWidget {
               ],
             ),
           ),
+          Container(
+            key: const ValueKey('debug-learn'),
+            padding: const EdgeInsets.fromLTRB(0, 14, 0, 16),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: p.line)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'What to learn',
+                  style: AppText.body(
+                    size: 14,
+                    weight: FontWeight.w500,
+                    color: p.ink,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  'Now is as it ships: skills picked, a score in each, their '
+                  'mark on cards. A: the Astute score alone. B: one aim, '
+                  'asked at the end of the first run (wipe to see it) and on '
+                  'the profile. C: no picking; where the answers say you are '
+                  'strong, in Your journey.',
+                  style: AppText.body(
+                    size: 12,
+                    height: 1.35,
+                    color: p.inkFaint,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ValueListenableBuilder<LearnLook>(
+                  valueListenable: DebugLooks.learn,
+                  builder: (context, look, _) => _LearnPicker(look: look),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Now, A, B or C, as What to learn's look: a segmented control like the
+/// profile top's, each choice with what it is under its letter.
+class _LearnPicker extends StatelessWidget {
+  const _LearnPicker({required this.look});
+
+  final LearnLook look;
+
+  static const _options = [
+    (look: LearnLook.today, name: 'Now', note: 'skills'),
+    (look: LearnLook.score, name: 'A', note: 'score'),
+    (look: LearnLook.aim, name: 'B', note: 'one aim'),
+    (look: LearnLook.profile, name: 'C', note: 'strengths'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.p;
+    return PaperCard(
+      padding: const EdgeInsets.all(5),
+      radius: 16,
+      child: Row(
+        children: [
+          for (final option in _options)
+            Expanded(
+              child: Builder(
+                builder: (context) {
+                  final bool selected = option.look == look;
+                  return Semantics(
+                    button: true,
+                    selected: selected,
+                    label: '${option.name}, ${option.note}',
+                    excludeSemantics: true,
+                    child: GestureDetector(
+                      key: ValueKey('debug-learn-${option.look.name}'),
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        if (selected) return;
+                        HapticFeedback.selectionClick();
+                        DebugLooks.setLearn(option.look);
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        constraints: const BoxConstraints(minHeight: 48),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 7,
+                        ),
+                        decoration: BoxDecoration(
+                          color: selected ? p.inverse : Colors.transparent,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              option.name,
+                              maxLines: 1,
+                              style: AppText.body(
+                                size: 13.5,
+                                weight: FontWeight.w700,
+                                color: selected ? p.onInverse : p.ink,
+                              ),
+                            ),
+                            const SizedBox(height: 1),
+                            Text(
+                              option.note,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppText.body(
+                                size: 10.5,
+                                weight: FontWeight.w500,
+                                color: (selected ? p.onInverse : p.inkMuted)
+                                    .withValues(alpha: 0.75),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
         ],
       ),
     );

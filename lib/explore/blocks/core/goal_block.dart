@@ -5,6 +5,8 @@ import '../../../data/goals.dart';
 import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
 import '../../../state/app_state.dart';
+import '../../../state/debug_looks.dart' show LearnLook;
+import '../../../widgets/learn_looks.dart' show aimOf, learnLook;
 import '../../../widgets/area_marks.dart';
 import '../../../widgets/explore/card_tiles.dart';
 import '../../../widgets/explore/first_shelves.dart';
@@ -32,7 +34,12 @@ class GoalBlock extends ExploreBlock with SectionLayout {
     if (host.subject != null) return null;
     final AppState app = host.app;
     final l = context.l10n;
-    final Goal area = Goal.ofDay(app.today);
+    // The area of the day, the same for everybody; in What to learn's look
+    // B, which asks the reader for one aim, the aim's every day
+    // (lib/widgets/learn_looks.dart).
+    final Goal area =
+        (learnLook == LearnLook.aim ? aimOf(app) : null) ??
+        Goal.ofDay(app.today);
     final List<Pill> cards = area.cardsFor(app.today, app.seenIds);
     if (cards.isEmpty) return null;
     return ShelfFrame(

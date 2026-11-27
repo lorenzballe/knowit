@@ -8,6 +8,7 @@ import '../measure/card_read.dart';
 import '../measure/session.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../theme.dart';
 import '../data/skill_levels.dart';
 import '../data/topics.dart';
@@ -23,6 +24,7 @@ import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
+import '../widgets/learn_looks.dart' show goalUnsaid, markedSkills;
 import 'today_done_view.dart';
 
 /// The card is the screen: dark chrome, and the deck filling everything
@@ -90,6 +92,25 @@ class _TodayScreenState extends State<TodayScreen> {
 
   /// The day whose pictures were last fetched ahead, by its cards.
   String? _warmed;
+
+  @override
+  void initState() {
+    super.initState();
+    // What to learn's look, as the developer tools pick it, shows at once:
+    // Today is kept alive beside the profile it is picked on, and a card's
+    // mark and the line under its head follow the look.
+    DebugLooks.learn.addListener(_looksChanged);
+  }
+
+  void _looksChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    DebugLooks.learn.removeListener(_looksChanged);
+    super.dispose();
+  }
 
   /// Fetches the pictures the finished day's shelf will show, once a day,
   /// after the frame: while the reader reads the five, so the shelf has them
@@ -344,7 +365,12 @@ class _TodayScreenState extends State<TodayScreen> {
                   if (cardNote(
                         context.l10n,
                         e.value,
-                        marked: skillMarkOf(e.value.pill, app.skills) != null,
+                        marked: goalUnsaid(
+                          app,
+                          marked:
+                              skillMarkOf(e.value.pill, markedSkills(app)) !=
+                              null,
+                        ),
                       )
                       case (final String line, _))
                     e.key: line,
@@ -355,7 +381,12 @@ class _TodayScreenState extends State<TodayScreen> {
                       cardNote(
                         context.l10n,
                         e.value,
-                        marked: skillMarkOf(e.value.pill, app.skills) != null,
+                        marked: goalUnsaid(
+                          app,
+                          marked:
+                              skillMarkOf(e.value.pill, markedSkills(app)) !=
+                              null,
+                        ),
                       )?.$2 ??
                       whyIcon(e.value.kind),
               },
@@ -367,10 +398,10 @@ class _TodayScreenState extends State<TodayScreen> {
               ),
               // A card that trains a skill the reader put in focus carries
               // its small mark beside the heart; a tap says what it means.
-              skillOf: (pill) => skillMarkOf(pill, app.skills),
+              skillOf: (pill) => skillMarkOf(pill, markedSkills(app)),
               // The score the answer moved, beside its verdict.
               moveOf: (pill) =>
-                  todayMoveOf(app, pill, skillMarkOf(pill, app.skills)),
+                  todayMoveOf(app, pill, skillMarkOf(pill, markedSkills(app))),
               onSkill: (pill, skill) =>
                   showSkillMarkSheet(context, app, skill, cardId: pill.id),
               answerFor: app.answerFor,

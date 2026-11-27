@@ -2000,6 +2000,73 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => 'どこでもっと見抜けるようになりたい？';
+
+  @override
+  String get aimLine => 'ひとつ選んでください。毎日そのためのカードがあり、いつでも変えられます。';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今週このためのカード $n 枚',
+      zero: '今週はこのためのカードなし',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$n 問中 $right 問正解',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'この目標のためのすべて';
+
+  @override
+  String get aimPlus => 'Astute+ なら：このテーマのパスをすべて最後まで、そして一緒に取り組むコーチ。';
+
+  @override
+  String get aimNone => 'どこでもっと見抜けるようになりたいか選ぶと、毎日そのためのカードが届きます。';
+
+  @override
+  String get aimPick => '目標を選ぶ';
+
+  @override
+  String get strengthsTitle => 'あなたの得意分野';
+
+  @override
+  String get strengthsLine => '選んだものではなく、あなたの答えから：どこでよく正解し、どこでつまずくか。';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'まだ答えが少ないもの：$skills';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return '$skillを練習する';
+  }
+
+  @override
+  String get strengthsBest => 'あなたの強み';
+
+  @override
+  String get strengthsWeak => 'いちばんつまずくところ';
+
+  @override
+  String get strengthsLocked => 'いちばんつまずくところと、残りのすべては Astute+ で。';
+
+  @override
+  String get strengthsEmpty => 'あと少し答えると、ここに得意分野が表示されます。';
+
+  @override
   String get scoreTitle => 'Astuteスコア';
 
   @override

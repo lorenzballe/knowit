@@ -11,6 +11,7 @@ import '../widgets/ui.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/path_door.dart';
 import '../widgets/share_sheet.dart';
+import '../widgets/learn_looks.dart' show markedSkills;
 import '../widgets/skill_mark.dart';
 import '../widgets/skill_score.dart' show todayMoveOf;
 import '../widgets/glass_round.dart';
@@ -339,12 +340,13 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                       setState(() {});
                     },
                     onShare: (pill) => showShareSheet(context, pill),
-                    skillOf: (pill) => skillMarkOf(pill, widget.app.skills),
+                    skillOf: (pill) =>
+                        skillMarkOf(pill, markedSkills(widget.app)),
                     // The score the answer moved, beside its verdict.
                     moveOf: (pill) => todayMoveOf(
                       widget.app,
                       pill,
-                      skillMarkOf(pill, widget.app.skills),
+                      skillMarkOf(pill, markedSkills(widget.app)),
                     ),
                     onSkill: (pill, skill) => showSkillMarkSheet(
                       context,

@@ -2082,6 +2082,81 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get aimTitle => '¿Dónde quieres ver más claro?';
+
+  @override
+  String get aimLine =>
+      'Elige uno. Cada día habrá tarjetas para ello, y puedes cambiarlo cuando quieras.';
+
+  @override
+  String aimWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n tarjetas para esto esta semana',
+      one: '1 tarjeta para esto esta semana',
+      zero: 'Ninguna tarjeta para esto esta semana',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String answersRightOf(int right, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right de $n acertadas',
+      one: '1 de $n acertada',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aimOpen => 'Todo para este objetivo';
+
+  @override
+  String get aimPlus =>
+      'Con Astute+: todas sus rutas completas, y un coach que trabaja en ello contigo.';
+
+  @override
+  String get aimNone =>
+      'Elige dónde quieres ver más claro: cada día habrá tarjetas para ello.';
+
+  @override
+  String get aimPick => 'Elegir objetivo';
+
+  @override
+  String get strengthsTitle => 'Dónde eres fuerte';
+
+  @override
+  String get strengthsLine =>
+      'Lo dicen tus respuestas, no una elección: dónde aciertas más y dónde fallas.';
+
+  @override
+  String strengthsFew(String skills) {
+    return 'Aún pocas respuestas: $skills.';
+  }
+
+  @override
+  String strengthsPractice(String skill) {
+    return 'Practica $skill';
+  }
+
+  @override
+  String get strengthsBest => 'Tu punto fuerte';
+
+  @override
+  String get strengthsWeak => 'Dónde fallas más';
+
+  @override
+  String get strengthsLocked =>
+      'Dónde fallas más, y todo lo demás, con Astute+.';
+
+  @override
+  String get strengthsEmpty =>
+      'Unas pocas respuestas más y aquí verás dónde eres fuerte.';
+
+  @override
   String get scoreTitle => 'Puntuación Astute';
 
   @override
