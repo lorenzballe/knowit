@@ -1,7 +1,8 @@
 // Where a card pays off in a life (lib/data/goals.dart,
 // explore/blocks/core/goal_block.dart): six areas, each named on the back
-// of its cards and a shelf on Explore a day each; and the areas a build
-// before let a reader pick, still kept, leaning the mix, told the coach.
+// of its cards and a shelf on Explore a day each; the one the reader picks
+// on the profile, kept, leaning the mix, its shelf on Explore every day,
+// told the coach.
 //
 //   flutter test test/explore/goal_block_test.dart
 import 'package:flutter/material.dart';
@@ -10,11 +11,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/goals.dart';
 import 'package:astuto/data/topics.dart';
+import 'package:astuto/debug_flags.dart';
+import 'package:astuto/explore/blocks/core/goal_block.dart' show withAimShelf;
+import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/widgets/area_marks.dart';
 import 'package:astuto/screens/journey_screen.dart' show coachStats;
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/state/debug_looks.dart';
 
 import 'core_harness.dart';
 
@@ -179,6 +184,43 @@ void main() {
       sections,
     );
     expect(find.text(l.goalShelf(goalName(l, area))), findsNothing);
+  });
+
+  testWidgets('a reader who said where they want to see more clearly has '
+      'its shelf every day, after Today\'s five and what to continue, in '
+      'every look of What to learn; with none, Explore as it was sent', (
+    tester,
+  ) async {
+    const List<ExploreSection> sent = [
+      ExploreSection(id: 'three', block: 'three'),
+      ExploreSection(id: 'your-five', block: 'your-five'),
+      ExploreSection(id: 'continue', block: 'continue'),
+      ExploreSection(id: 'news-today', block: 'news-today'),
+    ];
+    final bool tools = debugToolsOn;
+    debugToolsOn = true;
+    addTearDown(() {
+      debugToolsOn = tools;
+      DebugLooks.reset();
+    });
+    final app = await _app({
+      'knowit.goals': ['news'],
+    });
+    for (final LearnLook look in LearnLook.values) {
+      DebugLooks.learn.value = look;
+      expect(
+        [for (final s in withAimShelf(app, sent)) s.id],
+        ['three', 'your-five', 'continue', 'goal', 'news-today'],
+        reason: look.name,
+      );
+    }
+    // A shelf the server placed itself stays where it is, and is the goal's.
+    final placed = [...sent, const ExploreSection(id: 'goal', block: 'goal')];
+    expect(withAimShelf(app, placed), same(placed));
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    await pumpSections(tester, CoreHost(app), sections);
+    expect(find.text(l.goalShelf(l.goalNews)), findsOneWidget);
+    expect(withAimShelf(await _app({}), sent), same(sent));
   });
 
   testWidgets('the coach is told the goal, in the reader\'s words', (

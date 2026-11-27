@@ -3586,6 +3586,7 @@ void main() {
       top,
       'APPEARANCE',
       'YOUR TOPICS',
+      'WHERE DO YOU WANT TO BE SHARPER?',
       'DAILY NUDGE',
       'YOUR CARDS',
       'ACCOUNT',
@@ -3596,6 +3597,9 @@ void main() {
       top,
       'APPEARANCE',
       'YOUR TOPICS',
+      // Where the reader wants to see more clearly, beside the subjects:
+      // both decide what they are dealt.
+      'WHERE DO YOU WANT TO BE SHARPER?',
       'DAILY NUDGE',
       'YOUR CARDS',
       'ACCOUNT',

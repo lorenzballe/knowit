@@ -41,6 +41,7 @@ import 'archive_screen.dart';
 import 'saved_screen.dart';
 import 'how_screen.dart';
 import 'paywall_screen.dart';
+import '../widgets/aim_picker.dart';
 import '../widgets/learn_looks.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
@@ -434,6 +435,12 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
+          // Where the reader wants to see more clearly, beside the subjects
+          // because both decide what they are dealt: the six areas of a life
+          // the cards name, each in its own colour, one picked
+          // (lib/widgets/aim_picker.dart).
+          const SizedBox(height: 22),
+          ProfileAim(app: app),
           // What the reader is training, under what they read: not a second
           // wall of coloured pills, but the skills picked with their levels;
           // or what What to learn's look the developer tools try puts here
@@ -1593,9 +1600,9 @@ class _DebugLooksPanel extends StatelessWidget {
                 Text(
                   'Now is as it ships: skills picked, a score in each, their '
                   'mark on cards. A: the Astute score alone. B: one aim, '
-                  'asked at the end of the first run (wipe to see it) and on '
-                  'the profile. C: no picking; where the answers say you are '
-                  'strong, in Your journey.',
+                  'asked at the end of the first run too (wipe to see it), '
+                  'its week under the profile\'s question. C: no picking; '
+                  'where the answers say you are strong, in Your journey.',
                   style: AppText.body(
                     size: 12,
                     height: 1.35,

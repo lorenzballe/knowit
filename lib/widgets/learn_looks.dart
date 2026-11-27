@@ -10,12 +10,15 @@
 ///
 /// - A, [LearnLook.score]: the Astute score alone. No picker, no marks, no
 ///   skill scores; Your training keeps the score, its line and its level.
-/// - B, [LearnLook.aim]: one aim, asked once at the end of the first run and
-///   changed from the profile: where the reader wants to be sharper, one of
-///   the six areas the cards already name on their backs ("Useful for:
-///   Money and shopping", lib/data/goals.dart). Said in words and counts,
-///   never a score; a card dealt for it says so under its head; Explore's
-///   shelf of an area is the aim's every day; its page holds its paths.
+/// - B, [LearnLook.aim]: one aim, asked once at the end of the first run:
+///   where the reader wants to be sharper, one of the six areas the cards
+///   already name on their backs ("Useful for: Money and shopping",
+///   lib/data/goals.dart). Said in words and counts, never a score; a card
+///   dealt for it says so under its head; its page holds its paths. The
+///   question is now the profile's, for every reader, in every look
+///   (lib/widgets/aim_picker.dart), with the aim's shelf on Explore every
+///   day: B asks it at the end of the first run too, with the same rows,
+///   and adds the aim's week under it on the profile and in Your journey.
 /// - C, [LearnLook.profile]: nothing to pick. The skills are read from the
 ///   reader's answers, strongest first, each as right answers out of
 ///   answers given, with the weakest to practise: a chapter of Your journey
@@ -36,7 +39,6 @@ import '../data/pill_bank.dart';
 import '../data/pills_repository.dart' show dateKey, dealableOn;
 import '../data/skill_levels.dart';
 import '../data/skills.dart';
-import '../explore/explore_block.dart' show ExploreSection;
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../screens/area_screen.dart';
@@ -45,6 +47,7 @@ import '../screens/journey_screen.dart';
 import '../state/app_state.dart';
 import '../state/debug_looks.dart';
 import '../theme.dart';
+import 'aim_picker.dart' show AimRows;
 import 'area_marks.dart';
 import 'chunky.dart';
 import 'fit_text.dart';
@@ -186,7 +189,8 @@ class LearnProfileBox extends StatelessWidget {
       final Widget? box = switch (learnLook) {
         LearnLook.today => ProfileTraining(app: app),
         LearnLook.score => null,
-        LearnLook.aim => AimBox(app: app),
+        // Picked in the section over it; with none, nothing to add here.
+        LearnLook.aim => aimOf(app) == null ? null : AimBox(app: app),
         LearnLook.profile => StrengthsBox(app: app),
       };
       if (box == null) return const SizedBox.shrink();
@@ -249,24 +253,6 @@ bool _forAim(Goal aim, Pill p) => (aim.fitOf(p) ?? 2) < 2;
   return (cards: math.max(cards, answers), answers: answers, right: right);
 }
 
-/// Explore's sections, with B's shelf of the reader's aim among the first,
-/// after Today's five and what to continue: the area shelf Explore keeps
-/// for everybody's area of the day (GoalBlock), the aim's every day. In any
-/// other look, or with no aim, the sections as the server sent them.
-List<ExploreSection> withAimShelf(AppState app, List<ExploreSection> sections) {
-  if (learnLook != LearnLook.aim || aimOf(app) == null) return sections;
-  if (sections.any((s) => s.block == 'goal')) return sections;
-  var at = 0;
-  for (final (int i, ExploreSection s) in sections.indexed) {
-    if (s.id == 'your-five' || s.id == 'continue') at = i + 1;
-  }
-  return [
-    ...sections.take(at),
-    const ExploreSection(id: 'goal', block: 'goal'),
-    ...sections.skip(at),
-  ];
-}
-
 /// Opens the aim's own page: its paths, the moves it trains, more of it.
 void _openAimPage(BuildContext context, AppState app, Goal aim) {
   HapticFeedback.selectionClick();
@@ -277,7 +263,8 @@ void _openAimPage(BuildContext context, AppState app, Goal aim) {
   );
 }
 
-/// Opens the question, from the profile or Your journey.
+/// Opens the question, from Your journey: on the profile it is a section
+/// of its own (lib/widgets/aim_picker.dart).
 void openAim(BuildContext context, AppState app) {
   HapticFeedback.selectionClick();
   Navigator.of(context)
@@ -285,8 +272,9 @@ void openAim(BuildContext context, AppState app) {
 }
 
 /// One question: where the reader wants to be sharper. The six areas, each
-/// with its line, one to pick. At the end of the first run it has Next and
-/// Skip; from the profile, Done, and the way back.
+/// with its line, one to pick, in the profile's own rows. At the end of the
+/// first run it has Next and Skip; from Your journey, Done, and the way
+/// back.
 class AimScreen extends StatefulWidget {
   const AimScreen({super.key, required this.app, this.firstRun = false});
 
@@ -364,17 +352,18 @@ class _AimScreenState extends State<AimScreen> {
                     ),
                   ),
                   const SizedBox(height: 22),
-                  for (final Goal g in Goal.values) ...[
-                    _AimRow(
-                      goal: g,
-                      on: _picked == g,
-                      onTap: () {
-                        HapticFeedback.selectionClick();
-                        setState(() => _picked = g);
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                  ],
+                  // The profile's own rows (lib/widgets/aim_picker.dart):
+                  // one picker, wherever the question is asked.
+                  AimRows(
+                    picked: _picked,
+                    keyPrefix: 'aim-',
+                    gap: 10,
+                    onPick: (g) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _picked = g);
+                    },
+                  ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
@@ -421,98 +410,11 @@ class _AimScreenState extends State<AimScreen> {
   }
 }
 
-/// One area to pick: its mark, its name in the display face, its line, and
-/// a ring that fills when it is the one.
-class _AimRow extends StatelessWidget {
-  const _AimRow({required this.goal, required this.on, required this.onTap});
-
-  final Goal goal;
-  final bool on;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final p = context.p;
-    final String name = goalName(l, goal);
-    return Semantics(
-      button: true,
-      selected: on,
-      label: '$name. ${goalLine(l, goal)}',
-      excludeSemantics: true,
-      child: GestureDetector(
-        key: ValueKey('aim-${goal.key}'),
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          padding: const EdgeInsets.fromLTRB(16, 14, 14, 14),
-          decoration: BoxDecoration(
-            color: on ? p.ink.withValues(alpha: 0.08) : p.surfaceRaised,
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: on ? p.ink : p.line, width: on ? 1.6 : 1),
-          ),
-          child: Row(
-            children: [
-              Icon(
-                goalIcon(goal),
-                size: 20,
-                color: p.ink.withValues(alpha: 0.85),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: AppText.display(
-                        size: 19,
-                        weight: FontWeight.w600,
-                        height: 1.15,
-                        color: p.ink,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      goalLine(l, goal),
-                      style: AppText.body(
-                        size: 13.5,
-                        height: 1.35,
-                        color: p.ink.withValues(alpha: 0.6),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 180),
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: on ? p.ink : Colors.transparent,
-                  border: Border.all(
-                    color: on ? p.ink : p.lineStrong,
-                    width: 1.5,
-                  ),
-                ),
-                child: on
-                    ? Icon(Icons.check_rounded, size: 16, color: p.surface)
-                    : null,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 /// B on the profile: the aim, its line, what this week did for it, and on
-/// the free plan what Astute+ adds to it. The card opens the aim's page;
-/// Edit asks again.
+/// the free plan what Astute+ adds to it. The card opens the aim's page.
+/// It is picked in the section over it, where every reader picks it
+/// (lib/widgets/aim_picker.dart): the box has no way of its own to change
+/// it, and with none picked it is not there.
 class AimBox extends StatelessWidget {
   const AimBox({super.key, required this.app});
 
@@ -521,43 +423,20 @@ class AimBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final p = context.p;
     final Goal? aim = aimOf(app);
+    if (aim == null) return const SizedBox.shrink();
     return Column(
       key: const ValueKey('profile-aim'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            Expanded(child: Eyebrow(l.whyGoalRow)),
-            _link(
-              context,
-              l.edit,
-              () => openAim(context, app),
-              const ValueKey('profile-aim-edit'),
-            ),
-          ],
-        ),
+        Eyebrow(l.whyGoalRow),
         const SizedBox(height: 11),
-        if (aim == null)
-          _ProfileCard(
-            onTap: () => openAim(context, app),
-            child: Text(
-              l.aimNone,
-              style: AppText.body(
-                size: 14,
-                height: 1.38,
-                color: p.ink.withValues(alpha: 0.72),
-              ),
-            ),
-          )
-        else
-          _ProfileCard(
-            key: const ValueKey('profile-aim-card'),
-            onTap: () => _openAimPage(context, app, aim),
-            child: _AimSummary(app: app, aim: aim, size: 21),
-          ),
-        if (aim != null && !app.isPlus) ...[
+        _ProfileCard(
+          key: const ValueKey('profile-aim-card'),
+          onTap: () => _openAimPage(context, app, aim),
+          child: _AimSummary(app: app, aim: aim, size: 21),
+        ),
+        if (!app.isPlus) ...[
           const SizedBox(height: 10),
           _AimPlus(app: app, aim: aim),
         ],

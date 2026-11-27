@@ -16,7 +16,6 @@ import 'package:astuto/data/pills_repository.dart' show dateKey;
 import 'package:astuto/data/skill_levels.dart';
 import 'package:astuto/data/skills.dart';
 import 'package:astuto/debug_flags.dart';
-import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/state/app_state.dart';
@@ -223,43 +222,16 @@ void main() {
       expect(find.byKey(const ValueKey('profile-aim-card')), findsOneWidget);
       expect(find.byKey(const ValueKey('profile-aim-plus')), findsNothing);
 
-      // With no aim, what one does, and the way to pick it.
+      // With no aim, nothing: the section over it, every reader's, asks
+      // (lib/widgets/aim_picker.dart), and the box has no picker of its own.
+      expect(find.byKey(const ValueKey('profile-aim-edit')), findsNothing);
       final AppState none = await tester.runAsync(
         () => readyApp({'knowit.debug.learn': 'aim'}),
       ) as AppState;
       await show(tester, LearnProfileBox(app: none));
-      expect(find.text(l.aimNone), findsOneWidget);
+      expect(find.byKey(const ValueKey('profile-aim')), findsNothing);
+      expect(find.text(l.aimNone), findsNothing);
       expect(tester.takeException(), isNull);
-    });
-
-    test('Explore has the aim\'s shelf after Today\'s five and what to '
-        'continue, only in B and only with an aim', () async {
-      const List<ExploreSection> sections = [
-        ExploreSection(id: 'three', block: 'three'),
-        ExploreSection(id: 'your-five', block: 'your-five'),
-        ExploreSection(id: 'continue', block: 'continue'),
-        ExploreSection(id: 'news-today', block: 'news-today'),
-      ];
-      final AppState app = await readyApp({
-        'knowit.debug.learn': 'aim',
-        'knowit.goals': ['news'],
-      });
-      expect(learnLook, LearnLook.aim);
-      expect(
-        [for (final s in withAimShelf(app, sections)) s.id],
-        ['three', 'your-five', 'continue', 'goal', 'news-today'],
-      );
-      for (final LearnLook look in [
-        LearnLook.today,
-        LearnLook.score,
-        LearnLook.profile,
-      ]) {
-        DebugLooks.learn.value = look;
-        expect(withAimShelf(app, sections), same(sections), reason: look.name);
-      }
-      final AppState none = await readyApp({'knowit.debug.learn': 'aim'});
-      expect(learnLook, LearnLook.aim);
-      expect(withAimShelf(none, sections), same(sections));
     });
   });
 

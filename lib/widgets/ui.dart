@@ -241,8 +241,12 @@ class Eyebrow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Turkish capitals keep the dot on the i: "istersin" is "İSTERSİN",
+    // which toUpperCase alone, knowing no language, writes "ISTERSIN".
+    final bool turkish =
+        Localizations.maybeLocaleOf(context)?.languageCode == 'tr';
     return Text(
-      text.toUpperCase(),
+      (turkish ? text.replaceAll('i', 'İ') : text).toUpperCase(),
       style: AppText.label(
         size: 11,
         spacing: 1.3,

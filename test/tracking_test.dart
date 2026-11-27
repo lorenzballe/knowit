@@ -34,6 +34,7 @@ import 'package:astuto/screens/explore_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/subscription.dart';
 import 'package:astuto/sync/trace.dart';
+import 'package:astuto/widgets/aim_picker.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/place_it.dart';
 
@@ -1079,6 +1080,33 @@ void main() {
       expect(facts['last_active_local_hour'], inInclusiveRange(0, 23));
       expect(app.analyticsProfileOnce['first_day_completed'], today);
       expect(app.analyticsProfileOnce['install_date'], isA<String>());
+    });
+
+    testWidgets('where the reader wants to see more clearly, picked on the '
+        'profile: the area, the one before it, and where; nothing for a tap '
+        'on the one already picked', (tester) async {
+      final AppState app = await tester.runAsync(
+        () => _ready({
+          'knowit.goals': ['decide'],
+        }),
+      ) as AppState;
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: SingleChildScrollView(child: ProfileAim(app: app)),
+          ),
+        ),
+      );
+      await tester.tap(find.byKey(const ValueKey('profile-aim-money')));
+      await tester.pumpAndSettle();
+      expect(sink.all('goal set'), [
+        {'goal': 'money', 'before': 'decide', 'from': 'profile'},
+      ]);
+      await tester.tap(find.byKey(const ValueKey('profile-aim-money')));
+      await tester.pumpAndSettle();
+      expect(sink.all('goal set'), hasLength(1));
     });
   });
 
