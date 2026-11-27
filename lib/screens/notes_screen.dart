@@ -15,6 +15,7 @@ import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/fit_text.dart';
 import '../widgets/subject_icon.dart';
+import '../widgets/top_edge.dart' show SoftTop;
 import '../widgets/ui.dart' show BackCircle, ScreenView;
 import 'pill_detail_screen.dart';
 
@@ -91,21 +92,28 @@ class NotesScreen extends StatelessWidget {
                               ),
                             ),
                           )
-                        : ListView.separated(
-                            padding: const EdgeInsets.fromLTRB(20, 18, 20, 40),
-                            itemCount: cards.length,
-                            separatorBuilder: (_, _) =>
-                                const SizedBox(height: 10),
-                            itemBuilder: (context, i) => _NoteRow(
-                              key: ValueKey('note-row-${cards[i].id}'),
-                              pill: cards[i],
-                              note: app.noteOn(cards[i].id) ?? '',
-                              onTap: () => Navigator.of(context).push(
-                                MaterialPageRoute<void>(
-                                  builder: (_) => PillDetailScreen(
-                                    pill: cards[i],
-                                    app: app,
-                                    among: cards,
+                        : SoftTop(
+                            child: ListView.separated(
+                              padding: const EdgeInsets.fromLTRB(
+                                20,
+                                18,
+                                20,
+                                40,
+                              ),
+                              itemCount: cards.length,
+                              separatorBuilder: (_, _) =>
+                                  const SizedBox(height: 10),
+                              itemBuilder: (context, i) => _NoteRow(
+                                key: ValueKey('note-row-${cards[i].id}'),
+                                pill: cards[i],
+                                note: app.noteOn(cards[i].id) ?? '',
+                                onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                    builder: (_) => PillDetailScreen(
+                                      pill: cards[i],
+                                      app: app,
+                                      among: cards,
+                                    ),
                                   ),
                                 ),
                               ),

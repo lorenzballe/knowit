@@ -9,6 +9,7 @@ import '../widgets/card_note.dart';
 import '../widgets/reveal_body.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/card_edge.dart';
+import '../widgets/top_edge.dart' show SoftTop;
 import '../widgets/ui.dart';
 import '../data/topics.dart';
 import '../widgets/web/card_thumb.dart';
@@ -194,22 +195,24 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
             ),
           ),
           Expanded(
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(22, 20, 22, 28),
-              children: [
-                _CardHead(pill: pill, onOpen: () => _openCard(context, pill)),
-                const SizedBox(height: 22),
-                if (answered != null) ...[
-                  _AnsweredLine(pill: pill, given: answered),
-                  const SizedBox(height: 16),
+            child: SoftTop(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(22, 20, 22, 28),
+                children: [
+                  _CardHead(pill: pill, onOpen: () => _openCard(context, pill)),
+                  const SizedBox(height: 22),
+                  if (answered != null) ...[
+                    _AnsweredLine(pill: pill, given: answered),
+                    const SizedBox(height: 16),
+                  ],
+                  // The same reveal the card shows. This used to print
+                  // pill.answer alone, which on a worked problem is the last
+                  // line of the solution and on a debate is one side of it.
+                  RevealBody.onPage(pill, context.p),
+                  const SizedBox(height: 24),
+                  CardNoteSection(app: widget.app, pill: pill),
                 ],
-                // The same reveal the card shows. This used to print
-                // pill.answer alone, which on a worked problem is the last
-                // line of the solution and on a debate is one side of it.
-                RevealBody.onPage(pill, context.p),
-                const SizedBox(height: 24),
-                CardNoteSection(app: widget.app, pill: pill),
-              ],
+              ),
             ),
           ),
         ],

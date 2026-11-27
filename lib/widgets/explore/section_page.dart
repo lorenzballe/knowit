@@ -14,6 +14,7 @@ import '../../explore/explore_block.dart';
 import '../../l10n/l10n.dart';
 import '../../state/explore_play.dart';
 import '../../theme.dart';
+import '../top_edge.dart' show SoftTop;
 import '../ui.dart' show BackCircle;
 import 'explore_engine.dart';
 
@@ -75,13 +76,15 @@ class ExploreSectionPage extends StatelessWidget {
                       ),
                     );
                   }
-                  return CustomScrollView(
-                    slivers: [
-                      SliverPadding(
-                        padding: const EdgeInsets.only(bottom: 40),
-                        sliver: ExploreSliver(host: host, slots: slots),
-                      ),
-                    ],
+                  return SoftTop(
+                    child: CustomScrollView(
+                      slivers: [
+                        SliverPadding(
+                          padding: const EdgeInsets.only(bottom: 40),
+                          sliver: ExploreSliver(host: host, slots: slots),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),

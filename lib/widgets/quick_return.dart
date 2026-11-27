@@ -2,25 +2,33 @@
 /// part of the page, not pinned over it.
 ///
 /// - Going down, the way back and the small header it stands in go up and
-///   away with the page, point for point, so the page is all content.
+///   away with the page, point for point, so the page is all content: under
+///   the status bar the page goes soft and dissolves into its own colour
+///   ([TopEdge]), and the way back fades as it goes under.
 /// - Coming back up, even a little, they come straight back over the page,
-///   softly, wherever the reader is, with the page's colour laid behind
-///   them and fading out under them, as iOS 26 fades a page under its bar:
-///   nothing runs through the ring or under the words beside it.
+///   softly, wherever the reader is, and the edge under the status bar
+///   comes down with them, past their foot: the page under them goes soft
+///   and dark the higher it is, as iOS 26 draws a page under its floating
+///   controls. It is never a band of colour: the page always shows through,
+///   blurred, and there is no line where it ends.
 /// - At the top they stand where they always stood, with nothing behind.
 ///
 /// For whoever asked for less motion nothing slides: the way back fades out
-/// where it stands, and back in. With a screen reader on it stays where it
-/// is, always there to be found.
+/// where it stands, and back in, and the deeper edge with it. With a screen
+/// reader on it stays where it is, always there to be found.
 ///
 /// It reads the page's own scrolling, not a row inside it that scrolls
 /// sideways, and takes no touch of its own: the swipe back from the edge of
 /// the screen is the route's, and goes on working whatever the way back is
 /// doing. What has to stay, a button at the foot, stays outside it.
 ///
-/// On iOS 26 the way back is Apple's own glass, a native view, which is
-/// drawn away from its place inside a scrolling list. Here it is never in
-/// one: it stands over the page and is only moved up out of sight and back.
+/// On iOS 26 the way back is Apple's own glass, a native view, which iOS
+/// lays out in the safe area of wherever it is put on the screen: put there
+/// under the status bar, it is drawn a status bar lower than its place, and
+/// stays so (inside a scrolling list it is put there again and again). Here
+/// it is never in a list: it stands over the page and is only moved up out
+/// of sight and back, and out of sight it waits in its own place, unseen,
+/// so that it is never put back on the screen under the status bar.
 library;
 
 import 'dart:math' as math;
@@ -29,6 +37,7 @@ import 'package:flutter/scheduler.dart' show SchedulerBinding, SchedulerPhase;
 import 'package:flutter/widgets.dart';
 
 import '../theme.dart';
+import 'top_edge.dart';
 
 class QuickReturn extends StatefulWidget {
   const QuickReturn({
@@ -49,7 +58,8 @@ class QuickReturn extends StatefulWidget {
 
   /// Whether what goes up past the top of the room is cut there: not for
   /// a page laid under the status bar, whose header goes up past the edge
-  /// of the screen itself.
+  /// of the screen itself, and whose top edge, at rest, is the status bar's
+  /// room.
   final bool clip;
 
   /// How far the reader goes back up before the header comes back: a
@@ -66,9 +76,18 @@ class QuickReturn extends StatefulWidget {
   /// How long, for whoever asked for less motion, it takes to fade.
   static const Duration fade = Duration(milliseconds: 200);
 
-  /// How far past its own foot the header still has something to show: the
-  /// page's colour fading out under it, and a glass ring's shadow.
+  /// How far past its own foot the header still has something to show: a
+  /// glass ring's shadow.
   static const double shade = 24;
+
+  /// How far past the foot of the header the edge under it reaches once it
+  /// is back over the page, thinning to nothing there.
+  static const double reach = 28;
+
+  /// How much of the header shows while it waits out of sight: nothing to
+  /// see, but drawn, so that Apple's glass is never taken off the screen
+  /// and put back where iOS would push it down.
+  static const double unseen = 1 / 255;
 
   @override
   State<QuickReturn> createState() => _QuickReturnState();
@@ -184,6 +203,40 @@ class _QuickReturnState extends State<QuickReturn>
     return false;
   }
 
+  /// How much of the header shows at [at] points up: whole below the
+  /// status bar, fading as it goes up under it as the page under the status
+  /// bar does ([TopEdge.cover]), and into the last of its shade once out of
+  /// sight; never quite nothing while it moves, so Apple's glass is never
+  /// taken off the screen on its way. Before it has been measured it stands
+  /// in its place, whole.
+  double _shownAt(double at, double top, double gone) {
+    if (gone <= 0) return 1;
+    double shown = ((gone - at) / QuickReturn.shade).clamp(0.0, 1.0);
+    if (top > 0) {
+      // Its middle, between the status bar's foot and its own.
+      final double middle = (top + gone - QuickReturn.shade) / 2 - at;
+      shown = math.min(
+        shown,
+        1 - TopEdge.most * TopEdge.along(TopEdge.cover, middle / top),
+      );
+    }
+    return math.max(shown, QuickReturn.unseen);
+  }
+
+  /// The edge under the status bar, and under the header once it is back
+  /// over the page: as deep as [deep], grown by [strength] out of the
+  /// status bar's room, [top].
+  Widget _edge(Color ground, double top, double deep, double strength) =>
+      SizedBox(
+        height: strength > 0 ? math.max(top, deep) : top,
+        child: TopEdge(
+          key: const ValueKey('quick-return-edge'),
+          ground: ground,
+          rest: top,
+          strength: strength,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     _still = MediaQuery.disableAnimationsOf(context);
@@ -195,6 +248,8 @@ class _QuickReturnState extends State<QuickReturn>
     });
     // The page's own colour, light or dark as the page is.
     final Color ground = context.p.surface;
+    // The status bar's room, for a page laid under it.
+    final double top = widget.clip ? 0 : MediaQuery.paddingOf(context).top;
     final Widget room = Stack(
       fit: StackFit.expand,
       children: [
@@ -205,40 +260,55 @@ class _QuickReturnState extends State<QuickReturn>
             child: widget.child,
           ),
         ),
+        // Under the header, never over it: the page going soft and dark
+        // under the status bar, and under the header once it is back over
+        // the page, as deep as its foot and a little more.
+        Positioned(
+          left: 0,
+          right: 0,
+          top: 0,
+          child: IgnorePointer(
+            child: AnimatedBuilder(
+              animation: Listenable.merge([_up, _scrolled]),
+              builder: (context, _) {
+                final double gone = _gone;
+                final double up = _stays ? 0 : _up.value;
+                // Where it stands: in its place, or as far up as it is.
+                final double at = _still ? 0 : up;
+                // As deep as its foot, wherever it is, and a little more.
+                final double deep = gone <= 0
+                    ? top
+                    : gone - QuickReturn.shade - at + QuickReturn.reach;
+                // As much as the page has run under it: none while it
+                // stands in its own place, all once it is back over the
+                // page.
+                final double under = ((_scrolled.value - at) / 24).clamp(
+                  0.0,
+                  1.0,
+                );
+                if (!_still) return _edge(ground, top, deep, under);
+                final bool away = gone > 0 && up >= gone / 2;
+                return TweenAnimationBuilder<double>(
+                  tween: Tween(end: away ? 0 : 1),
+                  duration: QuickReturn.fade,
+                  curve: Curves.easeOut,
+                  builder: (context, shown, _) =>
+                      _edge(ground, top, deep, math.min(under, shown)),
+                );
+              },
+            ),
+          ),
+        ),
         Positioned(
           left: 0,
           right: 0,
           top: 0,
           child: AnimatedBuilder(
-            animation: Listenable.merge([_up, _scrolled]),
+            animation: _up,
             child: KeyedSubtree(key: _header, child: widget.header),
             builder: (context, header) {
               final double gone = _gone;
               final double up = _stays ? 0 : _up.value;
-              // Where it stands: in its place, or as far up as it is.
-              final double at = _still ? 0 : up;
-              // The page's colour behind it, as much as the page has run
-              // under it: none while it stands in its own place, whole once
-              // it is back over the page.
-              final Widget shown = Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: -(QuickReturn.shade - 4),
-                    child: IgnorePointer(
-                      child: Opacity(
-                        key: const ValueKey('quick-return-ground'),
-                        opacity: ((_scrolled.value - at) / 24).clamp(0.0, 1.0),
-                        child: _Ground(color: ground),
-                      ),
-                    ),
-                  ),
-                  header!,
-                ],
-              );
               final bool away = gone > 0 && up >= gone / 2;
               if (_still) {
                 return IgnorePointer(
@@ -248,20 +318,29 @@ class _QuickReturnState extends State<QuickReturn>
                     opacity: away ? 0 : 1,
                     duration: QuickReturn.fade,
                     curve: Curves.easeOut,
-                    child: shown,
+                    child: header,
                   ),
                 );
               }
-              // Gone into the last of its shade: faded with it, and not
-              // drawn at all once out of sight.
-              final double seen = gone <= 0
-                  ? 1
-                  : ((gone - up) / QuickReturn.shade).clamp(0.0, 1.0);
+              // Out of sight it waits in its own place, unseen, to be
+              // moved from there when it comes back.
+              final bool waits = gone > 0 && up >= gone;
+              final double at = waits ? 0 : up;
+              final double shown = waits
+                  ? QuickReturn.unseen
+                  : _shownAt(at, top, gone);
               return IgnorePointer(
-                ignoring: seen < 1,
-                child: Transform.translate(
-                  offset: Offset(0, -at),
-                  child: Opacity(opacity: seen, child: shown),
+                ignoring: shown < 0.5,
+                child: ExcludeSemantics(
+                  excluding: waits,
+                  child: Transform.translate(
+                    offset: Offset(0, -at),
+                    child: Opacity(
+                      key: const ValueKey('quick-return-header'),
+                      opacity: shown,
+                      child: header,
+                    ),
+                  ),
                 ),
               );
             },
@@ -271,39 +350,4 @@ class _QuickReturnState extends State<QuickReturn>
     );
     return widget.clip ? ClipRect(child: room) : room;
   }
-}
-
-/// The page's colour behind the header: whole behind the way back, so
-/// nothing runs through its ring, then gone a little under it.
-class _Ground extends StatelessWidget {
-  const _Ground({required this.color});
-
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, box) {
-      final double h = math.max(box.maxHeight, 1);
-      return DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              color,
-              color,
-              color.withValues(alpha: 0.7),
-              color.withValues(alpha: 0),
-            ],
-            stops: [
-              0,
-              ((h - 28) / h).clamp(0.0, 1.0),
-              ((h - 14) / h).clamp(0.0, 1.0),
-              1,
-            ],
-          ),
-        ),
-      );
-    },
-  );
 }

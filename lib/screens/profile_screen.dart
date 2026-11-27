@@ -33,6 +33,7 @@ import '../widgets/profile_top.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/sign_in_sheet.dart';
 import '../widgets/subject_icon.dart';
+import '../widgets/top_edge.dart' show UnderStatusBar;
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'saved_screen.dart';
@@ -308,13 +309,15 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
+    // The list runs on under the status bar, going soft and dissolving into
+    // the page there as Explore's shelves do, rather than being cut at a
+    // line under the time.
+    return UnderStatusBar(
       child: ListView(
         // The foot clears a glass tab bar the list runs under.
         padding: EdgeInsets.fromLTRB(
           22,
-          8,
+          MediaQuery.paddingOf(context).top + 8,
           22,
           24 + (barGlass ? MediaQuery.paddingOf(context).bottom : 0),
         ),

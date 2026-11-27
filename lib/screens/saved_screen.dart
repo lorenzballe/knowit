@@ -15,6 +15,7 @@ import '../widgets/web/card_thumb.dart';
 import '../widgets/web/web_card_page.dart' show groundOf;
 import '../widgets/share_sheet.dart';
 import '../widgets/fit_text.dart';
+import '../widgets/top_edge.dart' show SoftTop;
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'pill_detail_screen.dart';
@@ -307,19 +308,21 @@ class _SavedScreenState extends State<SavedScreen> {
     List<String> present,
   ) {
     final String? topic = _topic;
-    return CustomScrollView(
-      slivers: [
-        if (topic == null)
-          const SliverToBoxAdapter(child: SizedBox(height: 10))
-        else
-          SliverToBoxAdapter(
-            child: _BlockHead(topicKey: topic, count: shown.length),
+    return SoftTop(
+      child: CustomScrollView(
+        slivers: [
+          if (topic == null)
+            const SliverToBoxAdapter(child: SizedBox(height: 10))
+          else
+            SliverToBoxAdapter(
+              child: _BlockHead(topicKey: topic, count: shown.length),
+            ),
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: 28),
+            sliver: _grid(context, shown),
           ),
-        SliverPadding(
-          padding: const EdgeInsets.only(bottom: 28),
-          sliver: _grid(context, shown),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

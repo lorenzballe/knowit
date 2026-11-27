@@ -6,6 +6,7 @@ import '../data/topics.dart';
 import 'mix_screen.dart';
 import '../theme.dart';
 import '../widgets/subject_icon.dart';
+import '../widgets/top_edge.dart' show SoftTop;
 import '../widgets/ui.dart';
 
 /// The topic picker. Doubles as onboarding step two and as the "Edit" sheet
@@ -87,86 +88,88 @@ class _TopicsScreenState extends State<TopicsScreen> {
               Expanded(
                 child: Stack(
                   children: [
-                    SingleChildScrollView(
-                      key: const ValueKey('topics-page'),
-                      padding: const EdgeInsets.fromLTRB(22, 12, 22, 18),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (widget.isOnboarding)
-                            Row(
-                              children: List.generate(3, (i) {
-                                return Expanded(
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                      right: i == 2 ? 0 : 8,
+                    SoftTop(
+                      child: SingleChildScrollView(
+                        key: const ValueKey('topics-page'),
+                        padding: const EdgeInsets.fromLTRB(22, 12, 22, 18),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (widget.isOnboarding)
+                              Row(
+                                children: List.generate(3, (i) {
+                                  return Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                        right: i == 2 ? 0 : 8,
+                                      ),
+                                      height: 3,
+                                      decoration: BoxDecoration(
+                                        color: i < 2
+                                            ? context.p.ink
+                                            : context.p.line,
+                                        borderRadius: BorderRadius.circular(9),
+                                      ),
                                     ),
-                                    height: 3,
-                                    decoration: BoxDecoration(
-                                      color: i < 2
-                                          ? context.p.ink
-                                          : context.p.line,
-                                      borderRadius: BorderRadius.circular(9),
-                                    ),
-                                  ),
-                                );
-                              }),
-                            ),
-                          SizedBox(height: _backBar ? 10 : 22),
-                          Text(
-                            context.l10n.whatShouldWeTalkAbout,
-                            style: AppText.display(
-                              size: 33,
-                              weight: FontWeight.w700,
-                              height: 1.06,
-                              spacing: -1.3,
-                              color: context.p.ink,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            context.l10n.fivePillsADayPick,
-                            style: AppText.body(
-                              size: 15,
-                              height: 1.5,
-                              color: context.p.inkMuted,
-                            ),
-                          ),
-                          const SizedBox(height: 22),
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            // Every subject the onboarding offers, in its
-                            // order, and every one of them switchable. Editing
-                            // a mix while being shown a shorter list than the
-                            // one you were first given is how a setting starts
-                            // feeling like it lost something.
-                            children: kMixSubjects.map((subject) {
-                              final key = subject.key;
-                              final on = _picked.contains(key);
-                              return _TopicChip(
-                                label: context.l10n.subjectOf(subject.name),
-                                subject: subject.name,
-                                on: on,
-                                color: subject.color,
-                                onColor: inkOn(subject.color),
-                                onTap: () => setState(() {
-                                  if (on) {
-                                    _picked.remove(key);
-                                  } else {
-                                    _picked.add(key);
-                                  }
+                                  );
                                 }),
-                              );
-                            }).toList(),
-                          ),
-                          if (widget.onFineTune != null) ...[
-                            const SizedBox(height: 18),
-                            _FineTuneRow(onTap: _fineTune),
+                              ),
+                            SizedBox(height: _backBar ? 10 : 22),
+                            Text(
+                              context.l10n.whatShouldWeTalkAbout,
+                              style: AppText.display(
+                                size: 33,
+                                weight: FontWeight.w700,
+                                height: 1.06,
+                                spacing: -1.3,
+                                color: context.p.ink,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              context.l10n.fivePillsADayPick,
+                              style: AppText.body(
+                                size: 15,
+                                height: 1.5,
+                                color: context.p.inkMuted,
+                              ),
+                            ),
+                            const SizedBox(height: 22),
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              // Every subject the onboarding offers, in its
+                              // order, and every one of them switchable. Editing
+                              // a mix while being shown a shorter list than the
+                              // one you were first given is how a setting starts
+                              // feeling like it lost something.
+                              children: kMixSubjects.map((subject) {
+                                final key = subject.key;
+                                final on = _picked.contains(key);
+                                return _TopicChip(
+                                  label: context.l10n.subjectOf(subject.name),
+                                  subject: subject.name,
+                                  on: on,
+                                  color: subject.color,
+                                  onColor: inkOn(subject.color),
+                                  onTap: () => setState(() {
+                                    if (on) {
+                                      _picked.remove(key);
+                                    } else {
+                                      _picked.add(key);
+                                    }
+                                  }),
+                                );
+                              }).toList(),
+                            ),
+                            if (widget.onFineTune != null) ...[
+                              const SizedBox(height: 18),
+                              _FineTuneRow(onTap: _fineTune),
+                            ],
+                            // The count is said once, on the button.
+                            const SizedBox(height: 14),
                           ],
-                          // The count is said once, on the button.
-                          const SizedBox(height: 14),
-                        ],
+                        ),
                       ),
                     ),
                     // What runs on under the button fades into the page

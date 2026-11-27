@@ -61,61 +61,42 @@ class NewsStoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
-    final double bottom = MediaQuery.paddingOf(context).bottom;
+    final EdgeInsets safe = MediaQuery.paddingOf(context);
     return Scaffold(
       backgroundColor: p.surface,
-      body: SafeArea(
-        bottom: false,
-        child: QuickReturn(
-          header: Padding(
-            padding: const EdgeInsets.fromLTRB(14, 6, 14, 0),
-            child: Row(
-              children: [
-                BackCircle(onPressed: () => Navigator.of(context).maybePop()),
-              ],
-            ),
-          ),
-          child: Stack(
+      // The story runs on under the status bar, and goes soft and dark there
+      // rather than being cut at a line ([QuickReturn]).
+      body: QuickReturn(
+        clip: false,
+        header: Padding(
+          padding: EdgeInsets.fromLTRB(14, safe.top + 6, 14, 0),
+          child: Row(
             children: [
-              Positioned.fill(
-                child: SingleChildScrollView(
-                  key: ValueKey('news-story-${pill.id}'),
-                  // Under the way back, as tall as it stands.
-                  padding: EdgeInsets.fromLTRB(0, 6 + 44 + 18, 0, bottom + 48),
-                  child: Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 620),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 22),
-                        child: _Story(
-                          pill: pill,
-                          openLink: openLink ?? _launch,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              // What scrolls up goes out of sight softly at the top of the
-              // page, not cut at a line, once the way back has gone with it.
-              Positioned(
-                left: 0,
-                right: 0,
-                top: 0,
-                height: 18,
-                child: IgnorePointer(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [p.surface, p.surface.withValues(alpha: 0)],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              BackCircle(onPressed: () => Navigator.of(context).maybePop()),
             ],
+          ),
+        ),
+        child: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: SingleChildScrollView(
+            key: ValueKey('news-story-${pill.id}'),
+            // Under the way back, as tall as it stands.
+            padding: EdgeInsets.fromLTRB(
+              0,
+              safe.top + 6 + 44 + 18,
+              0,
+              safe.bottom + 48,
+            ),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 620),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  child: _Story(pill: pill, openLink: openLink ?? _launch),
+                ),
+              ),
+            ),
           ),
         ),
       ),

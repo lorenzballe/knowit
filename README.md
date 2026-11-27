@@ -143,16 +143,33 @@ subject's home, an area, a path, a news story) keep their way back as
 Instagram keeps its own (`widgets/quick_return.dart`). It is part of the
 page: going down, it goes up and away with the page, point for point, with
 the small line beside it where there is one, and the page is all content;
-going back up even a little, it comes straight back over the page, softly,
-with the page's colour laid behind it and fading out under it, as iOS 26
-fades a page under its bar, so it never sits on the words; at the top it
-stands where it always stood, with nothing behind it. What has to stay, Save at the foot of
-Tune your mix and a path's way on, stays. With less motion asked for nothing
-slides: it fades out where it stands and back in. With a screen reader on it
-stays put. It reads only the page's own scrolling and takes no touch, so the
-swipe back from the edge of the screen works whatever it is doing; and it is
-never laid inside the list, where Apple's own glass button, a native view on
-iOS 26, is drawn away from its place.
+going back up even a little, it comes straight back over the page, softly;
+at the top it stands where it always stood, with nothing behind it. What has
+to stay, Save at the foot of Tune your mix and a path's way on, stays. With
+less motion asked for nothing slides: it fades out where it stands and back
+in. With a screen reader on it stays put. It reads only the page's own
+scrolling and takes no touch, so the swipe back from the edge of the screen
+works whatever it is doing; and it is never laid inside the list, where
+Apple's own glass button, a native view on iOS 26, is drawn away from its
+place. Out of sight it waits in its own place, unseen: iOS lays that button
+out in the safe area of wherever it is put on the screen, and put back under
+the status bar it is drawn a status bar lower.
+
+Every one of those pages runs on under the status bar, as Explore does, and
+has one top edge (`widgets/top_edge.dart`), the scroll edge of iOS 26: what
+passes under it is blurred, most at the top of the screen and less and less
+further down, under the page's own colour, nearly whole at the top and gone
+at the foot. The page goes soft and dissolves rather than being cut by a
+line, and it is never a band of colour: the page always shows through. At
+rest the edge is the status bar's room; when the way back comes back it
+grows down with it, past its foot, strong enough behind it that the way back
+and the words beside it are read on the page, and back up when it goes. The
+blur is a handful of thin slices sharing one picture of the page, so it is
+one backdrop for the whole edge. The screens whose bar stays where it is
+(the archive, the shelves, the week, the path, the notes, how the cards are
+written, the skills, the topics, a card's page, a game's page, a book, the
+library, a founder) let what scrolls up dissolve the same way as it comes to
+the bar, and the profile runs on under the status bar as Explore does.
 
 ## One palette
 
