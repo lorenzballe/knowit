@@ -2964,15 +2964,21 @@ class AppLocalizationsKo extends AppLocalizations {
   String get themePuzzlesLine => '펜 하나와 1분이면 푸는 수수께끼';
 
   @override
-  String get weekRecapCaps => '이번 주 스스로에게 던진 질문';
-
-  @override
-  String get weekRecapLine => '카드가 남긴 질문들';
-
-  @override
   String weekRecapMore(int n) {
-    return 'Plus로 이번 주 $n개 더 보기';
+    return 'Astute+로 이번 주 카드 $n장 더';
   }
+
+  @override
+  String get weekReviewTitle => '이번 주 복습';
+
+  @override
+  String get weekReviewLine => '이번 주 카드의 질문들이에요. 다시 답해 보세요. 그래야 기억에 남아요.';
+
+  @override
+  String get weekReviewGo => '복습하기';
+
+  @override
+  String get weekReviewNone => '이번 주에 읽은 카드는 여기서 다시 복습할 수 있어요.';
 
   @override
   String get plusInTheApp =>
@@ -3370,9 +3376,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => '오늘부터 측정';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return '점 어긋남, 처음엔 $was';
   }
@@ -3391,10 +3394,19 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => '80% 이상 답한 적 아직 없음';
+  String get journeyMovesTitle => '알아채는 수';
 
   @override
-  String get journeyMovesTitle => '알아채는 수';
+  String get journeySureEmpty => '80% 이상 확신하고 답하면 나타나요.';
+
+  @override
+  String get journeyMovesEmpty => '카드 두 장에서 수를 알아채면 나타나요.';
+
+  @override
+  String get journeyMissedEmpty => '두 번째 분야에서 6번 답하면 측정돼요.';
+
+  @override
+  String get journeyFillsAsYouRead => '읽을수록 채워져요.';
 
   @override
   String journeyOfN(int n) {
@@ -3405,9 +3417,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String journeyNewest(String name) {
     return '최근: $name';
   }
-
-  @override
-  String get journeyNoneYet => '아직 없음';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3495,9 +3504,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => '아직 연대가 있는 카드 없음';
-
-  @override
   String get journeyInPlace => '지역';
 
   @override
@@ -3532,9 +3538,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => '중동';
-
-  @override
-  String get journeyNoPlace => '아직 장소 없음';
 
   @override
   String get journeyTopics => '세부 주제';
@@ -6102,9 +6105,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet => '한 분야에서 6번 답하면 측정돼요.';
-
-  @override
   String get journeyChangedMind => '생각이 바뀜';
 
   @override
@@ -6205,6 +6205,28 @@ class AppLocalizationsKo extends AppLocalizations {
       locale: localeName,
       other: '카드 $n장을 읽었어요. 여정은 여기서 시작돼요.',
       zero: '첫 카드가 기다리고 있어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '지금까지 카드 $n장, 이번 주에 $week장을 읽었어요.',
+      zero: '지금까지 카드 $n장을 읽었어요. 이번 주는 아직이에요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '카드 $n장을 모두 이번 주에 읽었어요.',
+      one: '지금까지 카드 1장을 읽었어요.',
     );
     return '$_temp0';
   }

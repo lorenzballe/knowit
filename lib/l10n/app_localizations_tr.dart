@@ -3051,15 +3051,23 @@ class AppLocalizationsTr extends AppLocalizations {
   String get themePuzzlesLine => 'Bir kalem ve bir dakikalık bilmeceler';
 
   @override
-  String get weekRecapCaps => 'BU HAFTA KENDİNE SORDUN';
-
-  @override
-  String get weekRecapLine => 'Kartlarının sana bıraktığı sorular';
-
-  @override
   String weekRecapMore(int n) {
-    return 'Plus ile haftandan $n tane daha';
+    return 'Astute+ ile haftandan $n kart daha';
   }
+
+  @override
+  String get weekReviewTitle => 'Haftayı tekrarla';
+
+  @override
+  String get weekReviewLine =>
+      'Bu haftaki kartlarının soruları. Yeniden cevapla: akılda böyle kalırlar.';
+
+  @override
+  String get weekReviewGo => 'Tekrarla';
+
+  @override
+  String get weekReviewNone =>
+      'Bu hafta okuduğun kartlar, tekrar etmen için buraya gelir.';
 
   @override
   String get plusInTheApp =>
@@ -3467,9 +3475,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => 'Bugünden itibaren sayılıyor';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return 'puan sapma, başta $was';
   }
@@ -3488,10 +3493,20 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => 'Henüz %80 ya da üstü demedin';
+  String get journeyMovesTitle => 'Fark ettiğin numaralar';
 
   @override
-  String get journeyMovesTitle => 'Fark ettiğin numaralar';
+  String get journeySureEmpty => '%80 ya da üstü dediğinde görünür.';
+
+  @override
+  String get journeyMovesEmpty =>
+      'Bir numarayı iki kartta fark ettiğinde görünür.';
+
+  @override
+  String get journeyMissedEmpty => 'İkinci bir konuda altı cevap, ve ölçülür.';
+
+  @override
+  String get journeyFillsAsYouRead => 'Okudukça dolar.';
 
   @override
   String journeyOfN(int n) {
@@ -3502,9 +3517,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String journeyNewest(String name) {
     return 'En yenisi: $name';
   }
-
-  @override
-  String get journeyNoneYet => 'Henüz yok';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3592,9 +3604,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => 'henüz tarihli bir şey yok';
-
-  @override
   String get journeyInPlace => 'Dünyada';
 
   @override
@@ -3629,9 +3638,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => 'Orta Doğu';
-
-  @override
-  String get journeyNoPlace => 'henüz bir yer yok';
 
   @override
   String get journeyTopics => 'Alt konular';
@@ -6258,9 +6264,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet => 'Bir konuda altı cevap, ve ölçülür.';
-
-  @override
   String get journeyChangedMind => 'Fikrin değişti';
 
   @override
@@ -6358,6 +6361,28 @@ class AppLocalizationsTr extends AppLocalizations {
       locale: localeName,
       other: '$n kart okundu. Yolculuk burada başlıyor.',
       zero: 'İlk kartın seni bekliyor.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '$n kart okundu, $week tanesi bu hafta.',
+      zero: '$n kart okundu, bu hafta henüz yok.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kart okundu, hepsi bu hafta.',
+      one: 'Şimdiye kadar 1 kart okundu.',
     );
     return '$_temp0';
   }

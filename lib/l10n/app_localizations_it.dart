@@ -3087,15 +3087,29 @@ class AppLocalizationsIt extends AppLocalizations {
       'Enigmi da risolvere con una penna e un minuto';
 
   @override
-  String get weekRecapCaps => 'QUESTA SETTIMANA TI SEI CHIESTO';
-
-  @override
-  String get weekRecapLine => 'Le domande che le tue carte ti hanno lasciato';
-
-  @override
   String weekRecapMore(int n) {
-    return 'Altre $n della tua settimana con Plus';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Altre $n della tua settimana con Astute+',
+      one: 'Un’altra della tua settimana con Astute+',
+    );
+    return '$_temp0';
   }
+
+  @override
+  String get weekReviewTitle => 'Ripassa la settimana';
+
+  @override
+  String get weekReviewLine =>
+      'Le domande delle tue carte di questa settimana. Rispondi di nuovo: è così che restano.';
+
+  @override
+  String get weekReviewGo => 'Ripassa';
+
+  @override
+  String get weekReviewNone =>
+      'Le carte che leggi questa settimana tornano qui, da ripassare.';
 
   @override
   String get plusInTheApp =>
@@ -3518,9 +3532,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => 'Si conta da oggi';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return 'punti fuori, prima $was';
   }
@@ -3539,10 +3550,22 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => 'Non hai ancora detto 80% o più';
+  String get journeyMovesTitle => 'Mosse che riconosci';
 
   @override
-  String get journeyMovesTitle => 'Mosse che riconosci';
+  String get journeySureEmpty =>
+      'Compare quando rispondi sicuro all’80% o più.';
+
+  @override
+  String get journeyMovesEmpty =>
+      'Compare quando riconosci una mossa in due carte.';
+
+  @override
+  String get journeyMissedEmpty =>
+      'Sei risposte in una seconda materia, e viene misurata.';
+
+  @override
+  String get journeyFillsAsYouRead => 'Si riempie man mano che leggi.';
 
   @override
   String journeyOfN(int n) {
@@ -3553,9 +3576,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String journeyNewest(String name) {
     return 'Ultima: $name';
   }
-
-  @override
-  String get journeyNoneYet => 'Ancora niente';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3650,9 +3670,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => 'ancora niente di datato';
-
-  @override
   String get journeyInPlace => 'Nel mondo';
 
   @override
@@ -3688,9 +3705,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => 'Medio Oriente';
-
-  @override
-  String get journeyNoPlace => 'ancora nessun luogo';
 
   @override
   String get journeyTopics => 'Argomenti';
@@ -6370,10 +6384,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet =>
-      'Sei risposte in una materia, e viene misurata.';
-
-  @override
   String get journeyChangedMind => 'Hai cambiato idea';
 
   @override
@@ -6473,6 +6483,35 @@ class AppLocalizationsIt extends AppLocalizations {
       other: '$n carte lette. Il percorso comincia qui.',
       one: 'Una carta letta. Il percorso comincia qui.',
       zero: 'La tua prima carta ti aspetta.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n carte lette',
+      one: 'Una carta letta',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '$week questa settimana.',
+      one: 'una questa settimana.',
+      zero: 'nessuna ancora questa settimana.',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n carte lette, tutte questa settimana.',
+      one: 'Una carta letta finora.',
     );
     return '$_temp0';
   }

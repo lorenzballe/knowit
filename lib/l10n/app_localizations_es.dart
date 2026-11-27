@@ -3088,15 +3088,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get themePuzzlesLine => 'Enigmas para un lápiz y un minuto';
 
   @override
-  String get weekRecapCaps => 'ESTA SEMANA TE PREGUNTASTE';
-
-  @override
-  String get weekRecapLine => 'Las preguntas que te dejaron tus tarjetas';
-
-  @override
   String weekRecapMore(int n) {
-    return '$n más de tu semana con Plus';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n más de tu semana con Astute+',
+      one: '1 más de tu semana con Astute+',
+    );
+    return '$_temp0';
   }
+
+  @override
+  String get weekReviewTitle => 'Repasa la semana';
+
+  @override
+  String get weekReviewLine =>
+      'Las preguntas de tus tarjetas de esta semana. Respóndelas otra vez: así se quedan.';
+
+  @override
+  String get weekReviewGo => 'Repasar';
+
+  @override
+  String get weekReviewNone =>
+      'Las tarjetas que leas esta semana vuelven aquí para repasarlas.';
 
   @override
   String get plusInTheApp =>
@@ -3518,9 +3532,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => 'Se cuenta desde hoy';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return 'puntos de desvío, antes $was';
   }
@@ -3539,10 +3550,21 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => 'Todavía no has dicho 80 % o más';
+  String get journeyMovesTitle => 'Trucos que detectas';
 
   @override
-  String get journeyMovesTitle => 'Trucos que detectas';
+  String get journeySureEmpty => 'Aparece cuando respondas con un 80 % o más.';
+
+  @override
+  String get journeyMovesEmpty =>
+      'Aparece cuando detectes un truco en dos tarjetas.';
+
+  @override
+  String get journeyMissedEmpty =>
+      'Seis respuestas en una segunda materia y queda medida.';
+
+  @override
+  String get journeyFillsAsYouRead => 'Se llena a medida que lees.';
 
   @override
   String journeyOfN(int n) {
@@ -3553,9 +3575,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String journeyNewest(String name) {
     return 'Último: $name';
   }
-
-  @override
-  String get journeyNoneYet => 'Todavía nada';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3650,9 +3669,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => 'nada con fecha todavía';
-
-  @override
   String get journeyInPlace => 'En el mundo';
 
   @override
@@ -3688,9 +3704,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => 'Oriente Medio';
-
-  @override
-  String get journeyNoPlace => 'ningún lugar todavía';
 
   @override
   String get journeyTopics => 'Subtemas';
@@ -6370,10 +6383,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet =>
-      'Seis respuestas en una materia y queda medida.';
-
-  @override
   String get journeyChangedMind => 'Cambiaste de idea';
 
   @override
@@ -6474,6 +6483,35 @@ class AppLocalizationsEs extends AppLocalizations {
       other: '$n tarjetas leídas. El recorrido empieza aquí.',
       one: 'Una tarjeta leída. El recorrido empieza aquí.',
       zero: 'Tu primera tarjeta te espera.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n tarjetas leídas',
+      one: 'Una tarjeta leída',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '$week esta semana.',
+      one: 'una esta semana.',
+      zero: 'ninguna aún esta semana.',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n tarjetas leídas, todas esta semana.',
+      one: 'Una tarjeta leída hasta ahora.',
     );
     return '$_temp0';
   }

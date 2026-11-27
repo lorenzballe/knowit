@@ -3069,15 +3069,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'Puzzles you can solve with a pen and a minute';
 
   @override
-  String get weekRecapCaps => 'THIS WEEK YOU ASKED YOURSELF';
-
-  @override
-  String get weekRecapLine => 'The questions your cards left you with';
-
-  @override
   String weekRecapMore(int n) {
-    return '$n more from your week with Plus';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n more from your week with Astute+',
+      one: '1 more from your week with Astute+',
+    );
+    return '$_temp0';
   }
+
+  @override
+  String get weekReviewTitle => 'Review the week';
+
+  @override
+  String get weekReviewLine =>
+      'The questions from your cards this week. Answer them again: that\'s how they stay.';
+
+  @override
+  String get weekReviewGo => 'Review';
+
+  @override
+  String get weekReviewNone =>
+      'The cards you read this week come back here, to go over again.';
 
   @override
   String get plusInTheApp =>
@@ -3499,9 +3513,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get journeyTimedFromToday => 'Counted from today';
-
-  @override
   String journeyPointsOffFrom(int was) {
     return 'points off, from $was';
   }
@@ -3520,10 +3531,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get journeySureNone => 'Nothing said at 80% or more yet';
+  String get journeyMovesTitle => 'Moves you can spot';
 
   @override
-  String get journeyMovesTitle => 'Moves you can spot';
+  String get journeySureEmpty => 'Shows once you answer 80% sure or more.';
+
+  @override
+  String get journeyMovesEmpty => 'Shows once you spot a move on two cards.';
+
+  @override
+  String get journeyMissedEmpty =>
+      'Six answers in a second subject, and it is measured.';
+
+  @override
+  String get journeyFillsAsYouRead => 'Fills in as you read.';
 
   @override
   String journeyOfN(int n) {
@@ -3534,9 +3555,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String journeyNewest(String name) {
     return 'Newest: $name';
   }
-
-  @override
-  String get journeyNoneYet => 'None yet';
 
   @override
   String journeyStillWithYou(int n) {
@@ -3625,9 +3643,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => 'nothing dated yet';
-
-  @override
   String get journeyInPlace => 'In place';
 
   @override
@@ -3663,9 +3678,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get journeyRegionMiddleEast => 'the Middle East';
-
-  @override
-  String get journeyNoPlace => 'no place yet';
 
   @override
   String get journeyTopics => 'Topics';
@@ -6324,10 +6336,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get journeySubjectsNotYet =>
-      'Six answers in a subject, and it is measured.';
-
-  @override
   String get journeyChangedMind => 'Changed your mind';
 
   @override
@@ -6428,6 +6436,35 @@ class AppLocalizationsEn extends AppLocalizations {
       other: '$n cards read. The journey starts here.',
       one: 'One card read. The journey starts here.',
       zero: 'Your first card is waiting.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineReadWeek(int n, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cards read',
+      one: 'One card read',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      week,
+      locale: localeName,
+      other: '$week this week.',
+      one: 'one this week.',
+      zero: 'none yet this week.',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String storyHeadlineReadAllWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cards read, all this week.',
+      one: 'One card read so far.',
     );
     return '$_temp0';
   }

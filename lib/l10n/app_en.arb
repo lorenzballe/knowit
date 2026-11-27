@@ -3131,15 +3131,30 @@
  "themeHowItWorksLine": "The mechanism behind something you see every day",
  "themePuzzles": "Work it out",
  "themePuzzlesLine": "Puzzles you can solve with a pen and a minute",
- "weekRecapCaps": "THIS WEEK YOU ASKED YOURSELF",
- "weekRecapLine": "The questions your cards left you with",
- "weekRecapMore": "{n} more from your week with Plus",
+ "weekRecapMore": "{n, plural, =1{1 more from your week with Astute+} other{{n} more from your week with Astute+}}",
  "@weekRecapMore": {
+  "description": "Your journey, Review the week, on the free plan: under its button, how many of the week's cards are past the first five, and the way to Astute+.",
   "placeholders": {
    "n": {
     "type": "int"
    }
   }
+ },
+ "weekReviewTitle": "Review the week",
+ "@weekReviewTitle": {
+  "description": "Your journey: the name of its last chapter, set in capitals after the chapter's number. The week's cards gone over again, each card that asks asked once more."
+ },
+ "weekReviewLine": "The questions from your cards this week. Answer them again: that's how they stay.",
+ "@weekReviewLine": {
+  "description": "Your journey, Review the week: the line under the chapter's name, over two or three of the week's questions."
+ },
+ "weekReviewGo": "Review",
+ "@weekReviewGo": {
+  "description": "Your journey, Review the week: the button that plays the week's cards again, full size, from the first."
+ },
+ "weekReviewNone": "The cards you read this week come back here, to go over again.",
+ "@weekReviewNone": {
+  "description": "Your journey, Review the week, before any card has been read this week (Monday on)."
  },
  "plusInTheApp": "Astute+ is in the app: download Astute on iPhone or Android to start your free trial.",
  "purchaseComplete": "Purchase complete.",
@@ -3711,10 +3726,6 @@
    }
   }
  },
- "journeyTimedFromToday": "Counted from today",
- "@journeyTimedFromToday": {
-  "description": "Under a dash: the app has started timing the cards today."
- },
  "journeyPointsOffFrom": "points off, from {was}",
  "@journeyPointsOffFrom": {
   "description": "Beside the points off: what they were at the start.",
@@ -3752,13 +3763,25 @@
    }
   }
  },
- "journeySureNone": "Nothing said at 80% or more yet",
- "@journeySureNone": {
-  "description": "Under a dash, before any answer at 80% sure or more."
- },
  "journeyMovesTitle": "Moves you can spot",
  "@journeyMovesTitle": {
   "description": "Tile title: the reasoning moves the reader has down."
+ },
+ "journeySureEmpty": "Shows once you answer 80% sure or more.",
+ "@journeySureEmpty": {
+  "description": "Your journey, the tile Right when sure: in place of its figure, before any answer said 80% sure or more."
+ },
+ "journeyMovesEmpty": "Shows once you spot a move on two cards.",
+ "@journeyMovesEmpty": {
+  "description": "Your journey, the tile Moves you can spot: in place of its figure, before any move counts as spotted (met on two cards or more, right on at least half)."
+ },
+ "journeyMissedEmpty": "Six answers in a second subject, and it is measured.",
+ "@journeyMissedEmpty": {
+  "description": "Your journey, the tile Most missed: in place of a subject, while only one subject has six answers."
+ },
+ "journeyFillsAsYouRead": "Fills in as you read.",
+ "@journeyFillsAsYouRead": {
+  "description": "Your journey: in place of the figure on a tile with nothing to show yet (reading time, in time, in place, topics, words)."
  },
  "journeyOfN": "of {n}",
  "@journeyOfN": {
@@ -3777,10 +3800,6 @@
     "type": "String"
    }
   }
- },
- "journeyNoneYet": "None yet",
- "@journeyNoneYet": {
-  "description": "Under the moves, before the first."
  },
  "journeyStillWithYou": "{n, plural, =1{card still with you} other{cards still with you}}",
  "@journeyStillWithYou": {
@@ -3896,10 +3915,6 @@
  "@journeyEraRecent": {
   "description": "An era, inside 'from … to this year': the year 2000."
  },
- "journeyNothingDated": "nothing dated yet",
- "@journeyNothingDated": {
-  "description": "Under a dash in the In time tile."
- },
  "journeyInPlace": "In place",
  "@journeyInPlace": {
   "description": "Tile title: where in the world the cards read are set."
@@ -3945,10 +3960,6 @@
  "journeyRegionMiddleEast": "the Middle East",
  "@journeyRegionMiddleEast": {
   "description": "A region of the world."
- },
- "journeyNoPlace": "no place yet",
- "@journeyNoPlace": {
-  "description": "Under a dash in the In place tile."
  },
  "journeyTopics": "Topics",
  "@journeyTopics": {
@@ -7117,10 +7128,6 @@
    }
   }
  },
- "journeySubjectsNotYet": "Six answers in a subject, and it is measured.",
- "@journeySubjectsNotYet": {
-  "description": "Your journey: shown under the two subject tiles before any subject has six answers."
- },
  "journeyChangedMind": "Changed your mind",
  "@journeyChangedMind": {
   "description": "Your journey: the label over how many cards changed the reader's mind, in the reader's own word on cards that ask what they did for them."
@@ -7236,6 +7243,27 @@
  "storyHeadlineRead": "{n, plural, =0{Your first card is waiting.} =1{One card read. The journey starts here.} other{{n} cards read. The journey starts here.}}",
  "@storyHeadlineRead": {
   "description": "Your journey as a story (the version on trial under the tiles): storyHeadlineRead",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "storyHeadlineReadWeek": "{n, plural, =1{One card read} other{{n} cards read}}, {week, plural, =0{none yet this week.} =1{one this week.} other{{week} this week.}}",
+ "@storyHeadlineReadWeek": {
+  "description": "Your journey, This week: the headline past the reader's first day, when the week is told in cards read: every card read so far, then those first read this week (Monday on).",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "week": {
+    "type": "int"
+   }
+  }
+ },
+ "storyHeadlineReadAllWeek": "{n, plural, =1{One card read so far.} other{{n} cards read, all this week.}}",
+ "@storyHeadlineReadAllWeek": {
+  "description": "Your journey, This week: the headline past the reader's first day, when every card they have read was read this week (Monday on).",
   "placeholders": {
    "n": {
     "type": "int"

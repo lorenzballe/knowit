@@ -9,6 +9,7 @@ import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/l10n/l10n.dart' show SubjectNames;
+import 'package:astuto/measure/card_read.dart' show CardStint;
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/journey_screen.dart';
@@ -280,6 +281,29 @@ void main() {
       expect(prefs.getString('knowit.dayLog'), isNotNull);
     });
 
+    test('a card read in the viewer adds its time in sight to the day, as a '
+        'card of the day adds its own when it is thrown; one of the day left '
+        'standing is timed when it is thrown, not here as well', () async {
+      final app = await _app({'knowit.onboarded': true, 'knowit.plus': true});
+      final Pill card = PillBank.cards.first;
+      final String today = dateKey(app.today);
+      int seconds() => app.dayLog[today]?[kLogSeconds] ?? 0;
+      final int before = seconds();
+      CardStint stint(int ms) =>
+          CardStint(card, msOn: ms, exit: 'thrown', facts: const {});
+
+      app.cardClosed(stint(42400), where: 'explore');
+      await Future<void>.delayed(Duration.zero);
+      expect(seconds(), before + 42);
+      app.cardClosed(stint(30000), where: 'today');
+      await Future<void>.delayed(Duration.zero);
+      expect(seconds(), before + 42);
+      // Five minutes a card at most, as on the day's own.
+      app.cardClosed(stint(3600000), where: 'journey');
+      await Future<void>.delayed(Duration.zero);
+      expect(seconds(), before + 42 + kMostSecondsACard);
+    });
+
     test('a phone that read before the days were written down gets them '
         'from what each day dealt', () async {
       final List<String> ids = PillBank.cards.take(3).map((p) => p.id).toList();
@@ -320,6 +344,9 @@ void main() {
         'knowit.onboarded': true,
         'knowit.plus': true,
         'knowit.skills': ['money'],
+        // Something read, so that what the reader knows has something to
+        // say.
+        'knowit.seenIds': [for (final p in PillBank.cards.take(3)) p.id],
       });
       await pump(tester, app);
       expect(find.byKey(const ValueKey('training-score')), findsOneWidget);
@@ -346,15 +373,10 @@ void main() {
       );
     });
 
-    testWidgets('the moves you keep missing and the week in questions '
-        'moved here from the profile, each question a tap from its card', (
+    testWidgets('the moves you keep missing, moved here from the profile', (
       tester,
     ) async {
-      final DateTime now = DateTime.now();
-      final String today = dateKey(now);
-      final String yesterday = dateKey(
-        DateTime(now.year, now.month, now.day - 1),
-      );
+      final String today = dateKey(DateTime.now());
       // A card answered wrong: its move is one the reader missed.
       final Pill missed = PillBank.cards.firstWhere(
         (p) =>
@@ -363,18 +385,9 @@ void main() {
             !p.challenge.accepts('0') &&
             p.challenge.accepts('1'),
       );
-      final List<Pill> read = PillBank.cards
-          .where((p) => p.ask.isNotEmpty)
-          .take(3)
-          .toList();
       final app = await _app({
         'knowit.onboarded': true,
         'knowit.plus': true,
-        'knowit.seenIds': [for (final p in read) p.id],
-        // Yesterday's: today's is the day the app deals on opening.
-        'knowit.deckHistory': jsonEncode({
-          yesterday: [for (final p in read) p.id],
-        }),
         'knowit.answersJson': jsonEncode({
           missed.id: {'r': '0', 'd': today},
         }),
@@ -382,7 +395,6 @@ void main() {
       expect(app.masteryByWeakness, isNotEmpty);
       await pump(tester, app);
       final Finder list = find.byType(Scrollable).first;
-
       await tester.scrollUntilVisible(
         find.byKey(const ValueKey('journey-missing')),
         300,
@@ -395,18 +407,133 @@ void main() {
         ),
         findsOneWidget,
       );
+    });
 
-      await tester.scrollUntilVisible(
-        find.text(read.last.ask),
+    group('the week, gone over again at the foot of the page', () {
+      final l = lookupAppLocalizations(const Locale('en'));
+      // Seven cards in words read today: whatever the day, this week's.
+      final List<Pill> read = PillBank.cards
+          .where((p) => !p.hasPage && p.question.isNotEmpty)
+          .take(7)
+          .toList();
+
+      Future<AppState> reader({required bool plus}) => _app({
+        'knowit.onboarded': true,
+        'knowit.plus': plus,
+        'knowit.seenIds': [for (final p in read) p.id],
+        'knowit.readDays': jsonEncode({
+          dateKey(DateTime.now()): [for (final p in read) p.id],
+        }),
+      });
+
+      Future<void> toReview(WidgetTester tester) => tester.scrollUntilVisible(
+        find.byKey(const ValueKey('journey-week-review-go')),
         300,
-        scrollable: list,
+        scrollable: find.byType(Scrollable).first,
       );
-      for (final p in read) {
-        expect(find.text(p.ask), findsOneWidget);
-      }
-      await tester.tap(find.text(read.first.ask));
-      await tester.pumpAndSettle();
-      expect(find.byType(DeckViewerScreen), findsOneWidget);
+
+      testWidgets('the last chapter: a line, the first of the week\'s '
+          'questions, and one button that plays the week again from the '
+          'first, each card asked again and nothing written down', (
+        tester,
+      ) async {
+        final app = await reader(plus: true);
+        await pump(tester, app);
+        await toReview(tester);
+        // After the story: the page ends on it.
+        expect(
+          tester
+              .getTopLeft(find.textContaining(l.weekReviewTitle.toUpperCase()))
+              .dy,
+          greaterThan(
+            tester
+                .getTopLeft(
+                  find.textContaining(l.storyChapterStory.toUpperCase()),
+                )
+                .dy,
+          ),
+        );
+        expect(find.text(l.weekReviewLine), findsOneWidget);
+        // Three of the week's questions, the shortest, so each is read
+        // whole; the rest wait for the review.
+        final List<Pill> byLength = [...read]
+          ..sort((a, b) => a.question.length.compareTo(b.question.length));
+        for (final Pill p in byLength.take(3)) {
+          expect(find.text(p.question), findsOneWidget);
+        }
+        for (final Pill p in byLength.skip(3)) {
+          expect(find.text(p.question), findsNothing);
+        }
+        // No door to Astute+ on Astute+.
+        expect(
+          find.byKey(const ValueKey('journey-week-review-more')),
+          findsNothing,
+        );
+        // Under the week's headline, no list of questions any more.
+        expect(find.text('THIS WEEK YOU ASKED YOURSELF'), findsNothing);
+
+        await tester.tap(find.byKey(const ValueKey('journey-week-review-go')));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 600));
+        final DeckViewerScreen viewer = tester.widget(
+          find.byType(DeckViewerScreen),
+        );
+        expect(
+          [for (final p in viewer.deck) p.id],
+          [for (final p in read) p.id],
+        );
+        expect(viewer.initialIndex, 0);
+        expect(viewer.answering, isTrue);
+        expect(viewer.records, isFalse);
+        expect(viewer.title, l.weekReviewTitle);
+      });
+
+      testWidgets('on the free plan, the first five, and the rest of the '
+          'week behind Astute+', (tester) async {
+        final app = await reader(plus: false);
+        await pump(tester, app);
+        await toReview(tester);
+        expect(find.text(l.weekRecapMore(2)), findsOneWidget);
+        expect(l.weekRecapMore(2), '2 more from your week with Astute+');
+        await tester.tap(find.byKey(const ValueKey('journey-week-review-go')));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 600));
+        final DeckViewerScreen viewer = tester.widget(
+          find.byType(DeckViewerScreen),
+        );
+        expect(
+          [for (final p in viewer.deck) p.id],
+          [for (final p in read.take(5)) p.id],
+        );
+      });
+
+      testWidgets('nothing read since Monday: what will be there, and '
+          'nothing to press', (tester) async {
+        final DateTime now = DateTime.now();
+        // Last Sunday: the week before this one.
+        final String sunday = dateKey(
+          DateTime(now.year, now.month, now.day - now.weekday),
+        );
+        final app = await _app({
+          'knowit.onboarded': true,
+          'knowit.plus': true,
+          'knowit.seenIds': [for (final p in read) p.id],
+          'knowit.readDays': jsonEncode({
+            sunday: [for (final p in read) p.id],
+          }),
+        });
+        await pump(tester, app);
+        await tester.scrollUntilVisible(
+          find.text(l.weekReviewNone),
+          300,
+          scrollable: find.byType(Scrollable).first,
+        );
+        expect(find.text(l.weekReviewNone), findsOneWidget);
+        expect(
+          find.byKey(const ValueKey('journey-week-review-go')),
+          findsNothing,
+        );
+      });
     });
 
     testWidgets('on an Italian phone the subject with the most topics and '
@@ -472,21 +599,90 @@ void main() {
     });
 
     testWidgets('before there is anything to say, how many more answers '
-        'it takes, said once, and no empty chart', (tester) async {
+        'it takes, said once; no empty chart, no dash, and no chapter with '
+        'nothing in it', (tester) async {
       final app = await _app(
         _answered({
           80: [(0, 0), (5, 3)],
         }),
       );
       await pump(tester, app);
+      final l = lookupAppLocalizations(const Locale('en'));
       expect(find.byKey(const ValueKey('journey-gap')), findsNothing);
       expect(
         find.textContaining('7 more answers saying how sure'),
         findsOneWidget,
       );
       expect(find.text('LEVEL 1 OF 7'), findsNothing);
-      expect(find.text('Counted from today'), findsOneWidget);
-      expect(find.text('nothing dated yet'), findsOneWidget);
+      expect(find.text('—'), findsNothing);
+      // Right when sure has five answers to go on; no move is spotted yet,
+      // and the tile beside it says how one comes.
+      expect(find.text(l.journeyRightWhenSure), findsOneWidget);
+      expect(find.text(l.journeyMovesEmpty), findsOneWidget);
+      // Nothing read: what the reader knows and their habits wait for it.
+      expect(
+        find.textContaining(l.journeyChapterKnow.toUpperCase()),
+        findsNothing,
+      );
+      expect(
+        find.textContaining(l.journeyChapterHabits.toUpperCase()),
+        findsNothing,
+      );
+      expect(find.text(l.journeyReadingTime), findsNothing);
+    });
+
+    testWidgets('the first day, as the owner\'s phone showed it: no dash or '
+        'nought set large, a calm line where a figure will be, and no tile '
+        'with nothing to say', (tester) async {
+      final String today = dateKey(DateTime.now());
+      // Five cards read today, three answered wrong without saying how
+      // sure, the day finished, twenty seconds timed.
+      final List<Pill> five = PillBank.cards
+          .where((p) => p.challenge is PickOne && p.principle.isReal)
+          .take(5)
+          .toList();
+      final app = await _app({
+        'knowit.onboarded': true,
+        'knowit.plus': true,
+        'knowit.streak': 1,
+        'knowit.bestStreak': 1,
+        'knowit.lastCompletionDate': today,
+        'knowit.completedDates': [today],
+        'knowit.seenIds': [for (final p in five) p.id],
+        'knowit.readDays': jsonEncode({
+          today: [for (final p in five) p.id],
+        }),
+        'knowit.judgements': jsonEncode([
+          for (final p in five.take(3)) {'k': false, 'p': p.id, 'd': today},
+        ]),
+        'knowit.dayLog': jsonEncode({
+          today: [0, 20, 0, 0, 5, 0],
+        }),
+      });
+      await pump(tester, app);
+      final l = lookupAppLocalizations(const Locale('en'));
+      expect(find.text('—'), findsNothing);
+      expect(find.text('0 min'), findsNothing);
+      expect(find.text(l.journeyMinThisWeek(0)), findsNothing);
+      // Right when sure and the moves: nothing to say yet, so not there;
+      // the line above them says what it takes.
+      expect(find.text(l.journeyRightWhenSure), findsNothing);
+      expect(find.text(l.journeyMovesTitle), findsNothing);
+      expect(
+        find.textContaining('12 more answers saying how sure'),
+        findsOneWidget,
+      );
+      // The day in a row, without "Best 1 · 1 of 1"; the reading time, a
+      // calm line until it comes to a minute.
+      expect(find.text('1 day'), findsOneWidget);
+      expect(find.text(l.journeyBestActive(1, 1, 1)), findsNothing);
+      expect(find.text(l.journeyReadingTime), findsOneWidget);
+      expect(find.text(l.journeyFillsAsYouRead), findsOneWidget);
+      // The thirteen weeks wait for more than the two the row shows.
+      expect(find.byKey(const ValueKey('journey-days')), findsNothing);
+      expect(find.text(l.journeyActiveDays(1, 1)), findsNothing);
+      // The headline: where the journey starts, on the day it starts.
+      expect(find.text(l.storyHeadlineRead(5)), findsOneWidget);
     });
   });
 
