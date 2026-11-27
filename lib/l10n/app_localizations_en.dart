@@ -6116,6 +6116,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get yourFiveFromToday => 'Your five from today';
 
   @override
+  String get dayMomentTitle => 'Day complete.';
+
+  @override
+  String get dayMomentLater => 'Later';
+
+  @override
+  String get yourDayCard => 'Your day';
+
+  @override
   String get tuneTitle => 'Tune your mix';
 
   @override

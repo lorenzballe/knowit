@@ -11,7 +11,6 @@ import '../state/app_state.dart';
 import '../state/debug_looks.dart';
 import '../theme.dart';
 import '../data/skill_levels.dart';
-import '../data/topics.dart';
 import '../data/why.dart';
 import '../widgets/magic_card.dart';
 import '../data/pills_repository.dart';
@@ -21,6 +20,7 @@ import '../widgets/share_sheet.dart';
 import '../widgets/skill_mark.dart';
 import '../widgets/skill_score.dart' show todayMoveOf;
 import '../widgets/level_up.dart' show showLevelUpIfDue;
+import '../widgets/day_moment.dart' show showDayMomentIfDue;
 import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
@@ -90,15 +90,24 @@ class _TodayScreenState extends State<TodayScreen> {
   /// and only when there is a level to tell.
   bool _levelDue = false;
 
-  /// The day whose pictures were last fetched ahead, by its cards.
-  String? _warmed;
+  /// Whether the day's own moment may rise once the shelf is up, where the
+  /// developer tools try it (C, lib/widgets/day_moment.dart): set, like the
+  /// level, only when the day is finished here, in this session, so that
+  /// opening the app onto a finished day never raises it.
+  bool _momentDue = false;
+
+  /// Whether the shelf lands on the day's own card, where the developer
+  /// tools try one after the five (D): the evening the day is finished
+  /// here, once; on any other opening it starts from the first card.
+  bool _landOnDay = false;
 
   @override
   void initState() {
     super.initState();
-    // What to learn's look, as the developer tools pick it, shows at once:
-    // Today is kept alive beside the profile it is picked on, and a card's
-    // mark and the line under its head follow the look.
+    // Where the day is sent from changes the shelf's count and its glow at
+    // once, from the debug section, with this Today kept alive beside it;
+    // What to learn's look, the mark on a card and the line under its head.
+    DebugLooks.shareDay.addListener(_looksChanged);
     DebugLooks.learn.addListener(_looksChanged);
   }
 
@@ -108,9 +117,13 @@ class _TodayScreenState extends State<TodayScreen> {
 
   @override
   void dispose() {
+    DebugLooks.shareDay.removeListener(_looksChanged);
     DebugLooks.learn.removeListener(_looksChanged);
     super.dispose();
   }
+
+  /// The day whose pictures were last fetched ahead, by its cards.
+  String? _warmed;
 
   /// Fetches the pictures the finished day's shelf will show, once a day,
   /// after the frame: while the reader reads the five, so the shelf has them
@@ -141,6 +154,8 @@ class _TodayScreenState extends State<TodayScreen> {
     if (!completed) {
       // A new day: the table is a deck again, and nothing is on offer yet.
       _magic = false;
+      _momentDue = false;
+      _landOnDay = false;
       return;
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -148,18 +163,28 @@ class _TodayScreenState extends State<TodayScreen> {
     });
     if (!widget.app.isPlus) _magic = true;
     _levelDue = true;
+    _momentDue = true;
+    _landOnDay = true;
   }
 
   /// Once the shelf has landed, the day at rest: a level its answers
   /// reached rises over it, once (lib/widgets/level_up.dart). Pushed over
   /// the tabs, so the shell's own asks at the finished day (the reminder,
   /// the account, the place) wait for it.
+  ///
+  /// Where the developer tools try the day's own moment (C), it rises then
+  /// instead, if it is due: never on the evening a level rises, which has
+  /// that evening and its own way to send (lib/widgets/day_moment.dart).
   void _riseLevel() {
     _levelDue = false;
-    Future<void>.delayed(const Duration(milliseconds: 650), () {
+    final bool moment = _momentDue;
+    _momentDue = false;
+    Future<void>.delayed(const Duration(milliseconds: 650), () async {
       if (!mounted || !widget.app.todayCompleted || _magic) return;
       if (!(ModalRoute.of(context)?.isCurrent ?? true)) return;
-      showLevelUpIfDue(context, widget.app);
+      final bool rose = await showLevelUpIfDue(context, widget.app);
+      if (rose || !moment || !mounted) return;
+      await showDayMomentIfDue(context, widget.app);
     });
   }
 
@@ -431,12 +456,20 @@ class _TodayScreenState extends State<TodayScreen> {
       _shelfDeck = deck;
       _shelfAt = 0;
     }
+    // Where the day is a card of its own after the five (D), the evening it
+    // is finished here the shelf lands on that card, once.
+    if (_landOnDay) {
+      _landOnDay = false;
+      if (TodayDoneView.dayCardOn) _shelfAt = deck.length;
+    }
     // On the free plan the shelf ends on the card that offers the rest of
     // the day; that card has no subject, so the tab takes the spectrum's
-    // violet behind it rather than the last card's colour.
-    final int count = deck.length + (app.isPlus ? 0 : 1);
+    // violet behind it rather than the last card's colour. The day's own
+    // card, where there is one, takes the colour of the card its picture
+    // sets large.
+    final int count = TodayDoneView.countOf(app);
     final int at = _shelfAt.clamp(0, count - 1);
-    final Color colour = at < deck.length ? deck[at].color : kSpectrum[9];
+    final Color colour = TodayDoneView.glowOf(app, at);
 
     return Stack(
       key: key,

@@ -20,6 +20,28 @@ enum ProfileTopPick {
   c,
 }
 
+/// Where the finished day is sent from, as the developer tools pick it: the
+/// four ways drawn for the owner, by the letter he knows each by
+/// (lib/screens/today_done_view.dart, lib/widgets/day_moment.dart).
+enum ShareDayPick {
+  /// As it ships: "See again" and the day's share mark at the end of the
+  /// row over the shelf.
+  a,
+
+  /// The share mark alone at the end of the row; the five again from
+  /// Explore's "Your five from today".
+  b,
+
+  /// The day closed on a screen of its own, once, right after the five: its
+  /// picture, the way to send it, and "Later". The shelf after it has the
+  /// share mark alone, as in [b].
+  c,
+
+  /// The day as a card of its own after the five on the shelf, its picture
+  /// and the way to send it; nothing at the end of the row.
+  d,
+}
+
 /// What to learn, three other ways, as the developer tools try them beside
 /// the one that ships (lib/widgets/learn_looks.dart): the owner did not
 /// believe in twelve skills, each with a score, a mark on the cards and a
@@ -49,10 +71,10 @@ enum LearnLook {
 
 /// Looks the developer tools let a phone try on, so the owner can compare
 /// on his own phone what only pictures showed him before: the finished day
-/// with no row over its card, the profile's other tops, and What to learn
-/// three other ways. Changed from the debug section at the foot of the
-/// profile, kept on the phone, and listened to where each is drawn, so a
-/// change shows at once.
+/// with no row over its card, the profile's other tops, where the day is
+/// sent from, and What to learn three other ways. Changed from the debug
+/// section at the foot of the profile, kept on the phone, and listened to
+/// where each is drawn, so a change shows at once.
 ///
 /// Read only while the tools are on ([debugToolsOn]): a look kept by a
 /// TestFlight build is still on the phone when the App Store build is
@@ -60,6 +82,7 @@ enum LearnLook {
 abstract final class DebugLooks {
   static const String _kNoTopRow = 'knowit.debug.todayNoTopRow';
   static const String _kProfileTop = 'knowit.debug.profileTop';
+  static const String _kShareDay = 'knowit.debug.shareDay';
   static const String _kLearn = 'knowit.debug.learn';
 
   /// The finished day with no row over its shelf, as kept.
@@ -68,6 +91,10 @@ abstract final class DebugLooks {
   /// The profile's top, as kept.
   static final ValueNotifier<ProfileTopPick> profileTop =
       ValueNotifier<ProfileTopPick>(ProfileTopPick.auto);
+
+  /// Where the finished day is sent from, as kept.
+  static final ValueNotifier<ShareDayPick> shareDay =
+      ValueNotifier<ShareDayPick>(ShareDayPick.a);
 
   /// What to learn's look, as kept.
   static final ValueNotifier<LearnLook> learn = ValueNotifier<LearnLook>(
@@ -82,6 +109,11 @@ abstract final class DebugLooks {
   static ProfileTopPick get profileTopPicked =>
       debugToolsOn ? profileTop.value : ProfileTopPick.auto;
 
+  /// Where the day is sent from in this run: as it ships, unless the tools
+  /// are on and another way was picked.
+  static ShareDayPick get shareDayPicked =>
+      debugToolsOn ? shareDay.value : ShareDayPick.a;
+
   /// What to learn's look for this run: as it ships, unless the tools are
   /// on and another was picked.
   static LearnLook get learnPicked =>
@@ -93,6 +125,9 @@ abstract final class DebugLooks {
     profileTop.value =
         ProfileTopPick.values.asNameMap()[prefs.getString(_kProfileTop)] ??
         ProfileTopPick.auto;
+    shareDay.value =
+        ShareDayPick.values.asNameMap()[prefs.getString(_kShareDay)] ??
+        ShareDayPick.a;
     learn.value =
         LearnLook.values.asNameMap()[prefs.getString(_kLearn)] ??
         LearnLook.today;
@@ -112,6 +147,13 @@ abstract final class DebugLooks {
     await prefs.setString(_kProfileTop, pick.name);
   }
 
+  /// Picks where the day is sent from, and keeps it so.
+  static Future<void> setShareDay(ShareDayPick pick) async {
+    shareDay.value = pick;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_kShareDay, pick.name);
+  }
+
   /// Picks What to learn's look, and keeps it so.
   static Future<void> setLearn(LearnLook look) async {
     learn.value = look;
@@ -127,6 +169,9 @@ abstract final class DebugLooks {
     if (profileTop.value != ProfileTopPick.auto) {
       await prefs.setString(_kProfileTop, profileTop.value.name);
     }
+    if (shareDay.value != ShareDayPick.a) {
+      await prefs.setString(_kShareDay, shareDay.value.name);
+    }
     if (learn.value != LearnLook.today) {
       await prefs.setString(_kLearn, learn.value.name);
     }
@@ -137,6 +182,7 @@ abstract final class DebugLooks {
   static void reset() {
     noTopRow.value = false;
     profileTop.value = ProfileTopPick.auto;
+    shareDay.value = ShareDayPick.a;
     learn.value = LearnLook.today;
   }
 }

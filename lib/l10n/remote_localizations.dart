@@ -5808,6 +5808,17 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('yourFiveFromToday') ?? _base.yourFiveFromToday;
 
   @override
+  String get dayMomentTitle =>
+      _words.text('dayMomentTitle') ?? _base.dayMomentTitle;
+
+  @override
+  String get dayMomentLater =>
+      _words.text('dayMomentLater') ?? _base.dayMomentLater;
+
+  @override
+  String get yourDayCard => _words.text('yourDayCard') ?? _base.yourDayCard;
+
+  @override
   String get tuneTitle => _words.text('tuneTitle') ?? _base.tuneTitle;
 
   @override

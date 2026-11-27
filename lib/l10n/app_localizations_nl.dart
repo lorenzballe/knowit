@@ -6163,6 +6163,15 @@ class AppLocalizationsNl extends AppLocalizations {
   String get yourFiveFromToday => 'Jouw vijf van vandaag';
 
   @override
+  String get dayMomentTitle => 'Dag voltooid.';
+
+  @override
+  String get dayMomentLater => 'Later';
+
+  @override
+  String get yourDayCard => 'Jouw dag';
+
+  @override
   String get tuneTitle => 'Stel je mix af';
 
   @override

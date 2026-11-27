@@ -6841,6 +6841,18 @@
  "@yourFiveFromToday": {
   "description": "Explore, near the top once the day's five are read: a small row that opens the reader's own five cards of today again, full size. It names the reader's own cards, so it is never taken for the day's challenge that is the same for everyone (\"Today's five\")."
  },
+ "dayMomentTitle": "Day complete.",
+ "@dayMomentTitle": {
+  "description": "The screen that rises once, right after the day's five are read, with the day's picture and the way to send it (tried from the developer tools): its headline. Short, plain, never a cheer."
+ },
+ "dayMomentLater": "Later",
+ "@dayMomentLater": {
+  "description": "The screen that rises once the day's five are read: the quiet way past it, under the button that sends the day. Nothing is asked again that day."
+ },
+ "yourDayCard": "Your day",
+ "@yourDayCard": {
+  "description": "Today, once the five are read (tried from the developer tools): the card after the five on the shelf, which shows the day's picture and sends it. Its name, over the picture, and what a screen reader says for its dot."
+ },
  "tuneTitle": "Tune your mix",
  "@tuneTitle": {
   "description": "The screen under the topics editor, and the row that opens it: how much of each subject, and which parts of each."
