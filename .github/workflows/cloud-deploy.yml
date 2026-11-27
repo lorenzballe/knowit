@@ -12,6 +12,13 @@
 # are asked of Claude with ANTHROPIC_API_KEY, the same Actions secret the
 # card factory uses: each deploy keeps it in Secret Manager, where the
 # function reads it, so the service account needs Secret Manager Admin too.
+#
+# Invita un amico (functions/src/invite.ts) gives a friend's week of Astute+
+# through RevenueCat with REVENUECAT_SECRET_KEY, an Actions secret of the
+# same name: a RevenueCat secret key (sk_…, API version V1), kept in Secret
+# Manager the same way. It is optional and never stops a deploy: without it
+# the functions answer "not configured" and every phone hides the
+# invitation, and the step summary says how to add it.
 name: Cloud deploy
 
 on:
@@ -44,6 +51,7 @@ jobs:
         env:
           KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           ANTHROPIC: ${{ secrets.ANTHROPIC_API_KEY }}
+          REVENUECAT: ${{ secrets.REVENUECAT_SECRET_KEY }}
         run: |
           test -n "$KEY" || { echo "FIREBASE_SERVICE_ACCOUNT is not set"; exit 1; }
           printf '%s' "$KEY" > "$RUNNER_TEMP/sa.json"
@@ -78,6 +86,50 @@ jobs:
                 echo
                 echo "Make a new key at console.anthropic.com → API keys, and put it in GitHub under Settings → Environments → production → ANTHROPIC_API_KEY, then deploy again. Until then the functions keep the key they have."
               } >> "$GITHUB_STEP_SUMMARY"
+            fi
+            # The key Invita un amico gives a friend's week with
+            # (functions/src/invite.ts): RevenueCat's secret key, kept in
+            # Secret Manager like the one above. Optional, and it never stops
+            # the deploy: without it the functions answer "not configured" and
+            # every phone keeps the invitation hidden. A function that names
+            # a secret Secret Manager has never had cannot be deployed, so
+            # until the key is added a stand-in is kept there, which the
+            # functions take as no key at all.
+            rc_kept=no
+            case "$REVENUECAT" in
+              "") ;;
+              sk_*)
+                umask 077
+                printf '%s' "$REVENUECAT" > "$RUNNER_TEMP/rc"
+                if npx --yes firebase-tools@15 functions:secrets:set REVENUECAT_SECRET_KEY --data-file "$RUNNER_TEMP/rc" --project astuto-3d398 --non-interactive --force; then
+                  rc_kept=yes
+                  echo "RevenueCat's secret key is kept for the invitations."
+                else
+                  echo "::warning::REVENUECAT_SECRET_KEY could not be kept in Secret Manager."
+                fi
+                rm -f "$RUNNER_TEMP/rc"
+                ;;
+              *)
+                echo "::warning::REVENUECAT_SECRET_KEY is not a RevenueCat secret key (those start sk_; an app's public key cannot give a week), so it is not kept."
+                ;;
+            esac
+            if [ "$rc_kept" = no ]; then
+              if npx --yes firebase-tools@15 functions:secrets:get REVENUECAT_SECRET_KEY --project astuto-3d398 --non-interactive > /dev/null 2>&1; then
+                echo "::notice::The invitations keep the RevenueCat key Secret Manager already holds."
+              else
+                printf 'unset' > "$RUNNER_TEMP/rc"
+                npx --yes firebase-tools@15 functions:secrets:set REVENUECAT_SECRET_KEY --data-file "$RUNNER_TEMP/rc" --project astuto-3d398 --non-interactive --force \
+                  || echo "::warning::No stand-in could be kept for REVENUECAT_SECRET_KEY."
+                rm -f "$RUNNER_TEMP/rc"
+                echo "::notice::No RevenueCat key is kept, so Invita un amico stays hidden on every phone until one is. Nothing else is affected."
+                {
+                  echo "### Invita un amico is not set up"
+                  echo
+                  echo "The invitations give a week of Astute+ through RevenueCat, with a secret key Secret Manager does not hold yet. Until it does, the functions answer \"not configured\" and the app hides the invitation; nothing else is affected."
+                  echo
+                  echo "In RevenueCat: Project settings → API keys → + New secret API key, API version V1. In GitHub: Settings → Secrets and variables → Actions → New repository secret, named REVENUECAT_SECRET_KEY. Then run this deploy again."
+                } >> "$GITHUB_STEP_SUMMARY"
+              fi
             fi
           ;; esac
           npx --yes firebase-tools@15 deploy --only "${{ inputs.only }}" --project astuto-3d398 --non-interactive --force

@@ -12,6 +12,7 @@ import { Deal, dealDay } from './deal.js';
 import { Event, Presence, Profile, Snapshot, buildProfile, facts } from './profile.js';
 import { PersonalExplore, buildPersonalExplore } from './explore.js';
 import { Place, placeFromJson } from './place.js';
+import { forgetInvites } from './invite.js';
 
 /** How many days of the trace the profile is read from. */
 export const TRACE_DAYS = 21;
@@ -150,10 +151,11 @@ export async function pruneReader(db: Firestore, uid: string, nowMs: number): Pr
   return docs.length;
 }
 
-/** Every trace, day, profile and shelf a reader had: gone with their account. */
+/** Every trace, day, profile and shelf a reader had, and their invitations: gone with their account. */
 export async function forgetReader(db: Firestore, uid: string): Promise<void> {
   await db.recursiveDelete(db.collection('readers').doc(uid));
   await db.collection('presence').doc(uid).delete().catch(() => undefined);
+  await forgetInvites(db, uid);
 }
 
 export { FieldValue };

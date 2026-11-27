@@ -79,3 +79,8 @@ jobs:
       # reader into the same counts, the marks pruned.
       - run: npx firebase emulators:exec --only firestore --project astuto-daily-test "node --test ../../functions/lib/daily.emulator.test.js"
         working-directory: tool/rules
+      # Invita un amico (functions/src/invite.ts): a code made once, a
+      # friend's week given after the first day, all of it gone with the
+      # account.
+      - run: npx firebase emulators:exec --only firestore --project astuto-invite-test "node --test ../../functions/lib/invite.emulator.test.js"
+        working-directory: tool/rules
