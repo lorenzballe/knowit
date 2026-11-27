@@ -23,6 +23,7 @@ import 'subject_icon.dart';
 import 'ui.dart';
 import 'web/card_thumb.dart';
 import 'web/web_card_page.dart' show groundOf;
+import '../l10n/dates.dart';
 
 /// The day, sent to a friend: a picture of the five cards that came out, and
 /// a line under it.
@@ -720,7 +721,7 @@ class DayPicture extends StatelessWidget {
     final String locale = Localizations.localeOf(context).toString();
     String date;
     try {
-      date = DateFormat('EEEE d MMMM', locale).format(day);
+      date = formatDay(DateFormat('EEEE d MMMM', locale), day);
     } catch (_) {
       date = DateFormat('EEEE d MMMM', 'en').format(day);
     }

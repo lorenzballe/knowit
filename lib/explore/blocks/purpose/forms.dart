@@ -24,6 +24,7 @@ import '../../../widgets/subject_icon.dart';
 import '../../explore_block.dart';
 import 'commit.dart' show askable;
 import 'kit.dart';
+import '../../../l10n/dates.dart';
 
 /// A shelf of tiles of one form: the form's own name and line unless the
 /// section gives its own, and its cards in a row.
@@ -926,9 +927,9 @@ class MovingBlock extends ExploreBlock {
       if (on != null) {
         String date;
         try {
-          date = DateFormat.MMMd(locale).format(on);
+          date = formatDay(DateFormat.MMMd(locale), on);
         } catch (_) {
-          date = DateFormat.MMMd('en').format(on);
+          date = formatDay(DateFormat.MMMd('en'), on);
         }
         return l.elided(l.purposeMovingUpdated(date));
       }

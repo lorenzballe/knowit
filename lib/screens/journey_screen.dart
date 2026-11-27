@@ -40,6 +40,7 @@ import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/move_words.dart';
 import '../widgets/skill_score.dart' show scoreUp, signedNumber;
 import '../widgets/training.dart';
+import '../l10n/dates.dart';
 
 part 'journey_story.dart';
 
@@ -507,7 +508,7 @@ DateFormat _format(BuildContext context, DateFormat Function(String) make) {
 
 /// A day of a month, as the phone's language writes it: 14 July, 7月14日.
 String _day(BuildContext context, DateTime d) =>
-    _format(context, (l) => DateFormat.MMMMd(l)).format(d);
+    formatDay(_format(context, (l) => DateFormat.MMMMd(l)), d);
 
 /// A month on its own, as it reads inside a sentence.
 String _month(BuildContext context, DateTime d) =>

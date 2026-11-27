@@ -47,6 +47,7 @@ import 'music_sound.dart';
 import 'progress.dart';
 import 'card_notes.dart';
 import 'reading_log.dart';
+import '../l10n/dates.dart';
 
 /// Which paid plan the paywall has selected. Purchases are not wired up.
 enum Plan { month, year }
@@ -3063,7 +3064,7 @@ class AppState extends ChangeNotifier {
     // at launch can outrun; this loads them, and does nothing once loaded.
     unawaited(initializeDateFormatting());
     try {
-      return DateFormat.MMMMd(locale).format(day);
+      return formatDay(DateFormat.MMMMd(locale), day);
     } catch (_) {
       return DateFormat.MMMMd('en').format(day);
     }

@@ -40,6 +40,7 @@ import 'glass_round.dart';
 import 'skill_score.dart' show scoreBookOf, scoreNumber, scoreUp, signedNumber;
 import 'training.dart' show pickedSkills;
 import 'ui.dart' show PrimaryButton;
+import '../l10n/dates.dart';
 
 /// Where [app]'s reader stands on the levels, with [told] the highest level
 /// kept as told.
@@ -1126,10 +1127,10 @@ class LevelPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final String date = DateFormat(
-      'd MMMM y',
-      Localizations.localeOf(context).toString(),
-    ).format(day);
+    final String date = formatDay(
+      DateFormat('d MMMM y', Localizations.localeOf(context).toString()),
+      day,
+    );
     final TextStyle faint = AppText.label(
       size: 11,
       weight: FontWeight.w700,

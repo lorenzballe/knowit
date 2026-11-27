@@ -35,6 +35,7 @@ import '../widgets/learn_looks.dart' show markedSkills;
 import '../widgets/subject_icon.dart';
 import '../widgets/web/card_thumb.dart';
 import '../widgets/web/web_card_page.dart' show groundOf;
+import '../l10n/dates.dart';
 
 /// The Today tab once the five are done, from artboard 66a.
 ///
@@ -2296,7 +2297,7 @@ String _dateOf(BuildContext context, DateTime day) {
   final String locale = Localizations.localeOf(context).toString();
   String date;
   try {
-    date = DateFormat.MMMMEEEEd(locale).format(day);
+    date = formatDay(DateFormat.MMMMEEEEd(locale), day);
   } catch (_) {
     date = DateFormat.MMMMEEEEd('en').format(day);
   }

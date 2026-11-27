@@ -39,6 +39,7 @@ import '../widgets/motion.dart';
 import '../widgets/ui.dart' show ScreenView;
 import 'purchase_success_screen.dart';
 import '../widgets/glass_round.dart';
+import '../l10n/dates.dart';
 
 part 'trial_offer.dart';
 part 'paywall_looks.dart';
@@ -338,7 +339,7 @@ Future<void> showPurchaseSuccess(
       ? DateTime(now.year + 1, now.month, now.day)
       : DateTime(now.year, now.month + 1, now.day);
   final String locale = Localizations.localeOf(context).toString();
-  String day(DateTime d) => DateFormat.MMMd(locale).format(d);
+  String day(DateTime d) => formatDay(DateFormat.MMMd(locale), d);
   final String? end = days == null ? null : day(now.add(Duration(days: days)));
   final String name = app.name.trim();
   final String? first = name.isEmpty || name == 'You'
