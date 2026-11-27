@@ -1274,7 +1274,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get termsLineTerms => 'Termini d’uso';
 
   @override
-  String get termsLinePrivacy => 'Informativa sulla privacy';
+  String get termsLinePrivacy => 'Informativa sulla privacy';
 
   @override
   String get skip => 'Salta';
