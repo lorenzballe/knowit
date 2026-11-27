@@ -52,6 +52,8 @@ final List<Object> _declared = [
   AppState.kPlaceAskFlag,
   AppState.kReviewAskFlag,
   AppState.kFirstRunTrialFlag,
+  AppState.kFirstWeekOfferFlag,
+  AppState.kFirstMonthOfferFlag,
   AppState.kCardAiFlag,
   AppState.kPushAskGapKnob,
   AppState.kPushDeferralsKnob,
@@ -578,6 +580,31 @@ void main() {
         'knowit.lastCompletionDate': _day(0),
       });
       expect(neverAsked.shouldAskForReview, isTrue);
+    });
+
+    test('the first week\'s page and the first month\'s: off as built, each '
+        'on only where the server says', () async {
+      final AppState app = await _app({});
+      expect(app.firstWeekOfferOn, isFalse);
+      expect(app.firstMonthOfferOn, isFalse);
+      _take({
+        'flags': {'offer.firstWeek': true},
+      });
+      expect(app.firstWeekOfferOn, isTrue);
+      expect(app.firstMonthOfferOn, isFalse);
+      _take({
+        'flags': {
+          'offer.firstWeek': true,
+          'offer.firstMonth': {'on': true},
+        },
+      });
+      expect(app.firstWeekOfferOn, isTrue);
+      expect(app.firstMonthOfferOn, isTrue);
+      _take({
+        'flags': {'offer.firstWeek': 'yes', 'offer.firstMonth': true},
+      });
+      expect(app.firstWeekOfferOn, isFalse, reason: 'written wrong: as built');
+      expect(app.firstMonthOfferOn, isTrue);
     });
 
     test('the account\'s offer, held back', () async {

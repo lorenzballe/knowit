@@ -214,6 +214,13 @@ class Subscription extends ChangeNotifier {
   /// Astute+ as the store holds it, or as a reviewer's code opened it.
   bool get isPlus => _isPlus || _reviewAccess;
 
+  /// Whether the store has ever held Astute+ for this reader: a trial or a
+  /// plan, running or long over. RevenueCat keeps an entitlement that ran
+  /// out beside the active ones, so a reader who once had a trial is known
+  /// as one on any phone their account is on. Read only once the store has
+  /// answered ([ready]): before, nothing is known either way.
+  bool get everHeldPlus => _plus != null;
+
   /// True on the Android phone a Google Play reviewer unlocked with the code
   /// Play Console gave them (see review_access.dart). Nobody else has it.
   bool get reviewAccess => _reviewAccess;

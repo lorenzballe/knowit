@@ -5,6 +5,8 @@
   "place.ask": {"default": true},
   "review.ask": {"default": true},
   "trial.firstRun": {"default": false},
+  "offer.firstWeek": {"default": false},
+  "offer.firstMonth": {"default": false},
   "cardAi": {"default": false}
  },
  "tunables": {
