@@ -53,6 +53,16 @@ class Languages(unittest.TestCase):
             self.assertIn('<link rel="alternate" hreflang="en" href="https://astutetheapp.com/">', p)
             self.assertIn('<link rel="alternate" hreflang="x-default" href="https://astutetheapp.com/">', p)
 
+    def test_the_italian_pages_show_the_app_in_italian(self):
+        page = read("it/index.html")
+        shown = set(re.findall(r'src="/assets/(?:it/)?(app-[a-z-]+\.webp|share-day\.webp)"', page))
+        self.assertGreater(len(shown), 8)
+        for name in shown:
+            self.assertTrue((SITE / "assets" / "it" / name).exists(), name)
+            self.assertIn(f'src="/assets/it/{name}"', page, name)
+            self.assertNotIn(f'src="/assets/{name}"', page, name)
+            self.assertIn(f'src="/assets/{name}"', read("index.html"), name)
+
     def test_the_twin_links_to_its_own_language(self):
         page = read("it/index.html")
         hrefs = set(re.findall(r'href="(/[^"]*)"', page))

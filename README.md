@@ -40,18 +40,72 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   presents Astute on Google Play and on the App Store, each with the store's
   own badge. The Play listing is live; the App Store's is made but not live
   yet, so until `APP_STORE_OPEN` in `tool/site/chrome.py` says it is (one
-  line to change at launch) Apple's badge keeps its link but is marked
-  "Coming soon", every line that says where the app is says "Free on
-  Android · coming to iPhone", and no Download button leads to the store's
-  empty page. An Android phone's Download goes to Google Play, a computer's
-  to a code to scan with the phone, and an iPhone's, like the code, to
-  `/get`: from there an Android phone goes on to Google Play, and an iPhone,
-  until the listing is live, stays on a page that says the app is on its
-  way. It reads fully without JavaScript, and without motion for anyone who
-  has asked their system for less. The phone pictures in `site/assets/` are
-  taken by `tool/site_shots.dart`, the app on an iPhone 16 Pro at night in
-  English with cards from the bank, and made WebP at 840×1826 by
-  `tool/site/shots.py`; nothing on them is made up about other readers.
+  line to change at launch) Apple's badge is marked "Coming soon" and leads
+  to the list for the iPhone (below), every line that says where the app is
+  says "Free on Android · coming to iPhone", and no button anywhere leads to
+  the store's empty page. An Android phone's Download goes to Google Play, a
+  computer's to a code to scan with the phone, and an iPhone's, like the
+  code, to `/get`: from there an Android phone goes on to Google Play, and an
+  iPhone, until the listing is live, stays on a page that says the app is on
+  its way and offers the two things to do meanwhile: leave an email to be
+  told the day it is there, or play Today's challenge in the browser
+  (`/sfida`). The first screen offers the same two to anyone not on Android.
+  On a phone, once the first screen is behind, a slim bar at the thumb holds
+  the prices, the questions and the store (on an iPhone, the list), and goes
+  as the last word comes up; the twenty subjects' names, which only said
+  again what the rows above them had shown, are left to screen readers
+  there. Every page has its own title and description, and Open Graph tags
+  for a shared link. It reads fully without JavaScript, and without motion
+  for anyone who has asked their system for less. The phone pictures in
+  `site/assets/` are taken by `tool/site_shots.dart`, the app on an iPhone
+  16 Pro at night in English with cards from the bank, and made WebP at
+  840×1826 by `tool/site/shots.py`; the Italian pages' are the same app
+  speaking Italian (`LANG_SHOT=it`), in `site/assets/it/`. Nothing on them
+  is made up about other readers.
+- **In Italian too.** The landing page and `/get` have Italian twins, `/it/`
+  and `/it/get`, written by `tool/site/i18n.py` from the English pages and
+  `tool/site/lang/it.json`, every run of the English page's text said in
+  Italian by hand, in the app's own words (`lib/l10n/app_it.arb`): Oggi,
+  Esplora, la sfida di oggi. The deploy stops if a twin is not what the
+  script writes, if a line of an English page has no Italian, or if the
+  table says a line no page shows any more. The other pages (the legal
+  pages, the 404, `/sfida`, `/invito`, a friend's card under `/c/`, the
+  card pages under `/q/`) hold both languages and show one. A few lines at
+  the top of every page choose, before anything is drawn: the language
+  picked with the switch in the nav (EN/IT), kept on the device under
+  `astute.lang`, or else the browser's (`navigator.language`), or else
+  English; `?lang=en` is the switch's own link. The twins name each other to
+  search engines (`hreflang`, English for everyone else). A card's own
+  words stay in English, as the app deals them, marked so. Another
+  language is a table beside `it.json`, its column in the chrome's and the
+  scripts' words, and its code in `chrome.LANGS` (`tool/site/README.md`).
+- **The list for the iPhone.** `/get#notify`, where every Apple badge leads
+  while the listing is not live, takes an email to be told, once, the day
+  Astute is on the App Store. `site/assets/notify.js` writes it straight into
+  Firestore through its REST API, with the site's own web config
+  (`keys.js`, as the account page), as a new document of `waitlist`: the
+  address, the page's language and the server's time, nothing else.
+  `firestore.rules` let anyone create one such document under a fresh
+  random id, well formed (an address's shape, at most 254 characters, a
+  two-letter language, the time the server stamps), and nobody read, change
+  or delete one; `tool/rules/rules.test.mjs` holds them to it. The privacy
+  policy (`/privacy#iphone-list`) says what is kept, why, and how to come
+  off it: the owner reads the list in the Firebase console, sends the one
+  email the day the app is there, and deletes the list. Without JavaScript
+  the form is an email link.
+- **A page for every card**, `/q/<id>`, written by `tool/cards/card_pages.py`
+  when the site is put together, for every card the app deals (books in
+  pills, which Astute+ gives whole, and the cards kept from a family setting
+  have none): the question as its title, the short answer and the why, the
+  source linked, the drawn card to play in place, four more to read next
+  (its strand's, its kind's, its subject's), and "Five like this every
+  morning" over the stores. Each says its
+  question and answer to search engines as Google documents them
+  (`FAQPage`; `QAPage` is for questions readers answer), is about 10 kB, and
+  is listed in the sitemap: `sitemap.xml` is an index of files of at most
+  50,000 addresses each, written from the bank at the same time.
+  `robots.txt` points to it and keeps the bare drawn pages
+  (`/cards/pages/`) and the web preview (`/app/`) out of searches.
 - **What the site measures**: the pages read and the store buttons pressed,
   `$pageview` and `store clicked` (`store`, `page`, `ref`), into the same
   PostHog project as the app, from `site/assets/main.js`. Nothing is kept on
@@ -70,8 +124,9 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   provider token, `APP_STORE_PROVIDER_TOKEN` in `tool/site/chrome.py`, which
   is empty until the owner sets it; the comment there says where it is. The
   web app under `/app/` has its own PostHog, below, and none of this.
-- `/sfida` is the challenge on today's five, written by
-  `tool/cards/sfida_page.py` when the site is put together: a friend sent
+- `/sfida` is Today's challenge in the browser (`/it/sfida` in Italian),
+  written by `tool/cards/sfida_page.py` when the site is put together: a
+  friend sent
   "Challenge a friend" from the app opens `sfida?d=2026-11-27&s=4` — the day
   the five were dealt and how many the reader got right, nothing else — and
   plays the same five in the browser, one at a time, each in its subject's
@@ -103,9 +158,9 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   once, in `tool/site/chrome.py`, and stamped onto every page between the
   markers each page carries; the deploy stops if a page has drifted. Astute
   is published by TheBaleCompany, and every page says so.
-- `robots.txt`, `sitemap.xml`, `manifest.webmanifest` (which names both
-  store listings, the Play one ahead of its day) and `assets/og.png`, the
-  picture a shared link shows.
+- `robots.txt`, `manifest.webmanifest` (which names both store listings,
+  the Play one ahead of its day) and `assets/og.png`, the picture a shared
+  link shows.
 - `/app/` is the app, built for the web: the live preview.
 - `/cards/cards.json` is the card bank the app refreshes from, and
   `/widget/days.json` today's shelf the iPhone widgets fall back on, with
@@ -1298,8 +1353,8 @@ as its link alone. It used to go as a picture with the whole answer under
 it, the steps, the other side, the bar move and the source: in a chat, a
 wall of words that spoiled the one thing worth sending.
 
-**Challenge a friend.** Today's five on Explore are the one thing every
-reader shares that day, and the site has them too, so they can be a
+**Challenge a friend.** Today's challenge on Explore is the one thing
+every reader shares that day, and the site has it too, so they can be a
 challenge for two without an account or a board: a line in the reader's
 language — "I got 4 of today's 5 on Astute. Can you beat me?" — and a link
 to `/sfida`, where the friend plays the same five in a browser and sees both

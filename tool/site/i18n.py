@@ -33,8 +33,10 @@ translated: kept, and marked lang="en".
 In the twin the links to the site's other pages go to their own language:
 /get to /it/get, the landing page's sections to /it/#how, the pages in both
 languages to their Italian half (/privacy#it); its canonical address and
-og:url are its own, and its og:locale the language's. A new language is a
-new table, a line in LOCALES and one in chrome.LANGS and chrome.WORDS.
+og:url are its own, and its og:locale the language's; and the app's
+pictures are the app in the language, where site/assets/<lang>/ has them
+(tool/site/shots.py). A new language is a new table, a line in LOCALES and
+one in chrome.LANGS and chrome.WORDS.
 """
 from __future__ import annotations
 
@@ -207,6 +209,17 @@ def relink(text: str, lang: str) -> str:
     return re.sub(r'href="(/[^"]*)"', one, text)
 
 
+def pictures(text: str, lang: str) -> str:
+    """The app's pictures in [lang] where the camera took them in it
+    (site/assets/<lang>/, tool/site/shots.py), the English ones elsewhere."""
+    def one(m):
+        name = m.group(1)
+        if (SITE / 'assets' / lang / name).exists():
+            return f'src="/assets/{lang}/{name}"'
+        return m.group(0)
+    return re.sub(r'src="/assets/([a-z0-9-]+\.webp)"', one, text)
+
+
 def twin(name: str, lang: str, words: dict[str, str]) -> tuple[str, list[str], set[str]]:
     """The page [name] of site/ in [lang]: its text, the runs the table does
     not say, and the table's entries it used."""
@@ -252,6 +265,7 @@ def twin(name: str, lang: str, words: dict[str, str]) -> tuple[str, list[str], s
     out = out.replace(f'<meta property="og:locale:alternate" content="{LOCALES[lang]}">',
                       f'<meta property="og:locale:alternate" content="{LOCALES["en"]}">', 1)
     out = relink(out, lang)
+    out = pictures(out, lang)
     out = chrome.stamp(out, landing=name == 'index.html', lang=lang, here=here)
     note = (f'<!-- Written by tool/site/i18n.py from site/{name} and tool/site/lang/{lang}.json: '
             f'change those and run it, never this. -->\n')
