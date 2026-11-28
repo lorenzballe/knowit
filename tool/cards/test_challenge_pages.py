@@ -1,6 +1,7 @@
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import challenge_pages as cp
 
@@ -57,7 +58,8 @@ class CardPages(unittest.TestCase):
         self.assertIn('og:image" content="https://astutetheapp.com/cards/thumbs/space-x-front.webp?v=abc"', page)
         self.assertIn("summary_large_image", page)
         self.assertIn("--c:#2B5CFF", page)
-        self.assertIn("ct=challenge", page)
+        # The store links carry the campaign: Google Play's here, Apple's once it is live.
+        self.assertIn("referrer=utm_source%3Dchallenge", page)
         self.assertNotIn("card.js", page, "a page plays itself")
 
     def test_a_drawn_card_without_its_picture_shows_its_subject(self):
@@ -66,13 +68,14 @@ class CardPages(unittest.TestCase):
 
     def test_a_card_in_words_asks_first_and_answers_behind_a_tap(self):
         page = cp.render(card("art-pick"))
+        self.assertIn('<div class="subject"><span class="l-en">ART</span><span class="l-it" lang="it">ARTE</span></div>', page)
         self.assertIn('<h1 class="q">Which one?</h1>', page)
         self.assertIn('data-right="1">Second &lt;b&gt;</button>', page)
         self.assertEqual(page.count('data-right="0"'), 2)
         self.assertIn('<section class="answer" hidden>', page)
         self.assertIn("The second, because.", page)
         self.assertIn("WHAT TO KEEP", page)
-        self.assertIn("Source · A book, 1970", page)
+        self.assertIn('<span class="l-en">Source</span><span class="l-it" lang="it">Fonte</span> · A book, 1970', page)
         self.assertIn('og:image" content="https://astutetheapp.com/cards/og/art.png"', page)
         self.assertIn("Can you get it?", page)
         self.assertIn('<script src="/c/card.js?v=', page)
@@ -80,7 +83,7 @@ class CardPages(unittest.TestCase):
 
     def test_a_read_shows_its_answer_on_a_tap(self):
         page = cp.render(card("history-read"))
-        self.assertIn('class="reveal">Show the answer</button>', page)
+        self.assertIn('class="reveal"><span class="l-en">Show the answer</span><span class="l-it" lang="it">Mostra la risposta</span></button>', page)
         self.assertNotIn('class="choices"', page)
         self.assertIn("--ink:#10100C", page, "dark words on history's yellow")
 
@@ -92,12 +95,37 @@ class CardPages(unittest.TestCase):
 
     def test_a_number_gives_its_hint_and_its_working(self):
         page = cp.render(card("art-sum"))
-        self.assertIn("Hint · Add them up.", page)
+        self.assertIn('<span class="l-en">Hint</span><span class="l-it" lang="it">Suggerimento</span> · Add them up.', page)
         self.assertIn("<li>One plus one</li>", page)
         self.assertNotIn("<li>Two</li>", page, "the last step is the answer, said once")
         self.assertIn('<form class="guess" data-value="2" data-unit="apples">', page)
         self.assertIn('placeholder="Your guess"', page)
         self.assertNotIn('class="reveal"', page, "a number is guessed, not shown")
+
+    def test_the_page_s_own_words_in_both_languages_the_card_s_in_its_own(self):
+        page = cp.render(card("art-pick"))
+        # The reader's language picked before anything is drawn, as on every
+        # page of the site that holds both.
+        self.assertIn(cp.chrome.lang_script("both", "/c/art-pick"), page)
+        self.assertLess(page.index("<!-- @lang -->"), page.index("<title>"))
+        self.assertIn('html[data-lang="it"] .l-en,html:not([data-lang="it"]) .l-it{display:none!important}', cp.CSS)
+        self.assertIn("Un amico ti ha mandato questa carta", page)
+        self.assertIn("DA PORTARE CON TE", page)
+        self.assertIn("Gratis su Android, e presto su iPhone.", page)
+        # The card's own words are the card's, in English.
+        self.assertIn('<h1 class="q">Which one?</h1>', page)
+        self.assertIn("'Non proprio.'", cp.SCRIPT)
+        self.assertIn("'Not quite.'", cp.SCRIPT)
+
+    def test_apple_s_button_leads_to_the_list_while_its_listing_is_not_live(self):
+        with mock.patch.object(cp, "APP_STORE_OPEN", False):
+            stores = cp.stores()
+            self.assertNotIn("apps.apple.com", stores)
+            self.assertIn('href="/get#notify"', stores)
+            self.assertIn('href="/it/get#notify"', stores)
+            self.assertLess(stores.index("Google Play"), stores.index("App Store"))
+        with mock.patch.object(cp, "APP_STORE_OPEN", True):
+            self.assertIn("https://apps.apple.com/app/id6806852300?ct=challenge", cp.stores())
 
     def test_an_estimate_counts_a_guess_within_its_factor_as_close(self):
         page = cp.render(card("art-guess"))

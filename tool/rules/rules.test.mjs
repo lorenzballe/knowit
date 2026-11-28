@@ -232,6 +232,54 @@ await check('invitations are the server\'s alone: no phone reads or writes a cod
   await assertFails(env.authenticatedContext('carl').firestore().doc('invited/carl').set({ code: 'K7MQ2P', at: 2, state: 'waiting' }));
 });
 
+// The list for the iPhone (site/assets/notify.js): the site has no sign-in,
+// so a stranger adds to it, and the one place anyone at all can write is
+// held to exactly what the page sends.
+const listed = (extra = {}) => ({ email: 'reader@example.com', lang: 'it', at: now(), ...extra });
+const listId = 'Ab3dEf6hIj9kLm2nOp5q';
+
+await check('anyone, signed in or not, joins the iPhone list once, with an address, a language and the moment', async () => {
+  await assertSucceeds(stranger().doc(`waitlist/${listId}`).set(listed()));
+  await assertSucceeds(stranger().doc('waitlist/Zz0aaaaaaaaaaaaaaaaa').set(listed({ email: 'x@y.co', lang: 'en' })));
+  await assertSucceeds(reader().doc('waitlist/Qq1aaaaaaaaaaaaaaaaa').set(listed()));
+  await assertSucceeds(stranger().doc('waitlist/Ww2aaaaaaaaaaaaaaaaa').set(listed({ email: 'a'.repeat(242) + '@example.com' })));
+});
+
+await check('and nobody reads the list, not even what they wrote', async () => {
+  await stranger().doc(`waitlist/${listId}`).set(listed());
+  await assertFails(stranger().doc(`waitlist/${listId}`).get());
+  await assertFails(stranger().collection('waitlist').get());
+  await assertFails(reader().doc(`waitlist/${listId}`).get());
+  await assertFails(reader().collection('waitlist').where('email', '==', 'reader@example.com').get());
+});
+
+await check('nor changes or takes away a name on it', async () => {
+  await stranger().doc(`waitlist/${listId}`).set(listed());
+  await assertFails(stranger().doc(`waitlist/${listId}`).set(listed({ email: 'other@example.com' })));
+  await assertFails(stranger().doc(`waitlist/${listId}`).update({ lang: 'en' }));
+  await assertFails(stranger().doc(`waitlist/${listId}`).delete());
+  await assertFails(reader().doc(`waitlist/${listId}`).delete());
+});
+
+await check('only an email\'s shape, never anything else beside it', async () => {
+  const db = stranger();
+  await assertFails(db.doc(`waitlist/${listId}`).set(listed({ email: 'not an address' })));
+  await assertFails(db.doc(`waitlist/${listId}`).set(listed({ email: 'reader@example' })));
+  await assertFails(db.doc(`waitlist/${listId}`).set(listed({ email: 'reader @example.com' })));
+  await assertFails(db.doc(`waitlist/${listId}`).set(listed({ email: '@example.com' })));
+  await assertFails(db.doc(`waitlist/${listId}`).set(listed({ email: 'a'.repeat(243) + '@example.com' })));
+  await assertFails(db.doc(`waitlist/${listId}`).set(listed({ email: 7 })));
+  await assertFails(db.doc(`waitlist/${listId}`).set(listed({ lang: 'Italiano' })));
+  await assertFails(db.doc(`waitlist/${listId}`).set(listed({ lang: 3 })));
+  await assertFails(db.doc(`waitlist/${listId}`).set(listed({ at: new Date(2026, 0, 1) })));
+  await assertFails(db.doc(`waitlist/${listId}`).set(listed({ name: 'Lorenzo' })));
+  await assertFails(db.doc(`waitlist/${listId}`).set({ email: 'reader@example.com', lang: 'it' }));
+  await assertFails(db.doc(`waitlist/${listId}`).set({ email: 'reader@example.com', at: now() }));
+  await assertFails(db.doc('waitlist/short').set(listed()));
+  await assertFails(db.doc('waitlist/Ab3dEf6hIj9kLm2nOp5q-').set(listed()));
+  await assertFails(db.doc('waitlist/reader@example.com').set(listed()));
+});
+
 await check('the rest of the rules still stand', async () => {
   await assertSucceeds(env.authenticatedContext('alice').firestore().doc('readers/alice').set({ a: 1 }));
   await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice').get());
