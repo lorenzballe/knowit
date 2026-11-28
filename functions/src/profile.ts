@@ -44,6 +44,8 @@ export interface Snapshot {
   topicLevels?: Record<string, number>;
   genresOff?: string[];
   strandsOff?: string[];
+  /** The subjects the reader loves, in the order picked, at most three. */
+  lovedTopics?: string[];
   pickedTopics?: string[];
   completedDates?: string[];
   streak?: number;
@@ -111,6 +113,10 @@ const TOP = 0.85;
 const APART = 0.6;
 const SPECIALIST_AT = 4;
 const GENERALIST_AT = 12;
+/** How many subjects the first run lets the reader say they love. */
+export const MOST_LOVED = 3;
+/** How much more a subject the reader loves is dealt (the phone's kLoveLean). */
+export const LOVE_LEAN = 2.0;
 export const PICKED_STRAND = 0.3;
 export const KEPT_GENRE = 0.1;
 export const FOCUS = [3.0, 2.0, 1.5];
@@ -126,24 +132,40 @@ export interface Reading {
   weights: Record<string, number>;
 }
 
-/** The onboarding's answers, read the way a person would. */
-export function readOnboarding(weights: Record<string, number>, genresOff: Set<string>, strandsOff: Set<string>): Reading {
-  const mix: Record<string, number> = {};
-  for (const [k, v] of Object.entries(weights)) {
-    if (v > FLOOR && k in GENRES) mix[k] = v;
+/** The loves that count: subjects the bank has, in the mix as said ([said]; empty is every subject), each once, at most three. */
+export function lovesIn(loved: readonly string[], said: Record<string, number>): string[] {
+  const out: string[] = [];
+  for (const k of loved) {
+    if (!(k in GENRES) || out.includes(k)) continue;
+    if (Object.keys(said).length > 0 && !(k in said)) continue;
+    out.push(k);
+    if (out.length === MOST_LOVED) break;
   }
-  const keys = Object.keys(mix);
+  return out;
+}
+
+/** The onboarding's answers, read the way a person would (lib/data/reader_profile.dart). */
+export function readOnboarding(weights: Record<string, number>, genresOff: Set<string>, strandsOff: Set<string>, loved: readonly string[] = []): Reading {
+  const said: Record<string, number> = {};
+  for (const [k, v] of Object.entries(weights)) {
+    if (v > FLOOR && k in GENRES) said[k] = v;
+  }
+  const loves = lovesIn(loved, said);
+  const saidKeys = Object.keys(said);
   const pruned = genresOff.size > 0 || strandsOff.size > 0;
-  const moved = keys.length < TOPICS.length || keys.some((k) => mix[k] < 0.99);
-  if (keys.length === 0 || (!pruned && !moved)) {
+  const moved = saidKeys.length < TOPICS.length || saidKeys.some((k) => said[k] < 0.99);
+  if (loves.length === 0 && (saidKeys.length === 0 || (!pruned && !moved))) {
     return {
       shape: 'untold',
       levels: Object.fromEntries(TOPICS.map((t) => [t, 1])),
       lean: {},
       claimed: [],
-      weights: mix,
+      weights: said,
     };
   }
+  // A mix walked past is every subject in, evenly.
+  const mix: Record<string, number> = saidKeys.length === 0 ? Object.fromEntries(TOPICS.map((t) => [t, 1])) : said;
+  const keys = Object.keys(mix);
   const highest = Math.max(...Object.values(mix));
   const share = (k: string) => (mix[k] ?? 0) / highest;
   const toldApart = keys.some((k) => share(k) <= APART);
@@ -163,7 +185,7 @@ export function readOnboarding(weights: Record<string, number>, genresOff: Set<s
   for (const key of keys) {
     const atTop = share(key) >= TOP;
     const curated = strandsOffIn(key) > 0 && share(key) >= APART;
-    const claim = curated || (atTop && (toldApart || shape === 'specialist'));
+    const claim = loves.includes(key) || curated || (atTop && (toldApart || shape === 'specialist'));
     if (claim) claimed.push(key);
     levels[key] = claim ? 2 : 1;
   }
@@ -181,7 +203,7 @@ export function readOnboarding(weights: Record<string, number>, genresOff: Set<s
       }
     }
   }
-  return { shape, levels, lean, claimed, weights: mix };
+  return { shape, levels, lean, claimed, weights: said };
 }
 
 /** The mix for the reader's [day]th day (0 the first): sharpened towards its top on the first three. */
@@ -336,7 +358,7 @@ export function buildProfile(snapshot: Snapshot, activity: Map<string, Event[]>,
   const weightsSaid = snapshot.topicWeights ?? {};
   const genresOff = new Set(snapshot.genresOff ?? []);
   const strandsOff = new Set(snapshot.strandsOff ?? []);
-  const reading = readOnboarding(weightsSaid, genresOff, strandsOff);
+  const reading = readOnboarding(weightsSaid, genresOff, strandsOff, snapshot.lovedTopics ?? []);
   const liked = snapshot.likedIds ?? [];
   const disliked = snapshot.dislikedIds ?? [];
 
@@ -351,9 +373,11 @@ export function buildProfile(snapshot: Snapshot, activity: Map<string, Event[]>,
   nudgeTopic(liked, LEAN);
   nudgeTopic(disliked, -LEAN);
   const base = Object.keys(weightsSaid).length === 0 ? Object.fromEntries(TOPICS.map((t) => [t, 1])) : weightsSaid;
+  // And a subject the reader loves twice (AppState.leanedWeights).
+  const loves = lovesIn(snapshot.lovedTopics ?? [], weightsSaid);
   const weights: Record<string, number> = {};
   for (const [k, v] of Object.entries(base)) {
-    weights[k] = Math.max(0.05, Math.min(3, v * (1 + (lean[k] ?? 0))));
+    weights[k] = Math.max(0.05, Math.min(3, v * (1 + (lean[k] ?? 0)) * (loves.includes(k) ? LOVE_LEAN : 1)));
   }
 
   // The taste: the onboarding's hand-picked strands, what was held and
