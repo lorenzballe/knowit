@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611272338,
- "built": "2026-11-27T23:38:18Z",
+ "version": 202611280043,
+ "built": "2026-11-28T00:43:53Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -280135,22 +280135,22 @@ const String kEmbeddedBank = r'''
    "words": 2196
   },
   "guns-germs-and-steel": {
-   "file": "summaries/guns-germs-and-steel.json?v=7272db9ce2f7",
+   "file": "summaries/guns-germs-and-steel.json?v=e6650902ad38",
    "minutes": 15,
    "parts": 8,
-   "words": 2228
+   "words": 2219
   },
   "influence": {
-   "file": "summaries/influence.json?v=f612986c4483",
+   "file": "summaries/influence.json?v=760656fbd546",
    "minutes": 15,
    "parts": 7,
-   "words": 2220
+   "words": 2229
   },
   "sapiens": {
-   "file": "summaries/sapiens.json?v=03d9d8d437ff",
+   "file": "summaries/sapiens.json?v=72ca179a1108",
    "minutes": 15,
    "parts": 7,
-   "words": 2191
+   "words": 2190
   },
   "the-structure-of-scientific-revolutions": {
    "file": "summaries/the-structure-of-scientific-revolutions.json?v=b15db14d48af",

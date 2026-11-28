@@ -95,7 +95,7 @@ const Map<String, String> kEmbeddedSummaries = {
  ]
 }
 ''',
-  'summaries/guns-germs-and-steel.json?v=7272db9ce2f7': r'''
+  'summaries/guns-germs-and-steel.json?v=e6650902ad38': r'''
 {
  "format": 1,
  "book": "guns-germs-and-steel",
@@ -103,7 +103,7 @@ const Map<String, String> kEmbeddedSummaries = {
  "author": "Jared Diamond",
  "year": 1997,
  "language": "en",
- "words": 2228,
+ "words": 2219,
  "minutes": 15,
  "parts": [
   {
@@ -139,7 +139,7 @@ const Map<String, String> kEmbeddedSummaries = {
     "Big domestic animals mattered as much as crops. They gave meat, milk, leather and wool. They pulled ploughs, which let fewer farmers feed more people, and they carried goods and soldiers. The horse transformed war for thousands of years, until the First World War.",
     "Diamond counts the candidates. The world has 148 species of large wild plant-eating mammals, weighing a hundred pounds or more, and before the twentieth century only 14 were domesticated. Thirteen of the fourteen came from Eurasia: sheep, goats, cattle, pigs and horses, and less widespread ones such as camels and water buffalo. South America had only the llama and alpaca. Sub-Saharan Africa, with its famous herds, contributed none, and Australia none.",
     "He explains this with what he calls the Anna Karenina principle, after Tolstoy's opening line about happy and unhappy families. Domesticable animals are all alike, and every undomesticable animal is undomesticable in its own way. To be tamed, a species has to pass many tests at once. It has to eat something people can supply, grow fast, breed in captivity, tolerate humans, stay calm when penned and live in herds with a hierarchy a human can take over. Failing any one is enough.",
-    "Zebras look like horses, but they have a vicious temper and a habit of biting a person and not letting go; they injure more zookeepers each year than tigers do. Gazelles panic and batter themselves against fences. Cheetahs will not breed in captivity, which is why princes who hunted with them had to capture new ones from the wild. The failures lay with the animals, Diamond stresses, and say nothing about the skills of the people who lived alongside them. Europeans in Africa tried to tame zebras in the nineteenth century, and failed too."
+    "Zebras look like horses, but they have a vicious temper and a habit of biting a person and not letting go. Gazelles panic and batter themselves against fences. Cheetahs will not breed in captivity, which is why princes who hunted with them had to capture new ones from the wild. The failures lay with the animals, Diamond stresses, and say nothing about the skills of the people who lived alongside them. Europeans in Africa tried to tame zebras in the nineteenth century, and failed too."
    ]
   },
   {
@@ -184,7 +184,7 @@ const Map<String, String> kEmbeddedSummaries = {
  ]
 }
 ''',
-  'summaries/influence.json?v=f612986c4483': r'''
+  'summaries/influence.json?v=760656fbd546': r'''
 {
  "format": 1,
  "book": "influence",
@@ -192,7 +192,7 @@ const Map<String, String> kEmbeddedSummaries = {
  "author": "Robert Cialdini",
  "year": 1984,
  "language": "en",
- "words": 2220,
+ "words": 2229,
  "minutes": 15,
  "parts": [
   {
@@ -254,7 +254,7 @@ const Map<String, String> kEmbeddedSummaries = {
    "text": [
     "The sixth principle is scarcity. Opportunities seem more valuable when they are less available, and the thought of losing something moves us more than the thought of gaining something of the same value. Salespeople use it constantly: only a few left, or the offer ends on Friday.",
     "Part of the effect is a shortcut, since things that are hard to get usually are better. Part of it is what psychologists call reactance: when our freedom to have something is limited, we want it more. It appears in two-year-olds and in teenagers forbidden to see someone, and Cialdini notes research suggesting that parents who oppose a young couple's romance can deepen it. When Miami banned detergents containing phosphates, residents drove to other counties to stock up and judged the banned detergents to work better than before.",
-    "Scarcity works best when something becomes newly scarce, and when we must compete for it. In an experiment, people rated cookies from a jar of two as more desirable than identical cookies from a jar of ten, and rated them higher still when the jar had just gone from ten to two. A beef importer told some of his customers that a shortage of Australian beef was coming; they ordered twice as much as usual. Those also told that the news came from an exclusive source ordered six times as much.",
+    "Scarcity works best when something becomes newly scarce, and when we must compete for it. In an experiment, people rated cookies from a jar of two as more desirable than identical cookies from a jar of ten, and rated them higher still when the jar had just gone from ten to two. A beef importer told some of his customers that a shortage of Australian beef was coming; they bought more than twice as much as customers who heard only the usual sales pitch. Those also told that the news came from an exclusive source bought six times as much.",
     "Cialdini closes the book by defending the shortcuts themselves. Life moves too fast for anyone to think through every decision, and these rules are mostly reliable. The danger is people who fake the signals: the invented deadline, the paid testimonial, the actor in a white coat. His advice is to stay alert to the rush of feeling that a shortcut produces, and to remember that the thing we want is worth what it is worth, scarce or not. The cookies from the nearly empty jar, he reminds us, did not taste any better."
    ]
   }
@@ -264,7 +264,7 @@ const Map<String, String> kEmbeddedSummaries = {
  ]
 }
 ''',
-  'summaries/sapiens.json?v=03d9d8d437ff': r'''
+  'summaries/sapiens.json?v=72ca179a1108': r'''
 {
  "format": 1,
  "book": "sapiens",
@@ -272,7 +272,7 @@ const Map<String, String> kEmbeddedSummaries = {
  "author": "Yuval Noah Harari",
  "year": 2014,
  "language": "en",
- "words": 2191,
+ "words": 2190,
  "minutes": 15,
  "parts": [
   {
@@ -298,7 +298,7 @@ const Map<String, String> kEmbeddedSummaries = {
    "text": [
     "For most of their history Sapiens lived as foragers, and Harari argues that our minds are still shaped by that life. Our craving for sweet, fatty food made sense to a forager who found a tree heavy with ripe figs and ate as many as possible before the baboons arrived. In a world of supermarkets the same urge makes us fat.",
     "He paints forager life as better than we usually imagine. Foragers ate dozens of different foods, which protected them from famine when one failed. They had fewer infectious diseases, because most of those come from domesticated animals and crowded settlements. Many worked fewer hours than farmers would. Their lives had real dangers, including high child mortality and violence, and Harari does not pretend otherwise. But the average forager probably knew more about the surrounding world than most of us do.",
-    "Foragers were also devastating. Sapiens reached Australia about 45,000 years ago, a journey that meant crossing open sea. Within a few thousand years, 23 of the 24 kinds of Australian animal weighing fifty kilograms or more were extinct, among them giant kangaroos and a marsupial lion. Climate may have played a part, but Harari notes that Australia's animals had survived earlier climate shifts. What was new was us, hunting animals that had not evolved to fear humans, and burning forests to clear them.",
+    "Foragers were also devastating. Sapiens reached Australia about 45,000 years ago, a journey that meant crossing open sea. Within a few thousand years, 23 of the 24 Australian animal species weighing 100 pounds or more were extinct, among them giant kangaroos and a marsupial lion. Climate may have played a part, but Harari notes that Australia's animals had survived earlier climate shifts. What was new was us, hunting animals that had not evolved to fear humans, and burning forests to clear them.",
     "The same thing happened in the Americas, which Sapiens reached about 16,000 years ago, and on island after island across the oceans. Mammoths and giant ground sloths disappeared soon after humans arrived, along with many other large animals. Long before anyone wrote a word, Harari concludes, our species had driven to extinction about half of the planet's big land animals. The romantic picture of ancient peoples living in harmony with nature does not survive these numbers."
    ]
   },
