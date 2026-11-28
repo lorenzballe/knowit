@@ -609,46 +609,55 @@ void main() {
 
   test('the share picture and the hard cards: kept on the phone, read back '
       'at the next start, kept through the wipe, and never read without the '
-      'tools', () async {
+      'tools, where the looks that ship are', () async {
     SharedPreferences.setMockInitialValues(_finished());
     debugToolsOn = true;
+    // Ringed ships, the owner's choice; as today stays in the tools.
+    expect(DebugLooks.hardCardsShips, HardCardLook.ringed);
     expect(DebugLooks.sharePicture.value, DebugLooks.sharePictureShips);
-    expect(DebugLooks.hardCards.value, HardCardLook.today);
+    expect(DebugLooks.hardCards.value, DebugLooks.hardCardsShips);
     await DebugLooks.setSharePicture(SharePictureLook.a);
-    await DebugLooks.setHardCards(HardCardLook.ringed);
+    await DebugLooks.setHardCards(HardCardLook.today);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('knowit.debug.sharePicture'), 'a');
-    expect(prefs.getString('knowit.debug.hardCards'), 'ringed');
+    expect(prefs.getString('knowit.debug.hardCards'), 'today');
 
     DebugLooks.reset();
     expect(DebugLooks.sharePicture.value, DebugLooks.sharePictureShips);
-    expect(DebugLooks.hardCards.value, HardCardLook.today);
+    expect(DebugLooks.hardCards.value, DebugLooks.hardCardsShips);
     final AppState app = AppState();
     await app.init();
     expect(DebugLooks.sharePicture.value, SharePictureLook.a);
-    expect(DebugLooks.hardCards.value, HardCardLook.ringed);
+    expect(DebugLooks.hardCards.value, HardCardLook.today);
     expect(DebugLooks.sharePicturePicked, SharePictureLook.a);
-    expect(DebugLooks.hardCardsPicked, HardCardLook.ringed);
+    expect(DebugLooks.hardCardsPicked, HardCardLook.today);
 
     await app.signOut();
     expect(prefs.getBool('knowit.onboarded'), isNull);
     expect(prefs.getString('knowit.debug.sharePicture'), 'a');
-    expect(prefs.getString('knowit.debug.hardCards'), 'ringed');
+    expect(prefs.getString('knowit.debug.hardCards'), 'today');
 
     debugToolsOn = false;
     expect(DebugLooks.sharePicturePicked, DebugLooks.sharePictureShips);
-    expect(DebugLooks.hardCardsPicked, HardCardLook.today);
+    expect(DebugLooks.hardCardsPicked, DebugLooks.hardCardsShips);
 
     debugToolsOn = true;
     await DebugLooks.setSharePicture(SharePictureLook.b);
-    await DebugLooks.setHardCards(HardCardLook.today);
+    await DebugLooks.setHardCards(HardCardLook.ringed);
     DebugLooks.load(prefs);
     expect(DebugLooks.sharePicture.value, SharePictureLook.b);
-    expect(DebugLooks.hardCards.value, HardCardLook.today);
+    expect(DebugLooks.hardCards.value, HardCardLook.ringed);
+
+    // Nothing kept is the look that ships.
+    SharedPreferences.setMockInitialValues({});
+    DebugLooks.load(await SharedPreferences.getInstance());
+    expect(DebugLooks.hardCards.value, DebugLooks.hardCardsShips);
   });
 
   testWidgets('picked in the debug section: the share picture, each letter '
-      'lit and kept, and the hard cards ringed and back', (tester) async {
+      'lit and kept, and the hard cards as today and back to ringed', (
+    tester,
+  ) async {
     debugToolsOn = true;
     SharedPreferences.setMockInitialValues(_finished());
     await tester.pumpWidget(const AstutoApp());
@@ -670,7 +679,9 @@ void main() {
       );
     }
 
-    for (final String look in const ['ringed', 'today']) {
+    // Ringed, as it ships, is lit to begin with.
+    expect(DebugLooks.hardCards.value, HardCardLook.ringed);
+    for (final String look in const ['today', 'ringed']) {
       final Finder choice = find.byKey(ValueKey('debug-hard-cards-$look'));
       await _scrollTo(tester, choice);
       await tester.tap(choice);
