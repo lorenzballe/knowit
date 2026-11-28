@@ -3,6 +3,9 @@
 /// the next question), so it goes on with the screen locked, where the app
 /// is not woken between one sound and the next.
 ///
+/// The books' summaries are heard through the same queue, a clip a part
+/// (lib/books/book_player.dart).
+///
 /// The app plays through just_audio, with the phone told it is speech
 /// (audio_session), as a podcast is: it keeps playing in the background
 /// (iOS: the `audio` background mode in Info.plist), and music playing
@@ -79,6 +82,10 @@ abstract class ListenAudio {
 
   /// Plays the sound at [index] from its start.
   Future<void> jump(int index);
+
+  /// Moves within the sound playing to [position]: the books' player's
+  /// "back 15 seconds" (lib/books/book_player.dart).
+  Future<void> seek(Duration position);
 
   /// Where the queue is, as it changes.
   Stream<ListenAudioState> get states;
@@ -179,6 +186,13 @@ class JustAudioListen implements ListenAudio {
   Future<void> jump(int index) async {
     await _player.seek(Duration.zero, index: index);
     if (!_player.playing) unawaited(_player.play());
+  }
+
+  @override
+  Future<void> seek(Duration position) async {
+    try {
+      await _player.seek(position < Duration.zero ? Duration.zero : position);
+    } catch (_) {}
   }
 
   @override

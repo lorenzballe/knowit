@@ -1,6 +1,7 @@
 // A silent queue for Listen (lib/listen/listen_audio.dart): no platform
 // channel, no sound; the test walks through it by hand with [finish].
-// Shared with the camera (tool/listen_shots.dart).
+// Shared with the cameras (tool/listen_shots.dart, tool/book_audio_shots.dart)
+// and the books' player's tests.
 import 'dart:async';
 
 import 'package:astuto/listen/listen_audio.dart';
@@ -19,6 +20,9 @@ class SilentListenAudio implements ListenAudio {
   /// How far into the sound playing, for the progress line.
   Duration position = const Duration(seconds: 1);
 
+  /// How long the sound playing lasts, as the player says it.
+  Duration duration = const Duration(seconds: 4);
+
   void _say() {
     if (_states.isClosed) return;
     _states.add(
@@ -26,7 +30,7 @@ class SilentListenAudio implements ListenAudio {
         index: index,
         playing: playing,
         ended: ended,
-        duration: const Duration(seconds: 4),
+        duration: duration,
         position: position,
       ),
     );
@@ -101,11 +105,19 @@ class SilentListenAudio implements ListenAudio {
   }
 
   @override
+  Future<void> seek(Duration position) async {
+    this.position = position < Duration.zero ? Duration.zero : position;
+    _say();
+  }
+
+  @override
   Stream<ListenAudioState> get states => _states.stream;
 
   @override
   Future<void> dispose() async {
     disposed = true;
-    await _states.close();
+    // Once: a queue closed again would hand back the first close's future,
+    // made in another test's zone.
+    if (!_states.isClosed) await _states.close();
   }
 }
