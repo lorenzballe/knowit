@@ -1212,6 +1212,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get reminderAskOther => 'Inna godzina';
 
   @override
+  String get reminderAskPick => 'Ty wybierasz';
+
+  @override
   String get reminderAskUsual => 'Kiedy zwykle czytasz';
 
   @override

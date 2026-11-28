@@ -920,6 +920,10 @@
  "@reminderAskOther": {
   "description": "A choice on the reminder sheet that opens a clock, to pick any other time."
  },
+ "reminderAskPick": "You choose",
+ "@reminderAskPick": {
+  "description": "On the reminder sheet, under «Another time», where the time goes until the reader has picked one of their own: a tap opens the phone's clock. A couple of words."
+ },
  "reminderAskUsual": "When you usually read",
  "@reminderAskUsual": {
   "description": "A note under the time on the reminder sheet that the sheet started on, because the reader tends to start reading then."
