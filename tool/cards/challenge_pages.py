@@ -21,6 +21,11 @@ page Safari's own banner offers the app, Open where it is installed, Get where
 it is not (apple-itunes-app, its argument the card's link). The link is
 short, astutetheapp.com/c/<id>; the site serves it from c/<id>.html.
 
+The card's words are the card's, in English, as the app shows them; the
+page's own (who sent it, the buttons, the way to the app) are in English and
+in Italian, the reader's shown as on every page of the site that holds both
+(tool/site/chrome.py, lang_script).
+
 Written when the site is put together (.github/workflows/deploy.yml), from the
 bank as it is published, into <site>/c/<id>.html; the card pages already sit
 at <site>/cards/pages/, and the kit they load is copied beside them.
@@ -38,9 +43,11 @@ from pathlib import Path
 # Where the app can be had, said as every page of the site says it: the
 # stores live, from tool/site/chrome.py, so one switch there reaches these
 # pages too. Until the App Store listing is live (APP_STORE_OPEN), Google
-# Play is the button and the App Store's is marked as coming, so that no
-# friend is sent to the store's empty page without being told.
+# Play is the button and the App Store's is marked as coming and leads to the
+# list for the iPhone (/get#notify), so that no friend is sent to the store's
+# empty page.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+import chrome  # noqa: E402
 from chrome import APP_STORE_OPEN, where  # noqa: E402
 
 SITE = "https://astutetheapp.com"
@@ -61,6 +68,12 @@ COLOURS = {
 NAMES = {"weird_facts": "Weird facts", "pop_culture": "Pop culture", "human_body": "Human body"}
 
 
+def two(en: str, it: str) -> str:
+    """One of the page's own lines in English and in Italian, the reader's
+    shown (the card's own words are the card's, in English)."""
+    return f'<span class="l-en">{en}</span><span class="l-it" lang="it">{it}</span>'
+
+
 def subject_name(topic: str) -> str:
     return NAMES.get(topic, topic.replace("_", " ").capitalize())
 
@@ -78,7 +91,8 @@ def ink_of(hex_colour: str) -> str:
     return "#10100C" if _luminance(hex_colour) > 0.34 else "#FFFFFF"
 
 
-CSS = """@font-face{font-family:Figtree;src:url(/assets/fonts/figtree-latin.woff2) format("woff2");font-weight:300 900;font-display:swap}
+CSS = """html[data-lang="it"] .l-en,html:not([data-lang="it"]) .l-it{display:none!important}
+@font-face{font-family:Figtree;src:url(/assets/fonts/figtree-latin.woff2) format("woff2");font-weight:300 900;font-display:swap}
 @font-face{font-family:Fraunces;src:url(/assets/fonts/fraunces-latin.woff2) format("woff2");font-weight:300 900;font-display:swap}
 *{box-sizing:border-box}
 html,body{margin:0;background:#0c0c0e;color:#f4f2ec;font-family:Figtree,system-ui,sans-serif}
@@ -139,6 +153,7 @@ HEAD = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{lang}
 <title>{title} · Astute</title>
 <meta name="description" content="A card from Astute, sent by a friend. Five like it every morning.">
 <meta name="robots" content="noindex">
@@ -161,13 +176,13 @@ HEAD = """<!DOCTYPE html>
 <body>
 <header>
   <a class="brand" href="/?ref=challenge"><img src="/assets/icon.webp" width="28" height="28" alt="">Astute</a>
-  <span class="from">A friend sent you this card</span>
+  <span class="from"><span class="l-en">A friend sent you this card</span><span class="l-it" lang="it">Un amico ti ha mandato questa carta</span></span>
 </header>
 """
 
 FOOT = """<section class="more">
-  <h2>Five cards like this, every morning.</h2>
-  <p>Questions with a why, drawn to be played. {where}.</p>
+  <h2><span class="l-en">Five cards like this, every morning.</span><span class="l-it" lang="it">Cinque carte così, ogni mattina.</span></h2>
+  <p><span class="l-en">Questions with a why, drawn to be played. {where}.</span><span class="l-it" lang="it">Domande con il perché, disegnate per essere giocate. {where_it}.</span></p>
   <div class="stores">
     {stores}
   </div>
@@ -184,6 +199,10 @@ DRAWN = """<main class="card drawn">
 # Picks an option, or shows the answer: the friend has thought first.
 # Picks an option, takes a side, or shows the answer: the friend has thought first.
 SCRIPT = """(function () {
+  var it = document.documentElement.dataset.lang === 'it';
+  var W = it
+    ? { both: 'Le due parti, allora.', right: 'Giusta.', wrong: 'Non proprio.', spot: 'Esatto.', close: 'Ci sei quasi: hai sbagliato di ', off: 'Hai sbagliato di ', end: '.', guess: 'La tua stima' }
+    : { both: 'Both sides, then.', right: 'Right.', wrong: 'Not quite.', spot: 'Spot on.', close: 'Close enough: ', off: 'You were ', end: ' off.', guess: 'Your guess' };
   var answer = document.querySelector('.answer'), verdict = document.querySelector('.verdict');
   function open() { answer.hidden = false; answer.scrollIntoView({behavior: 'smooth', block: 'nearest'}); }
   document.querySelectorAll('.choices button').forEach(function (b) {
@@ -195,11 +214,12 @@ SCRIPT = """(function () {
         else if (o.dataset.right === '1') o.classList.add('right');
         else if (o === b) o.classList.add('wrong');
       });
-      if (verdict) verdict.textContent = side ? 'Both sides, then.' : right ? 'Right.' : 'Not quite.';
+      if (verdict) verdict.textContent = side ? W.both : right ? W.right : W.wrong;
       open();
     });
   });
   var guess = document.querySelector('.guess');
+  if (guess && it) { var field = guess.querySelector('input'); field.placeholder = W.guess; field.setAttribute('aria-label', W.guess); }
   if (guess) guess.addEventListener('submit', function (e) {
     e.preventDefault();
     var said = parseFloat(guess.querySelector('input').value);
@@ -208,7 +228,7 @@ SCRIPT = """(function () {
     var factor = parseFloat(guess.dataset.factor || '');
     var off = Math.abs(said - value), shown = Math.round(off * 100) / 100;
     var close = factor > 0 && said > 0 && value > 0 && Math.max(said / value, value / said) <= factor;
-    if (verdict) verdict.textContent = off === 0 ? 'Spot on.' : (close ? 'Close enough: ' : 'You were ') + shown + (unit ? ' ' + unit : '') + ' off.';
+    if (verdict) verdict.textContent = off === 0 ? W.spot : (close ? W.close : W.off) + shown + (unit ? ' ' + unit : '') + W.end;
     guess.classList.add('done');
     var h = document.querySelector('.hint'); if (h) h.remove();
     open();
@@ -253,18 +273,18 @@ def words_card(card: dict) -> str:
         # and is told how far off it was, as the day's challenge tells the
         # reader who sent it.
         if card.get("hint"):
-            out.append(f'  <p class="hint">Hint · {_e(card["hint"])}</p>\n')
+            out.append(f'  <p class="hint">{two("Hint", "Suggerimento")} · {_e(card["hint"])}</p>\n')
         factor = card.get("withinFactor") if kind == "estimate" else None
         out.append(f'  <form class="guess" data-value="{card["value"]}" data-unit="{_e(card.get("unit", ""))}"'
                    f'{f" data-factor={chr(34)}{factor}{chr(34)}" if factor else ""}>\n'
                    f'    <input type="number" inputmode="decimal" step="any" required placeholder="Your guess" aria-label="Your guess">\n'
                    f'    <span class="unit">{_e(card.get("unit", ""))}</span>\n'
-                   f'    <button type="submit">Lock in</button>\n'
+                   f'    <button type="submit">{two("Lock in", "Conferma")}</button>\n'
                    f'  </form>\n')
     else:
         if kind in ("number", "estimate") and card.get("hint"):
-            out.append(f'  <p class="hint">Hint · {_e(card["hint"])}</p>\n')
-        label = "See both sides" if kind == "debate" else "Show the answer"
+            out.append(f'  <p class="hint">{two("Hint", "Suggerimento")} · {_e(card["hint"])}</p>\n')
+        label = two("See both sides", "Vedi le due parti") if kind == "debate" else two("Show the answer", "Mostra la risposta")
         out.append(f'  <button type="button" class="reveal">{label}</button>\n')
     out.append('  <section class="answer" hidden>\n')
     if options or (sides and len(sides) == 2) or kind in ("number", "estimate"):
@@ -274,11 +294,11 @@ def words_card(card: dict) -> str:
     if kind in ("number", "estimate") and len(steps) > 1:
         out.append('    <ol class="steps">' + "".join(f"<li>{_e(s)}</li>" for s in steps[:-1]) + "</ol>\n")
     if kind == "debate" and card.get("counterpoint"):
-        out.append(f'    <p class="other"><b>The other side.</b> {_e(card["counterpoint"])}</p>\n')
+        out.append(f'    <p class="other"><b>{two("The other side.", "L’altra parte.")}</b> {_e(card["counterpoint"])}</p>\n')
     if card.get("move"):
-        out.append(f'    <div class="keep"><span>WHAT TO KEEP</span><p>{_e(card["move"])}</p></div>\n')
+        out.append(f'    <div class="keep"><span>{two("WHAT TO KEEP", "DA PORTARE CON TE")}</span><p>{_e(card["move"])}</p></div>\n')
     if card.get("source"):
-        out.append(f'    <p class="src">Source · {_e(card["source"])}</p>\n')
+        out.append(f'    <p class="src">{two("Source", "Fonte")} · {_e(card["source"])}</p>\n')
     out.append("  </section>\n</main>\n")
     return "".join(out)
 
@@ -293,6 +313,7 @@ def render(card: dict) -> str:
     image = f"{SITE}/cards/{front}" if page and front else f"{SITE}/cards/og/{topic if topic in COLOURS else 'thinking'}.png"
     asks = card.get("kind") not in ("read",)
     head = HEAD.format(
+        lang=chrome.lang_script("both", f"/c/{cid}"),
         title=_e(card.get("question")),
         teaser="Can you get it? A card from Astute, sent by a friend." if asks
         else "A card from Astute, sent by a friend. Tap to find out.",
@@ -305,6 +326,7 @@ def render(card: dict) -> str:
     body = DRAWN.format(page=_e(page), title=_e(card.get("question"))) if page else words_card(card)
     foot = FOOT.format(
         where=where(sentence=True),
+        where_it=where(sentence=True, lang="it"),
         stores=stores(),
         script="" if page else f'<script src="/c/card.js?v={VERSION}" defer></script>\n',
     )
@@ -314,14 +336,16 @@ def render(card: dict) -> str:
 def stores() -> str:
     """The two stores' buttons at a page's foot: the App Store's first once
     its listing is live; until then Google Play's, and the App Store's after
-    it, marked as coming."""
+    it, marked as coming and leading to the list for the iPhone, in the
+    reader's language."""
     app_store = f"{APP_STORE}?ct=challenge"
     google_play = f"{GOOGLE_PLAY}&referrer=utm_source%3Dchallenge"
     if APP_STORE_OPEN:
         return (f'<a href="{app_store}">App Store</a>\n'
                 f'    <a class="alt" href="{google_play}">Google Play</a>')
     return (f'<a href="{google_play}">Google Play</a>\n'
-            f'    <a class="alt" href="{app_store}">App Store<span class="soon">Coming soon</span></a>')
+            f'    <a class="alt l-en" href="{chrome.notify_link("en")}">App Store<span class="soon">Coming soon</span></a>'
+            f'<a class="alt l-it" lang="it" href="{chrome.notify_link("it")}">App Store<span class="soon">In arrivo</span></a>')
 
 
 def write(site: Path, bank: dict) -> int:
