@@ -75,7 +75,11 @@ workflows:
           POSTHOG_KEY: "phc_tEhSptLL46d7zJTJqMDssKzBSySEFF6XQ3rYwETEPaFF"
           POSTHOG_HOST: "https://eu.i.posthog.com"
       flutter: stable
-      xcode: latest
+      # Xcode 27, so the app is built against the iOS 27 SDK, which App
+      # Store Connect asks for from April 2027 (ITMS-90725); `latest`
+      # still chose Xcode 26 and the iOS 26.5 SDK. 27.2 (27B52) is the
+      # newest release Codemagic has; 27.3 is its edge, a beta.
+      xcode: 27.2
       cocoapods: default
     cache: &ios_cache
       cache_paths:
@@ -324,7 +328,11 @@ workflows:
         # Said out loud, though it is what an unset variable means too.
         DEBUG_TOOLS: "false"
       flutter: stable
-      xcode: latest
+      # Xcode 27, so the app is built against the iOS 27 SDK, which App
+      # Store Connect asks for from April 2027 (ITMS-90725); `latest`
+      # still chose Xcode 26 and the iOS 26.5 SDK. 27.2 (27B52) is the
+      # newest release Codemagic has; 27.3 is its edge, a beta.
+      xcode: 27.2
       cocoapods: default
     cache: *ios_cache
     scripts: *ios_scripts
