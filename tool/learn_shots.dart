@@ -531,7 +531,18 @@ void main() {
     });
   }
 
-  // Where the developer tools pick the look, at the foot of the profile.
+  // Where the developer tools pick the look, at the foot of the profile:
+  // the mix, which ships, picked.
+  if (looks.contains(LearnLook.mix.name)) {
+    testWidgets('mix free debug', (tester) async {
+      await open(tester, plus: false, look: 'mix');
+      await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+      await settle(tester);
+      await profileAt(tester, 'debug-learn', from: 300);
+      await shoot('mix-free-9-debug');
+    });
+  }
+
   if (looks.contains(LearnLook.today.name)) {
     testWidgets('today free debug', (tester) async {
       await open(tester, plus: false, look: 'today');

@@ -1789,8 +1789,12 @@ class _DebugLooksPanel extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  'Now is as it ships: skills picked, a score in each, their '
-                  'mark on cards. A: the Astute score alone. B: the aim '
+                  'Mix is as it ships: the skills picked on a page laid as '
+                  'the goal\'s question, a score in each, and under the '
+                  'scores in Your journey where you see clearly and your '
+                  'blind spot. Now is as it was: the skills on their own '
+                  'screen, a score in each, their mark on cards. A: the '
+                  'Astute score alone. B: the aim '
                   'alone, asked at the end of the first run too (wipe to see '
                   'it), its week in Your journey. C: no picking; where the '
                   'answers say you are strong. D: the aim read: where you '
