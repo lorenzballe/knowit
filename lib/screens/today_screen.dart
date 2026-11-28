@@ -65,8 +65,8 @@ class TodayScreen extends StatefulWidget {
 
   /// What the shell lends the celebration of a reader's first finished day
   /// (lib/widgets/first_day.dart): the reminder, asked down its own road,
-  /// and the way to Explore. Opened as a screen of its own, off the path,
-  /// Today has no shell behind it, and nothing to lend.
+  /// and the way to Today's challenge on Explore. Opened as a screen of its
+  /// own, off the path, Today has no shell behind it, and nothing to lend.
   final FirstDayHost firstDay;
 
   const TodayScreen({

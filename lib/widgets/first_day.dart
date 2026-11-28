@@ -31,6 +31,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../analytics.dart';
+import '../books/book_player_view.dart' show bookPlayerRoom;
 import '../data/pills_repository.dart' show dateKey;
 import '../explore/blocks/core/your_day_block.dart' show kStreakOrange;
 import '../l10n/dates.dart';
@@ -409,11 +410,13 @@ class _FirstDayScreenState extends State<FirstDayScreen> {
               ),
             ),
             Padding(
+              // Clear of the small player of a book read aloud, where one
+              // plays (lib/books/book_player_view.dart).
               padding: EdgeInsets.fromLTRB(
                 24,
                 short ? 8 : 12,
                 24,
-                safe.bottom > 0 ? 6 : 16,
+                (safe.bottom > 0 ? 6 : 16) + bookPlayerRoom(context),
               ),
               child: RiseIn(
                 delay: const Duration(milliseconds: 560),

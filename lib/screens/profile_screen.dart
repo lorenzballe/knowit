@@ -841,20 +841,6 @@ class ProfileScreen extends StatelessWidget {
                 FirstOfferScreen.route(app, FirstOffer.month, preview: true),
               ),
             ),
-            // The first day's celebration, with sample numbers: only looked
-            // at; its reminder sheet keeps nothing and asks the phone
-            // nothing (lib/widgets/first_day.dart).
-            _LinkRow(
-              key: const ValueKey('debug-first-day'),
-              label: 'Preview: the first day\'s end',
-              onTap: () => Navigator.of(context, rootNavigator: true).push(
-                FirstDayScreen.route(
-                  app,
-                  numbers: FirstDayNumbers.sample,
-                  preview: true,
-                ),
-              ),
-            ),
             const SizedBox(height: 14),
             // What the app actually knows about itself. "Nothing happens"
             // is the least useful bug report there is, so it is replaced
@@ -1814,7 +1800,7 @@ class _DebugLooksPanel extends StatelessWidget {
                   'right — with Remind me tomorrow and Today\'s challenge; '
                   'the card that offers Astute+ after it. As before: that '
                   'card at once. Celebration ships. Wipe to see it again, '
-                  'or open the preview below.',
+                  'or show it now with sample numbers.',
                   style: AppText.body(
                     size: 12,
                     height: 1.35,
@@ -1825,6 +1811,36 @@ class _DebugLooksPanel extends StatelessWidget {
                 ValueListenableBuilder<FirstDayEndLook>(
                   valueListenable: DebugLooks.firstDayEnd,
                   builder: (context, look, _) => _FirstDayEndPicker(look: look),
+                ),
+                const SizedBox(height: 6),
+                // The celebration with sample numbers: only looked at; its
+                // reminder sheet keeps nothing and asks the phone nothing
+                // (lib/widgets/first_day.dart).
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: GestureDetector(
+                    key: const ValueKey('debug-first-day'),
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => Navigator.of(context, rootNavigator: true)
+                        .push(
+                          FirstDayScreen.route(
+                            app,
+                            numbers: FirstDayNumbers.sample,
+                            preview: true,
+                          ),
+                        ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Text(
+                        'Show it now  →',
+                        style: AppText.body(
+                          size: 13,
+                          weight: FontWeight.w600,
+                          color: p.link,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

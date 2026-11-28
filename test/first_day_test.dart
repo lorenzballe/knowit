@@ -32,6 +32,7 @@ import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/remote/remote.dart';
 import 'package:astuto/screens/explore_screen.dart';
+import 'package:astuto/screens/profile_screen.dart';
 import 'package:astuto/screens/purchase_success_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/state/debug_looks.dart';
@@ -1123,6 +1124,60 @@ void main() {
       );
       await tester.pump();
       expect(_textOf(tester, 'first-day-points-figure'), '+38');
+      await tester.pumpWidget(const SizedBox());
+    });
+
+    testWidgets('the developer tools\' section: As before picked and kept, '
+        'Celebration back, and the celebration shown from there', (
+      tester,
+    ) async {
+      final bool tools = debugToolsOn;
+      addTearDown(() => debugToolsOn = tools);
+      debugToolsOn = true;
+      _noWidgets(tester);
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        ..._readYesterday(),
+        'knowit.pushAsked': true,
+      });
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+      await _settle(tester);
+      final Finder list = find
+          .descendant(
+            of: find.byType(ProfileScreen),
+            matching: find.byType(Scrollable),
+          )
+          .first;
+      final Finder before = find.byKey(
+        const ValueKey('debug-first-day-end-asBefore'),
+      );
+      await tester.scrollUntilVisible(before, 400, scrollable: list);
+      await _settle(tester);
+      await tester.tap(before);
+      await _settle(tester);
+      expect(DebugLooks.firstDayEnd.value, FirstDayEndLook.asBefore);
+      expect(
+        (await SharedPreferences.getInstance()).getString(
+          'knowit.debug.firstDayEnd',
+        ),
+        'asBefore',
+      );
+      await tester.tap(
+        find.byKey(const ValueKey('debug-first-day-end-celebration')),
+      );
+      await _settle(tester);
+      expect(DebugLooks.firstDayEnd.value, FirstDayEndLook.celebration);
+
+      await tester.tap(find.byKey(const ValueKey('debug-first-day')));
+      await _settle(tester, 12);
+      expect(_celebration, findsOneWidget);
+      expect(find.text(_en.firstDayTitle), findsOneWidget);
+      await tester.tap(_close);
+      await _settle(tester);
+      expect(_celebration, findsNothing);
+      expect(said.events.where((e) => e.$1.startsWith('first day')), isEmpty);
       await tester.pumpWidget(const SizedBox());
     });
 
