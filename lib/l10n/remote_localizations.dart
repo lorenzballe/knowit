@@ -6983,4 +6983,34 @@ class RemoteLocalizations extends AppLocalizations {
   String inviteEarned(int n) =>
       _words.format('inviteEarned', localeName, {'n': n}) ??
       _base.inviteEarned(n);
+
+  @override
+  String get firstDayTitle =>
+      _words.text('firstDayTitle') ?? _base.firstDayTitle;
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) =>
+      _words.format('firstDaySureRight', localeName, {
+        'sure': sure,
+        'right': right,
+        'total': total,
+      }) ??
+      _base.firstDaySureRight(sure, right, total);
+
+  @override
+  String firstDayRight(int right, int total) =>
+      _words.format('firstDayRight', localeName, {
+        'right': right,
+        'total': total,
+      }) ??
+      _base.firstDayRight(right, total);
+
+  @override
+  String get firstDayRemind =>
+      _words.text('firstDayRemind') ?? _base.firstDayRemind;
+
+  @override
+  String firstDayReminded(String time) =>
+      _words.format('firstDayReminded', localeName, {'time': time}) ??
+      _base.firstDayReminded(time);
 }

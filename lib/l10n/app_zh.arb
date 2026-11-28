@@ -1691,5 +1691,10 @@
   "inviteSuccessPlan": "Astute+ · 一周",
   "inviteSuccessUntil": "有效期至 {date}",
   "inviteSuccessFoot": "无需付费，也无需取消：之后自动回到免费方案。",
-  "inviteEarned": "{n, plural, other{{n} 位朋友读完了第一天：你获得 {n} 周 Astute+。}}"
+  "inviteEarned": "{n, plural, other{{n} 位朋友读完了第一天：你获得 {n} 周 Astute+。}}",
+  "firstDayTitle": "你的第一天完成了",
+  "firstDaySureRight": "你有 {sure}% 的把握，{total} 题答对 {right} 题。",
+  "firstDayRight": "{total} 题答对 {right} 题。",
+  "firstDayRemind": "明天提醒我",
+  "firstDayReminded": "明天 {time} 提醒你。"
 }

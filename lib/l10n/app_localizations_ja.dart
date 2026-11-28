@@ -7071,4 +7071,25 @@ class AppLocalizationsJa extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => '最初の1日、完了';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return '自信は$sure%、$total問中$right問正解でした。';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return '$total問中$right問正解でした。';
+  }
+
+  @override
+  String get firstDayRemind => '明日お知らせを受け取る';
+
+  @override
+  String firstDayReminded(String time) {
+    return '明日$timeにお知らせします。';
+  }
 }

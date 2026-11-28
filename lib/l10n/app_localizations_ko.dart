@@ -7099,4 +7099,25 @@ class AppLocalizationsKo extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => '첫날을 마쳤어요';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return '$sure% 확신했고, $total개 중 $right개를 맞혔어요.';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return '$total개 중 $right개를 맞혔어요.';
+  }
+
+  @override
+  String get firstDayRemind => '내일 알려 주세요';
+
+  @override
+  String firstDayReminded(String time) {
+    return '내일 $time에 알려 드릴게요.';
+  }
 }
