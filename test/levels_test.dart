@@ -281,10 +281,19 @@ void main() {
           null,
         ),
       );
-      // Twelve right today: past the first level, and nothing told yet.
+      // Twelve right today: past the first level, and nothing told yet. Back
+      // for a second day: a first day finished is celebrated instead, and
+      // its level waits for another evening (test/first_day_test.dart).
+      final DateTime now = DateTime.now();
+      final String yesterday = dateKey(
+        DateTime(now.year, now.month, now.day - 1),
+      );
       final AppState app = await readyApp({
         'knowit.plus': true,
         'knowit.judgements': _rightToday(_medium(12)),
+        'knowit.streak': 1,
+        'knowit.lastCompletionDate': yesterday,
+        'knowit.completedDates': [yesterday],
       });
       app.todayIndex = app.todaysDeck.length - 1;
       await tester.pumpWidget(

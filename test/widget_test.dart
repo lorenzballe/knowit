@@ -66,15 +66,27 @@ Future<void> _settle(WidgetTester tester) async {
   }
 }
 
-/// Reads the day through: the five, and on the free plan the card after
-/// them that offers the rest, which is thrown like the rest. Stops when the
-/// deck is gone.
+/// Reads the day through: the five; on a reader's first day the screen that
+/// celebrates it, closed (lib/widgets/first_day.dart); and on the free plan
+/// the card after them that offers the rest, which is thrown like the rest.
+/// Stops when the deck is gone.
 Future<void> _finishDay(WidgetTester tester) async {
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 7; i++) {
+    await _closeFirstDay(tester);
     if (find.byType(PillCardStack).evaluate().isEmpty) break;
     await _swipeCardAway(tester);
     await _settle(tester);
   }
+  await _closeFirstDay(tester);
+}
+
+/// Closes the first day's celebration, where it has risen over the table.
+Future<void> _closeFirstDay(WidgetTester tester) async {
+  await _settle(tester);
+  final Finder close = find.byKey(const ValueKey('first-day-close'));
+  if (close.evaluate().isEmpty) return;
+  await tester.tap(close);
+  await _settle(tester);
 }
 
 /// How many of a fresh free day's five are the reader's own today: two, as
@@ -2552,6 +2564,13 @@ void main() {
       await _swipeCardAway(tester);
       await _settle(tester);
     }
+    // A first day: celebrated first (lib/widgets/first_day.dart), and over
+    // nothing for sale.
+    expect(
+      find.byKey(const ValueKey('magic-card'), skipOffstage: false),
+      findsNothing,
+    );
+    await _closeFirstDay(tester);
 
     // Five read, all of them the reader's own: no sixth card, no second
     // set — the shelf, straight away.
@@ -2730,11 +2749,14 @@ void main() {
   });
 
   group('After the fifth card', () {
+    /// The five read, and on this first day the screen that celebrates it
+    /// closed: what comes after the fifth comes after the celebration.
     Future<void> readFive(WidgetTester tester) async {
       for (var i = 0; i < 5; i++) {
         await _swipeCardAway(tester);
         await _settle(tester);
       }
+      await _closeFirstDay(tester);
     }
 
     testWidgets(
@@ -2752,10 +2774,18 @@ void main() {
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
         expect(find.text('Day 1'), findsNothing);
 
-        // The fifth thrown: the offer is the card on top, with every bar lit
-        // and no shelf yet. Nothing times out; nothing says skip.
+        // The fifth thrown: on this first day the day is celebrated first,
+        // the offer waiting under it (lib/widgets/first_day.dart); closed,
+        // the offer is the card on top, with every bar lit and no shelf
+        // yet. Nothing times out; nothing says skip.
         await _swipeCardAway(tester);
         await _settle(tester);
+        expect(find.byKey(const ValueKey('first-day')), findsOneWidget);
+        expect(
+          find.byKey(const ValueKey('magic-card'), skipOffstage: false),
+          findsOneWidget,
+        );
+        await _closeFirstDay(tester);
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
         // A first day is like any free day: the card offers the whole day,
         // all five the reader's own.
@@ -2811,9 +2841,11 @@ void main() {
       final stack = tester.widget<PillCardStack>(find.byType(PillCardStack));
       expect(stack.trailing, isNull);
       expect(find.byKey(const ValueKey('magic-card')), findsNothing);
-      // The fifth thrown: the shelf, because there is nothing to offer.
+      // The fifth thrown, and this first day celebrated: the shelf, because
+      // there is nothing to offer.
       await _swipeCardAway(tester);
       await _settle(tester);
+      await _closeFirstDay(tester);
       expect(find.byType(PillCardStack), findsNothing);
       expect(find.text('Day 1'), findsOneWidget);
     });
