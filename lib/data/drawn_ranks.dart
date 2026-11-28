@@ -15,7 +15,9 @@
 library;
 
 /// The good and the excellent drawings, and every card redrawn since the
-/// pass: 100 cards.
+/// pass that is clear on three phones: 99 cards. The clay slide
+/// (nature-clay-slide-plane) waits among the acceptable: its drawing
+/// shrinks at its end on a 375 by 667 phone.
 const Set<String> kStrongDrawings = {
   'economics-coltan-price-spike',
   'economics-gulf-idle-fleet',
@@ -48,7 +50,6 @@ const Set<String> kStrongDrawings = {
   'medicine-mri-field-strength',
   'nature-bared-teeth',
   'nature-burning-plastic-waste',
-  'nature-clay-slide-plane',
   'nature-glass-co2-savings',
   'nature-half-mountain-tsunami',
   'nature-heatwave-only-beginning-2',
@@ -119,8 +120,9 @@ const Set<String> kStrongDrawings = {
   'weird_facts-marble-football-fields',
 };
 
-/// The acceptable drawings: 206 cards.
+/// The acceptable drawings: 207 cards.
 const Set<String> kFairDrawings = {
+  'nature-clay-slide-plane',
   'art-florence-5',
   'economics-hormuz-pipeline-shortfall',
   'economics-resource-curse-flask',
