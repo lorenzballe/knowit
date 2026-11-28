@@ -17,10 +17,15 @@ List<Pill> pagedCards() => [
 ];
 
 /// The shipped bank, with the cards of [ids] given a front and a back, and
-/// every other card none.
-BankBundle bankWithPictures(Set<String> ids) {
+/// every other card none; those of [ringed] given too the two pairs a hard
+/// card's pictures taken ringed are, at night and on the day paper.
+BankBundle bankWithPictures(Set<String> ids, {Set<String> ringed = const {}}) {
   final Map<String, Object?> doc =
       jsonDecode(kEmbeddedBank) as Map<String, Object?>;
+  Map<String, Object?> pair(Object? id, String look) => {
+    'front': 'thumbs/$id$look-front.webp?v=0123456789ab',
+    'back': 'thumbs/$id$look-back.webp?v=0123456789ab',
+  };
   final List<Object?> cards = [
     for (final Object? raw in doc['cards'] as List)
       if (raw is Map && ids.contains(raw['id']) && raw['web'] is Map)
@@ -29,8 +34,11 @@ BankBundle bankWithPictures(Set<String> ids) {
           'web': {
             ...raw['web'] as Map,
             'thumbs': {
-              'front': 'thumbs/${raw['id']}-front.webp?v=0123456789ab',
-              'back': 'thumbs/${raw['id']}-back.webp?v=0123456789ab',
+              ...pair(raw['id'], ''),
+              if (ringed.contains(raw['id'])) ...{
+                'ringed': pair(raw['id'], '-ringed'),
+                'ringed_day': pair(raw['id'], '-ringed-day'),
+              },
             },
           },
         }

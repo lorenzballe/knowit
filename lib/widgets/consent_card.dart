@@ -45,8 +45,13 @@ class ConsentCard extends StatefulWidget {
 
   /// Whether the reminder's question is still to come this evening: the
   /// sheet rises over the shelf, and the card waits for it to be answered.
+  /// Not on the evening the first day was celebrated: the reminder was the
+  /// celebration's to ask, and the shell does not raise it again then.
   static bool reminderFirst(AppState app) =>
-      app.shouldAskForPush && remindersSupported && Push.instance.canAsk;
+      !app.celebratedToday &&
+      app.shouldAskForPush &&
+      remindersSupported &&
+      Push.instance.canAsk;
 
   @override
   State<ConsentCard> createState() => _ConsentCardState();

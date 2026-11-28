@@ -812,7 +812,7 @@ class DayPicture extends StatelessWidget {
   static Pill? heroOf(List<Pill> five) {
     if (five.isEmpty) return null;
     for (final Pill pill in five) {
-      if (CardThumb.has(pill, CardSide.front)) return pill;
+      if (CardThumb.has(pill, CardSide.front, own: true)) return pill;
     }
     return five.first;
   }
@@ -832,7 +832,8 @@ class DayPicture extends StatelessWidget {
     return [
       for (final Pill pill in five)
         if (!onlyHero || identical(pill, hero))
-          if (CardThumb.refOf(pill, CardSide.front) case final String ref) ...[
+          if (CardThumb.refOf(pill, CardSide.front, own: true)
+              case final String ref) ...[
             CardThumb.image(CardThumb.urlOf(ref)),
             if (identical(pill, hero))
               CardThumb.image(CardThumb.urlOf(CardThumb.largeOf(ref))),
@@ -1629,7 +1630,7 @@ class _Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? ref = CardThumb.refOf(pill, CardSide.front);
+    final String? ref = CardThumb.refOf(pill, CardSide.front, own: true);
     final Color colour = ref == null ? pill.color : groundOf(pill);
     final BorderRadius round = BorderRadius.circular(size * 0.14);
     // The card in words: its colour and mark. Under a drawing too, until the

@@ -33,6 +33,15 @@ on the fly, and a card added anywhere re-dealt every day since the epoch.)
 A card about a place travels like any other, its `place` with it, for the
 phones and the server to deal only to the readers who live there; the
 calendar never names one.
+
+A book's summary (tool/cards/summaries/<book>.json, summaries.py) travels
+the way a page does: a file of its own, `web/cards/summaries/<book>.json`,
+named in the bank's `summaries` by the hash of its bytes, with the minutes
+and parts a book's page shows before it is fetched. The phone fetches it
+when the book is opened and keeps it, and the server reads the same file to
+read it aloud (functions/src/books.ts). It is also built into the app,
+`lib/data/embedded_summaries.dart`, from the same bytes, so a book that
+ships with the app opens on a phone that has never been online.
 """
 from __future__ import annotations
 
@@ -45,6 +54,7 @@ import sys
 from pathlib import Path
 
 import check
+import summaries as books
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
@@ -57,6 +67,10 @@ PUBLISHED = ROOT / "web" / "cards" / "v2" / "cards.json"
 VERSION = PUBLISHED.parent / "version.json"
 # One file per free card's page, fetched by the phone when it is wanted.
 PAGES = ROOT / "web" / "cards" / "pages"
+# One file per book's summary, fetched when the book is opened, and the copy
+# of them all the app is built with.
+SUMMARIES = ROOT / "web" / "cards" / "summaries"
+EMBEDDED_SUMMARIES = ROOT / "lib" / "data" / "embedded_summaries.dart"
 # The small pictures of each page, its front and its back (tool/cards/thumbs.cjs), and the hash of
 # the page each was taken from.
 THUMBS = ROOT / "web" / "cards" / "thumbs"
@@ -166,9 +180,10 @@ def page_ref(card: dict) -> str:
     return f"{page_file(card)}?v={page_hash(card['_html'])}"
 
 
-def thumbs_index() -> dict[str, str]:
-    """The page hash each card's pictures were taken from, by card."""
-    index = THUMBS / "index.json"
+def thumbs_index(name: str = "index.json") -> dict[str, str]:
+    """The page hash each card's pictures were taken from, by card; with [name] "ringed.json", the hash a hard
+    card's ringed pictures were taken under."""
+    index = THUMBS / name
     return json.loads(index.read_text(encoding="utf-8")) if index.exists() else {}
 
 
@@ -184,17 +199,39 @@ def picture_hash(html: str) -> str:
     return page_hash(html + PICTURES)
 
 
-def thumbs_of(card: dict, index: dict[str, str]) -> dict | None:
+# The ring's edition, bumped when a hard card's look ringed changes (its colours in lib/widgets/hard_ring.dart and
+# tool/cards/hard_env.cjs, the kit's ring()), so every hard card's ringed pictures are taken again under a new name
+# (tool/cards/thumbs.cjs keeps the same) and the phones fetch them anew. 1: the ring as the owner chose it, November
+# 2026.
+RINGED = "\n<!-- ringed 1 -->"
+
+
+def ringed_hash(html: str) -> str:
+    """A hard card's ringed pictures' version: the page's hash with the pictures' edition and the ring's."""
+    return page_hash(html + PICTURES + RINGED)
+
+
+def thumbs_of(card: dict, index: dict[str, str], ringed: dict[str, str] | None = None) -> dict | None:
     """The pictures of a free card's page, front and back, named with the page's hash: only while
     they were taken from the page as it is now. A card whose page changed since goes without until
-    thumbs.cjs takes them again, and the app draws it as it would with no picture."""
+    thumbs.cjs takes them again, and the app draws it as it would with no picture.
+
+    A hard card carries two more pairs, taken ringed as the app reads it (lib/widgets/hard_ring.dart):
+    `ringed` at night, `ringed_day` on the day paper, named with their own hash, while they were taken
+    from the page as it is now and under the ring as it is now ([ringed], the hash each was taken under)."""
     h = picture_hash(card["_html"])
     if index.get(card["id"]) != h:
         return None
-    return {side: f"thumbs/{card['id']}-{side}.webp?v={h}" for side in ("front", "back")}
+    out: dict = {side: f"thumbs/{card['id']}-{side}.webp?v={h}" for side in ("front", "back")}
+    r = ringed_hash(card["_html"])
+    if card.get("difficulty") == "hard" and (ringed or {}).get(card["id"]) == r:
+        for key, look in (("ringed", "ringed"), ("ringed_day", "ringed-day")):
+            out[key] = {side: f"thumbs/{card['id']}-{look}-{side}.webp?v={r}" for side in ("front", "back")}
+    return out
 
 
 _THUMBS: dict[str, str] | None = None
+_RINGED: dict[str, str] | None = None
 
 
 def bundled(card: dict, *, inline: bool = False) -> dict:
@@ -206,20 +243,25 @@ def bundled(card: dict, *, inline: bool = False) -> dict:
         if inline:
             out["web"] = {**out["web"], "html": card["_html"]}
         else:
-            global _THUMBS
+            global _THUMBS, _RINGED
             if _THUMBS is None:
                 _THUMBS = thumbs_index()
+            if _RINGED is None:
+                _RINGED = thumbs_index("ringed.json")
             out["web"] = {**out["web"], "page": page_ref(card),
                           "bytes": len(card["_html"].encode("utf-8"))}
-            pictures = thumbs_of(card, _THUMBS)
+            pictures = thumbs_of(card, _THUMBS, _RINGED)
             if pictures:
                 out["web"]["thumbs"] = pictures
     return out
 
 
 def build(cards: list[dict], editions: dict[str, str], commons: dict[str, list[str]], *, version: int, built: str,
-          inline: bool = False) -> dict:
-    return {
+          inline: bool = False, summaries: dict[str, dict] | None = None) -> dict:
+    """The bank as the app reads it. [summaries] is the line on each book's
+    summary (summaries.index_of), for the builds that read summaries: the
+    builds from before pages travelled alone never meet one."""
+    out = {
         "format": 1 if inline else 2,
         "version": version,
         "built": built,
@@ -227,6 +269,9 @@ def build(cards: list[dict], editions: dict[str, str], commons: dict[str, list[s
         "editions": editions,
         "commons": commons,
     }
+    if summaries and not inline:
+        out["summaries"] = summaries
+    return out
 
 
 def legacy_ids() -> set[str]:
@@ -292,11 +337,60 @@ def render_dart(text: str) -> str:
 
 
 def same_content(a: dict | None, b: dict) -> bool:
-    """Whether two bundles hold the same cards and calendar, whatever the stamp."""
+    """Whether two bundles hold the same cards, calendar and summaries, whatever the stamp."""
     if a is None:
         return False
     return (a.get("cards") == b.get("cards") and a.get("editions") == b.get("editions")
-            and a.get("commons", {}) == b.get("commons", {}))
+            and a.get("commons", {}) == b.get("commons", {})
+            and a.get("summaries", {}) == b.get("summaries", {}))
+
+
+def summary_files(summaries: list[dict]) -> dict[str, str]:
+    """Every summary to publish, by its file under web/cards/."""
+    return {books.file_of(s): books.published_text(s) for s in summaries}
+
+
+def summaries_current(files: dict[str, str]) -> bool:
+    """Whether web/cards/summaries/ holds exactly these summaries."""
+    root = SUMMARIES.parent
+    on_disk = {f"summaries/{f.name}" for f in SUMMARIES.glob("*.json")} if SUMMARIES.exists() else set()
+    if on_disk != set(files):
+        return False
+    return all((root / name).read_text(encoding="utf-8") == text for name, text in files.items())
+
+
+def write_summaries(files: dict[str, str]) -> None:
+    root = SUMMARIES.parent
+    SUMMARIES.mkdir(parents=True, exist_ok=True)
+    for name, text in files.items():
+        path = root / name
+        if not path.exists() or path.read_text(encoding="utf-8") != text:
+            path.write_text(text, encoding="utf-8")
+    for f in SUMMARIES.glob("*.json"):
+        if f"summaries/{f.name}" not in files:
+            f.unlink()
+
+
+def render_summaries_dart(summaries: list[dict]) -> str:
+    """The summaries built into the app, each by the name the bank gives it
+    and in the very bytes the site publishes, so its hash holds."""
+    entries = []
+    for s in sorted(summaries, key=lambda s: s["book"]):
+        text = books.published_text(s)
+        if "'''" in text:
+            raise SystemExit(f"summary {s['book']} contains three quotes in a row, which a Dart raw string cannot hold")
+        entries.append(f"  '{books.ref_of(s)}': r'''\n{text}''',\n")
+    return (
+        "// GENERATED by tool/cards/bundle.py from tool/cards/summaries/. Do not edit:\n"
+        "// change a summary and run the bundler. CI checks this is current.\n"
+        "\n"
+        "/// The book summaries the app ships with, each by the name the bank gives\n"
+        "/// it (`summaries/<book>.json?v=<hash>`) and in the bytes the site\n"
+        "/// publishes. Read by BookSummaries (lib/data/book_summaries.dart).\n"
+        "const Map<String, String> kEmbeddedSummaries = {\n"
+        f"{''.join(entries)}"
+        "};\n"
+    )
 
 
 def version_note(bundle: dict) -> str:
@@ -350,6 +444,14 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"{cid}: {p}")
         print("the bank does not pass; nothing written")
         return 1
+    summaries = books.load_all()
+    report = books.check_all(summaries, cards)
+    if report:
+        for key, problems in report.items():
+            for p in problems:
+                print(f"{key}: {p}")
+        print("the summaries do not pass; nothing written")
+        return 1
 
     today = dt.date.fromisoformat(args.today) if args.today else dt.date.today()
     editions = json.loads(check.EDITIONS.read_text(encoding="utf-8")) if check.EDITIONS.exists() else {}
@@ -367,34 +469,45 @@ def main(argv: list[str] | None = None) -> int:
 
     now = dt.datetime.now(dt.timezone.utc)
     stamp, built = int(now.strftime("%Y%m%d%H%M")), now.strftime("%Y-%m-%dT%H:%M:%SZ")
-    bundle = build(cards, editions, commons, version=stamp, built=built)
+    bundle = build(cards, editions, commons, version=stamp, built=built, summaries=books.index_of(summaries))
     old = build_legacy(cards, editions, commons, version=stamp, built=built, keep=legacy_ids())
     pages = pages_of(cards)
+    summarised = summary_files(summaries)
+    shipped = render_summaries_dart(summaries)
     text = json.dumps(bundle, ensure_ascii=False, indent=1) + "\n"
 
     current = same_content(read_embedded(), bundle)
     published = same_content(read_json(PUBLISHED), bundle)
     legacy = same_content(read_json(LEGACY), old)
     paged = pages_current(pages)
+    told = summaries_current(summarised) and EMBEDDED_SUMMARIES.exists() and (
+        EMBEDDED_SUMMARIES.read_text(encoding="utf-8") == shipped)
     noted = version_current() and version_current(LEGACY, LEGACY_VERSION)
     if args.check:
-        if current and published and legacy and paged and noted:
-            print(f"{len(cards)} cards, {len(pages)} pages, {len(editions)} editions: every copy current")
+        if current and published and legacy and paged and told and noted:
+            print(f"{len(cards)} cards, {len(pages)} pages, {len(summaries)} book summaries,"
+                  f" {len(editions)} editions: every copy current")
             return 0
         print("stale:" + ("" if current else " lib/data/embedded_bank.dart")
               + ("" if published else " web/cards/v2/cards.json")
               + ("" if legacy else " web/cards/cards.json")
               + ("" if paged else " web/cards/pages/")
+              + ("" if told else " web/cards/summaries/ lib/data/embedded_summaries.dart")
               + ("" if noted else " the version notes"))
         print("run python3 tool/cards/bundle.py")
         return 1
 
+    if not told:
+        write_summaries(summarised)
+        EMBEDDED_SUMMARIES.write_text(shipped, encoding="utf-8")
+        print(f"wrote {SUMMARIES.relative_to(ROOT)}/ and {EMBEDDED_SUMMARIES.relative_to(ROOT)}")
     if current and published and legacy and paged:
         for pub, note in ((PUBLISHED, VERSION), (LEGACY, LEGACY_VERSION)):
             if not version_current(pub, note):
                 note.write_text(version_note(json.loads(pub.read_text(encoding="utf-8"))), encoding="utf-8")
                 print(f"wrote {note.relative_to(ROOT)}")
-        print(f"{len(cards)} cards, {len(pages)} pages, {len(editions)} editions: nothing to do")
+        print(f"{len(cards)} cards, {len(pages)} pages, {len(summaries)} book summaries,"
+              f" {len(editions)} editions: nothing more to do")
         return 0
     check.EDITIONS.write_text(json.dumps(editions, indent=2) + "\n", encoding="utf-8")
     check.COMMONS.write_text(json.dumps(commons, indent=1) + "\n", encoding="utf-8")

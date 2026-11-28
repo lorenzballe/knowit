@@ -10,7 +10,11 @@
   "cardAi": {"default": false},
   "share.challenge": {"default": false},
   "listen": {"default": false},
+  "bookAudio": {"default": false},
   "invite": {"default": false},
+  "journey.preview": {"default": false},
+  "week.sunday": {"default": false},
+  "calibration.early": {"default": true},
   "firstRun.loves": {"default": true},
   "parts.offer": {"default": true}
  },

@@ -192,6 +192,7 @@ The knobs this build reads:
 | `cardAi` | switch | off | — | the answers by Claude, Astute+'s: the assistant in Go deeper and the weekly coach in Your journey (a free reader sees them locked); the developer tools have them on regardless | `cardAiOn` (lib/widgets/deeper_sheet.dart) |
 | `share.challenge` | switch | off | — | "Challenge a friend" on today's five: at the end of the five on Explore, in place of the score as squares, and under the finished day's share, a line and a link to `astutetheapp.com/sfida`, where a friend plays the same five in a browser and sees both scores (on in `remote/app.json`) | `AppState.shareChallengeOn` (lib/explore/blocks/bets/three.dart, lib/widgets/share_day.dart) |
 | `listen` | switch | off | — | Listen: the day's five read aloud by ElevenLabs (question, a pause to think, answer and why), from a quiet entry at the end of Today's header while the five are read; the first card of a day for everybody, the rest Astute+'s (`requirePlus`, source `listen`). Off in `remote/app.json` until the ElevenLabs key and a plan are in; a server without a key answers "not configured" and the app hides it then too (functions/src/listen.ts) | `AppState.listenOn` (lib/listen/listen_sheet.dart) |
+| `bookAudio` | switch | off | — | Books read aloud: a book's summary ("Read in 15 minutes" on its page, which needs no switch) heard from the same page by ElevenLabs, a part a clip, played on with the screen locked and kept by a small player over every screen; the week's free book and the first part of any book for everybody, the rest Astute+'s (`requirePlus`, source `book audio`). Off: reading works and listening is hidden. Off in `remote/app.json` until the ElevenLabs key and a plan are in; a server without a key answers "not configured" and the app hides listening then too (functions/src/books.ts) | `AppState.bookAudioOn` (lib/books/summary_entry.dart) |
 | `invite` | switch | off | — | Invita un amico: in the profile, "Invite a friend" (a link with the reader's code, through the share sheet, to `astutetheapp.com/invito`) and "Have a code?" for a new reader; a week of Astute+ for each of the two once the friend has finished a first day (functions/src/invite.ts). Off in `remote/app.json` until RevenueCat's key is in place; even on, nothing shows while the server answers "not configured" | `AppState.inviteOn` (lib/screens/profile_screen.dart, lib/widgets/invite_sheet.dart) |
 | `firstRun.loves` | switch | on | — | the first run's question in the positive: after Your mix, up to three subjects the reader loves; their first three days open on a card of each, and their own cards lean to them after (twice as much); off, the first run goes from the mix to the day | `AppState.lovesAsked` (lib/main.dart) |
 | `parts.offer` | switch | on | — | Which parts, offered once on the finished day's shelf from the `parts.offerDay`th finished day, to a reader who has not chosen any parts already: the question the first run no longer asks | `AppState.partsOfferDue` (lib/widgets/parts_offer.dart) |
@@ -487,10 +488,13 @@ the card turns over, as a native one does), `done`, `haptic`, `open`,
 `zones` (where it wants the finger), `pan` (web build only: a drag that is
 not its own) and `error`. The app says `env` (dark, language, less motion,
 sound, touch, platform, size, the corner to leave, the subject, the line and
-the chip a native card carries, the foot, and, on a hard card the developer
-tools ring, `hard`: the colours to draw itself in and the tag it carries,
+the chip a native card carries, the foot, and, on a hard card, which is
+read ringed, `hard`: the colours to draw itself in and the tag it carries,
 lib/widgets/hard_ring.dart), `show` and `hide`. A page told no `hard` draws
-as it always has.
+as it always has. A page drawn in the kit's ink and ground (`--k`, `--c`,
+`--edge`) is right ringed by itself; one with colours of its own lights them
+up or takes them down under `.kit-hard[data-theme=dark]` or `…=light`, and a
+hard page is checked as it is, with `HARD=1` and with `HARD=day`.
 
 **Touch.** With `taps`, a tap goes to the page; a drag anywhere throws the
 card and a long press keeps it, as on any card. With `drags`, a touch that

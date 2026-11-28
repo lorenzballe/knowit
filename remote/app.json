@@ -7,6 +7,7 @@
   "cardAi": true,
   "share.challenge": true,
   "listen": false,
+  "bookAudio": false,
   "invite": false
  },
  "tunables": {"review.streakDays": 3},

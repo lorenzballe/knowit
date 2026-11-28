@@ -1,10 +1,11 @@
-// A hard card, seen as hard (lib/widgets/hard_ring.dart): with the developer
-// tools' look ringed (DebugLooks.hardCards), a hard card in words is dark,
-// ringed in its subject's colour, its subject's name in it, with HARD in its
-// head, front and back; on the day paper a pale colour takes its darker
-// tone, as Explore's shelf of the hardest does. As today, with the tools off,
-// or on a card that is not hard, none of it. A drawn card's page is told the
-// ringed colours only then.
+// A hard card, seen as hard (lib/widgets/hard_ring.dart): ringed, as the app
+// ships (DebugLooks.hardCardsShips), a hard card in words is dark, ringed in
+// its subject's colour, its subject's name in it, with HARD in its head,
+// front and back; on the day paper a pale colour takes its darker tone, as
+// Explore's shelf of the hardest does. As today, picked in the developer
+// tools, or on a card that is not hard, none of it; without the tools, the
+// look that ships whatever the phone kept. A drawn card's page is told the
+// ringed colours only when ringed, its ink one that small words read in.
 //
 //   flutter test test/hard_ring_test.dart
 import 'dart:io';
@@ -20,6 +21,7 @@ import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/state/debug_looks.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/card_edge.dart' show colourContrast;
 import 'package:astuto/widgets/hard_ring.dart';
 import 'package:astuto/widgets/pill_card.dart';
 
@@ -99,10 +101,20 @@ void main() {
     expect(pale.web, isNull);
   });
 
+  test('ringed is the look that ships', () {
+    expect(DebugLooks.hardCardsShips, HardCardLook.ringed);
+    expect(DebugLooks.hardCards.value, HardCardLook.ringed);
+    debugToolsOn = false;
+    expect(DebugLooks.hardCardsPicked, HardCardLook.ringed);
+    expect(HardRing.on(deep), isTrue);
+    expect(HardRing.on(easy), isFalse);
+  });
+
   testWidgets('as today, a hard card is like any other: no ring, no HARD', (
     tester,
   ) async {
     debugToolsOn = true;
+    DebugLooks.hardCards.value = HardCardLook.today;
     for (final bool back in [false, true]) {
       await tester.pumpWidget(_card(deep, back: back));
       await tester.pump();
@@ -167,15 +179,14 @@ void main() {
     expect(_tag, findsNothing);
   });
 
-  testWidgets('without the tools, a look kept on the phone is never read', (
-    tester,
-  ) async {
+  testWidgets('without the tools, a look kept on the phone is never read: '
+      'ringed, as it ships', (tester) async {
     debugToolsOn = false;
-    DebugLooks.hardCards.value = HardCardLook.ringed;
+    DebugLooks.hardCards.value = HardCardLook.today;
     await tester.pumpWidget(_card(deep));
     await tester.pump();
-    expect(_ring, findsNothing);
-    expect(_tag, findsNothing);
+    expect(_ring, findsOneWidget);
+    expect(_tag, findsOneWidget);
   });
 
   testWidgets('a drawn page is told the ringed colours only when ringed', (
@@ -199,6 +210,7 @@ void main() {
         ),
       ),
     );
+    DebugLooks.hardCards.value = HardCardLook.today;
     expect(HardRing.pageOf(context, drawn), isNull);
     DebugLooks.hardCards.value = HardCardLook.ringed;
     final Map<String, Object?> hard = HardRing.pageOf(context, drawn)!.toJson();
@@ -206,5 +218,45 @@ void main() {
     expect(hard['q'], '#f2f1ec');
     expect(hard['label'], 'HARD');
     expect(HardRing.pageOf(context, easy), isNull);
+  });
+
+  // The ink a ringed page draws its drawing and its small labels in, as
+  // tool/cards/hard_env.cjs gives the checker and the camera the same.
+  test('a ringed page\'s ink reads on its ground, at night and on paper', () {
+    for (final MapEntry<String, Color> subject in {
+      'economics': const Color(0xFFFFE600),
+      'history': const Color(0xFFFFB000),
+      'maths': const Color(0xFF0E9A70),
+      'medicine': const Color(0xFFFF3B30),
+      'science': const Color(0xFF00E5A0),
+      'space': const Color(0xFF2B5CFF),
+      'technology': const Color(0xFF00A6FF),
+      'cinema': const Color(0xFF6E3AFF),
+      'thinking': const Color(0xFFF2F1EC),
+      'food': const Color(0xFFFF7A1A),
+    }.entries) {
+      for (final Palette p in [Palette.dark, Palette.light]) {
+        final Pill pill = deep.withColours(color: subject.value, ink: p.ink);
+        final Color ink = HardRing.inkOf(HardRing.accentOf(pill, p), p);
+        expect(
+          colourContrast(ink, HardRing.groundOf(p)),
+          greaterThanOrEqualTo(HardRing.reads),
+          reason: '${subject.key} on the ${p.isDark ? 'night' : 'day'} paper',
+        );
+      }
+    }
+    String hex(Color c) =>
+        '#${(c.toARGB32() & 0xffffff).toRadixString(16).padLeft(6, '0')}';
+    Color inkFor(Color colour, Palette p) => HardRing.inkOf(
+      HardRing.accentOf(deep.withColours(color: colour, ink: p.ink), p),
+      p,
+    );
+    // The same as hard_env.cjs: a deep colour lifted at night, a light one
+    // taken down by day; one that reads already kept.
+    expect(hex(inkFor(const Color(0xFF2B5CFF), Palette.dark)), '#809dff');
+    expect(hex(inkFor(const Color(0xFF00A6FF), Palette.light)), '#007bbd');
+    expect(hex(inkFor(const Color(0xFFFFE600), Palette.light)), '#827500');
+    expect(hex(inkFor(const Color(0xFFFFB000), Palette.light)), '#9e6d00');
+    expect(hex(inkFor(const Color(0xFFFF3B30), Palette.dark)), '#ff3b30');
   });
 }

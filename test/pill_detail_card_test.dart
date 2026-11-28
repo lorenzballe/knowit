@@ -131,6 +131,31 @@ void main() {
     });
   }
 
+  testWidgets('a hard card with a drawing: its picture taken ringed, inside '
+      'its ring', (tester) async {
+    final Pill hard = pagedCards().firstWhere(
+      (p) => p.difficulty == Difficulty.hard,
+    );
+    PillBank.adopt(bankWithPictures({hard.id}, ringed: {hard.id}));
+    final ImageProvider picture = _freshPixel();
+    final List<Uri> asked = [];
+    CardThumb.image = (url) {
+      asked.add(url);
+      return picture;
+    };
+    final Pill pill = PillBank.byId(hard.id)!;
+    await _open(tester, await readyApp(), pill);
+    await _decoded(tester, picture);
+
+    expect(tester.takeException(), isNull);
+    expect(
+      asked.map((u) => u.path),
+      contains(endsWith('/thumbs/large/${hard.id}-ringed-front.webp')),
+    );
+    expect(find.byKey(const ValueKey('hard-ring')), findsOneWidget);
+    expect(find.text('Play the card'), findsOneWidget);
+  });
+
   testWidgets('the picture itself plays the card too', (tester) async {
     final Pill first = pagedCards().first;
     PillBank.adopt(bankWithPictures({first.id}));
@@ -152,7 +177,9 @@ void main() {
       final Pill longest = pagedCards().reduce(
         (a, b) => a.question.length >= b.question.length ? a : b,
       );
-      PillBank.adopt(bankWithPictures({longest.id}));
+      // Its pictures named, a hard card's ringed ones too (it is read
+      // ringed), and none of them comes.
+      PillBank.adopt(bankWithPictures({longest.id}, ringed: {longest.id}));
       final Pill pill = PillBank.byId(longest.id)!;
       // NoPicture: every picture fails, as with no network.
       await _open(tester, await readyApp(), pill, text: text);

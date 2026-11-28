@@ -1946,14 +1946,14 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'De vijf van vandaag';
+  String get fiveTitle => 'De uitdaging van vandaag';
 
   @override
   String get fiveSame =>
       'Vandaag voor iedereen dezelfde vijf. Ongeveer twee minuten.';
 
   @override
-  String get fiveDone => 'De vijf van vandaag · klaar';
+  String get fiveDone => 'De uitdaging van vandaag · klaar';
 
   @override
   String dailyOf(int max) {
@@ -2042,7 +2042,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · De vijf van vandaag · $date';
+    return 'Astute · De uitdaging van vandaag · $date';
   }
 
   @override
@@ -2056,7 +2056,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'De vijf van vandaag op Astute: voor iedereen dezelfde vijf vragen. Hoeveel heb jij er goed?';
+      'De uitdaging van vandaag op Astute: voor iedereen dezelfde vijf vragen. Hoeveel heb jij er goed?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -6509,7 +6509,7 @@ class AppLocalizationsNl extends AppLocalizations {
       one: '1 punt ernaast',
       zero: 'precies goed',
     );
-    return 'De uitdaging van vandaag op Astute: $_temp0. Kun jij het beter?';
+    return 'De gok van de dag op Astute: $_temp0. Kun jij het beter?';
   }
 
   @override
@@ -7381,6 +7381,119 @@ class AppLocalizationsNl extends AppLocalizations {
   String get listenNextCard => 'Volgende kaart';
 
   @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'Lees in $minutes minuten',
+      one: 'Lees in 1 minuut',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => 'Verder lezen';
+
+  @override
+  String get summaryAgain => 'Opnieuw lezen';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return 'Deel $part van $of';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'nog $n min',
+      one: 'nog 1 min',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return 'Luisteren · $minutes min';
+  }
+
+  @override
+  String get summaryPause => 'Pauze';
+
+  @override
+  String get summaryResume => 'Verder luisteren';
+
+  @override
+  String get summaryFreeNote =>
+      'Het eerste deel is gratis; de rest hoort bij Astute+.';
+
+  @override
+  String get summaryTitle => 'De samenvatting';
+
+  @override
+  String get summaryNowPlaying => 'Speelt nu';
+
+  @override
+  String get summaryNextPart => 'Volgend deel';
+
+  @override
+  String get summaryFinish => 'Afronden';
+
+  @override
+  String get summaryContents => 'Inhoud';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return 'Je hebt $title gelezen';
+  }
+
+  @override
+  String get summaryDoneLine =>
+      'De kaarten van het boek zorgen dat de ideeën blijven hangen.';
+
+  @override
+  String get summaryToCards => 'De ideeën als kaarten';
+
+  @override
+  String get summaryBackToBook => 'Terug naar het boek';
+
+  @override
+  String get summaryGateTitle =>
+      'De rest van deze samenvatting hoort bij Astute+';
+
+  @override
+  String summaryGateLine(int parts) {
+    return 'Alle $parts delen, om te lezen en te beluisteren, van elk boek. Het boek van de week is gratis voor iedereen.';
+  }
+
+  @override
+  String get summaryNeedsNetwork =>
+      'Deze samenvatting heeft één keer internet nodig.';
+
+  @override
+  String get bookAudioBack => '15 seconden terug';
+
+  @override
+  String get bookAudioWaiting => 'Het volgende deel komt eraan…';
+
+  @override
+  String get bookAudioDone => 'Tot het eind beluisterd.';
+
+  @override
+  String get bookAudioOfferTitle => 'Luister naar de rest van het boek';
+
+  @override
+  String get bookAudioOfferLine =>
+      'Met Astute+ wordt elke samenvatting helemaal voorgelezen, ook met je scherm vergrendeld.';
+
+  @override
+  String get bookAudioStop => 'Stoppen met luisteren';
+
+  @override
+  String get bookAudioOpen => 'Speler openen';
+
+  @override
   String get inviteSection => 'Vrienden';
 
   @override
@@ -7502,4 +7615,172 @@ class AppLocalizationsNl extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => 'Je eerste dag zit erop';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return 'Je was $sure% zeker en had er $right van de $total goed.';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return 'Je had er $right van de $total goed.';
+  }
+
+  @override
+  String get firstDayRemind => 'Herinner me morgen';
+
+  @override
+  String firstDayReminded(String time) {
+    return 'We herinneren je morgen om $time.';
+  }
+
+  @override
+  String get earlyReadingTag => 'Eerste indruk';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n keer $level%, en je had elke keer gelijk',
+      two: 'twee keer $level%, en je had beide keren gelijk',
+      one: 'één keer $level%, en je had gelijk',
+    );
+    return 'Tot nu toe: je zei $_temp0.';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n keer $level%, en je zat er elke keer naast',
+      two: 'twee keer $level%, en je zat er beide keren naast',
+      one: 'één keer $level%, en je zat ernaast',
+    );
+    return 'Tot nu toe: je zei $_temp0.';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n keer',
+      two: 'twee keer',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right keer',
+      two: 'twee keer',
+      one: 'één keer',
+    );
+    return 'Tot nu toe: je zei $_temp0 $level%, en je had $_temp1 gelijk.';
+  }
+
+  @override
+  String get journeyClearEyebrow => 'Deze week zichtbaar';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return 'Je blinde vlek: $subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return 'Je sterke punt: $subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return '$pct goed, bij je laatste $n antwoorden in dit vak.';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dagen',
+      two: 'twee dagen',
+      one: 'een dag',
+    );
+    return 'Na $_temp0 weet je er nog $right van de $of.';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks weken',
+      one: 'een week',
+    );
+    return 'Na $_temp0 weet je er nog $right van de $of.';
+  }
+
+  @override
+  String get journeyClearBlindNotYet =>
+      'Zes antwoorden in twee vakken, en hier staat het vak dat je het vaakst mist.';
+
+  @override
+  String get journeyClearStrongNotYet =>
+      'Zes antwoorden in één vak, en hier staat het vak waar je het sterkst in bent.';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Nog $n antwoorden met hoe zeker, en hier verschijnt een eerste indruk.',
+      one: 'Nog één antwoord met hoe zeker, en hier verschijnt een eerste indruk.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      'Kaarten komen terug na 2, 7 en 21 dagen: hier zie je hoeveel je er nog weet.';
+
+  @override
+  String get journeyPreviewDoor =>
+      'Elke week een ander getal. Astute+ opent de rest.';
+
+  @override
+  String weekSheetOf(String date) {
+    return 'De week van $date';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$right van $n';
+  }
+
+  @override
+  String get weekSheetRightLabel => 'Goede antwoorden';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'bij $n antwoorden',
+      one: 'bij 1 antwoord',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => 'Waar je jezelf te veel vertrouwt';
+
+  @override
+  String get weekSheetMemoryLabel => 'Wat je nog weet';
+
+  @override
+  String get weekSheetAccount => 'Bewaar je week op elke telefoon';
 }

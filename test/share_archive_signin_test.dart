@@ -130,13 +130,25 @@ Future<void> _swipeCardAway(WidgetTester tester) async {
   await _settle(tester);
 }
 
-/// Reads the day through: the five, and on the free plan the card after
-/// them that offers the rest, thrown like the rest.
+/// Reads the day through: the five; on a reader's first day the screen that
+/// celebrates it, closed (lib/widgets/first_day.dart); and on the free plan
+/// the card after them that offers the rest, thrown like the rest.
 Future<void> _finishDay(WidgetTester tester) async {
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 7; i++) {
+    await _closeFirstDay(tester);
     if (find.byType(PillCardStack).evaluate().isEmpty) break;
     await _swipeCardAway(tester);
   }
+  await _closeFirstDay(tester);
+}
+
+/// Closes the first day's celebration, where it has risen over the table.
+Future<void> _closeFirstDay(WidgetTester tester) async {
+  await _settle(tester);
+  final Finder close = find.byKey(const ValueKey('first-day-close'));
+  if (close.evaluate().isEmpty) return;
+  await tester.tap(close);
+  await _settle(tester);
 }
 
 /// The profile's own list. The tabs sit in a page view, which is a
