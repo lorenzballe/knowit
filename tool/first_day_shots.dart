@@ -38,6 +38,9 @@ import 'package:astuto/remote/remote.dart';
 import 'package:astuto/state/debug_looks.dart';
 import 'package:astuto/sync/push.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
+import 'package:astuto/widgets/web/card_thumb.dart';
+
+import '../test/flutter_test_config.dart' show NoPicture;
 
 Future<void> _loadFonts() async {
   final fonts = {
@@ -120,6 +123,10 @@ void main() {
     await _loadFonts();
     PillBank.fetch = (url) async => null;
     Remote.fetch = (url) async => null;
+    // A card's picture fails at once, as under test, so a card on the shelf
+    // is drawn as it is without one rather than waiting, grey, on a network
+    // there is none of here.
+    CardThumb.image = NoPicture.new;
   });
 
   final String out = Platform.environment['SHOTS'] ?? 'shots';
