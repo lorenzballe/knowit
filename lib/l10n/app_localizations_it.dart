@@ -7309,6 +7309,118 @@ class AppLocalizationsIt extends AppLocalizations {
   String get listenNextCard => 'Carta successiva';
 
   @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'Leggi in $minutes minuti',
+      one: 'Leggi in 1 minuto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => 'Continua a leggere';
+
+  @override
+  String get summaryAgain => 'Rileggi';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return 'Parte $part di $of';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'mancano $n min',
+      one: 'manca 1 min',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return 'Ascolta · $minutes min';
+  }
+
+  @override
+  String get summaryPause => 'Pausa';
+
+  @override
+  String get summaryResume => 'Riprendi l’ascolto';
+
+  @override
+  String get summaryFreeNote =>
+      'La prima parte è gratis; il resto con Astute+.';
+
+  @override
+  String get summaryTitle => 'Il riassunto';
+
+  @override
+  String get summaryNowPlaying => 'In ascolto';
+
+  @override
+  String get summaryNextPart => 'Parte successiva';
+
+  @override
+  String get summaryFinish => 'Concludi';
+
+  @override
+  String get summaryContents => 'Indice';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return 'Hai letto $title';
+  }
+
+  @override
+  String get summaryDoneLine =>
+      'Le carte del libro servono a far restare le sue idee.';
+
+  @override
+  String get summaryToCards => 'Le idee in carte';
+
+  @override
+  String get summaryBackToBook => 'Torna al libro';
+
+  @override
+  String get summaryGateTitle => 'Il resto del riassunto è con Astute+';
+
+  @override
+  String summaryGateLine(int parts) {
+    return 'Tutte le $parts parti, da leggere e da ascoltare, per ogni libro. Il libro della settimana è gratis per tutti.';
+  }
+
+  @override
+  String get summaryNeedsNetwork =>
+      'Questo riassunto ha bisogno di internet una volta.';
+
+  @override
+  String get bookAudioBack => 'Indietro di 15 secondi';
+
+  @override
+  String get bookAudioWaiting => 'La prossima parte sta arrivando…';
+
+  @override
+  String get bookAudioDone => 'Ascoltato fino alla fine.';
+
+  @override
+  String get bookAudioOfferTitle => 'Ascolta il resto del libro';
+
+  @override
+  String get bookAudioOfferLine =>
+      'Con Astute+ ogni riassunto ti viene letto per intero, anche a schermo bloccato.';
+
+  @override
+  String get bookAudioStop => 'Smetti di ascoltare';
+
+  @override
+  String get bookAudioOpen => 'Apri il lettore';
+
+  @override
   String get inviteSection => 'Amici';
 
   @override

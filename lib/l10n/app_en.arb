@@ -8209,6 +8209,151 @@
  "@listenNextCard": {
   "description": "Said to a screen reader on the player's button that goes on to the next card."
  },
+ "summaryReadIn": "{minutes, plural, =1{Read in 1 minute} other{Read in {minutes} minutes}}",
+ "@summaryReadIn": {
+  "description": "A book's page, the first way in when the book has a summary: opens the summary, read whole in about a quarter of an hour. minutes is how long it takes.",
+  "placeholders": {
+   "minutes": {
+    "type": "int"
+   }
+  }
+ },
+ "summaryContinue": "Continue reading",
+ "@summaryContinue": {
+  "description": "A book's page, the same button once the reader has started the summary and not finished it."
+ },
+ "summaryAgain": "Read again",
+ "@summaryAgain": {
+  "description": "A book's page, the same button once the summary has been read to its end."
+ },
+ "summaryPartOf": "Part {part} of {of}",
+ "@summaryPartOf": {
+  "description": "Where the reader is in a book's summary: part n of so many. Also the eyebrow over a part in the reader, in capitals, and in the player.",
+  "placeholders": {
+   "part": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "summaryMinutesLeft": "{n, plural, =1{1 min left} other{{n} min left}}",
+ "@summaryMinutesLeft": {
+  "description": "How many minutes of a summary are left to read or to hear, beside where the reader is.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "summaryListenFor": "Listen · {minutes} min",
+ "@summaryListenFor": {
+  "description": "A book's page, the second way in beside reading: plays the summary aloud. minutes is how long it takes.",
+  "placeholders": {
+   "minutes": {
+    "type": "int"
+   }
+  }
+ },
+ "summaryPause": "Pause",
+ "@summaryPause": {
+  "description": "A book's page, the listening button while this book's summary is being read aloud: pauses it."
+ },
+ "summaryResume": "Resume listening",
+ "@summaryResume": {
+  "description": "A book's page, the listening button while this book's summary is paused: plays on from where it stopped."
+ },
+ "summaryFreeNote": "The first part is free; the rest comes with Astute+.",
+ "@summaryFreeNote": {
+  "description": "A book's page and the player, on the free plan, for a book that is not the week's: what of the summary is free."
+ },
+ "summaryTitle": "The summary",
+ "@summaryTitle": {
+  "description": "A book's page: the name over the summary's parts, in capitals; also the reader's contents."
+ },
+ "summaryNowPlaying": "Now playing",
+ "@summaryNowPlaying": {
+  "description": "Beside the part of a summary being read aloud, on the book's page and in the player."
+ },
+ "summaryNextPart": "Next part",
+ "@summaryNextPart": {
+  "description": "At the foot of a part in the reader, over the next part's title; and the player's button that goes on to the next part."
+ },
+ "summaryFinish": "Finish",
+ "@summaryFinish": {
+  "description": "At the foot of the last part in the reader: ends the summary."
+ },
+ "summaryContents": "Contents",
+ "@summaryContents": {
+  "description": "The reader: the button that lists every part of the summary, and that list's title."
+ },
+ "summaryDoneTitle": "You’ve read {title}",
+ "@summaryDoneTitle": {
+  "description": "The page after the last part of a summary: the book read. title is the book's title, as published.",
+  "placeholders": {
+   "title": {
+    "type": "String"
+   }
+  }
+ },
+ "summaryDoneLine": "The book’s cards are there to make its ideas stay.",
+ "@summaryDoneLine": {
+  "description": "That page, under its title: the book's cards, the short way in, offered to make the ideas stay."
+ },
+ "summaryToCards": "The ideas as cards",
+ "@summaryToCards": {
+  "description": "That page's first button: opens the book's ideas as cards."
+ },
+ "summaryBackToBook": "Back to the book",
+ "@summaryBackToBook": {
+  "description": "That page's second button: back to the book's page."
+ },
+ "summaryGateTitle": "The rest of this summary comes with Astute+",
+ "@summaryGateTitle": {
+  "description": "The reader, on the free plan, at a part past the first of a book that is not the week's: what the rest is."
+ },
+ "summaryGateLine": "All {parts} parts, to read and to hear, for every book. The week’s book is free for everyone.",
+ "@summaryGateLine": {
+  "description": "Under it: what Astute+ opens. parts is how many parts the summary has.",
+  "placeholders": {
+   "parts": {
+    "type": "int"
+   }
+  }
+ },
+ "summaryNeedsNetwork": "This summary needs the internet once.",
+ "@summaryNeedsNetwork": {
+  "description": "The reader, when a summary that was never opened cannot be fetched: no network."
+ },
+ "bookAudioBack": "Back 15 seconds",
+ "@bookAudioBack": {
+  "description": "Said to a screen reader on the player's button that goes back fifteen seconds; the button shows a circling arrow and 15."
+ },
+ "bookAudioWaiting": "The next part is on its way…",
+ "@bookAudioWaiting": {
+  "description": "The player, when the next part of the summary is still on its way (a slow network)."
+ },
+ "bookAudioDone": "Heard to the end.",
+ "@bookAudioDone": {
+  "description": "The player, once every part of the summary has been heard."
+ },
+ "bookAudioOfferTitle": "Hear the rest of the book",
+ "@bookAudioOfferTitle": {
+  "description": "The player on the free plan, once the free part is heard: the offer of the rest."
+ },
+ "bookAudioOfferLine": "With Astute+ every summary is read to you whole, even with the screen locked.",
+ "@bookAudioOfferLine": {
+  "description": "Under it."
+ },
+ "bookAudioStop": "Stop listening",
+ "@bookAudioStop": {
+  "description": "The player's last button, and the small player's cross as a screen reader says it: stops the summary being read aloud."
+ },
+ "bookAudioOpen": "Open the player",
+ "@bookAudioOpen": {
+  "description": "Said to a screen reader on the small player that stays over every screen while a book is read aloud: opens the whole player."
+ },
  "inviteSection": "Friends",
  "@inviteSection": {
   "description": "Profile: the name over the box with the invitation's two rows (Invita un amico)."
