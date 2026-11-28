@@ -28,6 +28,7 @@ import '../data/reader_profile.dart';
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../measure/card_read.dart';
+import '../measure/first_steps.dart';
 import '../measure/session.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
@@ -115,6 +116,8 @@ class AppState extends ChangeNotifier {
   static const _kGoalAsked = 'knowit.goalAsked';
   static const _kTopicLevels = 'knowit.topicLevels';
   static const _kGenresOff = 'knowit.genresOff';
+  static const _kLoved = 'knowit.loved';
+  static const _kPartsOffer = 'knowit.partsOffer';
   static const _kStrandsOff = 'knowit.strandsOff';
   static const _kNotifications = 'knowit.notifications';
   static const _kNotifyHour = 'knowit.notifyHour';
@@ -387,6 +390,13 @@ class AppState extends ChangeNotifier {
   /// who chose before it existed.
   Set<String> genresOff = {};
   Set<String> strandsOff = {};
+
+  /// The subjects the reader loves, in the order they picked them, at most
+  /// three (kMostLoved): the first run's one question asked in the positive
+  /// (lib/screens/loves_screen.dart). Their first days open on them
+  /// (lib/data/first_days.dart) and their own cards lean to them after
+  /// ([leanedWeights]).
+  List<String> lovedTopics = const [];
   bool notificationsOn = true;
   String notifyTime = '08:30';
 
@@ -539,6 +549,10 @@ class AppState extends ChangeNotifier {
     } catch (_) {
       installedOn = dateKey(today);
     }
+    // The first run's steps, counted with nothing that says whose: a first
+    // open on a phone new to the app, or the return the day after it.
+    await FirstSteps.instance.load(_prefs);
+    unawaited(_noteOpened());
 
     ready = true;
     notifyListeners();
@@ -635,6 +649,8 @@ class AppState extends ChangeNotifier {
     } finally {
       _turningDay = false;
     }
+    // A night asleep in memory can be the night after the first open.
+    unawaited(_noteOpened());
     notifyListeners();
     unawaited(refreshDailyReminder());
     unawaited(refreshHomeWidget());
@@ -682,6 +698,8 @@ class AppState extends ChangeNotifier {
     if (goals.isEmpty) goals = _keptGoals(areasOf(skills));
     topicLevels = _decodeLevels(_prefs.getString(_kTopicLevels));
     genresOff = (_prefs.getStringList(_kGenresOff) ?? []).toSet();
+    lovedTopics = _keptLoves(_prefs.getStringList(_kLoved) ?? const []);
+    partsOffer = _prefs.getString(_kPartsOffer);
     strandsOff = (_prefs.getStringList(_kStrandsOff) ?? []).toSet();
     final storedTopics = _prefs.getStringList(_kTopics);
     if (storedTopics != null && storedTopics.isNotEmpty) {
@@ -885,6 +903,8 @@ class AppState extends ChangeNotifier {
       ...genresOff,
       '|',
       ...strandsOff,
+      '|',
+      ...lovedTopics,
     ]);
     if (_profileKey != key) {
       _profileKey = key;
@@ -892,6 +912,7 @@ class AppState extends ChangeNotifier {
         weights: topicWeights,
         genresOff: genresOff,
         strandsOff: strandsOff,
+        loved: lovedTopics,
       );
     }
     return _profile;
@@ -1006,6 +1027,7 @@ class AppState extends ChangeNotifier {
         date: date,
         topics: pickedTopics,
         claimed: profile.claimed,
+        loved: profile.loved,
         mix: topicWeights,
         weights: weights,
         levels: dealtLevels,
@@ -1720,6 +1742,8 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kBestStreak, bestStreak);
     await _prefs.setString(_kLastCompletion, lastCompletionDate!);
     await _prefs.setStringList(_kCompletedDates, completedDates);
+    // The first day this phone finished, once, as a step of the first run.
+    unawaited(FirstSteps.instance.note(FirstStep.firstDayDone, today));
     // Tomorrow, asked for tonight, so the morning is one read: the trace of
     // today goes first, so tomorrow is dealt from a day that includes it.
     unawaited(_askTomorrow());
@@ -1893,23 +1917,30 @@ class AppState extends ChangeNotifier {
   );
 
   /// The mix as the personal deals see it: what the reader asked for,
-  /// leaned by what they liked and threw down. The five of the day never
-  /// look at this; the second set and the swaps do.
+  /// leaned by what they liked and threw down, by what they want to get
+  /// better at, and by the subjects they said they love. The day's own
+  /// cards are dealt from it (sharpened on the first three days, see
+  /// [ReaderProfile.weightsOn]), and so are the second set and the swaps.
   Map<String, double> get leanedWeights {
     final Map<String, double> leaned = _leanedByReading;
     final Set<String> aimed = {
       for (final String k in goals) ...?Goal.of(k)?.topics,
     };
-    if (aimed.isEmpty) return leaned;
-    // What the reader wants to get better at counts half again.
+    final List<String> loved = profile.loved;
+    if (aimed.isEmpty && loved.isEmpty) return leaned;
     final base = leaned.isEmpty
         ? {for (final key in kTopicOrder) key: 1.0}
         : leaned;
+    // What the reader wants to get better at counts half again, and a
+    // subject they love twice.
     return {
       for (final e in base.entries)
-        e.key: aimed.contains(e.key)
-            ? (e.value * kGoalLean).clamp(0.05, 3.0)
-            : e.value,
+        e.key:
+            (e.value *
+                    (aimed.contains(e.key) ? kGoalLean : 1) *
+                    (loved.contains(e.key) ? kLoveLean : 1))
+                .clamp(0.05, 3.0)
+                .toDouble(),
     };
   }
 
@@ -2549,9 +2580,18 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// The app open on a new day of this phone, for the first run's steps
+  /// (lib/measure/first_steps.dart): its first open, or the next day.
+  Future<void> _noteOpened() => FirstSteps.instance.opened(
+    onboarded: onboarded,
+    installedOn: installedOn,
+    today: today,
+  );
+
   Future<void> completeOnboarding() async {
     onboarded = true;
     await _prefs.setBool(_kOnboarded, true);
+    unawaited(FirstSteps.instance.note(FirstStep.firstRunDone, today));
     Analytics.capture('onboarding completed', {
       'topics': pickedTopics.length,
       ...profile.facts,
@@ -2620,6 +2660,77 @@ class AppState extends ChangeNotifier {
   /// Whether the first run plays a card and offers the trial after it.
   bool get firstRunTrialOn => kFirstRunTrialFlag.on(_here);
 
+  // ── The three loved, and Which parts later ────────────────────────────
+
+  /// The first run's question in the positive (`firstRun.loves`): after
+  /// Your mix, up to three subjects the reader loves (lib/screens/
+  /// loves_screen.dart), which their first days open on and their own cards
+  /// lean to. On as built; off, the first run goes from the mix to the day.
+  static const RemoteFlag kLovesFlag = RemoteFlag(
+    'firstRun.loves',
+    fallback: true,
+  );
+
+  /// Whether the first run asks for the three the reader loves.
+  bool get lovesAsked => kLovesFlag.on(_here);
+
+  /// Which parts of each subject, offered once on the finished day's shelf
+  /// (`parts.offer`, lib/widgets/parts_offer.dart), from the
+  /// [kPartsOfferKnob]th finished day: the question the first run used to
+  /// ask before a single card, two hundred genres and their strands, asked
+  /// once the reader knows what a card is. On as built.
+  static const RemoteFlag kPartsOfferFlag = RemoteFlag(
+    'parts.offer',
+    fallback: true,
+  );
+
+  /// The finished days before Which parts is offered, as the server may
+  /// tune it: three, as built.
+  static const int kPartsOfferDay = 3;
+  static const RemoteNumber kPartsOfferKnob = RemoteNumber(
+    'parts.offerDay',
+    fallback: kPartsOfferDay,
+    min: 2,
+    max: 30,
+  );
+
+  /// Where the offer of Which parts stands: null before it was shown; the
+  /// day it was shown on, which it stays on that evening until answered and
+  /// never comes back after; or `done`, once answered.
+  String? partsOffer;
+
+  /// Whether Which parts is offered on the shelf now: on the finished day's
+  /// shelf from the [kPartsOfferKnob]th finished day, to a reader who has
+  /// not chosen any parts already (in the fine-tuning), once — the evening
+  /// it is first shown, until it is answered, and never again.
+  bool get partsOfferDue {
+    if (!kPartsOfferFlag.on(_here) || !dayClosed) return false;
+    if (genresOff.isNotEmpty || strandsOff.isNotEmpty) return false;
+    if (completedDates.length < kPartsOfferKnob.value) return false;
+    return partsOffer == null || partsOffer == dateKey(today);
+  }
+
+  /// The offer has been put on the shelf: noted on the day it was, so it
+  /// is not put on another.
+  Future<void> notedPartsOfferShown() async {
+    if (partsOffer != null) return;
+    partsOffer = dateKey(today);
+    await _prefs.setString(_kPartsOffer, partsOffer!);
+    Analytics.capture('parts offer shown', {
+      'days_completed': completedDates.length,
+    });
+  }
+
+  /// The reader answered the offer: Which parts opened ([chose]), or let go.
+  Future<void> notedPartsOfferAnswered({required bool chose}) async {
+    partsOffer = 'done';
+    await _prefs.setString(_kPartsOffer, 'done');
+    Analytics.capture('parts offer answered', {
+      'choice': chose ? 'choose' : 'not now',
+    });
+    notifyListeners();
+  }
+
   /// The day the offer was last put, as a date key; null when never. Kept
   /// for the phone rather than the reader, like the experiments' draws: a
   /// sign-out and a first run again the same day is not a second chance to
@@ -2645,6 +2756,7 @@ class AppState extends ChangeNotifier {
     today,
     topics: pickedTopics,
     claimed: profile.claimed,
+    loved: profile.loved,
     mix: topicWeights,
     genresOff: genresOff,
     strandsOff: strandsOff,
@@ -3688,6 +3800,29 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Keeps the subjects the reader loves, in the order picked: the first
+  /// run's one question asked in the positive, and up to three of them.
+  /// None is an answer too, and is kept as one.
+  Future<void> setLoved(List<String> keys) async {
+    lovedTopics = _keptLoves(keys);
+    await _prefs.setStringList(_kLoved, lovedTopics);
+    // How many, and which: the names decide what the bank writes next, as
+    // the mix's do ('mix set').
+    Analytics.capture('loves set', {
+      'count': lovedTopics.length,
+      'loved': lovedTopics.join(','),
+    });
+    notifyListeners();
+  }
+
+  /// [keys] as loves: subjects the app has, each once, at most three.
+  static List<String> _keptLoves(Iterable<String> keys) => List.unmodifiable(
+    <String>{
+      for (final String k in keys)
+        if (kTopics.containsKey(k) && k != 'thinking') k,
+    }.take(kMostLoved),
+  );
+
   /// The figures of Your journey just seen, written over what was seen of
   /// them before, and today as the day they were.
   Future<void> rememberJourney(Map<String, double> seen) async {
@@ -3791,6 +3926,9 @@ class AppState extends ChangeNotifier {
     if (month != null) await _prefs.setString(_kFirstMonthOfferedOn, month);
     // So do the looks the developer tools are trying on this phone.
     await DebugLooks.keep(_prefs);
+    // And the first run's steps this phone has counted: a reader who signs
+    // out and runs the first run again is not a new phone.
+    await FirstSteps.instance.keep();
     // The clear above took the reader's own answer to "measure this?" with
     // it. An opt-out a sign-out quietly undoes is not a choice, it is a
     // delay — so it goes back down before anything else is written.
@@ -3859,6 +3997,8 @@ class AppState extends ChangeNotifier {
     topicLevels = {};
     genresOff = {};
     strandsOff = {};
+    lovedTopics = const [];
+    partsOffer = null;
     deckHistory = {};
     // Whoever reads here next starts as a new reader does.
     firstDays = true;
@@ -4360,6 +4500,7 @@ class AppState extends ChangeNotifier {
     topicLevels: Map<String, int>.from(topicLevels),
     genresOff: genresOff.toList(),
     strandsOff: strandsOff.toList(),
+    lovedTopics: List<String>.from(lovedTopics),
     pushTokens: List<String>.from(pushTokens),
     place: place,
     placeRemovedAt: placeRemovedAt,
@@ -4398,6 +4539,7 @@ class AppState extends ChangeNotifier {
     topicLevels = Map<String, int>.from(s.topicLevels);
     genresOff = s.genresOff.toSet();
     strandsOff = s.strandsOff.toSet();
+    lovedTopics = _keptLoves(s.lovedTopics);
     pushTokens = List<String>.from(s.pushTokens);
     place = s.place;
     placeRemovedAt = s.placeRemovedAt;
@@ -4436,6 +4578,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setStringList(_kTopics, pickedTopics.toList());
     await _prefs.setString(_kTopicWeights, jsonEncode(topicWeights));
     await _prefs.setString(_kTopicLevels, jsonEncode(topicLevels));
+    await _prefs.setStringList(_kLoved, lovedTopics);
     await _prefs.setStringList(_kPushTokens, pushTokens);
     final Place? kept = place;
     final DateTime? removed = placeRemovedAt;

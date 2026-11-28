@@ -1009,6 +1009,25 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('everythingIsInDrag') ?? _base.everythingIsInDrag;
 
   @override
+  String get mixLeaveOut => _words.text('mixLeaveOut') ?? _base.mixLeaveOut;
+
+  @override
+  String get mixPutBack => _words.text('mixPutBack') ?? _base.mixPutBack;
+
+  @override
+  String get lovesTitle => _words.text('lovesTitle') ?? _base.lovesTitle;
+
+  @override
+  String get lovesLine => _words.text('lovesLine') ?? _base.lovesLine;
+
+  @override
+  String lovesCount(int n) =>
+      _words.format('lovesCount', localeName, {'n': n}) ?? _base.lovesCount(n);
+
+  @override
+  String get lovesFull => _words.text('lovesFull') ?? _base.lovesFull;
+
+  @override
   String get next => _words.text('next') ?? _base.next;
 
   @override
@@ -1037,6 +1056,14 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get swipeToSeeMore =>
       _words.text('swipeToSeeMore') ?? _base.swipeToSeeMore;
+
+  @override
+  String get introPromiseTitle =>
+      _words.text('introPromiseTitle') ?? _base.introPromiseTitle;
+
+  @override
+  String get introPromiseLine =>
+      _words.text('introPromiseLine') ?? _base.introPromiseLine;
 
   @override
   String get tagline => _words.text('tagline') ?? _base.tagline;
@@ -2673,6 +2700,10 @@ class RemoteLocalizations extends AppLocalizations {
   String get consentLine => _words.text('consentLine') ?? _base.consentLine;
 
   @override
+  String get consentCardLine =>
+      _words.text('consentCardLine') ?? _base.consentCardLine;
+
+  @override
   String get consentNo => _words.text('consentNo') ?? _base.consentNo;
 
   @override
@@ -2694,6 +2725,18 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get genresLine => _words.text('genresLine') ?? _base.genresLine;
+
+  @override
+  String get partsOfferLine =>
+      _words.text('partsOfferLine') ?? _base.partsOfferLine;
+
+  @override
+  String get partsOfferChoose =>
+      _words.text('partsOfferChoose') ?? _base.partsOfferChoose;
+
+  @override
+  String get partsOfferNotNow =>
+      _words.text('partsOfferNotNow') ?? _base.partsOfferNotNow;
 
   @override
   String get insideGenre => _words.text('insideGenre') ?? _base.insideGenre;

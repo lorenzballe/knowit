@@ -1,8 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
 import '../widgets/fit_text.dart';
-import '../widgets/ui.dart';
 
 import 'package:flutter/services.dart';
 
@@ -55,36 +56,113 @@ const List<MixSubject> kMixSubjects = [
 /// Below this a subject is out of the mix rather than merely quiet.
 const int kMixFloor = 6;
 
-/// The second and last step of the onboarding: how much of each subject.
+/// The second step of the first run, after the intro: how much of each
+/// subject. The three the reader loves come after it
+/// (lib/screens/loves_screen.dart).
 ///
 /// Everything starts all the way in, so the reader is turning things down
 /// rather than building a deck from nothing — an empty grid asks somebody who
 /// has never used the app to decide what they like about it.
+///
+/// A tap on a subject takes it out of the mix, and a second puts it back as
+/// it was; a slide sideways sets how much of it. The line under the title
+/// says both, and as the grid comes in the first subject's bar shows the
+/// slide once: down to about half, and back. A tester tapped a subject, saw
+/// nothing happen, and never found the slide — nothing had said there was
+/// one, and the tap did nothing at all.
 class MixScreen extends StatefulWidget {
-  const MixScreen({super.key, required this.onDone, required this.onSkip});
+  const MixScreen({super.key, required this.onDone});
 
-  /// The corner. Everything stays in, evenly, and the cards start.
-  final VoidCallback onSkip;
-
-  /// Weights by topic key, 0..1. A subject dragged to nothing is absent.
+  /// Weights by topic key, 0..1. A subject taken out is absent.
   final ValueChanged<Map<String, double>> onDone;
 
   @override
   State<MixScreen> createState() => _MixScreenState();
 }
 
-class _MixScreenState extends State<MixScreen> {
+class _MixScreenState extends State<MixScreen>
+    with SingleTickerProviderStateMixin {
   /// Keyed by name, as the canvas keys it: the six subjects without cards
   /// have no topic key to hold a value under.
   final Map<String, int> _value = {
     for (final MixSubject s in kMixSubjects) s.name: 100,
   };
 
+  /// Where each subject's bar stood before a tap took it out, so a second
+  /// tap puts it back as it was rather than all the way in.
+  final Map<String, int> _beforeOut = {};
+
+  /// The subject a tap moved last: its bar goes the whole way in one
+  /// settled movement, where a dragged bar follows the finger.
+  String? _tapped;
+
   int get _inMix => _value.values.where((int v) => v > kMixFloor).length;
+
+  /// The slide, shown once on the first subject as the grid comes in.
+  late final AnimationController _show = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1500),
+  );
+
+  /// How long the grid takes to rise before the slide is shown on it.
+  static const Duration _showAfter = Duration(milliseconds: 1100);
+
+  /// Waits for the grid to rise; a timer, so a screen gone before it
+  /// leaves nothing behind.
+  Timer? _showTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _show.addListener(() => setState(() {}));
+    _showTimer = Timer(_showAfter, () {
+      if (!mounted || _touched) return;
+      if (MediaQuery.disableAnimationsOf(context)) return;
+      _show.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _showTimer?.cancel();
+    _show.dispose();
+    super.dispose();
+  }
+
+  /// Whether the reader has put a finger on the grid: the slide is not
+  /// shown over their own hand, and stops where it was if it is showing.
+  bool _touched = false;
+
+  void _touch() {
+    _touched = true;
+    _showTimer?.cancel();
+    if (_show.isAnimating) _show.reset();
+  }
+
+  /// What [subject]'s bar shows: its value, or, while the slide is shown on
+  /// the first subject, down to a little over half and back — the value
+  /// itself untouched, since nobody chose it.
+  int _shown(MixSubject subject) {
+    final int v = _value[subject.name]!;
+    if (subject != kMixSubjects.first || !_show.isAnimating) return v;
+    final double t = _show.value;
+    // Down for the first part, a beat at the bottom, back up for the rest.
+    // Clamped: (1 - 0.58) / 0.42 is a hair over one in floating point.
+    final double depth = t < 0.42
+        ? Curves.easeInOutCubic.transform((t / 0.42).clamp(0.0, 1.0))
+        : t < 0.58
+        ? 1
+        : 1 -
+              Curves.easeInOutCubic.transform(
+                ((t - 0.58) / 0.42).clamp(0.0, 1.0),
+              );
+    return (v * (1 - 0.45 * depth)).round();
+  }
 
   /// The bar of [subject] set to where the finger is, [dx] along a tile
   /// [width] wide: anything left of the tile is zero, right of it all in.
   void _setAt(MixSubject subject, double dx, double width) {
+    _touch();
     final int next = ((dx / width).clamp(0.0, 1.0) * 100).round();
     final int was = _value[subject.name]!;
     if (was == next) return;
@@ -92,7 +170,28 @@ class _MixScreenState extends State<MixScreen> {
     // wheel instead of sliding in silence. Fired on the crossing rather than
     // on every pixel, or it would buzz continuously and mean nothing.
     if (next ~/ _detent != was ~/ _detent) HapticFeedback.selectionClick();
-    setState(() => _value[subject.name] = next);
+    setState(() {
+      _tapped = null;
+      _value[subject.name] = next;
+    });
+  }
+
+  /// A tap: a subject in the mix goes out of it, one out of it comes back
+  /// where it was before the tap took it out — all the way in, if a tap
+  /// never did.
+  void _toggle(MixSubject subject) {
+    _touch();
+    HapticFeedback.selectionClick();
+    setState(() {
+      _tapped = subject.name;
+      final int was = _value[subject.name]!;
+      if (was > kMixFloor) {
+        _beforeOut[subject.name] = was;
+        _value[subject.name] = 0;
+      } else {
+        _value[subject.name] = _beforeOut.remove(subject.name) ?? 100;
+      }
+    });
   }
 
   /// How far the bar travels between clicks.
@@ -142,10 +241,7 @@ class _MixScreenState extends State<MixScreen> {
     final Widget top = Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _MixHeading(onSkip: widget.onSkip),
-        const SizedBox(height: 14),
-      ],
+      children: const [_MixHeading(), SizedBox(height: 14)],
     );
     final Widget bottom = Column(
       mainAxisSize: MainAxisSize.min,
@@ -162,22 +258,29 @@ class _MixScreenState extends State<MixScreen> {
           ),
         ),
         const SizedBox(height: 10),
-        _StartButton(onTap: _finish),
+        // The three the reader loves come one screen on.
+        FirstRunButton(
+          key: const ValueKey('mix-next'),
+          label: context.l10n.next,
+          onTap: _finish,
+        ),
       ],
     );
     final Widget grid = _MixGrid(
-      value: _value,
+      value: {for (final MixSubject s in kMixSubjects) s.name: _shown(s)},
+      tapped: _tapped,
+      showing: _show.isAnimating ? kMixSubjects.first.name : null,
       onDragAt: _setAt,
+      onTap: _toggle,
       fixed: scrolls,
     );
     return Padding(
       padding: EdgeInsets.fromLTRB(
         18,
-        // Right under the notch, where the genres screen puts its heading
+        // Right under the notch, where the loves screen puts its heading
         // too. The canvas's 54 was its own drawn status bar: added on a
         // screen that has none (the web app, most Android phones) it left
-        // a band of nothing above the title. Skip takes no room here: it
-        // ends the heading's row.
+        // a band of nothing above the title.
         safe.top > 14 ? safe.top : 14,
         18,
         // 22, as the canvas has it. The artboard is already a phone with a
@@ -220,15 +323,39 @@ class _MixGrid extends StatelessWidget {
   const _MixGrid({
     required this.value,
     required this.onDragAt,
+    required this.onTap,
     required this.fixed,
+    this.tapped,
+    this.showing,
   });
 
   final Map<String, int> value;
   final void Function(MixSubject, double dx, double width) onDragAt;
+  final ValueChanged<MixSubject> onTap;
+
+  /// The subject a tap moved last, whose bar settles rather than follows.
+  final String? tapped;
+
+  /// The subject the slide is being shown on, whose bar follows the show.
+  final String? showing;
 
   /// Rows of their own height, on a page that scrolls, instead of rows
   /// sharing the height the screen leaves.
   final bool fixed;
+
+  Widget _tile(MixSubject subject, int index) => MixTile(
+    key: ValueKey('mix-${subject.key}'),
+    subject: subject,
+    value: value[subject.name]!,
+    index: index,
+    onDragAt: onDragAt,
+    onTap: () => onTap(subject),
+    duration: subject.name == showing
+        ? Duration.zero
+        : subject.name == tapped
+        ? MixTile.settle
+        : MixTile.follow,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -246,12 +373,7 @@ class _MixGrid extends StatelessWidget {
           if (c > 0) const SizedBox(width: 8),
           Expanded(
             child: r * columns + c < kMixSubjects.length
-                ? MixTile(
-                    subject: kMixSubjects[r * columns + c],
-                    value: value[kMixSubjects[r * columns + c].name]!,
-                    index: r * columns + c,
-                    onDragAt: onDragAt,
-                  )
+                ? _tile(kMixSubjects[r * columns + c], r * columns + c)
                 : const SizedBox.shrink(),
           ),
         ],
@@ -273,34 +395,26 @@ class _MixGrid extends StatelessWidget {
 }
 
 class _MixHeading extends StatelessWidget {
-  const _MixHeading({required this.onSkip});
-
-  final VoidCallback onSkip;
+  const _MixHeading();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            // White, all of it, as the genres screen has it. The second
-            // word used to walk the spectrum, which made the two screens
-            // that share this heading look like two different things.
-            Expanded(
-              child: Text(
-                context.l10n.yourMix,
-                style: AppText.display(
-                  size: 30,
-                  weight: FontWeight.w600,
-                  height: 1.04,
-                  spacing: -1,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            SkipCorner(onTap: onSkip, color: Colors.white, inset: 18),
-          ],
+        // White, all of it, as the loves screen has it. The second word
+        // used to walk the spectrum, which made the screens that share this
+        // heading look like different things. No Skip beside it: Next is
+        // the one way on, and a mix left as it starts is a mix all the same.
+        Text(
+          context.l10n.yourMix,
+          style: AppText.display(
+            size: 30,
+            weight: FontWeight.w600,
+            height: 1.04,
+            spacing: -1,
+            color: Colors.white,
+          ),
         ),
         const SizedBox(height: 7),
         Text(
@@ -333,9 +447,10 @@ class _MixHeading extends StatelessWidget {
   }
 }
 
-/// One subject's bar: dragged sideways, it says how much of the subject.
-/// The onboarding's grid is made of these, and so is the fine-tuning under
-/// the topics editor ([TuneScreen]).
+/// One subject's bar: dragged sideways, it says how much of the subject;
+/// tapped, it goes out of the mix or comes back. The onboarding's grid is
+/// made of these, and so is the fine-tuning under the topics editor
+/// ([TuneScreen]).
 class MixTile extends StatelessWidget {
   const MixTile({
     super.key,
@@ -343,6 +458,8 @@ class MixTile extends StatelessWidget {
     required this.value,
     required this.index,
     required this.onDragAt,
+    this.onTap,
+    this.duration = follow,
     this.mark,
   });
 
@@ -350,6 +467,16 @@ class MixTile extends StatelessWidget {
   final int value;
   final int index;
   final void Function(MixSubject, double dx, double width) onDragAt;
+
+  /// A tap: out of the mix, or back in.
+  final VoidCallback? onTap;
+
+  /// How long the bar takes to reach [value]: [follow] under a finger,
+  /// [settle] after a tap, which moves it the whole way at once.
+  final Duration duration;
+
+  static const Duration follow = Duration(milliseconds: 90);
+  static const Duration settle = Duration(milliseconds: 280);
 
   /// Where the reader last set the bar themselves, 0 to 100, when the app
   /// has since moved it: a thin line on the tile, so what was learned and
@@ -362,13 +489,16 @@ class MixTile extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, box) {
         void at(Offset local) => onDragAt(subject, local.dx, box.maxWidth);
-        // Only a sideways drag moves the bar. It used to follow the finger
-        // from the moment it touched, so a reader tapping a subject's name
-        // to choose it quietly turned that subject down to a quarter: the
-        // first decision in the app, undone by the gesture every other
-        // picker uses to say yes. Now a tap does nothing, and once the
-        // finger has travelled sideways the bar follows it, wherever it
-        // goes, the whole way to zero.
+        // Only a sideways drag moves the bar to the finger. It used to
+        // follow the finger from the moment it touched, so a reader tapping
+        // a subject's name to choose it quietly turned that subject down to
+        // a quarter: the first decision in the app, undone by the gesture
+        // every other picker uses to say yes. Then a tap did nothing at
+        // all, which a tester read as broken. Now a tap is out or in, the
+        // whole way and plainly — the bar empties, the name dims, the count
+        // under the grid says so — and once the finger has travelled
+        // sideways the bar follows it, wherever it goes, the whole way to
+        // zero.
         return Semantics(
           slider: true,
           label: subject.name,
@@ -377,9 +507,16 @@ class MixTile extends StatelessWidget {
           decreasedValue: '${(value - 20).clamp(0, 100)}%',
           onIncrease: () => at(Offset((value + 20) / 100 * box.maxWidth, 0)),
           onDecrease: () => at(Offset((value - 20) / 100 * box.maxWidth, 0)),
+          onTap: onTap,
+          onTapHint: onTap == null
+              ? null
+              : live
+              ? context.l10n.mixLeaveOut
+              : context.l10n.mixPutBack,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             excludeFromSemantics: true,
+            onTap: onTap,
             onHorizontalDragStart: (d) => HapticFeedback.selectionClick(),
             onHorizontalDragUpdate: (d) => at(d.localPosition),
             child: _TileIn(
@@ -428,8 +565,10 @@ class MixTile extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: AnimatedFractionallySizedBox(
-                          duration: const Duration(milliseconds: 90),
-                          curve: Curves.linear,
+                          duration: duration,
+                          curve: duration == settle
+                              ? Curves.easeOutCubic
+                              : Curves.linear,
                           widthFactor: value / 100,
                           heightFactor: 1,
                           child: DecoratedBox(
@@ -584,16 +723,19 @@ class _TileInState extends State<_TileIn> with SingleTickerProviderStateMixin {
   }
 }
 
-class _StartButton extends StatefulWidget {
-  const _StartButton({required this.onTap});
+/// The white button at the foot of the first run's questions: Your mix's
+/// Next, and the loves' Start reading.
+class FirstRunButton extends StatefulWidget {
+  const FirstRunButton({super.key, required this.label, required this.onTap});
 
+  final String label;
   final VoidCallback onTap;
 
   @override
-  State<_StartButton> createState() => _StartButtonState();
+  State<FirstRunButton> createState() => _FirstRunButtonState();
 }
 
-class _StartButtonState extends State<_StartButton> {
+class _FirstRunButtonState extends State<FirstRunButton> {
   bool _down = false;
 
   @override
@@ -615,8 +757,7 @@ class _StartButtonState extends State<_StartButton> {
             borderRadius: BorderRadius.circular(18),
           ),
           child: Text(
-            // The cards start one screen on, after one more question.
-            context.l10n.next,
+            widget.label,
             style: AppText.body(
               size: 16,
               weight: FontWeight.w700,

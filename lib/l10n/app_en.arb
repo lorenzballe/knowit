@@ -623,10 +623,10 @@
   "description": "Profile: the heading over How cards are written and Usage data."
  },
  "manageSubscription": "Manage subscription",
- "howPillsAreWritten": "How cards are written",
+ "howPillsAreWritten": "How we write the cards",
  "howTitle": "Every card here is written by an AI model.",
  "howIntro": "We'd rather say it up front than have you find out. Here is how a card reaches you.",
- "howStep1Title": "Written ahead, by a model",
+ "howStep1Title": "Written with AI",
  "howStep1Line": "Each card is drafted to one brief: a question worth asking, an answer that says why, and one move you can use again.",
  "howStep2Title": "Sourced, then read by a critic",
  "@howStep2Title": {
@@ -1077,7 +1077,36 @@
    }
   }
  },
- "everythingIsInDrag": "Everything is in. Slide a subject left to see less of it, or all the way to drop it.",
+ "everythingIsInDrag": "Everything is in. Tap a subject to leave it out, or slide it left to see less of it.",
+ "mixLeaveOut": "Leave it out",
+ "@mixLeaveOut": {
+  "description": "Read aloud by a screen reader on a subject of Your mix that is in: what a tap does. A verb, two words at most."
+ },
+ "mixPutBack": "Put it back",
+ "@mixPutBack": {
+  "description": "Read aloud by a screen reader on a subject of Your mix that is out: what a tap does. A verb, two or three words."
+ },
+ "lovesTitle": "Pick the three you love",
+ "@lovesTitle": {
+  "description": "The first run's step after Your mix: the title over the subjects, asking for up to three the reader loves. The one question asked in the positive."
+ },
+ "lovesLine": "Up to three. Your first days open on them, and after that they come up more often.",
+ "@lovesLine": {
+  "description": "Under lovesTitle: how many, and what the answer does — the first days open on them, and they come up more often after."
+ },
+ "lovesCount": "{n, plural, =0{Tap up to three} other{{n} of 3}}",
+ "@lovesCount": {
+  "description": "Above the button on the loves step: how many of the three are picked, or, with none, what to do. Short: one line.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "lovesFull": "Three at most: tap one to let it go.",
+ "@lovesFull": {
+  "description": "On the loves step, said for a moment in place of lovesCount when a fourth subject is tapped. One line."
+ },
  "next": "Next",
  "whatShouldWeTalkAbout": "What should we talk about?",
  "fivePillsADayPick": "Five cards a day, new every morning. Pick the topics you want in the mix — you can change them later.",
@@ -1106,9 +1135,17 @@
   }
  },
  "swipeToSeeMore": "Swipe to see more",
+ "introPromiseTitle": "Five cards a day, two minutes",
+ "@introPromiseTitle": {
+  "description": "The first page of the intro, under a real card's question: the promise in plain words, its first half. Two lines at most; no full stop, like the other scenes' titles. Words that belong together are joined by a no-break space ( ), so the two lines break between the phrases and never inside one."
+ },
+ "introPromiseLine": "Say how sure you are, and find out how far to trust what you know.",
+ "@introPromiseLine": {
+  "description": "The first page of the intro, under introPromiseTitle: the rest of the promise, plainly. Two lines on a phone."
+ },
  "tagline": "Learn the why behind things, and how far to trust what you know",
  "introTopicsTitle": "Twenty topics, five cards",
- "introTopicsLine": "Written ahead by a model, and each one names its source.",
+ "introTopicsLine": "Written with AI, then checked, and each one names its source.",
  "introQuestionTitle": "A question, how sure, then why",
  "introQuestionLine": "Say how sure you are first. In time you see what your “sure” is worth.",
  "introMixTitle": "You choose the mix",
@@ -1152,7 +1189,7 @@
  "continueWithGoogle": "Continue with Google",
  "startReading": "Start reading",
  "@startReading": {
-  "description": "The intro's one big button: into the app with no account."
+  "description": "The intro's one button, and the last step's of the first run: into the app with no account."
  },
  "haveAnAccount": "Already have an account?",
  "@haveAnAccount": {
@@ -3079,11 +3116,15 @@
  "usageOff": "Nothing more is measured.",
  "consentTitle": "Help make Astute better?",
  "@consentTitle": {
-  "description": "The question asked on the intro, and as a sheet once after the first finished day, before anything is measured: may Astute measure how the app is used?"
+  "description": "The question about usage data, asked on a calm card on the first finished day's shelf, after the day's celebration and the reminder, before anything is measured: may Astute measure how the app is used? It stays until answered."
  },
  "consentLine": "Share how you use the app — never your name, your email or what you write.",
  "@consentLine": {
-  "description": "Under consentTitle on the intro, in one breath with it: what would be shared, and what never is. Short: two lines on a small phone, so the intro keeps its picture."
+  "description": "Profile's Usage data, and builds before this one: what would be shared, and what never is."
+ },
+ "consentCardLine": "We count how the app is used, with no advertising and never your name.",
+ "@consentCardLine": {
+  "description": "On the card that asks about usage data on the first finished day's shelf, under consentTitle: what a yes lets the app do, and what it never does. True to the privacy policy: PostHog keeps a short profile of counts under a random id, so never promise 'no profile'. One sentence."
  },
  "consentNo": "No, thanks",
  "@consentNo": {
@@ -3095,7 +3136,7 @@
  },
  "consentChangeLater": "You can change this any time in {profile}, under {setting}.",
  "@consentChangeLater": {
-  "description": "The foot of the consent sheet: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).",
+  "description": "The foot of the card that asks about usage data: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).",
   "placeholders": {
    "profile": {
     "type": "String"
@@ -3108,9 +3149,21 @@
  "yourMix": "Your mix",
  "genresTitle": "Which parts?",
  "@genresTitle": {
-  "description": "The title of the onboarding step after the mix, where the reader picks which genres of each subject they want."
+  "description": "The title of Which parts: the page where the reader picks which genres of each subject they want, offered once on the shelf from the third finished day, and over the offer itself."
  },
  "genresLine": "Tap a genre to skip it. Hold one and the smaller topics inside open right below.",
+ "partsOfferLine": "A few days in, you know the cards. Inside each subject, keep the parts you want and leave the rest.",
+ "@partsOfferLine": {
+  "description": "On the finished day's shelf, once, from the third finished day: under genresTitle, why Which parts is offered now and what it does. Two short sentences."
+ },
+ "partsOfferChoose": "Choose the parts",
+ "@partsOfferChoose": {
+  "description": "The offer of Which parts on the shelf: its button, which opens the page. Short."
+ },
+ "partsOfferNotNow": "Not now",
+ "@partsOfferNotNow": {
+  "description": "The offer of Which parts on the shelf: the quiet way to let it go. It is not offered again."
+ },
  "insideGenre": "Inside",
  "nOfSixOn": "{n} of {total} on",
  "@nOfSixOn": {
@@ -8381,5 +8434,11 @@
     "type": "int"
    }
   }
+ },
+ "@introTopicsLine": {
+  "description": "The intro's second scene, under its title: how the cards are made, said plainly — written with AI and checked — never hiding the AI. Under it, a link to How cards are written (howPillsAreWritten). Two lines on a phone."
+ },
+ "@everythingIsInDrag": {
+  "description": "Under Your mix: what a tap on a subject does (it leaves the mix, and a second tap brings it back) and what sliding it does (less of it)."
  }
 }

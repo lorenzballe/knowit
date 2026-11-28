@@ -58,12 +58,15 @@ final List<Object> _declared = [
   AppState.kShareChallengeFlag,
   AppState.kListenFlag,
   AppState.kInviteFlag,
+  AppState.kLovesFlag,
+  AppState.kPartsOfferFlag,
   AppState.kPushAskGapKnob,
   AppState.kPushDeferralsKnob,
   kReminderTimesKnob,
   AppState.kPlaceFirstAskKnob,
   AppState.kPlaceLastAskKnob,
   AppState.kReviewStreakKnob,
+  AppState.kPartsOfferKnob,
   AppState.kPushFirstAskExperiment,
 ];
 

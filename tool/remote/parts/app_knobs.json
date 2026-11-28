@@ -10,7 +10,9 @@
   "cardAi": {"default": false},
   "share.challenge": {"default": false},
   "listen": {"default": false},
-  "invite": {"default": false}
+  "invite": {"default": false},
+  "firstRun.loves": {"default": true},
+  "parts.offer": {"default": true}
  },
  "tunables": {
   "push.askGapDays": {"type": "count", "default": 3, "min": 1, "max": 30},
@@ -22,7 +24,8 @@
   },
   "place.firstAskDay": {"type": "count", "default": 2, "min": 1, "max": 20},
   "place.lastAskDay": {"type": "count", "default": 7, "min": 2, "max": 30, "after": "place.firstAskDay"},
-  "review.streakDays": {"type": "count", "default": 7, "min": 3, "max": 60}
+  "review.streakDays": {"type": "count", "default": 7, "min": 3, "max": 60},
+  "parts.offerDay": {"type": "count", "default": 3, "min": 2, "max": 30}
  },
  "experiments": {
   "push.firstAsk": {"variants": ["cameBack", "firstDay"], "default": "cameBack"}

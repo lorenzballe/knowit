@@ -706,7 +706,7 @@ void main() {
       ('place-row', 'Where you live', 'Modena'),
       ('profile-plan', 'Manage subscription', 'Free plan'),
       ('profile-keep-streak', 'Keep your streak on a new phone', null),
-      ('profile-how', 'How cards are written', null),
+      ('profile-how', 'How we write the cards', null),
       ('profile-privacy', 'Privacy Policy', null),
       ('profile-terms', 'Terms of Use', null),
       ('profile-delete', 'Delete account', null),

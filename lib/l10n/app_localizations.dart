@@ -957,7 +957,7 @@ abstract class AppLocalizations {
   /// No description provided for @howPillsAreWritten.
   ///
   /// In en, this message translates to:
-  /// **'How cards are written'**
+  /// **'How we write the cards'**
   String get howPillsAreWritten;
 
   /// No description provided for @howTitle.
@@ -975,7 +975,7 @@ abstract class AppLocalizations {
   /// No description provided for @howStep1Title.
   ///
   /// In en, this message translates to:
-  /// **'Written ahead, by a model'**
+  /// **'Written with AI'**
   String get howStep1Title;
 
   /// No description provided for @howStep1Line.
@@ -1560,11 +1560,47 @@ abstract class AppLocalizations {
   /// **'{n} of {total} subjects in the mix'**
   String subjectsInTheMix(int n, int total);
 
-  /// No description provided for @everythingIsInDrag.
+  /// Under Your mix: what a tap on a subject does (it leaves the mix, and a second tap brings it back) and what sliding it does (less of it).
   ///
   /// In en, this message translates to:
-  /// **'Everything is in. Slide a subject left to see less of it, or all the way to drop it.'**
+  /// **'Everything is in. Tap a subject to leave it out, or slide it left to see less of it.'**
   String get everythingIsInDrag;
+
+  /// Read aloud by a screen reader on a subject of Your mix that is in: what a tap does. A verb, two words at most.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave it out'**
+  String get mixLeaveOut;
+
+  /// Read aloud by a screen reader on a subject of Your mix that is out: what a tap does. A verb, two or three words.
+  ///
+  /// In en, this message translates to:
+  /// **'Put it back'**
+  String get mixPutBack;
+
+  /// The first run's step after Your mix: the title over the subjects, asking for up to three the reader loves. The one question asked in the positive.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the three you love'**
+  String get lovesTitle;
+
+  /// Under lovesTitle: how many, and what the answer does — the first days open on them, and they come up more often after.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to three. Your first days open on them, and after that they come up more often.'**
+  String get lovesLine;
+
+  /// Above the button on the loves step: how many of the three are picked, or, with none, what to do. Short: one line.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Tap up to three} other{{n} of 3}}'**
+  String lovesCount(int n);
+
+  /// On the loves step, said for a moment in place of lovesCount when a fourth subject is tapped. One line.
+  ///
+  /// In en, this message translates to:
+  /// **'Three at most: tap one to let it go.'**
+  String get lovesFull;
 
   /// No description provided for @next.
   ///
@@ -1608,6 +1644,18 @@ abstract class AppLocalizations {
   /// **'Swipe to see more'**
   String get swipeToSeeMore;
 
+  /// The first page of the intro, under a real card's question: the promise in plain words, its first half. Two lines at most; no full stop, like the other scenes' titles. Words that belong together are joined by a no-break space ( ), so the two lines break between the phrases and never inside one.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards a day, two minutes'**
+  String get introPromiseTitle;
+
+  /// The first page of the intro, under introPromiseTitle: the rest of the promise, plainly. Two lines on a phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Say how sure you are, and find out how far to trust what you know.'**
+  String get introPromiseLine;
+
   /// No description provided for @tagline.
   ///
   /// In en, this message translates to:
@@ -1620,10 +1668,10 @@ abstract class AppLocalizations {
   /// **'Twenty topics, five cards'**
   String get introTopicsTitle;
 
-  /// No description provided for @introTopicsLine.
+  /// The intro's second scene, under its title: how the cards are made, said plainly — written with AI and checked — never hiding the AI. Under it, a link to How cards are written (howPillsAreWritten). Two lines on a phone.
   ///
   /// In en, this message translates to:
-  /// **'Written ahead by a model, and each one names its source.'**
+  /// **'Written with AI, then checked, and each one names its source.'**
   String get introTopicsLine;
 
   /// No description provided for @introQuestionTitle.
@@ -1716,7 +1764,7 @@ abstract class AppLocalizations {
   /// **'Continue with Google'**
   String get continueWithGoogle;
 
-  /// The intro's one big button: into the app with no account.
+  /// The intro's one button, and the last step's of the first run: into the app with no account.
   ///
   /// In en, this message translates to:
   /// **'Start reading'**
@@ -3960,17 +4008,23 @@ abstract class AppLocalizations {
   /// **'Nothing more is measured.'**
   String get usageOff;
 
-  /// The question asked on the intro, and as a sheet once after the first finished day, before anything is measured: may Astute measure how the app is used?
+  /// The question about usage data, asked on a calm card on the first finished day's shelf, after the day's celebration and the reminder, before anything is measured: may Astute measure how the app is used? It stays until answered.
   ///
   /// In en, this message translates to:
   /// **'Help make Astute better?'**
   String get consentTitle;
 
-  /// Under consentTitle on the intro, in one breath with it: what would be shared, and what never is. Short: two lines on a small phone, so the intro keeps its picture.
+  /// Profile's Usage data, and builds before this one: what would be shared, and what never is.
   ///
   /// In en, this message translates to:
   /// **'Share how you use the app — never your name, your email or what you write.'**
   String get consentLine;
+
+  /// On the card that asks about usage data on the first finished day's shelf, under consentTitle: what a yes lets the app do, and what it never does. True to the privacy policy: PostHog keeps a short profile of counts under a random id, so never promise 'no profile'. One sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'We count how the app is used, with no advertising and never your name.'**
+  String get consentCardLine;
 
   /// The answer that keeps measurement off. Exactly as prominent as consentYes, side by side.
   ///
@@ -3984,7 +4038,7 @@ abstract class AppLocalizations {
   /// **'Yes, share'**
   String get consentYes;
 
-  /// The foot of the consent sheet: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).
+  /// The foot of the card that asks about usage data: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).
   ///
   /// In en, this message translates to:
   /// **'You can change this any time in {profile}, under {setting}.'**
@@ -3996,7 +4050,7 @@ abstract class AppLocalizations {
   /// **'Your mix'**
   String get yourMix;
 
-  /// The title of the onboarding step after the mix, where the reader picks which genres of each subject they want.
+  /// The title of Which parts: the page where the reader picks which genres of each subject they want, offered once on the shelf from the third finished day, and over the offer itself.
   ///
   /// In en, this message translates to:
   /// **'Which parts?'**
@@ -4007,6 +4061,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap a genre to skip it. Hold one and the smaller topics inside open right below.'**
   String get genresLine;
+
+  /// On the finished day's shelf, once, from the third finished day: under genresTitle, why Which parts is offered now and what it does. Two short sentences.
+  ///
+  /// In en, this message translates to:
+  /// **'A few days in, you know the cards. Inside each subject, keep the parts you want and leave the rest.'**
+  String get partsOfferLine;
+
+  /// The offer of Which parts on the shelf: its button, which opens the page. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the parts'**
+  String get partsOfferChoose;
+
+  /// The offer of Which parts on the shelf: the quiet way to let it go. It is not offered again.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get partsOfferNotNow;
 
   /// No description provided for @insideGenre.
   ///

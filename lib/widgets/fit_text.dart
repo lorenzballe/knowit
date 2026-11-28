@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'balanced_text.dart';
+
 /// Text that takes the largest size, down from [style]'s, at which it fits
 /// the width it is given in at most [maxLines] lines.
 ///
@@ -22,6 +24,7 @@ class FitText extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.ellipsis = false,
     this.wholeWords = false,
+    this.balanced = false,
   });
 
   final String text;
@@ -40,6 +43,11 @@ class FitText extends StatelessWidget {
   /// cut. Words in scripts that break between any two characters — Chinese,
   /// Japanese, Korean — are no such words.
   final bool wholeWords;
+
+  /// Whether, once the size is found, the lines are broken evenly
+  /// ([BalancedText]): a title that wraps by one word does not leave that
+  /// word alone on the line under it. It never takes a line more.
+  final bool balanced;
 
   /// A character of a script whose lines break between any two of them.
   static final RegExp _breaksAnywhere = RegExp(
@@ -128,6 +136,13 @@ class FitText extends StatelessWidget {
           painter.dispose();
           if (fits) break;
           size -= 1;
+        }
+        if (balanced && !ellipsis) {
+          return BalancedText(
+            text,
+            textAlign: textAlign,
+            style: base.copyWith(fontSize: size),
+          );
         }
         return Text(
           text,

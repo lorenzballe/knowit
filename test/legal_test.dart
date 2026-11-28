@@ -93,6 +93,59 @@ void main() {
     expect(policy, contains('<li><strong>Dove vivi.</strong>'));
   });
 
+  test('the policy says how the first run is counted, in both its '
+      'languages, word for word as the app keeps it', () {
+    final String policy = File('site/privacy.html').readAsStringSync();
+    String plain(String html) => html
+        .replaceAll(RegExp(r'<[^>]+>'), '')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    expect(
+      kFirstStepsPolicy.keys,
+      unorderedEquals(kFirstStepsPolicyAnchors.keys),
+    );
+    for (final MapEntry<String, String> said in kFirstStepsPolicy.entries) {
+      final String anchor = kFirstStepsPolicyAnchors[said.key]!;
+      final RegExpMatch? paragraph = RegExp(
+        '<p id="$anchor">(.*?)</p>',
+        dotAll: true,
+      ).firstMatch(policy);
+      expect(paragraph, isNotNull, reason: anchor);
+      expect(plain(paragraph!.group(1)!), said.value, reason: anchor);
+      expect(firstStepsPolicyUrl(said.key), '$kPrivacyUrl#$anchor');
+    }
+    // The promises, so that a rewrite cannot quietly drop one: nothing that
+    // says whose, the address only in the cloud's own log, counted whatever
+    // the answer about usage data, and only from the stores.
+    final String en = kFirstStepsPolicy['en']!;
+    for (final String promise in const [
+      'counts four steps',
+      'the name of the step and the date, and nothing else',
+      'not your account, not an identifier of the phone',
+      'not your IP address',
+      'that log does not say which step was counted',
+      'whatever you answer about usage data',
+      'only an app installed from the App Store or Google Play',
+    ]) {
+      expect(en, contains(promise), reason: promise);
+    }
+    final String it = kFirstStepsPolicy['it']!;
+    for (final String promise in const [
+      'conta quattro passi',
+      'il nome del passo e la data, e nient’altro',
+      'né il tuo account, né un identificativo del telefono',
+      'né il tuo indirizzo IP',
+      'quel registro non dice quale passo è stato contato',
+      'qualunque cosa tu risponda sui dati di utilizzo',
+      'solo un’app installata dall’App Store o da Google Play',
+    ]) {
+      expect(it, contains(promise), reason: promise);
+    }
+    // And the question about usage data is said where it is now asked.
+    expect(policy, contains('At the end of your first day'));
+    expect(policy, contains('Alla fine della tua prima giornata'));
+  });
+
   test('the policy says what goes to Anthropic, in both its languages', () {
     // The assistant, the coach and the news are written by Claude: the
     // policy says what is sent for each, that nothing in it says who the

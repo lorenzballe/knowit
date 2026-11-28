@@ -795,7 +795,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get manageSubscription => 'Zarządzaj subskrypcją';
 
   @override
-  String get howPillsAreWritten => 'Jak powstają karty';
+  String get howPillsAreWritten => 'Jak piszemy karty';
 
   @override
   String get howTitle => 'Każdą kartę tutaj pisze model AI.';
@@ -805,7 +805,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'Wolimy powiedzieć to od razu, niż żebyś sam to odkrył. Oto jak karta do ciebie trafia.';
 
   @override
-  String get howStep1Title => 'Napisana wcześniej, przez model';
+  String get howStep1Title => 'Napisana z pomocą AI';
 
   @override
   String get howStep1Line =>
@@ -1350,7 +1350,34 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Wszystko jest w środku. Przesuń temat w lewo, żeby widzieć go mniej, albo do końca, żeby go wyrzucić.';
+      'Wszystko jest w środku. Stuknij temat, żeby go pominąć, albo przesuń w lewo, żeby widzieć go mniej.';
+
+  @override
+  String get mixLeaveOut => 'Pomiń';
+
+  @override
+  String get mixPutBack => 'Przywróć';
+
+  @override
+  String get lovesTitle => 'Wybierz trzy ulubione';
+
+  @override
+  String get lovesLine =>
+      'Najwyżej trzy. Od nich zaczną się twoje pierwsze dni, a potem będą wracać częściej.';
+
+  @override
+  String lovesCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n z 3',
+      zero: 'Stuknij najwyżej trzy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lovesFull => 'Najwyżej trzy: stuknij jeden, żeby go odznaczyć.';
 
   @override
   String get next => 'Dalej';
@@ -1397,6 +1424,13 @@ class AppLocalizationsPl extends AppLocalizations {
   String get swipeToSeeMore => 'Przesuń, by zobaczyć więcej';
 
   @override
+  String get introPromiseTitle => 'Pięć kart dziennie, dwie minuty';
+
+  @override
+  String get introPromiseLine =>
+      'Oceń swoją pewność i sprawdź, na ile możesz ufać temu, co wiesz.';
+
+  @override
   String get tagline =>
       'Zrozum, dlaczego jest tak, a nie inaczej, i na ile ufać temu, co wiesz';
 
@@ -1405,7 +1439,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Pisane wcześniej przez model, a każda podaje swoje źródło.';
+      'Pisane z pomocą AI, potem sprawdzane, a każda podaje swoje źródło.';
 
   @override
   String get introQuestionTitle => 'Pytanie, pewność, potem dlaczego';
@@ -3225,6 +3259,10 @@ class AppLocalizationsPl extends AppLocalizations {
       'Udostępniaj, jak korzystasz z aplikacji — nigdy imienia, e-maila ani tego, co piszesz.';
 
   @override
+  String get consentCardLine =>
+      'Liczymy, jak używa się aplikacji, bez reklam i nigdy z twoim imieniem.';
+
+  @override
   String get consentNo => 'Nie, dziękuję';
 
   @override
@@ -3244,6 +3282,16 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get genresLine =>
       'Dotknij gatunku, żeby go pominąć. Przytrzymaj, a mniejsze tematy w środku otworzą się tuż pod nim.';
+
+  @override
+  String get partsOfferLine =>
+      'Po kilku dniach znasz już karty. W każdym temacie zostaw części, które chcesz, a resztę pomiń.';
+
+  @override
+  String get partsOfferChoose => 'Wybierz części';
+
+  @override
+  String get partsOfferNotNow => 'Nie teraz';
 
   @override
   String get insideGenre => 'W środku';

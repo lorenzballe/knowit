@@ -215,8 +215,10 @@ repaints at once, and the status bar follows it.
 
 ## Screens
 
-**Free** — first run (the five-scene intro, then the subject run, and the
-genres under it, which is where the onboarding ends), Today with
+**Free** — first run (the five-scene intro, whose first page is a real
+card's question and the promise in plain words, then Your mix, and up to
+three subjects the reader loves, which is where the onboarding ends; one
+way on from each, no Skip), Today with
 the card stack and, once the five are done, the shelf, Explore (shelves of
 cards nobody dealt you, with a search over the whole pool), Saved with its
 empty state, Profile (the Astute score with the way into the journey under
@@ -1651,17 +1653,30 @@ when something has been pushed over it. A visit sends `$screen` as it begins
 and `screen left` as it ends: the time in front, how far down it was
 scrolled, the drags and taps, and where the reader came from and went.
 
-**Nothing is measured before a yes.** The intro's foot asks whether Astute
-may measure how the app is used — "Help make Astute better?", with No,
-thanks and Yes, share side by side and of one size — in all thirteen
-languages. It is not in the way: Start reading goes on without an answer,
-and no answer is a no. A reader who started without answering, or whose
-phone had the app before the question, is asked once more, as a sheet that
-waits for one of the two answers, after a finished day (after the reminder
-sheet, before the account's). PostHog is not even set up until the answer
-is yes: nothing is captured, queued or sent before it, and nothing after a
-no. What is stamped on every event, where the install came from and who the
-reader is are kept on the phone and said the moment a yes starts it.
+**Nothing is measured before a yes.** Nothing is asked before a card. At
+the end of the first day — after the day's celebration and after the
+reminder's question, which goes first — a calm card on the finished day's
+shelf asks whether Astute may measure how the app is used: "Help make Astute
+better? We count how the app is used, with no advertising and never your
+name", with No, thanks and Yes, share side by side and of one size, in all
+thirteen languages (`lib/widgets/consent_card.dart`). It is not in the way:
+the shelf is all there around it, and no answer is a no. It stays on the
+shelf, day after day, until it is answered. PostHog is not even set up until
+the answer is yes: nothing is captured, queued or sent before it, and
+nothing after a no. What is stamped on every event, where the install came
+from and who the reader is are kept on the phone and said the moment a yes
+starts it.
+
+**The first steps, counted without knowing who.** Whether the start of the
+app works is counted on our own server, as Today's five counts its crowd:
+four steps of a phone new to the app — the first open, the first run's
+questions answered, a first day read, and a return the day after the first
+open — each sent once as a plain request with the step and the date and
+nothing else, no account and no id of the phone, and added to that day's
+total in `steps/{day}` (`lib/measure/first_steps.dart`,
+`functions/src/steps.ts`). Only from an install the App Store or Google
+Play made. They say nothing about anyone, so they are counted whatever the
+answer about usage data, and the privacy policy says so.
 
 **The reader's switch** in the About box of Profile is the same answer, off
 until the reader has said yes. It is applied the moment it moves, and
@@ -1692,8 +1707,8 @@ up and *advanced* with how long it held the reader; answered with how long it
 took. The day says which slot each card fills; the end of the day how many
 were right and wrong. A streak that breaks is said once, milestones and
 records when they happen. The first run is measured step by step and scene by
-scene, with how long each held the reader and where it was skipped — from
-the corner, or by continuing without an account (`intro skipped`, `by`). The
+scene, with how long each held the reader and the scene Start reading left
+from (`intro skipped`, `at_scene`). The
 paywall says which plan was picked, how long it was open, how it was left and
 which link was opened; the store says what it put on sale and every change to
 the subscription — trial, renewal switched off, billing issue, expiry. Then
@@ -1792,10 +1807,9 @@ These are declared in the UI rather than faked:
 - **Notification delivery.** The permission is asked for and the token is
   registered, so a phone can be reached — but nothing sends yet. Deciding who
   gets what, and when in their own timezone, is the work that remains.
-- **Email sign-in.** Not offered. Apple and Google are wired; the intro's
-  third line is *Continue without an account*, which goes where Skip goes,
-  rather than an email button with nothing behind it, and the line under
-  them says continuing, not signing up. Firebase's email link needs a domain
+- **Email sign-in.** Not offered. Apple and Google are wired, behind the
+  intro's quiet *Sign in* under Start reading, rather than an email button
+  with nothing behind it; nobody is asked to make an account before a card. Firebase's email link needs a domain
   of ours with universal links, since Dynamic Links was retired.
 - **The nightly pipeline has not run for real.** The pipeline that grows
   the bank is built and tested against a canned model; the first real night

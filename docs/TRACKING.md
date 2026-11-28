@@ -22,6 +22,17 @@ will find in six months.
   mandato (`invite sent`), il codice di un amico usato e com'è andata
   (`invite code redeemed`), la settimana data, all'amico o a chi invita
   (`invite reward granted`). Mai il codice. §6.14.
+- **Quando si chiede.** Mai prima di una carta: la domanda sui dati di
+  utilizzo è una scheda tranquilla sotto le carte della giornata finita, dalla
+  fine della prima giornata (dopo la festa e dopo la domanda sul promemoria),
+  e resta lì finché il lettore non risponde. Prima di un sì non parte niente.
+- **I primi passi, senza sapere di chi.** Quattro passi (prima apertura,
+  prime domande finite, prima giornata finita, ritorno il giorno dopo) sono
+  contati dal nostro server, non da PostHog: il telefono manda solo il nome
+  del passo e la data, una volta per telefono, e il server tiene solo i
+  totali del giorno in `steps/{giorno}`. Contati comunque, perché non dicono
+  niente di nessuno; solo dalle installazioni dell'App Store e di Google
+  Play. Sezione 2.
 - **Cosa non va mai da nessuna parte:** quello che il lettore scrive o
   cerca, il nome, l'email, i codici amico. Nelle registrazioni di PostHog
   tutto il testo è nascosto. L'interruttore *Profilo → Dati di utilizzo*
@@ -82,12 +93,15 @@ These hold at every call site, old and new.
   an email and a friend code do not. A search is described by its length and
   how many cards it found; a typed answer by whether it was right. A test
   types a sentence into a card and fails if it appears in anything sent.
-- **Nothing before a yes.** The intro asks whether Astute may measure how
-  the app is used, with two answers of one size (`ConsentChoice`); a reader
-  who starts without answering is asked once more, as a sheet, after their
-  first finished day (`showConsentSheet`). PostHog is not set up until the
-  answer is yes, so nothing below is captured, queued or sent before it, and
-  nothing at all after a no; what is stamped on every event and who the
+- **Nothing before a yes.** Nothing is asked before a card: the question
+  whether Astute may measure how the app is used is a calm card on the
+  finished day's shelf (`ConsentCard`, lib/widgets/consent_card.dart), from
+  the end of the first day — after the day's celebration and after the
+  reminder's question, which goes first — with two answers of one size, and
+  it stays on the shelf, day after day, until it is answered. It is never a
+  sheet over the shelf. PostHog is not set up until the answer is yes, so
+  nothing below is captured, queued or sent before it, and nothing at all
+  after a no; what is stamped on every event and who the
   reader is are kept on the phone and said when a yes starts it. Kept as
   `knowit.analytics` with `knowit.analytics.asked`; an old switch turned off
   counts as a no, an old default of on as no answer. *Profile → Usage data*
@@ -126,6 +140,22 @@ does two things:
 Three events are trace-only and never reach PostHog: `card flipped`,
 `card shown` (a card a shelf of Explore put on screen) and `explore
 scrolled` (how far down Explore went, in tenths).
+
+**Neither: the first run's steps.** Four steps of a new phone are counted
+on our own server, the way Today's five counts its crowd, and not through
+`Analytics` at all (`lib/measure/first_steps.dart`, `functions/src/
+steps.ts`): `first_open`, `first_run_done` (the first run's questions
+answered), `first_day_done` (a first day's five read) and `next_day` (the
+app opened the day after the first open). Each is one plain POST to
+`countStep` with the step and the reader's date and nothing else — no
+account, no token, no id of the phone — and the server adds one to that
+day's total in `steps/{day}` (allow-listed, so a fifth name is refused; the
+rules let no app read or write it). Each is sent once per phone, kept in
+`knowit.firstSteps` across a sign-out, and only from a phone new to the app
+that a store installed (`install_channel` `app_store` or `play`: no
+TestFlight, sideload, test lab, debug or web). They carry nothing about
+anyone, so they are counted whatever the reader answers about usage data,
+and the privacy policy says so (`#first-steps`, `#primi-passi`).
 
 ## 3. On every event: super properties
 
@@ -286,7 +316,7 @@ Every PostHog event carries `$screen_name`: the screen in front when it was
 sent, which after a return from a pushed screen is the screen returned to.
 
 Screen names: `today`, `explore`, `profile` (tabs); `intro`, `onboarding
-subjects`, `onboarding genres`, `comeback` (first run and come-back; the
+subjects`, `onboarding loves`, `comeback` (first run and come-back; the
 first run has had no paywall since October 2026, so `onboarding offer` is
 gone); `onboarding first card`, `onboarding trial` (the one card and the
 offer of the free trial that end the first run behind the server's switch
@@ -296,7 +326,9 @@ their own); `first week`, `first month` (the page that rises once after the
 five on the seventh day of reading, and its twin a month after the install,
 behind `offer.firstWeek` and `offer.firstMonth`; §6.8); `deck viewer`, `pill
 detail`, `archive`, `saved`, `liked`,
-`journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`,
+`journey`, `path`, `week`, `topics`, `how`, `genres` (Which parts, opened
+from the shelf's offer; it was `onboarding genres` while the first run
+asked it), `paywall`, `purchase success`,
 `story` (a true story played from Explore); `update gate`, `pause` (the
 update gate's full screens, over everything, §6.13); `invite week` **new**
 (the purchase's own screen, for a week of Astute+ a friend's invitation
@@ -393,9 +425,12 @@ is in its card facts.
 
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
-| `intro scene changed`, `intro skipped` | the intro's scenes | `from`, `to`, `by`, `ms_on_scene`, `at_scene` | P |
-| `onboarding started`, `onboarding step done`, `onboarding step skipped`, `onboarding completed` | the first run | `step`, `next`, `ms_on_step`, `topics`, `shape`, `claimed`, `solid_start`, `hand_picked` | P, T:`onb` (completed) |
-| `genres shown`, `genres set`, `mix set`, `levels set` | the mix | `subjects_in_mix`, `genres_off`, `strands_off`, `genres_on`, `topics`, `leaned_to`, `subjects_rated` | P, T:`genres`/`mix` |
+| `intro scene changed`, `intro skipped` | the intro's scenes; `intro skipped` is its one way on, Start reading, from whichever scene (there is no Skip beside it any more) | `from`, `to`, `by` (`intro skipped`: `start reading`), `ms_on_scene`, `at_scene` | P |
+| `intro how opened` **new** | the second scene's link to How we write the cards | `at_scene` | P |
+| `onboarding started`, `onboarding step done`, `onboarding completed` | the first run: the intro, Your mix, the three loved (`onboarding loves`, behind `firstRun.loves`); none of them has a Skip, so `onboarding step skipped` is gone | `step`, `next`, `ms_on_step`, `topics`, `shape`, `claimed`, `solid_start`, `hand_picked` | P, T:`onb` (completed) |
+| `loves set` **new** | the first run's last question answered: up to three subjects the reader loves, none an answer too | `count`, `loved` (topic keys, comma-separated, in the order picked) | P |
+| `genres shown`, `genres set`, `mix set`, `levels set` | the mix, and Which parts — no longer a first-run step: offered on the shelf, or in the fine-tuning | `subjects_in_mix`, `genres_off`, `strands_off`, `genres_on`, `topics`, `leaned_to`, `subjects_rated` | P, T:`genres`/`mix` |
+| `parts offer shown`, `parts offer answered` **new** | Which parts, offered once on the finished day's shelf from the third finished day (`parts.offer`, `parts.offerDay`) to a reader who has not chosen parts | `days_completed` (shown), `choice` (`choose`, `not now`) | P |
 | `sign in started`, `sign in ended`, `account merged` | signing in | `method`, `outcome` (`signedIn`, `cancelled`, `unavailable`, `failed`, `busy`), `from` (`intro`, `profile`, `day done`), `ms`, `no_sheet` (a cancel that came back too fast for a sheet to have shown), `error` (every outcome but `signedIn`), `route`, `account_had_backup`, `days_on_phone`, `days_in_account`, `days_after`, `saved_after`, `cards_seen_after` | P |
 | `sign in ignored` | a press while another sign-in is still waiting | `method`, `from`, `busy_with`, `busy_since_ms` | P |
 | `sign in sheet shown`, `sign in sheet closed` | the sheet with Apple and Google, by its door | `from`, `signed_in` | P |
@@ -437,7 +472,7 @@ is in its card facts.
 | `goal set` **new** | where the reader wants to see more clearly, picked on the profile (`lib/widgets/aim_picker.dart`); nothing for a tap on the one already picked | `goal` (`money`, `business`, `people`, `news`, `health`, `decide`), `before` (the goal it replaces, absent where there was none), `from` (`profile`) | P |
 | `music sound switched` | the music cards' sound, off until turned on: Profile's switch, or Turn on after a card's Listen | `on`, `from` (`profile`, `card`) | P |
 | `usage sharing switched` | the reader's switch | `on` | P |
-| `usage sharing answered` | the first event after a yes: the intro's question or the sheet's (a no sends nothing) | `on`, `from` (`intro`, `sheet`) | P |
+| `usage sharing answered` | the first event after a yes: the card on the finished day's shelf (a no sends nothing). `intro` and `sheet` are older builds' | `on`, `from` (`shelf`) | P |
 | `legal page opened` | the privacy policy or the terms, from the intro's small print or Profile's About box (the paywall's own links send `paywall link opened`) | `page` (`privacy`, `terms`), `from` (`intro`, `profile`) | P |
 | `signed out` | | `streak_days`, `days_completed`, `pills_read` | P |
 | `account deletion asked`, `…cancelled`, `…started`, `…ended` | deleting the account | `signed_in`, `is_plus`, `account`, `outcome`, `error` | P |

@@ -21,6 +21,13 @@
 /// they turned off never comes at all; anything read is not dealt again;
 /// and what the opening cannot fill — a mix that keeps few of these
 /// subjects — the reader's own dealer fills, as on any day.
+///
+/// The subjects the reader said they love come first of all, one card each
+/// on every day of the opening: the opening's own card of the subject where
+/// it has one, and where it has none — music, art, cinema — the reader's own
+/// dealer's best card of it, a drawn one where there is one
+/// ([dealOpening]). A reader who picked the three they love and found none
+/// of them on the first morning would conclude the question was for show.
 library;
 
 import 'dart:math';
@@ -260,8 +267,9 @@ bool _showable(Pill p, DateTime date) =>
     dealableOn(p, date);
 
 /// The opening's cards this reader may still be dealt, in the order they
-/// come: the ones in a subject the reader claimed first, the subject held
-/// highest first, then the opening as it is listed.
+/// come: the ones in a subject the reader loves first, in the order they
+/// picked them, then in a subject they claimed, the subject held highest
+/// first, then the opening as it is listed.
 ///
 /// Never a card already read ([exclude]), the twin of one, a subject the
 /// reader turned off ([topics], by key; Thinking is always on), a card
@@ -271,6 +279,7 @@ List<Pill> openingFor(
   DateTime date, {
   Set<String>? topics,
   Set<String> claimed = const {},
+  List<String> loved = const [],
   Map<String, double> mix = const {},
   Set<String> genresOff = const {},
   Set<String> strandsOff = const {},
@@ -295,9 +304,14 @@ List<Pill> openingFor(
     if (p.strands.isNotEmpty && !p.strands.any(strandOn)) continue;
     found.add((i, p));
   }
+  // A subject loved is above any handle the wheel can set, the first of
+  // them highest.
   double held(Pill p) {
     final String? key = keyOf[p.topic];
-    return key != null && claimed.contains(key) ? (mix[key] ?? 1) : -1;
+    if (key == null) return -1;
+    final int love = loved.indexOf(key);
+    if (love >= 0) return 10.0 - love;
+    return claimed.contains(key) ? (mix[key] ?? 1) : -1;
   }
 
   found.sort((a, b) {
@@ -328,6 +342,7 @@ Deal? dealOpening({
   required DateTime date,
   Set<String>? topics,
   Set<String> claimed = const {},
+  List<String> loved = const [],
   Map<String, double> mix = const {},
   Map<String, double> weights = const {},
   Map<String, int> levels = const {},
@@ -348,16 +363,46 @@ Deal? dealOpening({
       .take(min(ownCount, max(0, asks - 1)))
       .toList();
   final Set<String> taken = {...exclude, ...review.map((p) => p.id)};
-  final List<Pill> pool = openingFor(
+  final List<Pill> opening = openingFor(
     date,
     topics: topics,
     claimed: claimed,
+    loved: loved,
     mix: mix,
     genresOff: genresOff,
     strandsOff: strandsOff,
     exclude: taken,
   );
-  if (pool.isEmpty) return null;
+  if (opening.isEmpty) return null;
+  // A subject the reader loves that the opening has no card of left is
+  // given the reader's own dealer's best two of it, one to read and one
+  // that asks, in the place its opening card would have stood: the day
+  // takes one of them, as it takes one of any subject loved.
+  final List<Pill> pool = [...opening];
+  final Set<String> inPool = {...taken, ...opening.map((p) => p.id)};
+  int at = 0;
+  for (final String key in loved) {
+    final String? name = kTopics[key]?.name;
+    if (name == null) continue;
+    final int first = pool.indexWhere((p) => p.topic == name);
+    if (first >= 0) {
+      at = pool.lastIndexWhere((p) => p.topic == name) + 1;
+      continue;
+    }
+    final List<Pill> own = _bestOf(
+      date,
+      key: key,
+      name: name,
+      levels: levels,
+      taste: taste,
+      genresOff: genresOff,
+      strandsOff: strandsOff,
+      exclude: inPool,
+    );
+    pool.insertAll(at, own);
+    inPool.addAll(own.map((p) => p.id));
+    at += own.length;
+  }
 
   final Pill? local = localCardFor(
     date,
@@ -466,6 +511,50 @@ Deal? dealOpening({
     own: {for (final Pill p in mine.take(ownCount)) p.id},
     local: local,
   );
+}
+
+/// The reader's own dealer's best cards of the subject [key] (named [name]
+/// on the cards), for a day of the opening that has none of its own: one to
+/// read and one that asks, a drawn one first, and never one for grown-ups
+/// or a dark one, a card about a place or a book's idea.
+List<Pill> _bestOf(
+  DateTime date, {
+  required String key,
+  required String name,
+  Map<String, int> levels = const {},
+  Map<String, double> taste = const {},
+  Set<String> genresOff = const {},
+  Set<String> strandsOff = const {},
+  Set<String> exclude = const {},
+}) {
+  bool fit(Pill p) =>
+      p.topic == name &&
+      !p.mature &&
+      p.mood != 'dark' &&
+      !p.isAboutAPlace &&
+      !p.needsLaterKit &&
+      p.book == null &&
+      !PillBank.isRetired(p.id) &&
+      dealableOn(p, date);
+  final Set<String> unfit = {
+    for (final Pill p in PillBank.cards)
+      if (p.topic == name && !fit(p)) p.id,
+  };
+  // The dealer weighs a drawn card most in a reader's first week (day 0),
+  // so a subject's drawings come first where it has them.
+  return pillsForDate(
+    date,
+    topics: {key},
+    weights: {key: 1},
+    levels: levels,
+    taste: taste,
+    genresOff: genresOff,
+    strandsOff: strandsOff,
+    exclude: {...exclude, ...unfit},
+    count: 2,
+    asking: 1,
+    day: 0,
+  ).where((p) => fit(p) && !exclude.contains(p.id)).toList();
 }
 
 /// The day's shape, as [arrangeDay] gives every day, but in the opening's

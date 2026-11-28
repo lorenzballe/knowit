@@ -656,7 +656,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get manageSubscription => 'Abonnement beheren';
 
   @override
-  String get howPillsAreWritten => 'Hoe kaarten geschreven worden';
+  String get howPillsAreWritten => 'Hoe we de kaarten schrijven';
 
   @override
   String get howTitle => 'Elke kaart hier is geschreven door een AI-model.';
@@ -666,7 +666,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'We zeggen het liever meteen dan dat je het zelf ontdekt. Zo komt een kaart bij jou.';
 
   @override
-  String get howStep1Title => 'Vooraf geschreven, door een model';
+  String get howStep1Title => 'Met AI geschreven';
 
   @override
   String get howStep1Line =>
@@ -1114,7 +1114,34 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Alles zit erin. Schuif een vak naar links om er minder van te zien, of helemaal om het te laten vallen.';
+      'Alles zit erin. Tik op een vak om het weg te laten, of schuif het naar links om er minder van te zien.';
+
+  @override
+  String get mixLeaveOut => 'Weglaten';
+
+  @override
+  String get mixPutBack => 'Terugzetten';
+
+  @override
+  String get lovesTitle => 'Kies de drie waar je van houdt';
+
+  @override
+  String get lovesLine =>
+      'Hooguit drie. Je eerste dagen beginnen ermee, en daarna komen ze vaker langs.';
+
+  @override
+  String lovesCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n van 3',
+      zero: 'Tik er tot drie aan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lovesFull => 'Hooguit drie: tik er een aan om het los te laten.';
 
   @override
   String get next => 'Volgende';
@@ -1145,6 +1172,13 @@ class AppLocalizationsNl extends AppLocalizations {
   String get swipeToSeeMore => 'Veeg voor meer';
 
   @override
+  String get introPromiseTitle => 'Vijf kaarten per dag, twee minuten';
+
+  @override
+  String get introPromiseLine =>
+      'Zeg hoe zeker je bent, en ontdek hoe ver je op je kennis kunt vertrouwen.';
+
+  @override
   String get tagline =>
       'Begrijp het waarom van dingen en hoe ver je op je kennis kunt vertrouwen';
 
@@ -1153,7 +1187,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Vooraf geschreven door een model, en elke kaart noemt haar bron.';
+      'Met AI geschreven en daarna gecontroleerd, en elke kaart noemt haar bron.';
 
   @override
   String get introQuestionTitle => 'Een vraag, hoe zeker, dan het waarom';
@@ -2885,6 +2919,10 @@ class AppLocalizationsNl extends AppLocalizations {
       'Deel hoe je de app gebruikt — nooit je naam, je e-mail of wat je schrijft.';
 
   @override
+  String get consentCardLine =>
+      'We tellen hoe de app gebruikt wordt, zonder reclame en nooit met je naam.';
+
+  @override
   String get consentNo => 'Nee, bedankt';
 
   @override
@@ -2904,6 +2942,16 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get genresLine =>
       'Tik op een genre om het over te slaan. Houd het vast en de kleinere onderwerpen erin openen er vlak onder.';
+
+  @override
+  String get partsOfferLine =>
+      'Na een paar dagen ken je de kaarten. Houd per vak de delen die je wilt en laat de rest.';
+
+  @override
+  String get partsOfferChoose => 'Delen kiezen';
+
+  @override
+  String get partsOfferNotNow => 'Niet nu';
 
   @override
   String get insideGenre => 'Binnenin';

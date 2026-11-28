@@ -1,150 +1,50 @@
+/// Whether Astute may measure how the app is used: the answer, and the two
+/// buttons it is given with. The question itself is a card on the finished
+/// day's shelf (lib/widgets/consent_card.dart), asked once the first day is
+/// done; Profile's switch under Usage data is the same answer, and changes
+/// it. See Analytics, which sets nothing up before a yes.
+///
+/// It used to be asked on the intro's foot, before a single card, and once
+/// more as a sheet after the first finished day for a reader who had not
+/// answered there.
+library;
+
 import 'package:flutter/material.dart';
 
+import '../analytics.dart';
 import '../l10n/l10n.dart';
+import '../state/app_state.dart';
 import '../theme.dart';
 
-/// Whether Astute may measure how the app is used, asked before anything is
-/// measured, with its two answers side by side and the same size: saying no
-/// is as easy as saying yes, and neither is the one the screen leans on.
-///
-/// On the intro it sits under "Start reading", white on the dark, and is
-/// not in the way: the reader can start without answering, and no answer
-/// is a no until they give one. A reader who started without answering is
-/// asked once more, as a sheet, after their first finished day
-/// ([showConsentSheet]). Either way the answer is kept and can be changed
-/// in Profile, under Usage data. See Analytics, which sets nothing up
-/// before a yes.
-class ConsentChoice extends StatelessWidget {
-  const ConsentChoice({super.key, required this.onAnswer});
+/// The reader's answer, wherever it was given: a yes sets measurement up
+/// there and then, and its first event is that yes; a no is kept, and
+/// nothing is sent about it. [from] says where (`shelf`).
+Future<void> answerConsent(
+  bool yes, {
+  required String from,
+  AppState? app,
+}) async {
+  await Analytics.setCollecting(yes);
+  if (!yes) return;
+  Analytics.capture('usage sharing answered', {'on': true, 'from': from});
+  // The reader's profile, said now that there is somewhere to say it.
+  if (app != null && app.ready) app.refreshAnalytics();
+}
+
+/// No and yes, in that order, as two buttons of one size and one look —
+/// the same height too, when one of them needs a second line: saying no is
+/// as easy as saying yes, and neither is the one the screen leans on.
+class ConsentAnswers extends StatelessWidget {
+  const ConsentAnswers({
+    super.key,
+    required this.onAnswer,
+    required this.onDark,
+  });
 
   /// True for yes, false for no.
   final ValueChanged<bool> onAnswer;
 
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    return Container(
-      key: const ValueKey('consent'),
-      // As little of a small phone as two lines and a row of answers
-      // can take: the picture above gives up what this takes.
-      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.07),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: l.consentTitle,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xEBFFFFFF),
-                  ),
-                ),
-                const TextSpan(text: ' '),
-                TextSpan(text: l.consentLine),
-              ],
-            ),
-            textAlign: TextAlign.center,
-            style: AppText.body(
-              size: 12.5,
-              height: 1.35,
-              color: Colors.white.withValues(alpha: 0.62),
-            ),
-          ),
-          const SizedBox(height: 8),
-          _Answers(onAnswer: onAnswer, onDark: true),
-        ],
-      ),
-    );
-  }
-}
-
-/// Puts the question as a sheet, for a reader who has not answered it: the
-/// title, what is shared and what never is, where to change it, and the
-/// two answers. It waits for one of them — swiping it away would leave the
-/// question neither asked nor answered — and returns it: true for yes.
-Future<bool?> showConsentSheet(BuildContext context) {
-  return showModalBottomSheet<bool>(
-    context: context,
-    isScrollControlled: true,
-    isDismissible: false,
-    enableDrag: false,
-    backgroundColor: Colors.transparent,
-    barrierColor: const Color(0x8C141416),
-    builder: (_) => const ConsentSheet(),
-  );
-}
-
-/// The sheet itself. Public so a test can lay it out in every language.
-class ConsentSheet extends StatelessWidget {
-  const ConsentSheet({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final Palette p = context.p;
-    return Container(
-      key: const ValueKey('consent-sheet'),
-      decoration: BoxDecoration(
-        color: p.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      padding: EdgeInsets.fromLTRB(
-        22,
-        26,
-        22,
-        MediaQuery.paddingOf(context).bottom + 18,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              l.consentTitle,
-              style: AppText.display(
-                size: 20,
-                weight: FontWeight.w600,
-                spacing: -0.6,
-                color: p.ink,
-              ),
-            ),
-            const SizedBox(height: 8),
-            // What Profile's switch says it measures, word for word: the
-            // two places that speak of it cannot drift apart.
-            Text(
-              l.anonymousUsageLine,
-              style: AppText.body(size: 13.5, height: 1.45, color: p.inkMuted),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              l.consentChangeLater(l.tabProfile, l.anonymousUsage),
-              style: AppText.body(size: 13.5, height: 1.45, color: p.inkMuted),
-            ),
-            const SizedBox(height: 20),
-            _Answers(
-              onAnswer: (bool yes) => Navigator.of(context).pop(yes),
-              onDark: false,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// No and yes, in that order, as two buttons of one size and one look —
-/// the same height too, when one of them needs a second line.
-class _Answers extends StatelessWidget {
-  const _Answers({required this.onAnswer, required this.onDark});
-
-  final ValueChanged<bool> onAnswer;
+  /// White on black, whatever the theme; otherwise the page's own ink.
   final bool onDark;
 
   @override

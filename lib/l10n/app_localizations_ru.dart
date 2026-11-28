@@ -770,7 +770,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get manageSubscription => 'Управлять подпиской';
 
   @override
-  String get howPillsAreWritten => 'Как пишутся карточки';
+  String get howPillsAreWritten => 'Как мы пишем карточки';
 
   @override
   String get howTitle => 'Каждую карточку здесь пишет ИИ-модель.';
@@ -780,7 +780,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Лучше скажем сразу, чем ты узнаешь сам. Вот как карточка доходит до тебя.';
 
   @override
-  String get howStep1Title => 'Написана заранее, моделью';
+  String get howStep1Title => 'Написана с помощью ИИ';
 
   @override
   String get howStep1Line =>
@@ -1328,7 +1328,34 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Всё включено. Сдвинь тему влево, чтобы видеть её реже, или до конца, чтобы убрать.';
+      'Всё включено. Коснись темы, чтобы убрать её, или сдвинь влево, чтобы видеть её реже.';
+
+  @override
+  String get mixLeaveOut => 'Убрать';
+
+  @override
+  String get mixPutBack => 'Вернуть';
+
+  @override
+  String get lovesTitle => 'Выбери три любимые темы';
+
+  @override
+  String get lovesLine =>
+      'Не больше трёх. С них начнутся твои первые дни, а потом они будут попадаться чаще.';
+
+  @override
+  String lovesCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n из 3',
+      zero: 'Коснись не больше трёх',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lovesFull => 'Не больше трёх: коснись одной, чтобы убрать её.';
 
   @override
   String get next => 'Дальше';
@@ -1375,6 +1402,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get swipeToSeeMore => 'Листай дальше';
 
   @override
+  String get introPromiseTitle => 'Пять карточек в день, две минуты';
+
+  @override
+  String get introPromiseLine =>
+      'Отмечай, насколько уверен, и узнай, насколько можно доверять тому, что знаешь.';
+
+  @override
   String get tagline =>
       'Пойми, почему всё так, и насколько можно доверять тому, что знаешь';
 
@@ -1383,7 +1417,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Написаны заранее моделью, и каждая называет свой источник.';
+      'Написаны с помощью ИИ и проверены, и каждая называет свой источник.';
 
   @override
   String get introQuestionTitle => 'Вопрос, уверенность, потом — почему';
@@ -3197,6 +3231,10 @@ class AppLocalizationsRu extends AppLocalizations {
       'Делись тем, как пользуешься приложением, — без имени, почты и того, что ты пишешь.';
 
   @override
+  String get consentCardLine =>
+      'Мы считаем, как пользуются приложением, — без рекламы и никогда с твоим именем.';
+
+  @override
   String get consentNo => 'Нет, спасибо';
 
   @override
@@ -3216,6 +3254,16 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get genresLine =>
       'Коснись жанра, чтобы пропустить его. Задержи — и темы поменьше внутри откроются прямо под ним.';
+
+  @override
+  String get partsOfferLine =>
+      'За несколько дней ты узнал карточки. В каждой теме оставь нужные части, а остальное убери.';
+
+  @override
+  String get partsOfferChoose => 'Выбрать части';
+
+  @override
+  String get partsOfferNotNow => 'Не сейчас';
 
   @override
   String get insideGenre => 'Внутри';

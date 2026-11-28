@@ -653,7 +653,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get manageSubscription => 'Manage subscription';
 
   @override
-  String get howPillsAreWritten => 'How cards are written';
+  String get howPillsAreWritten => 'How we write the cards';
 
   @override
   String get howTitle => 'Every card here is written by an AI model.';
@@ -663,7 +663,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'We\'d rather say it up front than have you find out. Here is how a card reaches you.';
 
   @override
-  String get howStep1Title => 'Written ahead, by a model';
+  String get howStep1Title => 'Written with AI';
 
   @override
   String get howStep1Line =>
@@ -1110,7 +1110,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Everything is in. Slide a subject left to see less of it, or all the way to drop it.';
+      'Everything is in. Tap a subject to leave it out, or slide it left to see less of it.';
+
+  @override
+  String get mixLeaveOut => 'Leave it out';
+
+  @override
+  String get mixPutBack => 'Put it back';
+
+  @override
+  String get lovesTitle => 'Pick the three you love';
+
+  @override
+  String get lovesLine =>
+      'Up to three. Your first days open on them, and after that they come up more often.';
+
+  @override
+  String lovesCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n of 3',
+      zero: 'Tap up to three',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lovesFull => 'Three at most: tap one to let it go.';
 
   @override
   String get next => 'Next';
@@ -1141,6 +1168,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get swipeToSeeMore => 'Swipe to see more';
 
   @override
+  String get introPromiseTitle => 'Five cards a day, two minutes';
+
+  @override
+  String get introPromiseLine =>
+      'Say how sure you are, and find out how far to trust what you know.';
+
+  @override
   String get tagline =>
       'Learn the why behind things, and how far to trust what you know';
 
@@ -1149,7 +1183,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Written ahead by a model, and each one names its source.';
+      'Written with AI, then checked, and each one names its source.';
 
   @override
   String get introQuestionTitle => 'A question, how sure, then why';
@@ -2871,6 +2905,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Share how you use the app — never your name, your email or what you write.';
 
   @override
+  String get consentCardLine =>
+      'We count how the app is used, with no advertising and never your name.';
+
+  @override
   String get consentNo => 'No, thanks';
 
   @override
@@ -2890,6 +2928,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get genresLine =>
       'Tap a genre to skip it. Hold one and the smaller topics inside open right below.';
+
+  @override
+  String get partsOfferLine =>
+      'A few days in, you know the cards. Inside each subject, keep the parts you want and leave the rest.';
+
+  @override
+  String get partsOfferChoose => 'Choose the parts';
+
+  @override
+  String get partsOfferNotNow => 'Not now';
 
   @override
   String get insideGenre => 'Inside';
