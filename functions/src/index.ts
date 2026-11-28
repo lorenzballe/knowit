@@ -38,6 +38,10 @@
 //   words. The first card of a day for everyone, the rest for Astute+.
 // - `listenAhead` (twice a day, 03:35 and 18:35 UTC): the next days' cards
 //   of the readers who listen, made before they ask, so playing is instant.
+// - `countStep` (HTTPS POST): one of the first run's four steps — a first
+//   open, the first run finished, a first day finished, a return the next
+//   day — added to that day's total (steps.ts). Sent with nothing that says
+//   who, not even the account, and kept as a number per step per day.
 // - `inviteState` and `redeemInvite` (callable): Invita un amico
 //   (invite.ts). A reader's code, made when they first send it; a friend's
 //   code used, on an account that is new and never held Astute+; and, once
@@ -72,6 +76,7 @@ import { Bank, currentBank, dateKey, localDate, parseDate, shiftDate } from './b
 import { BudgetSpent, firestoreLedger, spendDay, withinBudget, type Usage } from './budget.js';
 import { coachNote, coachWorst, readCoach } from './coach.js';
 import { countPlay, readPlay } from './daily.js';
+import { countStep as addStep, readStep } from './steps.js';
 import { backupHasADay, inviteState as invitesOf, redeem as redeemCode, storeFor, type Reader } from './invite.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
 import {
@@ -370,6 +375,32 @@ export const playDaily = onCall({ enforceAppCheck: false, maxInstances: 10 }, as
   } catch (e) {
     logger.error('daily failed', { day: play.day, game: play.game, error: String(e) });
     throw new HttpsError('unavailable', 'Try again in a moment.');
+  }
+});
+
+// ── The first run, counted ───────────────────────────────────────────────
+
+// A plain request rather than a callable: a callable carries the account's
+// token, and a step is counted with nothing that says whose it was. The
+// phone sends {step, day} and nothing else; the answer says nothing either.
+// No CORS: only the app sends it, and a web page elsewhere has no business
+// adding to the totals from a visitor's browser.
+export const countStep = onRequest({ cors: false, invoker: 'public', maxInstances: 2, memory: '256MiB' }, async (req, res) => {
+  if (req.method !== 'POST') {
+    res.status(405).send('POST only');
+    return;
+  }
+  const taken = readStep(req.body, Date.now());
+  if (typeof taken === 'string') {
+    res.status(400).json({ error: taken });
+    return;
+  }
+  try {
+    await addStep(db, taken);
+    res.status(204).send('');
+  } catch (e) {
+    logger.error('step not counted', { step: taken.step, day: taken.day, error: String(e) });
+    res.status(503).json({ error: 'Try again in a moment.' });
   }
 });
 

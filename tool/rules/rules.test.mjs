@@ -197,6 +197,16 @@ await check('what a reader heard read aloud, and the clips, are the server\'s al
   await assertFails(reader().doc('listen/0a1b').get());
 });
 
+await check('the first run\'s steps are totals no phone reads or writes, signed in or not', async () => {
+  await env.withSecurityRulesDisabled((ctx) => ctx.firestore().doc(`steps/${today}`).set({ first_open: 3, next_day: 1 }));
+  await assertFails(reader().doc(`steps/${today}`).get());
+  await assertFails(stranger().doc(`steps/${today}`).get());
+  await assertFails(reader().collection('steps').get());
+  await assertFails(reader().doc(`steps/${today}`).set({ first_open: inc(1) }, { merge: true }));
+  await assertFails(stranger().doc(`steps/${today}`).set({ first_open: inc(1) }, { merge: true }));
+  await assertFails(reader().doc(`steps/${today}`).delete());
+});
+
 await check('invitations are the server\'s alone: no phone reads or writes a code, a week or a friend\'s, its own included', async () => {
   await env.withSecurityRulesDisabled(async (ctx) => {
     await ctx.firestore().doc('invites/alice').set({ code: 'K7MQ2P', at: 1, weeks: [2], friends: 1, until: 3 });
