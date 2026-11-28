@@ -19,6 +19,10 @@
 .answered .q{font-size:max(2.2cqh,14px)}
 .answered #why{font-size:max(2cqh,13px);line-height:1.4}
 .answered #keep{font-size:max(1.85cqh,13px)}
+/* The blueprint in the card's own ink and ground (--k, --c), so a hard card ringed (env.hard) draws it in the ring's;
+   its rust guess and its blue fill lit up on the night ground. */
+.card{--rust:#8a2200;--cyan:#0b4f9c}
+.kit-hard[data-theme=dark] .card{--rust:#ff7a45;--cyan:#4f9dff}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Drag to guess · how sure">
   <div class="in">
@@ -39,7 +43,7 @@
 (() => {
   if (window.gsap) gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin, ScrambleTextPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const INK = '#10100c', AMBER = '#8a2200', CYAN = '#0b4f9c', GROUND = '#FFB000';
+  const INK = 'var(--k)', AMBER = 'var(--rust)', CYAN = 'var(--cyan)', GROUND = 'var(--c)';
   const L0 = 3, L1 = 10, ANS = 8e8, AE = Math.log10(ANS);
   const S = {g: 6, lv: L0};
   let armed = false, revealed = false, done = false, dragging = false, lastDec = 6, hinted = true;

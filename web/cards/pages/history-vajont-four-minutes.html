@@ -15,7 +15,12 @@
 .pulse{animation:pulse 1.3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 @keyframes pulse{50%{transform:scale(1.4);opacity:.55}}
 .kit-calm .pulse{animation:none}
-.say b{color:#a30d4a}
+.say b{color:var(--pink)}
+/* The guess's pink, and the reservoir's name on the lake, which a hard card ringed (env.hard) draws in the ring's
+   ink: the pink lit up on the night ground, the name in the ground's colour. */
+.card{--pink:#a30d4a;--foam:#ffffff}
+.kit-hard .card{--foam:var(--c)}
+.kit-hard[data-theme=dark] .card{--pink:#ff5c93}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Drag your guess · how fast">
   <div class="in">
@@ -34,8 +39,8 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
-  const PINK = '#a30d4a', PINK_TXT = '#a30d4a', WATER = 'var(--k)', WAVE = 'var(--edge)', FOAM = '#ffffff', AMBER = '#ffc640';
-  const INK = 'var(--k)', PINK_SOFT = 'color-mix(in srgb, #a30d4a 50%, var(--c))';
+  const PINK = 'var(--pink)', PINK_TXT = 'var(--pink)', WATER = 'var(--k)', WAVE = 'var(--edge)', FOAM = '#ffffff', AMBER = '#ffc640';
+  const INK = 'var(--k)', PINK_SOFT = 'color-mix(in srgb, var(--pink) 50%, var(--c))', LAKE_TXT = 'var(--foam)';
   const mix = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const MAX = 10080, REAL = 4;
   const G0 = typeof gsap !== 'undefined';
@@ -175,7 +180,7 @@
 
     // ---- labels in the drawing
     const [rx, ry] = P(.2, .31);
-    txt(G.lbl, rx, ry + fs * .35, 'Reservoir', {'text-anchor': 'middle', stroke: 'none'}, `fill:${FOAM};${body(L)}`);
+    txt(G.lbl, rx, ry + fs * .35, 'Reservoir', {'text-anchor': 'middle', stroke: 'none'}, `fill:${LAKE_TXT};${body(L)}`);
     const [lx, ly] = P(.235, .56);
     txt(G.lbl, Math.max(fs * 2.5, lx), ly + fs * 1.25, 'Landslide', {'text-anchor': 'middle'}, `fill:${INK};${body(L)}`);
     txt(G.lbl, ds.x + fs * .7, ds.y + fs * .35, 'Dam', {}, `fill:${INK};${body(L)}`);

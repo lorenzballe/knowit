@@ -57,8 +57,9 @@
   const svg = Kit.$('map'), say = Kit.$('say');
   const RIGHT = 1, NAMES = ['Clockwise', 'Anticlockwise'];
   const T0 = 48, T1 = 6, D = Math.PI / 180;
-  const cs = getComputedStyle(Kit.$('card'));
-  const INK = cs.getPropertyValue('--k').trim() || '#10100c', PAPER = cs.getPropertyValue('--c').trim() || '#00D451';
+  // The card's own ink and ground, as they are when each thing is painted (read here, before the kit has dressed
+  // the card, they were always the subject's): a hard card ringed (env.hard) draws the map in the ring's.
+  const INK = 'var(--k)', PAPER = 'var(--c)';
   const MUTED = `color-mix(in srgb, ${INK} 72%, ${PAPER})`, SLAB = '#a82314', RIFT = '#007a2f', TEAR = '#ffffff', SEA = '#10100c', SEAINK = '#ffffff', RED = '#a82314';
   const tint = n => `fill:color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const st = {s: 0, nud: 0};
@@ -260,7 +261,9 @@
   function bump() {
     Kit.haptic('light');
     say.innerHTML = 'Clockwise rams it into France: <b>no room that way.</b>';
-    gsap.fromTo(G.coastGlow, {attr: {stroke: RED, 'stroke-width': 4}}, {attr: {stroke: INK, 'stroke-width': 1.4}, duration: 1, ease: 'power2.out'});
+    // Faded back to the ink as it is now, a colour the tween can go through, then left on the card's own.
+    const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#10100c';
+    gsap.fromTo(G.coastGlow, {attr: {stroke: RED, 'stroke-width': 4}}, {attr: {stroke: ink, 'stroke-width': 1.4}, duration: 1, ease: 'power2.out', onComplete: () => G.coastGlow.setAttribute('stroke', INK)});
     gsap.fromTo(G.rings.children, {scale: 1.4, transformOrigin: '50% 50%'}, {scale: 1, duration: .6, ease: 'elastic.out(1,.4)'});
   }
 
