@@ -185,6 +185,8 @@ class CardPages(unittest.TestCase):
         self.assertEqual(qp.SUBJECTS_IT["space"], "Spazio")
         self.assertEqual(qp.SUBJECTS_IT["weird_facts"], "Stranezze")
         self.assertIn("Altro su Spazio", page)
+        # On the card too, as the app labels a card in Italian.
+        self.assertIn('<span class="l-en">Space</span><span class="l-it" lang="it">Spazio</span></p>', page)
         # The badges and marks drawn from the sprite, not carried.
         self.assertNotIn("<symbol", page)
         self.assertIn('<use href="/assets/sprite.svg?v=', page)

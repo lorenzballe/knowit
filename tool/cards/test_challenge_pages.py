@@ -68,6 +68,7 @@ class CardPages(unittest.TestCase):
 
     def test_a_card_in_words_asks_first_and_answers_behind_a_tap(self):
         page = cp.render(card("art-pick"))
+        self.assertIn('<div class="subject"><span class="l-en">ART</span><span class="l-it" lang="it">ARTE</span></div>', page)
         self.assertIn('<h1 class="q">Which one?</h1>', page)
         self.assertIn('data-right="1">Second &lt;b&gt;</button>', page)
         self.assertEqual(page.count('data-right="0"'), 2)

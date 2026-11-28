@@ -37,6 +37,7 @@ from __future__ import annotations
 import hashlib
 import html
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -76,6 +77,22 @@ def two(en: str, it: str) -> str:
 
 def subject_name(topic: str) -> str:
     return NAMES.get(topic, topic.replace("_", " ").capitalize())
+
+
+def _subjects_it() -> dict[str, str]:
+    """The subjects' names in Italian, as the app says them (subjectName)."""
+    arb = Path(__file__).resolve().parents[2] / "lib" / "l10n" / "app_it.arb"
+    return dict(re.findall(r"(\w+)\{([^{}]+)\}", json.loads(arb.read_text(encoding="utf-8"))["subjectName"]))
+
+
+SUBJECTS_IT = _subjects_it()
+
+
+def subject_label(topic: str) -> str:
+    """The card's subject over its question, in the reader's language, as
+    the app labels a card."""
+    en = subject_name(topic)
+    return two(_e(en.upper()), _e(SUBJECTS_IT.get(topic, en).upper()))
 
 
 def _luminance(hex_colour: str) -> float:
@@ -254,7 +271,7 @@ def words_card(card: dict) -> str:
     kind = card.get("kind")
     options = card.get("options") if kind == "pickOne" else None
     correct = card.get("correct")
-    out = [f'<main class="card words">\n  <div class="subject">{_e(subject_name(card.get("topic", "")).upper())}</div>\n'
+    out = [f'<main class="card words">\n  <div class="subject">{subject_label(card.get("topic", ""))}</div>\n'
            f'  <h1 class="q">{_e(card.get("question"))}</h1>\n']
     sides = card.get("sides") if kind == "debate" else None
     if options:

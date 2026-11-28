@@ -385,7 +385,8 @@ def render(card: dict, cards: list[dict]) -> str:
 
     body = [f'<article class="q-card" style="--c:{colour};--ink:{triplet}">',
             f'<div class="q-front{" q-plain" if page else ""}">',
-            f'<p class="q-label"><svg class="mark" aria-hidden="true"><use href="{sprite}#{mark}"/></svg><span>{e(name["en"])}</span></p>',
+            f'<p class="q-label"><svg class="mark" aria-hidden="true"><use href="{sprite}#{mark}"/></svg>'
+            f'<span class="l-en">{e(name["en"])}</span><span class="l-it" lang="it">{e(name["it"])}</span></p>',
             f'<h1 class="q-q">{e(card["question"])}</h1>']
     if card.get("kind") == "pickOne" and card.get("options"):
         items = "".join(
