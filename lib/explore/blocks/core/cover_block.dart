@@ -247,6 +247,11 @@ class _CoverMosaicState extends State<CoverMosaic>
   /// The tabs' own scroll, listened to while the cover waits to be seen.
   ScrollPosition? _tabs;
 
+  /// The page's own scroll, down Explore, listened to as well: the cover is
+  /// no longer the top of the page, and one built below the fold comes into
+  /// view as the reader scrolls down, never as the tabs move.
+  ScrollPosition? _page;
+
   /// Whether a look at the screen is due after the next frame.
   bool _looking = false;
 
@@ -278,9 +283,19 @@ class _CoverMosaicState extends State<CoverMosaic>
       context,
       axis: Axis.horizontal,
     )?.position;
-    if (tabs == _tabs) return;
-    _tabs?.removeListener(_look);
-    _tabs = tabs?..addListener(_look);
+    final ScrollPosition? page = Scrollable.maybeOf(
+      context,
+      axis: Axis.vertical,
+    )?.position;
+    if (tabs == _tabs && page == _page) return;
+    if (tabs != _tabs) {
+      _tabs?.removeListener(_look);
+      _tabs = tabs?..addListener(_look);
+    }
+    if (page != _page) {
+      _page?.removeListener(_look);
+      _page = page?..addListener(_look);
+    }
     _look();
   }
 
@@ -298,13 +313,16 @@ class _CoverMosaicState extends State<CoverMosaic>
   /// Starts the cover coming up once it is on the screen. Explore is built
   /// beside the tab on screen before a reader goes to it, and a cover that
   /// came up there would have come up for no one; so until it is in view it
-  /// waits, listening to the tabs slide. Where it is in no tabs, it comes up
-  /// at once.
+  /// waits, listening to the tabs slide and the page scroll: a cover below
+  /// the fold, waiting only on the tabs, never came up, and stood empty
+  /// under its title. Where it is in no scroll at all, it comes up at once.
   void _riseWhenSeen() {
     if (!mounted || !_waiting) return;
-    if (_tabs != null && !_onScreen()) return;
+    if ((_tabs != null || _page != null) && !_onScreen()) return;
     _tabs?.removeListener(_look);
     _tabs = null;
+    _page?.removeListener(_look);
+    _page = null;
     CoverMosaic.cameUp = true;
     _rise.forward();
   }
@@ -323,6 +341,7 @@ class _CoverMosaicState extends State<CoverMosaic>
   @override
   void dispose() {
     _tabs?.removeListener(_look);
+    _page?.removeListener(_look);
     _rise.dispose();
     super.dispose();
   }

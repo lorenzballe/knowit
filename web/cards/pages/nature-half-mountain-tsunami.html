@@ -251,13 +251,15 @@ function render() {
 
 function play(mode) {
   if (tl) tl.kill();
+  // Counted when chosen, not when its fall ends: switched before the boulder
+  // lands, the first choice still counts, and the answer still comes in.
+  seen.add(mode);
   Object.assign(st, {mode, slide: 0, rock: 0, c: -1, A: 0, spray: 0});
   const read = Kit.$('read'), big = mode === 'mountain';
   read.textContent = big ? 'Half the mountain slides into the sea…' : 'A boulder tumbles into the sea…';
   render();
   tl = gsap.timeline({onUpdate: render, onComplete: () => {
     read.textContent = big ? 'At the coast: a wall of water floods the shore.' : 'At the coast: a ripple you would hardly notice.';
-    seen.add(mode);
     if (big) Kit.haptic('heavy');
     if (seen.size === 2) finish();
   }});
