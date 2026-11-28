@@ -202,7 +202,7 @@ jobs:
                     echo
                     echo "ElevenLabs takes the key but will not read yet (HTTP $status): $said"
                     echo
-                    echo "The key is kept. Buy a plan at elevenlabs.io → Subscription (Creator, \$22 a month, holds what Listen may spend; Starter, \$6, is enough to try it): Listen's voice comes from the Voice Library, which the free plan cannot use through the API. Nothing needs deploying again: the first card read after the plan is bought just works. Until then a reader who taps Listen is told, calmly, that it is not available right now."
+                    echo "The key is kept. Buy a plan at elevenlabs.io → Subscription (Starter, \$6 a month, holds what the books read aloud may spend, functions/src/books.ts; Creator, \$22, if Listen is turned on too): the voice comes from the Voice Library, which the free plan cannot use through the API. Nothing needs deploying again: the first part read after the plan is bought just works. Until then a reader who taps Listen is told, calmly, that it is not available right now."
                   } >> "$GITHUB_STEP_SUMMARY"
                   ;;
                 key)
