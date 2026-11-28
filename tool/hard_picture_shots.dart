@@ -55,32 +55,23 @@ ImageProvider _picture(Uri url) {
   );
 }
 
-/// Every picture [pills] will show on this paper, decoded before the shot.
-Future<void> _precache(
-  WidgetTester tester,
-  Iterable<Pill> pills, {
-  required bool dark,
-}) async {
-  await tester.runAsync(() async {
-    final BuildContext context = tester.element(find.byType(MaterialApp).first);
-    for (final Pill pill in pills) {
-      for (final CardSide side in CardSide.values) {
-        final String? ref = CardThumb.refOf(pill, side, dark: dark);
-        if (ref == null) continue;
-        for (final String at in [
-          ref,
-          CardThumb.largeOf(ref),
-          CardThumb.shelfOf(ref),
-        ]) {
-          if (!File('web/cards/${at.split('?').first}').existsSync()) continue;
-          await precacheImage(
-            _picture(CardThumb.urlOf(at)),
-            context,
-          ).timeout(const Duration(seconds: 20), onTimeout: () {});
-        }
+/// Waits for the pictures on screen to come, as a phone would: each as the
+/// screen asks for it, decoded at the size it is shown, so the shot is
+/// taken once the screen is up (the finished day's shelf comes after the
+/// app has read its day) and once a card is turned.
+Future<void> _pictured(WidgetTester tester) async {
+  for (int round = 0; round < 3; round++) {
+    await tester.runAsync(() async {
+      for (final Element e in find.byType(Image).evaluate().toList()) {
+        await precacheImage(
+          (e.widget as Image).image,
+          e,
+          onError: (_, _) {},
+        ).timeout(const Duration(seconds: 20), onTimeout: () {});
       }
-    }
-  });
+    });
+    await _settle(tester, 6);
+  }
 }
 
 Future<void> _settle(WidgetTester tester, [int frames = 18]) async {
@@ -218,14 +209,15 @@ void main() {
         _prefs(five, dark: dark, read: five.length),
       );
       await tester.pumpWidget(_framed(const AstutoApp()));
-      await _precache(tester, five, dark: dark);
       await _settle(tester, 30);
+      await _pictured(tester);
       expect(tester.takeException(), isNull);
       await _save(tester, 'shelf-front-$paper');
 
       // Turned over, as a tap on the card at the front turns it.
       await tester.tap(find.byKey(ValueKey('shelf-face-${drawn.id}-front')));
       await _settle(tester, 20);
+      await _pictured(tester);
       expect(tester.takeException(), isNull);
       await _save(tester, 'shelf-back-$paper');
     });
@@ -263,8 +255,8 @@ void main() {
           dark: dark,
         ),
       );
-      await _precache(tester, kept, dark: dark);
       await _settle(tester);
+      await _pictured(tester);
       expect(tester.takeException(), isNull);
       await _save(tester, 'saved-$paper');
 
@@ -274,8 +266,8 @@ void main() {
           dark: dark,
         ),
       );
-      await _precache(tester, [drawn], dark: dark);
       await _settle(tester);
+      await _pictured(tester);
       expect(tester.takeException(), isNull);
       await _save(tester, 'detail-$paper');
     });
