@@ -32,6 +32,7 @@ import '../data/topics.dart';
 import '../widgets/day_moment.dart';
 import '../widgets/share_day.dart';
 import '../widgets/share_sheet.dart';
+import '../widgets/shelf_ask.dart';
 import '../widgets/learn_looks.dart' show markedSkills;
 import '../widgets/subject_icon.dart';
 import '../widgets/web/card_thumb.dart';
@@ -428,6 +429,10 @@ class _TodayDoneViewState extends State<TodayDoneView>
           padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
           child: _Actions(app: app),
         ),
+        // What the shelf asks, when it asks anything: the question about
+        // usage data, or Which parts, once. A card among the rest, never a
+        // sheet over them (lib/widgets/shelf_ask.dart).
+        ShelfAsk(app: app, padding: const EdgeInsets.fromLTRB(24, 14, 24, 0)),
         // What the canvas leaves between the last line and the tab bar.
         const SizedBox(height: 16),
       ],

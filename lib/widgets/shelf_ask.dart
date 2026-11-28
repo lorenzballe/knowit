@@ -29,6 +29,13 @@ class ShelfAsk extends StatefulWidget {
   static bool any(AppState app) =>
       ConsentCard.due(app) || PartsOfferCard.due(app);
 
+  /// The least height of screen, in points at the reader's text size, that
+  /// leaves the shelf's own cards room enough beside a card asking: a small
+  /// phone at twice the text has not, and the cards of the day squeezed past
+  /// reading would be the price. Nothing is asked there; Profile's Usage
+  /// data and the fine-tuning's parts are there all the same.
+  static const double leastRoom = 400;
+
   @override
   State<ShelfAsk> createState() => _ShelfAskState();
 }
@@ -43,6 +50,13 @@ class _ShelfAskState extends State<ShelfAsk> {
   @override
   Widget build(BuildContext context) {
     final AppState app = widget.app;
+    // Whenever there is no room: the text made larger, or the phone turned,
+    // with a card already up, puts it away too.
+    if (MediaQuery.sizeOf(context).height /
+            MediaQuery.textScalerOf(context).scale(1) <
+        ShelfAsk.leastRoom) {
+      return const SizedBox.shrink();
+    }
     if (_asked == null) {
       if (ConsentCard.due(app)) {
         _asked = _Asked.consent;
