@@ -455,9 +455,15 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
   }
 }
 
-/// The card after the last one: the deck's colours in a row, how many
-/// there were, and the two ways on — put the deck down, or go round again
+/// The card after the last one: the deck as it was read, how many cards
+/// there were, and the two ways on: put the deck down, or go round again
 /// from the first. Thrown like any card, it puts the deck down.
+///
+/// A short deck shows a mark in each card's colour, in a row or two. A long
+/// one, Explore's hundred and fifty, is told by its subjects instead: a
+/// mark a card was a wall of colour in no order that pushed the words onto
+/// the buttons, so it is one bar, the subjects the most read first, and
+/// the first few of them named with their counts.
 class DeckEnd extends StatelessWidget {
   const DeckEnd({
     super.key,
@@ -469,6 +475,9 @@ class DeckEnd extends StatelessWidget {
   final List<Pill> deck;
   final VoidCallback onClose;
   final VoidCallback onAgain;
+
+  /// Up to this many cards, a mark each: two rows at most on any phone.
+  static const int marksUpTo = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -487,40 +496,49 @@ class DeckEnd extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Spacer(),
-          // The deck, read: one mark in each card's colour.
-          ExcludeSemantics(
-            child: Wrap(
-              spacing: 5,
-              runSpacing: 5,
-              children: [
-                for (final Pill pill in deck)
-                  Container(
-                    width: 22,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: pill.color,
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: p.line, width: 0),
+          if (deck.length <= marksUpTo)
+            // The deck, read: one mark in each card's colour.
+            ExcludeSemantics(
+              key: const ValueKey('deck-end-marks'),
+              child: Wrap(
+                spacing: 5,
+                runSpacing: 5,
+                children: [
+                  for (final Pill pill in deck)
+                    Container(
+                      width: 22,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: pill.color,
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: p.line, width: 0),
+                      ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 22),
           Semantics(
             header: true,
-            child: Text(
-              title,
-              style: AppText.display(
-                size: 30,
-                weight: FontWeight.w600,
-                height: 1.08,
-                spacing: -0.9,
-                color: p.ink,
+            child: Padding(
+              padding: EdgeInsets.only(top: deck.length <= marksUpTo ? 22 : 0),
+              child: Text(
+                title,
+                style: AppText.display(
+                  size: 30,
+                  weight: FontWeight.w600,
+                  height: 1.08,
+                  spacing: -0.9,
+                  color: p.ink,
+                ),
               ),
             ),
           ),
+          if (deck.length > marksUpTo) ...[
+            const SizedBox(height: 22),
+            DeckSubjects(deck: deck),
+          ],
           const Spacer(),
+          const SizedBox(height: 20),
           PrimaryButton(
             key: const ValueKey('deck-end-close'),
             label: MaterialLocalizations.of(context).closeButtonLabel,
@@ -535,6 +553,132 @@ class DeckEnd extends StatelessWidget {
               onPressed: onAgain,
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A long deck by its subjects: one bar in their colours, each as wide as
+/// its share of the deck, the most read first; under it the first [named]
+/// of them with how many cards each, and how many more there were.
+class DeckSubjects extends StatelessWidget {
+  const DeckSubjects({super.key, required this.deck});
+
+  final List<Pill> deck;
+
+  /// The subjects named under the bar.
+  static const int named = 4;
+
+  /// The deck's subjects, the most cards first, then in the order first met.
+  static List<({String topic, Color color, int count})> of(List<Pill> deck) {
+    final Map<String, ({Color color, int count, int first})> by = {};
+    for (final (int i, Pill pill) in deck.indexed) {
+      final mark = by[pill.topic];
+      by[pill.topic] = mark == null
+          ? (color: pill.color, count: 1, first: i)
+          : (color: mark.color, count: mark.count + 1, first: mark.first);
+    }
+    final List<MapEntry<String, ({Color color, int count, int first})>> rows =
+        by.entries.toList()..sort((a, b) {
+          final int byCount = b.value.count.compareTo(a.value.count);
+          return byCount != 0
+              ? byCount
+              : a.value.first.compareTo(b.value.first);
+        });
+    return [
+      for (final e in rows)
+        (topic: e.key, color: e.value.color, count: e.value.count),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final l = context.l10n;
+    final rows = of(deck);
+    final TextStyle line = AppText.body(
+      size: 15,
+      weight: FontWeight.w600,
+      height: 1.25,
+      color: p.ink,
+    );
+    return Semantics(
+      key: const ValueKey('deck-end-subjects'),
+      label: [
+        for (final r in rows.take(named)) '${l.subjectOf(r.topic)} ${r.count}',
+        if (rows.length > named) l.trainingMore(rows.length - named),
+      ].join(', '),
+      excludeSemantics: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: SizedBox(
+              height: 10,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // The named subjects in their colours; the rest, which
+                  // the line under the names counts, as one quiet stretch.
+                  for (final (int i, r) in rows.take(named).indexed) ...[
+                    if (i > 0) const SizedBox(width: 2),
+                    Expanded(
+                      flex: r.count,
+                      child: ColoredBox(color: r.color),
+                    ),
+                  ],
+                  if (rows.length > named) ...[
+                    const SizedBox(width: 2),
+                    Expanded(
+                      flex: rows.skip(named).fold(0, (int n, r) => n + r.count),
+                      child: ColoredBox(color: p.lineStrong),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 18),
+          for (final r in rows.take(named))
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: [
+                  Container(
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: r.color,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      l.subjectOf(r.topic),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: line,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    '${r.count}',
+                    style: line.copyWith(
+                      color: p.inkMuted,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          if (rows.length > named)
+            Text(
+              l.trainingMore(rows.length - named),
+              style: AppText.body(size: 13.5, height: 1.3, color: p.inkFaint),
+            ),
         ],
       ),
     );
