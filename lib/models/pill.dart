@@ -421,6 +421,28 @@ abstract final class SureAsk {
   }
 }
 
+/// A video a card's story is told in at more length: where it is, and who
+/// made it, with where and when ("Geopop (YouTube, 2018)").
+@immutable
+class PillWatch {
+  const PillWatch({required this.url, required this.by});
+
+  final String url;
+  final String by;
+
+  /// Read from the bank's `{"url": …, "by": …}`; null for anything else,
+  /// or for an address that is not a secure page.
+  static PillWatch? fromJson(Object? raw) {
+    if (raw is! Map) return null;
+    final Object? url = raw['url'], by = raw['by'];
+    if (url is! String || by is! String) return null;
+    if (!url.startsWith('https://') || by.trim().isEmpty) return null;
+    return PillWatch(url: url, by: by.trim());
+  }
+
+  Map<String, Object?> toJson() => {'url': url, 'by': by};
+}
+
 /// The book a card is one big idea of (Books in pills, explore/blocks/core/
 /// books_block.dart): which book, and which of its ideas, in order. The
 /// words are the card's own: an idea retold, never the book's pages.
@@ -751,6 +773,12 @@ class Pill {
   /// arithmetic. Empty when the card does not say.
   final String sourceKind;
 
+  /// A video that tells the card's story at more length, offered under Go
+  /// deeper as Watch more beside the source, never as it: the source is the
+  /// paper, the agency or the book that states the claim (`watch` in
+  /// tool/cards/schema.json). Null where the card has none.
+  final PillWatch? watch;
+
   /// Why it matters, under Go deeper: what the idea changes in the reader's
   /// own world. Empty on a card written before November 2026.
   final String why;
@@ -893,6 +921,7 @@ class Pill {
     this.reacts = false,
     this.reference = '',
     this.sourceKind = '',
+    this.watch,
     this.why = '',
     this.views = const [],
     this.book,
@@ -948,6 +977,7 @@ class Pill {
         reacts: reacts,
         reference: reference,
         sourceKind: sourceKind,
+        watch: watch,
         why: why,
         views: views,
         book: book,

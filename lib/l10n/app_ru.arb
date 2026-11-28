@@ -1730,5 +1730,6 @@
   "streakMomentEyebrow": "Подряд",
   "streakMomentUnit": "{n, plural, =1{день} few{дня} many{дней} other{дня}}",
   "streakMomentWeek": "Целая неделя. Завтра на одну карточку из пяти больше выберут для тебя.",
-  "streakMomentNext": "Завтра будет {next}."
+  "streakMomentNext": "Завтра будет {next}.",
+  "deeperWatchMore": "Смотреть видео"
 }

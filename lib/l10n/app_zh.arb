@@ -1730,5 +1730,6 @@
   "streakMomentEyebrow": "连续",
   "streakMomentUnit": "{n, plural, =1{天} other{天}}",
   "streakMomentWeek": "整整一周。明天的五张里，会多一张专门为你挑选。",
-  "streakMomentNext": "明天就是 {next} 天。"
+  "streakMomentNext": "明天就是 {next} 天。",
+  "deeperWatchMore": "观看视频"
 }

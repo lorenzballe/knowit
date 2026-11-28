@@ -1730,5 +1730,6 @@
   "streakMomentEyebrow": "Üst üste",
   "streakMomentUnit": "{n, plural, =1{gün} other{gün}}",
   "streakMomentWeek": "Koca bir hafta. Yarın beş karttan biri daha senin için seçilecek.",
-  "streakMomentNext": "Yarın {next} olur."
+  "streakMomentNext": "Yarın {next} olur.",
+  "deeperWatchMore": "Videoyu izle"
 }

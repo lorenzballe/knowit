@@ -8195,4 +8195,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String streakMomentNext(int next) {
     return 'Jutro będzie $next.';
   }
+
+  @override
+  String get deeperWatchMore => 'Obejrzyj wideo';
 }

@@ -8610,5 +8610,9 @@
     "type": "int"
    }
   }
+ },
+ "deeperWatchMore": "Watch more",
+ "@deeperWatchMore": {
+  "description": "Go deeper, under the card's source: opens a video that tells the card's story at more length. Who made it follows, in the card's own words (\"Geopop (YouTube, 2018)\"). The video is extra, never the source."
  }
 }

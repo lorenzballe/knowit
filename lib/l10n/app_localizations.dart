@@ -10505,6 +10505,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tomorrow makes {next}.'**
   String streakMomentNext(int next);
+
+  /// Go deeper, under the card's source: opens a video that tells the card's story at more length. Who made it follows, in the card's own words ("Geopop (YouTube, 2018)"). The video is extra, never the source.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch more'**
+  String get deeperWatchMore;
 }
 
 class _AppLocalizationsDelegate

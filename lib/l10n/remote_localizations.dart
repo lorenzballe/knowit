@@ -7159,4 +7159,8 @@ class RemoteLocalizations extends AppLocalizations {
   String streakMomentNext(int next) =>
       _words.format('streakMomentNext', localeName, {'next': next}) ??
       _base.streakMomentNext(next);
+
+  @override
+  String get deeperWatchMore =>
+      _words.text('deeperWatchMore') ?? _base.deeperWatchMore;
 }

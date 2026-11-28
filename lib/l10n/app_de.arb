@@ -1730,5 +1730,6 @@
   "streakMomentEyebrow": "Am Stück",
   "streakMomentUnit": "{n, plural, =1{Tag} other{Tage}}",
   "streakMomentWeek": "Eine ganze Woche. Morgen ist eine Karte mehr der fünf für dich ausgewählt.",
-  "streakMomentNext": "Morgen werden es {next}."
+  "streakMomentNext": "Morgen werden es {next}.",
+  "deeperWatchMore": "Mehr im Video"
 }

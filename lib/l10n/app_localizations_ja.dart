@@ -7259,4 +7259,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String streakMomentNext(int next) {
     return '明日で$next日。';
   }
+
+  @override
+  String get deeperWatchMore => '動画で見る';
 }

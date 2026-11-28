@@ -1730,5 +1730,6 @@
   "streakMomentEyebrow": "Seguidos",
   "streakMomentUnit": "{n, plural, =1{día} other{días}}",
   "streakMomentWeek": "Una semana entera. Mañana una carta más de las cinco se elige para ti.",
-  "streakMomentNext": "Mañana serán {next}."
+  "streakMomentNext": "Mañana serán {next}.",
+  "deeperWatchMore": "Ver el vídeo"
 }

@@ -8164,4 +8164,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String streakMomentNext(int next) {
     return 'Завтра будет $next.';
   }
+
+  @override
+  String get deeperWatchMore => 'Смотреть видео';
 }

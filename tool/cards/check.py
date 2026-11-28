@@ -74,7 +74,7 @@ KEY_ORDER = [
     "answer", "move", "ask", "end", "both", "trap", "hint", "steps", "simply", "counterpoint",
     "why", "views", "sure", "reacts", "book",
     *TAG_KEYS, "traits", "place", "builds_on", "figure", "diagram", "scene", "web",
-    "source", "source_kind", "reference", "quote", "written", "checked", "disabled",
+    "source", "source_kind", "reference", "watch", "quote", "written", "checked", "disabled",
 ]
 
 # A card about a place (`place` in schema.json) goes only to the readers who

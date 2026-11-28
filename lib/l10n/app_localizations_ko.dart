@@ -7288,4 +7288,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String streakMomentNext(int next) {
     return '내일이면 $next일이에요.';
   }
+
+  @override
+  String get deeperWatchMore => '영상으로 보기';
 }

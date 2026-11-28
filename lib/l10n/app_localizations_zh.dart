@@ -7253,4 +7253,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String streakMomentNext(int next) {
     return '明天就是 $next 天。';
   }
+
+  @override
+  String get deeperWatchMore => '观看视频';
 }

@@ -1730,5 +1730,6 @@
   "streakMomentEyebrow": "連続",
   "streakMomentUnit": "{n, plural, =1{日} other{日}}",
   "streakMomentWeek": "まる1週間。明日は5枚のうち、あなたのために選ぶカードが1枚増えます。",
-  "streakMomentNext": "明日で{next}日。"
+  "streakMomentNext": "明日で{next}日。",
+  "deeperWatchMore": "動画で見る"
 }
