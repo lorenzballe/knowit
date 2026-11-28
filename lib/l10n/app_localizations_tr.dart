@@ -2280,6 +2280,26 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Sağlam bir argümanı yanıltıcı olandan ayırmak.',
+      'decisions': 'İçgüdüyle değil, risk ve olasılıkla seçmek.',
+      'money': 'Fiyatlar, faiz, kampanyalar: paran nereye gidiyor.',
+      'numbers': 'Yüzdeleri ve grafikleri kanmadan okumak.',
+      'talk': 'Sözlü de yazılı da anlaşılmak.',
+      'persuade': 'İkna etmek ve seni ikna etmeye çalıştıklarını fark etmek.',
+      'people': 'İnsanlar yaptıklarını neden yapar.',
+      'fakes': 'Sahte haberleri, oynanmış fotoğrafları ve şişirilmiş araştırmaları fark etmek.',
+      'science': 'Bir fikre inanmadan önce onu sınamak.',
+      'focus': 'Dikkatini önemli yerde daha uzun tutmak.',
+      'lead': 'Bir grubu yönetmek ve herkes için karar vermek.',
+      'culture': 'Tarih, bilim, sanat: herkesin alıntıladığı şeyler.',
+      'other': '',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get perkFiveShort => 'Her gün, senin seviyende.';
 
   @override

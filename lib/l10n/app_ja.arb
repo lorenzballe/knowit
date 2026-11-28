@@ -499,6 +499,7 @@
   "scoreAnswers": "{n, plural, =1{1回の回答から} other{{n}回の回答から}}",
   "skillsRowTitle": "学びたいこと",
   "skillName": "{key, select, critical{批判的思考} decisions{より良い決断} money{お金と貯蓄} numbers{数字と統計} talk{伝える力} persuade{説得する力} people{人を理解する} fakes{フェイクを見抜く} science{科学者のように考える} focus{集中力} lead{リーダーシップ} culture{一般教養} other{{key}}}",
+  "skillLine": "{key, select, critical{まっとうな論証と、だます論証を見分ける。} decisions{勘ではなく、リスクと確率で選ぶ。} money{価格、利息、セール。お金の行き先を知る。} numbers{割合やグラフにだまされずに読む。} talk{話しても書いても、伝わるようにする。} persuade{説得する力と、説得されていると気づく力。} people{人がなぜそうするのかを知る。} fakes{偽ニュース、加工写真、誇張された研究を見抜く。} science{信じる前に、考えを試す。} focus{大事なところに、より長く注意を向ける。} lead{チームを導き、みんなのために決める。} culture{歴史、科学、芸術。誰もが引用すること。} other{}}",
   "perkFiveShort": "毎日、あなたのレベルで。",
   "perkShelvesTitle": "すべてのパスと本",
   "perkShelvesLine": "まるごと。毎週新しいものも。",

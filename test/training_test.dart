@@ -114,16 +114,13 @@ void main() {
         ),
         findsOneWidget,
       );
-      // The box opens What to learn in a sheet, as the owner picked it: the
-      // reading of the answers at its head, then the twelve, the picked
-      // ones ticked.
+      // The box opens What to learn in a sheet, as the owner picked it: a
+      // page like the goal's, the twelve one under another, each with its
+      // line, the picked ones ticked, more than one at once.
       await tester.tap(find.byKey(const ValueKey('profile-skills')));
       await tester.pumpAndSettle();
       expect(find.byType(SkillsSheet), findsOneWidget);
-      expect(
-        find.byKey(const ValueKey('profile-skills-reading')),
-        findsOneWidget,
-      );
+      expect(find.text(l.skillLine('money')), findsOneWidget);
       for (final Skill s in Skill.values) {
         expect(
           find.byKey(ValueKey('profile-skills-${s.name}')),
@@ -131,8 +128,8 @@ void main() {
           reason: s.name,
         );
       }
-      SkillTile tile(String k) =>
-          tester.widget<SkillTile>(find.byKey(ValueKey('profile-skills-$k')));
+      SkillRow tile(String k) =>
+          tester.widget<SkillRow>(find.byKey(ValueKey('profile-skills-$k')));
       expect(tile('money').on, isTrue);
       expect(tile('science').on, isFalse);
       // A tap picks a skill at once, and another lets it go.

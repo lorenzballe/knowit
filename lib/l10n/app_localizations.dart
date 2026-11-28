@@ -3144,6 +3144,12 @@ abstract class AppLocalizations {
   /// **'{key, select, critical{Critical thinking} decisions{Better decisions} money{Money and saving} numbers{Numbers and statistics} talk{Communication} persuade{Persuasion} people{Understanding people} fakes{Spotting fakes} science{Thinking like a scientist} focus{Focus} lead{Leadership} culture{General knowledge} other{{key}}}'**
   String skillName(String key);
 
+  /// What a skill covers, in one short line, under its name on What to learn's sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, critical{Telling a sound argument from a slippery one.} decisions{Choosing with odds and risks, not gut feel.} money{Prices, interest, offers: where your money goes.} numbers{Reading percentages and charts without being fooled.} talk{Being understood, out loud and in writing.} persuade{Convincing others, and noticing when you’re being convinced.} people{Why people do what they do.} fakes{Spotting fake news, doctored photos, inflated studies.} science{Testing an idea before believing it.} focus{Keeping your attention where it counts, for longer.} lead{Leading a group and deciding for everyone.} culture{History, science, art: the things everyone quotes.} other{}}'**
+  String skillLine(String key);
+
   /// Paywall feature line under perkOwnFiveTitle: one short line.
   ///
   /// In en, this message translates to:

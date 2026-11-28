@@ -2083,6 +2083,11 @@ class RemoteLocalizations extends AppLocalizations {
       _base.skillName(key);
 
   @override
+  String skillLine(String key) =>
+      _words.format('skillLine', localeName, {'key': key}) ??
+      _base.skillLine(key);
+
+  @override
   String get perkFiveShort =>
       _words.text('perkFiveShort') ?? _base.perkFiveShort;
 

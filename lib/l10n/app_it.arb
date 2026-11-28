@@ -499,6 +499,7 @@
   "scoreAnswers": "{n, plural, =1{da 1 risposta} other{da {n} risposte}}",
   "skillsRowTitle": "Cosa vuoi imparare",
   "skillName": "{key, select, critical{Pensiero critico} decisions{Decidere meglio} money{Soldi e risparmio} numbers{Numeri e statistica} talk{Comunicare} persuade{Persuadere} people{Capire le persone} fakes{Smascherare le bufale} science{Pensare da scienziato} focus{Concentrazione} lead{Leadership} culture{Cultura generale} other{{key}}}",
+  "skillLine": "{key, select, critical{Distinguere un buon argomento da uno che inganna.} decisions{Scegliere con rischi e probabilità, non d’istinto.} money{Prezzi, interessi, offerte: dove vanno i tuoi soldi.} numbers{Leggere percentuali e grafici senza farsi fregare.} talk{Farti capire, a voce e per iscritto.} persuade{Convincere, e accorgerti quando cercano di convincerti.} people{Perché la gente fa quello che fa.} fakes{Riconoscere notizie false, foto truccate, studi gonfiati.} science{Mettere alla prova un’idea prima di crederci.} focus{Tenere l’attenzione dove serve, più a lungo.} lead{Guidare un gruppo e decidere per tutti.} culture{Storia, scienza, arte: le cose che tutti citano.} other{}}",
   "perkFiveShort": "Ogni giorno, al tuo livello.",
   "perkShelvesTitle": "Ogni percorso e ogni libro",
   "perkShelvesLine": "Interi, e nuovi ogni settimana.",

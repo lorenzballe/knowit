@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
+import '../data/learn_reading.dart' show SkillTally, skillTallies;
 import '../data/skill_scores.dart';
 import '../data/skills.dart';
 import '../l10n/l10n.dart';
@@ -30,7 +31,7 @@ import 'count_since.dart';
 import 'fit_text.dart';
 import 'level_up.dart' show LevelLine;
 import 'skill_score.dart';
-import 'skills_sheet.dart' show showSkillsSheet;
+import 'skills_sheet.dart' show SkillsReading, showSkillsSheet;
 import 'ui.dart' show Eyebrow;
 
 /// The skills [app]'s reader picked, in the order they picked them, that
@@ -437,6 +438,10 @@ class TrainingChapter extends StatelessWidget {
         ],
       ),
     );
+    final List<SkillTally> ranked = [
+      for (final SkillTally t in skillTallies(app))
+        if (t.ranked) t,
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -492,6 +497,13 @@ class TrainingChapter extends StatelessWidget {
             ),
           ),
         ],
+        // Under the scores, the reading of the answers: where the reader
+        // sees clearly, and their blind spot (the owner's mix).
+        const SizedBox(height: 8),
+        SkillsReading(
+          best: ranked.isEmpty ? null : ranked.first,
+          blind: ranked.length > 1 ? ranked.last : null,
+        ),
       ],
     );
   }

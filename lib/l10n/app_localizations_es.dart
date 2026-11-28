@@ -2311,6 +2311,26 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Distinguir un buen argumento de uno que engaña.',
+      'decisions': 'Elegir con riesgos y probabilidades, no por instinto.',
+      'money': 'Precios, intereses, ofertas: adónde va tu dinero.',
+      'numbers': 'Leer porcentajes y gráficos sin que te engañen.',
+      'talk': 'Hacerte entender, de palabra y por escrito.',
+      'persuade': 'Convencer, y darte cuenta de cuándo intentan convencerte.',
+      'people': 'Por qué la gente hace lo que hace.',
+      'fakes': 'Detectar noticias falsas, fotos trucadas y estudios inflados.',
+      'science': 'Poner a prueba una idea antes de creerla.',
+      'focus': 'Mantener la atención donde importa, durante más tiempo.',
+      'lead': 'Dirigir un grupo y decidir por todos.',
+      'culture': 'Historia, ciencia, arte: lo que todos citan.',
+      'other': '',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get perkFiveShort => 'Cada día, a tu nivel.';
 
   @override
