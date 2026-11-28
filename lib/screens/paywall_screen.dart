@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart'
-    show ValueListenable, defaultTargetPlatform, kIsWeb;
+    show ValueListenable, defaultTargetPlatform, kIsWeb, visibleForTesting;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart' show DateFormat, NumberFormat;
@@ -434,6 +434,15 @@ class PaywallScreen extends StatefulWidget {
 
   const PaywallScreen({super.key, required this.app, required this.source});
 
+  /// The web's paywall on a phone's engine, which is never the web's, for
+  /// the camera that photographs it (tool/money_shots.dart). False
+  /// everywhere else.
+  @visibleForTesting
+  static bool webForShots = false;
+
+  /// Whether this is the web's paywall, which sells nothing.
+  static bool get _web => kIsWeb || webForShots;
+
   @override
   State<PaywallScreen> createState() => _PaywallScreenState();
 }
@@ -481,7 +490,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   /// web's word that Astute+ is in the app, or where the store stands.
   _Offer get _offer {
     if (_store.answer == StoreAnswer.ready) return _Offer.plans;
-    if (kIsWeb) return _Offer.inTheApp;
+    if (PaywallScreen._web) return _Offer.inTheApp;
     if (Subscription.previewWithoutStore) return _Offer.preview;
     return _store.answer == StoreAnswer.asking
         ? _Offer.asking
@@ -898,7 +907,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
         alignment: WrapAlignment.center,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          if (!kIsWeb) ...[
+          if (!PaywallScreen._web) ...[
             _SmallLink(
               l.restorePurchases,
               key: const ValueKey('paywall-restore'),

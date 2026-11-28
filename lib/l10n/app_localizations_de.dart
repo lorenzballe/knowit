@@ -7747,7 +7747,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get plusInTheAppAndroid =>
-      'Astute+ gibt es in der App: Lade Astute auf Android und starte deine kostenlose Testphase. Fürs iPhone kommt sie bald.';
+      'Astute+ gibt es in der App: Lade Astute auf Android und starte deine kostenlose Testphase. Fürs iPhone kommt die App bald.';
 
   @override
   String get exploreCapTitle => 'Für heute endet Entdecken hier.';

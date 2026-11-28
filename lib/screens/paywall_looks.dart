@@ -712,42 +712,61 @@ class _CheckLine extends StatelessWidget {
 }
 
 /// Two or more things under the button, each with its check: side by side
-/// where they fit on one line, one under the other where they do not.
+/// where they fit on one line, one under the other where they do not. One
+/// that takes two lines on a narrow phone is a list's item: its check on
+/// its first line, its words from there, the two in the middle together —
+/// not the check at the edge and the words away from it.
 class _CheckLines extends StatelessWidget {
   const _CheckLines(this.lines, {super.key});
 
   final List<String> lines;
 
+  static const double _check = 14;
+
   @override
-  Widget build(BuildContext context) => Wrap(
-    alignment: WrapAlignment.center,
-    crossAxisAlignment: WrapCrossAlignment.center,
-    spacing: 16,
-    runSpacing: 3,
-    children: [
-      for (final String text in lines)
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ExcludeSemantics(
-              child: Icon(
-                Icons.check_circle_rounded,
-                size: 14,
-                color: _smallPrintStyle(context).color,
+  Widget build(BuildContext context) {
+    final TextStyle style = _smallPrintStyle(context);
+    // The check in the middle of the first line, at whatever size the
+    // reader's text is.
+    final double line =
+        MediaQuery.textScalerOf(context).scale(style.fontSize ?? 12.5) *
+        (style.height ?? 1.4);
+    return Wrap(
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: 16,
+      runSpacing: 3,
+      children: [
+        for (final String text in lines)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: math.max(0, (line - _check) / 2),
+                ),
+                child: ExcludeSemantics(
+                  child: Icon(
+                    Icons.check_circle_rounded,
+                    size: _check,
+                    color: style.color,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                text,
-                textAlign: TextAlign.center,
-                style: _smallPrintStyle(context),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  text,
+                  textWidthBasis: TextWidthBasis.longestLine,
+                  style: style,
+                ),
               ),
-            ),
-          ],
-        ),
-    ],
-  );
+            ],
+          ),
+      ],
+    );
+  }
 }
 
 /// The evidence for what Astute+ trains, only as far as it holds up: that
