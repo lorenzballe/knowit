@@ -163,6 +163,7 @@ Map<String, Object> _reader(String theme) => {
   'knowit.reviewAsked': true,
   'knowit.goalAsked': true,
   'knowit.placeAsks': 9,
+  'knowit.partsOffer': 'done',
 };
 
 /// Today's five as the phone deals them, by id.
