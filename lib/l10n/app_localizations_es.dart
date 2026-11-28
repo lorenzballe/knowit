@@ -1912,13 +1912,13 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'Las cinco de hoy';
+  String get fiveTitle => 'El reto de hoy';
 
   @override
   String get fiveSame => 'Las mismas cinco para todos hoy. Unos dos minutos.';
 
   @override
-  String get fiveDone => 'Las cinco de hoy · hecho';
+  String get fiveDone => 'El reto de hoy · hecho';
 
   @override
   String dailyOf(int max) {
@@ -2007,7 +2007,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · Las cinco de hoy · $date';
+    return 'Astute · El reto de hoy · $date';
   }
 
   @override
@@ -2021,7 +2021,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Las cinco de hoy en Astute: las mismas cinco preguntas para todos. ¿Cuántas aciertas?';
+      'El reto de hoy en Astute: las mismas cinco preguntas para todos. ¿Cuántas aciertas?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -6463,7 +6463,7 @@ class AppLocalizationsEs extends AppLocalizations {
       one: 'me desvié 1 punto',
       zero: 'di en el clavo',
     );
-    return 'El reto de hoy en Astute: $_temp0. ¿Lo haces mejor?';
+    return 'La apuesta del día en Astute: $_temp0. ¿Lo haces mejor?';
   }
 
   @override

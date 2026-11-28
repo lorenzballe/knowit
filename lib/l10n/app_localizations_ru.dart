@@ -2181,13 +2181,13 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'Пять вопросов дня';
+  String get fiveTitle => 'Вызов дня';
 
   @override
   String get fiveSame => 'Сегодня у всех одни и те же пять. Около двух минут.';
 
   @override
-  String get fiveDone => 'Пять вопросов дня · готово';
+  String get fiveDone => 'Вызов дня · готово';
 
   @override
   String dailyOf(int max) {
@@ -2284,7 +2284,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · Пять вопросов дня · $date';
+    return 'Astute · Вызов дня · $date';
   }
 
   @override
@@ -2298,7 +2298,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      '«Пять вопросов дня» в Astute: одни и те же пять вопросов для всех. Сколько ответишь верно?';
+      '«Вызов дня» в Astute: одни и те же пять вопросов для всех. Сколько ответишь верно?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -6945,7 +6945,7 @@ class AppLocalizationsRu extends AppLocalizations {
       one: 'ошибся на $off пункт',
       zero: 'попал точно',
     );
-    return 'Задание дня в Astute: $_temp0. Сможешь точнее?';
+    return 'Ставка дня в Astute: $_temp0. Сможешь точнее?';
   }
 
   @override

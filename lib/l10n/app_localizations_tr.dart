@@ -1882,13 +1882,13 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'Bugünün beşlisi';
+  String get fiveTitle => 'Günün meydan okuması';
 
   @override
   String get fiveSame => 'Bugün herkese aynı beş soru. Yaklaşık iki dakika.';
 
   @override
-  String get fiveDone => 'Bugünün beşlisi · tamam';
+  String get fiveDone => 'Günün meydan okuması · tamam';
 
   @override
   String dailyOf(int max) {
@@ -1976,7 +1976,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · Bugünün beşlisi · $date';
+    return 'Astute · Günün meydan okuması · $date';
   }
 
   @override
@@ -1990,7 +1990,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Astute\'ta bugünün beşlisi: herkese aynı beş soru. Kaçını bilebilirsin?';
+      'Astute\'ta günün meydan okuması: herkese aynı beş soru. Kaçını bilebilirsin?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -6344,7 +6344,7 @@ class AppLocalizationsTr extends AppLocalizations {
       other: '$off puan saptım',
       zero: 'tam isabet',
     );
-    return 'Astute\'ta bugünün meydan okuması: $_temp0. Daha iyisini yapabilir misin?';
+    return 'Astute\'ta günün bahsi: $_temp0. Daha iyisini yapabilir misin?';
   }
 
   @override

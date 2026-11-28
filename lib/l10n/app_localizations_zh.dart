@@ -1829,13 +1829,13 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => '今日五题';
+  String get fiveTitle => '今日挑战';
 
   @override
   String get fiveSame => '今天大家都是同样五题，约两分钟。';
 
   @override
-  String get fiveDone => '今日五题 · 完成';
+  String get fiveDone => '今日挑战 · 完成';
 
   @override
   String dailyOf(int max) {
@@ -1922,7 +1922,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · 今日五题 · $date';
+    return 'Astute · 今日挑战 · $date';
   }
 
   @override
@@ -1934,7 +1934,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fiveChallengeAll => 'Astute 今日五题，我全部答对。你也能做到吗？';
 
   @override
-  String get fiveChallengeInvite => 'Astute 今日五题：每个人都是同样的五道题。你能答对几道？';
+  String get fiveChallengeInvite => 'Astute 今日挑战：每个人都是同样的五道题。你能答对几道？';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -6149,7 +6149,7 @@ class AppLocalizationsZh extends AppLocalizations {
       other: '我差了 $off 个百分点',
       zero: '我正好猜中',
     );
-    return '今天的 Astute 挑战：$_temp0。你能猜得更准吗？';
+    return 'Astute 今日一赌：$_temp0。你能猜得更准吗？';
   }
 
   @override

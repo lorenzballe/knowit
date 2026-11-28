@@ -2622,10 +2622,10 @@ abstract class AppLocalizations {
   /// **'Yesterday\'s three: {score} of 300.'**
   String threeYesterday(int score);
 
-  /// Today's five: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short.
+  /// Today's challenge: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short, and never the words the reader's own five cards go by ("Today's five", Today), so the two are never taken for each other.
   ///
   /// In en, this message translates to:
-  /// **'Today\'s five'**
+  /// **'Today\'s challenge'**
   String get fiveTitle;
 
   /// Under the Lock in button of today's five.
@@ -2637,7 +2637,7 @@ abstract class AppLocalizations {
   /// Head of the result card of today's five.
   ///
   /// In en, this message translates to:
-  /// **'Today\'s five · done'**
+  /// **'Today\'s challenge · done'**
   String get fiveDone;
 
   /// Beside the day's score in large figures: '380 of 500'.
@@ -2733,7 +2733,7 @@ abstract class AppLocalizations {
   /// First line of the message today's five is sent in.
   ///
   /// In en, this message translates to:
-  /// **'Astute · Today\'s five · {date}'**
+  /// **'Astute · Today\'s challenge · {date}'**
   String fiveShareHead(String date);
 
   /// Challenge a friend, from today's five: the line sent before the link to the site, where the friend plays the same five questions. It says how many of today's five the reader got right, from 0 to 4 (fiveChallengeAll says all five), then asks the friend, briefly, to do better. Plain, never a boast.
@@ -2751,7 +2751,7 @@ abstract class AppLocalizations {
   /// Challenge a friend, before the reader has played today's five: the line sent before the link to the site, where the friend plays the five questions that are the same for everyone today.
   ///
   /// In en, this message translates to:
-  /// **'Today\'s five on Astute: the same five questions for everyone. How many can you get?'**
+  /// **'Today\'s challenge on Astute: the same five questions for everyone. How many can you get?'**
   String get fiveChallengeInvite;
 
   /// First line of the message a subject's three is sent in.
@@ -8967,7 +8967,7 @@ abstract class AppLocalizations {
   /// The first line of the day's challenge sent to a friend, before its question and the link: how far off the reader was, never the answer. Points are percentage points.
   ///
   /// In en, this message translates to:
-  /// **'Today\'s challenge on Astute: I was {off, plural, =0{spot on} =1{1 point off} other{{off} points off}}. Can you do better?'**
+  /// **'The bet of the day on Astute: I was {off, plural, =0{spot on} =1{1 point off} other{{off} points off}}. Can you do better?'**
   String betsDayShareLine(int off);
 
   /// On a drawn card opened from saved, liked or the archive: opens the card itself at full size, its drawing live, to play again.
