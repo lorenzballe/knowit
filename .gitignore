@@ -82,3 +82,6 @@ tool/shots/news/
 tool/shots/gridmix/
 # The site's pictures of the app, at the site's sizes (tool/site_shots.dart): copied to site/assets by tool/site/shots.py, not kept here
 tool/shots/site/
+# Hard cards ringed, in words and by their pictures (tool/hard_card_shots.dart, tool/hard_picture_shots.dart): looked at, not kept
+tool/shots/hard/
+tool/shots/hard-pictures/
