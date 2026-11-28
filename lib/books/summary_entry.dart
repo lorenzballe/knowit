@@ -151,14 +151,14 @@ class SummaryBlock extends StatelessWidget {
               ),
               onPressed: () => _listen(context, summary, mine, place, whole),
               child: _Label(
-                icon: mine == null
+                icon: !_going(mine)
                     ? Icons.headphones_rounded
-                    : mine.playing
+                    : mine!.playing
                     ? Icons.pause_rounded
                     : Icons.play_arrow_rounded,
-                text: mine == null
+                text: !_going(mine)
                     ? l.summaryListenFor(summaryRef.minutes)
-                    : mine.playing
+                    : mine!.playing
                     ? l.summaryPause
                     : l.summaryResume,
               ),
@@ -198,11 +198,7 @@ class SummaryBlock extends StatelessWidget {
               title: summary.parts[i].title,
               read: place?.read.contains(i) ?? false,
               locked: !whole && i > 0,
-              lit:
-                  mine != null &&
-                  mine.at == i &&
-                  (mine.phase == BookPlayerPhase.playing ||
-                      mine.phase == BookPlayerPhase.waiting),
+              lit: _going(mine) && mine!.at == i,
               onTap: () => _openPart(context, i, whole),
             ),
         ],
@@ -231,6 +227,13 @@ class SummaryBlock extends StatelessWidget {
     );
   }
 
+  /// Whether [mine] is under way, a part playing or paused in, or the next
+  /// one coming: what the button pauses and resumes.
+  static bool _going(BookPlayer? mine) =>
+      mine != null &&
+      (mine.phase == BookPlayerPhase.playing ||
+          mine.phase == BookPlayerPhase.waiting);
+
   /// Plays the summary from where the reader is, or pauses and resumes the
   /// one playing.
   Future<void> _listen(
@@ -241,7 +244,13 @@ class SummaryBlock extends StatelessWidget {
     bool whole,
   ) async {
     if (mine != null) {
-      await mine.toggle();
+      // Playing or paused: pause or play on. Still asking, at the offer, at
+      // the end or unable to play: the player, which says where it is.
+      if (_going(mine)) {
+        await mine.toggle();
+      } else {
+        await showBookPlayer(context, app, mine);
+      }
       return;
     }
     BookSummary? summary = inHand;

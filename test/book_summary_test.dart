@@ -533,6 +533,30 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('Listen, on the page of a book its player cannot play: the '
+      'player opens and says so; nothing is asked behind the reader\'s back', (
+    tester,
+  ) async {
+    _bookAudio(on: true);
+    final AppState app = await readyApp({'knowit.plus': true});
+    replies[0] = const BookAudioNone(BookAudioWhyNot.unavailable);
+    final BookPlayer poor = await play(app, 'sapiens');
+    expect(poor.phase, BookPlayerPhase.unavailable);
+    await bookPage(tester, app, _book(app, 'sapiens'));
+    // Not "Resume": there is nothing under way to resume.
+    expect(find.text('Listen · 15 min'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('summary-listen')));
+    await settle(tester, 8);
+    expect(find.byKey(const ValueKey('book-player')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('book-player-unavailable')),
+      findsOneWidget,
+    );
+    expect(asked, [0]);
+    expect(poor.phase, BookPlayerPhase.unavailable);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('the small player stays over the app while a book plays, steps '
       'aside for cards and sheets, and stops cleanly', (tester) async {
     final AppState app = await readyApp({'knowit.plus': true});
