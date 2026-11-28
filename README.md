@@ -917,7 +917,15 @@ app one prompt and no second chance, so spending it on a launch screen throws
 the channel away on someone who does not yet know what the app is. The app's
 own sheet asks first, and asks *when* rather than whether
 (`lib/widgets/reminder_ask.dart`): morning 08:30, lunchtime 12:30, evening
-19:00 or a time of the reader's own, starting on the time already set. It
+19:00 or a time of the reader's own, starting on the time already set. At
+its head it draws the notification itself, as the phone will show it at the
+time picked: the app's icon and name, that time, "Your five are ready" and
+the question the nudge will carry (`AppState.firstNudgeAt`, `leadOn`), on a
+ground of the time's colour, an iPhone's shape on an iPhone and Android's on
+Android; it changes the moment another time is picked. Under it the four
+times are tiles in the goal sheet's language — amber, yellow, violet, and
+the page's ink for a time of one's own — and the two answers stay in view
+while the rest scrolls. `tool/reminder_shots.dart` photographs it. It
 rises at a quiet moment — the shelf, once the card after the fifth has been
 thrown (straight after the fifth on Astute+), a launch onto a finished day,
 or the screens of a trial's purchase closing — and never over an offer or a

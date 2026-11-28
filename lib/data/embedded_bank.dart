@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611280043,
- "built": "2026-11-28T00:43:53Z",
+ "version": 202611280048,
+ "built": "2026-11-28T00:48:20Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -142633,11 +142633,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Illustration of a rock slab plunging into water, with rings of tsunami waves spreading outward. The page asks which falls from Etna's flank, a boulder or half a mountain, and lets the reader flip between the two to watch the far coast.",
-    "page": "pages/nature-half-mountain-tsunami.html?v=32654a760493",
-    "bytes": 20428,
+    "page": "pages/nature-half-mountain-tsunami.html?v=a15159a81b56",
+    "bytes": 20578,
     "thumbs": {
-     "front": "thumbs/nature-half-mountain-tsunami-front.webp?v=c4489495bdd9",
-     "back": "thumbs/nature-half-mountain-tsunami-back.webp?v=c4489495bdd9"
+     "front": "thumbs/nature-half-mountain-tsunami-front.webp?v=343cb943449a",
+     "back": "thumbs/nature-half-mountain-tsunami-back.webp?v=343cb943449a"
     }
    },
    "source": "Geopop, “▶️ETNA: \"POSSIBILE COLLASSO GRAVITATIVO E TSUNAMI\". VUOI CAPIRE COSA SUCCEDE?” (YouTube, 2018)",
@@ -275243,7 +275243,8 @@ const String kEmbeddedBank = r'''
   "485": "thinking-7",
   "486": "thinking-4",
   "487": "thinking-z11",
-  "488": "thinking-book-the-black-swan-3"
+  "488": "thinking-book-the-black-swan-3",
+  "489": "thinking-book-range-2"
  },
  "commons": {
   "1": [
@@ -280125,6 +280126,16 @@ const String kEmbeddedBank = r'''
    "nature-water-carves-caves",
    "food-future-food-1",
    "thinking-book-the-black-swan-4"
+  ],
+  "489": [
+   "thinking-book-range-3",
+   "maths-money-3",
+   "art-perspective-11",
+   "music-chills-1",
+   "economics-debt-1",
+   "technology-swaying-tower-stress",
+   "food-book-the-omnivores-dilemma-4",
+   "human_body-digestion-12"
   ]
  },
  "summaries": {

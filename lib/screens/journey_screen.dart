@@ -63,7 +63,7 @@ Widget _learnChapter(BuildContext context, AppState app, int n) {
     ],
   );
   return switch (learnLook) {
-    LearnLook.today => _Chapter(
+    LearnLook.today || LearnLook.mix => _Chapter(
       n: n,
       title: l.trainingTitle,
       trailing: TrainingChapter.change(context, app),

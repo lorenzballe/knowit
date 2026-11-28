@@ -373,13 +373,17 @@ void main() {
         expect(prefs.getBool('knowit.onboarded'), isNull);
         expect(
           prefs.getString('knowit.debug.learn'),
-          look == LearnLook.today ? isNull : look.name,
+          look == DebugLooks.learnShips ? isNull : look.name,
           reason: look.name,
         );
         expect(DebugLooks.learn.value, look, reason: look.name);
 
         debugToolsOn = false;
-        expect(DebugLooks.learnPicked, LearnLook.today, reason: look.name);
+        expect(
+          DebugLooks.learnPicked,
+          DebugLooks.learnShips,
+          reason: look.name,
+        );
       }
 
       // As it ships, the look of a phone that kept none.
@@ -387,7 +391,8 @@ void main() {
       DebugLooks.reset();
       debugToolsOn = true;
       DebugLooks.load(await SharedPreferences.getInstance());
-      expect(DebugLooks.learn.value, LearnLook.today);
+      expect(DebugLooks.learn.value, DebugLooks.learnShips);
+      expect(DebugLooks.learnShips, LearnLook.mix);
     },
   );
 

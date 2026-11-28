@@ -1,7 +1,7 @@
 {
  "format": 1,
- "version": 202611280043,
- "built": "2026-11-28T00:43:53Z",
+ "version": 202611280002,
+ "built": "2026-11-28T00:02:24Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -235201,7 +235201,8 @@
   "485": "thinking-7",
   "486": "thinking-4",
   "487": "thinking-z11",
-  "488": "thinking-book-the-black-swan-3"
+  "488": "thinking-book-the-black-swan-3",
+  "489": "thinking-book-range-2"
  },
  "commons": {
   "1": [
@@ -239931,6 +239932,15 @@
    "music-hearing-4",
    "food-future-food-1",
    "thinking-book-the-black-swan-4"
+  ],
+  "489": [
+   "thinking-book-range-3",
+   "maths-money-3",
+   "art-perspective-11",
+   "music-chills-1",
+   "economics-debt-1",
+   "food-book-the-omnivores-dilemma-4",
+   "human_body-digestion-12"
   ]
  }
 }

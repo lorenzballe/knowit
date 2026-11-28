@@ -952,6 +952,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get reminderAskOther => '다른 시간';
 
   @override
+  String get reminderAskPick => '직접 선택';
+
+  @override
   String get reminderAskUsual => '평소에 읽는 시간';
 
   @override
@@ -2207,6 +2210,26 @@ class AppLocalizationsKo extends AppLocalizations {
       'lead': '리더십',
       'culture': '일반 상식',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': '건전한 논증과 속이는 논증을 가려낸다.',
+      'decisions': '감이 아니라 위험과 확률로 고른다.',
+      'money': '가격, 이자, 할인: 돈이 어디로 가는지.',
+      'numbers': '속지 않고 퍼센트와 그래프를 읽는다.',
+      'talk': '말로도 글로도 이해받는다.',
+      'persuade': '설득하고, 설득당할 때를 알아챈다.',
+      'people': '사람들이 왜 그렇게 하는지.',
+      'fakes': '가짜 뉴스, 조작된 사진, 부풀린 연구를 알아본다.',
+      'science': '믿기 전에 생각을 시험한다.',
+      'focus': '중요한 곳에 더 오래 집중한다.',
+      'lead': '팀을 이끌고 모두를 위해 결정한다.',
+      'culture': '역사, 과학, 예술: 모두가 인용하는 것들.',
+      'other': '',
     });
     return '$_temp0';
   }

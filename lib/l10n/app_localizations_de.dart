@@ -989,6 +989,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reminderAskOther => 'Andere Uhrzeit';
 
   @override
+  String get reminderAskPick => 'Du wählst';
+
+  @override
   String get reminderAskUsual => 'Wann du meistens liest';
 
   @override
@@ -2302,6 +2305,26 @@ class AppLocalizationsDe extends AppLocalizations {
       'lead': 'Führung',
       'culture': 'Allgemeinwissen',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Ein gutes Argument von einem täuschenden unterscheiden.',
+      'decisions': 'Mit Risiken und Wahrscheinlichkeiten entscheiden, nicht aus dem Bauch.',
+      'money': 'Preise, Zinsen, Angebote: wohin dein Geld geht.',
+      'numbers': 'Prozente und Diagramme lesen, ohne sich täuschen zu lassen.',
+      'talk': 'Verstanden werden, mündlich und schriftlich.',
+      'persuade': 'Überzeugen und merken, wenn man dich überzeugen will.',
+      'people': 'Warum Menschen tun, was sie tun.',
+      'fakes': 'Falschmeldungen, gefälschte Fotos und aufgeblasene Studien erkennen.',
+      'science': 'Eine Idee prüfen, bevor man ihr glaubt.',
+      'focus': 'Die Aufmerksamkeit länger dort halten, wo sie zählt.',
+      'lead': 'Eine Gruppe führen und für alle entscheiden.',
+      'culture': 'Geschichte, Wissenschaft, Kunst: was alle zitieren.',
+      'other': '',
     });
     return '$_temp0';
   }

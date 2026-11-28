@@ -71,6 +71,30 @@ class FitText extends StatelessWidget {
     return true;
   }
 
+  /// The one size [texts] are all set at in [width]: the largest, from
+  /// [from] down by half points to [least], at which each of their words
+  /// fits a line alone in [style] at that size; null where none does. What
+  /// names laid side by side ask, so that none reads louder than the one
+  /// beside it and none breaks inside a word.
+  static double? oneSize(
+    List<String> texts,
+    TextStyle Function(double size) style,
+    double width, {
+    required double from,
+    required double least,
+    required TextScaler scaler,
+    required TextDirection direction,
+  }) {
+    for (double size = from; size >= least; size -= 0.5) {
+      if (texts.every(
+        (t) => wordsFit(t, style(size), scaler, direction, width),
+      )) {
+        return size;
+      }
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
