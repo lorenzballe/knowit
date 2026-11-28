@@ -10104,6 +10104,174 @@ abstract class AppLocalizations {
   /// **'Next card'**
   String get listenNextCard;
 
+  /// A book's page, the first way in when the book has a summary: opens the summary, read whole in about a quarter of an hour. minutes is how long it takes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes, plural, =1{Read in 1 minute} other{Read in {minutes} minutes}}'**
+  String summaryReadIn(int minutes);
+
+  /// A book's page, the same button once the reader has started the summary and not finished it.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue reading'**
+  String get summaryContinue;
+
+  /// A book's page, the same button once the summary has been read to its end.
+  ///
+  /// In en, this message translates to:
+  /// **'Read again'**
+  String get summaryAgain;
+
+  /// Where the reader is in a book's summary: part n of so many. Also the eyebrow over a part in the reader, in capitals, and in the player.
+  ///
+  /// In en, this message translates to:
+  /// **'Part {part} of {of}'**
+  String summaryPartOf(int part, int of);
+
+  /// How many minutes of a summary are left to read or to hear, beside where the reader is.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 min left} other{{n} min left}}'**
+  String summaryMinutesLeft(int n);
+
+  /// A book's page, the second way in beside reading: plays the summary aloud. minutes is how long it takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen · {minutes} min'**
+  String summaryListenFor(int minutes);
+
+  /// A book's page, the listening button while this book's summary is being read aloud: pauses it.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get summaryPause;
+
+  /// A book's page, the listening button while this book's summary is paused: plays on from where it stopped.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume listening'**
+  String get summaryResume;
+
+  /// A book's page and the player, on the free plan, for a book that is not the week's: what of the summary is free.
+  ///
+  /// In en, this message translates to:
+  /// **'The first part is free; the rest comes with Astute+.'**
+  String get summaryFreeNote;
+
+  /// A book's page: the name over the summary's parts, in capitals; also the reader's contents.
+  ///
+  /// In en, this message translates to:
+  /// **'The summary'**
+  String get summaryTitle;
+
+  /// Beside the part of a summary being read aloud, on the book's page and in the player.
+  ///
+  /// In en, this message translates to:
+  /// **'Now playing'**
+  String get summaryNowPlaying;
+
+  /// At the foot of a part in the reader, over the next part's title; and the player's button that goes on to the next part.
+  ///
+  /// In en, this message translates to:
+  /// **'Next part'**
+  String get summaryNextPart;
+
+  /// At the foot of the last part in the reader: ends the summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get summaryFinish;
+
+  /// The reader: the button that lists every part of the summary, and that list's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Contents'**
+  String get summaryContents;
+
+  /// The page after the last part of a summary: the book read. title is the book's title, as published.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ve read {title}'**
+  String summaryDoneTitle(String title);
+
+  /// That page, under its title: the book's cards, the short way in, offered to make the ideas stay.
+  ///
+  /// In en, this message translates to:
+  /// **'The book’s cards are there to make its ideas stay.'**
+  String get summaryDoneLine;
+
+  /// That page's first button: opens the book's ideas as cards.
+  ///
+  /// In en, this message translates to:
+  /// **'The ideas as cards'**
+  String get summaryToCards;
+
+  /// That page's second button: back to the book's page.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the book'**
+  String get summaryBackToBook;
+
+  /// The reader, on the free plan, at a part past the first of a book that is not the week's: what the rest is.
+  ///
+  /// In en, this message translates to:
+  /// **'The rest of this summary comes with Astute+'**
+  String get summaryGateTitle;
+
+  /// Under it: what Astute+ opens. parts is how many parts the summary has.
+  ///
+  /// In en, this message translates to:
+  /// **'All {parts} parts, to read and to hear, for every book. The week’s book is free for everyone.'**
+  String summaryGateLine(int parts);
+
+  /// The reader, when a summary that was never opened cannot be fetched: no network.
+  ///
+  /// In en, this message translates to:
+  /// **'This summary needs the internet once.'**
+  String get summaryNeedsNetwork;
+
+  /// Said to a screen reader on the player's button that goes back fifteen seconds; the button shows a circling arrow and 15.
+  ///
+  /// In en, this message translates to:
+  /// **'Back 15 seconds'**
+  String get bookAudioBack;
+
+  /// The player, when the next part of the summary is still on its way (a slow network).
+  ///
+  /// In en, this message translates to:
+  /// **'The next part is on its way…'**
+  String get bookAudioWaiting;
+
+  /// The player, once every part of the summary has been heard.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard to the end.'**
+  String get bookAudioDone;
+
+  /// The player on the free plan, once the free part is heard: the offer of the rest.
+  ///
+  /// In en, this message translates to:
+  /// **'Hear the rest of the book'**
+  String get bookAudioOfferTitle;
+
+  /// Under it.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ every summary is read to you whole, even with the screen locked.'**
+  String get bookAudioOfferLine;
+
+  /// The player's last button, and the small player's cross as a screen reader says it: stops the summary being read aloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop listening'**
+  String get bookAudioStop;
+
+  /// Said to a screen reader on the small player that stays over every screen while a book is read aloud: opens the whole player.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the player'**
+  String get bookAudioOpen;
+
   /// Profile: the name over the box with the invitation's two rows (Invita un amico).
   ///
   /// In en, this message translates to:

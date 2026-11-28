@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../books/player_room.dart';
 import '../l10n/l10n.dart';
 
 import '../models/pill.dart';
@@ -60,11 +61,15 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
   @override
   void initState() {
     super.initState();
+    // A card fills the screen: a book read aloud keeps its small player out
+    // of its way.
+    BookPlayerRoom.cardsOpened();
     _opened(widget.pill, swiped: false);
   }
 
   @override
   void dispose() {
+    BookPlayerRoom.cardsClosed();
     _pages.dispose();
     super.dispose();
   }

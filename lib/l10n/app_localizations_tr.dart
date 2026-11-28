@@ -7194,6 +7194,115 @@ class AppLocalizationsTr extends AppLocalizations {
   String get listenNextCard => 'Sonraki kart';
 
   @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes dakikada oku',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => 'Okumaya devam et';
+
+  @override
+  String get summaryAgain => 'Yeniden oku';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return 'Bölüm $part/$of';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dk kaldı',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return 'Dinle · $minutes dk';
+  }
+
+  @override
+  String get summaryPause => 'Duraklat';
+
+  @override
+  String get summaryResume => 'Dinlemeye devam et';
+
+  @override
+  String get summaryFreeNote => 'İlk bölüm ücretsiz; gerisi Astute+ ile.';
+
+  @override
+  String get summaryTitle => 'Özet';
+
+  @override
+  String get summaryNowPlaying => 'Çalıyor';
+
+  @override
+  String get summaryNextPart => 'Sonraki bölüm';
+
+  @override
+  String get summaryFinish => 'Bitir';
+
+  @override
+  String get summaryContents => 'İçindekiler';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return '$title kitabını okudun';
+  }
+
+  @override
+  String get summaryDoneLine =>
+      'Kitabın kartları fikirlerin akılda kalmasını sağlar.';
+
+  @override
+  String get summaryToCards => 'Kartlarla fikirler';
+
+  @override
+  String get summaryBackToBook => 'Kitaba dön';
+
+  @override
+  String get summaryGateTitle => 'Özetin devamı Astute+ ile';
+
+  @override
+  String summaryGateLine(int parts) {
+    return 'Her kitabın $parts bölümünün tamamı, okumak ve dinlemek için. Haftanın kitabı herkese ücretsiz.';
+  }
+
+  @override
+  String get summaryNeedsNetwork =>
+      'Bu özet bir kez internet bağlantısı gerektirir.';
+
+  @override
+  String get bookAudioBack => '15 saniye geri';
+
+  @override
+  String get bookAudioWaiting => 'Sonraki bölüm geliyor…';
+
+  @override
+  String get bookAudioDone => 'Sonuna kadar dinlendi.';
+
+  @override
+  String get bookAudioOfferTitle => 'Kitabın devamını dinle';
+
+  @override
+  String get bookAudioOfferLine =>
+      'Astute+ ile her özet baştan sona okunur, ekran kilitliyken bile.';
+
+  @override
+  String get bookAudioStop => 'Dinlemeyi durdur';
+
+  @override
+  String get bookAudioOpen => 'Oynatıcıyı aç';
+
+  @override
   String get inviteSection => 'Arkadaşlar';
 
   @override

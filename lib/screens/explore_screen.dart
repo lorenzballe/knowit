@@ -36,6 +36,7 @@ import 'area_screen.dart';
 import 'deck_viewer_screen.dart';
 import 'mix_screen.dart';
 import '../analytics.dart';
+import '../books/book_player_view.dart' show bookPlayerRoom;
 import '../measure/screens.dart';
 import '../measure/shelves.dart';
 import '../widgets/hand_glass.dart';
@@ -637,10 +638,12 @@ class ExploreScreenState extends State<ExploreScreen>
                   ),
                 ),
                 SliverPadding(
+                  // The foot also clears the small player while a book plays.
                   padding: EdgeInsets.only(
                     bottom:
                         30 +
-                        (barGlass ? MediaQuery.paddingOf(context).bottom : 0),
+                        (barGlass ? MediaQuery.paddingOf(context).bottom : 0) +
+                        bookPlayerRoom(context),
                   ),
                   sliver: ExploreSliver(host: this, slots: slots),
                 ),
