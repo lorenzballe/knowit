@@ -1099,15 +1099,28 @@ stops you in two seconds, a big drawing on both sides, a real source,
 nothing dark. Fifteen are the three days of a reader who leaned nowhere,
 five a day, read in their order; for a reader who held some subjects above
 the rest, the best of those come first, and a subject turned off never
-comes. The day keeps its shape — three to read, two that ask, the two
-questions the reader's own on the free plan, a review on Astute+, the card
-about home — and what the opening cannot fill, the reader's own dealer
-fills, never with a card marked dark or for adults. The first morning was
-dealt when the app opened, before the first run had asked anything, so
-every new reader of a date met the same five; it is dealt again when the
-first run ends. The opening is the phone's, whatever the server holds.
-Readers who were past the first run before it existed are dealt as they
-always were.
+comes. Three of each day's five ask and two are to read (`opening.asks`):
+a first day of two questions gave the calibration record, the app's
+promise, two answers to start from, and on those three days every card
+with a right answer asks how sure every time, never by its odds
+(`SureAsk.always`). Two of the questions are the reader's own on the free
+plan, a review comes on Astute+, the card about home keeps its place, and
+what the opening cannot fill, the reader's own dealer fills, never with a
+card marked dark or for adults. The first morning was dealt when the app
+opened, before the first run had asked anything, so every new reader of a
+date met the same five; it is dealt again when the first run ends. The
+opening is the phone's, whatever the server holds. Readers who were past
+the first run before it existed are dealt as they always were.
+
+**The rest of the first week.** After three days of drawings, a fourth of
+whatever the mix dealt was felt as a drop. So days four to seven are the
+phone's too (`firstWeek.drawn`, `dealFirstWeek`): four, four, three and
+three of their five are drawings, from the strongest the bank has — the
+ones judged good or excellent in the pass over every drawing, and every
+card redrawn since (`lib/data/drawn_ranks.dart`), then the acceptable
+ones, never the weak — one subject before any has two; the rest is the
+reader's own dealer's, so the cards of words come in a little at a time.
+From the eighth day the server deals as it does for everyone.
 
 On the free plan two of the five are the reader's own —
 dealt from the mix, from the subjects and strands they kept on, at the

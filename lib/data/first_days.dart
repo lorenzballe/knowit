@@ -21,6 +21,12 @@
 /// they turned off never comes at all; anything read is not dealt again;
 /// and what the opening cannot fill — a mix that keeps few of these
 /// subjects — the reader's own dealer fills, as on any day.
+///
+/// Three of an opening day's five ask ([kOpeningAsks], `opening.asks`): a
+/// new reader's first answers are what the calibration record, the app's
+/// promise, is made of, and two a day made it start slowly. And the rest of
+/// the first week stays mostly drawn ([dealFirstWeek], `firstWeek.drawn`):
+/// after three days of drawings, a fourth day of words was felt as a drop.
 library;
 
 import 'dart:math';
@@ -30,6 +36,7 @@ import 'package:flutter/foundation.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
 import 'daily.dart';
+import 'drawn_ranks.dart';
 import 'local_cards.dart';
 import 'pill_bank.dart';
 import 'pills_repository.dart';
@@ -37,6 +44,25 @@ import 'topics.dart';
 
 /// How many of a reader's days open on these cards: the first three.
 const int kOpeningDays = 3;
+
+/// How many of an opening day's five ask, where the opening's own shape is
+/// on (`opening.asks`): three, one more than any other day has. A first day
+/// of two questions and three cards to read gave the calibration record,
+/// which is the app's promise, two answers to start from.
+const int kOpeningAsks = 3;
+
+/// How many of the day's five are drawn on the rest of the first week,
+/// days four to seven (`firstWeek.drawn`): most of the day still, and the
+/// cards of words let in one at a time. On the fourth day the opening's
+/// three days of drawings used to give way to whatever the mix dealt.
+const List<int> kFirstWeekDrawn = [4, 4, 3, 3];
+
+/// How many drawn cards the first week deals on the reader's [day], 0 for
+/// their first: [kFirstWeekDrawn] on days four to seven, none on any other.
+int firstWeekDrawnOn(int day) {
+  final int i = day - kOpeningDays;
+  return i >= 0 && i < kFirstWeekDrawn.length ? kFirstWeekDrawn[i] : 0;
+}
 
 /// One card of the opening, and why it is there.
 @immutable
@@ -61,11 +87,15 @@ class FirstCard {
 
 /// The opening, in the order it is dealt.
 ///
-/// Each day is three cards to read and two that ask, one of those with a
+/// Each day is two cards to read and three that ask, two of those with a
 /// right answer, five subjects, read in this order: a drawing first, then
-/// a question, by turns. The subjects' own close the list. Every one was
-/// clear in tool/cards/card_check.cjs on three phones when chosen; a card
-/// whose drawing is redone should be looked at again before it stays.
+/// a question, by turns. The two to read each day are the drawings the
+/// owner named as the level (ESEMPI, lessons 5 and 6). With the opening's
+/// own shape off (`opening.asks`), a day takes two that ask and three to
+/// read, from the same list in the same order. The subjects' own close the
+/// list. Every one was clear in tool/cards/card_check.cjs on three phones
+/// when chosen; a card whose drawing is redone should be looked at again
+/// before it stays.
 const List<FirstCard> kFirstDays = [
   // Day 1.
   FirstCard(
@@ -97,11 +127,11 @@ const List<FirstCard> kFirstDays = [
         '1935 numbers: reading runs by itself.',
   ),
   FirstCard(
-    'technology-hoover-dam-blocks',
+    'science-fourth-power-glow',
     day: 1,
     why:
-        'A why with a picture: concrete cools from the outside in, so the '
-        'dam was cut into blocks. Pour it each way and watch the heat.',
+        'A guess with a right answer and a law behind it: a rail a little '
+        'hotter glows far more, by the fourth power. Dragged, then shown.',
   ),
   // Day 2.
   FirstCard(
@@ -133,11 +163,11 @@ const List<FirstCard> kFirstDays = [
         'with its limits said.',
   ),
   FirstCard(
-    'thinking-two-four-seven',
+    'technology-five-times-downforce',
     day: 2,
     why:
-        'A game: the rule a doubling guess can never crack. Confirmation bias '
-        'felt before it is named.',
+        'A robot mouse held to the floor by its own fan: the guess stacked '
+        'in mouse weights, then five of them. A small machine, a big force.',
   ),
   // Day 3.
   FirstCard(
@@ -156,11 +186,11 @@ const List<FirstCard> kFirstDays = [
         'month, ten times osteoporosis.',
   ),
   FirstCard(
-    'maths-knot-tricolorability',
+    'technology-hoover-dam-blocks',
     day: 3,
     why:
-        'Maths as play: a three-colour test that tells two knots apart, on a '
-        'big red knot that fills the card.',
+        'A why with a picture: concrete cools from the outside in, so the '
+        'dam was cut into blocks. Pour it each way and watch the heat.',
   ),
   FirstCard(
     'thinking-fukushima-radiation-toll',
@@ -170,11 +200,11 @@ const List<FirstCard> kFirstDays = [
         'from the wave. What we fear is not what kills.',
   ),
   FirstCard(
-    'technology-induction-magnetic-field',
+    'nature-clay-slide-plane',
     day: 3,
     why:
-        'The hob in the kitchen, explained: the pot is the heater. A bold '
-        'pot and coil that fill the card.',
+        'A hillside in section after rain: tap the layer it slides on. The '
+        'clay that lets no water through, and the slope that rides it.',
   ),
   // The subjects' own, for a reader who held these highest.
   FirstCard(
@@ -240,6 +270,41 @@ const List<FirstCard> kFirstDays = [
     why:
         'Pop culture: denim leaves the dye yellow-green and turns blue in '
         'the air, held up by the reader.',
+  ),
+  FirstCard(
+    'technology-backlash-pin-hole',
+    day: 0,
+    why:
+        'Technology, with a right answer: the give in a pin and its hole, '
+        'felt with a handle. The pointer waits, then follows.',
+  ),
+  FirstCard(
+    'nature-vesuvius-ash-volume',
+    day: 0,
+    why:
+        'Nature, with a right answer: Vesuvius\'s ten days of 1944 dragged '
+        'into a cube beside it, 245 million m³ made a size you can see.',
+  ),
+  FirstCard(
+    'thinking-two-four-seven',
+    day: 0,
+    why:
+        'Thinking: the rule a doubling guess can never crack. Confirmation '
+        'bias felt before it is named. A day of the opening until three asked.',
+  ),
+  FirstCard(
+    'maths-knot-tricolorability',
+    day: 0,
+    why:
+        'Maths as play: a three-colour test that tells two knots apart, on a '
+        'big red knot. A day of the opening until three asked.',
+  ),
+  FirstCard(
+    'technology-induction-magnetic-field',
+    day: 0,
+    why:
+        'The hob in the kitchen, explained: the pot is the heater. A day of '
+        'the opening until three asked.',
   ),
 ];
 
@@ -312,8 +377,8 @@ List<Pill> openingFor(
 /// when not one of the opening's cards is left for this reader, and the day
 /// is dealt as any other ([dealDay]).
 ///
-/// The shape of the day is the shape of every day: [asksInADay] of the five
-/// ask, one of them with a right answer when the opening has one; a card
+/// The shape of the day is the shape of every day, but for how many ask
+/// ([asking]): one of those with a right answer when the opening has one; a card
 /// that came due for review takes an asking slot first, on Astute+ (pass
 /// [reviews] only there); a card about where the reader lives takes a slot
 /// as it does on any day; at most one debate. The first [own] are the
@@ -324,6 +389,9 @@ List<Pill> openingFor(
 ///
 /// [weights], [levels] and [taste] are the reader's own dealer's, as
 /// [dealDay] takes them, for the slots the opening leaves.
+///
+/// [asking] is how many of the five ask: [kOpeningAsks] where the opening's
+/// own shape is on, the day's usual [asksInADay] where it is not.
 Deal? dealOpening({
   required DateTime date,
   Set<String>? topics,
@@ -339,16 +407,9 @@ Deal? dealOpening({
   int count = kPillsPerDay,
   int own = kOwnCardsFree,
   Place? home,
-}) {
-  final int asks = asksInADay(count);
-  final int ownCount = own.clamp(0, count);
-  // As on any day: a review is the reader's own coming back, one at most.
-  final List<Pill> review = reviews
-      .where((p) => dealableOn(p, date))
-      .take(min(ownCount, max(0, asks - 1)))
-      .toList();
-  final Set<String> taken = {...exclude, ...review.map((p) => p.id)};
-  final List<Pill> pool = openingFor(
+  int? asking,
+}) => _dealFrom(
+  (Set<String> taken) => openingFor(
     date,
     topics: topics,
     claimed: claimed,
@@ -356,7 +417,165 @@ Deal? dealOpening({
     genresOff: genresOff,
     strandsOff: strandsOff,
     exclude: taken,
+  ),
+  most: count,
+  asks: asking ?? asksInADay(count),
+  date: date,
+  topics: topics,
+  weights: weights,
+  levels: levels,
+  taste: taste,
+  genresOff: genresOff,
+  strandsOff: strandsOff,
+  exclude: exclude,
+  reviews: reviews,
+  count: count,
+  own: own,
+  home: home,
+);
+
+/// The drawings the rest of a reader's first week is dealt from
+/// ([dealFirstWeek]): the strong ones first, then the fair ones
+/// (lib/data/drawn_ranks.dart), never the weak; each shuffled for the date,
+/// so no two days lead with the same, and the subjects the reader claimed
+/// before the rest, as the opening has them.
+///
+/// Never a card already read ([exclude]) or the twin of one, a subject
+/// turned off ([topics]), a card whose every strand is off, one the bank
+/// no longer deals or draws, or one it marks dark or for adults.
+List<Pill> firstWeekFor(
+  DateTime date, {
+  Set<String>? topics,
+  Set<String> claimed = const {},
+  Map<String, double> mix = const {},
+  Set<String> genresOff = const {},
+  Set<String> strandsOff = const {},
+  Set<String> exclude = const {},
+}) {
+  final Set<String> wanted = {
+    for (final String key in topics ?? const <String>{}) ?kTopics[key]?.name,
+  };
+  final Map<String, String> keyOf = {
+    for (final e in kTopics.entries) e.value.name: e.key,
+  };
+  bool strandOn(String strand) =>
+      !strandsOff.contains(strand) &&
+      !genresOff.contains(strand.substring(0, strand.lastIndexOf('.')));
+  bool fits(Pill p) =>
+      _showable(p, date) &&
+      !p.mature &&
+      p.mood != 'dark' &&
+      !exclude.contains(p.id) &&
+      !exclude.contains(_twins[p.id]) &&
+      (wanted.isEmpty || wanted.contains(p.topic)) &&
+      (p.strands.isEmpty || p.strands.any(strandOn));
+  double held(Pill p) {
+    final String? key = keyOf[p.topic];
+    return key != null && claimed.contains(key) ? (mix[key] ?? 1) : -1;
+  }
+
+  final Random rng = Random(editionOf(date) * 7907 + 13);
+  List<Pill> tier(Set<String> ids) {
+    final List<Pill> cards = [
+      for (final String id in ids.toList()..sort())
+        if (PillBank.byId(id) case final Pill p when fits(p)) p,
+    ]..shuffle(rng);
+    final List<(int, Pill)> order = [...cards.indexed];
+    order.sort((a, b) {
+      final int byClaim = held(b.$2).compareTo(held(a.$2));
+      return byClaim != 0 ? byClaim : a.$1.compareTo(b.$1);
+    });
+    return [for (final (_, p) in order) p];
+  }
+
+  return [...tier(kStrongDrawings), ...tier(kFairDrawings)];
+}
+
+/// A day of the rest of the reader's first week, days four to seven: most
+/// of it still drawn ([firstWeekDrawnOn]: four, four, three, three), from
+/// the strong drawings ([firstWeekFor]), and the rest what the reader's own
+/// dealer gives, so the cards of words come in a little at a time. The
+/// day's shape is any day's: [asksInADay] ask. Null on any other day, or
+/// when no drawing is left for this reader, and the day is dealt as any
+/// other ([dealDay]).
+///
+/// [day] is which of the reader's days this is, 0 for the first.
+Deal? dealFirstWeek({
+  required DateTime date,
+  required int day,
+  Set<String>? topics,
+  Set<String> claimed = const {},
+  Map<String, double> mix = const {},
+  Map<String, double> weights = const {},
+  Map<String, int> levels = const {},
+  Map<String, double> taste = const {},
+  Set<String> genresOff = const {},
+  Set<String> strandsOff = const {},
+  Set<String> exclude = const {},
+  List<Pill> reviews = const [],
+  int count = kPillsPerDay,
+  int own = kOwnCardsFree,
+  Place? home,
+}) {
+  final int drawn = firstWeekDrawnOn(day);
+  if (drawn == 0) return null;
+  return _dealFrom(
+    (Set<String> taken) => firstWeekFor(
+      date,
+      topics: topics,
+      claimed: claimed,
+      mix: mix,
+      genresOff: genresOff,
+      strandsOff: strandsOff,
+      exclude: taken,
+    ),
+    most: drawn,
+    asks: asksInADay(count),
+    date: date,
+    topics: topics,
+    weights: weights,
+    levels: levels,
+    taste: taste,
+    genresOff: genresOff,
+    strandsOff: strandsOff,
+    exclude: exclude,
+    reviews: reviews,
+    count: count,
+    own: own,
+    home: home,
   );
+}
+
+/// A day dealt from [poolOf] (what is left of it once [exclude] and the
+/// reviews are taken), at most [most] of its cards, [asks] of the day's
+/// five asking, the rest from the reader's own dealer: the body of
+/// [dealOpening] and [dealFirstWeek].
+Deal? _dealFrom(
+  List<Pill> Function(Set<String> taken) poolOf, {
+  required int most,
+  required int asks,
+  required DateTime date,
+  Set<String>? topics,
+  Map<String, double> weights = const {},
+  Map<String, int> levels = const {},
+  Map<String, double> taste = const {},
+  Set<String> genresOff = const {},
+  Set<String> strandsOff = const {},
+  Set<String> exclude = const {},
+  List<Pill> reviews = const [],
+  int count = kPillsPerDay,
+  int own = kOwnCardsFree,
+  Place? home,
+}) {
+  asks = asks.clamp(0, count);
+  final int ownCount = own.clamp(0, count);
+  // As on any day: a review is the reader's own coming back, one at most.
+  final List<Pill> review = reviews
+      .where((p) => dealableOn(p, date))
+      .take(min(ownCount, max(0, asks - 1)))
+      .toList();
+  final Set<String> taken = {...exclude, ...review.map((p) => p.id)};
+  final List<Pill> pool = poolOf(taken);
   if (pool.isEmpty) return null;
 
   final Pill? local = localCardFor(
@@ -383,9 +602,10 @@ Deal? dealOpening({
   final bool gradedLeft = gradedIn(pool) && !gradedIn(review);
   // One card of a subject first, then a second, and an asking slot kept
   // for a card with a right answer until nothing else can fill it.
+  final int fromPool = min(slots, most);
   for (final (int cap, bool keepGraded) in [(1, true), (2, true), (2, false)]) {
     for (final Pill p in pool) {
-      if (picked.length >= slots) break;
+      if (picked.length >= fromPool) break;
       if (picked.contains(p) || (bySubject[p.topic] ?? 0) >= cap) continue;
       if (picked.any((q) => _twins[q.id] == p.id)) continue;
       if (p.asksSomething) {

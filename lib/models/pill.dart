@@ -392,8 +392,15 @@ abstract final class SureAsk {
   /// This install's own draw, set once the app has read it (AppState.init).
   static String seed = '';
 
+  /// Whether [pill] asks how sure every time today, whatever odds it gives:
+  /// a card of a new reader's opening days, whose first answers are what
+  /// the calibration record starts from (AppState.init sets it).
+  static bool Function(Pill pill) always = _never;
+  static bool _never(Pill _) => false;
+
   static bool of(Pill pill, {DateTime? on}) {
     if (!pill.isGraded) return false;
+    if (always(pill)) return true;
     final double? odds = pill.sureOdds;
     if (odds == null || odds >= 1) return true;
     if (odds <= 0) return false;

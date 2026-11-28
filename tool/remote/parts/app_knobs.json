@@ -10,7 +10,11 @@
   "cardAi": {"default": false},
   "share.challenge": {"default": false},
   "listen": {"default": false},
-  "invite": {"default": false}
+  "invite": {"default": false},
+  "opening.asks": {"default": true},
+  "firstWeek.drawn": {"default": true},
+  "opening.dayLine": {"default": true},
+  "streak.told": {"default": true}
  },
  "tunables": {
   "push.askGapDays": {"type": "count", "default": 3, "min": 1, "max": 30},

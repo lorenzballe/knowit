@@ -481,7 +481,13 @@ class AppState extends ChangeNotifier {
   DateTime? placeCheckedAt;
 
   late DateTime today;
-  late List<Pill> todaysDeck;
+  List<Pill> get todaysDeck => _todaysDeck!;
+  set todaysDeck(List<Pill> cards) => _todaysDeck = cards;
+  List<Pill>? _todaysDeck;
+
+  /// Whether a day has been dealt or restored yet: [todaysDeck] is not
+  /// there to be read before.
+  bool get _dealt => _todaysDeck != null;
 
   bool get todayCompleted => todayIndex >= todaysDeck.length;
 
@@ -738,6 +744,14 @@ class AppState extends ChangeNotifier {
       _prefs.setString(_kSureSeed, sureSeed);
     }
     SureAsk.seed = sureSeed;
+    // On the opening's days every card with a right answer asks how sure,
+    // never by chance (`opening.asks`): a new reader's first answers are
+    // what the calibration record starts from.
+    SureAsk.always = (Pill pill) =>
+        _dealt &&
+        openingAsksOn &&
+        opensOn(today) &&
+        todaysDeck.any((Pill p) => p.id == pill.id);
     final String? variant = _prefs.getString(_kTasteVariant);
     tasteVariant =
         variant ?? (math.Random().nextBool() ? 'implicit' : 'explicit');
@@ -1016,8 +1030,29 @@ class AppState extends ChangeNotifier {
         reviews: due,
         own: own,
         home: place,
+        asking: openingAsksOn ? kOpeningAsks : null,
       );
       if (opening != null) return opening;
+    }
+    // The rest of the first week, still mostly drawn (`firstWeek.drawn`).
+    if (firstDays && firstWeekDrawnOn(day) > 0 && firstWeekDrawnFlagOn) {
+      final Deal? week = dealFirstWeek(
+        date: date,
+        day: day,
+        topics: pickedTopics,
+        claimed: profile.claimed,
+        mix: topicWeights,
+        weights: weights,
+        levels: dealtLevels,
+        taste: lean,
+        genresOff: genresOff,
+        strandsOff: strandsOff,
+        exclude: exclude,
+        reviews: due,
+        own: own,
+        home: place,
+      );
+      if (week != null) return week;
     }
     return dealDay(
       date: date,
@@ -1049,6 +1084,16 @@ class AppState extends ChangeNotifier {
   /// because the server deals a first day as it deals any other.
   bool opensOn(DateTime date) => firstDays && dayNumberOf(date) < kOpeningDays;
 
+  /// Whether the phone deals [date] itself, whatever the server holds: the
+  /// opening's days ([opensOn]), and the rest of the first week while it is
+  /// still mostly drawn (`firstWeek.drawn`, [dealFirstWeek]), which the
+  /// server does not deal.
+  bool dealtHere(DateTime date) =>
+      opensOn(date) ||
+      (firstDays &&
+          firstWeekDrawnFlagOn &&
+          firstWeekDrawnOn(dayNumberOf(date)) > 0);
+
   /// Deals a fresh day and records it, so a restart resumes the same deck.
   ///
   /// An app that never re-asks what you got wrong is not teaching, it is
@@ -1064,7 +1109,7 @@ class AppState extends ChangeNotifier {
     // store's own cache — and the wait for it is bounded. Failing that, the
     // phone deals as it always did, from the same calendar. A new reader's
     // first days are the phone's: they open on the cards chosen for them.
-    final ServedDay? served = opensOn(today)
+    final ServedDay? served = dealtHere(today)
         ? null
         : await Served.instance.dayFor(today);
     final Set<String> dealtReviews;
@@ -2211,7 +2256,7 @@ class AppState extends ChangeNotifier {
   List<Pill> get tomorrowsDeck {
     final tomorrow = DateTime(today.year, today.month, today.day + 1);
     final ServedDay? kept = _servedTomorrow;
-    if (kept != null && !opensOn(tomorrow)) return kept.cards;
+    if (kept != null && !dealtHere(tomorrow)) return kept.cards;
     return _deal(
       tomorrow,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
@@ -2256,9 +2301,9 @@ class AppState extends ChangeNotifier {
   /// fetches the pages of its first free cards, so the morning's first card
   /// comes up drawn.
   Future<void> _askTomorrow() async {
-    // A first day's tomorrow is the opening's, dealt on the phone: there is
-    // nothing to ask for.
-    if (_askingTomorrow || opensOn(dayShift(today, 1))) return;
+    // A first day's tomorrow is the opening's, dealt on the phone, and so is
+    // the rest of the first week: there is nothing to ask for.
+    if (_askingTomorrow || dealtHere(dayShift(today, 1))) return;
     _askingTomorrow = true;
     try {
       await Trace.instance.flush();
@@ -2619,6 +2664,56 @@ class AppState extends ChangeNotifier {
 
   /// Whether the first run plays a card and offers the trial after it.
   bool get firstRunTrialOn => kFirstRunTrialFlag.on(_here);
+
+  /// The opening's own shape (`opening.asks`): three of an opening day's
+  /// five ask (lib/data/first_days.dart, kOpeningAsks), and every card of
+  /// those days with a right answer asks how sure, never by chance
+  /// ([SureAsk.always]). On as built; off, an opening day asks two, as
+  /// every day does, and a card that gives odds asks how sure by them.
+  static const RemoteFlag kOpeningAsksFlag = RemoteFlag(
+    'opening.asks',
+    fallback: true,
+  );
+
+  /// Whether the opening's days ask three and always how sure.
+  bool get openingAsksOn => kOpeningAsksFlag.on(_here);
+
+  /// The rest of the first week, still mostly drawn (`firstWeek.drawn`):
+  /// days four to seven are dealt on the phone, four, four, three and three
+  /// of their five from the strongest drawings (dealFirstWeek). On as
+  /// built; off, they are dealt as any day, by the server first.
+  static const RemoteFlag kFirstWeekDrawnFlag = RemoteFlag(
+    'firstWeek.drawn',
+    fallback: true,
+  );
+
+  /// Whether the rest of the first week leans to the strong drawings.
+  bool get firstWeekDrawnFlagOn => kFirstWeekDrawnFlag.on(_here);
+
+  /// The line at the top of Today on the opening's second and third days
+  /// (`opening.dayLine`): which day it is, how the day before went, in its
+  /// own numbers, and what is new today (lib/widgets/today_line.dart). On
+  /// as built.
+  static const RemoteFlag kDayLineFlag = RemoteFlag(
+    'opening.dayLine',
+    fallback: true,
+  );
+
+  /// Whether Today opens the second and third days on their line.
+  bool get dayLineOn => kDayLineFlag.on(_here);
+
+  /// The streak told (`streak.told`): on the morning after a freeze kept
+  /// it, Today says so first; the finished day says that a day missed is
+  /// covered and how many freezes there are; and the streak reaching two,
+  /// three and seven days rises once, small (lib/widgets/streak_moment.dart).
+  /// On as built.
+  static const RemoteFlag kStreakToldFlag = RemoteFlag(
+    'streak.told',
+    fallback: true,
+  );
+
+  /// Whether the streak and its freezes are told.
+  bool get streakToldOn => kStreakToldFlag.on(_here);
 
   /// The day the offer was last put, as a date key; null when never. Kept
   /// for the phone rather than the reader, like the experiments' draws: a
