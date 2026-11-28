@@ -8526,5 +8526,183 @@
     "type": "int"
    }
   }
+ },
+ "earlyReadingTag": "First reading",
+ "@earlyReadingTag": {
+  "description": "A small tag in capitals over a provisional reading of how sure against how right, on the profile (How well you know yourself), in Your journey and its free preview: it is a first reading from the first few answers, firming up with more."
+ },
+ "earlyReadingAll": "So far: you said {level}% {n, plural, =1{once, and you were right} =2{twice, and you were right twice} other{{n} times, and you were right every time}}.",
+ "@earlyReadingAll": {
+  "description": "The provisional reading, before twelve answers said how sure: the level the reader said most often (level, a percentage) and how many times (n), every one of them right. Shown on the profile and in Your journey.",
+  "placeholders": {
+   "level": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "earlyReadingNone": "So far: you said {level}% {n, plural, =1{once, and you were wrong} =2{twice, and you were wrong both times} other{{n} times, and you were wrong every time}}.",
+ "@earlyReadingNone": {
+  "description": "The same provisional reading when none of those answers (n of them, said at level %) was right.",
+  "placeholders": {
+   "level": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "earlyReadingSome": "So far: you said {level}% {n, plural, =2{twice} other{{n} times}}, and you were right {right, plural, =1{once} =2{twice} other{{right} times}}.",
+ "@earlyReadingSome": {
+  "description": "The same provisional reading when some were right and some were not: said level % n times (two or more), right of them `right` times.",
+  "placeholders": {
+   "level": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyClearEyebrow": "In the clear this week",
+ "@journeyClearEyebrow": {
+  "description": "Your journey on the free plan, the preview: the small capitals over the one figure shown in the clear this week, every other figure of the journey being blurred under it. A different one each week."
+ },
+ "journeyClearBlind": "Your blind spot: {subject}",
+ "@journeyClearBlind": {
+  "description": "The preview's figure in the clear, when it is the blind spot: the subject the reader misses most (subject, its name).",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyClearStrong": "Your strong point: {subject}",
+ "@journeyClearStrong": {
+  "description": "The preview's figure in the clear, when it is the strong point: the subject the reader is best in (subject, its name).",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyClearShare": "{pct} right, of your last {n} answers in it.",
+ "@journeyClearShare": {
+  "description": "Under the blind spot or the strong point in the clear: how often right (pct, a percentage as the phone writes it) of the reader's latest n answers in that subject (six to twenty).",
+  "placeholders": {
+   "pct": {
+    "type": "String"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyClearMemoryDays": "After {days, plural, =1{a day} =2{two days} other{{days} days}}, you still remember {right} of {of}.",
+ "@journeyClearMemoryDays": {
+  "description": "The preview's figure in the clear, when it is what the reader remembers: of the cards that came back after a wait of `days` days (two, the review ladder's first wait, after a miss), how many were known then (right of of).",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyClearMemoryWeeks": "After {weeks, plural, =1{a week} other{{weeks} weeks}}, you still remember {right} of {of}.",
+ "@journeyClearMemoryWeeks": {
+  "description": "The same, after a wait of `weeks` weeks (one after the first right answer, three after the second): of the cards that came back then, how many were still known (right of of).",
+  "placeholders": {
+   "weeks": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyClearBlindNotYet": "Six answers in two subjects, and this shows the one you miss most.",
+ "@journeyClearBlindNotYet": {
+  "description": "The preview, the blind spot's week, when no subject has six answers yet: what it takes, rather than a sample."
+ },
+ "journeyClearStrongNotYet": "Six answers in one subject, and this shows the one you’re best at.",
+ "@journeyClearStrongNotYet": {
+  "description": "The preview, the strong point's week, when no subject has six answers yet: what it takes."
+ },
+ "journeyClearSureNotYet": "{n, plural, =1{One more answer saying how sure, and a first reading shows here.} other{{n} more answers saying how sure, and a first reading shows here.}}",
+ "@journeyClearSureNotYet": {
+  "description": "The preview, the week of how sure against how right, before two answers said how sure: how many more it takes (n) for a first reading.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyClearMemoryNotYet": "Cards come back after 2, 7 and 21 days: this shows how many you still remember.",
+ "@journeyClearMemoryNotYet": {
+  "description": "The preview, the week of what the reader remembers, before any card has come back: how it comes."
+ },
+ "journeyPreviewDoor": "A different figure each week. Astute+ opens the rest.",
+ "@journeyPreviewDoor": {
+  "description": "The preview, the one quiet line under the figure in the clear, with a lock: it opens the plans, on the journey's door."
+ },
+ "weekSheetOf": "The week of {date}",
+ "@weekSheetOf": {
+  "description": "Sunday's week, the sheet a free reader gets on Sunday after the five (or on Monday morning): the small capitals over its title, naming the week by its Monday (date, a day and a month as the phone writes them).",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "weekSheetRightValue": "{right} of {n}",
+ "@weekSheetRightValue": {
+  "description": "Sunday's week: the right answers of the week as a figure, right of n.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "weekSheetRightLabel": "Right answers",
+ "@weekSheetRightLabel": {
+  "description": "Sunday's week: the small capitals under that figure."
+ },
+ "weekSheetAcross": "{n, plural, =1{over 1 answer} other{over {n} answers}}",
+ "@weekSheetAcross": {
+  "description": "Sunday's week: under how sure against how right, how many of the week's answers said how sure (n), so a figure of three answers says it is one.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "weekSheetOverLabel": "Where you trust yourself too much",
+ "@weekSheetOverLabel": {
+  "description": "Sunday's week: the name over the one figure only Astute+ shows, blurred, when it is where the reader trusts themselves too much."
+ },
+ "weekSheetMemoryLabel": "What you still remember",
+ "@weekSheetMemoryLabel": {
+  "description": "Sunday's week: the name over that blurred figure when it is how many cards the reader still remembers after the review ladder's waits."
+ },
+ "weekSheetAccount": "Keep your week on every phone",
+ "@weekSheetAccount": {
+  "description": "Sunday's week: the one line that offers the account (Apple or Google) to a reader not signed in, and the title of the sign-in sheet it opens."
  }
 }

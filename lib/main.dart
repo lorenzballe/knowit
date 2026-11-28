@@ -15,7 +15,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'analytics.dart';
 import 'books/book_player_view.dart' show BookPlayerHost, BookPlayerRoom;
 import 'cloud.dart';
+import 'data/levels.dart' show LevelMemory;
 import 'data/pill_bank.dart';
+import 'data/pills_repository.dart' show dateKey;
 import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
 import 'screens/deck_viewer_screen.dart';
@@ -33,6 +35,7 @@ import 'screens/mix_screen.dart';
 import 'screens/paywall_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
+import 'state/your_week.dart' show yourWeekDue;
 import 'sync/account.dart';
 import 'sync/invite.dart';
 import 'sync/place_finder.dart';
@@ -59,6 +62,7 @@ import 'screens/gate_screen.dart';
 import 'store_links.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
+import 'widgets/your_week_sheet.dart' show showYourWeek;
 import 'widgets/hand_glass.dart';
 import 'widgets/invite_sheet.dart';
 import 'widgets/tab_zoom.dart';
@@ -432,6 +436,12 @@ class _AstutoRootState extends State<AstutoRoot> {
   bool _askingForAccount = false;
   Timer? _accountAskTimer;
 
+  /// True while Sunday's week is up, and what follows from it; and the day
+  /// a level rose on, which has the evening, so the week waits for Monday.
+  bool _askingForWeek = false;
+  Timer? _weekAskTimer;
+  String? _weekRestsOn;
+
   /// True while a reader past the first run who never answered is asked
   /// whether Astute may measure how the app is used (showConsentSheet).
   bool _askingForConsent = false;
@@ -503,6 +513,8 @@ class _AstutoRootState extends State<AstutoRoot> {
         _widgetAskTimer = null;
         _accountAskTimer?.cancel();
         _accountAskTimer = null;
+        _weekAskTimer?.cancel();
+        _weekAskTimer = null;
         _consentAskTimer?.cancel();
         _consentAskTimer = null;
       },
@@ -544,6 +556,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         // on the screen.
         _considerConsentAsk();
         _considerAccountAsk();
+        _considerWeekAsk();
         _considerPlaceAsk();
         _considerWidgetAsk();
         _considerUpdateAsk();
@@ -931,6 +944,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     _considerReminderAsk();
     _considerConsentAsk();
     _considerAccountAsk();
+    _considerWeekAsk();
     _considerPlaceAsk();
     _considerWidgetAsk();
     _considerUpdateAsk();
@@ -985,6 +999,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     // only at its end and a newer build waits for any moment at all.
     _considerConsentAsk();
     _considerAccountAsk();
+    _considerWeekAsk();
     _considerPlaceAsk();
     _considerWidgetAsk();
     _considerUpdateAsk();
@@ -1024,6 +1039,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     _placeAskTimer?.cancel();
     _widgetAskTimer?.cancel();
     _accountAskTimer?.cancel();
+    _weekAskTimer?.cancel();
     _consentAskTimer?.cancel();
     _updateAskTimer?.cancel();
     Remote.revision.removeListener(_onRemoteChanged);
@@ -1060,6 +1076,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     _considerReminderAsk();
     _considerConsentAsk();
     _considerAccountAsk();
+    _considerWeekAsk();
     _considerPlaceAsk();
     _considerWidgetAsk();
     _considerUpdateAsk();
@@ -1196,6 +1213,76 @@ class _AstutoRootState extends State<AstutoRoot> {
     }
   }
 
+  /// Why Sunday's week would rise now, or null when this is not its moment
+  /// (lib/state/your_week.dart says whether one is due at all).
+  ///
+  /// On Sunday the finished day at rest, as for the account's sheet, with
+  /// nothing pushed over the tabs and the card after the fifth thrown; on
+  /// Monday morning that, or Today before its first card is thrown, never
+  /// in the middle of the five. After the reminder's sheet, the consent's
+  /// and the account's own, and in a sitting nothing else has asked in.
+  String? _weekAskReason() {
+    if (!_app.ready || _stage != _Stage.shell || !_onTop) return null;
+    if (_askingForPush || _askingForPlace || _askingForAccount) return null;
+    if (_askingForConsent || _askingForWidget || _askingForUpdate) {
+      return null;
+    }
+    if (_askingForWeek || _askedThisSitting) return null;
+    if (_weekRestsOn == dateKey(_app.today)) return null;
+    if (_reminderAskReason() != null ||
+        (_reminderAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (_consentAskReason() != null || (_consentAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (_accountAskReason() != null || (_accountAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    final bool atRest = _app.dayClosed ? !_deckOnTable : _app.todayIndex == 0;
+    if (!atRest || yourWeekDue(_app) == null) return null;
+    return _app.dayClosed ? 'day done' : 'morning';
+  }
+
+  /// Raises Sunday's week a beat after its moment arrives, as the other
+  /// sheets rise, and only if the moment is still there then.
+  void _considerWeekAsk() {
+    if (!mounted || _askingForWeek) return;
+    if (_weekAskReason() == null) {
+      _weekAskTimer?.cancel();
+      _weekAskTimer = null;
+      return;
+    }
+    if (_weekAskTimer?.isActive ?? false) return;
+    _weekAskTimer = Timer(_kReminderAskBeat, () {
+      _weekAskTimer = null;
+      if (!mounted || _weekAskReason() == null) return;
+      _offerWeek();
+    });
+  }
+
+  /// The week itself, once for its week whatever is done with it. Not on
+  /// the evening a level rose, which has that evening: then it waits for
+  /// Monday morning.
+  Future<void> _offerWeek() async {
+    if (_askingForWeek) return;
+    _askingForWeek = true;
+    try {
+      final String today = dateKey(_app.today);
+      if (await LevelMemory.roseOn() == today) {
+        _weekRestsOn = today;
+        return;
+      }
+      if (!mounted || _askedThisSitting) return;
+      final DateTime? monday = yourWeekDue(_app);
+      if (monday == null) return;
+      _askedThisSitting = true;
+      await showYourWeek(context, app: _app, account: _account, monday: monday);
+    } finally {
+      _askingForWeek = false;
+    }
+  }
+
   /// The app's language, as the gate's and the switches' rules read it.
   String get _language => Localizations.localeOf(context).languageCode;
 
@@ -1277,6 +1364,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     _considerReminderAsk();
     _considerConsentAsk();
     _considerAccountAsk();
+    _considerWeekAsk();
     _considerPlaceAsk();
     _considerWidgetAsk();
     _considerUpdateAsk();
@@ -1484,6 +1572,7 @@ class _AstutoRootState extends State<AstutoRoot> {
             _considerReminderAsk();
             _considerConsentAsk();
             _considerAccountAsk();
+            _considerWeekAsk();
             _considerPlaceAsk();
             _considerWidgetAsk();
             _considerUpdateAsk();

@@ -144,6 +144,10 @@ class AppState extends ChangeNotifier {
   static const _kPathsOpened = 'knowit.pathsOpened';
   static const _kJourneySeen = 'knowit.journeySeen';
   static const _kJourneySeenOn = 'knowit.journeySeenOn';
+  static const _kJourneyClear = 'knowit.journeyClear';
+  static const _kWeekShownFor = 'knowit.weekShownFor';
+  static const _kWeekAccountShown = 'knowit.weekAccountShown';
+  static const _kWeekAccountDeclined = 'knowit.weekAccountDeclined';
   static const _kNotes = 'knowit.notes';
   static const _kTasteVariant = 'knowit.exp.tasteVariant';
   static const _kReactions = 'knowit.reactions';
@@ -733,6 +737,10 @@ class AppState extends ChangeNotifier {
     pathsOpened = _prefs.getStringList(_kPathsOpened) ?? [];
     journeySeen = _decodeWeights(_prefs.getString(_kJourneySeen));
     journeySeenOn = _prefs.getString(_kJourneySeenOn);
+    journeyClear = _prefs.getString(_kJourneyClear);
+    weekShownFor = _prefs.getString(_kWeekShownFor);
+    weekAccountShown = _prefs.getInt(_kWeekAccountShown) ?? 0;
+    weekAccountDeclined = _prefs.getBool(_kWeekAccountDeclined) ?? false;
     notes = CardNotes.decode(_prefs.getString(_kNotes));
     reactions = _decodeReactions(_prefs.getString(_kReactions));
     // The phone's own draw for the cards that ask how sure only some of the
@@ -2380,6 +2388,40 @@ class AppState extends ChangeNotifier {
   int get calibratedAnswers =>
       judgements.where((j) => j.confidence != null).length;
 
+  /// A first reading of how sure against how right, while there are too
+  /// few answers to measure it ([kEarlyReadingFrom] to one under
+  /// [kCalibrationFloor]): the level said most often, the higher of two said
+  /// as often, and how it went. Null outside those, and while the server
+  /// holds it back ([kEarlyReadingFlag]); the profile and the journey then
+  /// say how many more answers it takes, as they did.
+  EarlyReading? get earlyReading {
+    if (!kEarlyReadingFlag.on(_here)) return null;
+    final List<CalibrationBucket> levels = calibration.toList();
+    final int n = levels.fold<int>(0, (a, b) => a + b.count);
+    if (n < kEarlyReadingFrom || n >= kCalibrationFloor) return null;
+    final CalibrationBucket most = levels.reduce(
+      (a, b) =>
+          b.count > a.count || (b.count == a.count && b.said > a.said) ? b : a,
+    );
+    return EarlyReading(
+      level: most.said,
+      count: most.count,
+      right: most.right,
+      answers: n,
+    );
+  }
+
+  /// The first reading under the floor (`calibration.early`): on as built,
+  /// so the profile and the journey say what the first answers came to; the
+  /// server can hold it back, and they wait for twelve again.
+  static const RemoteFlag kEarlyReadingFlag = RemoteFlag(
+    'calibration.early',
+    fallback: true,
+  );
+
+  /// Whether the server lets the first reading be said.
+  bool get earlyReadingOn => kEarlyReadingFlag.on(_here);
+
   /// How the gap between confidence and accuracy has moved across the run.
   ///
   /// Judgements are append-only and kept in order, so the earliest window and
@@ -2739,6 +2781,77 @@ class AppState extends ChangeNotifier {
   Future<void> notedFirstMonthOffered() async {
     firstMonthOfferedOn = dateKey(today);
     await _prefs.setString(_kFirstMonthOfferedOn, firstMonthOfferedOn!);
+  }
+
+  // ── Your journey's preview, and Sunday's week ─────────────────────────
+
+  /// Your journey's preview (`journey.preview`): a reader on the free plan
+  /// who opens Your journey sees their own, worked out from their answers,
+  /// behind a soft blur, one figure of it in the clear each week, and the
+  /// way to Astute+ under it (lib/screens/journey_screen.dart). Off as
+  /// built: the journey's doors open the plans, as they always did.
+  static const RemoteFlag kJourneyPreviewFlag = RemoteFlag(
+    'journey.preview',
+    fallback: false,
+  );
+
+  /// Whether the server has the preview on for this reader.
+  bool get journeyPreviewOn => kJourneyPreviewFlag.on(_here);
+
+  /// Sunday's week (`week.sunday`): on Sunday, once the five are read, or
+  /// on Monday morning for a reader who missed Sunday, a reader on the free
+  /// plan is shown what the week came to, with one figure of Astute+'s
+  /// blurred and, to a reader without an account, the account in one line
+  /// (lib/state/your_week.dart says when, lib/widgets/your_week_sheet.dart
+  /// shows it). Off as built.
+  static const RemoteFlag kSundayWeekFlag = RemoteFlag(
+    'week.sunday',
+    fallback: false,
+  );
+
+  /// Whether the server has Sunday's week on for this reader.
+  bool get sundayWeekOn => kSundayWeekFlag.on(_here);
+
+  /// The figure the journey's preview shows in the clear this week, as
+  /// `yyyy-mm-dd|figure`, the week by its Monday: chosen the first time the
+  /// preview is opened in a week that has one to show, and kept for that
+  /// week, so the figure in the clear does not change under the reader as
+  /// more of the others can be said. Kept on the phone only.
+  String? journeyClear;
+
+  /// Keeps [figure] as the one in the clear for the week of [monday].
+  Future<void> keepJourneyClear(String monday, String figure) async {
+    journeyClear = '$monday|$figure';
+    await _prefs.setString(_kJourneyClear, journeyClear!);
+  }
+
+  /// The Monday of the last week Sunday's week was shown for, as a date
+  /// key: it is shown once a week at most.
+  String? weekShownFor;
+
+  /// How many weeks the account's line was offered with the week, and
+  /// whether the reader said no to the sheet it opened: three times at
+  /// most, and never again after a no.
+  int weekAccountShown = 0;
+  bool weekAccountDeclined = false;
+
+  /// Notes the week of [monday] as shown, and the account's line with it
+  /// when it was there. Noted as the sheet rises, so a sheet that fails to
+  /// show is not a reason to put it again.
+  Future<void> notedWeekShown(String monday, {required bool account}) async {
+    weekShownFor = monday;
+    await _prefs.setString(_kWeekShownFor, monday);
+    if (account) {
+      weekAccountShown += 1;
+      await _prefs.setInt(_kWeekAccountShown, weekAccountShown);
+    }
+  }
+
+  /// Notes the account's sheet, opened from the week, closed without an
+  /// account: the line is not offered again.
+  Future<void> notedWeekAccountDeclined() async {
+    weekAccountDeclined = true;
+    await _prefs.setBool(_kWeekAccountDeclined, true);
   }
 
   /// The first morning, dealt again now that the reader has said what they
@@ -3878,6 +3991,10 @@ class AppState extends ChangeNotifier {
     pathsOpened = [];
     journeySeen = {};
     journeySeenOn = null;
+    journeyClear = null;
+    weekShownFor = null;
+    weekAccountShown = 0;
+    weekAccountDeclined = false;
     notes = {};
     reactions = {};
     topicWeights = {};
@@ -4102,6 +4219,10 @@ class AppState extends ChangeNotifier {
     'account.offer',
     fallback: true,
   );
+
+  /// Whether the server lets the app offer an account of its own accord:
+  /// the sheet after the first day, and the line under Sunday's week.
+  bool get accountOfferOn => kAccountOfferFlag.on(_here);
 
   /// Noted before the sheet rises, so a sheet that fails to show is not a
   /// reason to put it again.

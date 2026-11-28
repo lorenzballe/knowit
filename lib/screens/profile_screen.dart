@@ -18,7 +18,8 @@ import '../state/app_state.dart';
 import '../state/debug_looks.dart';
 import '../state/first_offers.dart' show FirstOffer;
 import '../state/music_sound.dart';
-import '../state/progress.dart' show kCalibrationFloor;
+import '../state/progress.dart' show EarlyReading, kCalibrationFloor;
+import 'progress_text.dart' show earlyReadingText;
 import '../sync/identity.dart';
 import '../sync/invite.dart';
 import '../sync/place_finder.dart';
@@ -1255,14 +1256,33 @@ class _Calibration extends StatelessWidget {
   Widget build(BuildContext context) {
     final buckets = app.calibration.toList();
     final gap = app.overconfidence;
+    // Under the floor, from the second answer said how sure, what those
+    // answers came to so far, marked as a first reading: the card used to
+    // say only how many more it wanted, ten of them after two.
+    final EarlyReading? early = gap == null ? app.earlyReading : null;
 
     return PaperCard(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (early != null) ...[
+            Text(
+              _upperIn(context, context.l10n.earlyReadingTag),
+              key: const ValueKey('calibration-early'),
+              style: AppText.label(
+                size: 10.5,
+                weight: FontWeight.w700,
+                spacing: 1.4,
+                color: context.p.inkMuted,
+              ),
+            ),
+            const SizedBox(height: 6),
+          ],
           Text(
-            _headline(context, gap),
+            early != null
+                ? earlyReadingText(context, early)
+                : _headline(context, gap),
             style: AppText.display(
               size: 19,
               weight: FontWeight.w600,
@@ -1308,6 +1328,12 @@ class _Calibration extends StatelessWidget {
         ? context.l10n.overconfidentBy(points)
         : context.l10n.underconfidentBy(points);
   }
+
+  /// Capitals, with Turkish's dotted capital I.
+  static String _upperIn(BuildContext context, String text) =>
+      Localizations.localeOf(context).languageCode == 'tr'
+      ? text.replaceAll('i', 'İ').toUpperCase()
+      : text.toUpperCase();
 }
 
 class _Row extends StatelessWidget {

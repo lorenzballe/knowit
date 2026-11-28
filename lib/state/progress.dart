@@ -15,6 +15,39 @@ import '../models/pill.dart';
 /// the reader does.
 const int kCalibrationFloor = 12;
 
+/// Answers said how sure before a first reading is said, under the floor:
+/// what those answers were and how they went, as they stand, marked as a
+/// first reading and firming up with every answer until the floor measures
+/// it. A reader who said 80% twice and was right twice was told to wait for
+/// ten more; two is the least a pattern can be read from at all.
+const int kEarlyReadingFrom = 2;
+
+/// A first reading of how sure against how right, before there are
+/// [kCalibrationFloor] answers to measure it from: the level the reader
+/// said most often, the higher of two said as often, how many times and how
+/// many of them were right, out of all the answers said how sure so far.
+class EarlyReading {
+  const EarlyReading({
+    required this.level,
+    required this.count,
+    required this.right,
+    required this.answers,
+  });
+
+  /// The level said most often, as a percentage: 50 to 90.
+  final int level;
+
+  /// How many times it was said, and how many of them were right.
+  final int count;
+  final int right;
+
+  /// Every answer said how sure so far, at any level.
+  final int answers;
+
+  /// How many more answers said how sure before the floor measures it.
+  int get toGo => kCalibrationFloor - answers;
+}
+
 /// A card is held once it has come back and been got right twice: past the
 /// second rung of the review ladder, the app stops asking for a while.
 const int kHeldFromStage = 2;

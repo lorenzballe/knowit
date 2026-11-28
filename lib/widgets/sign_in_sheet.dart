@@ -21,7 +21,10 @@ enum SignInDoor {
   profile('profile'),
 
   /// Once, after the first finished day, when there is a streak to keep.
-  firstDay('day done');
+  firstDay('day done'),
+
+  /// The one line under Sunday's week: "Keep your week on every phone".
+  week('week');
 
   const SignInDoor(this.from);
 
@@ -253,6 +256,7 @@ class _SignInSheetState extends State<SignInSheet> {
       SignInDoor.intro => (l.signInWelcomeTitle, l.signInWelcomeLine),
       SignInDoor.profile => (l.keepStreakOnNewPhone, l.keepStreakLine),
       SignInDoor.firstDay => (l.keepStreakTitle, l.keepStreakLine),
+      SignInDoor.week => (l.weekSheetAccount, l.keepStreakLine),
     };
     final String? note = _note;
     final String? detail = _detail;

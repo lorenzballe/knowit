@@ -11,6 +11,15 @@ String rungName(BuildContext context, Rung rung) =>
 String rungClaim(BuildContext context, Rung rung) =>
     context.l10n.rungClaim(rung.id);
 
+/// The first reading under the floor, in words: "So far: you said 80%
+/// twice, and you were right twice." Every one right, none, or some.
+String earlyReadingText(BuildContext context, EarlyReading r) {
+  final l = context.l10n;
+  if (r.right == r.count) return l.earlyReadingAll(r.level, r.count);
+  if (r.right == 0) return l.earlyReadingNone(r.level, r.count);
+  return l.earlyReadingSome(r.level, r.count, r.right);
+}
+
 String? stepText(BuildContext context, Standing standing) {
   final Step? step = standing.step;
   if (step == null) return null;

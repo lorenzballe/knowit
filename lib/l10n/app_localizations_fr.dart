@@ -7606,4 +7606,151 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get earlyReadingTag => 'Première lecture';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n fois, et tu avais raison chaque fois',
+      two: 'deux fois, et tu avais raison les deux fois',
+      one: 'une fois, et tu avais raison',
+    );
+    return 'Pour l’instant : tu as dit $level % $_temp0.';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n fois, et tu avais tort chaque fois',
+      two: 'deux fois, et tu avais tort les deux fois',
+      one: 'une fois, et tu avais tort',
+    );
+    return 'Pour l’instant : tu as dit $level % $_temp0.';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n fois',
+      two: 'deux fois',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right fois',
+      two: 'deux fois',
+      one: 'une fois',
+    );
+    return 'Pour l’instant : tu as dit $level % $_temp0, et tu avais raison $_temp1.';
+  }
+
+  @override
+  String get journeyClearEyebrow => 'Cette semaine, en clair';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return 'Ton angle mort : $subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return 'Ton point fort : $subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return '$pct de réussite sur tes $n dernières réponses dans cette matière.';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days jours',
+      two: 'deux jours',
+      one: 'un jour',
+    );
+    return 'Après $_temp0, tu te souviens encore de $right sur $of.';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks semaines',
+      one: 'une semaine',
+    );
+    return 'Après $_temp0, tu te souviens encore de $right sur $of.';
+  }
+
+  @override
+  String get journeyClearBlindNotYet =>
+      'Six réponses dans deux matières, et ici apparaît celle où tu te trompes le plus.';
+
+  @override
+  String get journeyClearStrongNotYet =>
+      'Six réponses dans une matière, et ici apparaît celle où tu es le plus fort.';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Encore $n réponses avec ton degré de certitude, et une première lecture apparaît ici.',
+      one: 'Encore une réponse avec ton degré de certitude, et une première lecture apparaît ici.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      'Les cartes reviennent après 2, 7 et 21 jours : ici, tu verras combien tu t’en rappelles encore.';
+
+  @override
+  String get journeyPreviewDoor =>
+      'Chaque semaine, un chiffre différent. Astute+ ouvre le reste.';
+
+  @override
+  String weekSheetOf(String date) {
+    return 'La semaine du $date';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$right sur $n';
+  }
+
+  @override
+  String get weekSheetRightLabel => 'Bonnes réponses';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'sur $n réponses',
+      one: 'sur $n réponse',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => 'Là où tu te fies trop';
+
+  @override
+  String get weekSheetMemoryLabel => 'Ce dont tu te souviens encore';
+
+  @override
+  String get weekSheetAccount => 'Garde ta semaine sur tous tes téléphones';
 }
