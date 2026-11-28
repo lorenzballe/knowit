@@ -716,7 +716,7 @@ void main() {
   });
 
   group('The intro leads with reading, and a sign-in never fails silently', () {
-    testWidgets('Start reading is the one button, and goes where Skip goes', (
+    testWidgets('Start reading is the one way on: there is no Skip beside it', (
       tester,
     ) async {
       final said = _listen();
@@ -752,18 +752,15 @@ void main() {
       // Nothing was signed in to, and nothing says it was tried.
       expect(find.byType(SnackBar), findsNothing);
 
-      // The corner goes the same way, and says it was the corner.
-      await tester.tap(find.text('Skip'));
-      await _settle(tester);
-      expect(continued, 2);
-      expect(said.of('intro skipped').last['by'], 'corner');
+      // No corner doing what the button does: one way on.
+      expect(find.text('Skip'), findsNothing);
 
       // The quiet line asks for a sign-in; one that does not end in an
       // account leaves the reader where they were.
       await tester.tap(find.byKey(const ValueKey('intro-sign-in')));
       await _settle(tester);
       expect(asked, 1);
-      expect(continued, 2);
+      expect(continued, 1);
     });
 
     testWidgets('in the app it lands on the subjects', (tester) async {

@@ -42,6 +42,7 @@ class ReaderSnapshot {
     this.topicLevels = const {},
     this.genresOff = const [],
     this.strandsOff = const [],
+    this.lovedTopics = const [],
     this.pushTokens = const [],
     this.place,
     this.placeRemovedAt,
@@ -106,6 +107,10 @@ class ReaderSnapshot {
   /// existed.
   final List<String> genresOff;
   final List<String> strandsOff;
+
+  /// The subjects the reader loves, in the order picked, at most three:
+  /// the first run's question asked in the positive, part of the mix.
+  final List<String> lovedTopics;
 
   /// Where to send a notification, one entry per phone the reader uses.
   final List<String> pushTokens;
@@ -172,6 +177,7 @@ class ReaderSnapshot {
     'topicLevels': topicLevels,
     'genresOff': genresOff,
     'strandsOff': strandsOff,
+    'lovedTopics': lovedTopics,
     'pushTokens': pushTokens,
     'place': ?place?.toJson(),
     if (placeRemovedAt != null)
@@ -303,6 +309,7 @@ class ReaderSnapshot {
       topicLevels: levels,
       genresOff: strings(raw['genresOff']),
       strandsOff: strings(raw['strandsOff']),
+      lovedTopics: strings(raw['lovedTopics']),
       pushTokens: strings(raw['pushTokens']),
       place: Place.fromJson(raw['place']),
       placeRemovedAt: raw['placeRemovedAt'] is String
@@ -501,6 +508,10 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     // rule: a union would quietly resurrect a genre this phone turned off.
     genresOff: localChoseMix ? local.genresOff : remote.genresOff,
     strandsOff: localChoseMix ? local.strandsOff : remote.strandsOff,
+    // The loves too, which a reader can give with the mix walked past.
+    lovedTopics: localChoseMix || local.lovedTopics.isNotEmpty
+        ? local.lovedTopics
+        : remote.lovedTopics,
     // A reader with two phones should be reachable on both.
     pushTokens: union(local.pushTokens, remote.pushTokens),
     place: home.place,

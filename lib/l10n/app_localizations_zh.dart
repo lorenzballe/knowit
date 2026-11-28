@@ -627,7 +627,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get manageSubscription => '管理订阅';
 
   @override
-  String get howPillsAreWritten => '卡片是怎么写出来的';
+  String get howPillsAreWritten => '我们怎样写卡片';
 
   @override
   String get howTitle => '这里的每张卡片都由 AI 模型撰写。';
@@ -636,7 +636,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get howIntro => '与其让你自己发现，不如我们先说清楚。下面是一张卡片到你手上的过程。';
 
   @override
-  String get howStep1Title => '由模型提前写好';
+  String get howStep1Title => '用 AI 写成';
 
   @override
   String get howStep1Line => '每张卡片都按同一要求写成：一个值得问的问题，一个讲清原因的答案，一个可以反复用的招。';
@@ -1062,7 +1062,33 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get everythingIsInDrag => '全部都在。把主题向左滑会少看到它，滑到底则移除。';
+  String get everythingIsInDrag => '全部都在。点一下主题就移除，向左滑会少看到它。';
+
+  @override
+  String get mixLeaveOut => '移除';
+
+  @override
+  String get mixPutBack => '放回';
+
+  @override
+  String get lovesTitle => '选出你最爱的三个';
+
+  @override
+  String get lovesLine => '最多三个。你的头几天从它们开始，之后它们也会更常出现。';
+
+  @override
+  String lovesCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已选 $n / 3',
+      zero: '最多点选三个',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lovesFull => '最多三个：点一下已选的就能取消。';
 
   @override
   String get next => '下一步';
@@ -1092,13 +1118,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get swipeToSeeMore => '滑动查看更多';
 
   @override
+  String get introPromiseTitle => '每天五张卡片，两分钟';
+
+  @override
+  String get introPromiseLine => '说出你有几分把握，看清自己知道的能信几分。';
+
+  @override
   String get tagline => '弄懂事物背后的“为什么”，也看清自己知道的能信几分';
 
   @override
   String get introTopicsTitle => '二十个主题，五张卡片';
 
   @override
-  String get introTopicsLine => '由模型提前写好，每一张都注明出处。';
+  String get introTopicsLine => '用 AI 写成，再经核对，每一张都注明出处。';
 
   @override
   String get introQuestionTitle => '一道题，有多确定，再看为什么';
@@ -2759,6 +2791,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get consentLine => '分享你使用应用的方式——绝不包括你的名字、邮箱或你写的内容。';
 
   @override
+  String get consentCardLine => '我们统计应用的使用方式，没有广告，也绝不涉及你的名字。';
+
+  @override
   String get consentNo => '不用了，谢谢';
 
   @override
@@ -2777,6 +2812,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get genresLine => '点一下跳过某个类别。长按，里面更小的主题就在下面展开。';
+
+  @override
+  String get partsOfferLine => '读了几天，你已经了解这些卡片了。在每个主题里，留下想看的部分，其余的拿掉。';
+
+  @override
+  String get partsOfferChoose => '选择部分';
+
+  @override
+  String get partsOfferNotNow => '以后再说';
 
   @override
   String get insideGenre => '里面有';

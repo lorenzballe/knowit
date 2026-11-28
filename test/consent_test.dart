@@ -11,8 +11,11 @@ import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
+import 'package:astuto/screens/today_done_view.dart';
+import 'package:astuto/state/app_state.dart';
+import 'package:astuto/sync/push.dart';
 import 'package:astuto/theme.dart';
-import 'package:astuto/widgets/consent.dart';
+import 'package:astuto/widgets/consent_card.dart';
 
 /// Keeps what would have been sent, to be read back.
 class _Said implements AnalyticsSink {
@@ -54,13 +57,27 @@ class _Said implements AnalyticsSink {
   ) async {}
 }
 
+/// Stands in for the system's prompt about notifications: a phone where it
+/// can still be put, so the app's own reminder sheet comes first.
+class _Asker extends Push {
+  @override
+  bool get canAsk => true;
+
+  @override
+  Future<String?> ask() async => null;
+
+  @override
+  Future<String?> refresh() async => null;
+}
+
 Future<void> _settle(WidgetTester tester) async {
   for (var i = 0; i < 10; i++) {
     await tester.pump(const Duration(milliseconds: 100));
   }
 }
 
-/// Long enough for a sheet's beat and its rise, frame by frame.
+/// Long enough for the shelf's beat and anything rising over it, frame by
+/// frame.
 Future<void> _wait(WidgetTester tester) async {
   for (var i = 0; i < 30; i++) {
     await tester.pump(const Duration(milliseconds: 100));
@@ -79,197 +96,290 @@ void _noWidgets(WidgetTester tester) {
   addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
 }
 
-/// Today's five, already read, on an install past the first run whose
-/// reminder sheet has had its turn: the app opens on the finished day.
-Map<String, Object> _dayDone() => {
+String _key(int daysFromToday) =>
+    dateKey(DateTime.now().add(Duration(days: daysFromToday)));
+
+/// The reader's first day, its five read on an earlier launch and its
+/// reminder question settled: the app opens on the finished day's shelf.
+Map<String, Object> _firstDayDone() => {
   'knowit.onboarded': true,
   'knowit.plus': false,
   'knowit.pushAsked': true,
-  'knowit.todayDate': dateKey(DateTime.now()),
-  'knowit.todayDeckIds': dealDay(date: DateTime.now()).cards
-      .map((p) => p.id)
-      .toList(),
+  'knowit.todayDate': _key(0),
+  'knowit.todayDeckIds': dealDay(
+    date: DateTime.now(),
+  ).cards.map((p) => p.id).toList(),
   'knowit.todayIndex': 5,
-  'knowit.lastCompletionDate': dateKey(DateTime.now()),
-  'knowit.completedDates': [dateKey(DateTime.now())],
+  'knowit.lastCompletionDate': _key(0),
+  'knowit.completedDates': [_key(0)],
 };
 
-final Finder _question = find.byKey(const ValueKey('consent'));
-final Finder _sheet = find.byKey(const ValueKey('consent-sheet'));
+final Finder _card = find.byKey(const ValueKey('consent-card'));
 final Finder _yes = find.byKey(const ValueKey('consent-yes'));
 final Finder _no = find.byKey(const ValueKey('consent-no'));
 
-/// Nothing is measured before the reader says yes: the intro asks, a reader
-/// who started without answering is asked once more after a finished day,
-/// and the two answers weigh the same.
+/// Nothing is measured before the reader says yes, and the question is not
+/// the first thing the app asks: it is a calm card on the finished day's
+/// shelf, from the end of the first day — after the day's own moment and
+/// the reminder's question — and it stays there until it is answered. The
+/// two answers weigh the same.
 void main() {
   late _Said said;
 
-  setUp(() => said = _Said());
-  tearDown(() => Analytics.useForTest(null));
+  setUp(() {
+    said = _Said();
+    // A phone, so the shelf is laid out as it is in a hand.
+    final view =
+        TestWidgetsFlutterBinding.instance.platformDispatcher.views.first;
+    view.physicalSize = const Size(402, 874) * 3;
+    view.devicePixelRatio = 3;
+  });
+  tearDown(() {
+    final view =
+        TestWidgetsFlutterBinding.instance.platformDispatcher.views.first;
+    view.resetPhysicalSize();
+    view.resetDevicePixelRatio();
+    Analytics.useForTest(null);
+    Push.useForTest(Push());
+  });
 
-  group('the intro asks', () {
-    Future<void> firstLaunch(WidgetTester tester) async {
+  group('the first run', () {
+    testWidgets('asks nothing about usage data, and measures nothing', (
+      tester,
+    ) async {
       SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
       await Analytics.startForTest(said);
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
+      expect(find.byType(IntroScreen), findsOneWidget);
+      expect(_yes, findsNothing);
+      expect(_no, findsNothing);
+      expect(find.text('Help make Astute better?'), findsNothing);
+      // Turning the scenes and starting: measured by the intro only once
+      // there is a yes, and there is none.
+      await tester.tapAt(const Offset(200, 200));
+      await _settle(tester);
+      await tester.tap(find.text('Start reading'));
+      await _settle(tester);
+      expect(find.byType(MixScreen), findsOneWidget);
+      expect(_yes, findsNothing);
+      expect(Analytics.answered, isFalse);
+      expect(Analytics.ready, isFalse);
+      expect(said.events, isEmpty);
+    });
+  });
+
+  group('the finished day\'s shelf', () {
+    Future<void> openOnShelf(
+      WidgetTester tester, [
+      Map<String, Object> prefs = const {},
+    ]) async {
+      _noWidgets(tester);
+      SharedPreferences.setMockInitialValues({..._firstDayDone(), ...prefs});
+      await Analytics.startForTest(said);
+      await tester.pumpWidget(const AstutoApp());
+      await _wait(tester);
     }
 
-    testWidgets('on the foot of a first launch, two answers of one size, and '
-        'nothing measured meanwhile', (tester) async {
-      await firstLaunch(tester);
-      expect(_question, findsOneWidget);
+    testWidgets('asks at the end of the first day, as a card among the '
+        'shelf\'s, two answers of one size, and nothing measured meanwhile', (
+      tester,
+    ) async {
+      await openOnShelf(tester);
+      expect(_card, findsOneWidget);
+      // On the shelf, not over it: a card of the finished day's own.
       expect(
-        find.text('Help make Astute better?', findRichText: true),
-        findsNothing,
-        reason: 'one text with its line, not two',
+        find.ancestor(of: _card, matching: find.byType(TodayDoneView)),
+        findsOneWidget,
       );
+      expect(find.byType(BottomSheet), findsNothing);
+      expect(find.text('Help make Astute better?'), findsOneWidget);
       expect(
-        find.textContaining('Help make Astute better?', findRichText: true),
+        find.text(
+          'We count how the app is used, with no advertising and never your '
+          'name.',
+        ),
         findsOneWidget,
       );
       expect(tester.getSize(_no), tester.getSize(_yes));
       expect(tester.getSize(_yes).height, greaterThanOrEqualTo(44));
-      // Turning the scenes is measured by the intro — once there is a yes.
-      await tester.tapAt(const Offset(200, 200));
-      await _settle(tester);
       expect(Analytics.ready, isFalse);
+      expect(said.events, isEmpty);
+    });
+
+    testWidgets('does not stand in the way: the tabs work around it, and it '
+        'is still there to answer', (tester) async {
+      await openOnShelf(tester);
+      expect(_card, findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('tab-Today')));
+      await _settle(tester);
+      expect(_card, findsOneWidget);
+      expect(Analytics.answered, isFalse);
       expect(said.events, isEmpty);
     });
 
     testWidgets('a yes starts measurement there and then, and its first '
         'event is that yes', (tester) async {
-      await firstLaunch(tester);
+      await openOnShelf(tester);
       await tester.tap(_yes);
       await _settle(tester);
-      expect(_question, findsNothing);
+      expect(_card, findsNothing);
       expect(Analytics.ready, isTrue);
       expect(Analytics.collecting, isTrue);
       expect(said.events.first.$1, 'usage sharing answered');
       expect(said.of('usage sharing answered'), [
-        {'on': true, 'from': 'intro'},
+        {'on': true, 'from': 'shelf'},
       ]);
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getBool('knowit.analytics'), isTrue);
     });
 
-    testWidgets('a no is kept, the question goes, and nothing is sent', (
-      tester,
-    ) async {
-      await firstLaunch(tester);
+    testWidgets('a no is kept, nothing is sent, and it is not asked again at '
+        'the next launch', (tester) async {
+      await openOnShelf(tester);
       await tester.tap(_no);
       await _settle(tester);
-      expect(_question, findsNothing);
+      expect(_card, findsNothing);
       expect(Analytics.answered, isTrue);
       expect(Analytics.ready, isFalse);
-      // The intro goes on as before, unmeasured.
-      await tester.tap(find.text('Start reading'));
-      await _settle(tester);
-      expect(find.byType(MixScreen), findsOneWidget);
       expect(said.events, isEmpty);
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getBool('knowit.analytics'), isFalse);
       expect(prefs.getBool('knowit.analytics.asked'), isTrue);
-    });
-
-    testWidgets('it is not in the way: starting without an answer starts, '
-        'and measures nothing', (tester) async {
-      await firstLaunch(tester);
-      await tester.tap(find.text('Start reading'));
-      await _settle(tester);
-      expect(find.byType(MixScreen), findsOneWidget);
-      expect(Analytics.answered, isFalse);
-      expect(Analytics.ready, isFalse);
-      expect(said.events, isEmpty);
-    });
-
-    testWidgets('a build with nowhere to send it does not ask', (tester) async {
-      SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
-      Analytics.useForTest(null);
-      await tester.pumpWidget(const AstutoApp());
-      await _settle(tester);
-      expect(find.text('Start reading'), findsOneWidget);
-      expect(_question, findsNothing);
-    });
-  });
-
-  group('a reader past the first run who never answered', () {
-    testWidgets('is asked once, as a sheet, on a finished day; a yes '
-        'measures from then on', (tester) async {
-      _noWidgets(tester);
-      SharedPreferences.setMockInitialValues(_dayDone());
-      await Analytics.startForTest(said);
-      await tester.pumpWidget(const AstutoApp());
-      await _wait(tester);
-      expect(_sheet, findsOneWidget);
-      expect(said.events, isEmpty);
-      // It waits for an answer: a tap beside it is not one.
-      await tester.tapAt(const Offset(20, 40));
-      await _settle(tester);
-      expect(_sheet, findsOneWidget);
-      await tester.tap(_yes);
-      await _settle(tester);
-      expect(_sheet, findsNothing);
-      expect(Analytics.collecting, isTrue);
-      expect(said.of('usage sharing answered'), [
-        {'on': true, 'from': 'sheet'},
-      ]);
-    });
-
-    testWidgets('a no is kept, and not asked again at the next launch', (
-      tester,
-    ) async {
-      _noWidgets(tester);
-      SharedPreferences.setMockInitialValues(_dayDone());
-      await Analytics.startForTest(said);
-      await tester.pumpWidget(const AstutoApp());
-      await _wait(tester);
-      await tester.tap(_no);
-      await _settle(tester);
-      expect(_sheet, findsNothing);
-      expect(Analytics.answered, isTrue);
-      expect(said.events, isEmpty);
 
       // The next launch, on the same phone.
       await Analytics.startForTest(said);
       await tester.pumpWidget(const SizedBox());
       await tester.pumpWidget(const AstutoApp());
       await _wait(tester);
-      expect(_sheet, findsNothing);
+      expect(find.byType(TodayDoneView), findsOneWidget);
+      expect(_card, findsNothing);
       expect(Analytics.ready, isFalse);
+      expect(said.events, isEmpty);
+    });
+
+    testWidgets('unanswered, it stays: there again at the next launch, and on '
+        'a day finished later', (tester) async {
+      await openOnShelf(tester);
+      expect(_card, findsOneWidget);
+
+      await Analytics.startForTest(said);
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpWidget(const AstutoApp());
+      await _wait(tester);
+      expect(_card, findsOneWidget);
+
+      // A later day, finished: the shelf asks again.
+      await tester.pumpWidget(const SizedBox());
+      await openOnShelf(tester, {
+        'knowit.completedDates': [_key(-1), _key(0)],
+        'knowit.streak': 2,
+      });
+      expect(_card, findsOneWidget);
+      expect(said.events, isEmpty);
+    });
+
+    testWidgets('waits for the reminder\'s question, which goes first, and '
+        'comes once it is answered', (tester) async {
+      // Back for a second day, on a phone where the system's prompt is
+      // unspent: the evening's reminder sheet rises over the shelf.
+      Push.useForTest(_Asker());
+      await openOnShelf(tester, {
+        'knowit.pushAsked': false,
+        'knowit.completedDates': [_key(-1), _key(0)],
+        'knowit.streak': 2,
+      });
+      expect(find.byKey(const ValueKey('reminder-ask')), findsOneWidget);
+      expect(_card, findsNothing);
+      await tester.tap(find.byKey(const ValueKey('reminder-not-now')));
+      await _wait(tester);
+      expect(find.byKey(const ValueKey('reminder-ask')), findsNothing);
+      expect(_card, findsOneWidget);
+    });
+
+    testWidgets('is not on a day still being read', (tester) async {
+      _noWidgets(tester);
+      SharedPreferences.setMockInitialValues({
+        ..._firstDayDone(),
+        'knowit.todayIndex': 2,
+        'knowit.lastCompletionDate': _key(-1),
+        'knowit.completedDates': [_key(-1)],
+      });
+      await Analytics.startForTest(said);
+      await tester.pumpWidget(const AstutoApp());
+      await _wait(tester);
+      expect(_card, findsNothing);
+    });
+
+    testWidgets('a build with nowhere to send it does not ask', (tester) async {
+      _noWidgets(tester);
+      SharedPreferences.setMockInitialValues(_firstDayDone());
+      Analytics.useForTest(null);
+      await tester.pumpWidget(const AstutoApp());
+      await _wait(tester);
+      expect(find.byType(TodayDoneView), findsOneWidget);
+      expect(_card, findsNothing);
     });
   });
 
-  testWidgets('the sheet holds whole in every language, on a small phone', (
-    tester,
-  ) async {
-    tester.view.physicalSize = const Size(375, 667) * 2;
+  testWidgets('the card holds whole in every language, on a small phone and '
+      'at a larger text size', (tester) async {
+    SharedPreferences.setMockInitialValues(_firstDayDone());
+    await Analytics.startForTest(said);
+    final AppState app = AppState(
+      hasPermission: () async => false,
+      askPermission: () async => false,
+      arm: (_) async {},
+      disarm: () async {},
+      pushWidget: (_) async {},
+    );
+    await tester.runAsync(app.init);
+    expect(ConsentCard.due(app), isTrue);
+    tester.view.physicalSize = const Size(320, 568) * 2;
     tester.view.devicePixelRatio = 2;
     addTearDown(tester.view.reset);
-    for (final Locale locale in AppLocalizations.supportedLocales) {
-      await tester.pumpWidget(
-        MaterialApp(
-          key: UniqueKey(),
-          locale: locale,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          theme: buildAstutoTheme(Brightness.light),
-          home: const Scaffold(
-            body: Align(
-              alignment: Alignment.bottomCenter,
-              child: ConsentSheet(),
+    for (final double scale in const [1.0, 1.5]) {
+      for (final Locale locale in AppLocalizations.supportedLocales) {
+        await tester.pumpWidget(
+          MaterialApp(
+            key: UniqueKey(),
+            locale: locale,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme: buildAstutoTheme(Brightness.light),
+            home: MediaQuery(
+              data: MediaQueryData(
+                size: const Size(320, 568),
+                textScaler: TextScaler.linear(scale),
+              ),
+              child: Scaffold(
+                body: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ConsentCard(app: app),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      );
-      await tester.pump();
-      final l = lookupAppLocalizations(locale);
-      expect(tester.takeException(), isNull, reason: '$locale');
-      // What it measures, word for word as Profile's switch says it.
-      expect(find.text(l.anonymousUsageLine), findsOneWidget);
-      expect(tester.getSize(_no), tester.getSize(_yes), reason: '$locale');
-      expect(tester.getRect(_yes).bottom, lessThanOrEqualTo(667));
+        );
+        await tester.pump();
+        final String where = '$locale at ${scale}x';
+        final l = lookupAppLocalizations(locale);
+        expect(tester.takeException(), isNull, reason: where);
+        expect(find.text(l.consentTitle), findsOneWidget, reason: where);
+        expect(find.text(l.consentCardLine), findsOneWidget, reason: where);
+        expect(tester.getSize(_no), tester.getSize(_yes), reason: where);
+        expect(tester.getRect(_card).top, greaterThan(0), reason: where);
+        expect(
+          tester.getRect(_yes).bottom,
+          lessThanOrEqualTo(568),
+          reason: where,
+        );
+      }
     }
   });
 

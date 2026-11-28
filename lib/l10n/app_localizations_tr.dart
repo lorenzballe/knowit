@@ -644,7 +644,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get manageSubscription => 'Aboneliği yönet';
 
   @override
-  String get howPillsAreWritten => 'Kartlar nasıl yazılıyor';
+  String get howPillsAreWritten => 'Kartları nasıl yazıyoruz';
 
   @override
   String get howTitle => 'Buradaki her kartı bir yapay zekâ modeli yazıyor.';
@@ -654,7 +654,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Senin fark etmenden önce baştan söylemeyi tercih ederiz. Bir kart sana şöyle ulaşır.';
 
   @override
-  String get howStep1Title => 'Önceden, bir model tarafından yazılır';
+  String get howStep1Title => 'Yapay zekâyla yazılır';
 
   @override
   String get howStep1Line =>
@@ -1097,7 +1097,34 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Her şey içeride. Daha az görmek için bir konuyu sola kaydır, çıkarmak için sonuna kadar.';
+      'Her şey içeride. Çıkarmak için bir konuya dokun, daha az görmek için sola kaydır.';
+
+  @override
+  String get mixLeaveOut => 'Çıkar';
+
+  @override
+  String get mixPutBack => 'Geri koy';
+
+  @override
+  String get lovesTitle => 'Sevdiğin üç konuyu seç';
+
+  @override
+  String get lovesLine =>
+      'En fazla üç. İlk günlerin onlarla başlar, sonra da daha sık karşına çıkarlar.';
+
+  @override
+  String lovesCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n / 3',
+      zero: 'En fazla üçüne dokun',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lovesFull => 'En fazla üç: birini bırakmak için ona dokun.';
 
   @override
   String get next => 'İleri';
@@ -1128,6 +1155,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get swipeToSeeMore => 'Daha fazlası için kaydır';
 
   @override
+  String get introPromiseTitle => 'Günde beş kart, iki dakika';
+
+  @override
+  String get introPromiseLine =>
+      'Ne kadar emin olduğunu söyle, bildiklerine ne kadar güvenebileceğini gör.';
+
+  @override
   String get tagline =>
       'Olayların nedenini anla, bildiklerine ne kadar güvenebileceğini gör';
 
@@ -1136,7 +1170,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Bir model tarafından önceden yazılır, her biri kaynağını belirtir.';
+      'Yapay zekâyla yazılır, sonra kontrol edilir; her biri kaynağını belirtir.';
 
   @override
   String get introQuestionTitle => 'Bir soru, ne kadar emin, sonra neden';
@@ -2851,6 +2885,10 @@ class AppLocalizationsTr extends AppLocalizations {
       'Uygulamayı nasıl kullandığını paylaş — adın, e-postan ve yazdıkların asla gitmez.';
 
   @override
+  String get consentCardLine =>
+      'Uygulamanın nasıl kullanıldığını sayarız; reklam yok, adın asla yok.';
+
+  @override
   String get consentNo => 'Hayır, teşekkürler';
 
   @override
@@ -2870,6 +2908,16 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get genresLine =>
       'Atlamak için bir türe dokun. Basılı tut, içindeki küçük konular hemen altında açılsın.';
+
+  @override
+  String get partsOfferLine =>
+      'Birkaç günde kartları tanıdın. Her konuda istediğin bölümleri tut, gerisini bırak.';
+
+  @override
+  String get partsOfferChoose => 'Bölümleri seç';
+
+  @override
+  String get partsOfferNotNow => 'Şimdi değil';
 
   @override
   String get insideGenre => 'İçinde';

@@ -24,8 +24,9 @@ class InvitoPage(unittest.TestCase):
 
     def test_the_site_s_own_chrome_style_and_script(self):
         page = ip.render()
-        self.assertIn(chrome.header("/", "/"), page)
-        self.assertIn(chrome.footer("/", "/"), page)
+        # In both languages, the reader's shown, as on every page that holds both.
+        self.assertIn(chrome.header("both", "/invito"), page)
+        self.assertIn(chrome.footer("both", "/invito"), page)
         # The stylesheet and the script the deploy stamps with the commit, and
         # through which the site counts the page and its store buttons.
         self.assertIn('<link rel="stylesheet" href="/assets/site.css">', page)
@@ -70,8 +71,14 @@ class InvitoPage(unittest.TestCase):
         page = ip.render()
         self.assertIn('<section class="invite" id="en" lang="en"', page)
         self.assertIn('<section class="invite" id="it" lang="it"', page)
-        self.assertIn("/^it(-|$)/i.test(l)", ip.EARLY)
+        # The site's own choice of language, before the page is drawn: the one
+        # chosen with the switch, or else the browser's.
+        self.assertEqual(ip.EARLY, chrome.lang_script("both", "/invito"))
+        self.assertIn("/^it(-|$)/i.test(navigator.language||'')", ip.EARLY)
+        self.assertIn("localStorage.getItem(k)", ip.EARLY)
         self.assertLess(page.index(ip.EARLY), page.index("<body>"))
+        # The page's own way to the other language keeps the choice too.
+        self.assertIn('data-switch="it" data-lang-to="it"', page)
         for lang in ("en", "it"):
             self.assertEqual(set(ip.WORDS[lang]), set(ip.WORDS["en"]), lang)
         self.assertIn("Una settimana di Astute+, in regalo.", page)

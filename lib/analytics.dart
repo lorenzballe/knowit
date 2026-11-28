@@ -98,9 +98,12 @@ abstract class AnalyticsSink {
 /// the network.
 ///
 /// **It waits for the reader's yes.** PostHog is not even set up until the
-/// reader has said yes — on the intro, on the sheet that asks once after
-/// the first finished day, or with the switch in Profile — so nothing is
-/// captured, queued or sent before then, and nothing at all after a no.
+/// reader has said yes — on the card the first finished day's shelf asks
+/// with (lib/widgets/consent_card.dart), or with the switch in Profile — so
+/// nothing is captured, queued or sent before then, and nothing at all after
+/// a no. (The first run's four steps are no measurement of anyone: totals
+/// on our own server with nothing that says whose, lib/measure/
+/// first_steps.dart.)
 /// What the app stamps on every event and who the reader is are kept on
 /// the phone meanwhile, and said the moment a yes starts it.
 ///
@@ -269,8 +272,8 @@ class Analytics {
     }
   }
 
-  /// The reader's answer: on the intro, on the sheet that asks once, or
-  /// with the switch in Profile. Remembered, and applied at once — a yes
+  /// The reader's answer: on the card on the finished day's shelf, or with
+  /// the switch in Profile. Remembered, and applied at once — a yes
   /// sets measurement up there and then, a no stops it before anything
   /// else is sent; an answer that only takes effect next launch is not
   /// one.

@@ -93,15 +93,67 @@ void main() {
     expect(policy, contains('<li><strong>Dove vivi.</strong>'));
   });
 
+  test('the policy says how the first run is counted, in both its '
+      'languages, word for word as the app keeps it', () {
+    final String policy = File('site/privacy.html').readAsStringSync();
+    String plain(String html) => html
+        .replaceAll(RegExp(r'<[^>]+>'), '')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    expect(
+      kFirstStepsPolicy.keys,
+      unorderedEquals(kFirstStepsPolicyAnchors.keys),
+    );
+    for (final MapEntry<String, String> said in kFirstStepsPolicy.entries) {
+      final String anchor = kFirstStepsPolicyAnchors[said.key]!;
+      final RegExpMatch? paragraph = RegExp(
+        '<p id="$anchor">(.*?)</p>',
+        dotAll: true,
+      ).firstMatch(policy);
+      expect(paragraph, isNotNull, reason: anchor);
+      expect(plain(paragraph!.group(1)!), said.value, reason: anchor);
+      expect(firstStepsPolicyUrl(said.key), '$kPrivacyUrl#$anchor');
+    }
+    // The promises, so that a rewrite cannot quietly drop one: nothing that
+    // says whose, the address only in the cloud's own log, counted whatever
+    // the answer about usage data, and only from the stores.
+    final String en = kFirstStepsPolicy['en']!;
+    for (final String promise in const [
+      'counts four steps',
+      'the name of the step and the date, and nothing else',
+      'not your account, not an identifier of the phone',
+      'not your IP address',
+      'that log does not say which step was counted',
+      'whatever you answer about usage data',
+      'only an app installed from the App Store or Google Play',
+    ]) {
+      expect(en, contains(promise), reason: promise);
+    }
+    final String it = kFirstStepsPolicy['it']!;
+    for (final String promise in const [
+      'conta quattro passi',
+      'il nome del passo e la data, e nient’altro',
+      'né il tuo account, né un identificativo del telefono',
+      'né il tuo indirizzo IP',
+      'quel registro non dice quale passo è stato contato',
+      'qualunque cosa tu risponda sui dati di utilizzo',
+      'solo un’app installata dall’App Store o da Google Play',
+    ]) {
+      expect(it, contains(promise), reason: promise);
+    }
+    // And the question about usage data is said where it is now asked.
+    expect(policy, contains('At the end of your first day'));
+    expect(policy, contains('Alla fine della tua prima giornata'));
+  });
+
   test('the policy says what goes to Anthropic, in both its languages', () {
     // The assistant, the coach and the news are written by Claude: the
     // policy says what is sent for each, that nothing in it says who the
     // reader is, and how much of what they write goes, at the length the
     // server cuts it to (functions/src/ask.ts, MAX_TEXT).
     final String policy = File('site/privacy.html').readAsStringSync();
-    final RegExpMatch? cap = RegExp(
-      r'export const MAX_TEXT = (\d+);',
-    ).firstMatch(File('functions/src/ask.ts').readAsStringSync());
+    final RegExpMatch? cap = RegExp(r'export const MAX_TEXT = (\d+);')
+        .firstMatch(File('functions/src/ask.ts').readAsStringSync());
     expect(cap, isNotNull);
     for (final String said in [
       '<p id="assistant">',
@@ -155,9 +207,8 @@ void main() {
 
   test('the site offers the App Store and Google Play, and names the '
       'company', () {
-    // The landing page links both listings with the stores' own badges.
+    // The landing page shows both stores with their own badges.
     final String home = File('site/index.html').readAsStringSync();
-    expect(home, contains('https://apps.apple.com/app/id6806852300'));
     for (final String badge in const [
       'site/assets/badges/app-store.svg',
       'site/assets/badges/google-play.svg',
@@ -176,6 +227,12 @@ void main() {
       r'^APP_STORE_OPEN = True$',
       multiLine: true,
     ).hasMatch(File('tool/site/chrome.py').readAsStringSync());
+    // Apple's listing answers 404 until it is live: no page links to it
+    // before then, and the home links it from the day it is.
+    expect(
+      home.contains('href="https://apps.apple.com/app/id6806852300'),
+      appStoreOpen,
+    );
     final RegExp download = RegExp(r'<a\b[^>]*\bdata-store\b[^>]*>');
     // Every page is signed by TheBaleCompany, says where the app is, as
     // chrome.py writes it, and links the Play listing.
@@ -212,25 +269,35 @@ void main() {
       ];
       expect(buttons, isNotEmpty, reason: page);
       for (final String button in buttons) {
+        // A page in both languages has a button in each: the Italian one
+        // leads to the Italian /get.
         expect(
           button,
-          contains(
-            appStoreOpen
-                ? 'href="https://apps.apple.com/app/id6806852300'
-                : 'href="/get"',
-          ),
+          appStoreOpen
+              ? contains('href="https://apps.apple.com/app/id6806852300')
+              : anyOf(contains('href="/get"'), contains('href="/it/get"')),
           reason: '$page: $button',
         );
       }
       if (appStoreOpen) {
         expect(text, isNot(contains('store-app-store store-soon')));
       } else {
+        // Apple's badge, marked as coming, leads to the list of those who
+        // want to be told the day it is (/get#notify), never to a page of
+        // Apple's that is not there yet.
         expect(
           text,
-          contains(
-            '<a class="store store-app-store store-soon" '
-            'href="https://apps.apple.com/app/id6806852300',
+          matches(
+            RegExp(
+              r'<a class="store store-app-store store-soon[^"]*" '
+              r'href="/get#notify"',
+            ),
           ),
+          reason: page,
+        );
+        expect(
+          text,
+          isNot(contains('href="https://apps.apple.com/')),
           reason: page,
         );
         expect(
@@ -269,9 +336,11 @@ void main() {
         reason: from,
       );
     }
+    // The sitemap is written as the site is put together (card_pages.py),
+    // its own pages first.
     expect(
-      File('site/sitemap.xml').readAsStringSync(),
-      contains('https://astutetheapp.com/delete-account'),
+      File('tool/cards/card_pages.py').readAsStringSync(),
+      contains('"/delete-account"'),
     );
   });
 

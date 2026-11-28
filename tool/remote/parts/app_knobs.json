@@ -15,7 +15,9 @@
   "invite": {"default": false},
   "journey.preview": {"default": false},
   "week.sunday": {"default": false},
-  "calibration.early": {"default": true}
+  "calibration.early": {"default": true},
+  "firstRun.loves": {"default": true},
+  "parts.offer": {"default": true}
  },
  "tunables": {
   "push.askGapDays": {"type": "count", "default": 3, "min": 1, "max": 30},
@@ -28,7 +30,8 @@
   "place.firstAskDay": {"type": "count", "default": 2, "min": 1, "max": 20},
   "place.lastAskDay": {"type": "count", "default": 7, "min": 2, "max": 30, "after": "place.firstAskDay"},
   "review.streakDays": {"type": "count", "default": 7, "min": 3, "max": 60},
-  "explore.freeCards": {"type": "count", "default": 0, "min": 0, "max": 500}
+  "explore.freeCards": {"type": "count", "default": 0, "min": 0, "max": 500},
+  "parts.offerDay": {"type": "count", "default": 3, "min": 2, "max": 30}
  },
  "experiments": {
   "push.firstAsk": {"variants": ["cameBack", "firstDay"], "default": "cameBack"}

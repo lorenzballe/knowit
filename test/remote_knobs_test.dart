@@ -63,6 +63,8 @@ final List<Object> _declared = [
   AppState.kJourneyPreviewFlag,
   AppState.kSundayWeekFlag,
   AppState.kEarlyReadingFlag,
+  AppState.kLovesFlag,
+  AppState.kPartsOfferFlag,
   AppState.kPushAskGapKnob,
   AppState.kPushDeferralsKnob,
   kReminderTimesKnob,
@@ -70,6 +72,7 @@ final List<Object> _declared = [
   AppState.kPlaceLastAskKnob,
   AppState.kReviewStreakKnob,
   AppState.kExploreFreeCardsKnob,
+  AppState.kPartsOfferKnob,
   AppState.kPushFirstAskExperiment,
 ];
 

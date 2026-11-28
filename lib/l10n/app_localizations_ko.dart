@@ -632,7 +632,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get manageSubscription => '구독 관리';
 
   @override
-  String get howPillsAreWritten => '카드가 만들어지는 방법';
+  String get howPillsAreWritten => '카드는 이렇게 씁니다';
 
   @override
   String get howTitle => '여기 있는 모든 카드는 AI 모델이 씁니다.';
@@ -641,7 +641,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get howIntro => '나중에 알게 되기보다 처음부터 말씀드리고 싶어요. 카드가 여러분에게 오기까지의 과정입니다.';
 
   @override
-  String get howStep1Title => '모델이 미리 씁니다';
+  String get howStep1Title => 'AI로 씁니다';
 
   @override
   String get howStep1Line =>
@@ -1071,7 +1071,33 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get everythingIsInDrag => '모두 들어 있어요. 주제를 왼쪽으로 밀면 덜 보이고, 끝까지 밀면 빠집니다.';
+  String get everythingIsInDrag => '모두 들어 있어요. 주제를 탭하면 빠지고, 왼쪽으로 밀면 덜 보여요.';
+
+  @override
+  String get mixLeaveOut => '빼기';
+
+  @override
+  String get mixPutBack => '다시 넣기';
+
+  @override
+  String get lovesTitle => '좋아하는 세 가지를 골라요';
+
+  @override
+  String get lovesLine => '세 가지까지. 첫 며칠은 여기서 시작하고, 그 뒤에도 더 자주 나와요.';
+
+  @override
+  String lovesCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n / 3',
+      zero: '세 가지까지 탭하세요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lovesFull => '최대 세 가지예요. 하나를 탭해서 빼 주세요.';
 
   @override
   String get next => '다음';
@@ -1102,13 +1128,19 @@ class AppLocalizationsKo extends AppLocalizations {
   String get swipeToSeeMore => '밀어서 더 보기';
 
   @override
+  String get introPromiseTitle => '하루 다섯 장, 2분';
+
+  @override
+  String get introPromiseLine => '얼마나 확신하는지 말하고, 내가 아는 것을 얼마나 믿어도 될지 알아보세요.';
+
+  @override
   String get tagline => '왜 그런지 배우고, 내가 아는 것을 얼마나 믿어도 될지 알아보세요';
 
   @override
   String get introTopicsTitle => '스무 개 주제, 다섯 장의 카드';
 
   @override
-  String get introTopicsLine => '모델이 미리 쓰고, 한 장 한 장 출처를 밝힙니다.';
+  String get introTopicsLine => 'AI로 쓰고 검토한 뒤, 한 장 한 장 출처를 밝힙니다.';
 
   @override
   String get introQuestionTitle => '질문, 확신 정도, 그리고 이유';
@@ -2776,6 +2808,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get consentLine => '앱 사용 방식을 공유해요. 이름, 이메일, 쓴 내용은 보내지 않아요.';
 
   @override
+  String get consentCardLine => '앱이 어떻게 쓰이는지 세어요. 광고는 없고, 이름은 절대 쓰지 않아요.';
+
+  @override
   String get consentNo => '아니요, 괜찮아요';
 
   @override
@@ -2794,6 +2829,16 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get genresLine => '장르를 탭하면 건너뜁니다. 길게 누르면 안의 작은 주제들이 바로 아래에 열립니다.';
+
+  @override
+  String get partsOfferLine =>
+      '며칠 읽어 보니 카드가 어떤지 알겠죠. 주제마다 원하는 부분만 남기고 나머지는 빼세요.';
+
+  @override
+  String get partsOfferChoose => '부분 고르기';
+
+  @override
+  String get partsOfferNotNow => '나중에';
 
   @override
   String get insideGenre => '이 안에';

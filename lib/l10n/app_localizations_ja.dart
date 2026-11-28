@@ -630,7 +630,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get manageSubscription => 'サブスクリプションを管理';
 
   @override
-  String get howPillsAreWritten => 'カードの作り方';
+  String get howPillsAreWritten => 'カードはこうして書いています';
 
   @override
   String get howTitle => 'ここにあるカードは、すべてAIモデルが書いています。';
@@ -639,7 +639,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get howIntro => 'あとで気づかれるより、最初に伝えたいと考えています。カードがあなたに届くまでの流れです。';
 
   @override
-  String get howStep1Title => 'モデルが前もって書く';
+  String get howStep1Title => 'AIで書く';
 
   @override
   String get howStep1Line =>
@@ -1067,7 +1067,33 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get everythingIsInDrag => 'すべて入っています。分野を左へスライドすると減り、左端まで動かすと外れます。';
+  String get everythingIsInDrag => 'すべて入っています。分野をタップすると外れ、左へスライドすると少なめになります。';
+
+  @override
+  String get mixLeaveOut => '外す';
+
+  @override
+  String get mixPutBack => '戻す';
+
+  @override
+  String get lovesTitle => '好きな3つを選んで';
+
+  @override
+  String get lovesLine => '3つまで。最初の数日はここから始まり、その後もよく出てきます。';
+
+  @override
+  String lovesCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n / 3',
+      zero: '3つまでタップ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lovesFull => '3つまでです。どれかをタップして外してください。';
 
   @override
   String get next => '次へ';
@@ -1098,13 +1124,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get swipeToSeeMore => 'スワイプして続きを見る';
 
   @override
+  String get introPromiseTitle => '1日5枚、2分で';
+
+  @override
+  String get introPromiseLine => '自信の度合いを答えて、自分の知識をどこまで信じていいかを知る。';
+
+  @override
   String get tagline => '物事の「なぜ」を学び、自分の知識をどこまで信じていいかを知る';
 
   @override
   String get introTopicsTitle => '20の分野、5枚のカード';
 
   @override
-  String get introTopicsLine => 'モデルが前もって書き、一枚ずつ出典を示しています。';
+  String get introTopicsLine => 'AIで書き、確認してから届けます。一枚ずつ出典つき。';
 
   @override
   String get introQuestionTitle => '問い、自信の度合い、そして理由';
@@ -2765,6 +2797,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get consentLine => 'アプリの使い方を共有します。名前、メール、書いた内容は送りません。';
 
   @override
+  String get consentCardLine => 'アプリの使われ方を数えます。広告はなく、名前も使いません。';
+
+  @override
   String get consentNo => 'いいえ、結構です';
 
   @override
@@ -2783,6 +2818,15 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get genresLine => 'ジャンルをタップすると外せます。長押しすると、中の小さなテーマがすぐ下に開きます。';
+
+  @override
+  String get partsOfferLine => '数日読んで、カードのことがわかってきたはず。分野ごとに、読みたい部分だけを残せます。';
+
+  @override
+  String get partsOfferChoose => '部分を選ぶ';
+
+  @override
+  String get partsOfferNotNow => '今はしない';
 
   @override
   String get insideGenre => 'この中身';

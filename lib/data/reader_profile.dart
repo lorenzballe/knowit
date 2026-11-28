@@ -1,9 +1,11 @@
 /// What the onboarding said, read the way a person would read it.
 ///
 /// The onboarding asks two things and no more: how much of each subject
-/// (the wheel, a handle per subject pushed up or down) and, one layer
-/// down, which genres and strands to leave out. It never asks what the
-/// reader knows — that screen went, because a self-rating given before a
+/// (the wheel, a handle per subject pushed up or down) and the three
+/// subjects, at most, the reader loves; which genres and strands to leave
+/// out, one layer down, is asked later, once the reader has seen some
+/// cards (lib/widgets/parts_offer.dart). It never asks what the reader
+/// knows — that screen went, because a self-rating given before a
 /// single card is a guess that ages from the first morning. But the two
 /// answers it does take say more than their face value, and a day dealt
 /// from their face value alone wastes most of it:
@@ -18,6 +20,9 @@
 ///   reader has told the app.
 /// - **How many subjects stayed.** Four is a specialist, who wants depth;
 ///   fifteen is a generalist, who wants range. They are served differently.
+/// - **What they said they love.** Up to three subjects picked on their
+///   own, the one answer given in the positive: as plain a claim as a
+///   handle held at the top while the rest came down, and plainer.
 /// - **Whether anything moved at all.** A reader who walked straight
 ///   through is not a reader who likes everything equally; they have told
 ///   the app nothing, and it should not pretend they did.
@@ -27,7 +32,8 @@
 /// 1. **A starting level for each subject, a notch above.** Nobody starts
 ///    as a beginner. The default is *some*, which already leans to cards
 ///    that ask; a subject the reader clearly claimed — held at the top
-///    while others came down, or pruned from the inside — starts *solid*,
+///    while others came down, pruned from the inside, or picked among the
+///    three the reader loves — starts *solid*,
 ///    where the hard questions come first. The first card the app puts in
 ///    front of somebody should say that this is not a quiz for children:
 ///    a reader who finds it a stretch feels respected, and one who finds it
@@ -51,6 +57,15 @@ library;
 import 'dart:math' as math;
 
 import 'genres.dart';
+
+/// How many subjects the first run lets the reader say they love.
+const int kMostLoved = 3;
+
+/// How much more a subject the reader loves is dealt of their own cards,
+/// from the first day on (AppState.leanedWeights): twice as much as it would
+/// be, and on the first three days sharpened further with the rest of the
+/// mix ([ReaderProfile.weightsOn]).
+const double kLoveLean = 2.0;
 
 /// Who the onboarding describes, from the shape of their answers.
 enum ReaderShape {
@@ -77,6 +92,7 @@ class ReaderProfile {
     required this.lean,
     required this.claimed,
     required this.weights,
+    this.loved = const [],
   });
 
   /// Nothing said: every subject even, nothing claimed.
@@ -139,8 +155,12 @@ class ReaderProfile {
   final Map<String, double> lean;
 
   /// The subjects the reader claimed: held at the top while others came
-  /// down, or pruned from inside.
+  /// down, pruned from inside, or loved ([loved]).
   final Set<String> claimed;
+
+  /// The subjects the reader said they love, in the order they picked
+  /// them: at most three, and only subjects in the mix.
+  final List<String> loved;
 
   /// The mix as it was set, by topic key.
   final Map<String, double> weights;
@@ -150,27 +170,40 @@ class ReaderProfile {
   /// [weights] is the wheel, 0..1 by topic key, absent for a subject
   /// dragged to nothing — or empty, for a reader who never set it.
   /// [genresOff] and [strandsOff] are what was turned off one layer down.
+  /// [loved] is the three the reader loves, in the order picked: a subject
+  /// out of the mix is not one of them.
   factory ReaderProfile.read({
     required Map<String, double> weights,
     Set<String> genresOff = const {},
     Set<String> strandsOff = const {},
+    List<String> loved = const [],
   }) {
-    final Map<String, double> mix = {
+    final Map<String, double> said = {
       for (final e in weights.entries)
         if (e.value > floor && kGenres.containsKey(e.key)) e.key: e.value,
     };
+    final List<String> loves = [
+      for (final String key in loved.toSet())
+        if (kGenres.containsKey(key) && (said.isEmpty || said.containsKey(key)))
+          key,
+    ].take(kMostLoved).toList();
     final bool pruned = genresOff.isNotEmpty || strandsOff.isNotEmpty;
     final bool moved =
-        mix.length < kGenres.length || mix.values.any((w) => w < 0.99);
-    if (mix.isEmpty || (!pruned && !moved)) {
+        said.length < kGenres.length || said.values.any((w) => w < 0.99);
+    if (loves.isEmpty && (said.isEmpty || (!pruned && !moved))) {
       return ReaderProfile._(
         shape: ReaderShape.untold,
         levels: {for (final key in kGenres.keys) key: 1},
         lean: const {},
         claimed: const {},
-        weights: Map.unmodifiable(mix),
+        weights: Map.unmodifiable(said),
       );
     }
+    // A mix walked past is every subject in, evenly — which is what the
+    // dealer makes of it too.
+    final Map<String, double> mix = said.isEmpty
+        ? {for (final String key in kGenres.keys) key: 1.0}
+        : said;
 
     final double highest = mix.values.reduce(math.max);
     double share(String key) => (mix[key] ?? 0) / highest;
@@ -204,7 +237,9 @@ class ReaderProfile {
       // At the top counts as a claim only when the reader told subjects
       // apart, or kept few enough that every one of them is chosen.
       final bool claim =
-          curated || (atTop && (toldApart || shape == ReaderShape.specialist));
+          loves.contains(key) ||
+          curated ||
+          (atTop && (toldApart || shape == ReaderShape.specialist));
       if (claim) claimed.add(key);
       levels[key] = claim ? 2 : 1;
     }
@@ -236,7 +271,8 @@ class ReaderProfile {
       levels: Map.unmodifiable(levels),
       lean: Map.unmodifiable(lean),
       claimed: Set.unmodifiable(claimed),
-      weights: Map.unmodifiable(mix),
+      weights: Map.unmodifiable(said),
+      loved: List.unmodifiable(loves),
     );
   }
 
@@ -284,6 +320,7 @@ class ReaderProfile {
   Map<String, Object> get facts => {
     'shape': shape.name,
     'claimed': claimed.length,
+    'loved': loved.length,
     'solid_start': levels.values.where((l) => l >= 2).length,
     'hand_picked': lean.keys.where((k) => k.startsWith('strand:')).length,
   };

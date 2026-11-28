@@ -73,6 +73,60 @@ const Map<String, String> kPlacePolicyAnchors = {
 String placePolicyUrl(String language) =>
     '$kPrivacyUrl#${kPlacePolicyAnchors[language] ?? kPlacePolicyAnchors['en']}';
 
+/// What the privacy policy says about the first run's four steps, counted
+/// on the server with nothing about the reader (lib/measure/
+/// first_steps.dart), word for word as site/privacy.html prints it, in both
+/// of its languages: the app's own copy. test/legal_test.dart holds the
+/// page to it, and test/first_steps_test.dart holds the code to it.
+const Map<String, String> kFirstStepsPolicy = {
+  'en':
+      'The first run, counted without knowing who. To know whether the '
+      'start of the app works, our server counts four steps: opening the '
+      'app for the first time, finishing the first questions, finishing '
+      'a first day, and coming back the day after the first open. For '
+      'each one, the phone sends our server the name of the step and the '
+      'date, and nothing else: not your account, not an identifier of '
+      'the phone. The server adds one to that day’s total for that step, '
+      'and our code keeps nothing beside the totals: not who, not which '
+      'phone, not your IP address. Google Cloud, where it runs, notes '
+      'the network address of each request in its own short-lived '
+      'request log, as it does for every request to our server; that log '
+      'does not say which step was counted. So that each step counts '
+      'once, the phone remembers which steps it has sent. Because these '
+      'totals carry nothing about you, they are counted whatever you '
+      'answer about usage data; only an app installed from the App Store '
+      'or Google Play sends them.',
+  'it':
+      'I primi passi, contati senza sapere di chi. Per sapere se '
+      'l’inizio dell’app funziona, il nostro server conta quattro passi: '
+      'aprire l’app la prima volta, finire le prime domande, finire una '
+      'prima giornata e tornare il giorno dopo la prima apertura. Per '
+      'ciascuno il telefono invia al nostro server il nome del passo e '
+      'la data, e nient’altro: né il tuo account, né un identificativo '
+      'del telefono. Il server aggiunge uno al totale di quel giorno per '
+      'quel passo, e il nostro codice oltre ai totali non conserva '
+      'niente: né chi, né quale telefono, né il tuo indirizzo IP. Google '
+      'Cloud, su cui gira, annota l’indirizzo di rete di ogni richiesta '
+      'in un proprio registro delle richieste, tenuto per poco tempo, '
+      'come fa per ogni richiesta al nostro server; quel registro non '
+      'dice quale passo è stato contato. Perché ogni passo conti una '
+      'volta sola, il telefono ricorda quali passi ha già inviato. Visto '
+      'che questi totali non dicono niente di te, vengono contati '
+      'qualunque cosa tu risponda sui dati di utilizzo; li invia solo '
+      'un’app installata dall’App Store o da Google Play.',
+};
+
+/// Where each language's paragraph about the first steps sits on the page.
+const Map<String, String> kFirstStepsPolicyAnchors = {
+  'en': 'first-steps',
+  'it': 'primi-passi',
+};
+
+/// The policy's paragraph about the first steps, in the app's language
+/// where the policy has one, and in English otherwise.
+String firstStepsPolicyUrl(String language) =>
+    '$kPrivacyUrl#${kFirstStepsPolicyAnchors[language] ?? kFirstStepsPolicyAnchors['en']}';
+
 /// Opens a page in the phone's own browser sheet, and says nothing if it
 /// cannot: a link that does not open is not worth an error over a paywall.
 Future<void> openLink(String url) async {

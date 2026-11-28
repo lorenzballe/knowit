@@ -89,6 +89,31 @@ void main() {
       expect(p.weightsOn(3, const {}), isEmpty, reason: 'then even');
     });
 
+    test('the subjects a reader loves are claimed and start solid, the mix '
+        'walked past or not', () {
+      for (final Map<String, double> mix in [const <String, double>{}, _even()]) {
+        final p = ReaderProfile.read(weights: mix, loved: const ['music', 'space']);
+        expect(p.shape, isNot(ReaderShape.untold));
+        expect(p.loved, ['music', 'space']);
+        expect(p.claimed, {'music', 'space'});
+        expect(p.levels['music'], 2);
+        expect(p.levels['economics'], 1);
+        // The mix as it was said, which a mix walked past is not.
+        expect(p.weights, mix);
+        expect(p.facts['loved'], 2);
+      }
+    });
+
+    test('a love out of the mix, one the app has not, a fourth and one said '
+        'twice are not loves', () {
+      final p = ReaderProfile.read(
+        weights: {..._even()}..remove('sport'),
+        loved: const ['sport', 'astrology', 'art', 'art', 'cinema', 'music', 'food'],
+      );
+      expect(p.loved, ['art', 'cinema', 'music']);
+      expect(p.claimed, {'art', 'cinema', 'music'});
+    });
+
     test('what the reader or the measurement said wins over the start', () {
       final p = ReaderProfile.read(weights: {..._even(0.4), 'space': 1});
       expect(p.levelsUnder(const {'space': 0})['space'], 0);

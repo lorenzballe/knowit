@@ -253,6 +253,78 @@ void main() {
     );
   });
 
+  group('the subjects a reader loves', () {
+    /// A day of the opening for a reader who left the mix as it starts and
+    /// loves [loved], as the app deals it.
+    Deal lovedDay(List<String> loved, {required int day, Set<String> read = const {}}) {
+      final ReaderProfile profile = ReaderProfile.read(
+        weights: _everything,
+        loved: loved,
+      );
+      final Map<String, double> leaned = {
+        for (final e in _everything.entries)
+          e.key: loved.contains(e.key) ? e.value * kLoveLean : e.value,
+      };
+      return dealOpening(
+        date: DateTime(_start.year, _start.month, _start.day + day),
+        topics: _subjectsOf(_everything),
+        claimed: profile.claimed,
+        loved: profile.loved,
+        mix: _everything,
+        weights: profile.weightsOn(day, leaned),
+        levels: profile.levelsUnder(const {}),
+        taste: profile.lean,
+        exclude: read,
+      )!;
+    }
+
+    for (final List<String> loved in const [
+      ['space', 'history', 'music'],
+      ['music', 'art', 'cinema'],
+      ['economics'],
+    ]) {
+      test('${loved.join(', ')}: one card of each on every day of the '
+          'opening, the rest the opening as listed', () {
+        final Set<String> read = {};
+        for (var day = 0; day < kOpeningDays; day++) {
+          final Deal deal = lovedDay(loved, day: day, read: read);
+          final List<String> subjects = [for (final p in deal.cards) p.topic];
+          expect(deal.cards, hasLength(kPillsPerDay), reason: 'day ${day + 1}');
+          for (final String key in loved) {
+            expect(
+              subjects.where((t) => t == kTopics[key]!.name),
+              hasLength(1),
+              reason: '$key on day ${day + 1}: $subjects',
+            );
+          }
+          // Still five subjects, three to read and two that ask.
+          expect(subjects.toSet(), hasLength(kPillsPerDay));
+          expect(
+            deal.cards.where((p) => p.asksSomething),
+            hasLength(asksInADay(kPillsPerDay)),
+          );
+          // Nothing for grown-ups, nothing dark, nothing read before.
+          for (final Pill p in deal.cards) {
+            expect(p.mature, isFalse, reason: p.id);
+            expect(p.mood, isNot('dark'), reason: p.id);
+            expect(read, isNot(contains(p.id)));
+          }
+          read.addAll(_ids(deal.cards));
+        }
+      });
+    }
+
+    test('the opening\'s own card of a subject loved comes before the '
+        'dealer\'s', () {
+      final Deal deal = lovedDay(const ['space'], day: 0);
+      final Set<String> opening = {
+        for (final c in kFirstDays) c.id,
+      };
+      final Pill space = deal.cards.firstWhere((p) => p.topic == 'Space');
+      expect(opening, contains(space.id));
+    });
+  });
+
   group('every first-run answer', () {
     for (final MapEntry<String, _Choice> e in _choices.entries) {
       test('${e.key}: three days of five, on the mix, varied, the opening '
@@ -489,6 +561,36 @@ void main() {
       });
       expect(later.opensOn(fourth), isFalse);
       expect(later.dealtBy, 'server');
+    });
+
+    test('the subjects loved open the first morning, and lean the days '
+        'after it', () async {
+      DateTime now = _start;
+      final AppState app = await _open(() => now);
+      await app.setTopicMix(_everything);
+      await app.setLoved(const ['music', 'art', 'cinema']);
+      await app.completeOnboarding();
+      expect(
+        app.todaysDeck.map((p) => p.topic).toSet(),
+        containsAll(const ['Music', 'Art', 'Cinema']),
+      );
+      // Kept, and backed up with the mix.
+      expect((await _launch(() => now)).lovedTopics, ['music', 'art', 'cinema']);
+      expect(app.snapshot().lovedTopics, ['music', 'art', 'cinema']);
+      // The days after the opening: the reader's own cards lean to them.
+      for (var day = 0; day < kOpeningDays; day++) {
+        await _finish(app);
+        now = DateTime(now.year, now.month, now.day + 1, 9);
+        await app.turnDayIfDue();
+      }
+      expect(app.opensOn(now), isFalse);
+      // What three days of reading did to the lean is the reader's own; on
+      // top of it, a loved subject weighs kLoveLean times what it would.
+      double musicToEconomics() =>
+          app.leanedWeights['music']! / app.leanedWeights['economics']!;
+      final double loved = musicToEconomics();
+      await app.setLoved(const []);
+      expect(loved / musicToEconomics(), closeTo(kLoveLean, 1e-9));
     });
 
     test('the first day is said once, when the reader reaches it', () async {

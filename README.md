@@ -40,18 +40,72 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   presents Astute on Google Play and on the App Store, each with the store's
   own badge. The Play listing is live; the App Store's is made but not live
   yet, so until `APP_STORE_OPEN` in `tool/site/chrome.py` says it is (one
-  line to change at launch) Apple's badge keeps its link but is marked
-  "Coming soon", every line that says where the app is says "Free on
-  Android · coming to iPhone", and no Download button leads to the store's
-  empty page. An Android phone's Download goes to Google Play, a computer's
-  to a code to scan with the phone, and an iPhone's, like the code, to
-  `/get`: from there an Android phone goes on to Google Play, and an iPhone,
-  until the listing is live, stays on a page that says the app is on its
-  way. It reads fully without JavaScript, and without motion for anyone who
-  has asked their system for less. The phone pictures in `site/assets/` are
-  taken by `tool/site_shots.dart`, the app on an iPhone 16 Pro at night in
-  English with cards from the bank, and made WebP at 840×1826 by
-  `tool/site/shots.py`; nothing on them is made up about other readers.
+  line to change at launch) Apple's badge is marked "Coming soon" and leads
+  to the list for the iPhone (below), every line that says where the app is
+  says "Free on Android · coming to iPhone", and no button anywhere leads to
+  the store's empty page. An Android phone's Download goes to Google Play, a
+  computer's to a code to scan with the phone, and an iPhone's, like the
+  code, to `/get`: from there an Android phone goes on to Google Play, and an
+  iPhone, until the listing is live, stays on a page that says the app is on
+  its way and offers the two things to do meanwhile: leave an email to be
+  told the day it is there, or play Today's challenge in the browser
+  (`/sfida`). The first screen offers the same two to anyone not on Android.
+  On a phone, once the first screen is behind, a slim bar at the thumb holds
+  the prices, the questions and the store (on an iPhone, the list), and goes
+  as the last word comes up; the twenty subjects' names, which only said
+  again what the rows above them had shown, are left to screen readers
+  there. Every page has its own title and description, and Open Graph tags
+  for a shared link. It reads fully without JavaScript, and without motion
+  for anyone who has asked their system for less. The phone pictures in
+  `site/assets/` are taken by `tool/site_shots.dart`, the app on an iPhone
+  16 Pro at night in English with cards from the bank, and made WebP at
+  840×1826 by `tool/site/shots.py`; the Italian pages' are the same app
+  speaking Italian (`LANG_SHOT=it`), in `site/assets/it/`. Nothing on them
+  is made up about other readers.
+- **In Italian too.** The landing page and `/get` have Italian twins, `/it/`
+  and `/it/get`, written by `tool/site/i18n.py` from the English pages and
+  `tool/site/lang/it.json`, every run of the English page's text said in
+  Italian by hand, in the app's own words (`lib/l10n/app_it.arb`): Oggi,
+  Esplora, la sfida di oggi. The deploy stops if a twin is not what the
+  script writes, if a line of an English page has no Italian, or if the
+  table says a line no page shows any more. The other pages (the legal
+  pages, the 404, `/sfida`, `/invito`, a friend's card under `/c/`, the
+  card pages under `/q/`) hold both languages and show one. A few lines at
+  the top of every page choose, before anything is drawn: the language
+  picked with the switch in the nav (EN/IT), kept on the device under
+  `astute.lang`, or else the browser's (`navigator.language`), or else
+  English; `?lang=en` is the switch's own link. The twins name each other to
+  search engines (`hreflang`, English for everyone else). A card's own
+  words stay in English, as the app deals them, marked so. Another
+  language is a table beside `it.json`, its column in the chrome's and the
+  scripts' words, and its code in `chrome.LANGS` (`tool/site/README.md`).
+- **The list for the iPhone.** `/get#notify`, where every Apple badge leads
+  while the listing is not live, takes an email to be told, once, the day
+  Astute is on the App Store. `site/assets/notify.js` writes it straight into
+  Firestore through its REST API, with the site's own web config
+  (`keys.js`, as the account page), as a new document of `waitlist`: the
+  address, the page's language and the server's time, nothing else.
+  `firestore.rules` let anyone create one such document under a fresh
+  random id, well formed (an address's shape, at most 254 characters, a
+  two-letter language, the time the server stamps), and nobody read, change
+  or delete one; `tool/rules/rules.test.mjs` holds them to it. The privacy
+  policy (`/privacy#iphone-list`) says what is kept, why, and how to come
+  off it: the owner reads the list in the Firebase console, sends the one
+  email the day the app is there, and deletes the list. Without JavaScript
+  the form is an email link.
+- **A page for every card**, `/q/<id>`, written by `tool/cards/card_pages.py`
+  when the site is put together, for every card the app deals (books in
+  pills, which Astute+ gives whole, and the cards kept from a family setting
+  have none): the question as its title, the short answer and the why, the
+  source linked, the drawn card to play in place, four more to read next
+  (its strand's, its kind's, its subject's), and "Five like this every
+  morning" over the stores. Each says its
+  question and answer to search engines as Google documents them
+  (`FAQPage`; `QAPage` is for questions readers answer), is about 10 kB, and
+  is listed in the sitemap: `sitemap.xml` is an index of files of at most
+  50,000 addresses each, written from the bank at the same time.
+  `robots.txt` points to it and keeps the bare drawn pages
+  (`/cards/pages/`) and the web preview (`/app/`) out of searches.
 - **What the site measures**: the pages read and the store buttons pressed,
   `$pageview` and `store clicked` (`store`, `page`, `ref`), into the same
   PostHog project as the app, from `site/assets/main.js`. Nothing is kept on
@@ -70,8 +124,9 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   provider token, `APP_STORE_PROVIDER_TOKEN` in `tool/site/chrome.py`, which
   is empty until the owner sets it; the comment there says where it is. The
   web app under `/app/` has its own PostHog, below, and none of this.
-- `/sfida` is the challenge on today's five, written by
-  `tool/cards/sfida_page.py` when the site is put together: a friend sent
+- `/sfida` is Today's challenge in the browser (`/it/sfida` in Italian),
+  written by `tool/cards/sfida_page.py` when the site is put together: a
+  friend sent
   "Challenge a friend" from the app opens `sfida?d=2026-11-27&s=4` — the day
   the five were dealt and how many the reader got right, nothing else — and
   plays the same five in the browser, one at a time, each in its subject's
@@ -103,9 +158,9 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   once, in `tool/site/chrome.py`, and stamped onto every page between the
   markers each page carries; the deploy stops if a page has drifted. Astute
   is published by TheBaleCompany, and every page says so.
-- `robots.txt`, `sitemap.xml`, `manifest.webmanifest` (which names both
-  store listings, the Play one ahead of its day) and `assets/og.png`, the
-  picture a shared link shows.
+- `robots.txt`, `manifest.webmanifest` (which names both store listings,
+  the Play one ahead of its day) and `assets/og.png`, the picture a shared
+  link shows.
 - `/app/` is the app, built for the web: the live preview.
 - `/cards/cards.json` is the card bank the app refreshes from, and
   `/widget/days.json` today's shelf the iPhone widgets fall back on, with
@@ -215,8 +270,10 @@ repaints at once, and the status bar follows it.
 
 ## Screens
 
-**Free** — first run (the five-scene intro, then the subject run, and the
-genres under it, which is where the onboarding ends), Today with
+**Free** — first run (the five-scene intro, whose first page is a real
+card's question and the promise in plain words, then Your mix, and up to
+three subjects the reader loves, which is where the onboarding ends; one
+way on from each, no Skip), Today with
 the card stack and, once the five are done, the shelf, Explore (shelves of
 cards nobody dealt you, with a search over the whole pool), Saved with its
 empty state, Profile (the Astute score with the way into the journey under
@@ -1320,8 +1377,8 @@ as its link alone. It used to go as a picture with the whole answer under
 it, the steps, the other side, the bar move and the source: in a chat, a
 wall of words that spoiled the one thing worth sending.
 
-**Challenge a friend.** Today's five on Explore are the one thing every
-reader shares that day, and the site has them too, so they can be a
+**Challenge a friend.** Today's challenge on Explore is the one thing
+every reader shares that day, and the site has it too, so they can be a
 challenge for two without an account or a board: a line in the reader's
 language — "I got 4 of today's 5 on Astute. Can you beat me?" — and a link
 to `/sfida`, where the friend plays the same five in a browser and sees both
@@ -1973,17 +2030,30 @@ when something has been pushed over it. A visit sends `$screen` as it begins
 and `screen left` as it ends: the time in front, how far down it was
 scrolled, the drags and taps, and where the reader came from and went.
 
-**Nothing is measured before a yes.** The intro's foot asks whether Astute
-may measure how the app is used — "Help make Astute better?", with No,
-thanks and Yes, share side by side and of one size — in all thirteen
-languages. It is not in the way: Start reading goes on without an answer,
-and no answer is a no. A reader who started without answering, or whose
-phone had the app before the question, is asked once more, as a sheet that
-waits for one of the two answers, after a finished day (after the reminder
-sheet, before the account's). PostHog is not even set up until the answer
-is yes: nothing is captured, queued or sent before it, and nothing after a
-no. What is stamped on every event, where the install came from and who the
-reader is are kept on the phone and said the moment a yes starts it.
+**Nothing is measured before a yes.** Nothing is asked before a card. At
+the end of the first day — after the day's celebration and after the
+reminder's question, which goes first — a calm card on the finished day's
+shelf asks whether Astute may measure how the app is used: "Help make Astute
+better? We count how the app is used, with no advertising and never your
+name", with No, thanks and Yes, share side by side and of one size, in all
+thirteen languages (`lib/widgets/consent_card.dart`). It is not in the way:
+the shelf is all there around it, and no answer is a no. It stays on the
+shelf, day after day, until it is answered. PostHog is not even set up until
+the answer is yes: nothing is captured, queued or sent before it, and
+nothing after a no. What is stamped on every event, where the install came
+from and who the reader is are kept on the phone and said the moment a yes
+starts it.
+
+**The first steps, counted without knowing who.** Whether the start of the
+app works is counted on our own server, as Today's five counts its crowd:
+four steps of a phone new to the app — the first open, the first run's
+questions answered, a first day read, and a return the day after the first
+open — each sent once as a plain request with the step and the date and
+nothing else, no account and no id of the phone, and added to that day's
+total in `steps/{day}` (`lib/measure/first_steps.dart`,
+`functions/src/steps.ts`). Only from an install the App Store or Google
+Play made. They say nothing about anyone, so they are counted whatever the
+answer about usage data, and the privacy policy says so.
 
 **The reader's switch** in the About box of Profile is the same answer, off
 until the reader has said yes. It is applied the moment it moves, and
@@ -2014,8 +2084,8 @@ up and *advanced* with how long it held the reader; answered with how long it
 took. The day says which slot each card fills; the end of the day how many
 were right and wrong. A streak that breaks is said once, milestones and
 records when they happen. The first run is measured step by step and scene by
-scene, with how long each held the reader and where it was skipped — from
-the corner, or by continuing without an account (`intro skipped`, `by`). The
+scene, with how long each held the reader and the scene Start reading left
+from (`intro skipped`, `at_scene`). The
 paywall says which plan was picked, how long it was open, how it was left and
 which link was opened; the store says what it put on sale and every change to
 the subscription — trial, renewal switched off, billing issue, expiry. Then
@@ -2114,10 +2184,9 @@ These are declared in the UI rather than faked:
 - **Notification delivery.** The permission is asked for and the token is
   registered, so a phone can be reached — but nothing sends yet. Deciding who
   gets what, and when in their own timezone, is the work that remains.
-- **Email sign-in.** Not offered. Apple and Google are wired; the intro's
-  third line is *Continue without an account*, which goes where Skip goes,
-  rather than an email button with nothing behind it, and the line under
-  them says continuing, not signing up. Firebase's email link needs a domain
+- **Email sign-in.** Not offered. Apple and Google are wired, behind the
+  intro's quiet *Sign in* under Start reading, rather than an email button
+  with nothing behind it; nobody is asked to make an account before a card. Firebase's email link needs a domain
   of ours with universal links, since Dynamic Links was retired.
 - **The nightly pipeline has not run for real.** The pipeline that grows
   the bank is built and tested against a canned model; the first real night
@@ -2272,6 +2341,12 @@ errors.
 improved forecasting accuracy by around 10% on Brier score, sustained across
 four years of tournament
 ([Mellers et al., Good Judgment Project](https://www.cambridge.org/core/journals/judgment-and-decision-making/article/developing-expert-political-judgment-the-impact-of-training-and-practice-on-judgmental-accuracy-in-geopolitical-forecasting-tournaments/123EB18425391D05FA6581FDBB3F309F)).
+A 2025 re-analysis of the same data found the effects of training and teams
+shrank, vanished or reversed once the questions forecasters chose to answer,
+and when, were accounted for
+([Hauenstein et al., Psychological Science, 2025](https://doi.org/10.1177/09567976241266481)),
+which Mellers and colleagues dispute; so the site states no figure, says what
+the 2014 study found, and links both.
 
 ### Three things that follow
 

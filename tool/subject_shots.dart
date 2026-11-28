@@ -76,7 +76,7 @@ void main() {
 
   testWidgets('the mix and the genres', (tester) async {
     await tester.pumpWidget(
-      onboarding(MixScreen(onDone: (_) {}, onSkip: () {})),
+      onboarding(MixScreen(onDone: (_) {})),
     );
     await settle(tester);
     await shoot(tester, 'mix');
@@ -94,7 +94,7 @@ void main() {
     // The new one asked for most, so it leads the list.
     await tester.runAsync(() => app.setTopicMix({'life': 0.8, 'science': 0.3}));
     await tester.pumpWidget(
-      onboarding(GenresScreen(app: app, onDone: (_, _) {}, onSkip: () {})),
+      onboarding(GenresScreen(app: app, onDone: (_, _) {}, onBack: () {})),
     );
     await settle(tester);
     await shoot(tester, 'genres');
@@ -108,7 +108,7 @@ void main() {
       () => app.setTopicMix({'economics': 0.9, 'life': 0.3}),
     );
     await tester.pumpWidget(
-      onboarding(GenresScreen(app: app, onDone: (_, _) {}, onSkip: () {})),
+      onboarding(GenresScreen(app: app, onDone: (_, _) {}, onBack: () {})),
     );
     await settle(tester);
     await tester.longPress(find.text('Think in incentives'));

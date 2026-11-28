@@ -98,6 +98,31 @@ test('the onboarding is read as the phone reads it', () => {
   assert.deepEqual(weightsOn(fan, 3, fan.weights), fan.weights);
 });
 
+test('the subjects a reader loves are claimed, start solid and are dealt twice as much, as the phone has it', () => {
+  // Loved with the mix walked past: no longer a reader who said nothing.
+  const walked = readOnboarding({}, new Set(), new Set(), ['music', 'space']);
+  assert.notEqual(walked.shape, 'untold');
+  assert.deepEqual(walked.claimed.sort(), ['music', 'space']);
+  assert.equal(walked.levels.music, 2);
+  assert.equal(walked.levels.economics, 1);
+  // With a mix left as it starts, the same; the mix as said is kept as said.
+  const even1 = readOnboarding(even(), new Set(), new Set(), ['history']);
+  assert.deepEqual(even1.claimed, ['history']);
+  assert.deepEqual(even1.weights, even());
+  // A love out of the mix, a subject the bank lacks, a fourth and a twice-said one do not count.
+  const mix = { ...even(), sport: 0 };
+  delete (mix as Record<string, number>).sport;
+  const odd = readOnboarding(mix, new Set(), new Set(), ['sport', 'astrology', 'art', 'art', 'cinema', 'music', 'food']);
+  assert.deepEqual(odd.claimed.sort(), ['art', 'cinema', 'music']);
+  // And what is dealt of the reader's own leans to them, twice over.
+  const p = profileOf({ topicWeights: even(), lovedTopics: ['music'] });
+  assert.equal(p.weights.music / p.weights.economics, 2);
+  assert.ok(p.claimed.includes('music'));
+  const none = profileOf({ topicWeights: even() });
+  assert.equal(none.weights.music, none.weights.economics);
+  assert.equal(none.shape, 'untold');
+});
+
 test('the trace moves the taste: what held the reader, what they threw on, what they never opened', () => {
   const slow = bank.live.find((c) => c.strand === 'space.black_holes.event_horizons' && !asks(c)) as typeof bank.live[0];
   const fast = bank.live.find((c) => c.strand === 'sport.rules_and_why.offside' && !asks(c)) as typeof bank.live[0];

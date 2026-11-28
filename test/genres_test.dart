@@ -34,7 +34,7 @@ Future<void> _pump(
     MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: GenresScreen(app: app, onDone: onDone ?? (_, _) {}, onSkip: () {}),
+      home: GenresScreen(app: app, onDone: onDone ?? (_, _) {}, onBack: () {}),
     ),
   );
   await tester.pump();
@@ -203,7 +203,7 @@ void main() {
           theme: buildAstutoTheme(Brightness.light),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: GenresScreen(app: app, onDone: (_, _) {}, onSkip: () {}),
+          home: GenresScreen(app: app, onDone: (_, _) {}, onBack: () {}),
         ),
       );
       await tester.pump();

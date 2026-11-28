@@ -434,19 +434,26 @@ void main() {
     view.resetDevicePixelRatio();
   });
 
-  testWidgets('a fresh install opens on the welcome screen', (tester) async {
+  testWidgets('a fresh install opens on the welcome screen: a real '
+      'question, and the promise in plain words', (tester) async {
     SharedPreferences.setMockInitialValues({});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     expect(find.text('Astute'), findsOneWidget);
+    expect(find.text(kIntroQuestion), findsOneWidget);
+    expect(find.text('NATURE'), findsOneWidget);
+    expect(find.text('Five cards a\u00a0day, two\u00a0minutes'), findsOneWidget);
     expect(
       find.text(
-        'Learn the why behind things, and how far to trust what you know',
+        'Say how sure you are, and find out how far to trust what you know.',
       ),
       findsOneWidget,
     );
     expect(find.text('Start reading'), findsOneWidget);
+    // Nothing asked before a single card: not an account, not usage data.
+    expect(find.byKey(const ValueKey('consent-yes')), findsNothing);
+    expect(find.text('Skip'), findsNothing);
   });
 
   testWidgets('the first run runs the subjects, then deals', (tester) async {
@@ -465,33 +472,46 @@ void main() {
     expect(find.text('Maths'), findsOneWidget);
     expect(find.text('20 of 20 subjects in the mix'), findsOneWidget);
 
-    // A tap on a subject's name changes nothing: it is already in, and a
-    // tap is how every other picker says yes.
+    // A tap on a subject takes it out of the mix, plainly, and a second
+    // puts it back where it was.
+    await tester.tap(find.text('Science'));
+    await _settle(tester);
+    expect(find.text('19 of 20 subjects in the mix'), findsOneWidget);
     await tester.tap(find.text('Science'));
     await _settle(tester);
     expect(find.text('20 of 20 subjects in the mix'), findsOneWidget);
 
-    // Slid all the way to the left it leaves the mix, with the count
-    // saying so.
+    // Slid all the way to the left it leaves the mix too, with the count
+    // saying so; so does Maths, tapped.
     await tester.dragFrom(
       tester.getCenter(find.text('Science')),
       const Offset(-300, 0),
     );
     await _settle(tester);
     expect(find.text('19 of 20 subjects in the mix'), findsOneWidget);
+    await tester.tap(find.text('Maths'));
+    await _settle(tester);
+    expect(find.text('18 of 20 subjects in the mix'), findsOneWidget);
 
     await tester.tap(find.text('Next'));
     await _settle(tester);
 
-    // Three: the same answer one layer finer — the six genres inside each
-    // subject, most asked-for subject first. Walked past here; it has a
-    // run of its own in test/genres_test.dart.
-    expect(find.text('Which parts?'), findsOneWidget);
-    await tester.tap(find.text('Skip'));
+    // Three: the subjects the reader loves, of those still in the mix.
+    // Which parts is no longer asked here: it is offered on the shelf from
+    // the third finished day (test/parts_offer_test.dart).
+    expect(find.text('Which parts?'), findsNothing);
+    expect(find.text('Pick the three you love'), findsOneWidget);
+    expect(find.byKey(const ValueKey('love-science')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('love-space')));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('love-music')));
+    await _settle(tester);
+    expect(find.text('2 of 3'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('loves-done')));
     await _settle(tester);
 
     // And then the first day, straight away: no offer and no question
-    // between the genres and the first card.
+    // between the last question and the first card.
     expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
 
@@ -499,9 +519,12 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     final weights = jsonDecode(prefs.getString('knowit.topicWeights')!) as Map;
     expect(prefs.getBool('knowit.onboarded'), isTrue);
+    expect(prefs.getStringList('knowit.loved'), ['space', 'music']);
 
-    // Science was dragged to nothing, so it is not in the mix.
+    // Science was dragged to nothing and Maths tapped out, so neither is in
+    // the mix.
     expect(weights.containsKey('science'), isFalse);
+    expect(weights.containsKey('maths'), isFalse);
     // Every subject the grid draws is a real topic — including the six with
     // nothing written for them yet, which are switchable on purpose.
     expect(
@@ -517,7 +540,7 @@ void main() {
       MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: MixScreen(onDone: (_) {}, onSkip: () {}),
+        home: MixScreen(onDone: (_) {}),
       ),
     );
     await _settle(tester);
@@ -2326,24 +2349,28 @@ void main() {
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
-  testWidgets('the onboarding is the intro, the mix and the genres, and then '
-      'the cards', (tester) async {
+  testWidgets('the onboarding is the intro, the mix and the three loved, '
+      'one way on each, and then the cards', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    // One: the intro. Skip takes the same road as the buttons do.
-    await tester.tap(find.text('Skip'));
+    // One: the intro, with its one button and no Skip beside it.
+    expect(find.text('Skip'), findsNothing);
+    await tester.tap(find.text('Start reading'));
     await _settle(tester);
 
-    // Two: the mix.
+    // Two: the mix, with Next and no Skip.
     expect(find.text('Science'), findsOneWidget);
+    expect(find.text('Skip'), findsNothing);
     await tester.tap(find.text('Next'));
     await _settle(tester);
 
-    // Three: the genres under it, which can be walked past.
-    expect(find.text('Which parts?'), findsOneWidget);
-    await tester.tap(find.text('Skip'));
+    // Three: the three loved; none picked is an answer too.
+    expect(find.text('Pick the three you love'), findsOneWidget);
+    expect(find.text('Tap up to three'), findsOneWidget);
+    expect(find.text('Skip'), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('loves-done')));
     await _settle(tester);
 
     // And the cards, straight after: nothing is sold to a reader who has
@@ -2353,45 +2380,64 @@ void main() {
     expect(find.byType(PillCardStack), findsOneWidget);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.onboarded'), isTrue);
+    expect(prefs.getStringList('knowit.loved'), isEmpty);
   });
 
-  testWidgets('setting the genres ends on the first day too', (tester) async {
-    SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
-    await tester.pumpWidget(const AstutoApp());
-    await _settle(tester);
-    await tester.tap(find.text('Skip'));
-    await _settle(tester);
-    await tester.tap(find.text('Next'));
-    await _settle(tester);
-    expect(find.text('Which parts?'), findsOneWidget);
-    // Answered rather than walked past: the same road, to the cards.
-    await tester.tap(find.textContaining('genres on'));
-    await _settle(tester);
-    expect(find.byType(PaywallScreen), findsNothing);
-    expect(find.byType(PillCardStack), findsOneWidget);
-    final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getBool('knowit.onboarded'), isTrue);
-  });
-
-  testWidgets('skipping the mix goes straight to the first day', (
+  testWidgets('three is the most a reader can love, and a fourth says so', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
-    await tester.tap(find.text('Skip'));
+    await tester.tap(find.text('Start reading'));
     await _settle(tester);
-    // The mix's own Skip, in its heading's row.
-    await tester.tap(find.text('Skip'));
+    await tester.tap(find.text('Next'));
     await _settle(tester);
-    // Past the genres too, which narrow a mix nobody set: the first day,
-    // straight away.
-    expect(find.text('Your mix'), findsNothing);
-    expect(find.byType(PaywallScreen), findsNothing);
-    expect(find.byType(PillCardStack), findsOneWidget);
-    // And the first run is not asked again.
+    for (final String key in const ['history', 'space', 'art']) {
+      await tester.tap(find.byKey(ValueKey('love-$key')));
+      await _settle(tester);
+    }
+    expect(find.text('3 of 3'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('love-music')));
+    await _settle(tester);
+    expect(find.text('Three at most: tap one to let it go.'), findsOneWidget);
+    // Let go of one, and the fourth takes its place, last.
+    await tester.tap(find.byKey(const ValueKey('love-space')));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('love-music')));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('loves-done')));
+    await _settle(tester);
     final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getBool('knowit.onboarded'), isTrue);
+    expect(prefs.getStringList('knowit.loved'), ['history', 'art', 'music']);
+  });
+
+  testWidgets('with the server\'s switch off, the first run goes from the mix '
+      'to the day', (tester) async {
+    Remote.adopt(
+      RemoteConfig.parse(
+        jsonEncode({
+          'schema': 1,
+          'hash': 'no-loves',
+          'app': {
+            'flags': {'firstRun.loves': false},
+          },
+          'strings': <String, Object?>{},
+          'explore': null,
+          'looks': null,
+        }),
+      ),
+    );
+    addTearDown(Remote.reset);
+    SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await tester.tap(find.text('Start reading'));
+    await _settle(tester);
+    await tester.tap(find.text('Next'));
+    await _settle(tester);
+    expect(find.text('Pick the three you love'), findsNothing);
+    expect(find.byType(PillCardStack), findsOneWidget);
   });
 
   testWidgets('the paywall sells only what it delivers', (tester) async {
@@ -5687,7 +5733,7 @@ void main() {
         (Size(430, 932), EdgeInsets.only(top: 62, bottom: 34)),
       ];
       const titles = [
-        'Astute',
+        'Five cards a\u00a0day, two\u00a0minutes',
         'Twenty topics, five cards',
         'A question, how sure, then why',
         'You choose the mix',
@@ -5751,12 +5797,12 @@ void main() {
 
       const copy = [
         (
-          'Astute',
-          'Learn the why behind things, and how far to trust what you know',
+          'Five cards a\u00a0day, two\u00a0minutes',
+          'Say how sure you are, and find out how far to trust what you know.',
         ),
         (
           'Twenty topics, five cards',
-          'Written ahead by a model, and each one names its source.',
+          'Written with AI, then checked, and each one names its source.',
         ),
         (
           'A question, how sure, then why',
@@ -5888,40 +5934,42 @@ void main() {
         );
         expect(band.height, lessThan(small.width * 252 / 344));
         expect(band.top, greaterThanOrEqualTo(20));
-        final Rect title = tester.getRect(find.text('Astute'));
+        final Rect title = tester.getRect(find.text('Five cards a\u00a0day, two\u00a0minutes'));
         expect(title.top, greaterThanOrEqualTo(band.bottom));
         final Rect apple = tester.getRect(find.text('Start reading'));
         expect(apple.bottom, lessThanOrEqualTo(small.height));
-        // The drawing is fitted to the shallower band: whole, and centred.
-        final Rect mark = tester.getRect(
-          find.descendant(
-            of: find.byKey(const ValueKey('intro-stage')),
-            matching: find.byType(Image),
-          ),
-        );
-        expect(mark.center.dx, closeTo(band.center.dx, 0.5));
-        expect(mark.center.dy, closeTo(band.center.dy, 0.5));
+        // The drawing is fitted to the shallower band: the name and the
+        // question's card whole inside it, and centred.
+        for (final String key in const [
+          'intro-wordmark',
+          'intro-question-card',
+        ]) {
+          final Rect part = tester.getRect(find.byKey(ValueKey(key)));
+          expect(part.center.dx, closeTo(band.center.dx, 0.5), reason: key);
+          expect(part.top, greaterThanOrEqualTo(band.top - 0.5), reason: key);
+          expect(
+            part.bottom,
+            lessThanOrEqualTo(band.bottom + 0.5),
+            reason: key,
+          );
+        }
       },
     );
 
-    testWidgets('every drawing sits inside its band, clear of Skip', (
-      tester,
-    ) async {
+    testWidgets('every drawing sits inside its band', (tester) async {
       // The drawings are made on a band of one shape and the stage is that
       // shape, so each should land on it exactly — and it did not: the box
       // the drawing was scaled from took the stage's size, and scaling it
       // from its middle lifted the drawing twenty points above the band.
-      // The ring, the chips and the card then ran off under the notch, and
-      // Skip, in the top right corner, printed over the chips.
+      // The ring, the chips and the card then ran off under the notch.
       await pumpIntro(tester);
 
       final stage = find.byKey(const ValueKey('intro-stage'));
       final Rect band = tester.getRect(stage);
-      final Rect skip = tester.getRect(find.text('Skip'));
 
       // Scene by scene, what is drawn and where it must stay.
       const List<List<String>> drawn = [
-        [], // the mark, found by its image below
+        [], // the name and the question's card, found by their keys below
         [], // falling cards, whose box is checked as a whole
         ['ECONOMICS', 'tap to reveal', 'WHAT TO KEEP', 'Source · Stanford GSB'],
         ['Space', 'Economics', 'Technology', 'Human body', 'Science', 'Cinema'],
@@ -5938,8 +5986,8 @@ void main() {
           await _settle(tester);
         }
         // Each word's box, where it has one — a chip, the card, the bar
-        // move, the source — because the box is what can meet Skip while
-        // the word inside it still stays clear.
+        // move, the source — because the box is what can run off the band
+        // while the word inside it still stays on it.
         final List<Rect> parts = [
           for (final text in drawn[scene])
             tester.getRect(
@@ -5952,13 +6000,16 @@ void main() {
             ),
         ];
         if (scene == 0) {
-          // The mark sits on the middle of the band, where it was drawn.
-          final Rect mark = tester.getRect(
-            find.descendant(of: stage, matching: find.byType(Image)),
-          );
-          expect(mark.center.dx, closeTo(band.center.dx, 0.5));
-          expect(mark.center.dy, closeTo(band.center.dy, 0.5));
-          parts.add(mark);
+          // The name at the band's head and the question's card on its
+          // foot, both on its middle line.
+          for (final String key in const [
+            'intro-wordmark',
+            'intro-question-card',
+          ]) {
+            final Rect part = tester.getRect(find.byKey(ValueKey(key)));
+            expect(part.center.dx, closeTo(band.center.dx, 0.5));
+            parts.add(part);
+          }
         }
         if (scene == 4) {
           // Tomorrow morning: the notification, the first card and the
@@ -5996,11 +6047,6 @@ void main() {
             lessThanOrEqualTo(band.bottom + 0.5),
             reason: 'scene ${scene + 1} runs off the bottom of its band',
           );
-          expect(
-            part.overlaps(skip),
-            isFalse,
-            reason: 'scene ${scene + 1} draws under Skip',
-          );
         }
       }
     });
@@ -6021,77 +6067,54 @@ void main() {
       FlutterError.onError = (details) =>
           broke.add(details.exceptionAsString().split('\n').first);
       try {
-        // With the question about measuring on the foot, as a first launch
-        // has it, and without, as it is once answered.
-        for (final bool asking in const [false, true]) {
-          for (final double scale in const [1.3, 2.0]) {
-            for (final Locale locale in const [
-              Locale('en'),
-              Locale('it'),
-              Locale('de'),
-              Locale('ru'),
-            ]) {
-              await tester.pumpWidget(
-                MaterialApp(
-                  // A tree of its own each time, so the question is asked
-                  // afresh.
-                  key: UniqueKey(),
-                  locale: locale,
-                  localizationsDelegates:
-                      AppLocalizations.localizationsDelegates,
-                  supportedLocales: AppLocalizations.supportedLocales,
-                  theme: buildAstutoTheme(Brightness.dark),
-                  home: MediaQuery(
-                    data: MediaQueryData(
-                      size: const Size(375, 667),
-                      padding: const EdgeInsets.only(top: 20),
-                      textScaler: TextScaler.linear(scale),
-                    ),
-                    child: IntroScreen(
-                      onContinue: () {},
-                      onSignIn: (_) async => false,
-                      askConsent: asking,
-                    ),
+        for (final double scale in const [1.3, 2.0]) {
+          for (final Locale locale in const [
+            Locale('en'),
+            Locale('it'),
+            Locale('de'),
+            Locale('ru'),
+          ]) {
+            await tester.pumpWidget(
+              MaterialApp(
+                // A tree of its own each time, so it starts on the first
+                // scene.
+                key: UniqueKey(),
+                locale: locale,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
+                theme: buildAstutoTheme(Brightness.dark),
+                home: MediaQuery(
+                  data: MediaQueryData(
+                    size: const Size(375, 667),
+                    padding: const EdgeInsets.only(top: 20),
+                    textScaler: TextScaler.linear(scale),
+                  ),
+                  child: IntroScreen(
+                    onContinue: () {},
+                    onSignIn: (_) async => false,
                   ),
                 ),
+              ),
+            );
+            await _settle(tester);
+            final String start = lookupAppLocalizations(locale).startReading;
+            for (int scene = 0; scene < 5; scene++) {
+              final String where = '$locale at ${scale}x, scene ${scene + 1}';
+              final Rect button = tester.getRect(
+                find.byKey(const ValueKey('intro-start')),
               );
-              await _settle(tester);
-              final String start = lookupAppLocalizations(locale).startReading;
-              for (int scene = 0; scene < 5; scene++) {
-                final String where =
-                    '$locale at ${scale}x, scene ${scene + 1}'
-                    '${asking ? ', asking' : ''}';
-                if (asking) {
-                  for (final String key in const [
-                    'consent-no',
-                    'consent-yes',
-                  ]) {
-                    final Rect answer = tester.getRect(
-                      find.byKey(ValueKey(key)),
-                    );
-                    expect(
-                      answer.bottom,
-                      lessThanOrEqualTo(667),
-                      reason: where,
-                    );
-                  }
-                }
-                final Rect button = tester.getRect(
-                  find.byKey(const ValueKey('intro-start')),
+              expect(button.bottom, lessThanOrEqualTo(667), reason: where);
+              expect(find.text(start), findsOneWidget, reason: where);
+              if (scale == 2.0) {
+                expect(
+                  find.byKey(const ValueKey('intro-stage')),
+                  findsNothing,
+                  reason: where,
                 );
-                expect(button.bottom, lessThanOrEqualTo(667), reason: where);
-                expect(find.text(start), findsOneWidget, reason: where);
-                if (scale == 2.0) {
-                  expect(
-                    find.byKey(const ValueKey('intro-stage')),
-                    findsNothing,
-                    reason: where,
-                  );
-                }
-                // A tap anywhere above the words turns to the next scene.
-                await tester.tapAt(const Offset(187, 110));
-                await _settle(tester);
               }
+              // A tap anywhere above the words turns to the next scene.
+              await tester.tapAt(const Offset(187, 110));
+              await _settle(tester);
             }
           }
         }
@@ -6147,11 +6170,11 @@ void main() {
       'intro-fortnight',
     ];
 
-    testWidgets('lines up with the buttons, clear of Skip, on every phone '
-        'tall enough for the whole band', (tester) async {
+    testWidgets('lines up with the buttons on every phone tall enough for '
+        'the whole band', (tester) async {
       // The notification, the card and the days start and end where the
-      // buttons do — and the phones whose band starts right under Skip are
-      // the ones that matter, which is why this walks several.
+      // buttons do, on several phones whose bands start at different
+      // heights.
       const sizes = [
         (Size(393, 852), EdgeInsets.only(top: 59, bottom: 34)),
         (Size(390, 844), EdgeInsets.only(top: 47, bottom: 34)),
@@ -6164,7 +6187,6 @@ void main() {
         final Rect band = tester.getRect(
           find.byKey(const ValueKey('intro-stage')),
         );
-        final Rect skip = tester.getRect(find.text('Skip'));
         final Rect apple = tester.getRect(
           find
               .ancestor(
@@ -6188,32 +6210,15 @@ void main() {
           expect(part.top, greaterThanOrEqualTo(band.top));
           expect(part.bottom, lessThanOrEqualTo(band.bottom + 0.5));
         }
-        // Skip keeps a clear line of its own over the notification.
-        final Rect notice = tester.getRect(
-          find.byKey(const ValueKey('intro-notice')),
-        );
-        expect(
-          notice.top - skip.bottom,
-          greaterThanOrEqualTo(12),
-          reason: 'on a $phone phone, the notification crowds Skip',
-        );
-        // And no further under it than that where the band reaches up to
-        // Skip: the room above is the card's and the days', to grow into.
-        if (band.top < skip.bottom + 16) {
-          expect(
-            notice.top - skip.bottom,
-            lessThanOrEqualTo(24),
-            reason: 'on a $phone phone, the drawing leaves the top empty',
-          );
-        }
       }
     });
 
-    testWidgets('on a short phone shrinks with its band, centred and clear '
-        'of Skip', (tester) async {
+    testWidgets('on a short phone shrinks with its band, centred', (
+      tester,
+    ) async {
       // An SE: the band is shallower than the width wants, so the drawing
       // is fitted to its height like every other scene, and stays in the
-      // middle — away from Skip in the corner.
+      // middle.
       await pumpLastScene(
         tester,
         const Size(375, 667),
@@ -6222,13 +6227,11 @@ void main() {
       final Rect band = tester.getRect(
         find.byKey(const ValueKey('intro-stage')),
       );
-      final Rect skip = tester.getRect(find.text('Skip'));
       for (final key in parts) {
         final Rect part = tester.getRect(find.byKey(ValueKey(key)));
         expect(part.center.dx, closeTo(band.center.dx, 0.5));
         expect(part.top, greaterThanOrEqualTo(band.top));
         expect(part.bottom, lessThanOrEqualTo(band.bottom + 0.5));
-        expect(part.overlaps(skip), isFalse, reason: '$key draws under Skip');
       }
     });
   });
