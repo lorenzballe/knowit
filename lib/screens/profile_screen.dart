@@ -29,6 +29,7 @@ import '../utils/reminders.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/day_moment.dart' show DayMoment, DayMomentMemory;
+import '../widgets/first_day.dart' show FirstDayNumbers, FirstDayScreen;
 import '../widgets/place_ask.dart';
 import '../widgets/profile_menu.dart';
 import '../widgets/profile_top.dart';
@@ -836,6 +837,20 @@ class ProfileScreen extends StatelessWidget {
                 FirstOfferScreen.route(app, FirstOffer.month, preview: true),
               ),
             ),
+            // The first day's celebration, with sample numbers: only looked
+            // at; its reminder sheet keeps nothing and asks the phone
+            // nothing (lib/widgets/first_day.dart).
+            _LinkRow(
+              key: const ValueKey('debug-first-day'),
+              label: 'Preview: the first day\'s end',
+              onTap: () => Navigator.of(context, rootNavigator: true).push(
+                FirstDayScreen.route(
+                  app,
+                  numbers: FirstDayNumbers.sample,
+                  preview: true,
+                ),
+              ),
+            ),
             const SizedBox(height: 14),
             // What the app actually knows about itself. "Nothing happens"
             // is the least useful bug report there is, so it is replaced
@@ -1582,8 +1597,9 @@ class _PlusCard extends StatelessWidget {
 /// The looks the developer tools try on this phone ([DebugLooks]): the
 /// finished day without the row over its card, where the day is sent from
 /// and the picture it is sent as, which top the profile opens on, how a
-/// card's foot is set, how a hard card looks, What to learn's look, and
-/// which paywall. English, as the rest of the section is.
+/// card's foot is set, how a hard card looks, how the first finished day
+/// ends, What to learn's look, and which paywall. English, as the rest of
+/// the section is.
 class _DebugLooksPanel extends StatelessWidget {
   const _DebugLooksPanel({required this.app});
 
@@ -1766,6 +1782,45 @@ class _DebugLooksPanel extends StatelessWidget {
                 ValueListenableBuilder<HardCardLook>(
                   valueListenable: DebugLooks.hardCards,
                   builder: (context, look, _) => _HardCardsPicker(look: look),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            key: const ValueKey('debug-first-day-end'),
+            padding: const EdgeInsets.fromLTRB(0, 14, 0, 16),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: p.line)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'First day\'s end',
+                  style: AppText.body(
+                    size: 14,
+                    weight: FontWeight.w500,
+                    color: p.ink,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  'Celebration: after a reader\'s first five, a screen of its '
+                  'own first — the streak, the points, how sure against how '
+                  'right — with Remind me tomorrow and Explore; the card '
+                  'that offers Astute+ after it. As before: that card at '
+                  'once. Celebration ships. Wipe to see it again, or open '
+                  'the preview below.',
+                  style: AppText.body(
+                    size: 12,
+                    height: 1.35,
+                    color: p.inkFaint,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ValueListenableBuilder<FirstDayEndLook>(
+                  valueListenable: DebugLooks.firstDayEnd,
+                  builder: (context, look, _) => _FirstDayEndPicker(look: look),
                 ),
               ],
             ),
@@ -2318,6 +2373,39 @@ class _HardCardsPicker extends StatelessWidget {
     picked: look,
     keyOf: (pick) => 'debug-hard-cards-${pick.name}',
     onPick: DebugLooks.setHardCards,
+  );
+}
+
+/// Celebration or as before, as the end of a reader's first finished day
+/// (first_day.dart).
+class _FirstDayEndPicker extends StatelessWidget {
+  const _FirstDayEndPicker({required this.look});
+
+  final FirstDayEndLook look;
+
+  static const List<_DebugChoice<FirstDayEndLook>> _choices = [
+    (
+      pick: FirstDayEndLook.celebration,
+      name: 'Celebration',
+      note: 'first, ships',
+      said: 'First day\'s end: celebration, ships',
+      flex: 1,
+    ),
+    (
+      pick: FirstDayEndLook.asBefore,
+      name: 'As before',
+      note: 'the offer at once',
+      said: 'First day\'s end as before',
+      flex: 1,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) => _DebugPicker<FirstDayEndLook>(
+    choices: _choices,
+    picked: look,
+    keyOf: (pick) => 'debug-first-day-end-${pick.name}',
+    onPick: DebugLooks.setFirstDayEnd,
   );
 }
 

@@ -1,4 +1,4 @@
-import 'dart:async' show Timer, unawaited;
+import 'dart:async' show Completer, Timer, unawaited;
 
 import 'package:flutter/foundation.dart'
     show ValueListenable, kIsWeb, visibleForTesting;
@@ -59,6 +59,7 @@ import 'store_links.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
 import 'widgets/hand_glass.dart';
+import 'widgets/first_day.dart' show FirstDayHost;
 import 'widgets/invite_sheet.dart';
 import 'widgets/tab_zoom.dart';
 import 'widgets/learn_looks.dart' show AimScreen, learnAsksAim;
@@ -676,8 +677,10 @@ class _AstutoRootState extends State<AstutoRoot> {
   /// reader knows what they would be agreeing to — and, on a phone, once
   /// they have chosen a time on the app's own sheet (see [_offerReminder]).
   /// Where no sheet can lead to it, it is asked for as it always was; there
-  /// it shows nothing and only settles that it was asked.
-  Future<void> _askForPush() async {
+  /// it shows nothing and only settles that it was asked. [onAnswer] hears
+  /// whether the reader said yes the moment the system says, before the
+  /// reminders are armed for it.
+  Future<void> _askForPush({ValueChanged<bool>? onAnswer}) async {
     if (_askingForPush) return;
     _askingForPush = true;
     _pushAskedThisSession = true;
@@ -686,6 +689,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     final String? token = await _push.ask();
     if (!mounted) return;
     Analytics.capture('push permission answered', {'granted': token != null});
+    onAnswer?.call(token != null);
     await _app.notedPushAnswer(token: token);
     _askingForPush = false;
   }
@@ -699,8 +703,13 @@ class _AstutoRootState extends State<AstutoRoot> {
   /// asks whether. A time chosen is kept, and then the system's prompt is
   /// put exactly as it always was. "Not now" spends nothing, and the sheet
   /// comes back three days later (AppState.shouldAskForPush).
-  Future<void> _offerReminder(String reason) async {
-    if (_askingForPush) return;
+  ///
+  /// [from] names the screen the reader raised it from, where it was not
+  /// the shell's own moment: `celebration`, the first day's
+  /// (lib/widgets/first_day.dart). The time the reminder will come at, once
+  /// one was chosen and the system said yes; null otherwise.
+  Future<String?> _offerReminder(String reason, {String? from}) async {
+    if (_askingForPush) return null;
     _askingForPush = true;
     // The sheet is a question too, and the store's rating prompt never
     // follows one in the same session.
@@ -715,19 +724,56 @@ class _AstutoRootState extends State<AstutoRoot> {
       'reason': reason,
       'starts_on': habit ?? _app.notifyTime,
       'from_habit': habit != null,
+      'from': from,
     });
     final String? at = await showReminderAsk(context, _app);
-    if (!mounted) return;
+    if (!mounted) return null;
     Analytics.capture('push preprompt answered', {'choice': at ?? 'not now'});
     if (at == null) {
       await _app.notedPushDeferred();
       _askingForPush = false;
-      return;
+      return null;
     }
     // Kept quietly: the prompt is the one below, and only that one.
     await _app.setNotifyTime(at, quietly: true);
     _askingForPush = false;
-    if (mounted) await _askForPush();
+    if (!mounted) return null;
+    // Said as soon as the system has answered, not once the reminders are
+    // armed for it: a screen waiting on the answer has nothing to wait for.
+    final Completer<bool> granted = Completer<bool>();
+    unawaited(
+      _askForPush(onAnswer: granted.complete).whenComplete(() {
+        if (!granted.isCompleted) granted.complete(false);
+      }),
+    );
+    return await granted.future ? at : null;
+  }
+
+  /// Whether the celebration of the first finished day offers to remind
+  /// the reader (lib/widgets/first_day.dart): exactly when this evening
+  /// would have had the reminder sheet at the finished day — the system's
+  /// prompt unspent, the nudge on, the sheet due (AppState.shouldAskForPush,
+  /// which the first evening has as the server's experiment says), nothing
+  /// else asked or being asked that keeps the sheet waiting — and never
+  /// where notifications are on already: there is nothing to ask.
+  bool _celebrationMayRemind() {
+    if (_stage != _Stage.shell || !_canOfferReminder || _askingForPush) {
+      return false;
+    }
+    if (_app.pushAsked || !_app.notificationsOn) return false;
+    if (_app.notificationsAllowed) return false;
+    if (_askingForPlace || _placeAskedThisSitting) return false;
+    if (_askingForUpdate || _updateAskedThisSitting) return false;
+    return _app.shouldAskForPush;
+  }
+
+  /// The reminder sheet, raised from the celebration of the first day: the
+  /// shell's own road, with the moment the shell would have given it —
+  /// the day done — so it is asked once and counted once.
+  Future<String?> _remindFromCelebration() {
+    _reminderAskTimer?.cancel();
+    _reminderAskTimer = null;
+    return _offerReminder('day done', from: 'celebration');
   }
 
   /// Why the reminder sheet would rise now — 'trial' or 'day done' — or
@@ -749,7 +795,14 @@ class _AstutoRootState extends State<AstutoRoot> {
     if (_askingForPlace || _placeAskedThisSitting) return null;
     if (_askingForUpdate || _updateAskedThisSitting) return null;
     if (_trialAskDue) return 'trial';
-    if (_app.shouldAskForPush && _app.dayClosed && !_deckOnTable) {
+    // Not the evening the first day was celebrated: the celebration was the
+    // day's moment, and asked from there or passed over, the reminder is
+    // not asked twice in an evening. It comes back on a day finished later,
+    // as the sheet always does (AppState.shouldAskForPush).
+    if (_app.shouldAskForPush &&
+        _app.dayClosed &&
+        !_deckOnTable &&
+        !_app.celebratedToday) {
       return 'day done';
     }
     return null;
@@ -1467,6 +1520,10 @@ class _AstutoRootState extends State<AstutoRoot> {
           app: _app,
           account: _account,
           widgetOpen: _widgetOpen,
+          // The first day's celebration asks for the reminder down the
+          // shell's own road, so it is asked once on that evening.
+          mayRemindOnFirstDay: _celebrationMayRemind,
+          remindOnFirstDay: _remindFromCelebration,
           onDeckOnTable: (onTable) {
             _deckOnTable = onTable;
             _considerReminderAsk();
@@ -1547,6 +1604,12 @@ class AstutoShell extends StatefulWidget {
   /// or the card after them — or the shelf.
   final ValueChanged<bool>? onDeckOnTable;
 
+  /// Whether the celebration of the first finished day may offer the
+  /// reminder, and the way it asks: the root's own, which keeps the
+  /// questions of an evening in order (lib/widgets/first_day.dart).
+  final bool Function()? mayRemindOnFirstDay;
+  final Future<String?> Function()? remindOnFirstDay;
+
   const AstutoShell({
     super.key,
     required this.app,
@@ -1554,6 +1617,8 @@ class AstutoShell extends StatefulWidget {
     required this.onSignedOut,
     this.widgetOpen,
     this.onDeckOnTable,
+    this.mayRemindOnFirstDay,
+    this.remindOnFirstDay,
   });
 
   @override
@@ -1898,6 +1963,14 @@ class _AstutoShellState extends State<AstutoShell>
     final screens = [
       TodayScreen(
         app: widget.app,
+        // The first day's celebration: the reminder the root asks, and
+        // Explore, the tab beside this one.
+        firstDay: FirstDayHost(
+          mayRemind: () => widget.mayRemindOnFirstDay?.call() ?? false,
+          remind: () =>
+              widget.remindOnFirstDay?.call() ?? Future<String?>.value(),
+          explore: () => _goTo(1, by: 'first day'),
+        ),
         onCardMotion: (moving) {
           if (moving != _cardMoving) setState(() => _cardMoving = moving);
         },
