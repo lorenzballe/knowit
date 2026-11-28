@@ -110,7 +110,7 @@ void main() {
     });
     DebugLooks.learn.value = LearnLook.profile;
     debugToolsOn = false;
-    expect(learnLook, LearnLook.today);
+    expect(learnLook, DebugLooks.learnShips);
     expect(markedSkills(app), ['money']);
     final Pill money = _closest(Skill.money, 1).single;
     expect(skillMarkOf(money, markedSkills(app)), Skill.money);
@@ -781,7 +781,7 @@ void main() {
           final List<Widget> drawn = [
             LearnProfileBox(app: app),
             switch (look) {
-              LearnLook.today => TrainingChapter(app: app),
+              LearnLook.today || LearnLook.mix => TrainingChapter(app: app),
               LearnLook.score => TrainingChapter(
                 app: app,
                 skills: false,
