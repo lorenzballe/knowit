@@ -464,22 +464,23 @@ another, and for a reader who asked for less motion everything is where it
 ends.
 
 At its foot "Remind me tomorrow", and Today's challenge, the five questions
-everyone gets that day at the top of Explore: the part of the app a new
-reader most wants to send a friend, which the day's end never used to lead
-to. The way out quietly in the corner, as on a level reached. The button raises the reminder sheet down
-the shell's own road (`_offerReminder`, main.dart, with `from:
-celebration`): the same sheet and the same system prompt behind it as at the
-end of any day, asked once and counted once, and the time chosen takes the
-button's place ("We'll remind you tomorrow at 19:00"). It is there exactly
-when the shell would have put the sheet that evening — the prompt unspent,
-the nudge on, `AppState.shouldAskForPush` — and never where the phone
-already lets the app notify. The celebration is that evening's ask: used or
-passed over, the shell puts no sheet of its own that evening
-(`AppState.celebratedToday`), and a reader who passed it over is asked on a
-later evening, as ever, with nothing spent. Today's challenge closes it
-onto Explore, put back the way the tab opens (every subject, no search, at
-its top, `showBest`), where the challenge is the first thing; the card
-after the fifth stays on Today's table.
+everyone gets that day at the top of Explore, which the report on new
+readers found the part of the app most worth sending a friend, and which the
+day's end never used to lead to; the way out quietly in the corner, as on a
+level reached. The button raises the reminder sheet down the shell's own
+road (`_offerReminder`, main.dart, with `from: celebration`): the same sheet
+and the same system prompt behind it as at the end of any day, asked once
+and counted once, and the time chosen takes the button's place ("We'll
+remind you tomorrow at 19:00"). It is there exactly when the shell would
+have put the sheet that evening — the prompt unspent, the nudge on,
+`AppState.shouldAskForPush` — and never where the phone already lets the app
+notify. The celebration is that evening's ask: used or passed over, the
+shell puts no sheet of its own that evening (`AppState.celebratedToday`),
+and a reader who passed it over is asked on a later evening, as ever, with
+nothing spent. Today's challenge closes it onto Explore, put back the way
+the tab opens (every subject, no search, at its top, `showBest`), where the
+challenge is the first thing; the card after the fifth stays on Today's
+table.
 
 After it, on the free plan, the card after the fifth, as it always was;
 with Astute+, the shelf. A friend's week given on that first day (*Invita
