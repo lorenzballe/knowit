@@ -5,6 +5,8 @@
 from __future__ import annotations
 
 import json
+import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -265,6 +267,26 @@ class TheBundle(unittest.TestCase):
 
     def test_a_page_card_never_becomes_the_question_of_the_day(self):
         self.assertNotIn("page", check.GRADED)
+
+
+class TheRing(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("node"), "node is not installed")
+    def test_a_hard_page_and_its_pictures_are_ringed_in_the_apps_colours(self):
+        # The checker and the camera tell a hard page the colours of hard_env.cjs; the app rings its picture in its
+        # own (lib/widgets/hard_ring.dart). The same five test/hard_ring_test.dart pins, so the two never drift: a
+        # deep colour lifted at night, a light one taken down by day, one that reads already kept.
+        script = ("const h = require(process.argv[1]); console.log(JSON.stringify(["
+                  "h('space'), h('technology', {day: true}), h('economics', {day: true}), h('history', {day: true}),"
+                  " h('medicine'), h('maths', {day: true, label: 'DIFFICILE'})]))")
+        ran = subprocess.run(["node", "-e", script, str(Path(__file__).resolve().parent / "hard_env.cjs")],
+                             capture_output=True, text=True, check=True)
+        space, tech, economics, history, medicine, maths = json.loads(ran.stdout)
+        self.assertEqual((space["c"], space["k"], space["q"], space["edge"]), ("#0b0b0d", "#809dff", "#f2f1ec", "#2b5cff"))
+        self.assertEqual((tech["c"], tech["k"], tech["q"], tech["edge"]), ("#ffffff", "#007bbd", "#131316", "#00a6ff"))
+        self.assertEqual((economics["k"], economics["edge"]), ("#827500", "#9e8f00"))
+        self.assertEqual(history["k"], "#9e6d00")
+        self.assertEqual(medicine["k"], "#ff3b30")
+        self.assertEqual((space["label"], maths["label"]), ("HARD", "DIFFICILE"))
 
 
 if __name__ == "__main__":
