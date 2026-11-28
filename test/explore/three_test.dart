@@ -433,9 +433,18 @@ void main() {
     // The first to play: no share of a handful, card by card too few.
     expect(textOf(tester, 'three-crowd'), l.dailyFirst(1));
     expect(find.byKey(const ValueKey('three-spread')), findsNothing);
+    // The five folded under "Question by question" until it is tapped, so
+    // the result is short; open, no card says it cannot be compared yet,
+    // which the line above says once for all five.
     for (final String id in ids) {
-      expect(textOf(tester, 'three-row-crowd-$id'), l.dailyItemFew);
+      expect(find.byKey(ValueKey('three-row-$id')), findsNothing);
     }
+    await tapKey(tester, 'three-each');
+    for (final String id in ids) {
+      expect(find.byKey(ValueKey('three-row-$id')), findsOneWidget);
+      expect(find.byKey(ValueKey('three-row-crowd-$id')), findsNothing);
+    }
+    expect(find.text(l.dailyItemFew), findsNothing);
     // Under each question, what was said against the answer: a wrong pick
     // as two lines, the reader's and the right one; a right pick, the
     // right one; a share, both numbers. The card's words quoted, whole.
@@ -505,6 +514,7 @@ void main() {
     expect(textOf(tester, 'three-crowd'), l.dailyBetter(90, 10));
     expect(find.byKey(const ValueKey('three-spread')), findsOneWidget);
     expect(find.byKey(const ValueKey('three-you')), findsOneWidget);
+    await tapKey(tester, 'three-each');
     for (final String id in ids) {
       final bool pick = PillBank.byId(id)!.challenge is PickOne;
       final BetNumbers n = BetNumbers('en');
@@ -584,6 +594,7 @@ void main() {
         if (p.challenge is PickOne ? i < 3 : true) p,
     ].length;
     expect(textOf(tester, 'three-crowd'), l.dailyAverage(right, 5, '3.5'));
+    await tapKey(tester, 'three-each');
     for (final Pill p in five) {
       expect(textOf(tester, 'three-row-crowd-${p.id}'), l.crowdGotRight(70));
     }
@@ -753,6 +764,7 @@ void main() {
     final List<String> ids = await play(tester);
     await tapKey(tester, 'three-why');
     expect(host.opened.last, ('three', ids.first));
+    await tapKey(tester, 'three-each');
     await tapKey(tester, 'three-row-${ids[2]}');
     expect(host.opened.last, ('three', ids[2]));
   });
