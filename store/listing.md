@@ -1,106 +1,114 @@
 # Store listing
 
-The words for the App Store and Google Play, in English and Italian, kept
-beside the app so they change with it. Character limits are the stores';
-each field's count is checked in `store/check_listing.py`.
+The words for Google Play and the App Store, in English and Italian, kept
+beside the app so they change with it. `store/check_listing.py` holds each
+field to the store's limit and every number in it to the app's own: the
+subjects, the cards a day and how many are free, the trial, the minutes,
+the languages, and no feature the app does not ship. `store/play_it_en.md`
+is the page to copy them into the Play Console from.
 
-Screenshots are made by `tool/store_shots.dart` (the screens) and
-`store/compose_shots.py` (the frames and captions), not kept here.
+The screenshots are made by `tool/store_shots.dart` (the screens) and
+`store/compose_shots.py` (the frames and captions), and kept in
+`store/play/`.
 
 ## English
 
 ### App name (App Store 30, Google Play 30)
-Astute: Daily Learning Cards
+Astute: Daily Facts & Quiz
 
 ### Subtitle (App Store 30)
-Daily facts & quiz, 2 minutes
+Learn something new every day
 
 ### Keywords (App Store 100, comma-separated, no spaces, none of the name's or subtitle's words)
-trivia,knowledge,curious,science,history,brain,general,interesting,psychology,space,why,smart,fun
+trivia,curiosity,knowledge,science,history,brain,why,psychology,space,general,calibration,smart
 
 ### Promotional text (App Store 170)
-Five cards every morning, drawn to be played. Answer, say how sure you are, then see why. New: ten-card paths, and a daily challenge to send a friend.
+Five cards every morning, many drawn to be played. Answer, say how sure you are, then see why. In Explore, today's five: the same for everyone, to send a friend.
 
 ### Short description (Google Play 80)
-Five cards a day: answer, say how sure you are, then see why. Two minutes.
+Learn something new every day. Five cards: answer, say how sure, see why.
 
 ### Description (App Store and Google Play 4000)
 Five cards a day. A little sharper.
 
-Astute gives you five cards every morning, from the subjects you pick: space, history, science, art, psychology, food and fourteen more. Each card asks a real question, or tells you something you did not know, and always the why behind it. Two minutes, with your coffee.
+Learn something new every day, in about two minutes. Every morning Astute gives you five cards from the subjects you choose, out of twenty: science, space, history, psychology, economics, the human body, food, art and the rest. Each card asks a real question or tells you something you didn't know, and always gives the why behind it: daily facts with their reasons and their sources, not a feed of trivia.
 
-CARDS YOU CAN PLAY
-Many cards are drawn to be played: drag your guess up the chart before the price is shown, push a plunger until the cotton catches fire, drag the Earth to where it passes nearest the Sun. The idea clicks because you did it.
+How a card works
+Answer first. Then say how sure you are, from 50% to 90%. Then turn the card over: the answer, the reason, often the trap most people fall into, the one thing to keep, and the source it comes from.
 
-SAY HOW SURE YOU ARE
-Before a card turns over, you say how sure you are. Over the weeks Astute shows how far to trust what you know: where you are right more than you think, and where you are sure and wrong.
+Cards you play
+More than 900 cards are drawn to be played. Drop a boulder into the sea, then half a mountain, and watch what reaches the far coast. Drag a straw longer until the air can no longer push the water up. Count an MRI's field in Earths, ten times more at every tap. You get it because you did it.
 
-ALWAYS THE WHY
-Every answer comes with the reason, the trap most people fall into, the one thing to keep, and where it comes from. Real sources, named on every card.
+What your "sure" is worth
+Every time you say how sure you are, Astute keeps count. Your profile shows how often you are right when you say 70%, 80% or 90%: where you know more than you think, and where you are sure and wrong.
 
-A HABIT THAT STAYS SMALL
-Five cards, then you are done for the day. A streak that forgives a missed day, a reminder with the morning's first question, and a widget for your home and lock screen.
+Explore, when your five are done
+Today's five: the same five questions for everyone, a score out of 500, and a link to challenge a friend. Short challenges in estimation and judgement. The latest news, a story to a card, with the reports each one comes from. A line of the day, checked against where it was first written. A problem of the day. Books in pills, one free every week. Ten-card paths, from the easiest card to the hardest.
 
-MORE WHEN YOU WANT IT
-Explore holds the daily challenge (the same for everyone, to send a friend), quick games, your subjects' levels, ten-card paths from easy to hard, and every card you have read.
+A habit that stays small
+Five cards and you are done for the day. One notification a day, with a question from your cards; a streak with freezes for the day you forget; and widgets for your home screen.
 
-SEND A CARD TO A FRIEND
-A card goes as its question and a link. Your friend answers first, with or without the app.
+Free, with no ads
+Every morning you get five cards: two chosen for you and three at random from your subjects. Explore, your score, your level and how well you know yourself are free too. There are no ads.
 
-ASTUTE+
-Five cards of your own every day at your level, the ones you miss coming back until they stick, every path whole, your journey week by week, and every day you have read. Try it free for 14 days. Cancel any time.
+Astute+
+All five cards chosen for you every day, at your level, and the ones you miss come back until they stick. Your journey, week by week; a note from your coach every week; an assistant that explains any card, then tests you on it; every path and every book whole; every day you have read. The yearly plan starts with 14 days free: cancel before they end and you pay nothing.
 
-No ads. Your cards, your pace.
+How the cards are made
+An AI model writes every card ahead of time, and each one names where its facts come from, so you can check it. Most are read again by a second model acting as a critic, and what it cannot confirm goes on a list for a person to check. A card that enough readers flag as wrong stops being shown until someone has checked it.
 
-Terms: https://astutetheapp.com/terms.html
-Privacy: https://astutetheapp.com/privacy.html
+The app speaks 13 languages. The cards are in English for now.
+
+Terms: https://astutetheapp.com/terms
+Privacy: https://astutetheapp.com/privacy
 
 ## Italiano
 
 ### Nome dell'app
-Astute: Carte per imparare
+Astute: curiosità e perché
 
 ### Sottotitolo
-Curiosità e quiz in 2 minuti
+Impara qualcosa ogni giorno
 
 ### Parole chiave
-cultura,generale,scienza,storia,cervello,perché,trivia,psicologia,spazio,arte,giochi,domande,curiosi
+quiz,cultura,generale,scienza,storia,cervello,sapevi,psicologia,spazio,arte,domande,mente,imparare
 
 ### Testo promozionale
-Cinque carte ogni mattina, da giocare. Rispondi, di' quanto sei sicuro, poi scopri il perché. Novità: percorsi da 10 carte e la sfida del giorno da mandare a un amico.
+Cinque carte ogni mattina, molte da giocare. Rispondi, di' quanto sei sicuro e scopri il perché. In Esplora, le cinque di oggi: uguali per tutti, da mandare a un amico.
 
 ### Descrizione breve (Google Play)
-Cinque carte al giorno: rispondi, di' quanto sei sicuro, poi scopri il perché.
+Impara qualcosa di nuovo ogni giorno: cinque carte, e di ognuna il perché.
 
 ### Descrizione
 Cinque carte al giorno. Un po' più svegli.
 
-Astute ti dà cinque carte ogni mattina, dalle materie che scegli tu: spazio, storia, scienza, arte, psicologia, cibo e altre quattordici. Ogni carta ti fa una domanda vera, o ti racconta una cosa che non sapevi, e sempre il perché. Due minuti, con il caffè.
+Impara qualcosa di nuovo ogni giorno, in circa due minuti. Ogni mattina Astute ti dà cinque carte dalle materie che scegli tu, tra venti: scienza, spazio, storia, psicologia, economia, corpo umano, cibo, arte e le altre. Ogni carta ti fa una domanda vera o ti racconta una curiosità che non conoscevi, e ti dà sempre il perché: curiosità e cultura generale con le loro ragioni e le loro fonti, non un elenco di stranezze.
 
-CARTE CON CUI GIOCARE
-Molte carte sono disegnate per giocarci: trascina la tua stima sul grafico prima di vedere il prezzo, spingi lo stantuffo finché il cotone prende fuoco, porta la Terra dove passa più vicina al Sole. L'idea entra perché l'hai fatta tu.
+Come funziona una carta
+Prima rispondi. Poi dici quanto sei sicuro, dal 50% al 90%. Poi giri la carta: la risposta, la spiegazione, spesso la trappola in cui cadono quasi tutti, la cosa da ricordare e la fonte da cui viene.
 
-DI' QUANTO SEI SICURO
-Prima di girare la carta dici quanto sei sicuro. Settimana dopo settimana Astute ti mostra quanto fidarti di quello che sai: dove hai ragione più di quanto pensi, e dove sei sicuro e sbagli.
+Carte da giocare
+Più di 900 carte sono disegnate per essere giocate. Fai cadere in mare un masso, poi mezza montagna, e guarda cosa arriva sulla costa di fronte. Allunga una cannuccia finché l'aria non riesce più a spingere l'acqua più in alto. Misura il campo di una risonanza magnetica in Terre, dieci volte tanto a ogni tocco. Lo capisci perché l'hai fatto tu.
 
-SEMPRE IL PERCHÉ
-Ogni risposta arriva con la ragione, la trappola in cui cadono quasi tutti, la cosa da ricordare e da dove viene. Fonti vere, scritte su ogni carta.
+Quanto vale il tuo «sono sicuro»
+Ogni volta che dici quanto sei sicuro, Astute tiene il conto. Nel profilo vedi quante volte hai ragione quando dici 70%, 80% o 90%: dove ne sai più di quanto pensi, e dove sei sicuro e sbagli.
 
-UN'ABITUDINE CHE RESTA PICCOLA
-Cinque carte e per oggi hai finito. Una serie di giorni che perdona un giorno saltato, un promemoria con la prima domanda del mattino, e un widget per la schermata Home e quella di blocco.
+Esplora, quando hai finito le tue cinque
+Le cinque di oggi: le stesse cinque domande per tutti, un punteggio su 500 e un link per sfidare un amico. Sfide brevi di stima e di giudizio. Le ultime notizie, una storia per carta, con gli articoli da cui viene ognuna. La frase del giorno, verificata là dove fu scritta per la prima volta. Il problema del giorno. I libri in pillole, uno gratis ogni settimana. Percorsi da 10 carte, dalla più facile alla più difficile.
 
-DI PIÙ QUANDO VUOI
-In Esplora trovi la sfida del giorno (uguale per tutti, da mandare a un amico), giochi veloci, il livello delle tue materie, percorsi da 10 carte dalla più facile alla più difficile, e tutte le carte che hai letto.
+Un'abitudine che resta piccola
+Cinque carte e per oggi hai finito. Una notifica al giorno, con una domanda dalle tue carte; una serie di giorni con i jolly per il giorno in cui te ne dimentichi; e i widget per la schermata Home.
 
-MANDA UNA CARTA A UN AMICO
-Una carta parte come domanda e link. Il tuo amico risponde prima, con o senza l'app.
+Gratis, senza pubblicità
+Ogni mattina hai cinque carte: due scelte per te e tre a caso dalle tue materie. Esplora, il punteggio, il livello e quanto ti conosci sono gratis anche loro. Non c'è pubblicità.
 
-ASTUTE+
-Cinque carte tutte tue ogni giorno al tuo livello, quelle che sbagli che tornano finché non restano, ogni percorso intero, il tuo viaggio settimana per settimana, e tutti i giorni che hai letto. Provalo gratis per 14 giorni. Disdici quando vuoi.
+Astute+
+Tutte e cinque le carte scelte per te ogni giorno, al tuo livello, e quelle che sbagli tornano finché non restano. Il tuo viaggio, settimana per settimana; una nota del coach ogni settimana; un assistente che ti spiega qualsiasi carta e poi ti mette alla prova; ogni percorso e ogni libro interi; tutti i giorni che hai letto. L'abbonamento annuale parte con 14 giorni gratis: se lo disdici prima che finiscano, non paghi nulla.
 
-Niente pubblicità. Le tue carte, il tuo ritmo.
+Come nascono le carte
+Ogni carta è scritta in anticipo da un modello di intelligenza artificiale, e ognuna cita la fonte da cui vengono i fatti, così puoi controllarla. La maggior parte viene riletta da un secondo modello che fa da critico, e quello che non riesce a confermare finisce in una lista che controlla una persona. Una carta che abbastanza lettori segnalano come sbagliata smette di uscire finché qualcuno non l'ha verificata.
 
-Termini: https://astutetheapp.com/terms.html
-Privacy: https://astutetheapp.com/privacy.html
+L'app parla italiano e altre 12 lingue. Le carte, per ora, sono in inglese.
 
-Nota: le carte sono in inglese; finché non sono tradotte, la scheda italiana va pubblicata solo se il lancio include l'Italia.
+Termini: https://astutetheapp.com/terms
+Privacy: https://astutetheapp.com/privacy
