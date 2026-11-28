@@ -629,17 +629,30 @@
 .five-when .sep { opacity: .5; }
 @media (max-width: 599px) { .five-when { gap: 6px 14px; } .five-when .sep { display: none; } }
 .five-when #five-next { color: var(--cream-50); font-variant-numeric: tabular-nums; }
-.five-row { margin: 0; padding-top: 34px; list-style: none; }
-.five-item { flex: 0 0 min(76vw, 268px); display: flex; scroll-snap-align: start; }
-@media (min-width: 1100px) { .five-item { flex: 1 1 0; min-width: 0; } }
+/* One question at a time, large, as the question of the day was before
+   there were five: the five in a row that turns one card to a view, the
+   dots under it and, on a computer, the arrows, to go on to the next. */
+/* Two classes, so it wins over .row's full-bleed padding further down. */
+.row.five-row {
+  margin: 0 auto;
+  padding: 34px 0 24px;
+  scroll-padding-left: 0;
+  max-width: min(600px, calc(100vw - 2 * var(--gutter)));
+  gap: 24px;
+  list-style: none;
+  /* One card to a view: no faded edges over it. */
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.five-item { flex: 0 0 100%; display: flex; scroll-snap-align: center; }
 .five-card {
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 330px;
-  padding: 20px 20px 18px;
-  border-radius: 28px;
+  min-height: clamp(420px, 64vh, 560px);
+  padding: 28px 28px 24px;
+  border-radius: 34px;
   background-color: var(--c);
   color: rgb(var(--ink));
   text-decoration: none;
@@ -651,7 +664,7 @@
 .five-n { margin-left: auto; font-variant-numeric: tabular-nums; }
 .five-q { flex: 1 1 0; margin: 14px 0 16px; }
 .five-q.spill { flex-basis: auto; }
-.five-go { display: inline-flex; align-items: center; gap: 8px; font: 650 14px/1.2 var(--font-text); }
+.five-go { display: inline-flex; align-items: center; gap: 8px; font: 650 16px/1.2 var(--font-text); }
 .five-go b { font-weight: 600; transition: translate .25s ease; }
 .five-card:hover .five-go b { translate: 4px 0; }
 .five-note { margin-top: 22px; font: 400 15px/1.55 var(--font-text); color: var(--cream-50); text-wrap: pretty; }
