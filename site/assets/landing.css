@@ -947,6 +947,12 @@
 .evidence .claim { margin: 0 0 14px; font: 500 clamp(26px, 3.4vw, 44px)/1.08 var(--font-display); letter-spacing: -.025em; font-variation-settings: 'opsz' 144; text-wrap: balance; }
 .src { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; border: 1px solid rgba(20, 20, 22, .14); font: 500 13px/1.2 var(--font-text); color: rgba(20, 20, 22, .68); }
 .src svg { width: 13px; height: 13px; flex: none; opacity: .7; }
+/* A source that can be opened: the same pill, its paper underlined. */
+a.src { text-decoration: none; transition: border-color .2s ease, color .2s ease; }
+a.src:hover { color: var(--night); border-color: rgba(20, 20, 22, .4); }
+/* What a claim rests on, when the evidence for it is argued over: said in
+   a line, calmly, under the claim. */
+.evidence .claim-note { margin: -2px 0 14px; max-width: 640px; font: 400 16px/1.55 var(--font-text); color: var(--ink-70); text-wrap: pretty; }
 .so { margin: 44px 0 0; max-width: 680px; font: 500 clamp(20px, 2vw, 26px)/1.4 var(--font-display); font-variation-settings: 'opsz' 144; letter-spacing: -.015em; color: var(--night); text-wrap: pretty; }
 .so::before { content: ""; display: block; width: 40px; height: 2px; background: var(--night); margin-bottom: 18px; }
 @media (max-width: 600px) { .evidence li { grid-template-columns: 56px minmax(0, 1fr); } .evidence .n { font-size: 36px; } }

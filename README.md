@@ -1936,6 +1936,12 @@ errors.
 improved forecasting accuracy by around 10% on Brier score, sustained across
 four years of tournament
 ([Mellers et al., Good Judgment Project](https://www.cambridge.org/core/journals/judgment-and-decision-making/article/developing-expert-political-judgment-the-impact-of-training-and-practice-on-judgmental-accuracy-in-geopolitical-forecasting-tournaments/123EB18425391D05FA6581FDBB3F309F)).
+A 2025 re-analysis of the same data found the effects of training and teams
+shrank, vanished or reversed once the questions forecasters chose to answer,
+and when, were accounted for
+([Hauenstein et al., Psychological Science, 2025](https://doi.org/10.1177/09567976241266481)),
+which Mellers and colleagues dispute; so the site states no figure, says what
+the 2014 study found, and links both.
 
 ### Three things that follow
 
