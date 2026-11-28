@@ -7419,4 +7419,67 @@ class AppLocalizationsTr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String todayLineSure(int right, int asked, int sure) {
+    return 'Dün $asked sorudan $right doğru, %$sure emindin.';
+  }
+
+  @override
+  String todayLineRight(int right, int asked) {
+    return 'Dün $asked sorudan $right doğru.';
+  }
+
+  @override
+  String get todayLineRead => 'Dün beşini de okudun.';
+
+  @override
+  String todayLineFirstSubject(String subject) {
+    return 'Bugün ilk kez: $subject.';
+  }
+
+  @override
+  String freezeSavedLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days gün ara verdin: serin güvende.',
+      one: 'Dün ara verdin: serin güvende.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String freezeCoversLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bir gün atlarsan serin bozulmaz: $n dondurman var.',
+      one: 'Bir gün atlarsan serin bozulmaz: 1 dondurman var.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentEyebrow => 'Üst üste';
+
+  @override
+  String streakMomentUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'gün',
+      one: 'gün',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentWeek =>
+      'Koca bir hafta. Yarın beş karttan biri daha senin için seçilecek.';
+
+  @override
+  String streakMomentNext(int next) {
+    return 'Yarın $next olur.';
+  }
 }

@@ -1122,6 +1122,20 @@ ones, never the weak — one subject before any has two; the rest is the
 reader's own dealer's, so the cards of words come in a little at a time.
 From the eighth day the server deals as it does for everyone.
 
+**The second and third mornings, and the streak told.** The second day
+opened exactly as the first. Now Today says, over the cards, which day it
+is, how the day before went in its own numbers and the subject met for
+the first time ("Day 2. Yesterday 2 of 2, and you were 80% sure. Today,
+your first card in Space."), only where yesterday was read
+(`opening.dayLine`, lib/widgets/today_line.dart). The freeze that keeps a
+streak over a missed day was never told: the morning after one did, the
+same place says so first ("You skipped yesterday: your streak is
+safe."); from a streak of two the finished day says that a missed day is
+covered and how many freezes there are; and a streak reaching two, three
+and seven days rises once, small, after the five, in the manner of a
+level (`streak.told`, lib/widgets/streak_moment.dart), never on an
+evening that had its moment already.
+
 On the free plan two of the five are the reader's own —
 dealt from the mix, from the subjects and strands they kept on, at the
 level the onboarding was read to start them at (see *Reading the

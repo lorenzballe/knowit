@@ -1720,5 +1720,15 @@
   "inviteSuccessPlan": "Astute+ · 一周",
   "inviteSuccessUntil": "有效期至 {date}",
   "inviteSuccessFoot": "无需付费，也无需取消：之后自动回到免费方案。",
-  "inviteEarned": "{n, plural, other{{n} 位朋友读完了第一天：你获得 {n} 周 Astute+。}}"
+  "inviteEarned": "{n, plural, other{{n} 位朋友读完了第一天：你获得 {n} 周 Astute+。}}",
+  "todayLineSure": "昨天 {asked} 题答对 {right} 题，你有 {sure}% 的把握。",
+  "todayLineRight": "昨天 {asked} 题答对 {right} 题。",
+  "todayLineRead": "昨天五张都读完了。",
+  "todayLineFirstSubject": "今天第一次读到{subject}。",
+  "freezeSavedLine": "{days, plural, =1{昨天你没来，连续记录保住了。} other{你有 {days} 天没来，连续记录保住了。}}",
+  "freezeCoversLine": "{n, plural, =1{漏掉一天，连续记录也不会断：你有 1 次冻结。} other{漏掉一天，连续记录也不会断：你有 {n} 次冻结。}}",
+  "streakMomentEyebrow": "连续",
+  "streakMomentUnit": "{n, plural, =1{天} other{天}}",
+  "streakMomentWeek": "整整一周。明天的五张里，会多一张专门为你挑选。",
+  "streakMomentNext": "明天就是 {next} 天。"
 }

@@ -1720,5 +1720,15 @@
   "inviteSuccessPlan": "Astute+ · één week",
   "inviteSuccessUntil": "Tot {date}",
   "inviteSuccessFoot": "Niets te betalen en niets op te zeggen: daarna heb je weer het gratis abonnement.",
-  "inviteEarned": "{n, plural, =1{Een vriend maakte zijn eerste dag af: een week Astute+ voor jou.} other{{n} vrienden maakten hun eerste dag af: {n} weken Astute+ voor jou.}}"
+  "inviteEarned": "{n, plural, =1{Een vriend maakte zijn eerste dag af: een week Astute+ voor jou.} other{{n} vrienden maakten hun eerste dag af: {n} weken Astute+ voor jou.}}",
+  "todayLineSure": "Gisteren {right} van de {asked}, en je was {sure}% zeker.",
+  "todayLineRight": "Gisteren {right} van de {asked}.",
+  "todayLineRead": "Gisteren las je ze alle vijf.",
+  "todayLineFirstSubject": "Vandaag je eerste kaart over {subject}.",
+  "freezeSavedLine": "{days, plural, =1{Gisteren sloeg je over: je reeks is veilig.} other{Je sloeg {days} dagen over: je reeks is veilig.}}",
+  "freezeCoversLine": "{n, plural, =1{Sla je een dag over, dan houdt je reeks stand: je hebt 1 freeze.} other{Sla je een dag over, dan houdt je reeks stand: je hebt {n} freezes.}}",
+  "streakMomentEyebrow": "Op rij",
+  "streakMomentUnit": "{n, plural, =1{dag} other{dagen}}",
+  "streakMomentWeek": "Een hele week. Morgen is er één kaart meer van de vijf voor jou gekozen.",
+  "streakMomentNext": "Morgen worden het er {next}."
 }

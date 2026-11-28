@@ -1720,5 +1720,15 @@
   "inviteSuccessPlan": "Astute+ · bir hafta",
   "inviteSuccessUntil": "{date} tarihine kadar",
   "inviteSuccessFoot": "Ödenecek ya da iptal edilecek bir şey yok: sonra ücretsiz plana dönersin.",
-  "inviteEarned": "{n, plural, other{{n} arkadaşın ilk gününü bitirdi: sana {n} hafta Astute+.}}"
+  "inviteEarned": "{n, plural, other{{n} arkadaşın ilk gününü bitirdi: sana {n} hafta Astute+.}}",
+  "todayLineSure": "Dün {asked} sorudan {right} doğru, %{sure} emindin.",
+  "todayLineRight": "Dün {asked} sorudan {right} doğru.",
+  "todayLineRead": "Dün beşini de okudun.",
+  "todayLineFirstSubject": "Bugün ilk kez: {subject}.",
+  "freezeSavedLine": "{days, plural, =1{Dün ara verdin: serin güvende.} other{{days} gün ara verdin: serin güvende.}}",
+  "freezeCoversLine": "{n, plural, =1{Bir gün atlarsan serin bozulmaz: 1 dondurman var.} other{Bir gün atlarsan serin bozulmaz: {n} dondurman var.}}",
+  "streakMomentEyebrow": "Üst üste",
+  "streakMomentUnit": "{n, plural, =1{gün} other{gün}}",
+  "streakMomentWeek": "Koca bir hafta. Yarın beş karttan biri daha senin için seçilecek.",
+  "streakMomentNext": "Yarın {next} olur."
 }

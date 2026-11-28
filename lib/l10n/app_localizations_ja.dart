@@ -7197,4 +7197,66 @@ class AppLocalizationsJa extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String todayLineSure(int right, int asked, int sure) {
+    return '昨日は$asked問中$right問正解、自信は$sure%でした。';
+  }
+
+  @override
+  String todayLineRight(int right, int asked) {
+    return '昨日は$asked問中$right問正解。';
+  }
+
+  @override
+  String get todayLineRead => '昨日は5枚すべて読みました。';
+
+  @override
+  String todayLineFirstSubject(String subject) {
+    return '今日は初めての$subjectのカード。';
+  }
+
+  @override
+  String freezeSavedLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days日お休みでしたが、連続記録は守られています。',
+      one: '昨日はお休みでしたが、連続記録は守られています。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String freezeCoversLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '1日休んでも連続記録は続きます。フリーズは$n個。',
+      one: '1日休んでも連続記録は続きます。フリーズは1個。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentEyebrow => '連続';
+
+  @override
+  String streakMomentUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '日',
+      one: '日',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentWeek => 'まる1週間。明日は5枚のうち、あなたのために選ぶカードが1枚増えます。';
+
+  @override
+  String streakMomentNext(int next) {
+    return '明日で$next日。';
+  }
 }

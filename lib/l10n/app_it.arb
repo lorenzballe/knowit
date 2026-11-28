@@ -1720,5 +1720,15 @@
   "inviteSuccessPlan": "Astute+ · una settimana",
   "inviteSuccessUntil": "Fino al {date}",
   "inviteSuccessFoot": "Niente da pagare e niente da disdire: poi torni al piano gratuito.",
-  "inviteEarned": "{n, plural, =1{Un amico ha finito la sua prima giornata: una settimana di Astute+ per te.} other{{n} amici hanno finito la prima giornata: {n} settimane di Astute+ per te.}}"
+  "inviteEarned": "{n, plural, =1{Un amico ha finito la sua prima giornata: una settimana di Astute+ per te.} other{{n} amici hanno finito la prima giornata: {n} settimane di Astute+ per te.}}",
+  "todayLineSure": "Ieri {right} su {asked}, ed eri sicuro al {sure}%.",
+  "todayLineRight": "Ieri {right} su {asked}.",
+  "todayLineRead": "Ieri le hai lette tutte e cinque.",
+  "todayLineFirstSubject": "Oggi, la tua prima carta di {subject}.",
+  "freezeSavedLine": "{days, plural, =1{Ieri l’hai saltato: la tua serie è salva.} other{Hai saltato {days} giorni: la tua serie è salva.}}",
+  "freezeCoversLine": "{n, plural, =1{Se salti un giorno, la serie regge: hai 1 jolly.} other{Se salti un giorno, la serie regge: hai {n} jolly.}}",
+  "streakMomentEyebrow": "Di fila",
+  "streakMomentUnit": "{n, plural, =1{giorno} other{giorni}}",
+  "streakMomentWeek": "Una settimana intera. Domani una carta in più delle cinque è scelta per te.",
+  "streakMomentNext": "Domani fanno {next}."
 }

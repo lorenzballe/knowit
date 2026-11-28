@@ -8095,4 +8095,73 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String todayLineSure(int right, int asked, int sure) {
+    return 'Вчера $right из $asked, и ты был уверен на $sure%.';
+  }
+
+  @override
+  String todayLineRight(int right, int asked) {
+    return 'Вчера $right из $asked.';
+  }
+
+  @override
+  String get todayLineRead => 'Вчера ты прочитал все пять.';
+
+  @override
+  String todayLineFirstSubject(String subject) {
+    return 'Сегодня первая карточка по теме «$subject».';
+  }
+
+  @override
+  String freezeSavedLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Ты пропустил $days дня: серия цела.',
+      many: 'Ты пропустил $days дней: серия цела.',
+      few: 'Ты пропустил $days дня: серия цела.',
+      one: 'Вчера ты пропустил день: серия цела.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String freezeCoversLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Пропустишь день — серия устоит: у тебя $n заморозки.',
+      many: 'Пропустишь день — серия устоит: у тебя $n заморозок.',
+      few: 'Пропустишь день — серия устоит: у тебя $n заморозки.',
+      one: 'Пропустишь день — серия устоит: у тебя 1 заморозка.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentEyebrow => 'Подряд';
+
+  @override
+  String streakMomentUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'дня',
+      many: 'дней',
+      few: 'дня',
+      one: 'день',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentWeek =>
+      'Целая неделя. Завтра на одну карточку из пяти больше выберут для тебя.';
+
+  @override
+  String streakMomentNext(int next) {
+    return 'Завтра будет $next.';
+  }
 }

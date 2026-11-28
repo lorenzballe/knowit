@@ -24,6 +24,8 @@ import '../widgets/skill_score.dart' show todayMoveOf;
 import '../sync/invite.dart';
 import '../widgets/invite_sheet.dart' show showInviteWeekIfDue;
 import '../widgets/level_up.dart' show showLevelUpIfDue;
+import '../widgets/streak_moment.dart' show showStreakMomentIfDue;
+import '../widgets/today_line.dart';
 import '../widgets/day_moment.dart' show showDayMomentIfDue;
 import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
@@ -206,6 +208,11 @@ class _TodayScreenState extends State<TodayScreen> {
       // The first week's page or the first month's, when one is due
       // (lib/state/first_offers.dart): a level reached wins the evening.
       if (await showFirstOfferIfDue(context, widget.app)) return;
+      // The streak reaching two days, three or seven, small and once
+      // (lib/widgets/streak_moment.dart): never on an evening that had
+      // its moment already.
+      if (!mounted) return;
+      if (await showStreakMomentIfDue(context, widget.app)) return;
       if (!moment || !mounted) return;
       await showDayMomentIfDue(context, widget.app);
     });
@@ -342,6 +349,18 @@ class _TodayScreenState extends State<TodayScreen> {
                   : null,
             ),
           ),
+          // What the morning has to say before its first card: the day
+          // missed that a freeze covered, or, on a new reader's second
+          // and third days, how the day before went and what is new
+          // (lib/widgets/today_line.dart). All day, so the deck below
+          // keeps one size.
+          if (todayLineOf(context, app) case (
+            lead: final String? lead,
+            text: final String text,
+          )) ...[
+            const SizedBox(height: 10),
+            TodayLine(lead: lead, text: text),
+          ],
           const SizedBox(height: 16),
           _ProgressBars(total: app.todaysDeck.length, index: app.todayIndex),
           const SizedBox(height: 16),
@@ -856,15 +875,23 @@ class _Pool extends StatelessWidget {
   }
 }
 
-/// The small line under the finished day's. The freeze is said here and
-/// nowhere else, so it comes first on the day it was spent. Otherwise the
-/// gesture that likes a card, until the reader has liked one: from then on
-/// they know it, a liked card says so itself with the heart in its corner,
-/// and there is no line.
+/// The small line under the finished day's, which is where the streak is
+/// shown: the freeze, first on the day it was spent. Then, where the streak
+/// is told (`streak.told`) and there is a streak of two days or more to
+/// keep, that a missed day is covered and how many freezes the reader
+/// holds: first in the first week, when the reader is learning the app,
+/// and after the gesture that likes a card later on. That gesture is said
+/// until the reader has liked a card, the first evening's line: from then
+/// on a liked card says so itself with the heart in its corner.
 String? _shelfAside(BuildContext context, AppState app) {
   if (app.streakWasFrozen) return context.l10n.freezeKeptStreak;
+  final String? covered =
+      app.streakToldOn && app.liveStreak > 1 && app.freezes > 0
+      ? context.l10n.freezeCoversLine(app.freezes)
+      : null;
+  if (covered != null && app.completedDates.length <= 7) return covered;
   if (app.likedIds.isEmpty) return context.l10n.holdACardYouLike;
-  return null;
+  return covered;
 }
 
 class _ProgressBars extends StatelessWidget {

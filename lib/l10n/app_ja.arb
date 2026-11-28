@@ -1720,5 +1720,15 @@
   "inviteSuccessPlan": "Astute+・1週間",
   "inviteSuccessUntil": "{date}まで",
   "inviteSuccessFoot": "支払いも解約も不要です。その後は無料プランに戻ります。",
-  "inviteEarned": "{n, plural, other{友だち{n}人が最初の1日を終えました。あなたにAstute+を{n}週間。}}"
+  "inviteEarned": "{n, plural, other{友だち{n}人が最初の1日を終えました。あなたにAstute+を{n}週間。}}",
+  "todayLineSure": "昨日は{asked}問中{right}問正解、自信は{sure}%でした。",
+  "todayLineRight": "昨日は{asked}問中{right}問正解。",
+  "todayLineRead": "昨日は5枚すべて読みました。",
+  "todayLineFirstSubject": "今日は初めての{subject}のカード。",
+  "freezeSavedLine": "{days, plural, =1{昨日はお休みでしたが、連続記録は守られています。} other{{days}日お休みでしたが、連続記録は守られています。}}",
+  "freezeCoversLine": "{n, plural, =1{1日休んでも連続記録は続きます。フリーズは1個。} other{1日休んでも連続記録は続きます。フリーズは{n}個。}}",
+  "streakMomentEyebrow": "連続",
+  "streakMomentUnit": "{n, plural, =1{日} other{日}}",
+  "streakMomentWeek": "まる1週間。明日は5枚のうち、あなたのために選ぶカードが1枚増えます。",
+  "streakMomentNext": "明日で{next}日。"
 }

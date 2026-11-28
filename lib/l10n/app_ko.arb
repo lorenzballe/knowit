@@ -1720,5 +1720,15 @@
   "inviteSuccessPlan": "Astute+ · 1주일",
   "inviteSuccessUntil": "{date}까지",
   "inviteSuccessFoot": "결제도 해지도 필요 없어요. 이후에는 무료 요금제로 돌아가요.",
-  "inviteEarned": "{n, plural, other{친구 {n}명이 첫날을 마쳤어요. 나에게 Astute+ {n}주.}}"
+  "inviteEarned": "{n, plural, other{친구 {n}명이 첫날을 마쳤어요. 나에게 Astute+ {n}주.}}",
+  "todayLineSure": "어제는 {asked}개 중 {right}개, 확신은 {sure}%였어요.",
+  "todayLineRight": "어제는 {asked}개 중 {right}개.",
+  "todayLineRead": "어제는 다섯 장을 모두 읽었어요.",
+  "todayLineFirstSubject": "오늘은 처음으로 {subject} 카드가 있어요.",
+  "freezeSavedLine": "{days, plural, =1{어제는 건너뛰었지만 연속 기록은 안전해요.} other{{days}일을 건너뛰었지만 연속 기록은 안전해요.}}",
+  "freezeCoversLine": "{n, plural, =1{하루를 건너뛰어도 연속 기록은 이어져요. 프리즈가 1개 있어요.} other{하루를 건너뛰어도 연속 기록은 이어져요. 프리즈가 {n}개 있어요.}}",
+  "streakMomentEyebrow": "연속",
+  "streakMomentUnit": "{n, plural, =1{일} other{일}}",
+  "streakMomentWeek": "꼬박 일주일. 내일은 다섯 장 중 한 장이 더 당신을 위해 골라져요.",
+  "streakMomentNext": "내일이면 {next}일이에요."
 }

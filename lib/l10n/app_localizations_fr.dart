@@ -7606,4 +7606,67 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String todayLineSure(int right, int asked, int sure) {
+    return 'Hier, $right sur $asked, et tu étais sûr à $sure %.';
+  }
+
+  @override
+  String todayLineRight(int right, int asked) {
+    return 'Hier, $right sur $asked.';
+  }
+
+  @override
+  String get todayLineRead => 'Hier, tu as lu les cinq.';
+
+  @override
+  String todayLineFirstSubject(String subject) {
+    return 'Aujourd’hui, une première carte : $subject.';
+  }
+
+  @override
+  String freezeSavedLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Tu as sauté $days jours : ta série est sauve.',
+      one: 'Tu as sauté hier : ta série est sauve.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String freezeCoversLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Un jour sauté, ta série tient : tu as $n jokers.',
+      one: 'Un jour sauté, ta série tient : tu as 1 joker.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentEyebrow => 'D’affilée';
+
+  @override
+  String streakMomentUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'jours',
+      one: 'jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentWeek =>
+      'Une semaine entière. Demain, une carte de plus sur les cinq est choisie pour toi.';
+
+  @override
+  String streakMomentNext(int next) {
+    return 'Demain, ça fera $next.';
+  }
 }

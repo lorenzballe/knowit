@@ -1720,5 +1720,15 @@
   "inviteSuccessPlan": "Astute+ · une semaine",
   "inviteSuccessUntil": "Jusqu’au {date}",
   "inviteSuccessFoot": "Rien à payer, rien à résilier : ensuite tu reviens au forfait gratuit.",
-  "inviteEarned": "{n, plural, one{Un ami a fini sa première journée : une semaine d’Astute+ pour toi.} other{{n} amis ont fini leur première journée : {n} semaines d’Astute+ pour toi.}}"
+  "inviteEarned": "{n, plural, one{Un ami a fini sa première journée : une semaine d’Astute+ pour toi.} other{{n} amis ont fini leur première journée : {n} semaines d’Astute+ pour toi.}}",
+  "todayLineSure": "Hier, {right} sur {asked}, et tu étais sûr à {sure} %.",
+  "todayLineRight": "Hier, {right} sur {asked}.",
+  "todayLineRead": "Hier, tu as lu les cinq.",
+  "todayLineFirstSubject": "Aujourd’hui, une première carte : {subject}.",
+  "freezeSavedLine": "{days, plural, =1{Tu as sauté hier : ta série est sauve.} other{Tu as sauté {days} jours : ta série est sauve.}}",
+  "freezeCoversLine": "{n, plural, =1{Un jour sauté, ta série tient : tu as 1 joker.} other{Un jour sauté, ta série tient : tu as {n} jokers.}}",
+  "streakMomentEyebrow": "D’affilée",
+  "streakMomentUnit": "{n, plural, =1{jour} other{jours}}",
+  "streakMomentWeek": "Une semaine entière. Demain, une carte de plus sur les cinq est choisie pour toi.",
+  "streakMomentNext": "Demain, ça fera {next}."
 }

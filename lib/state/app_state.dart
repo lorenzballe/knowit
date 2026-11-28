@@ -91,6 +91,8 @@ class AppState extends ChangeNotifier {
   static const _kLastCompletion = 'knowit.lastCompletionDate';
   static const _kFreezes = 'knowit.freezes';
   static const _kFrozeOn = 'knowit.frozeOn';
+  static const _kFrozeDays = 'knowit.frozeDays';
+  static const _kStreakTold = 'knowit.streakTold';
   static const _kCompletedDates = 'knowit.completedDates';
   static const _kSavedIds = 'knowit.savedIds';
   static const _kLikedIds = 'knowit.likedIds';
@@ -190,6 +192,14 @@ class AppState extends ChangeNotifier {
 
   /// The day a freeze was spent, so it can be said out loud once.
   String? frozeOn;
+
+  /// How many days the freezes spent on [frozeOn] covered: one, or up to
+  /// three on Astute+.
+  int frozeDays = 1;
+
+  /// The streaks whose moment has risen (lib/widgets/streak_moment.dart),
+  /// each once on this phone.
+  List<int> streakTold = [];
   List<String> completedDates = [];
 
   /// Saved pill ids, most recently kept first. A bookmark: the cards the
@@ -663,6 +673,11 @@ class AppState extends ChangeNotifier {
     lastCompletionDate = _prefs.getString(_kLastCompletion);
     freezes = _prefs.getInt(_kFreezes) ?? 1;
     frozeOn = _prefs.getString(_kFrozeOn);
+    frozeDays = _prefs.getInt(_kFrozeDays) ?? 1;
+    streakTold = [
+      for (final String n in _prefs.getStringList(_kStreakTold) ?? const [])
+        ?int.tryParse(n),
+    ];
     completedDates = _prefs.getStringList(_kCompletedDates) ?? [];
     savedIds = _prefs.getStringList(_kSavedIds) ?? [];
     likedIds = _prefs.getStringList(_kLikedIds) ?? [];
@@ -848,9 +863,11 @@ class AppState extends ChangeNotifier {
     freezes -= missed;
     lastCompletionDate = dateKey(dayShift(today, -1));
     frozeOn = dateKey(today);
+    frozeDays = missed;
     await _prefs.setInt(_kFreezes, freezes);
     await _prefs.setString(_kLastCompletion, lastCompletionDate!);
     await _prefs.setString(_kFrozeOn, frozeOn!);
+    await _prefs.setInt(_kFrozeDays, frozeDays);
     Analytics.capture('streak frozen', {
       'days_covered': missed,
       'freezes_left': freezes,
@@ -860,6 +877,72 @@ class AppState extends ChangeNotifier {
 
   /// True when a freeze saved the streak today and it has not been said yet.
   bool get streakWasFrozen => frozeOn == dateKey(today);
+
+  /// The streaks that rise once, small, when they are reached
+  /// (lib/widgets/streak_moment.dart): the second day, the third and the
+  /// seventh. The first day's own moment is the end of the first five.
+  static const Set<int> kStreakMoments = {2, 3, 7};
+
+  /// Whether the streak just reached one of [kStreakMoments] with today's
+  /// five, and its moment has not risen on this phone (`streak.told`).
+  bool get streakMomentDue =>
+      streakToldOn &&
+      dayClosed &&
+      kStreakMoments.contains(liveStreak) &&
+      !streakTold.contains(liveStreak);
+
+  /// The streak's moment has risen: never again for this streak.
+  Future<void> noteStreakTold() async {
+    if (streakTold.contains(liveStreak)) return;
+    streakTold = [...streakTold, liveStreak];
+    await _prefs.setStringList(_kStreakTold, [
+      for (final int n in streakTold) '$n',
+    ]);
+    Analytics.capture('streak told', {
+      'streak_days': liveStreak,
+      'freezes': freezes,
+      'is_plus': isPlus,
+    });
+  }
+
+  /// How the day [day] (a date key) went, in its own numbers: how many of
+  /// its questions with a right answer were answered, how many were right,
+  /// and how sure the reader said they were, on average, where they said;
+  /// null for a day with no such answer.
+  ({int asked, int right, int? sure})? numbersOn(String day) {
+    final List<Judgement> theirs = [
+      for (final Judgement j in judgements)
+        if (j.on == day) j,
+    ];
+    if (theirs.isEmpty) return null;
+    final List<int> said = [
+      for (final Judgement j in theirs) ?j.confidence,
+    ];
+    return (
+      asked: theirs.length,
+      right: theirs.where((j) => j.correct).length,
+      sure: said.isEmpty
+          ? null
+          : (said.reduce((a, b) => a + b) / said.length).round(),
+    );
+  }
+
+  /// The subjects of today's five the reader meets for the first time: not
+  /// one card read before today was of them. In the order the day has them.
+  List<String> get firstSubjectsToday {
+    final Set<String> todays = {for (final Pill p in todaysDeck) p.id};
+    final Set<String> met = {
+      for (final String id in seenIds)
+        if (!todays.contains(id)) ?PillBank.byId(id)?.topic,
+    };
+    final List<String> first = [];
+    for (final Pill p in todaysDeck) {
+      if (!met.contains(p.topic) && !first.contains(p.topic)) {
+        first.add(p.topic);
+      }
+    }
+    return first;
+  }
 
   /// Earns a freeze every seventh day kept, up to what can be held. The
   /// streak pays for its own insurance.
@@ -3942,6 +4025,8 @@ class AppState extends ChangeNotifier {
     notifyTime = '08:30';
     freezes = 1;
     frozeOn = null;
+    frozeDays = 1;
+    streakTold = [];
     name = 'You';
     isPlus = false;
     themeMode = ThemeMode.dark;

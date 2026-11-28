@@ -6168,6 +6168,16 @@ void main() {
       await _settle(tester);
       await _finishDay(tester);
 
+      // The week kept rises once, small, over the shelf
+      // (lib/widgets/streak_moment.dart), and goes at a tap.
+      await tester.pump(const Duration(seconds: 2));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('streak-moment')), findsOneWidget);
+      await tester.tapAt(tester.getCenter(find.byType(Scaffold).last));
+      await tester.pump(const Duration(seconds: 1));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('streak-moment')), findsNothing);
+
       // The shelf opens on the first card, with the day's name over it and
       // nothing about the week in the way.
       expect(find.text('Day 7'), findsOneWidget);

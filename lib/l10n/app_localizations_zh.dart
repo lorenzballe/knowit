@@ -7191,4 +7191,66 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String todayLineSure(int right, int asked, int sure) {
+    return '昨天 $asked 题答对 $right 题，你有 $sure% 的把握。';
+  }
+
+  @override
+  String todayLineRight(int right, int asked) {
+    return '昨天 $asked 题答对 $right 题。';
+  }
+
+  @override
+  String get todayLineRead => '昨天五张都读完了。';
+
+  @override
+  String todayLineFirstSubject(String subject) {
+    return '今天第一次读到$subject。';
+  }
+
+  @override
+  String freezeSavedLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '你有 $days 天没来，连续记录保住了。',
+      one: '昨天你没来，连续记录保住了。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String freezeCoversLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '漏掉一天，连续记录也不会断：你有 $n 次冻结。',
+      one: '漏掉一天，连续记录也不会断：你有 1 次冻结。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentEyebrow => '连续';
+
+  @override
+  String streakMomentUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '天',
+      one: '天',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentWeek => '整整一周。明天的五张里，会多一张专门为你挑选。';
+
+  @override
+  String streakMomentNext(int next) {
+    return '明天就是 $next 天。';
+  }
 }

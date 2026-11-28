@@ -7226,4 +7226,66 @@ class AppLocalizationsKo extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String todayLineSure(int right, int asked, int sure) {
+    return '어제는 $asked개 중 $right개, 확신은 $sure%였어요.';
+  }
+
+  @override
+  String todayLineRight(int right, int asked) {
+    return '어제는 $asked개 중 $right개.';
+  }
+
+  @override
+  String get todayLineRead => '어제는 다섯 장을 모두 읽었어요.';
+
+  @override
+  String todayLineFirstSubject(String subject) {
+    return '오늘은 처음으로 $subject 카드가 있어요.';
+  }
+
+  @override
+  String freezeSavedLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days일을 건너뛰었지만 연속 기록은 안전해요.',
+      one: '어제는 건너뛰었지만 연속 기록은 안전해요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String freezeCoversLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '하루를 건너뛰어도 연속 기록은 이어져요. 프리즈가 $n개 있어요.',
+      one: '하루를 건너뛰어도 연속 기록은 이어져요. 프리즈가 1개 있어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentEyebrow => '연속';
+
+  @override
+  String streakMomentUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '일',
+      one: '일',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentWeek => '꼬박 일주일. 내일은 다섯 장 중 한 장이 더 당신을 위해 골라져요.';
+
+  @override
+  String streakMomentNext(int next) {
+    return '내일이면 $next일이에요.';
+  }
 }
