@@ -7212,4 +7212,131 @@ class AppLocalizationsZh extends AppLocalizations {
   String firstDayReminded(String time) {
     return '明天 $time 提醒你。';
   }
+
+  @override
+  String get earlyReadingTag => '初步结果';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '每次都答对了',
+      two: '两次都答对了',
+      one: '答对了',
+    );
+    return '目前：你说过 $n 次 $level%，$_temp0。';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '每次都答错了',
+      two: '两次都答错了',
+      one: '答错了',
+    );
+    return '目前：你说过 $n 次 $level%，$_temp0。';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    return '目前：你说过 $n 次 $level%，其中答对 $right 次。';
+  }
+
+  @override
+  String get journeyClearEyebrow => '本周公开';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return '你的盲点：$subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return '你最强的一项：$subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return '这个科目最近 $n 题，正确率 $pct。';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days 天后',
+      two: '两天后',
+      one: '一天后',
+    );
+    return '$_temp0，$of 张里你还记得 $right 张。';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks 周后',
+      one: '一周后',
+    );
+    return '$_temp0，$of 张里你还记得 $right 张。';
+  }
+
+  @override
+  String get journeyClearBlindNotYet => '两个科目各答满六题，这里就会显示你最常答错的那个。';
+
+  @override
+  String get journeyClearStrongNotYet => '一个科目答满六题，这里就会显示你最擅长的那个。';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '再有 $n 个附带把握度的回答，这里就会出现初步结果。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet => '卡片会在 2 天、7 天和 21 天后回来：这里会显示你还记得多少张。';
+
+  @override
+  String get journeyPreviewDoor => '每周公开一项。其余的，用 Astute+ 打开。';
+
+  @override
+  String weekSheetOf(String date) {
+    return '$date起的一周';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$n 题中 $right 题';
+  }
+
+  @override
+  String get weekSheetRightLabel => '答对';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '基于 $n 个回答',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => '你过于自信的地方';
+
+  @override
+  String get weekSheetMemoryLabel => '你还记得的';
+
+  @override
+  String get weekSheetAccount => '在每部手机上留住你的这一周';
 }

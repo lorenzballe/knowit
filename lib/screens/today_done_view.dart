@@ -2092,21 +2092,11 @@ class _Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // The lock only where the button opens the plans: with the free plan's
+    // preview on, it opens the reader's own journey (openJourney).
     final Widget journey = _JourneyButton(
-      locked: !app.isPlus,
-      onPressed: () => requirePlus(
-        context,
-        app,
-        () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (routeContext) => JourneyScreen(
-              app: app,
-              onBack: () => Navigator.of(routeContext).pop(),
-            ),
-          ),
-        ),
-        source: 'journey',
-      ),
+      locked: !app.isPlus && !journeyIsPreview(app),
+      onPressed: () => openJourney(context, app),
     );
     return journey;
   }

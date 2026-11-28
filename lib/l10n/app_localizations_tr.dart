@@ -7440,4 +7440,136 @@ class AppLocalizationsTr extends AppLocalizations {
   String firstDayReminded(String time) {
     return 'Hatırlatma yarın saat $time.';
   }
+
+  @override
+  String get earlyReadingTag => 'İlk sonuç';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kez %$level dedin ve her seferinde haklıydın',
+      two: 'iki kez %$level dedin ve ikisinde de haklıydın',
+      one: 'bir kez %$level dedin ve haklıydın',
+    );
+    return 'Şimdiye kadar: $_temp0.';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kez %$level dedin ve her seferinde yanıldın',
+      two: 'iki kez %$level dedin ve ikisinde de yanıldın',
+      one: 'bir kez %$level dedin ve yanıldın',
+    );
+    return 'Şimdiye kadar: $_temp0.';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    return 'Şimdiye kadar: $n kez %$level dedin ve $right kez haklıydın.';
+  }
+
+  @override
+  String get journeyClearEyebrow => 'Bu hafta açık';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return 'Kör noktan: $subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return 'Güçlü yanın: $subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return 'Bu konudaki son $n cevabının $pct doğru.';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days gün',
+      two: 'İki gün',
+      one: 'Bir gün',
+    );
+    return '$_temp0 sonra hâlâ $of karttan $right tanesini hatırlıyorsun.';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks hafta',
+      one: 'Bir hafta',
+    );
+    return '$_temp0 sonra hâlâ $of karttan $right tanesini hatırlıyorsun.';
+  }
+
+  @override
+  String get journeyClearBlindNotYet =>
+      'İki konuda altışar cevap, burada en çok yanıldığın konu çıkar.';
+
+  @override
+  String get journeyClearStrongNotYet =>
+      'Bir konuda altı cevap, burada en iyi olduğun konu çıkar.';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Ne kadar emin olduğunu söylediğin $n cevap daha, burada ilk sonuç çıkar.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      'Kartlar 2, 7 ve 21 gün sonra geri gelir: burada kaçını hâlâ hatırladığını görürsün.';
+
+  @override
+  String get journeyPreviewDoor =>
+      'Her hafta başka bir rakam. Gerisini Astute+ açar.';
+
+  @override
+  String weekSheetOf(String date) {
+    return '$date haftası';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$n sorudan $right';
+  }
+
+  @override
+  String get weekSheetRightLabel => 'Doğru cevaplar';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cevaba göre',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => 'Kendine fazla güvendiğin yer';
+
+  @override
+  String get weekSheetMemoryLabel => 'Hâlâ hatırladıkların';
+
+  @override
+  String get weekSheetAccount => 'Haftanı her telefonda koru';
 }

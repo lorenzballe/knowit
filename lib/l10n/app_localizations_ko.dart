@@ -7247,4 +7247,133 @@ class AppLocalizationsKo extends AppLocalizations {
   String firstDayReminded(String time) {
     return '내일 $time에 알려 드릴게요.';
   }
+
+  @override
+  String get earlyReadingTag => '잠정 결과';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n번 답했고, 모두 맞았어요',
+      two: '두 번 답했고, 두 번 다 맞았어요',
+      one: '한 번 답했고, 맞았어요',
+    );
+    return '지금까지: $level%라고 $_temp0.';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n번 답했고, 모두 틀렸어요',
+      two: '두 번 답했고, 두 번 다 틀렸어요',
+      one: '한 번 답했고, 틀렸어요',
+    );
+    return '지금까지: $level%라고 $_temp0.';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    return '지금까지: $level%라고 $n번 답했고, 그중 $right번 맞았어요.';
+  }
+
+  @override
+  String get journeyClearEyebrow => '이번 주 공개';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return '나의 사각지대: $subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return '나의 강점: $subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return '이 분야 최근 $n번의 답 중 정답률 $pct.';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days일 뒤에도',
+      two: '이틀 뒤에도',
+      one: '하루 뒤에도',
+    );
+    return '$_temp0 $of장 중 $right장을 기억해요.';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks주 뒤에도',
+      one: '일주일 뒤에도',
+    );
+    return '$_temp0 $of장 중 $right장을 기억해요.';
+  }
+
+  @override
+  String get journeyClearBlindNotYet =>
+      '두 분야에서 각각 6번 답하면, 가장 많이 틀리는 분야가 여기 나와요.';
+
+  @override
+  String get journeyClearStrongNotYet => '한 분야에서 6번 답하면, 가장 강한 분야가 여기 나와요.';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '확신 정도를 함께 고른 답이 $n개 더 있으면, 여기 잠정 결과가 나와요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      '카드는 2일, 7일, 21일 뒤에 다시 와요. 몇 장을 아직 기억하는지 여기 나와요.';
+
+  @override
+  String get journeyPreviewDoor => '매주 다른 수치 하나. 나머지는 Astute+로 열려요.';
+
+  @override
+  String weekSheetOf(String date) {
+    return '$date부터 한 주';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$n개 중 $right개';
+  }
+
+  @override
+  String get weekSheetRightLabel => '정답';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '답 $n개 기준',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => '너무 확신하는 분야';
+
+  @override
+  String get weekSheetMemoryLabel => '아직 기억하는 것';
+
+  @override
+  String get weekSheetAccount => '어떤 휴대폰에서도 이번 주를 간직하세요';
 }

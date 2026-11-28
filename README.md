@@ -255,7 +255,9 @@ all five are the reader's own, at the level the app has measured, with a
 card that came due for review. **Your journey**: the level and the numbers,
 every subject opened strand by strand, what stayed when a card came back,
 and the moves you keep missing — the screen is Astute+; the profile keeps
-the record itself free. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
+the record itself free, and where the server has the preview on, a free
+reader sees their own journey veiled with one figure of it in the clear a
+week (below, *Your journey*). **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
 fourteen days free, the only free trial there is. It is never offered in
 the first run: a new reader goes from the subjects to their first cards
 with no screen and no tap in between, and has not yet seen anything a plan
@@ -560,6 +562,42 @@ cards read, counts them with the week past the first day: "32 cards read,
 9 this week."
 Once the day is done, the day as five squares to send sits at the foot (the
 finished day sends it too, on either plan).
+
+**On the free plan, the preview** (`journey.preview`, off as built:
+`lib/screens/journey_preview.dart`). Without it, every way into the journey
+opens the plans, and a reader who does not pay never learns what they are
+missing. With it, the same doors — the finished day's button, which loses
+its lock, the profile's way in, the looks of What to learn — open the
+reader's own journey, worked out from their answers exactly as for
+Astute+: every chapter under its clear name, its body behind a soft blur
+(still, unread by a screen reader, a tap on it the plans). Over the
+chapters one figure is in the clear, a different one each week in turn —
+the blind spot, the strong point, how sure against how right, what they
+still remember when cards come back — and under it one quiet line, the
+lock and the link's colour of the journey's other doors: "A different
+figure each week. Astute+ opens the rest." It opens the plans on the
+journey's own door. The week's figure is its own in the turn while it can
+be said, or else the first after it that can, and once shown it is kept
+for the week (`journeyClear`, on the phone), so it does not change under
+the reader; where none can be said yet, the card names the week's figure
+and says what it takes ("Six answers in two subjects, and this shows the
+one you miss most"), never a sample. Nothing the preview veils is written
+down as seen, so a trial taken from it opens the journey counting from the
+start; taken there, the page turns into the journey at once.
+`journey preview opened` says which figure was in the clear.
+
+**The first reading.** How sure against how right is measured from twelve
+answers said how sure; until then the profile said "Not enough answers yet"
+and asked for ten more after two. From the second answer
+(`kEarlyReadingFrom`) it says what they came to so far, marked as a first
+reading, and how many more it takes: "So far: you said 80% twice, and you
+were right twice." — the level said most often, the higher of two said as
+often (`AppState.earlyReading`). The profile's How well you know yourself
+says it on either plan, and so does the journey under How you reason;
+`calibration.early` holds it back, on as built. The answers given in
+Today's five on Explore are never said how sure: the game asks for a pick
+or a share and nothing more, so they count for the levels and the
+subjects, and not here.
 
 Everything is counted from what the app writes down, with a date where it
 has one (`JourneyRecord`, in `lib/state/journey_record.dart`):
@@ -2271,6 +2309,31 @@ sure about and wrong about. That last list is the page in this app most
 worth going back to. It is reachable from the record and from the profile,
 and on Sunday the finished day offers it directly, which is the one moment
 a reader is already looking at what a day came to.
+
+**Sunday's week, free** (`week.sunday`, off as built:
+`lib/state/your_week.dart`, `lib/widgets/your_week_sheet.dart`). On Sunday,
+once the five are read, a reader on the free plan is shown their week in a
+sheet: the cards read, the right answers, how sure against how right (over
+how many answers, said under it), the days in a row and the subject they did
+best in, two to a row between hairlines; under them one figure only Astute+
+shows, its name clear and the reader's own figure blurred — where they trust
+themselves too much, else their blind spot, else what they still remember,
+and none at all rather than a sample — a tap on it the plans; then "Review
+the week", the week's first five gone over again as the journey's foot goes
+over them, answered for the reader alone, and Close. A reader who missed
+Sunday gets the week gone by on Monday morning, before noon, at a calm
+moment: Today before its first card is thrown, or the day done. Once a week
+(`weekShownFor`), never on Astute+, the first day or a week with nothing
+read, and never on an evening something else has: a level, the first week's
+page, the trial's offer, the reminder sheet or the store's rating sheet. The
+shell raises it after the reminder's, the consent's and the account's own
+sheets, in a sitting nothing else has asked in. To a reader without an
+account it offers one in one line, "Keep your week on every phone", which
+opens the sign-in sheet with Apple and Google under that title — the way back
+to a reader who uninstalls, with no address of the app's own collected or
+written to. The line is offered three weeks at most, never again once its
+sheet is closed without an account, and never while `account.offer` holds
+the account back. `week sheet shown` and `week sheet closed` count it.
 
 **The nudge carries the question.** Not "three days in a row, keep it up" —
 that is a message about the app's counter. The reminder is the first

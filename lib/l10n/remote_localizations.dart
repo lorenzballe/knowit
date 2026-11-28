@@ -7133,4 +7133,119 @@ class RemoteLocalizations extends AppLocalizations {
   String firstDayReminded(String time) =>
       _words.format('firstDayReminded', localeName, {'time': time}) ??
       _base.firstDayReminded(time);
+
+  @override
+  String get earlyReadingTag =>
+      _words.text('earlyReadingTag') ?? _base.earlyReadingTag;
+
+  @override
+  String earlyReadingAll(int level, int n) =>
+      _words.format('earlyReadingAll', localeName, {'level': level, 'n': n}) ??
+      _base.earlyReadingAll(level, n);
+
+  @override
+  String earlyReadingNone(int level, int n) =>
+      _words.format('earlyReadingNone', localeName, {'level': level, 'n': n}) ??
+      _base.earlyReadingNone(level, n);
+
+  @override
+  String earlyReadingSome(int level, int n, int right) =>
+      _words.format('earlyReadingSome', localeName, {
+        'level': level,
+        'n': n,
+        'right': right,
+      }) ??
+      _base.earlyReadingSome(level, n, right);
+
+  @override
+  String get journeyClearEyebrow =>
+      _words.text('journeyClearEyebrow') ?? _base.journeyClearEyebrow;
+
+  @override
+  String journeyClearBlind(String subject) =>
+      _words.format('journeyClearBlind', localeName, {'subject': subject}) ??
+      _base.journeyClearBlind(subject);
+
+  @override
+  String journeyClearStrong(String subject) =>
+      _words.format('journeyClearStrong', localeName, {'subject': subject}) ??
+      _base.journeyClearStrong(subject);
+
+  @override
+  String journeyClearShare(String pct, int n) =>
+      _words.format('journeyClearShare', localeName, {'pct': pct, 'n': n}) ??
+      _base.journeyClearShare(pct, n);
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) =>
+      _words.format('journeyClearMemoryDays', localeName, {
+        'days': days,
+        'right': right,
+        'of': of,
+      }) ??
+      _base.journeyClearMemoryDays(days, right, of);
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) =>
+      _words.format('journeyClearMemoryWeeks', localeName, {
+        'weeks': weeks,
+        'right': right,
+        'of': of,
+      }) ??
+      _base.journeyClearMemoryWeeks(weeks, right, of);
+
+  @override
+  String get journeyClearBlindNotYet =>
+      _words.text('journeyClearBlindNotYet') ?? _base.journeyClearBlindNotYet;
+
+  @override
+  String get journeyClearStrongNotYet =>
+      _words.text('journeyClearStrongNotYet') ?? _base.journeyClearStrongNotYet;
+
+  @override
+  String journeyClearSureNotYet(int n) =>
+      _words.format('journeyClearSureNotYet', localeName, {'n': n}) ??
+      _base.journeyClearSureNotYet(n);
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      _words.text('journeyClearMemoryNotYet') ?? _base.journeyClearMemoryNotYet;
+
+  @override
+  String get journeyPreviewDoor =>
+      _words.text('journeyPreviewDoor') ?? _base.journeyPreviewDoor;
+
+  @override
+  String weekSheetOf(String date) =>
+      _words.format('weekSheetOf', localeName, {'date': date}) ??
+      _base.weekSheetOf(date);
+
+  @override
+  String weekSheetRightValue(int right, int n) =>
+      _words.format('weekSheetRightValue', localeName, {
+        'right': right,
+        'n': n,
+      }) ??
+      _base.weekSheetRightValue(right, n);
+
+  @override
+  String get weekSheetRightLabel =>
+      _words.text('weekSheetRightLabel') ?? _base.weekSheetRightLabel;
+
+  @override
+  String weekSheetAcross(int n) =>
+      _words.format('weekSheetAcross', localeName, {'n': n}) ??
+      _base.weekSheetAcross(n);
+
+  @override
+  String get weekSheetOverLabel =>
+      _words.text('weekSheetOverLabel') ?? _base.weekSheetOverLabel;
+
+  @override
+  String get weekSheetMemoryLabel =>
+      _words.text('weekSheetMemoryLabel') ?? _base.weekSheetMemoryLabel;
+
+  @override
+  String get weekSheetAccount =>
+      _words.text('weekSheetAccount') ?? _base.weekSheetAccount;
 }
