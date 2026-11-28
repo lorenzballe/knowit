@@ -112,7 +112,7 @@ class Languages(unittest.TestCase):
         self.assertIn('<a class="l-it" lang="it" href="/privacy#it">Privacy</a>', footer)
         css = read("assets/site.css")
         self.assertIn('html[data-lang="it"] .l-en, html:not([data-lang="it"]) .l-it { display: none !important; }', css)
-        self.assertIn('.js[data-lang="it"] .doc > section[lang="en"]', css)
+        self.assertIn('.js[data-lang="it"] .doc section[lang="en"]', css)
         for name in ("privacy.html", "terms.html", "support.html", "delete-account.html", "404.html", "account.html"):
             self.assertIn(chrome.header("both", "/" + name[:-5]), read(name), name)
 

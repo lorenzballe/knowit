@@ -70,7 +70,7 @@
   const showLang = to => {
     root.dataset.lang = to;
     const half = $('section[lang="' + to + '"][data-title]');
-    const section = $('.doc > section[lang="' + to + '"] h1');
+    const section = $('.doc section[lang="' + to + '"] h1');
     const titled = $('[data-title-' + to + ']');
     if (half) document.title = half.dataset.title;
     else if (section) document.title = section.textContent;

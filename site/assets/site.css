@@ -105,7 +105,7 @@ h1, h2, h3 { hanging-punctuation: first; }
    at a time once the script is there, and both, one after the other,
    without it. */
 html[data-lang="it"] .l-en, html:not([data-lang="it"]) .l-it { display: none !important; }
-.js[data-lang="it"] .doc > section[lang="en"], .js:not([data-lang="it"]) .doc > section[lang="it"], .js .doc > hr { display: none; }
+.js[data-lang="it"] .doc section[lang="en"], .js:not([data-lang="it"]) .doc section[lang="it"], .js .doc hr { display: none; }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 .skip {
