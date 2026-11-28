@@ -25,6 +25,7 @@ import '../data/skills.dart';
 import '../l10n/l10n.dart';
 import '../screens/skills_screen.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../theme.dart';
 import 'chunky.dart';
 import 'count_since.dart';
@@ -497,13 +498,15 @@ class TrainingChapter extends StatelessWidget {
             ),
           ),
         ],
-        // Under the scores, the reading of the answers: where the reader
-        // sees clearly, and their blind spot (the owner's mix).
-        const SizedBox(height: 8),
-        SkillsReading(
-          best: ranked.isEmpty ? null : ranked.first,
-          blind: ranked.length > 1 ? ranked.last : null,
-        ),
+        // Under the scores, in the owner's mix, the reading of the answers:
+        // where the reader sees clearly, and their blind spot.
+        if (DebugLooks.learnPicked == LearnLook.mix) ...[
+          const SizedBox(height: 8),
+          SkillsReading(
+            best: ranked.isEmpty ? null : ranked.first,
+            blind: ranked.length > 1 ? ranked.last : null,
+          ),
+        ],
       ],
     );
   }
@@ -652,7 +655,9 @@ class ProfileTraining extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         // The owner's mix: the skills as they are, behind a tap, in a sheet
         // like the goal's (lib/widgets/skills_sheet.dart).
-        onTap: () => showSkillsSheet(context, app),
+        onTap: () => DebugLooks.learnPicked == LearnLook.mix
+            ? showSkillsSheet(context, app)
+            : openSkills(context, app, from: 'profile'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

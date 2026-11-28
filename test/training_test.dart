@@ -17,6 +17,8 @@ import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/skills_screen.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/state/debug_looks.dart';
+import 'package:astuto/debug_flags.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/skill_score.dart';
 import 'package:astuto/widgets/skills_sheet.dart';
@@ -245,9 +247,49 @@ void main() {
       );
       expect(b.dy, a.dy, reason: 'two to a row');
       expect(b.dx, greaterThan(a.dx));
+      // As it ships, the owner's mix: the reading of the answers under the
+      // scores, where the reader sees clearly and their blind spot.
+      expect(
+        find.byKey(const ValueKey('profile-skills-reading')),
+        findsOneWidget,
+      );
       await tester.tap(find.byKey(const ValueKey('training-change')));
       await tester.pumpAndSettle();
       expect(find.byType(SkillsScreen), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('in Now, picked in the debug section, What to learn as it '
+        'was: the box opens its screen, the chapter has no reading', (
+      tester,
+    ) async {
+      await phone(tester, const Size(390, 1400));
+      final bool tools = debugToolsOn;
+      debugToolsOn = true;
+      addTearDown(() {
+        debugToolsOn = tools;
+        DebugLooks.reset();
+      });
+      final List<Pill> money = trainingCards(Skill.money, 5);
+      final AppState app = await tester.runAsync(
+        () => readyApp({
+          'knowit.skills': ['money', 'numbers'],
+          'knowit.seenIds': [for (final Pill p in money) p.id],
+          'knowit.judgements': judgementsOf(money),
+        }),
+      ) as AppState;
+      // Picked once the app has read the phone's own, as in the section.
+      DebugLooks.learn.value = LearnLook.today;
+      await show(tester, (_) => TrainingChapter(app: app));
+      expect(
+        find.byKey(const ValueKey('profile-skills-reading')),
+        findsNothing,
+      );
+      await show(tester, (_) => ProfileTraining(app: app));
+      await tester.tap(find.byKey(const ValueKey('profile-skills')));
+      await tester.pumpAndSettle();
+      expect(find.byType(SkillsScreen), findsOneWidget);
+      expect(find.byType(SkillsSheet), findsNothing);
       expect(tester.takeException(), isNull);
     });
 
