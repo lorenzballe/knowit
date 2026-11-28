@@ -8,7 +8,10 @@
   "share.challenge": true,
   "listen": false,
   "bookAudio": false,
-  "invite": false
+  "invite": false,
+  "journey.preview": true,
+  "week.sunday": true,
+  "trial.reverse": {"on": true, "audience": {"rollout": 50}}
  },
  "tunables": {"review.streakDays": 3},
  "experiments": {"push.firstAsk": {"variants": ["firstDay"]}}

@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "fc6432e42fc14b85",
+ "hash": "eb2e55303d982d7e",
  "app": {
   "gate": null,
   "flags": {
@@ -17,7 +17,15 @@ const String kEmbeddedRemote = r'''
    "share.challenge": true,
    "listen": false,
    "bookAudio": false,
-   "invite": false
+   "invite": false,
+   "journey.preview": true,
+   "week.sunday": true,
+   "trial.reverse": {
+    "on": true,
+    "audience": {
+     "rollout": 50
+    }
+   }
   },
   "tunables": {
    "review.streakDays": 3
