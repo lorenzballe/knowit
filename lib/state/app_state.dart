@@ -3035,11 +3035,35 @@ class AppState extends ChangeNotifier {
   }
 
   /// The reader's hour, as numbers.
-  (int, int) get _notifyClock {
-    final parts = notifyTime.split(':');
+  (int, int) get _notifyClock => _clockOf(notifyTime);
+
+  /// A time of day written "HH:mm", as numbers: 08:30 where it does not
+  /// read.
+  static (int, int) _clockOf(String at) {
+    final parts = at.split(':');
     final int hour = int.tryParse(parts.first) ?? 8;
     final int minute = parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30;
     return (hour, minute);
+  }
+
+  /// When the daily nudge would first land were it set for [at] ("HH:mm"):
+  /// today at that time, while it is still to come and today's five are
+  /// still to read, otherwise tomorrow — the first of [reminderPlan]'s, by
+  /// the same two rules. The reminder sheet draws that notification at its
+  /// head as a time is picked: the nudge's title and the question of the
+  /// card that morning opens on ([leadOn]), which is what it will carry.
+  DateTime firstNudgeAt(String at, {DateTime? now}) {
+    final (int hour, int minute) = _clockOf(at);
+    final DateTime clock = now ?? _clock();
+    final DateTime later = DateTime(
+      today.year,
+      today.month,
+      today.day,
+      hour,
+      minute,
+    );
+    if (later.isAfter(clock) && !todayCompleted) return later;
+    return DateTime(today.year, today.month, today.day + 1, hour, minute);
   }
 
   /// The slot the warning before a trial's charge takes in the plan: apart

@@ -17,8 +17,11 @@ import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/skills_screen.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/state/debug_looks.dart';
+import 'package:astuto/debug_flags.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/skill_score.dart';
+import 'package:astuto/widgets/skills_sheet.dart';
 import 'package:astuto/widgets/training.dart';
 
 import 'explore/core_harness.dart';
@@ -113,9 +116,37 @@ void main() {
         ),
         findsOneWidget,
       );
+      // The box opens What to learn in a sheet, as the owner picked it: a
+      // page like the goal's, the twelve one under another, each with its
+      // line, the picked ones ticked, more than one at once.
       await tester.tap(find.byKey(const ValueKey('profile-skills')));
       await tester.pumpAndSettle();
-      expect(find.byType(SkillsScreen), findsOneWidget);
+      expect(find.byType(SkillsSheet), findsOneWidget);
+      expect(find.text(l.skillLine('money')), findsOneWidget);
+      for (final Skill s in Skill.values) {
+        expect(
+          find.byKey(ValueKey('profile-skills-${s.name}')),
+          findsOneWidget,
+          reason: s.name,
+        );
+      }
+      SkillRow tile(String k) =>
+          tester.widget<SkillRow>(find.byKey(ValueKey('profile-skills-$k')));
+      expect(tile('money').on, isTrue);
+      expect(tile('science').on, isFalse);
+      // A tap picks a skill at once, and another lets it go.
+      final Finder science = find.byKey(
+        const ValueKey('profile-skills-science'),
+      );
+      await tester.ensureVisible(science);
+      await tester.pumpAndSettle();
+      await tester.tap(science);
+      await tester.pumpAndSettle();
+      expect(app.skills, contains('science'));
+      expect(tile('science').on, isTrue);
+      await tester.tap(science);
+      await tester.pumpAndSettle();
+      expect(app.skills, isNot(contains('science')));
       expect(tester.takeException(), isNull);
     });
 
@@ -196,8 +227,7 @@ void main() {
       // The one number stays large; the skills are a size and more under
       // it, a row each no taller than its badge and two lines; the others
       // sit two to a row.
-      double sizeOf(Finder text) =>
-          tester.widget<Text>(text).style!.fontSize!;
+      double sizeOf(Finder text) => tester.widget<Text>(text).style!.fontSize!;
       final double big = sizeOf(
         find.descendant(
           of: find.byKey(const ValueKey('training-score')),
@@ -217,9 +247,49 @@ void main() {
       );
       expect(b.dy, a.dy, reason: 'two to a row');
       expect(b.dx, greaterThan(a.dx));
+      // As it ships, the owner's mix: the reading of the answers under the
+      // scores, where the reader sees clearly and their blind spot.
+      expect(
+        find.byKey(const ValueKey('profile-skills-reading')),
+        findsOneWidget,
+      );
       await tester.tap(find.byKey(const ValueKey('training-change')));
       await tester.pumpAndSettle();
       expect(find.byType(SkillsScreen), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('in Now, picked in the debug section, What to learn as it '
+        'was: the box opens its screen, the chapter has no reading', (
+      tester,
+    ) async {
+      await phone(tester, const Size(390, 1400));
+      final bool tools = debugToolsOn;
+      debugToolsOn = true;
+      addTearDown(() {
+        debugToolsOn = tools;
+        DebugLooks.reset();
+      });
+      final List<Pill> money = trainingCards(Skill.money, 5);
+      final AppState app = await tester.runAsync(
+        () => readyApp({
+          'knowit.skills': ['money', 'numbers'],
+          'knowit.seenIds': [for (final Pill p in money) p.id],
+          'knowit.judgements': judgementsOf(money),
+        }),
+      ) as AppState;
+      // Picked once the app has read the phone's own, as in the section.
+      DebugLooks.learn.value = LearnLook.today;
+      await show(tester, (_) => TrainingChapter(app: app));
+      expect(
+        find.byKey(const ValueKey('profile-skills-reading')),
+        findsNothing,
+      );
+      await show(tester, (_) => ProfileTraining(app: app));
+      await tester.tap(find.byKey(const ValueKey('profile-skills')));
+      await tester.pumpAndSettle();
+      expect(find.byType(SkillsScreen), findsOneWidget);
+      expect(find.byType(SkillsSheet), findsNothing);
       expect(tester.takeException(), isNull);
     });
 

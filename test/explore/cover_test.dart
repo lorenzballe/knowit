@@ -234,6 +234,59 @@ void main() {
     expect(shown(), 1);
   });
 
+  testWidgets('below the fold, it comes up as the page is scrolled down to '
+      'it, never left empty under its title', (tester) async {
+    final CoreHost host = CoreHost(await readyApp());
+    tester.view.physicalSize = const Size(402, 874) * 3;
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final List<ExploreSection> sections = sectionsOf([_cover]);
+    final PageController pages = PageController();
+    addTearDown(pages.dispose);
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          // As the app's tabs, the page on screen being Explore's, with
+          // the sections above the cover taking the first screen whole.
+          body: PageView(
+            controller: pages,
+            children: [
+              Builder(
+                builder: (context) => CustomScrollView(
+                  slivers: [
+                    const SliverToBoxAdapter(child: SizedBox(height: 1200)),
+                    ExploreSliver(
+                      host: host,
+                      slots: exploreSlots(
+                        context,
+                        host,
+                        sections,
+                        host.app.remoteContext(host.language),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    await tester.pump(const Duration(seconds: 2));
+    // Below the fold: still waiting.
+    expect(CoverMosaic.cameUp, isFalse);
+    // Scrolled down to, it comes up.
+    await tester.drag(find.byType(CustomScrollView), const Offset(0, -900));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 60));
+    expect(CoverMosaic.cameUp, isTrue);
+    await tester.pump(CoverMosaic.rise);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('for a reader who asked for less motion it is simply there', (
     tester,
   ) async {
