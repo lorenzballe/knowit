@@ -326,6 +326,53 @@ void main() {
     await shoot('profile-aim-pick-5');
   });
 
+  // What to learn as the owner picked it: the training box on the profile,
+  // the sheet it opens (the reading of the answers, then the twelve), and
+  // the twelve further down, at night or on paper.
+  testWidgets('profile-skills', (tester) async {
+    final String theme = Platform.environment['THEME'] ?? 'dark';
+    _prefs({
+      ..._reader(plus: false),
+      'knowit.theme': theme,
+      'knowit.goals': ['decide'],
+      'knowit.skills': ['decisions', 'money', 'fakes'],
+    });
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await settle(tester);
+    final Finder list = find
+        .descendant(
+          of: find.byType(ProfileScreen),
+          matching: find.byType(Scrollable),
+        )
+        .first;
+    final Finder box = find.byKey(const ValueKey('profile-skills'));
+    await tester.scrollUntilVisible(box, 300, scrollable: list);
+    await settle(tester);
+    final ScrollPosition position = tester
+        .state<ScrollableState>(list)
+        .position;
+    position.jumpTo(position.pixels + tester.getRect(box).top - 160);
+    await settle(tester);
+    await shoot('profile-skills-1');
+    await tester.tap(find.byKey(const ValueKey('profile-training')));
+    await settle(tester);
+    await shoot('profile-skills-2');
+    final Finder inSheet = find
+        .descendant(
+          of: find.byKey(const ValueKey('profile-skills-sheet')),
+          matching: find.byType(Scrollable),
+        )
+        .first;
+    await tester.drag(inSheet, const Offset(0, -520));
+    await settle(tester);
+    await shoot('profile-skills-3');
+    await tester.tap(find.byKey(const ValueKey('profile-skills-science')));
+    await settle(tester);
+    await shoot('profile-skills-4');
+  });
+
   // The 320-wide phone, no notch, in German: at the ordinary text size,
   // and at 1.6×.
   for (final double text in [1, 1.6]) {

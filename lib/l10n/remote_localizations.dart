@@ -879,6 +879,10 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('reminderAskOther') ?? _base.reminderAskOther;
 
   @override
+  String get reminderAskPick =>
+      _words.text('reminderAskPick') ?? _base.reminderAskPick;
+
+  @override
   String get reminderAskUsual =>
       _words.text('reminderAskUsual') ?? _base.reminderAskUsual;
 

@@ -209,6 +209,7 @@
   "reminderAskLunch": "점심",
   "reminderAskEvening": "저녁",
   "reminderAskOther": "다른 시간",
+  "reminderAskPick": "직접 선택",
   "reminderAskUsual": "평소에 읽는 시간",
   "reminderAskYes": "알림 받기",
   "reminderAskNotNow": "나중에",
