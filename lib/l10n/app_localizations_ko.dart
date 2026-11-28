@@ -1839,13 +1839,13 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => '오늘의 5문제';
+  String get fiveTitle => '오늘의 챌린지';
 
   @override
   String get fiveSame => '오늘은 모두 같은 5문제. 약 2분.';
 
   @override
-  String get fiveDone => '오늘의 5문제 · 완료';
+  String get fiveDone => '오늘의 챌린지 · 완료';
 
   @override
   String dailyOf(int max) {
@@ -1932,7 +1932,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · 오늘의 5문제 · $date';
+    return 'Astute · 오늘의 챌린지 · $date';
   }
 
   @override
@@ -1945,7 +1945,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Astute 오늘의 5문제: 모두에게 같은 다섯 문제. 몇 개나 맞힐 수 있어?';
+      'Astute 오늘의 챌린지: 모두에게 같은 다섯 문제. 몇 개나 맞힐 수 있어?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -6177,7 +6177,7 @@ class AppLocalizationsKo extends AppLocalizations {
       other: '$off포인트 차이였어',
       zero: '정확히 맞혔어',
     );
-    return '오늘의 Astute 도전: $_temp0. 더 잘할 수 있어?';
+    return 'Astute 오늘의 베팅: $_temp0. 더 잘할 수 있어?';
   }
 
   @override

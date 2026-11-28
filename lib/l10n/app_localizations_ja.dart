@@ -1835,13 +1835,13 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => '今日の5問';
+  String get fiveTitle => '今日のチャレンジ';
 
   @override
   String get fiveSame => '今日はみんな同じ5問。約2分。';
 
   @override
-  String get fiveDone => '今日の5問 · 完了';
+  String get fiveDone => '今日のチャレンジ · 完了';
 
   @override
   String dailyOf(int max) {
@@ -1928,7 +1928,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · 今日の5問 · $date';
+    return 'Astute · 今日のチャレンジ · $date';
   }
 
   @override
@@ -1940,7 +1940,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get fiveChallengeAll => 'Astuteの今日の5問で全問正解。あなたもできる？';
 
   @override
-  String get fiveChallengeInvite => 'Astuteの今日の5問：みんな同じ5問。何問正解できる？';
+  String get fiveChallengeInvite => 'Astuteの今日のチャレンジ：みんな同じ5問。何問正解できる？';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -6159,7 +6159,7 @@ class AppLocalizationsJa extends AppLocalizations {
       other: '$offポイント差',
       zero: 'ぴったり正解',
     );
-    return '今日のAstuteチャレンジ：$_temp0。もっと近づける？';
+    return 'Astuteの今日の賭け：$_temp0。もっと近づける？';
   }
 
   @override

@@ -1973,15 +1973,15 @@
    }
   }
  },
- "fiveTitle": "Today's five",
+ "fiveTitle": "Today's challenge",
  "@fiveTitle": {
-  "description": "Today's five: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short."
+  "description": "Today's challenge: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short, and never the words the reader's own five cards go by (\"Today's five\", Today), so the two are never taken for each other."
  },
  "fiveSame": "The same five for everyone today. About two minutes.",
  "@fiveSame": {
   "description": "Under the Lock in button of today's five."
  },
- "fiveDone": "Today's five · done",
+ "fiveDone": "Today's challenge · done",
  "@fiveDone": {
   "description": "Head of the result card of today's five."
  },
@@ -2109,7 +2109,7 @@
    }
   }
  },
- "fiveShareHead": "Astute · Today's five · {date}",
+ "fiveShareHead": "Astute · Today's challenge · {date}",
  "@fiveShareHead": {
   "description": "First line of the message today's five is sent in.",
   "placeholders": {
@@ -2131,7 +2131,7 @@
  "@fiveChallengeAll": {
   "description": "Challenge a friend, from today's five, when the reader got all five right: the line sent before the link to the site, where the friend plays the same five questions. Asks the friend to do as well. Plain, never a boast or a cheer."
  },
- "fiveChallengeInvite": "Today's five on Astute: the same five questions for everyone. How many can you get?",
+ "fiveChallengeInvite": "Today's challenge on Astute: the same five questions for everyone. How many can you get?",
  "@fiveChallengeInvite": {
   "description": "Challenge a friend, before the reader has played today's five: the line sent before the link to the site, where the friend plays the five questions that are the same for everyone today."
  },
@@ -7206,7 +7206,7 @@
  "@rereadWrong": {
   "description": "Under a drawn card opened again from the archive, saved or liked: the reader missed it when it was dealt."
  },
- "betsDayShareLine": "Today's challenge on Astute: I was {off, plural, =0{spot on} =1{1 point off} other{{off} points off}}. Can you do better?",
+ "betsDayShareLine": "The bet of the day on Astute: I was {off, plural, =0{spot on} =1{1 point off} other{{off} points off}}. Can you do better?",
  "@betsDayShareLine": {
   "description": "The first line of the day's challenge sent to a friend, before its question and the link: how far off the reader was, never the answer. Points are percentage points.",
   "placeholders": {
