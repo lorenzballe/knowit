@@ -30,7 +30,13 @@
     "touch": "taps",
     "label": "Concrete pour options for the Hoover Dam: one pour, or 4, 16 or 64 blocks. Pick a pouring method and watch the heat escape from the concrete, then try another way."
   },
-  "source": "Geopop, “Come è stata costruita la diga di Hoover” (YouTube, 2022)",
-  "reference": "https://www.youtube.com/watch?v=aye7SUnEHDc&t=264s",
-  "written": "2026-11-03"
+  "source": "US Bureau of Reclamation, “Hoover Dam: Concrete”",
+  "source_kind": "institution",
+  "reference": "https://www.usbr.gov/lc/hooverdam/History/essays/concrete.html",
+  "watch": {
+    "url": "https://www.youtube.com/watch?v=aye7SUnEHDc&t=264s",
+    "by": "Geopop (YouTube, 2022)"
+  },
+  "written": "2026-11-03",
+  "checked": "2026-11-28"
 }

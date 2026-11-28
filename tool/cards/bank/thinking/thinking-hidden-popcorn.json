@@ -5,7 +5,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Can a hidden message in a film make you buy popcorn?",
-  "answer": "Vicary's 1957 claim used a flash of 0.33 ms, 50 times shorter than one frame on this screen (17 ms). In a 2006 lab test with a 23 ms 'Lipton Ice' flash, 80% of thirsty people chose the flashed drink versus 20% without the flash. Not-thirsty people showed no significant effect.",
+  "answer": "Vicary's 1957 claim used a flash of 0.33 ms, 50 times shorter than one frame on this screen (17 ms). In a 2006 lab test with a 23 ms 'Lipton Ice' flash, over 80% of thirsty people chose the flashed drink, against 30% without the flash. Not-thirsty people showed no significant effect.",
   "move": "A hidden flash can’t create a want. At most it tips a choice you were already making.",
   "keywords": [
     "vicary",
@@ -29,7 +29,9 @@
     "touch": "taps",
     "label": "A cinema in the dark: curtains, the screen, the audience's heads, a bucket of popcorn. A word flashes on the screen between rows of X's for as long as the reader picks, down to one frame, and they say which flashed. Then Vicary's 1957 claim, 0.33 ms, against one 17 ms frame, and a 2006 lab: thirsty people chose the drink 20% without the flash, 80% with it."
   },
-  "source": "Diventare Strong, “Persuasione Ipnotica. \"Comandi Nascosti\". Convincere Persuadere E Influenzare: Linguaggio Ipnotico” (YouTube, 2017)",
-  "reference": "https://www.youtube.com/watch?v=rgMUHXLPtuc",
-  "written": "2026-11-03"
+  "source": "Karremans, Stroebe & Claus, “Beyond Vicary’s fantasies: The impact of subliminal priming and brand choice”, Journal of Experimental Social Psychology, 2006; Stroebe, Scientific American",
+  "source_kind": "paper",
+  "reference": "https://doi.org/10.1016/j.jesp.2005.12.002",
+  "written": "2026-11-03",
+  "checked": "2026-11-28"
 }

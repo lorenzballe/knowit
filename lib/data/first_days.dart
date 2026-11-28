@@ -152,8 +152,9 @@ const List<FirstCard> kFirstDays = [
     'medicine-mri-field-strength',
     day: 2,
     why:
-        'An MRI counted in Earths, ten more at every tap: one of the drawings '
-        'the owner named as the level.',
+        'An MRI counted in Earths, ten times more at every tap up to a '
+        'common scanner\'s 30,000: one of the drawings the owner named as '
+        'the level.',
   ),
   FirstCard(
     'life-jerks-dont-climb',
@@ -163,11 +164,12 @@ const List<FirstCard> kFirstDays = [
         'with its limits said.',
   ),
   FirstCard(
-    'technology-five-times-downforce',
+    'technology-backlash-pin-hole',
     day: 2,
     why:
-        'A robot mouse held to the floor by its own fan: the guess stacked '
-        'in mouse weights, then five of them. A small machine, a big force.',
+        'Technology, with a right answer: the give in a pin and its hole, '
+        'felt with a handle. The pointer waits, then follows (Howell, '
+        'Compliant Mechanisms).',
   ),
   // Day 3.
   FirstCard(
@@ -200,11 +202,11 @@ const List<FirstCard> kFirstDays = [
         'from the wave. What we fear is not what kills.',
   ),
   FirstCard(
-    'nature-vesuvius-ash-volume',
+    'nature-everest-underwater',
     day: 3,
     why:
-        'A guess with a right answer: Vesuvius\'s ten days of 1944 dragged '
-        'into a cube beside it, 245 million m³ made a size you can see.',
+        'A guess with a right answer: Everest dragged down onto the deepest '
+        'seabed, its summit still over 2 km under (NOAA).',
   ),
   // The subjects' own, for a reader who held these highest.
   FirstCard(
@@ -270,13 +272,6 @@ const List<FirstCard> kFirstDays = [
     why:
         'Pop culture: denim leaves the dye yellow-green and turns blue in '
         'the air, held up by the reader.',
-  ),
-  FirstCard(
-    'technology-backlash-pin-hole',
-    day: 0,
-    why:
-        'Technology, with a right answer: the give in a pin and its hole, '
-        'felt with a handle. The pointer waits, then follows.',
   ),
   FirstCard(
     'thinking-two-four-seven',

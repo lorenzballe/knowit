@@ -29,7 +29,13 @@
     "label": "Card asks how many people died directly from radiation at Fukushima. The reader drags to guess, and each dot on the display stands for one person. The reveal gives the answer: one death from radiation, while the tsunami killed over 15,000.",
     "graded": false
   },
-  "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
-  "reference": "https://www.youtube.com/watch?v=yoTTJ9BJYIM&t=559s",
-  "written": "2026-11-03"
+  "source": "E. Meixler, TIME, 6 September 2018",
+  "source_kind": "news_archive",
+  "reference": "https://time.com/5388178/japan-first-fukushima-radiation-death/",
+  "watch": {
+    "url": "https://www.youtube.com/watch?v=yoTTJ9BJYIM&t=559s",
+    "by": "Geopop (YouTube, 2021)"
+  },
+  "written": "2026-11-03",
+  "checked": "2026-11-28"
 }
