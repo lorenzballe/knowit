@@ -194,6 +194,26 @@ class TheBundle(unittest.TestCase):
         self.assertNotEqual(bundle.bundled(a)["web"]["page"], bundle.bundled(b)["web"]["page"])
         self.assertEqual(len(bundle.page_hash(TEMPLATE)), 12)
 
+    def test_a_hard_card_names_its_pictures_taken_ringed_at_night_and_on_paper(self):
+        # Its own pair while taken from the page as it is; the two ringed pairs only while taken under the ring as
+        # it is too, with a name of their own (lib/widgets/hard_ring.dart, tool/cards/thumbs.cjs).
+        card = page_card(difficulty="hard")
+        cid, own, ringed = card["id"], bundle.picture_hash(TEMPLATE), bundle.ringed_hash(TEMPLATE)
+        self.assertNotEqual(own, ringed)
+        self.assertEqual(bundle.ringed_hash(TEMPLATE), bundle.page_hash(TEMPLATE + bundle.PICTURES + bundle.RINGED))
+        pictures = bundle.thumbs_of(card, {cid: own}, {cid: ringed})
+        self.assertEqual(pictures["front"], f"thumbs/{cid}-front.webp?v={own}")
+        self.assertEqual(pictures["ringed"], {"front": f"thumbs/{cid}-ringed-front.webp?v={ringed}",
+                                              "back": f"thumbs/{cid}-ringed-back.webp?v={ringed}"})
+        self.assertEqual(pictures["ringed_day"]["back"], f"thumbs/{cid}-ringed-day-back.webp?v={ringed}")
+        # Taken under another ring, or never: its own pair alone.
+        self.assertNotIn("ringed", bundle.thumbs_of(card, {cid: own}, {cid: "000000000000"}))
+        self.assertNotIn("ringed_day", bundle.thumbs_of(card, {cid: own}, {}))
+        # A card that is not hard never has them, whatever the index says.
+        self.assertNotIn("ringed", bundle.thumbs_of(page_card(difficulty="medium"), {cid: own}, {cid: ringed}))
+        # Its own pair taken from another page: nothing named at all.
+        self.assertIsNone(bundle.thumbs_of(card, {cid: "000000000000"}, {cid: ringed}))
+
     def test_the_builds_from_before_get_the_page_inside_the_card(self):
         card = page_card()
         out = bundle.bundled(card, inline=True)
