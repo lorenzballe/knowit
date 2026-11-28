@@ -1829,13 +1829,13 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => '今日五题';
+  String get fiveTitle => '今日挑战';
 
   @override
   String get fiveSame => '今天大家都是同样五题，约两分钟。';
 
   @override
-  String get fiveDone => '今日五题 · 完成';
+  String get fiveDone => '今日挑战 · 完成';
 
   @override
   String dailyOf(int max) {
@@ -1922,7 +1922,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · 今日五题 · $date';
+    return 'Astute · 今日挑战 · $date';
   }
 
   @override
@@ -1934,7 +1934,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fiveChallengeAll => 'Astute 今日五题，我全部答对。你也能做到吗？';
 
   @override
-  String get fiveChallengeInvite => 'Astute 今日五题：每个人都是同样的五道题。你能答对几道？';
+  String get fiveChallengeInvite => 'Astute 今日挑战：每个人都是同样的五道题。你能答对几道？';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -6149,7 +6149,7 @@ class AppLocalizationsZh extends AppLocalizations {
       other: '我差了 $off 个百分点',
       zero: '我正好猜中',
     );
-    return '今天的 Astute 挑战：$_temp0。你能猜得更准吗？';
+    return 'Astute 今日一赌：$_temp0。你能猜得更准吗？';
   }
 
   @override
@@ -6974,6 +6974,112 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get listenNextCard => '下一张卡片';
+
+  @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes 分钟读完',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => '继续阅读';
+
+  @override
+  String get summaryAgain => '再读一遍';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return '第 $part 部分（共 $of 部分）';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '还剩 $n 分钟',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return '收听 · $minutes 分钟';
+  }
+
+  @override
+  String get summaryPause => '暂停';
+
+  @override
+  String get summaryResume => '继续收听';
+
+  @override
+  String get summaryFreeNote => '第一部分免费，其余部分需 Astute+。';
+
+  @override
+  String get summaryTitle => '摘要';
+
+  @override
+  String get summaryNowPlaying => '正在播放';
+
+  @override
+  String get summaryNextPart => '下一部分';
+
+  @override
+  String get summaryFinish => '读完';
+
+  @override
+  String get summaryContents => '目录';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return '你读完了《$title》';
+  }
+
+  @override
+  String get summaryDoneLine => '这本书的卡片能帮你记住它的观点。';
+
+  @override
+  String get summaryToCards => '卡片里的观点';
+
+  @override
+  String get summaryBackToBook => '返回本书';
+
+  @override
+  String get summaryGateTitle => '摘要的其余部分需 Astute+';
+
+  @override
+  String summaryGateLine(int parts) {
+    return '每本书的全部 $parts 个部分，都能读也能听。本周之书对所有人免费。';
+  }
+
+  @override
+  String get summaryNeedsNetwork => '此摘要需要联网一次。';
+
+  @override
+  String get bookAudioBack => '后退 15 秒';
+
+  @override
+  String get bookAudioWaiting => '下一部分马上就来…';
+
+  @override
+  String get bookAudioDone => '已听完。';
+
+  @override
+  String get bookAudioOfferTitle => '收听本书的其余部分';
+
+  @override
+  String get bookAudioOfferLine => '有了 Astute+，每篇摘要都能完整朗读给你听，锁屏时也可以。';
+
+  @override
+  String get bookAudioStop => '停止收听';
+
+  @override
+  String get bookAudioOpen => '打开播放器';
 
   @override
   String get inviteSection => '朋友';

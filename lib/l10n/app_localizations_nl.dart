@@ -1912,14 +1912,14 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'De vijf van vandaag';
+  String get fiveTitle => 'De uitdaging van vandaag';
 
   @override
   String get fiveSame =>
       'Vandaag voor iedereen dezelfde vijf. Ongeveer twee minuten.';
 
   @override
-  String get fiveDone => 'De vijf van vandaag · klaar';
+  String get fiveDone => 'De uitdaging van vandaag · klaar';
 
   @override
   String dailyOf(int max) {
@@ -2008,7 +2008,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · De vijf van vandaag · $date';
+    return 'Astute · De uitdaging van vandaag · $date';
   }
 
   @override
@@ -2022,7 +2022,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'De vijf van vandaag op Astute: voor iedereen dezelfde vijf vragen. Hoeveel heb jij er goed?';
+      'De uitdaging van vandaag op Astute: voor iedereen dezelfde vijf vragen. Hoeveel heb jij er goed?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -6461,7 +6461,7 @@ class AppLocalizationsNl extends AppLocalizations {
       one: '1 punt ernaast',
       zero: 'precies goed',
     );
-    return 'De uitdaging van vandaag op Astute: $_temp0. Kun jij het beter?';
+    return 'De gok van de dag op Astute: $_temp0. Kun jij het beter?';
   }
 
   @override
@@ -7331,6 +7331,119 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get listenNextCard => 'Volgende kaart';
+
+  @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'Lees in $minutes minuten',
+      one: 'Lees in 1 minuut',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => 'Verder lezen';
+
+  @override
+  String get summaryAgain => 'Opnieuw lezen';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return 'Deel $part van $of';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'nog $n min',
+      one: 'nog 1 min',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return 'Luisteren · $minutes min';
+  }
+
+  @override
+  String get summaryPause => 'Pauze';
+
+  @override
+  String get summaryResume => 'Verder luisteren';
+
+  @override
+  String get summaryFreeNote =>
+      'Het eerste deel is gratis; de rest hoort bij Astute+.';
+
+  @override
+  String get summaryTitle => 'De samenvatting';
+
+  @override
+  String get summaryNowPlaying => 'Speelt nu';
+
+  @override
+  String get summaryNextPart => 'Volgend deel';
+
+  @override
+  String get summaryFinish => 'Afronden';
+
+  @override
+  String get summaryContents => 'Inhoud';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return 'Je hebt $title gelezen';
+  }
+
+  @override
+  String get summaryDoneLine =>
+      'De kaarten van het boek zorgen dat de ideeën blijven hangen.';
+
+  @override
+  String get summaryToCards => 'De ideeën als kaarten';
+
+  @override
+  String get summaryBackToBook => 'Terug naar het boek';
+
+  @override
+  String get summaryGateTitle =>
+      'De rest van deze samenvatting hoort bij Astute+';
+
+  @override
+  String summaryGateLine(int parts) {
+    return 'Alle $parts delen, om te lezen en te beluisteren, van elk boek. Het boek van de week is gratis voor iedereen.';
+  }
+
+  @override
+  String get summaryNeedsNetwork =>
+      'Deze samenvatting heeft één keer internet nodig.';
+
+  @override
+  String get bookAudioBack => '15 seconden terug';
+
+  @override
+  String get bookAudioWaiting => 'Het volgende deel komt eraan…';
+
+  @override
+  String get bookAudioDone => 'Tot het eind beluisterd.';
+
+  @override
+  String get bookAudioOfferTitle => 'Luister naar de rest van het boek';
+
+  @override
+  String get bookAudioOfferLine =>
+      'Met Astute+ wordt elke samenvatting helemaal voorgelezen, ook met je scherm vergrendeld.';
+
+  @override
+  String get bookAudioStop => 'Stoppen met luisteren';
+
+  @override
+  String get bookAudioOpen => 'Speler openen';
 
   @override
   String get inviteSection => 'Vrienden';

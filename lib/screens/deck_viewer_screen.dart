@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../books/player_room.dart';
 import '../data/skill_levels.dart';
 import '../l10n/l10n.dart';
 
@@ -166,7 +167,16 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Cards fill the screen: a book read aloud keeps its small player out
+    // of their way.
+    BookPlayerRoom.cardsOpened();
+  }
+
+  @override
   void dispose() {
+    BookPlayerRoom.cardsClosed();
     // The card open when the viewer closes was read too: most visits from
     // Explore are one card, opened, turned over and closed.
     _read(_index);

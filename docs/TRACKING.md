@@ -374,6 +374,12 @@ is in its card facts.
 | `explore story opened` **new** | a true story starts playing, from its tile on Explore | card facts, `beats` (how many it has), `authored` (true for a story written to be played, its scenes and its question), `rank` (its place on the shelf, from 1) | which stories are opened, and from where on the shelf | P |
 | `explore story finished` **new** | a story reaches its last screen, once per opening | `pill_id`, `beats`, `authored`, `ms_to_finish` (from opening), `picked_right` (on a story written to be played: whether the outcome picked came true; absent when nothing was picked) | how many stories are told to the end, and how long one takes | P |
 | `explore story closed` **new** | a story is closed, however | `pill_id`, `beats`, `beats_seen` (how many of its beats were on screen), `finished`, `ms_in_story`, `taps_back` (taps on the left to go back), `holds` (fingers held down to stop it), `exit` (`closed` with its button, `swiped down`, `card` — the card opened in its place, `back` — the phone's back) | where readers leave a story, and how: the beats seen are counted on the phone and said once, never an event per beat | P |
+| `summary opened` **new** | a book's summary opens in the reader (lib/books/summary_reader.dart), from the book's page or a part of it | `book`, `from` (`book`), `part` (where it opened, from 1), `of` (its parts), `weekly` (bool: this week's free book), `is_plus`, `resumed` (bool: back where the reader left it) | whether the long way into a book is taken, and taken up again | P |
+| `summary part read` **new** | a part of a summary is read to its foot, or turned past, once a sitting; never a part behind the offer | `book`, `part` (from 1), `of`, `is_plus`, `how` (`scroll`, `turn`) | how far into a summary readers go | P |
+| `summary finished` **new** | the page after a summary's last part | `book`, `of`, `read` (parts read so far), `is_plus` | | P |
+| `book audio played` **new** | a summary starts playing aloud (lib/books/book_player.dart, behind `bookAudio`) | `book`, `part` (where it starts, from 1), `of`, `whole` (bool: every part may be heard, Astute+ or the week's book), `from` (`book`) | whether books are heard, and on which plan | P |
+| `book audio finished` **new** | every part that could be heard was, to the end | `book`, `heard`, `of`, `whole`, `ms_listening` | | P |
+| `book audio stopped` **new** | the player is stopped before the end (its cross, Stop listening) | `book`, `heard`, `at`, `of`, `phase` (`playing`, `waiting`, `offer`, `unavailable`, `preparing`), `whole`, `ms_listening`, `why` (when nothing could be heard: `credit`, `spent`, `busy`, `storage`, `not-configured`, `later`, `audio`) | where listeners stop; `phase: offer` is the free part heard and the rest not taken. The paywall it opens says `plus gate reached` with `source: book audio`, and a locked part read `source: book summary` | P |
 
 ### 6.6 Keeping, saying, sharing
 
@@ -600,6 +606,9 @@ once each, one paywall.
 
 Listen adds two to six events to a day it is used on: started, a card heard
 per card (one on the free plan, five on Astute+), and finished or stopped.
+A book's summary adds one to ten to the day it is read on: opened, a part
+read per part (five to eight), finished; heard, two: played, then finished
+or stopped.
 
 Where the reader lives adds nothing to a day: a handful of events per reader
 in all — at most two sheets of the app's own and their answers, one system

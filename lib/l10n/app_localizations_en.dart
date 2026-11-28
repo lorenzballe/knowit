@@ -1901,13 +1901,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'Today\'s five';
+  String get fiveTitle => 'Today\'s challenge';
 
   @override
   String get fiveSame => 'The same five for everyone today. About two minutes.';
 
   @override
-  String get fiveDone => 'Today\'s five · done';
+  String get fiveDone => 'Today\'s challenge · done';
 
   @override
   String dailyOf(int max) {
@@ -1996,7 +1996,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · Today\'s five · $date';
+    return 'Astute · Today\'s challenge · $date';
   }
 
   @override
@@ -2010,7 +2010,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Today\'s five on Astute: the same five questions for everyone. How many can you get?';
+      'Today\'s challenge on Astute: the same five questions for everyone. How many can you get?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -6417,7 +6417,7 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '1 point off',
       zero: 'spot on',
     );
-    return 'Today\'s challenge on Astute: I was $_temp0. Can you do better?';
+    return 'The bet of the day on Astute: I was $_temp0. Can you do better?';
   }
 
   @override
@@ -7285,6 +7285,117 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get listenNextCard => 'Next card';
+
+  @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'Read in $minutes minutes',
+      one: 'Read in 1 minute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => 'Continue reading';
+
+  @override
+  String get summaryAgain => 'Read again';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return 'Part $part of $of';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n min left',
+      one: '1 min left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return 'Listen · $minutes min';
+  }
+
+  @override
+  String get summaryPause => 'Pause';
+
+  @override
+  String get summaryResume => 'Resume listening';
+
+  @override
+  String get summaryFreeNote =>
+      'The first part is free; the rest comes with Astute+.';
+
+  @override
+  String get summaryTitle => 'The summary';
+
+  @override
+  String get summaryNowPlaying => 'Now playing';
+
+  @override
+  String get summaryNextPart => 'Next part';
+
+  @override
+  String get summaryFinish => 'Finish';
+
+  @override
+  String get summaryContents => 'Contents';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return 'You’ve read $title';
+  }
+
+  @override
+  String get summaryDoneLine =>
+      'The book’s cards are there to make its ideas stay.';
+
+  @override
+  String get summaryToCards => 'The ideas as cards';
+
+  @override
+  String get summaryBackToBook => 'Back to the book';
+
+  @override
+  String get summaryGateTitle => 'The rest of this summary comes with Astute+';
+
+  @override
+  String summaryGateLine(int parts) {
+    return 'All $parts parts, to read and to hear, for every book. The week’s book is free for everyone.';
+  }
+
+  @override
+  String get summaryNeedsNetwork => 'This summary needs the internet once.';
+
+  @override
+  String get bookAudioBack => 'Back 15 seconds';
+
+  @override
+  String get bookAudioWaiting => 'The next part is on its way…';
+
+  @override
+  String get bookAudioDone => 'Heard to the end.';
+
+  @override
+  String get bookAudioOfferTitle => 'Hear the rest of the book';
+
+  @override
+  String get bookAudioOfferLine =>
+      'With Astute+ every summary is read to you whole, even with the screen locked.';
+
+  @override
+  String get bookAudioStop => 'Stop listening';
+
+  @override
+  String get bookAudioOpen => 'Open the player';
 
   @override
   String get inviteSection => 'Friends';

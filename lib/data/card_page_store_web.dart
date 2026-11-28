@@ -4,3 +4,6 @@ export 'card_page_store_base.dart';
 
 /// On the web the browser keeps what it fetched; the app keeps nothing.
 PageStore pageStoreOnThisPhone() => MemoryPageStore();
+
+/// On the web the browser keeps the summaries it fetched too.
+PageStore summaryStoreOnThisPhone() => MemoryPageStore();
