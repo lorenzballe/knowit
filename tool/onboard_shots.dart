@@ -397,6 +397,13 @@ void main() {
     await settle(tester, frames: 30);
     await shoot(tester, 'de-small-4-consent');
     await leave(tester);
+    // Too short for the card beside the day's cards: it waits. An SE has
+    // the room, and is asked.
+    tester.view.physicalSize = const Size(375, 667) * 3;
+    await open(tester, _finished('dark', days: 1));
+    await settle(tester, frames: 30);
+    await shoot(tester, 'de-se-4-consent');
+    await leave(tester);
   });
 
   // Which parts on the 320-wide phone, in German.
@@ -413,6 +420,11 @@ void main() {
     await open(tester, _finished('dark', days: 3));
     await settle(tester, frames: 30);
     await shoot(tester, 'de-small-5-parts');
+    await leave(tester);
+    tester.view.physicalSize = const Size(375, 667) * 3;
+    await open(tester, _finished('dark', days: 3));
+    await settle(tester, frames: 30);
+    await shoot(tester, 'de-se-5-parts');
     await leave(tester);
   });
 

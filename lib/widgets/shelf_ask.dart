@@ -30,11 +30,12 @@ class ShelfAsk extends StatefulWidget {
       ConsentCard.due(app) || PartsOfferCard.due(app);
 
   /// The least height of screen, in points at the reader's text size, that
-  /// leaves the shelf's own cards room enough beside a card asking: a small
-  /// phone at twice the text has not, and the cards of the day squeezed past
-  /// reading would be the price. Nothing is asked there; Profile's Usage
-  /// data and the fine-tuning's parts are there all the same.
-  static const double leastRoom = 400;
+  /// leaves the shelf's own cards room enough beside a card asking: an SE
+  /// has (667), a 568-point phone has not, nor any phone at twice the text,
+  /// and the cards of the day squeezed to thumbnails would be the price.
+  /// Nothing is asked there; Profile's Usage data and the fine-tuning's
+  /// parts are there all the same.
+  static const double leastRoom = 580;
 
   @override
   State<ShelfAsk> createState() => _ShelfAskState();
