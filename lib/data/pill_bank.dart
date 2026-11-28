@@ -22,6 +22,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/book_summary.dart';
 import '../models/pill.dart';
 import 'card_json.dart';
 import 'news_paper.dart';
@@ -64,6 +65,11 @@ class BankBundle {
   /// chains its own.
   final Map<int, List<String>> commons;
 
+  /// The books whose summary can be read, by book: where each is published
+  /// and what the book's page says of it before it is fetched
+  /// (lib/data/book_summaries.dart). Empty on a bundle from before them.
+  final Map<String, SummaryRef> summaries;
+
   const BankBundle({
     required this.version,
     required this.built,
@@ -71,6 +77,7 @@ class BankBundle {
     required this.retired,
     required this.editions,
     this.commons = const {},
+    this.summaries = const {},
   });
 
   /// Reads a bundle. Throws [FormatException] on a document the app could
@@ -148,6 +155,20 @@ class BankBundle {
         ];
       }
     }
+    // A summary is a book's: one whose book this bundle does not hold, or
+    // that this build cannot read, is passed over, never the bundle with it.
+    final books = <String>{
+      for (final Pill p in cards)
+        if (p.book != null) p.book!.id,
+    };
+    final summaries = <String, SummaryRef>{};
+    final rawSummaries = doc['summaries'];
+    if (rawSummaries is Map) {
+      for (final e in rawSummaries.entries) {
+        final SummaryRef? ref = SummaryRef.fromJson(e.value);
+        if (ref != null && books.contains(e.key)) summaries['${e.key}'] = ref;
+      }
+    }
     return BankBundle(
       version: version,
       built: doc['built'] is String ? doc['built'] as String : '',
@@ -155,6 +176,7 @@ class BankBundle {
       retired: retired,
       editions: editions,
       commons: commons,
+      summaries: summaries,
     );
   }
 }
@@ -255,6 +277,9 @@ class PillBank {
 
   /// The frozen common cards, by edition. See [BankBundle.commons].
   static Map<int, List<String>> get commons => _bundle.commons;
+
+  /// The summary of the book [book], when it has one to read.
+  static SummaryRef? summaryOf(String book) => _bundle.summaries[book];
 
   /// The stamp of the bundle in use; higher is newer.
   static int get version => _bundle.version;
