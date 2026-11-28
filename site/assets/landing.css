@@ -213,6 +213,13 @@
 @keyframes shimmer { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
 /* Where the app is today, under its badges. */
 .hero-where { margin: 14px 0 0; font: 500 13px/1.4 var(--font-text); color: var(--cream-50); }
+/* For anyone not on Android, while the App Store is not live: the list for
+   the iPhone, and today's challenge to play in the browser. */
+.hero-iphone { margin: 10px 0 0; font: 500 14px/1.6 var(--font-text); color: var(--cream-50); text-wrap: pretty; }
+.hero-iphone a { color: var(--cream-85); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(242, 241, 236, .35); transition: text-decoration-color .2s ease, color .2s ease; }
+.hero-iphone a:hover { color: var(--cream); text-decoration-color: var(--cream); }
+.android .hero-iphone { display: none; }
+@media (max-width: 480px) { .hero-iphone .sep { display: none; } .hero-iphone a { display: block; width: fit-content; } .hero-iphone .sep + a { margin-top: 4px; } }
 /* Four facts under the badges, each a number in the serif. */
 .facts { list-style: none; margin: 34px 0 0; padding: 24px 0 0; border-top: 1px solid var(--hairline); display: flex; flex-wrap: wrap; gap: 14px 30px; }
 .facts li { display: flex; align-items: baseline; gap: 8px; font: 500 13px/1.2 var(--font-text); color: var(--cream-60); }
@@ -865,6 +872,13 @@
 @media (hover: hover) { .deck-card:hover { translate: 0 -6px; } }
 .chips { list-style: none; max-width: 900px; margin: 0 auto; padding: 48px var(--gutter) 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .chips li { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px 0 14px; border-radius: 20px; background: var(--c); color: rgb(var(--ink)); font: 600 15px/1 var(--font-text); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3); }
+/* On a phone the twenty names under the rows only said again what the rows
+   had just shown, card by card, at half a screen's length: there they are
+   kept for whoever hears the page (the rows are not read out) and not
+   drawn. */
+@media (max-width: 767px) {
+  .chips { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+}
 
 /* ── Inside: the screens in a row ───────────────────────────────────── */
 
@@ -1153,3 +1167,46 @@ html:not(.js) .phone-controls { display: none; }
   .shelf-card, .shelf-live { transition: none; }
   .pc-play { display: none; }
 }
+
+/* ── The slim bar ───────────────────────────────────────────────────── */
+
+/* On a phone the page is long, and the prices and the questions far down
+   it: once the first screen is behind, a bar like the nav, at the thumb,
+   holds them and the store a tap away (main.js shows it, and hides it as
+   the last word comes up). On an iPhone, while the App Store is not live,
+   its button is the list instead of the store. */
+.slimbar { display: none; }
+@media (max-width: 767px) {
+  .slimbar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    z-index: 48;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 58px;
+    padding: 0 7px 0 8px;
+    border-radius: 29px;
+    background: rgba(20, 20, 22, .86);
+    -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    backdrop-filter: blur(22px) saturate(1.5);
+    border: 1px solid rgba(242, 241, 236, .12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05), 0 22px 50px -20px rgba(0, 0, 0, .95);
+    transform: translateY(calc(100% + 28px));
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .5s var(--ease), opacity .35s ease;
+  }
+  .slimbar.on { transform: none; opacity: 1; pointer-events: auto; }
+  body.menu-open .slimbar { display: none; }
+  .slim-link { display: inline-flex; align-items: center; height: 44px; padding: 0 14px; border-radius: 22px; font: 600 14.5px/1 var(--font-text); color: var(--cream-85); text-decoration: none; white-space: nowrap; }
+  .slim-link:hover { color: var(--cream); background: rgba(242, 241, 236, .06); }
+  .slim-go { display: inline-flex; align-items: center; justify-content: center; height: 44px; margin-left: auto; padding: 0 22px; border-radius: 22px; background: var(--cream); color: var(--night); font: 700 14.5px/1 var(--font-text); text-decoration: none; white-space: nowrap; box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset; }
+  .slim-go:hover { color: var(--night); }
+  .slim-notify { display: none; }
+  .ios .slim-notify { display: inline-flex; }
+  .ios .slimbar:has(.slim-notify) .slim-store { display: none; }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) { .slimbar { transition: opacity .2s ease; transform: none; } }

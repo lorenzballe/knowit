@@ -4,9 +4,11 @@ rules_version = '2';
 // dealt them under it, one board per reader that a friend may look at, a
 // count per card per day of how many readers held on to it, the same count
 // kept for good, Explore as the server assembled it, the day's games as it
-// counted them, and the invitations, which only the server reads and writes.
+// counted them, the invitations, which only the server reads and writes,
+// and the list of those waiting for the iPhone app, which nobody reads back.
 // The policy: you may read and write your own, anyone signed in may read a
-// board or a day's counts and add one to a count, and nothing else exists.
+// board or a day's counts and add one to a count, anyone at all may add an
+// address to the list, and nothing else exists.
 //
 // Deploy with:  firebase deploy --only firestore:rules
 service cloud.firestore {
@@ -288,6 +290,28 @@ service cloud.firestore {
     // (listenSpend/{period}), and when each reader last listened
     // (listeners/{uid}), which goes with the account. Closed to every
     // phone by the rule below; named here so nobody opens them by mistake.
+
+    // The list for the iPhone (site/assets/notify.js): whoever leaves an
+    // email on the site, to be told the day Astute is on the App Store. The
+    // site has no sign-in, so anyone may add to it — one document at a
+    // time, under a name like the ones Firestore's clients draw, holding
+    // exactly an address of an email's shape and length, the language of
+    // the page it was left on, and the moment the server took it, nothing
+    // else. Nobody reads it back, a document once written is never changed
+    // or taken away by a phone or a page, and no one can tell from here who
+    // is on it; the owner reads it in the console, and deletes from there.
+    match /waitlist/{id} {
+      allow create: if id.matches('[A-Za-z0-9]{20}')
+        && request.resource.data.keys().hasOnly(['email', 'lang', 'at'])
+        && request.resource.data.keys().hasAll(['email', 'lang', 'at'])
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.email.matches('[^@\\s]+@[^@\\s]+[.][^@\\s]+')
+        && request.resource.data.lang is string
+        && request.resource.data.lang.matches('[a-z]{2}')
+        && request.resource.data.at == request.time;
+      allow read, update, delete: if false;
+    }
 
     // Anything not named above is closed, including reads of other readers.
     match /{document=**} {
