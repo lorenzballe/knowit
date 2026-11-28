@@ -28,13 +28,15 @@
 //
 //   FOOT=links LANG_SHOT=it node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html [out-dir]
 //
-// With HARD=1 it is a hard card ringed, as the app tries it (lib/widgets/hard_ring.dart): the page is told the
-// colours to draw itself in (env.hard: the night ground, its subject's colour as its ink, the question in the
-// light ink, HARD beside the name), and its photographs carry the ring. HARD=day is the same on the day paper.
+// With HARD=1 it is a hard card ringed, as the app reads every hard card (lib/widgets/hard_ring.dart): the page is
+// told the colours to draw itself in (env.hard, tool/cards/hard_env.cjs: the night ground, its subject's colour as its
+// ink, the question in the light ink, HARD beside the name), and its photographs carry the ring. HARD=day is the same
+// on the day paper. A hard card's page is right in all three: as it is, HARD=1 and HARD=day.
 //
 //   HARD=1 node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html [out-dir]
 const path = require('path'), fs = require('fs');
 let pw; try { pw = require('playwright'); } catch { pw = require('/opt/node22/lib/node_modules/playwright'); }
+const hardEnv = require('./hard_env.cjs');
 const file = path.resolve(process.argv[2]); const out = path.resolve(process.argv[3] || path.join(path.dirname(file), 'check'));
 fs.mkdirSync(out, {recursive: true});
 const KIT = path.join(__dirname, '../../docs/cards/kit');
@@ -174,22 +176,9 @@ async function single() {
   const arb = l => path.join(__dirname, '../../lib/l10n', `app_${l}.arb`);
   const words = JSON.parse(fs.readFileSync(fs.existsSync(arb(lang)) ? arb(lang) : arb('en'), 'utf8'));
   const subjectName = (String(words.subjectName || '').match(new RegExp(`(?:^|\\s)${topic}\\{([^}]*)\\}`)) || [])[1];
-  // A hard card ringed, in the colours the app gives it (lib/widgets/hard_ring.dart, HardRing.pageOf): on the night
-  // paper its ground night black, its ink its subject's colour (a deep one lifted until small words read in it), its
-  // question the light ink; on the day paper the raised paper, a pale colour's darker tone, the dark ink.
+  // A hard card ringed, in the colours the app gives it (lib/widgets/hard_ring.dart, HardRing.pageOf; hard_env.cjs).
   const hardDay = process.env.HARD === 'day';
-  const hard = (() => {
-    if (!process.env.HARD) return null;
-    const kit = fs.readFileSync(path.join(KIT, 'astute-card.js'), 'utf8');
-    const colour = (kit.match(new RegExp(`\\b${topic}: \\['[^']*', '(#[0-9A-Fa-f]{6})'`)) || [])[1] || '#F2F1EC';
-    const rgb = colour.slice(1).match(/../g).map(h => parseInt(h, 16));
-    const lin = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
-    const lum = 0.2126 * lin(rgb[0]) + 0.7152 * lin(rgb[1]) + 0.0722 * lin(rgb[2]);
-    const hex = c => '#' + c.map(v => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0')).join('');
-    const accent = hardDay && lum > 0.45 ? hex(rgb.map(v => v * 0.62)) : colour;
-    const ink = !hardDay && lum < 0.16 ? hex(rgb.map(v => v + (255 - v) * 0.4)) : accent;
-    return {c: hardDay ? '#ffffff' : '#0b0b0d', k: ink, q: hardDay ? '#131316' : '#f2f1ec', edge: accent, label: (words.hardBadge || 'Hard').toUpperCase()};
-  })();
+  const hard = process.env.HARD ? hardEnv(topic, {day: hardDay, label: (words.hardBadge || 'Hard').toUpperCase()}) : null;
   const ORIGIN = 'https://card.astute/';
   const browser = await pw.chromium.launch({executablePath});
   let problems = 0;

@@ -157,11 +157,13 @@ class _TodayScreenState extends State<TodayScreen> {
   /// for two seconds while its picture came).
   void _warmDay(AppState app) {
     final String day = [for (final Pill p in app.todaysDeck) p.id].join(',');
-    if (day.isEmpty || day == _warmed) return;
-    _warmed = day;
+    // A hard card's pictures are the ones taken on the reader's paper.
+    final bool dark = context.p.isDark;
+    if (day.isEmpty || '$day $dark' == _warmed) return;
+    _warmed = '$day $dark';
     final List<Pill> deck = List.of(app.todaysDeck);
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => CardThumb.warmDay(deck),
+      (_) => CardThumb.warmDay(deck, dark: dark),
     );
   }
 

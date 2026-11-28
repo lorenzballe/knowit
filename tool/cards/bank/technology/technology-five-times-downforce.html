@@ -60,7 +60,9 @@ const Turn = {
 };
 (() => {
   const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
-  const INK = '#10100c', STONE = '#fffbf0', WALL = '#f7f6f0', RED = '#e4402f', PCB = '#1f8f4e', HOUSING = '#3a3f47', HUB = '#aab5c1', BLOCK = '#ffc83d';
+  // INK is the card's own ink (--k), so a hard card ringed (env.hard) draws the lines, the maze's floor and the words
+  // in the ring's.
+  const INK = 'var(--k)', STONE = '#fffbf0', WALL = '#f7f6f0', RED = '#e4402f', PCB = '#1f8f4e', HOUSING = '#3a3f47', HUB = '#aab5c1', BLOCK = '#ffc83d';
   const MAX = 8, TRUE = 5;
   let N = 0, touched = false, answered = false, turned = false;
   let F = null, stackG = null, hintG = null, heroT = null;

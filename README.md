@@ -2100,7 +2100,8 @@ and *Card foot*, A line, B two lines, C buttons or D links
 whose page is told it as `foot` as it was told the build's `SOURCE_FOOT`,
 which still sets the way when none is picked; A is the default; *Share
 picture*, the picture the day is sent as, A as it was, B the cards, C light,
-which ships (Share my day, above); and *Hard cards*, as today or ringed
+which ships (Share my day, above); and *Hard cards*, ringed, which ships
+since the owner chose it on 28 November 2026, or as today
 (`lib/widgets/hard_ring.dart`): a hard card, wherever it is read — Today's
 deck and shelf, the deck viewer, Explore's cards — front and back, dark,
 ringed in its subject's colour, its subject's name in it and HARD in its
@@ -2108,10 +2109,23 @@ head, as Explore's shelf of the hardest draws them; on the day paper the
 raised paper, a pale colour taken to its darker tone. A card in words is
 drawn in those colours; a drawn card's page is told them as `hard`, and the
 kit draws itself in them (its ground, its subject's colour as its ink, the
-question in the light ink), while a page told nothing draws as it always
-has. Its pictures are not taken again, so with the look on the shelf and
-Explore still show a drawn hard card as it was. The cameras are
-`tool/hard_card_shots.dart` and `HARD=1 node tool/cards/card_check.cjs`.
+question in the light ink; on the day paper the ink taken down until small
+words read in it, 4.5 to 1), while a page told nothing draws as it always
+has. Every hard drawn page draws in the kit's ink and ground (`--k`, `--c`,
+`--edge`), or in colours of its own that it lights up on the night ground
+or takes down on the paper (`.kit-hard[data-theme=…]`), so it is right as
+it was, ringed at night and ringed on paper: a new hard page is checked in
+all three (`node tool/cards/card_check.cjs`, then `HARD=1` and `HARD=day`).
+Its pictures are taken ringed too (`tool/cards/thumbs.cjs`, the colours
+from `tool/cards/hard_env.cjs`), at night and on the day paper, beside the
+ones of the card as it was, and named with a hash of their own
+(`RINGED`, in `bundle.py` and `thumbs.cjs` alike, bumped in both when the
+ring's look changes; `test_pages.py` holds them together): the finished
+day's shelf, Saved, the archive and a card's page show the one for the
+reader's paper inside the ring (Explore shows its cards in words), and a
+hard card with none taken yet in words, ringed; the picture of the day sent
+away keeps each card's own. The cameras are `tool/hard_card_shots.dart`,
+`tool/hard_picture_shots.dart` and `HARD=1 node tool/cards/card_check.cjs`.
 Under the looks, beside *Open the paywall*, *Preview: your first week* and
 *Preview: your first month* open those two pages with sample numbers, on
 either plan, keeping and counting nothing (`lib/screens/first_offer.dart`).

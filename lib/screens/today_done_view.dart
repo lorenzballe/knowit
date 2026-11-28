@@ -35,7 +35,6 @@ import '../widgets/share_sheet.dart';
 import '../widgets/learn_looks.dart' show markedSkills;
 import '../widgets/subject_icon.dart';
 import '../widgets/web/card_thumb.dart';
-import '../widgets/web/web_card_page.dart' show groundOf;
 import '../l10n/dates.dart';
 
 /// The Today tab once the five are done, from artboard 66a.
@@ -803,13 +802,11 @@ class _TodayDoneViewState extends State<TodayDoneView>
         ? context.l10n.forYouChip
         : null;
     String picture(bool back) => '${pill.id}-${back ? 'back' : 'front'}';
-    // A hard card in words, where the developer tools ring it, as it was in
-    // the deck: dark, ringed, HARD in its head (hard_ring.dart). A drawn one
-    // is its picture, taken as it always looked.
+    // A hard card as it was in the deck: dark, ringed, HARD in its head
+    // (hard_ring.dart). A drawn one is its picture taken so, on this paper,
+    // inside the same ring.
     final Palette p = context.p;
-    final Color? ring = pill.web == null && HardRing.on(pill)
-        ? HardRing.accentOf(pill, p)
-        : null;
+    final Color? ring = HardRing.on(pill) ? HardRing.accentOf(pill, p) : null;
     final Pill shown = ring == null ? pill : HardRing.dressed(pill, p);
     Widget face(bool back) => _CardFace(
       key: ValueKey('shelf-face-${pill.id}-${back ? 'back' : 'front'}'),
@@ -970,9 +967,10 @@ class _CardFace extends StatelessWidget {
   final Pill pill;
   final int number;
 
-  /// The ring's colour, on a hard card in words ringed (hard_ring.dart):
-  /// its edge, its subject's mark and name, and HARD in its head. [pill] is
-  /// then in the ringed colours already.
+  /// The ring's colour, on a hard card ringed (hard_ring.dart): its edge,
+  /// and on a card in words its subject's mark and name and HARD in its
+  /// head, which a drawn one's picture carries itself. [pill] is then in the
+  /// ringed colours already.
   final Color? ring;
 
   /// Whether the card's picture has come. Until it has, the card is plain
@@ -1024,10 +1022,11 @@ class _CardFace extends StatelessWidget {
     );
     // A free card with its picture is shown by it, whole: the card as the
     // reader met it, drawing and all, on the same shape, edge and glow as
-    // any card here. Where the picture will not come, its words, as on a
-    // card that has none.
+    // any card here (a hard one ringed, its picture taken ringed on this
+    // paper). Where the picture will not come, its words, as on a card that
+    // has none.
     if (CardThumb.has(pill, side)) {
-      final Color ground = groundOf(pill);
+      final Color ground = CardThumb.groundFor(pill, p);
       // Of the card's two pictures, the one nearer its shape: on most phones
       // the one taken at the shelf's own proportion, which fills the card
       // from side to side as every card does; on a card the room has made
@@ -1138,7 +1137,9 @@ class _CardFace extends StatelessWidget {
       color: colour,
       // The deck's corner, at the shelf's scale: one card, one shape.
       borderRadius: BorderRadius.circular(34 * s),
-      border: ring == null
+      // Ringed, a hard card; grey, as the rest of its edge, while its
+      // picture comes.
+      border: ring == null || !glowing
           ? cardHairline(colour, p.surface)
           : Border.all(color: ring!, width: HardRing.width * s),
       boxShadow: [
