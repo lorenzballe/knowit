@@ -879,6 +879,10 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('reminderAskOther') ?? _base.reminderAskOther;
 
   @override
+  String get reminderAskPick =>
+      _words.text('reminderAskPick') ?? _base.reminderAskPick;
+
+  @override
   String get reminderAskUsual =>
       _words.text('reminderAskUsual') ?? _base.reminderAskUsual;
 
@@ -2077,6 +2081,11 @@ class RemoteLocalizations extends AppLocalizations {
   String skillName(String key) =>
       _words.format('skillName', localeName, {'key': key}) ??
       _base.skillName(key);
+
+  @override
+  String skillLine(String key) =>
+      _words.format('skillLine', localeName, {'key': key}) ??
+      _base.skillLine(key);
 
   @override
   String get perkFiveShort =>
