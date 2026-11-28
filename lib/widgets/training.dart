@@ -30,6 +30,7 @@ import 'count_since.dart';
 import 'fit_text.dart';
 import 'level_up.dart' show LevelLine;
 import 'skill_score.dart';
+import 'skills_sheet.dart' show showSkillsSheet;
 import 'ui.dart' show Eyebrow;
 
 /// The skills [app]'s reader picked, in the order they picked them, that
@@ -637,7 +638,9 @@ class ProfileTraining extends StatelessWidget {
       child: GestureDetector(
         key: const ValueKey('profile-skills'),
         behavior: HitTestBehavior.opaque,
-        onTap: () => openSkills(context, app, from: 'profile'),
+        // The owner's mix: the skills as they are, behind a tap, in a sheet
+        // like the goal's (lib/widgets/skills_sheet.dart).
+        onTap: () => showSkillsSheet(context, app),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -670,7 +673,7 @@ class ProfileTraining extends StatelessWidget {
                   Expanded(child: inside),
                   const SizedBox(width: 6),
                   Icon(
-                    Icons.chevron_right_rounded,
+                    Icons.expand_more_rounded,
                     size: 22,
                     color: p.ink.withValues(alpha: 0.4),
                   ),

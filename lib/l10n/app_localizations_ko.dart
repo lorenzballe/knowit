@@ -952,6 +952,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get reminderAskOther => '다른 시간';
 
   @override
+  String get reminderAskPick => '직접 선택';
+
+  @override
   String get reminderAskUsual => '평소에 읽는 시간';
 
   @override

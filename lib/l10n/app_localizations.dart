@@ -1374,6 +1374,12 @@ abstract class AppLocalizations {
   /// **'Another time'**
   String get reminderAskOther;
 
+  /// On the reminder sheet, under «Another time», where the time goes until the reader has picked one of their own: a tap opens the phone's clock. A couple of words.
+  ///
+  /// In en, this message translates to:
+  /// **'You choose'**
+  String get reminderAskPick;
+
   /// A note under the time on the reminder sheet that the sheet started on, because the reader tends to start reading then.
   ///
   /// In en, this message translates to:

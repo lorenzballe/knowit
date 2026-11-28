@@ -19,6 +19,7 @@ import 'package:astuto/screens/skills_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/skill_score.dart';
+import 'package:astuto/widgets/skills_sheet.dart';
 import 'package:astuto/widgets/training.dart';
 
 import 'explore/core_harness.dart';
@@ -113,9 +114,40 @@ void main() {
         ),
         findsOneWidget,
       );
+      // The box opens What to learn in a sheet, as the owner picked it: the
+      // reading of the answers at its head, then the twelve, the picked
+      // ones ticked.
       await tester.tap(find.byKey(const ValueKey('profile-skills')));
       await tester.pumpAndSettle();
-      expect(find.byType(SkillsScreen), findsOneWidget);
+      expect(find.byType(SkillsSheet), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('profile-skills-reading')),
+        findsOneWidget,
+      );
+      for (final Skill s in Skill.values) {
+        expect(
+          find.byKey(ValueKey('profile-skills-${s.name}')),
+          findsOneWidget,
+          reason: s.name,
+        );
+      }
+      SkillTile tile(String k) =>
+          tester.widget<SkillTile>(find.byKey(ValueKey('profile-skills-$k')));
+      expect(tile('money').on, isTrue);
+      expect(tile('science').on, isFalse);
+      // A tap picks a skill at once, and another lets it go.
+      final Finder science = find.byKey(
+        const ValueKey('profile-skills-science'),
+      );
+      await tester.ensureVisible(science);
+      await tester.pumpAndSettle();
+      await tester.tap(science);
+      await tester.pumpAndSettle();
+      expect(app.skills, contains('science'));
+      expect(tile('science').on, isTrue);
+      await tester.tap(science);
+      await tester.pumpAndSettle();
+      expect(app.skills, isNot(contains('science')));
       expect(tester.takeException(), isNull);
     });
 
@@ -196,8 +228,7 @@ void main() {
       // The one number stays large; the skills are a size and more under
       // it, a row each no taller than its badge and two lines; the others
       // sit two to a row.
-      double sizeOf(Finder text) =>
-          tester.widget<Text>(text).style!.fontSize!;
+      double sizeOf(Finder text) => tester.widget<Text>(text).style!.fontSize!;
       final double big = sizeOf(
         find.descendant(
           of: find.byKey(const ValueKey('training-score')),

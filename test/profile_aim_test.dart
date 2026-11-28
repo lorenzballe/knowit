@@ -325,10 +325,13 @@ void main() {
                 .evaluate()) {
           final Text t = e.widget as Text;
           final double width = e.size!.width;
+          // As drawn: the page's own style under the text's, its letter
+          // spacing among it.
+          final TextStyle drawn = DefaultTextStyle.of(e).style.merge(t.style);
           expect(
             FitText.wordsFit(
               t.data!,
-              t.style!,
+              drawn,
               scaler,
               TextDirection.ltr,
               width + 0.5,
@@ -372,6 +375,58 @@ void main() {
       find.descendant(of: hero, matching: find.text(decide)),
       findsOneWidget,
     );
+  });
+
+  testWidgets('on the 320-wide phone at 1.6 times the text, in the other '
+      'languages too, no word of the six breaks in two as drawn', (
+    tester,
+  ) async {
+    final AppState app = await tester.runAsync(
+      () => readyApp({
+        'knowit.goals': ['decide'],
+      }),
+    ) as AppState;
+    const TextScaler scaler = TextScaler.linear(1.6);
+    for (final String language in [
+      'it',
+      'en',
+      'fr',
+      'es',
+      'pt',
+      'nl',
+      'pl',
+      'ru',
+      'tr',
+    ]) {
+      await show(
+        tester,
+        app,
+        size: const Size(320, 568),
+        language: language,
+        text: 1.6,
+      );
+      expect(tester.takeException(), isNull, reason: language);
+      for (final Goal g in Goal.values) {
+        for (final Element e
+            in find
+                .descendant(of: row(g), matching: find.byType(Text))
+                .evaluate()) {
+          final Text t = e.widget as Text;
+          final TextStyle drawn = DefaultTextStyle.of(e).style.merge(t.style);
+          expect(
+            FitText.wordsFit(
+              t.data!,
+              drawn,
+              scaler,
+              TextDirection.ltr,
+              e.size!.width + 0.5,
+            ),
+            isTrue,
+            reason: '$language ${g.key}: "${t.data}"',
+          );
+        }
+      }
+    }
   });
 
   testWidgets('night and paper: each area\'s colour reads as a mark on its '

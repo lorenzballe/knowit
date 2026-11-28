@@ -949,6 +949,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get reminderAskOther => '別の時間';
 
   @override
+  String get reminderAskPick => '自分で選ぶ';
+
+  @override
   String get reminderAskUsual => 'いつも読んでいる時間';
 
   @override
