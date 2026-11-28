@@ -1829,13 +1829,13 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => '今日五题';
+  String get fiveTitle => '今日挑战';
 
   @override
   String get fiveSame => '今天大家都是同样五题，约两分钟。';
 
   @override
-  String get fiveDone => '今日五题 · 完成';
+  String get fiveDone => '今日挑战 · 完成';
 
   @override
   String dailyOf(int max) {
@@ -1922,7 +1922,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · 今日五题 · $date';
+    return 'Astute · 今日挑战 · $date';
   }
 
   @override
@@ -1934,7 +1934,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fiveChallengeAll => 'Astute 今日五题，我全部答对。你也能做到吗？';
 
   @override
-  String get fiveChallengeInvite => 'Astute 今日五题：每个人都是同样的五道题。你能答对几道？';
+  String get fiveChallengeInvite => 'Astute 今日挑战：每个人都是同样的五道题。你能答对几道？';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -2197,6 +2197,26 @@ class AppLocalizationsZh extends AppLocalizations {
       'lead': '领导力',
       'culture': '通识',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': '分辨可靠的论证和误导人的论证。',
+      'decisions': '凭风险和概率做选择，而不是凭直觉。',
+      'money': '价格、利息、优惠：你的钱去了哪里。',
+      'numbers': '读懂百分比和图表，不被误导。',
+      'talk': '说话写字，都能让人明白。',
+      'persuade': '说服别人，也能察觉别人在说服你。',
+      'people': '人为什么会那样做。',
+      'fakes': '识破假新闻、修改过的照片和夸大的研究。',
+      'science': '相信一个想法之前，先检验它。',
+      'focus': '把注意力更久地放在重要的地方。',
+      'lead': '带领团队，为大家做决定。',
+      'culture': '历史、科学、艺术：人人都会引用的东西。',
+      'other': '',
     });
     return '$_temp0';
   }
@@ -6129,7 +6149,7 @@ class AppLocalizationsZh extends AppLocalizations {
       other: '我差了 $off 个百分点',
       zero: '我正好猜中',
     );
-    return '今天的 Astute 挑战：$_temp0。你能猜得更准吗？';
+    return 'Astute 今日一赌：$_temp0。你能猜得更准吗？';
   }
 
   @override

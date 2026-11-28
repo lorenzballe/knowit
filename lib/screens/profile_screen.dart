@@ -1907,16 +1907,17 @@ class _DebugLooksPanel extends StatelessWidget {
   }
 }
 
-/// Now, A, B, C, D or E, as What to learn's look: a segmented control like
-/// the profile top's, each choice with what it is under its letter, in two
-/// rows of three, where six in one would leave each too narrow for its
-/// word.
+/// Mix, Now, A, B, C, D or E, as What to learn's look: a segmented control
+/// like the profile top's, each choice with what it is under its letter, in
+/// two rows, four and three, where seven in one would leave each too narrow
+/// for its word. The mix first, as it ships.
 class _LearnPicker extends StatelessWidget {
   const _LearnPicker({required this.look});
 
   final LearnLook look;
 
   static const _options = [
+    (look: LearnLook.mix, name: 'Mix', note: 'ships'),
     (look: LearnLook.today, name: 'Now', note: 'skills'),
     (look: LearnLook.score, name: 'A', note: 'score'),
     (look: LearnLook.aim, name: 'B', note: 'the aim'),
@@ -1925,6 +1926,8 @@ class _LearnPicker extends StatelessWidget {
     (look: LearnLook.weekly, name: 'E', note: 'a week'),
   ];
 
+  static const int _perRow = 4;
+
   @override
   Widget build(BuildContext context) {
     return PaperCard(
@@ -1932,8 +1935,16 @@ class _LearnPicker extends StatelessWidget {
       radius: 16,
       child: Column(
         children: [
-          for (int row = 0; row < _options.length; row += 3)
-            _row(context, _options.sublist(row, row + 3)),
+          for (int row = 0; row < _options.length; row += _perRow)
+            _row(
+              context,
+              _options.sublist(
+                row,
+                row + _perRow < _options.length
+                    ? row + _perRow
+                    : _options.length,
+              ),
+            ),
         ],
       ),
     );

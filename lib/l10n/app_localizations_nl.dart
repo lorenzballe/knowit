@@ -1912,14 +1912,14 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'De vijf van vandaag';
+  String get fiveTitle => 'De uitdaging van vandaag';
 
   @override
   String get fiveSame =>
       'Vandaag voor iedereen dezelfde vijf. Ongeveer twee minuten.';
 
   @override
-  String get fiveDone => 'De vijf van vandaag · klaar';
+  String get fiveDone => 'De uitdaging van vandaag · klaar';
 
   @override
   String dailyOf(int max) {
@@ -2008,7 +2008,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · De vijf van vandaag · $date';
+    return 'Astute · De uitdaging van vandaag · $date';
   }
 
   @override
@@ -2022,7 +2022,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'De vijf van vandaag op Astute: voor iedereen dezelfde vijf vragen. Hoeveel heb jij er goed?';
+      'De uitdaging van vandaag op Astute: voor iedereen dezelfde vijf vragen. Hoeveel heb jij er goed?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -2307,6 +2307,26 @@ class AppLocalizationsNl extends AppLocalizations {
       'lead': 'Leiderschap',
       'culture': 'Algemene kennis',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Een goed argument onderscheiden van een misleidend.',
+      'decisions': 'Kiezen met risico’s en kansen, niet op gevoel.',
+      'money': 'Prijzen, rente, aanbiedingen: waar je geld heen gaat.',
+      'numbers': 'Percentages en grafieken lezen zonder je te laten foppen.',
+      'talk': 'Begrepen worden, in woord en geschrift.',
+      'persuade': 'Overtuigen, en merken wanneer jij overtuigd wordt.',
+      'people': 'Waarom mensen doen wat ze doen.',
+      'fakes': 'Nepnieuws, bewerkte foto’s en opgeblazen studies herkennen.',
+      'science': 'Een idee toetsen voordat je het gelooft.',
+      'focus': 'Je aandacht langer houden waar het telt.',
+      'lead': 'Een groep leiden en voor iedereen beslissen.',
+      'culture': 'Geschiedenis, wetenschap, kunst: wat iedereen aanhaalt.',
+      'other': '',
     });
     return '$_temp0';
   }
@@ -6441,7 +6461,7 @@ class AppLocalizationsNl extends AppLocalizations {
       one: '1 punt ernaast',
       zero: 'precies goed',
     );
-    return 'De uitdaging van vandaag op Astute: $_temp0. Kun jij het beter?';
+    return 'De gok van de dag op Astute: $_temp0. Kun jij het beter?';
   }
 
   @override

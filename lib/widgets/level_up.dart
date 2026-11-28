@@ -99,7 +99,10 @@ Future<bool> showLevelUpIfDue(BuildContext context, AppState app) async {
         from: found.from,
         answers: found.answers,
       ),
-      LearnLook.today || LearnLook.profile || LearnLook.aimProfile => found,
+      LearnLook.today ||
+      LearnLook.mix ||
+      LearnLook.profile ||
+      LearnLook.aimProfile => found,
     };
     unawaited(
       Navigator.of(

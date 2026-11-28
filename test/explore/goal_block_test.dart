@@ -223,7 +223,7 @@ void main() {
       );
     }
     // Back to the look that ships, whose Explore has no shelf of its own.
-    DebugLooks.learn.value = LearnLook.today;
+    DebugLooks.learn.value = DebugLooks.learnShips;
     // A shelf the server placed itself stays where it is, and is the goal's.
     final placed = [...sent, const ExploreSection(id: 'goal', block: 'goal')];
     expect(withAimShelf(app, placed), same(placed));

@@ -1911,13 +1911,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'Die fünf von heute';
+  String get fiveTitle => 'Herausforderung des Tages';
 
   @override
   String get fiveSame => 'Heute dieselben fünf für alle. Etwa zwei Minuten.';
 
   @override
-  String get fiveDone => 'Die fünf von heute · fertig';
+  String get fiveDone => 'Herausforderung des Tages · geschafft';
 
   @override
   String dailyOf(int max) {
@@ -2006,7 +2006,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · Die fünf von heute · $date';
+    return 'Astute · Herausforderung des Tages · $date';
   }
 
   @override
@@ -2020,7 +2020,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Die fünf von heute auf Astute: dieselben fünf Fragen für alle. Wie viele schaffst du?';
+      'Die Herausforderung des Tages auf Astute: dieselben fünf Fragen für alle. Wie viele schaffst du?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -2305,6 +2305,26 @@ class AppLocalizationsDe extends AppLocalizations {
       'lead': 'Führung',
       'culture': 'Allgemeinwissen',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Ein gutes Argument von einem täuschenden unterscheiden.',
+      'decisions': 'Mit Risiken und Wahrscheinlichkeiten entscheiden, nicht aus dem Bauch.',
+      'money': 'Preise, Zinsen, Angebote: wohin dein Geld geht.',
+      'numbers': 'Prozente und Diagramme lesen, ohne sich täuschen zu lassen.',
+      'talk': 'Verstanden werden, mündlich und schriftlich.',
+      'persuade': 'Überzeugen und merken, wenn man dich überzeugen will.',
+      'people': 'Warum Menschen tun, was sie tun.',
+      'fakes': 'Falschmeldungen, gefälschte Fotos und aufgeblasene Studien erkennen.',
+      'science': 'Eine Idee prüfen, bevor man ihr glaubt.',
+      'focus': 'Die Aufmerksamkeit länger dort halten, wo sie zählt.',
+      'lead': 'Eine Gruppe führen und für alle entscheiden.',
+      'culture': 'Geschichte, Wissenschaft, Kunst: was alle zitieren.',
+      'other': '',
     });
     return '$_temp0';
   }
@@ -6447,7 +6467,7 @@ class AppLocalizationsDe extends AppLocalizations {
       one: '1 Punkt daneben',
       zero: 'genau getroffen',
     );
-    return 'Die heutige Herausforderung bei Astute: $_temp0. Schaffst du es besser?';
+    return 'Die Wette des Tages bei Astute: $_temp0. Schaffst du es besser?';
   }
 
   @override

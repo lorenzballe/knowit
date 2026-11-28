@@ -134,6 +134,13 @@ enum LearnLook {
   /// own cards leaning to it, and on Sunday how the week went. Chosen in
   /// turn on the free plan, from the reader's answers on Astute+.
   weekly,
+
+  /// The owner's mix, which ships: the skills as they are, picked on a page
+  /// laid as the goal's question (any number of them, one under another,
+  /// each with its line: lib/widgets/skills_sheet.dart); their scores in
+  /// Your journey as they are, with the reading of the answers under them,
+  /// where the reader sees clearly and their blind spot.
+  mix,
 }
 
 /// How the reader's first finished day ends, as the developer tools pick it
@@ -212,8 +219,11 @@ abstract final class DebugLooks {
 
   /// What to learn's look, as kept.
   static final ValueNotifier<LearnLook> learn = ValueNotifier<LearnLook>(
-    LearnLook.today,
+    learnShips,
   );
+
+  /// What to learn as it ships: the owner's mix.
+  static const LearnLook learnShips = LearnLook.mix;
 
   /// The foot of a card, as kept: null, the build's own (A, unless the
   /// build names another).
@@ -258,8 +268,7 @@ abstract final class DebugLooks {
 
   /// What to learn's look for this run: as it ships, unless the tools are
   /// on and another was picked.
-  static LearnLook get learnPicked =>
-      debugToolsOn ? learn.value : LearnLook.today;
+  static LearnLook get learnPicked => debugToolsOn ? learn.value : learnShips;
 
   /// The card's foot as picked for this run: none, so the build's own,
   /// unless the tools are on and one was picked.
@@ -294,8 +303,7 @@ abstract final class DebugLooks {
         PaywallLook.values.asNameMap()[prefs.getString(_kPaywall)] ??
         paywallShips;
     learn.value =
-        LearnLook.values.asNameMap()[prefs.getString(_kLearn)] ??
-        LearnLook.today;
+        LearnLook.values.asNameMap()[prefs.getString(_kLearn)] ?? learnShips;
     cardFoot.value = CardFootPick.values
         .asNameMap()[prefs.getString(_kCardFoot)];
     sharePicture.value =
@@ -386,7 +394,7 @@ abstract final class DebugLooks {
     if (paywall.value != paywallShips) {
       await prefs.setString(_kPaywall, paywall.value.name);
     }
-    if (learn.value != LearnLook.today) {
+    if (learn.value != learnShips) {
       await prefs.setString(_kLearn, learn.value.name);
     }
     if (cardFoot.value case final CardFootPick foot) {
@@ -410,7 +418,7 @@ abstract final class DebugLooks {
     profileTop.value = ProfileTopPick.auto;
     shareDay.value = ShareDayPick.a;
     paywall.value = paywallShips;
-    learn.value = LearnLook.today;
+    learn.value = learnShips;
     cardFoot.value = null;
     sharePicture.value = sharePictureShips;
     hardCards.value = HardCardLook.today;

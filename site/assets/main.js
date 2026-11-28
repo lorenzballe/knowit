@@ -636,7 +636,7 @@
           return '<li class="five-item">'
             + '<a class="five-card paper" href="/c/' + encodeURIComponent(c.id) + '" style="--c:' + esc(c.color) + '; --ink:' + triplet(c.ink) + '">'
             + '<span class="label"><svg class="mark" aria-hidden="true"><use href="#' + esc(mark) + '"/></svg><span>' + esc(c.topic) + '</span><span class="five-n">' + (i + 1) + '/5</span></span>'
-            + '<span class="five-q" data-fit="19 27"><span>' + esc(c.question) + '</span></span>'
+            + '<span class="five-q" data-fit="26 44"><span>' + esc(c.question) + '</span></span>'
             + '<span class="five-go">Answer it <b aria-hidden="true">&rarr;</b></span>'
             + '</a></li>';
         }).join('');

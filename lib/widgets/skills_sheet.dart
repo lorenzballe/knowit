@@ -1,56 +1,54 @@
-/// What to learn the way the owner picked it, "un mix": the twelve skills as
-/// they are, each with its score, but behind a tap, in a sheet drawn like
-/// the goal's (lib/widgets/aim_picker.dart), and with the reading of the
-/// reader's answers at its head: where they see clearly, and their blind
-/// spot.
+/// What to learn the way the owner picked it, "un mix": a page like the
+/// goal's question, one row under another, each skill with its badge, its
+/// name and a line on what it covers, but more than one may be picked; a
+/// page of its own, laid as the goal's question is (AimScreen), behind a
+/// tap on the profile's box of the skills picked. The scores stay in Your journey, as they are, with the reading
+/// of the answers under them: where the reader sees clearly, and their
+/// blind spot (SkillsReading).
 ///
-/// The profile's box of the skills picked (ProfileTraining) opens it; a tap
-/// on a tile picks or lets go of a skill, at once, as What to learn's own
-/// screen does (lib/screens/skills_screen.dart), which stays where the rest
-/// of the app opens it from.
+/// A tap on a row picks or lets go of a skill at once, as What to learn's
+/// own screen does (lib/screens/skills_screen.dart), which stays where the
+/// rest of the app opens it from.
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
-import '../data/learn_reading.dart' show SkillTally, skillTallies;
-import '../data/skill_scores.dart';
+import '../data/learn_reading.dart' show SkillTally;
 import '../data/skills.dart';
 import '../data/topics.dart' show inkOn;
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import 'chunky.dart' show ChunkyButton;
 import 'fit_text.dart';
-import 'skill_score.dart' show scoreBookOf, scoreNumber;
 import 'training.dart' show SkillBadge;
+import 'ui.dart' show BackCircle;
 
-/// Raises the sheet over [context]'s page, and says once, as it goes down,
-/// what changed, as What to learn's screen says on its way out.
+/// Opens What to learn's page over [context]'s, and says once, as it
+/// closes, what changed, as What to learn's screen says on its way out.
 Future<void> showSkillsSheet(BuildContext context, AppState app) {
   HapticFeedback.selectionClick();
   Analytics.capture('skills opened', {'from': 'profile'});
   final List<String> before = List.of(app.skills);
-  return showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
-    backgroundColor: Colors.transparent,
-    barrierColor: const Color(0x8C141416),
-    builder: (_) => SkillsSheet(app: app),
-  ).whenComplete(() {
-    final List<String> now = app.skills;
-    if (now.join(',') == before.join(',')) return;
-    Analytics.capture('skills saved', {
-      'skills': now.join(','),
-      'count': now.length,
-      'added': now.where((k) => !before.contains(k)).length,
-      'removed': before.where((k) => !now.contains(k)).length,
-    });
-  });
+  return Navigator.of(context)
+      .push(MaterialPageRoute<void>(builder: (_) => SkillsSheet(app: app)))
+      .whenComplete(() {
+        final List<String> now = app.skills;
+        if (now.join(',') == before.join(',')) return;
+        Analytics.capture('skills saved', {
+          'skills': now.join(','),
+          'count': now.length,
+          'added': now.where((k) => !before.contains(k)).length,
+          'removed': before.where((k) => !now.contains(k)).length,
+        });
+      });
 }
 
-/// The sheet: the reading of the answers, then the question and the twelve.
+/// The page, laid as the goal's question is (AimScreen): the way back, the
+/// question large, what a pick does, the twelve one under another, and Done
+/// at the foot; any number of them picked, each kept the moment it is.
 class SkillsSheet extends StatelessWidget {
   const SkillsSheet({super.key, required this.app});
 
@@ -67,73 +65,71 @@ class SkillsSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final p = context.p;
-    return Container(
+    final double foot = MediaQuery.paddingOf(context).bottom;
+    return Scaffold(
       key: const ValueKey('profile-skills-sheet'),
-      decoration: BoxDecoration(
-        color: p.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      padding: EdgeInsets.fromLTRB(
-        18,
-        12,
-        18,
-        MediaQuery.paddingOf(context).bottom + 18,
-      ),
-      child: SingleChildScrollView(
-        child: ListenableBuilder(
-          listenable: app,
-          builder: (context, _) {
-            final ScoreBook book = scoreBookOf(app);
-            final List<SkillTally> ranked = [
-              for (final SkillTally t in skillTallies(app))
-                if (t.ranked) t,
-            ];
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Center(
-                  child: Container(
-                    width: 38,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: p.inkMuted.withValues(alpha: 0.35),
-                      borderRadius: BorderRadius.circular(9),
+      backgroundColor: p.surface,
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 6, 20, 0),
+              child: Row(
+                children: [
+                  BackCircle(onPressed: () => Navigator.of(context).maybePop()),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(20, 18, 20, 12),
+                children: [
+                  Semantics(
+                    header: true,
+                    child: Text(
+                      l.skillsRowTitle,
+                      style: AppText.display(
+                        size: 31,
+                        weight: FontWeight.w600,
+                        height: 1.12,
+                        spacing: -0.5,
+                        color: p.ink,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 18),
-                SkillsReading(
-                  best: ranked.isEmpty ? null : ranked.first,
-                  blind: ranked.length > 1 ? ranked.last : null,
-                ),
-                const SizedBox(height: 28),
-                Semantics(
-                  header: true,
-                  child: Text(
-                    l.trainingTitle,
-                    style: AppText.display(
-                      size: 21,
-                      weight: FontWeight.w600,
-                      height: 1.15,
-                      color: p.ink,
+                  const SizedBox(height: 10),
+                  Text(
+                    l.trainingEmpty,
+                    style: AppText.body(
+                      size: 15,
+                      height: 1.4,
+                      color: p.ink.withValues(alpha: 0.62),
                     ),
                   ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  l.trainingEmpty,
-                  style: AppText.body(
-                    size: 13.5,
-                    height: 1.4,
-                    color: p.inkMuted,
+                  const SizedBox(height: 22),
+                  ListenableBuilder(
+                    listenable: app,
+                    builder: (context, _) =>
+                        SkillRows(picked: app.skills, onTap: _toggle),
                   ),
-                ),
-                const SizedBox(height: 16),
-                SkillTiles(picked: app.skills, book: book, onTap: _toggle),
-              ],
-            );
-          },
+                  const SizedBox(height: 10),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 8, 20, foot > 0 ? foot : 16),
+              child: ChunkyButton(
+                key: const ValueKey('profile-skills-done'),
+                label: l.skillsDone,
+                fill: p.inverse,
+                ink: p.onInverse,
+                height: 58,
+                onPressed: () => Navigator.of(context).maybePop(),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -258,22 +254,18 @@ class SkillsReading extends StatelessWidget {
   }
 }
 
-/// The twelve, two to a row where their words fit there, one to a row
-/// where they do not, names at one size, the largest at which every word of
-/// the twelve fits a line of its own.
-class SkillTiles extends StatelessWidget {
-  const SkillTiles({
-    super.key,
-    required this.picked,
-    required this.book,
-    required this.onTap,
-  });
+/// The twelve, one under another as the goal's six are, names at one size
+/// and lines at one, the largest at which every word of the twelve fits a
+/// line of its own beside the badge and the ring; where they would have to
+/// go below four fifths of it, under them instead, the row's whole width
+/// theirs.
+class SkillRows extends StatelessWidget {
+  const SkillRows({super.key, required this.picked, required this.onTap});
 
   final List<String> picked;
-  final ScoreBook book;
   final ValueChanged<Skill> onTap;
 
-  static const double gap = 10;
+  static const double gap = 8;
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
@@ -281,72 +273,65 @@ class SkillTiles extends StatelessWidget {
       final l = context.l10n;
       final TextScaler scaler = MediaQuery.textScalerOf(context);
       final TextDirection direction = Directionality.of(context);
-      // Measured as drawn: the page's own text style under the tile's.
+      // Measured as drawn: the page's own style under the row's.
       final TextStyle base = DefaultTextStyle.of(context).style;
       final List<String> names = [
         for (final Skill s in Skill.values) l.skillName(s.name),
       ];
-      final double half = (box.maxWidth - gap) / 2 - 2 * SkillTile.inset;
-      final double? two = FitText.oneSize(
-        names,
-        (size) => base.merge(SkillTile.nameStyle(size)),
-        half,
-        from: SkillTile.largestName,
-        least: SkillTile.largestName * 0.8,
+      final List<String> lines = [
+        for (final Skill s in Skill.values) l.skillLine(s.name),
+      ];
+      double? fit(
+        List<String> texts,
+        TextStyle Function(double) style,
+        double room,
+        double from,
+        double least,
+      ) => FitText.oneSize(
+        texts,
+        (size) => base.merge(style(size)),
+        room,
+        from: from,
+        least: least,
         scaler: scaler,
         direction: direction,
       );
-      final bool pairs = two != null;
-      final double size =
-          two ??
-          FitText.oneSize(
-            names,
-            (size) => base.merge(SkillTile.nameStyle(size)),
-            box.maxWidth - 2 * SkillTile.inset,
-            from: SkillTile.largestName,
-            least: 9,
-            scaler: scaler,
-            direction: direction,
-          ) ??
-          9;
-      Widget tile(Skill s) => SkillTile(
-        key: ValueKey('profile-skills-${s.name}'),
-        skill: s,
-        score: book.of(s),
-        on: picked.contains(s.name),
-        nameSize: size,
-        onTap: () => onTap(s),
+      final double beside = box.maxWidth - SkillRow.around;
+      final double? name = fit(
+        names,
+        SkillRow.nameStyle,
+        beside,
+        SkillRow.largestName,
+        SkillRow.largestName * 0.8,
       );
-      const List<Skill> all = Skill.values;
-      if (!pairs) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (final (int i, Skill s) in all.indexed) ...[
-              if (i > 0) const SizedBox(height: gap),
-              tile(s),
-            ],
-          ],
-        );
-      }
+      final double? line = fit(
+        lines,
+        SkillRow.lineStyle,
+        beside,
+        SkillRow.largestLine,
+        SkillRow.largestLine * 0.8,
+      );
+      final bool stacked = name == null || line == null;
+      final double under = box.maxWidth - 2 * SkillRow.inset;
+      final double nameSize = stacked
+          ? fit(names, SkillRow.nameStyle, under, SkillRow.largestName, 8) ?? 8
+          : name;
+      final double lineSize = stacked
+          ? fit(lines, SkillRow.lineStyle, under, SkillRow.largestLine, 7) ?? 7
+          : line;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (int i = 0; i < all.length; i += 2) ...[
+          for (final (int i, Skill s) in Skill.values.indexed) ...[
             if (i > 0) const SizedBox(height: gap),
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(child: tile(all[i])),
-                  const SizedBox(width: gap),
-                  Expanded(
-                    child: i + 1 < all.length
-                        ? tile(all[i + 1])
-                        : const SizedBox.shrink(),
-                  ),
-                ],
-              ),
+            SkillRow(
+              key: ValueKey('profile-skills-${s.name}'),
+              skill: s,
+              on: picked.contains(s.name),
+              onTap: () => onTap(s),
+              nameSize: nameSize,
+              lineSize: lineSize,
+              stacked: stacked,
             ),
           ],
         ],
@@ -355,30 +340,46 @@ class SkillTiles extends StatelessWidget {
   );
 }
 
-/// One skill: its badge and the ring over the corner, its name, its score
-/// and how far this week moved it. Edged in its colour; picked, edged in it
-/// whole, lit by it from under, and ticked.
-class SkillTile extends StatelessWidget {
-  const SkillTile({
+/// One skill: its badge, its name in the display face, its line, and a ring
+/// that fills with its colour when it is picked. Edged in its colour;
+/// picked, edged in it whole, lit by it from under, and ticked.
+class SkillRow extends StatelessWidget {
+  const SkillRow({
     super.key,
     required this.skill,
-    required this.score,
     required this.on,
     required this.onTap,
     this.nameSize = largestName,
+    this.lineSize = largestLine,
+    this.stacked = false,
   });
 
   final Skill skill;
-  final SkillScore score;
   final bool on;
   final VoidCallback onTap;
   final double nameSize;
+  final double lineSize;
 
-  static const double largestName = 16;
-  static const double inset = 14;
+  /// The words under the badge and the ring rather than between them.
+  final bool stacked;
+
+  static const double largestName = 17;
+  static const double largestLine = 13;
+
+  /// The edge and the room inside it, the same picked or not: picked, the
+  /// words do not move.
+  static const double inset = 13.5;
+  static const double _badge = 38;
+  static const double _ring = 24;
+
+  /// The room a row keeps around its words, across.
+  static const double around = 2 * inset + _badge + 12 + 10 + _ring;
 
   static TextStyle nameStyle(double size) =>
-      AppText.display(size: size, weight: FontWeight.w600, height: 1.14);
+      AppText.display(size: size, weight: FontWeight.w600, height: 1.15);
+
+  static TextStyle lineStyle(double size) =>
+      AppText.body(size: size, height: 1.33);
 
   static const Duration _turn = Duration(milliseconds: 180);
 
@@ -388,11 +389,38 @@ class SkillTile extends StatelessWidget {
     final p = context.p;
     final Color tone = skill.mark(p.isDark);
     final double edge = on ? 1.6 : 1;
-    final int week = score.week;
+    final String name = l.skillName(skill.name);
+    final String line = l.skillLine(skill.name);
+    final Widget ring = AnimatedContainer(
+      duration: _turn,
+      width: _ring,
+      height: _ring,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: on ? tone : Colors.transparent,
+        border: Border.all(color: on ? tone : p.lineStrong, width: 1.5),
+      ),
+      child: on
+          ? Icon(Icons.check_rounded, size: 16, color: inkOn(tone))
+          : null,
+    );
+    final Widget words = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(name, style: nameStyle(nameSize).copyWith(color: p.ink)),
+        const SizedBox(height: 3),
+        Text(
+          line,
+          style: lineStyle(lineSize)
+              .copyWith(color: p.ink.withValues(alpha: 0.6)),
+        ),
+      ],
+    );
+    final Widget badge = SkillBadge(skill: skill, size: _badge);
     return Semantics(
       button: true,
       selected: on,
-      label: '${l.skillName(skill.name)}, ${scoreNumber(context, score.now)}',
+      label: '$name. $line',
       excludeSemantics: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -402,11 +430,14 @@ class SkillTile extends StatelessWidget {
           padding: EdgeInsets.all(inset - edge),
           decoration: BoxDecoration(
             color: p.surfaceRaised,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(18),
             border: Border.all(
               color: on ? tone : tone.withValues(alpha: p.isDark ? 0.34 : 0.4),
               width: edge,
             ),
+            // Lit from under in its colour rather than washed in it: a
+            // yellow laid faint on the night is olive, a glow of it is
+            // still yellow.
             boxShadow: [
               BoxShadow(
                 color: tone.withValues(
@@ -418,72 +449,24 @@ class SkillTile extends StatelessWidget {
               ),
             ],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  SkillBadge(skill: skill, size: 34),
-                  const Spacer(),
-                  AnimatedContainer(
-                    duration: _turn,
-                    width: 22,
-                    height: 22,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: on ? tone : Colors.transparent,
-                      border: Border.all(
-                        color: on ? tone : p.lineStrong,
-                        width: 1.5,
-                      ),
-                    ),
-                    child: on
-                        ? Icon(
-                            Icons.check_rounded,
-                            size: 15,
-                            color: inkOn(tone),
-                          )
-                        : null,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Text(
-                l.skillName(skill.name),
-                style: nameStyle(nameSize).copyWith(color: p.ink),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Text(
-                    scoreNumber(context, score.now),
-                    style: AppText.display(
-                      size: 22,
-                      weight: FontWeight.w600,
-                      height: 1,
-                      color: p.ink,
-                    ),
-                  ),
-                  if (week > 0) ...[
-                    const SizedBox(width: 6),
-                    Flexible(
-                      child: Text(
-                        '+${scoreNumber(context, week)}',
-                        style: AppText.body(
-                          size: 12.5,
-                          weight: FontWeight.w700,
-                          color: tone,
-                        ),
-                      ),
-                    ),
+          child: stacked
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(children: [badge, const Spacer(), ring]),
+                    const SizedBox(height: 10),
+                    words,
                   ],
-                ],
-              ),
-            ],
-          ),
+                )
+              : Row(
+                  children: [
+                    badge,
+                    const SizedBox(width: 12),
+                    Expanded(child: words),
+                    const SizedBox(width: 10),
+                    ring,
+                  ],
+                ),
         ),
       ),
     );

@@ -365,12 +365,43 @@ void main() {
           matching: find.byType(Scrollable),
         )
         .first;
-    await tester.drag(inSheet, const Offset(0, -520));
+    await tester.drag(inSheet, const Offset(0, -420));
     await settle(tester);
     await shoot('profile-skills-3');
-    await tester.tap(find.byKey(const ValueKey('profile-skills-science')));
+    final Finder science = find.byKey(const ValueKey('profile-skills-science'));
+    await tester.ensureVisible(science);
+    await settle(tester);
+    await tester.tap(science);
     await settle(tester);
     await shoot('profile-skills-4');
+  });
+
+  // Your journey, on Astute+: the scores as they are, and under them where
+  // the reader sees clearly and their blind spot.
+  testWidgets('profile-skills-journey', (tester) async {
+    final String theme = Platform.environment['THEME'] ?? 'dark';
+    _prefs({
+      ..._reader(plus: true),
+      'knowit.theme': theme,
+      'knowit.goals': ['decide'],
+      'knowit.skills': ['decisions', 'money', 'fakes'],
+    });
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await settle(tester);
+    await tester.tap(find.byKey(const ValueKey('profile-journey')));
+    await settle(tester);
+    final Finder reading = find.byKey(const ValueKey('profile-skills-reading'));
+    final Finder list = find.byType(Scrollable).last;
+    await tester.scrollUntilVisible(reading, 300, scrollable: list);
+    await settle(tester);
+    final ScrollPosition position = tester
+        .state<ScrollableState>(list)
+        .position;
+    position.jumpTo(position.pixels + tester.getRect(reading).bottom - 760);
+    await settle(tester);
+    await shoot('profile-skills-5');
   });
 
   // The 320-wide phone, no notch, in German: at the ordinary text size,

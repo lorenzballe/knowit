@@ -2196,14 +2196,14 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'Dzisiejsza piątka';
+  String get fiveTitle => 'Dzisiejsze wyzwanie';
 
   @override
   String get fiveSame =>
       'Dziś ta sama piątka dla wszystkich. Około dwóch minut.';
 
   @override
-  String get fiveDone => 'Dzisiejsza piątka · gotowe';
+  String get fiveDone => 'Dzisiejsze wyzwanie · gotowe';
 
   @override
   String dailyOf(int max) {
@@ -2298,7 +2298,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · Dzisiejsza piątka · $date';
+    return 'Astute · Dzisiejsze wyzwanie · $date';
   }
 
   @override
@@ -2312,7 +2312,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Dzisiejsza piątka w Astute: te same pięć pytań dla wszystkich. Ile z nich trafisz?';
+      'Dzisiejsze wyzwanie w Astute: te same pięć pytań dla wszystkich. Ile z nich trafisz?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -2604,6 +2604,27 @@ class AppLocalizationsPl extends AppLocalizations {
       'lead': 'Przywództwo',
       'culture': 'Wiedza ogólna',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Odróżniać dobry argument od zwodniczego.',
+      'decisions':
+          'Wybierać według ryzyka i prawdopodobieństwa, nie przeczucia.',
+      'money': 'Ceny, odsetki, promocje: dokąd idą twoje pieniądze.',
+      'numbers': 'Czytać procenty i wykresy, nie dając się nabrać.',
+      'talk': 'Być zrozumianym, w mowie i na piśmie.',
+      'persuade': 'Przekonywać i zauważać, gdy ktoś przekonuje ciebie.',
+      'people': 'Dlaczego ludzie robią to, co robią.',
+      'fakes': 'Rozpoznawać fałszywe wiadomości, przerobione zdjęcia i rozdmuchane badania.',
+      'science': 'Sprawdzać pomysł, zanim w niego uwierzysz.',
+      'focus': 'Dłużej trzymać uwagę tam, gdzie się liczy.',
+      'lead': 'Prowadzić grupę i decydować za wszystkich.',
+      'culture': 'Historia, nauka, sztuka: to, co wszyscy cytują.',
+      'other': '',
     });
     return '$_temp0';
   }
@@ -6951,7 +6972,7 @@ class AppLocalizationsPl extends AppLocalizations {
       one: 'pomyliłem się o 1 punkt',
       zero: 'trafiłem w punkt',
     );
-    return 'Dzisiejsze wyzwanie w Astute: $_temp0. Zrobisz to lepiej?';
+    return 'Zakład dnia w Astute: $_temp0. Zrobisz to lepiej?';
   }
 
   @override

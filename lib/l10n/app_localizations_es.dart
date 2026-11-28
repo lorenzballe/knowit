@@ -1912,13 +1912,13 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'Las cinco de hoy';
+  String get fiveTitle => 'El reto de hoy';
 
   @override
   String get fiveSame => 'Las mismas cinco para todos hoy. Unos dos minutos.';
 
   @override
-  String get fiveDone => 'Las cinco de hoy · hecho';
+  String get fiveDone => 'El reto de hoy · hecho';
 
   @override
   String dailyOf(int max) {
@@ -2007,7 +2007,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · Las cinco de hoy · $date';
+    return 'Astute · El reto de hoy · $date';
   }
 
   @override
@@ -2021,7 +2021,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Las cinco de hoy en Astute: las mismas cinco preguntas para todos. ¿Cuántas aciertas?';
+      'El reto de hoy en Astute: las mismas cinco preguntas para todos. ¿Cuántas aciertas?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -2306,6 +2306,26 @@ class AppLocalizationsEs extends AppLocalizations {
       'lead': 'Liderazgo',
       'culture': 'Cultura general',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Distinguir un buen argumento de uno que engaña.',
+      'decisions': 'Elegir con riesgos y probabilidades, no por instinto.',
+      'money': 'Precios, intereses, ofertas: adónde va tu dinero.',
+      'numbers': 'Leer porcentajes y gráficos sin que te engañen.',
+      'talk': 'Hacerte entender, de palabra y por escrito.',
+      'persuade': 'Convencer, y darte cuenta de cuándo intentan convencerte.',
+      'people': 'Por qué la gente hace lo que hace.',
+      'fakes': 'Detectar noticias falsas, fotos trucadas y estudios inflados.',
+      'science': 'Poner a prueba una idea antes de creerla.',
+      'focus': 'Mantener la atención donde importa, durante más tiempo.',
+      'lead': 'Dirigir un grupo y decidir por todos.',
+      'culture': 'Historia, ciencia, arte: lo que todos citan.',
+      'other': '',
     });
     return '$_temp0';
   }
@@ -6443,7 +6463,7 @@ class AppLocalizationsEs extends AppLocalizations {
       one: 'me desvié 1 punto',
       zero: 'di en el clavo',
     );
-    return 'El reto de hoy en Astute: $_temp0. ¿Lo haces mejor?';
+    return 'La apuesta del día en Astute: $_temp0. ¿Lo haces mejor?';
   }
 
   @override

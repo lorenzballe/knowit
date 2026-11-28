@@ -2181,13 +2181,13 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'Пять вопросов дня';
+  String get fiveTitle => 'Вызов дня';
 
   @override
   String get fiveSame => 'Сегодня у всех одни и те же пять. Около двух минут.';
 
   @override
-  String get fiveDone => 'Пять вопросов дня · готово';
+  String get fiveDone => 'Вызов дня · готово';
 
   @override
   String dailyOf(int max) {
@@ -2284,7 +2284,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · Пять вопросов дня · $date';
+    return 'Astute · Вызов дня · $date';
   }
 
   @override
@@ -2298,7 +2298,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      '«Пять вопросов дня» в Astute: одни и те же пять вопросов для всех. Сколько ответишь верно?';
+      '«Вызов дня» в Astute: одни и те же пять вопросов для всех. Сколько ответишь верно?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -2584,6 +2584,26 @@ class AppLocalizationsRu extends AppLocalizations {
       'lead': 'Лидерство',
       'culture': 'Общая эрудиция',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Отличать здравый аргумент от обманчивого.',
+      'decisions': 'Выбирать по рискам и вероятностям, а не наугад.',
+      'money': 'Цены, проценты, скидки: куда уходят твои деньги.',
+      'numbers': 'Читать проценты и графики, не попадаясь на уловки.',
+      'talk': 'Быть понятым устно и письменно.',
+      'persuade': 'Убеждать и замечать, когда убеждают тебя.',
+      'people': 'Почему люди поступают так, как поступают.',
+      'fakes': 'Распознавать фейки, поддельные фото и раздутые исследования.',
+      'science': 'Проверять идею, прежде чем в неё поверить.',
+      'focus': 'Дольше держать внимание там, где это важно.',
+      'lead': 'Вести группу и принимать решения за всех.',
+      'culture': 'История, наука, искусство: то, что все цитируют.',
+      'other': '',
     });
     return '$_temp0';
   }
@@ -6925,7 +6945,7 @@ class AppLocalizationsRu extends AppLocalizations {
       one: 'ошибся на $off пункт',
       zero: 'попал точно',
     );
-    return 'Задание дня в Astute: $_temp0. Сможешь точнее?';
+    return 'Ставка дня в Astute: $_temp0. Сможешь точнее?';
   }
 
   @override

@@ -1910,13 +1910,13 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'Le cinque di oggi';
+  String get fiveTitle => 'La sfida di oggi';
 
   @override
   String get fiveSame => 'Le stesse cinque per tutti, oggi. Circa due minuti.';
 
   @override
-  String get fiveDone => 'Le cinque di oggi · fatto';
+  String get fiveDone => 'La sfida di oggi · fatta';
 
   @override
   String dailyOf(int max) {
@@ -2006,7 +2006,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · Le cinque di oggi · $date';
+    return 'Astute · La sfida di oggi · $date';
   }
 
   @override
@@ -2020,7 +2020,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Le cinque di oggi su Astute: le stesse cinque domande per tutti. Quante ne indovini?';
+      'La sfida di oggi su Astute: le stesse cinque domande per tutti. Quante ne indovini?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -2305,6 +2305,26 @@ class AppLocalizationsIt extends AppLocalizations {
       'lead': 'Leadership',
       'culture': 'Cultura generale',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Distinguere un buon argomento da uno che inganna.',
+      'decisions': 'Scegliere con rischi e probabilità, non d’istinto.',
+      'money': 'Prezzi, interessi, offerte: dove vanno i tuoi soldi.',
+      'numbers': 'Leggere percentuali e grafici senza farsi fregare.',
+      'talk': 'Farti capire, a voce e per iscritto.',
+      'persuade': 'Convincere, e accorgerti quando cercano di convincerti.',
+      'people': 'Perché la gente fa quello che fa.',
+      'fakes': 'Riconoscere notizie false, foto truccate, studi gonfiati.',
+      'science': 'Mettere alla prova un’idea prima di crederci.',
+      'focus': 'Tenere l’attenzione dove serve, più a lungo.',
+      'lead': 'Guidare un gruppo e decidere per tutti.',
+      'culture': 'Storia, scienza, arte: le cose che tutti citano.',
+      'other': '',
     });
     return '$_temp0';
   }
@@ -6444,7 +6464,7 @@ class AppLocalizationsIt extends AppLocalizations {
       one: 'ho sbagliato di 1 punto',
       zero: 'ho fatto centro',
     );
-    return 'La sfida di oggi su Astute: $_temp0. Fai meglio?';
+    return 'La puntata del giorno su Astute: $_temp0. Fai meglio?';
   }
 
   @override
