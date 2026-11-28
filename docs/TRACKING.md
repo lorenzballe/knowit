@@ -65,6 +65,15 @@ will find in six months.
   prova) e quando parte la prova (`first offer trial started`); gli acquisti
   partiti da lì hanno `source` `first week` o `first month`. Tre eventi per
   pagina al massimo, e ogni pagina si apre una volta sola.
+- **La fine del primo giorno.** La schermata che festeggia il primo giorno
+  finito, subito dopo la quinta carta, dice quando si apre e cosa ha detto
+  (`first day shown`: la serie, i punti, le risposte giuste su quante, quanto
+  il lettore si diceva sicuro, se c'era «Ricordamelo domani»), quando si
+  tocca il promemoria (`first day reminder tapped`) o Esplora (`first day
+  explore tapped`) e come si chiude (`first day closed`). Il foglio del
+  promemoria aperto da lì è quello di sempre, contato una volta sola, con
+  `from: celebration` su `push preprompt shown`. Al massimo quattro eventi,
+  una volta per lettore.
 - **Dove vuoi vederci più chiaro.** Quando il lettore sceglie dal profilo
   l'area in cui vuole vederci più chiaro, `goal set` dice quale (`goal`),
   quale c'era prima (`before`) e da dove (`from`: `profile`). Un evento per
@@ -279,7 +288,7 @@ background ends every visit; coming back starts a new one.
 | --- | --- | --- | --- | --- |
 | `$screen` | a visit begins | `$screen_name` | PostHog's screen views and paths | P |
 | `screen left` **new** | a visit ends | `screen`, `ms_on_screen` (in front only), `max_scroll_pct` (how far down its main list was seen, 0–100; absent when nothing scrolls), `scrolls` (finger drags that moved it), `taps`, `screens_opened` (full screens pushed over it), `from` (the screen before, `background` after a return, absent at launch), `left_to` (the next screen, or `background`) | dwell, depth and attention per screen, and the path between them | P |
-| `tab opened` | a tab is chosen | `tab`, `by` (`bar`, `swipe`, `widget`) | how the tabs are reached | P, T:`tab` |
+| `tab opened` | a tab is chosen | `tab`, `by` (`bar`, `swipe`, `widget`, `first day` **new**: Explore from the first day's celebration) | how the tabs are reached | P, T:`tab` |
 | `explore refreshed` **new** | Explore pulled down from its top: read again from the server, whatever its age | none | how often readers pull a feed for more | P |
 
 Every PostHog event carries `$screen_name`: the screen in front when it was
@@ -300,7 +309,8 @@ detail`, `archive`, `saved`, `liked`,
 `story` (a true story played from Explore); `update gate`, `pause` (the
 update gate's full screens, over everything, §6.13); `invite week` **new**
 (the purchase's own screen, for a week of Astute+ a friend's invitation
-gave, §6.14).
+gave, §6.14); `first day` **new** (the celebration of a reader's first
+finished day, right after the fifth card, §6.3).
 
 ### 6.3 The day on Today
 
@@ -313,6 +323,10 @@ gave, §6.14).
 | `card advanced` **extended** | a card of the day is thrown on | card facts, `review`, `ms_on_card` (from the card coming up, background included), and the read facts of its last stint (§6.4) | drop-off by place in the day, and how each card was read | P, T:`next` |
 | `card flipped` | a card is turned to its back | `pill_id`, `ms_to_flip` | the scorecard counts turns | T:`flip` only |
 | `day completed` | the fifth card is done | `streak_days`, `best_streak`, `cards`, `days_completed`, `rung`, `score_gained`, `rungs_climbed`, `is_plus`, `answered_right`, `answered_wrong`, `reviews`, `own` | | P, T:`done` |
+| `first day shown` **new** | the celebration of a reader's first finished day rises, right after the fifth card, once per phone (lib/widgets/first_day.dart) | `streak_days`, `points` (what the day's answers added to the Astute score), `answered` (today's graded answers), `right`, `sure` (how sure the reader said they were, on average over today's answers that asked, 50–90; absent when none asked), `remind` (bool: «Remind me tomorrow» was offered), `is_plus` | whether celebrating first keeps readers, read against the day-two return | P |
+| `first day reminder tapped` **new** | «Remind me tomorrow» is tapped on it; the reminder sheet that rises is the shell's, with its own events (§6.9, `from: celebration`) | `ms_open` | | P |
+| `first day explore tapped` **new** | Explore is tapped on it: it closes onto the Explore tab | `ms_open` | | P |
+| `first day closed` **new** | it goes | `left_by` (`close`, `back`, `explore`), `ms_open`, `reminder` (`set`: a time chosen and the phone said yes; `not set`: asked from it and not set; absent when not asked from it) | | P |
 | `rung reached` | a new rung of the ladder | `rung`, `rung_index`, `days_in`, `pills_read` | | P |
 | `streak milestone`, `best streak beaten` | the streak hits a milestone, or the best | `streak_days`, `is_plus`, `previous_best` | | P |
 | `streak broken` | the streak is found broken | `streak_lost`, `best_streak`, `days_missed`, `freezes_left`, `is_plus` | | P |
@@ -423,7 +437,7 @@ is in its card facts.
 | --- | --- | --- | --- |
 | `reminder opened` | a reminder's tap opened or brought the app forward (also sets the sitting's `entry` to `notification`) | `slot`, `planned_for`, `launched_app` | P |
 | `reminder switched`, `reminder time set` | the reminder settings | `on`, `at` | P |
-| `push preprompt shown`, `push preprompt answered`, `push permission asked`, `push permission answered` | asking for notifications | `reason`, `starts_on` (the time the sheet starts on), `from_habit` (whether the reader's usual time chose it), `choice`, `granted` | P |
+| `push preprompt shown`, `push preprompt answered`, `push permission asked`, `push permission answered` | asking for notifications | `reason` (`day done`, `trial`), `starts_on` (the time the sheet starts on), `from_habit` (whether the reader's usual time chose it), `from` **new** (`celebration`: raised from the first day's celebration, at the end of that day, which is then the evening's only ask; absent when the shell raised it), `choice`, `granted` | P |
 | `app opened from widget` | a widget's tap (sets `entry` to `widget`) | `widget`, `pill_id`, `where` | P |
 | `widget asked` | the sheet that shows how to put the widget on the home screen is put: once, at the end of the second finished day or later, to a reader with none placed | `can_pin` (the launcher puts it down when asked: Android 8+), `apple` | P |
 | `widget answered` | that sheet closes | `choice` (`pin`, `got it`, `not now`, `dismissed`), `pin_asked` (the launcher's dialog was asked for) | P |
@@ -600,6 +614,10 @@ once each, one paywall.
 
 Listen adds two to six events to a day it is used on: started, a card heard
 per card (one on the free plan, five on Astute+), and finished or stopped.
+
+The first day's celebration adds two to four events to one evening per
+reader, and nothing after: shown, closed, and between them the reminder or
+Explore tapped.
 
 Where the reader lives adds nothing to a day: a handful of events per reader
 in all — at most two sheets of the app's own and their answers, one system

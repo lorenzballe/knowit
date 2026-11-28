@@ -430,6 +430,70 @@ reads as a reward rather than a rule. The offer and where the week has got
 to are the same subject, so they share a card, and a test holds the
 longest of it to fitting in every language on a small phone.
 
+On a reader's first finished day it waits on the table under the
+celebration of that day, and comes when the celebration goes (*The first
+day's end*).
+
+## The first day's end
+
+The end of a reader's first day decides whether they come back, and it
+used to end on the sale: the card after the fifth at once, and then, on the
+first evenings the server's experiment asks on (`push.firstAsk`, all of them
+now), the reminder sheet over the shelf. An analysis of the first day
+concluded, and the owner agreed, that it is celebrated first: the streak,
+the points and how sure against how right, then the reminder and Explore;
+the sale after it, never instead (`lib/widgets/first_day.dart`).
+
+The first time a reader with no day finished before finishes one, in this
+sitting, a screen of its own rises right after the fifth card is thrown,
+before anything else the evening has (TodayScreen, `firstDayDue`). Black at
+night and paper by day, as the app is and as the first week's page is,
+which this is the first of: the day's date, and "Your first day is done" in
+the display face; between two hairlines the streak, its flame and its one
+lit in the streak's orange as the profile lights them — the screen's one
+colour — and what the day's answers added to the Astute score
+(`scoreBookOf(app).overall.today`), counting up from nothing; then one plain
+line, how sure against how right: "You were 70% sure, and got 4 of 5
+right", the average of what the reader said where a card asked how sure
+(`Judgement.confidence`), against every graded answer given that day — the
+five's, and any card answered before them, as the score counts them; "You
+got 4 of 5 right" alone on a day no card asked, and nothing on a day with no
+answer, when the day's cards stand in the points' place. Nothing bounces
+and nothing falls from the sky: the lines rise into place one after
+another, and for a reader who asked for less motion everything is where it
+ends.
+
+At its foot "Remind me tomorrow", and Explore; the way out quietly in the
+corner, as on a level reached. The button raises the reminder sheet down
+the shell's own road (`_offerReminder`, main.dart, with `from:
+celebration`): the same sheet and the same system prompt behind it as at the
+end of any day, asked once and counted once, and the time chosen takes the
+button's place ("We'll remind you tomorrow at 19:00"). It is there exactly
+when the shell would have put the sheet that evening — the prompt unspent,
+the nudge on, `AppState.shouldAskForPush` — and never where the phone
+already lets the app notify. The celebration is that evening's ask: used or
+passed over, the shell puts no sheet of its own that evening
+(`AppState.celebratedToday`), and a reader who passed it over is asked on a
+later evening, as ever, with nothing spent. Explore closes it onto the
+Explore tab, the card after the fifth still on Today's table.
+
+After it, on the free plan, the card after the fifth, as it always was;
+with Astute+, the shelf. A friend's week given on that first day (*Invita
+un amico*) rises after it, once the shelf has landed, and never over it. A
+level reached that evening — rare, with ten answers needed behind the score
+— is not folded into it: it waits for the next calm moment, the next day
+finished or Your journey opened, as it waits on the evening of the first
+week's page; so does the day's own moment. Once on a phone
+(`knowit.firstDayCelebratedOn`); never on opening the app onto a day already
+finished, never on day two; a reader who signs out leaves it behind for
+whoever reads next.
+
+The developer tools put the end back as it was (*First day's end:
+Celebration / As before*; Celebration ships) and preview the screen with
+sample numbers. `tool/first_day_shots.dart` photographs both ends at night
+and on paper, the reminder rising from the celebration and the smallest
+phone in German; what it says is in docs/TRACKING.md (§6.3).
+
 ## Your journey
 
 Artboard 137a: tiles, two to a row, the score first.
