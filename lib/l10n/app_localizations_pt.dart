@@ -7628,6 +7628,174 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get firstDayTitle => 'Terminaste o teu primeiro dia';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return 'Estavas $sure% seguro e acertaste $right em $total.';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return 'Acertaste $right em $total.';
+  }
+
+  @override
+  String get firstDayRemind => 'Lembra-me amanhã';
+
+  @override
+  String firstDayReminded(String time) {
+    return 'Lembramos-te amanhã às $time.';
+  }
+
+  @override
+  String get earlyReadingTag => 'Primeira leitura';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n vezes, e acertaste todas',
+      two: 'duas vezes, e acertaste as duas',
+      one: 'uma vez, e acertaste',
+    );
+    return 'Até agora: disseste $level% $_temp0.';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n vezes, e falhaste todas',
+      two: 'duas vezes, e falhaste as duas',
+      one: 'uma vez, e falhaste',
+    );
+    return 'Até agora: disseste $level% $_temp0.';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n vezes',
+      two: 'duas vezes',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right vezes',
+      two: 'duas vezes',
+      one: 'uma vez',
+    );
+    return 'Até agora: disseste $level% $_temp0, e acertaste $_temp1.';
+  }
+
+  @override
+  String get journeyClearEyebrow => 'Esta semana, à vista';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return 'O teu ponto cego: $subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return 'O teu ponto forte: $subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return '$pct certas nas tuas últimas $n respostas desta área.';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dias',
+      two: 'dois dias',
+      one: 'um dia',
+    );
+    return 'Após $_temp0, ainda te lembras de $right de $of.';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks semanas',
+      one: 'uma semana',
+    );
+    return 'Após $_temp0, ainda te lembras de $right de $of.';
+  }
+
+  @override
+  String get journeyClearBlindNotYet =>
+      'Seis respostas em duas áreas e aqui aparece a que mais falhas.';
+
+  @override
+  String get journeyClearStrongNotYet =>
+      'Seis respostas numa área e aqui aparece aquela em que és melhor.';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Mais $n respostas a dizer quão certo estás, e aqui aparece uma primeira leitura.',
+      one: 'Mais uma resposta a dizer quão certo estás, e aqui aparece uma primeira leitura.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      'As cartas voltam ao fim de 2, 7 e 21 dias: aqui vês quantas ainda recordas.';
+
+  @override
+  String get journeyPreviewDoor =>
+      'Todas as semanas um número diferente. O Astute+ abre o resto.';
+
+  @override
+  String weekSheetOf(String date) {
+    return 'A semana de $date';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$right de $n';
+  }
+
+  @override
+  String get weekSheetRightLabel => 'Respostas certas';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'em $n respostas',
+      one: 'em 1 resposta',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => 'Onde confias demais';
+
+  @override
+  String get weekSheetMemoryLabel => 'O que ainda recordas';
+
+  @override
+  String get weekSheetAccount => 'Guarda a tua semana em qualquer telemóvel';
+
+  @override
   String todayLineSure(int right, int asked, int sure) {
     return 'Ontem $right em $asked, e estavas $sure% seguro.';
   }

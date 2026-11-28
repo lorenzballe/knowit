@@ -28,9 +28,9 @@ import '../../theme.dart';
 import '../card_edge.dart';
 import '../scaled_text.dart';
 import '../subject_icon.dart';
+import '../hard_ring.dart';
 import '../web/card_thumb.dart';
 import '../video_card.dart' show filmClock;
-import '../web/web_card_page.dart' show groundOf;
 import 'first_shelves.dart' show ReadTick;
 
 /// The steps of a row of cards, smallest first. [m] and [l] are the two
@@ -411,13 +411,23 @@ class BoxTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TileLook drawn = look ?? TileLook.forBox(box);
-    final Widget words = TileBody(pill: pill, look: drawn, read: read);
     if (picture && showsPicture(pill, box)) {
+      // A hard card is shown as it is once opened: its picture taken ringed
+      // on this paper, in its ring, as Explore's shelf of the hardest rings
+      // its cards (hard_ring.dart, SharpRow).
+      final Palette p = context.p;
+      final Color? ring = HardRing.ringOf(pill, p);
+      final Pill face = ring == null ? pill : HardRing.dressed(pill, p);
       return Container(
         key: ValueKey('tile-picture-${pill.id}'),
         width: box.width,
         height: box.height,
-        decoration: cardFace(context, groundOf(pill), radius: drawn.radius),
+        decoration: cardFace(
+          context,
+          CardThumb.groundFor(pill, p),
+          radius: drawn.radius,
+          ring: ring,
+        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(drawn.radius),
           child: CardThumb(
@@ -431,16 +441,17 @@ class BoxTile extends StatelessWidget {
                 ? BoxFit.cover
                 : BoxFit.contain,
             fallback: ColoredBox(
-              color: pill.color,
+              color: face.color,
               child: Padding(
                 padding: EdgeInsets.all(drawn.padding),
-                child: words,
+                child: TileBody(pill: face, look: drawn, read: read),
               ),
             ),
           ),
         ),
       );
     }
+    final Widget words = TileBody(pill: pill, look: drawn, read: read);
     return Container(
       width: box.width,
       height: box.height,

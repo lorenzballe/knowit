@@ -15,7 +15,10 @@
   "opening.asks": {"default": true},
   "firstWeek.drawn": {"default": true},
   "opening.dayLine": {"default": true},
-  "streak.told": {"default": true}
+  "streak.told": {"default": true},
+  "journey.preview": {"default": false},
+  "week.sunday": {"default": false},
+  "calibration.early": {"default": true}
  },
  "tunables": {
   "push.askGapDays": {"type": "count", "default": 3, "min": 1, "max": 30},

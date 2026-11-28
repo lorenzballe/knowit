@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
@@ -27,6 +29,7 @@ import '../widgets/level_up.dart' show showLevelUpIfDue;
 import '../widgets/streak_moment.dart' show showStreakMomentIfDue;
 import '../widgets/today_line.dart';
 import '../widgets/day_moment.dart' show showDayMomentIfDue;
+import '../widgets/first_day.dart';
 import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
@@ -62,12 +65,19 @@ class TodayScreen extends StatefulWidget {
   /// the table after the fifth is thrown, and it is thrown too.
   final ValueChanged<bool>? onDeckOnTable;
 
+  /// What the shell lends the celebration of a reader's first finished day
+  /// (lib/widgets/first_day.dart): the reminder, asked down its own road,
+  /// and the way to Today's challenge on Explore. Opened as a screen of its
+  /// own, off the path, Today has no shell behind it, and nothing to lend.
+  final FirstDayHost firstDay;
+
   const TodayScreen({
     super.key,
     required this.app,
     this.onBack,
     this.onCardMotion,
     this.onDeckOnTable,
+    this.firstDay = FirstDayHost.none,
   });
 
   @override
@@ -109,6 +119,12 @@ class _TodayScreenState extends State<TodayScreen> {
   /// here, once; on any other opening it starts from the first card.
   bool _landOnDay = false;
 
+  /// True from the moment the reader's first finished day is to be
+  /// celebrated (firstDayDue) until the screen that celebrates it has gone:
+  /// it rises right after the fifth card, before anything else the
+  /// evening has, and the shelf's own moments wait for it.
+  bool _celebrating = false;
+
   @override
   void initState() {
     super.initState();
@@ -143,11 +159,13 @@ class _TodayScreenState extends State<TodayScreen> {
   /// for two seconds while its picture came).
   void _warmDay(AppState app) {
     final String day = [for (final Pill p in app.todaysDeck) p.id].join(',');
-    if (day.isEmpty || day == _warmed) return;
-    _warmed = day;
+    // A hard card's pictures are the ones taken on the reader's paper.
+    final bool dark = context.p.isDark;
+    if (day.isEmpty || '$day $dark' == _warmed) return;
+    _warmed = '$day $dark';
     final List<Pill> deck = List.of(app.todaysDeck);
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => CardThumb.warmDay(deck),
+      (_) => CardThumb.warmDay(deck, dark: dark),
     );
   }
 
@@ -173,6 +191,15 @@ class _TodayScreenState extends State<TodayScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       HapticFeedback.heavyImpact();
     });
+    // The reader's first finished day: celebrated first, on a screen of its
+    // own, before the card after the fifth and before anything the shelf
+    // has. Raised after this frame, and ahead of the word to the shell that
+    // the deck has left the table, so the shell finds the evening already
+    // the celebration's.
+    if (firstDayDue(widget.app)) {
+      _celebrating = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _celebrate());
+    }
     // A friend's code taken, its week waiting on this very day: the server
     // is asked now, and the card after the fifth does not offer Astute+ on
     // the evening a week of it is being given.
@@ -184,6 +211,25 @@ class _TodayScreenState extends State<TodayScreen> {
     _landOnDay = true;
   }
 
+  /// The celebration of the reader's first finished day, over the card the
+  /// fifth left on the table (lib/widgets/first_day.dart). Noted as it
+  /// rises, so it rises once whatever happens next. Once it has gone, the
+  /// card after the fifth is there to be thrown — or, on Astute+, the shelf
+  /// — and the shelf's moments come as on any evening but one: the level.
+  Future<void> _celebrate() async {
+    if (!mounted) return;
+    // Noted before the shell hears the deck has left the table: on this
+    // evening the reminder is the celebration's to ask, and the shell's
+    // own sheet does not rise for it.
+    unawaited(widget.app.notedFirstDayCelebrated());
+    await Navigator.of(
+      context,
+      rootNavigator: true,
+    ).push(FirstDayScreen.route(widget.app, host: widget.firstDay));
+    if (!mounted) return;
+    setState(() => _celebrating = false);
+  }
+
   /// Once the shelf has landed, the day at rest: a level its answers
   /// reached rises over it, once (lib/widgets/level_up.dart). Pushed over
   /// the tabs, so the shell's own asks at the finished day (the reminder,
@@ -192,6 +238,13 @@ class _TodayScreenState extends State<TodayScreen> {
   /// Where the developer tools try the day's own moment (C), it rises then
   /// instead, if it is due: never on the evening a level rises, which has
   /// that evening and its own way to send (lib/widgets/day_moment.dart).
+  ///
+  /// The evening the first day was celebrated has had its moment: a week a
+  /// friend's code gave still rises, after the celebration and never over
+  /// it, since it is given on that very evening; a level reached is not
+  /// folded into the celebration but waits for the next calm moment, the
+  /// next day finished or Your journey opened; the day's own moment waits
+  /// for another evening.
   void _riseLevel() {
     _levelDue = false;
     final bool moment = _momentDue;
@@ -202,7 +255,7 @@ class _TodayScreenState extends State<TodayScreen> {
       // A week a friend's code gave, once this first day is read: the
       // evening is its own (lib/widgets/invite_sheet.dart).
       if (await showInviteWeekIfDue(context, widget.app)) return;
-      if (!mounted) return;
+      if (!mounted || widget.app.celebratedToday) return;
       final bool rose = await showLevelUpIfDue(context, widget.app);
       if (rose || !mounted) return;
       // The first week's page or the first month's, when one is due
@@ -292,7 +345,9 @@ class _TodayScreenState extends State<TodayScreen> {
     // the shelf comes up when it, too, has been thrown.
     final bool onTable = !done || _magic;
     _tellShell(onTable);
-    if (!onTable && _levelDue) _riseLevel();
+    // Not while the first day's celebration is up: what rises over the
+    // shelf rises once it has gone.
+    if (!onTable && _levelDue && !_celebrating) _riseLevel();
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 420),
       switchInCurve: Curves.easeOutCubic,

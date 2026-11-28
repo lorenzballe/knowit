@@ -157,11 +157,13 @@ const Kit = (() => {
     addEventListener('pointerup', end, true); addEventListener('pointercancel', end, true);
   }
 
-  // A hard card ringed (env.hard, being tried in the app from November 2026; lib/widgets/hard_ring.dart): the page
+  // A hard card ringed (env.hard, every hard card in the app from November 2026; lib/widgets/hard_ring.dart): the page
   // draws itself in the colours the app says in place of its subject's — its ground (c), its ink (k: the drawing,
   // the subject's name, what it asks), its question's ink (q) — and the app draws the ring (edge) round it, as
   // Explore's shelf of the hardest draws those cards. The page's own colours are kept, and given back when the app
-  // stops saying so. Without env.hard nothing here runs, and every page draws as it always has.
+  // stops saying so. Without env.hard nothing here runs, and every page draws as it always has. A page draws in
+  // var(--k), var(--c) and var(--edge), read as it paints; a colour of its own that would not read on the ring's
+  // ground it lights up, or takes down, under .kit-hard[data-theme=dark] or [data-theme=light] (both on <html>).
   const HARD_VARS = ['--c', '--k', '--edge'];
   function ring(h) {
     const st = card.style, root = document.documentElement;

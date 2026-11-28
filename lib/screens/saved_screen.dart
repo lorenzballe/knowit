@@ -9,10 +9,10 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/card_edge.dart';
+import '../widgets/hard_ring.dart';
 import '../widgets/motion.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/web/card_thumb.dart';
-import '../widgets/web/web_card_page.dart' show groundOf;
 import '../widgets/share_sheet.dart';
 import '../widgets/fit_text.dart';
 import '../widgets/top_edge.dart' show SoftTop;
@@ -575,6 +575,10 @@ class _KeptTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget face = _MiniFace(pill: pill);
+    // A hard card, its picture the one taken ringed or its words, is in its
+    // ring.
+    final bool pictured = CardThumb.has(pill, CardSide.back);
+    final Palette p = context.p;
     return Semantics(
       button: true,
       label: pill.question,
@@ -585,10 +589,16 @@ class _KeptTile extends StatelessWidget {
         onTap: onOpen,
         onLongPress: onHold,
         child: Container(
-          decoration: cardFace(context, groundOf(pill), radius: 10),
+          decoration: cardFace(
+            context,
+            CardThumb.groundFor(pill, p),
+            radius: 10,
+            ring: HardRing.ringOf(pill, p),
+            ringWidth: 1.2,
+          ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: CardThumb.has(pill, CardSide.back)
+            child: pictured
                 ? CardThumb(pill: pill, side: CardSide.back, fallback: face)
                 : face,
           ),
@@ -606,14 +616,19 @@ class _MiniFace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // A hard card, read ringed: on the ring's ground, its mark in the ring's
+    // colour, its question in the page's ink, inside its ring (_KeptTile).
+    final Palette p = context.p;
+    final Color? ring = HardRing.ringOf(pill, p);
+    final Pill shown = ring == null ? pill : HardRing.dressed(pill, p);
     return ColoredBox(
-      color: pill.color,
+      color: shown.color,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(9, 10, 9, 9),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CardMark(pill: pill, size: 13, ink: pill.ink),
+            CardMark(pill: pill, size: 13, ink: ring ?? pill.ink),
             const SizedBox(height: 8),
             Expanded(
               child: Text(
@@ -624,7 +639,7 @@ class _MiniFace extends StatelessWidget {
                   weight: FontWeight.w700,
                   height: 1.15,
                   spacing: -0.2,
-                  color: pill.ink,
+                  color: shown.ink,
                 ),
               ),
             ),

@@ -83,7 +83,8 @@ const Turn = {
   const MAXG = 6;
   // Flat colours, one meaning each: the plinths cream stone with a shaded side; the two rails glowing, cherry red
   // and a little hotter bright orange, each with a lighter top; the heat a flat orange with a yellow core.
-  const INK = '#10100c', STONE = '#fffbf0', SIDE = '#e6dcc2';
+  // The card's own ink (--k), so a hard card ringed (env.hard) draws the lines and words in the ring's.
+  const INK = 'var(--k)', STONE = '#fffbf0', SIDE = '#e6dcc2';
   const GLOW = [{face: '#c8341f', top: '#ec6a4c'}, {face: '#ffab2a', top: '#ffd978'}];
   const HEAT = '#ff7a3c', CORE = '#ffc85a';
   const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';

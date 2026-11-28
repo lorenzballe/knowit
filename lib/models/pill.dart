@@ -680,15 +680,28 @@ class WebFace {
 /// answer, its drawing, the line to keep and the source. Each is the card at
 /// 366 by 606 points, edge to edge, with its foot-right corner left empty
 /// for the app's own save and share.
+///
+/// A hard card has two more pairs, taken as it is drawn ringed
+/// (lib/widgets/hard_ring.dart): on the night paper, `-ringed-front` and
+/// `-ringed-back`, and on the day one, `-ringed-day-front` and
+/// `-ringed-day-back`, named with a hash of their own that changes with the
+/// page and with the ring's look (bundle.py, RINGED). Its own pair stays as
+/// it was, for the builds that draw it as it was.
 @immutable
 class WebThumbs {
-  const WebThumbs({this.front, this.back});
+  const WebThumbs({this.front, this.back, this.ringed, this.ringedDay});
 
   /// The card as first shown, or null when only the back was taken.
   final String? front;
 
   /// The card once played, or null when only the front was taken.
   final String? back;
+
+  /// A hard card's pictures taken ringed on the night paper, or null.
+  final WebThumbs? ringed;
+
+  /// A hard card's pictures taken ringed on the day paper, or null.
+  final WebThumbs? ringedDay;
 
   /// The proportion of every picture, width to height: the card's.
   static const double aspect = 366 / 606;
@@ -699,10 +712,14 @@ class WebThumbs {
 
   @override
   bool operator ==(Object other) =>
-      other is WebThumbs && other.front == front && other.back == back;
+      other is WebThumbs &&
+      other.front == front &&
+      other.back == back &&
+      other.ringed == ringed &&
+      other.ringedDay == ringedDay;
 
   @override
-  int get hashCode => Object.hash(front, back);
+  int get hashCode => Object.hash(front, back, ringed, ringedDay);
 }
 
 /// How much work a card expects.

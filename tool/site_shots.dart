@@ -1,10 +1,14 @@
 // Photographs the app for the site: the phone pictures astutetheapp.com
 // shows (site/assets/app-*.webp), as an iPhone 16 Pro shows the app — 402
 // by 874 points, its status bar, its glass tab bar and its home bar — in
-// English, at night, with cards from the bank and their own pictures.
+// English, at night, with cards from the bank and their own pictures. With
+// LANG_SHOT=it the app speaks Italian, for the site's Italian pages
+// (site/assets/it/), the cards in English as the app deals them.
 //
 //   SHOTS=/some/folder flutter test tool/site_shots.dart --update-goldens
 //   python3 tool/site/shots.py /some/folder
+//   SHOTS=/other/folder LANG_SHOT=it flutter test tool/site_shots.dart --update-goldens
+//   python3 tool/site/shots.py /other/folder it
 //
 // The second line makes them the site's WebPs, 840 by 1826, under the names
 // the pages use (tool/site/shots.py says which is which). A camera, not a
@@ -269,9 +273,13 @@ Widget _onPhone(Widget app) => Directionality(
   ),
 );
 
+/// The language the app speaks in the pictures: English, or the one
+/// LANG_SHOT names.
+final Locale _locale = Locale(Platform.environment['LANG_SHOT'] ?? 'en');
+
 /// A screen of the app's own, alone, as a page pushed over it is.
 Widget _page(Widget home) => MaterialApp(
-  locale: const Locale('en'),
+  locale: _locale,
   localizationsDelegates: AppLocalizations.localizationsDelegates,
   supportedLocales: AppLocalizations.supportedLocales,
   theme: buildAstutoTheme(Brightness.dark),
@@ -310,7 +318,7 @@ Future<void> _decodeShown(WidgetTester tester) async {
 }
 
 /// The phone, held for [tester]: an iPhone's size, insets and platform,
-/// and English.
+/// and its language (_locale).
 void _hold(WidgetTester tester) {
   debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
   final view = tester.view;
@@ -321,8 +329,8 @@ void _hold(WidgetTester tester) {
     bottom: _insets.bottom * _ratio,
   );
   view.viewPadding = view.padding;
-  tester.platformDispatcher.localesTestValue = const [Locale('en')];
-  tester.platformDispatcher.localeTestValue = const Locale('en');
+  tester.platformDispatcher.localesTestValue = [_locale];
+  tester.platformDispatcher.localeTestValue = _locale;
   addTearDown(() {
     view.reset();
     tester.platformDispatcher.clearLocalesTestValue();
@@ -748,7 +756,9 @@ void main() {
     await open(tester, _day(_five, read: 2));
     await tester.tap(find.byKey(const ValueKey('tab-Explore')).first);
     await _settle(tester, 24);
-    final Finder title = find.text('Challenges');
+    final Finder title = find.text(
+      lookupAppLocalizations(_locale).challengesTitle,
+    );
     final Finder down = find
         .byWidgetPredicate(
           (w) => w is Scrollable && w.axisDirection == AxisDirection.down,

@@ -4,14 +4,102 @@
 // count up, the light that follows the pointer across a card, the phone that
 // turns and goes through today's cards on its shelf, Today's five and the
 // time to the next, the rows that scroll, the calibration chart, the cards
-// that flip, the plan picker, the questions that open, and the rail beside a
-// long page — and it counts the pages read and the store buttons pressed.
+// that flip, the plan picker, the questions that open, the rail beside a
+// long page, the slim bar a phone gets down the landing page, and the
+// language switch — and it counts the pages read and the store buttons
+// pressed.
 (() => {
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => Array.from(root.querySelectorAll(s));
   const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const onChange = (mq, fn) => (mq.addEventListener ? mq.addEventListener('change', fn) : mq.addListener(fn));
+  const root = document.documentElement;
+
+  // The language the page is shown in: a page's twin is in one (its lang),
+  // a page in both shows the one its head chose (data-lang), which the
+  // switch below can change in place. What this script says, it says in it.
+  const lang = () => (root.dataset.lang === 'it' || (!root.dataset.lang && root.lang === 'it') ? 'it' : 'en');
+  const WORDS = {
+    en: {
+      edition: n => 'Edition ' + n + ' · out this morning',
+      menu: 'Menu', closeMenu: 'Close the menu',
+      pause: 'Pause the cards', play: 'Play the cards',
+      date: 'en-GB',
+      soon: 'A new challenge any minute',
+      next: (h, m) => 'New challenge in ' + (h ? h + 'h ' : '') + m + 'm',
+      answer: 'Answer it',
+      said: c => 'You said ' + c + '%.',
+      right: (acc, gap) => 'You were right ' + acc + '% of the time. ' + gap + ' points overconfident.',
+      sure: c => c + ' per cent sure',
+      yearly: 'Try 14 days free, then €29.99/yr',
+      monthly: 'Start monthly · €3.99/mo',
+      onPage: 'On this page',
+    },
+    it: {
+      edition: n => 'Edizione ' + n + ' · uscita stamattina',
+      menu: 'Menu', closeMenu: 'Chiudi il menu',
+      pause: 'Ferma le carte', play: 'Fai scorrere le carte',
+      date: 'it-IT',
+      soon: 'La nuova sfida tra pochi minuti',
+      next: (h, m) => 'Nuova sfida tra ' + (h ? h + ' h ' : '') + m + ' min',
+      answer: 'Rispondi',
+      said: c => 'Hai detto ' + c + '%.',
+      right: (acc, gap) => 'Ci hai preso il ' + acc + '% delle volte: ' + gap + ' punti di sicurezza in più del dovuto.',
+      sure: c => 'sicuro al ' + c + ' per cento',
+      yearly: '14 giorni gratis, poi 29,99 €/anno',
+      monthly: 'Inizia il mensile · 3,99 €/mese',
+      onPage: 'In questa pagina',
+    },
+  };
+  const word = key => WORDS[lang()][key];
+  // The subjects, as Today's challenge names them, in the app's Italian.
+  const SUBJECTS_IT = {
+    Economics: 'Economia', Sport: 'Sport', Nature: 'Natura', Science: 'Scienza', Maths: 'Matematica',
+    Language: 'Lingua', Technology: 'Tecnologia', Space: 'Spazio', Philosophy: 'Filosofia', Cinema: 'Cinema',
+    Psychology: 'Psicologia', Music: 'Musica', 'Weird facts': 'Stranezze', Art: 'Arte', 'Pop culture': 'Cultura pop',
+    'Human body': 'Corpo umano', Medicine: 'Medicina', Food: 'Cibo', History: 'Storia', Life: 'Vita', Thinking: 'Pensiero',
+  };
+  const subjectName = name => (lang() === 'it' && SUBJECTS_IT[name]) || name;
+
+  // The language switch: the choice kept on the device (astute.lang, the one
+  // thing the site keeps there), so the next page opens in it. On a page in
+  // both languages it shows the other in place; on a page with a twin it goes
+  // to the twin.
+  const keep = to => { try { localStorage.setItem('astute.lang', to); } catch (e) { /* not kept: the page still changes */ } };
+  const showLang = to => {
+    root.dataset.lang = to;
+    const half = $('section[lang="' + to + '"][data-title]');
+    const section = $('.doc section[lang="' + to + '"] h1');
+    const titled = $('[data-title-' + to + ']');
+    if (half) document.title = half.dataset.title;
+    else if (section) document.title = section.textContent;
+    else if (titled) document.title = titled.getAttribute('data-title-' + to);
+    $$('[data-label-it]').forEach(el => {
+      if (!el.dataset.labelEn) el.dataset.labelEn = el.getAttribute('aria-label') || '';
+      el.setAttribute('aria-label', to === 'it' ? el.dataset.labelIt : el.dataset.labelEn);
+    });
+  };
+  $$('[data-lang-to], .doc .langs a[href="#it"], .doc .langs a[href="#en"]').forEach(a => a.addEventListener('click', e => {
+    const to = a.dataset.langTo || a.getAttribute('href').slice(1);
+    keep(to);
+    if (a.getAttribute('href').charAt(0) !== '#') return;
+    e.preventDefault();
+    showLang(to);
+    history.replaceState(null, '', location.pathname + location.search);
+    if ($('.doc')) window.scrollTo({ top: 0, behavior: 'auto' });
+  }));
+  // A link to a part of a page in both languages opens the part's language.
+  if (location.hash.length > 1 && !/^#(it|en)$/.test(location.hash)) {
+    let target = null;
+    try { target = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (e) { /* not an id */ }
+    const half = target && target.closest('section[lang]');
+    if (half && root.dataset.lang && half.lang !== root.dataset.lang && $('.doc')) {
+      root.dataset.lang = half.lang;
+      requestAnimationFrame(() => target.scrollIntoView());
+    }
+  }
+  if (root.dataset.lang) showLang(lang());
 
   // Download links go to Google Play on Android, and on a computer to the QR
   // code at the foot of the landing page, to be scanned with the phone. On
@@ -22,9 +110,12 @@
   const ua = navigator.userAgent;
   const android = /android/i.test(ua);
   const ios = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+  // The code to scan is on the landing page in the link's language: an
+  // Italian link (a page's twin, or a page in both's Italian half) to /it/.
+  const italian = a => a.classList.contains('l-it') || (!a.classList.contains('l-en') && lang() === 'it');
   $$('[data-store]').forEach(a => {
     if (android) a.href = 'https://play.google.com/store/apps/details?id=com.astuto.app';
-    else if (!ios) a.href = '/#download';
+    else if (!ios) a.href = $('#download') ? '#download' : (italian(a) ? '/it/#download' : '/#download');
   });
 
   // What the site measures: the pages read and the store buttons pressed,
@@ -116,7 +207,7 @@
   if (kicker) {
     const d = new Date();
     const edition = Math.round((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(2026, 8, 1)) / 864e5) + 1;
-    if (edition > 0) kicker.textContent = 'Edition ' + edition + ' \u00b7 out this morning';
+    if (edition > 0) kicker.textContent = word('edition')(edition);
   }
 
   // The nav frosts once the page has moved; a line along the top shows how
@@ -139,6 +230,33 @@
     onScroll();
   }
 
+  // The slim bar, on a phone down the landing page: once the first screen is
+  // behind, the prices, the questions and the store a tap away from
+  // anywhere, until the last word or the footer, which offer the stores
+  // themselves, come into view. Out of sight, it is out of reach too.
+  const slim = $('[data-slimbar]');
+  const heroSection = $('#hero');
+  if (slim && heroSection) {
+    let past = false, queued = false;
+    const ends = new Set();
+    const sync = () => {
+      const on = past && ends.size === 0;
+      slim.classList.toggle('on', on);
+      slim.inert = !on;
+      slim.setAttribute('aria-hidden', String(!on));
+    };
+    const measure = () => { queued = false; past = window.scrollY > heroSection.offsetHeight * 0.8; sync(); };
+    window.addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(measure); } }, { passive: true });
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => (e.isIntersecting ? ends.add(e.target) : ends.delete(e.target)));
+        sync();
+      });
+      [$('#download'), $('.site-foot')].forEach(el => el && io.observe(el));
+    }
+    measure();
+  }
+
   // The menu on a phone: a sheet over the page, closed by a link, the
   // button, Escape, or the window growing past a phone.
   const toggle = $('#menu-toggle');
@@ -148,7 +266,7 @@
     const show = open => {
       menu.hidden = !open;
       toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Close the menu' : 'Menu');
+      toggle.setAttribute('aria-label', open ? word('closeMenu') : word('menu'));
       if (nav) nav.classList.toggle('open', open);
       document.body.classList.toggle('menu-open', open);
     };
@@ -494,7 +612,7 @@
     const say = () => {
       if (!playBtn) return;
       playBtn.setAttribute('aria-pressed', String(stopped));
-      playBtn.setAttribute('aria-label', stopped ? 'Play the cards' : 'Pause the cards');
+      playBtn.setAttribute('aria-label', stopped ? word('play') : word('pause'));
       shelf.setAttribute('aria-live', stopped ? 'polite' : 'off');
     };
     if (playBtn) playBtn.addEventListener('click', () => {
@@ -635,13 +753,13 @@
           const mark = 'subject-' + String(c.topic || '').toLowerCase().replace(/[^a-z]+/g, '-');
           return '<li class="five-item">'
             + '<a class="five-card paper" href="/c/' + encodeURIComponent(c.id) + '" style="--c:' + esc(c.color) + '; --ink:' + triplet(c.ink) + '">'
-            + '<span class="label"><svg class="mark" aria-hidden="true"><use href="#' + esc(mark) + '"/></svg><span>' + esc(c.topic) + '</span><span class="five-n">' + (i + 1) + '/5</span></span>'
-            + '<span class="five-q" data-fit="26 44"><span>' + esc(c.question) + '</span></span>'
-            + '<span class="five-go">Answer it <b aria-hidden="true">&rarr;</b></span>'
+            + '<span class="label"><svg class="mark" aria-hidden="true"><use href="#' + esc(mark) + '"/></svg><span>' + esc(subjectName(c.topic)) + '</span><span class="five-n">' + (i + 1) + '/5</span></span>'
+            + '<span class="five-q" data-fit="26 44" lang="en"><span>' + esc(c.question) + '</span></span>'
+            + '<span class="five-go">' + word('answer') + ' <b aria-hidden="true">&rarr;</b></span>'
             + '</a></li>';
         }).join('');
         const date = $('#five-date');
-        if (date) date.textContent = new Intl.DateTimeFormat('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }).format(now);
+        if (date) date.textContent = new Intl.DateTimeFormat(word('date'), { weekday: 'long', day: 'numeric', month: 'long' }).format(now);
         const next = $('#five-next');
         if (next) {
           const tick = () => {
@@ -650,7 +768,7 @@
             midnight.setHours(24, 0, 0, 0);
             const ms = midnight - t;
             const h = Math.floor(ms / 3600000), m = Math.floor((ms % 3600000) / 60000);
-            next.textContent = ms < 60000 ? 'New five any minute' : 'New five in ' + (h ? h + 'h ' : '') + m + 'm';
+            next.textContent = ms < 60000 ? word('soon') : word('next')(h, m);
           };
           tick();
           setInterval(tick, 30000);
@@ -682,10 +800,10 @@
       const left = (c - 50) / 40 * 100 + '%';
       $('#conf-fill').style.width = left;
       thumb.style.left = left;
-      set(thumb, { 'aria-valuenow': c, 'aria-valuetext': c + ' per cent sure' });
+      set(thumb, { 'aria-valuenow': c, 'aria-valuetext': word('sure')(c) });
       steps.forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.conf === c)));
-      $('#read-said').textContent = 'You said ' + c + '%.';
-      $('#read-rest').textContent = 'You were right ' + acc + '% of the time. ' + (c - acc) + ' points overconfident.';
+      $('#read-said').textContent = word('said')(c);
+      $('#read-rest').textContent = word('right')(acc, c - acc);
       const gap = $('#gap-fill');
       if (gap) gap.style.setProperty('--g', c - acc);
       const x = px(c);
@@ -752,9 +870,7 @@
   plans.forEach(b => b.addEventListener('click', () => {
     plans.forEach(p => p.setAttribute('aria-pressed', String(p === b)));
     if (cta) {
-      cta.textContent = b.dataset.plan === 'yearly'
-        ? 'Try 14 days free, then €29.99/yr'
-        : 'Start monthly · €3.99/mo';
+      cta.textContent = b.dataset.plan === 'yearly' ? word('yearly') : word('monthly');
     }
   }));
 
@@ -769,25 +885,28 @@
     });
   }));
 
-  // A long page gets a rail of its sections beside it on a wide screen,
-  // from the headings of its first language, with the one being read
-  // marked.
+  // A long page gets a rail of its sections beside it on a wide screen, with
+  // the one being read marked: one rail for each language the page holds,
+  // from that language's headings, the reader's shown (l-en, l-it).
   const doc = $('.doc');
   if (doc && 'IntersectionObserver' in window) {
-    const first = $('section[lang]', doc) || doc;
-    const heads = $$('h2', first);
-    if (heads.length > 2) {
-      const prefix = first.id ? first.id + '-' : '';
+    const halves = $$(':scope > section[lang]', doc);
+    const rails = [];
+    const entries = new Map();
+    (halves.length ? halves : [doc]).forEach(half => {
+      const heads = $$('h2', half);
+      if (heads.length <= 2) return;
+      const prefix = half.id ? half.id + '-' : '';
+      const words = WORDS[half.lang === 'it' ? 'it' : 'en'];
       const toc = document.createElement('nav');
-      toc.className = 'toc';
-      toc.setAttribute('aria-label', 'On this page');
+      toc.className = 'toc' + (halves.length > 1 ? ' l-' + half.lang : '');
+      toc.setAttribute('aria-label', words.onPage);
       const title = document.createElement('p');
-      title.textContent = 'On this page';
+      title.textContent = words.onPage;
       toc.appendChild(title);
       const ul = document.createElement('ul');
-      const entries = new Map();
       heads.forEach((h, i) => {
-        if (!h.id) h.id = prefix + (h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || i);
+        if (!h.id) h.id = prefix + (h.textContent.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || i);
         const li = document.createElement('li');
         const a = document.createElement('a');
         a.href = '#' + h.id;
@@ -797,10 +916,13 @@
         entries.set(h, a);
       });
       toc.appendChild(ul);
+      rails.push(toc);
+    });
+    if (rails.length) {
       const body = document.createElement('div');
       body.className = 'doc-body';
       while (doc.firstChild) body.appendChild(doc.firstChild);
-      doc.appendChild(toc);
+      rails.forEach(toc => doc.appendChild(toc));
       doc.appendChild(body);
       doc.classList.add('has-toc');
       const spy = new IntersectionObserver(es => {
@@ -809,7 +931,7 @@
           entries.forEach((a, h) => a.classList.toggle('active', h === e.target));
         });
       }, { rootMargin: '-20% 0px -70% 0px' });
-      heads.forEach(h => spy.observe(h));
+      entries.forEach((a, h) => spy.observe(h));
     }
   }
 })();

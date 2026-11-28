@@ -16,6 +16,10 @@
 #pic{flex:1;min-height:0;width:100%;display:block;user-select:none;-webkit-user-select:none}
 #pic [data-tap]{cursor:pointer}
 .say{overflow-wrap:anywhere}
+/* The drawing's lines and words in the card's own ink (--k), so a hard card ringed (env.hard) draws them in the
+   ring's; its red lit up on the night ground. */
+.card{--red:#b3261e}
+.kit-hard[data-theme=dark] .card{--red:#ff6a55}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Sort into two groups · how sure">
   <div class="in">
@@ -34,7 +38,7 @@
 <script>
 // Flat colours with one meaning each: a blue and green globe; the harm red (the rope, the words); lead's haze grey;
 // the ozone layer a pale blue ring; wood, cream and a teal blanket for the bed; the pump petrol red.
-const INK = '#10100c', RED = '#b3261e', SEA = '#2f7fe0', LAND = '#3fa35a', HAZE = '#6e6a66', OZONE = '#bfe3ff', CREAM = '#fff8ea',
+const INK = 'var(--k)', RED = 'var(--red)', SEA ='#2f7fe0', LAND = '#3fa35a', HAZE = '#6e6a66', OZONE = '#bfe3ff', CREAM = '#fff8ea',
   WOOD = '#9a6236', SKIN = '#f1c9a3', HAIR = '#3a2c25', BLANKET = '#2a8f86', PUMP = '#d8452f';
 const KEYS = ['lead', 'freon', 'lift'];
 const NAME = {lead: 'Leaded gas', freon: 'Freon', lift: 'Pulley bed lift'};

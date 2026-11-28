@@ -1325,12 +1325,7 @@ class DeeperSource extends StatelessWidget {
         ],
         if (watch case final VoidCallback see) ...[
           SizedBox(height: open == null ? 14 : 8),
-          DeeperWatch(
-            by: watchBy,
-            onTap: see,
-            ink: p.ink,
-            muted: p.inkMuted,
-          ),
+          DeeperWatch(by: watchBy, onTap: see, ink: p.ink, muted: p.inkMuted),
         ],
       ],
     );

@@ -13,6 +13,11 @@
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
 #go{align-self:flex-start}
 .answered .q{font-size:max(2.5cqh,15px)}
+/* The card's own ground is the sky. On a hard card ringed (env.hard) what is drawn on it is in the ring's ink, and on
+   the day paper the clouds and the sun's rays take a warmer tone, to stand out of the white. */
+.card{--sky-ink:#10100c;--cloud:#fff6e8;--rays:#fff2c8}
+.kit-hard .card{--sky-ink:var(--k)}
+.kit-hard[data-theme=light] .card{--cloud:#ecdfc8;--rays:#f7cf78}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Drag to guess · the gap">
   <div class="in">
@@ -32,7 +37,8 @@
 gsap.registerPlugin(DrawSVGPlugin);
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), go = Kit.$('go'), card = Kit.$('card'), stage = Kit.$('stage');
-  const INK = '#10100c', PAPER = '#fbf3e4', MERC = '#d8362a', MERC2 = '#ee7f2e';
+  // SKY_INK is for what is drawn on the sky, which is the card's own ground: the card's ink on a hard card ringed.
+  const INK = '#10100c', PAPER = '#fbf3e4', MERC = '#d8362a', MERC2 = '#ee7f2e', SKY_INK = 'var(--sky-ink)';
   const SKY_HOT = ['#fde3bd', '#f39a62'], SKY_COOL = ['#f7f0e1', '#ecc9a2'];
   const TRUE = 3.5, MAX = 6;
   let W = 0, H = 0, fs = 12, G = {}, g = 0, touched = false, revealed = false, vis = false, lastStep = 0, hintTw = null, tl = null, bw = 0, bh = 0;
@@ -91,14 +97,14 @@ gsap.registerPlugin(DrawSVGPlugin);
     G.rays = mk('g', {}, G.sunAll);
     for (let i = 0; i < 14; i++) {
       const a = i / 14 * Math.PI * 2, a1 = a - .07, a2 = a + .07, r1 = sr * 1.22, r2 = sr * (i % 2 ? 1.5 : 1.75);
-      mk('path', {d: `M${sx + Math.cos(a1) * r1},${sy + Math.sin(a1) * r1} L${sx + Math.cos(a) * r2},${sy + Math.sin(a) * r2} L${sx + Math.cos(a2) * r1},${sy + Math.sin(a2) * r1}Z`, fill: '#fff2c8', opacity: .9}, G.rays);
+      mk('path', {d: `M${sx + Math.cos(a1) * r1},${sy + Math.sin(a1) * r1} L${sx + Math.cos(a) * r2},${sy + Math.sin(a) * r2} L${sx + Math.cos(a2) * r1},${sy + Math.sin(a2) * r1}Z`, fill: 'var(--rays)', opacity: .9}, G.rays);
     }
     const sun = mk('g', {filter: 'url(#sh)'}, G.sunAll);
     mk('circle', {cx: sx, cy: sy, r: sr, fill: 'url(#sunG)'}, sun);
     mk('circle', {cx: sx, cy: sy, r: sr * .72, fill: '#ffd98a', opacity: .55}, sun);
     mk('circle', {cx: sx - sr * .15, cy: sy - sr * .15, r: sr * .4, fill: '#fff4d2', opacity: .6}, sun);
     G.sx = sx; G.sy = sy;
-    const cloud = (cx, cy, s) => { const gg = mk('g', {filter: 'url(#sh)'}, L1); [[0, 0, 1], [-.9, .25, .7], [.9, .3, .65], [.35, -.35, .7]].forEach(([dx, dy, rr]) => mk('circle', {cx: cx + dx * s, cy: cy + dy * s, r: rr * s, fill: '#fff6e8'}, gg)); mk('rect', {x: cx - 1.5 * s, y: cy + .2 * s, width: 3 * s, height: .6 * s, rx: .3 * s, fill: '#fff6e8'}, gg); };
+    const cloud = (cx, cy, s) => { const gg = mk('g', {filter: 'url(#sh)'}, L1); [[0, 0, 1], [-.9, .25, .7], [.9, .3, .65], [.35, -.35, .7]].forEach(([dx, dy, rr]) => mk('circle', {cx: cx + dx * s, cy: cy + dy * s, r: rr * s, fill: 'var(--cloud)'}, gg)); mk('rect', {x: cx - 1.5 * s, y: cy + .2 * s, width: 3 * s, height: .6 * s, rx: .3 * s, fill: 'var(--cloud)'}, gg); };
     cloud(Math.max(W * .1, fs * 2.4), fs * 2.2, fs * .85);
     cloud(W * .64, fs * 1.7, fs * .6);
 
@@ -202,7 +208,7 @@ gsap.registerPlugin(DrawSVGPlugin);
 
     // drag knob + guess tag
     G.knob = mk('g', {}, L4);
-    G.knobIn = mk('path', {d: `M${xR - tw / 2 - 3},0 L${xR - tw / 2 - 3 - fs * .95},${-fs * .6} L${xR - tw / 2 - 3 - fs * .95},${fs * .6}Z`, fill: INK, 'stroke-linejoin': 'round'}, G.knob);
+    G.knobIn = mk('path', {d: `M${xR - tw / 2 - 3},0 L${xR - tw / 2 - 3 - fs * .95},${-fs * .6} L${xR - tw / 2 - 3 - fs * .95},${fs * .6}Z`, fill: SKY_INK, 'stroke-linejoin': 'round'}, G.knob);
     G.tag = mk('g', {}, L4);
     const tgx = xR + tw / 2 + fs * .6;
     G.tagR = mk('rect', {x: tgx, y: -fs * .95, width: fs * 5, height: fs * 1.9, rx: 3, fill: PAPER, filter: 'url(#sh)'}, G.tag);
@@ -211,13 +217,13 @@ gsap.registerPlugin(DrawSVGPlugin);
     writeTag();
 
     // the models' arc
-    G.arc = mk('path', {d: `M${xL},${yT - 3} C${xL},${yT - fs * 3} ${xR},${yT - fs * 3} ${xR},${yT - 7}`, fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round', opacity: vis ? 1 : 0}, L4);
-    G.arrow = mk('path', {d: `M${xR - 5},${yT - 13} L${xR},${yT - 6} L${xR + 5},${yT - 13}`, fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: vis ? 1 : 0}, L4);
+    G.arc = mk('path', {d: `M${xL},${yT - 3} C${xL},${yT - fs * 3} ${xR},${yT - fs * 3} ${xR},${yT - 7}`, fill: 'none', stroke: SKY_INK, 'stroke-width': 1.8, 'stroke-linecap': 'round', opacity: vis ? 1 : 0}, L4);
+    G.arrow = mk('path', {d: `M${xR - 5},${yT - 13} L${xR},${yT - 6} L${xR + 5},${yT - 13}`, fill: 'none', stroke: SKY_INK, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: vis ? 1 : 0}, L4);
 
     // the truth
     const yt = lvl(TRUE), mid = (y0 + yt) / 2;
     G.truth = mk('g', {opacity: vis ? 1 : 0}, L4);
-    G.br = mk('path', {d: `M${xR + tw / 2 + 2},${y0} H${xb} V${yt} H${xR + tw / 2 + 2}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, G.truth);
+    G.br = mk('path', {d: `M${xR + tw / 2 + 2},${y0} H${xb} V${yt} H${xR + tw / 2 + 2}`, fill: 'none', stroke: SKY_INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, G.truth);
     G.lab = mk('g', {}, G.truth);
     const lr = mk('rect', {x: xb + fs * .45, y: mid - fs * 1.7, width: fs * 6, height: fs * 4.6, rx: 3, fill: PAPER, filter: 'url(#sh)'}, G.lab);
     const big = txt(G.lab, xb + fs * .9, mid + fs * .45, '−3.5°C', {style: DISP, 'font-size': fs * 1.8, fill: '#b7321f'});

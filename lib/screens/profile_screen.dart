@@ -18,7 +18,8 @@ import '../state/app_state.dart';
 import '../state/debug_looks.dart';
 import '../state/first_offers.dart' show FirstOffer;
 import '../state/music_sound.dart';
-import '../state/progress.dart' show kCalibrationFloor;
+import '../state/progress.dart' show EarlyReading, kCalibrationFloor;
+import 'progress_text.dart' show earlyReadingText;
 import '../sync/identity.dart';
 import '../sync/invite.dart';
 import '../sync/place_finder.dart';
@@ -30,6 +31,7 @@ import '../utils/reminders.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/day_moment.dart' show DayMoment, DayMomentMemory;
+import '../widgets/first_day.dart' show FirstDayNumbers, FirstDayScreen;
 import '../widgets/place_ask.dart';
 import '../widgets/profile_menu.dart';
 import '../widgets/profile_top.dart';
@@ -1255,14 +1257,33 @@ class _Calibration extends StatelessWidget {
   Widget build(BuildContext context) {
     final buckets = app.calibration.toList();
     final gap = app.overconfidence;
+    // Under the floor, from the second answer said how sure, what those
+    // answers came to so far, marked as a first reading: the card used to
+    // say only how many more it wanted, ten of them after two.
+    final EarlyReading? early = gap == null ? app.earlyReading : null;
 
     return PaperCard(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (early != null) ...[
+            Text(
+              _upperIn(context, context.l10n.earlyReadingTag),
+              key: const ValueKey('calibration-early'),
+              style: AppText.label(
+                size: 10.5,
+                weight: FontWeight.w700,
+                spacing: 1.4,
+                color: context.p.inkMuted,
+              ),
+            ),
+            const SizedBox(height: 6),
+          ],
           Text(
-            _headline(context, gap),
+            early != null
+                ? earlyReadingText(context, early)
+                : _headline(context, gap),
             style: AppText.display(
               size: 19,
               weight: FontWeight.w600,
@@ -1308,6 +1329,12 @@ class _Calibration extends StatelessWidget {
         ? context.l10n.overconfidentBy(points)
         : context.l10n.underconfidentBy(points);
   }
+
+  /// Capitals, with Turkish's dotted capital I.
+  static String _upperIn(BuildContext context, String text) =>
+      Localizations.localeOf(context).languageCode == 'tr'
+      ? text.replaceAll('i', 'İ').toUpperCase()
+      : text.toUpperCase();
 }
 
 class _Row extends StatelessWidget {
@@ -1586,8 +1613,9 @@ class _PlusCard extends StatelessWidget {
 /// The looks the developer tools try on this phone ([DebugLooks]): the
 /// finished day without the row over its card, where the day is sent from
 /// and the picture it is sent as, which top the profile opens on, how a
-/// card's foot is set, how a hard card looks, What to learn's look, and
-/// which paywall. English, as the rest of the section is.
+/// card's foot is set, how a hard card looks, how the first finished day
+/// ends, What to learn's look, and which paywall. English, as the rest of
+/// the section is.
 class _DebugLooksPanel extends StatelessWidget {
   const _DebugLooksPanel({required this.app});
 
@@ -1756,10 +1784,11 @@ class _DebugLooksPanel extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  'Ringed: a hard card, wherever it is read, dark and ringed '
-                  'in its subject\'s colour with HARD on it, as Explore\'s '
-                  'shelf of the hardest draws it; front and back, in words '
-                  'and drawn. As today is how the app ships.',
+                  'Ringed is how the app ships: a hard card, wherever it is '
+                  'read, dark and ringed in its subject\'s colour with HARD '
+                  'on it, as Explore\'s shelf of the hardest draws it; front '
+                  'and back, in words and drawn, and in its pictures. As '
+                  'today: like any other card, as before.',
                   style: AppText.body(
                     size: 12,
                     height: 1.35,
@@ -1770,6 +1799,75 @@ class _DebugLooksPanel extends StatelessWidget {
                 ValueListenableBuilder<HardCardLook>(
                   valueListenable: DebugLooks.hardCards,
                   builder: (context, look, _) => _HardCardsPicker(look: look),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            key: const ValueKey('debug-first-day-end'),
+            padding: const EdgeInsets.fromLTRB(0, 14, 0, 16),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: p.line)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'First day\'s end',
+                  style: AppText.body(
+                    size: 14,
+                    weight: FontWeight.w500,
+                    color: p.ink,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  'Celebration: after a reader\'s first five, a screen of its '
+                  'own first — the streak, the points, how sure against how '
+                  'right — with Remind me tomorrow and Today\'s challenge; '
+                  'the card that offers Astute+ after it. As before: that '
+                  'card at once. Celebration ships. Wipe to see it again, '
+                  'or show it now with sample numbers.',
+                  style: AppText.body(
+                    size: 12,
+                    height: 1.35,
+                    color: p.inkFaint,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ValueListenableBuilder<FirstDayEndLook>(
+                  valueListenable: DebugLooks.firstDayEnd,
+                  builder: (context, look, _) => _FirstDayEndPicker(look: look),
+                ),
+                const SizedBox(height: 6),
+                // The celebration with sample numbers: only looked at; its
+                // reminder sheet keeps nothing and asks the phone nothing
+                // (lib/widgets/first_day.dart).
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: GestureDetector(
+                    key: const ValueKey('debug-first-day'),
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => Navigator.of(context, rootNavigator: true)
+                        .push(
+                          FirstDayScreen.route(
+                            app,
+                            numbers: FirstDayNumbers.sample,
+                            preview: true,
+                          ),
+                        ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Text(
+                        'Show it now  →',
+                        style: AppText.body(
+                          size: 13,
+                          weight: FontWeight.w600,
+                          color: p.link,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -2308,7 +2406,8 @@ class _SharePicturePicker extends StatelessWidget {
   );
 }
 
-/// As today or ringed, as a hard card wherever it is read (hard_ring.dart).
+/// As today or ringed, as a hard card wherever it is read (hard_ring.dart):
+/// ringed ships.
 class _HardCardsPicker extends StatelessWidget {
   const _HardCardsPicker({required this.look});
 
@@ -2319,14 +2418,14 @@ class _HardCardsPicker extends StatelessWidget {
       pick: HardCardLook.today,
       name: 'As today',
       note: 'like any card',
-      said: 'Hard cards as today',
+      said: 'Hard cards as today, like any card',
       flex: 1,
     ),
     (
       pick: HardCardLook.ringed,
       name: 'Ringed',
-      note: 'dark, HARD',
-      said: 'Hard cards ringed',
+      note: 'dark, HARD, ships',
+      said: 'Hard cards ringed, dark, HARD, ships',
       flex: 1,
     ),
   ];
@@ -2337,6 +2436,39 @@ class _HardCardsPicker extends StatelessWidget {
     picked: look,
     keyOf: (pick) => 'debug-hard-cards-${pick.name}',
     onPick: DebugLooks.setHardCards,
+  );
+}
+
+/// Celebration or as before, as the end of a reader's first finished day
+/// (first_day.dart).
+class _FirstDayEndPicker extends StatelessWidget {
+  const _FirstDayEndPicker({required this.look});
+
+  final FirstDayEndLook look;
+
+  static const List<_DebugChoice<FirstDayEndLook>> _choices = [
+    (
+      pick: FirstDayEndLook.celebration,
+      name: 'Celebration',
+      note: 'first, ships',
+      said: 'First day\'s end: celebration, ships',
+      flex: 1,
+    ),
+    (
+      pick: FirstDayEndLook.asBefore,
+      name: 'As before',
+      note: 'the offer at once',
+      said: 'First day\'s end as before',
+      flex: 1,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) => _DebugPicker<FirstDayEndLook>(
+    choices: _choices,
+    picked: look,
+    keyOf: (pick) => 'debug-first-day-end-${pick.name}',
+    onPick: DebugLooks.setFirstDayEnd,
   );
 }
 

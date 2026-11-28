@@ -16,6 +16,11 @@
 /// what works without the picture on it ([waiting]: its save and share), as
 /// a photo still coming is a grey square under its post's own buttons; then
 /// the picture, at once.
+///
+/// A hard card is read ringed (lib/widgets/hard_ring.dart), and is shown by
+/// the pictures taken of it ringed, on the paper the reader is on: dark at
+/// night, on the raised paper by day, the ring round it drawn by the place
+/// that shows it, as the deck draws it round the page ([picturesOf]).
 
 import 'dart:math' as math;
 
@@ -24,6 +29,7 @@ import 'package:flutter/material.dart';
 import '../../data/card_pages.dart';
 import '../../models/pill.dart';
 import '../../theme.dart';
+import '../hard_ring.dart';
 import 'cached_thumb.dart';
 import 'web_card_page.dart';
 
@@ -84,17 +90,20 @@ class CardThumb extends StatelessWidget {
   /// Fetches the pictures the finished day's shelf will show of [deck],
   /// front and back at the shelf's size, and the fronts the day sent as
   /// five squares shows, while the reader is still reading: the shelf has
-  /// them at once. Quietly, a few at a time; only where the app fetches its
-  /// own pictures (a test's stand-in is left alone).
-  static Future<void> warmDay(Iterable<Pill> deck) async {
+  /// them at once. A hard card's are those taken ringed on the paper the
+  /// reader is on ([dark]). Quietly, a few at a time; only where the app
+  /// fetches its own pictures (a test's stand-in is left alone).
+  static Future<void> warmDay(Iterable<Pill> deck, {bool dark = true}) async {
     if (!identical(image, _kept)) return;
     await CachedThumb.warm([
       for (final Pill p in deck)
         for (final CardSide side in CardSide.values)
-          if (refOf(p, side) case final String ref) ...[
+          if (refOf(p, side, dark: dark) case final String ref)
             urlOf(shelfOf(ref)),
-            if (side == CardSide.front) urlOf(ref),
-          ],
+      // The day sent as a picture leaves the app, and shows each card's own.
+      for (final Pill p in deck)
+        if (refOf(p, CardSide.front, own: true) case final String ref)
+          urlOf(ref),
     ]);
   }
 
@@ -102,15 +111,45 @@ class CardThumb extends StatelessWidget {
   /// photo in a feed does.
   static const Duration fade = Duration(milliseconds: 140);
 
-  /// Where [pill]'s picture of [side] is published, relative to the bank,
-  /// or null when it has none.
-  static String? refOf(Pill pill, CardSide side) {
+  /// The pictures [pill] is shown by in this run. A hard card read ringed
+  /// (hard_ring.dart) is shown by those taken of it ringed: on the night
+  /// paper, or, [dark] false, on the day one; where they were not taken it
+  /// has none, and is drawn as a card without a picture is, ringed, rather
+  /// than by a picture of it as it was. Any other card, by its own; and with
+  /// [own], every card: for a picture that leaves the app (the day sent as a
+  /// picture), whose reader meets the card on the web, as it is drawn there.
+  static WebThumbs? picturesOf(
+    Pill pill, {
+    bool dark = true,
+    bool own = false,
+  }) {
     final WebThumbs? thumbs = pill.web?.thumbs;
+    if (thumbs == null || own || !HardRing.on(pill)) return thumbs;
+    return dark ? thumbs.ringed : thumbs.ringedDay;
+  }
+
+  /// Where [pill]'s picture of [side] is published, relative to the bank,
+  /// or null when it has none: on the night paper, or, [dark] false, on the
+  /// day one, which only a hard card's differ by; with [own], the card's
+  /// own ([picturesOf]).
+  static String? refOf(
+    Pill pill,
+    CardSide side, {
+    bool dark = true,
+    bool own = false,
+  }) {
+    final WebThumbs? thumbs = picturesOf(pill, dark: dark, own: own);
     return switch (side) {
       CardSide.front => thumbs?.front,
       CardSide.back => thumbs?.back,
     };
   }
+
+  /// The colour a picture of [pill] is set on, and the place showing it
+  /// takes for the card's own: its ground, or, on a hard card read ringed,
+  /// the ground its pictures were taken on (HardRing.groundOf).
+  static Color groundFor(Pill pill, Palette p) =>
+      HardRing.on(pill) ? HardRing.groundOf(p) : groundOf(pill);
 
   /// Where the large picture of [side] is published, the small one's
   /// beside it: `thumbs/large/…` for `thumbs/…`, the same version.
@@ -122,8 +161,11 @@ class CardThumb extends StatelessWidget {
   static String shelfOf(String ref) =>
       ref.startsWith('thumbs/') ? 'thumbs/shelf/${ref.substring(7)}' : ref;
 
-  /// Whether [pill] has a picture of [side].
-  static bool has(Pill pill, CardSide side) => refOf(pill, side) != null;
+  /// Whether [pill] has a picture of [side], on either paper; with [own],
+  /// one of its own ([picturesOf]).
+  static bool has(Pill pill, CardSide side, {bool own = false}) => own
+      ? refOf(pill, side, own: true) != null
+      : refOf(pill, side) != null && refOf(pill, side, dark: false) != null;
 
   /// The full address of a picture named [ref].
   static Uri urlOf(String ref) => Uri.parse(kCardsBase).resolve(ref);
@@ -162,7 +204,7 @@ class CardThumb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? small = refOf(pill, side);
+    final String? small = refOf(pill, side, dark: context.p.isDark);
     final Widget none = fallback ?? const SizedBox.shrink();
     if (small == null) return none;
     final String ref = shelf
@@ -250,7 +292,7 @@ class CardThumb extends StatelessWidget {
         final Widget card = Stack(
           fit: StackFit.expand,
           children: [
-            ColoredBox(color: groundOf(pill)),
+            ColoredBox(color: groundFor(pill, context.p)),
             child,
             ?foreground,
           ],
