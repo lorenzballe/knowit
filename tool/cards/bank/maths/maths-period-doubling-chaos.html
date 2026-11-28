@@ -33,6 +33,10 @@
    too, the map's pills say them. */
 .answered .q{font-size:max(2.5cqh,15px)}
 @container (max-height:540px){.answered #why .big{display:none}}
+/* The map's ground, lines and pills, and its dots: near-black, white and cream on the card's green; on a hard card
+   ringed (env.hard), drawn in the ring's ink (--k) with the pills' words in the ground's colour (--c). */
+.card{--line:#10100c;--on-line:#ffffff;--dots:#fff6df}
+.kit-hard .card{--line:var(--k);--on-line:var(--c);--dots:var(--k)}
 </style>
 <article class="card" id="card" data-topic="maths" data-kind="Sort · how sure">
   <div class="in">
@@ -198,7 +202,7 @@ function map(){
   const s = cv.width / W;
   const off = document.createElement('canvas'); off.width = cv.width; off.height = cv.height;
   const o = off.getContext('2d'); o.scale(s, s);
-  o.fillStyle = CREAM;
+  o.fillStyle = css('--dots') || CREAM;
   const step = 1 / s, dot = 1.5;
   for (let px = L; px <= Rr; px += step){
     const r = R0 + (R1 - R0) * (px - L) / (Rr - L);
@@ -211,15 +215,17 @@ function map(){
 }
 const xr = r => G.L + (G.Rr - G.L) * (r - R0) / (R1 - R0);
 function pill(x, a, y, w, h, text, ok){
-  x.fillStyle = ok ? INK : RED;
+  x.fillStyle = ok ? css('--line') || INK : RED;
   x.beginPath(); x.roundRect(a, y, w, h, h / 2); x.fill();
-  x.fillStyle = ok ? WHITE : INK; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillStyle = ok ? css('--on-line') || WHITE : INK; x.textAlign = 'center'; x.textBaseline = 'middle';
   x.fillText(text, a + w / 2, y + h / 2 + 1);
 }
 
 function render(){
   if (!G) return;
   const {x, W, H, f, ph, top, bot, L, Rr, s, off, cv, marks} = G;
+  // The card's own line and ink as they are now: a hard card ringed draws the map in the ring's.
+  const line = css('--line') || INK, ink = css('--k') || WHITE;
   x.clearRect(0, 0, W, H);
   // The map, drawn left to right as the answer comes in.
   const pxEnd = L + (Rr - L) * st.p;
@@ -228,24 +234,24 @@ function render(){
   x.drawImage(off, 0, 0, sw, cv.height, 0, 0, sw, cv.height);
   x.restore();
   // The ground under it, with the rates written at its ends and where chaos begins.
-  x.strokeStyle = INK; x.lineWidth = 2.4; x.lineCap = 'round';
+  x.strokeStyle = line; x.lineWidth = 2.4; x.lineCap = 'round';
   x.beginPath(); x.moveTo(L, bot + 3); x.lineTo(Rr, bot + 3); x.stroke();
-  x.font = `700 ${f}px ${FONT}`; x.textBaseline = 'top'; x.fillStyle = WHITE;
+  x.font = `700 ${f}px ${FONT}`; x.textBaseline = 'top'; x.fillStyle = ink;
   x.textAlign = 'left'; x.fillText('R ' + R0, L, bot + f * .55);
   x.textAlign = 'right'; x.fillText(R1.toFixed(1), Rr, bot + f * .55);
   const c357 = xr(3.57);
   if (pxEnd >= c357){
-    x.setLineDash([4, 4]); x.strokeStyle = INK; x.lineWidth = 1.6;
+    x.setLineDash([4, 4]); x.strokeStyle = line; x.lineWidth = 1.6;
     x.beginPath(); x.moveTo(c357, top - f * .2); x.lineTo(c357, bot + 3); x.stroke();
     x.setLineDash([]);
-    x.textAlign = 'center'; x.fillStyle = WHITE; x.fillText('3.57', c357, bot + f * .55);
+    x.textAlign = 'center'; x.fillStyle = ink; x.fillText('3.57', c357, bot + f * .55);
   }
   // A pill on each of the six rates: what it does, and whether it was sorted right; a line down to the map.
   x.font = `800 ${f}px ${FONT}`;
   ITEMS.forEach(it => {
     const P = it.pill; if (!P || P.c > pxEnd) return;
     const y = P.y;
-    x.strokeStyle = it.ok ? INK : RED; x.lineWidth = 1.6;
+    x.strokeStyle = it.ok ? line : RED; x.lineWidth = 1.6;
     x.beginPath(); x.moveTo(P.c, y + ph); x.lineTo(P.c, bot + 3); x.stroke();
     pill(x, P.a, y, P.w, ph, it.lab + (marks || !it.ok ? (it.ok ? ' ✓' : ' ✗') : ''), it.ok);
   });

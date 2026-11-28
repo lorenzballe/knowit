@@ -10446,6 +10446,168 @@ abstract class AppLocalizations {
   /// **'{n, plural, =1{A friend finished their first day: a week of Astute+ for you.} other{{n} friends finished their first day: {n} weeks of Astute+ for you.}}'**
   String inviteEarned(int n);
 
+  /// The screen that celebrates the reader's first finished day, right after their fifth card (black at night, paper by day): its headline, in the display face, over the streak, the points the day earned and how sure against how right. Set on up to three lines; no full stop, as a headline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first day is done'**
+  String get firstDayTitle;
+
+  /// That screen, one plain line under the streak and the points: how sure the reader said they were on today's answers, on average (sure, 50 to 90, a percent), set against how many of today's answers were right (right of total). Said only where the card asked how sure at least once that day.
+  ///
+  /// In en, this message translates to:
+  /// **'You were {sure}% sure, and got {right} of {total} right.'**
+  String firstDaySureRight(int sure, int right, int total);
+
+  /// That screen, the same line on a day no card asked how sure: how many of today's answers were right, right of total.
+  ///
+  /// In en, this message translates to:
+  /// **'You got {right} of {total} right.'**
+  String firstDayRight(int right, int total);
+
+  /// That screen, its first button: raises the reminder sheet, which asks at what time to send the daily reminder. Short, as a button.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me tomorrow'**
+  String get firstDayRemind;
+
+  /// That screen, in place of the first button once the reader chose a time and the phone allowed notifications: when the first reminder comes. time is the time as the phone writes it (19:00, or 7:00 PM).
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll remind you tomorrow at {time}.'**
+  String firstDayReminded(String time);
+
+  /// A small tag in capitals over a provisional reading of how sure against how right, on the profile (How well you know yourself), in Your journey and its free preview: it is a first reading from the first few answers, firming up with more.
+  ///
+  /// In en, this message translates to:
+  /// **'First reading'**
+  String get earlyReadingTag;
+
+  /// The provisional reading, before twelve answers said how sure: the level the reader said most often (level, a percentage) and how many times (n), every one of them right. Shown on the profile and in Your journey.
+  ///
+  /// In en, this message translates to:
+  /// **'So far: you said {level}% {n, plural, =1{once, and you were right} =2{twice, and you were right twice} other{{n} times, and you were right every time}}.'**
+  String earlyReadingAll(int level, int n);
+
+  /// The same provisional reading when none of those answers (n of them, said at level %) was right.
+  ///
+  /// In en, this message translates to:
+  /// **'So far: you said {level}% {n, plural, =1{once, and you were wrong} =2{twice, and you were wrong both times} other{{n} times, and you were wrong every time}}.'**
+  String earlyReadingNone(int level, int n);
+
+  /// The same provisional reading when some were right and some were not: said level % n times (two or more), right of them `right` times.
+  ///
+  /// In en, this message translates to:
+  /// **'So far: you said {level}% {n, plural, =2{twice} other{{n} times}}, and you were right {right, plural, =1{once} =2{twice} other{{right} times}}.'**
+  String earlyReadingSome(int level, int n, int right);
+
+  /// Your journey on the free plan, the preview: the small capitals over the one figure shown in the clear this week, every other figure of the journey being blurred under it. A different one each week.
+  ///
+  /// In en, this message translates to:
+  /// **'In the clear this week'**
+  String get journeyClearEyebrow;
+
+  /// The preview's figure in the clear, when it is the blind spot: the subject the reader misses most (subject, its name).
+  ///
+  /// In en, this message translates to:
+  /// **'Your blind spot: {subject}'**
+  String journeyClearBlind(String subject);
+
+  /// The preview's figure in the clear, when it is the strong point: the subject the reader is best in (subject, its name).
+  ///
+  /// In en, this message translates to:
+  /// **'Your strong point: {subject}'**
+  String journeyClearStrong(String subject);
+
+  /// Under the blind spot or the strong point in the clear: how often right (pct, a percentage as the phone writes it) of the reader's latest n answers in that subject (six to twenty).
+  ///
+  /// In en, this message translates to:
+  /// **'{pct} right, of your last {n} answers in it.'**
+  String journeyClearShare(String pct, int n);
+
+  /// The preview's figure in the clear, when it is what the reader remembers: of the cards that came back after a wait of `days` days (two, the review ladder's first wait, after a miss), how many were known then (right of of).
+  ///
+  /// In en, this message translates to:
+  /// **'After {days, plural, =1{a day} =2{two days} other{{days} days}}, you still remember {right} of {of}.'**
+  String journeyClearMemoryDays(int days, int right, int of);
+
+  /// The same, after a wait of `weeks` weeks (one after the first right answer, three after the second): of the cards that came back then, how many were still known (right of of).
+  ///
+  /// In en, this message translates to:
+  /// **'After {weeks, plural, =1{a week} other{{weeks} weeks}}, you still remember {right} of {of}.'**
+  String journeyClearMemoryWeeks(int weeks, int right, int of);
+
+  /// The preview, the blind spot's week, when no subject has six answers yet: what it takes, rather than a sample.
+  ///
+  /// In en, this message translates to:
+  /// **'Six answers in two subjects, and this shows the one you miss most.'**
+  String get journeyClearBlindNotYet;
+
+  /// The preview, the strong point's week, when no subject has six answers yet: what it takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Six answers in one subject, and this shows the one you’re best at.'**
+  String get journeyClearStrongNotYet;
+
+  /// The preview, the week of how sure against how right, before two answers said how sure: how many more it takes (n) for a first reading.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One more answer saying how sure, and a first reading shows here.} other{{n} more answers saying how sure, and a first reading shows here.}}'**
+  String journeyClearSureNotYet(int n);
+
+  /// The preview, the week of what the reader remembers, before any card has come back: how it comes.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards come back after 2, 7 and 21 days: this shows how many you still remember.'**
+  String get journeyClearMemoryNotYet;
+
+  /// The preview, the one quiet line under the figure in the clear, with a lock: it opens the plans, on the journey's door.
+  ///
+  /// In en, this message translates to:
+  /// **'A different figure each week. Astute+ opens the rest.'**
+  String get journeyPreviewDoor;
+
+  /// Sunday's week, the sheet a free reader gets on Sunday after the five (or on Monday morning): the small capitals over its title, naming the week by its Monday (date, a day and a month as the phone writes them).
+  ///
+  /// In en, this message translates to:
+  /// **'The week of {date}'**
+  String weekSheetOf(String date);
+
+  /// Sunday's week: the right answers of the week as a figure, right of n.
+  ///
+  /// In en, this message translates to:
+  /// **'{right} of {n}'**
+  String weekSheetRightValue(int right, int n);
+
+  /// Sunday's week: the small capitals under that figure.
+  ///
+  /// In en, this message translates to:
+  /// **'Right answers'**
+  String get weekSheetRightLabel;
+
+  /// Sunday's week: under how sure against how right, how many of the week's answers said how sure (n), so a figure of three answers says it is one.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{over 1 answer} other{over {n} answers}}'**
+  String weekSheetAcross(int n);
+
+  /// Sunday's week: the name over the one figure only Astute+ shows, blurred, when it is where the reader trusts themselves too much.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you trust yourself too much'**
+  String get weekSheetOverLabel;
+
+  /// Sunday's week: the name over that blurred figure when it is how many cards the reader still remembers after the review ladder's waits.
+  ///
+  /// In en, this message translates to:
+  /// **'What you still remember'**
+  String get weekSheetMemoryLabel;
+
+  /// Sunday's week: the one line that offers the account (Apple or Google) to a reader not signed in, and the title of the sign-in sheet it opens.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your week on every phone'**
+  String get weekSheetAccount;
+
   /// The new reader's gift (trial.reverse), its moment in the first run, where the trial offer would stand: the headline. days is how long the gift lasts (always 14 today). 'Yours' because it is given, never sold: no card, nothing to cancel.
   ///
   /// In en, this message translates to:

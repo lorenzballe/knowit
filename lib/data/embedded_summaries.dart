@@ -425,4 +425,87 @@ const Map<String, String> kEmbeddedSummaries = {
  ]
 }
 ''',
+  'summaries/thinking-fast-and-slow.json?v=47910ab604d7': r'''
+{
+ "format": 1,
+ "book": "thinking-fast-and-slow",
+ "title": "Thinking, Fast and Slow",
+ "author": "Daniel Kahneman",
+ "year": 2011,
+ "language": "en",
+ "words": 2251,
+ "minutes": 15,
+ "parts": [
+  {
+   "title": "Two characters in one head",
+   "text": [
+    "Daniel Kahneman, a psychologist who won the Nobel Prize in economics in 2002, describes the mind as the work of two characters. He calls them System 1 and System 2. System 1 works automatically and fast, with little effort and no sense of control: it reads anger in a face, finishes the phrase bread and butter, and drives a car on an empty road. System 2 is slow and deliberate: it multiplies 17 by 24, checks whether an argument holds and fills in a tax form. We identify with System 2, the conscious self that reasons and chooses, yet most of what we think and do starts in System 1.",
+    "System 2 has one weakness that matters more than any other: it is lazy. Effort is costly, and the mind follows what Kahneman calls \"the law of least effort\". So System 2 often accepts what System 1 offers without checking. The classic test is a puzzle. A bat and a ball cost $1.10 together, and the bat costs $1 more than the ball. How much is the ball? A number comes to mind at once, 10 cents, and it is wrong. If the ball cost 10 cents, the bat would cost $1.10 and the two together $1.20. The right answer is 5 cents.",
+    "More than half of the students tested at Harvard, MIT and Princeton gave the intuitive answer, and at less selective universities more than 80 per cent did. They could have solved it; they simply did not check. Attention is limited too. In a film made by Christopher Chabris and Daniel Simons, viewers asked to count the passes of a basketball team often fail to see a woman in a gorilla suit who walks across the court and thumps her chest. About half of them never notice her, and they are sure they would have.",
+    "None of this makes System 1 the enemy. It is the source of most of what we do well, from understanding speech to the quick judgments of an experienced nurse. The trouble is that it cannot be switched off, and it does not know what it does not know. The rest of the book maps the places where its answers go wrong, and the moments when it pays to call on the slower system."
+   ]
+  },
+  {
+   "title": "A machine for jumping to conclusions",
+   "text": [
+    "System 1 builds the most coherent story it can from whatever is in front of it, and it does not stop to ask what is missing. Kahneman sums this up in a phrase he shortens to WYSIATI: \"what you see is all there is\". In one experiment, people who heard only one side of a legal case were more confident in their verdict than people who heard both sides. Less information made a tidier story, and a tidier story felt like better evidence.",
+    "The same habit produces the halo effect. If you like a politician's policies, you are likely to think well of their voice and their looks too. Solomon Asch showed how much order matters with two descriptions. Alan is intelligent, industrious, impulsive, critical, stubborn and envious. Ben is envious, stubborn, critical, impulsive, industrious and intelligent. The words are the same, yet most people think far better of Alan, because the first traits colour the ones that follow.",
+    "When a question is hard, System 1 quietly answers an easier one. Asked how happy you are with your life these days, you are likely to report your mood right now. In one study, German students were asked how happy they were and how many dates they had had the month before. In that order, the two answers had almost nothing to do with each other. When the question about dates came first, they were strongly linked: the dating question set the mood, and the mood answered the question about life.",
+    "Kahneman calls this substitution. It is quick and often good enough, and it is invisible. We rarely notice that the question we answered is different from the one we were asked."
+   ]
+  },
+  {
+   "title": "Anchors, examples and stereotypes",
+   "text": [
+    "Kahneman's best known work, done with his friend Amos Tversky from 1969 onwards, traced many errors to a few rules of thumb. The first is anchoring. In one experiment, a wheel of fortune rigged to stop at 10 or at 65 was spun in front of students, who were then asked what share of African nations were members of the United Nations. Those who had seen 10 guessed 25 per cent on average; those who had seen 65 guessed 45 per cent. A number they knew to be random moved their answer.",
+    "Experts are no safer. Experienced German judges read about a woman caught shoplifting, then rolled a pair of dice loaded to land on 3 or 9. Those who rolled 9 said, on average, that they would sentence her to 8 months; those who rolled 3 said 5 months.",
+    "The second rule is availability: we judge how common something is by how easily examples come to mind. Plane crashes and shark attacks, vivid and widely reported, feel more frequent than they are. Couples asked what share of the housework each of them does give answers that add up to more than 100 per cent, because each remembers their own efforts better than their partner's.",
+    "The third is representativeness: we judge by resemblance and forget the odds. Kahneman and Tversky described Linda, 31, single, outspoken and very bright, a philosophy graduate who as a student cared deeply about discrimination and social justice. Asked whether Linda is more likely to be a bank teller or a bank teller active in the feminist movement, most people chose the second, including graduate students trained in statistics. That cannot be right: every feminist bank teller is a bank teller. The story fitted, so the logic was ignored."
+   ]
+  },
+  {
+   "title": "Why praise seems to fail",
+   "text": [
+    "Teaching flight instructors in the Israeli Air Force, Kahneman told them that rewarding improvement works better than punishing mistakes. One instructor objected. When he praised a cadet for a clean manoeuvre, the next attempt was usually worse; when he shouted at a cadet for a bad one, the next was usually better. Praise, he concluded, did harm.",
+    "Kahneman saw what had happened, and describes it as the most satisfying moment of insight of his career. Any single performance is part skill and part luck. An unusually good flight is likely to be followed by a more ordinary one, and so is an unusually bad one, whatever the instructor says. The instructor was watching regression to the mean and reading it as the effect of his own words.",
+    "Regression is everywhere once you look for it. An athlete who appears on a magazine cover after an outstanding season often does worse the next year, and a jinx gets the blame. Depressed children given almost any treatment, even an energy drink, will on average seem better three months later, because the most extreme cases drift back towards normal. The mind wants a cause for every change, and System 1 supplies one. Statistics says that extreme results are partly luck, and luck does not repeat on demand.",
+    "The lesson for anyone who judges performance is simple to state and hard to feel. Before crediting or blaming a cause, ask how much of the result was luck, and expect the next result to sit closer to the average."
+   ]
+  },
+  {
+   "title": "The illusion of knowing",
+   "text": [
+    "As a young officer in the Israeli army, Kahneman helped assess candidates for officer training. In one test, eight soldiers with no assigned leader had to get a long log over a wall without letting it touch the wall. The assessors watched, felt sure who would make good leaders and wrote confident predictions. Months later, reports from the officer school showed their forecasts were only slightly better than blind guesses. The next group of candidates arrived, and the assessors felt just as sure as before.",
+    "He calls this the illusion of validity: confidence comes from how coherent a story is, and says little about whether it is true. Finance offers a large test. The economist Terrance Odean studied the trades of 10,000 brokerage accounts and found that, on average, the shares investors sold went on to do better than the shares they bought, by 3.2 percentage points a year. At one investment firm, Kahneman found that the rankings of its advisers from one year to the next had a correlation of about zero. The firm's bonuses were rewarding luck.",
+    "Experts lose to simple formulas more often than they believe. Building on the work of Paul Meehl, Kahneman reports that in study after study a few facts, weighed by a rule, predicted outcomes as well as trained judgment or better. With the psychologist Gary Klein he concludes that intuition can be trusted only in a world regular enough to be predictable, and only after long practice with quick feedback. A firefighter or a chess master qualifies. A stock picker or a political pundit does not.",
+    "The same overconfidence wrecks plans. Kahneman once led a team writing a school textbook on judgment. After a year, everyone guessed the job would take about two years more. He asked the most experienced member how long similar teams had taken. About 40 per cent never finished, and none had finished in less than seven years. The team carried on anyway. The book took eight more years, and was never used.",
+    "His remedies are practical. Take the outside view: before trusting your own forecast, find out how similar projects went. And run a premortem, an idea of Klein's: before a decision is final, ask the team to imagine that a year has passed and the plan has failed, then write the story of how it happened."
+   ]
+  },
+  {
+   "title": "Losses loom larger than gains",
+   "text": [
+    "Economics long assumed that people judge a gamble by the wealth it would leave them with. Kahneman and Tversky's prospect theory, published in 1979, said instead that we judge changes from a reference point, usually where we stand now, and that losses weigh more than gains of the same size. Offered a coin toss in which they lose $100 on tails and win $150 on heads, most people refuse. In experiments, a loss typically has to be balanced by a gain about 1.5 to 2.5 times as large.",
+    "Loss aversion explains the endowment effect. In experiments with coffee mugs, people who had been given a mug asked about twice as much to sell it as others were willing to pay to buy one. Once a thing is ours, giving it up feels like a loss. It also explains why professional golfers putt more accurately to save par than to make a birdie, a pattern found in more than two million putts.",
+    "We also weigh chances badly. Moving from no chance to a 5 per cent chance of winning feels like much more than moving from 60 to 65 per cent, which is why lottery tickets sell. Moving from 95 per cent to certainty feels larger still, which is why people pay heavily to settle a strong court case. Kahneman and Tversky set this out as a fourfold pattern: people take risks they should avoid and avoid risks they should take, depending on whether they face gains or losses and whether the chances are small or large.",
+    "Framing works through the same machinery. Asked to choose between programmes to fight an outbreak expected to kill 600 people, most respondents chose a sure plan that would save 200 lives over a gamble. When the same choice was described as 400 people dying for sure, most chose the gamble. The outcomes were identical; only the words had changed."
+   ]
+  },
+  {
+   "title": "The self that remembers",
+   "text": [
+    "In the last part of the book Kahneman separates two selves. The experiencing self lives through each moment; the remembering self keeps score and makes the decisions. They often disagree. In a study of patients undergoing colonoscopy, done with Donald Redelmeier, people later judged the procedure by two moments: the worst point and the last few minutes. How long it had lasted barely mattered.",
+    "A simpler experiment made the point sharper. Volunteers held one hand in painfully cold water, at 14 degrees Celsius, for 60 seconds. With the other hand they did the same, then kept it in for 30 seconds more while the water warmed by about one degree. Asked which trial to repeat, most chose the longer one: more pain in total, but a gentler end. Kahneman calls this the peak-end rule, and the indifference to how long things last duration neglect.",
+    "The same gap shapes how we judge whole lives. Students in the Midwest and in California were about equally satisfied with their lives, yet both groups expected Californians to be happier, because the question put the weather in front of them. Kahneman's name for this is the focusing illusion: nothing in life matters quite as much as it seems to while we are thinking about it.",
+    "The book ends without promising a cure. Kahneman admits that decades of study have barely changed his own intuitions. What helps is a vocabulary: words like anchoring, regression and the outside view, which make errors easier to spot in other people, in organisations and, with practice, in ourselves, at the moments when the stakes are high enough to slow down.",
+    "One caution belongs with the book. Some studies in its early chapters on priming, such as people walking more slowly after reading words about old age, did not hold up when other laboratories repeated them. In 2012 Kahneman himself wrote to researchers in the field urging them to replicate one another's work. The core findings on heuristics, regression, overconfidence and loss aversion have held up far better."
+   ]
+  }
+ ],
+ "sources": [
+  "Daniel Kahneman, Thinking, Fast and Slow (Farrar, Straus and Giroux, paperback 2013; first published 2011), ISBN 9780374533557, https://openlibrary.org/isbn/9780374533557",
+  "Ed Yong, \"Nobel laureate challenges psychologists to clean up their act\", Nature, 3 October 2012, doi:10.1038/nature.2012.11535"
+ ]
+}
+''',
 };

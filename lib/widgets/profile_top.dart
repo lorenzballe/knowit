@@ -30,7 +30,6 @@ import '../screens/journey_screen.dart';
 import '../state/app_state.dart';
 import '../state/debug_looks.dart';
 import '../theme.dart';
-import 'premium.dart';
 import 'skill_score.dart';
 import 'ui.dart' show Eyebrow;
 
@@ -82,21 +81,11 @@ ProfileTop? profileTopForShots;
 int _readToday(AppState app) =>
     app.dayClosed ? kPillsPerDay : app.todayIndex.clamp(0, kPillsPerDay);
 
-/// Opens Your journey: on the free plan, the plans, on the journey's own
-/// door, and straight through to the journey if a trial is taken there.
-void _openJourney(BuildContext context, AppState app) => requirePlus(
-  context,
-  app,
-  () => Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (routeContext) => JourneyScreen(
-        app: app,
-        onBack: () => Navigator.of(routeContext).pop(),
-      ),
-    ),
-  ),
-  source: 'journey',
-);
+/// Opens Your journey: on the free plan, the preview where the server has
+/// it on, or the plans on the journey's own door, straight through to the
+/// journey if a trial is taken there (openJourney).
+void _openJourney(BuildContext context, AppState app) =>
+    openJourney(context, app);
 
 /// The top, as [profileTopOf] has it for the reader.
 class ProfileTopView extends StatelessWidget {

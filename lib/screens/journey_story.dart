@@ -249,6 +249,9 @@ class _HowYouReason extends StatelessWidget {
         : shares.reduce((a, b) => b.share < a.share ? b : a);
     final over = overconfidentIn(app);
     String subject(String key) => l.subjectOf(kTopics[key]?.name ?? '');
+    // Under the floor, from the second answer said how sure, a first
+    // reading of them, and under it how many more it takes to be measured.
+    final EarlyReading? early = said == null ? app.earlyReading : null;
 
     return _Box(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
@@ -256,17 +259,24 @@ class _HowYouReason extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _Line(
+            key: early == null ? null : const ValueKey('story-early'),
             icon: Icons.track_changes_rounded,
-            text: said == null
-                ? l.storySaidRightToGo(
-                    math.max(1, kCalibrationFloor - app.calibratedAnswers),
-                  )
-                : l.elided(
+            text: said != null
+                ? l.elided(
                     l.storySaidRight(
                       _percent(context, said.sure / 100),
                       _percent(context, said.right / 100),
                     ),
+                  )
+                : early != null
+                ? earlyReadingText(context, early)
+                : l.storySaidRightToGo(
+                    math.max(1, kCalibrationFloor - app.calibratedAnswers),
                   ),
+            note: early == null
+                ? null
+                : '${l.earlyReadingTag}  ·  '
+                      '${l.storySaidRightToGo(math.max(1, early.toGo))}',
           ),
           if (app.reactions.isNotEmpty)
             _Line(
@@ -298,12 +308,14 @@ class _HowYouReason extends StatelessWidget {
   }
 }
 
-/// One line of the chapter: a mark, and what it says.
+/// One line of the chapter: a mark, what it says, and, where it is only a
+/// first reading, a quieter line under it saying so.
 class _Line extends StatelessWidget {
-  const _Line({required this.icon, required this.text});
+  const _Line({super.key, required this.icon, required this.text, this.note});
 
   final IconData icon;
   final String text;
+  final String? note;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -314,14 +326,31 @@ class _Line extends StatelessWidget {
         Icon(icon, size: 18, color: context.p.ink.withValues(alpha: 0.55)),
         const SizedBox(width: 12),
         Expanded(
-          child: Text(
-            text,
-            style: AppText.body(
-              size: 15,
-              weight: FontWeight.w600,
-              height: 1.35,
-              color: context.p.ink,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                text,
+                style: AppText.body(
+                  size: 15,
+                  weight: FontWeight.w600,
+                  height: 1.35,
+                  color: context.p.ink,
+                ),
+              ),
+              if (note case final String note) ...[
+                const SizedBox(height: 4),
+                Text(
+                  note,
+                  style: AppText.body(
+                    size: 12.5,
+                    weight: FontWeight.w500,
+                    height: 1.35,
+                    color: context.p.ink.withValues(alpha: 0.55),
+                  ),
+                ),
+              ],
+            ],
           ),
         ),
       ],
@@ -1100,12 +1129,17 @@ class _YourStory extends StatelessWidget {
 // ── The frame ─────────────────────────────────────────────────────────────
 
 /// A chapter: its number and name in small capitals, then what it says.
+///
+/// In the free plan's preview ([veil] given) the name stays clear and what
+/// the chapter says is the reader's own, worked out as for Astute+, behind
+/// the veil: blurred, still, and one tap from the plans.
 class _Chapter extends StatelessWidget {
   const _Chapter({
     required this.n,
     required this.title,
     required this.child,
     this.trailing,
+    this.veil,
   });
 
   final int n;
@@ -1116,35 +1150,43 @@ class _Chapter extends StatelessWidget {
   /// what it shows (the skills of Your training).
   final Widget? trailing;
 
+  /// The reader on the free plan the chapter is veiled for, in the preview.
+  final AppState? veil;
+
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-      Padding(
-        padding: EdgeInsets.only(
-          left: 4,
-          right: 4,
-          bottom: trailing == null ? 10 : 6,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Text(
-                '$n  ·  ${_upper(context, title)}',
-                style: AppText.body(
-                  size: 11,
-                  weight: FontWeight.w800,
-                  spacing: 1.4,
-                  color: context.p.ink.withValues(alpha: 0.5),
+  Widget build(BuildContext context) {
+    final AppState? veil = this.veil;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            left: 4,
+            right: 4,
+            bottom: trailing == null || veil != null ? 10 : 6,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text(
+                  '$n  ·  ${_upper(context, title)}',
+                  style: AppText.body(
+                    size: 11,
+                    weight: FontWeight.w800,
+                    spacing: 1.4,
+                    color: context.p.ink.withValues(alpha: 0.5),
+                  ),
                 ),
               ),
-            ),
-            ?trailing,
-          ],
+              // A way to change what a veiled chapter shows would change
+              // something the reader cannot see.
+              if (veil == null) ?trailing,
+            ],
+          ),
         ),
-      ),
-      child,
-    ],
-  );
+        if (veil == null) child else _Veil(app: veil, child: child),
+      ],
+    );
+  }
 }

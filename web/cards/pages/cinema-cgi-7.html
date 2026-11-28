@@ -26,6 +26,11 @@
 .stagebox svg,.stagebox canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 #pic text,#pic2 text{font-family:var(--body);font-weight:700;fill:var(--k)}
 #pic text.b,#pic2 text.b{font-family:var(--display);font-weight:800}
+/* The rendered frame: a veil of white on the card's purple, or on the night ground of a hard card ringed (env.hard);
+   on the day paper, where white on white would show nothing, the card's own purple, the words in it white. */
+.card{--frame:rgba(255,255,255,.1);--floor:rgba(255,255,255,.14);--frame-ink:var(--k)}
+.kit-hard[data-theme=light] .card{--frame:#6e3aff;--floor:#7b4cff;--frame-ink:#ffffff}
+#pic2 text.in-frame{fill:var(--frame-ink)}
 #opts{display:flex;gap:1.6cqw}
 /* on taller cards the three answers stack, one to a line, and fill the room under the frames */
 @container (min-height:560px){#opts{flex-direction:column;gap:1cqh}#opts .opt{text-align:left;padding:max(1.4cqh,10px) 4.5cqw}}
@@ -91,6 +96,8 @@ const Turn = {
   })();
   const el = (t, a, p) => Kit.mk(t, a, p);
   const txt = (s, a, p) => { const e = el('text', a, p); e.textContent = s; return e; };
+  // The card's colours as they are now, for what the canvas paints (a hard card ringed has its own).
+  const css = n => getComputedStyle(Kit.$('card')).getPropertyValue(n).trim();
   let pick = -1, answered = false, turned = false, B = null;
 
   // ---------- a film frame: a rounded box between two rows of sprocket holes ----------
@@ -155,10 +162,10 @@ const Turn = {
     ctx.clearRect(0, 0, W, H);
     ctx.save();
     ctx.beginPath(); ctx.roundRect ? ctx.roundRect(fx + 1, fy + 1, fw - 2, fh - 2, 8) : ctx.rect(fx + 1, fy + 1, fw - 2, fh - 2); ctx.clip();
-    ctx.fillStyle = 'rgba(255,255,255,.1)'; ctx.fillRect(fx, fy, fw, fh);
+    ctx.fillStyle = css('--frame') || 'rgba(255,255,255,.1)'; ctx.fillRect(fx, fy, fw, fh);
     const floorY = fy + fh * .8, r = Math.min(fw * .2, fh * .27), cx = fx + fw * .56, cy = floorY - r;
     const lamp = [fx + fw * .9, fy + fh * .16];
-    ctx.fillStyle = 'rgba(255,255,255,.14)'; ctx.fillRect(fx, floorY, fw, fh);
+    ctx.fillStyle = css('--floor') || 'rgba(255,255,255,.14)'; ctx.fillRect(fx, floorY, fw, fh);
     // light: the direct ray always; bounces off the floor and walls as t grows
     const bounces = Math.floor(t * 3.2);
     ctx.strokeStyle = LIGHT; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
@@ -201,11 +208,11 @@ const Turn = {
     el('rect', {x: fx + 1, y: fy + 1, width: fw - 2, height: fh - 2, rx: 8, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 2}, svg);
     // what the artists added, named in the frame's top-left corner, where no ray of light passes
     const added = [[.2, 'more hair'], [.45, 'light bounces'], [.75, 'finer detail']].filter(([k]) => t >= k).map(([, s]) => s);
-    added.forEach((s, i) => { if (fy + fs * 1.35 + i * fs * 1.3 < fy + fh * .5) txt(`+ ${s}`, {x: fx + 10, y: fy + fs * 1.35 + i * fs * 1.3, 'font-size': fs * .95}, svg); });
+    added.forEach((s, i) => { if (fy + fs * 1.35 + i * fs * 1.3 < fy + fh * .5) txt(`+ ${s}`, {class: 'in-frame', x: fx + 10, y: fy + fs * 1.35 + i * fs * 1.3, 'font-size': fs * .95}, svg); });
     // computers: a bar that runs right out of the card; hours a frame: a bar that does not move
     const lw = Math.max(fs * 6.6, W * .3), x0 = lw, span = W - x0, h = rowH - 4, end = t >= 1;
     const comp = Math.min(1, .05 + Math.pow(t, 1.6) * 1.15), hours = .34;
-    const rows = [['computers', comp, '#ffffff'], ['hours a frame', hours, LIGHT]];
+    const rows = [['computers', comp, 'var(--k)'], ['hours a frame', hours, LIGHT]];
     rows.forEach(([name, v, col], i) => {
       const y = by + i * (rowH + gapR);
       txt(name, {x: 0, y: y + h / 2 + fs * .35, 'font-size': fs * .95}, svg);

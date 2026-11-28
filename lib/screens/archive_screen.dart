@@ -16,9 +16,9 @@ import '../widgets/ui.dart';
 import 'pill_detail_screen.dart';
 import '../analytics.dart';
 import '../widgets/card_edge.dart';
+import '../widgets/hard_ring.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/web/card_thumb.dart';
-import '../widgets/web/web_card_page.dart' show groundOf;
 import '../l10n/dates.dart';
 
 /// How many days back the free plan's archive goes. A week: long enough
@@ -640,24 +640,35 @@ class _Small extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // A hard card, its picture the one taken ringed or its colour and mark,
+    // is in its ring: on the ring's ground, the mark in the ring's colour.
+    final Palette p = context.p;
+    final Color? ring = HardRing.ringOf(pill, p);
     final Widget plain = ColoredBox(
-      color: pill.color,
+      color: ring == null ? pill.color : HardRing.groundOf(p),
       child: Center(
         child: SubjectIcon(
           subject: pill.topic,
           size: height * 0.26,
-          ink: pill.ink,
+          ink: ring ?? pill.ink,
         ),
       ),
     );
+    final bool pictured = CardThumb.has(pill, CardSide.back);
     return ExcludeSemantics(
       child: Container(
         width: height * WebThumbs.aspect,
         height: height,
-        decoration: cardFace(context, groundOf(pill), radius: 7),
+        decoration: cardFace(
+          context,
+          CardThumb.groundFor(pill, p),
+          radius: 7,
+          ring: ring,
+          ringWidth: 1,
+        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(7),
-          child: CardThumb.has(pill, CardSide.back)
+          child: pictured
               ? CardThumb(pill: pill, side: CardSide.back, fallback: plain)
               : plain,
         ),

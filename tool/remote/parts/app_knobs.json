@@ -12,7 +12,10 @@
   "share.challenge": {"default": false},
   "listen": {"default": false},
   "bookAudio": {"default": false},
-  "invite": {"default": false}
+  "invite": {"default": false},
+  "journey.preview": {"default": false},
+  "week.sunday": {"default": false},
+  "calibration.early": {"default": true}
  },
  "tunables": {
   "push.askGapDays": {"type": "count", "default": 3, "min": 1, "max": 30},

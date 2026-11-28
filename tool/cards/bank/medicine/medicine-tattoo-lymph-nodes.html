@@ -10,7 +10,12 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-.card{--ink:#2b0a0c}
+.card{--ink:#2b0a0c;--guess:#2b0a0c}
+/* A hard card ringed (env.hard): the guess's word, on the dark or the paper, in the ring's ink. */
+.kit-hard .card{--guess:var(--k)}
+/* On the day paper the white figure would be white on white: it takes a blush of the ring's red. */
+.card{--skin:#ffffff}
+.kit-hard[data-theme=light] .card{--skin:color-mix(in srgb,var(--edge) 15%,#ffffff)}
 .turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
 .card .in{perspective:1600px}
 .turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
@@ -30,6 +35,7 @@
 #chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding-top:.6cqh}
 .chip{font:700 max(1.85cqh,13px)/1.2 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 2px var(--k);border-radius:99px;padding:1cqh 3.6cqw;cursor:pointer}
 .chip.on{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px #fff}
+.kit-hard[data-theme=light] .chip.on{background:var(--k);color:#fff;box-shadow:none}
 .q{overflow-wrap:break-word}
 .front .say{margin:0;font:600 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
 
@@ -95,7 +101,8 @@ const Turn = {
 };
 (() => {
   if (window.DrawSVGPlugin) gsap.registerPlugin(DrawSVGPlugin);
-  const INK = '#2b0a0c', PAPER = '#ffffff';
+  // GUESS is the guess's word and its line, on the card's ground: maroon on the red, the ring's ink when ringed.
+  const INK = '#2b0a0c', PAPER = '#ffffff', GUESS = 'var(--guess)';
   let K = '#ffffff', RED = '#ff3b30';
   // The figure in its own units: 100 tall, x = 0 down the middle. Tattoo on the forearm on the viewer's right.
   const TAT = [19.8, 46];
@@ -109,7 +116,10 @@ const Turn = {
   const ink = () => {
     const cs = getComputedStyle(Kit.$('card'));
     const v = cs.getPropertyValue('--k').trim(); if (v) K = v;
-    const bg = cs.backgroundColor; if (bg && bg !== 'transparent' && !/rgba\(0, 0, 0, 0\)/.test(bg)) RED = bg;
+    // The nodes in the card's red: its ground, or on a hard card ringed (env.hard) the ring's, its ground being dark.
+    const ringed = document.documentElement.classList.contains('kit-hard');
+    const bg = ringed ? cs.getPropertyValue('--edge').trim() : cs.backgroundColor;
+    if (bg && bg !== 'transparent' && !/rgba\(0, 0, 0, 0\)/.test(bg)) RED = bg;
   };
   const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
 
@@ -144,7 +154,7 @@ const Turn = {
   // The figure: one flat white shape, and a crisp ink anchor on the forearm.
   function figure(g, s) {
     const body = Kit.mk('g', {}, g);
-    Kit.mk('path', {d: BODY, fill: PAPER}, body);
+    Kit.mk('path', {d: BODY, fill: 'var(--skin)'}, body);
     const sw = Math.max(.62, 1.4 / s);
     const t = Kit.mk('g', {transform: `translate(${TAT[0]},${TAT[1]}) rotate(-17) scale(.9)`, fill: 'none', stroke: INK, 'stroke-width': sw, 'stroke-linecap': 'round'}, g);
     Kit.mk('circle', {cx: 0, cy: -4.6, r: .95}, t);
@@ -275,14 +285,14 @@ const Turn = {
       let placed = null;
       for (const c of cands) {
         if (c.y < fs || c.y > H - 4) continue;
-        const bx = label(L3, W, c.x, c.y, 'your guess', fs, {'text-anchor': c.anc, fill: INK, 'font-weight': 800});
+        const bx = label(L3, W, c.x, c.y, 'your guess', fs, {'text-anchor': c.anc, fill: GUESS, 'font-weight': 800});
         if (!hits(bx, boxes)) { placed = Object.assign(bx, c); break; }
         bx.e.remove();
       }
       if (placed) {
         const ex = placed.anc === 'end' ? placed.r + 5 : placed.l - 5, ey = placed.y - fs * .35;
         const ddx = ex - gp[0], ddy = ey - gp[1], dd = Math.hypot(ddx, ddy) || 1;
-        line(L3, gp[0] + ddx / dd * (rr * s + 3), gp[1] + ddy / dd * (rr * s + 3), ex, ey, INK, 1.3);
+        line(L3, gp[0] + ddx / dd * (rr * s + 3), gp[1] + ddy / dd * (rr * s + 3), ex, ey, GUESS, 1.3);
       }
     }
 

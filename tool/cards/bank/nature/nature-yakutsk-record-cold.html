@@ -10,6 +10,11 @@
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
 .say{overflow-wrap:anywhere}
+/* The thermometer, its scale and its reading in the card's own ink (--k), so a hard card ringed (env.hard) draws
+   them in the ring's; the guess's red lit up on the night ground, and the ice fog over the town, white elsewhere,
+   a grey there, under which the reading still reads. */
+.card{--guess:#8a1d10;--frost:#ffffff}
+.kit-hard[data-theme=dark] .card{--guess:#ff6a55;--frost:#7d8c84}
 </style>
 <article class="card" id="card" data-topic="nature" data-kind="Guess · how sure">
   <div class="in">
@@ -28,7 +33,8 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const REC = -63, TMAX = 20, TMIN = -80;
-const INK = '#10100c';
+// INK is the car's, on the snow; LINE the card's own ink, for everything drawn on the card's ground.
+const INK = '#10100c', LINE = 'var(--k)', GUESS = 'var(--guess)';
 const SNOW = '#f7f8f2';
 const TINT = n => `fill:color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 const st = {g: -20, cur: -20, picked: false, revealed: false};
@@ -107,14 +113,14 @@ function draw(){
   mk('path', {d: `M${ex},${ey} C${ex + cw * .15},${ey - cw * .02} ${ex + cw * .3},${ey - cw * .1} ${ex + cw * .36},${ey - cw * .3} C${ex + cw * .48},${ey - cw * .22} ${ex + cw * .44},${ey + cw * .04} ${ex + cw * .2},${ey + cw * .08} Q${ex + cw * .06},${ey + cw * .08} ${ex},${ey} z`, style: steam});
 
   // ice fog that settles over the town in the deepest cold
-  const frost = mk('rect', {x: 0, y: H * .55, width: W, height: H * .45, fill: '#fff', opacity: st.revealed ? .35 : 0, 'pointer-events': 'none'});
+  const frost = mk('rect', {x: 0, y: H * .55, width: W, height: H * .45, fill: 'var(--frost)', opacity: st.revealed ? .35 : 0, 'pointer-events': 'none'});
 
   // thermometer
   const cx = W * .38, br = Math.min(W * .07, H * .055), tw = br * 1.05;
   const by = H * .86 - br, top = H * .07, bot = by - br * 1.1;
   const y = T => top + (TMAX - T) / (TMAX - TMIN) * (bot - top);
-  mk('rect', {x: cx - tw / 2, y: top - tw / 2, width: tw, height: by - top + tw / 2, rx: tw / 2, fill: INK, stroke: INK, 'stroke-width': 6});
-  mk('circle', {cx, cy: by, r: br, fill: INK, stroke: INK, 'stroke-width': 6});
+  mk('rect', {x: cx - tw / 2, y: top - tw / 2, width: tw, height: by - top + tw / 2, rx: tw / 2, fill: LINE, stroke: LINE, 'stroke-width': 6});
+  mk('circle', {cx, cy: by, r: br, fill: LINE, stroke: LINE, 'stroke-width': 6});
   mk('rect', {x: cx - tw / 2, y: top - tw / 2, width: tw, height: by - top + tw / 2, rx: tw / 2, fill: SNOW});
   mk('circle', {cx, cy: by, r: br, fill: SNOW});
   // ticks
@@ -124,7 +130,7 @@ function draw(){
     const yy = y(T);
     mk('line', {x1: cx - tw / 2 + 2, x2: cx - tw / 2 + tw * .3, y1: yy, y2: yy, stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'});
     if (T % step === 0){
-      const t = mk('text', {x: cx - tw / 2 - 8, y: yy, 'text-anchor': 'end', 'dominant-baseline': 'central', fill: INK, 'font-size': f, style: 'font-family:var(--body);font-weight:600'});
+      const t = mk('text', {x: cx - tw / 2 - 8, y: yy, 'text-anchor': 'end', 'dominant-baseline': 'central', fill: LINE, 'font-size': f, style: 'font-family:var(--body);font-weight:600'});
       t.textContent = fmt(T) + '°';
     }
   }
@@ -132,12 +138,12 @@ function draw(){
   mk('circle', {cx, cy: by, r: br * .72, fill: '#e2402f'});
   const merc = mk('rect', {x: cx - mw / 2, width: mw, rx: mw / 2, fill: '#e2402f'});
   // guess marker (shown after reveal)
-  const gline = mk('line', {x1: cx - tw * .9, x2: cx + tw * 1.2, stroke: '#8a1d10', 'stroke-width': 2.5, 'stroke-dasharray': '5 4', 'stroke-linecap': 'round', opacity: 0});
-  const glab = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: '#8a1d10', 'font-size': f, opacity: 0, style: 'font-family:var(--body);font-weight:700'});
+  const gline = mk('line', {x1: cx - tw * .9, x2: cx + tw * 1.2, stroke: GUESS, 'stroke-width': 2.5, 'stroke-dasharray': '5 4', 'stroke-linecap': 'round', opacity: 0});
+  const glab = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: GUESS, 'font-size': f, opacity: 0, style: 'font-family:var(--body);font-weight:700'});
   // the reading
-  const big = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: INK, 'font-size': f * 2.1, style: 'font-family:var(--display);font-weight:800'});
-  const small = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: INK, 'font-size': f, style: 'font-family:var(--body);font-weight:600'});
-  const arrow = mk('path', {fill: INK});
+  const big = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: LINE, 'font-size': f * 2.1, style: 'font-family:var(--display);font-weight:800'});
+  const small = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: LINE, 'font-size': f, style: 'font-family:var(--body);font-weight:600'});
+  const arrow = mk('path', {fill: LINE});
   const flakes = [];
   G = {W, H, f, cx, tw, by, top, bot, y, merc, mw, gline, glab, big, small, arrow, frost, flakes};
   update();
