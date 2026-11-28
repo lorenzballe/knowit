@@ -100,6 +100,12 @@ class HonestyTest(unittest.TestCase):
         text = swapped("A habit that stays small", "Listen to your five. A habit that stays small")
         self.assertEqual(check_listing.problems(text, facts), [])
 
+    def test_book_audio_is_not_promised_while_it_is_off(self):
+        facts = dict(FACTS, flags=dict(FACTS["flags"], bookAudio=False))
+        text = swapped("Books in pills, one free every week.", "Books in pills, one free every week, read aloud.")
+        found = check_listing.problems(text, facts)
+        self.assertTrue(any("bookAudio" in p for p in found), found)
+
     def test_the_cards_in_english_are_said(self):
         found = problems(swapped("Le carte, per ora, sono in inglese.", ""))
         self.assertTrue(any("in English" in p for p in found), found)

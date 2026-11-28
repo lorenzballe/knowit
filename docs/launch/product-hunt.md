@@ -55,6 +55,6 @@ A few things I want to be clear about:
 - The cards are written ahead of time by an AI model, each from a named source you can open. A second model reviews most of them, and anything it cannot confirm goes to a person. You can flag a card, and a flagged card stops being shown until someone has checked it.
 - Many of the drawn cards start from science explainer videos. Each names the video, usually with a link to the minute it comes from.
 - The cards are in English for now; the app itself speaks 13 languages.
-- The free plan is five cards a day and Explore, with its daily five and its challenges. Astute+ picks all five at your level and shows how you change week by week; the yearly plan starts with 14 days free.
+- The free plan is five cards a day and Explore, with today's challenge (five questions, the same for everyone) and its short exercises. Astute+ picks all five at your level and shows how you change week by week; the yearly plan starts with 14 days free.
 
 What I would most like to hear: which card made you stop and think, and which one was wrong or dull.

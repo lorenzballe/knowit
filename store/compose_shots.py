@@ -52,14 +52,14 @@ CAPTIONS = {
         "02-drawn": ("Cards you play,\nnot just read.", "Tap, drag, and watch the answer happen."),
         "03-answer": ("Say how sure you are.\nThen see why.", "The answer, the trap and the source."),
         "04-journey": ("Watch yourself\nget sharper.", "Your journey, week by week, with Astute+."),
-        "05-explore": ("After your five,\nExplore.", "Today’s five for everyone, challenges, the news."),
+        "05-explore": ("After your five,\nExplore.", "Today’s challenge for everyone, and the line of the day."),
     },
     "it": {
         "01-today": ("Cinque carte\nogni mattina.", "Domande vere, dalle materie che scegli tu."),
         "02-drawn": ("Carte da giocare,\nnon solo da leggere.", "Tocchi, trascini, e la risposta prende forma."),
         "03-answer": ("Di’ quanto sei sicuro.\nPoi scopri perché.", "La risposta, la trappola e la fonte."),
         "04-journey": ("Guarda quanto\nmigliori.", "Il tuo viaggio, settimana per settimana, con Astute+."),
-        "05-explore": ("Dopo le tue cinque,\nc’è Esplora.", "Le cinque di oggi per tutti, le sfide, le notizie."),
+        "05-explore": ("Dopo le tue cinque,\nc’è Esplora.", "La sfida di oggi, uguale per tutti, e la frase del giorno."),
     },
 }
 

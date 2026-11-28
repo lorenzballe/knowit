@@ -40,7 +40,7 @@ Some details:
 
 - About 6,500 cards across 20 subjects. Around 900 are small drawings you play with: drop half of Etna into the sea and watch what reaches the far coast, or lengthen a straw until the air can no longer push the water up.
 - An AI model writes the cards ahead of time, each from a named source. Most of the drawn ones start from science explainer videos (Geopop and Veritasium), usually with a link to the minute where the point is made. A second model reviews most cards, and anything it cannot confirm goes on a list for a person to check. Readers can flag a card; a card flagged enough stops being dealt until someone has checked it.
-- The free plan is five cards a day (two picked for you, three at random from your subjects), plus Explore: a daily five that is the same for everyone, short estimation exercises, and a news digest with its sources. Astute+ is €29.99 a year with 14 days free: it picks all five at your level and shows your calibration week by week.
+- The free plan is five cards a day (two picked for you, three at random from your subjects), plus Explore: today's challenge (five questions, the same for everyone), short estimation exercises, and a news digest with its sources. Astute+ is €29.99 a year with 14 days free: it picks all five at your level and shows your calibration week by week.
 - No ads, and no account needed. Signing in only moves your record to a new phone.
 - Built with Flutter, Firebase and RevenueCat. The drawn cards are HTML pages on a small kit, shown in a webview, so a new kind of card does not need an app release.
 

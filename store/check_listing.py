@@ -183,6 +183,8 @@ IN_ENGLISH = {"en": r"\bcards are in English\b", "it": r"\bcarte[^.]{0,20}\bsono
 # The words that name a feature behind each switch.
 FEATURES = {
     "listen": {"en": [r"\blisten", r"\bread aloud\b", r"\baudio\b"], "it": [r"\bascolt", r"\bad alta voce\b", r"\baudio\b"]},
+    "bookAudio": {"en": [r"\baudio ?books?\b", r"\bbooks?\b[^.]{0,40}\b(?:read aloud|listen|audio)"],
+                  "it": [r"\baudiolibr", r"\blibr[oi]\b[^.]{0,40}\b(?:ad alta voce|ascolt|audio)"]},
     "invite": {"en": [r"\binvit(?:e|ation)"], "it": [r"\binvit[ao]\b", r"\binvita un amico\b"]},
     "share.challenge": {"en": [r"\bchallenge a friend\b"], "it": [r"\bsfid(?:a|are) un amico\b"]},
     "cardAi": {"en": [r"\bassistant\b", r"\bcoach\b"], "it": [r"\bassistente\b", r"\bcoach\b"]},

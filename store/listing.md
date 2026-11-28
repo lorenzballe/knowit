@@ -23,7 +23,7 @@ Learn something new every day
 trivia,curiosity,knowledge,science,history,brain,why,psychology,space,general,calibration,smart
 
 ### Promotional text (App Store 170)
-Five cards every morning, many drawn to be played. Answer, say how sure you are, then see why. In Explore, today's five: the same for everyone, to send a friend.
+Five cards every morning, many drawn to be played. Answer, say how sure you are, then see why. In Explore, today's challenge: five questions, the same for everyone.
 
 ### Short description (Google Play 80)
 Learn something new every day. Five cards: answer, say how sure, see why.
@@ -43,7 +43,7 @@ What your "sure" is worth
 Every time you say how sure you are, Astute keeps count. Your profile shows how often you are right when you say 70%, 80% or 90%: where you know more than you think, and where you are sure and wrong.
 
 Explore, when your five are done
-Today's five: the same five questions for everyone, a score out of 500, and a link to challenge a friend. Short challenges in estimation and judgement. The latest news, a story to a card, with the reports each one comes from. A line of the day, checked against where it was first written. A problem of the day. Books in pills, one free every week. Ten-card paths, from the easiest card to the hardest.
+Today's challenge: the same five questions for everyone, a score out of 500, and a link to challenge a friend. Short challenges in estimation and judgement. The latest news, a story to a card, with the reports each one comes from. A line of the day, checked against where it was first written. A problem of the day. Books in pills, one free every week. Ten-card paths, from the easiest card to the hardest.
 
 A habit that stays small
 Five cards and you are done for the day. One notification a day, with a question from your cards; a streak with freezes for the day you forget; and widgets for your home screen.
@@ -74,7 +74,7 @@ Impara qualcosa ogni giorno
 quiz,cultura,generale,scienza,storia,cervello,sapevi,psicologia,spazio,arte,domande,mente,imparare
 
 ### Testo promozionale
-Cinque carte ogni mattina, molte da giocare. Rispondi, di' quanto sei sicuro e scopri il perché. In Esplora, le cinque di oggi: uguali per tutti, da mandare a un amico.
+Cinque carte ogni mattina, molte da giocare. Rispondi, di' quanto sei sicuro e scopri il perché. In Esplora, la sfida di oggi: cinque domande uguali per tutti.
 
 ### Descrizione breve (Google Play)
 Impara qualcosa di nuovo ogni giorno: cinque carte, e di ognuna il perché.
@@ -94,7 +94,7 @@ Quanto vale il tuo «sono sicuro»
 Ogni volta che dici quanto sei sicuro, Astute tiene il conto. Nel profilo vedi quante volte hai ragione quando dici 70%, 80% o 90%: dove ne sai più di quanto pensi, e dove sei sicuro e sbagli.
 
 Esplora, quando hai finito le tue cinque
-Le cinque di oggi: le stesse cinque domande per tutti, un punteggio su 500 e un link per sfidare un amico. Sfide brevi di stima e di giudizio. Le ultime notizie, una storia per carta, con gli articoli da cui viene ognuna. La frase del giorno, verificata là dove fu scritta per la prima volta. Il problema del giorno. I libri in pillole, uno gratis ogni settimana. Percorsi da 10 carte, dalla più facile alla più difficile.
+La sfida di oggi: le stesse cinque domande per tutti, un punteggio su 500 e un link per sfidare un amico. Sfide brevi di stima e di giudizio. Le ultime notizie, una storia per carta, con gli articoli da cui viene ognuna. La frase del giorno, verificata là dove fu scritta per la prima volta. Il problema del giorno. I libri in pillole, uno gratis ogni settimana. Percorsi da 10 carte, dalla più facile alla più difficile.
 
 Un'abitudine che resta piccola
 Cinque carte e per oggi hai finito. Una notifica al giorno, con una domanda dalle tue carte; una serie di giorni con i jolly per il giorno in cui te ne dimentichi; e i widget per la schermata Home.
