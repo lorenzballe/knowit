@@ -110,6 +110,11 @@ jobs:
           # friend sent a card to play it in a browser (/c/<id>.html).
           cp -r docs/cards/kit _site/cards/pages/kit
           python3 tool/cards/challenge_pages.py _site
+          # A public page for every card the app deals (/q/<id>): the
+          # question, the answer and the why, the source, the card to play
+          # where it is drawn; and the sitemaps that list them, from the bank
+          # as it is published here, so they never fall behind it.
+          python3 tool/cards/card_pages.py _site
           # Today's challenge (/sfida, and in Italian /it/sfida): a friend
           # plays the five a reader sent, from five/ below, and sees both
           # scores.
@@ -127,7 +132,7 @@ jobs:
       - name: Version the site's stylesheets and script so a deploy cannot be served from cache
         run: |
           v="${GITHUB_SHA::12}"
-          sed -i -E "s#/assets/(site\.css|landing\.css|account\.css|main\.js|account\.js|notify\.js)\"#/assets/\1?v=$v\"#g" _site/*.html _site/it/*.html
+          sed -i -E "s#/assets/(site\.css|landing\.css|account\.css|main\.js|account\.js|notify\.js)\"#/assets/\1?v=$v\"#g" _site/*.html _site/it/*.html _site/q/*.html
           sed -i "s#'./keys.js'#'./keys.js?v=$v'#" _site/assets/account.js _site/assets/notify.js
           grep -o 'site.css?v=[0-9a-f]*' _site/index.html | head -1
           grep -o "keys.js?v=[0-9a-f]*" _site/assets/account.js | head -1
