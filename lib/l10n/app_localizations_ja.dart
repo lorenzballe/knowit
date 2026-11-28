@@ -1972,7 +1972,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get fiveChallengeAll => 'Astuteの今日の5問で全問正解。あなたもできる？';
 
   @override
-  String get fiveChallengeInvite => 'Astuteの今日のチャレンジ：みんな同じ5問。何問正解できる？';
+  String get fiveChallengeInvite => 'Astuteの今日のチャレンジ。何問正解できる？';
 
   @override
   String threeShareHeadIn(String subject, String date) {

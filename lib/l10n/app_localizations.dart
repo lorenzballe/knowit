@@ -2799,7 +2799,7 @@ abstract class AppLocalizations {
   /// Challenge a friend, before the reader has played today's five: the line sent before the link to the site, where the friend plays the five questions that are the same for everyone today.
   ///
   /// In en, this message translates to:
-  /// **'Today\'s challenge on Astute: the same five questions for everyone. How many can you get?'**
+  /// **'Today\'s challenge on Astute. How many can you get?'**
   String get fiveChallengeInvite;
 
   /// First line of the message a subject's three is sent in.

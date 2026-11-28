@@ -2024,7 +2024,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Astute\'ta günün meydan okuması: herkese aynı beş soru. Kaçını bilebilirsin?';
+      'Astute\'ta günün meydan okuması. Kaçını bilebilirsin?';
 
   @override
   String threeShareHeadIn(String subject, String date) {

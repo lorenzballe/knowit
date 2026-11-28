@@ -2168,7 +2168,7 @@
  "@fiveChallengeAll": {
   "description": "Challenge a friend, from today's five, when the reader got all five right: the line sent before the link to the site, where the friend plays the same five questions. Asks the friend to do as well. Plain, never a boast or a cheer."
  },
- "fiveChallengeInvite": "Today's challenge on Astute: the same five questions for everyone. How many can you get?",
+ "fiveChallengeInvite": "Today's challenge on Astute. How many can you get?",
  "@fiveChallengeInvite": {
   "description": "Challenge a friend, before the reader has played today's five: the line sent before the link to the site, where the friend plays the five questions that are the same for everyone today."
  },

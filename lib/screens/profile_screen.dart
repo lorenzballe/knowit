@@ -14,6 +14,9 @@ import '../analytics.dart';
 import '../books/book_player_view.dart' show bookPlayerRoom;
 import '../cloud.dart';
 import '../debug_flags.dart';
+import '../explore/blocks/bets/bets_day.dart' show BetsDay;
+import '../explore/blocks/bets/five_challenge.dart' show sendFiveChallenge;
+import '../explore/blocks/bets/three.dart' show fiveRightToday;
 import '../legal.dart';
 import '../models/place.dart';
 import '../state/app_state.dart';
@@ -1003,13 +1006,38 @@ class _InviteBoxState extends State<_InviteBox> {
     });
   }
 
+  /// Today's challenge sent to a friend: one short line and the link to
+  /// the site's page where the same five are played, with the reader's
+  /// score once they have played them (five_challenge.dart).
+  Future<void> _challenge() async {
+    final l = context.l10n;
+    final ScaffoldMessengerState? messenger = ScaffoldMessenger.maybeOf(
+      context,
+    );
+    await BetsDay.instance.load();
+    final bool shared = await sendFiveChallenge(
+      l,
+      from: 'profile',
+      day: BetsDay.instance.today,
+      right: fiveRightToday(),
+    );
+    if (!shared) {
+      messenger?.showSnackBar(SnackBar(content: Text(l.copiedToClipboard)));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
       listenable: Listenable.merge([Invites.instance, Subscription.instance]),
       builder: (context, _) {
         final AppState app = widget.app;
-        if (!inviteShown(app)) return const SizedBox.shrink();
+        // Today's challenge, sent as one line and its link, is the friends'
+        // row whenever the challenge is shared at all; the invite's rows
+        // follow it where the server has the invite on.
+        final bool invite = inviteShown(app);
+        final bool challenge = app.shareChallengeOn;
+        if (!invite && !challenge) return const SizedBox.shrink();
         final Invites invites = Invites.instance;
         final InviteRedeem? redeem = invites.state?.redeem;
         final Subscription store = Subscription.instance;
@@ -1030,14 +1058,25 @@ class _InviteBoxState extends State<_InviteBox> {
             ProfileHeader(context.l10n.inviteSection),
             ProfileBox(
               children: [
-                ProfileRow(
-                  key: const ValueKey('profile-invite'),
-                  mark: ProfileMarks.letter,
-                  label: context.l10n.inviteRow,
-                  value: context.l10n.inviteRowLine,
-                  onTap: () => showInviteSheet(context, app),
-                ),
-                if (codeOpen)
+                if (challenge)
+                  ProfileRow(
+                    key: const ValueKey('profile-challenge'),
+                    mark: ProfileMarks.letter,
+                    label: context.l10n.challengeFriend,
+                    value: context.l10n.fiveTitle,
+                    onTap: _challenge,
+                  ),
+                if (invite)
+                  ProfileRow(
+                    key: const ValueKey('profile-invite'),
+                    mark: ProfileMarks.ticket,
+                    label: context.l10n.inviteRow,
+                    value: context.l10n.inviteRowLine,
+                    onTap: () => showInviteSheet(context, app),
+                  ),
+                if (!invite)
+                  const SizedBox.shrink()
+                else if (codeOpen)
                   ProfileRow(
                     key: const ValueKey('profile-invite-code'),
                     mark: ProfileMarks.ticket,
@@ -1866,8 +1905,8 @@ class _DebugLooksPanel extends StatelessWidget {
                   child: GestureDetector(
                     key: const ValueKey('debug-first-day'),
                     behavior: HitTestBehavior.opaque,
-                    onTap: () => Navigator.of(context, rootNavigator: true)
-                        .push(
+                    onTap: () =>
+                        Navigator.of(context, rootNavigator: true).push(
                           FirstDayScreen.route(
                             app,
                             numbers: FirstDayNumbers.sample,

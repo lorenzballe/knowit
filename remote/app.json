@@ -8,7 +8,7 @@
   "share.challenge": true,
   "listen": false,
   "bookAudio": false,
-  "invite": {"on": true, "audience": {"platforms": ["android"]}},
+  "invite": false,
   "journey.preview": true,
   "week.sunday": true,
   "trial.reverse": {"on": true, "audience": {"rollout": 50}}

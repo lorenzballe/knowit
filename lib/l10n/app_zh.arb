@@ -446,7 +446,7 @@
   "fiveShareHead": "Astute · 今日挑战 · {date}",
   "fiveChallengeLine": "Astute 今日五题，我答对了 {right} 道。你能超过我吗？",
   "fiveChallengeAll": "Astute 今日五题，我全部答对。你也能做到吗？",
-  "fiveChallengeInvite": "Astute 今日挑战：每个人都是同样的五道题。你能答对几道？",
+  "fiveChallengeInvite": "Astute 今日挑战。你能答对几道？",
   "threeShareHeadIn": "Astute · 今日三题 · {subject} · {date}",
   "dailyShareScore": "{score} / {max} · 第 {day} 天",
   "dailyShareScoreAlone": "{score} / {max}",

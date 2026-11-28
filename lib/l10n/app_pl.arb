@@ -446,7 +446,7 @@
   "fiveShareHead": "Astute · Dzisiejsze wyzwanie · {date}",
   "fiveChallengeLine": "W dzisiejszej piątce Astute mam {right} na 5. Pobijesz mnie?",
   "fiveChallengeAll": "W dzisiejszej piątce Astute mam 5 na 5. Wyrównasz?",
-  "fiveChallengeInvite": "Dzisiejsze wyzwanie w Astute: te same pięć pytań dla wszystkich. Ile z nich trafisz?",
+  "fiveChallengeInvite": "Dzisiejsze wyzwanie w Astute. Ile z nich trafisz?",
   "threeShareHeadIn": "Astute · Dzisiejsza trójka · {subject} · {date}",
   "dailyShareScore": "{score} z {max} · dzień {day}",
   "dailyShareScoreAlone": "{score} z {max}",

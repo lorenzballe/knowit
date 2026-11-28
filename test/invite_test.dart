@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:astuto/explore/blocks/bets/bets_day.dart' show BetsDay;
 import 'package:astuto/analytics.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
@@ -392,7 +393,52 @@ void main() {
       await _settle(tester);
       expect(find.byKey(const ValueKey('profile-invite')), findsNothing);
       expect(find.byKey(const ValueKey('profile-invite-code')), findsNothing);
+      // As built, the challenge is off too: no friends' box at all.
+      expect(find.byKey(const ValueKey('profile-challenge')), findsNothing);
       expect(find.text(en.inviteSection.toUpperCase()), findsNothing);
+      expect(server.asked, isEmpty);
+    });
+
+    testWidgets('Challenge a friend sends one short line and the link to '
+        'today\'s challenge', (tester) async {
+      SharedPreferences.setMockInitialValues(_reader());
+      // As the server has it: the challenge on, the invite off.
+      _take({'share.challenge': true});
+      final (server, _) = _invites();
+      final List<String> sent = [];
+      final Future<bool> Function(String) was = sendText;
+      sendText = (text) async {
+        sent.add(text);
+        return true;
+      };
+      addTearDown(() => sendText = was);
+      // The day's bets read from storage for real, before the app is up.
+      // ignore: invalid_use_of_visible_for_testing_member
+      BetsDay.resetForTest();
+      await tester.runAsync(BetsDay.instance.load);
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      final Finder row = await _profileRow(tester, 'profile-challenge');
+      // The send waits on the day's bets, read for real: the tap's work is
+      // let run outside the test's clock.
+      await tester.tap(row);
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 300)),
+      );
+      await _settle(tester);
+      expect(sent, hasLength(1));
+      final List<String> lines = sent.single.split('\n');
+      expect(lines, hasLength(2));
+      expect(lines.first, en.fiveChallengeInvite);
+      expect(lines.first.length, lessThan(60));
+      expect(
+        lines.last,
+        matches(
+          RegExp(r'^https://astutetheapp\.com/sfida\?d=\d{4}-\d{2}-\d{2}$'),
+        ),
+      );
+      // The invite's rows stay away, and the server is never asked.
+      expect(find.byKey(const ValueKey('profile-invite')), findsNothing);
       expect(server.asked, isEmpty);
     });
 
@@ -828,18 +874,13 @@ void main() {
     });
   });
 
-  test('the switch is the server\'s, off as built, and on for Android '
-      'once the store key is deployed', () {
+  test('the switch is the server\'s, off as built and on the server: the '
+      'owner chose Challenge a friend instead', () {
     expect(AppState.kInviteFlag.name, 'invite');
     expect(AppState.kInviteFlag.fallback, isFalse);
     final Map<String, Object?> app = jsonDecode(
       File('remote/app.json').readAsStringSync(),
     ) as Map<String, Object?>;
-    expect((app['flags'] as Map)['invite'], {
-      'on': true,
-      'audience': {
-        'platforms': ['android'],
-      },
-    });
+    expect((app['flags'] as Map)['invite'], isFalse);
   });
 }

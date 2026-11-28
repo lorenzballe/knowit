@@ -446,7 +446,7 @@
   "fiveShareHead": "Astute · 今日のチャレンジ · {date}",
   "fiveChallengeLine": "Astuteの今日の5問で{right}問正解。私に勝てる？",
   "fiveChallengeAll": "Astuteの今日の5問で全問正解。あなたもできる？",
-  "fiveChallengeInvite": "Astuteの今日のチャレンジ：みんな同じ5問。何問正解できる？",
+  "fiveChallengeInvite": "Astuteの今日のチャレンジ。何問正解できる？",
   "threeShareHeadIn": "Astute · 今日の3問 · {subject} · {date}",
   "dailyShareScore": "{score} / {max} · {day}日目",
   "dailyShareScoreAlone": "{score} / {max}",
