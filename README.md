@@ -951,6 +951,8 @@ tool/
   content/       the brief: what to write next, by genre, worked out from the bank
   icons/         the supplied artwork, and the script that resizes it
   illustrations/ the figures a card can carry — Python, run on a server
+  marketing/     a drawn card as a video for TikTok, Reels and Shorts
+store/           the store listing, its checker, and the Play screenshots
 web/cards/       cards.json, the bank as the site serves it
 ```
 
@@ -1622,6 +1624,35 @@ whether the entitlement is active. A plan that reads "not in the offering"
 is a RevenueCat package missing; one whose price never arrives is an App
 Store product not yet *Ready to Submit*. The first subscriptions go to App
 Review with an app version, attached on the version's page.
+
+## Being found: the store listing, and a card a day
+
+The words in the stores are kept beside the app, in `store/listing.md`, in
+English and Italian, and `store/check_listing.py` holds them to the app as
+it is: every number they say (the twenty subjects, the five cards a day and
+the two a free day chooses, the fourteen free days, the two minutes, the
+thirteen languages, the cards drawn) is read from the code and compared,
+each Google Play description has to say the first of them and that the
+cards are in English, and a feature behind a switch that is off in
+`remote/app.json` may not be named at all. Google Play's own rules for the
+title and the short description are held too, and `store/play_it_en.md`,
+the page the owner fills the Play Console from, has to carry every field
+word for word (`python3 -m unittest store/test_check_listing.py`).
+
+The listing's pictures are the app itself: `tool/store_shots.dart`
+photographs five screens on an Android phone (its status bar, the camera's
+hole, the gesture bar), in the language `LANG_SHOT` names, with the drawn
+cards as `tool/cards/card_check.cjs` photographs them bare in the same
+language; `store/compose_shots.py` sets each in a plain Android phone under
+a caption written by hand, as the 1080 × 1920 pictures in `store/play/`.
+
+`tool/marketing/card_video.cjs` makes a drawn card into a vertical video
+for TikTok, Reels and Shorts, about twenty seconds, and
+`tool/marketing/README.md` says how one is made and posted each day. The
+drafts for the launch the owner sends himself (Show HN, Product Hunt,
+LessWrong and the forecasting forums, the creators the cards come from, a
+message asking friends for the first reviews) are in `docs/launch/`, each
+with what has to be true before it goes.
 
 ## Astute+ on the web, and the account page
 
