@@ -171,11 +171,15 @@
     gsap.killTweensOf(st);
     if (d) gsap.to(st, {m: to, duration: 1.5, ease: 'power1.inOut', onUpdate: render, onComplete: () => to === 1 && seen()});
     else { st.m = to; render(); if (to === 1) seen(); }
+    // Many-Worlds picked: the answer is due when its tree has grown, whatever is tapped after.
+    if (d && to === 1 && !due) due = gsap.delayedCall(1.5, seen);
     Kit.$('say').textContent = to ? 'Many-Worlds: one rule. Every branch grows on, and you still see only yours.' : 'Copenhagen: two rules, and the scissors cut every branch but yours.';
   }
   // Both seen: the switch and its line give their room to the tree, and the answer comes in.
+  let due = null;
   function seen() {
     if (st.seen) return; st.seen = true; Kit.haptic('success');
+    if (due) due.kill();
     Kit.$('card').classList.add('answered');
     Kit.hide('say'); Kit.hide('sw'); Kit.show('why'); Kit.show('keep');
   }

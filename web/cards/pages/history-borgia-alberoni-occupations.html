@@ -16,6 +16,9 @@
 .opt small{display:block;font:500 max(1.6cqh,12px)/1.2 var(--mono);opacity:.75;margin-top:.4cqh}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none;cursor:default}
 .opt:disabled{cursor:default}
+/* While a strike plays the other one waits, and looks it: dimmed, taking no tap, until it lands. */
+#opts .opt{transition:opacity .2s ease}
+#opts.wait .opt:not(.on){opacity:.45;pointer-events:none}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Build it · see why">
   <div class="in">
@@ -126,10 +129,10 @@ Kit.onShow.card = () => {
 
 function strike(i){
   const s = S[i]; if (s.done || busy) return;
-  busy = true; Kit.haptic('light');
+  busy = true; Kit.haptic('light'); Kit.$('opts').classList.add('wait');
   const k = fast ? 0.15 : 1;
   const tl = gsap.timeline({onUpdate:place, onComplete:() => {
-    busy = false; s.done = true; place();
+    busy = false; s.done = true; place(); Kit.$('opts').classList.remove('wait');
     if (S.every(x => x.done)) finish();
   }});
   tl.to(s, {t:1, duration:.6*k, ease:'power3.in'})

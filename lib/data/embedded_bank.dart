@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611280048,
- "built": "2026-11-28T00:48:20Z",
+ "version": 202611280931,
+ "built": "2026-11-28T09:31:06Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -52992,11 +52992,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Astute free card titled Two brief occupations of San Marino. It asks which two men occupied San Marino and how long they lasted. Two swords labeled Cesare Borgia strike 1503 and Cardinal Alberoni strike 1739–1740 are tapped to attack a small castle.",
-    "page": "pages/history-borgia-alberoni-occupations.html?v=fc982cc7a0cc",
-    "bytes": 9893,
+    "page": "pages/history-borgia-alberoni-occupations.html?v=9a18e14a8e49",
+    "bytes": 10169,
     "thumbs": {
-     "front": "thumbs/history-borgia-alberoni-occupations-front.webp?v=0c87c79100cf",
-     "back": "thumbs/history-borgia-alberoni-occupations-back.webp?v=0c87c79100cf"
+     "front": "thumbs/history-borgia-alberoni-occupations-front.webp?v=4fbae27115f9",
+     "back": "thumbs/history-borgia-alberoni-occupations-back.webp?v=4fbae27115f9"
     }
    },
    "source": "Geopop, “Perché esiste la Repubblica di San Marino e come mai non è mai entrata a far parte dell'Italia?” (YouTube, 2023)",
@@ -138623,11 +138623,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Diagram of a vertical volcanic eruption column with a switch. Flipping it cools the column's top so it turns heavy and falls into a fast, ground-hugging glowing cloud. Asks why pyroclastic flows are deadlier than the eruption column.",
-    "page": "pages/nature-column-collapse-flows-2.html?v=658285384291",
-    "bytes": 8657,
+    "page": "pages/nature-column-collapse-flows-2.html?v=853311193356",
+    "bytes": 9063,
     "thumbs": {
-     "front": "thumbs/nature-column-collapse-flows-2-front.webp?v=0ddfddd04532",
-     "back": "thumbs/nature-column-collapse-flows-2-back.webp?v=0ddfddd04532"
+     "front": "thumbs/nature-column-collapse-flows-2-front.webp?v=b7d754d3a145",
+     "back": "thumbs/nature-column-collapse-flows-2-back.webp?v=b7d754d3a145"
     }
    },
    "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
@@ -142144,11 +142144,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Interactive card: a wave simulation that flips between a rockslide alone and a rockslide hitting a glacier, Lituya Bay 1958. It asks what effect a glacier impact has on tsunami size.",
-    "page": "pages/nature-glacier-wave-amplifier.html?v=bb9579b75d64",
-    "bytes": 12928,
+    "page": "pages/nature-glacier-wave-amplifier.html?v=f31b5147f6c2",
+    "bytes": 13380,
     "thumbs": {
-     "front": "thumbs/nature-glacier-wave-amplifier-front.webp?v=b632b57a748e",
-     "back": "thumbs/nature-glacier-wave-amplifier-back.webp?v=b632b57a748e"
+     "front": "thumbs/nature-glacier-wave-amplifier-front.webp?v=37d080ddefe3",
+     "back": "thumbs/nature-glacier-wave-amplifier-back.webp?v=37d080ddefe3"
     }
    },
    "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
@@ -142633,11 +142633,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Illustration of a rock slab plunging into water, with rings of tsunami waves spreading outward. The page asks which falls from Etna's flank, a boulder or half a mountain, and lets the reader flip between the two to watch the far coast.",
-    "page": "pages/nature-half-mountain-tsunami.html?v=a15159a81b56",
-    "bytes": 20578,
+    "page": "pages/nature-half-mountain-tsunami.html?v=d01fa046f7d0",
+    "bytes": 21025,
     "thumbs": {
-     "front": "thumbs/nature-half-mountain-tsunami-front.webp?v=343cb943449a",
-     "back": "thumbs/nature-half-mountain-tsunami-back.webp?v=343cb943449a"
+     "front": "thumbs/nature-half-mountain-tsunami-front.webp?v=863e7d753963",
+     "back": "thumbs/nature-half-mountain-tsunami-back.webp?v=863e7d753963"
     }
    },
    "source": "Geopop, “▶️ETNA: \"POSSIBILE COLLASSO GRAVITATIVO E TSUNAMI\". VUOI CAPIRE COSA SUCCEDE?” (YouTube, 2018)",
@@ -204570,11 +204570,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A hand-drawn tree: a wave grows up from its source, forking at three measurements, you at the top. At its foot two rule cards: the Schrödinger equation, and collapse with scissors that cut every branch but yours. The reader flips to Many-Worlds: the collapse card falls away and every branch grows on, with other yous at the tips. Asks why physicists find Many-Worlds cleaner.",
-    "page": "pages/science-many-worlds-flow.html?v=56ed11a87de2",
-    "bytes": 13897,
+    "page": "pages/science-many-worlds-flow.html?v=651b048973c0",
+    "bytes": 14102,
     "thumbs": {
-     "front": "thumbs/science-many-worlds-flow-front.webp?v=f5c06c409bd3",
-     "back": "thumbs/science-many-worlds-flow-back.webp?v=f5c06c409bd3"
+     "front": "thumbs/science-many-worlds-flow-front.webp?v=63039a8956db",
+     "back": "thumbs/science-many-worlds-flow-back.webp?v=63039a8956db"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -205084,11 +205084,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Two side-by-side views of Earth under the Moon's pull: water bulging up toward the Moon, and solid ground that barely moves. Asks why the Moon affects water more than land.",
-    "page": "pages/science-moon-water-land.html?v=03a1a61f2b5a",
-    "bytes": 9439,
+    "page": "pages/science-moon-water-land.html?v=08f4663626f6",
+    "bytes": 9673,
     "thumbs": {
-     "front": "thumbs/science-moon-water-land-front.webp?v=15f1671ae6fd",
-     "back": "thumbs/science-moon-water-land-back.webp?v=15f1671ae6fd"
+     "front": "thumbs/science-moon-water-land-front.webp?v=092dc2ec34c0",
+     "back": "thumbs/science-moon-water-land-back.webp?v=092dc2ec34c0"
     }
    },
    "source": "Geopop, “Mont Saint-Michel: la magia delle maree di oltre 10 metri” (YouTube, 2018)",
@@ -208193,11 +208193,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A switch sets the ground at Campi Flegrei to rise or sink. Two counters show earthquakes in each phase, with rising at 0 and sinking at 0. The question asks when earthquakes strike as the ground breathes.",
-    "page": "pages/science-quakes-rising-ground.html?v=20e32a682c1b",
-    "bytes": 14976,
+    "page": "pages/science-quakes-rising-ground.html?v=675709f34542",
+    "bytes": 15332,
     "thumbs": {
-     "front": "thumbs/science-quakes-rising-ground-front.webp?v=211ce68954c8",
-     "back": "thumbs/science-quakes-rising-ground-back.webp?v=211ce68954c8"
+     "front": "thumbs/science-quakes-rising-ground-front.webp?v=d3ee41264765",
+     "back": "thumbs/science-quakes-rising-ground-back.webp?v=d3ee41264765"
     }
    },
    "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
@@ -230092,11 +230092,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A 3D diagram of Earth with two donut-shaped radiation belts around its middle and a spacecraft path skimming the thin outer edge. Tap a route to fly it and watch its radiation bar fill.",
-    "page": "pages/space-van-allen-donut.html?v=c4defb34e46e",
-    "bytes": 10461,
+    "page": "pages/space-van-allen-donut.html?v=5bfe044d7d8a",
+    "bytes": 10850,
     "thumbs": {
-     "front": "thumbs/space-van-allen-donut-front.webp?v=a075a13deeef",
-     "back": "thumbs/space-van-allen-donut-back.webp?v=a075a13deeef"
+     "front": "thumbs/space-van-allen-donut-front.webp?v=88e01c9c2dc2",
+     "back": "thumbs/space-van-allen-donut-back.webp?v=88e01c9c2dc2"
     }
    },
    "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
@@ -243725,11 +243725,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A railway cut across under a rain cloud: rails clipped to a concrete sleeper, a deep bed of angular stones with gaps between them, sand and soil below, a ditch at each side, the track running off over fields. It asks how the ballast protects the track from water. Rain on the stones runs down through the gaps and off to the ditches; rain on bare soil pools, turns to mud and the sleeper sinks.",
-    "page": "pages/technology-ballast-drains-water.html?v=2dbf58d4663a",
-    "bytes": 43402,
+    "page": "pages/technology-ballast-drains-water.html?v=d7b1452d1d25",
+    "bytes": 43683,
     "thumbs": {
-     "front": "thumbs/technology-ballast-drains-water-front.webp?v=ba4689482507",
-     "back": "thumbs/technology-ballast-drains-water-back.webp?v=ba4689482507"
+     "front": "thumbs/technology-ballast-drains-water-front.webp?v=456cd71e5f2e",
+     "back": "thumbs/technology-ballast-drains-water-back.webp?v=456cd71e5f2e"
     }
    },
    "source": "Geopop, “A cosa servono le pietre sui binari?” (YouTube, 2021)",

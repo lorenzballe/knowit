@@ -249,6 +249,11 @@ function render() {
   }
 }
 
+// The answer, once both have been picked: due when the fall then in front lands, and kept due
+// whatever is tapped after (a tap restarts the picture, never the wait). On the app's clock,
+// so it waits with the picture while the card is out of sight.
+let due = null;
+
 function play(mode) {
   if (tl) tl.kill();
   // Counted when chosen, not when its fall ends: switched before the boulder
@@ -275,10 +280,15 @@ function play(mode) {
     tl.fromTo(st, {c: .51}, {c: .885, duration: 2, ease: 'power1.inOut', immediateRender: false}, .5);
   }
   if (Kit.calm) tl.progress(1);
+  else if (seen.size === 2 && !due) due = gsap.delayedCall(tl.duration(), finish);
 }
 
-// Both seen: the switch and its line give their room to the picture, and the answer comes in.
+// Both seen: the switch and its line give their room to the picture, and the answer comes in, once.
+let finished = false;
 function finish() {
+  if (finished) return;
+  finished = true;
+  if (due) due.kill();
   Kit.hide('say'); Kit.hide('read'); Kit.hide('sw');
   Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
 }

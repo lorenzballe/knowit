@@ -143,9 +143,12 @@ function render(k){
 function fly(k, btn){
   if (running || st[k].done) return;
   running = true; btn.classList.add('on'); Kit.haptic('selection');
+  // The other route waits while this one flies, and looks it, until the flight lands.
+  document.querySelectorAll('.rt').forEach(b => { if (b !== btn && !st[b.dataset.k].done) { b.style.transition = 'opacity .2s ease'; b.style.opacity = '.45'; b.style.pointerEvents = 'none'; } });
   const dur = fast || Kit.calm ? 0.3 : R_[k].len*0.33;
   gsap.to(st[k], {t: 1, duration: dur, ease: 'none', onUpdate: () => render(k), onComplete: () => {
     st[k].done = true; running = false; render(k); Kit.haptic('light');
+    document.querySelectorAll('.rt').forEach(b => { b.style.opacity = ''; b.style.pointerEvents = ''; });
     if (st.mid.done && st.apo.done) finish();
   }});
 }

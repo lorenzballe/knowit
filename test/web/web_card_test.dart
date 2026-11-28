@@ -404,6 +404,38 @@ void main() {
     expect(under.touchable, isTrue);
   });
 
+  testWidgets('the fourth drawn card of a day, risen after three thrown, '
+      'is told it is in front and takes the finger at once: its answers '
+      'never wait on a tap elsewhere', (tester) async {
+    await tester.pumpWidget(
+      _Deck(
+        deck: [
+          _card('a', challenge: const NoChallenge()),
+          _card('b', challenge: const NoChallenge()),
+          _card('c', challenge: const NoChallenge()),
+          _card('d'),
+        ],
+        answers: [],
+        stints: [],
+      ),
+    );
+    await settle(tester);
+    int index() => tester.state<_DeckState>(find.byType(_Deck)).index;
+    final Offset centre = tester.getCenter(find.byType(PillCardStack));
+    for (int thrown = 1; thrown <= 3; thrown++) {
+      await tester.dragFrom(centre, const Offset(-300, 0));
+      await settle(tester);
+      await settle(tester);
+      expect(index(), thrown);
+    }
+    final FakeWebSurface d = FakeWebSurface.made.singleWhere(
+      (s) =>
+          !s.disposed && (s.html ?? '').contains('<assembled>') && s.touchable,
+    );
+    expect(d.told.last, {'t': 'show'});
+    expect(d.gestures.map((f) => f.type), contains(TapGestureRecognizer));
+  });
+
   testWidgets('a page in a place that keeps it from the finger lets the '
       'pointer through, and one inside another is shut if either is', (
     tester,
