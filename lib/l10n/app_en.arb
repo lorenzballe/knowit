@@ -8381,5 +8381,208 @@
     "type": "int"
    }
   }
+ },
+ "giftTitle": "{days, plural, =1{Astute+ is yours for a day.} other{Astute+ is yours for {days} days.}}",
+ "@giftTitle": {
+  "description": "The new reader's gift (trial.reverse), its moment in the first run, where the trial offer would stand: the headline. days is how long the gift lasts (always 14 today). 'Yours' because it is given, never sold: no card, nothing to cancel.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "giftMark": "yours",
+ "@giftMark": {
+  "description": "That headline: the words in it painted in the three lights. Must be the very words as they stand in giftTitle."
+ },
+ "giftLine": "No card, nothing to cancel.",
+ "@giftLine": {
+  "description": "That moment: the line under the headline. Card as in a payment card: none is asked for, and there is nothing to cancel at the end."
+ },
+ "giftStepEndLine": "The free plan again. Nothing is charged.",
+ "@giftStepEndLine": {
+  "description": "That moment's timeline of the gift's days: under its last day, the fifteenth, when the free plan is back. Nothing is bought, so nothing is charged."
+ },
+ "giftStart": "Start reading",
+ "@giftStart": {
+  "description": "That moment's one button: on to the day's five."
+ },
+ "giftEndsSoon": "{days, plural, =1{Last day of Astute+.} other{Astute+ is yours for {days} more days.}}",
+ "@giftEndsSoon": {
+  "description": "The gift's last two days: one quiet line under the finished day's name on Today, and the title of the thirteenth's morning notification. days is the days left, today included: 2, then 1.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "giftPlanUntil": "Astute+ · a gift until {date}",
+ "@giftPlanUntil": {
+  "description": "Profile, the plan's row, while the gift lasts: its value. date is the gift's last day, as the phone writes a day and a month.",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "giftEndEyebrow": "Your gift has ended",
+ "@giftEndEyebrow": {
+  "description": "The page the morning after the gift: the eyebrow over its title, set in capitals."
+ },
+ "giftEndTitle": "{days, plural, =1{Your day of Astute+.} other{Your {days} days of Astute+.}}",
+ "@giftEndTitle": {
+  "description": "That page: its title, over what the gift's days came to. days is how long the gift lasted (14).",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "giftEndDaysLabel": "days read",
+ "@giftEndDaysLabel": {
+  "description": "That page: under a figure like 11/14, the days the five were finished of the gift's days."
+ },
+ "giftEndBackRight": "{n, plural, =1{miss, then right} other{misses, then right}}",
+ "@giftEndBackRight": {
+  "description": "That page: under a count, the moves the reader missed and then got right when they came back, in the gift's days.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "giftLossTitle": "From today, on the free plan",
+ "@giftLossTitle": {
+  "description": "That page: the heading over what changes with the free plan, from this morning."
+ },
+ "giftLossRandom": "{n, plural, =1{One of your five cards comes at random.} other{{n} of your five cards come at random.}}",
+ "@giftLossRandom": {
+  "description": "That page, under that heading: how many of the day's five the free plan deals at random, today.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "giftLossMisses": "The ones you miss no longer come back in your five: they wait in Explore.",
+ "@giftLossMisses": {
+  "description": "That page: on the free plan, cards answered wrong no longer come back among the five; they wait on Explore's shelf of cards that came back."
+ },
+ "giftLossAsk": "The assistant on every card stays with Astute+.",
+ "@giftLossAsk": {
+  "description": "That page, only where the answers by Claude are on: the assistant in Go deeper is Astute+'s."
+ },
+ "giftKeep": "Keep Astute+",
+ "@giftKeep": {
+  "description": "That page: its first button, which opens the paywall."
+ },
+ "sixthRandomToday": "{n, plural, =1{Today one of your five came at random.} other{Today {n} of your five came at random.}}",
+ "@sixthRandomToday": {
+  "description": "The card after the fifth, on the free plan (one true thing a day): set large, how many of today's five came at random rather than chosen for the reader.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "sixthRandomTodayPlus": "With Astute+, all five would have been chosen for you.",
+ "@sixthRandomTodayPlus": {
+  "description": "That card, under it: what Astute+ would have done with today."
+ },
+ "sixthRandomTomorrow": "{n, plural, =1{Tomorrow one of your five will come at random.} other{Tomorrow {n} of your five will come at random.}}",
+ "@sixthRandomTomorrow": {
+  "description": "The card after the fifth, on the free plan: set large, how many of tomorrow's five will come at random, as tomorrow is dealt.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "sixthRandomTomorrowPlus": "With Astute+, all five chosen for you: from your mix, at your level.",
+ "@sixthRandomTomorrowPlus": {
+  "description": "That card, under it: what Astute+ would do with tomorrow."
+ },
+ "sixthSureWrong": "Today you missed one you were {sure} sure of.",
+ "@sixthSureWrong": {
+  "description": "The card after the fifth, on the free plan: set large, a card the reader missed today though they said they were 80% sure or more. sure is that, as a percentage written the language's way (90%).",
+  "placeholders": {
+   "sure": {
+    "type": "String"
+   }
+  }
+ },
+ "sixthSureWrongPlus": "With Astute+ it comes back in your five.",
+ "@sixthSureWrongPlus": {
+  "description": "That card, under it: on Astute+ a card missed comes back among the five."
+ },
+ "sixthMisses": "{n, plural, =1{A card you got wrong came back: it’s waiting in Explore.} other{{n} cards you got wrong came back: they’re waiting in Explore.}}",
+ "@sixthMisses": {
+  "description": "The card after the fifth, on the free plan: set large, how many cards the reader got wrong are back and waiting on Explore (on the free plan they wait there, outside the five).",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "sixthMissesPlus": "With Astute+ the ones you miss come back in your five, one a day.",
+ "@sixthMissesPlus": {
+  "description": "That card, under it: on Astute+ what is missed comes back among the five, one card a day."
+ },
+ "sixthLevel": "In {subject} you get {right} out of {of} right.",
+ "@sixthLevel": {
+  "description": "The card after the fifth, on the free plan: set large, a subject whose latest answers measure the reader a level above the one the free plan deals it at. subject is the subject's name; right of of answers right.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   },
+   "right": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "sixthLevelPlus": "With Astute+ your {subject} cards would go up a level.",
+ "@sixthLevelPlus": {
+  "description": "That card, under it: on Astute+ a subject's cards are dealt at the level the reader's answers measure, which here is one higher. subject is the subject's name.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "paywallScience": "You can train calibration: about 10% better forecasts.",
+ "@paywallScience": {
+  "description": "The paywall, under what Astute+ is: the evidence the site gives for training calibration (Mellers et al., the Good Judgment Project: about 10% better forecasts), in one line. The source is the line after it."
+ },
+ "paywallScienceSource": "Mellers et al., Good Judgment Project",
+ "@paywallScienceSource": {
+  "description": "The paywall: the source of that line, as the site names it."
+ },
+ "paywallWarnBefore": "We warn you two days before the charge",
+ "@paywallWarnBefore": {
+  "description": "The paywall, under the button, beside a check, on a plan that starts with free days, to a reader the app can notify: the app sends a notification two days before the trial's first charge (AppState.kTrialWarningDays, two)."
+ },
+ "plusInTheAppAndroid": "Astute+ is in the app: download Astute on Android to start your free trial. It’s coming to iPhone.",
+ "@plusInTheAppAndroid": {
+  "description": "The paywall on the web, where nothing is sold, while Astute is on Google Play and not yet on the App Store (kAppStoreOpen in lib/store_links.dart): where to get it, and that the iPhone app is coming, as the site says it."
+ },
+ "exploreCapTitle": "That’s Explore for today.",
+ "@exploreCapTitle": {
+  "description": "Explore, at the end of its endless flow, for a free reader on a day they have read as many cards as the server's explore.freeCards allows: the card's title. Calm, never an alarm."
+ },
+ "exploreCapLine": "{n, plural, =1{You’ve read one card beyond your five. More tomorrow.} other{You’ve read {n} cards beyond your five. More tomorrow.}}",
+ "@exploreCapLine": {
+  "description": "That card, under its title: how many cards the reader read today beyond the day's five, and that more come tomorrow.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "exploreCapPlus": "With Astute+, Explore has no end.",
+ "@exploreCapPlus": {
+  "description": "That card: what Astute+ changes about it, over its button."
  }
 }

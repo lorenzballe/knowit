@@ -7495,4 +7495,192 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String giftTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ est à toi pour $days jours.',
+      one: 'Astute+ est à toi pour un jour.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftMark => 'à toi';
+
+  @override
+  String get giftLine => 'Sans carte bancaire, rien à résilier.';
+
+  @override
+  String get giftStepEndLine =>
+      'Retour au forfait gratuit. Rien n’est prélevé.';
+
+  @override
+  String get giftStart => 'Commencer à lire';
+
+  @override
+  String giftEndsSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ est à toi encore $days jours.',
+      one: 'Dernier jour d’Astute+.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String giftPlanUntil(String date) {
+    return 'Astute+ · offert jusqu’au $date';
+  }
+
+  @override
+  String get giftEndEyebrow => 'Ton cadeau est terminé';
+
+  @override
+  String giftEndTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Tes $days jours avec Astute+.',
+      one: 'Ta journée avec Astute+.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftEndDaysLabel => 'jours lus';
+
+  @override
+  String giftEndBackRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ratées, puis réussies',
+      one: 'ratée, puis réussie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossTitle => 'Dès aujourd’hui, en forfait gratuit';
+
+  @override
+  String giftLossRandom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n de tes cinq cartes arrivent au hasard.',
+      one: 'Une de tes cinq cartes arrive au hasard.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossMisses =>
+      'Celles que tu rates ne reviennent plus dans tes cinq : elles t’attendent dans Explorer.';
+
+  @override
+  String get giftLossAsk => 'L’assistant sur chaque carte reste avec Astute+.';
+
+  @override
+  String get giftKeep => 'Garder Astute+';
+
+  @override
+  String sixthRandomToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Aujourd’hui, $n de tes cinq sont arrivées au hasard.',
+      one: 'Aujourd’hui, une de tes cinq est arrivée au hasard.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTodayPlus =>
+      'Avec Astute+, les cinq auraient été choisies pour toi.';
+
+  @override
+  String sixthRandomTomorrow(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Demain, $n de tes cinq arriveront au hasard.',
+      one: 'Demain, une de tes cinq arrivera au hasard.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTomorrowPlus =>
+      'Avec Astute+, les cinq choisies pour toi : de ton mix, à ton niveau.';
+
+  @override
+  String sixthSureWrong(String sure) {
+    return 'Aujourd’hui, tu en as raté une dont tu étais sûr à $sure.';
+  }
+
+  @override
+  String get sixthSureWrongPlus => 'Avec Astute+, elle revient dans tes cinq.';
+
+  @override
+  String sixthMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n cartes que tu avais ratées sont revenues : elles t’attendent dans Explorer.',
+      one: 'Une carte que tu avais ratée est revenue : elle t’attend dans Explorer.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthMissesPlus =>
+      'Avec Astute+, celles que tu rates reviennent dans tes cinq, une par jour.';
+
+  @override
+  String sixthLevel(String subject, int right, int of) {
+    return 'En $subject, tu as juste $right fois sur $of.';
+  }
+
+  @override
+  String sixthLevelPlus(String subject) {
+    return 'Avec Astute+, tes cartes en $subject monteraient d’un niveau.';
+  }
+
+  @override
+  String get paywallScience =>
+      'La calibration s’entraîne : des prévisions meilleures d’environ 10 %.';
+
+  @override
+  String get paywallScienceSource => 'Mellers et al., Good Judgment Project';
+
+  @override
+  String get paywallWarnBefore =>
+      'On te prévient deux jours avant le prélèvement';
+
+  @override
+  String get plusInTheAppAndroid =>
+      'Astute+ est dans l’app : télécharge Astute sur Android pour commencer ton essai gratuit. Elle arrive bientôt sur iPhone.';
+
+  @override
+  String get exploreCapTitle => 'Pour aujourd’hui, Explorer s’arrête ici.';
+
+  @override
+  String exploreCapLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Tu as lu $n cartes en plus de tes cinq. D’autres demain.',
+      one: 'Tu as lu une carte en plus de tes cinq. D’autres demain.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreCapPlus => 'Avec Astute+, Explorer n’a pas de fin.';
 }

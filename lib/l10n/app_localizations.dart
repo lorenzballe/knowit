@@ -10277,6 +10277,204 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =1{A friend finished their first day: a week of Astute+ for you.} other{{n} friends finished their first day: {n} weeks of Astute+ for you.}}'**
   String inviteEarned(int n);
+
+  /// The new reader's gift (trial.reverse), its moment in the first run, where the trial offer would stand: the headline. days is how long the gift lasts (always 14 today). 'Yours' because it is given, never sold: no card, nothing to cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{Astute+ is yours for a day.} other{Astute+ is yours for {days} days.}}'**
+  String giftTitle(int days);
+
+  /// That headline: the words in it painted in the three lights. Must be the very words as they stand in giftTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'yours'**
+  String get giftMark;
+
+  /// That moment: the line under the headline. Card as in a payment card: none is asked for, and there is nothing to cancel at the end.
+  ///
+  /// In en, this message translates to:
+  /// **'No card, nothing to cancel.'**
+  String get giftLine;
+
+  /// That moment's timeline of the gift's days: under its last day, the fifteenth, when the free plan is back. Nothing is bought, so nothing is charged.
+  ///
+  /// In en, this message translates to:
+  /// **'The free plan again. Nothing is charged.'**
+  String get giftStepEndLine;
+
+  /// That moment's one button: on to the day's five.
+  ///
+  /// In en, this message translates to:
+  /// **'Start reading'**
+  String get giftStart;
+
+  /// The gift's last two days: one quiet line under the finished day's name on Today, and the title of the thirteenth's morning notification. days is the days left, today included: 2, then 1.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{Last day of Astute+.} other{Astute+ is yours for {days} more days.}}'**
+  String giftEndsSoon(int days);
+
+  /// Profile, the plan's row, while the gift lasts: its value. date is the gift's last day, as the phone writes a day and a month.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute+ · a gift until {date}'**
+  String giftPlanUntil(String date);
+
+  /// The page the morning after the gift: the eyebrow over its title, set in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Your gift has ended'**
+  String get giftEndEyebrow;
+
+  /// That page: its title, over what the gift's days came to. days is how long the gift lasted (14).
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{Your day of Astute+.} other{Your {days} days of Astute+.}}'**
+  String giftEndTitle(int days);
+
+  /// That page: under a figure like 11/14, the days the five were finished of the gift's days.
+  ///
+  /// In en, this message translates to:
+  /// **'days read'**
+  String get giftEndDaysLabel;
+
+  /// That page: under a count, the moves the reader missed and then got right when they came back, in the gift's days.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{miss, then right} other{misses, then right}}'**
+  String giftEndBackRight(int n);
+
+  /// That page: the heading over what changes with the free plan, from this morning.
+  ///
+  /// In en, this message translates to:
+  /// **'From today, on the free plan'**
+  String get giftLossTitle;
+
+  /// That page, under that heading: how many of the day's five the free plan deals at random, today.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One of your five cards comes at random.} other{{n} of your five cards come at random.}}'**
+  String giftLossRandom(int n);
+
+  /// That page: on the free plan, cards answered wrong no longer come back among the five; they wait on Explore's shelf of cards that came back.
+  ///
+  /// In en, this message translates to:
+  /// **'The ones you miss no longer come back in your five: they wait in Explore.'**
+  String get giftLossMisses;
+
+  /// That page, only where the answers by Claude are on: the assistant in Go deeper is Astute+'s.
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant on every card stays with Astute+.'**
+  String get giftLossAsk;
+
+  /// That page: its first button, which opens the paywall.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Astute+'**
+  String get giftKeep;
+
+  /// The card after the fifth, on the free plan (one true thing a day): set large, how many of today's five came at random rather than chosen for the reader.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Today one of your five came at random.} other{Today {n} of your five came at random.}}'**
+  String sixthRandomToday(int n);
+
+  /// That card, under it: what Astute+ would have done with today.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+, all five would have been chosen for you.'**
+  String get sixthRandomTodayPlus;
+
+  /// The card after the fifth, on the free plan: set large, how many of tomorrow's five will come at random, as tomorrow is dealt.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Tomorrow one of your five will come at random.} other{Tomorrow {n} of your five will come at random.}}'**
+  String sixthRandomTomorrow(int n);
+
+  /// That card, under it: what Astute+ would do with tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+, all five chosen for you: from your mix, at your level.'**
+  String get sixthRandomTomorrowPlus;
+
+  /// The card after the fifth, on the free plan: set large, a card the reader missed today though they said they were 80% sure or more. sure is that, as a percentage written the language's way (90%).
+  ///
+  /// In en, this message translates to:
+  /// **'Today you missed one you were {sure} sure of.'**
+  String sixthSureWrong(String sure);
+
+  /// That card, under it: on Astute+ a card missed comes back among the five.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ it comes back in your five.'**
+  String get sixthSureWrongPlus;
+
+  /// The card after the fifth, on the free plan: set large, how many cards the reader got wrong are back and waiting on Explore (on the free plan they wait there, outside the five).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{A card you got wrong came back: it’s waiting in Explore.} other{{n} cards you got wrong came back: they’re waiting in Explore.}}'**
+  String sixthMisses(int n);
+
+  /// That card, under it: on Astute+ what is missed comes back among the five, one card a day.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ the ones you miss come back in your five, one a day.'**
+  String get sixthMissesPlus;
+
+  /// The card after the fifth, on the free plan: set large, a subject whose latest answers measure the reader a level above the one the free plan deals it at. subject is the subject's name; right of of answers right.
+  ///
+  /// In en, this message translates to:
+  /// **'In {subject} you get {right} out of {of} right.'**
+  String sixthLevel(String subject, int right, int of);
+
+  /// That card, under it: on Astute+ a subject's cards are dealt at the level the reader's answers measure, which here is one higher. subject is the subject's name.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ your {subject} cards would go up a level.'**
+  String sixthLevelPlus(String subject);
+
+  /// The paywall, under what Astute+ is: the evidence the site gives for training calibration (Mellers et al., the Good Judgment Project: about 10% better forecasts), in one line. The source is the line after it.
+  ///
+  /// In en, this message translates to:
+  /// **'You can train calibration: about 10% better forecasts.'**
+  String get paywallScience;
+
+  /// The paywall: the source of that line, as the site names it.
+  ///
+  /// In en, this message translates to:
+  /// **'Mellers et al., Good Judgment Project'**
+  String get paywallScienceSource;
+
+  /// The paywall, under the button, beside a check, on a plan that starts with free days, to a reader the app can notify: the app sends a notification two days before the trial's first charge (AppState.kTrialWarningDays, two).
+  ///
+  /// In en, this message translates to:
+  /// **'We warn you two days before the charge'**
+  String get paywallWarnBefore;
+
+  /// The paywall on the web, where nothing is sold, while Astute is on Google Play and not yet on the App Store (kAppStoreOpen in lib/store_links.dart): where to get it, and that the iPhone app is coming, as the site says it.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute+ is in the app: download Astute on Android to start your free trial. It’s coming to iPhone.'**
+  String get plusInTheAppAndroid;
+
+  /// Explore, at the end of its endless flow, for a free reader on a day they have read as many cards as the server's explore.freeCards allows: the card's title. Calm, never an alarm.
+  ///
+  /// In en, this message translates to:
+  /// **'That’s Explore for today.'**
+  String get exploreCapTitle;
+
+  /// That card, under its title: how many cards the reader read today beyond the day's five, and that more come tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{You’ve read one card beyond your five. More tomorrow.} other{You’ve read {n} cards beyond your five. More tomorrow.}}'**
+  String exploreCapLine(int n);
+
+  /// That card: what Astute+ changes about it, over its button.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+, Explore has no end.'**
+  String get exploreCapPlus;
 }
 
 class _AppLocalizationsDelegate

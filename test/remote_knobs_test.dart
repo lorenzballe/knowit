@@ -52,6 +52,7 @@ final List<Object> _declared = [
   AppState.kPlaceAskFlag,
   AppState.kReviewAskFlag,
   AppState.kFirstRunTrialFlag,
+  AppState.kReverseTrialFlag,
   AppState.kFirstWeekOfferFlag,
   AppState.kFirstMonthOfferFlag,
   AppState.kCardAiFlag,
@@ -64,6 +65,7 @@ final List<Object> _declared = [
   AppState.kPlaceFirstAskKnob,
   AppState.kPlaceLastAskKnob,
   AppState.kReviewStreakKnob,
+  AppState.kExploreFreeCardsKnob,
   AppState.kPushFirstAskExperiment,
 ];
 

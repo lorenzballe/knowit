@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+import '../l10n/dates.dart' show formatDay;
 import '../l10n/l10n.dart';
 
 import 'package:flutter/services.dart';
@@ -674,24 +676,39 @@ class ProfileScreen extends StatelessWidget {
                   key: const ValueKey('profile-plan'),
                   mark: ProfileMarks.plan,
                   label: context.l10n.manageSubscription,
-                  value: app.isPlus
+                  // The new reader's gift says itself, and until when: it is
+                  // Astute+, and nothing was bought.
+                  value: !app.paidPlus && app.onGift
+                      ? context.l10n.elided(
+                          context.l10n.giftPlanUntil(
+                            formatDay(
+                              DateFormat.MMMd(
+                                Localizations.localeOf(context).toString(),
+                              ),
+                              app.giftLastDay!,
+                            ),
+                          ),
+                        )
+                      : app.isPlus
                       ? context.l10n.plusName
                       : context.l10n.freePlan,
                   // A subscriber wants to cancel, change plan or ask for a
                   // refund, and none of that belongs on a screen built to
                   // sell. RevenueCat's customer centre does all of it; the
-                  // paywall is for everyone else.
+                  // paywall is for everyone else, a reader in their gift
+                  // included: there is nothing of theirs at the store.
                   onTap: () {
                     Analytics.capture('manage subscription opened', {
                       'is_plus': app.isPlus,
+                      'on_gift': !app.paidPlus && app.onGift,
                     });
-                    app.isPlus
+                    app.paidPlus
                         ? Subscription.instance.presentCustomerCenter()
                         : Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (_) => PaywallScreen(
                                 app: app,
-                                source: 'manage plan',
+                                source: app.onGift ? 'gift' : 'manage plan',
                               ),
                             ),
                           );

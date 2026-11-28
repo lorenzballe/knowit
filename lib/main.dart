@@ -32,6 +32,7 @@ import 'screens/mix_screen.dart';
 import 'screens/paywall_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
+import 'state/gift.dart' show giftDue;
 import 'sync/account.dart';
 import 'sync/invite.dart';
 import 'sync/place_finder.dart';
@@ -321,11 +322,15 @@ class _PhoneFrame extends StatelessWidget {
 /// come between the onboarding and the day: one real card
 /// ([_Stage.firstCard]), and then the offer of the free trial
 /// ([_Stage.trialOffer]), the day's five after it whichever the answer.
+/// Behind `trial.reverse`, off as built, the card is followed by the new
+/// reader's gift instead ([_Stage.gift]): Astute+ given for two weeks,
+/// nothing sold (lib/state/gift.dart).
 enum _Stage {
   intro,
   subjects,
   genres,
   firstCard,
+  gift,
   trialOffer,
   comeback,
   shell;
@@ -338,6 +343,7 @@ enum _Stage {
     _Stage.subjects => 'onboarding subjects',
     _Stage.genres => 'onboarding genres',
     _Stage.firstCard => 'onboarding first card',
+    _Stage.gift => 'onboarding gift',
     _Stage.trialOffer => 'onboarding trial',
     _Stage.comeback => 'comeback',
     _Stage.shell => 'today',
@@ -1319,18 +1325,30 @@ class _AstutoRootState extends State<AstutoRoot> {
   }
 
   Future<void> _endOnboarding() async {
-    final Pill? card = trialOfferDue(_app) ? _app.firstRunCard : null;
-    if (card == null) return _finishOnboarding();
+    // The new reader's gift, where the server has it on, stands where the
+    // offer of the trial would: after the one card, or at once when the
+    // opening has no card left for this reader.
+    final bool gift = giftDue(_app);
+    final Pill? card = gift || trialOfferDue(_app) ? _app.firstRunCard : null;
+    if (card == null) {
+      if (gift) {
+        _go(_Stage.gift);
+        return;
+      }
+      return _finishOnboarding();
+    }
     _firstRunCard = card;
     _go(_Stage.firstCard);
   }
 
-  /// The first run's card, thrown on: the offer, unless it stopped being
-  /// due while the card was read — Astute+ turned out to be the reader's,
-  /// say — and then the day's five.
+  /// The first run's card, thrown on: the gift, or the offer, unless it
+  /// stopped being due while the card was read — Astute+ turned out to be
+  /// the reader's, say — and then the day's five.
   void _afterFirstCard() {
     if (!mounted) return;
-    if (trialOfferDue(_app)) {
+    if (giftDue(_app)) {
+      _go(_Stage.gift);
+    } else if (trialOfferDue(_app)) {
       _go(_Stage.trialOffer);
     } else {
       _finishOnboarding();
@@ -1447,6 +1465,11 @@ class _AstutoRootState extends State<AstutoRoot> {
           card: card,
           onDone: _afterFirstCard,
         );
+
+      // Or, behind `trial.reverse`, Astute+ given for two weeks: no card,
+      // nothing to cancel, and the day's five after it.
+      case _Stage.gift:
+        return GiftScreen(app: _app, onDone: _finishOnboarding);
 
       // And the free trial, said day by day at the store's own price, with
       // the way out as plain as the way in; the day's five after it.

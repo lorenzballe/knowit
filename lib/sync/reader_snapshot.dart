@@ -45,6 +45,8 @@ class ReaderSnapshot {
     this.pushTokens = const [],
     this.place,
     this.placeRemovedAt,
+    this.giftFrom,
+    this.giftEndSaid,
   });
 
   final String name;
@@ -120,6 +122,16 @@ class ReaderSnapshot {
   /// phone's removal is not undone by another phone's copy.
   final DateTime? placeRemovedAt;
 
+  /// The first day of the new reader's gift of Astute+, as a date key, or
+  /// null for a reader who never had one: the reader's, so a new phone
+  /// keeps the days the first one gave and gives no others. Not the plan:
+  /// the gift is given once and never bought, and it is held to its date.
+  final String? giftFrom;
+
+  /// The day the gift's end was said, so it is said once whichever phone
+  /// says it.
+  final String? giftEndSaid;
+
   bool get isEmpty =>
       streak == 0 &&
       pillsRead == 0 &&
@@ -164,6 +176,8 @@ class ReaderSnapshot {
     'place': ?place?.toJson(),
     if (placeRemovedAt != null)
       'placeRemovedAt': placeRemovedAt!.toUtc().toIso8601String(),
+    'giftFrom': ?giftFrom,
+    'giftEndSaid': ?giftEndSaid,
   };
 
   static ReaderSnapshot fromJson(Map<String, dynamic>? raw) {
@@ -294,8 +308,21 @@ class ReaderSnapshot {
       placeRemovedAt: raw['placeRemovedAt'] is String
           ? DateTime.tryParse(raw['placeRemovedAt'] as String)
           : null,
+      giftFrom: _dayKey(raw['giftFrom']),
+      giftEndSaid: _dayKey(raw['giftEndSaid']),
     );
   }
+}
+
+/// [raw] when it is a day as the app files one, yyyy-mm-dd; null otherwise.
+String? _dayKey(Object? raw) =>
+    raw is String && RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(raw) ? raw : null;
+
+/// The earlier of two days kept as date keys, either of them missing.
+String? _earlier(String? a, String? b) {
+  if (a == null) return b;
+  if (b == null) return a;
+  return a.compareTo(b) <= 0 ? a : b;
 }
 
 /// Where the reader lives, of two records of it: whichever phone heard
@@ -478,5 +505,9 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     pushTokens: union(local.pushTokens, remote.pushTokens),
     place: home.place,
     placeRemovedAt: home.removedAt,
+    // A gift was given on whichever phone gave it first, and runs from that
+    // day: a second phone neither starts another nor moves its end.
+    giftFrom: _earlier(local.giftFrom, remote.giftFrom),
+    giftEndSaid: _earlier(local.giftEndSaid, remote.giftEndSaid),
   );
 }

@@ -8012,4 +8012,211 @@ class AppLocalizationsPl extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String giftTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ jest twój przez $days dni.',
+      many: 'Astute+ jest twój przez $days dni.',
+      few: 'Astute+ jest twój przez $days dni.',
+      one: 'Astute+ jest twój przez jeden dzień.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftMark => 'twój';
+
+  @override
+  String get giftLine => 'Bez karty płatniczej, nic do anulowania.';
+
+  @override
+  String get giftStepEndLine =>
+      'Wracasz do planu darmowego. Nic nie pobieramy.';
+
+  @override
+  String get giftStart => 'Zacznij czytać';
+
+  @override
+  String giftEndsSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ jest twój jeszcze przez $days dni.',
+      many: 'Astute+ jest twój jeszcze przez $days dni.',
+      few: 'Astute+ jest twój jeszcze przez $days dni.',
+      one: 'Ostatni dzień Astute+.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String giftPlanUntil(String date) {
+    return 'Astute+ · w prezencie do $date';
+  }
+
+  @override
+  String get giftEndEyebrow => 'Twój prezent się skończył';
+
+  @override
+  String giftEndTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Twoje $days dni z Astute+.',
+      many: 'Twoje $days dni z Astute+.',
+      few: 'Twoje $days dni z Astute+.',
+      one: 'Twój dzień z Astute+.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftEndDaysLabel => 'dni czytania';
+
+  @override
+  String giftEndBackRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'najpierw błąd, potem dobrze',
+      many: 'najpierw błąd, potem dobrze',
+      few: 'najpierw błąd, potem dobrze',
+      one: 'najpierw błąd, potem dobrze',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossTitle => 'Od dziś, w planie darmowym';
+
+  @override
+  String giftLossRandom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n z twoich pięciu kart jest losowych.',
+      many: '$n z twoich pięciu kart jest losowych.',
+      few: '$n z twoich pięciu kart są losowe.',
+      one: 'Jedna z twoich pięciu kart jest losowa.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossMisses =>
+      'Te, w których się mylisz, nie wracają już w twojej piątce: czekają w zakładce Odkrywaj.';
+
+  @override
+  String get giftLossAsk => 'Asystent przy każdej karcie zostaje w Astute+.';
+
+  @override
+  String get giftKeep => 'Zostań przy Astute+';
+
+  @override
+  String sixthRandomToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Dziś $n z twojej piątki było losowych.',
+      many: 'Dziś $n z twojej piątki było losowych.',
+      few: 'Dziś $n z twojej piątki były losowe.',
+      one: 'Dziś jedna z twojej piątki była losowa.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTodayPlus =>
+      'Z Astute+ cała piątka byłaby wybrana dla ciebie.';
+
+  @override
+  String sixthRandomTomorrow(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Jutro $n z twojej piątki będzie losowych.',
+      many: 'Jutro $n z twojej piątki będzie losowych.',
+      few: 'Jutro $n z twojej piątki będą losowe.',
+      one: 'Jutro jedna z twojej piątki będzie losowa.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTomorrowPlus =>
+      'Z Astute+ cała piątka wybrana dla ciebie: z twojego miksu, na twoim poziomie.';
+
+  @override
+  String sixthSureWrong(String sure) {
+    return 'Dziś pomyliłeś się w karcie, której byłeś pewien na $sure.';
+  }
+
+  @override
+  String get sixthSureWrongPlus => 'Z Astute+ wraca w twojej piątce.';
+
+  @override
+  String sixthMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Wróciło $n kart, w których się pomyliłeś: czekają w zakładce Odkrywaj.',
+      many:
+          'Wróciło $n kart, w których się pomyliłeś: czekają w zakładce Odkrywaj.',
+      few:
+          'Wróciły $n karty, w których się pomyliłeś: czekają w zakładce Odkrywaj.',
+      one: 'Wróciła karta, w której się pomyliłeś: czeka w zakładce Odkrywaj.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthMissesPlus =>
+      'Z Astute+ twoje błędy wracają w piątce, jeden dziennie.';
+
+  @override
+  String sixthLevel(String subject, int right, int of) {
+    return '$subject: masz dobrze $right z $of.';
+  }
+
+  @override
+  String sixthLevelPlus(String subject) {
+    return 'Z Astute+ karty z tematu $subject byłyby o poziom wyżej.';
+  }
+
+  @override
+  String get paywallScience =>
+      'Kalibrację da się wytrenować: prognozy lepsze o około 10%.';
+
+  @override
+  String get paywallScienceSource => 'Mellers i in., Good Judgment Project';
+
+  @override
+  String get paywallWarnBefore => 'Uprzedzimy cię dwa dni przed obciążeniem';
+
+  @override
+  String get plusInTheAppAndroid =>
+      'Astute+ jest w aplikacji: pobierz Astute na Androida, aby zacząć darmowy okres próbny. Na iPhone’a już wkrótce.';
+
+  @override
+  String get exploreCapTitle => 'Na dziś to koniec zakładki Odkrywaj.';
+
+  @override
+  String exploreCapLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Przeczytałeś $n kart poza swoją piątką. Jutro będą kolejne.',
+      many: 'Przeczytałeś $n kart poza swoją piątką. Jutro będą kolejne.',
+      few: 'Przeczytałeś $n karty poza swoją piątką. Jutro będą kolejne.',
+      one: 'Przeczytałeś jedną kartę poza swoją piątką. Jutro będą kolejne.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreCapPlus => 'Z Astute+ zakładka Odkrywaj nie ma końca.';
 }

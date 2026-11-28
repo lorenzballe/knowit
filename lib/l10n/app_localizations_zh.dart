@@ -7085,4 +7085,176 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String giftTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '接下来 $days 天，Astute+ 归你。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftMark => '归你';
+
+  @override
+  String get giftLine => '无需绑卡，也无需取消。';
+
+  @override
+  String get giftStepEndLine => '回到免费方案，不会扣任何费用。';
+
+  @override
+  String get giftStart => '开始阅读';
+
+  @override
+  String giftEndsSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ 还归你 $days 天。',
+      one: '今天是 Astute+ 的最后一天。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String giftPlanUntil(String date) {
+    return 'Astute+ · 赠送至 $date';
+  }
+
+  @override
+  String get giftEndEyebrow => '赠送期已结束';
+
+  @override
+  String giftEndTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '你和 Astute+ 的 $days 天。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftEndDaysLabel => '阅读天数';
+
+  @override
+  String giftEndBackRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '答错后又答对',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossTitle => '从今天起，免费方案中';
+
+  @override
+  String giftLossRandom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '五张卡片中有 $n 张是随机的。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossMisses => '答错的卡片不再回到你的五张里，而是在“探索”里等你。';
+
+  @override
+  String get giftLossAsk => '每张卡片上的助手仅限 Astute+。';
+
+  @override
+  String get giftKeep => '继续使用 Astute+';
+
+  @override
+  String sixthRandomToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天的五张里有 $n 张是随机的。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTodayPlus => '有 Astute+，五张都会为你挑选。';
+
+  @override
+  String sixthRandomTomorrow(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '明天的五张里有 $n 张会是随机的。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTomorrowPlus => '有 Astute+，五张都为你挑选：来自你的组合，匹配你的水平。';
+
+  @override
+  String sixthSureWrong(String sure) {
+    return '今天你答错了一张你有 $sure 把握的卡片。';
+  }
+
+  @override
+  String get sixthSureWrongPlus => '有 Astute+，它会回到你的五张里。';
+
+  @override
+  String sixthMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '你答错的 $n 张卡片回来了，正在“探索”里等你。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthMissesPlus => '有 Astute+，答错的卡片每天一张回到你的五张里。';
+
+  @override
+  String sixthLevel(String subject, int right, int of) {
+    return '在$subject上，你答对了 $of 题中的 $right 题。';
+  }
+
+  @override
+  String sixthLevelPlus(String subject) {
+    return '有 Astute+，你的$subject卡片会升一级。';
+  }
+
+  @override
+  String get paywallScience => '校准是可以训练的：预测准确度提高约 10%。';
+
+  @override
+  String get paywallScienceSource => 'Mellers 等，Good Judgment Project';
+
+  @override
+  String get paywallWarnBefore => '扣费前两天提醒你';
+
+  @override
+  String get plusInTheAppAndroid =>
+      'Astute+ 在应用中提供：在 Android 上下载 Astute，开始免费试用。iPhone 版即将推出。';
+
+  @override
+  String get exploreCapTitle => '今天的“探索”就到这里。';
+
+  @override
+  String exploreCapLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '除了你的五张，你还读了 $n 张。明天还有更多。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreCapPlus => '有 Astute+，“探索”没有尽头。';
 }

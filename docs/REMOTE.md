@@ -187,6 +187,7 @@ The knobs this build reads:
 | `place.ask` | switch | on | — | the place's sheet after a finished day (Explore and Profile still ask when the reader asks them to) | `AppState.shouldAskForPlace` |
 | `review.ask` | switch | on | — | the store's rating prompt | `AppState.shouldAskForReview` |
 | `trial.firstRun` | switch | off | — | the first run's free trial: after the onboarding, one real card, then the offer of the year's free days, then the day's five (never to a reader with Astute+, never twice a day, never without the store's own year on sale) | `trialOfferDue` (lib/screens/trial_offer.dart) |
+| `trial.reverse` | switch | off | — | the new reader's gift: where the first run would offer the trial, after its one card, Astute+ given for fourteen days, held on the phone, with no purchase, no card and nothing to cancel; one quiet line on the finished day's shelf in its last two days, the thirteenth's nudge saying it to a reader with the nudge on, and the morning after it, before the five, what the days came to and what goes back to free, then the paywall. Never to a reader with Astute+, one the store ever held it for, or a phone or an account that had a gift; a gift given is never taken back by the switch | `giftDue` (lib/state/gift.dart) |
 | `offer.firstWeek` | switch | off | — | the first week's page: after the five on the seventh day the five are finished (up to the tenth), a reader on the free plan who never had a trial sees what the week came to in their own numbers, and the year's free days under them; once, never on Astute+, never without the store's year with free days for this reader, never on a day with another full-screen moment (a level wins), never on the evening of the reminder sheet or the rating prompt | `firstOfferDue` (lib/state/first_offers.dart) |
 | `offer.firstMonth` | switch | off | — | its twin: after the five on a day 30 to 44 days after the install, with seven days of reading at least and two weeks at least after the week's page, "Your first month", with the month's numbers; the same rules | `firstOfferDue` (lib/state/first_offers.dart) |
 | `cardAi` | switch | off | — | the answers by Claude, Astute+'s: the assistant in Go deeper and the weekly coach in Your journey (a free reader sees them locked); the developer tools have them on regardless | `cardAiOn` (lib/widgets/deeper_sheet.dart) |
@@ -199,6 +200,7 @@ The knobs this build reads:
 | `place.firstAskDay` | number | 2 | 1 to 20 | the finished days before the place's sheet first asks | `AppState.shouldAskForPlace` |
 | `place.lastAskDay` | number | 7 | 2 to 30, after `place.firstAskDay` | the finished days before it asks the second and last time (a phone keeps thirty) | `AppState.shouldAskForPlace` |
 | `review.streakDays` | number | 7 | 3 to 60 | the days in a row that end in the rating prompt | `AppState.shouldAskForReview` |
+| `explore.freeCards` | number | 0 | 0 to 500 | the cards a reader on the free plan reads in a day beyond the day's five before Explore's endless flow ends on a calm card that names Astute+ (0: no end). A soft end: what is on the page stays open, and the shelves above it are as they were | `AppState.exploreCapped` (lib/explore/blocks/core/feed_cap.dart) |
 | `push.firstAsk` | experiment | `cameBack` | `cameBack`, `firstDay` | whether the reminder sheet comes at the end of the very first finished day, or waits for a reader who came back | `AppState.shouldAskForPush` |
 
 Changing them from the server:
@@ -208,6 +210,10 @@ Changing them from the server:
   `"tunables": {"push.askGapDays": 2, "push.times": ["07:45", "12:30", "19:00"]}`;
 - the first run's free trial for half of new readers on iPhone:
   `"flags": {"trial.firstRun": {"on": true, "audience": {"platforms": ["ios"], "rollout": 50}}}`;
+- the new reader's gift for a fifth of new readers on Android, as a test:
+  `"flags": {"trial.reverse": {"on": true, "audience": {"platforms": ["android"], "rollout": 20}}}`;
+- Explore's endless flow ending after thirty cards a day for the free plan:
+  `"tunables": {"explore.freeCards": 30}`;
 - the first week's page for everybody, the first month's held back:
   `"flags": {"offer.firstWeek": true, "offer.firstMonth": false}`;
 - Invita un amico on Android first, once RevenueCat's key is deployed:

@@ -227,6 +227,29 @@ class StoreLinksTest(unittest.TestCase):
         self.assertIn(const("kAppStoreSubscriptionsUrl"), account)
         self.assertIn(const("kGooglePlaySubscriptionsUrl"), account)
 
+    def test_the_app_says_which_stores_are_live_as_the_site_does(self):
+        """The web app's paywall offers the stores lib/store_links.dart says
+        are live: the same two switches as the site's, the day one moves."""
+        dart = (ROOT / "lib" / "store_links.dart").read_text(encoding="utf-8")
+        chrome = (ROOT / "tool" / "site" / "chrome.py").read_text(encoding="utf-8")
+
+        def app(name: str) -> bool:
+            m = re.search(r"const bool " + name + r" = (true|false);", dart)
+            self.assertIsNotNone(m, name)
+            return m.group(1) == "true"
+
+        def site(name: str) -> bool:
+            m = re.search(r"^" + name + r" = (True|False)$", chrome, re.M)
+            self.assertIsNotNone(m, name)
+            return m.group(1) == "True"
+
+        self.assertEqual(app("kAppStoreOpen"), site("APP_STORE_OPEN"))
+        self.assertEqual(app("kGooglePlayOpen"), site("GOOGLE_PLAY_OPEN"))
+        # The app has words for both stores, and for Android with the iPhone
+        # on its way: a store live on its own other than Google Play wants
+        # words of its own before it ships.
+        self.assertTrue(app("kGooglePlayOpen"))
+
 
 if __name__ == "__main__":
     unittest.main()

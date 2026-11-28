@@ -6988,4 +6988,148 @@ class RemoteLocalizations extends AppLocalizations {
   String inviteEarned(int n) =>
       _words.format('inviteEarned', localeName, {'n': n}) ??
       _base.inviteEarned(n);
+
+  @override
+  String giftTitle(int days) =>
+      _words.format('giftTitle', localeName, {'days': days}) ??
+      _base.giftTitle(days);
+
+  @override
+  String get giftMark => _words.text('giftMark') ?? _base.giftMark;
+
+  @override
+  String get giftLine => _words.text('giftLine') ?? _base.giftLine;
+
+  @override
+  String get giftStepEndLine =>
+      _words.text('giftStepEndLine') ?? _base.giftStepEndLine;
+
+  @override
+  String get giftStart => _words.text('giftStart') ?? _base.giftStart;
+
+  @override
+  String giftEndsSoon(int days) =>
+      _words.format('giftEndsSoon', localeName, {'days': days}) ??
+      _base.giftEndsSoon(days);
+
+  @override
+  String giftPlanUntil(String date) =>
+      _words.format('giftPlanUntil', localeName, {'date': date}) ??
+      _base.giftPlanUntil(date);
+
+  @override
+  String get giftEndEyebrow =>
+      _words.text('giftEndEyebrow') ?? _base.giftEndEyebrow;
+
+  @override
+  String giftEndTitle(int days) =>
+      _words.format('giftEndTitle', localeName, {'days': days}) ??
+      _base.giftEndTitle(days);
+
+  @override
+  String get giftEndDaysLabel =>
+      _words.text('giftEndDaysLabel') ?? _base.giftEndDaysLabel;
+
+  @override
+  String giftEndBackRight(int n) =>
+      _words.format('giftEndBackRight', localeName, {'n': n}) ??
+      _base.giftEndBackRight(n);
+
+  @override
+  String get giftLossTitle =>
+      _words.text('giftLossTitle') ?? _base.giftLossTitle;
+
+  @override
+  String giftLossRandom(int n) =>
+      _words.format('giftLossRandom', localeName, {'n': n}) ??
+      _base.giftLossRandom(n);
+
+  @override
+  String get giftLossMisses =>
+      _words.text('giftLossMisses') ?? _base.giftLossMisses;
+
+  @override
+  String get giftLossAsk => _words.text('giftLossAsk') ?? _base.giftLossAsk;
+
+  @override
+  String get giftKeep => _words.text('giftKeep') ?? _base.giftKeep;
+
+  @override
+  String sixthRandomToday(int n) =>
+      _words.format('sixthRandomToday', localeName, {'n': n}) ??
+      _base.sixthRandomToday(n);
+
+  @override
+  String get sixthRandomTodayPlus =>
+      _words.text('sixthRandomTodayPlus') ?? _base.sixthRandomTodayPlus;
+
+  @override
+  String sixthRandomTomorrow(int n) =>
+      _words.format('sixthRandomTomorrow', localeName, {'n': n}) ??
+      _base.sixthRandomTomorrow(n);
+
+  @override
+  String get sixthRandomTomorrowPlus =>
+      _words.text('sixthRandomTomorrowPlus') ?? _base.sixthRandomTomorrowPlus;
+
+  @override
+  String sixthSureWrong(String sure) =>
+      _words.format('sixthSureWrong', localeName, {'sure': sure}) ??
+      _base.sixthSureWrong(sure);
+
+  @override
+  String get sixthSureWrongPlus =>
+      _words.text('sixthSureWrongPlus') ?? _base.sixthSureWrongPlus;
+
+  @override
+  String sixthMisses(int n) =>
+      _words.format('sixthMisses', localeName, {'n': n}) ??
+      _base.sixthMisses(n);
+
+  @override
+  String get sixthMissesPlus =>
+      _words.text('sixthMissesPlus') ?? _base.sixthMissesPlus;
+
+  @override
+  String sixthLevel(String subject, int right, int of) =>
+      _words.format('sixthLevel', localeName, {
+        'subject': subject,
+        'right': right,
+        'of': of,
+      }) ??
+      _base.sixthLevel(subject, right, of);
+
+  @override
+  String sixthLevelPlus(String subject) =>
+      _words.format('sixthLevelPlus', localeName, {'subject': subject}) ??
+      _base.sixthLevelPlus(subject);
+
+  @override
+  String get paywallScience =>
+      _words.text('paywallScience') ?? _base.paywallScience;
+
+  @override
+  String get paywallScienceSource =>
+      _words.text('paywallScienceSource') ?? _base.paywallScienceSource;
+
+  @override
+  String get paywallWarnBefore =>
+      _words.text('paywallWarnBefore') ?? _base.paywallWarnBefore;
+
+  @override
+  String get plusInTheAppAndroid =>
+      _words.text('plusInTheAppAndroid') ?? _base.plusInTheAppAndroid;
+
+  @override
+  String get exploreCapTitle =>
+      _words.text('exploreCapTitle') ?? _base.exploreCapTitle;
+
+  @override
+  String exploreCapLine(int n) =>
+      _words.format('exploreCapLine', localeName, {'n': n}) ??
+      _base.exploreCapLine(n);
+
+  @override
+  String get exploreCapPlus =>
+      _words.text('exploreCapPlus') ?? _base.exploreCapPlus;
 }

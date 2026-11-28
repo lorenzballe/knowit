@@ -5,6 +5,7 @@
   "place.ask": {"default": true},
   "review.ask": {"default": true},
   "trial.firstRun": {"default": false},
+  "trial.reverse": {"default": false},
   "offer.firstWeek": {"default": false},
   "offer.firstMonth": {"default": false},
   "cardAi": {"default": false},
@@ -22,7 +23,8 @@
   },
   "place.firstAskDay": {"type": "count", "default": 2, "min": 1, "max": 20},
   "place.lastAskDay": {"type": "count", "default": 7, "min": 2, "max": 30, "after": "place.firstAskDay"},
-  "review.streakDays": {"type": "count", "default": 7, "min": 3, "max": 60}
+  "review.streakDays": {"type": "count", "default": 7, "min": 3, "max": 60},
+  "explore.freeCards": {"type": "count", "default": 0, "min": 0, "max": 500}
  },
  "experiments": {
   "push.firstAsk": {"variants": ["cameBack", "firstDay"], "default": "cameBack"}

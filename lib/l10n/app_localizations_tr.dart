@@ -7310,4 +7310,182 @@ class AppLocalizationsTr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String giftTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ $days gün boyunca senin.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftMark => 'senin';
+
+  @override
+  String get giftLine => 'Kredi kartı yok, iptal edilecek bir şey yok.';
+
+  @override
+  String get giftStepEndLine =>
+      'Ücretsiz plana dönersin. Hiçbir ücret alınmaz.';
+
+  @override
+  String get giftStart => 'Okumaya başla';
+
+  @override
+  String giftEndsSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ $days gün daha senin.',
+      one: 'Astute+’ın son günü.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String giftPlanUntil(String date) {
+    return 'Astute+ · $date tarihine kadar hediye';
+  }
+
+  @override
+  String get giftEndEyebrow => 'Hediyen sona erdi';
+
+  @override
+  String giftEndTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ ile $days günün.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftEndDaysLabel => 'okunan gün';
+
+  @override
+  String giftEndBackRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'önce yanlış, sonra doğru',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossTitle => 'Bugünden itibaren ücretsiz planda';
+
+  @override
+  String giftLossRandom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Beş kartının $n tanesi rastgele gelir.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossMisses =>
+      'Kaçırdıkların artık beşinin arasına dönmez: Keşfet’te seni bekler.';
+
+  @override
+  String get giftLossAsk => 'Her karttaki asistan Astute+’ta kalır.';
+
+  @override
+  String get giftKeep => 'Astute+’ta kal';
+
+  @override
+  String sixthRandomToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bugün beşinin $n tanesi rastgele geldi.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTodayPlus =>
+      'Astute+ ile beşi de senin için seçilirdi.';
+
+  @override
+  String sixthRandomTomorrow(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Yarın beşinin $n tanesi rastgele gelecek.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTomorrowPlus =>
+      'Astute+ ile beşi de senin için seçilir: karışımından, seviyende.';
+
+  @override
+  String sixthSureWrong(String sure) {
+    return 'Bugün $sure emin olduğun bir kartı kaçırdın.';
+  }
+
+  @override
+  String get sixthSureWrongPlus => 'Astute+ ile beşinin arasına geri döner.';
+
+  @override
+  String sixthMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Yanlış yaptığın $n kart geri döndü: Keşfet’te seni bekliyor.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthMissesPlus =>
+      'Astute+ ile kaçırdıkların beşinin arasına döner, günde bir tane.';
+
+  @override
+  String sixthLevel(String subject, int right, int of) {
+    return '$subject konusunda $of kartın $right tanesini doğru biliyorsun.';
+  }
+
+  @override
+  String sixthLevelPlus(String subject) {
+    return 'Astute+ ile $subject kartların bir seviye yükselirdi.';
+  }
+
+  @override
+  String get paywallScience =>
+      'Kalibrasyon çalışılarak gelişir: yaklaşık %10 daha iyi tahminler.';
+
+  @override
+  String get paywallScienceSource => 'Mellers ve ark., Good Judgment Project';
+
+  @override
+  String get paywallWarnBefore => 'Ücretlendirmeden iki gün önce seni uyarırız';
+
+  @override
+  String get plusInTheAppAndroid =>
+      'Astute+ uygulamada: ücretsiz denemeni başlatmak için Astute’u Android’e indir. iPhone’a yakında geliyor.';
+
+  @override
+  String get exploreCapTitle => 'Bugünlük Keşfet burada bitiyor.';
+
+  @override
+  String exploreCapLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Beşinin dışında $n kart okudun. Yarın yenileri gelecek.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreCapPlus => 'Astute+ ile Keşfet’in sonu yok.';
 }

@@ -7981,4 +7981,207 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String giftTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ твой на $days дня.',
+      many: 'Astute+ твой на $days дней.',
+      few: 'Astute+ твой на $days дня.',
+      one: 'Astute+ твой на $days день.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftMark => 'твой';
+
+  @override
+  String get giftLine => 'Без банковской карты, ничего не нужно отменять.';
+
+  @override
+  String get giftStepEndLine => 'Снова бесплатный план. Ничего не списывается.';
+
+  @override
+  String get giftStart => 'Начать читать';
+
+  @override
+  String giftEndsSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ твой ещё $days дня.',
+      many: 'Astute+ твой ещё $days дней.',
+      few: 'Astute+ твой ещё $days дня.',
+      one: 'Последний день Astute+.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String giftPlanUntil(String date) {
+    return 'Astute+ · в подарок до $date';
+  }
+
+  @override
+  String get giftEndEyebrow => 'Подарок закончился';
+
+  @override
+  String giftEndTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Твои $days дня с Astute+.',
+      many: 'Твои $days дней с Astute+.',
+      few: 'Твои $days дня с Astute+.',
+      one: 'Твой день с Astute+.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftEndDaysLabel => 'дней чтения';
+
+  @override
+  String giftEndBackRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'сначала ошибка, потом верно',
+      many: 'сначала ошибка, потом верно',
+      few: 'сначала ошибка, потом верно',
+      one: 'сначала ошибка, потом верно',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossTitle => 'С сегодняшнего дня, на бесплатном плане';
+
+  @override
+  String giftLossRandom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n из пяти твоих карточек — случайные.',
+      many: '$n из пяти твоих карточек — случайные.',
+      few: '$n из пяти твоих карточек — случайные.',
+      one: '$n из пяти твоих карточек — случайная.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossMisses =>
+      'Карточки с ошибками больше не возвращаются в твою пятёрку: они ждут в «Обзоре».';
+
+  @override
+  String get giftLossAsk => 'Помощник к каждой карточке остаётся в Astute+.';
+
+  @override
+  String get giftKeep => 'Оставить Astute+';
+
+  @override
+  String sixthRandomToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Сегодня $n из твоих пяти — случайные.',
+      many: 'Сегодня $n из твоих пяти — случайные.',
+      few: 'Сегодня $n из твоих пяти — случайные.',
+      one: 'Сегодня $n из твоих пяти — случайная.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTodayPlus =>
+      'С Astute+ все пять были бы выбраны для тебя.';
+
+  @override
+  String sixthRandomTomorrow(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Завтра $n из твоих пяти будут случайными.',
+      many: 'Завтра $n из твоих пяти будут случайными.',
+      few: 'Завтра $n из твоих пяти будут случайными.',
+      one: 'Завтра $n из твоих пяти будет случайной.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTomorrowPlus =>
+      'С Astute+ все пять выбраны для тебя: из твоего микса, на твоём уровне.';
+
+  @override
+  String sixthSureWrong(String sure) {
+    return 'Сегодня ты ошибся в карточке, в которой был уверен на $sure.';
+  }
+
+  @override
+  String get sixthSureWrongPlus => 'С Astute+ она вернётся в твою пятёрку.';
+
+  @override
+  String sixthMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Вернулись $n карточки, где ты ошибся: они ждут в «Обзоре».',
+      many: 'Вернулись $n карточек, где ты ошибся: они ждут в «Обзоре».',
+      few: 'Вернулись $n карточки, где ты ошибся: они ждут в «Обзоре».',
+      one: 'Вернулась $n карточка, где ты ошибся: она ждёт в «Обзоре».',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthMissesPlus =>
+      'С Astute+ ошибки возвращаются в твою пятёрку, по одной в день.';
+
+  @override
+  String sixthLevel(String subject, int right, int of) {
+    return '$subject: верно $right из $of.';
+  }
+
+  @override
+  String sixthLevelPlus(String subject) {
+    return 'С Astute+ карточки по теме «$subject» стали бы на уровень выше.';
+  }
+
+  @override
+  String get paywallScience =>
+      'Калибровку можно натренировать: прогнозы точнее примерно на 10%.';
+
+  @override
+  String get paywallScienceSource => 'Меллерс и др., Good Judgment Project';
+
+  @override
+  String get paywallWarnBefore => 'Мы предупредим за два дня до списания';
+
+  @override
+  String get plusInTheAppAndroid =>
+      'Astute+ — в приложении: скачай Astute на Android, чтобы начать бесплатный период. Скоро и на iPhone.';
+
+  @override
+  String get exploreCapTitle => 'На сегодня «Обзор» закончился.';
+
+  @override
+  String exploreCapLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ты прочитал $n карточки сверх своих пяти. Завтра будут новые.',
+      many: 'Ты прочитал $n карточек сверх своих пяти. Завтра будут новые.',
+      few: 'Ты прочитал $n карточки сверх своих пяти. Завтра будут новые.',
+      one: 'Ты прочитал $n карточку сверх своих пяти. Завтра будут новые.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreCapPlus => 'С Astute+ у «Обзора» нет конца.';
 }

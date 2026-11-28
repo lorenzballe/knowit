@@ -7516,4 +7516,189 @@ class AppLocalizationsPt extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String giftTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'O Astute+ é teu durante $days dias.',
+      one: 'O Astute+ é teu durante um dia.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftMark => 'teu';
+
+  @override
+  String get giftLine => 'Sem cartão, nada a cancelar.';
+
+  @override
+  String get giftStepEndLine => 'Voltas ao plano gratuito. Nada é cobrado.';
+
+  @override
+  String get giftStart => 'Começar a ler';
+
+  @override
+  String giftEndsSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'O Astute+ é teu por mais $days dias.',
+      one: 'Último dia do Astute+.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String giftPlanUntil(String date) {
+    return 'Astute+ · oferecido até $date';
+  }
+
+  @override
+  String get giftEndEyebrow => 'A tua oferta terminou';
+
+  @override
+  String giftEndTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Os teus $days dias com o Astute+.',
+      one: 'O teu dia com o Astute+.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftEndDaysLabel => 'dias lidos';
+
+  @override
+  String giftEndBackRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'falhadas, depois certas',
+      one: 'falhada, depois certa',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossTitle => 'A partir de hoje, no plano gratuito';
+
+  @override
+  String giftLossRandom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n das tuas cinco cartas chegam ao acaso.',
+      one: 'Uma das tuas cinco cartas chega ao acaso.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossMisses =>
+      'As que falhas já não voltam nas tuas cinco: esperam por ti em Explorar.';
+
+  @override
+  String get giftLossAsk => 'O assistente em cada carta fica no Astute+.';
+
+  @override
+  String get giftKeep => 'Ficar com o Astute+';
+
+  @override
+  String sixthRandomToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Hoje, $n das tuas cinco chegaram ao acaso.',
+      one: 'Hoje, uma das tuas cinco chegou ao acaso.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTodayPlus =>
+      'Com o Astute+, as cinco teriam sido escolhidas para ti.';
+
+  @override
+  String sixthRandomTomorrow(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Amanhã, $n das tuas cinco vão chegar ao acaso.',
+      one: 'Amanhã, uma das tuas cinco vai chegar ao acaso.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTomorrowPlus =>
+      'Com o Astute+, as cinco escolhidas para ti: da tua mistura, ao teu nível.';
+
+  @override
+  String sixthSureWrong(String sure) {
+    return 'Hoje falhaste uma de que estavas $sure seguro.';
+  }
+
+  @override
+  String get sixthSureWrongPlus => 'Com o Astute+, volta nas tuas cinco.';
+
+  @override
+  String sixthMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Voltaram $n cartas que falhaste: esperam por ti em Explorar.',
+      one: 'Voltou uma carta que falhaste: espera por ti em Explorar.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthMissesPlus =>
+      'Com o Astute+, as que falhas voltam nas tuas cinco, uma por dia.';
+
+  @override
+  String sixthLevel(String subject, int right, int of) {
+    return 'Em $subject, acertas $right em $of.';
+  }
+
+  @override
+  String sixthLevelPlus(String subject) {
+    return 'Com o Astute+, as tuas cartas de $subject subiriam de nível.';
+  }
+
+  @override
+  String get paywallScience =>
+      'A calibração treina-se: previsões cerca de 10% melhores.';
+
+  @override
+  String get paywallScienceSource => 'Mellers et al., Good Judgment Project';
+
+  @override
+  String get paywallWarnBefore => 'Avisamos-te dois dias antes da cobrança';
+
+  @override
+  String get plusInTheAppAndroid =>
+      'O Astute+ está na app: descarrega o Astute no Android para começar o teste gratuito. Em breve no iPhone.';
+
+  @override
+  String get exploreCapTitle => 'Por hoje, Explorar acaba aqui.';
+
+  @override
+  String exploreCapLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Leste $n cartas além das tuas cinco. Amanhã há mais.',
+      one: 'Leste uma carta além das tuas cinco. Amanhã há mais.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreCapPlus => 'Com o Astute+, Explorar não tem fim.';
 }
