@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611280048,
- "built": "2026-11-28T00:48:20Z",
+ "version": 202611280923,
+ "built": "2026-11-28T09:23:45Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -280168,6 +280168,12 @@ const String kEmbeddedBank = r'''
    "minutes": 15,
    "parts": 7,
    "words": 2180
+  },
+  "thinking-fast-and-slow": {
+   "file": "summaries/thinking-fast-and-slow.json?v=47910ab604d7",
+   "minutes": 15,
+   "parts": 7,
+   "words": 2251
   }
  }
 }
