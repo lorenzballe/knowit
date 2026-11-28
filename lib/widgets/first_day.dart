@@ -13,8 +13,11 @@
 /// Astute score; then one plain line, how sure the reader said they were
 /// against how many they got right. At the foot "Remind me tomorrow", which
 /// raises the reminder sheet down the shell's own road (main.dart), so it
-/// is asked once and counted once, and Explore; the way out quietly in the
-/// corner, as on a level reached (lib/widgets/level_up.dart).
+/// is asked once and counted once, and Today's challenge, the five
+/// questions everyone gets that day, at the top of Explore: the part of
+/// the app most worth sending to a friend, which the day's end used never
+/// to lead to. The way out quietly in the corner, as on a level reached
+/// (lib/widgets/level_up.dart).
 ///
 /// Nothing bounces and nothing falls from the sky: the lines rise into
 /// place one after another and the points count up from nothing; for a
@@ -47,12 +50,12 @@ import 'ui.dart' show ScreenView, clockTime;
 /// What the shell lends the celebration: whether the reminder may be asked
 /// from it, the way to ask it — the shell's own, so that it is asked once,
 /// counted once, and never asked again by the shell that evening — and the
-/// way to Explore.
+/// way to Today's challenge.
 class FirstDayHost {
   const FirstDayHost({
     required this.mayRemind,
     required this.remind,
-    required this.explore,
+    required this.challenge,
   });
 
   /// Whether "Remind me tomorrow" is there, asked once as the screen rises:
@@ -65,15 +68,16 @@ class FirstDayHost {
   /// once one was chosen and the phone allowed it; null otherwise.
   final Future<String?> Function() remind;
 
-  /// Goes to the Explore tab.
-  final VoidCallback explore;
+  /// Goes to Today's challenge: the Explore tab, put back the way it opens,
+  /// the challenge at its top.
+  final VoidCallback challenge;
 
   /// A host that offers no reminder and goes nowhere: a screen opened
   /// outside the tabs.
   static const FirstDayHost none = FirstDayHost(
     mayRemind: _never,
     remind: _nothing,
-    explore: _nowhere,
+    challenge: _nowhere,
   );
 
   static bool _never() => false;
@@ -266,7 +270,7 @@ class _FirstDayScreenState extends State<FirstDayScreen> {
   /// When the first reminder comes, once one will.
   String? _remindAt;
 
-  /// How the screen went: the corner, Explore, or the way back.
+  /// How the screen went: the corner, the challenge, or the way back.
   String _leftBy = 'back';
   bool _leaving = false;
 
@@ -340,17 +344,18 @@ class _FirstDayScreenState extends State<FirstDayScreen> {
     });
   }
 
-  /// Explore: the screen goes, and the tabs go to Explore under it. The
-  /// card after the fifth stays on Today's table, where it comes next.
-  void _explore() {
+  /// Today's challenge: the screen goes, and the tabs go to Explore under
+  /// it, the challenge at its top. The card after the fifth stays on
+  /// Today's table, where it comes next.
+  void _challenge() {
     if (_leaving || _asking) return;
     if (!widget.preview) {
-      Analytics.capture('first day explore tapped', {
+      Analytics.capture('first day challenge tapped', {
         'ms_open': _open.elapsedMilliseconds,
       });
     }
-    _leave('explore');
-    if (!widget.preview) widget.host.explore();
+    _leave('challenge');
+    if (!widget.preview) widget.host.challenge();
   }
 
   @override
@@ -389,14 +394,16 @@ class _FirstDayScreenState extends State<FirstDayScreen> {
             ),
             Expanded(
               child: LayoutBuilder(
-                builder: (context, room) => SingleChildScrollView(
-                  key: const ValueKey('first-day-scroll'),
-                  padding: const EdgeInsets.symmetric(horizontal: 28),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: room.maxHeight),
-                    // In the middle of the room there is, and from the top
-                    // where the words need more of it than there is.
-                    child: Center(child: _body(context, n, short)),
+                builder: (context, room) => _FadeFoot(
+                  child: SingleChildScrollView(
+                    key: const ValueKey('first-day-scroll'),
+                    padding: const EdgeInsets.symmetric(horizontal: 28),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: room.maxHeight),
+                      // In the middle of the room there is, and from the
+                      // top where the words need more of it than there is.
+                      child: Center(child: _body(context, n, short)),
+                    ),
                   ),
                 ),
               ),
@@ -494,7 +501,8 @@ class _FirstDayScreenState extends State<FirstDayScreen> {
   }
 
   /// "Remind me tomorrow", or when it will come once it is set; then
-  /// Explore, which takes the first button's colour when it stands alone.
+  /// Today's challenge, which takes the first button's colour when it
+  /// stands alone.
   Widget _foot(BuildContext context, bool short) {
     final Palette p = context.p;
     final l = context.l10n;
@@ -548,14 +556,34 @@ class _FirstDayScreenState extends State<FirstDayScreen> {
           ),
         if (remind || at != null) SizedBox(height: short ? 8 : 10),
         button(
-          key: const ValueKey('first-day-explore'),
-          label: l.tabExplore,
+          key: const ValueKey('first-day-challenge'),
+          label: l.fiveTitle,
           first: lone,
-          onPressed: _explore,
+          onPressed: _challenge,
         ),
       ],
     );
   }
+}
+
+/// The foot of the words fades into the buttons where they scroll, so what
+/// goes on under them is seen to go on rather than to stop at a line.
+class _FadeFoot extends StatelessWidget {
+  const _FadeFoot({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => ShaderMask(
+    blendMode: BlendMode.dstIn,
+    shaderCallback: (r) => LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: const [Colors.white, Colors.white, Colors.transparent],
+      stops: [0, 1 - (18 / r.height).clamp(0.0, 1.0), 1],
+    ).createShader(r),
+    child: child,
+  );
 }
 
 /// The streak and the points, side by side between two hairlines: each a
@@ -596,10 +624,12 @@ class _Figures extends StatelessWidget {
               label: l.profileInARowLabel(n.streak),
               semantics: '${scoreNumber(context, n.streak)} '
                   '${l.profileInARowLabel(n.streak)}',
+              // The flame grows with the reader's text size, as the
+              // number beside it does.
               child: _Lit(
                 number: scoreNumber(context, n.streak),
                 style: figure,
-                flame: size * 0.74,
+                flame: MediaQuery.textScalerOf(context).scale(size * 0.74),
               ),
             ),
           ),

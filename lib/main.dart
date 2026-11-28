@@ -1964,12 +1964,17 @@ class _AstutoShellState extends State<AstutoShell>
       TodayScreen(
         app: widget.app,
         // The first day's celebration: the reminder the root asks, and
-        // Explore, the tab beside this one.
+        // Today's challenge, the first thing on Explore, the tab beside
+        // this one, put back the way it opens: every subject, no search,
+        // at its top.
         firstDay: FirstDayHost(
           mayRemind: () => widget.mayRemindOnFirstDay?.call() ?? false,
           remind: () =>
               widget.remindOnFirstDay?.call() ?? Future<String?>.value(),
-          explore: () => _goTo(1, by: 'first day'),
+          challenge: () {
+            _goTo(1, by: 'first day');
+            _explore.currentState?.showBest();
+          },
         ),
         onCardMotion: (moving) {
           if (moving != _cardMoving) setState(() => _cardMoving = moving);

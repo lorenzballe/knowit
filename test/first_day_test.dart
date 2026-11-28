@@ -3,7 +3,8 @@
 // and never again; its numbers — the streak, the points the day earned, how
 // sure against how right, with and without the cards' how-sure question;
 // "Remind me tomorrow", which asks the reminder down the shell's own road,
-// once, the shell asking nothing more that evening; Explore; the card after
+// once, the shell asking nothing more that evening; Today's challenge, on
+// Explore; the card after
 // the fifth after it, never before, and none on Astute+; a level reached
 // waiting for another evening; a friend's week after it, never over it; the
 // developer tools' look that puts the end back as it was; and the screen
@@ -267,8 +268,19 @@ final Finder _celebration = find.byType(FirstDayScreen);
 final Finder _sheet = find.byKey(const ValueKey('reminder-ask'));
 final Finder _offer = find.byKey(const ValueKey('magic-card'));
 final Finder _remind = find.byKey(const ValueKey('first-day-remind'));
-final Finder _explore = find.byKey(const ValueKey('first-day-explore'));
+final Finder _challenge = find.byKey(const ValueKey('first-day-challenge'));
 final Finder _close = find.byKey(const ValueKey('first-day-close'));
+
+/// Explore's own list, the one that scrolls down the page.
+ScrollPosition _exploreList(WidgetTester tester) => tester
+    .stateList<ScrollableState>(
+      find.descendant(
+        of: find.byType(ExploreScreen),
+        matching: find.byType(Scrollable),
+      ),
+    )
+    .firstWhere((s) => s.position.axis == Axis.vertical)
+    .position;
 
 /// [child] in the app's own theme and language, as the screen is drawn.
 Widget _host(Widget child, {String language = 'en', bool dark = true}) =>
@@ -538,13 +550,13 @@ void main() {
       expect(said.of('push permission answered'), [
         {'granted': true},
       ]);
-      // In the button's place, when it will come; Explore stays.
+      // In the button's place, when it will come; the challenge stays.
       expect(_remind, findsNothing);
       expect(
         find.text(_en.firstDayReminded('7:00 PM')),
         findsOneWidget,
       );
-      expect(_explore, findsOneWidget);
+      expect(_challenge, findsOneWidget);
 
       await tester.tap(_close);
       await _settle(tester);
@@ -631,8 +643,8 @@ void main() {
         expect(_celebration, findsOneWidget, reason: 'asked: $asked');
         expect(_remind, findsNothing, reason: 'asked: $asked');
         expect(said.of('first day shown').last['remind'], isFalse);
-        // Explore alone, as the first button.
-        expect(_explore, findsOneWidget);
+        // Today's challenge alone, as the first button.
+        expect(_challenge, findsOneWidget);
         await tester.pumpWidget(const SizedBox());
         await tester.pump();
       }
@@ -665,26 +677,55 @@ void main() {
     });
   });
 
-  group('Explore', () {
-    testWidgets('goes to the Explore tab; the offer waits on Today\'s table', (
-      tester,
-    ) async {
+  group('Today\'s challenge', () {
+    testWidgets('goes to Explore put back the way it opens, the challenge at '
+        'its top; the offer waits on Today\'s table', (tester) async {
       _noWidgets(tester);
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
+      // Explore visited and left scrolled down, before the day is read.
+      await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+      await _settle(tester, 20);
+      await tester.drag(
+        find.byType(ExploreScreen),
+        const Offset(0, -900),
+        warnIfMissed: false,
+      );
+      await _settle(tester);
+      expect(_exploreList(tester).pixels, greaterThan(0));
+      await tester.tap(find.byKey(const ValueKey('tab-Today')));
+      await _settle(tester, 20);
+
       await _readFive(tester);
-      expect(find.text(_en.tabExplore), findsWidgets);
-      await tester.tap(_explore);
+      await _settle(tester);
+      expect(find.text(_en.fiveTitle), findsOneWidget, reason: 'its name');
+      await tester.tap(_challenge);
       await _settle(tester, 20);
       expect(_celebration, findsNothing);
-      expect(said.of('first day explore tapped'), hasLength(1));
-      expect(said.of('first day closed').single['left_by'], 'explore');
+      expect(said.of('first day challenge tapped'), hasLength(1));
+      expect(said.of('first day closed').single['left_by'], 'challenge');
       expect(
         said.of('tab opened').last,
         {'tab': 'explore', 'by': 'first day'},
       );
       expect(find.byType(ExploreScreen), findsOneWidget);
+      expect(_exploreList(tester).pixels, 0, reason: 'at its top');
+      // The challenge, there to be played: its name, as its head sets it,
+      // and its first card.
+      expect(
+        find
+            .descendant(
+              of: find.byType(ExploreScreen),
+              matching: find.text(_en.fiveTitle.toUpperCase()),
+            )
+            .hitTestable(),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('three-step-0')).hitTestable(),
+        findsOneWidget,
+      );
       expect(_offer, findsNothing, reason: 'Today is not in front');
 
       // Back on Today: the card after the fifth, still to be thrown.
@@ -818,9 +859,9 @@ void main() {
       );
       // The date, as the day's: in capitals.
       expect(_textOf(tester, 'first-day-date'), contains(RegExp('[A-Z]')));
-      // No how-sure, no reminder offered: Explore alone.
+      // No reminder offered: Today's challenge alone.
       expect(_remind, findsNothing);
-      expect(find.text('Esplora'), findsOneWidget);
+      expect(find.text('La sfida di oggi'), findsOneWidget);
       await tester.pumpWidget(const SizedBox());
     });
 
@@ -980,7 +1021,7 @@ void main() {
                     host: FirstDayHost(
                       mayRemind: () => true,
                       remind: () async => '21:45',
-                      explore: () {},
+                      challenge: () {},
                     ),
                   ),
                 ),
@@ -994,7 +1035,7 @@ void main() {
           expect(tester.takeException(), isNull, reason: why);
           final AppLocalizations l = lookupAppLocalizations(Locale(language));
           expect(find.text(l.firstDayTitle), findsOneWidget, reason: why);
-          for (final Finder button in [_remind, _explore, _close]) {
+          for (final Finder button in [_remind, _challenge, _close]) {
             expect(button.hitTestable(), findsOneWidget, reason: why);
           }
           // Asked and set: the time where the button was, whole.

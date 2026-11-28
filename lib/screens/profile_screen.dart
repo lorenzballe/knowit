@@ -1807,10 +1807,10 @@ class _DebugLooksPanel extends StatelessWidget {
                 Text(
                   'Celebration: after a reader\'s first five, a screen of its '
                   'own first — the streak, the points, how sure against how '
-                  'right — with Remind me tomorrow and Explore; the card '
-                  'that offers Astute+ after it. As before: that card at '
-                  'once. Celebration ships. Wipe to see it again, or open '
-                  'the preview below.',
+                  'right — with Remind me tomorrow and Today\'s challenge; '
+                  'the card that offers Astute+ after it. As before: that '
+                  'card at once. Celebration ships. Wipe to see it again, '
+                  'or open the preview below.',
                   style: AppText.body(
                     size: 12,
                     height: 1.35,

@@ -5,8 +5,9 @@
 // * as it ships, celebrated: the celebration with the cards' how-sure
 //   answers (after-dark-1, after-light-1) and without them (after-dark-1b,
 //   after-light-1b); the reminder sheet risen from it (-2); the time set,
-//   in the button's place (-3); and the card that offers Astute+, there
-//   once it has gone (-4);
+//   in the button's place (-3); the card that offers Astute+, there once
+//   it has gone (-4); and Explore at its top, where Today's challenge
+//   takes the reader (-5);
 // * as it was before, the developer tools' look: the card that offers
 //   Astute+ at once (before-dark-1, before-light-1), the shelf once it is
 //   thrown (-2), the reminder sheet over the shelf (-3);
@@ -248,6 +249,18 @@ void main() {
       await leave(tester);
     });
 
+    // Today's challenge, from the celebration: Explore at its top.
+    testWidgets('after-$theme-challenge', (tester) async {
+      await open(tester, theme: theme);
+      await fling(tester);
+      await settle(tester, frames: 36);
+      await tester.tap(find.byKey(const ValueKey('first-day-challenge')));
+      await settle(tester, frames: 24);
+      expect(find.byKey(const ValueKey('first-day')), findsNothing);
+      await shoot('after-$theme-5');
+      await leave(tester);
+    });
+
     testWidgets('before-$theme', (tester) async {
       await open(tester, theme: theme, asBefore: true);
       await fling(tester);
@@ -257,7 +270,7 @@ void main() {
       await shoot('before-$theme-1');
       await fling(tester);
       // The shelf landed, before the sheet's beat is over.
-      await settle(tester, frames: 9);
+      await settle(tester, frames: 15);
       await shoot('before-$theme-2');
       await settle(tester, frames: 40);
       expect(find.byKey(const ValueKey('reminder-ask')), findsOneWidget);

@@ -441,8 +441,8 @@ used to end on the sale: the card after the fifth at once, and then, on the
 first evenings the server's experiment asks on (`push.firstAsk`, all of them
 now), the reminder sheet over the shelf. An analysis of the first day
 concluded, and the owner agreed, that it is celebrated first: the streak,
-the points and how sure against how right, then the reminder and Explore;
-the sale after it, never instead (`lib/widgets/first_day.dart`).
+the points and how sure against how right, then the reminder and the way
+on; the sale after it, never instead (`lib/widgets/first_day.dart`).
 
 The first time a reader with no day finished before finishes one, in this
 sitting, a screen of its own rises right after the fifth card is thrown,
@@ -463,8 +463,10 @@ and nothing falls from the sky: the lines rise into place one after
 another, and for a reader who asked for less motion everything is where it
 ends.
 
-At its foot "Remind me tomorrow", and Explore; the way out quietly in the
-corner, as on a level reached. The button raises the reminder sheet down
+At its foot "Remind me tomorrow", and Today's challenge, the five questions
+everyone gets that day at the top of Explore: the part of the app a new
+reader most wants to send a friend, which the day's end never used to lead
+to. The way out quietly in the corner, as on a level reached. The button raises the reminder sheet down
 the shell's own road (`_offerReminder`, main.dart, with `from:
 celebration`): the same sheet and the same system prompt behind it as at the
 end of any day, asked once and counted once, and the time chosen takes the
@@ -474,8 +476,10 @@ the nudge on, `AppState.shouldAskForPush` — and never where the phone
 already lets the app notify. The celebration is that evening's ask: used or
 passed over, the shell puts no sheet of its own that evening
 (`AppState.celebratedToday`), and a reader who passed it over is asked on a
-later evening, as ever, with nothing spent. Explore closes it onto the
-Explore tab, the card after the fifth still on Today's table.
+later evening, as ever, with nothing spent. Today's challenge closes it
+onto Explore, put back the way the tab opens (every subject, no search, at
+its top, `showBest`), where the challenge is the first thing; the card
+after the fifth stays on Today's table.
 
 After it, on the free plan, the card after the fifth, as it always was;
 with Astute+, the shelf. A friend's week given on that first day (*Invita
