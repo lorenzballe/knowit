@@ -1,0 +1,88 @@
+{
+ "format": 1,
+ "book": "business-adventures",
+ "title": "Business Adventures",
+ "author": "John Brooks",
+ "year": 1969,
+ "language": "en",
+ "words": 2196,
+ "minutes": 15,
+ "parts": [
+  {
+   "title": "Twelve stories from Wall Street",
+   "text": [
+    "John Brooks wrote about business for The New Yorker, and Business Adventures collects twelve of his long articles from the 1960s. Each takes one episode, a stock market panic, a failed car, a lawsuit over a spacesuit engineer, and follows the people inside it. The book went out of print, and might have been forgotten, until Bill Gates wrote in 2014 that it was the best business book he had ever read.",
+    "Gates had the recommendation from Warren Buffett. Soon after they met in 1991, Gates asked Buffett for his favourite book about business, and Buffett named this one and lent him his own copy. What Gates admired was that Brooks writes about human nature, which changes far more slowly than the companies and markets in his stories. The details have dated, and the behaviour has not.",
+    "Brooks writes like a reporter with a novelist's eye. He talked to executives and clerks alike, read the court transcripts and the company memos, and let the contradictions show. He is fair to the people he writes about, and often quietly funny about them. What follows are seven of his twelve stories, chosen because each still teaches something.",
+    "The first is about the stock market itself. Brooks opens it with a remark attributed to the financier J. P. Morgan. Asked what the market was going to do, Morgan is supposed to have answered that it would fluctuate. The rest of the story shows what that fluctuation looks like up close."
+   ]
+  },
+  {
+   "title": "The little crash of 1962",
+   "text": [
+    "On Monday, 28 May 1962, the New York stock market had its steepest fall in points since the crash of 1929. There was no single piece of bad news. Prices had been sliding for weeks, and on that day selling fed on itself. So many orders came in that the ticker, the machine that printed prices for brokers across the country, fell far behind, so investors were selling on prices that were already out of date. Not knowing the true price frightened people into selling more.",
+    "The next day, on enormous volume, the market turned and rose almost as dramatically as it had fallen. Brooks reconstructs both days from the floor of the exchange and from brokerage offices, where clerks worked through the night to keep up with the paperwork. He follows the brokers and the floor specialists who had to keep trading through it, whatever they felt.",
+    "The episode looked at the time like a warning of a depression, and it turned out to be nothing of the kind. Brooks's interest is in what it revealed. Markets in 1962 were supposed to be much safer than in 1929, because of new rules on borrowing to buy shares and new government oversight. Those rules did help. But the panic showed that the deepest cause of a crash, a crowd of people afraid of being the last to sell, had not been regulated away.",
+    "His lesson is a modest one, and it has aged well. The market is made of people, and on its worst days it behaves like them. A system for buying and selling is only as calm as those using it, and information that arrives late is a source of fear in its own right."
+   ]
+  },
+  {
+   "title": "The fate of the Edsel",
+   "text": [
+    "In September 1957 the Ford Motor Company launched a new car with enormous fanfare. Ford had spent heavily on market research to find out what buyers wanted their car to say about them. The Edsel was meant to be a medium-priced car for the growing number of families who were moving up from a Ford but were not ready for a Lincoln.",
+    "Brooks enjoys the story of its name. Ford's researchers wrote to the poet Marianne Moore asking for suggestions that would convey speed and elegance. She sent a series of extraordinary names, among them the Utopian Turtletop and the Mongoose Civique, all of which were politely declined. In the end, after thousands of candidates had been considered, the car was named after Edsel Ford, Henry Ford's only son, although the family had been reluctant.",
+    "The car was a failure. Its styling, especially the upright oval grille, drew jokes. Early cars had mechanical faults. Worse, the timing was wrong: the Edsel arrived as a recession began, and as buyers started turning toward smaller, cheaper cars. Sales fell far short of what Ford had planned, and in November 1959 the company stopped making it. Ford lost hundreds of millions of dollars.",
+    "Brooks resists the easy moral. He notes that the Edsel was the most researched car of its day, and that all the research about images and motives could not tell Ford that the market would change before the car arrived. The time between deciding on a product and putting it on sale is long, and the world does not wait. Planning gives a company confidence, but confidence about the future is a different thing from knowledge of it."
+   ]
+  },
+  {
+   "title": "The copier nobody wanted",
+   "text": [
+    "In October 1938, in a rented room in Astoria, Queens, a patent attorney named Chester Carlson made the first copy by a new process. He and an assistant charged a plate with static electricity, exposed it to an image, dusted it with powder and pressed it onto paper. The first copy read 10-22-38 Astoria. Carlson spent his evenings on the invention because his job involved endless copying of documents, and he had poor eyesight and arthritis.",
+    "For years almost no one was interested. Carlson took the idea to more than twenty companies, among them some of the biggest in America, and all of them turned it down. In 1944 a nonprofit research institute in Ohio, Battelle, agreed to develop it, and in 1947 a small photographic paper company in Rochester, the Haloid Company, bought the rights. A classics professor coined a name from the Greek for dry writing: xerography.",
+    "Haloid spent more than a decade, and much more money than it could comfortably afford, before it had a machine that could copy onto plain paper at the push of a button. The Xerox 914 went on sale at the end of the 1950s and changed office work almost overnight. Haloid renamed itself Xerox, and people who had bought its shares early became rich. Carlson himself became very wealthy and gave much of his fortune away.",
+    "Brooks is most interested in the company's chief executive, Joseph Wilson, who believed a corporation had obligations beyond profit. In 1964 Xerox paid for a series of television programmes about the United Nations. An organised letter campaign by opponents of the United Nations urged it to cancel, and the company went ahead anyway. Brooks also notes the other side of the invention: once copying became cheap, authors and publishers began to worry about copyright."
+   ]
+  },
+  {
+   "title": "A rich hole in Ontario",
+   "text": [
+    "In November 1963 the Texas Gulf Sulphur Company drilled a test hole near Timmins, in Ontario, and pulled up a core of rock unusually rich in copper and zinc. The company kept the result secret while it bought up the land around it, which was legal and sensible. Meanwhile several of its officers and employees, geologists among them, bought shares and options in the company, at prices that did not yet reflect the find.",
+    "Rumours spread anyway. In April 1964 the company issued a press release describing the rumours as exaggerated and the drilling as inconclusive. Four days later it announced a major strike. Some insiders bought shares in the minutes after the announcement was read to reporters, before the news had reached the wider public.",
+    "The Securities and Exchange Commission sued, and the case became a landmark of American law on insider trading. The courts ruled that people with important information that the public does not have must either disclose it or refrain from trading on it. They also took up the question that gives Brooks's chapter its title: how long must an insider wait after news is announced? The answer was a reasonable amount of time, long enough for the information to spread, and an insider placing an order as the announcement was being made had not waited long enough.",
+    "Brooks is careful to show how ordinary the people involved were. Several thought they were doing nothing wrong, since buying shares in your own company had long been considered a sign of faith in it. The case changed that understanding, and it is part of why the rules on what insiders may do are as strict as they are today."
+   ]
+  },
+  {
+   "title": "The conspiracy at General Electric",
+   "text": [
+    "In 1961 several of the largest electrical equipment makers in the United States, General Electric and Westinghouse among them, were found guilty of fixing prices on heavy equipment such as turbines and transformers. Executives met in hotel rooms under code names and agreed in secret which company would win each contract, and at what price. Several of them went to prison, a rare punishment for business executives at the time.",
+    "What fascinates Brooks is that General Electric had an explicit written policy against exactly this. The rule, known inside the company as Directive 20.5, required employees to obey the antitrust laws. Yet many managers testified before a Senate subcommittee that they had understood the policy to be a formality. Some described being handed the policy in a way that made clear it was not meant seriously. Others said they had been pushed to meet targets that could only be met by fixing prices.",
+    "The company's leaders said they had known nothing, and Brooks takes the claim seriously. His chapter is about communication. Orders passed down through layers of management, and each layer heard in them what it expected to hear. A clear instruction could be understood as its opposite, depending on the tone in which it was given and the pressure behind it.",
+    "Gates singled out this story as one of the reasons the book has lasted. Every large organisation has written rules and unwritten ones, and people learn the unwritten ones from what their managers do and reward. When the two disagree, the written rule tends to lose."
+   ]
+  },
+  {
+   "title": "The last great corner",
+   "text": [
+    "Clarence Saunders founded Piggly Wiggly in Memphis in 1916, the first grocery chain where shoppers took goods from the shelves themselves instead of asking a clerk. It was a great success, and Saunders, a flamboyant self-made man, became rich and began building a vast pink marble mansion. In 1922, when some stores using the Piggly Wiggly name in the north failed, speculators began to sell its shares short, betting the price would fall.",
+    "Saunders decided to fight them. With money borrowed from banks, he bought up almost every share that was available to trade, which forced the price up. Short sellers had borrowed shares and promised to deliver them later. Now there were almost none to buy, and Saunders held them. In March 1923 he demanded delivery, intending to make them pay whatever he asked. It was a corner, the oldest trap on Wall Street.",
+    "Then the New York Stock Exchange intervened. It suspended trading in Piggly Wiggly and gave the short sellers extra time to find shares to deliver, effectively changing the rules in the middle of the game. Saunders, left holding a mountain of shares bought with borrowed money, could not repay his debts. He lost control of Piggly Wiggly, and his unfinished mansion. It later became a museum.",
+    "Brooks calls it the last great corner, the end of an era when one daring individual could take on the market in this way. He tells it with sympathy for Saunders, who was reckless and was also, in his own eyes, defending his company against people betting on its failure. Saunders tried several times to rebuild his fortune with new kinds of stores and never quite managed it."
+   ]
+  },
+  {
+   "title": "Saving the pound",
+   "text": [
+    "The last story is about cooperation. In the autumn of 1964, soon after a new Labour government came to power in Britain, traders began selling pounds on a huge scale, expecting the currency to be devalued. Under the system of fixed exchange rates, the Bank of England had to buy pounds with its reserves of dollars and gold to hold the price, and those reserves were draining fast.",
+    "Brooks tells the story largely from the Federal Reserve Bank of New York, and from Charles Coombs, the official in charge of its dealings in foreign currencies. In a single day in November 1964, Coombs and his colleagues around the world assembled about three billion dollars in credit for Britain from the central banks of the United States and other countries. The speculators, faced with that much money, backed off, and the pound survived.",
+    "Brooks writes about these central bankers as people under pressure, working the telephones across time zones through the night, and depending on trust built over years of meetings. Their success showed that the institutions of international money, so often described as cold machinery, depend on personal relationships. The rescue only postponed the problem: Britain devalued the pound in 1967.",
+    "Taken together, the stories make one argument about business. Markets panic, plans fail, rules are winked at and rescues hinge on trust, because businesses are made of people. Brooks never states it as a principle. He simply shows people at work, and it is that patient attention to human nature, Gates suggests, that keeps the book useful decades after its examples have grown old."
+   ]
+  }
+ ],
+ "sources": [
+  "John Brooks, Business Adventures: Twelve Classic Tales from the World of Wall Street (Open Road Media, 2014), ISBN 9781497644892, https://openlibrary.org/isbn/9781497644892",
+  "Bill Gates, The best business book I've ever read, GatesNotes, 2014, https://www.gatesnotes.com/Business-Adventures"
+ ]
+}

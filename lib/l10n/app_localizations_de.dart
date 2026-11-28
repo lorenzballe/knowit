@@ -1911,13 +1911,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'Die fünf von heute';
+  String get fiveTitle => 'Herausforderung des Tages';
 
   @override
   String get fiveSame => 'Heute dieselben fünf für alle. Etwa zwei Minuten.';
 
   @override
-  String get fiveDone => 'Die fünf von heute · fertig';
+  String get fiveDone => 'Herausforderung des Tages · geschafft';
 
   @override
   String dailyOf(int max) {
@@ -2006,7 +2006,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · Die fünf von heute · $date';
+    return 'Astute · Herausforderung des Tages · $date';
   }
 
   @override
@@ -2020,7 +2020,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Die fünf von heute auf Astute: dieselben fünf Fragen für alle. Wie viele schaffst du?';
+      'Die Herausforderung des Tages auf Astute: dieselben fünf Fragen für alle. Wie viele schaffst du?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -6467,7 +6467,7 @@ class AppLocalizationsDe extends AppLocalizations {
       one: '1 Punkt daneben',
       zero: 'genau getroffen',
     );
-    return 'Die heutige Herausforderung bei Astute: $_temp0. Schaffst du es besser?';
+    return 'Die Wette des Tages bei Astute: $_temp0. Schaffst du es besser?';
   }
 
   @override
@@ -7339,6 +7339,119 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get listenNextCard => 'Nächste Karte';
+
+  @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'In $minutes Minuten lesen',
+      one: 'In 1 Minute lesen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => 'Weiterlesen';
+
+  @override
+  String get summaryAgain => 'Noch einmal lesen';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return 'Teil $part von $of';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'noch $n Min.',
+      one: 'noch 1 Min.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return 'Anhören · $minutes Min.';
+  }
+
+  @override
+  String get summaryPause => 'Pause';
+
+  @override
+  String get summaryResume => 'Weiter anhören';
+
+  @override
+  String get summaryFreeNote =>
+      'Der erste Teil ist kostenlos, der Rest gehört zu Astute+.';
+
+  @override
+  String get summaryTitle => 'Die Zusammenfassung';
+
+  @override
+  String get summaryNowPlaying => 'Läuft gerade';
+
+  @override
+  String get summaryNextPart => 'Nächster Teil';
+
+  @override
+  String get summaryFinish => 'Abschließen';
+
+  @override
+  String get summaryContents => 'Inhalt';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return 'Du hast $title gelesen';
+  }
+
+  @override
+  String get summaryDoneLine =>
+      'Die Karten des Buchs helfen, dass seine Ideen bleiben.';
+
+  @override
+  String get summaryToCards => 'Die Ideen als Karten';
+
+  @override
+  String get summaryBackToBook => 'Zurück zum Buch';
+
+  @override
+  String get summaryGateTitle =>
+      'Der Rest dieser Zusammenfassung gehört zu Astute+';
+
+  @override
+  String summaryGateLine(int parts) {
+    return 'Alle $parts Teile zum Lesen und Hören, für jedes Buch. Das Buch der Woche ist für alle kostenlos.';
+  }
+
+  @override
+  String get summaryNeedsNetwork =>
+      'Diese Zusammenfassung braucht einmal Internet.';
+
+  @override
+  String get bookAudioBack => '15 Sekunden zurück';
+
+  @override
+  String get bookAudioWaiting => 'Der nächste Teil kommt gleich…';
+
+  @override
+  String get bookAudioDone => 'Bis zum Ende gehört.';
+
+  @override
+  String get bookAudioOfferTitle => 'Hör den Rest des Buchs';
+
+  @override
+  String get bookAudioOfferLine =>
+      'Mit Astute+ wird dir jede Zusammenfassung ganz vorgelesen, auch bei gesperrtem Bildschirm.';
+
+  @override
+  String get bookAudioStop => 'Wiedergabe beenden';
+
+  @override
+  String get bookAudioOpen => 'Player öffnen';
 
   @override
   String get inviteSection => 'Freunde';

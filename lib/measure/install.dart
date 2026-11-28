@@ -45,10 +45,13 @@ String installChannelFor({
 }
 
 /// Whether [channel] is a device that is not a reader at all: a developer's
-/// build, or a robot. PostHog's own "internal and test users" filter is
-/// told so through the profile (`$internal_or_test_user`).
+/// build, a robot, or an iPhone on TestFlight, which is a tester's or the
+/// copy App Review installs (no reader has an iPhone build any other way
+/// until the App Store has one). PostHog's own "internal and test users"
+/// filter is told so through the profile (`$internal_or_test_user`), so the
+/// charts can leave out the phones that were almost all of their data.
 bool isTestChannel(String channel) =>
-    channel == 'test_lab' || channel == 'debug';
+    channel == 'test_lab' || channel == 'debug' || channel == 'testflight';
 
 /// How long an Android phone is given to say where the app came from. It
 /// answers from what it already holds, so this only bounds a phone that

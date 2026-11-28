@@ -1259,6 +1259,91 @@ switch `listen` (docs/REMOTE.md) is off in the build and in
 `listen started`, `listen card heard`, `listen finished` and `listen
 stopped` (docs/TRACKING.md).
 
+## Books, read and heard
+
+The day's cards are made to be looked at, and read aloud they lose what
+makes them cards, so Listen stays off. A book is different: people read
+fifteen minutes of one on the page, and listen to it walking or driving.
+So a book of Books in pills has a longer way in beside its cards: its
+summary, the real argument and the real examples of the book, about 2,200
+words in five to eight parts, each with a title, in the cards' plain voice
+(`tool/cards/summaries/<book>.json`, held to its rules by
+`tool/cards/summaries.py`: the lengths, the edition its cards' cover is of
+named first in its sources, short quotations, no dash joining two clauses,
+no "it's not X, it's Y", none of the stock phrases). Five ship: the week's
+free book when they were written, The Structure of Scientific Revolutions,
+then the founders' most-recommended picks, Sapiens, Guns, Germs, and Steel,
+Influence and Business Adventures. The bundler publishes each as a file of
+its own, `web/cards/summaries/<book>.json`, named in the bank by the hash
+of its bytes, and builds them into the app
+(`lib/data/embedded_summaries.dart`), so the five open on a phone that has
+never been online; a summary added or revised later is fetched when its
+book is opened, and kept.
+
+**Read.** The book's page opens on "Read in 15 minutes" (the minutes are the
+summary's own, at 150 words a minute), then "Listen", then the summary's
+parts in order, each read, still to read or for Astute+; its cards follow,
+as they were. The reader (`lib/books/summary_reader.dart`) is a page of a
+book: a bar with the title and the contents, a stroke a part that fills as
+the reader goes, and a part to a page, its place in the book, its title,
+its paragraphs in Figtree at 17.5 points with room between the lines, and
+at its foot the next part's title. A swipe turns the page. Where the reader
+stopped, and how far down, is kept on the phone (`SummaryShelf`), and the
+next opening goes straight back there; the last page is the book read, and
+its cards offered to make its ideas stay.
+
+**Heard.** The same page reads the summary aloud (`lib/books/`): each part
+is one clip, its title and then its paragraphs, asked of the server one
+ahead of the voice and played through Listen's own queue (just_audio,
+speech, the `audio` background mode), so it goes on with the screen locked.
+The player is a sheet over the page: the parts, the one being read lit,
+a stroke a part that fills as each is heard, the minutes left, back fifteen
+seconds, play and pause, on to the next part, and Stop listening. Closed,
+it leaves a small player over every screen, a tap from the whole one and a
+cross from stopping; it steps aside while Today's deck is on the table,
+while a screen of cards is open, and under any sheet, because nothing
+covers a card. A part heard is a part read: the reader opens where the
+voice stopped.
+
+**Who gets what.** The week's free book (worked out on the server exactly
+as the phones work it out, `bookOfTheWeek`, with a day's grace where a
+phone's clock turns the week later) is free to read and to hear, and so is
+the first part of any book. The rest is Astute+, through `requirePlus`
+with the source `book summary` for a part read and `book audio` for a part
+heard; with Astute+ taken there, the reader goes straight on.
+
+**The voice, and what it costs.** ElevenLabs reads it
+(`functions/src/books.ts`, the callable `bookClip`), in Listen's voice,
+Finley, "Articulate Anchor", which a new account can use through the API
+on any paid plan, on **Eleven v4 Turbo**: at $0.04 for a thousand
+characters it costs half of v4, and of the models at that price it is the
+most expressive by ElevenLabs' own account, the real-time twin of v4, where
+Flash, the other, is made for speed. A summary is about
+13,200 characters read aloud, so about **53 cents a book, once**; the five
+together are 66,000 characters, $2.64. Each clip is kept in Storage
+(`books/{hash}.mp3`, indexed in `bookClips/{hash}`) under the hash of its
+words, its voice, its model and its settings: every reader after the first
+hears the same file, a changed summary reads only the parts that changed,
+and two readers asking at once wait for one reading. The book audio keeps
+to its own month, `BOOK_AUDIO_MONTH_CHARS` (120,000 characters) in
+`functions/src/limits.ts`, counted in `bookSpend/{month}`, under the 150,000
+that ElevenLabs' Starter plan ($6 a month, $1 the first) includes on v4
+Turbo; a book is begun only when every part of it still to be read fits in
+what the month has left, so none is left half read. The server reads the
+summary the bank names, from the copies the functions are deployed with
+(`npm run data` copies `web/cards/summaries/`) or, for one revised since,
+from the site, and only when its hash is the one named: the phone sends a
+book and a part, never words.
+
+The key is Listen's, `ELEVENLABS_API_KEY`: without it the function answers
+"not configured" and the app hides listening for the sitting; with a key
+but no credit, the player says calmly that listening is not available right
+now, with the way to try again. The switch `bookAudio` (docs/REMOTE.md) is
+off in the build and in `remote/app.json`: off, the summaries are read and
+not heard. Counted as `summary opened`, `summary part read`, `summary
+finished`, `book audio played`, `book audio finished` and `book audio
+stopped` (docs/TRACKING.md).
+
 ## Liked, saved, and less like this
 
 The heart and the bookmark used to be one gesture doing two jobs. A card
