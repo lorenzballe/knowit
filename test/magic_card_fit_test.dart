@@ -78,4 +78,54 @@ void main() {
       });
     }
   }
+
+  // A true line about the reader's day (lib/widgets/sixth_card.dart), the
+  // longest of them, at twice the text: on the shelf its headline took its
+  // floor on more lines than the card had room for, and the button went
+  // out of the card. The headline now gives way, a size at a time.
+  for (final Locale locale in const [Locale('de'), Locale('ru')]) {
+    for (final Size box in const [Size(268, 330), Size(339, 475)]) {
+      testWidgets('the longest true line at twice the text keeps the button '
+          'in a ${box.width.round()} by ${box.height.round()} card in '
+          '${locale.languageCode}', (tester) async {
+        final AppLocalizations l = lookupAppLocalizations(locale);
+        await tester.pumpWidget(
+          MaterialApp(
+            locale: locale,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme: buildAstutoTheme(Brightness.dark),
+            home: MediaQuery(
+              data: const MediaQueryData(
+                disableAnimations: true,
+                textScaler: TextScaler.linear(2),
+              ),
+              child: Scaffold(
+                body: Center(
+                  child: SizedBox.fromSize(
+                    size: box,
+                    child: MagicCard(
+                      eyebrow: l.plusNameCaps,
+                      headline: l.sixthMisses(2),
+                      line: l.sixthMissesPlus,
+                      action: l.magicUnlock(14),
+                      onAction: () {},
+                      headlineSize: 31,
+                      headlineLines: 5,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+        expect(tester.takeException(), isNull);
+        final Rect card = tester.getRect(find.byType(MagicCard));
+        final Rect button = tester.getRect(find.text(l.magicUnlock(14)));
+        expect(button.bottom, lessThanOrEqualTo(card.bottom));
+        expect(find.text(l.sixthMisses(2)), findsOneWidget);
+      });
+    }
+  }
 }
