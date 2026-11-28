@@ -603,6 +603,7 @@ class AimRows extends StatelessWidget {
     double width,
     TextScaler scaler,
     TextDirection direction,
+    TextStyle base,
   ) {
     final List<String> names = [
       for (final Goal g in Goal.values) goalName(l, g),
@@ -612,7 +613,9 @@ class AimRows extends StatelessWidget {
     ];
     double? name(double room, double least) => _oneSize(
       names,
-      AimRow.nameStyle,
+      // Measured as drawn: the page's own style, its letter spacing
+      // among it, under the row's.
+      (size) => base.merge(AimRow.nameStyle(size)),
       room,
       from: AimRow.largestName,
       least: least,
@@ -621,7 +624,9 @@ class AimRows extends StatelessWidget {
     );
     double? line(double room, double least) => _oneSize(
       lines,
-      AimRow.lineStyle,
+      // Measured as drawn: the page's own style, its letter spacing
+      // among it, under the row's.
+      (size) => base.merge(AimRow.lineStyle(size)),
       room,
       from: AimRow.largestLine,
       least: least,
@@ -651,7 +656,13 @@ class AimRows extends StatelessWidget {
           .putIfAbsent(
             '${Localizations.localeOf(context)} ${box.maxWidth.round()} '
             '${scaler.scale(100).round()}',
-            () => _layout(context.l10n, box.maxWidth, scaler, direction),
+            () => _layout(
+              context.l10n,
+              box.maxWidth,
+              scaler,
+              direction,
+              DefaultTextStyle.of(context).style,
+            ),
           );
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -861,6 +872,7 @@ class AimTiles extends StatelessWidget {
     double width,
     TextScaler scaler,
     TextDirection direction,
+    TextStyle base,
   ) {
     final List<String> names = [
       for (final Goal g in Goal.values) goalName(l, g),
@@ -870,7 +882,9 @@ class AimTiles extends StatelessWidget {
     ];
     double? name(double room, double least) => AimRows._oneSize(
       names,
-      AimTile.nameStyle,
+      // Measured as drawn: the page's own style, its letter spacing
+      // among it, under the row's.
+      (size) => base.merge(AimTile.nameStyle(size)),
       room,
       from: AimTile.largestName,
       least: least,
@@ -879,7 +893,9 @@ class AimTiles extends StatelessWidget {
     );
     double? line(double room, double least) => AimRows._oneSize(
       lines,
-      AimTile.lineStyle,
+      // Measured as drawn: the page's own style, its letter spacing
+      // among it, under the row's.
+      (size) => base.merge(AimTile.lineStyle(size)),
       room,
       from: AimTile.largestLine,
       least: least,
@@ -905,7 +921,13 @@ class AimTiles extends StatelessWidget {
           .putIfAbsent(
             '${Localizations.localeOf(context)} ${box.maxWidth.round()} '
             '${scaler.scale(100).round()}',
-            () => _layout(context.l10n, box.maxWidth, scaler, direction),
+            () => _layout(
+              context.l10n,
+              box.maxWidth,
+              scaler,
+              direction,
+              DefaultTextStyle.of(context).style,
+            ),
           );
       Widget tile(Goal g) => AimTile(
         key: ValueKey('$keyPrefix${g.key}'),
