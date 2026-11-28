@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 import tempfile
@@ -287,6 +288,15 @@ class TheRing(unittest.TestCase):
         self.assertEqual(history["k"], "#9e6d00")
         self.assertEqual(medicine["k"], "#ff3b30")
         self.assertEqual((space["label"], maths["label"]), ("HARD", "DIFFICILE"))
+
+    def test_the_camera_takes_pictures_under_the_editions_the_bundle_names_them_by(self):
+        # thumbs.cjs takes a picture under the hash bundle.py names it by: an edition bumped in one is bumped in both,
+        # or the pictures are never named and every hard card shows its words.
+        camera = (Path(__file__).resolve().parent / "thumbs.cjs").read_text(encoding="utf-8")
+        for name in ("PICTURES", "RINGED"):
+            found = re.search(rf"^const {name} = '(.*)';$", camera, re.M)
+            self.assertIsNotNone(found, name)
+            self.assertEqual(found.group(1).replace("\\n", "\n"), getattr(bundle, name), name)
 
 
 if __name__ == "__main__":

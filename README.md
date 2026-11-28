@@ -1896,7 +1896,8 @@ all three (`node tool/cards/card_check.cjs`, then `HARD=1` and `HARD=day`).
 Its pictures are taken ringed too (`tool/cards/thumbs.cjs`, the colours
 from `tool/cards/hard_env.cjs`), at night and on the day paper, beside the
 ones of the card as it was, and named with a hash of their own
-(`bundle.py`, `RINGED`, bumped when the ring's look changes): the finished
+(`RINGED`, in `bundle.py` and `thumbs.cjs` alike, bumped in both when the
+ring's look changes; `test_pages.py` holds them together): the finished
 day's shelf, Saved, the archive and a card's page show the one for the
 reader's paper inside the ring (Explore shows its cards in words), and a
 hard card with none taken yet in words, ringed; the picture of the day sent
