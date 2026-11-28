@@ -647,7 +647,15 @@ void main() {
     ) async {
       _switch();
       SharedPreferences.setMockInitialValues(
-        _reader(left: 2, more: {'knowit.plus': true}),
+        // The week's own moment (lib/widgets/streak_moment.dart) told
+        // already: what is watched here is the first week's page alone.
+        _reader(
+          left: 2,
+          more: {
+            'knowit.plus': true,
+            'knowit.streakTold': ['7'],
+          },
+        ),
       );
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);

@@ -1008,9 +1008,11 @@ class AppState extends ChangeNotifier {
   bool get streakWasFrozen => frozeOn == dateKey(today);
 
   /// The streaks that rise once, small, when they are reached
-  /// (lib/widgets/streak_moment.dart): the second day, the third and the
-  /// seventh. The first day's own moment is the end of the first five.
-  static const Set<int> kStreakMoments = {2, 3, 7};
+  /// (lib/widgets/streak_moment.dart): the seventh, a week. The first day's
+  /// own moment is the end of the first five, and the second and third
+  /// evenings have their own asks (the reminder, the place, Which parts),
+  /// which a moment of the streak would take the evening from.
+  static const Set<int> kStreakMoments = {7};
 
   /// Whether the streak just reached one of [kStreakMoments] with today's
   /// five, and its moment has not risen on this phone (`streak.told`).

@@ -29,6 +29,16 @@ import '../theme.dart';
 /// rose.
 Future<bool> showStreakMomentIfDue(BuildContext context, AppState app) async {
   if (!app.streakMomentDue || app.firstOfferRoseToday) return false;
+  // The shell's own asks at the finished day (the reminder, the place, the
+  // rating, the widget, the account) have the evening first: the week is
+  // said on the shelf all the same, and the moment never takes their place.
+  if (app.shouldAskForPush ||
+      app.shouldAskForPlace ||
+      app.shouldAskForReview ||
+      app.shouldAskForWidget ||
+      app.shouldOfferAccount) {
+    return false;
+  }
   if (!(ModalRoute.of(context)?.isCurrent ?? true)) return false;
   final int days = app.liveStreak;
   final int freezes = app.freezes;

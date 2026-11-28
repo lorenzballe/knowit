@@ -238,8 +238,8 @@ void main() {
   });
 
   group('the streak told', () {
-    test('a streak of two, three or seven reached today is due its moment, '
-        'once; one, four or eight never', () async {
+    test('a week reached today is due its moment, once; one, two, three, '
+        'four or eight never', () async {
       for (final int n in [1, 2, 3, 4, 7, 8]) {
         final AppState app = await _open(DateTime(2026, 11, 28, 21), {
           'knowit.onboarded': true,
@@ -273,7 +273,7 @@ void main() {
       () async {
         final AppState open = await _open(DateTime(2026, 11, 28, 9), {
           'knowit.onboarded': true,
-          'knowit.streak': 2,
+          'knowit.streak': 7,
           'knowit.lastCompletionDate': '2026-11-27',
           'knowit.completedDates': ['2026-11-26', '2026-11-27'],
         });
@@ -283,7 +283,7 @@ void main() {
         });
         final AppState off = await _open(DateTime(2026, 11, 28, 21), {
           'knowit.onboarded': true,
-          'knowit.streak': 2,
+          'knowit.streak': 7,
           'knowit.lastCompletionDate': '2026-11-28',
           'knowit.completedDates': ['2026-11-27', '2026-11-28'],
         });
