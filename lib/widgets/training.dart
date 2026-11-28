@@ -19,17 +19,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
+import '../data/learn_reading.dart' show SkillTally, skillTallies;
 import '../data/skill_scores.dart';
 import '../data/skills.dart';
 import '../l10n/l10n.dart';
 import '../screens/skills_screen.dart';
 import '../state/app_state.dart';
+import '../state/debug_looks.dart';
 import '../theme.dart';
 import 'chunky.dart';
 import 'count_since.dart';
 import 'fit_text.dart';
 import 'level_up.dart' show LevelLine;
 import 'skill_score.dart';
+import 'skills_sheet.dart' show SkillsReading, showSkillsSheet;
 import 'ui.dart' show Eyebrow;
 
 /// The skills [app]'s reader picked, in the order they picked them, that
@@ -436,6 +439,10 @@ class TrainingChapter extends StatelessWidget {
         ],
       ),
     );
+    final List<SkillTally> ranked = [
+      for (final SkillTally t in skillTallies(app))
+        if (t.ranked) t,
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -489,6 +496,15 @@ class TrainingChapter extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+        ],
+        // Under the scores, in the owner's mix, the reading of the answers:
+        // where the reader sees clearly, and their blind spot.
+        if (DebugLooks.learnPicked == LearnLook.mix) ...[
+          const SizedBox(height: 8),
+          SkillsReading(
+            best: ranked.isEmpty ? null : ranked.first,
+            blind: ranked.length > 1 ? ranked.last : null,
           ),
         ],
       ],
@@ -637,7 +653,11 @@ class ProfileTraining extends StatelessWidget {
       child: GestureDetector(
         key: const ValueKey('profile-skills'),
         behavior: HitTestBehavior.opaque,
-        onTap: () => openSkills(context, app, from: 'profile'),
+        // The owner's mix: the skills as they are, behind a tap, in a sheet
+        // like the goal's (lib/widgets/skills_sheet.dart).
+        onTap: () => DebugLooks.learnPicked == LearnLook.mix
+            ? showSkillsSheet(context, app)
+            : openSkills(context, app, from: 'profile'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -670,7 +690,7 @@ class ProfileTraining extends StatelessWidget {
                   Expanded(child: inside),
                   const SizedBox(width: 6),
                   Icon(
-                    Icons.chevron_right_rounded,
+                    Icons.expand_more_rounded,
                     size: 22,
                     color: p.ink.withValues(alpha: 0.4),
                   ),
