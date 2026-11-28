@@ -404,50 +404,61 @@ class PillCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  // The subject's own mark beside its name, as on the shelf
-                  // the card ends the day on: one card, drawn one way. On a
-                  // hard card ringed, both in the ring's colour, and HARD
-                  // after them, as Explore's shelf of the hardest has them.
-                  CardMark(pill: pill, size: 16, ink: _accent ?? pill.ink),
-                  const SizedBox(width: 8),
-                  Text(
-                    context.l10n.subjectOf(pill.topic).toUpperCase(),
-                    style: AppText.label(
-                      size: 11,
-                      spacing: 1.4,
-                      color: _accent ?? pill.ink.withValues(alpha: 0.72),
-                    ),
-                  ),
-                  if (_accent case final Color accent) ...[
-                    const SizedBox(width: 9),
-                    HardTag(accent: accent, ground: pill.color),
-                  ],
-                  if (isReview || isOwn) ...[
-                    const SizedBox(width: 9),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: pill.wash,
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Text(
-                        isReview
-                            ? context.l10n.againChip
-                            : context.l10n.forYouChip,
+              // A narrow card that cannot hold the subject, HARD and the
+              // Again or For you chip all at once (a hard card of the
+              // reader's own, on a small phone) draws them a touch smaller,
+              // never cut and never past its edge.
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // The subject's own mark beside its name, as on the shelf
+                      // the card ends the day on: one card, drawn one way. On a
+                      // hard card ringed, both in the ring's colour, and HARD
+                      // after them, as Explore's shelf of the hardest has them.
+                      CardMark(pill: pill, size: 16, ink: _accent ?? pill.ink),
+                      const SizedBox(width: 8),
+                      Text(
+                        context.l10n.subjectOf(pill.topic).toUpperCase(),
                         style: AppText.label(
-                          size: 9.5,
-                          spacing: 1,
-                          color: pill.ink.withValues(alpha: 0.7),
+                          size: 11,
+                          spacing: 1.4,
+                          color: _accent ?? pill.ink.withValues(alpha: 0.72),
                         ),
                       ),
-                    ),
-                  ],
-                ],
+                      if (_accent case final Color accent) ...[
+                        const SizedBox(width: 9),
+                        HardTag(accent: accent, ground: pill.color),
+                      ],
+                      if (isReview || isOwn) ...[
+                        const SizedBox(width: 9),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 3,
+                          ),
+                          decoration: BoxDecoration(
+                            color: pill.wash,
+                            borderRadius: BorderRadius.circular(999),
+                          ),
+                          child: Text(
+                            isReview
+                                ? context.l10n.againChip
+                                : context.l10n.forYouChip,
+                            style: AppText.label(
+                              size: 9.5,
+                              spacing: 1,
+                              color: pill.ink.withValues(alpha: 0.7),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
               ),
               if (liked || indexLabel != null)
                 Row(

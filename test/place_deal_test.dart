@@ -575,7 +575,7 @@ void main() {
           final Rect line = tester.getRect(
             find.byKey(const ValueKey('place-line')),
           );
-          final Rect face = tester.getRect(find.byType(PillCard));
+          final Rect face = tester.getRect(find.byType(PillCard).first);
           expect(face.contains(line.topLeft), isTrue);
           expect(face.contains(line.bottomRight), isTrue);
         }

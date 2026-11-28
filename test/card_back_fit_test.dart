@@ -231,7 +231,9 @@ void main() {
   /// controls in the corner.
   List<String> collisions(WidgetTester tester) {
     final out = <String>[];
-    final Rect card = tester.getRect(find.byType(PillCard));
+    // A hard card is drawn ringed: the card it is, built again in the ring's
+    // colours inside it (hard_ring.dart). The outer one is the card's edge.
+    final Rect card = tester.getRect(find.byType(PillCard).first);
     final controls = find.descendant(
       of: find.byType(PillCard),
       matching: find.byIcon(Icons.bookmark_border_rounded),
