@@ -2054,7 +2054,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'La sfida di oggi su Astute: le stesse cinque domande per tutti. Quante ne indovini?';
+      'La sfida di oggi su Astute. Quante ne indovini?';
 
   @override
   String threeShareHeadIn(String subject, String date) {

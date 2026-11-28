@@ -1976,8 +1976,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get fiveChallengeAll => 'Astute 오늘의 5문제를 다 맞혔어. 너도 할 수 있어?';
 
   @override
-  String get fiveChallengeInvite =>
-      'Astute 오늘의 챌린지: 모두에게 같은 다섯 문제. 몇 개나 맞힐 수 있어?';
+  String get fiveChallengeInvite => 'Astute 오늘의 챌린지. 몇 개나 맞힐 수 있어?';
 
   @override
   String threeShareHeadIn(String subject, String date) {

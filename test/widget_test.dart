@@ -3292,6 +3292,26 @@ void main() {
       expect(prefs.getStringList('knowit.dislikedIds'), isEmpty);
     });
 
+    testWidgets('less like this goes by itself, and never follows the reader '
+        'to the day\'s end', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      final deck = tester.getRect(find.byType(PillCardStack));
+      await tester.flingFrom(
+        Offset(deck.center.dx, deck.top + 90),
+        const Offset(0, 300),
+        1400,
+      );
+      await _settle(tester);
+      expect(find.text('Less like this'), findsOneWidget);
+      // A snack bar with an action stays until dismissed unless told to go
+      // (Flutter's default): this one is gone after its four seconds.
+      await tester.pump(const Duration(seconds: 5));
+      await _settle(tester);
+      expect(find.text('Less like this'), findsNothing);
+    });
+
     testWidgets('a sideways throw is only a throw', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const AstutoApp());

@@ -446,7 +446,7 @@
   "fiveShareHead": "Astute · Вызов дня · {date}",
   "fiveChallengeLine": "В «Пяти вопросах дня» Astute у меня {right} из 5. Сможешь лучше?",
   "fiveChallengeAll": "В «Пяти вопросах дня» Astute у меня 5 из 5. Повторишь?",
-  "fiveChallengeInvite": "«Вызов дня» в Astute: одни и те же пять вопросов для всех. Сколько ответишь верно?",
+  "fiveChallengeInvite": "«Вызов дня» в Astute. Сколько ответишь верно?",
   "threeShareHeadIn": "Astute · Три вопроса дня · {subject} · {date}",
   "dailyShareScore": "{score} из {max} · день {day}",
   "dailyShareScoreAlone": "{score} из {max}",

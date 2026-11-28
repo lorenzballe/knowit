@@ -446,7 +446,7 @@
   "fiveShareHead": "Astute · Günün meydan okuması · {date}",
   "fiveChallengeLine": "Astute'ta bugünün beşlisinde 5'te {right} yaptım. Beni geçebilir misin?",
   "fiveChallengeAll": "Astute'ta bugünün beşlisinde 5'te 5 yaptım. Sen de yapabilir misin?",
-  "fiveChallengeInvite": "Astute'ta günün meydan okuması: herkese aynı beş soru. Kaçını bilebilirsin?",
+  "fiveChallengeInvite": "Astute'ta günün meydan okuması. Kaçını bilebilirsin?",
   "threeShareHeadIn": "Astute · Bugünün üçlüsü · {subject} · {date}",
   "dailyShareScore": "{score} / {max} · {day}. gün",
   "dailyShareScoreAlone": "{score} / {max}",

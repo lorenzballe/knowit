@@ -446,7 +446,7 @@
   "fiveShareHead": "Astute · La sfida di oggi · {date}",
   "fiveChallengeLine": "Ho indovinato {right} delle cinque di oggi su Astute. Riesci a battermi?",
   "fiveChallengeAll": "Ho indovinato tutte le cinque di oggi su Astute. Riesci a fare lo stesso?",
-  "fiveChallengeInvite": "La sfida di oggi su Astute: le stesse cinque domande per tutti. Quante ne indovini?",
+  "fiveChallengeInvite": "La sfida di oggi su Astute. Quante ne indovini?",
   "threeShareHeadIn": "Astute · Le tre di oggi · {subject} · {date}",
   "dailyShareScore": "{score} su {max} · giorno {day}",
   "dailyShareScoreAlone": "{score} su {max}",

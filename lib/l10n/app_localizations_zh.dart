@@ -1966,7 +1966,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fiveChallengeAll => 'Astute 今日五题，我全部答对。你也能做到吗？';
 
   @override
-  String get fiveChallengeInvite => 'Astute 今日挑战：每个人都是同样的五道题。你能答对几道？';
+  String get fiveChallengeInvite => 'Astute 今日挑战。你能答对几道？';
 
   @override
   String threeShareHeadIn(String subject, String date) {

@@ -2056,7 +2056,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'De uitdaging van vandaag op Astute: voor iedereen dezelfde vijf vragen. Hoeveel heb jij er goed?';
+      'De uitdaging van vandaag op Astute. Hoeveel heb jij er goed?';
 
   @override
   String threeShareHeadIn(String subject, String date) {

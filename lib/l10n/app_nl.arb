@@ -446,7 +446,7 @@
   "fiveShareHead": "Astute · De uitdaging van vandaag · {date}",
   "fiveChallengeLine": "Ik had {right} van de vijf van vandaag goed op Astute. Kun jij het beter?",
   "fiveChallengeAll": "Ik had de vijf van vandaag op Astute allemaal goed. Kun jij dat ook?",
-  "fiveChallengeInvite": "De uitdaging van vandaag op Astute: voor iedereen dezelfde vijf vragen. Hoeveel heb jij er goed?",
+  "fiveChallengeInvite": "De uitdaging van vandaag op Astute. Hoeveel heb jij er goed?",
   "threeShareHeadIn": "Astute · De drie van vandaag · {subject} · {date}",
   "dailyShareScore": "{score} van {max} · dag {day}",
   "dailyShareScoreAlone": "{score} van {max}",

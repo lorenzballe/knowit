@@ -2332,7 +2332,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      '«Вызов дня» в Astute: одни и те же пять вопросов для всех. Сколько ответишь верно?';
+      '«Вызов дня» в Astute. Сколько ответишь верно?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
