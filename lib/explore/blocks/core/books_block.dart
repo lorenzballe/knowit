@@ -18,6 +18,11 @@
 /// everybody, the same for every reader: the book of the week, set apart at
 /// the head of the section. A book read whole is a reason to come back for
 /// the next one; a book stopped at two of five, a reason to see the plans.
+///
+/// A book with a summary has a longer way in too: "Read in 15 minutes" on
+/// its page, the book read whole in five to eight parts, and, behind the
+/// switch `bookAudio`, the same summary read aloud (lib/books/). Its cards
+/// stay as they are, under the summary.
 library;
 
 export '../../../data/books.dart';
@@ -27,11 +32,15 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../../analytics.dart';
+import '../../../books/book_player_view.dart' show bookPlayerRoom;
+import '../../../books/book_player.dart';
+import '../../../books/summary_entry.dart';
 import '../../../data/founders.dart';
 import '../../../data/books.dart';
 import '../../../data/pill_bank.dart';
 import '../../../l10n/l10n.dart';
 import '../../../legal.dart' show openLink;
+import '../../../models/book_summary.dart';
 import '../../../models/pill.dart';
 import '../../../screens/deck_viewer_screen.dart';
 import '../../../state/app_state.dart';
@@ -767,8 +776,10 @@ class BookScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
+    // A book with a summary opens on it; its cards follow, as they were.
+    final SummaryRef? summary = PillBank.summaryOf(book.id);
     return ListenableBuilder(
-      listenable: app,
+      listenable: Listenable.merge([app, BookPlayer.current]),
       builder: (context, _) {
         final bool whole = app.isPlus || book.id == weekly;
         final List<bool> read = [
@@ -800,7 +811,9 @@ class BookScreen extends StatelessWidget {
                 24,
                 4,
                 24,
-                MediaQuery.paddingOf(context).bottom + 28,
+                MediaQuery.paddingOf(context).bottom +
+                    28 +
+                    bookPlayerRoom(context),
               ),
               children: [
                 Center(child: BookCover(book: book, width: 168)),
@@ -854,15 +867,17 @@ class BookScreen extends StatelessWidget {
                   spacing: 8,
                   runSpacing: 6,
                   children: [
-                    Text(
-                      '${l.bookIdeas(book.cards.length)} · '
-                      '${l.bookMinutes(bookMinutes(book))}',
-                      style: AppText.body(
-                        size: 13.5,
-                        weight: FontWeight.w700,
-                        color: p.inkMuted,
+                    // With a summary, each way in says its own minutes.
+                    if (summary == null)
+                      Text(
+                        '${l.bookIdeas(book.cards.length)} · '
+                        '${l.bookMinutes(bookMinutes(book))}',
+                        style: AppText.body(
+                          size: 13.5,
+                          weight: FontWeight.w700,
+                          color: p.inkMuted,
+                        ),
                       ),
-                    ),
                     if (book.id == weekly)
                       _Chip(
                         text: l.bookFreeThisWeek,
@@ -872,22 +887,31 @@ class BookScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 22),
-                SizedBox(
-                  height: 54,
-                  child: FilledButton(
-                    key: const ValueKey('book-go'),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: p.inverse,
-                      foregroundColor: p.onInverse,
-                      shape: const StadiumBorder(),
-                    ),
-                    onPressed: () => _openAt(context, next == -1 ? 0 : next),
-                    child: Text(
-                      go,
-                      style: AppText.body(size: 16, weight: FontWeight.w700),
+                if (summary != null)
+                  SummaryBlock(
+                    key: const ValueKey('book-summary'),
+                    app: app,
+                    book: book,
+                    summaryRef: summary,
+                    weekly: weekly,
+                  )
+                else
+                  SizedBox(
+                    height: 54,
+                    child: FilledButton(
+                      key: const ValueKey('book-go'),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: p.inverse,
+                        foregroundColor: p.onInverse,
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: () => _openAt(context, next == -1 ? 0 : next),
+                      child: Text(
+                        go,
+                        style: AppText.body(size: 16, weight: FontWeight.w700),
+                      ),
                     ),
                   ),
-                ),
                 if (picksOf(book.id) case final List<(Founder, BookPick)> picks
                     when picks.isNotEmpty) ...[
                   const SizedBox(height: 28),
@@ -918,6 +942,41 @@ class BookScreen extends StatelessWidget {
                     color: p.ink.withValues(alpha: 0.5),
                   ),
                 ),
+                // Under a summary, the cards are the short way in: their
+                // minutes, and the button that plays them.
+                if (summary != null) ...[
+                  const SizedBox(height: 6),
+                  Text(
+                    '${l.bookIdeas(book.cards.length)} · '
+                    '${l.bookMinutes(bookMinutes(book))}',
+                    style: AppText.body(
+                      size: 13,
+                      weight: FontWeight.w600,
+                      color: p.inkMuted,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 50,
+                    child: OutlinedButton(
+                      key: const ValueKey('book-go'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: p.ink,
+                        side: BorderSide(color: p.lineStrong, width: 1.2),
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: () => _openAt(context, next == -1 ? 0 : next),
+                      child: Text(
+                        go,
+                        style: AppText.body(
+                          size: 15.5,
+                          weight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                ],
                 const SizedBox(height: 8),
                 for (int i = 0; i < book.cards.length; i++)
                   _IdeaRow(

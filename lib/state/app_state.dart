@@ -17,6 +17,7 @@ import '../data/daily.dart';
 import '../data/first_days.dart';
 import '../data/genres.dart';
 import '../data/local_cards.dart';
+import '../data/book_summaries.dart';
 import '../data/books.dart';
 import '../data/goals.dart';
 import '../data/learn_reading.dart' show withFocusLean;
@@ -217,6 +218,11 @@ class AppState extends ChangeNotifier {
 
   /// Every pill id already read, so later days open on something new.
   Set<String> seenIds = {};
+
+  /// Where the reader is in each book's summary (lib/data/book_summaries.dart):
+  /// the part, how far into it, the parts read or heard. A book's page and
+  /// its reader listen to it.
+  final SummaryShelf summaries = SummaryShelf();
 
   /// Which of today's cards are the reader's own — chosen for them rather
   /// than dealt at random. Two of five on the free plan, and every one of
@@ -526,6 +532,7 @@ class AppState extends ChangeNotifier {
     // And the remote document: what the server last said about the app,
     // before anything reads a part of it.
     Remote.restore(_prefs);
+    summaries.restore(_prefs);
     today = _clock();
 
     // Stored state is read defensively. A value written by an older build,
@@ -2611,6 +2618,23 @@ class AppState extends ChangeNotifier {
   /// Whether Listen is offered on Today, as far as the server's switch goes.
   bool get listenOn => kListenFlag.on(_here);
 
+  /// Books read aloud (`bookAudio`): a book's summary heard from its page, a
+  /// part a clip, played on with the screen locked and kept by a small
+  /// player over every screen (lib/books/). The week's book and the first
+  /// part of any book for everybody, the rest for Astute+. Reading the
+  /// summary needs no switch; this one only adds the voice. Off as built,
+  /// and off in remote/app.json until the owner has added the ElevenLabs
+  /// key and its plan; a server without a key says "not configured", and
+  /// the app hides listening then too.
+  static const RemoteFlag kBookAudioFlag = RemoteFlag(
+    'bookAudio',
+    fallback: false,
+  );
+
+  /// Whether a book's summary can be listened to, as far as the server's
+  /// switch goes.
+  bool get bookAudioOn => kBookAudioFlag.on(_here);
+
   /// Invita un amico (`invite`): in the profile, a link with the reader's
   /// code to send a friend, and "Have a code?" for a friend's; a week of
   /// Astute+ for each of the two once the friend has finished a first day
@@ -3853,6 +3877,7 @@ class AppState extends ChangeNotifier {
     themeMode = ThemeMode.dark;
     MusicSound.load(_prefs);
     seenIds = {};
+    summaries.forget();
     pushAsked = false;
     pushDeferrals = 0;
     pushDeferredOn = null;

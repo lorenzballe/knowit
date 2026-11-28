@@ -1,0 +1,79 @@
+{
+ "format": 1,
+ "book": "the-structure-of-scientific-revolutions",
+ "title": "The Structure of Scientific Revolutions",
+ "author": "Thomas S. Kuhn",
+ "year": 1962,
+ "language": "en",
+ "words": 2180,
+ "minutes": 15,
+ "parts": [
+  {
+   "title": "Science that moves in jumps",
+   "text": [
+    "Thomas Kuhn trained as a physicist. While he was still a graduate student at Harvard, he was drawn into an experimental course that taught physical science to students who were not scientists, and it was his first real encounter with the history of science. Reading the old texts closely unsettled what he believed about how science works. The Structure of Scientific Revolutions, published in 1962, was his attempt to draw a truer picture. It first appeared as a volume of the International Encyclopedia of Unified Science, a series edited by philosophers who saw science as the steady growth of tested knowledge, which is close to the picture the book took apart.",
+    "The picture he wanted to replace is the one in science textbooks. There, knowledge grows by accumulation: each generation adds its facts to the pile and hands on a larger, truer store. Kuhn argues that this is a story told after the fact. Read the record as it happened and you find long quiet stretches in which a field shares one way of working, broken by short upheavals in which that way of working is thrown out and replaced. He called the quiet stretches normal science and the upheavals scientific revolutions.",
+    "The key idea came to him in an unexpected place. Kuhn spent 1958 and 1959 at a centre for the behavioural sciences at Stanford, surrounded by social scientists, and was struck by how openly they disagreed about which problems mattered and which methods were legitimate. Natural scientists seldom argue about such basics. Trying to explain the difference, he arrived at the notion that made the book famous: the paradigm.",
+    "The word has since left the book. People talk about a paradigm shift when a company changes its strategy. Kuhn meant something narrower and stranger, and the argument behind it changed how historians and philosophers talk about science, and how many scientists talk about themselves."
+   ]
+  },
+  {
+   "title": "What a paradigm is",
+   "text": [
+    "Kuhn starts in the time before anyone agrees. In the first half of the eighteenth century, he notes, there were almost as many views of electricity as there were people experimenting with it. One group treated attraction as the basic effect, another gave repulsion equal weight, and others pictured electricity as a fluid running through conductors. Each school explained some of the facts and had to wave others away. In periods like this, Kuhn writes of optics before Newton, every writer had to build the field anew from its foundations.",
+    "Then Benjamin Franklin and his followers offered an account that explained most of the known effects at once, including the puzzling Leyden jar, a glass vessel that could store a charge and give a shock. Freed from arguing about everything, the people who adopted it could study chosen effects in far more detail, and the rival schools faded as their followers went over.",
+    "Kuhn calls achievements of this kind paradigms, and he lists several: Aristotle's Physics, Ptolemy's Almagest, Newton's Principia and Opticks, Franklin's Electricity, Lavoisier's Chemistry and Lyell's Geology. Each did two things. It was impressive enough to draw a lasting group of followers away from competing ways of doing science, and it was open-ended enough to leave them plenty of problems to solve.",
+    "A paradigm includes a theory, and it also sets the example of how good work is done: which questions count, and what an acceptable answer looks like. Students absorb it from textbooks and by solving the problems their teachers solved. That is why a mature science can move so fast. Nobody has to defend first principles in every paper, and researchers can go deep into details that no one would bother with unless they trusted the framework."
+   ]
+  },
+  {
+   "title": "Normal science solves puzzles",
+   "text": [
+    "Most scientists, most of the time, do what Kuhn calls normal science, and he describes it with deliberate plainness as mopping up. Mopping up, he writes, is what occupies most scientists for their entire careers. A paradigm promises that the world works in a certain way, and normal science works out that promise in detail. It measures the quantities the theory says are important, more and more precisely. It builds apparatus to show theory and nature agreeing, like Atwood's machine, designed almost a century after Newton's Principia to show his second law at work. And it extends the theory to cases it has not yet covered.",
+    "Kuhn compares this work to solving puzzles, in the sense of a crossword or a jigsaw. A puzzle is guaranteed to have a solution, and there are rules about what counts as one. The researcher usually knows roughly what the answer should be. The challenge, and the satisfaction, is in finding a way to get there. Normal science, he writes, does not aim at new kinds of fact or theory, and when it succeeds it finds none.",
+    "This has a consequence that sounds unscientific and turns out to be essential. Inside normal science the paradigm itself is not on trial. When a puzzle resists, the failure reflects on the researcher and leaves the theory alone. Kuhn quotes the proverb that it is a poor carpenter who blames his tools.",
+    "He defends this stubbornness. Because the paradigm is not given up easily, scientists are not distracted by every odd result, and the problems that finally do force a change have to cut deep into what the field knows. A community that dropped its framework at the first contrary measurement would never push it far enough to find out exactly where it fails."
+   ]
+  },
+  {
+   "title": "When nature refuses to fit",
+   "text": [
+    "Normal science is not designed to find novelties, and yet it keeps finding them. Kuhn's explanation is that discovery begins with an anomaly: a result the paradigm says should not happen. Only someone who knows precisely what to expect can notice that something is wrong, so the narrow, detailed work of normal science is what makes surprises visible.",
+    "His examples show how untidy discovery is. Ask who discovered oxygen and there is no clean answer. The Swedish chemist Carl Scheele had prepared the gas, though his account appeared later. Joseph Priestley isolated it in 1774 and took it for air with less phlogiston in it, phlogiston being the substance chemists then believed was given off in burning. Antoine Lavoisier saw that it was a new gas, one of the main parts of the atmosphere, and built a new chemistry on it. Discovering something truly new, Kuhn concludes, takes time, and a change in what the discoverers believe.",
+    "X-rays arrived in a similar way. In 1895 Wilhelm Roentgen noticed a screen glowing across his laboratory when nothing should have made it glow. No theory forbade such rays, but they broke expectations so deeply rooted that they were met with surprise and some shock. Lord Kelvin at first called them an elaborate hoax.",
+    "To show why the new is hard to see, Kuhn borrows an experiment by the psychologists Jerome Bruner and Leo Postman. They flashed playing cards at people and slipped in impossible ones, such as a red six of spades or a black four of hearts. At short exposures people saw them as normal cards, without hesitation. With longer looks many grew uneasy, and some became distressed. One said he was no longer sure what a spade looked like. Even when the cards stayed in view far longer than needed for normal ones, more than one in ten of the odd cards went unrecognised. Scientists, Kuhn suggests, see in much the same way: novelty emerges only with difficulty, against a background of expectation."
+   ]
+  },
+  {
+   "title": "Crisis, and why theories survive it",
+   "text": [
+    "A single anomaly rarely brings a paradigm down. Every theory lives with results it cannot explain, and scientists set them aside as problems for later. For decades after Newton, calculations of the moon's motion failed to match one feature astronomers measured, the slow turning of its orbit. Leading mathematicians proposed changing the law of gravity itself. Then Alexis Clairaut found that the fault lay in the mathematics, and Newton's law stood.",
+    "Crisis comes when anomalies pile up and the best people in a field begin to doubt the rules themselves. Kuhn's main example is astronomy before Copernicus. Ptolemy's system of circles upon circles had been adjusted for centuries to follow the planets, and a discrepancy fixed in one place tended to show up in another. By the sixteenth century the result was so complicated that Copernicus compared it to a monster, a figure assembled from hands, feet and a head taken from different bodies.",
+    "Other revolutions also began in crisis. Chemists who believed in phlogiston struggled to explain why metals grew heavier when they were roasted, if burning meant losing something. At the end of the nineteenth century, physicists could not detect the earth's motion through the ether, the medium that was supposed to carry light. Lavoisier's chemistry and Einstein's relativity grew out of those failures.",
+    "Even in crisis, scientists do not simply abandon their paradigm. Kuhn insists that a theory is declared invalid only when a rival is ready to take its place, because to reject one paradigm without putting another in its place would be to stop doing science. Instead the rules loosen. Versions of the theory multiply, and researchers try ideas they would have dismissed in calmer times. As in manufacture, Kuhn writes, retooling is an extravagance kept for the occasion that demands it."
+   ]
+  },
+  {
+   "title": "A different world after the revolution",
+   "text": [
+    "When a new paradigm wins, Kuhn argues, the change goes far deeper than swapping one theory for another. Scientists come to see the world differently. He compares it to the familiar drawing that is a duck one moment and a rabbit the next: what were ducks in the scientist's world before the revolution are rabbits afterwards.",
+    "His examples are among the most memorable in the book. Watching a heavy stone swing on a string, followers of Aristotle saw a body falling with difficulty. Galileo saw a pendulum, a motion that almost repeats itself forever. Within half a century of Copernicus, Western astronomers began to record new stars and other changes in heavens they had believed unchanging. Chinese astronomers, whose ideas about the cosmos allowed for change, had recorded such things for centuries. Priestley went on seeing dephlogisticated air where Lavoisier saw oxygen, and never accepted the new chemistry.",
+    "This is why debates between paradigms are so hard to settle. Each side argues from inside its own framework, and the same words carry different meanings on each side. Mass in Newton's physics is conserved, while in Einstein's it can be converted into energy. Newton's laws can be recovered from Einstein's as a special case only by quietly changing what the terms mean. Kuhn's word for rival traditions like these is incommensurable: there is no neutral measure against which both can be judged.",
+    "A change of allegiance is therefore, in Kuhn's word, a conversion, and no proof can force it. He quotes Max Planck's bleak remark that a new scientific truth triumphs as its opponents eventually die and a generation grows up familiar with it. He also quotes Darwin, who at the end of the Origin of Species placed his hopes in young and rising naturalists. Arguments still matter. A new paradigm wins people over by solving the problems that broke the old one, and sometimes simply by being neater. But no single experiment converts everyone at once."
+   ]
+  },
+  {
+   "title": "Progress without a destination",
+   "text": [
+    "If revolutions are this disruptive, why does science look like a smooth climb? Kuhn's answer is that revolutions become invisible. After each one the textbooks are rewritten, and the history in them is rewritten too, so that earlier scientists seem to have worked on today's problems with today's methods. Students inherit a tidy line of progress, and the questions of the losing side drop out of view.",
+    "Does science progress at all, then? Kuhn says it does, and changes what progress means. A mature science gets steadily better at solving its puzzles, and a new paradigm has to keep most of the problem-solving power of the old one while adding more. What he doubts is that each change brings scientists closer to a final truth about nature. He compares science to evolution as Darwin described it, a process that moves away from primitive beginnings without being drawn toward any goal.",
+    "Critics accused him of making science irrational, a matter of persuasion and fashion, and of using his central word loosely. On the second charge he largely agreed. In a postscript added in 1969 he reports that one sympathetic reader had found paradigm used in at least twenty-two different ways. He split the word in two: the shared beliefs and values of a scientific community, which he called its disciplinary matrix, and the concrete solved problems that students learn from, which he called exemplars.",
+    "To the charge of irrationality he answered that scientists do choose between theories for reasons, such as accuracy of prediction and simplicity. Those values are shared, but they do not point everyone to the same answer at the same moment, which is why a new paradigm spreads person by person until a community has turned.",
+    "Read today, the book describes how any community of experts works. Its shared assumptions are what let it work fast, and they also decide which surprises its members are able to see."
+   ]
+  }
+ ],
+ "sources": [
+  "Thomas S. Kuhn, The Structure of Scientific Revolutions, 50th anniversary edition, with an introductory essay by Ian Hacking (University of Chicago Press, 2012), ISBN 9780226458120, https://openlibrary.org/isbn/9780226458120"
+ ]
+}

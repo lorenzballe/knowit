@@ -6979,6 +6979,112 @@ class AppLocalizationsJa extends AppLocalizations {
   String get listenNextCard => '次のカード';
 
   @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes分で読む',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => '続きを読む';
+
+  @override
+  String get summaryAgain => 'もう一度読む';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return 'パート$part／$of';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '残り$n分',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return '聴く · $minutes分';
+  }
+
+  @override
+  String get summaryPause => '一時停止';
+
+  @override
+  String get summaryResume => '続きを聴く';
+
+  @override
+  String get summaryFreeNote => '最初のパートは無料、残りはAstute+で。';
+
+  @override
+  String get summaryTitle => '要約';
+
+  @override
+  String get summaryNowPlaying => '再生中';
+
+  @override
+  String get summaryNextPart => '次のパート';
+
+  @override
+  String get summaryFinish => '読み終える';
+
+  @override
+  String get summaryContents => '目次';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return '$titleを読み終えました';
+  }
+
+  @override
+  String get summaryDoneLine => 'この本のカードで、アイデアを記憶に残しましょう。';
+
+  @override
+  String get summaryToCards => 'アイデアをカードで';
+
+  @override
+  String get summaryBackToBook => '本に戻る';
+
+  @override
+  String get summaryGateTitle => 'この要約の続きはAstute+で';
+
+  @override
+  String summaryGateLine(int parts) {
+    return 'どの本も全$partsパートを読んで聴けます。今週の本は誰でも無料です。';
+  }
+
+  @override
+  String get summaryNeedsNetwork => 'この要約は一度だけインターネット接続が必要です。';
+
+  @override
+  String get bookAudioBack => '15秒戻る';
+
+  @override
+  String get bookAudioWaiting => '次のパートを準備しています…';
+
+  @override
+  String get bookAudioDone => '最後まで聴きました。';
+
+  @override
+  String get bookAudioOfferTitle => 'この本の続きを聴く';
+
+  @override
+  String get bookAudioOfferLine => 'Astute+なら、どの要約も最後まで読み上げます。画面ロック中も。';
+
+  @override
+  String get bookAudioStop => '再生を停止';
+
+  @override
+  String get bookAudioOpen => 'プレーヤーを開く';
+
+  @override
   String get inviteSection => '友だち';
 
   @override
