@@ -11,6 +11,7 @@ import '../data/topics.dart';
 import 'notes_screen.dart';
 import 'mix_screen.dart';
 import '../analytics.dart';
+import '../books/book_player_view.dart' show bookPlayerRoom;
 import '../cloud.dart';
 import '../debug_flags.dart';
 import '../legal.dart';
@@ -321,12 +322,15 @@ class ProfileScreen extends StatelessWidget {
     // line under the time.
     return UnderStatusBar(
       child: ListView(
-        // The foot clears a glass tab bar the list runs under.
+        // The foot clears a glass tab bar the list runs under, and the
+        // small player while a book plays.
         padding: EdgeInsets.fromLTRB(
           22,
           MediaQuery.paddingOf(context).top + 8,
           22,
-          24 + (barGlass ? MediaQuery.paddingOf(context).bottom : 0),
+          24 +
+              (barGlass ? MediaQuery.paddingOf(context).bottom : 0) +
+              bookPlayerRoom(context),
         ),
         children: [
           // The record, not an identity. This screen used to open with a

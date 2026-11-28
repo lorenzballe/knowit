@@ -122,6 +122,29 @@ export function traitsOf(c: Card): string[] {
   return out;
 }
 
+/**
+ * How the bank names a book's summary (tool/cards/summaries.py, index_of):
+ * the file under the site's cards with the hash of its bytes
+ * (`summaries/<book>.json?v=<hash>`), and how many parts it has.
+ */
+export interface SummaryRef {
+  file: string;
+  parts: number;
+}
+
+/** The bank's summaries, by book: every entry that names a file and its parts. */
+function summaryRefsOf(raw: unknown): Map<string, SummaryRef> {
+  const out = new Map<string, SummaryRef>();
+  if (typeof raw !== 'object' || raw === null) return out;
+  for (const [book, entry] of Object.entries(raw as Record<string, unknown>)) {
+    const e = entry as { file?: unknown; parts?: unknown } | null;
+    if (typeof e?.file === 'string' && e.file.startsWith('summaries/') && typeof e.parts === 'number' && e.parts > 0) {
+      out.set(book, { file: e.file, parts: e.parts });
+    }
+  }
+  return out;
+}
+
 /** A bank: the cards, indexed, and the calendar. */
 export class Bank {
   readonly version: number;
@@ -130,14 +153,24 @@ export class Bank {
   readonly byId: Map<string, Card>;
   readonly editions: Map<number, string>;
   readonly commons: Map<number, string[]>;
+  /** The books whose summary can be read and heard (books.ts), by book. */
+  readonly summaries: Map<string, SummaryRef>;
 
-  constructor(doc: { version: number; built?: string; cards: Card[]; editions?: Record<string, string>; commons?: Record<string, string[]> }) {
+  constructor(doc: {
+    version: number;
+    built?: string;
+    cards: Card[];
+    editions?: Record<string, string>;
+    commons?: Record<string, string[]>;
+    summaries?: unknown;
+  }) {
     this.version = doc.version;
     this.built = doc.built ?? '';
     this.cards = doc.cards;
     this.byId = new Map(doc.cards.map((c) => [c.id, c]));
     this.editions = new Map(Object.entries(doc.editions ?? {}).map(([k, v]) => [Number(k), v]));
     this.commons = new Map(Object.entries(doc.commons ?? {}).map(([k, v]) => [Number(k), v]));
+    this.summaries = summaryRefsOf(doc.summaries);
   }
 
   /**

@@ -11,6 +11,7 @@
   "cardAi": {"default": false},
   "share.challenge": {"default": false},
   "listen": {"default": false},
+  "bookAudio": {"default": false},
   "invite": {"default": false}
  },
  "tunables": {

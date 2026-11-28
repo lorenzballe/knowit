@@ -13,6 +13,7 @@ import 'package:posthog_flutter/posthog_flutter.dart' show PostHogWidget;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'analytics.dart';
+import 'books/book_player_view.dart' show BookPlayerHost, BookPlayerRoom;
 import 'cloud.dart';
 import 'data/pill_bank.dart';
 import 'debug_flags.dart';
@@ -259,7 +260,11 @@ class _AstutoAppState extends State<AstutoApp> {
       theme: buildAstutoTheme(Brightness.light),
       darkTheme: buildAstutoTheme(Brightness.dark),
       themeMode: _app.themeMode,
-      navigatorObservers: [_screens],
+      // The small player over every screen sits above the navigator, so it
+      // opens the whole player through this key, and steps aside under a
+      // sheet or a dialog by the routes it counts (lib/books/).
+      navigatorKey: BookPlayerRoom.navigator,
+      navigatorObservers: [_screens, BookPlayerRoom.routes],
       home: AstutoRoot(app: _app),
       scrollBehavior: const _DragAnywhereScrollBehavior(),
       // Above the navigator, so that nothing the app pushes is ever drawn
@@ -267,7 +272,14 @@ class _AstutoAppState extends State<AstutoApp> {
       // document brings new ones.
       builder: (context, child) => _PhoneFrame(
         child: RemoteWordsScope(
-          child: GateKeeper(app: _app, child: child ?? const SizedBox.shrink()),
+          child: GateKeeper(
+            app: _app,
+            // A book read aloud keeps a small player over every screen.
+            child: BookPlayerHost(
+              app: _app,
+              child: child ?? const SizedBox.shrink(),
+            ),
+          ),
         ),
       ),
     );
@@ -1836,6 +1848,7 @@ class _AstutoShellState extends State<AstutoShell>
     _zoom.currentState?.finish();
     _barSmall.value = false;
     setState(() => _tab = tab);
+    _sayDeck();
     _noteTab(tab, by: by);
     if ((tab - from).abs() == 1 && fromBar) {
       _jump.stop();
@@ -1890,9 +1903,16 @@ class _AstutoShellState extends State<AstutoShell>
     if (page != _tab) {
       _barSmall.value = false;
       setState(() => _tab = page);
+      _sayDeck();
       _noteTab(page, by: 'swipe');
     }
     return false;
+  }
+
+  /// Tells the small player of a book read aloud whether Today's deck is in
+  /// front, where it must not cover a card (lib/books/book_player_view.dart).
+  void _sayDeck() {
+    BookPlayerRoom.todayDeck.value = _tab == 0 && _deckOnTable;
   }
 
   /// The three tabs, by the names their screens go by.
@@ -1925,7 +1945,10 @@ class _AstutoShellState extends State<AstutoShell>
           if (moving != _cardMoving) setState(() => _cardMoving = moving);
         },
         onDeckOnTable: (onTable) {
-          if (onTable != _deckOnTable) setState(() => _deckOnTable = onTable);
+          if (onTable != _deckOnTable) {
+            setState(() => _deckOnTable = onTable);
+            _sayDeck();
+          }
           widget.onDeckOnTable?.call(onTable);
         },
       ),

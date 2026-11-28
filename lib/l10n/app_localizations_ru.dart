@@ -7861,6 +7861,120 @@ class AppLocalizationsRu extends AppLocalizations {
   String get listenNextCard => 'Следующая карточка';
 
   @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'Прочитать за $minutes минуты',
+      many: 'Прочитать за $minutes минут',
+      few: 'Прочитать за $minutes минуты',
+      one: 'Прочитать за $minutes минуту',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => 'Читать дальше';
+
+  @override
+  String get summaryAgain => 'Перечитать';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return 'Часть $part из $of';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'осталось $n мин',
+      many: 'осталось $n мин',
+      few: 'осталось $n мин',
+      one: 'осталась $n мин',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return 'Слушать · $minutes мин';
+  }
+
+  @override
+  String get summaryPause => 'Пауза';
+
+  @override
+  String get summaryResume => 'Слушать дальше';
+
+  @override
+  String get summaryFreeNote => 'Первая часть бесплатно, остальное с Astute+.';
+
+  @override
+  String get summaryTitle => 'Краткий пересказ';
+
+  @override
+  String get summaryNowPlaying => 'Сейчас звучит';
+
+  @override
+  String get summaryNextPart => 'Следующая часть';
+
+  @override
+  String get summaryFinish => 'Завершить';
+
+  @override
+  String get summaryContents => 'Содержание';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return 'Прочитано: $title';
+  }
+
+  @override
+  String get summaryDoneLine => 'Карточки книги помогут запомнить её идеи.';
+
+  @override
+  String get summaryToCards => 'Идеи в карточках';
+
+  @override
+  String get summaryBackToBook => 'Назад к книге';
+
+  @override
+  String get summaryGateTitle => 'Продолжение пересказа доступно с Astute+';
+
+  @override
+  String summaryGateLine(int parts) {
+    return 'Все части ($parts), чтобы читать и слушать, в каждой книге. Книга недели бесплатна для всех.';
+  }
+
+  @override
+  String get summaryNeedsNetwork =>
+      'Для этого пересказа один раз нужен интернет.';
+
+  @override
+  String get bookAudioBack => 'Назад на 15 секунд';
+
+  @override
+  String get bookAudioWaiting => 'Следующая часть уже в пути…';
+
+  @override
+  String get bookAudioDone => 'Прослушано до конца.';
+
+  @override
+  String get bookAudioOfferTitle => 'Дослушай книгу до конца';
+
+  @override
+  String get bookAudioOfferLine =>
+      'С Astute+ каждый пересказ читается целиком, даже при заблокированном экране.';
+
+  @override
+  String get bookAudioStop => 'Остановить';
+
+  @override
+  String get bookAudioOpen => 'Открыть плеер';
+
+  @override
   String get inviteSection => 'Друзья';
 
   @override

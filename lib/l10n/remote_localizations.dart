@@ -6864,6 +6864,121 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('listenNextCard') ?? _base.listenNextCard;
 
   @override
+  String summaryReadIn(int minutes) =>
+      _words.format('summaryReadIn', localeName, {'minutes': minutes}) ??
+      _base.summaryReadIn(minutes);
+
+  @override
+  String get summaryContinue =>
+      _words.text('summaryContinue') ?? _base.summaryContinue;
+
+  @override
+  String get summaryAgain => _words.text('summaryAgain') ?? _base.summaryAgain;
+
+  @override
+  String summaryPartOf(int part, int of) =>
+      _words.format('summaryPartOf', localeName, {'part': part, 'of': of}) ??
+      _base.summaryPartOf(part, of);
+
+  @override
+  String summaryMinutesLeft(int n) =>
+      _words.format('summaryMinutesLeft', localeName, {'n': n}) ??
+      _base.summaryMinutesLeft(n);
+
+  @override
+  String summaryListenFor(int minutes) =>
+      _words.format('summaryListenFor', localeName, {'minutes': minutes}) ??
+      _base.summaryListenFor(minutes);
+
+  @override
+  String get summaryPause => _words.text('summaryPause') ?? _base.summaryPause;
+
+  @override
+  String get summaryResume =>
+      _words.text('summaryResume') ?? _base.summaryResume;
+
+  @override
+  String get summaryFreeNote =>
+      _words.text('summaryFreeNote') ?? _base.summaryFreeNote;
+
+  @override
+  String get summaryTitle => _words.text('summaryTitle') ?? _base.summaryTitle;
+
+  @override
+  String get summaryNowPlaying =>
+      _words.text('summaryNowPlaying') ?? _base.summaryNowPlaying;
+
+  @override
+  String get summaryNextPart =>
+      _words.text('summaryNextPart') ?? _base.summaryNextPart;
+
+  @override
+  String get summaryFinish =>
+      _words.text('summaryFinish') ?? _base.summaryFinish;
+
+  @override
+  String get summaryContents =>
+      _words.text('summaryContents') ?? _base.summaryContents;
+
+  @override
+  String summaryDoneTitle(String title) =>
+      _words.format('summaryDoneTitle', localeName, {'title': title}) ??
+      _base.summaryDoneTitle(title);
+
+  @override
+  String get summaryDoneLine =>
+      _words.text('summaryDoneLine') ?? _base.summaryDoneLine;
+
+  @override
+  String get summaryToCards =>
+      _words.text('summaryToCards') ?? _base.summaryToCards;
+
+  @override
+  String get summaryBackToBook =>
+      _words.text('summaryBackToBook') ?? _base.summaryBackToBook;
+
+  @override
+  String get summaryGateTitle =>
+      _words.text('summaryGateTitle') ?? _base.summaryGateTitle;
+
+  @override
+  String summaryGateLine(int parts) =>
+      _words.format('summaryGateLine', localeName, {'parts': parts}) ??
+      _base.summaryGateLine(parts);
+
+  @override
+  String get summaryNeedsNetwork =>
+      _words.text('summaryNeedsNetwork') ?? _base.summaryNeedsNetwork;
+
+  @override
+  String get bookAudioBack =>
+      _words.text('bookAudioBack') ?? _base.bookAudioBack;
+
+  @override
+  String get bookAudioWaiting =>
+      _words.text('bookAudioWaiting') ?? _base.bookAudioWaiting;
+
+  @override
+  String get bookAudioDone =>
+      _words.text('bookAudioDone') ?? _base.bookAudioDone;
+
+  @override
+  String get bookAudioOfferTitle =>
+      _words.text('bookAudioOfferTitle') ?? _base.bookAudioOfferTitle;
+
+  @override
+  String get bookAudioOfferLine =>
+      _words.text('bookAudioOfferLine') ?? _base.bookAudioOfferLine;
+
+  @override
+  String get bookAudioStop =>
+      _words.text('bookAudioStop') ?? _base.bookAudioStop;
+
+  @override
+  String get bookAudioOpen =>
+      _words.text('bookAudioOpen') ?? _base.bookAudioOpen;
+
+  @override
   String get inviteSection =>
       _words.text('inviteSection') ?? _base.inviteSection;
 
