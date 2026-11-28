@@ -1784,10 +1784,11 @@ class _DebugLooksPanel extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  'Ringed: a hard card, wherever it is read, dark and ringed '
-                  'in its subject\'s colour with HARD on it, as Explore\'s '
-                  'shelf of the hardest draws it; front and back, in words '
-                  'and drawn. As today is how the app ships.',
+                  'Ringed is how the app ships: a hard card, wherever it is '
+                  'read, dark and ringed in its subject\'s colour with HARD '
+                  'on it, as Explore\'s shelf of the hardest draws it; front '
+                  'and back, in words and drawn, and in its pictures. As '
+                  'today: like any other card, as before.',
                   style: AppText.body(
                     size: 12,
                     height: 1.35,
@@ -2405,7 +2406,8 @@ class _SharePicturePicker extends StatelessWidget {
   );
 }
 
-/// As today or ringed, as a hard card wherever it is read (hard_ring.dart).
+/// As today or ringed, as a hard card wherever it is read (hard_ring.dart):
+/// ringed ships.
 class _HardCardsPicker extends StatelessWidget {
   const _HardCardsPicker({required this.look});
 
@@ -2416,14 +2418,14 @@ class _HardCardsPicker extends StatelessWidget {
       pick: HardCardLook.today,
       name: 'As today',
       note: 'like any card',
-      said: 'Hard cards as today',
+      said: 'Hard cards as today, like any card',
       flex: 1,
     ),
     (
       pick: HardCardLook.ringed,
       name: 'Ringed',
-      note: 'dark, HARD',
-      said: 'Hard cards ringed',
+      note: 'dark, HARD, ships',
+      said: 'Hard cards ringed, dark, HARD, ships',
       flex: 1,
     ),
   ];

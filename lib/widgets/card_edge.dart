@@ -65,19 +65,24 @@ List<BoxShadow> cardLift(Palette p, {double depth = 1}) => p.isDark
 
 /// A card's face in [colour], cut from [ground] (the page, unless it lies
 /// on something else) and lifted by [lift] when it stands rather than
-/// lies flat.
+/// lies flat. A hard card read ringed is cut out by its [ring] instead,
+/// [ringWidth] wide (lib/widgets/hard_ring.dart).
 BoxDecoration cardFace(
   BuildContext context,
   Color colour, {
   required double radius,
   double lift = 0,
   Color? ground,
+  Color? ring,
+  double ringWidth = 1.5,
 }) {
   final Palette p = context.p;
   return BoxDecoration(
     color: colour,
     borderRadius: BorderRadius.circular(radius),
-    border: cardHairline(colour, ground ?? p.surface),
+    border: ring != null
+        ? Border.all(color: ring, width: ringWidth)
+        : cardHairline(colour, ground ?? p.surface),
     boxShadow: lift > 0 ? cardLift(p, depth: lift) : null,
   );
 }

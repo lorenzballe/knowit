@@ -19,6 +19,12 @@
 .kit-calm .hint{animation:none}
 #say{font:600 max(1.9cqh,13px)/1.3 var(--body)}
 #say b{font-weight:800}
+/* The drawing in the card's own ink, ground and edge (--k, --c, --edge), so a hard card ringed (env.hard) draws it
+   in the ring's. Its two colours of its own: the words on the inked bar, cream, the ground's when ringed; the red of
+   what was kept, lit up on the night ground. */
+.card{--paper:#fffdf0;--red:#a8281c}
+.kit-hard .card{--paper:var(--c)}
+.kit-hard[data-theme=dark] .card{--red:#ff6a55}
 </style>
 <article class="card" id="card" data-topic="economics" data-kind="Drag to guess · how sure">
   <div class="in">
@@ -38,7 +44,7 @@
 (() => {
   gsap.registerPlugin(Physics2DPlugin, DrawSVGPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), keep = Kit.$('keep'), stage = Kit.$('stage');
-  const INK = '#10100c', RED = '#a8281c', PAPER = '#fffdf0', GD = '#10100c', GROUND = '#FFE600', EDGE = '#9c8d00';
+  const INK = 'var(--k)', RED = 'var(--red)', PAPER = 'var(--paper)', GD = 'var(--k)', GROUND = 'var(--c)', EDGE = 'var(--edge)';
   const MAX = 35, BET = 33.5, BACK = 25, N = 25;
   const FINAL = 'Lights, music and small wins make slots feel generous. Yet the machines kept <b>€8.5 B</b>: only <b>74.6 %</b> came back.';
   let W, H, fs, sf, GY, PT, BW, X1, X2, AX;

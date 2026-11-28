@@ -16,7 +16,7 @@
 #sky canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 #verdict{position:absolute;left:50%;top:50%;font:800 24px/1 var(--display);color:var(--k);white-space:nowrap;pointer-events:none}
 #verdict.pulse{animation:qpulse 2.2s ease-in-out infinite}
-#verdict.lock{color:#F4C152}
+#verdict.lock{color:var(--amber)}
 @keyframes qpulse{50%{opacity:.55}}
 .kit-calm #verdict.pulse{animation:none}
 #opts{display:flex;gap:2.6cqw;margin:0 3.4cqw}
@@ -29,9 +29,13 @@
 .bet.on .gl{color:var(--c)}
 .bet.off{opacity:.38}
 #why{display:flex;flex-direction:column;gap:.8cqh;margin:0 4cqw}
-#why .big{color:#fff;font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
-#why .body{color:#fff;font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
-#why .body b{color:#fff0b8}
+#why .big{color:var(--k);font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{color:var(--k);font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+#why .body b{color:var(--hi)}
+/* The answer in the card's own ink (--k: white on the card's green, the ring's on a hard card ringed, env.hard); its
+   amber and its pale yellow highlight, which would vanish on the day paper there, taken down to a deep amber. */
+.card{--amber:#F4C152;--hi:#fff0b8}
+.kit-hard[data-theme=light] .card{--amber:#9a6400;--hi:#9a6400}
 </style>
 <article class="card" id="card" data-topic="maths" data-kind="Pick one · how sure">
   <div class="in">
@@ -64,7 +68,7 @@
   gsap.set(vd, {xPercent: -50, yPercent: -50});
 
   // ---------- the card's own colours, flat ----------
-  const AMBER = '#F4C152';
+  let AMBER = '#F4C152';
   let INK = 'rgb(255,255,255)', PLATE = 'rgb(40,170,130)', RIM = 'rgb(120,200,175)', LEAD = 'rgb(120,200,175)';
   function rgbOf(v, fb) {
     const e = document.createElement('i'); e.style.color = v; e.style.display = 'none';
@@ -77,6 +81,7 @@
   function paints() {
     const k = rgbOf('var(--k)', [255, 255, 255]), c = rgbOf('var(--c)', [14, 154, 112]);
     INK = `rgb(${k.map(Math.round)})`; PLATE = mix(k, c, .13); RIM = mix(k, c, .5); LEAD = mix(k, c, .55);
+    AMBER = getComputedStyle(Kit.$('card')).getPropertyValue('--amber').trim() || '#F4C152';
   }
 
   // ---------- the knot: one trefoil in 3D ----------

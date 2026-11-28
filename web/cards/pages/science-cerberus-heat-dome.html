@@ -16,6 +16,9 @@
 .sink{stroke-dasharray:7 7;animation:flow .8s linear infinite}
 .calm .sink{animation:none}
 @keyframes flow{to{stroke-dashoffset:-14}}
+/* The dome's reds, lit up on a hard card ringed (env.hard) on the night ground. */
+.card{--dome:#a30f0f;--dome-ink:#8a0c0c}
+.kit-hard[data-theme=dark] .card{--dome:#ff5c4d;--dome-ink:#ff7b6b}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
   <div class="in">
@@ -72,15 +75,15 @@ function draw() {
   Kit.mk('rect', {x: tx - tw / 2, y: tt, width: tw, height: tb - tt, rx: tw / 2, fill: '#fff', stroke: '#10100c', 'stroke-width': 1.5}, svg);
   const tf = Kit.mk('rect', {x: tx - tw / 2 + 2, width: tw - 4, rx: (tw - 4) / 2, fill: '#d62828'}, svg);
   Kit.mk('circle', {cx: tx, cy: tb, r: tw * 0.9, fill: '#d62828', stroke: '#10100c', 'stroke-width': 1.5}, svg);
-  const ht = Kit.mk('text', {x: W - 4, y: tt - fs * 0.5, 'text-anchor': 'end', fill: '#a30f0f', style: `font:800 ${Math.max(12, fs * 0.85)}px var(--body)`}, svg); ht.textContent = 'heat';
+  const ht = Kit.mk('text', {x: W - 4, y: tt - fs * 0.5, 'text-anchor': 'end', fill: 'var(--dome)', style: `font:800 ${Math.max(12, fs * 0.85)}px var(--body)`}, svg); ht.textContent = 'heat';
   // the dome
   const rx = W * 0.25, ry = H * 0.55;
   const dome = Kit.mk('g', {}, svg);
-  Kit.mk('path', {d: `M${-rx} 0 A${rx} ${ry} 0 0 1 ${rx} 0 Z`, fill: 'rgba(214,40,40,.16)', stroke: '#a30f0f', 'stroke-width': Math.max(2, m * 0.01), 'stroke-dasharray': '10 6'}, dome);
+  Kit.mk('path', {d: `M${-rx} 0 A${rx} ${ry} 0 0 1 ${rx} 0 Z`, fill: 'rgba(214,40,40,.16)', stroke: 'var(--dome)', 'stroke-width': Math.max(2, m * 0.01), 'stroke-dasharray': '10 6'}, dome);
   const cY = -ry * 0.47, hS = fs * 2.2, hY = cY - fs * 1.8;
-  const hT = Kit.mk('text', {x: 0, y: hY, 'text-anchor': 'middle', fill: '#8a0c0c', style: `font:900 ${hS}px var(--display)`}, dome); hT.textContent = 'H';
-  const cT = Kit.mk('text', {x: 0, y: cY, 'text-anchor': 'middle', fill: '#8a0c0c', style: `font:800 ${fs}px var(--body);letter-spacing:.08em`}, dome); cT.textContent = 'CERBERUS';
-  const arr = Kit.mk('g', {stroke: '#8a0c0c', 'stroke-width': Math.max(3, m * 0.014), 'stroke-linecap': 'round', fill: 'none'}, dome);
+  const hT = Kit.mk('text', {x: 0, y: hY, 'text-anchor': 'middle', fill: 'var(--dome-ink)', style: `font:900 ${hS}px var(--display)`}, dome); hT.textContent = 'H';
+  const cT = Kit.mk('text', {x: 0, y: cY, 'text-anchor': 'middle', fill: 'var(--dome-ink)', style: `font:800 ${fs}px var(--body);letter-spacing:.08em`}, dome); cT.textContent = 'CERBERUS';
+  const arr = Kit.mk('g', {stroke: 'var(--dome-ink)', 'stroke-width': Math.max(3, m * 0.014), 'stroke-linecap': 'round', fill: 'none'}, dome);
   const a = m * 0.03;
   [-0.55, 0, 0.55].forEach(k => {
     const x = rx * k, y0 = k ? -ry * 0.55 : -ry * 0.36, y1 = -ry * 0.07;

@@ -5,6 +5,9 @@
 from __future__ import annotations
 
 import json
+import re
+import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -194,6 +197,26 @@ class TheBundle(unittest.TestCase):
         self.assertNotEqual(bundle.bundled(a)["web"]["page"], bundle.bundled(b)["web"]["page"])
         self.assertEqual(len(bundle.page_hash(TEMPLATE)), 12)
 
+    def test_a_hard_card_names_its_pictures_taken_ringed_at_night_and_on_paper(self):
+        # Its own pair while taken from the page as it is; the two ringed pairs only while taken under the ring as
+        # it is too, with a name of their own (lib/widgets/hard_ring.dart, tool/cards/thumbs.cjs).
+        card = page_card(difficulty="hard")
+        cid, own, ringed = card["id"], bundle.picture_hash(TEMPLATE), bundle.ringed_hash(TEMPLATE)
+        self.assertNotEqual(own, ringed)
+        self.assertEqual(bundle.ringed_hash(TEMPLATE), bundle.page_hash(TEMPLATE + bundle.PICTURES + bundle.RINGED))
+        pictures = bundle.thumbs_of(card, {cid: own}, {cid: ringed})
+        self.assertEqual(pictures["front"], f"thumbs/{cid}-front.webp?v={own}")
+        self.assertEqual(pictures["ringed"], {"front": f"thumbs/{cid}-ringed-front.webp?v={ringed}",
+                                              "back": f"thumbs/{cid}-ringed-back.webp?v={ringed}"})
+        self.assertEqual(pictures["ringed_day"]["back"], f"thumbs/{cid}-ringed-day-back.webp?v={ringed}")
+        # Taken under another ring, or never: its own pair alone.
+        self.assertNotIn("ringed", bundle.thumbs_of(card, {cid: own}, {cid: "000000000000"}))
+        self.assertNotIn("ringed_day", bundle.thumbs_of(card, {cid: own}, {}))
+        # A card that is not hard never has them, whatever the index says.
+        self.assertNotIn("ringed", bundle.thumbs_of(page_card(difficulty="medium"), {cid: own}, {cid: ringed}))
+        # Its own pair taken from another page: nothing named at all.
+        self.assertIsNone(bundle.thumbs_of(card, {cid: "000000000000"}, {cid: ringed}))
+
     def test_the_builds_from_before_get_the_page_inside_the_card(self):
         card = page_card()
         out = bundle.bundled(card, inline=True)
@@ -245,6 +268,35 @@ class TheBundle(unittest.TestCase):
 
     def test_a_page_card_never_becomes_the_question_of_the_day(self):
         self.assertNotIn("page", check.GRADED)
+
+
+class TheRing(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("node"), "node is not installed")
+    def test_a_hard_page_and_its_pictures_are_ringed_in_the_apps_colours(self):
+        # The checker and the camera tell a hard page the colours of hard_env.cjs; the app rings its picture in its
+        # own (lib/widgets/hard_ring.dart). The same five test/hard_ring_test.dart pins, so the two never drift: a
+        # deep colour lifted at night, a light one taken down by day, one that reads already kept.
+        script = ("const h = require(process.argv[1]); console.log(JSON.stringify(["
+                  "h('space'), h('technology', {day: true}), h('economics', {day: true}), h('history', {day: true}),"
+                  " h('medicine'), h('maths', {day: true, label: 'DIFFICILE'})]))")
+        ran = subprocess.run(["node", "-e", script, str(Path(__file__).resolve().parent / "hard_env.cjs")],
+                             capture_output=True, text=True, check=True)
+        space, tech, economics, history, medicine, maths = json.loads(ran.stdout)
+        self.assertEqual((space["c"], space["k"], space["q"], space["edge"]), ("#0b0b0d", "#809dff", "#f2f1ec", "#2b5cff"))
+        self.assertEqual((tech["c"], tech["k"], tech["q"], tech["edge"]), ("#ffffff", "#007bbd", "#131316", "#00a6ff"))
+        self.assertEqual((economics["k"], economics["edge"]), ("#827500", "#9e8f00"))
+        self.assertEqual(history["k"], "#9e6d00")
+        self.assertEqual(medicine["k"], "#ff3b30")
+        self.assertEqual((space["label"], maths["label"]), ("HARD", "DIFFICILE"))
+
+    def test_the_camera_takes_pictures_under_the_editions_the_bundle_names_them_by(self):
+        # thumbs.cjs takes a picture under the hash bundle.py names it by: an edition bumped in one is bumped in both,
+        # or the pictures are never named and every hard card shows its words.
+        camera = (Path(__file__).resolve().parent / "thumbs.cjs").read_text(encoding="utf-8")
+        for name in ("PICTURES", "RINGED"):
+            found = re.search(rf"^const {name} = '(.*)';$", camera, re.M)
+            self.assertIsNotNone(found, name)
+            self.assertEqual(found.group(1).replace("\\n", "\n"), getattr(bundle, name), name)
 
 
 if __name__ == "__main__":

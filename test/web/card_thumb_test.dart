@@ -14,14 +14,17 @@ import 'package:astuto/data/card_pages.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart' show dateKey;
+import 'package:astuto/debug_flags.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/saved_screen.dart';
 import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/state/debug_looks.dart';
 import 'package:astuto/sync/served.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/explore/card_tiles.dart';
+import 'package:astuto/widgets/hard_ring.dart';
 import 'package:astuto/widgets/subject_icon.dart';
 import 'package:astuto/widgets/web/card_thumb.dart';
 
@@ -50,6 +53,7 @@ Future<void> _pump(
   Widget child, {
   Size size = const Size(375, 667),
   double text = 1,
+  bool dark = true,
 }) async {
   tester.view.physicalSize = size * 3;
   tester.view.devicePixelRatio = 3;
@@ -59,7 +63,7 @@ Future<void> _pump(
     MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: buildAstutoTheme(Brightness.dark),
+      theme: buildAstutoTheme(dark ? Brightness.dark : Brightness.light),
       debugShowCheckedModeBanner: false,
       home: Builder(
         builder: (context) => MediaQuery(
@@ -227,6 +231,201 @@ void main() {
       expect(find.text('words'), findsOneWidget);
       expect(find.text('over'), findsNothing);
     });
+  });
+
+  // A hard card is read ringed (lib/widgets/hard_ring.dart): wherever it is
+  // shown by its picture, by the one taken ringed, on the reader's paper,
+  // inside its ring; as today, in the tools, by its own.
+  group('a hard card', () {
+    late bool tools;
+    setUp(() => tools = debugToolsOn);
+    tearDown(() {
+      debugToolsOn = tools;
+      DebugLooks.reset();
+    });
+
+    final Pill hard = pagedCards().firstWhere(
+      (p) => p.difficulty == Difficulty.hard,
+    );
+
+    test('its ringed pictures read from the card\'s face, written back as '
+        'read; the regular pair stays', () {
+      final Map<String, Object?> web = {
+        'page': 'pages/maths-x.html?v=abcdef12',
+        'thumbs': {
+          'front': 'thumbs/maths-x-front.webp?v=abcdef12',
+          'back': 'thumbs/maths-x-back.webp?v=abcdef12',
+          'ringed': {
+            'front': 'thumbs/maths-x-ringed-front.webp?v=0011aabbccdd',
+            'back': 'thumbs/maths-x-ringed-back.webp?v=0011aabbccdd',
+          },
+          'ringed_day': {
+            'front': 'thumbs/maths-x-ringed-day-front.webp?v=0011aabbccdd',
+            'back': 'thumbs/maths-x-ringed-day-back.webp?v=0011aabbccdd',
+          },
+        },
+      };
+      final WebFace face = webFromJson(web)!;
+      expect(face.thumbs!.front, 'thumbs/maths-x-front.webp?v=abcdef12');
+      expect(
+        face.thumbs!.ringed!.front,
+        'thumbs/maths-x-ringed-front.webp?v=0011aabbccdd',
+      );
+      expect(
+        face.thumbs!.ringedDay!.back,
+        'thumbs/maths-x-ringed-day-back.webp?v=0011aabbccdd',
+      );
+      final Map<String, Object?> out = webToJson(
+        face,
+        challenge: const NoChallenge(),
+      );
+      expect(out['thumbs'], web['thumbs']);
+      expect(webFromJson(out)!.thumbs, face.thumbs);
+      // Anything but a picture of the bank's is left out there too.
+      expect(
+        webFromJson({
+          'page': web['page'],
+          'thumbs': {
+            'front': 'thumbs/maths-x-front.webp',
+            'ringed': {'front': 'https://elsewhere.example/x.webp'},
+          },
+        })!.thumbs!.ringed,
+        isNull,
+      );
+    });
+
+    for (final bool dark in [true, false]) {
+      final String paper = dark ? 'night' : 'day';
+      testWidgets('shown by the picture taken ringed on the $paper paper', (
+        tester,
+      ) async {
+        PillBank.adopt(bankWithPictures({hard.id}, ringed: {hard.id}));
+        final Pill pill = PillBank.byId(hard.id)!;
+        final List<Uri> asked = [];
+        CardThumb.image = (url) {
+          asked.add(url);
+          return onePixel;
+        };
+        await _pump(
+          tester,
+          SizedBox(
+            width: 120,
+            height: 200,
+            child: CardThumb(pill: pill, side: CardSide.front),
+          ),
+          dark: dark,
+        );
+        expect(
+          asked.single.path,
+          endsWith(
+            '/cards/thumbs/${hard.id}-ringed${dark ? '' : '-day'}-front.webp',
+          ),
+        );
+        expect(
+          CardThumb.refOf(pill, CardSide.back, dark: dark),
+          'thumbs/${hard.id}-ringed${dark ? '' : '-day'}-back.webp'
+          '?v=0123456789ab',
+        );
+      });
+    }
+
+    testWidgets('as today, in the tools, by its own picture; with no ringed '
+        'pictures taken, by none, never by its own inside the ring', (
+      tester,
+    ) async {
+      PillBank.adopt(bankWithPictures({hard.id}, ringed: {hard.id}));
+      debugToolsOn = true;
+      DebugLooks.hardCards.value = HardCardLook.today;
+      final Pill pill = PillBank.byId(hard.id)!;
+      expect(
+        CardThumb.refOf(pill, CardSide.front),
+        'thumbs/${hard.id}-front.webp?v=0123456789ab',
+      );
+      DebugLooks.hardCards.value = HardCardLook.ringed;
+      expect(
+        CardThumb.refOf(pill, CardSide.front),
+        'thumbs/${hard.id}-ringed-front.webp?v=0123456789ab',
+      );
+
+      PillBank.adopt(bankWithPictures({hard.id}));
+      final Pill bare = PillBank.byId(hard.id)!;
+      expect(CardThumb.has(bare, CardSide.front), isFalse);
+      await _pump(
+        tester,
+        CardThumb(
+          pill: bare,
+          side: CardSide.front,
+          fallback: const Text('words'),
+        ),
+      );
+      expect(find.text('words'), findsOneWidget);
+      expect(find.byType(Image), findsNothing);
+      // A card that is not hard keeps its own, ringed or not.
+      final Pill easy = pagedCards().first;
+      PillBank.adopt(bankWithPictures({easy.id}));
+      expect(
+        CardThumb.refOf(PillBank.byId(easy.id)!, CardSide.front, dark: false),
+        'thumbs/${easy.id}-front.webp?v=0123456789ab',
+      );
+    });
+
+    for (final bool dark in [true, false]) {
+      testWidgets('on the day\'s shelf, its ringed picture in its ring, on '
+          'the ${dark ? 'night' : 'day'} paper', (tester) async {
+        final List<Pill> five = [
+          hard,
+          ...pagedCards().where((p) => p.id != hard.id).take(4),
+        ];
+        PillBank.adopt(bankWithPictures({hard.id}, ringed: {hard.id}));
+        final List<Uri> asked = [];
+        CardThumb.image = (url) {
+          asked.add(url);
+          return onePixel;
+        };
+        final AppState app = await _dayDone([
+          for (final Pill p in five) PillBank.byId(p.id)!,
+        ]);
+        await _pump(
+          tester,
+          TodayDoneView(app: app, at: 0, onPick: (_) {}),
+          dark: dark,
+        );
+        await _arrive(tester);
+        expect(tester.takeException(), isNull);
+        expect(_picture(hard.id, 'front'), findsOneWidget);
+        expect(
+          asked.map((u) => u.path),
+          contains(
+            endsWith('${hard.id}-ringed${dark ? '' : '-day'}-front.webp'),
+          ),
+        );
+        expect(
+          asked
+              .map((u) => u.path)
+              .where((p) => p.endsWith('/${hard.id}-front.webp')),
+          isEmpty,
+        );
+        // Its ring, in its subject's colour (on paper a pale one's darker
+        // tone), on the ground the picture was taken on.
+        final Palette p = dark ? Palette.dark : Palette.light;
+        final BoxDecoration face =
+            tester
+                    .widget<Container>(
+                      find
+                          .ancestor(
+                            of: _picture(hard.id, 'front'),
+                            matching: find.byKey(
+                              const ValueKey('shelf-picture'),
+                            ),
+                          )
+                          .first,
+                    )
+                    .decoration!
+                as BoxDecoration;
+        expect((face.border! as Border).top.color, HardRing.accentOf(hard, p));
+        expect(face.color, HardRing.groundOf(p));
+      });
+    }
   });
 
   group('the day\'s shelf', () {

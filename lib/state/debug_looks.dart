@@ -83,15 +83,19 @@ enum SharePictureLook {
   c,
 }
 
-/// How a hard card looks wherever it is read, as the developer tools pick
-/// it (lib/widgets/hard_ring.dart): as today, in its subject's colour like
-/// every card, or ringed, dark and ringed in its subject's colour with HARD
-/// on it, as Explore's shelf of the hardest cards draws them.
+/// How a hard card looks wherever it is read (lib/widgets/hard_ring.dart):
+/// as it was, in its subject's colour like every card, or ringed, dark and
+/// ringed in its subject's colour with HARD on it, as Explore's shelf of the
+/// hardest cards draws them. The owner chose ringed on 28 November 2026,
+/// and ringed ships ([DebugLooks.hardCardsShips]); the tools still show a
+/// hard card as it was.
 enum HardCardLook {
-  /// As the app ships: a hard card looks like any other.
+  /// As the app shipped until ringed was chosen: a hard card looks like any
+  /// other.
   today,
 
-  /// Dark, ringed in the subject's colour, the label in it, HARD on it.
+  /// Dark, ringed in the subject's colour, the label in it, HARD on it. The
+  /// one that ships.
   ringed,
 }
 
@@ -179,8 +183,9 @@ enum CardFootPick {
 /// on his own phone what only pictures showed him before: the finished day
 /// with no row over its card, the profile's other tops, where the day is
 /// sent from, the picture it is sent as, What to learn five other ways,
-/// the paywall's prototypes, the four feet of a card, the hard cards
-/// ringed, and the first day's end as it was before it was celebrated.
+/// the paywall's prototypes, the four feet of a card, the hard cards as
+/// they were before they were ringed, and the first day's end as it was
+/// before it was celebrated.
 /// Changed from the debug section at the foot of the profile, kept on the
 /// phone, and listened to where each is drawn, so a change shows at once.
 ///
@@ -237,9 +242,12 @@ abstract final class DebugLooks {
   static final ValueNotifier<SharePictureLook> sharePicture =
       ValueNotifier<SharePictureLook>(sharePictureShips);
 
+  /// How a hard card looks that ships: the owner's choice.
+  static const HardCardLook hardCardsShips = HardCardLook.ringed;
+
   /// How a hard card looks, as kept.
   static final ValueNotifier<HardCardLook> hardCards =
-      ValueNotifier<HardCardLook>(HardCardLook.today);
+      ValueNotifier<HardCardLook>(hardCardsShips);
 
   /// How the first finished day ends that ships: celebrated.
   static const FirstDayEndLook firstDayEndShips = FirstDayEndLook.celebration;
@@ -280,10 +288,10 @@ abstract final class DebugLooks {
   static SharePictureLook get sharePicturePicked =>
       debugToolsOn ? sharePicture.value : sharePictureShips;
 
-  /// How a hard card looks in this run: as today, unless the tools are on
-  /// and ringed was picked.
+  /// How a hard card looks in this run: ringed, as it ships, unless the
+  /// tools are on and as today was picked.
   static HardCardLook get hardCardsPicked =>
-      debugToolsOn ? hardCards.value : HardCardLook.today;
+      debugToolsOn ? hardCards.value : hardCardsShips;
 
   /// How the first finished day ends in this run: celebrated, as it ships,
   /// unless the tools are on and as before was picked.
@@ -311,7 +319,7 @@ abstract final class DebugLooks {
         sharePictureShips;
     hardCards.value =
         HardCardLook.values.asNameMap()[prefs.getString(_kHardCards)] ??
-        HardCardLook.today;
+        hardCardsShips;
     firstDayEnd.value =
         FirstDayEndLook.values.asNameMap()[prefs.getString(_kFirstDayEnd)] ??
         firstDayEndShips;
@@ -403,7 +411,7 @@ abstract final class DebugLooks {
     if (sharePicture.value != sharePictureShips) {
       await prefs.setString(_kSharePicture, sharePicture.value.name);
     }
-    if (hardCards.value != HardCardLook.today) {
+    if (hardCards.value != hardCardsShips) {
       await prefs.setString(_kHardCards, hardCards.value.name);
     }
     if (firstDayEnd.value != firstDayEndShips) {
@@ -421,7 +429,7 @@ abstract final class DebugLooks {
     learn.value = learnShips;
     cardFoot.value = null;
     sharePicture.value = sharePictureShips;
-    hardCards.value = HardCardLook.today;
+    hardCards.value = hardCardsShips;
     firstDayEnd.value = firstDayEndShips;
   }
 }
