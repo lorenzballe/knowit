@@ -128,6 +128,7 @@ class BooksBlock extends ExploreBlock with SectionLayout {
                 itemBuilder: (context, i) => _BookTile(
                   book: rest[i],
                   width: width,
+                  boxes: _BookTile.boxesOf(context, rest, width),
                   read: readOf(rest[i]),
                   weekly: false,
                   locked: !app.isPlus,
@@ -557,10 +558,50 @@ class _BookTile extends StatelessWidget {
     required this.onTap,
     this.width = rowWidth,
     this.line = false,
+    this.boxes,
   });
 
   /// The tile's width in the row.
   static const double rowWidth = 116;
+
+  /// The heights every tile of a row keeps for the week's line, the title
+  /// and the author, the tallest of the row's ([boxesOf]): so the authors
+  /// start on one line across the row and the dashes end on one, whether a
+  /// title takes one line or two.
+  final ({double line, double title, double author})? boxes;
+
+  /// The row's boxes for [books] as tiles [width] wide, at the reader's
+  /// text size; the week's line counted where one of them is [marked].
+  static ({double line, double title, double author}) boxesOf(
+    BuildContext context,
+    Iterable<CardBook> books,
+    double width, {
+    String? marked,
+  }) {
+    final Palette p = context.p;
+    double line = 0, title = 0, author = 0;
+    for (final CardBook b in books) {
+      if (b.id == marked) {
+        line =
+            wordsHeight(
+              context,
+              context.l10n.bookFreeThisWeek.toUpperCase(),
+              _lineStyle(p),
+              width,
+            ) +
+            2;
+      }
+      title = math.max(
+        title,
+        wordsHeight(context, b.book.title, _titleStyle(p), width),
+      );
+      author = math.max(
+        author,
+        wordsHeight(context, b.book.author, _authorStyle(p), width),
+      );
+    }
+    return (line: line, title: title, author: author);
+  }
 
   static TextStyle _lineStyle(Palette p) => AppText.body(
     size: 10,
@@ -580,33 +621,20 @@ class _BookTile extends StatelessWidget {
   static TextStyle _authorStyle(Palette p) =>
       AppText.body(size: 12, height: 1.3, color: p.inkMuted);
 
-  /// How tall the tallest of [books] stands as a tile [width] wide, at the
-  /// reader's text size: its cover, its title and its author whole, however
-  /// many lines they take, and the dashes; the week's line over the title
-  /// of [marked].
+  /// How tall a row of [books] stands as tiles [width] wide, at the
+  /// reader's text size: the cover, the row's boxes for the week's line,
+  /// the title and the author ([boxesOf]), and the dashes.
   static double heightOf(
     BuildContext context,
     Iterable<CardBook> books,
     double width, {
     String? marked,
   }) {
-    final Palette p = context.p;
-    final String week = context.l10n.bookFreeThisWeek.toUpperCase();
-    double most = width * 1.5;
-    for (final CardBook b in books) {
-      most = math.max(
-        most,
-        width * 1.5 +
-            10 +
-            (b.id == marked
-                ? wordsHeight(context, week, _lineStyle(p), width) + 2
-                : 0) +
-            wordsHeight(context, b.book.title, _titleStyle(p), width) +
-            wordsHeight(context, b.book.author, _authorStyle(p), width) +
-            7 +
-            3,
-      );
-    }
+    // Every tile keeps the row's boxes, so the row is as tall as its
+    // tallest title and its tallest author together, under the cover.
+    final boxes = boxesOf(context, books, width, marked: marked);
+    final double most =
+        width * 1.5 + 10 + boxes.line + boxes.title + boxes.author + 7 + 3;
     return (most + 2).ceilToDouble();
   }
 
@@ -674,9 +702,17 @@ class _BookTile extends StatelessWidget {
                     key: const ValueKey('book-weekly'),
                     style: _lineStyle(p),
                   ),
-                ),
-              Text(book.book.title, style: _titleStyle(p)),
-              Text(book.book.author, style: _authorStyle(p)),
+                )
+              else if ((boxes?.line ?? 0) > 0)
+                SizedBox(height: boxes!.line),
+              SizedBox(
+                height: boxes?.title,
+                child: Text(book.book.title, style: _titleStyle(p)),
+              ),
+              SizedBox(
+                height: boxes?.author,
+                child: Text(book.book.author, style: _authorStyle(p)),
+              ),
               const SizedBox(height: 7),
               BookProgress(of: book.cards.length, read: read),
             ],
@@ -1543,6 +1579,12 @@ class LibraryScreen extends StatelessWidget {
                               book: books[r * across + c],
                               width: width,
                               line: true,
+                              boxes: _BookTile.boxesOf(
+                                context,
+                                books.skip(r * across).take(across),
+                                width,
+                                marked: weekly,
+                              ),
                               read: books[r * across + c].cards
                                   .where((p) => app.seenIds.contains(p.id))
                                   .length,

@@ -312,6 +312,22 @@ void main() {
     expect(find.byKey(ValueKey('book-${books[1].id}')), findsOneWidget);
     expect(find.byKey(const ValueKey('books-see-all')), findsOneWidget);
     expect(tester.takeException(), isNull);
+    // Under the covers the row lines up, whether a title takes one line or
+    // two: every author starts, and every row of dashes sits, at one height.
+    final List<double> dashes = [
+      for (final b in books.skip(1))
+        for (final Element e
+            in find
+                .descendant(
+                  of: find.byKey(ValueKey('book-${b.id}')),
+                  matching: find.byType(BookProgress),
+                )
+                .evaluate())
+          if (e.renderObject case final RenderBox box when box.hasSize)
+            box.localToGlobal(Offset.zero).dy,
+    ];
+    expect(dashes.length, greaterThan(1));
+    expect(dashes.toSet(), hasLength(1), reason: '$dashes');
 
     await tester.tap(week);
     for (var i = 0; i < 8; i++) {
