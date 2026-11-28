@@ -44,6 +44,10 @@
 .back .body{margin:1.4cqh 0 1cqh;font-size:clamp(13px,2.05cqh,16px);line-height:1.4}
 .back .foot{margin:1cqh 0 0;padding-right:0}
 .face .q,.face .body,.face .say,.face .keep{overflow-wrap:break-word}
+/* Cold's blue and hot's rust, their edges and their words, lit up on a hard card ringed (env.hard) on the night
+   ground. */
+.card{--cold-edge:#1f62b8;--cold-ink:#17468a;--hot-edge:#c4471d;--hot-ink:#a8340f}
+.kit-hard[data-theme=dark] .card{--cold-edge:#4f93ff;--cold-ink:#7db5ff;--hot-edge:#ff6a3d;--hot-ink:#ff8a5c}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
   <div class="in">
@@ -79,7 +83,7 @@ const Turn = {
 };
 (() => {
   const RIGHT = 0;
-  const COLD = {fill: '#a9d2f7', edge: '#1f62b8', ink: '#17468a'}, HOT = {fill: '#f6b49c', edge: '#c4471d', ink: '#a8340f'};
+  const COLD = {fill: '#a9d2f7', edge: 'var(--cold-edge)', ink: 'var(--cold-ink)'}, HOT = {fill: '#f6b49c', edge: 'var(--hot-edge)', ink: 'var(--hot-ink)'};
   const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
   let K = '#111', fs = 13, open = .3, len = 1, temp = 0, touched = false, pick = -1, turned = false;
   let F = null, B = null, T = 0;

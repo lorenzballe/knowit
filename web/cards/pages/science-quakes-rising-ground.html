@@ -42,7 +42,7 @@ const K = 110, lanes = {up: [], down: []}, acc = {up: 0, down: 0};
 // Where each quake struck: across the dome (-1 to 1) and how deep between the town and the magma (0 to 1).
 const quakes = [];
 const counts = {up: 0, down: 0}, done = {up: false, down: false};
-let G = null, dir = 0, tw = null, amp = 0, fast = false, lastSpawn = 0, finished = false, lastU = S.u;
+let G = null, dir = 0, tw = null, amp = 0, fast = false, lastSpawn = 0, finished = false, lastU = S.u, due = null;
 
 function build() {
   const svg = Kit.$('sv');
@@ -204,6 +204,7 @@ gsap.ticker.add(() => {
 function finish() {
   if (finished) return;
   finished = true;
+  if (due) due.kill();
   Kit.hide('say'); Kit.hide('sw'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
   build();
 }
@@ -219,12 +220,16 @@ function go(d) {
     dir = 0; return;
   }
   Kit.$('say').textContent = d === 'up' ? 'The ground rises…' : 'The ground sinks…';
+  // Counted when chosen, not when the ground gets there: flipped back before
+  // it arrives, the first way still counts, and the answer still comes in.
+  if (dist > .3) done[d] = true;
   tw = gsap.to(S, {u: target, duration: fast ? .8 : Math.max(.4, 4.5 * dist), ease: 'sine.inOut', onComplete() {
-    if (dist > .3) done[d] = true;
     dir = 0;
     if (done.up && done.down) finish();
     else Kit.$('say').textContent = d === 'up' ? 'Now flip it: make the ground sink.' : 'Now flip it: make the ground rise.';
   }});
+  // Both ways made: the answer is due when this one lands, whatever is tapped after.
+  if (done.up && done.down && !due) due = gsap.delayedCall(tw.duration(), finish);
 }
 
 Kit.$('sw').addEventListener('click', e => { const b = e.target.closest('.sb'); if (b) go(b.dataset.d); });

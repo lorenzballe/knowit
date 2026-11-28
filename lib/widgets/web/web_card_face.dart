@@ -5,6 +5,7 @@ import 'page_gestures.dart';
 import 'page_messages.dart';
 import 'web_card_page.dart';
 import 'web_card_poster.dart';
+import 'web_surface.dart';
 
 /// How visible a page is while it is loading underneath its poster, and a
 /// card while it is held for its page: as near nothing as the screen
@@ -48,14 +49,17 @@ class PageHold extends StatelessWidget {
         final bool held = page == null ? waiting : page.holding;
         return IgnorePointer(
           ignoring: held,
-          child: AnimatedOpacity(
-            opacity: held ? kWaitingOpacity : 1,
-            // Out of sight at once, in with a short fade.
-            duration: held || MediaQuery.disableAnimationsOf(context)
-                ? Duration.zero
-                : const Duration(milliseconds: 220),
-            curve: Curves.easeOut,
-            child: card,
+          child: PageTouch(
+            open: !held,
+            child: AnimatedOpacity(
+              opacity: held ? kWaitingOpacity : 1,
+              // Out of sight at once, in with a short fade.
+              duration: held || MediaQuery.disableAnimationsOf(context)
+                  ? Duration.zero
+                  : const Duration(milliseconds: 220),
+              curve: Curves.easeOut,
+              child: card,
+            ),
           ),
         );
       },
@@ -170,29 +174,35 @@ class _WebCardFaceState extends State<WebCardFace> {
           if (live)
             IgnorePointer(
               ignoring: !drawn || widget.onMessage == null,
-              child: AnimatedOpacity(
-                // Never quite 0 while it waits: a layer at opacity 0 is not painted, so
-                // the platform view under it is never put on screen, the page never
-                // loads, and it never says it is ready. Nearly 0 hides it all the same.
-                opacity: drawn || held ? 1 : kWaitingOpacity,
-                // A page that draws over a poster already shown fades in; a
-                // card let out of its hold before its page drew shows its
-                // poster at once, with no half-made page fading out over it.
-                // A card waiting under the top one has its clock stopped
-                // (only the top card moves), and a fade needs its ticks:
-                // under there it would stand at its first frame, the page
-                // nearly nothing, until the card rose. It shows at once.
-                duration:
-                    !drawn ||
-                        !TickerMode.valuesOf(context).enabled ||
-                        MediaQuery.disableAnimationsOf(context)
-                    ? Duration.zero
-                    : const Duration(milliseconds: 160),
-                curve: Curves.easeOut,
-                child: page.surface.view(
-                  gestures: pageGestures(
-                    web?.touch ?? WebTouch.taps,
-                    zones: () => page.zones,
+              // The card under the one in front, and one whose page has not
+              // drawn: on the web build its iframe lets the pointer through
+              // to the card over it, which took no tap while it was there.
+              child: PageTouch(
+                open: drawn && widget.onMessage != null,
+                child: AnimatedOpacity(
+                  // Never quite 0 while it waits: a layer at opacity 0 is not painted, so
+                  // the platform view under it is never put on screen, the page never
+                  // loads, and it never says it is ready. Nearly 0 hides it all the same.
+                  opacity: drawn || held ? 1 : kWaitingOpacity,
+                  // A page that draws over a poster already shown fades in; a
+                  // card let out of its hold before its page drew shows its
+                  // poster at once, with no half-made page fading out over it.
+                  // A card waiting under the top one has its clock stopped
+                  // (only the top card moves), and a fade needs its ticks:
+                  // under there it would stand at its first frame, the page
+                  // nearly nothing, until the card rose. It shows at once.
+                  duration:
+                      !drawn ||
+                          !TickerMode.valuesOf(context).enabled ||
+                          MediaQuery.disableAnimationsOf(context)
+                      ? Duration.zero
+                      : const Duration(milliseconds: 160),
+                  curve: Curves.easeOut,
+                  child: page.surface.view(
+                    gestures: pageGestures(
+                      web?.touch ?? WebTouch.taps,
+                      zones: () => page.zones,
+                    ),
                   ),
                 ),
               ),

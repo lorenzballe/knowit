@@ -40,18 +40,72 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   presents Astute on Google Play and on the App Store, each with the store's
   own badge. The Play listing is live; the App Store's is made but not live
   yet, so until `APP_STORE_OPEN` in `tool/site/chrome.py` says it is (one
-  line to change at launch) Apple's badge keeps its link but is marked
-  "Coming soon", every line that says where the app is says "Free on
-  Android · coming to iPhone", and no Download button leads to the store's
-  empty page. An Android phone's Download goes to Google Play, a computer's
-  to a code to scan with the phone, and an iPhone's, like the code, to
-  `/get`: from there an Android phone goes on to Google Play, and an iPhone,
-  until the listing is live, stays on a page that says the app is on its
-  way. It reads fully without JavaScript, and without motion for anyone who
-  has asked their system for less. The phone pictures in `site/assets/` are
-  taken by `tool/site_shots.dart`, the app on an iPhone 16 Pro at night in
-  English with cards from the bank, and made WebP at 840×1826 by
-  `tool/site/shots.py`; nothing on them is made up about other readers.
+  line to change at launch) Apple's badge is marked "Coming soon" and leads
+  to the list for the iPhone (below), every line that says where the app is
+  says "Free on Android · coming to iPhone", and no button anywhere leads to
+  the store's empty page. An Android phone's Download goes to Google Play, a
+  computer's to a code to scan with the phone, and an iPhone's, like the
+  code, to `/get`: from there an Android phone goes on to Google Play, and an
+  iPhone, until the listing is live, stays on a page that says the app is on
+  its way and offers the two things to do meanwhile: leave an email to be
+  told the day it is there, or play Today's challenge in the browser
+  (`/sfida`). The first screen offers the same two to anyone not on Android.
+  On a phone, once the first screen is behind, a slim bar at the thumb holds
+  the prices, the questions and the store (on an iPhone, the list), and goes
+  as the last word comes up; the twenty subjects' names, which only said
+  again what the rows above them had shown, are left to screen readers
+  there. Every page has its own title and description, and Open Graph tags
+  for a shared link. It reads fully without JavaScript, and without motion
+  for anyone who has asked their system for less. The phone pictures in
+  `site/assets/` are taken by `tool/site_shots.dart`, the app on an iPhone
+  16 Pro at night in English with cards from the bank, and made WebP at
+  840×1826 by `tool/site/shots.py`; the Italian pages' are the same app
+  speaking Italian (`LANG_SHOT=it`), in `site/assets/it/`. Nothing on them
+  is made up about other readers.
+- **In Italian too.** The landing page and `/get` have Italian twins, `/it/`
+  and `/it/get`, written by `tool/site/i18n.py` from the English pages and
+  `tool/site/lang/it.json`, every run of the English page's text said in
+  Italian by hand, in the app's own words (`lib/l10n/app_it.arb`): Oggi,
+  Esplora, la sfida di oggi. The deploy stops if a twin is not what the
+  script writes, if a line of an English page has no Italian, or if the
+  table says a line no page shows any more. The other pages (the legal
+  pages, the 404, `/sfida`, `/invito`, a friend's card under `/c/`, the
+  card pages under `/q/`) hold both languages and show one. A few lines at
+  the top of every page choose, before anything is drawn: the language
+  picked with the switch in the nav (EN/IT), kept on the device under
+  `astute.lang`, or else the browser's (`navigator.language`), or else
+  English; `?lang=en` is the switch's own link. The twins name each other to
+  search engines (`hreflang`, English for everyone else). A card's own
+  words stay in English, as the app deals them, marked so. Another
+  language is a table beside `it.json`, its column in the chrome's and the
+  scripts' words, and its code in `chrome.LANGS` (`tool/site/README.md`).
+- **The list for the iPhone.** `/get#notify`, where every Apple badge leads
+  while the listing is not live, takes an email to be told, once, the day
+  Astute is on the App Store. `site/assets/notify.js` writes it straight into
+  Firestore through its REST API, with the site's own web config
+  (`keys.js`, as the account page), as a new document of `waitlist`: the
+  address, the page's language and the server's time, nothing else.
+  `firestore.rules` let anyone create one such document under a fresh
+  random id, well formed (an address's shape, at most 254 characters, a
+  two-letter language, the time the server stamps), and nobody read, change
+  or delete one; `tool/rules/rules.test.mjs` holds them to it. The privacy
+  policy (`/privacy#iphone-list`) says what is kept, why, and how to come
+  off it: the owner reads the list in the Firebase console, sends the one
+  email the day the app is there, and deletes the list. Without JavaScript
+  the form is an email link.
+- **A page for every card**, `/q/<id>`, written by `tool/cards/card_pages.py`
+  when the site is put together, for every card the app deals (books in
+  pills, which Astute+ gives whole, and the cards kept from a family setting
+  have none): the question as its title, the short answer and the why, the
+  source linked, the drawn card to play in place, four more to read next
+  (its strand's, its kind's, its subject's), and "Five like this every
+  morning" over the stores. Each says its
+  question and answer to search engines as Google documents them
+  (`FAQPage`; `QAPage` is for questions readers answer), is about 10 kB, and
+  is listed in the sitemap: `sitemap.xml` is an index of files of at most
+  50,000 addresses each, written from the bank at the same time.
+  `robots.txt` points to it and keeps the bare drawn pages
+  (`/cards/pages/`) and the web preview (`/app/`) out of searches.
 - **What the site measures**: the pages read and the store buttons pressed,
   `$pageview` and `store clicked` (`store`, `page`, `ref`), into the same
   PostHog project as the app, from `site/assets/main.js`. Nothing is kept on
@@ -70,8 +124,9 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   provider token, `APP_STORE_PROVIDER_TOKEN` in `tool/site/chrome.py`, which
   is empty until the owner sets it; the comment there says where it is. The
   web app under `/app/` has its own PostHog, below, and none of this.
-- `/sfida` is the challenge on today's five, written by
-  `tool/cards/sfida_page.py` when the site is put together: a friend sent
+- `/sfida` is Today's challenge in the browser (`/it/sfida` in Italian),
+  written by `tool/cards/sfida_page.py` when the site is put together: a
+  friend sent
   "Challenge a friend" from the app opens `sfida?d=2026-11-27&s=4` — the day
   the five were dealt and how many the reader got right, nothing else — and
   plays the same five in the browser, one at a time, each in its subject's
@@ -103,9 +158,9 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   once, in `tool/site/chrome.py`, and stamped onto every page between the
   markers each page carries; the deploy stops if a page has drifted. Astute
   is published by TheBaleCompany, and every page says so.
-- `robots.txt`, `sitemap.xml`, `manifest.webmanifest` (which names both
-  store listings, the Play one ahead of its day) and `assets/og.png`, the
-  picture a shared link shows.
+- `robots.txt`, `manifest.webmanifest` (which names both store listings,
+  the Play one ahead of its day) and `assets/og.png`, the picture a shared
+  link shows.
 - `/app/` is the app, built for the web: the live preview.
 - `/cards/cards.json` is the card bank the app refreshes from, and
   `/widget/days.json` today's shelf the iPhone widgets fall back on, with
@@ -215,8 +270,10 @@ repaints at once, and the status bar follows it.
 
 ## Screens
 
-**Free** — first run (the five-scene intro, then the subject run, and the
-genres under it, which is where the onboarding ends), Today with
+**Free** — first run (the five-scene intro, whose first page is a real
+card's question and the promise in plain words, then Your mix, and up to
+three subjects the reader loves, which is where the onboarding ends; one
+way on from each, no Skip), Today with
 the card stack and, once the five are done, the shelf, Explore (shelves of
 cards nobody dealt you, with a search over the whole pool), Saved with its
 empty state, Profile (the Astute score with the way into the journey under
@@ -255,7 +312,9 @@ all five are the reader's own, at the level the app has measured, with a
 card that came due for review. **Your journey**: the level and the numbers,
 every subject opened strand by strand, what stayed when a card came back,
 and the moves you keep missing — the screen is Astute+; the profile keeps
-the record itself free. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
+the record itself free, and where the server has the preview on, a free
+reader sees their own journey veiled with one figure of it in the clear a
+week (below, *Your journey*). **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
 fourteen days free, the only free trial there is. It is never offered in
 the first run: a new reader goes from the subjects to their first cards
 with no screen and no tap in between, and has not yet seen anything a plan
@@ -407,12 +466,34 @@ The one card in the app that is not a card. On the free plan it is the
 last card in the deck: it peeks from under the fifth like any next card,
 comes to the top when the fifth is thrown, and is thrown the same way — a
 rim of every colour the deck has, turning, with its light spilling onto
-the table, and one offer: "all five, yours". The button is the
+the table, and one true thing about the reader's own day, set large, with
+what Astute+ would have done with that day under it. The button is the
 paywall. Nothing times out and nothing says skip; a throw is the way past
-it, as it is past every other card. Then it is the last card on the shelf
-too, after the five, with the counter giving way to the plan's name and a
-dot of every colour under it. With Astute+ there is no sixth card at all:
-the five were all the reader's own, and there is nothing left to sell.
+it, as it is past every other card. With Astute+ there is no sixth card at
+all: the five were all the reader's own, and there is nothing left to sell.
+
+**One true thing a day** (`lib/state/sixth_line.dart`, said by
+`lib/widgets/sixth_card.dart`). The same sale every evening, word for word,
+was a card readers learnt to throw unread, and "free against Astute+" was
+never felt. So the card says what is true tonight, read off the day as it
+was dealt and answered, and what Astute+ would have done with it: how many
+of tomorrow's five will come at random ("With Astute+, all five chosen for
+you: from your mix, at your level"); how many of today's did; a card missed
+today at 80% sure or more ("With Astute+ it comes back in your five"); the
+cards got wrong that are back and waiting in Explore, where Astute+ deals
+them in the five, one a day; a subject the reader's answers measure a level
+above the one the free plan deals it at. A thing not true tonight is not
+said. The kinds come round in a turn, the first true one after the one the
+last day said, so no two days running say the same; once said, it is the
+day's, on the deck and on the shelf, through a relaunch
+(`AppState.sixthSaid`). A test holds every one of them to fitting the card
+on an SE in every language, the week's note over it.
+
+**Once an evening.** Dealt after the five, it is not met again on the
+finished day's shelf that day (`AppState.sixthDealtOn`): the shelf is the
+five. It ends on the offer only on a day the deck did not deal it — opened
+onto a day finished with no card after its five — with the counter giving
+way to the plan's name and a dot of every colour under it.
 
 It is dealt only when the day is finished *in this session* — opening the
 app onto a day already done goes to the shelf. `MagicCard`
@@ -429,6 +510,75 @@ are the reader's own instead of two, said once, the night before, where it
 reads as a reward rather than a rule. The offer and where the week has got
 to are the same subject, so they share a card, and a test holds the
 longest of it to fitting in every language on a small phone.
+
+On a reader's first finished day it waits on the table under the
+celebration of that day, and comes when the celebration goes (*The first
+day's end*).
+
+## The first day's end
+
+The end of a reader's first day decides whether they come back, and it
+used to end on the sale: the card after the fifth at once, and then, on the
+first evenings the server's experiment asks on (`push.firstAsk`, all of them
+now), the reminder sheet over the shelf. An analysis of the first day
+concluded, and the owner agreed, that it is celebrated first: the streak,
+the points and how sure against how right, then the reminder and the way
+on; the sale after it, never instead (`lib/widgets/first_day.dart`).
+
+The first time a reader with no day finished before finishes one, in this
+sitting, a screen of its own rises right after the fifth card is thrown,
+before anything else the evening has (TodayScreen, `firstDayDue`). Black at
+night and paper by day, as the app is and as the first week's page is,
+which this is the first of: the day's date, and "Your first day is done" in
+the display face; between two hairlines the streak, its flame and its one
+lit in the streak's orange as the profile lights them — the screen's one
+colour — and what the day's answers added to the Astute score
+(`scoreBookOf(app).overall.today`), counting up from nothing; then one plain
+line, how sure against how right: "You were 70% sure, and got 4 of 5
+right", the average of what the reader said where a card asked how sure
+(`Judgement.confidence`), against every graded answer given that day — the
+five's, and any card answered before them, as the score counts them; "You
+got 4 of 5 right" alone on a day no card asked, and nothing on a day with no
+answer, when the day's cards stand in the points' place. Nothing bounces
+and nothing falls from the sky: the lines rise into place one after
+another, and for a reader who asked for less motion everything is where it
+ends.
+
+At its foot "Remind me tomorrow", and Today's challenge, the five questions
+everyone gets that day at the top of Explore, which the report on new
+readers found the part of the app most worth sending a friend, and which the
+day's end never used to lead to; the way out quietly in the corner, as on a
+level reached. The button raises the reminder sheet down the shell's own
+road (`_offerReminder`, main.dart, with `from: celebration`): the same sheet
+and the same system prompt behind it as at the end of any day, asked once
+and counted once, and the time chosen takes the button's place ("We'll
+remind you tomorrow at 19:00"). It is there exactly when the shell would
+have put the sheet that evening — the prompt unspent, the nudge on,
+`AppState.shouldAskForPush` — and never where the phone already lets the app
+notify. The celebration is that evening's ask: used or passed over, the
+shell puts no sheet of its own that evening (`AppState.celebratedToday`),
+and a reader who passed it over is asked on a later evening, as ever, with
+nothing spent. Today's challenge closes it onto Explore, put back the way
+the tab opens (every subject, no search, at its top, `showBest`), where the
+challenge is the first thing; the card after the fifth stays on Today's
+table.
+
+After it, on the free plan, the card after the fifth, as it always was;
+with Astute+, the shelf. A friend's week given on that first day (*Invita
+un amico*) rises after it, once the shelf has landed, and never over it. A
+level reached that evening — rare, with ten answers needed behind the score
+— is not folded into it: it waits for the next calm moment, the next day
+finished or Your journey opened, as it waits on the evening of the first
+week's page; so does the day's own moment. Once on a phone
+(`knowit.firstDayCelebratedOn`); never on opening the app onto a day already
+finished, never on day two; a reader who signs out leaves it behind for
+whoever reads next.
+
+The developer tools put the end back as it was (*First day's end:
+Celebration / As before*; Celebration ships) and preview the screen with
+sample numbers. `tool/first_day_shots.dart` photographs both ends at night
+and on paper, the reminder rising from the celebration and the smallest
+phone in German; what it says is in docs/TRACKING.md (§6.3).
 
 ## Your journey
 
@@ -491,6 +641,42 @@ cards read, counts them with the week past the first day: "32 cards read,
 9 this week."
 Once the day is done, the day as five squares to send sits at the foot (the
 finished day sends it too, on either plan).
+
+**On the free plan, the preview** (`journey.preview`, off as built:
+`lib/screens/journey_preview.dart`). Without it, every way into the journey
+opens the plans, and a reader who does not pay never learns what they are
+missing. With it, the same doors — the finished day's button, which loses
+its lock, the profile's way in, the looks of What to learn — open the
+reader's own journey, worked out from their answers exactly as for
+Astute+: every chapter under its clear name, its body behind a soft blur
+(still, unread by a screen reader, a tap on it the plans). Over the
+chapters one figure is in the clear, a different one each week in turn —
+the blind spot, the strong point, how sure against how right, what they
+still remember when cards come back — and under it one quiet line, the
+lock and the link's colour of the journey's other doors: "A different
+figure each week. Astute+ opens the rest." It opens the plans on the
+journey's own door. The week's figure is its own in the turn while it can
+be said, or else the first after it that can, and once shown it is kept
+for the week (`journeyClear`, on the phone), so it does not change under
+the reader; where none can be said yet, the card names the week's figure
+and says what it takes ("Six answers in two subjects, and this shows the
+one you miss most"), never a sample. Nothing the preview veils is written
+down as seen, so a trial taken from it opens the journey counting from the
+start; taken there, the page turns into the journey at once.
+`journey preview opened` says which figure was in the clear.
+
+**The first reading.** How sure against how right is measured from twelve
+answers said how sure; until then the profile said "Not enough answers yet"
+and asked for ten more after two. From the second answer
+(`kEarlyReadingFrom`) it says what they came to so far, marked as a first
+reading, and how many more it takes: "So far: you said 80% twice, and you
+were right twice." — the level said most often, the higher of two said as
+often (`AppState.earlyReading`). The profile's How well you know yourself
+says it on either plan, and so does the journey under How you reason;
+`calibration.early` holds it back, on as built. The answers given in
+Today's five on Explore are never said how sure: the game asks for a pick
+or a share and nothing more, so they count for the levels and the
+subjects, and not here.
 
 Everything is counted from what the app writes down, with a date where it
 has one (`JourneyRecord`, in `lib/state/journey_record.dart`):
@@ -917,7 +1103,15 @@ app one prompt and no second chance, so spending it on a launch screen throws
 the channel away on someone who does not yet know what the app is. The app's
 own sheet asks first, and asks *when* rather than whether
 (`lib/widgets/reminder_ask.dart`): morning 08:30, lunchtime 12:30, evening
-19:00 or a time of the reader's own, starting on the time already set. It
+19:00 or a time of the reader's own, starting on the time already set. At
+its head it draws the notification itself, as the phone will show it at the
+time picked: the app's icon and name, that time, "Your five are ready" and
+the question the nudge will carry (`AppState.firstNudgeAt`, `leadOn`), on a
+ground of the time's colour, an iPhone's shape on an iPhone and Android's on
+Android; it changes the moment another time is picked. Under it the four
+times are tiles in the goal sheet's language — amber, yellow, violet, and
+the page's ink for a time of one's own — and the two answers stay in view
+while the rest scrolls. `tool/reminder_shots.dart` photographs it. It
 rises at a quiet moment — the shelf, once the card after the fifth has been
 thrown (straight after the fifth on Astute+), a launch onto a finished day,
 or the screens of a trial's purchase closing — and never over an offer or a
@@ -943,6 +1137,8 @@ tool/
   content/       the brief: what to write next, by genre, worked out from the bank
   icons/         the supplied artwork, and the script that resizes it
   illustrations/ the figures a card can carry — Python, run on a server
+  marketing/     a drawn card as a video for TikTok, Reels and Shorts
+store/           the store listing, its checker, and the Play screenshots
 web/cards/       cards.json, the bank as the site serves it
 ```
 
@@ -1091,15 +1287,42 @@ stops you in two seconds, a big drawing on both sides, a real source,
 nothing dark. Fifteen are the three days of a reader who leaned nowhere,
 five a day, read in their order; for a reader who held some subjects above
 the rest, the best of those come first, and a subject turned off never
-comes. The day keeps its shape — three to read, two that ask, the two
-questions the reader's own on the free plan, a review on Astute+, the card
-about home — and what the opening cannot fill, the reader's own dealer
-fills, never with a card marked dark or for adults. The first morning was
-dealt when the app opened, before the first run had asked anything, so
-every new reader of a date met the same five; it is dealt again when the
-first run ends. The opening is the phone's, whatever the server holds.
-Readers who were past the first run before it existed are dealt as they
-always were.
+comes. Three of each day's five ask and two are to read (`opening.asks`):
+a first day of two questions gave the calibration record, the app's
+promise, two answers to start from, and on those three days every card
+with a right answer asks how sure every time, never by its odds
+(`SureAsk.always`). Two of the questions are the reader's own on the free
+plan, a review comes on Astute+, the card about home keeps its place, and
+what the opening cannot fill, the reader's own dealer fills, never with a
+card marked dark or for adults. The first morning was dealt when the app
+opened, before the first run had asked anything, so every new reader of a
+date met the same five; it is dealt again when the first run ends. The
+opening is the phone's, whatever the server holds. Readers who were past
+the first run before it existed are dealt as they always were.
+
+**The rest of the first week.** After three days of drawings, a fourth of
+whatever the mix dealt was felt as a drop. So days four to seven are the
+phone's too (`firstWeek.drawn`, `dealFirstWeek`): four, four, three and
+three of their five are drawings, from the strongest the bank has — the
+ones judged good or excellent in the pass over every drawing, and every
+card redrawn since (`lib/data/drawn_ranks.dart`), then the acceptable
+ones, never the weak — one subject before any has two; the rest is the
+reader's own dealer's, so the cards of words come in a little at a time.
+From the eighth day the server deals as it does for everyone.
+
+**The second and third mornings, and the streak told.** The second day
+opened exactly as the first. Now Today says, over the cards, which day it
+is, how the day before went in its own numbers and the subject met for
+the first time ("Day 2. Yesterday 2 of 2, and you were 80% sure. Today,
+your first card in Space."), only where yesterday was read
+(`opening.dayLine`, lib/widgets/today_line.dart). The freeze that keeps a
+streak over a missed day was never told: the morning after one did, the
+same place says so first ("You skipped yesterday: your streak is
+safe."); from a streak of two the finished day says that a missed day is
+covered and how many freezes there are; and a streak reaching two, three
+and seven days rises once, small, after the five, in the manner of a
+level (`streak.told`, lib/widgets/streak_moment.dart), never on an
+evening that had its moment already.
 
 On the free plan two of the five are the reader's own —
 dealt from the mix, from the subjects and strands they kept on, at the
@@ -1181,8 +1404,8 @@ as its link alone. It used to go as a picture with the whole answer under
 it, the steps, the other side, the bar move and the source: in a chat, a
 wall of words that spoiled the one thing worth sending.
 
-**Challenge a friend.** Today's five on Explore are the one thing every
-reader shares that day, and the site has them too, so they can be a
+**Challenge a friend.** Today's challenge on Explore is the one thing
+every reader shares that day, and the site has it too, so they can be a
 challenge for two without an account or a board: a line in the reader's
 language — "I got 4 of today's 5 on Astute. Can you beat me?" — and a link
 to `/sfida`, where the friend plays the same five in a browser and sees both
@@ -1247,6 +1470,91 @@ right now" until the plan is bought, with nothing to deploy again. The
 switch `listen` (docs/REMOTE.md) is off in the build and in
 `remote/app.json`, and goes on once the key and the plan are in. Counted as
 `listen started`, `listen card heard`, `listen finished` and `listen
+stopped` (docs/TRACKING.md).
+
+## Books, read and heard
+
+The day's cards are made to be looked at, and read aloud they lose what
+makes them cards, so Listen stays off. A book is different: people read
+fifteen minutes of one on the page, and listen to it walking or driving.
+So a book of Books in pills has a longer way in beside its cards: its
+summary, the real argument and the real examples of the book, about 2,200
+words in five to eight parts, each with a title, in the cards' plain voice
+(`tool/cards/summaries/<book>.json`, held to its rules by
+`tool/cards/summaries.py`: the lengths, the edition its cards' cover is of
+named first in its sources, short quotations, no dash joining two clauses,
+no "it's not X, it's Y", none of the stock phrases). Five ship: the week's
+free book when they were written, The Structure of Scientific Revolutions,
+then the founders' most-recommended picks, Sapiens, Guns, Germs, and Steel,
+Influence and Business Adventures. The bundler publishes each as a file of
+its own, `web/cards/summaries/<book>.json`, named in the bank by the hash
+of its bytes, and builds them into the app
+(`lib/data/embedded_summaries.dart`), so the five open on a phone that has
+never been online; a summary added or revised later is fetched when its
+book is opened, and kept.
+
+**Read.** The book's page opens on "Read in 15 minutes" (the minutes are the
+summary's own, at 150 words a minute), then "Listen", then the summary's
+parts in order, each read, still to read or for Astute+; its cards follow,
+as they were. The reader (`lib/books/summary_reader.dart`) is a page of a
+book: a bar with the title and the contents, a stroke a part that fills as
+the reader goes, and a part to a page, its place in the book, its title,
+its paragraphs in Figtree at 17.5 points with room between the lines, and
+at its foot the next part's title. A swipe turns the page. Where the reader
+stopped, and how far down, is kept on the phone (`SummaryShelf`), and the
+next opening goes straight back there; the last page is the book read, and
+its cards offered to make its ideas stay.
+
+**Heard.** The same page reads the summary aloud (`lib/books/`): each part
+is one clip, its title and then its paragraphs, asked of the server one
+ahead of the voice and played through Listen's own queue (just_audio,
+speech, the `audio` background mode), so it goes on with the screen locked.
+The player is a sheet over the page: the parts, the one being read lit,
+a stroke a part that fills as each is heard, the minutes left, back fifteen
+seconds, play and pause, on to the next part, and Stop listening. Closed,
+it leaves a small player over every screen, a tap from the whole one and a
+cross from stopping; it steps aside while Today's deck is on the table,
+while a screen of cards is open, and under any sheet, because nothing
+covers a card. A part heard is a part read: the reader opens where the
+voice stopped.
+
+**Who gets what.** The week's free book (worked out on the server exactly
+as the phones work it out, `bookOfTheWeek`, with a day's grace where a
+phone's clock turns the week later) is free to read and to hear, and so is
+the first part of any book. The rest is Astute+, through `requirePlus`
+with the source `book summary` for a part read and `book audio` for a part
+heard; with Astute+ taken there, the reader goes straight on.
+
+**The voice, and what it costs.** ElevenLabs reads it
+(`functions/src/books.ts`, the callable `bookClip`), in Listen's voice,
+Finley, "Articulate Anchor", which a new account can use through the API
+on any paid plan, on **Eleven v4 Turbo**: at $0.04 for a thousand
+characters it costs half of v4, and of the models at that price it is the
+most expressive by ElevenLabs' own account, the real-time twin of v4, where
+Flash, the other, is made for speed. A summary is about
+13,200 characters read aloud, so about **53 cents a book, once**; the five
+together are 66,000 characters, $2.64. Each clip is kept in Storage
+(`books/{hash}.mp3`, indexed in `bookClips/{hash}`) under the hash of its
+words, its voice, its model and its settings: every reader after the first
+hears the same file, a changed summary reads only the parts that changed,
+and two readers asking at once wait for one reading. The book audio keeps
+to its own month, `BOOK_AUDIO_MONTH_CHARS` (120,000 characters) in
+`functions/src/limits.ts`, counted in `bookSpend/{month}`, under the 150,000
+that ElevenLabs' Starter plan ($6 a month, $1 the first) includes on v4
+Turbo; a book is begun only when every part of it still to be read fits in
+what the month has left, so none is left half read. The server reads the
+summary the bank names, from the copies the functions are deployed with
+(`npm run data` copies `web/cards/summaries/`) or, for one revised since,
+from the site, and only when its hash is the one named: the phone sends a
+book and a part, never words.
+
+The key is Listen's, `ELEVENLABS_API_KEY`: without it the function answers
+"not configured" and the app hides listening for the sitting; with a key
+but no credit, the player says calmly that listening is not available right
+now, with the way to try again. The switch `bookAudio` (docs/REMOTE.md) is
+off in the build and in `remote/app.json`: off, the summaries are read and
+not heard. Counted as `summary opened`, `summary part read`, `summary
+finished`, `book audio played`, `book audio finished` and `book audio
 stopped` (docs/TRACKING.md).
 
 ## Liked, saved, and less like this
@@ -1530,6 +1838,112 @@ is a RevenueCat package missing; one whose price never arrives is an App
 Store product not yet *Ready to Submit*. The first subscriptions go to App
 Review with an app version, attached on the version's page.
 
+**The paywall's two lines.** Under what Astute+ is, the evidence, only
+as far as it holds up: calibration — how sure you are against how often
+you are right — can be measured and trained with feedback, as forecasting
+research does (Tetlock, Mellers), and Astute measures yours. No percentage:
+the Good Judgment Project's training effect is disputed (Hauenstein et al.,
+*Psychological Science*, 2025). And under the button, beside "Cancel any
+time", that the app warns two days before the charge — the warning it
+arms (`AppState.trialWarning`, a notification at the reader's hour two days
+before the store's trial turns into the year, whatever the daily nudge's
+switch says), said only on a plan that starts with free days and to a
+reader it can notify. The price, the month the year comes to, the saving
+("SAVE 37%") and the free days are all the store's own: a price changed in
+App Store Connect or Play Console is said right with no new build
+(`yearlySaving`, from the store's two prices). The site's plan picker is
+written by hand and is not.
+
+**The web's word.** The web app sells nothing; its paywall says where
+Astute+ is, as the stores stand (`kAppStoreOpen`, `kGooglePlayOpen` in
+`lib/store_links.dart`, held to the site's switches by
+`tool/remote/test_app.py`): on Android now, the iPhone app on its way.
+
+## The new reader's gift
+
+Behind `trial.reverse`, off as built (`lib/state/gift.dart`, the screens
+in `lib/screens/gift_pages.dart`). What Astute+ adds is only understood by
+using it for days; the first run's offer asked for it after one card. With
+the switch on, where the first run would offer the store's trial — after its
+one card — a new reader is *given* Astute+ for fourteen days instead: "Astute+
+is yours for 14 days. No card, nothing to cancel.", the days on the trial's
+own rail (today, the thirteenth's note where it can reach them, the
+fifteenth: the free plan again, nothing charged), and one button to the
+five. Nothing is bought and the store knows nothing of it: it is held on the
+phone (`AppState.giftFrom`, its first day), and `isPlus` is the plan or the
+gift while `paidPlus` is the plan alone, which the paywall sells against —
+so a reader in their gift can still buy, and the profile's plan row says
+"Astute+ · a gift until …" and opens the paywall, not the store's screen.
+The server is told the plan as each morning has it, and a day it dealt the
+night before as Astute+'s is not taken for a free reader's.
+
+- **Who.** A new reader, in the first run: never one the store ever held
+  Astute+ for (a trial or a plan, running or over), never twice on a phone
+  (a sign-out takes the gift with the reader, and the phone remembers it
+  gave one), never on the web's preview. A gift given is never taken back by
+  the switch.
+- **Honest on every phone.** The first day travels in the account's backup
+  (`ReaderSnapshot.giftFrom`), and a merge keeps the earlier: signing in on
+  a new phone keeps the days the first one gave and gives no more. A phone
+  reinstalled without signing in keeps nothing, as with everything else the
+  app keeps; the store's word that it once held Astute+ for the reader is
+  the one memory left, and it is honoured.
+- **The last two days.** One quiet line under the finished day's name
+  ("Astute+ is yours for 2 more days.", then "Last day of Astute+."), and on
+  the thirteenth, for a reader with the nudge on, that morning's nudge says
+  it in its title: the gift's one notification.
+- **The morning after.** Before the five are begun, once, within two weeks
+  of the end, and once the store has answered: "Your 14 days of Astute+.",
+  the reader's own numbers — cards read, days read of fourteen, points off
+  and where they started, moves missed and then got right — then what goes
+  back to the free plan (three of the five at random, misses waiting in
+  Explore rather than coming back, the assistant), "Keep Astute+", which is
+  the paywall in its place, and "Continue for free".
+- **The store's own trial on top.** RevenueCat sells the year with the
+  store's introductory offer; a reader who never had it is still eligible
+  after the gift, so buying the year on the fifteenth starts the store's
+  fourteen free days, and the paywall says so at the store's own terms.
+
+## Explore's end, for the free plan
+
+Behind the number `explore.freeCards`, nought as built (no end;
+`lib/explore/blocks/core/feed_cap.dart`): with a number, once the cards a
+free reader has read today beyond the day's five reach it, Explore's endless
+flow lays no more bands and a calm card stands where the next would have
+been — "That's Explore for today.", how many were read, more tomorrow, and
+"With Astute+, Explore has no end." with the door to the paywall. Soft:
+what is on the page stays open, the shelves above it are as they were, and
+nothing is taken away under the reader's finger.
+
+## Being found: the store listing, and a card a day
+
+The words in the stores are kept beside the app, in `store/listing.md`, in
+English and Italian, and `store/check_listing.py` holds them to the app as
+it is: every number they say (the twenty subjects, the five cards a day and
+the two a free day chooses, the fourteen free days, the two minutes, the
+thirteen languages, the cards drawn) is read from the code and compared,
+each Google Play description has to say the first of them and that the
+cards are in English, and a feature behind a switch that is off in
+`remote/app.json` may not be named at all. Google Play's own rules for the
+title and the short description are held too, and `store/play_it_en.md`,
+the page the owner fills the Play Console from, has to carry every field
+word for word (`python3 -m unittest store/test_check_listing.py`).
+
+The listing's pictures are the app itself: `tool/store_shots.dart`
+photographs five screens on an Android phone (its status bar, the camera's
+hole, the gesture bar), in the language `LANG_SHOT` names, with the drawn
+cards as `tool/cards/card_check.cjs` photographs them bare in the same
+language; `store/compose_shots.py` sets each in a plain Android phone under
+a caption written by hand, as the 1080 × 1920 pictures in `store/play/`.
+
+`tool/marketing/card_video.cjs` makes a drawn card into a vertical video
+for TikTok, Reels and Shorts, about twenty seconds, and
+`tool/marketing/README.md` says how one is made and posted each day. The
+drafts for the launch the owner sends himself (Show HN, Product Hunt,
+LessWrong and the forecasting forums, the creators the cards come from, a
+message asking friends for the first reviews) are in `docs/launch/`, each
+with what has to be true before it goes.
+
 ## Astute+ on the web, and the account page
 
 `/account` is a reader's Astute on the web: the same account as the app,
@@ -1643,17 +2057,30 @@ when something has been pushed over it. A visit sends `$screen` as it begins
 and `screen left` as it ends: the time in front, how far down it was
 scrolled, the drags and taps, and where the reader came from and went.
 
-**Nothing is measured before a yes.** The intro's foot asks whether Astute
-may measure how the app is used — "Help make Astute better?", with No,
-thanks and Yes, share side by side and of one size — in all thirteen
-languages. It is not in the way: Start reading goes on without an answer,
-and no answer is a no. A reader who started without answering, or whose
-phone had the app before the question, is asked once more, as a sheet that
-waits for one of the two answers, after a finished day (after the reminder
-sheet, before the account's). PostHog is not even set up until the answer
-is yes: nothing is captured, queued or sent before it, and nothing after a
-no. What is stamped on every event, where the install came from and who the
-reader is are kept on the phone and said the moment a yes starts it.
+**Nothing is measured before a yes.** Nothing is asked before a card. At
+the end of the first day — after the day's celebration and after the
+reminder's question, which goes first — a calm card on the finished day's
+shelf asks whether Astute may measure how the app is used: "Help make Astute
+better? We count how the app is used, with no advertising and never your
+name", with No, thanks and Yes, share side by side and of one size, in all
+thirteen languages (`lib/widgets/consent_card.dart`). It is not in the way:
+the shelf is all there around it, and no answer is a no. It stays on the
+shelf, day after day, until it is answered. PostHog is not even set up until
+the answer is yes: nothing is captured, queued or sent before it, and
+nothing after a no. What is stamped on every event, where the install came
+from and who the reader is are kept on the phone and said the moment a yes
+starts it.
+
+**The first steps, counted without knowing who.** Whether the start of the
+app works is counted on our own server, as Today's five counts its crowd:
+four steps of a phone new to the app — the first open, the first run's
+questions answered, a first day read, and a return the day after the first
+open — each sent once as a plain request with the step and the date and
+nothing else, no account and no id of the phone, and added to that day's
+total in `steps/{day}` (`lib/measure/first_steps.dart`,
+`functions/src/steps.ts`). Only from an install the App Store or Google
+Play made. They say nothing about anyone, so they are counted whatever the
+answer about usage data, and the privacy policy says so.
 
 **The reader's switch** in the About box of Profile is the same answer, off
 until the reader has said yes. It is applied the moment it moves, and
@@ -1684,8 +2111,8 @@ up and *advanced* with how long it held the reader; answered with how long it
 took. The day says which slot each card fills; the end of the day how many
 were right and wrong. A streak that breaks is said once, milestones and
 records when they happen. The first run is measured step by step and scene by
-scene, with how long each held the reader and where it was skipped — from
-the corner, or by continuing without an account (`intro skipped`, `by`). The
+scene, with how long each held the reader and the scene Start reading left
+from (`intro skipped`, `at_scene`). The
 paywall says which plan was picked, how long it was open, how it was left and
 which link was opened; the store says what it put on sale and every change to
 the subscription — trial, renewal switched off, billing issue, expiry. Then
@@ -1784,10 +2211,9 @@ These are declared in the UI rather than faked:
 - **Notification delivery.** The permission is asked for and the token is
   registered, so a phone can be reached — but nothing sends yet. Deciding who
   gets what, and when in their own timezone, is the work that remains.
-- **Email sign-in.** Not offered. Apple and Google are wired; the intro's
-  third line is *Continue without an account*, which goes where Skip goes,
-  rather than an email button with nothing behind it, and the line under
-  them says continuing, not signing up. Firebase's email link needs a domain
+- **Email sign-in.** Not offered. Apple and Google are wired, behind the
+  intro's quiet *Sign in* under Start reading, rather than an email button
+  with nothing behind it; nobody is asked to make an account before a card. Firebase's email link needs a domain
   of ours with universal links, since Dynamic Links was retired.
 - **The nightly pipeline has not run for real.** The pipeline that grows
   the bank is built and tested against a canned model; the first real night
@@ -1869,7 +2295,8 @@ and *Card foot*, A line, B two lines, C buttons or D links
 whose page is told it as `foot` as it was told the build's `SOURCE_FOOT`,
 which still sets the way when none is picked; A is the default; *Share
 picture*, the picture the day is sent as, A as it was, B the cards, C light,
-which ships (Share my day, above); and *Hard cards*, as today or ringed
+which ships (Share my day, above); and *Hard cards*, ringed, which ships
+since the owner chose it on 28 November 2026, or as today
 (`lib/widgets/hard_ring.dart`): a hard card, wherever it is read — Today's
 deck and shelf, the deck viewer, Explore's cards — front and back, dark,
 ringed in its subject's colour, its subject's name in it and HARD in its
@@ -1877,10 +2304,23 @@ head, as Explore's shelf of the hardest draws them; on the day paper the
 raised paper, a pale colour taken to its darker tone. A card in words is
 drawn in those colours; a drawn card's page is told them as `hard`, and the
 kit draws itself in them (its ground, its subject's colour as its ink, the
-question in the light ink), while a page told nothing draws as it always
-has. Its pictures are not taken again, so with the look on the shelf and
-Explore still show a drawn hard card as it was. The cameras are
-`tool/hard_card_shots.dart` and `HARD=1 node tool/cards/card_check.cjs`.
+question in the light ink; on the day paper the ink taken down until small
+words read in it, 4.5 to 1), while a page told nothing draws as it always
+has. Every hard drawn page draws in the kit's ink and ground (`--k`, `--c`,
+`--edge`), or in colours of its own that it lights up on the night ground
+or takes down on the paper (`.kit-hard[data-theme=…]`), so it is right as
+it was, ringed at night and ringed on paper: a new hard page is checked in
+all three (`node tool/cards/card_check.cjs`, then `HARD=1` and `HARD=day`).
+Its pictures are taken ringed too (`tool/cards/thumbs.cjs`, the colours
+from `tool/cards/hard_env.cjs`), at night and on the day paper, beside the
+ones of the card as it was, and named with a hash of their own
+(`RINGED`, in `bundle.py` and `thumbs.cjs` alike, bumped in both when the
+ring's look changes; `test_pages.py` holds them together): the finished
+day's shelf, Saved, the archive and a card's page show the one for the
+reader's paper inside the ring (Explore shows its cards in words), and a
+hard card with none taken yet in words, ringed; the picture of the day sent
+away keeps each card's own. The cameras are `tool/hard_card_shots.dart`,
+`tool/hard_picture_shots.dart` and `HARD=1 node tool/cards/card_check.cjs`.
 Under the looks, beside *Open the paywall*, *Preview: your first week* and
 *Preview: your first month* open those two pages with sample numbers, on
 either plan, keeping and counting nothing (`lib/screens/first_offer.dart`).
@@ -1928,6 +2368,12 @@ errors.
 improved forecasting accuracy by around 10% on Brier score, sustained across
 four years of tournament
 ([Mellers et al., Good Judgment Project](https://www.cambridge.org/core/journals/judgment-and-decision-making/article/developing-expert-political-judgment-the-impact-of-training-and-practice-on-judgmental-accuracy-in-geopolitical-forecasting-tournaments/123EB18425391D05FA6581FDBB3F309F)).
+A 2025 re-analysis of the same data found the effects of training and teams
+shrank, vanished or reversed once the questions forecasters chose to answer,
+and when, were accounted for
+([Hauenstein et al., Psychological Science, 2025](https://doi.org/10.1177/09567976241266481)),
+which Mellers and colleagues dispute; so the site states no figure, says what
+the 2014 study found, and links both.
 
 ### Three things that follow
 
@@ -2078,6 +2524,31 @@ sure about and wrong about. That last list is the page in this app most
 worth going back to. It is reachable from the record and from the profile,
 and on Sunday the finished day offers it directly, which is the one moment
 a reader is already looking at what a day came to.
+
+**Sunday's week, free** (`week.sunday`, off as built:
+`lib/state/your_week.dart`, `lib/widgets/your_week_sheet.dart`). On Sunday,
+once the five are read, a reader on the free plan is shown their week in a
+sheet: the cards read, the right answers, how sure against how right (over
+how many answers, said under it), the days in a row and the subject they did
+best in, two to a row between hairlines; under them one figure only Astute+
+shows, its name clear and the reader's own figure blurred — where they trust
+themselves too much, else their blind spot, else what they still remember,
+and none at all rather than a sample — a tap on it the plans; then "Review
+the week", the week's first five gone over again as the journey's foot goes
+over them, answered for the reader alone, and Close. A reader who missed
+Sunday gets the week gone by on Monday morning, before noon, at a calm
+moment: Today before its first card is thrown, or the day done. Once a week
+(`weekShownFor`), never on Astute+, the first day or a week with nothing
+read, and never on an evening something else has: a level, the first week's
+page, the trial's offer, the reminder sheet or the store's rating sheet. The
+shell raises it after the reminder's, the consent's and the account's own
+sheets, in a sitting nothing else has asked in. To a reader without an
+account it offers one in one line, "Keep your week on every phone", which
+opens the sign-in sheet with Apple and Google under that title — the way back
+to a reader who uninstalls, with no address of the app's own collected or
+written to. The line is offered three weeks at most, never again once its
+sheet is closed without an account, and never while `account.offer` holds
+the account back. `week sheet shown` and `week sheet closed` count it.
 
 **The nudge carries the question.** Not "three days in a row, keep it up" —
 that is a message about the app's counter. The reminder is the first

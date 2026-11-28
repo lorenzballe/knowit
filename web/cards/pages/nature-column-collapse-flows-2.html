@@ -114,15 +114,22 @@ Kit.onShow.card = () => {
   txt(labB, W * 0.73, ay + fs * 1.15, 'and searing hot', '#8a1c00', 800);
 };
 
+// The answer, once the collapse has been picked: due when its flow lands, and kept due whatever
+// is tapped after (switched back before it lands, the answer still comes in).
+let due = null;
+function finish() {
+  if (done) return;
+  done = true; if (due) due.kill();
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+}
+
 function go(m) {
   if (m === mode) return;
   mode = m; Kit.haptic('selection');
   document.querySelectorAll('#sw .opt').forEach(b => b.classList.toggle('on', +b.dataset.m === m));
   if (tl) tl.kill();
   const S = m ? P.B : P.A, k = Kit.calm ? 0 : 1;
-  tl = gsap.timeline({onComplete: () => {
-    if (m && !done) { done = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }
-  }});
+  tl = gsap.timeline({onComplete: () => { if (m) finish(); }});
   puffs.forEach((c, i) => {
     const t = i / (N - 1), p = S[i];
     if (m) {
@@ -134,6 +141,8 @@ function go(m) {
     }
   });
   setLabels(m, 0.4 * k);
+  // The collapse picked: the answer is due when its flow lands, whatever is tapped after.
+  if (m && !due) due = gsap.delayedCall(tl.duration(), finish);
 }
 Kit.$('sw').addEventListener('click', e => { const b = e.target.closest('.opt'); if (b) go(+b.dataset.m); });
 

@@ -10,3 +10,8 @@ reads or writes a code or a week, its own included. Needs Node and Java.
 The counts are the one place a stranger's write lands on a shared document,
 so every way of moving one by more than one, or moving two, or taking one
 back, or writing into a week that is over, is tried and has to fail.
+
+The list for the iPhone (`waitlist/`, written by the site's /get page) is the
+one place anyone at all may write, signed in or not: so every way of putting
+more than an address, a language and the server's moment into it, of reading
+it back, or of changing or taking away a name on it, is tried too.

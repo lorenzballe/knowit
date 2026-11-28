@@ -12,6 +12,14 @@ const String kAppStoreUrl = 'https://apps.apple.com/app/id6806852300';
 const String kGooglePlayUrl =
     'https://play.google.com/store/apps/details?id=com.astuto.app';
 
+/// Whether each listing is live, as the site says it (APP_STORE_OPEN and
+/// GOOGLE_PLAY_OPEN in tool/site/chrome.py, which tool/remote/test_app.py
+/// holds these to): the web app's paywall offers only a store that is, and
+/// says the other is on its way. Astute is on Google Play; the App Store's
+/// listing is made and not live yet. The day it is, both change together.
+const bool kAppStoreOpen = false;
+const bool kGooglePlayOpen = true;
+
 /// Where a subscription is managed in each store, as the receipt after a
 /// purchase links it.
 const String kAppStoreSubscriptionsUrl =

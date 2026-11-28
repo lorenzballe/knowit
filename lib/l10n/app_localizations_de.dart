@@ -657,7 +657,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get manageSubscription => 'Abo verwalten';
 
   @override
-  String get howPillsAreWritten => 'Wie Karten geschrieben werden';
+  String get howPillsAreWritten => 'Wie wir die Karten schreiben';
 
   @override
   String get howTitle => 'Jede Karte hier schreibt ein KI-Modell.';
@@ -667,7 +667,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wir sagen es lieber gleich, als dass du es selbst herausfindest. So kommt eine Karte zu dir.';
 
   @override
-  String get howStep1Title => 'Vorab geschrieben, von einem Modell';
+  String get howStep1Title => 'Mit KI geschrieben';
 
   @override
   String get howStep1Line =>
@@ -989,6 +989,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reminderAskOther => 'Andere Uhrzeit';
 
   @override
+  String get reminderAskPick => 'Du wählst';
+
+  @override
   String get reminderAskUsual => 'Wann du meistens liest';
 
   @override
@@ -1113,7 +1116,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Alles ist drin. Schieb ein Fach nach links, um weniger davon zu sehen, oder ganz nach links, um es zu streichen.';
+      'Alles ist drin. Tippe ein Fach an, um es wegzulassen, oder schieb es nach links, um weniger davon zu sehen.';
+
+  @override
+  String get mixLeaveOut => 'Weglassen';
+
+  @override
+  String get mixPutBack => 'Wieder rein';
+
+  @override
+  String get lovesTitle => 'Wähl die drei, die du liebst';
+
+  @override
+  String get lovesLine =>
+      'Bis zu drei. Deine ersten Tage beginnen mit ihnen, und danach kommen sie öfter.';
+
+  @override
+  String lovesCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n von 3',
+      zero: 'Tippe bis zu drei an',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lovesFull => 'Höchstens drei: Tippe eins an, um es loszulassen.';
 
   @override
   String get next => 'Weiter';
@@ -1144,6 +1174,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get swipeToSeeMore => 'Wischen für mehr';
 
   @override
+  String get introPromiseTitle => 'Fünf Karten am Tag, zwei Minuten';
+
+  @override
+  String get introPromiseLine =>
+      'Sag, wie sicher du bist – und sieh, wie weit du deinem Wissen trauen kannst.';
+
+  @override
   String get tagline =>
       'Versteh das Warum der Dinge und wie weit du deinem Wissen trauen kannst';
 
@@ -1152,7 +1189,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Vorab von einem Modell geschrieben, und jede nennt ihre Quelle.';
+      'Mit KI geschrieben, dann geprüft, und jede nennt ihre Quelle.';
 
   @override
   String get introQuestionTitle => 'Eine Frage, wie sicher, dann das Warum';
@@ -1908,13 +1945,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => 'Die fünf von heute';
+  String get fiveTitle => 'Herausforderung des Tages';
 
   @override
   String get fiveSame => 'Heute dieselben fünf für alle. Etwa zwei Minuten.';
 
   @override
-  String get fiveDone => 'Die fünf von heute · fertig';
+  String get fiveDone => 'Herausforderung des Tages · geschafft';
 
   @override
   String dailyOf(int max) {
@@ -2003,7 +2040,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · Die fünf von heute · $date';
+    return 'Astute · Herausforderung des Tages · $date';
   }
 
   @override
@@ -2017,7 +2054,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Die fünf von heute auf Astute: dieselben fünf Fragen für alle. Wie viele schaffst du?';
+      'Die Herausforderung des Tages auf Astute: dieselben fünf Fragen für alle. Wie viele schaffst du?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -2302,6 +2339,26 @@ class AppLocalizationsDe extends AppLocalizations {
       'lead': 'Führung',
       'culture': 'Allgemeinwissen',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Ein gutes Argument von einem täuschenden unterscheiden.',
+      'decisions': 'Mit Risiken und Wahrscheinlichkeiten entscheiden, nicht aus dem Bauch.',
+      'money': 'Preise, Zinsen, Angebote: wohin dein Geld geht.',
+      'numbers': 'Prozente und Diagramme lesen, ohne sich täuschen zu lassen.',
+      'talk': 'Verstanden werden, mündlich und schriftlich.',
+      'persuade': 'Überzeugen und merken, wenn man dich überzeugen will.',
+      'people': 'Warum Menschen tun, was sie tun.',
+      'fakes': 'Falschmeldungen, gefälschte Fotos und aufgeblasene Studien erkennen.',
+      'science': 'Eine Idee prüfen, bevor man ihr glaubt.',
+      'focus': 'Die Aufmerksamkeit länger dort halten, wo sie zählt.',
+      'lead': 'Eine Gruppe führen und für alle entscheiden.',
+      'culture': 'Geschichte, Wissenschaft, Kunst: was alle zitieren.',
+      'other': '',
     });
     return '$_temp0';
   }
@@ -2860,6 +2917,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Teile, wie du die App nutzt – nie deinen Namen, deine E-Mail oder was du schreibst.';
 
   @override
+  String get consentCardLine =>
+      'Wir zählen, wie die App genutzt wird – ohne Werbung und nie mit deinem Namen.';
+
+  @override
   String get consentNo => 'Nein, danke';
 
   @override
@@ -2879,6 +2940,16 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get genresLine =>
       'Tippe ein Genre an, um es zu überspringen. Halte es, und die kleineren Themen darin öffnen sich direkt darunter.';
+
+  @override
+  String get partsOfferLine =>
+      'Nach ein paar Tagen kennst du die Karten. Behalte in jedem Fach die Teile, die du willst, und lass den Rest.';
+
+  @override
+  String get partsOfferChoose => 'Teile wählen';
+
+  @override
+  String get partsOfferNotNow => 'Nicht jetzt';
 
   @override
   String get insideGenre => 'Darin';
@@ -6444,7 +6515,7 @@ class AppLocalizationsDe extends AppLocalizations {
       one: '1 Punkt daneben',
       zero: 'genau getroffen',
     );
-    return 'Die heutige Herausforderung bei Astute: $_temp0. Schaffst du es besser?';
+    return 'Die Wette des Tages bei Astute: $_temp0. Schaffst du es besser?';
   }
 
   @override
@@ -7318,6 +7389,119 @@ class AppLocalizationsDe extends AppLocalizations {
   String get listenNextCard => 'Nächste Karte';
 
   @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'In $minutes Minuten lesen',
+      one: 'In 1 Minute lesen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => 'Weiterlesen';
+
+  @override
+  String get summaryAgain => 'Noch einmal lesen';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return 'Teil $part von $of';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'noch $n Min.',
+      one: 'noch 1 Min.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return 'Anhören · $minutes Min.';
+  }
+
+  @override
+  String get summaryPause => 'Pause';
+
+  @override
+  String get summaryResume => 'Weiter anhören';
+
+  @override
+  String get summaryFreeNote =>
+      'Der erste Teil ist kostenlos, der Rest gehört zu Astute+.';
+
+  @override
+  String get summaryTitle => 'Die Zusammenfassung';
+
+  @override
+  String get summaryNowPlaying => 'Läuft gerade';
+
+  @override
+  String get summaryNextPart => 'Nächster Teil';
+
+  @override
+  String get summaryFinish => 'Abschließen';
+
+  @override
+  String get summaryContents => 'Inhalt';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return 'Du hast $title gelesen';
+  }
+
+  @override
+  String get summaryDoneLine =>
+      'Die Karten des Buchs helfen, dass seine Ideen bleiben.';
+
+  @override
+  String get summaryToCards => 'Die Ideen als Karten';
+
+  @override
+  String get summaryBackToBook => 'Zurück zum Buch';
+
+  @override
+  String get summaryGateTitle =>
+      'Der Rest dieser Zusammenfassung gehört zu Astute+';
+
+  @override
+  String summaryGateLine(int parts) {
+    return 'Alle $parts Teile zum Lesen und Hören, für jedes Buch. Das Buch der Woche ist für alle kostenlos.';
+  }
+
+  @override
+  String get summaryNeedsNetwork =>
+      'Diese Zusammenfassung braucht einmal Internet.';
+
+  @override
+  String get bookAudioBack => '15 Sekunden zurück';
+
+  @override
+  String get bookAudioWaiting => 'Der nächste Teil kommt gleich…';
+
+  @override
+  String get bookAudioDone => 'Bis zum Ende gehört.';
+
+  @override
+  String get bookAudioOfferTitle => 'Hör den Rest des Buchs';
+
+  @override
+  String get bookAudioOfferLine =>
+      'Mit Astute+ wird dir jede Zusammenfassung ganz vorgelesen, auch bei gesperrtem Bildschirm.';
+
+  @override
+  String get bookAudioStop => 'Wiedergabe beenden';
+
+  @override
+  String get bookAudioOpen => 'Player öffnen';
+
+  @override
   String get inviteSection => 'Freunde';
 
   @override
@@ -7440,4 +7624,428 @@ class AppLocalizationsDe extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => 'Dein erster Tag ist geschafft';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return 'Du warst dir zu $sure % sicher und hattest $right von $total richtig.';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return 'Du hattest $right von $total richtig.';
+  }
+
+  @override
+  String get firstDayRemind => 'Erinnere mich morgen';
+
+  @override
+  String firstDayReminded(String time) {
+    return 'Wir erinnern dich morgen um $time.';
+  }
+
+  @override
+  String get earlyReadingTag => 'Erste Einschätzung';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n-mal $level % gesagt und lagst jedes Mal richtig',
+      two: 'zweimal $level % gesagt und lagst beide Male richtig',
+      one: 'einmal $level % gesagt und lagst richtig',
+    );
+    return 'Bisher: Du hast $_temp0.';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n-mal $level % gesagt und lagst jedes Mal falsch',
+      two: 'zweimal $level % gesagt und lagst beide Male falsch',
+      one: 'einmal $level % gesagt und lagst falsch',
+    );
+    return 'Bisher: Du hast $_temp0.';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n-mal',
+      two: 'zweimal',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      right,
+      locale: localeName,
+      other: '$right-mal',
+      two: 'zweimal',
+      one: 'einmal',
+    );
+    return 'Bisher: Du hast $_temp0 $level % gesagt und lagst $_temp1 richtig.';
+  }
+
+  @override
+  String get journeyClearEyebrow => 'Diese Woche frei sichtbar';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return 'Dein blinder Fleck: $subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return 'Deine Stärke: $subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return '$pct richtig, bei deinen letzten $n Antworten in diesem Fach.';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days Tagen',
+      two: 'zwei Tagen',
+      one: 'einem Tag',
+    );
+    return 'Nach $_temp0 weißt du noch $right von $of.';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks Wochen',
+      one: 'einer Woche',
+    );
+    return 'Nach $_temp0 weißt du noch $right von $of.';
+  }
+
+  @override
+  String get journeyClearBlindNotYet =>
+      'Sechs Antworten in zwei Fächern, dann steht hier das, in dem du am häufigsten danebenliegst.';
+
+  @override
+  String get journeyClearStrongNotYet =>
+      'Sechs Antworten in einem Fach, dann steht hier das, in dem du am stärksten bist.';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Noch $n Antworten mit „wie sicher“, dann steht hier eine erste Einschätzung.',
+      one: 'Noch eine Antwort mit „wie sicher“, dann steht hier eine erste Einschätzung.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      'Karten kommen nach 2, 7 und 21 Tagen zurück: Hier siehst du, wie viele du noch weißt.';
+
+  @override
+  String get journeyPreviewDoor =>
+      'Jede Woche eine andere Zahl. Astute+ öffnet den Rest.';
+
+  @override
+  String weekSheetOf(String date) {
+    return 'Die Woche vom $date';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$right von $n';
+  }
+
+  @override
+  String get weekSheetRightLabel => 'Richtige Antworten';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'bei $n Antworten',
+      one: 'bei 1 Antwort',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => 'Wo du dir zu sehr vertraust';
+
+  @override
+  String get weekSheetMemoryLabel => 'Was du noch weißt';
+
+  @override
+  String get weekSheetAccount => 'Behalte deine Woche auf jedem Handy';
+
+  @override
+  String giftTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ gehört dir für $days Tage.',
+      one: 'Astute+ gehört dir für einen Tag.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftMark => 'gehört dir';
+
+  @override
+  String get giftLine => 'Ohne Kreditkarte, ohne Kündigung.';
+
+  @override
+  String get giftStepEndLine =>
+      'Wieder der Gratis-Tarif. Es wird nichts abgebucht.';
+
+  @override
+  String get giftStart => 'Loslegen';
+
+  @override
+  String giftEndsSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ gehört dir noch $days Tage.',
+      one: 'Letzter Tag mit Astute+.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String giftPlanUntil(String date) {
+    return 'Astute+ · geschenkt bis $date';
+  }
+
+  @override
+  String get giftEndEyebrow => 'Dein Geschenk ist vorbei';
+
+  @override
+  String giftEndTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Deine $days Tage mit Astute+.',
+      one: 'Dein Tag mit Astute+.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftEndDaysLabel => 'Tage gelesen';
+
+  @override
+  String giftEndBackRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'erst falsch, dann richtig',
+      one: 'erst falsch, dann richtig',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossTitle => 'Ab heute, im Gratis-Tarif';
+
+  @override
+  String giftLossRandom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n deiner fünf Karten kommen zufällig.',
+      one: 'Eine deiner fünf Karten kommt zufällig.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossMisses =>
+      'Was du falsch hast, kommt nicht mehr unter deinen fünf zurück: Es wartet in Entdecken.';
+
+  @override
+  String get giftLossAsk => 'Der Assistent zu jeder Karte bleibt bei Astute+.';
+
+  @override
+  String get giftKeep => 'Astute+ behalten';
+
+  @override
+  String sixthRandomToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Heute kamen $n deiner fünf zufällig.',
+      one: 'Heute kam eine deiner fünf zufällig.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTodayPlus =>
+      'Mit Astute+ wären alle fünf für dich gewählt gewesen.';
+
+  @override
+  String sixthRandomTomorrow(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Morgen kommen $n deiner fünf zufällig.',
+      one: 'Morgen kommt eine deiner fünf zufällig.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTomorrowPlus =>
+      'Mit Astute+ alle fünf für dich gewählt: aus deinem Mix, auf deinem Niveau.';
+
+  @override
+  String sixthSureWrong(String sure) {
+    return 'Heute lagst du bei einer falsch, bei der du dir zu $sure sicher warst.';
+  }
+
+  @override
+  String get sixthSureWrongPlus =>
+      'Mit Astute+ kommt sie unter deinen fünf zurück.';
+
+  @override
+  String sixthMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n Karten, die du falsch hattest, sind zurück: Sie warten in Entdecken.',
+      one: 'Eine Karte, die du falsch hattest, ist zurück: Sie wartet in Entdecken.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthMissesPlus =>
+      'Mit Astute+ kommt, was du falsch hast, unter deinen fünf zurück, eine pro Tag.';
+
+  @override
+  String sixthLevel(String subject, int right, int of) {
+    return 'In $subject liegst du $right-mal von $of richtig.';
+  }
+
+  @override
+  String sixthLevelPlus(String subject) {
+    return 'Mit Astute+ kämen deine Karten in $subject eine Stufe höher.';
+  }
+
+  @override
+  String get paywallScience =>
+      'Kalibrierung lässt sich messen und mit Rückmeldung trainieren. Astute misst deine.';
+
+  @override
+  String get paywallScienceSource => 'Prognoseforschung: Tetlock, Mellers';
+
+  @override
+  String get paywallWarnBefore =>
+      'Wir erinnern dich zwei Tage vor der Abbuchung';
+
+  @override
+  String get plusInTheAppAndroid =>
+      'Astute+ gibt es in der App: Lade Astute auf Android und starte deine kostenlose Testphase. Fürs iPhone kommt die App bald.';
+
+  @override
+  String get exploreCapTitle => 'Für heute endet Entdecken hier.';
+
+  @override
+  String exploreCapLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Du hast $n Karten über deine fünf hinaus gelesen. Morgen kommen neue.',
+      one: 'Du hast eine Karte über deine fünf hinaus gelesen. Morgen kommen neue.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreCapPlus => 'Mit Astute+ hat Entdecken kein Ende.';
+
+  @override
+  String todayLineSure(int right, int asked, int sure) {
+    return 'Gestern $right von $asked, und du warst dir zu $sure % sicher.';
+  }
+
+  @override
+  String todayLineRight(int right, int asked) {
+    return 'Gestern $right von $asked.';
+  }
+
+  @override
+  String get todayLineRead => 'Gestern hast du alle fünf gelesen.';
+
+  @override
+  String todayLineFirstSubject(String subject) {
+    return 'Heute deine erste Karte in $subject.';
+  }
+
+  @override
+  String freezeSavedLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Du hast $days Tage ausgesetzt: Deine Serie ist sicher.',
+      one: 'Gestern hast du ausgesetzt: Deine Serie ist sicher.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String freezeCoversLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Fällt ein Tag aus, hält die Serie: Du hast $n Joker.',
+      one: 'Fällt ein Tag aus, hält die Serie: Du hast 1 Joker.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentEyebrow => 'Am Stück';
+
+  @override
+  String streakMomentUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Tage',
+      one: 'Tag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentWeek =>
+      'Eine ganze Woche. Morgen ist eine Karte mehr der fünf für dich ausgewählt.';
+
+  @override
+  String streakMomentNext(int next) {
+    return 'Morgen werden es $next.';
+  }
+
+  @override
+  String get deeperWatchMore => 'Mehr im Video';
 }

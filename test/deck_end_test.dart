@@ -106,6 +106,48 @@ void main() {
     expect(find.byType(DeckViewerScreen), findsNothing);
   });
 
+  testWidgets('a long deck ends on its subjects, in order, with room for '
+      'the words above the buttons, on the smallest phone too', (tester) async {
+    for (final Size phone in const [Size(390, 844), Size(320, 568)]) {
+      tester.view.physicalSize = phone * 3;
+      tester.view.devicePixelRatio = 3;
+      addTearDown(tester.view.reset);
+      final app = await freshApp();
+      final List<Pill> deck = PillBank.cards.take(150).toList();
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          home: DeckViewerScreen(
+            app: app,
+            deck: deck,
+            title: 'Explore',
+            initialIndex: deck.length,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byType(DeckEnd), findsOneWidget);
+      expect(find.text("That's all 150."), findsOneWidget);
+      // No wall of marks: one bar of the subjects, the most read first.
+      expect(find.byKey(const ValueKey('deck-end-marks')), findsNothing);
+      expect(find.byKey(const ValueKey('deck-end-subjects')), findsOneWidget);
+      final rows = DeckSubjects.of(deck);
+      for (int i = 1; i < rows.length; i++) {
+        expect(rows[i - 1].count, greaterThanOrEqualTo(rows[i].count));
+      }
+      expect(rows.fold(0, (n, r) => n + r.count), 150);
+      // The words stand clear of the buttons.
+      final Rect words = tester.getRect(find.text("That's all 150."));
+      final Rect close = tester.getRect(
+        find.byKey(const ValueKey('deck-end-close')),
+      );
+      expect(words.bottom, lessThan(close.top - 16), reason: '$phone');
+      expect(tester.takeException(), isNull, reason: '$phone');
+    }
+  });
+
   testWidgets('one card, thrown, is put down', (tester) async {
     final app = await freshApp();
     await tester.pumpWidget(host(app, plain(1)));

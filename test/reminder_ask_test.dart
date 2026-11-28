@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart'
+    show debugDefaultTargetPlatformOverride;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show FontLoader, MethodChannel;
@@ -12,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/analytics.dart';
 import 'package:astuto/data/daily.dart';
 import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/data/topics.dart' show inkOn;
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/reminder.dart';
@@ -24,6 +27,7 @@ import 'package:astuto/sync/board.dart';
 import 'package:astuto/sync/push.dart';
 import 'package:astuto/sync/subscription.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/fit_text.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/reminder_ask.dart';
 
@@ -151,6 +155,12 @@ EntitlementInfo _plus({
 
 final Finder _sheet = find.byKey(const ValueKey('reminder-ask'));
 
+/// The time the notification at the head of the sheet comes at, as written
+/// where the phone says "now".
+String? _previewTime(WidgetTester tester) => tester
+    .widget<Text>(find.byKey(const ValueKey('reminder-preview-time')))
+    .data;
+
 String _key(DateTime d) => dateKey(d);
 
 DateTime _daysFromToday(int days) {
@@ -272,14 +282,22 @@ void main() {
   });
 
   group('on the first day', () {
-    testWidgets('the five are read, the card after them thrown, and nothing '
-        'is asked', (tester) async {
+    testWidgets('the five are read, the day celebrated, the card after them '
+        'thrown, and nothing is asked', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
-      for (var i = 0; i < 6; i++) {
+      for (var i = 0; i < 5; i++) {
         await _throw(tester);
       }
+      // The first day's celebration (test/first_day_test.dart), with no
+      // reminder to offer where the sheet waits for a reader who came back.
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('first-day')), findsOneWidget);
+      expect(find.byKey(const ValueKey('first-day-remind')), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('first-day-close')));
+      await _settle(tester);
+      await _throw(tester);
       expect(_appOf(tester).dayClosed, isTrue);
       expect(find.byType(PillCardStack), findsNothing);
       await _wait(tester, seconds: 6);
@@ -403,7 +421,15 @@ void main() {
             .first,
       );
       expect(morning.properties.selected, isTrue);
-      expect(find.text('8:30 AM'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('reminder-at-08:30')),
+          matching: find.text('8:30 AM'),
+        ),
+        findsOneWidget,
+      );
+      // And the notification at the head of the sheet comes at it.
+      expect(_previewTime(tester), '8:30 AM');
 
       await tester.tap(find.byKey(const ValueKey('reminder-at-19:00')));
       await _settle(tester);
@@ -448,7 +474,14 @@ void main() {
       await _wait(tester);
 
       expect(find.text('Another time'), findsOneWidget);
-      expect(find.text('7:15 AM'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('reminder-at-own')),
+          matching: find.text('7:15 AM'),
+        ),
+        findsOneWidget,
+      );
+      expect(_previewTime(tester), '7:15 AM');
       // Away to the morning and back: the reader's own time is still there.
       await tester.tap(find.byKey(const ValueKey('reminder-at-08:30')));
       await _settle(tester);
@@ -612,7 +645,14 @@ void main() {
       await app.init();
       await open(tester, app);
       expect(chosen(tester, 'reminder-at-own'), isTrue);
-      expect(find.text('9:45 PM'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('reminder-at-own')),
+          matching: find.text('9:45 PM'),
+        ),
+        findsOneWidget,
+      );
+      expect(_previewTime(tester), '9:45 PM');
       expect(find.text('When you usually read'), findsOneWidget);
     });
 
@@ -1279,6 +1319,499 @@ void main() {
     }
     expect(findings, isEmpty, reason: findings.join('\n'));
   });
+
+  group('the notification at the head of the sheet', () {
+    test('lands where the plan puts the first nudge, and says what it '
+        'says', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      // A Wednesday, at six in the evening: tomorrow is no Monday, so no
+      // week's book takes the place of the question.
+      final DateTime at = DateTime(2026, 10, 21, 18);
+      final app = AppState(
+        clock: () => at,
+        hasPermission: () async => true,
+        askPermission: () async => true,
+        arm: (_) async {},
+        disarm: () async {},
+        pushWidget: (_) async {},
+      );
+      await app.init();
+      // The day still to read: a time still to come lands today, one gone
+      // by tomorrow.
+      expect(app.firstNudgeAt('19:00', now: at), DateTime(2026, 10, 21, 19));
+      expect(app.firstNudgeAt('08:30', now: at), DateTime(2026, 10, 22, 8, 30));
+      Future<void> samePlan(String why) async {
+        for (final String time in ['08:30', '12:30', '19:00', '21:45']) {
+          await app.setNotifyTime(time, quietly: true);
+          final Reminder first = app.reminderPlan(now: at).first;
+          expect(
+            first.when,
+            app.firstNudgeAt(time, now: at),
+            reason: '$why, $time',
+          );
+          expect(first.title, 'Your five are ready', reason: '$why, $time');
+          expect(
+            first.body,
+            app.leadOn(first.when).question,
+            reason: '$why, $time',
+          );
+        }
+      }
+
+      await samePlan('to read');
+      // The day read: tomorrow, whatever the time.
+      while (!app.todayCompleted) {
+        await app.advance();
+      }
+      expect(app.firstNudgeAt('19:00', now: at), DateTime(2026, 10, 22, 19));
+      await samePlan('read');
+    });
+
+    testWidgets('comes at the time picked, and moves the moment another is '
+        'picked', (tester) async {
+      final AppState app = _bare(
+        prefs: {
+          'knowit.readStarts':
+              '{"${_key(_daysFromToday(-1))}":1170,"${_key(DateTime.now())}":1185}',
+        },
+      ).app;
+      await app.init();
+      await _show(tester, app);
+      final l = lookupAppLocalizations(const Locale('en'));
+
+      ReminderPreview preview() =>
+          tester.widget<ReminderPreview>(find.byType(ReminderPreview));
+      String? every() => tester
+          .widget<Text>(find.byKey(const ValueKey('reminder-preview-every')))
+          .data;
+      String question() => tester
+          .widget<FitText>(
+            find.byKey(const ValueKey('reminder-preview-question')),
+          )
+          .text;
+
+      // Started on the evening the reader reads at: the notification is
+      // the nudge, at 7 PM, with the question it will carry.
+      expect(_previewTime(tester), '7:00 PM');
+      expect(every(), 'EVERY DAY AT 7:00 PM');
+      expect(preview().moment, ReminderMoment.evening);
+      expect(
+        find.descendant(
+          of: find.byType(ReminderPreview),
+          matching: find.text(l.nudgeTitle),
+        ),
+        findsOneWidget,
+      );
+      expect(question(), app.leadOn(app.firstNudgeAt('19:00')).question);
+      expect(find.text('Astute'), findsOneWidget);
+
+      // The morning picked: at once, the notification comes at 8:30 on
+      // the morning's ground.
+      await tester.tap(find.byKey(const ValueKey('reminder-at-08:30')));
+      await tester.pump();
+      expect(_previewTime(tester), '8:30 AM');
+      expect(every(), 'EVERY DAY AT 8:30 AM');
+      expect(preview().moment, ReminderMoment.morning);
+      expect(question(), app.leadOn(app.firstNudgeAt('08:30')).question);
+      await _settle(tester);
+
+      // Lunchtime, and back to the evening.
+      await tester.tap(find.byKey(const ValueKey('reminder-at-12:30')));
+      await tester.pump();
+      expect(_previewTime(tester), '12:30 PM');
+      expect(preview().moment, ReminderMoment.lunch);
+      await tester.tap(find.byKey(const ValueKey('reminder-at-19:00')));
+      await tester.pump();
+      expect(_previewTime(tester), '7:00 PM');
+      expect(preview().moment, ReminderMoment.evening);
+
+      // A time of the reader's own, picked on the phone's clock.
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('reminder-at-own')));
+      await _settle(tester);
+      await tester.tap(find.byIcon(Icons.keyboard_outlined));
+      await _settle(tester);
+      await tester.enterText(find.byType(TextField).at(0), '9');
+      await tester.enterText(find.byType(TextField).at(1), '15');
+      await tester.tap(find.text('OK'));
+      await _settle(tester);
+      expect(_previewTime(tester), '9:15 PM');
+      expect(every(), 'EVERY DAY AT 9:15 PM');
+      expect(preview().moment, ReminderMoment.other);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('reminder-at-own')),
+          matching: find.text('9:15 PM'),
+        ),
+        findsOneWidget,
+      );
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('an iPhone\'s notification on an iPhone, Android\'s on '
+        'Android', (tester) async {
+      final AppState app = _bare().app;
+      await app.init();
+      Finder circles() => find.descendant(
+        of: find.byType(ReminderPreview),
+        matching: find.byType(ClipOval),
+      );
+      try {
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        await _show(tester, app);
+        // The icon a rounded square, as on an iPhone.
+        expect(circles(), findsNothing);
+        expect(_previewTime(tester), '8:30 AM');
+        debugDefaultTargetPlatformOverride = TargetPlatform.android;
+        await _show(tester, app);
+        // Cut to a circle, as Android does.
+        expect(circles(), findsOneWidget);
+        expect(_previewTime(tester), '8:30 AM');
+      } finally {
+        debugDefaultTargetPlatformOverride = null;
+      }
+    });
+  });
+
+  group('the four times as tiles', () {
+    test('night and paper: four colours apart, each a mark that reads on '
+        'its tile, its glyph on its disc', () {
+      for (final Palette p in [Palette.dark, Palette.light]) {
+        final String page = p.isDark ? 'night' : 'paper';
+        final Set<int> tones = {
+          for (final ReminderMoment m in ReminderMoment.values)
+            m.tone(p).toARGB32(),
+        };
+        expect(tones, hasLength(4), reason: page);
+        for (final ReminderMoment m in ReminderMoment.values) {
+          final Color tone = m.tone(p);
+          expect(
+            _contrast(tone, p.surfaceRaised),
+            greaterThanOrEqualTo(3),
+            reason: '${m.name} on $page',
+          );
+          expect(
+            _contrast(inkOn(tone), tone),
+            greaterThanOrEqualTo(3),
+            reason: '${m.name} glyph on $page',
+          );
+        }
+      }
+      // The hours: amber, yellow and violet at night, the ink of the page
+      // for a time of the reader's own.
+      expect(
+        ReminderMoment.morning.tone(Palette.dark),
+        const Color(0xFFFFB000),
+      );
+      expect(ReminderMoment.lunch.tone(Palette.dark), const Color(0xFFFFE600));
+      expect(
+        ReminderMoment.evening.tone(Palette.dark),
+        const Color(0xFF6E3AFF),
+      );
+      expect(ReminderMoment.other.tone(Palette.dark), Palette.dark.ink);
+      expect(ReminderMoment.other.tone(Palette.light), Palette.light.ink);
+    });
+
+    testWidgets('night and paper: each edged in its colour, and only the one '
+        'picked edged in it whole, lit by it and ticked', (tester) async {
+      final AppState app = _bare(prefs: {'knowit.notifyHour': '07:15'}).app;
+      await app.init();
+      const Map<String, ReminderMoment> tiles = {
+        'reminder-at-08:30': ReminderMoment.morning,
+        'reminder-at-12:30': ReminderMoment.lunch,
+        'reminder-at-19:00': ReminderMoment.evening,
+        'reminder-at-own': ReminderMoment.other,
+      };
+      for (final bool paper in [false, true]) {
+        final Palette p = paper ? Palette.light : Palette.dark;
+        final String page = paper ? 'paper' : 'night';
+        await _show(tester, app, paper: paper);
+        // The picked one, in turn each of the four: the reader's own time
+        // first, as it is the time set.
+        for (final String pick in [
+          'reminder-at-own',
+          'reminder-at-08:30',
+          'reminder-at-12:30',
+          'reminder-at-19:00',
+        ]) {
+          if (pick != 'reminder-at-own') {
+            await tester.tap(find.byKey(ValueKey(pick)));
+            await _settle(tester);
+          }
+          for (final MapEntry<String, ReminderMoment> t in tiles.entries) {
+            final Finder tile = find.byKey(ValueKey(t.key));
+            final bool on = t.key == pick;
+            final Color tone = t.value.tone(p);
+            final String why = '${t.key} on $page, ${on ? 'picked' : 'not'}';
+            // Its glyph on a disc of its colour.
+            final Container disc = tester.widget<Container>(
+              find
+                  .descendant(
+                    of: find.descendant(
+                      of: tile,
+                      matching: find.byType(ReminderDisc),
+                    ),
+                    matching: find.byType(Container),
+                  )
+                  .first,
+            );
+            expect(
+              (disc.decoration! as BoxDecoration).color,
+              tone,
+              reason: why,
+            );
+            final BoxDecoration body =
+                tester
+                        .widget<AnimatedContainer>(
+                          find
+                              .descendant(
+                                of: tile,
+                                matching: find.byType(AnimatedContainer),
+                              )
+                              .first,
+                        )
+                        .decoration!
+                    as BoxDecoration;
+            // The tile is the page's own, picked or not: never a block
+            // of colour, nor a wash of it.
+            expect(body.color, p.surfaceRaised, reason: why);
+            final Border edge = body.border! as Border;
+            expect(
+              edge.top.color,
+              on ? tone : tone.withValues(alpha: paper ? 0.4 : 0.34),
+              reason: why,
+            );
+            expect(edge.top.width, on ? 1.6 : 1, reason: why);
+            // Lit from under in its own colour, and only when picked.
+            final Color glow = body.boxShadow!.first.color;
+            expect(glow.a, on ? greaterThan(0) : 0, reason: why);
+            expect(glow.withValues(alpha: 1), tone.withValues(alpha: 1));
+            expect(
+              find.descendant(
+                of: tile,
+                matching: find.byIcon(Icons.check_rounded),
+              ),
+              on ? findsOneWidget : findsNothing,
+              reason: why,
+            );
+            final Semantics semantics = tester.widget<Semantics>(
+              find.descendant(of: tile, matching: find.byType(Semantics)).first,
+            );
+            expect(semantics.properties.selected, on, reason: why);
+          }
+        }
+      }
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('a time of the reader\'s own not yet picked says so, and its '
+        'tile opens the clock', (tester) async {
+      final AppState app = _bare().app;
+      await app.init();
+      await _show(tester, app);
+      final Finder own = find.byKey(const ValueKey('reminder-at-own'));
+      expect(
+        find.descendant(of: own, matching: find.text('You choose')),
+        findsOneWidget,
+      );
+      await tester.tap(own);
+      await _settle(tester);
+      expect(find.byType(TimePickerDialog), findsOneWidget);
+    });
+
+    testWidgets('two to a row where the words fit, one to a row where they '
+        'do not', (tester) async {
+      final AppState app = _bare(prefs: {'knowit.notifyHour': '07:15'}).app;
+      await app.init();
+      Rect at(String key) => tester.getRect(find.byKey(ValueKey(key)));
+      await _show(tester, app);
+      // Side by side: the morning beside lunchtime, the evening beside
+      // the reader's own, the two rows one over the other.
+      expect(at('reminder-at-08:30').top, at('reminder-at-12:30').top);
+      expect(
+        at('reminder-at-08:30').right,
+        lessThan(at('reminder-at-12:30').left),
+      );
+      expect(at('reminder-at-19:00').top, at('reminder-at-own').top);
+      expect(
+        at('reminder-at-19:00').top,
+        greaterThan(at('reminder-at-08:30').bottom),
+      );
+      // A phone too narrow for two at the text asked for: one under
+      // another, each across the sheet.
+      await _show(tester, app, size: const Size(250, 1400), text: 2);
+      final List<Rect> four = [
+        for (final String key in [
+          'reminder-at-08:30',
+          'reminder-at-12:30',
+          'reminder-at-19:00',
+          'reminder-at-own',
+        ])
+          at(key),
+      ];
+      for (int i = 1; i < four.length; i++) {
+        expect(four[i].top, greaterThan(four[i - 1].bottom));
+        expect(four[i].left, four[0].left);
+        expect(four[i].width, four[0].width);
+      }
+      expect(_broken(tester, _sheet), isEmpty);
+      expect(tester.takeException(), isNull);
+    });
+  });
+
+  testWidgets('whole on the 320-wide phone, in German, at 1.6 times the '
+      'text: nothing runs off, and no word breaks in two', (tester) async {
+    await tester.runAsync(_loadRealFonts);
+    // Every line the sheet can show: the note on a habit, a time of the
+    // reader's own, the trial's line; and "You choose" where there is no
+    // time of the reader's own yet.
+    final AppState habit = _bare(
+      prefs: {
+        'knowit.readStarts':
+            '{"${_key(_daysFromToday(-1))}":1170,"${_key(DateTime.now())}":1185}',
+      },
+    ).app;
+    await habit.init();
+    final AppState own = _bare(
+      granted: false,
+      prefs: {'knowit.notifyHour': '21:45'},
+    ).app;
+    await own.init();
+    await own.applyTrial(
+      FreeTrial(
+        endsAt: DateTime.now().add(const Duration(days: 14)),
+        price: '€29,99',
+      ),
+    );
+    await own.applyEntitlement(true);
+    expect(own.warnsBeforeTrialEnds, isTrue);
+
+    for (final double text in [1, 1.6]) {
+      for (final (String what, AppState app) in [
+        ('habit', habit),
+        ('own', own),
+      ]) {
+        final String why = '$what ×$text';
+        await _show(
+          tester,
+          app,
+          language: 'de',
+          size: const Size(320, 568),
+          text: text,
+        );
+        expect(tester.takeException(), isNull, reason: why);
+        expect(_broken(tester, _sheet), isEmpty, reason: why);
+        expect(_cut(tester), isEmpty, reason: why);
+        for (final Element e
+            in find
+                .descendant(of: _sheet, matching: find.byType(RichText))
+                .evaluate()) {
+          final Rect r = (e.renderObject! as RenderBox).paintBounds.shift(
+            (e.renderObject! as RenderBox).localToGlobal(Offset.zero),
+          );
+          expect(r.left, greaterThanOrEqualTo(0), reason: why);
+          expect(r.right, lessThanOrEqualTo(320.5), reason: why);
+        }
+        // The two answers in view, whatever scrolls above them.
+        for (final String key in ['reminder-yes', 'reminder-not-now']) {
+          final Rect r = tester.getRect(find.byKey(ValueKey(key)));
+          expect(r.bottom, lessThanOrEqualTo(568), reason: '$why: $key');
+        }
+        // The reader's own tile says its time, or that there is one to
+        // choose.
+        expect(
+          find.descendant(
+            of: find.byKey(const ValueKey('reminder-at-own')),
+            matching: find.text(what == 'own' ? '21:45' : 'Du wählst'),
+          ),
+          findsOneWidget,
+          reason: why,
+        );
+      }
+    }
+    // And in every language the narrow phone at 1.6× breaks no word.
+    for (final Locale locale in AppLocalizations.supportedLocales) {
+      await _show(
+        tester,
+        habit,
+        language: locale.languageCode,
+        size: const Size(320, 568),
+        text: 1.6,
+      );
+      expect(tester.takeException(), isNull, reason: '$locale');
+      expect(_broken(tester, _sheet), isEmpty, reason: '$locale');
+    }
+  });
+}
+
+/// The sheet alone, risen over a page: at night or on paper, in [language],
+/// on a phone [size] in logical pixels, at [text] times the text.
+Future<void> _show(
+  WidgetTester tester,
+  AppState app, {
+  bool paper = false,
+  String language = 'en',
+  Size size = const Size(402, 874),
+  double text = 1,
+}) async {
+  tester.view.physicalSize = size;
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+  await tester.pumpWidget(
+    MaterialApp(
+      // A tree of its own each time, so nothing picked carries over.
+      key: UniqueKey(),
+      locale: Locale(language),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      theme: buildAstutoTheme(paper ? Brightness.light : Brightness.dark),
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: TextScaler.linear(text)),
+        child: child!,
+      ),
+      home: Scaffold(
+        body: Align(
+          alignment: Alignment.bottomCenter,
+          child: ReminderAsk(app: app),
+        ),
+      ),
+    ),
+  );
+  await _settle(tester);
+}
+
+/// Every paragraph under [box] with a word wider than the paragraph, in
+/// the style it is drawn in — what the page's own letter spacing adds
+/// included: a word that the paragraph breaks in two.
+List<String> _broken(WidgetTester tester, Finder box) {
+  final out = <String>[];
+  for (final Element e
+      in find.descendant(of: box, matching: find.byType(RichText)).evaluate()) {
+    final RenderObject? ro = e.renderObject;
+    if (ro is! RenderParagraph || !ro.attached || !ro.hasSize) continue;
+    final InlineSpan span = ro.text;
+    final String plain = span.toPlainText();
+    if (plain.trim().isEmpty || span is! TextSpan || span.style == null) {
+      continue;
+    }
+    if (!FitText.wordsFit(
+      plain,
+      span.style!,
+      ro.textScaler,
+      ro.textDirection,
+      ro.size.width + 0.5,
+    )) {
+      out.add('"$plain" in ${ro.size.width.toStringAsFixed(1)}');
+    }
+  }
+  return out;
+}
+
+/// WCAG's contrast between two colours, 1 to 21.
+double _contrast(Color a, Color b) {
+  final double x = a.computeLuminance(), y = b.computeLuminance();
+  return (x > y ? x + 0.05 : y + 0.05) / (x > y ? y + 0.05 : x + 0.05);
 }
 
 /// The faces the app ships, so a layout is measured in the text a reader

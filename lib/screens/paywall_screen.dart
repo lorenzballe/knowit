@@ -1,9 +1,9 @@
-import 'dart:async' show Timer, scheduleMicrotask, unawaited;
+import 'dart:async' show Completer, Timer, scheduleMicrotask, unawaited;
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart'
-    show ValueListenable, defaultTargetPlatform, kIsWeb;
+    show ValueListenable, defaultTargetPlatform, kIsWeb, visibleForTesting;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart' show DateFormat, NumberFormat;
@@ -25,10 +25,15 @@ import '../models/pill.dart' show Pill;
 import '../state/app_state.dart';
 import '../state/debug_looks.dart';
 import '../state/first_offers.dart';
+import '../state/gift.dart';
 import '../state/journey_record.dart' show Tally;
 import '../state/progress.dart' show kCalibrationFloor;
 import '../store_links.dart'
-    show kAppStoreSubscriptionsUrl, kGooglePlaySubscriptionsUrl;
+    show
+        kAppStoreOpen,
+        kAppStoreSubscriptionsUrl,
+        kGooglePlayOpen,
+        kGooglePlaySubscriptionsUrl;
 import '../sync/review_access.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
@@ -48,6 +53,7 @@ import '../l10n/dates.dart';
 
 part 'trial_offer.dart';
 part 'first_offer.dart';
+part 'gift_pages.dart';
 part 'paywall_looks.dart';
 
 /// What Astute+ costs, in cents, so the saving can be worked out rather than
@@ -428,6 +434,15 @@ class PaywallScreen extends StatefulWidget {
 
   const PaywallScreen({super.key, required this.app, required this.source});
 
+  /// The web's paywall on a phone's engine, which is never the web's, for
+  /// the camera that photographs it (tool/money_shots.dart). False
+  /// everywhere else.
+  @visibleForTesting
+  static bool webForShots = false;
+
+  /// Whether this is the web's paywall, which sells nothing.
+  static bool get _web => kIsWeb || webForShots;
+
   @override
   State<PaywallScreen> createState() => _PaywallScreenState();
 }
@@ -475,7 +490,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   /// web's word that Astute+ is in the app, or where the store stands.
   _Offer get _offer {
     if (_store.answer == StoreAnswer.ready) return _Offer.plans;
-    if (kIsWeb) return _Offer.inTheApp;
+    if (PaywallScreen._web) return _Offer.inTheApp;
     if (Subscription.previewWithoutStore) return _Offer.preview;
     return _store.answer == StoreAnswer.asking
         ? _Offer.asking
@@ -533,7 +548,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   String get _cta {
     final l = context.l10n;
-    if (widget.app.isPlus) return l.plusIsActive;
+    if (widget.app.paidPlus) return l.plusIsActive;
     if (_buying) return l.oneMoment;
     final Plan plan = _shown;
     final String suffix = plan == Plan.year ? l.perYearShort : l.perMonthShort;
@@ -892,7 +907,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
         alignment: WrapAlignment.center,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          if (!kIsWeb) ...[
+          if (!PaywallScreen._web) ...[
             _SmallLink(
               l.restorePurchases,
               key: const ValueKey('paywall-restore'),
@@ -1131,7 +1146,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
       // A reader already on Astute+ is sent to the store's own place for
       // their plan. This used to say "Cancel the trial" and turn a flag off
       // on the phone, while the store went on and charged them.
-      if (widget.app.isPlus)
+      if (widget.app.paidPlus)
         _manageLink(context)
       else
         // Under the button, one line. The price and the plan are on the
@@ -1218,7 +1233,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }) {
     final p = context.p;
     final bool dark = p.isDark;
-    final bool still = widget.app.isPlus || _buying;
+    final bool still = widget.app.paidPlus || _buying;
     return _Sheen(
       on: !still,
       face: (short ? 60 : 65) - 5,
@@ -1372,6 +1387,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
           gap: short ? 7 : (twoSteps ? 14 : 8),
         ),
       ),
+      // Why any of it should work, only as far as the evidence holds up,
+      // and where the line comes from.
+      Padding(
+        padding: side.copyWith(top: short ? 10 : 14),
+        child: const _ScienceLine(key: ValueKey('paywall-science')),
+      ),
     ];
 
     final List<Widget> foot = [
@@ -1515,14 +1536,14 @@ class _PaywallScreenState extends State<PaywallScreen> {
         context,
         short: short,
         key: const ValueKey('paywall-next'),
-        label: widget.app.isPlus
+        label: widget.app.paidPlus
             ? l.plusIsActive
             : trial
             ? l.trialOfferStart
             : l.seeThePlans,
         onPressed: () => setState(() => _plansUp = true),
       ),
-      if (widget.app.isPlus)
+      if (widget.app.paidPlus)
         _manageLink(context)
       else
         Padding(
@@ -1560,7 +1581,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     final List<Widget> tiles = _planTiles(context);
     final Plan shown = _shown;
     final int? days = _freeDays(shown);
-    final bool plus = widget.app.isPlus;
+    final bool plus = widget.app.paidPlus;
     final String price = _priceFor(shown);
     final DateTime today = DateTime.now();
     final Widget? timeline = days == null || plus
@@ -1618,10 +1639,19 @@ class _PaywallScreenState extends State<PaywallScreen> {
         ? _manageLink(context)
         : Padding(
             padding: EdgeInsets.only(top: short ? 8 : 10),
-            child: _CheckLine(
-              days == null ? l.paywallChargedToday : l.cancelAnyTime,
-              key: const ValueKey('paywall-cancel'),
-            ),
+            // A plan that starts with free days, to a reader the app can
+            // notify: that the app warns two days before the first charge
+            // (AppState.trialWarning), the most reassuring thing it does,
+            // beside the way out.
+            child: days != null && _canRemind
+                ? _CheckLines([
+                    l.paywallWarnBefore,
+                    l.cancelAnyTime,
+                  ], key: const ValueKey('paywall-cancel'))
+                : _CheckLine(
+                    days == null ? l.paywallChargedToday : l.cancelAnyTime,
+                    key: const ValueKey('paywall-cancel'),
+                  ),
           );
     return inSheet
         ? [
@@ -1706,8 +1736,14 @@ class _StorePanel extends StatelessWidget {
           ),
         ],
       ),
+      // Where the app can be had, as the stores stand: only what is live is
+      // offered, and the other is said to be on its way, as the site says
+      // it (kAppStoreOpen, held to tool/site/chrome.py).
       _Offer.inTheApp => Text(
-        l.plusInTheApp,
+        kAppStoreOpen && kGooglePlayOpen
+            ? l.plusInTheApp
+            : l.plusInTheAppAndroid,
+        key: const ValueKey('paywall-in-the-app'),
         textAlign: TextAlign.center,
         style: line,
       ),

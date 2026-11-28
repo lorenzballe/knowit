@@ -266,7 +266,32 @@ class _TuneScreenState extends State<TuneScreen>
     if (was == next) return;
     if (next ~/ 5 != was ~/ 5) HapticFeedback.selectionClick();
     setState(() {
+      _tapped = null;
       _value[subject.key] = next;
+      _touched.add(subject.key);
+    });
+  }
+
+  /// Where a bar stood before a tap took its subject out, for the tap that
+  /// puts it back.
+  final Map<String, int> _beforeOut = {};
+
+  /// The subject a tap moved last, whose bar settles rather than follows.
+  String? _tapped;
+
+  /// A tap on a bar, as on the first run's: out of the mix, or back where
+  /// it was.
+  void _toggle(MixSubject subject) {
+    HapticFeedback.selectionClick();
+    setState(() {
+      _tapped = subject.key;
+      final int was = _value[subject.key]!;
+      if (was > kMixFloor) {
+        _beforeOut[subject.key] = was;
+        _value[subject.key] = 0;
+      } else {
+        _value[subject.key] = _beforeOut.remove(subject.key) ?? 100;
+      }
       _touched.add(subject.key);
     });
   }
@@ -398,7 +423,13 @@ class _TuneScreenState extends State<TuneScreen>
                             const SizedBox(height: 22),
                             Eyebrow(l.tuneHowMuch),
                             const SizedBox(height: 10),
-                            _Bars(value: _value, mark: _mark, onDragAt: _setAt),
+                            _Bars(
+                              value: _value,
+                              mark: _mark,
+                              tapped: _tapped,
+                              onDragAt: _setAt,
+                              onTap: _toggle,
+                            ),
                             const SizedBox(height: 8),
                             Text(
                               l.subjectsInTheMix(_inMix, kMixSubjects.length),
@@ -530,11 +561,17 @@ class _Bars extends StatelessWidget {
     required this.value,
     required this.mark,
     required this.onDragAt,
+    required this.onTap,
+    this.tapped,
   });
 
   final Map<String, int> value;
   final Map<String, int> mark;
   final void Function(MixSubject, double dx, double width) onDragAt;
+  final ValueChanged<MixSubject> onTap;
+
+  /// The subject a tap moved last, whose bar settles rather than follows.
+  final String? tapped;
 
   @override
   Widget build(BuildContext context) {
@@ -563,6 +600,11 @@ class _Bars extends StatelessWidget {
                             mark: mark[kMixSubjects[r * columns + c].key],
                             index: r * columns + c,
                             onDragAt: onDragAt,
+                            onTap: () => onTap(kMixSubjects[r * columns + c]),
+                            duration:
+                                kMixSubjects[r * columns + c].key == tapped
+                                ? MixTile.settle
+                                : MixTile.follow,
                           )
                         : const SizedBox.shrink(),
                   ),

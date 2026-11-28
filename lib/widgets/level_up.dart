@@ -66,8 +66,9 @@ Future<bool> showLevelUpIfDue(BuildContext context, AppState app) async {
   await _atRest(context);
   if (!context.mounted || _looking) return false;
   // One full-screen moment a day: on the day the first week's page or the
-  // first month's rose, a level waits for the next calm moment.
-  if (app.firstOfferRoseToday) return false;
+  // first month's rose, or the first day was celebrated
+  // (lib/widgets/first_day.dart), a level waits for the next calm moment.
+  if (app.firstOfferRoseToday || app.celebratedToday) return false;
   _looking = true;
   try {
     final int? told = await LevelMemory.read();
@@ -98,7 +99,10 @@ Future<bool> showLevelUpIfDue(BuildContext context, AppState app) async {
         from: found.from,
         answers: found.answers,
       ),
-      LearnLook.today || LearnLook.profile || LearnLook.aimProfile => found,
+      LearnLook.today ||
+      LearnLook.mix ||
+      LearnLook.profile ||
+      LearnLook.aimProfile => found,
     };
     unawaited(
       Navigator.of(

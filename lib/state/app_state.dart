@@ -17,6 +17,7 @@ import '../data/daily.dart';
 import '../data/first_days.dart';
 import '../data/genres.dart';
 import '../data/local_cards.dart';
+import '../data/book_summaries.dart';
 import '../data/books.dart';
 import '../data/goals.dart';
 import '../data/learn_reading.dart' show withFocusLean;
@@ -28,6 +29,7 @@ import '../data/reader_profile.dart';
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../measure/card_read.dart';
+import '../measure/first_steps.dart';
 import '../measure/session.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
@@ -90,6 +92,8 @@ class AppState extends ChangeNotifier {
   static const _kLastCompletion = 'knowit.lastCompletionDate';
   static const _kFreezes = 'knowit.freezes';
   static const _kFrozeOn = 'knowit.frozeOn';
+  static const _kFrozeDays = 'knowit.frozeDays';
+  static const _kStreakTold = 'knowit.streakTold';
   static const _kCompletedDates = 'knowit.completedDates';
   static const _kSavedIds = 'knowit.savedIds';
   static const _kLikedIds = 'knowit.likedIds';
@@ -107,6 +111,21 @@ class AppState extends ChangeNotifier {
   /// [firstWeekOfferedOn]).
   static const _kFirstWeekOfferedOn = 'knowit.firstWeekOfferedOn';
   static const _kFirstMonthOfferedOn = 'knowit.firstMonthOfferedOn';
+
+  /// The new reader's gift of Astute+ (see [giftFrom]): its first day, the
+  /// phone's own memory that it gave one, and the day its end was said.
+  static const _kGiftFrom = 'knowit.giftFrom';
+  static const _kGiftGiven = 'knowit.giftGiven';
+  static const _kGiftEndShownOn = 'knowit.giftEndShownOn';
+
+  /// The card after the fifth (lib/state/sixth_line.dart): the day it was
+  /// last dealt after the five, and what it said on the day it last spoke.
+  static const _kSixthDealtOn = 'knowit.sixthDealtOn';
+  static const _kSixthSaid = 'knowit.sixthSaid';
+
+  /// The day the first finished day was celebrated (see
+  /// [firstDayCelebratedOn]).
+  static const _kFirstDayCelebratedOn = 'knowit.firstDayCelebratedOn';
   static const _kTopics = 'knowit.topics';
   static const _kTopicWeights = 'knowit.topicWeights';
   static const _kGoal = 'knowit.goal';
@@ -115,6 +134,8 @@ class AppState extends ChangeNotifier {
   static const _kGoalAsked = 'knowit.goalAsked';
   static const _kTopicLevels = 'knowit.topicLevels';
   static const _kGenresOff = 'knowit.genresOff';
+  static const _kLoved = 'knowit.loved';
+  static const _kPartsOffer = 'knowit.partsOffer';
   static const _kStrandsOff = 'knowit.strandsOff';
   static const _kNotifications = 'knowit.notifications';
   static const _kNotifyHour = 'knowit.notifyHour';
@@ -143,6 +164,10 @@ class AppState extends ChangeNotifier {
   static const _kPathsOpened = 'knowit.pathsOpened';
   static const _kJourneySeen = 'knowit.journeySeen';
   static const _kJourneySeenOn = 'knowit.journeySeenOn';
+  static const _kJourneyClear = 'knowit.journeyClear';
+  static const _kWeekShownFor = 'knowit.weekShownFor';
+  static const _kWeekAccountShown = 'knowit.weekAccountShown';
+  static const _kWeekAccountDeclined = 'knowit.weekAccountDeclined';
   static const _kNotes = 'knowit.notes';
   static const _kTasteVariant = 'knowit.exp.tasteVariant';
   static const _kReactions = 'knowit.reactions';
@@ -189,6 +214,14 @@ class AppState extends ChangeNotifier {
 
   /// The day a freeze was spent, so it can be said out loud once.
   String? frozeOn;
+
+  /// How many days the freezes spent on [frozeOn] covered: one, or up to
+  /// three on Astute+.
+  int frozeDays = 1;
+
+  /// The streaks whose moment has risen (lib/widgets/streak_moment.dart),
+  /// each once on this phone.
+  List<int> streakTold = [];
   List<String> completedDates = [];
 
   /// Saved pill ids, most recently kept first. A bookmark: the cards the
@@ -213,6 +246,11 @@ class AppState extends ChangeNotifier {
 
   /// Every pill id already read, so later days open on something new.
   Set<String> seenIds = {};
+
+  /// Where the reader is in each book's summary (lib/data/book_summaries.dart):
+  /// the part, how far into it, the parts read or heard. A book's page and
+  /// its reader listen to it.
+  final SummaryShelf summaries = SummaryShelf();
 
   /// Which of today's cards are the reader's own — chosen for them rather
   /// than dealt at random. Two of five on the free plan, and every one of
@@ -387,12 +425,99 @@ class AppState extends ChangeNotifier {
   /// who chose before it existed.
   Set<String> genresOff = {};
   Set<String> strandsOff = {};
+
+  /// The subjects the reader loves, in the order they picked them, at most
+  /// three (kMostLoved): the first run's one question asked in the positive
+  /// (lib/screens/loves_screen.dart). Their first days open on them
+  /// (lib/data/first_days.dart) and their own cards lean to them after
+  /// ([leanedWeights]).
+  List<String> lovedTopics = const [];
   bool notificationsOn = true;
   String notifyTime = '08:30';
 
   /// Astute+ — every card of the day the reader's own, the map of what
-  /// they know, and the whole archive.
-  bool isPlus = false;
+  /// they know, and the whole archive — as the store holds it, or as the
+  /// new reader's gift holds it while it lasts ([onGift]).
+  bool get isPlus => _paid || onGift;
+
+  /// Astute+ as the store last said the reader has it, or as a debug build
+  /// turned it on: what was bought, or given through the store, never the
+  /// gift. The paywall sells against this, so a reader in their gift can
+  /// still buy.
+  bool get paidPlus => _paid;
+  bool _paid = false;
+
+  // ── The new reader's gift (`trial.reverse`, lib/state/gift.dart) ──────
+
+  /// How long the gift lasts: two weeks, from the first run.
+  static const int kGiftDays = 14;
+
+  /// The first day of the gift, as a date key; null for a reader who never
+  /// had one. The reader's, so it travels in the backup and a new phone
+  /// keeps the days a first one gave, no more.
+  String? giftFrom;
+
+  /// Whether this phone ever gave a gift: kept through a sign-out, so
+  /// signing out and starting again is not a second one.
+  bool giftGiven = false;
+
+  /// The day the gift's end was said (GiftEndScreen), as a date key; null
+  /// until it has been.
+  String? giftEndShownOn;
+
+  /// The first day after the gift: day fifteen, when the free plan is back.
+  DateTime? get giftEndsOn {
+    final DateTime? from = _dateOf(giftFrom);
+    return from == null
+        ? null
+        : DateTime(from.year, from.month, from.day + kGiftDays);
+  }
+
+  /// The gift's last day, the fourteenth.
+  DateTime? get giftLastDay {
+    final DateTime? ends = giftEndsOn;
+    return ends == null ? null : DateTime(ends.year, ends.month, ends.day - 1);
+  }
+
+  /// Whether the gift covers [day]: one of its fourteen days.
+  bool giftCovers(DateTime day) {
+    final DateTime? ends = giftEndsOn;
+    if (ends == null) return false;
+    final String key = dateKey(day);
+    return key.compareTo(giftFrom!) >= 0 && key.compareTo(dateKey(ends)) < 0;
+  }
+
+  /// Whether the gift covers today. Taken back by nothing once given, the
+  /// server's switch included: a gift that ends early is not a gift.
+  bool get onGift => giftFrom != null && giftCovers(today);
+
+  /// Astute+ on [day], as the morning will deal it: the plan, or the gift
+  /// on its days.
+  bool plusOn(DateTime day) => _paid || giftCovers(day);
+
+  /// The gift's last days, in which one quiet line says it is ending: two,
+  /// the thirteenth and the fourteenth.
+  static const int kGiftNoticeDays = 2;
+
+  /// The days left of the gift, today included, in its last two, for a
+  /// reader who has not bought Astute+ since; null on every other day.
+  int? get giftDaysLeft {
+    final DateTime? ends = giftEndsOn;
+    if (_paid || ends == null || !onGift) return null;
+    final int left = daysBetween(today, ends);
+    return left <= kGiftNoticeDays ? left : null;
+  }
+
+  /// Whether [day]'s nudge carries the note that the gift ends in two
+  /// days: the thirteenth, while it is still a gift.
+  bool _giftNoteOn(DateTime day) {
+    final DateTime? ends = giftEndsOn;
+    return !_paid &&
+        ends != null &&
+        giftCovers(day) &&
+        daysBetween(day, ends) == kGiftNoticeDays;
+  }
+
   String name = 'You';
   Plan plan = Plan.year;
 
@@ -481,7 +606,13 @@ class AppState extends ChangeNotifier {
   DateTime? placeCheckedAt;
 
   late DateTime today;
-  late List<Pill> todaysDeck;
+  List<Pill> get todaysDeck => _todaysDeck!;
+  set todaysDeck(List<Pill> cards) => _todaysDeck = cards;
+  List<Pill>? _todaysDeck;
+
+  /// Whether a day has been dealt or restored yet: [todaysDeck] is not
+  /// there to be read before.
+  bool get _dealt => _todaysDeck != null;
 
   bool get todayCompleted => todayIndex >= todaysDeck.length;
 
@@ -522,6 +653,7 @@ class AppState extends ChangeNotifier {
     // And the remote document: what the server last said about the app,
     // before anything reads a part of it.
     Remote.restore(_prefs);
+    summaries.restore(_prefs);
     today = _clock();
 
     // Stored state is read defensively. A value written by an older build,
@@ -539,6 +671,10 @@ class AppState extends ChangeNotifier {
     } catch (_) {
       installedOn = dateKey(today);
     }
+    // The first run's steps, counted with nothing that says whose: a first
+    // open on a phone new to the app, or the return the day after it.
+    await FirstSteps.instance.load(_prefs);
+    unawaited(_noteOpened());
 
     ready = true;
     notifyListeners();
@@ -635,6 +771,8 @@ class AppState extends ChangeNotifier {
     } finally {
       _turningDay = false;
     }
+    // A night asleep in memory can be the night after the first open.
+    unawaited(_noteOpened());
     notifyListeners();
     unawaited(refreshDailyReminder());
     unawaited(refreshHomeWidget());
@@ -650,6 +788,11 @@ class AppState extends ChangeNotifier {
     lastCompletionDate = _prefs.getString(_kLastCompletion);
     freezes = _prefs.getInt(_kFreezes) ?? 1;
     frozeOn = _prefs.getString(_kFrozeOn);
+    frozeDays = _prefs.getInt(_kFrozeDays) ?? 1;
+    streakTold = [
+      for (final String n in _prefs.getStringList(_kStreakTold) ?? const [])
+        ?int.tryParse(n),
+    ];
     completedDates = _prefs.getStringList(_kCompletedDates) ?? [];
     savedIds = _prefs.getStringList(_kSavedIds) ?? [];
     likedIds = _prefs.getStringList(_kLikedIds) ?? [];
@@ -661,6 +804,14 @@ class AppState extends ChangeNotifier {
     trialOfferedOn = _prefs.getString(_kTrialOfferedOn);
     firstWeekOfferedOn = _prefs.getString(_kFirstWeekOfferedOn);
     firstMonthOfferedOn = _prefs.getString(_kFirstMonthOfferedOn);
+    giftFrom = _dateOf(_prefs.getString(_kGiftFrom)) == null
+        ? null
+        : _prefs.getString(_kGiftFrom);
+    giftGiven = (_prefs.getBool(_kGiftGiven) ?? false) || giftFrom != null;
+    giftEndShownOn = _prefs.getString(_kGiftEndShownOn);
+    sixthDealtOn = _prefs.getString(_kSixthDealtOn);
+    sixthSaid = _prefs.getString(_kSixthSaid);
+    firstDayCelebratedOn = _prefs.getString(_kFirstDayCelebratedOn);
     // A reader not yet through the first run is new, and opens on the cards
     // chosen for a first impression; one who was through it before this
     // was kept is dealt as they always were.
@@ -682,6 +833,8 @@ class AppState extends ChangeNotifier {
     if (goals.isEmpty) goals = _keptGoals(areasOf(skills));
     topicLevels = _decodeLevels(_prefs.getString(_kTopicLevels));
     genresOff = (_prefs.getStringList(_kGenresOff) ?? []).toSet();
+    lovedTopics = _keptLoves(_prefs.getStringList(_kLoved) ?? const []);
+    partsOffer = _prefs.getString(_kPartsOffer);
     strandsOff = (_prefs.getStringList(_kStrandsOff) ?? []).toSet();
     final storedTopics = _prefs.getStringList(_kTopics);
     if (storedTopics != null && storedTopics.isNotEmpty) {
@@ -690,7 +843,7 @@ class AppState extends ChangeNotifier {
     notificationsOn = _prefs.getBool(_kNotifications) ?? true;
     notifyTime = _prefs.getString(_kNotifyHour) ?? '08:30';
     name = _prefs.getString(_kName) ?? 'You';
-    isPlus = _prefs.getBool(_kPlus) ?? false;
+    _paid = _prefs.getBool(_kPlus) ?? false;
     Trace.instance.plus = isPlus;
     themeMode = _decodeTheme(_prefs.getString(_kTheme));
     MusicSound.load(_prefs);
@@ -726,6 +879,10 @@ class AppState extends ChangeNotifier {
     pathsOpened = _prefs.getStringList(_kPathsOpened) ?? [];
     journeySeen = _decodeWeights(_prefs.getString(_kJourneySeen));
     journeySeenOn = _prefs.getString(_kJourneySeenOn);
+    journeyClear = _prefs.getString(_kJourneyClear);
+    weekShownFor = _prefs.getString(_kWeekShownFor);
+    weekAccountShown = _prefs.getInt(_kWeekAccountShown) ?? 0;
+    weekAccountDeclined = _prefs.getBool(_kWeekAccountDeclined) ?? false;
     notes = CardNotes.decode(_prefs.getString(_kNotes));
     reactions = _decodeReactions(_prefs.getString(_kReactions));
     // The phone's own draw for the cards that ask how sure only some of the
@@ -738,6 +895,14 @@ class AppState extends ChangeNotifier {
       _prefs.setString(_kSureSeed, sureSeed);
     }
     SureAsk.seed = sureSeed;
+    // On the opening's days every card with a right answer asks how sure,
+    // never by chance (`opening.asks`): a new reader's first answers are
+    // what the calibration record starts from.
+    SureAsk.always = (Pill pill) =>
+        _dealt &&
+        openingAsksOn &&
+        opensOn(today) &&
+        todaysDeck.any((Pill p) => p.id == pill.id);
     final String? variant = _prefs.getString(_kTasteVariant);
     tasteVariant =
         variant ?? (math.Random().nextBool() ? 'implicit' : 'explicit');
@@ -827,9 +992,11 @@ class AppState extends ChangeNotifier {
     freezes -= missed;
     lastCompletionDate = dateKey(dayShift(today, -1));
     frozeOn = dateKey(today);
+    frozeDays = missed;
     await _prefs.setInt(_kFreezes, freezes);
     await _prefs.setString(_kLastCompletion, lastCompletionDate!);
     await _prefs.setString(_kFrozeOn, frozeOn!);
+    await _prefs.setInt(_kFrozeDays, frozeDays);
     Analytics.capture('streak frozen', {
       'days_covered': missed,
       'freezes_left': freezes,
@@ -839,6 +1006,72 @@ class AppState extends ChangeNotifier {
 
   /// True when a freeze saved the streak today and it has not been said yet.
   bool get streakWasFrozen => frozeOn == dateKey(today);
+
+  /// The streaks that rise once, small, when they are reached
+  /// (lib/widgets/streak_moment.dart): the seventh, a week. The first day's
+  /// own moment is the end of the first five, and the second and third
+  /// evenings have their own asks (the reminder, the place, Which parts),
+  /// which a moment of the streak would take the evening from.
+  static const Set<int> kStreakMoments = {7};
+
+  /// Whether the streak just reached one of [kStreakMoments] with today's
+  /// five, and its moment has not risen on this phone (`streak.told`).
+  bool get streakMomentDue =>
+      streakToldOn &&
+      dayClosed &&
+      kStreakMoments.contains(liveStreak) &&
+      !streakTold.contains(liveStreak);
+
+  /// The streak's moment has risen: never again for this streak.
+  Future<void> noteStreakTold() async {
+    if (streakTold.contains(liveStreak)) return;
+    streakTold = [...streakTold, liveStreak];
+    await _prefs.setStringList(_kStreakTold, [
+      for (final int n in streakTold) '$n',
+    ]);
+    Analytics.capture('streak told', {
+      'streak_days': liveStreak,
+      'freezes': freezes,
+      'is_plus': isPlus,
+    });
+  }
+
+  /// How the day [day] (a date key) went, in its own numbers: how many of
+  /// its questions with a right answer were answered, how many were right,
+  /// and how sure the reader said they were, on average, where they said;
+  /// null for a day with no such answer.
+  ({int asked, int right, int? sure})? numbersOn(String day) {
+    final List<Judgement> theirs = [
+      for (final Judgement j in judgements)
+        if (j.on == day) j,
+    ];
+    if (theirs.isEmpty) return null;
+    final List<int> said = [for (final Judgement j in theirs) ?j.confidence];
+    return (
+      asked: theirs.length,
+      right: theirs.where((j) => j.correct).length,
+      sure: said.isEmpty
+          ? null
+          : (said.reduce((a, b) => a + b) / said.length).round(),
+    );
+  }
+
+  /// The subjects of today's five the reader meets for the first time: not
+  /// one card read before today was of them. In the order the day has them.
+  List<String> get firstSubjectsToday {
+    final Set<String> todays = {for (final Pill p in todaysDeck) p.id};
+    final Set<String> met = {
+      for (final String id in seenIds)
+        if (!todays.contains(id)) ?PillBank.byId(id)?.topic,
+    };
+    final List<String> first = [];
+    for (final Pill p in todaysDeck) {
+      if (!met.contains(p.topic) && !first.contains(p.topic)) {
+        first.add(p.topic);
+      }
+    }
+    return first;
+  }
 
   /// Earns a freeze every seventh day kept, up to what can be held. The
   /// streak pays for its own insurance.
@@ -862,7 +1095,7 @@ class AppState extends ChangeNotifier {
   /// How many of [day]'s cards are the reader's own, as that morning will
   /// deal them: Sunday is the day's own, and the streak is as it stands.
   int ownCardsOn(DateTime day) =>
-      ownCardsFor(plus: isPlus, streak: liveStreak, sunday: isSunday(day));
+      ownCardsFor(plus: plusOn(day), streak: liveStreak, sunday: isSunday(day));
 
   /// True on the reader's Sunday when today's five hold the one more card
   /// chosen for them, which the first of their own says under its head on
@@ -885,6 +1118,8 @@ class AppState extends ChangeNotifier {
       ...genresOff,
       '|',
       ...strandsOff,
+      '|',
+      ...lovedTopics,
     ]);
     if (_profileKey != key) {
       _profileKey = key;
@@ -892,6 +1127,7 @@ class AppState extends ChangeNotifier {
         weights: topicWeights,
         genresOff: genresOff,
         strandsOff: strandsOff,
+        loved: lovedTopics,
       );
     }
     return _profile;
@@ -993,17 +1229,45 @@ class AppState extends ChangeNotifier {
   }) {
     final int day = dayNumberOf(date);
     final Map<String, double> weights = profile.weightsOn(day, leanedWeights);
+    // The plan as that morning has it: the gift's last evening deals the
+    // morning after it as the free plan will.
+    final bool plus = plusOn(date);
     // In What to learn's look E, as the developer tools try it, the reader's
     // own cards lean into the week's skill too (lib/data/learn_reading.dart);
     // as it ships, the lean is the reader's alone.
     final Map<String, double> lean = withFocusLean(
       this,
-      isPlus ? profile.tasteWith(taste) : profile.lean,
+      plus ? profile.tasteWith(taste) : profile.lean,
     );
-    final List<Pill> due = isPlus ? reviews : const [];
+    final List<Pill> due = plus ? reviews : const [];
+    final Map<String, int> levels = plus
+        ? measuredLevels
+        : profile.levelsUnder(topicLevels);
     if (firstDays && day < kOpeningDays) {
       final Deal? opening = dealOpening(
         date: date,
+        topics: pickedTopics,
+        claimed: profile.claimed,
+        loved: profile.loved,
+        mix: topicWeights,
+        weights: weights,
+        levels: levels,
+        taste: lean,
+        genresOff: genresOff,
+        strandsOff: strandsOff,
+        exclude: exclude,
+        reviews: due,
+        own: own,
+        home: place,
+        asking: openingAsksOn ? kOpeningAsks : null,
+      );
+      if (opening != null) return opening;
+    }
+    // The rest of the first week, still mostly drawn (`firstWeek.drawn`).
+    if (firstDays && firstWeekDrawnOn(day) > 0 && firstWeekDrawnFlagOn) {
+      final Deal? week = dealFirstWeek(
+        date: date,
+        day: day,
         topics: pickedTopics,
         claimed: profile.claimed,
         mix: topicWeights,
@@ -1017,14 +1281,14 @@ class AppState extends ChangeNotifier {
         own: own,
         home: place,
       );
-      if (opening != null) return opening;
+      if (week != null) return week;
     }
     return dealDay(
       date: date,
       topics: pickedTopics,
       weights: weights,
       mix: topicWeights,
-      levels: dealtLevels,
+      levels: levels,
       taste: lean,
       genresOff: genresOff,
       strandsOff: strandsOff,
@@ -1049,6 +1313,16 @@ class AppState extends ChangeNotifier {
   /// because the server deals a first day as it deals any other.
   bool opensOn(DateTime date) => firstDays && dayNumberOf(date) < kOpeningDays;
 
+  /// Whether the phone deals [date] itself, whatever the server holds: the
+  /// opening's days ([opensOn]), and the rest of the first week while it is
+  /// still mostly drawn (`firstWeek.drawn`, [dealFirstWeek]), which the
+  /// server does not deal.
+  bool dealtHere(DateTime date) =>
+      opensOn(date) ||
+      (firstDays &&
+          firstWeekDrawnFlagOn &&
+          firstWeekDrawnOn(dayNumberOf(date)) > 0);
+
   /// Deals a fresh day and records it, so a restart resumes the same deck.
   ///
   /// An app that never re-asks what you got wrong is not teaching, it is
@@ -1058,22 +1332,33 @@ class AppState extends ChangeNotifier {
     // How long the day takes to arrive, server or phone: the reader waits
     // for it on the splash.
     final Stopwatch dealing = Stopwatch()..start();
+    // The plan as this morning has it, said to the server when it moved: the
+    // morning after the gift's last day is the free plan's, on the phone
+    // and, from now, on the server.
+    if (Trace.instance.plus != isPlus) {
+      Trace.instance.plus = isPlus;
+      unawaited(Trace.instance.sayPresence());
+    }
     // The server's day first: dealt from what the reader did, not only from
     // what they said. It is usually on the phone already — asked for the
     // evening before, or dealt by the nightly pass and read from the
     // store's own cache — and the wait for it is bounded. Failing that, the
     // phone deals as it always did, from the same calendar. A new reader's
     // first days are the phone's: they open on the cards chosen for them.
-    final ServedDay? served = opensOn(today)
+    final ServedDay? served = dealtHere(today)
         ? null
         : await Served.instance.dayFor(today);
     final Set<String> dealtReviews;
     // A served day with a card about a place the reader does not live in —
     // a server older than the cards about places, or a place changed since
-    // it dealt — is not the reader's day: the phone deals its own.
+    // it dealt — is not the reader's day: the phone deals its own. Nor is an
+    // Astute+ day, all five the reader's own, for a reader on the free plan:
+    // the server dealt it the night before, from a plan that was still the
+    // gift's.
     if (served != null &&
         served.cards.length >= kPillsPerDay &&
-        served.cards.every((p) => reachesReader(p, place))) {
+        served.cards.every((p) => reachesReader(p, place)) &&
+        (isPlus || served.own.length < kPillsPerDay)) {
       todaysDeck = served.cards;
       ownIdsToday = served.own.intersection(
         todaysDeck.map((p) => p.id).toSet(),
@@ -1189,7 +1474,7 @@ class AppState extends ChangeNotifier {
       day,
       exclude: const {},
       reviews: const [],
-      own: ownCardsFor(plus: isPlus, streak: 0, sunday: isSunday(day)),
+      own: ownCardsFor(plus: plusOn(day), streak: 0, sunday: isSunday(day)),
     ).cards;
   }
 
@@ -1720,6 +2005,8 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kBestStreak, bestStreak);
     await _prefs.setString(_kLastCompletion, lastCompletionDate!);
     await _prefs.setStringList(_kCompletedDates, completedDates);
+    // The first day this phone finished, once, as a step of the first run.
+    unawaited(FirstSteps.instance.note(FirstStep.firstDayDone, today));
     // Tomorrow, asked for tonight, so the morning is one read: the trace of
     // today goes first, so tomorrow is dealt from a day that includes it.
     unawaited(_askTomorrow());
@@ -1893,23 +2180,30 @@ class AppState extends ChangeNotifier {
   );
 
   /// The mix as the personal deals see it: what the reader asked for,
-  /// leaned by what they liked and threw down. The five of the day never
-  /// look at this; the second set and the swaps do.
+  /// leaned by what they liked and threw down, by what they want to get
+  /// better at, and by the subjects they said they love. The day's own
+  /// cards are dealt from it (sharpened on the first three days, see
+  /// [ReaderProfile.weightsOn]), and so are the second set and the swaps.
   Map<String, double> get leanedWeights {
     final Map<String, double> leaned = _leanedByReading;
     final Set<String> aimed = {
       for (final String k in goals) ...?Goal.of(k)?.topics,
     };
-    if (aimed.isEmpty) return leaned;
-    // What the reader wants to get better at counts half again.
+    final List<String> loved = profile.loved;
+    if (aimed.isEmpty && loved.isEmpty) return leaned;
     final base = leaned.isEmpty
         ? {for (final key in kTopicOrder) key: 1.0}
         : leaned;
+    // What the reader wants to get better at counts half again, and a
+    // subject they love twice.
     return {
       for (final e in base.entries)
-        e.key: aimed.contains(e.key)
-            ? (e.value * kGoalLean).clamp(0.05, 3.0)
-            : e.value,
+        e.key:
+            (e.value *
+                    (aimed.contains(e.key) ? kGoalLean : 1) *
+                    (loved.contains(e.key) ? kLoveLean : 1))
+                .clamp(0.05, 3.0)
+                .toDouble(),
     };
   }
 
@@ -2203,6 +2497,78 @@ class AppState extends ChangeNotifier {
     return due;
   }
 
+  /// How many of today's five came at random: neither chosen for the reader
+  /// nor back for another go nor about where they live.
+  int get randomToday => [
+    for (final Pill p in todaysDeck.take(kPillsPerDay))
+      if (!ownIdsToday.contains(p.id) &&
+          !reviewIdsToday.contains(p.id) &&
+          !p.isAboutAPlace)
+        p,
+  ].length;
+
+  /// How many of tomorrow's five will come at random, as the morning will
+  /// deal them ([tomorrowsDeck]): what the card after the fifth says of
+  /// tomorrow (lib/state/sixth_line.dart).
+  int get randomTomorrow {
+    final tomorrow = DateTime(today.year, today.month, today.day + 1);
+    final ServedDay? kept = _servedTomorrow;
+    final List<Pill> cards;
+    final Set<String> own;
+    if (kept != null &&
+        !opensOn(tomorrow) &&
+        (plusOn(tomorrow) || kept.own.length < kPillsPerDay)) {
+      cards = kept.cards;
+      own = kept.own;
+    } else {
+      final Deal deal = _deal(
+        tomorrow,
+        exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
+        reviews: _reviewsDue(tomorrow),
+        own: ownCardsOn(tomorrow),
+      );
+      cards = deal.cards;
+      own = deal.own;
+    }
+    return [
+      for (final Pill p in cards.take(kPillsPerDay))
+        if (!own.contains(p.id) && !p.isAboutAPlace) p,
+    ].length;
+  }
+
+  // ── Explore's end, for a free reader (`explore.freeCards`) ────────────
+
+  /// The cards a reader on the free plan reads in a day, beyond the day's
+  /// five, before Explore's endless flow ends on a card that names Astute+
+  /// (lib/explore/blocks/core/feed_cap.dart). Nought, as built: no end. A
+  /// soft end: what is on the page stays open, and the shelves above it
+  /// are as they were.
+  static const RemoteNumber kExploreFreeCardsKnob = RemoteNumber(
+    'explore.freeCards',
+    fallback: 0,
+    min: 0,
+    max: 500,
+  );
+
+  /// Cards first read today beyond today's five, wherever they were read.
+  int get readBeyondFiveToday {
+    final Set<String> five = {
+      for (final Pill p in todaysDeck.take(kPillsPerDay)) p.id,
+    };
+    return [
+      for (final String id in readDays[dateKey(today)] ?? const <String>[])
+        if (!five.contains(id)) id,
+    ].length;
+  }
+
+  /// Whether Explore's endless flow has ended for today: on the free plan,
+  /// with an end set, once the cards read beyond the five have reached it.
+  bool get exploreCapped {
+    if (isPlus) return false;
+    final int cap = kExploreFreeCardsKnob.value;
+    return cap > 0 && readBeyondFiveToday >= cap;
+  }
+
   /// Tomorrow's cards, dealt the way tomorrow will deal them.
   ///
   /// The dealer is deterministic in the date and the reading history, and
@@ -2211,7 +2577,13 @@ class AppState extends ChangeNotifier {
   List<Pill> get tomorrowsDeck {
     final tomorrow = DateTime(today.year, today.month, today.day + 1);
     final ServedDay? kept = _servedTomorrow;
-    if (kept != null && !opensOn(tomorrow)) return kept.cards;
+    // Not an Astute+ day for a morning the free plan will deal: the gift's
+    // last evening, whose server still had the gift (see _startNewDay).
+    if (kept != null &&
+        !dealtHere(tomorrow) &&
+        (plusOn(tomorrow) || kept.own.length < kPillsPerDay)) {
+      return kept.cards;
+    }
     return _deal(
       tomorrow,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
@@ -2256,9 +2628,9 @@ class AppState extends ChangeNotifier {
   /// fetches the pages of its first free cards, so the morning's first card
   /// comes up drawn.
   Future<void> _askTomorrow() async {
-    // A first day's tomorrow is the opening's, dealt on the phone: there is
-    // nothing to ask for.
-    if (_askingTomorrow || opensOn(dayShift(today, 1))) return;
+    // A first day's tomorrow is the opening's, dealt on the phone, and so is
+    // the rest of the first week: there is nothing to ask for.
+    if (_askingTomorrow || dealtHere(dayShift(today, 1))) return;
     _askingTomorrow = true;
     try {
       await Trace.instance.flush();
@@ -2372,6 +2744,40 @@ class AppState extends ChangeNotifier {
 
   int get calibratedAnswers =>
       judgements.where((j) => j.confidence != null).length;
+
+  /// A first reading of how sure against how right, while there are too
+  /// few answers to measure it ([kEarlyReadingFrom] to one under
+  /// [kCalibrationFloor]): the level said most often, the higher of two said
+  /// as often, and how it went. Null outside those, and while the server
+  /// holds it back ([kEarlyReadingFlag]); the profile and the journey then
+  /// say how many more answers it takes, as they did.
+  EarlyReading? get earlyReading {
+    if (!kEarlyReadingFlag.on(_here)) return null;
+    final List<CalibrationBucket> levels = calibration.toList();
+    final int n = levels.fold<int>(0, (a, b) => a + b.count);
+    if (n < kEarlyReadingFrom || n >= kCalibrationFloor) return null;
+    final CalibrationBucket most = levels.reduce(
+      (a, b) =>
+          b.count > a.count || (b.count == a.count && b.said > a.said) ? b : a,
+    );
+    return EarlyReading(
+      level: most.said,
+      count: most.count,
+      right: most.right,
+      answers: n,
+    );
+  }
+
+  /// The first reading under the floor (`calibration.early`): on as built,
+  /// so the profile and the journey say what the first answers came to; the
+  /// server can hold it back, and they wait for twelve again.
+  static const RemoteFlag kEarlyReadingFlag = RemoteFlag(
+    'calibration.early',
+    fallback: true,
+  );
+
+  /// Whether the server lets the first reading be said.
+  bool get earlyReadingOn => kEarlyReadingFlag.on(_here);
 
   /// How the gap between confidence and accuracy has moved across the run.
   ///
@@ -2549,9 +2955,18 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// The app open on a new day of this phone, for the first run's steps
+  /// (lib/measure/first_steps.dart): its first open, or the next day.
+  Future<void> _noteOpened() => FirstSteps.instance.opened(
+    onboarded: onboarded,
+    installedOn: installedOn,
+    today: today,
+  );
+
   Future<void> completeOnboarding() async {
     onboarded = true;
     await _prefs.setBool(_kOnboarded, true);
+    unawaited(FirstSteps.instance.note(FirstStep.firstRunDone, today));
     Analytics.capture('onboarding completed', {
       'topics': pickedTopics.length,
       ...profile.facts,
@@ -2574,6 +2989,22 @@ class AppState extends ChangeNotifier {
     'trial.firstRun',
     fallback: false,
   );
+
+  /// The new reader's gift (`trial.reverse`): where the first run would
+  /// offer the trial, after its one card, a new reader is given Astute+ for
+  /// [kGiftDays] days instead, held on the phone, with no purchase and no
+  /// card; two days before the end one quiet line says so, and the morning
+  /// after it, what the fourteen days came to and what goes back to free
+  /// (lib/state/gift.dart). Off as built: the first run is what
+  /// `trial.firstRun` makes it. A gift given is never taken back by the
+  /// switch.
+  static const RemoteFlag kReverseTrialFlag = RemoteFlag(
+    'trial.reverse',
+    fallback: false,
+  );
+
+  /// Whether the server has the new reader's gift on for this reader.
+  bool get reverseTrialOn => kReverseTrialFlag.on(_here);
 
   /// The answers by Claude: the assistant in Go deeper and the weekly coach
   /// in Your journey, both Astute+'s (a free reader sees them locked). Off
@@ -2606,6 +3037,23 @@ class AppState extends ChangeNotifier {
   /// Whether Listen is offered on Today, as far as the server's switch goes.
   bool get listenOn => kListenFlag.on(_here);
 
+  /// Books read aloud (`bookAudio`): a book's summary heard from its page, a
+  /// part a clip, played on with the screen locked and kept by a small
+  /// player over every screen (lib/books/). The week's book and the first
+  /// part of any book for everybody, the rest for Astute+. Reading the
+  /// summary needs no switch; this one only adds the voice. Off as built,
+  /// and off in remote/app.json until the owner has added the ElevenLabs
+  /// key and its plan; a server without a key says "not configured", and
+  /// the app hides listening then too.
+  static const RemoteFlag kBookAudioFlag = RemoteFlag(
+    'bookAudio',
+    fallback: false,
+  );
+
+  /// Whether a book's summary can be listened to, as far as the server's
+  /// switch goes.
+  bool get bookAudioOn => kBookAudioFlag.on(_here);
+
   /// Invita un amico (`invite`): in the profile, a link with the reader's
   /// code to send a friend, and "Have a code?" for a friend's; a week of
   /// Astute+ for each of the two once the friend has finished a first day
@@ -2619,6 +3067,127 @@ class AppState extends ChangeNotifier {
 
   /// Whether the first run plays a card and offers the trial after it.
   bool get firstRunTrialOn => kFirstRunTrialFlag.on(_here);
+
+  // ── The three loved, and Which parts later ────────────────────────────
+
+  /// The first run's question in the positive (`firstRun.loves`): after
+  /// Your mix, up to three subjects the reader loves (lib/screens/
+  /// loves_screen.dart), which their first days open on and their own cards
+  /// lean to. On as built; off, the first run goes from the mix to the day.
+  static const RemoteFlag kLovesFlag = RemoteFlag(
+    'firstRun.loves',
+    fallback: true,
+  );
+
+  /// Whether the first run asks for the three the reader loves.
+  bool get lovesAsked => kLovesFlag.on(_here);
+
+  /// Which parts of each subject, offered once on the finished day's shelf
+  /// (`parts.offer`, lib/widgets/parts_offer.dart), from the
+  /// [kPartsOfferKnob]th finished day: the question the first run used to
+  /// ask before a single card, two hundred genres and their strands, asked
+  /// once the reader knows what a card is. On as built.
+  static const RemoteFlag kPartsOfferFlag = RemoteFlag(
+    'parts.offer',
+    fallback: true,
+  );
+
+  /// The finished days before Which parts is offered, as the server may
+  /// tune it: three, as built.
+  static const int kPartsOfferDay = 3;
+  static const RemoteNumber kPartsOfferKnob = RemoteNumber(
+    'parts.offerDay',
+    fallback: kPartsOfferDay,
+    min: 2,
+    max: 30,
+  );
+
+  /// Where the offer of Which parts stands: null before it was shown; the
+  /// day it was shown on, which it stays on that evening until answered and
+  /// never comes back after; or `done`, once answered.
+  String? partsOffer;
+
+  /// Whether Which parts is offered on the shelf now: on the finished day's
+  /// shelf from the [kPartsOfferKnob]th finished day, to a reader who has
+  /// not chosen any parts already (in the fine-tuning), once — the evening
+  /// it is first shown, until it is answered, and never again.
+  bool get partsOfferDue {
+    if (!kPartsOfferFlag.on(_here) || !dayClosed) return false;
+    if (genresOff.isNotEmpty || strandsOff.isNotEmpty) return false;
+    if (completedDates.length < kPartsOfferKnob.value) return false;
+    return partsOffer == null || partsOffer == dateKey(today);
+  }
+
+  /// The offer has been put on the shelf: noted on the day it was, so it
+  /// is not put on another.
+  Future<void> notedPartsOfferShown() async {
+    if (partsOffer != null) return;
+    partsOffer = dateKey(today);
+    await _prefs.setString(_kPartsOffer, partsOffer!);
+    Analytics.capture('parts offer shown', {
+      'days_completed': completedDates.length,
+    });
+  }
+
+  /// The reader answered the offer: Which parts opened ([chose]), or let go.
+  Future<void> notedPartsOfferAnswered({required bool chose}) async {
+    partsOffer = 'done';
+    await _prefs.setString(_kPartsOffer, 'done');
+    Analytics.capture('parts offer answered', {
+      'choice': chose ? 'choose' : 'not now',
+    });
+    notifyListeners();
+  }
+
+  /// The opening's own shape (`opening.asks`): three of an opening day's
+  /// five ask (lib/data/first_days.dart, kOpeningAsks), and every card of
+  /// those days with a right answer asks how sure, never by chance
+  /// ([SureAsk.always]). On as built; off, an opening day asks two, as
+  /// every day does, and a card that gives odds asks how sure by them.
+  static const RemoteFlag kOpeningAsksFlag = RemoteFlag(
+    'opening.asks',
+    fallback: true,
+  );
+
+  /// Whether the opening's days ask three and always how sure.
+  bool get openingAsksOn => kOpeningAsksFlag.on(_here);
+
+  /// The rest of the first week, still mostly drawn (`firstWeek.drawn`):
+  /// days four to seven are dealt on the phone, four, four, three and three
+  /// of their five from the strongest drawings (dealFirstWeek). On as
+  /// built; off, they are dealt as any day, by the server first.
+  static const RemoteFlag kFirstWeekDrawnFlag = RemoteFlag(
+    'firstWeek.drawn',
+    fallback: true,
+  );
+
+  /// Whether the rest of the first week leans to the strong drawings.
+  bool get firstWeekDrawnFlagOn => kFirstWeekDrawnFlag.on(_here);
+
+  /// The line at the top of Today on the opening's second and third days
+  /// (`opening.dayLine`): which day it is, how the day before went, in its
+  /// own numbers, and what is new today (lib/widgets/today_line.dart). On
+  /// as built.
+  static const RemoteFlag kDayLineFlag = RemoteFlag(
+    'opening.dayLine',
+    fallback: true,
+  );
+
+  /// Whether Today opens the second and third days on their line.
+  bool get dayLineOn => kDayLineFlag.on(_here);
+
+  /// The streak told (`streak.told`): on the morning after a freeze kept
+  /// it, Today says so first; the finished day says that a day missed is
+  /// covered and how many freezes there are; and the streak reaching two,
+  /// three and seven days rises once, small (lib/widgets/streak_moment.dart).
+  /// On as built.
+  static const RemoteFlag kStreakToldFlag = RemoteFlag(
+    'streak.told',
+    fallback: true,
+  );
+
+  /// Whether the streak and its freezes are told.
+  bool get streakToldOn => kStreakToldFlag.on(_here);
 
   /// The day the offer was last put, as a date key; null when never. Kept
   /// for the phone rather than the reader, like the experiments' draws: a
@@ -2645,6 +3214,7 @@ class AppState extends ChangeNotifier {
     today,
     topics: pickedTopics,
     claimed: profile.claimed,
+    loved: profile.loved,
     mix: topicWeights,
     genresOff: genresOff,
     strandsOff: strandsOff,
@@ -2715,6 +3285,124 @@ class AppState extends ChangeNotifier {
   Future<void> notedFirstMonthOffered() async {
     firstMonthOfferedOn = dateKey(today);
     await _prefs.setString(_kFirstMonthOfferedOn, firstMonthOfferedOn!);
+  }
+
+  // ── The card after the fifth (lib/state/sixth_line.dart) ──────────────
+
+  /// The day the card after the fifth was last dealt after the five, as a
+  /// date key: that day, the finished day's shelf does not show it again.
+  String? sixthDealtOn;
+
+  /// What the card after the fifth said on the last day it said anything,
+  /// as `date|kind`: a day says one thing all day, and never what the day
+  /// before it said.
+  String? sixthSaid;
+
+  /// Whether the card after the fifth was dealt after today's five.
+  bool get sixthDealtToday => sixthDealtOn == dateKey(today);
+
+  /// Notes the card after the fifth as it is dealt after the five.
+  Future<void> noteSixthDealt() async {
+    sixthDealtOn = dateKey(today);
+    await _prefs.setString(_kSixthDealtOn, sixthDealtOn!);
+  }
+
+  /// Notes what the card after the fifth says today.
+  Future<void> noteSixthSaid(String said) async {
+    if (sixthSaid == said) return;
+    sixthSaid = said;
+    await _prefs.setString(_kSixthSaid, said);
+  }
+
+  /// The day the reader's first finished day was celebrated, on a screen of
+  /// its own right after the fifth card (lib/widgets/first_day.dart), as a
+  /// date key; null while it never has been. Noted as the screen rises, so
+  /// it rises once whatever happens next. A reader who signs out leaves it
+  /// behind: whoever reads here next has a first day of their own.
+  String? firstDayCelebratedOn;
+
+  /// Whether this is the evening the first day was celebrated. That screen
+  /// is the evening's one full-screen moment and its one question: the
+  /// reminder is asked from it, never again by the shell on the same
+  /// evening, and a level reached waits for the next calm moment.
+  bool get celebratedToday => firstDayCelebratedOn == dateKey(today);
+
+  /// Notes the celebration as it rises. Kept at once, before the write
+  /// lands: the shell asks whether this is its evening in the same frame.
+  Future<void> notedFirstDayCelebrated() async {
+    firstDayCelebratedOn = dateKey(today);
+    await _prefs.setString(_kFirstDayCelebratedOn, firstDayCelebratedOn!);
+  }
+
+  // ── Your journey's preview, and Sunday's week ─────────────────────────
+
+  /// Your journey's preview (`journey.preview`): a reader on the free plan
+  /// who opens Your journey sees their own, worked out from their answers,
+  /// behind a soft blur, one figure of it in the clear each week, and the
+  /// way to Astute+ under it (lib/screens/journey_screen.dart). Off as
+  /// built: the journey's doors open the plans, as they always did.
+  static const RemoteFlag kJourneyPreviewFlag = RemoteFlag(
+    'journey.preview',
+    fallback: false,
+  );
+
+  /// Whether the server has the preview on for this reader.
+  bool get journeyPreviewOn => kJourneyPreviewFlag.on(_here);
+
+  /// Sunday's week (`week.sunday`): on Sunday, once the five are read, or
+  /// on Monday morning for a reader who missed Sunday, a reader on the free
+  /// plan is shown what the week came to, with one figure of Astute+'s
+  /// blurred and, to a reader without an account, the account in one line
+  /// (lib/state/your_week.dart says when, lib/widgets/your_week_sheet.dart
+  /// shows it). Off as built.
+  static const RemoteFlag kSundayWeekFlag = RemoteFlag(
+    'week.sunday',
+    fallback: false,
+  );
+
+  /// Whether the server has Sunday's week on for this reader.
+  bool get sundayWeekOn => kSundayWeekFlag.on(_here);
+
+  /// The figure the journey's preview shows in the clear this week, as
+  /// `yyyy-mm-dd|figure`, the week by its Monday: chosen the first time the
+  /// preview is opened in a week that has one to show, and kept for that
+  /// week, so the figure in the clear does not change under the reader as
+  /// more of the others can be said. Kept on the phone only.
+  String? journeyClear;
+
+  /// Keeps [figure] as the one in the clear for the week of [monday].
+  Future<void> keepJourneyClear(String monday, String figure) async {
+    journeyClear = '$monday|$figure';
+    await _prefs.setString(_kJourneyClear, journeyClear!);
+  }
+
+  /// The Monday of the last week Sunday's week was shown for, as a date
+  /// key: it is shown once a week at most.
+  String? weekShownFor;
+
+  /// How many weeks the account's line was offered with the week, and
+  /// whether the reader said no to the sheet it opened: three times at
+  /// most, and never again after a no.
+  int weekAccountShown = 0;
+  bool weekAccountDeclined = false;
+
+  /// Notes the week of [monday] as shown, and the account's line with it
+  /// when it was there. Noted as the sheet rises, so a sheet that fails to
+  /// show is not a reason to put it again.
+  Future<void> notedWeekShown(String monday, {required bool account}) async {
+    weekShownFor = monday;
+    await _prefs.setString(_kWeekShownFor, monday);
+    if (account) {
+      weekAccountShown += 1;
+      await _prefs.setInt(_kWeekAccountShown, weekAccountShown);
+    }
+  }
+
+  /// Notes the account's sheet, opened from the week, closed without an
+  /// account: the line is not offered again.
+  Future<void> notedWeekAccountDeclined() async {
+    weekAccountDeclined = true;
+    await _prefs.setBool(_kWeekAccountDeclined, true);
   }
 
   /// The first morning, dealt again now that the reader has said what they
@@ -3012,6 +3700,11 @@ class AppState extends ChangeNotifier {
           body = off == null
               ? l.nudgeTwoWeeksBodyNoGap(answers.length, lead.question)
               : l.nudgeTwoWeeksBody(off.round(), lead.question);
+        } else if (_giftNoteOn(day)) {
+          // Two days before the gift ends, that morning's nudge says so:
+          // the one notification the gift ever sends, and only to a reader
+          // who has the nudge on.
+          title = l.giftEndsSoon(kGiftNoticeDays);
         } else if (day.weekday == DateTime.monday && gap < 2) {
           // On Mondays a reader who keeps coming is told the week's free
           // book: something new to open, once a week.
@@ -3035,11 +3728,35 @@ class AppState extends ChangeNotifier {
   }
 
   /// The reader's hour, as numbers.
-  (int, int) get _notifyClock {
-    final parts = notifyTime.split(':');
+  (int, int) get _notifyClock => _clockOf(notifyTime);
+
+  /// A time of day written "HH:mm", as numbers: 08:30 where it does not
+  /// read.
+  static (int, int) _clockOf(String at) {
+    final parts = at.split(':');
     final int hour = int.tryParse(parts.first) ?? 8;
     final int minute = parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30;
     return (hour, minute);
+  }
+
+  /// When the daily nudge would first land were it set for [at] ("HH:mm"):
+  /// today at that time, while it is still to come and today's five are
+  /// still to read, otherwise tomorrow — the first of [reminderPlan]'s, by
+  /// the same two rules. The reminder sheet draws that notification at its
+  /// head as a time is picked: the nudge's title and the question of the
+  /// card that morning opens on ([leadOn]), which is what it will carry.
+  DateTime firstNudgeAt(String at, {DateTime? now}) {
+    final (int hour, int minute) = _clockOf(at);
+    final DateTime clock = now ?? _clock();
+    final DateTime later = DateTime(
+      today.year,
+      today.month,
+      today.day,
+      hour,
+      minute,
+    );
+    if (later.isAfter(clock) && !todayCompleted) return later;
+    return DateTime(today.year, today.month, today.day + 1, hour, minute);
   }
 
   /// The slot the warning before a trial's charge takes in the plan: apart
@@ -3390,6 +4107,8 @@ class AppState extends ChangeNotifier {
   /// worth cutting every chart by. Counts and enums, like every event.
   Map<String, Object> get analyticsProfile => {
     'is_plus': isPlus,
+    // Astute+ as the new reader's gift holds it, nothing bought.
+    'on_gift': onGift && !_paid,
     'rung': standing.at,
     'streak_days': streak,
     'best_streak': bestStreak,
@@ -3466,6 +4185,7 @@ class AppState extends ChangeNotifier {
   /// without a join.
   static const List<String> _everyEvent = [
     'is_plus',
+    'on_gift',
     'rung',
     'streak_days',
     'days_completed',
@@ -3664,6 +4384,29 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Keeps the subjects the reader loves, in the order picked: the first
+  /// run's one question asked in the positive, and up to three of them.
+  /// None is an answer too, and is kept as one.
+  Future<void> setLoved(List<String> keys) async {
+    lovedTopics = _keptLoves(keys);
+    await _prefs.setStringList(_kLoved, lovedTopics);
+    // How many, and which: the names decide what the bank writes next, as
+    // the mix's do ('mix set').
+    Analytics.capture('loves set', {
+      'count': lovedTopics.length,
+      'loved': lovedTopics.join(','),
+    });
+    notifyListeners();
+  }
+
+  /// [keys] as loves: subjects the app has, each once, at most three.
+  static List<String> _keptLoves(Iterable<String> keys) => List.unmodifiable(
+    <String>{
+      for (final String k in keys)
+        if (kTopics.containsKey(k) && k != 'thinking') k,
+    }.take(kMostLoved),
+  );
+
   /// The figures of Your journey just seen, written over what was seen of
   /// them before, and today as the day they were.
   Future<void> rememberJourney(Map<String, double> seen) async {
@@ -3699,7 +4442,7 @@ class AppState extends ChangeNotifier {
   /// Unlocks the Astute+ screens locally. No billing is wired up, so this
   /// only flips a stored flag — the paywall says as much when it calls it.
   Future<void> startPlusTrial() async {
-    isPlus = true;
+    _paid = true;
     Trace.instance.plus = true;
     await _prefs.setBool(_kPlus, true);
     // Said to the server now, not with the next things read: it is what
@@ -3715,9 +4458,10 @@ class AppState extends ChangeNotifier {
   /// Kept in prefs so a launch with no network still opens on the right side
   /// of the paywall: the store is the truth, this is the last thing it said.
   Future<void> applyEntitlement(bool active) async {
-    if (isPlus == active) return;
-    isPlus = active;
-    Trace.instance.plus = active;
+    if (_paid == active) return;
+    _paid = active;
+    // Astute+ as the reader has it, which a gift still running keeps on.
+    Trace.instance.plus = isPlus;
     await _prefs.setBool(_kPlus, active);
     // Said to the server now, not with the next things read: it is what
     // the answers by Claude are given on.
@@ -3727,20 +4471,52 @@ class AppState extends ChangeNotifier {
     // and the one place the profile is told at once, beside the store's
     // own word on the trial (Subscription.planFacts).
     Analytics.capture('plan changed', {'is_plus': active});
-    Analytics.register('is_plus', active);
-    Analytics.person(set: {'is_plus': active}, now: true);
+    Analytics.register('is_plus', isPlus);
+    Analytics.person(set: {'is_plus': isPlus}, now: true);
     notifyListeners();
+    // A plan bought in the gift's days takes the note about its end off
+    // the morning it was to ride on.
+    if (giftFrom != null) unawaited(refreshDailyReminder());
   }
 
   Future<void> endPlus() async {
-    isPlus = false;
-    Trace.instance.plus = false;
+    _paid = false;
+    Trace.instance.plus = isPlus;
     await _prefs.setBool(_kPlus, false);
-    Analytics.register('is_plus', false);
+    Analytics.register('is_plus', isPlus);
     // Said to the server now, not with the next things read: it is what
     // the answers by Claude are given on.
     unawaited(Trace.instance.sayPresence());
     notifyListeners();
+  }
+
+  /// Gives the new reader Astute+ for [kGiftDays] days from today, held on
+  /// the phone: nothing bought, nothing to cancel, and nothing the store
+  /// knows of (lib/state/gift.dart says who is given it, and when). Once a
+  /// reader, and once a phone.
+  Future<void> startGift() async {
+    if (giftFrom != null || giftGiven) return;
+    giftFrom = dateKey(today);
+    giftGiven = true;
+    await _prefs.setString(_kGiftFrom, giftFrom!);
+    await _prefs.setBool(_kGiftGiven, true);
+    // Said to the server now: the days it deals and the answers by Claude
+    // are given on it.
+    Trace.instance.plus = isPlus;
+    unawaited(Trace.instance.sayPresence());
+    Analytics.capture('gift started', {
+      'days': kGiftDays,
+      'ends_on': dateKey(giftEndsOn!),
+    });
+    notifyListeners();
+    // The note two days before its end rides on that morning's nudge.
+    unawaited(refreshDailyReminder());
+  }
+
+  /// Notes the gift's end as it is said, so it is said once.
+  Future<void> notedGiftEnd() async {
+    giftEndShownOn = dateKey(today);
+    await _prefs.setString(_kGiftEndShownOn, giftEndShownOn!);
   }
 
   /// Wipes local state — used by "Sign out" on the profile.
@@ -3765,8 +4541,14 @@ class AppState extends ChangeNotifier {
     if (week != null) await _prefs.setString(_kFirstWeekOfferedOn, week);
     final String? month = firstMonthOfferedOn;
     if (month != null) await _prefs.setString(_kFirstMonthOfferedOn, month);
+    // And that this phone gave its gift: the gift was the reader's and goes
+    // with them, but signing out and starting again is not a second one.
+    if (giftGiven) await _prefs.setBool(_kGiftGiven, true);
     // So do the looks the developer tools are trying on this phone.
     await DebugLooks.keep(_prefs);
+    // And the first run's steps this phone has counted: a reader who signs
+    // out and runs the first run again is not a new phone.
+    await FirstSteps.instance.keep();
     // The clear above took the reader's own answer to "measure this?" with
     // it. An opt-out a sign-out quietly undoes is not a choice, it is a
     // delay — so it goes back down before anything else is written.
@@ -3799,11 +4581,18 @@ class AppState extends ChangeNotifier {
     notifyTime = '08:30';
     freezes = 1;
     frozeOn = null;
+    frozeDays = 1;
+    streakTold = [];
     name = 'You';
-    isPlus = false;
+    _paid = false;
+    giftFrom = null;
+    giftEndShownOn = null;
+    sixthDealtOn = null;
+    sixthSaid = null;
     themeMode = ThemeMode.dark;
     MusicSound.load(_prefs);
     seenIds = {};
+    summaries.forget();
     pushAsked = false;
     pushDeferrals = 0;
     pushDeferredOn = null;
@@ -3814,6 +4603,7 @@ class AppState extends ChangeNotifier {
     reviewAskedOn = null;
     accountOffered = false;
     widgetAsked = false;
+    firstDayCelebratedOn = null;
     pushTokens = [];
     place = null;
     placeRemovedAt = null;
@@ -3829,12 +4619,18 @@ class AppState extends ChangeNotifier {
     pathsOpened = [];
     journeySeen = {};
     journeySeenOn = null;
+    journeyClear = null;
+    weekShownFor = null;
+    weekAccountShown = 0;
+    weekAccountDeclined = false;
     notes = {};
     reactions = {};
     topicWeights = {};
     topicLevels = {};
     genresOff = {};
     strandsOff = {};
+    lovedTopics = const [];
+    partsOffer = null;
     deckHistory = {};
     // Whoever reads here next starts as a new reader does.
     firstDays = true;
@@ -4053,6 +4849,10 @@ class AppState extends ChangeNotifier {
     'account.offer',
     fallback: true,
   );
+
+  /// Whether the server lets the app offer an account of its own accord:
+  /// the sheet after the first day, and the line under Sunday's week.
+  bool get accountOfferOn => kAccountOfferFlag.on(_here);
 
   /// Noted before the sheet rises, so a sheet that fails to show is not a
   /// reason to put it again.
@@ -4336,9 +5136,12 @@ class AppState extends ChangeNotifier {
     topicLevels: Map<String, int>.from(topicLevels),
     genresOff: genresOff.toList(),
     strandsOff: strandsOff.toList(),
+    lovedTopics: List<String>.from(lovedTopics),
     pushTokens: List<String>.from(pushTokens),
     place: place,
     placeRemovedAt: placeRemovedAt,
+    giftFrom: giftFrom,
+    giftEndSaid: giftEndShownOn,
   );
 
   /// Takes on a snapshot that has already been merged, and stores it.
@@ -4374,9 +5177,15 @@ class AppState extends ChangeNotifier {
     topicLevels = Map<String, int>.from(s.topicLevels);
     genresOff = s.genresOff.toSet();
     strandsOff = s.strandsOff.toSet();
+    lovedTopics = _keptLoves(s.lovedTopics);
     pushTokens = List<String>.from(s.pushTokens);
     place = s.place;
     placeRemovedAt = s.placeRemovedAt;
+    // The gift as the account has it: from its first day on whichever phone
+    // gave it, so a second phone keeps those days and gives no more.
+    giftFrom = s.giftFrom;
+    giftEndShownOn = s.giftEndSaid;
+    giftGiven = giftGiven || giftFrom != null;
     // A place removed on another phone stops this one reading it again; a
     // place set on another phone since this one removed it is the reader's
     // newer word, and this phone's "off" no longer stands.
@@ -4412,6 +5221,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setStringList(_kTopics, pickedTopics.toList());
     await _prefs.setString(_kTopicWeights, jsonEncode(topicWeights));
     await _prefs.setString(_kTopicLevels, jsonEncode(topicLevels));
+    await _prefs.setStringList(_kLoved, lovedTopics);
     await _prefs.setStringList(_kPushTokens, pushTokens);
     final Place? kept = place;
     final DateTime? removed = placeRemovedAt;
@@ -4429,6 +5239,20 @@ class AppState extends ChangeNotifier {
       );
     }
     await _prefs.setString(_kLocationPermission, locationPermission);
+    final String? gift = giftFrom;
+    if (gift == null) {
+      await _prefs.remove(_kGiftFrom);
+    } else {
+      await _prefs.setString(_kGiftFrom, gift);
+      await _prefs.setBool(_kGiftGiven, true);
+    }
+    final String? giftEnd = giftEndShownOn;
+    if (giftEnd != null) await _prefs.setString(_kGiftEndShownOn, giftEnd);
+    // Astute+ as the gift now has it, said to the server.
+    if (Trace.instance.plus != isPlus) {
+      Trace.instance.plus = isPlus;
+      unawaited(Trace.instance.sayPresence());
+    }
     await _saveAnswers();
     await _noteClimb();
     notifyListeners();

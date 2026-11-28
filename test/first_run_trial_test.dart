@@ -147,9 +147,9 @@ Future<void> _settle(WidgetTester tester, [int frames = 10]) async {
   }
 }
 
-/// A fresh install, through the intro, the mix and the genres, each walked
-/// past: the onboarding's end. [atIntro] runs while the intro is up: the
-/// store answering, as it does a moment after launch.
+/// A fresh install, through the intro, the mix and the three loved, each
+/// left as it starts: the onboarding's end. [atIntro] runs while the intro
+/// is up: the store answering, as it does a moment after launch.
 Future<AppState> _throughTheOnboarding(
   WidgetTester tester, {
   Map<String, Object> prefs = const {},
@@ -162,12 +162,12 @@ Future<AppState> _throughTheOnboarding(
     atIntro();
     await _settle(tester);
   }
-  await tester.tap(find.text('Skip'));
+  await tester.tap(find.text('Start reading'));
   await _settle(tester);
   await tester.tap(find.text('Next'));
   await _settle(tester);
-  expect(find.text('Which parts?'), findsOneWidget);
-  await tester.tap(find.text('Skip'));
+  expect(find.text('Pick the three you love'), findsOneWidget);
+  await tester.tap(find.byKey(const ValueKey('loves-done')));
   await _settle(tester);
   return tester.widget<AstutoRoot>(find.byType(AstutoRoot)).app;
 }

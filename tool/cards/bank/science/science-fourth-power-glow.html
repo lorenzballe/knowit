@@ -63,7 +63,7 @@
         <div class="stagebox"><svg id="pic2" role="img" aria-label="The same two rails on their plinths, a small step apart above absolute zero. The cherry rail gives off a short column of heat. The hot rail's column rises far higher, beside the dashed outline of your guess."></svg></div>
         <p class="body">Radiated power grows with the <b>fourth power</b> of absolute temperature, counted from absolute zero. The hot rail stands only a little further from zero, but that small step is multiplied by itself four times. Slight increases in temperature result in huge increases in power.</p>
         <div class="keep"><b>WHAT TO KEEP</b> Before trusting that a small step changes little, find the true zero and the exponent.</div>
-        <div class="foot"><span class="src">Source · Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)</span></div>
+        <div class="foot"><span class="src">Source · HyperPhysics, Stefan-Boltzmann law.</span></div>
       </section>
     </div>
   </div>
@@ -83,7 +83,8 @@ const Turn = {
   const MAXG = 6;
   // Flat colours, one meaning each: the plinths cream stone with a shaded side; the two rails glowing, cherry red
   // and a little hotter bright orange, each with a lighter top; the heat a flat orange with a yellow core.
-  const INK = '#10100c', STONE = '#fffbf0', SIDE = '#e6dcc2';
+  // The card's own ink (--k), so a hard card ringed (env.hard) draws the lines and words in the ring's.
+  const INK = 'var(--k)', STONE = '#fffbf0', SIDE = '#e6dcc2';
   const GLOW = [{face: '#c8341f', top: '#ec6a4c'}, {face: '#ffab2a', top: '#ffd978'}];
   const HEAT = '#ff7a3c', CORE = '#ffc85a';
   const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';

@@ -760,6 +760,8 @@ class EdSource extends StatelessWidget {
     required this.source,
     required this.kind,
     required this.open,
+    this.watchBy,
+    this.watch,
   });
 
   final DeeperLook look;
@@ -767,10 +769,21 @@ class EdSource extends StatelessWidget {
   final String? kind;
   final VoidCallback? open;
 
+  /// The video beside the source, as on AppSource.
+  final String? watchBy;
+  final VoidCallback? watch;
+
   @override
   Widget build(BuildContext context) {
     if (deeperStyle == DeeperStyle.app) {
-      return AppSource(look: look, source: source, kind: kind, open: open);
+      return AppSource(
+        look: look,
+        source: source,
+        kind: kind,
+        open: open,
+        watchBy: watchBy,
+        watch: watch,
+      );
     }
     final l = context.l10n;
     final EdInk ed = EdInk.of(context, look);
@@ -838,6 +851,10 @@ class EdSource extends StatelessWidget {
                 ),
               ),
             ),
+          ],
+          if (watch case final VoidCallback see) ...[
+            SizedBox(height: open == null ? 12 : 6),
+            DeeperWatch(by: watchBy, onTap: see, ink: ed.ink, muted: ed.muted),
           ],
         ],
       ),

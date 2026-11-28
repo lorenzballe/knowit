@@ -957,7 +957,7 @@ abstract class AppLocalizations {
   /// No description provided for @howPillsAreWritten.
   ///
   /// In en, this message translates to:
-  /// **'How cards are written'**
+  /// **'How we write the cards'**
   String get howPillsAreWritten;
 
   /// No description provided for @howTitle.
@@ -975,7 +975,7 @@ abstract class AppLocalizations {
   /// No description provided for @howStep1Title.
   ///
   /// In en, this message translates to:
-  /// **'Written ahead, by a model'**
+  /// **'Written with AI'**
   String get howStep1Title;
 
   /// No description provided for @howStep1Line.
@@ -1374,6 +1374,12 @@ abstract class AppLocalizations {
   /// **'Another time'**
   String get reminderAskOther;
 
+  /// On the reminder sheet, under «Another time», where the time goes until the reader has picked one of their own: a tap opens the phone's clock. A couple of words.
+  ///
+  /// In en, this message translates to:
+  /// **'You choose'**
+  String get reminderAskPick;
+
   /// A note under the time on the reminder sheet that the sheet started on, because the reader tends to start reading then.
   ///
   /// In en, this message translates to:
@@ -1554,11 +1560,47 @@ abstract class AppLocalizations {
   /// **'{n} of {total} subjects in the mix'**
   String subjectsInTheMix(int n, int total);
 
-  /// No description provided for @everythingIsInDrag.
+  /// Under Your mix: what a tap on a subject does (it leaves the mix, and a second tap brings it back) and what sliding it does (less of it).
   ///
   /// In en, this message translates to:
-  /// **'Everything is in. Slide a subject left to see less of it, or all the way to drop it.'**
+  /// **'Everything is in. Tap a subject to leave it out, or slide it left to see less of it.'**
   String get everythingIsInDrag;
+
+  /// Read aloud by a screen reader on a subject of Your mix that is in: what a tap does. A verb, two words at most.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave it out'**
+  String get mixLeaveOut;
+
+  /// Read aloud by a screen reader on a subject of Your mix that is out: what a tap does. A verb, two or three words.
+  ///
+  /// In en, this message translates to:
+  /// **'Put it back'**
+  String get mixPutBack;
+
+  /// The first run's step after Your mix: the title over the subjects, asking for up to three the reader loves. The one question asked in the positive.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the three you love'**
+  String get lovesTitle;
+
+  /// Under lovesTitle: how many, and what the answer does — the first days open on them, and they come up more often after.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to three. Your first days open on them, and after that they come up more often.'**
+  String get lovesLine;
+
+  /// Above the button on the loves step: how many of the three are picked, or, with none, what to do. Short: one line.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Tap up to three} other{{n} of 3}}'**
+  String lovesCount(int n);
+
+  /// On the loves step, said for a moment in place of lovesCount when a fourth subject is tapped. One line.
+  ///
+  /// In en, this message translates to:
+  /// **'Three at most: tap one to let it go.'**
+  String get lovesFull;
 
   /// No description provided for @next.
   ///
@@ -1602,6 +1644,18 @@ abstract class AppLocalizations {
   /// **'Swipe to see more'**
   String get swipeToSeeMore;
 
+  /// The first page of the intro, under a real card's question: the promise in plain words, its first half. Two lines at most; no full stop, like the other scenes' titles. Words that belong together are joined by a no-break space ( ), so the two lines break between the phrases and never inside one.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards a day, two minutes'**
+  String get introPromiseTitle;
+
+  /// The first page of the intro, under introPromiseTitle: the rest of the promise, plainly. Two lines on a phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Say how sure you are, and find out how far to trust what you know.'**
+  String get introPromiseLine;
+
   /// No description provided for @tagline.
   ///
   /// In en, this message translates to:
@@ -1614,10 +1668,10 @@ abstract class AppLocalizations {
   /// **'Twenty topics, five cards'**
   String get introTopicsTitle;
 
-  /// No description provided for @introTopicsLine.
+  /// The intro's second scene, under its title: how the cards are made, said plainly — written with AI and checked — never hiding the AI. Under it, a link to How cards are written (howPillsAreWritten). Two lines on a phone.
   ///
   /// In en, this message translates to:
-  /// **'Written ahead by a model, and each one names its source.'**
+  /// **'Written with AI, then checked, and each one names its source.'**
   String get introTopicsLine;
 
   /// No description provided for @introQuestionTitle.
@@ -1710,7 +1764,7 @@ abstract class AppLocalizations {
   /// **'Continue with Google'**
   String get continueWithGoogle;
 
-  /// The intro's one big button: into the app with no account.
+  /// The intro's one button, and the last step's of the first run: into the app with no account.
   ///
   /// In en, this message translates to:
   /// **'Start reading'**
@@ -2616,10 +2670,10 @@ abstract class AppLocalizations {
   /// **'Yesterday\'s three: {score} of 300.'**
   String threeYesterday(int score);
 
-  /// Today's five: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short.
+  /// Today's challenge: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short, and never the words the reader's own five cards go by ("Today's five", Today), so the two are never taken for each other.
   ///
   /// In en, this message translates to:
-  /// **'Today\'s five'**
+  /// **'Today\'s challenge'**
   String get fiveTitle;
 
   /// Under the Lock in button of today's five.
@@ -2631,7 +2685,7 @@ abstract class AppLocalizations {
   /// Head of the result card of today's five.
   ///
   /// In en, this message translates to:
-  /// **'Today\'s five · done'**
+  /// **'Today\'s challenge · done'**
   String get fiveDone;
 
   /// Beside the day's score in large figures: '380 of 500'.
@@ -2727,7 +2781,7 @@ abstract class AppLocalizations {
   /// First line of the message today's five is sent in.
   ///
   /// In en, this message translates to:
-  /// **'Astute · Today\'s five · {date}'**
+  /// **'Astute · Today\'s challenge · {date}'**
   String fiveShareHead(String date);
 
   /// Challenge a friend, from today's five: the line sent before the link to the site, where the friend plays the same five questions. It says how many of today's five the reader got right, from 0 to 4 (fiveChallengeAll says all five), then asks the friend, briefly, to do better. Plain, never a boast.
@@ -2745,7 +2799,7 @@ abstract class AppLocalizations {
   /// Challenge a friend, before the reader has played today's five: the line sent before the link to the site, where the friend plays the five questions that are the same for everyone today.
   ///
   /// In en, this message translates to:
-  /// **'Today\'s five on Astute: the same five questions for everyone. How many can you get?'**
+  /// **'Today\'s challenge on Astute: the same five questions for everyone. How many can you get?'**
   String get fiveChallengeInvite;
 
   /// First line of the message a subject's three is sent in.
@@ -3137,6 +3191,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{key, select, critical{Critical thinking} decisions{Better decisions} money{Money and saving} numbers{Numbers and statistics} talk{Communication} persuade{Persuasion} people{Understanding people} fakes{Spotting fakes} science{Thinking like a scientist} focus{Focus} lead{Leadership} culture{General knowledge} other{{key}}}'**
   String skillName(String key);
+
+  /// What a skill covers, in one short line, under its name on What to learn's sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, critical{Telling a sound argument from a slippery one.} decisions{Choosing with odds and risks, not gut feel.} money{Prices, interest, offers: where your money goes.} numbers{Reading percentages and charts without being fooled.} talk{Being understood, out loud and in writing.} persuade{Convincing others, and noticing when you’re being convinced.} people{Why people do what they do.} fakes{Spotting fake news, doctored photos, inflated studies.} science{Testing an idea before believing it.} focus{Keeping your attention where it counts, for longer.} lead{Leading a group and deciding for everyone.} culture{History, science, art: the things everyone quotes.} other{}}'**
+  String skillLine(String key);
 
   /// Paywall feature line under perkOwnFiveTitle: one short line.
   ///
@@ -3948,17 +4008,23 @@ abstract class AppLocalizations {
   /// **'Nothing more is measured.'**
   String get usageOff;
 
-  /// The question asked on the intro, and as a sheet once after the first finished day, before anything is measured: may Astute measure how the app is used?
+  /// The question about usage data, asked on a calm card on the first finished day's shelf, after the day's celebration and the reminder, before anything is measured: may Astute measure how the app is used? It stays until answered.
   ///
   /// In en, this message translates to:
   /// **'Help make Astute better?'**
   String get consentTitle;
 
-  /// Under consentTitle on the intro, in one breath with it: what would be shared, and what never is. Short: two lines on a small phone, so the intro keeps its picture.
+  /// Profile's Usage data, and builds before this one: what would be shared, and what never is.
   ///
   /// In en, this message translates to:
   /// **'Share how you use the app — never your name, your email or what you write.'**
   String get consentLine;
+
+  /// On the card that asks about usage data on the first finished day's shelf, under consentTitle: what a yes lets the app do, and what it never does. True to the privacy policy: PostHog keeps a short profile of counts under a random id, so never promise 'no profile'. One sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'We count how the app is used, with no advertising and never your name.'**
+  String get consentCardLine;
 
   /// The answer that keeps measurement off. Exactly as prominent as consentYes, side by side.
   ///
@@ -3972,7 +4038,7 @@ abstract class AppLocalizations {
   /// **'Yes, share'**
   String get consentYes;
 
-  /// The foot of the consent sheet: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).
+  /// The foot of the card that asks about usage data: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).
   ///
   /// In en, this message translates to:
   /// **'You can change this any time in {profile}, under {setting}.'**
@@ -3984,7 +4050,7 @@ abstract class AppLocalizations {
   /// **'Your mix'**
   String get yourMix;
 
-  /// The title of the onboarding step after the mix, where the reader picks which genres of each subject they want.
+  /// The title of Which parts: the page where the reader picks which genres of each subject they want, offered once on the shelf from the third finished day, and over the offer itself.
   ///
   /// In en, this message translates to:
   /// **'Which parts?'**
@@ -3995,6 +4061,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap a genre to skip it. Hold one and the smaller topics inside open right below.'**
   String get genresLine;
+
+  /// On the finished day's shelf, once, from the third finished day: under genresTitle, why Which parts is offered now and what it does. Two short sentences.
+  ///
+  /// In en, this message translates to:
+  /// **'A few days in, you know the cards. Inside each subject, keep the parts you want and leave the rest.'**
+  String get partsOfferLine;
+
+  /// The offer of Which parts on the shelf: its button, which opens the page. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the parts'**
+  String get partsOfferChoose;
+
+  /// The offer of Which parts on the shelf: the quiet way to let it go. It is not offered again.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get partsOfferNotNow;
 
   /// No description provided for @insideGenre.
   ///
@@ -8955,7 +9039,7 @@ abstract class AppLocalizations {
   /// The first line of the day's challenge sent to a friend, before its question and the link: how far off the reader was, never the answer. Points are percentage points.
   ///
   /// In en, this message translates to:
-  /// **'Today\'s challenge on Astute: I was {off, plural, =0{spot on} =1{1 point off} other{{off} points off}}. Can you do better?'**
+  /// **'The bet of the day on Astute: I was {off, plural, =0{spot on} =1{1 point off} other{{off} points off}}. Can you do better?'**
   String betsDayShareLine(int off);
 
   /// On a drawn card opened from saved, liked or the archive: opens the card itself at full size, its drawing live, to play again.
@@ -10092,6 +10176,174 @@ abstract class AppLocalizations {
   /// **'Next card'**
   String get listenNextCard;
 
+  /// A book's page, the first way in when the book has a summary: opens the summary, read whole in about a quarter of an hour. minutes is how long it takes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes, plural, =1{Read in 1 minute} other{Read in {minutes} minutes}}'**
+  String summaryReadIn(int minutes);
+
+  /// A book's page, the same button once the reader has started the summary and not finished it.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue reading'**
+  String get summaryContinue;
+
+  /// A book's page, the same button once the summary has been read to its end.
+  ///
+  /// In en, this message translates to:
+  /// **'Read again'**
+  String get summaryAgain;
+
+  /// Where the reader is in a book's summary: part n of so many. Also the eyebrow over a part in the reader, in capitals, and in the player.
+  ///
+  /// In en, this message translates to:
+  /// **'Part {part} of {of}'**
+  String summaryPartOf(int part, int of);
+
+  /// How many minutes of a summary are left to read or to hear, beside where the reader is.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 min left} other{{n} min left}}'**
+  String summaryMinutesLeft(int n);
+
+  /// A book's page, the second way in beside reading: plays the summary aloud. minutes is how long it takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen · {minutes} min'**
+  String summaryListenFor(int minutes);
+
+  /// A book's page, the listening button while this book's summary is being read aloud: pauses it.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get summaryPause;
+
+  /// A book's page, the listening button while this book's summary is paused: plays on from where it stopped.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume listening'**
+  String get summaryResume;
+
+  /// A book's page and the player, on the free plan, for a book that is not the week's: what of the summary is free.
+  ///
+  /// In en, this message translates to:
+  /// **'The first part is free; the rest comes with Astute+.'**
+  String get summaryFreeNote;
+
+  /// A book's page: the name over the summary's parts, in capitals; also the reader's contents.
+  ///
+  /// In en, this message translates to:
+  /// **'The summary'**
+  String get summaryTitle;
+
+  /// Beside the part of a summary being read aloud, on the book's page and in the player.
+  ///
+  /// In en, this message translates to:
+  /// **'Now playing'**
+  String get summaryNowPlaying;
+
+  /// At the foot of a part in the reader, over the next part's title; and the player's button that goes on to the next part.
+  ///
+  /// In en, this message translates to:
+  /// **'Next part'**
+  String get summaryNextPart;
+
+  /// At the foot of the last part in the reader: ends the summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get summaryFinish;
+
+  /// The reader: the button that lists every part of the summary, and that list's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Contents'**
+  String get summaryContents;
+
+  /// The page after the last part of a summary: the book read. title is the book's title, as published.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ve read {title}'**
+  String summaryDoneTitle(String title);
+
+  /// That page, under its title: the book's cards, the short way in, offered to make the ideas stay.
+  ///
+  /// In en, this message translates to:
+  /// **'The book’s cards are there to make its ideas stay.'**
+  String get summaryDoneLine;
+
+  /// That page's first button: opens the book's ideas as cards.
+  ///
+  /// In en, this message translates to:
+  /// **'The ideas as cards'**
+  String get summaryToCards;
+
+  /// That page's second button: back to the book's page.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the book'**
+  String get summaryBackToBook;
+
+  /// The reader, on the free plan, at a part past the first of a book that is not the week's: what the rest is.
+  ///
+  /// In en, this message translates to:
+  /// **'The rest of this summary comes with Astute+'**
+  String get summaryGateTitle;
+
+  /// Under it: what Astute+ opens. parts is how many parts the summary has.
+  ///
+  /// In en, this message translates to:
+  /// **'All {parts} parts, to read and to hear, for every book. The week’s book is free for everyone.'**
+  String summaryGateLine(int parts);
+
+  /// The reader, when a summary that was never opened cannot be fetched: no network.
+  ///
+  /// In en, this message translates to:
+  /// **'This summary needs the internet once.'**
+  String get summaryNeedsNetwork;
+
+  /// Said to a screen reader on the player's button that goes back fifteen seconds; the button shows a circling arrow and 15.
+  ///
+  /// In en, this message translates to:
+  /// **'Back 15 seconds'**
+  String get bookAudioBack;
+
+  /// The player, when the next part of the summary is still on its way (a slow network).
+  ///
+  /// In en, this message translates to:
+  /// **'The next part is on its way…'**
+  String get bookAudioWaiting;
+
+  /// The player, once every part of the summary has been heard.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard to the end.'**
+  String get bookAudioDone;
+
+  /// The player on the free plan, once the free part is heard: the offer of the rest.
+  ///
+  /// In en, this message translates to:
+  /// **'Hear the rest of the book'**
+  String get bookAudioOfferTitle;
+
+  /// Under it.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ every summary is read to you whole, even with the screen locked.'**
+  String get bookAudioOfferLine;
+
+  /// The player's last button, and the small player's cross as a screen reader says it: stops the summary being read aloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop listening'**
+  String get bookAudioStop;
+
+  /// Said to a screen reader on the small player that stays over every screen while a book is read aloud: opens the whole player.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the player'**
+  String get bookAudioOpen;
+
   /// Profile: the name over the box with the invitation's two rows (Invita un amico).
   ///
   /// In en, this message translates to:
@@ -10265,6 +10517,432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =1{A friend finished their first day: a week of Astute+ for you.} other{{n} friends finished their first day: {n} weeks of Astute+ for you.}}'**
   String inviteEarned(int n);
+
+  /// The screen that celebrates the reader's first finished day, right after their fifth card (black at night, paper by day): its headline, in the display face, over the streak, the points the day earned and how sure against how right. Set on up to three lines; no full stop, as a headline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first day is done'**
+  String get firstDayTitle;
+
+  /// That screen, one plain line under the streak and the points: how sure the reader said they were on today's answers, on average (sure, 50 to 90, a percent), set against how many of today's answers were right (right of total). Said only where the card asked how sure at least once that day.
+  ///
+  /// In en, this message translates to:
+  /// **'You were {sure}% sure, and got {right} of {total} right.'**
+  String firstDaySureRight(int sure, int right, int total);
+
+  /// That screen, the same line on a day no card asked how sure: how many of today's answers were right, right of total.
+  ///
+  /// In en, this message translates to:
+  /// **'You got {right} of {total} right.'**
+  String firstDayRight(int right, int total);
+
+  /// That screen, its first button: raises the reminder sheet, which asks at what time to send the daily reminder. Short, as a button.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me tomorrow'**
+  String get firstDayRemind;
+
+  /// That screen, in place of the first button once the reader chose a time and the phone allowed notifications: when the first reminder comes. time is the time as the phone writes it (19:00, or 7:00 PM).
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll remind you tomorrow at {time}.'**
+  String firstDayReminded(String time);
+
+  /// A small tag in capitals over a provisional reading of how sure against how right, on the profile (How well you know yourself), in Your journey and its free preview: it is a first reading from the first few answers, firming up with more.
+  ///
+  /// In en, this message translates to:
+  /// **'First reading'**
+  String get earlyReadingTag;
+
+  /// The provisional reading, before twelve answers said how sure: the level the reader said most often (level, a percentage) and how many times (n), every one of them right. Shown on the profile and in Your journey.
+  ///
+  /// In en, this message translates to:
+  /// **'So far: you said {level}% {n, plural, =1{once, and you were right} =2{twice, and you were right twice} other{{n} times, and you were right every time}}.'**
+  String earlyReadingAll(int level, int n);
+
+  /// The same provisional reading when none of those answers (n of them, said at level %) was right.
+  ///
+  /// In en, this message translates to:
+  /// **'So far: you said {level}% {n, plural, =1{once, and you were wrong} =2{twice, and you were wrong both times} other{{n} times, and you were wrong every time}}.'**
+  String earlyReadingNone(int level, int n);
+
+  /// The same provisional reading when some were right and some were not: said level % n times (two or more), right of them `right` times.
+  ///
+  /// In en, this message translates to:
+  /// **'So far: you said {level}% {n, plural, =2{twice} other{{n} times}}, and you were right {right, plural, =1{once} =2{twice} other{{right} times}}.'**
+  String earlyReadingSome(int level, int n, int right);
+
+  /// Your journey on the free plan, the preview: the small capitals over the one figure shown in the clear this week, every other figure of the journey being blurred under it. A different one each week.
+  ///
+  /// In en, this message translates to:
+  /// **'In the clear this week'**
+  String get journeyClearEyebrow;
+
+  /// The preview's figure in the clear, when it is the blind spot: the subject the reader misses most (subject, its name).
+  ///
+  /// In en, this message translates to:
+  /// **'Your blind spot: {subject}'**
+  String journeyClearBlind(String subject);
+
+  /// The preview's figure in the clear, when it is the strong point: the subject the reader is best in (subject, its name).
+  ///
+  /// In en, this message translates to:
+  /// **'Your strong point: {subject}'**
+  String journeyClearStrong(String subject);
+
+  /// Under the blind spot or the strong point in the clear: how often right (pct, a percentage as the phone writes it) of the reader's latest n answers in that subject (six to twenty).
+  ///
+  /// In en, this message translates to:
+  /// **'{pct} right, of your last {n} answers in it.'**
+  String journeyClearShare(String pct, int n);
+
+  /// The preview's figure in the clear, when it is what the reader remembers: of the cards that came back after a wait of `days` days (two, the review ladder's first wait, after a miss), how many were known then (right of of).
+  ///
+  /// In en, this message translates to:
+  /// **'After {days, plural, =1{a day} =2{two days} other{{days} days}}, you still remember {right} of {of}.'**
+  String journeyClearMemoryDays(int days, int right, int of);
+
+  /// The same, after a wait of `weeks` weeks (one after the first right answer, three after the second): of the cards that came back then, how many were still known (right of of).
+  ///
+  /// In en, this message translates to:
+  /// **'After {weeks, plural, =1{a week} other{{weeks} weeks}}, you still remember {right} of {of}.'**
+  String journeyClearMemoryWeeks(int weeks, int right, int of);
+
+  /// The preview, the blind spot's week, when no subject has six answers yet: what it takes, rather than a sample.
+  ///
+  /// In en, this message translates to:
+  /// **'Six answers in two subjects, and this shows the one you miss most.'**
+  String get journeyClearBlindNotYet;
+
+  /// The preview, the strong point's week, when no subject has six answers yet: what it takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Six answers in one subject, and this shows the one you’re best at.'**
+  String get journeyClearStrongNotYet;
+
+  /// The preview, the week of how sure against how right, before two answers said how sure: how many more it takes (n) for a first reading.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One more answer saying how sure, and a first reading shows here.} other{{n} more answers saying how sure, and a first reading shows here.}}'**
+  String journeyClearSureNotYet(int n);
+
+  /// The preview, the week of what the reader remembers, before any card has come back: how it comes.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards come back after 2, 7 and 21 days: this shows how many you still remember.'**
+  String get journeyClearMemoryNotYet;
+
+  /// The preview, the one quiet line under the figure in the clear, with a lock: it opens the plans, on the journey's door.
+  ///
+  /// In en, this message translates to:
+  /// **'A different figure each week. Astute+ opens the rest.'**
+  String get journeyPreviewDoor;
+
+  /// Sunday's week, the sheet a free reader gets on Sunday after the five (or on Monday morning): the small capitals over its title, naming the week by its Monday (date, a day and a month as the phone writes them).
+  ///
+  /// In en, this message translates to:
+  /// **'The week of {date}'**
+  String weekSheetOf(String date);
+
+  /// Sunday's week: the right answers of the week as a figure, right of n.
+  ///
+  /// In en, this message translates to:
+  /// **'{right} of {n}'**
+  String weekSheetRightValue(int right, int n);
+
+  /// Sunday's week: the small capitals under that figure.
+  ///
+  /// In en, this message translates to:
+  /// **'Right answers'**
+  String get weekSheetRightLabel;
+
+  /// Sunday's week: under how sure against how right, how many of the week's answers said how sure (n), so a figure of three answers says it is one.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{over 1 answer} other{over {n} answers}}'**
+  String weekSheetAcross(int n);
+
+  /// Sunday's week: the name over the one figure only Astute+ shows, blurred, when it is where the reader trusts themselves too much.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you trust yourself too much'**
+  String get weekSheetOverLabel;
+
+  /// Sunday's week: the name over that blurred figure when it is how many cards the reader still remembers after the review ladder's waits.
+  ///
+  /// In en, this message translates to:
+  /// **'What you still remember'**
+  String get weekSheetMemoryLabel;
+
+  /// Sunday's week: the one line that offers the account (Apple or Google) to a reader not signed in, and the title of the sign-in sheet it opens.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your week on every phone'**
+  String get weekSheetAccount;
+
+  /// The new reader's gift (trial.reverse), its moment in the first run, where the trial offer would stand: the headline. days is how long the gift lasts (always 14 today). 'Yours' because it is given, never sold: no card, nothing to cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{Astute+ is yours for a day.} other{Astute+ is yours for {days} days.}}'**
+  String giftTitle(int days);
+
+  /// That headline: the words in it painted in the three lights. Must be the very words as they stand in giftTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'yours'**
+  String get giftMark;
+
+  /// That moment: the line under the headline. Card as in a payment card: none is asked for, and there is nothing to cancel at the end.
+  ///
+  /// In en, this message translates to:
+  /// **'No card, nothing to cancel.'**
+  String get giftLine;
+
+  /// That moment's timeline of the gift's days: under its last day, the fifteenth, when the free plan is back. Nothing is bought, so nothing is charged.
+  ///
+  /// In en, this message translates to:
+  /// **'The free plan again. Nothing is charged.'**
+  String get giftStepEndLine;
+
+  /// That moment's one button: on to the day's five.
+  ///
+  /// In en, this message translates to:
+  /// **'Start reading'**
+  String get giftStart;
+
+  /// The gift's last two days: one quiet line under the finished day's name on Today, and the title of the thirteenth's morning notification. days is the days left, today included: 2, then 1.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{Last day of Astute+.} other{Astute+ is yours for {days} more days.}}'**
+  String giftEndsSoon(int days);
+
+  /// Profile, the plan's row, while the gift lasts: its value. date is the gift's last day, as the phone writes a day and a month.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute+ · a gift until {date}'**
+  String giftPlanUntil(String date);
+
+  /// The page the morning after the gift: the eyebrow over its title, set in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Your gift has ended'**
+  String get giftEndEyebrow;
+
+  /// That page: its title, over what the gift's days came to. days is how long the gift lasted (14).
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{Your day of Astute+.} other{Your {days} days of Astute+.}}'**
+  String giftEndTitle(int days);
+
+  /// That page: under a figure like 11/14, the days the five were finished of the gift's days.
+  ///
+  /// In en, this message translates to:
+  /// **'days read'**
+  String get giftEndDaysLabel;
+
+  /// That page: under a count, the moves the reader missed and then got right when they came back, in the gift's days.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{miss, then right} other{misses, then right}}'**
+  String giftEndBackRight(int n);
+
+  /// That page: the heading over what changes with the free plan, from this morning.
+  ///
+  /// In en, this message translates to:
+  /// **'From today, on the free plan'**
+  String get giftLossTitle;
+
+  /// That page, under that heading: how many of the day's five the free plan deals at random, today.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One of your five cards comes at random.} other{{n} of your five cards come at random.}}'**
+  String giftLossRandom(int n);
+
+  /// That page: on the free plan, cards answered wrong no longer come back among the five; they wait on Explore's shelf of cards that came back.
+  ///
+  /// In en, this message translates to:
+  /// **'The ones you miss no longer come back in your five: they wait in Explore.'**
+  String get giftLossMisses;
+
+  /// That page, only where the answers by Claude are on: the assistant in Go deeper is Astute+'s.
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant on every card stays with Astute+.'**
+  String get giftLossAsk;
+
+  /// That page: its first button, which opens the paywall.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Astute+'**
+  String get giftKeep;
+
+  /// The card after the fifth, on the free plan (one true thing a day): set large, how many of today's five came at random rather than chosen for the reader.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Today one of your five came at random.} other{Today {n} of your five came at random.}}'**
+  String sixthRandomToday(int n);
+
+  /// That card, under it: what Astute+ would have done with today.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+, all five would have been chosen for you.'**
+  String get sixthRandomTodayPlus;
+
+  /// The card after the fifth, on the free plan: set large, how many of tomorrow's five will come at random, as tomorrow is dealt.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Tomorrow one of your five will come at random.} other{Tomorrow {n} of your five will come at random.}}'**
+  String sixthRandomTomorrow(int n);
+
+  /// That card, under it: what Astute+ would do with tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+, all five chosen for you: from your mix, at your level.'**
+  String get sixthRandomTomorrowPlus;
+
+  /// The card after the fifth, on the free plan: set large, a card the reader missed today though they said they were 80% sure or more. sure is that, as a percentage written the language's way (90%).
+  ///
+  /// In en, this message translates to:
+  /// **'Today you missed one you were {sure} sure of.'**
+  String sixthSureWrong(String sure);
+
+  /// That card, under it: on Astute+ a card missed comes back among the five.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ it comes back in your five.'**
+  String get sixthSureWrongPlus;
+
+  /// The card after the fifth, on the free plan: set large, how many cards the reader got wrong are back and waiting on Explore (on the free plan they wait there, outside the five).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{A card you got wrong came back: it’s waiting in Explore.} other{{n} cards you got wrong came back: they’re waiting in Explore.}}'**
+  String sixthMisses(int n);
+
+  /// That card, under it: on Astute+ what is missed comes back among the five, one card a day.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ the ones you miss come back in your five, one a day.'**
+  String get sixthMissesPlus;
+
+  /// The card after the fifth, on the free plan: set large, a subject whose latest answers measure the reader a level above the one the free plan deals it at. subject is the subject's name; right of of answers right.
+  ///
+  /// In en, this message translates to:
+  /// **'In {subject} you get {right} out of {of} right.'**
+  String sixthLevel(String subject, int right, int of);
+
+  /// That card, under it: on Astute+ a subject's cards are dealt at the level the reader's answers measure, which here is one higher. subject is the subject's name.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ your {subject} cards would go up a level.'**
+  String sixthLevelPlus(String subject);
+
+  /// The paywall, under what Astute+ is: what holds up of the evidence for what it trains. Calibration (how sure you are against how often you are right) can be measured and trained with feedback, as forecasting research does, and Astute measures the reader's. No percentage and nothing proven about the reader: the size of the training effect in the Good Judgment Project is disputed (Hauenstein et al., Psychological Science, 2025). The source is the line after it.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibration can be measured, and trained with feedback. Astute measures yours.'**
+  String get paywallScience;
+
+  /// The paywall: under that line, where it comes from, by its researchers' names.
+  ///
+  /// In en, this message translates to:
+  /// **'Forecasting research: Tetlock, Mellers'**
+  String get paywallScienceSource;
+
+  /// The paywall, under the button, beside a check, on a plan that starts with free days, to a reader the app can notify: the app sends a notification two days before the trial's first charge (AppState.kTrialWarningDays, two).
+  ///
+  /// In en, this message translates to:
+  /// **'We warn you two days before the charge'**
+  String get paywallWarnBefore;
+
+  /// The paywall on the web, where nothing is sold, while Astute is on Google Play and not yet on the App Store (kAppStoreOpen in lib/store_links.dart): where to get it, and that the iPhone app is coming, as the site says it.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute+ is in the app: download Astute on Android to start your free trial. It’s coming to iPhone.'**
+  String get plusInTheAppAndroid;
+
+  /// Explore, at the end of its endless flow, for a free reader on a day they have read as many cards as the server's explore.freeCards allows: the card's title. Calm, never an alarm.
+  ///
+  /// In en, this message translates to:
+  /// **'That’s Explore for today.'**
+  String get exploreCapTitle;
+
+  /// That card, under its title: how many cards the reader read today beyond the day's five, and that more come tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{You’ve read one card beyond your five. More tomorrow.} other{You’ve read {n} cards beyond your five. More tomorrow.}}'**
+  String exploreCapLine(int n);
+
+  /// That card: what Astute+ changes about it, over its button.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+, Explore has no end.'**
+  String get exploreCapPlus;
+
+  /// Top of Today on a new reader's second and third days, after "Day N.": how the day before went, its questions with a right answer got right of those answered, and how sure the reader said they were on average. Italian: the article before the number is mended in code (all’80%).
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday {right} of {asked}, and you were {sure}% sure.'**
+  String todayLineSure(int right, int asked, int sure);
+
+  /// Top of Today on a new reader's second and third days, after "Day N.": the day before's questions with a right answer, right of those answered, where the reader never said how sure.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday {right} of {asked}.'**
+  String todayLineRight(int right, int asked);
+
+  /// Top of Today on a new reader's second and third days, after "Day N.", when the day before had no question with a right answer: the five were read.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday you read all five.'**
+  String get todayLineRead;
+
+  /// Top of Today on a new reader's second and third days, after the day before's numbers: a subject in today's five the reader has not met yet. subject is the subject's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Today, your first card in {subject}.'**
+  String todayLineFirstSubject(String subject);
+
+  /// Top of Today, on the morning a freeze kept the streak: the days missed were covered and the streak goes on.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{You skipped yesterday: your streak is safe.} other{You skipped {days} days: your streak is safe.}}'**
+  String freezeSavedLine(int days);
+
+  /// Under the finished day's heading, and on the streak's moment: one missed day is covered by a freeze, and how many the reader holds.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Miss a day and your streak holds: you have 1 freeze.} other{Miss a day and your streak holds: you have {n} freezes.}}'**
+  String freezeCoversLine(int n);
+
+  /// The small capitals over the streak's number on its moment, when it reaches two, three or seven days.
+  ///
+  /// In en, this message translates to:
+  /// **'In a row'**
+  String get streakMomentEyebrow;
+
+  /// Under the streak's big number on its moment: the word for days.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{day} other{days}}'**
+  String streakMomentUnit(int n);
+
+  /// On the streak's moment at seven days, on the free plan: tomorrow one more of the five cards is chosen for the reader from their own mix (three instead of two).
+  ///
+  /// In en, this message translates to:
+  /// **'A whole week. Tomorrow one more of your five is chosen for you.'**
+  String get streakMomentWeek;
+
+  /// On the streak's moment at two or three days when the reader holds no freeze: the streak tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow makes {next}.'**
+  String streakMomentNext(int next);
+
+  /// Go deeper, under the card's source: opens a video that tells the card's story at more length. Who made it follows, in the card's own words ("Geopop (YouTube, 2018)"). The video is extra, never the source.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch more'**
+  String get deeperWatchMore;
 }
 
 class _AppLocalizationsDelegate

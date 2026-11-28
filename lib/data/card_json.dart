@@ -126,6 +126,12 @@ Map<String, Object?> cardToJson(Pill p) {
   if (p.web != null) out['web'] = webToJson(p.web!, challenge: p.challenge);
   if (p.book != null) out['book'] = p.book!.toJson();
   out['source'] = p.source;
+  // Where the source is, and what kind of thing it is: today's five are kept
+  // on the phone this way, and a day opened again kept its words but lost
+  // the way to the original.
+  if (p.reference.isNotEmpty) out['reference'] = p.reference;
+  if (p.sourceKind.isNotEmpty) out['source_kind'] = p.sourceKind;
+  if (p.watch != null) out['watch'] = p.watch!.toJson();
   return out;
 }
 
@@ -146,11 +152,18 @@ Map<String, Object?> webToJson(WebFace web, {required Challenge challenge}) => {
     'page': web.page,
     if (web.bytes > 0) 'bytes': web.bytes,
   },
-  if (web.thumbs case final WebThumbs thumbs)
-    'thumbs': {
-      if (thumbs.front case final String front) 'front': front,
-      if (thumbs.back case final String back) 'back': back,
-    },
+  if (web.thumbs case final WebThumbs thumbs) 'thumbs': thumbsToJson(thumbs),
+};
+
+/// A free card's pictures as the bundle carries them: its own front and
+/// back, and a hard card's taken ringed, at night (`ringed`) and on the day
+/// paper (`ringed_day`).
+Map<String, Object?> thumbsToJson(WebThumbs thumbs) => {
+  if (thumbs.front case final String front) 'front': front,
+  if (thumbs.back case final String back) 'back': back,
+  if (thumbs.ringed case final WebThumbs ringed) 'ringed': thumbsToJson(ringed),
+  if (thumbs.ringedDay case final WebThumbs day)
+    'ringed_day': thumbsToJson(day),
 };
 
 /// What a card may name as its page: a file under the bank's `pages/`, and
@@ -168,7 +181,10 @@ final RegExp _thumbRef = RegExp(
 /// A free card's pictures from their JSON object, or null when it names
 /// none. A side that is not a picture of the bank's is left out rather than
 /// refusing the card: without its picture a card is drawn as it always was.
-WebThumbs? thumbsFromJson(Object? raw) {
+/// A hard card's pictures taken ringed come in `ringed` and `ringed_day`,
+/// each a front and a back, read the same way ([ringed] false: one level
+/// only).
+WebThumbs? thumbsFromJson(Object? raw, {bool ringed = true}) {
   if (raw is! Map) return null;
   String? side(String key) {
     final Object? ref = raw[key];
@@ -177,8 +193,16 @@ WebThumbs? thumbsFromJson(Object? raw) {
 
   final String? front = side('front');
   final String? back = side('back');
-  if (front == null && back == null) return null;
-  return WebThumbs(front: front, back: back);
+  final WebThumbs? night = ringed
+      ? thumbsFromJson(raw['ringed'], ringed: false)
+      : null;
+  final WebThumbs? day = ringed
+      ? thumbsFromJson(raw['ringed_day'], ringed: false)
+      : null;
+  if (front == null && back == null && night == null && day == null) {
+    return null;
+  }
+  return WebThumbs(front: front, back: back, ringed: night, ringedDay: day);
 }
 
 /// A colour as the bank writes one: `#rrggbb`.
@@ -402,6 +426,7 @@ Pill cardFromJson(Map<String, Object?> raw) {
     reacts: raw['reacts'] == true,
     reference: referenceLink(raw['reference']),
     sourceKind: text('source_kind'),
+    watch: PillWatch.fromJson(raw['watch']),
     why: text('why'),
     book: PillBook.fromJson(raw['book']),
     views: switch (raw['views']) {

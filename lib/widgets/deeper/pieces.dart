@@ -1237,6 +1237,8 @@ class DeeperSource extends StatelessWidget {
     required this.kind,
     required this.draw,
     required this.open,
+    this.watchBy,
+    this.watch,
   });
 
   final DeeperLook look;
@@ -1249,10 +1251,23 @@ class DeeperSource extends StatelessWidget {
   /// Opens the original; null where there is no link to it.
   final VoidCallback? open;
 
+  /// Who made the video the card's story is told in at more length, and
+  /// where; with [watch], which opens it, offered as Watch more under the
+  /// source. Both null where the card has none.
+  final String? watchBy;
+  final VoidCallback? watch;
+
   @override
   Widget build(BuildContext context) {
     if (deeperEditorial) {
-      return EdSource(look: look, source: source, kind: kind, open: open);
+      return EdSource(
+        look: look,
+        source: source,
+        kind: kind,
+        open: open,
+        watchBy: watchBy,
+        watch: watch,
+      );
     }
     final l = context.l10n;
     final Palette p = context.p;
@@ -1307,6 +1322,10 @@ class DeeperSource extends StatelessWidget {
             alignment: AlignmentDirectional.centerStart,
             child: _Original(look: look, onTap: go),
           ),
+        ],
+        if (watch case final VoidCallback see) ...[
+          SizedBox(height: open == null ? 14 : 8),
+          DeeperWatch(by: watchBy, onTap: see, ink: p.ink, muted: p.inkMuted),
         ],
       ],
     );

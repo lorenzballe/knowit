@@ -8,19 +8,29 @@ import '../l10n/l10n.dart';
 import '../legal.dart';
 import '../theme.dart';
 import '../widgets/ambient.dart';
-import '../widgets/consent.dart';
+import '../widgets/balanced_text.dart';
 import '../widgets/fit_text.dart';
-import '../widgets/ui.dart';
 import '../analytics.dart';
+import 'how_screen.dart';
 
 /// The first thing the app shows: five scenes that say what Astute is, over a
 /// dark ground that keeps moving.
 ///
+/// The first is concrete: a real question, the one a new reader's first day
+/// opens on, set large under the name, and the promise under it in plain
+/// words — five cards a day, two minutes, say how sure you are, and find out
+/// how far to trust what you know. It used to be the mark in two orbits and
+/// "Learn the why behind things, and how far to trust what you know", which
+/// a tester understood only after playing a card.
+///
 /// Swipe left or tap for the next scene, swipe right for the previous. The
-/// one button at the foot is "Start reading", and it asks for nothing: no
-/// account is made here. A reader who already has one finds a quiet "Sign
-/// in" under it; everyone else is offered an account once there is a streak
-/// worth keeping, after the first finished day, and in Profile.
+/// one way on is the button at the foot, "Start reading", and it asks for
+/// nothing: no account is made here, and the question about usage data
+/// waits for the end of the first day, on its shelf. A "Skip" in the corner
+/// used to do exactly what the button did. A reader who already has an
+/// account finds a quiet "Sign in" under the button; everyone else is
+/// offered an account once there is a streak worth keeping, after the
+/// first finished day, and in Profile.
 ///
 /// It used to lead with Apple and Google, two large white buttons over a
 /// faint "Continue without an account". The largest button is the one most
@@ -65,15 +75,16 @@ const double kIntroHintSlot = 26;
 const int kIntroSpareAbove = 3;
 const int kIntroSpareBelow = 1;
 
-/// Where the column starts under the safe area, and where Skip does: Skip
-/// sits over the picture's top right corner and takes no room of its own.
+/// Where the column starts under the safe area.
 const double kIntroTop = 14;
-const double kIntroSkipTop = 8;
 
-/// The clear line kept between Skip's box and a drawing that reaches the
-/// top right corner — the last scene's notification, which spans the width.
-/// Sixteen points under the word itself, as the canvas has it.
-const double kIntroUnderSkip = 12;
+/// The card the first scene shows the question of: the opener of a first
+/// day (lib/data/first_days.dart), its subject, and its question as the
+/// bank has it — test/intro_test.dart holds the three to the bank.
+const String kIntroQuestionCard = 'nature-half-mountain-tsunami';
+const String kIntroQuestionSubject = 'nature';
+const String kIntroQuestion =
+    'What happens if half a mountain falls into the sea?';
 
 /// The margin down each side of the screen: the words and the buttons keep
 /// it, and the last scene's drawing lines up on it.
@@ -146,8 +157,8 @@ class _CopyRoom {
         titleBox,
         fitted(
           title,
-          _SceneCopy.titleStyle(wordmark: i == 0),
-          maxLines: i == 0 ? 1 : 2,
+          _SceneCopy.titleStyle,
+          maxLines: 2,
           minSize: 24,
           width: width,
         ),
@@ -172,11 +183,9 @@ class IntroScreen extends StatefulWidget {
     super.key,
     required this.onContinue,
     required this.onSignIn,
-    this.askConsent = false,
-    this.onConsent,
   });
 
-  /// "Start reading", Skip, and where a sign-in lands once it is done.
+  /// "Start reading", and where a sign-in lands once it is done.
   final VoidCallback onContinue;
 
   /// Offers Apple and Google on a sheet of their own, for a reader who
@@ -184,14 +193,6 @@ class IntroScreen extends StatefulWidget {
   /// "Not now", a sheet swiped away, a sign-in that did not work — leaves
   /// them exactly where they were.
   final Future<bool> Function(BuildContext context) onSignIn;
-
-  /// Whether the foot asks if Astute may measure how the app is used: a
-  /// build with somewhere to send it, and a reader who has not answered.
-  /// Nothing is measured until they say yes (see ConsentChoice).
-  final bool askConsent;
-
-  /// The reader's answer, true for yes.
-  final ValueChanged<bool>? onConsent;
 
   @override
   State<IntroScreen> createState() => _IntroScreenState();
@@ -205,15 +206,6 @@ class _IntroScreenState extends State<IntroScreen> {
   double _moved = 0;
 
   List<Color> get _blooms => kSceneBlooms[_scene % kSceneBlooms.length];
-
-  /// Whether the question about measuring is still on the foot. It goes as
-  /// soon as it is answered, and gives its room back to the picture.
-  late bool _asking = widget.askConsent;
-
-  void _answer(bool yes) {
-    setState(() => _asking = false);
-    widget.onConsent?.call(yes);
-  }
 
   /// When the scene now showing came up, for how long it held the reader.
   final Stopwatch _sceneClock = Stopwatch()..start();
@@ -240,20 +232,26 @@ class _IntroScreenState extends State<IntroScreen> {
   void _prev() =>
       _go(_scene == 0 ? _sceneCount - 1 : _scene - 1, by: 'swipe back');
 
-  /// The way on, from the corner or from "Start reading": said with the
-  /// scene it left from, and [by] which of the two.
-  void _skipIntro({String by = 'corner'}) {
+  /// The way on, "Start reading": said with the scene it left from.
+  void _start() {
     Analytics.capture('intro skipped', {
       'at_scene': _scene + 1,
       'ms_on_scene': _sceneClock.elapsedMilliseconds,
-      'by': by,
+      'by': 'start reading',
     });
     widget.onContinue();
   }
 
+  /// How the cards are written, from the scene that says they are written
+  /// with AI: the page that says how, over the intro, and back.
+  void _openHow() {
+    Analytics.capture('intro how opened', {'at_scene': _scene + 1});
+    Navigator.of(context)
+        .push(MaterialPageRoute<void>(builder: (_) => const HowScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
-    final EdgeInsets safe = MediaQuery.paddingOf(context);
     return Scaffold(
       backgroundColor: Colors.black,
       body: GestureDetector(
@@ -278,9 +276,29 @@ class _IntroScreenState extends State<IntroScreen> {
         },
         child: Stack(
           children: [
-            Positioned.fill(child: AmbientBlooms(colors: _blooms)),
-            const Positioned.fill(child: Bokeh()),
-            const Positioned(left: 0, right: 0, top: 0, child: LightSweep()),
+            // The first page is plain black, a page of print: the name, a
+            // card's question and the promise. The colour comes in with the
+            // second scene, and stays.
+            Positioned.fill(
+              child: AnimatedOpacity(
+                key: const ValueKey('intro-ambient'),
+                opacity: _scene == 0 ? 0 : 1,
+                duration: const Duration(milliseconds: 900),
+                curve: Curves.easeOutCubic,
+                child: Stack(
+                  children: [
+                    Positioned.fill(child: AmbientBlooms(colors: _blooms)),
+                    const Positioned.fill(child: Bokeh()),
+                    const Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      child: LightSweep(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
 
             // What makes the words readable: the blooms go dark under them.
             const Positioned.fill(child: _Scrim()),
@@ -332,26 +350,6 @@ class _IntroScreenState extends State<IntroScreen> {
                             final double band = fits < kIntroLeastBand
                                 ? 0
                                 : fits;
-                            // How much of the band's top a drawing that
-                            // spans the width has to leave under Skip, in the
-                            // band's own units: Skip's foot is a fixed height
-                            // down this column, and the band starts under the
-                            // share of the spare room that goes above it.
-                            final double over =
-                                math.max(0, spare - band) *
-                                kIntroSpareAbove /
-                                (kIntroSpareAbove + kIntroSpareBelow);
-                            final double skipFoot =
-                                kIntroSkipTop +
-                                SkipCorner.heightOf(context) -
-                                kIntroTop;
-                            final double underSkip = band <= 0
-                                ? 0
-                                : math.max(
-                                        0,
-                                        skipFoot + kIntroUnderSkip - over,
-                                      ) /
-                                      (band / _SceneStage.bandHeight);
                             final List<Widget> words = [
                               Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -376,43 +374,49 @@ class _IntroScreenState extends State<IntroScreen> {
                                 active: _scene,
                                 onTap: (i) => _go(i, by: 'dot'),
                               ),
+                              // Under the dots, one line: on the first scene
+                              // that there is more to swipe to, on the second
+                              // the way to how the cards are written, which
+                              // that scene says are written with AI.
                               SizedBox(
                                 height: hintSlot,
-                                child: AnimatedOpacity(
-                                  opacity: _moved == 0 && _scene == 0 ? 1 : 0,
-                                  duration: const Duration(milliseconds: 350),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 6),
-                                    child: Text(
-                                      context.l10n.swipeToSeeMore,
-                                      textAlign: TextAlign.center,
-                                      style: AppText.body(
-                                        size: 12.5,
-                                        weight: FontWeight.w500,
-                                        color: Colors.white.withValues(
-                                          alpha: 0.4,
+                                child: _scene == 1
+                                    ? _HowLink(onTap: _openHow)
+                                    : AnimatedOpacity(
+                                        opacity: _moved == 0 && _scene == 0
+                                            ? 1
+                                            : 0,
+                                        duration: const Duration(
+                                          milliseconds: 350,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 6,
+                                          ),
+                                          child: Text(
+                                            context.l10n.swipeToSeeMore,
+                                            textAlign: TextAlign.center,
+                                            style: AppText.body(
+                                              size: 12.5,
+                                              weight: FontWeight.w500,
+                                              color: Colors.white.withValues(
+                                                alpha: 0.4,
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
                               ),
                             ];
                             // The words alone, at the very largest sizes, can
                             // be taller than the room: they scroll then, under
                             // the buttons, rather than run into them.
-                            if (spare + kIntroCopyGap <
-                                SkipCorner.heightOf(context)) {
+                            if (spare + kIntroCopyGap < 0) {
                               return SingleChildScrollView(
                                 child: Column(
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
-                                  children: [
-                                    SizedBox(
-                                      height: SkipCorner.heightOf(context),
-                                    ),
-                                    ...words,
-                                  ],
+                                  children: words,
                                 ),
                               );
                             }
@@ -430,15 +434,20 @@ class _IntroScreenState extends State<IntroScreen> {
                                 if (band > 0) ...[
                                   SizedBox(
                                     height: band,
-                                    child: ExcludeSemantics(
-                                      child: MediaQuery.withNoTextScaling(
-                                        child: _SceneStage(
-                                          key: const ValueKey('intro-stage'),
-                                          child: _Swap(
-                                            scene: _scene,
-                                            child: _IntroScene(
-                                              index: _scene,
-                                              underSkip: underSkip,
+                                    // The first scene's question is read
+                                    // out, as the words it is; the drawings
+                                    // are pictures, and are not.
+                                    child: Semantics(
+                                      label: _scene == 0
+                                          ? _SceneQuestion.question
+                                          : null,
+                                      child: ExcludeSemantics(
+                                        child: MediaQuery.withNoTextScaling(
+                                          child: _SceneStage(
+                                            key: const ValueKey('intro-stage'),
+                                            child: _Swap(
+                                              scene: _scene,
+                                              child: _IntroScene(index: _scene),
                                             ),
                                           ),
                                         ),
@@ -446,10 +455,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                     ),
                                   ),
                                   const SizedBox(height: kIntroCopyGap),
-                                ] else
-                                  SizedBox(
-                                    height: SkipCorner.heightOf(context),
-                                  ),
+                                ],
                                 ...words,
                                 const Spacer(flex: kIntroSpareBelow),
                               ],
@@ -471,11 +477,7 @@ class _IntroScreenState extends State<IntroScreen> {
                               horizontal: kIntroSide,
                             ),
                             child: _StartBlock(
-                              consent: _asking
-                                  ? ConsentChoice(onAnswer: _answer)
-                                  : null,
-                              // Where Skip goes, as the one button there is.
-                              onStart: () => _skipIntro(by: 'start reading'),
+                              onStart: _start,
                               onSignIn: () async {
                                 if (await widget.onSignIn(context)) {
                                   widget.onContinue();
@@ -489,16 +491,6 @@ class _IntroScreenState extends State<IntroScreen> {
                   ),
                 ),
               ),
-            ),
-
-            // Skip, over the top right corner of the picture. It takes no
-            // room: the picture starts where it would if the word were not
-            // there, and the drawings keep out of that corner.
-            Positioned(
-              left: 0,
-              right: 0,
-              top: safe.top + kIntroSkipTop,
-              child: SkipCorner(onTap: _skipIntro, color: Colors.white),
             ),
           ],
         ),
@@ -671,32 +663,24 @@ class _SceneCopy extends StatelessWidget {
   /// files in every language while the screen showed its own English copy.
   static (String, String) words(AppLocalizations l, int index) =>
       switch (index) {
-        0 => (l.appName, l.tagline),
+        0 => (l.introPromiseTitle, l.introPromiseLine),
         1 => (l.introTopicsTitle, l.introTopicsLine),
         2 => (l.introQuestionTitle, l.introQuestionLine),
         3 => (l.introMixTitle, l.introMixLine),
         _ => (l.introThirtyTitle, l.introThirtyLine),
       };
 
-  /// The wordmark is Fraunces at 46; the rest are Figtree at 30. The canvas
-  /// sets the scene titles in Outfit, which the app does not ship. Figtree
-  /// at 700 is the closest face already bundled; adding a third family for
-  /// five lines is not worth the weight.
-  static TextStyle titleStyle({required bool wordmark}) => wordmark
-      ? AppText.display(
-          size: 46,
-          weight: FontWeight.w600,
-          height: 1,
-          spacing: -1.6,
-          color: Colors.white,
-        )
-      : AppText.body(
-          size: 30,
-          weight: FontWeight.w700,
-          height: 1.12,
-          spacing: -1.2,
-          color: Colors.white,
-        );
+  /// Figtree at 30, every scene's. The canvas sets the scene titles in
+  /// Outfit, which the app does not ship. Figtree at 700 is the closest face
+  /// already bundled; adding a third family for five lines is not worth the
+  /// weight. The name, in Fraunces, heads the first scene's picture now.
+  static final TextStyle titleStyle = AppText.body(
+    size: 30,
+    weight: FontWeight.w700,
+    height: 1.12,
+    spacing: -1.2,
+    color: Colors.white,
+  );
 
   static final TextStyle subtitleStyle = AppText.body(
     size: kIntroSubtitleSize,
@@ -707,23 +691,23 @@ class _SceneCopy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (String title, String sub) = words(context.l10n, index);
-    final bool wordmark = index == 0;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         // A box of one height with the title centred in it: centred in the
-        // same box, the wordmark's middle and every title's land on the same
-        // line. A title takes two lines when it needs them, and a size
-        // smaller before a third.
+        // same box, every title's middle lands on the same line. A title
+        // takes two lines when it needs them, and a size smaller before a
+        // third.
         SizedBox(
           height: titleBox,
           child: Center(
             child: FitText(
               title,
               textAlign: TextAlign.center,
-              maxLines: wordmark ? 1 : 2,
+              maxLines: 2,
               minSize: 24,
-              style: titleStyle(wordmark: wordmark),
+              balanced: true,
+              style: titleStyle,
             ),
           ),
         ),
@@ -737,6 +721,7 @@ class _SceneCopy extends StatelessWidget {
             maxLines: 2,
             minSize: 14,
             textAlign: TextAlign.center,
+            balanced: true,
             style: subtitleStyle,
           ),
         ),
@@ -748,17 +733,10 @@ class _SceneCopy extends StatelessWidget {
 /// The foot of every scene: "Start reading", the way in for a reader who
 /// already has an account, and the terms.
 class _StartBlock extends StatelessWidget {
-  const _StartBlock({
-    required this.onStart,
-    required this.onSignIn,
-    this.consent,
-  });
+  const _StartBlock({required this.onStart, required this.onSignIn});
 
   final VoidCallback onStart;
   final VoidCallback onSignIn;
-
-  /// The question about measuring, while it is unanswered.
-  final Widget? consent;
 
   @override
   Widget build(BuildContext context) {
@@ -811,31 +789,67 @@ class _StartBlock extends StatelessWidget {
             ),
           ),
         ),
-        // Under the way in and over the terms, and gone once answered: the
-        // foot shrinks back and the picture above takes the room.
-        AnimatedSize(
-          duration: const Duration(milliseconds: 260),
-          curve: Curves.easeOutCubic,
-          alignment: Alignment.topCenter,
-          child: consent == null
-              ? const SizedBox(width: double.infinity)
-              : Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  // The question and the small print grow with the text
-                  // size up to half as large again, and no further: past
-                  // that, at twice the size, the two of them would take the
-                  // screen from the way in.
-                  child: MediaQuery.withClampedTextScaling(
-                    maxScaleFactor: 1.5,
-                    child: consent!,
-                  ),
-                ),
-        ),
+        // The small print grows with the text size up to half as large
+        // again, and no further: past that it would take the screen from
+        // the way in.
         MediaQuery.withClampedTextScaling(
           maxScaleFactor: 1.5,
           child: const _TermsLine(),
         ),
       ],
+    );
+  }
+}
+
+/// Under the dots on the scene that says the cards are written with AI:
+/// the way to the page that says how ("How cards are written"), a quiet
+/// line in the hint's place, which is the same height on every scene, so
+/// nothing moves for it.
+class _HowLink extends StatelessWidget {
+  const _HowLink({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final String label = context.l10n.howPillsAreWritten;
+    final Color ink = Colors.white.withValues(alpha: 0.62);
+    return Semantics(
+      button: true,
+      label: label,
+      excludeSemantics: true,
+      child: GestureDetector(
+        key: const ValueKey('intro-how'),
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 6),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style:
+                      AppText.body(
+                        size: 12.5,
+                        weight: FontWeight.w600,
+                        color: ink,
+                      ).copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationColor: Colors.white.withValues(alpha: 0.28),
+                      ),
+                ),
+              ),
+              const SizedBox(width: 2),
+              Icon(Icons.chevron_right_rounded, size: 16, color: ink),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -987,220 +1001,131 @@ class _WhiteButtonState extends State<_WhiteButton> {
 
 /// The five scenes.
 class _IntroScene extends StatelessWidget {
-  const _IntroScene({required this.index, this.underSkip = 0});
+  const _IntroScene({required this.index});
 
   final int index;
-
-  /// The top of the band a drawing across the whole width must leave for
-  /// Skip, in the band's units. See [kIntroUnderSkip].
-  final double underSkip;
 
   @override
   Widget build(BuildContext context) {
     return switch (index) {
-      0 => const _SceneOrbits(),
+      0 => const _SceneQuestion(),
       1 => const _SceneRain(),
       2 => const _SceneCard(),
       3 => const _SceneChips(),
-      _ => _SceneTomorrow(underSkip: underSkip),
+      _ => const _SceneTomorrow(),
     };
   }
 }
 
-/// Scene 0 — the mark held inside two counter-rotating orbits.
-class _SceneOrbits extends StatelessWidget {
-  const _SceneOrbits();
+/// Scene 0 — the name, and under it a real question, set large: the one a
+/// reader who leans nowhere opens their first day on
+/// (lib/data/first_days.dart), with its subject over it in the subject's
+/// colour. A page of a magazine rather than a logo: what Astute is, shown
+/// before it is said.
+///
+/// The question stays in English, as every card is for now and as the card
+/// of the third scene does: a question drawn in Italian here would promise
+/// an Italian card on the first morning. The subject over it is the app's
+/// word, in the reader's language.
+class _SceneQuestion extends StatelessWidget {
+  const _SceneQuestion();
+
+  static const String question = kIntroQuestion;
 
   @override
   Widget build(BuildContext context) {
+    final TopicStyle style = kTopics[kIntroQuestionSubject]!;
     return SizedBox(
       width: _SceneStage.width,
       height: _SceneStage.bandHeight,
-      child: Stack(
-        alignment: Alignment.center,
+      child: Column(
         children: [
-          _Orbit(
-            size: 236,
-            period: const Duration(seconds: 38),
-            opacity: 0.09,
-            satellites: const [
-              _Satellite(angle: -90, size: 10, color: Color(0xFFFF2E9C)),
-              _Satellite(angle: 133, size: 6, color: Color(0xFF00B083)),
-            ],
-          ),
-          _Orbit(
-            size: 178,
-            period: const Duration(seconds: 24),
-            reverse: true,
-            opacity: 0.13,
-            satellites: const [
-              _Satellite(angle: -25, size: 9, color: Color(0xFF2B4BFF)),
-              _Satellite(angle: 104, size: 5, color: Color(0xFFFFC93C)),
-            ],
-          ),
-          const _Pulse(size: 146, color: Color(0x992B4BFF)),
-          _Pop(
-            duration: const Duration(milliseconds: 850),
-            child: Container(
-              width: 104,
-              height: 104,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0xB3000000),
-                    blurRadius: 60,
-                    offset: Offset(0, 24),
-                  ),
-                ],
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: Image.asset(
-                'assets/brand/mark-light.png',
-                fit: BoxFit.cover,
-                filterQuality: FilterQuality.medium,
+          const SizedBox(height: 4),
+          _Rise(
+            child: Text(
+              context.l10n.appName,
+              key: const ValueKey('intro-wordmark'),
+              textAlign: TextAlign.center,
+              style: AppText.display(
+                size: 30,
+                weight: FontWeight.w600,
+                height: 1,
+                spacing: -1,
+                color: Colors.white,
               ),
             ),
           ),
+          // A card, as the day's are: its subject at the head, its question
+          // under it. Drawn in a hairline on the dark rather than in the
+          // subject's colour, so the page stays calm and the words lead. It
+          // stands on the band's foot, and where a face sets the question
+          // taller than the band, the card is set smaller rather than cut.
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: _Rise(
+                  delay: const Duration(milliseconds: 240),
+                  child: Container(
+                    key: const ValueKey('intro-question-card'),
+                    width: 306,
+                    padding: const EdgeInsets.fromLTRB(20, 17, 20, 19),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.06),
+                      borderRadius: BorderRadius.circular(24),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.16),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 7,
+                              height: 7,
+                              decoration: BoxDecoration(
+                                color: style.color,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              context.l10n.subjectOf(style.name).toUpperCase(),
+                              style: AppText.body(
+                                size: 10.5,
+                                weight: FontWeight.w700,
+                                spacing: 1.7,
+                                color: Colors.white.withValues(alpha: 0.62),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        BalancedText(
+                          question,
+                          key: const ValueKey('intro-question'),
+                          style: AppText.display(
+                            size: 25,
+                            weight: FontWeight.w600,
+                            height: 1.14,
+                            spacing: -0.7,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 6),
         ],
       ),
-    );
-  }
-}
-
-class _Satellite {
-  const _Satellite({
-    required this.angle,
-    required this.size,
-    required this.color,
-  });
-
-  final double angle;
-  final double size;
-  final Color color;
-}
-
-class _Orbit extends StatefulWidget {
-  const _Orbit({
-    required this.size,
-    required this.period,
-    required this.opacity,
-    required this.satellites,
-    this.reverse = false,
-  });
-
-  final double size;
-  final Duration period;
-  final double opacity;
-  final List<_Satellite> satellites;
-  final bool reverse;
-
-  @override
-  State<_Orbit> createState() => _OrbitState();
-}
-
-class _OrbitState extends State<_Orbit> with SingleTickerProviderStateMixin {
-  late final AnimationController _c = AnimationController(
-    vsync: this,
-    duration: widget.period,
-  )..repeat();
-
-  @override
-  void dispose() {
-    _c.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final double radius = widget.size / 2;
-    final Widget ring = Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          width: widget.size,
-          height: widget.size,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.white.withValues(alpha: widget.opacity),
-            ),
-          ),
-        ),
-        for (final _Satellite s in widget.satellites)
-          Transform.translate(
-            offset: Offset(
-              radius * math.cos(s.angle * math.pi / 180),
-              radius * math.sin(s.angle * math.pi / 180),
-            ),
-            child: Container(
-              width: s.size,
-              height: s.size,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: s.color,
-                boxShadow: [
-                  BoxShadow(
-                    color: s.color.withValues(alpha: 0.9),
-                    blurRadius: s.size * 1.9,
-                  ),
-                ],
-              ),
-            ),
-          ),
-      ],
-    );
-
-    if (MediaQuery.disableAnimationsOf(context)) return ring;
-
-    return AnimatedBuilder(
-      animation: _c,
-      builder: (context, child) => Transform.rotate(
-        angle: (widget.reverse ? -1 : 1) * _c.value * 2 * math.pi,
-        child: child,
-      ),
-      child: ring,
-    );
-  }
-}
-
-/// A glow that breathes.
-class _Pulse extends StatefulWidget {
-  const _Pulse({required this.size, required this.color});
-
-  final double size;
-  final Color color;
-
-  @override
-  State<_Pulse> createState() => _PulseState();
-}
-
-class _PulseState extends State<_Pulse> with SingleTickerProviderStateMixin {
-  late final AnimationController _c = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 6500),
-  )..repeat(reverse: true);
-
-  @override
-  void dispose() {
-    _c.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final Widget glow = Bloom(color: widget.color, size: widget.size);
-    if (MediaQuery.disableAnimationsOf(context)) return glow;
-    return AnimatedBuilder(
-      animation: _c,
-      builder: (context, child) {
-        final double t = Curves.easeInOut.transform(_c.value);
-        return Opacity(
-          opacity: 0.45 + 0.35 * t,
-          child: Transform.scale(scale: 1 + 0.14 * t, child: child),
-        );
-      },
-      child: glow,
     );
   }
 }
@@ -1907,21 +1832,17 @@ class _SceneChips extends StatelessWidget {
 /// band is as wide as the screen, which is every phone tall enough to give
 /// it its full height, the notification, the card and the days start and
 /// end on the lines the buttons do. On a phone short enough to shrink the
-/// band the column shrinks with it, centred, which keeps it clear of Skip.
+/// band the column shrinks with it, centred.
 ///
-/// It stands on the band's foot and leaves [underSkip] at the top, which
-/// puts the notification sixteen points under Skip on every phone, as the
-/// canvas has it. Whatever the band has above that, the card and the days
-/// grow into: from the sizes that fit the phone whose band starts right
-/// under the corner, up towards the canvas's own.
+/// It stands on the band's foot, and the card and the days take the band's
+/// height: from the sizes that fit a short band up to the canvas's own. The
+/// top of the band used to be kept clear for a Skip in the corner, which
+/// is gone.
 class _SceneTomorrow extends StatelessWidget {
-  const _SceneTomorrow({this.underSkip = 0});
-
-  /// The top of the band left for Skip, in the band's units.
-  final double underSkip;
+  const _SceneTomorrow();
 
   /// Each height the drawing is made of, as short as it goes and as the
-  /// canvas drew it: the room under Skip decides where between the two.
+  /// canvas drew it: the band's room decides where between the two.
   static const (double, double) _noticePad = (7.5, 10.3);
   static const (double, double) _gapToCard = (8.0, 10.3);
   static const (double, double) _cardHeight = (92.0, 118.0);
@@ -1982,7 +1903,7 @@ class _SceneTomorrow extends StatelessWidget {
     );
     // Two points to spare: the words' own lines round a little over the
     // heights added up here.
-    final double room = _SceneStage.bandHeight - underSkip - 2;
+    final double room = _SceneStage.bandHeight - 2;
     final double short = _heightAt(0);
     final double t = ((room - short) / (_heightAt(1) - short)).clamp(0.0, 1.0);
     double at((double, double) size) => _grown(size, t);

@@ -26,6 +26,8 @@ class MagicCard extends StatefulWidget {
     this.note,
     this.skip,
     this.onSkip,
+    this.headlineSize = 40,
+    this.headlineLines = 2,
   });
 
   final String eyebrow;
@@ -43,6 +45,12 @@ class MagicCard extends StatefulWidget {
   /// The quiet way past the card. Absent on the shelf, where a swipe is.
   final String? skip;
   final VoidCallback? onSkip;
+
+  /// The headline's size, and the lines it may take: a short offer set
+  /// large on two, as built; a sentence about the reader's day a little
+  /// smaller, on as many as it needs (lib/widgets/sixth_card.dart).
+  final double headlineSize;
+  final int headlineLines;
 
   @override
   State<MagicCard> createState() => _MagicCardState();
@@ -109,7 +117,7 @@ class _MagicCardState extends State<MagicCard>
         padding: const EdgeInsets.fromLTRB(26, 26, 26, 22),
         child: LayoutBuilder(
           builder: (context, box) {
-            final (bool note, bool line) = _fit(context, box);
+            final (bool note, bool line, double? shrunk) = _fit(context, box);
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,12 +141,23 @@ class _MagicCardState extends State<MagicCard>
                 const Spacer(),
                 // Two lines at most, in whatever size two lines take: the
                 // Italian is two words longer, the German longer again.
-                FitText(
-                  widget.headline,
-                  maxLines: 2,
-                  minSize: 24,
-                  style: _headlineStyle(ink),
-                ),
+                // Smaller still, on as many lines as it takes, only where
+                // not even the headline and the button would fit as it is.
+                if (shrunk == null)
+                  FitText(
+                    widget.headline,
+                    maxLines: widget.headlineLines,
+                    minSize: _minSize,
+                    style: _headlineStyle(ink, widget.headlineSize),
+                  )
+                else
+                  Text(
+                    widget.headline,
+                    style: _headlineStyle(
+                      ink,
+                      widget.headlineSize,
+                    ).copyWith(fontSize: shrunk),
+                  ),
                 if (line) ...[
                   const SizedBox(height: 14),
                   Text(widget.line, style: _lineStyle(ink)),
@@ -169,27 +188,39 @@ class _MagicCardState extends State<MagicCard>
     color: ink.withValues(alpha: 0.85),
   );
 
-  static TextStyle _headlineStyle(Color ink) => AppText.display(
-    size: 40,
-    weight: FontWeight.w600,
-    height: 1.02,
-    spacing: -1.2,
-    color: ink,
-  );
+  static TextStyle _headlineStyle(Color ink, [double size = 40]) =>
+      AppText.display(
+        size: size,
+        weight: FontWeight.w600,
+        height: size < 40 ? 1.08 : 1.02,
+        spacing: -1.2 * size / 40,
+        color: ink,
+      );
 
   static TextStyle _lineStyle(Color ink) =>
       AppText.body(size: 15, height: 1.4, color: ink.withValues(alpha: 0.62));
 
+  /// The smallest the headline is set at on its lines (FitText's floor).
+  double get _minSize => 24 * widget.headlineSize / 40;
+
+  /// The least the headline is ever set at, where even its floor would not
+  /// leave the button room.
+  static const double _leastSize = 12;
+
   /// Which of the two things the card can do without fit in [box]: the
-  /// week's note, and the line under the headline.
+  /// week's note, and the line under the headline; and the size the
+  /// headline is set at where it must be smaller than its own fitting
+  /// takes it (null: as FitText sets it).
   ///
   /// The eyebrow, the headline and the button always stay: they are the
   /// offer. On a short phone the card was a fixed column with nothing that
   /// gave way, and the button the card exists for was cut off by 23
   /// points. The line goes first, being the headline said again at
-  /// length; then the note, which the shelf says elsewhere.
-  (bool, bool) _fit(BuildContext context, BoxConstraints box) {
-    if (!box.maxHeight.isFinite) return (true, true);
+  /// length; then the note, which the shelf says elsewhere; and last, a
+  /// long sentence about the reader's day at the largest text sizes, the
+  /// headline goes a size down at a time until the button has its room.
+  (bool, bool, double?) _fit(BuildContext context, BoxConstraints box) {
+    if (!box.maxHeight.isFinite) return (true, true, null);
     final TextScaler scaler = MediaQuery.textScalerOf(context);
     final TextDirection direction = Directionality.of(context);
     final Color ink = context.p.ink;
@@ -208,20 +239,64 @@ class _MagicCardState extends State<MagicCard>
       return h;
     }
 
-    final double fixed =
-        math.max(15, scaler.scale(11) * 1.3) +
-        measure(widget.headline, _headlineStyle(ink), lines: 2) +
+    // The headline as FitText sets it: the largest size, a point at a
+    // time, at which it keeps to its lines; at its floor, on as many as it
+    // takes.
+    final TextStyle headline = _headlineStyle(ink, widget.headlineSize);
+    double size = headline.fontSize ?? widget.headlineSize;
+    while (size > _minSize) {
+      final TextPainter p = TextPainter(
+        text: TextSpan(
+          text: widget.headline,
+          style: inherited.merge(headline.copyWith(fontSize: size)),
+        ),
+        textDirection: direction,
+        textScaler: scaler,
+        maxLines: widget.headlineLines,
+      )..layout(maxWidth: box.maxWidth);
+      final bool over = p.didExceedMaxLines;
+      p.dispose();
+      if (!over) break;
+      size -= 1;
+    }
+    // The eyebrow's row: its mark, or its words as the face sets them,
+    // whichever is taller — at the largest text sizes, the words.
+    final double eyebrow = math.max(
+      15,
+      measure(
+        widget.eyebrow.toUpperCase(),
+        AppText.label(size: 11, spacing: 1.3),
+        lines: 1,
+      ),
+    );
+    final double chrome =
+        eyebrow +
         // The button is 54, and the quiet way past it its own line.
         54 +
         (widget.skip != null ? 4 + 20 + scaler.scale(13) * 1.3 : 0);
+    final double fixed =
+        chrome +
+        measure(
+          widget.headline,
+          headline.copyWith(fontSize: size),
+          lines: size <= _minSize ? null : widget.headlineLines,
+        );
     final double note = widget.note == null
         ? 0
         : 12 + measure(widget.note!.$2, _noteStyle(ink));
     final double line = 14 + measure(widget.line, _lineStyle(ink));
     final double room = box.maxHeight;
-    if (fixed + note + line <= room) return (true, true);
-    if (fixed + note <= room) return (true, false);
-    return (false, false);
+    if (fixed + note + line <= room) return (true, true, null);
+    if (fixed + note <= room) return (true, false, null);
+    if (fixed <= room) return (false, false, null);
+    for (size -= 1; size > _leastSize; size -= 1) {
+      final double head = measure(
+        widget.headline,
+        headline.copyWith(fontSize: size),
+      );
+      if (chrome + head <= room) return (false, false, size);
+    }
+    return (false, false, _leastSize);
   }
 }
 

@@ -5,12 +5,23 @@
   "place.ask": {"default": true},
   "review.ask": {"default": true},
   "trial.firstRun": {"default": false},
+  "trial.reverse": {"default": false},
   "offer.firstWeek": {"default": false},
   "offer.firstMonth": {"default": false},
   "cardAi": {"default": false},
   "share.challenge": {"default": false},
   "listen": {"default": false},
-  "invite": {"default": false}
+  "bookAudio": {"default": false},
+  "invite": {"default": false},
+  "opening.asks": {"default": true},
+  "firstWeek.drawn": {"default": true},
+  "opening.dayLine": {"default": true},
+  "streak.told": {"default": true},
+  "journey.preview": {"default": false},
+  "week.sunday": {"default": false},
+  "calibration.early": {"default": true},
+  "firstRun.loves": {"default": true},
+  "parts.offer": {"default": true}
  },
  "tunables": {
   "push.askGapDays": {"type": "count", "default": 3, "min": 1, "max": 30},
@@ -22,7 +33,9 @@
   },
   "place.firstAskDay": {"type": "count", "default": 2, "min": 1, "max": 20},
   "place.lastAskDay": {"type": "count", "default": 7, "min": 2, "max": 30, "after": "place.firstAskDay"},
-  "review.streakDays": {"type": "count", "default": 7, "min": 3, "max": 60}
+  "review.streakDays": {"type": "count", "default": 7, "min": 3, "max": 60},
+  "explore.freeCards": {"type": "count", "default": 0, "min": 0, "max": 500},
+  "parts.offerDay": {"type": "count", "default": 3, "min": 2, "max": 30}
  },
  "experiments": {
   "push.firstAsk": {"variants": ["cameBack", "firstDay"], "default": "cameBack"}

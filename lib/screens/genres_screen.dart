@@ -12,23 +12,31 @@ import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/balanced_text.dart';
+import '../widgets/fit_text.dart';
 import '../widgets/subject_icon.dart';
 import 'mix_screen.dart';
 import '../widgets/ui.dart';
 
-/// Artboard 86a: the mix, one layer down.
+/// Artboard 86a: the mix, one layer down — Which parts.
 ///
-/// The wheel before this one asks how much of each subject, which is as fine
-/// as a subject goes — two readers both ask for Space and one of them means
-/// rockets while the other means how big the thing is. This is where they say
-/// which. Six genres a subject, three strands inside each genre, and
-/// everything starts on: the reader is turning things down rather than
-/// building a deck out of nothing, the same way the wheel works.
+/// Your mix asks how much of each subject, which is as fine as a subject
+/// goes — two readers both ask for Space and one of them means rockets while
+/// the other means how big the thing is. This is where they say which. Six
+/// genres a subject, three strands inside each genre, and everything starts
+/// on: the reader is turning things down rather than building a deck out of
+/// nothing, the same way the mix works.
 ///
-/// The subjects are in the order the reader just put them in, and a subject
-/// asked for more is drawn larger — the screen is a reading of the wheel
-/// rather than a second, unrelated list. A subject left out of the mix keeps
-/// a line at the foot of the list, dimmed, so it is quiet rather than gone.
+/// It used to be the first run's third question, two hundred genres and
+/// their strands before a single card, which a tester found too many. It is
+/// offered instead, once, on the finished day's shelf from the third
+/// finished day (lib/widgets/parts_offer.dart), and opens over it as a page
+/// of its own; the fine-tuning under the topics editor ([TuneScreen]) has
+/// the same parts whenever the reader wants them.
+///
+/// The subjects are in the order of the reader's mix, and a subject asked
+/// for more is drawn larger — the screen is a reading of the mix rather than
+/// a second, unrelated list. A subject left out of the mix keeps a line at
+/// the foot of the list, dimmed, so it is quiet rather than gone.
 class GenresScreen extends StatefulWidget {
   final AppState app;
 
@@ -36,14 +44,14 @@ class GenresScreen extends StatefulWidget {
   /// is not a decision until the reader leaves the screen.
   final void Function(Set<String> genresOff, Set<String> strandsOff) onDone;
 
-  /// Walked past. Everything stays on, which is what it already was.
-  final VoidCallback onSkip;
+  /// The way back, which keeps nothing.
+  final VoidCallback onBack;
 
   const GenresScreen({
     super.key,
     required this.app,
     required this.onDone,
-    required this.onSkip,
+    required this.onBack,
   });
 
   @override
@@ -73,8 +81,14 @@ class _GenresScreenState extends State<GenresScreen> {
   /// it. A subject the reader dragged to nothing is weight zero and sinks to
   /// the bottom of the list on its own.
   List<(String, double)> get _subjects {
+    // A subject in the mix with no weight of its own is all the way in, as
+    // the fine-tuning reads it: a mix never set is every picked subject in.
     final Map<String, double> mix = widget.app.topicWeights;
-    final list = [for (final key in kGenres.keys) (key, mix[key] ?? 0.0)];
+    final Set<String> picked = widget.app.pickedTopics;
+    final list = [
+      for (final key in kGenres.keys)
+        (key, picked.contains(key) ? (mix[key] ?? 1.0) : 0.0),
+    ];
     list.sort((a, b) {
       final int byWeight = b.$2.compareTo(a.$2);
       if (byWeight != 0) return byWeight;
@@ -124,12 +138,8 @@ class _GenresScreenState extends State<GenresScreen> {
     });
   }
 
-  /// The page's own theme: dark, whatever the phone's.
-  ///
-  /// This is the mix one layer down, the step after the wheel and a part of
-  /// it, and the intro and the wheel before it are black in either theme.
-  /// Following the phone, it alone turned cream in the middle of the first
-  /// run, as if the reader had been handed to a different app.
+  /// The page's own theme: dark, whatever the phone's, as the mix's bars
+  /// and parts are wherever they are shown: the colours are drawn for black.
   static final ThemeData _dark = buildAstutoTheme(Brightness.dark);
 
   @override
@@ -142,116 +152,122 @@ class _GenresScreenState extends State<GenresScreen> {
     final l = context.l10n;
     final Palette p = context.p;
 
-    return Scaffold(
-      backgroundColor: p.surface,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            Expanded(
-              child: Stack(
-                children: [
-                  // The head scrolls with the subjects rather than sitting
-                  // over them: it is the first thing on the page, not a bar.
-                  ListView.builder(
-                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
-                    itemCount: _subjects.length + 1,
-                    itemBuilder: (context, i) {
-                      if (i == 0) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 18),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    // Its own question. It used to repeat
-                                    // the wheel's "Your mix", so the step
-                                    // read as the same screen again.
-                                    child: Text(
-                                      l.genresTitle,
-                                      style: AppText.display(
-                                        size: 28,
-                                        weight: FontWeight.w600,
-                                        spacing: -0.9,
-                                        color: p.ink,
-                                      ),
-                                    ),
+    return ScreenView(
+      name: 'genres',
+      child: Scaffold(
+        backgroundColor: p.surface,
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            children: [
+              // The way back stays put above what scrolls, as on the other
+              // pages pushed over the tabs.
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: BackCircle(onPressed: widget.onBack),
+                ),
+              ),
+              Expanded(
+                child: Stack(
+                  children: [
+                    // The head scrolls with the subjects rather than sitting
+                    // over them: it is the first thing on the page, not a bar.
+                    ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+                      itemCount: _subjects.length + 1,
+                      itemBuilder: (context, i) {
+                        if (i == 0) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 18),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Its own question. It used to repeat the mix's
+                                // "Your mix", so the page read as the same one
+                                // again.
+                                Text(
+                                  l.genresTitle,
+                                  style: AppText.display(
+                                    size: 28,
+                                    weight: FontWeight.w600,
+                                    spacing: -0.9,
+                                    color: p.ink,
                                   ),
-                                  // Level with the title, ending the same
-                                  // distance from the edge as on the intro
-                                  // and the mix.
-                                  SkipCorner(onTap: widget.onSkip, inset: 20),
-                                ],
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                l.genresLine,
-                                style: AppText.body(
-                                  size: 12.5,
-                                  height: 1.4,
-                                  color: p.inkMuted,
                                 ),
-                              ),
-                            ],
-                          ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  l.genresLine,
+                                  style: AppText.body(
+                                    size: 12.5,
+                                    height: 1.4,
+                                    color: p.inkMuted,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        final (String key, double weight) = _subjects[i - 1];
+                        return Padding(
+                          padding: EdgeInsets.only(top: i > 1 ? 20 : 0),
+                          child: weight > 0
+                              ? GenreSubject(
+                                  topicKey: key,
+                                  weight: weight,
+                                  genresOff: _genresOff,
+                                  strandsOff: _strandsOff,
+                                  open: _open,
+                                  onTapGenre: _toggleGenre,
+                                  onHoldGenre: _openGenre,
+                                  onTapStrand: _toggleStrand,
+                                )
+                              : GenreSubjectOff(topicKey: key),
                         );
-                      }
-                      final (String key, double weight) = _subjects[i - 1];
-                      return Padding(
-                        padding: EdgeInsets.only(top: i > 1 ? 20 : 0),
-                        child: weight > 0
-                            ? GenreSubject(
-                                topicKey: key,
-                                weight: weight,
-                                genresOff: _genresOff,
-                                strandsOff: _strandsOff,
-                                open: _open,
-                                onTapGenre: _toggleGenre,
-                                onHoldGenre: _openGenre,
-                                onTapStrand: _toggleStrand,
-                              )
-                            : GenreSubjectOff(topicKey: key),
-                      );
-                    },
-                  ),
-                  // The list runs under the footer rather than stopping short
-                  // of it, so it reads as continuing rather than as ending on
-                  // whatever row the scroll happened to leave there.
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: 36,
-                    child: IgnorePointer(
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [p.surface.withValues(alpha: 0), p.surface],
+                      },
+                    ),
+                    // The list runs under the footer rather than stopping short
+                    // of it, so it reads as continuing rather than as ending on
+                    // whatever row the scroll happened to leave there.
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      height: 36,
+                      child: IgnorePointer(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                p.surface.withValues(alpha: 0),
+                                p.surface,
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 30),
-              child: Column(
-                children: [
-                  PrimaryButton(
-                    label: l.continueGenresOn(_genresOn, kAllGenres.length),
-                    height: 54,
-                    onPressed: () => widget.onDone(_genresOff, _strandsOff),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 30),
+                child: Column(
+                  children: [
+                    PrimaryButton(
+                      key: const ValueKey('genres-done'),
+                      label: l.continueGenresOn(_genresOn, kAllGenres.length),
+                      height: 54,
+                      onPressed: () => widget.onDone(_genresOff, _strandsOff),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -780,14 +796,16 @@ class _GenreChip extends StatelessWidget {
               ],
               // Flexible, because a genre's name is written with the content
               // and the chip is not. Most are two words; "Where things come
-              // from" is five, and on a narrow phone or at a large text size
-              // it is wider than the line it has to sit on. It gives up its
-              // own tail rather than running off the card.
+              // from" is five, and on a narrow phone, at a large text size or
+              // in Russian it is wider than the line it has to sit on. It
+              // sets itself a size or two smaller first, and gives up its
+              // own tail only past that, rather than run off the card.
               Flexible(
-                child: Text(
+                child: FitText(
                   context.l10n.themeOf(genre),
                   maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  minSize: 9.5,
+                  ellipsis: true,
                   style: AppText.body(
                     size: 11.5,
                     weight: FontWeight.w600,

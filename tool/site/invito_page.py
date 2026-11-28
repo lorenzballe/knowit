@@ -21,8 +21,10 @@ what the friend gets and how:
 - the rules in a line: a new account that never had Astute+, one code each,
   nothing to pay or to cancel, eight weeks a year at most for whoever invites.
 
-In English and in Italian, the site's two languages, the one the browser
-asks for first shown (both, one after the other, without a script). The
+In English and in Italian, the site's two languages, the reader's shown:
+the one they chose with the site's switch, or else their browser's (both,
+one after the other, without a script), and the site's chrome around it in
+the same, as on every page that holds both (chrome.header("both")). The
 code is read from the link by the page's script, shown, and taken out of
 the address before anything is counted: the site counts the page as it
 counts every page (site/assets/main.js), never the code. Nothing is kept on
@@ -112,22 +114,15 @@ APP_WORDS = {
 
 def where_it(sentence: bool = False) -> str:
     """chrome.where, in Italian: where the app can be had, as the stores stand."""
-    if APP_STORE_OPEN and GOOGLE_PLAY_OPEN:
-        return "Gratis su iPhone e Android"
-    if GOOGLE_PLAY_OPEN:
-        return "Gratis su Android, e presto su iPhone" if sentence else "Gratis su Android · presto su iPhone"
-    return "Gratis su iPhone, e presto su Android" if sentence else "Gratis su iPhone · presto su Android"
+    return chrome.where(sentence, "it")
 
 
-def stores() -> str:
-    """The two stores' badges, as the site draws them (chrome.badge): the store
-    the app is in first. Until the App Store listing is live, Google Play's is
-    the button and Apple's comes after it, marked as coming."""
-    apple = (chrome.badge("app-store", chrome.APP_STORE_LINK) if APP_STORE_OPEN
-             else chrome.soon("app-store", chrome.APP_STORE_LINK))
-    play = (chrome.badge("google-play", GOOGLE_PLAY) if GOOGLE_PLAY_OPEN
-            else chrome.coming("google-play"))
-    return play + apple if GOOGLE_PLAY_OPEN and not APP_STORE_OPEN else apple + play
+def stores(lang: str = "en") -> str:
+    """The two stores' badges, as the site draws them (chrome.stores), in
+    [lang]: the store the app is in first. Until the App Store listing is
+    live, Google Play's is the button and Apple's comes after it, marked as
+    coming and leading to the list for the iPhone."""
+    return chrome.stores(lang, play_first=True)
 
 
 CSS = """.invite-page{position:relative;overflow:hidden}
@@ -215,11 +210,11 @@ SCRIPT = """(() => {
 })();
 """.replace("@ALPHABET@", CODE_ALPHABET).replace("@LENGTH@", str(CODE_LENGTH)).replace("@PACKAGE@", PACKAGE).replace("@PLAY@", GOOGLE_PLAY)
 
-# Before the page is drawn: the language the browser asks for first, Italian
-# or English, so the page is never drawn in the other one first.
-EARLY = ("document.documentElement.classList.add('js');"
-         "(function(){var h=document.documentElement,l=((navigator.languages&&navigator.languages[0])||navigator.language||'');"
-         "var it=/^it(-|$)/i.test(l);h.dataset.lang=it?'it':'en';if(it)h.lang='it';})();")
+# Before the page is drawn: the language the reader chose on the site, or
+# else the one the browser asks for, Italian or English, so the page is never
+# drawn in the other one first (chrome.lang_script, as every page of the
+# site has it).
+EARLY = chrome.lang_script("both", "/" + PATH)
 
 PAGE = """<!DOCTYPE html>
 <html lang="en">
@@ -248,7 +243,7 @@ PAGE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/assets/site.css">
 <style>
 {css}</style>
-<script>{early}</script>
+{early}
 <script src="/assets/main.js" defer></script>
 </head>
 <body>
@@ -272,7 +267,7 @@ PAGE = """<!DOCTYPE html>
 SECTION = """<section class="invite" id="{lang}" lang="{lang}" data-title="{title_plain} · Astute">
   <div class="invite-top">
     <p class="invite-kicker">{kicker}</p>
-    <a class="invite-other" href="#{other_lang}" data-switch="{other_lang}" lang="{other_lang}">{other}</a>
+    <a class="invite-other" href="#{other_lang}" data-switch="{other_lang}" data-lang-to="{other_lang}" lang="{other_lang}">{other}</a>
   </div>
   <h1 class="invite-title">{title}</h1>
   <p class="invite-lede">{lede}</p>
@@ -313,8 +308,8 @@ def section(lang: str) -> str:
         play=GOOGLE_PLAY,
         steps=e(w["steps"]),
         step1=e(w["step1"]),
-        stores=stores(),
-        where=e(where(sentence=True) if lang == "en" else where_it(sentence=True)),
+        stores=stores(lang),
+        where=e(where(sentence=True, lang=lang)),
         step2=e(w["step2"].format(profile=app["profile"], row=app["row"])),
         step3=e(w["step3"]),
         rules=e(w["rules"]),
@@ -334,9 +329,9 @@ def render() -> str:
         site=SITE,
         css=CSS,
         early=EARLY,
-        header=chrome.header("/", "/"),
+        header=chrome.header("both", "/" + PATH),
         sections="\n".join(section(lang) for lang in ("en", "it")),
-        footer=chrome.footer("/", "/"),
+        footer=chrome.footer("both", "/" + PATH),
         script=SCRIPT,
     )
 

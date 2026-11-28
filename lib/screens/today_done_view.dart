@@ -26,16 +26,16 @@ import '../widgets/liked_mark.dart';
 import '../widgets/skill_mark.dart';
 import 'journey_screen.dart';
 import '../widgets/motion.dart';
-import '../widgets/magic_card.dart';
+import '../widgets/sixth_card.dart';
 import '../widgets/premium.dart';
 import '../data/topics.dart';
 import '../widgets/day_moment.dart';
 import '../widgets/share_day.dart';
 import '../widgets/share_sheet.dart';
+import '../widgets/shelf_ask.dart';
 import '../widgets/learn_looks.dart' show markedSkills;
 import '../widgets/subject_icon.dart';
 import '../widgets/web/card_thumb.dart';
-import '../widgets/web/web_card_page.dart' show groundOf;
 import '../l10n/dates.dart';
 
 /// The Today tab once the five are done, from artboard 66a.
@@ -158,9 +158,12 @@ class TodayDoneView extends StatefulWidget {
   /// How many cards [app]'s shelf holds: the day's cards, the day's own
   /// card where it is tried, and the offer on the free plan, where three of
   /// the five came at random; never on Astute+, so nobody is sold what they
-  /// already have.
+  /// already have, and never on a day the card after the fifth was dealt
+  /// after the five, so nobody meets the same card twice in an evening.
   static int countOf(AppState app) =>
-      app.todaysDeck.length + (dayCardOn ? 1 : 0) + (app.isPlus ? 0 : 1);
+      app.todaysDeck.length +
+      (dayCardOn ? 1 : 0) +
+      (app.isPlus || app.sixthDealtToday ? 0 : 1);
 
   /// The colour the tab glows in with the card at [at] in front: a card's
   /// own; the day's card's, that of the card its picture sets large; and
@@ -429,6 +432,10 @@ class _TodayDoneViewState extends State<TodayDoneView>
           padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
           child: _Actions(app: app),
         ),
+        // What the shelf asks, when it asks anything: the question about
+        // usage data, or Which parts, once. A card among the rest, never a
+        // sheet over them (lib/widgets/shelf_ask.dart).
+        ShelfAsk(app: app, padding: const EdgeInsets.fromLTRB(24, 14, 24, 0)),
         // What the canvas leaves between the last line and the tab bar.
         const SizedBox(height: 16),
       ],
@@ -803,13 +810,11 @@ class _TodayDoneViewState extends State<TodayDoneView>
         ? context.l10n.forYouChip
         : null;
     String picture(bool back) => '${pill.id}-${back ? 'back' : 'front'}';
-    // A hard card in words, where the developer tools ring it, as it was in
-    // the deck: dark, ringed, HARD in its head (hard_ring.dart). A drawn one
-    // is its picture, taken as it always looked.
+    // A hard card as it was in the deck: dark, ringed, HARD in its head
+    // (hard_ring.dart). A drawn one is its picture taken so, on this paper,
+    // inside the same ring.
     final Palette p = context.p;
-    final Color? ring = pill.web == null && HardRing.on(pill)
-        ? HardRing.accentOf(pill, p)
-        : null;
+    final Color? ring = HardRing.on(pill) ? HardRing.accentOf(pill, p) : null;
     final Pill shown = ring == null ? pill : HardRing.dressed(pill, p);
     Widget face(bool back) => _CardFace(
       key: ValueKey('shelf-face-${pill.id}-${back ? 'back' : 'front'}'),
@@ -872,19 +877,11 @@ class _TodayDoneViewState extends State<TodayDoneView>
   /// but a swipe — which is the way past every other card.
   Widget _sixth(BuildContext context) {
     final app = widget.app;
-    final l = context.l10n;
     return SizedBox(
       key: const ValueKey('shelf-magic'),
       width: _cardWidth,
       height: _cardHeight,
-      child: MagicCard(
-        eyebrow: l.plusNameCaps,
-        note: weekNoteOf(context, app),
-        headline: l.plusCardHeadline,
-        line: l.magicLine,
-        action: plusActionOf(context),
-        onAction: _sell,
-      ),
+      child: SixthCard(app: app, onAction: _sell),
     );
   }
 }
@@ -970,9 +967,10 @@ class _CardFace extends StatelessWidget {
   final Pill pill;
   final int number;
 
-  /// The ring's colour, on a hard card in words ringed (hard_ring.dart):
-  /// its edge, its subject's mark and name, and HARD in its head. [pill] is
-  /// then in the ringed colours already.
+  /// The ring's colour, on a hard card ringed (hard_ring.dart): its edge,
+  /// and on a card in words its subject's mark and name and HARD in its
+  /// head, which a drawn one's picture carries itself. [pill] is then in the
+  /// ringed colours already.
   final Color? ring;
 
   /// Whether the card's picture has come. Until it has, the card is plain
@@ -1024,10 +1022,11 @@ class _CardFace extends StatelessWidget {
     );
     // A free card with its picture is shown by it, whole: the card as the
     // reader met it, drawing and all, on the same shape, edge and glow as
-    // any card here. Where the picture will not come, its words, as on a
-    // card that has none.
+    // any card here (a hard one ringed, its picture taken ringed on this
+    // paper). Where the picture will not come, its words, as on a card that
+    // has none.
     if (CardThumb.has(pill, side)) {
-      final Color ground = groundOf(pill);
+      final Color ground = CardThumb.groundFor(pill, p);
       // Of the card's two pictures, the one nearer its shape: on most phones
       // the one taken at the shelf's own proportion, which fills the card
       // from side to side as every card does; on a card the room has made
@@ -1138,7 +1137,9 @@ class _CardFace extends StatelessWidget {
       color: colour,
       // The deck's corner, at the shelf's scale: one card, one shape.
       borderRadius: BorderRadius.circular(34 * s),
-      border: ring == null
+      // Ringed, a hard card; grey, as the rest of its edge, while its
+      // picture comes.
+      border: ring == null || !glowing
           ? cardHairline(colour, p.surface)
           : Border.all(color: ring!, width: HardRing.width * s),
       boxShadow: [
@@ -2092,21 +2093,11 @@ class _Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // The lock only where the button opens the plans: with the free plan's
+    // preview on, it opens the reader's own journey (openJourney).
     final Widget journey = _JourneyButton(
-      locked: !app.isPlus,
-      onPressed: () => requirePlus(
-        context,
-        app,
-        () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (routeContext) => JourneyScreen(
-              app: app,
-              onBack: () => Navigator.of(routeContext).pop(),
-            ),
-          ),
-        ),
-        source: 'journey',
-      ),
+      locked: !app.isPlus && !journeyIsPreview(app),
+      onPressed: () => openJourney(context, app),
     );
     return journey;
   }

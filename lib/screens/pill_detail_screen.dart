@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../books/player_room.dart';
 import '../l10n/l10n.dart';
 
 import '../models/pill.dart';
@@ -9,11 +10,11 @@ import '../widgets/card_note.dart';
 import '../widgets/reveal_body.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/card_edge.dart';
+import '../widgets/hard_ring.dart';
 import '../widgets/top_edge.dart' show SoftTop;
 import '../widgets/ui.dart';
 import '../data/topics.dart';
 import '../widgets/web/card_thumb.dart';
-import '../widgets/web/web_card_page.dart' show groundOf;
 import 'deck_viewer_screen.dart';
 import '../analytics.dart';
 
@@ -60,11 +61,15 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
   @override
   void initState() {
     super.initState();
+    // A card fills the screen: a book read aloud keeps its small player out
+    // of its way.
+    BookPlayerRoom.cardsOpened();
     _opened(widget.pill, swiped: false);
   }
 
   @override
   void dispose() {
+    BookPlayerRoom.cardsClosed();
     _pages.dispose();
     super.dispose();
   }
@@ -279,32 +284,40 @@ class _CardHead extends StatelessWidget {
             child: DecoratedBox(
               decoration: cardFace(
                 context,
-                groundOf(pill),
+                CardThumb.groundFor(pill, context.p),
                 radius: 30,
                 lift: 1,
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: AspectRatio(
-                  // The picture's own shape: the card whole.
-                  aspectRatio: 458 / 758,
-                  child: CardThumb(
-                    pill: pill,
-                    side: CardSide.front,
-                    large: true,
-                    // Where the picture will not come, the card's words,
-                    // its question at the head of its colour — a size
-                    // down where the reader's text is set so large that
-                    // they would run past the card's foot.
-                    fallback: LayoutBuilder(
-                      builder: (context, box) => ColoredBox(
-                        color: pill.color,
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.topCenter,
-                          child: SizedBox(
-                            width: box.maxWidth,
-                            child: _Words(pill: pill, face: false),
+              // A hard card's picture is the one taken ringed, in its ring.
+              child: _ringed(
+                context,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: AspectRatio(
+                    // The picture's own shape: the card whole.
+                    aspectRatio: 458 / 758,
+                    child: CardThumb(
+                      pill: pill,
+                      side: CardSide.front,
+                      large: true,
+                      // Where the picture will not come, the card's words,
+                      // its question at the head of its colour — a size
+                      // down where the reader's text is set so large that
+                      // they would run past the card's foot.
+                      fallback: LayoutBuilder(
+                        builder: (context, box) => ColoredBox(
+                          // A hard card's words are ringed, on the ring's
+                          // ground (_Words).
+                          color: HardRing.on(pill)
+                              ? HardRing.groundOf(context.p)
+                              : pill.color,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.topCenter,
+                            child: SizedBox(
+                              width: box.maxWidth,
+                              child: _Words(pill: pill, face: false),
+                            ),
                           ),
                         ),
                       ),
@@ -320,6 +333,17 @@ class _CardHead extends StatelessWidget {
       ],
     );
   }
+
+  /// [picture] in the card's ring, where it is read ringed.
+  Widget _ringed(BuildContext context, Widget picture) =>
+      switch (HardRing.ringOf(pill, context.p)) {
+        final Color ring => HardRingEdge(
+          colour: ring,
+          radius: 30,
+          child: picture,
+        ),
+        null => picture,
+      };
 }
 
 /// A card's words on its colour: its subject and its question, and what
@@ -336,23 +360,45 @@ class _Words extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color onCard = pill.ink;
+    // A hard card, read ringed: on the ring's ground, in its ink, its
+    // subject's name in the ring's colour and HARD after it (hard_ring.dart).
+    final Palette p = context.p;
+    final Color? ring = HardRing.ringOf(pill, p);
+    final Pill shown = ring == null ? pill : HardRing.dressed(pill, p);
+    final Color onCard = shown.ink;
+    final Widget subject = Text(
+      context.l10n.subjectOf(pill.topic).toUpperCase(),
+      style: AppText.label(
+        size: 10.5,
+        spacing: 1.4,
+        color: ring ?? onCard.withValues(alpha: 0.7),
+      ),
+    );
     return Container(
       padding: EdgeInsets.fromLTRB(26, 26, 26, foot == null ? 26 : 20),
       decoration: face
-          ? cardFace(context, pill.color, radius: 30, lift: 1)
+          ? cardFace(
+              context,
+              shown.color,
+              radius: 30,
+              lift: 1,
+              ring: ring,
+              ringWidth: HardRing.width,
+            )
           : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            context.l10n.subjectOf(pill.topic).toUpperCase(),
-            style: AppText.label(
-              size: 10.5,
-              spacing: 1.4,
-              color: onCard.withValues(alpha: 0.7),
+          if (ring == null)
+            subject
+          else
+            Row(
+              children: [
+                Flexible(child: subject),
+                const SizedBox(width: 9),
+                HardTag(accent: ring, ground: shown.color),
+              ],
             ),
-          ),
           const SizedBox(height: 18),
           Text(
             pill.question,
@@ -380,7 +426,8 @@ class _Open extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color ink = pill.ink;
+    // In the card's ink as it is drawn: a hard card's, ringed, the page's.
+    final Color ink = HardRing.on(pill) ? context.p.ink : pill.ink;
     return Container(
       height: 36,
       padding: const EdgeInsets.fromLTRB(11, 0, 14, 0),
@@ -428,8 +475,16 @@ class _Play extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color ground = groundOf(pill);
-    final Color ink = pill.web?.ground == null ? pill.ink : inkOn(ground);
+    // A hard card read ringed plays from the ground its picture was taken
+    // on, in the page's ink, inside its ring.
+    final Palette p = context.p;
+    final Color? ring = HardRing.ringOf(pill, p);
+    final Color ground = CardThumb.groundFor(pill, p);
+    final Color ink = ring != null
+        ? p.ink
+        : pill.web?.ground == null
+        ? pill.ink
+        : inkOn(ground);
     return Semantics(
       button: true,
       excludeSemantics: true,
@@ -443,6 +498,9 @@ class _Play extends StatelessWidget {
           decoration: BoxDecoration(
             color: ground,
             borderRadius: BorderRadius.circular(999),
+            border: ring == null
+                ? null
+                : Border.all(color: ring, width: HardRing.width),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

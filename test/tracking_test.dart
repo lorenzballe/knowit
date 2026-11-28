@@ -1165,7 +1165,8 @@ void main() {
       expect(isTestChannel('test_lab'), isTrue);
       expect(isTestChannel('debug'), isTrue);
       expect(isTestChannel('play'), isFalse);
-      expect(isTestChannel('testflight'), isFalse);
+      expect(isTestChannel('testflight'), isTrue);
+      expect(isTestChannel('app_store'), isFalse);
     });
 
     group('asking the phone', () {

@@ -130,6 +130,80 @@ void main() {
     expect(find.text('With Astute+'), findsNothing);
   });
 
+  test('a card keeps its video beside its source, read and written with it, '
+      'and only a secure address with a maker counts', () {
+    Pill withWatch(Object? watch) => cardFromJson({
+      'id': 'nature-watch',
+      'topic': 'nature',
+      'kind': 'read',
+      'difficulty': 'easy',
+      'question': 'Could half a mountain fall into the sea?',
+      'answer': 'Yes.',
+      'move': 'Look at the flank.',
+      'source': 'Urlaub et al., Science Advances, 2018',
+      'reference': 'doi:10.1126/sciadv.aat9700',
+      'watch': watch,
+    });
+    final Pill pill = withWatch({
+      'url': 'https://www.youtube.com/watch?v=cwdZkSbbYhw',
+      'by': 'Geopop (YouTube, 2018)',
+    });
+    expect(pill.watch?.by, 'Geopop (YouTube, 2018)');
+    expect(pill.reference, 'https://doi.org/10.1126/sciadv.aat9700');
+    expect(cardToJson(pill)['watch'], {
+      'url': 'https://www.youtube.com/watch?v=cwdZkSbbYhw',
+      'by': 'Geopop (YouTube, 2018)',
+    });
+    expect(cardFromJson(cardToJson(pill)).watch?.url, pill.watch?.url);
+    // Today's five are kept on the phone this way: a day opened again keeps
+    // the way to the original, not only its words.
+    expect(
+      cardFromJson(cardToJson(pill)).reference,
+      'https://doi.org/10.1126/sciadv.aat9700',
+    );
+    expect(withWatch(null).watch, isNull);
+    expect(cardToJson(withWatch(null)).containsKey('watch'), isFalse);
+    expect(withWatch({'url': 'http://x.org/v', 'by': 'X'}).watch, isNull);
+    expect(withWatch({'url': 'https://x.org/v', 'by': ' '}).watch, isNull);
+  });
+
+  testWidgets('a card with a video offers it as Watch more under the source, '
+      'named with who made it', (tester) async {
+    final Pill pill = cardFromJson({
+      ...cardToJson(_card()),
+      'watch': {
+        'url': 'https://www.youtube.com/watch?v=cwdZkSbbYhw',
+        'by': 'Geopop (YouTube, 2018)',
+      },
+    });
+    await _open(tester, await _app(plus: false), pill);
+    expect(find.byKey(const ValueKey('deeper-open-source')), findsOneWidget);
+    final Finder watch = find.byKey(const ValueKey('deeper-watch'));
+    expect(watch, findsOneWidget);
+    expect(
+      find.descendant(
+        of: watch,
+        matching: find.textContaining(
+          'Watch more  ·  Geopop (YouTube, 2018)',
+          findRichText: true,
+        ),
+      ),
+      findsOneWidget,
+    );
+    // Under the source's own way out, never in its place.
+    expect(
+      tester.getTopLeft(watch).dy,
+      greaterThan(
+        tester.getTopLeft(find.byKey(const ValueKey('deeper-open-source'))).dy,
+      ),
+    );
+  });
+
+  testWidgets('a card without a video shows no Watch more', (tester) async {
+    await _open(tester, await _app(plus: true), _card());
+    expect(find.byKey(const ValueKey('deeper-watch')), findsNothing);
+  });
+
   testWidgets('on the free plan, why it matters and the two views wait '
       'behind glass with the way through', (tester) async {
     await _open(tester, await _app(plus: false), _card());

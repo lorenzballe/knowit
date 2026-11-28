@@ -55,6 +55,10 @@ Map<String, Object?> pick(String id) => {
 /// keep it (PICTURES): bumped when the kit changes how every page is drawn.
 const String _pictures = '\n<!-- pictures 2 -->';
 
+/// The ring's edition, as the same two keep it (RINGED): bumped when a hard
+/// card's look ringed changes, so its ringed pictures are taken again.
+const String _ringed = '\n<!-- ringed 1 -->';
+
 void main() {
   setUp(() {
     PillBank.reset();
@@ -86,10 +90,15 @@ void main() {
               f.path,
       };
       final embedded = PillBank.embedded.cards.map((p) => p.id).toSet();
-      final File thumbs = File('web/cards/thumbs/index.json');
-      final Map<String, Object?> thumbsIndex = thumbs.existsSync()
-          ? jsonDecode(thumbs.readAsStringSync()) as Map<String, Object?>
-          : const {};
+      Map<String, Object?> index(String name) {
+        final File file = File('web/cards/thumbs/$name');
+        return file.existsSync()
+            ? jsonDecode(file.readAsStringSync()) as Map<String, Object?>
+            : const {};
+      }
+
+      final Map<String, Object?> thumbsIndex = index('index.json');
+      final Map<String, Object?> ringedIndex = index('ringed.json');
       expect(onDisk.keys.toSet(), embedded, reason: 'run tool/cards/bundle.py');
       for (final f in files) {
         final raw = jsonDecode(f.readAsStringSync()) as Map<String, Object?>;
@@ -101,17 +110,19 @@ void main() {
         // Word for word: an edit to a file that was not bundled is the
         // other way a phone and the bank could disagree.
         final id = raw['id'] as String;
-        // The bank keeps more than the phone reads: where the claim was
-        // checked stays with the file.
+        // The bank keeps more than the phone reads: when the claim was
+        // checked, and the passage it was checked against, stay with the
+        // file. The phone keeps the way to the source, as a link.
+        final String link = referenceLink(raw['reference']);
         raw.removeWhere(
           (k, _) =>
               k == 'reference' ||
               k == 'written' ||
               k == 'checked' ||
               k == 'disabled' ||
-              k == 'source_kind' ||
               k == 'quote',
         );
+        if (link.isNotEmpty) raw['reference'] = link;
         // A free card's page lives beside it and travels alone, published
         // word for word and named by the hash of its bytes.
         final Object? web = raw['web'];
@@ -132,10 +143,25 @@ void main() {
               .convert(utf8.encode(page + _pictures))
               .toString()
               .substring(0, 12);
+          // A hard card's taken ringed too, at night and on the day paper,
+          // under the ring's edition as well (RINGED).
+          final String ringed = sha256
+              .convert(utf8.encode(page + _pictures + _ringed))
+              .toString()
+              .substring(0, 12);
           if (thumbsIndex[id] == pictures) {
             web['thumbs'] = {
               'front': 'thumbs/$id-front.webp?v=$pictures',
               'back': 'thumbs/$id-back.webp?v=$pictures',
+              if (raw['difficulty'] == 'hard' && ringedIndex[id] == ringed)
+                for (final (String key, String look) in const [
+                  ('ringed', 'ringed'),
+                  ('ringed_day', 'ringed-day'),
+                ])
+                  key: {
+                    'front': 'thumbs/$id-$look-front.webp?v=$ringed',
+                    'back': 'thumbs/$id-$look-back.webp?v=$ringed',
+                  },
             };
           }
           expect(

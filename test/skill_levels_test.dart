@@ -117,7 +117,7 @@ void main() {
     const ValueKey<String> key = ValueKey('skill-mark-money');
     await card();
     await tester.pumpAndSettle();
-    final Rect face = tester.getRect(find.byType(PillCard));
+    final Rect face = tester.getRect(find.byType(PillCard).first);
     Rect mark = tester.getRect(find.byKey(key));
     // Where the heart's right side stands, 28 in, at the head's middle.
     expect(

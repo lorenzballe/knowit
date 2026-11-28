@@ -632,7 +632,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get manageSubscription => '구독 관리';
 
   @override
-  String get howPillsAreWritten => '카드가 만들어지는 방법';
+  String get howPillsAreWritten => '카드는 이렇게 씁니다';
 
   @override
   String get howTitle => '여기 있는 모든 카드는 AI 모델이 씁니다.';
@@ -641,7 +641,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get howIntro => '나중에 알게 되기보다 처음부터 말씀드리고 싶어요. 카드가 여러분에게 오기까지의 과정입니다.';
 
   @override
-  String get howStep1Title => '모델이 미리 씁니다';
+  String get howStep1Title => 'AI로 씁니다';
 
   @override
   String get howStep1Line =>
@@ -952,6 +952,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get reminderAskOther => '다른 시간';
 
   @override
+  String get reminderAskPick => '직접 선택';
+
+  @override
   String get reminderAskUsual => '평소에 읽는 시간';
 
   @override
@@ -1068,7 +1071,33 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get everythingIsInDrag => '모두 들어 있어요. 주제를 왼쪽으로 밀면 덜 보이고, 끝까지 밀면 빠집니다.';
+  String get everythingIsInDrag => '모두 들어 있어요. 주제를 탭하면 빠지고, 왼쪽으로 밀면 덜 보여요.';
+
+  @override
+  String get mixLeaveOut => '빼기';
+
+  @override
+  String get mixPutBack => '다시 넣기';
+
+  @override
+  String get lovesTitle => '좋아하는 세 가지를 골라요';
+
+  @override
+  String get lovesLine => '세 가지까지. 첫 며칠은 여기서 시작하고, 그 뒤에도 더 자주 나와요.';
+
+  @override
+  String lovesCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n / 3',
+      zero: '세 가지까지 탭하세요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lovesFull => '최대 세 가지예요. 하나를 탭해서 빼 주세요.';
 
   @override
   String get next => '다음';
@@ -1099,13 +1128,19 @@ class AppLocalizationsKo extends AppLocalizations {
   String get swipeToSeeMore => '밀어서 더 보기';
 
   @override
+  String get introPromiseTitle => '하루 다섯 장, 2분';
+
+  @override
+  String get introPromiseLine => '얼마나 확신하는지 말하고, 내가 아는 것을 얼마나 믿어도 될지 알아보세요.';
+
+  @override
   String get tagline => '왜 그런지 배우고, 내가 아는 것을 얼마나 믿어도 될지 알아보세요';
 
   @override
   String get introTopicsTitle => '스무 개 주제, 다섯 장의 카드';
 
   @override
-  String get introTopicsLine => '모델이 미리 쓰고, 한 장 한 장 출처를 밝힙니다.';
+  String get introTopicsLine => 'AI로 쓰고 검토한 뒤, 한 장 한 장 출처를 밝힙니다.';
 
   @override
   String get introQuestionTitle => '질문, 확신 정도, 그리고 이유';
@@ -1836,13 +1871,13 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => '오늘의 5문제';
+  String get fiveTitle => '오늘의 챌린지';
 
   @override
   String get fiveSame => '오늘은 모두 같은 5문제. 약 2분.';
 
   @override
-  String get fiveDone => '오늘의 5문제 · 완료';
+  String get fiveDone => '오늘의 챌린지 · 완료';
 
   @override
   String dailyOf(int max) {
@@ -1929,7 +1964,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · 오늘의 5문제 · $date';
+    return 'Astute · 오늘의 챌린지 · $date';
   }
 
   @override
@@ -1942,7 +1977,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get fiveChallengeInvite =>
-      'Astute 오늘의 5문제: 모두에게 같은 다섯 문제. 몇 개나 맞힐 수 있어?';
+      'Astute 오늘의 챌린지: 모두에게 같은 다섯 문제. 몇 개나 맞힐 수 있어?';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -2207,6 +2242,26 @@ class AppLocalizationsKo extends AppLocalizations {
       'lead': '리더십',
       'culture': '일반 상식',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': '건전한 논증과 속이는 논증을 가려낸다.',
+      'decisions': '감이 아니라 위험과 확률로 고른다.',
+      'money': '가격, 이자, 할인: 돈이 어디로 가는지.',
+      'numbers': '속지 않고 퍼센트와 그래프를 읽는다.',
+      'talk': '말로도 글로도 이해받는다.',
+      'persuade': '설득하고, 설득당할 때를 알아챈다.',
+      'people': '사람들이 왜 그렇게 하는지.',
+      'fakes': '가짜 뉴스, 조작된 사진, 부풀린 연구를 알아본다.',
+      'science': '믿기 전에 생각을 시험한다.',
+      'focus': '중요한 곳에 더 오래 집중한다.',
+      'lead': '팀을 이끌고 모두를 위해 결정한다.',
+      'culture': '역사, 과학, 예술: 모두가 인용하는 것들.',
+      'other': '',
     });
     return '$_temp0';
   }
@@ -2753,6 +2808,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get consentLine => '앱 사용 방식을 공유해요. 이름, 이메일, 쓴 내용은 보내지 않아요.';
 
   @override
+  String get consentCardLine => '앱이 어떻게 쓰이는지 세어요. 광고는 없고, 이름은 절대 쓰지 않아요.';
+
+  @override
   String get consentNo => '아니요, 괜찮아요';
 
   @override
@@ -2771,6 +2829,16 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get genresLine => '장르를 탭하면 건너뜁니다. 길게 누르면 안의 작은 주제들이 바로 아래에 열립니다.';
+
+  @override
+  String get partsOfferLine =>
+      '며칠 읽어 보니 카드가 어떤지 알겠죠. 주제마다 원하는 부분만 남기고 나머지는 빼세요.';
+
+  @override
+  String get partsOfferChoose => '부분 고르기';
+
+  @override
+  String get partsOfferNotNow => '나중에';
 
   @override
   String get insideGenre => '이 안에';
@@ -6154,7 +6222,7 @@ class AppLocalizationsKo extends AppLocalizations {
       other: '$off포인트 차이였어',
       zero: '정확히 맞혔어',
     );
-    return '오늘의 Astute 도전: $_temp0. 더 잘할 수 있어?';
+    return 'Astute 오늘의 베팅: $_temp0. 더 잘할 수 있어?';
   }
 
   @override
@@ -6984,6 +7052,113 @@ class AppLocalizationsKo extends AppLocalizations {
   String get listenNextCard => '다음 카드';
 
   @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes분 만에 읽기',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => '이어서 읽기';
+
+  @override
+  String get summaryAgain => '다시 읽기';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return '$of개 중 $part번째 파트';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n분 남음',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return '듣기 · $minutes분';
+  }
+
+  @override
+  String get summaryPause => '일시정지';
+
+  @override
+  String get summaryResume => '이어서 듣기';
+
+  @override
+  String get summaryFreeNote => '첫 파트는 무료, 나머지는 Astute+로.';
+
+  @override
+  String get summaryTitle => '요약';
+
+  @override
+  String get summaryNowPlaying => '재생 중';
+
+  @override
+  String get summaryNextPart => '다음 파트';
+
+  @override
+  String get summaryFinish => '다 읽기';
+
+  @override
+  String get summaryContents => '목차';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return '$title을(를) 다 읽었어요';
+  }
+
+  @override
+  String get summaryDoneLine => '이 책의 카드로 아이디어를 오래 기억하세요.';
+
+  @override
+  String get summaryToCards => '카드로 보는 아이디어';
+
+  @override
+  String get summaryBackToBook => '책으로 돌아가기';
+
+  @override
+  String get summaryGateTitle => '요약의 나머지는 Astute+에서';
+
+  @override
+  String summaryGateLine(int parts) {
+    return '모든 책의 $parts개 파트를 읽고 들을 수 있어요. 이번 주의 책은 누구나 무료예요.';
+  }
+
+  @override
+  String get summaryNeedsNetwork => '이 요약은 한 번 인터넷 연결이 필요해요.';
+
+  @override
+  String get bookAudioBack => '15초 뒤로';
+
+  @override
+  String get bookAudioWaiting => '다음 파트를 불러오는 중…';
+
+  @override
+  String get bookAudioDone => '끝까지 들었어요.';
+
+  @override
+  String get bookAudioOfferTitle => '책의 나머지를 들어 보세요';
+
+  @override
+  String get bookAudioOfferLine =>
+      'Astute+와 함께라면 모든 요약을 끝까지 들려드려요. 화면이 잠겨 있어도요.';
+
+  @override
+  String get bookAudioStop => '듣기 중지';
+
+  @override
+  String get bookAudioOpen => '플레이어 열기';
+
+  @override
   String get inviteSection => '친구';
 
   @override
@@ -7096,4 +7271,393 @@ class AppLocalizationsKo extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => '첫날을 마쳤어요';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return '$sure% 확신했고, $total개 중 $right개를 맞혔어요.';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return '$total개 중 $right개를 맞혔어요.';
+  }
+
+  @override
+  String get firstDayRemind => '내일 알려 주세요';
+
+  @override
+  String firstDayReminded(String time) {
+    return '내일 $time에 알려 드릴게요.';
+  }
+
+  @override
+  String get earlyReadingTag => '잠정 결과';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n번 답했고, 모두 맞았어요',
+      two: '두 번 답했고, 두 번 다 맞았어요',
+      one: '한 번 답했고, 맞았어요',
+    );
+    return '지금까지: $level%라고 $_temp0.';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n번 답했고, 모두 틀렸어요',
+      two: '두 번 답했고, 두 번 다 틀렸어요',
+      one: '한 번 답했고, 틀렸어요',
+    );
+    return '지금까지: $level%라고 $_temp0.';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    return '지금까지: $level%라고 $n번 답했고, 그중 $right번 맞았어요.';
+  }
+
+  @override
+  String get journeyClearEyebrow => '이번 주 공개';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return '나의 사각지대: $subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return '나의 강점: $subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return '이 분야 최근 $n번의 답 중 정답률 $pct.';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days일 뒤에도',
+      two: '이틀 뒤에도',
+      one: '하루 뒤에도',
+    );
+    return '$_temp0 $of장 중 $right장을 기억해요.';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks주 뒤에도',
+      one: '일주일 뒤에도',
+    );
+    return '$_temp0 $of장 중 $right장을 기억해요.';
+  }
+
+  @override
+  String get journeyClearBlindNotYet =>
+      '두 분야에서 각각 6번 답하면, 가장 많이 틀리는 분야가 여기 나와요.';
+
+  @override
+  String get journeyClearStrongNotYet => '한 분야에서 6번 답하면, 가장 강한 분야가 여기 나와요.';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '확신 정도를 함께 고른 답이 $n개 더 있으면, 여기 잠정 결과가 나와요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      '카드는 2일, 7일, 21일 뒤에 다시 와요. 몇 장을 아직 기억하는지 여기 나와요.';
+
+  @override
+  String get journeyPreviewDoor => '매주 다른 수치 하나. 나머지는 Astute+로 열려요.';
+
+  @override
+  String weekSheetOf(String date) {
+    return '$date부터 한 주';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$n개 중 $right개';
+  }
+
+  @override
+  String get weekSheetRightLabel => '정답';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '답 $n개 기준',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => '너무 확신하는 분야';
+
+  @override
+  String get weekSheetMemoryLabel => '아직 기억하는 것';
+
+  @override
+  String get weekSheetAccount => '어떤 휴대폰에서도 이번 주를 간직하세요';
+
+  @override
+  String giftTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days일 동안 Astute+는 당신의 것이에요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftMark => '당신의 것';
+
+  @override
+  String get giftLine => '카드 등록 없이, 해지할 것도 없어요.';
+
+  @override
+  String get giftStepEndLine => '무료 요금제로 돌아가요. 결제되는 건 없어요.';
+
+  @override
+  String get giftStart => '읽기 시작하기';
+
+  @override
+  String giftEndsSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+는 $days일 더 당신의 것이에요.',
+      one: '오늘이 Astute+ 마지막 날이에요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String giftPlanUntil(String date) {
+    return 'Astute+ · $date까지 선물';
+  }
+
+  @override
+  String get giftEndEyebrow => '선물 기간이 끝났어요';
+
+  @override
+  String giftEndTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+와 함께한 $days일.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftEndDaysLabel => '읽은 날';
+
+  @override
+  String giftEndBackRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '틀렸다가 다시 맞힘',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossTitle => '오늘부터 무료 요금제에서는';
+
+  @override
+  String giftLossRandom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '다섯 장 중 $n장은 무작위로 와요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossMisses => '틀린 카드는 더 이상 다섯 장에 돌아오지 않고, 탐색에서 기다려요.';
+
+  @override
+  String get giftLossAsk => '카드마다 쓰던 어시스턴트는 Astute+에만 있어요.';
+
+  @override
+  String get giftKeep => 'Astute+ 계속 쓰기';
+
+  @override
+  String sixthRandomToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 다섯 장 중 $n장은 무작위였어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTodayPlus => 'Astute+였다면 다섯 장 모두 당신을 위해 골랐을 거예요.';
+
+  @override
+  String sixthRandomTomorrow(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '내일 다섯 장 중 $n장은 무작위로 와요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTomorrowPlus =>
+      'Astute+라면 다섯 장 모두 당신을 위해: 당신의 믹스에서, 당신의 수준으로.';
+
+  @override
+  String sixthSureWrong(String sure) {
+    return '오늘 $sure 확신했던 카드를 틀렸어요.';
+  }
+
+  @override
+  String get sixthSureWrongPlus => 'Astute+라면 그 카드가 다섯 장에 다시 와요.';
+
+  @override
+  String sixthMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '틀렸던 카드 $n장이 돌아와 탐색에서 기다리고 있어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthMissesPlus => 'Astute+라면 틀린 카드가 하루 한 장씩 다섯 장에 돌아와요.';
+
+  @override
+  String sixthLevel(String subject, int right, int of) {
+    return '$subject에서는 $of개 중 $right개를 맞히고 있어요.';
+  }
+
+  @override
+  String sixthLevelPlus(String subject) {
+    return 'Astute+라면 $subject 카드가 한 단계 올라가요.';
+  }
+
+  @override
+  String get paywallScience =>
+      '보정은 측정할 수 있고, 피드백으로 훈련할 수 있어요. Astute는 당신의 보정을 측정해요.';
+
+  @override
+  String get paywallScienceSource => '예측 연구: Tetlock, Mellers';
+
+  @override
+  String get paywallWarnBefore => '결제 이틀 전에 알려 드려요';
+
+  @override
+  String get plusInTheAppAndroid =>
+      'Astute+는 앱에서 이용할 수 있어요. Android에 Astute를 받아 무료 체험을 시작하세요. iPhone 버전은 곧 나와요.';
+
+  @override
+  String get exploreCapTitle => '오늘의 탐색은 여기까지예요.';
+
+  @override
+  String exploreCapLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '다섯 장 외에 $n장을 읽었어요. 내일 또 있어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreCapPlus => 'Astute+라면 탐색에 끝이 없어요.';
+
+  @override
+  String todayLineSure(int right, int asked, int sure) {
+    return '어제는 $asked개 중 $right개, 확신은 $sure%였어요.';
+  }
+
+  @override
+  String todayLineRight(int right, int asked) {
+    return '어제는 $asked개 중 $right개.';
+  }
+
+  @override
+  String get todayLineRead => '어제는 다섯 장을 모두 읽었어요.';
+
+  @override
+  String todayLineFirstSubject(String subject) {
+    return '오늘은 처음으로 $subject 카드가 있어요.';
+  }
+
+  @override
+  String freezeSavedLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days일을 건너뛰었지만 연속 기록은 안전해요.',
+      one: '어제는 건너뛰었지만 연속 기록은 안전해요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String freezeCoversLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '하루를 건너뛰어도 연속 기록은 이어져요. 프리즈가 $n개 있어요.',
+      one: '하루를 건너뛰어도 연속 기록은 이어져요. 프리즈가 1개 있어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentEyebrow => '연속';
+
+  @override
+  String streakMomentUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '일',
+      one: '일',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentWeek => '꼬박 일주일. 내일은 다섯 장 중 한 장이 더 당신을 위해 골라져요.';
+
+  @override
+  String streakMomentNext(int next) {
+    return '내일이면 $next일이에요.';
+  }
+
+  @override
+  String get deeperWatchMore => '영상으로 보기';
 }

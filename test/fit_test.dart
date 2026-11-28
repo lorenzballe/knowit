@@ -26,6 +26,7 @@ import 'package:astuto/screens/genres_screen.dart';
 import 'package:astuto/screens/how_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/journey_screen.dart';
+import 'package:astuto/screens/loves_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/screens/path_screen.dart';
 import 'package:astuto/screens/paywall_screen.dart';
@@ -262,8 +263,9 @@ void main() {
         'archive': ArchiveScreen(app: app, onBack: () {}),
         'how': const HowScreen(),
         'intro': IntroScreen(onContinue: () {}, onSignIn: (_) async => false),
-        'mix': MixScreen(onDone: (_) {}, onSkip: () {}),
-        'genres': GenresScreen(app: app, onDone: (_, _) {}, onSkip: () {}),
+        'mix': MixScreen(onDone: (_) {}),
+        'genres': GenresScreen(app: app, onDone: (_, _) {}, onBack: () {}),
+        'loves': LovesScreen(mix: const {}, onDone: (_) {}),
         'comeback': ComebackScreen(app: app, onContinue: () {}),
         'topics': TopicsScreen(initial: app.pickedTopics, onDone: (_) {}),
         'detail-debate': PillDetailScreen(pill: debate, app: app),
@@ -315,7 +317,8 @@ void main() {
         }
       }
 
-      // The day itself, in the app: reading, the sixth card, the shelf.
+      // The day itself, in the app: reading, the first day's celebration,
+      // the sixth card, the shelf.
       tester.platformDispatcher.localeTestValue = locale;
       tester.platformDispatcher.localesTestValue = [locale];
       SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
@@ -326,6 +329,10 @@ void main() {
         await tester.flingFrom(deckTop(tester), const Offset(-320, 0), 900);
         await settle(tester);
       }
+      await settle(tester);
+      note(locale, 'first day', tester);
+      await tester.tap(find.byKey(const ValueKey('first-day-close')));
+      await settle(tester);
       note(locale, 'sixth card', tester);
       await tester.flingFrom(deckTop(tester), const Offset(-320, 0), 900);
       await settle(tester);

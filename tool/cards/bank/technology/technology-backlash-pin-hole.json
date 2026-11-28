@@ -30,7 +30,13 @@
     "touch": "drags",
     "label": "A hand holds a red handle whose pin sits in a hole in a pointer arm, with some give, shown big in a round zoom; the arm hangs from a pivot over a scale. Hold to push and let go to pull back, then pick what the pointer does first: moves at once, waits then follows, or jumps past; then say how sure you are."
   },
-  "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
-  "reference": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=320s",
-  "written": "2026-11-07"
+  "source": "L. L. Howell, Compliant Mechanisms, Wiley, 2001, chapter 1",
+  "source_kind": "book",
+  "reference": "https://catalogimages.wiley.com/images/db/pdf/047138478X.pdf",
+  "watch": {
+    "url": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=320s",
+    "by": "Veritasium (YouTube, 2019)"
+  },
+  "written": "2026-11-07",
+  "checked": "2026-11-28"
 }

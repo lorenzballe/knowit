@@ -22,6 +22,7 @@ import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/utils/share_link.dart';
 import 'package:astuto/utils/share_text.dart';
+import 'package:astuto/widgets/flip_card.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
@@ -130,13 +131,25 @@ Future<void> _swipeCardAway(WidgetTester tester) async {
   await _settle(tester);
 }
 
-/// Reads the day through: the five, and on the free plan the card after
-/// them that offers the rest, thrown like the rest.
+/// Reads the day through: the five; on a reader's first day the screen that
+/// celebrates it, closed (lib/widgets/first_day.dart); and on the free plan
+/// the card after them that offers the rest, thrown like the rest.
 Future<void> _finishDay(WidgetTester tester) async {
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 7; i++) {
+    await _closeFirstDay(tester);
     if (find.byType(PillCardStack).evaluate().isEmpty) break;
     await _swipeCardAway(tester);
   }
+  await _closeFirstDay(tester);
+}
+
+/// Closes the first day's celebration, where it has risen over the table.
+Future<void> _closeFirstDay(WidgetTester tester) async {
+  await _settle(tester);
+  final Finder close = find.byKey(const ValueKey('first-day-close'));
+  if (close.evaluate().isEmpty) return;
+  await tester.tap(close);
+  await _settle(tester);
 }
 
 /// The profile's own list. The tabs sit in a page view, which is a
@@ -354,16 +367,22 @@ void main() {
       Navigator.of(tester.element(find.byType(DayPicture))).pop();
       await _settle(tester);
 
-      // At the last card on the shelf, the one that sells, it is still the
-      // row under the shelf: nothing of it lies on the offer.
+      // At the last card on the shelf it is still the row under the shelf:
+      // nothing of it lies on the card. The card after the fifth was dealt
+      // after the five this evening, so the shelf ends on the fifth and the
+      // offer is not met there again.
       for (var i = 0; i < 5; i++) {
         await tester.drag(find.byType(TodayDoneView), const Offset(-200, 0));
         await _settle(tester);
       }
-      final Finder offer = find.byKey(const ValueKey('shelf-magic'));
-      expect(offer, findsOneWidget);
+      expect(find.byKey(const ValueKey('shelf-magic')), findsNothing);
+      final Finder last = find.descendant(
+        of: find.byType(TodayDoneView),
+        matching: find.byType(FlipCard),
+      );
+      expect(last, findsOneWidget);
       expect(send, findsOneWidget);
-      expect(tester.getRect(offer).overlaps(tester.getRect(send)), isFalse);
+      expect(tester.getRect(last).overlaps(tester.getRect(send)), isFalse);
     });
 
     testWidgets('as a story too, the whole sheet is on the screen, with a '
@@ -697,7 +716,7 @@ void main() {
   });
 
   group('The intro leads with reading, and a sign-in never fails silently', () {
-    testWidgets('Start reading is the one button, and goes where Skip goes', (
+    testWidgets('Start reading is the one way on: there is no Skip beside it', (
       tester,
     ) async {
       final said = _listen();
@@ -733,18 +752,15 @@ void main() {
       // Nothing was signed in to, and nothing says it was tried.
       expect(find.byType(SnackBar), findsNothing);
 
-      // The corner goes the same way, and says it was the corner.
-      await tester.tap(find.text('Skip'));
-      await _settle(tester);
-      expect(continued, 2);
-      expect(said.of('intro skipped').last['by'], 'corner');
+      // No corner doing what the button does: one way on.
+      expect(find.text('Skip'), findsNothing);
 
       // The quiet line asks for a sign-in; one that does not end in an
       // account leaves the reader where they were.
       await tester.tap(find.byKey(const ValueKey('intro-sign-in')));
       await _settle(tester);
       expect(asked, 1);
-      expect(continued, 2);
+      expect(continued, 1);
     });
 
     testWidgets('in the app it lands on the subjects', (tester) async {

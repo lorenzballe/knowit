@@ -61,7 +61,6 @@ import 'aim_picker.dart' show AimRows;
 import 'area_marks.dart';
 import 'chunky.dart';
 import 'fit_text.dart';
-import 'premium.dart';
 import 'training.dart' show ProfileTraining;
 import 'ui.dart' show BackCircle, Eyebrow;
 
@@ -74,7 +73,7 @@ LearnLook get learnLook => DebugLooks.learnPicked;
 /// as it ships; in E the week's one; none in the other looks, where no card
 /// carries a skill's mark.
 List<String> markedSkills(AppState app) => switch (learnLook) {
-  LearnLook.today => app.skills,
+  LearnLook.today || LearnLook.mix => app.skills,
   LearnLook.weekly => [weekFocusOf(app).skill.name],
   _ => const [],
 };
@@ -83,7 +82,9 @@ List<String> markedSkills(AppState app) => switch (learnLook) {
 /// picked, as it ships; none in the other looks, where the answer moves the
 /// Astute score, the one score they keep.
 List<String> scoredSkills(AppState app) =>
-    learnLook == LearnLook.today ? app.skills : const [];
+    learnLook == LearnLook.today || learnLook == LearnLook.mix
+    ? app.skills
+    : const [];
 
 /// Whether a card dealt for the reader's goal keeps quiet about it under
 /// its head: as it ships and in E, where a skill's mark says what the card
@@ -91,7 +92,7 @@ List<String> scoredSkills(AppState app) =>
 /// score or the answers. B and D, the looks of the aim, say it in words:
 /// "For your goal: Money and shopping".
 bool goalUnsaid(AppState app, {required bool marked}) => switch (learnLook) {
-  LearnLook.today || LearnLook.weekly => marked,
+  LearnLook.today || LearnLook.mix || LearnLook.weekly => marked,
   LearnLook.aim || LearnLook.aimProfile => false,
   LearnLook.score || LearnLook.profile => true,
 };
@@ -100,7 +101,10 @@ bool goalUnsaid(AppState app, {required bool marked}) => switch (learnLook) {
 /// end of the first run (lib/main.dart): B, D and E.
 bool get learnAsksAim => switch (learnLook) {
   LearnLook.aim || LearnLook.aimProfile || LearnLook.weekly => true,
-  LearnLook.today || LearnLook.score || LearnLook.profile => false,
+  LearnLook.today ||
+  LearnLook.mix ||
+  LearnLook.score ||
+  LearnLook.profile => false,
 };
 
 /// Capitals, with Turkish's dotted capital I.
@@ -283,7 +287,7 @@ class LearnProfileBox extends StatelessWidget {
     valueListenable: DebugLooks.learn,
     builder: (context, _, _) {
       final Widget? box = switch (learnLook) {
-        LearnLook.today => ProfileTraining(app: app),
+        LearnLook.today || LearnLook.mix => ProfileTraining(app: app),
         // The question over it is the whole of A's and B's profile.
         LearnLook.score || LearnLook.aim => null,
         LearnLook.profile => StrengthsBox(app: app),
@@ -296,20 +300,10 @@ class LearnProfileBox extends StatelessWidget {
   );
 }
 
-/// Opens Your journey: on the free plan through its own door, the plans.
-void _openJourney(BuildContext context, AppState app) => requirePlus(
-  context,
-  app,
-  () => Navigator.of(context).push(
-    MaterialPageRoute<void>(
-      builder: (routeContext) => JourneyScreen(
-        app: app,
-        onBack: () => Navigator.of(routeContext).pop(),
-      ),
-    ),
-  ),
-  source: 'journey',
-);
+/// Opens Your journey: on the free plan the preview where the server has
+/// it on, or the plans on the journey's own door (openJourney).
+void _openJourney(BuildContext context, AppState app) =>
+    openJourney(context, app);
 
 // ── B · The aim ───────────────────────────────────────────────────────────
 

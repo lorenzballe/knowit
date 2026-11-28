@@ -184,6 +184,35 @@ void main() {
       expect(app.pickedTopics.contains('thinking'), isTrue);
       expect(app.topicWeights.containsKey('music'), isFalse);
     });
+
+    testWidgets('a tap takes a subject out, as on the first run, and a second '
+        'puts it back where it stood', (tester) async {
+      final AppState app = await readyApp({
+        'knowit.topicWeights': jsonEncode({
+          for (final s in kMixSubjects) s.key: s.key == 'music' ? 0.6 : 1.0,
+        }),
+      });
+      await _pump(
+        tester,
+        TuneScreen(app: app, picked: app.pickedTopics),
+        size: const Size(402, 1400),
+      );
+      final Finder music = find.byKey(const ValueKey('tune-music'));
+      final int stood = _bar(tester, 'music');
+      expect(stood, greaterThan(0));
+      await tester.tap(music);
+      await tester.pump(const Duration(milliseconds: 600));
+      expect(_bar(tester, 'music'), 0);
+      await tester.tap(music);
+      await tester.pump(const Duration(milliseconds: 600));
+      expect(_bar(tester, 'music'), stood);
+      // Out again, and saved: out of the mix.
+      await tester.tap(music);
+      await tester.pump(const Duration(milliseconds: 600));
+      await _save(tester);
+      expect(app.pickedTopics.contains('music'), isFalse);
+      expect(app.topicWeights.containsKey('music'), isFalse);
+    });
   });
 
   group('One page, and the hint that a part opens', () {

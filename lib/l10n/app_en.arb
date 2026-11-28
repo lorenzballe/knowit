@@ -623,10 +623,10 @@
   "description": "Profile: the heading over How cards are written and Usage data."
  },
  "manageSubscription": "Manage subscription",
- "howPillsAreWritten": "How cards are written",
+ "howPillsAreWritten": "How we write the cards",
  "howTitle": "Every card here is written by an AI model.",
  "howIntro": "We'd rather say it up front than have you find out. Here is how a card reaches you.",
- "howStep1Title": "Written ahead, by a model",
+ "howStep1Title": "Written with AI",
  "howStep1Line": "Each card is drafted to one brief: a question worth asking, an answer that says why, and one move you can use again.",
  "howStep2Title": "Sourced, then read by a critic",
  "@howStep2Title": {
@@ -920,6 +920,10 @@
  "@reminderAskOther": {
   "description": "A choice on the reminder sheet that opens a clock, to pick any other time."
  },
+ "reminderAskPick": "You choose",
+ "@reminderAskPick": {
+  "description": "On the reminder sheet, under «Another time», where the time goes until the reader has picked one of their own: a tap opens the phone's clock. A couple of words."
+ },
  "reminderAskUsual": "When you usually read",
  "@reminderAskUsual": {
   "description": "A note under the time on the reminder sheet that the sheet started on, because the reader tends to start reading then."
@@ -1073,7 +1077,36 @@
    }
   }
  },
- "everythingIsInDrag": "Everything is in. Slide a subject left to see less of it, or all the way to drop it.",
+ "everythingIsInDrag": "Everything is in. Tap a subject to leave it out, or slide it left to see less of it.",
+ "mixLeaveOut": "Leave it out",
+ "@mixLeaveOut": {
+  "description": "Read aloud by a screen reader on a subject of Your mix that is in: what a tap does. A verb, two words at most."
+ },
+ "mixPutBack": "Put it back",
+ "@mixPutBack": {
+  "description": "Read aloud by a screen reader on a subject of Your mix that is out: what a tap does. A verb, two or three words."
+ },
+ "lovesTitle": "Pick the three you love",
+ "@lovesTitle": {
+  "description": "The first run's step after Your mix: the title over the subjects, asking for up to three the reader loves. The one question asked in the positive."
+ },
+ "lovesLine": "Up to three. Your first days open on them, and after that they come up more often.",
+ "@lovesLine": {
+  "description": "Under lovesTitle: how many, and what the answer does — the first days open on them, and they come up more often after."
+ },
+ "lovesCount": "{n, plural, =0{Tap up to three} other{{n} of 3}}",
+ "@lovesCount": {
+  "description": "Above the button on the loves step: how many of the three are picked, or, with none, what to do. Short: one line.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "lovesFull": "Three at most: tap one to let it go.",
+ "@lovesFull": {
+  "description": "On the loves step, said for a moment in place of lovesCount when a fourth subject is tapped. One line."
+ },
  "next": "Next",
  "whatShouldWeTalkAbout": "What should we talk about?",
  "fivePillsADayPick": "Five cards a day, new every morning. Pick the topics you want in the mix — you can change them later.",
@@ -1102,9 +1135,17 @@
   }
  },
  "swipeToSeeMore": "Swipe to see more",
+ "introPromiseTitle": "Five cards a day, two minutes",
+ "@introPromiseTitle": {
+  "description": "The first page of the intro, under a real card's question: the promise in plain words, its first half. Two lines at most; no full stop, like the other scenes' titles. Words that belong together are joined by a no-break space ( ), so the two lines break between the phrases and never inside one."
+ },
+ "introPromiseLine": "Say how sure you are, and find out how far to trust what you know.",
+ "@introPromiseLine": {
+  "description": "The first page of the intro, under introPromiseTitle: the rest of the promise, plainly. Two lines on a phone."
+ },
  "tagline": "Learn the why behind things, and how far to trust what you know",
  "introTopicsTitle": "Twenty topics, five cards",
- "introTopicsLine": "Written ahead by a model, and each one names its source.",
+ "introTopicsLine": "Written with AI, then checked, and each one names its source.",
  "introQuestionTitle": "A question, how sure, then why",
  "introQuestionLine": "Say how sure you are first. In time you see what your “sure” is worth.",
  "introMixTitle": "You choose the mix",
@@ -1148,7 +1189,7 @@
  "continueWithGoogle": "Continue with Google",
  "startReading": "Start reading",
  "@startReading": {
-  "description": "The intro's one big button: into the app with no account."
+  "description": "The intro's one button, and the last step's of the first run: into the app with no account."
  },
  "haveAnAccount": "Already have an account?",
  "@haveAnAccount": {
@@ -1969,15 +2010,15 @@
    }
   }
  },
- "fiveTitle": "Today's five",
+ "fiveTitle": "Today's challenge",
  "@fiveTitle": {
-  "description": "Today's five: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short."
+  "description": "Today's challenge: five questions from five subjects at the top of Explore, the same for everyone that day. A name, short, and never the words the reader's own five cards go by (\"Today's five\", Today), so the two are never taken for each other."
  },
  "fiveSame": "The same five for everyone today. About two minutes.",
  "@fiveSame": {
   "description": "Under the Lock in button of today's five."
  },
- "fiveDone": "Today's five · done",
+ "fiveDone": "Today's challenge · done",
  "@fiveDone": {
   "description": "Head of the result card of today's five."
  },
@@ -2105,7 +2146,7 @@
    }
   }
  },
- "fiveShareHead": "Astute · Today's five · {date}",
+ "fiveShareHead": "Astute · Today's challenge · {date}",
  "@fiveShareHead": {
   "description": "First line of the message today's five is sent in.",
   "placeholders": {
@@ -2127,7 +2168,7 @@
  "@fiveChallengeAll": {
   "description": "Challenge a friend, from today's five, when the reader got all five right: the line sent before the link to the site, where the friend plays the same five questions. Asks the friend to do as well. Plain, never a boast or a cheer."
  },
- "fiveChallengeInvite": "Today's five on Astute: the same five questions for everyone. How many can you get?",
+ "fiveChallengeInvite": "Today's challenge on Astute: the same five questions for everyone. How many can you get?",
  "@fiveChallengeInvite": {
   "description": "Challenge a friend, before the reader has played today's five: the line sent before the link to the site, where the friend plays the five questions that are the same for everyone today."
  },
@@ -2483,6 +2524,15 @@
  "skillName": "{key, select, critical{Critical thinking} decisions{Better decisions} money{Money and saving} numbers{Numbers and statistics} talk{Communication} persuade{Persuasion} people{Understanding people} fakes{Spotting fakes} science{Thinking like a scientist} focus{Focus} lead{Leadership} culture{General knowledge} other{{key}}}",
  "@skillName": {
   "description": "A skill the reader may want to learn, by its key. Short: two of them share a row of tiles.",
+  "placeholders": {
+   "key": {
+    "type": "String"
+   }
+  }
+ },
+ "skillLine": "{key, select, critical{Telling a sound argument from a slippery one.} decisions{Choosing with odds and risks, not gut feel.} money{Prices, interest, offers: where your money goes.} numbers{Reading percentages and charts without being fooled.} talk{Being understood, out loud and in writing.} persuade{Convincing others, and noticing when you’re being convinced.} people{Why people do what they do.} fakes{Spotting fake news, doctored photos, inflated studies.} science{Testing an idea before believing it.} focus{Keeping your attention where it counts, for longer.} lead{Leading a group and deciding for everyone.} culture{History, science, art: the things everyone quotes.} other{}}",
+ "@skillLine": {
+  "description": "What a skill covers, in one short line, under its name on What to learn's sheet.",
   "placeholders": {
    "key": {
     "type": "String"
@@ -3066,11 +3116,15 @@
  "usageOff": "Nothing more is measured.",
  "consentTitle": "Help make Astute better?",
  "@consentTitle": {
-  "description": "The question asked on the intro, and as a sheet once after the first finished day, before anything is measured: may Astute measure how the app is used?"
+  "description": "The question about usage data, asked on a calm card on the first finished day's shelf, after the day's celebration and the reminder, before anything is measured: may Astute measure how the app is used? It stays until answered."
  },
  "consentLine": "Share how you use the app — never your name, your email or what you write.",
  "@consentLine": {
-  "description": "Under consentTitle on the intro, in one breath with it: what would be shared, and what never is. Short: two lines on a small phone, so the intro keeps its picture."
+  "description": "Profile's Usage data, and builds before this one: what would be shared, and what never is."
+ },
+ "consentCardLine": "We count how the app is used, with no advertising and never your name.",
+ "@consentCardLine": {
+  "description": "On the card that asks about usage data on the first finished day's shelf, under consentTitle: what a yes lets the app do, and what it never does. True to the privacy policy: PostHog keeps a short profile of counts under a random id, so never promise 'no profile'. One sentence."
  },
  "consentNo": "No, thanks",
  "@consentNo": {
@@ -3082,7 +3136,7 @@
  },
  "consentChangeLater": "You can change this any time in {profile}, under {setting}.",
  "@consentChangeLater": {
-  "description": "The foot of the consent sheet: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).",
+  "description": "The foot of the card that asks about usage data: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).",
   "placeholders": {
    "profile": {
     "type": "String"
@@ -3095,9 +3149,21 @@
  "yourMix": "Your mix",
  "genresTitle": "Which parts?",
  "@genresTitle": {
-  "description": "The title of the onboarding step after the mix, where the reader picks which genres of each subject they want."
+  "description": "The title of Which parts: the page where the reader picks which genres of each subject they want, offered once on the shelf from the third finished day, and over the offer itself."
  },
  "genresLine": "Tap a genre to skip it. Hold one and the smaller topics inside open right below.",
+ "partsOfferLine": "A few days in, you know the cards. Inside each subject, keep the parts you want and leave the rest.",
+ "@partsOfferLine": {
+  "description": "On the finished day's shelf, once, from the third finished day: under genresTitle, why Which parts is offered now and what it does. Two short sentences."
+ },
+ "partsOfferChoose": "Choose the parts",
+ "@partsOfferChoose": {
+  "description": "The offer of Which parts on the shelf: its button, which opens the page. Short."
+ },
+ "partsOfferNotNow": "Not now",
+ "@partsOfferNotNow": {
+  "description": "The offer of Which parts on the shelf: the quiet way to let it go. It is not offered again."
+ },
  "insideGenre": "Inside",
  "nOfSixOn": "{n} of {total} on",
  "@nOfSixOn": {
@@ -7193,7 +7259,7 @@
  "@rereadWrong": {
   "description": "Under a drawn card opened again from the archive, saved or liked: the reader missed it when it was dealt."
  },
- "betsDayShareLine": "Today's challenge on Astute: I was {off, plural, =0{spot on} =1{1 point off} other{{off} points off}}. Can you do better?",
+ "betsDayShareLine": "The bet of the day on Astute: I was {off, plural, =0{spot on} =1{1 point off} other{{off} points off}}. Can you do better?",
  "@betsDayShareLine": {
   "description": "The first line of the day's challenge sent to a friend, before its question and the link: how far off the reader was, never the answer. Points are percentage points.",
   "placeholders": {
@@ -8209,6 +8275,151 @@
  "@listenNextCard": {
   "description": "Said to a screen reader on the player's button that goes on to the next card."
  },
+ "summaryReadIn": "{minutes, plural, =1{Read in 1 minute} other{Read in {minutes} minutes}}",
+ "@summaryReadIn": {
+  "description": "A book's page, the first way in when the book has a summary: opens the summary, read whole in about a quarter of an hour. minutes is how long it takes.",
+  "placeholders": {
+   "minutes": {
+    "type": "int"
+   }
+  }
+ },
+ "summaryContinue": "Continue reading",
+ "@summaryContinue": {
+  "description": "A book's page, the same button once the reader has started the summary and not finished it."
+ },
+ "summaryAgain": "Read again",
+ "@summaryAgain": {
+  "description": "A book's page, the same button once the summary has been read to its end."
+ },
+ "summaryPartOf": "Part {part} of {of}",
+ "@summaryPartOf": {
+  "description": "Where the reader is in a book's summary: part n of so many. Also the eyebrow over a part in the reader, in capitals, and in the player.",
+  "placeholders": {
+   "part": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "summaryMinutesLeft": "{n, plural, =1{1 min left} other{{n} min left}}",
+ "@summaryMinutesLeft": {
+  "description": "How many minutes of a summary are left to read or to hear, beside where the reader is.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "summaryListenFor": "Listen · {minutes} min",
+ "@summaryListenFor": {
+  "description": "A book's page, the second way in beside reading: plays the summary aloud. minutes is how long it takes.",
+  "placeholders": {
+   "minutes": {
+    "type": "int"
+   }
+  }
+ },
+ "summaryPause": "Pause",
+ "@summaryPause": {
+  "description": "A book's page, the listening button while this book's summary is being read aloud: pauses it."
+ },
+ "summaryResume": "Resume listening",
+ "@summaryResume": {
+  "description": "A book's page, the listening button while this book's summary is paused: plays on from where it stopped."
+ },
+ "summaryFreeNote": "The first part is free; the rest comes with Astute+.",
+ "@summaryFreeNote": {
+  "description": "A book's page and the player, on the free plan, for a book that is not the week's: what of the summary is free."
+ },
+ "summaryTitle": "The summary",
+ "@summaryTitle": {
+  "description": "A book's page: the name over the summary's parts, in capitals; also the reader's contents."
+ },
+ "summaryNowPlaying": "Now playing",
+ "@summaryNowPlaying": {
+  "description": "Beside the part of a summary being read aloud, on the book's page and in the player."
+ },
+ "summaryNextPart": "Next part",
+ "@summaryNextPart": {
+  "description": "At the foot of a part in the reader, over the next part's title; and the player's button that goes on to the next part."
+ },
+ "summaryFinish": "Finish",
+ "@summaryFinish": {
+  "description": "At the foot of the last part in the reader: ends the summary."
+ },
+ "summaryContents": "Contents",
+ "@summaryContents": {
+  "description": "The reader: the button that lists every part of the summary, and that list's title."
+ },
+ "summaryDoneTitle": "You’ve read {title}",
+ "@summaryDoneTitle": {
+  "description": "The page after the last part of a summary: the book read. title is the book's title, as published.",
+  "placeholders": {
+   "title": {
+    "type": "String"
+   }
+  }
+ },
+ "summaryDoneLine": "The book’s cards are there to make its ideas stay.",
+ "@summaryDoneLine": {
+  "description": "That page, under its title: the book's cards, the short way in, offered to make the ideas stay."
+ },
+ "summaryToCards": "The ideas as cards",
+ "@summaryToCards": {
+  "description": "That page's first button: opens the book's ideas as cards."
+ },
+ "summaryBackToBook": "Back to the book",
+ "@summaryBackToBook": {
+  "description": "That page's second button: back to the book's page."
+ },
+ "summaryGateTitle": "The rest of this summary comes with Astute+",
+ "@summaryGateTitle": {
+  "description": "The reader, on the free plan, at a part past the first of a book that is not the week's: what the rest is."
+ },
+ "summaryGateLine": "All {parts} parts, to read and to hear, for every book. The week’s book is free for everyone.",
+ "@summaryGateLine": {
+  "description": "Under it: what Astute+ opens. parts is how many parts the summary has.",
+  "placeholders": {
+   "parts": {
+    "type": "int"
+   }
+  }
+ },
+ "summaryNeedsNetwork": "This summary needs the internet once.",
+ "@summaryNeedsNetwork": {
+  "description": "The reader, when a summary that was never opened cannot be fetched: no network."
+ },
+ "bookAudioBack": "Back 15 seconds",
+ "@bookAudioBack": {
+  "description": "Said to a screen reader on the player's button that goes back fifteen seconds; the button shows a circling arrow and 15."
+ },
+ "bookAudioWaiting": "The next part is on its way…",
+ "@bookAudioWaiting": {
+  "description": "The player, when the next part of the summary is still on its way (a slow network)."
+ },
+ "bookAudioDone": "Heard to the end.",
+ "@bookAudioDone": {
+  "description": "The player, once every part of the summary has been heard."
+ },
+ "bookAudioOfferTitle": "Hear the rest of the book",
+ "@bookAudioOfferTitle": {
+  "description": "The player on the free plan, once the free part is heard: the offer of the rest."
+ },
+ "bookAudioOfferLine": "With Astute+ every summary is read to you whole, even with the screen locked.",
+ "@bookAudioOfferLine": {
+  "description": "Under it."
+ },
+ "bookAudioStop": "Stop listening",
+ "@bookAudioStop": {
+  "description": "The player's last button, and the small player's cross as a screen reader says it: stops the summary being read aloud."
+ },
+ "bookAudioOpen": "Open the player",
+ "@bookAudioOpen": {
+  "description": "Said to a screen reader on the small player that stays over every screen while a book is read aloud: opens the whole player."
+ },
  "inviteSection": "Friends",
  "@inviteSection": {
   "description": "Profile: the name over the box with the invitation's two rows (Invita un amico)."
@@ -8368,5 +8579,524 @@
     "type": "int"
    }
   }
+ },
+ "@introTopicsLine": {
+  "description": "The intro's second scene, under its title: how the cards are made, said plainly — written with AI and checked — never hiding the AI. Under it, a link to How cards are written (howPillsAreWritten). Two lines on a phone."
+ },
+ "@everythingIsInDrag": {
+  "description": "Under Your mix: what a tap on a subject does (it leaves the mix, and a second tap brings it back) and what sliding it does (less of it)."
+ },
+ "firstDayTitle": "Your first day is done",
+ "@firstDayTitle": {
+  "description": "The screen that celebrates the reader's first finished day, right after their fifth card (black at night, paper by day): its headline, in the display face, over the streak, the points the day earned and how sure against how right. Set on up to three lines; no full stop, as a headline."
+ },
+ "firstDaySureRight": "You were {sure}% sure, and got {right} of {total} right.",
+ "@firstDaySureRight": {
+  "description": "That screen, one plain line under the streak and the points: how sure the reader said they were on today's answers, on average (sure, 50 to 90, a percent), set against how many of today's answers were right (right of total). Said only where the card asked how sure at least once that day.",
+  "placeholders": {
+   "sure": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "firstDayRight": "You got {right} of {total} right.",
+ "@firstDayRight": {
+  "description": "That screen, the same line on a day no card asked how sure: how many of today's answers were right, right of total.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "firstDayRemind": "Remind me tomorrow",
+ "@firstDayRemind": {
+  "description": "That screen, its first button: raises the reminder sheet, which asks at what time to send the daily reminder. Short, as a button."
+ },
+ "firstDayReminded": "We’ll remind you tomorrow at {time}.",
+ "@firstDayReminded": {
+  "description": "That screen, in place of the first button once the reader chose a time and the phone allowed notifications: when the first reminder comes. time is the time as the phone writes it (19:00, or 7:00 PM).",
+  "placeholders": {
+   "time": {
+    "type": "String"
+   }
+  }
+ },
+ "earlyReadingTag": "First reading",
+ "@earlyReadingTag": {
+  "description": "A small tag in capitals over a provisional reading of how sure against how right, on the profile (How well you know yourself), in Your journey and its free preview: it is a first reading from the first few answers, firming up with more."
+ },
+ "earlyReadingAll": "So far: you said {level}% {n, plural, =1{once, and you were right} =2{twice, and you were right twice} other{{n} times, and you were right every time}}.",
+ "@earlyReadingAll": {
+  "description": "The provisional reading, before twelve answers said how sure: the level the reader said most often (level, a percentage) and how many times (n), every one of them right. Shown on the profile and in Your journey.",
+  "placeholders": {
+   "level": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "earlyReadingNone": "So far: you said {level}% {n, plural, =1{once, and you were wrong} =2{twice, and you were wrong both times} other{{n} times, and you were wrong every time}}.",
+ "@earlyReadingNone": {
+  "description": "The same provisional reading when none of those answers (n of them, said at level %) was right.",
+  "placeholders": {
+   "level": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "earlyReadingSome": "So far: you said {level}% {n, plural, =2{twice} other{{n} times}}, and you were right {right, plural, =1{once} =2{twice} other{{right} times}}.",
+ "@earlyReadingSome": {
+  "description": "The same provisional reading when some were right and some were not: said level % n times (two or more), right of them `right` times.",
+  "placeholders": {
+   "level": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyClearEyebrow": "In the clear this week",
+ "@journeyClearEyebrow": {
+  "description": "Your journey on the free plan, the preview: the small capitals over the one figure shown in the clear this week, every other figure of the journey being blurred under it. A different one each week."
+ },
+ "journeyClearBlind": "Your blind spot: {subject}",
+ "@journeyClearBlind": {
+  "description": "The preview's figure in the clear, when it is the blind spot: the subject the reader misses most (subject, its name).",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyClearStrong": "Your strong point: {subject}",
+ "@journeyClearStrong": {
+  "description": "The preview's figure in the clear, when it is the strong point: the subject the reader is best in (subject, its name).",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyClearShare": "{pct} right, of your last {n} answers in it.",
+ "@journeyClearShare": {
+  "description": "Under the blind spot or the strong point in the clear: how often right (pct, a percentage as the phone writes it) of the reader's latest n answers in that subject (six to twenty).",
+  "placeholders": {
+   "pct": {
+    "type": "String"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyClearMemoryDays": "After {days, plural, =1{a day} =2{two days} other{{days} days}}, you still remember {right} of {of}.",
+ "@journeyClearMemoryDays": {
+  "description": "The preview's figure in the clear, when it is what the reader remembers: of the cards that came back after a wait of `days` days (two, the review ladder's first wait, after a miss), how many were known then (right of of).",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyClearMemoryWeeks": "After {weeks, plural, =1{a week} other{{weeks} weeks}}, you still remember {right} of {of}.",
+ "@journeyClearMemoryWeeks": {
+  "description": "The same, after a wait of `weeks` weeks (one after the first right answer, three after the second): of the cards that came back then, how many were still known (right of of).",
+  "placeholders": {
+   "weeks": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyClearBlindNotYet": "Six answers in two subjects, and this shows the one you miss most.",
+ "@journeyClearBlindNotYet": {
+  "description": "The preview, the blind spot's week, when no subject has six answers yet: what it takes, rather than a sample."
+ },
+ "journeyClearStrongNotYet": "Six answers in one subject, and this shows the one you’re best at.",
+ "@journeyClearStrongNotYet": {
+  "description": "The preview, the strong point's week, when no subject has six answers yet: what it takes."
+ },
+ "journeyClearSureNotYet": "{n, plural, =1{One more answer saying how sure, and a first reading shows here.} other{{n} more answers saying how sure, and a first reading shows here.}}",
+ "@journeyClearSureNotYet": {
+  "description": "The preview, the week of how sure against how right, before two answers said how sure: how many more it takes (n) for a first reading.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyClearMemoryNotYet": "Cards come back after 2, 7 and 21 days: this shows how many you still remember.",
+ "@journeyClearMemoryNotYet": {
+  "description": "The preview, the week of what the reader remembers, before any card has come back: how it comes."
+ },
+ "journeyPreviewDoor": "A different figure each week. Astute+ opens the rest.",
+ "@journeyPreviewDoor": {
+  "description": "The preview, the one quiet line under the figure in the clear, with a lock: it opens the plans, on the journey's door."
+ },
+ "weekSheetOf": "The week of {date}",
+ "@weekSheetOf": {
+  "description": "Sunday's week, the sheet a free reader gets on Sunday after the five (or on Monday morning): the small capitals over its title, naming the week by its Monday (date, a day and a month as the phone writes them).",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "weekSheetRightValue": "{right} of {n}",
+ "@weekSheetRightValue": {
+  "description": "Sunday's week: the right answers of the week as a figure, right of n.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "weekSheetRightLabel": "Right answers",
+ "@weekSheetRightLabel": {
+  "description": "Sunday's week: the small capitals under that figure."
+ },
+ "weekSheetAcross": "{n, plural, =1{over 1 answer} other{over {n} answers}}",
+ "@weekSheetAcross": {
+  "description": "Sunday's week: under how sure against how right, how many of the week's answers said how sure (n), so a figure of three answers says it is one.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "weekSheetOverLabel": "Where you trust yourself too much",
+ "@weekSheetOverLabel": {
+  "description": "Sunday's week: the name over the one figure only Astute+ shows, blurred, when it is where the reader trusts themselves too much."
+ },
+ "weekSheetMemoryLabel": "What you still remember",
+ "@weekSheetMemoryLabel": {
+  "description": "Sunday's week: the name over that blurred figure when it is how many cards the reader still remembers after the review ladder's waits."
+ },
+ "weekSheetAccount": "Keep your week on every phone",
+ "@weekSheetAccount": {
+  "description": "Sunday's week: the one line that offers the account (Apple or Google) to a reader not signed in, and the title of the sign-in sheet it opens."
+ },
+ "giftTitle": "{days, plural, =1{Astute+ is yours for a day.} other{Astute+ is yours for {days} days.}}",
+ "@giftTitle": {
+  "description": "The new reader's gift (trial.reverse), its moment in the first run, where the trial offer would stand: the headline. days is how long the gift lasts (always 14 today). 'Yours' because it is given, never sold: no card, nothing to cancel.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "giftMark": "yours",
+ "@giftMark": {
+  "description": "That headline: the words in it painted in the three lights. Must be the very words as they stand in giftTitle."
+ },
+ "giftLine": "No card, nothing to cancel.",
+ "@giftLine": {
+  "description": "That moment: the line under the headline. Card as in a payment card: none is asked for, and there is nothing to cancel at the end."
+ },
+ "giftStepEndLine": "The free plan again. Nothing is charged.",
+ "@giftStepEndLine": {
+  "description": "That moment's timeline of the gift's days: under its last day, the fifteenth, when the free plan is back. Nothing is bought, so nothing is charged."
+ },
+ "giftStart": "Start reading",
+ "@giftStart": {
+  "description": "That moment's one button: on to the day's five."
+ },
+ "giftEndsSoon": "{days, plural, =1{Last day of Astute+.} other{Astute+ is yours for {days} more days.}}",
+ "@giftEndsSoon": {
+  "description": "The gift's last two days: one quiet line under the finished day's name on Today, and the title of the thirteenth's morning notification. days is the days left, today included: 2, then 1.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "giftPlanUntil": "Astute+ · a gift until {date}",
+ "@giftPlanUntil": {
+  "description": "Profile, the plan's row, while the gift lasts: its value. date is the gift's last day, as the phone writes a day and a month.",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "giftEndEyebrow": "Your gift has ended",
+ "@giftEndEyebrow": {
+  "description": "The page the morning after the gift: the eyebrow over its title, set in capitals."
+ },
+ "giftEndTitle": "{days, plural, =1{Your day of Astute+.} other{Your {days} days of Astute+.}}",
+ "@giftEndTitle": {
+  "description": "That page: its title, over what the gift's days came to. days is how long the gift lasted (14).",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "giftEndDaysLabel": "days read",
+ "@giftEndDaysLabel": {
+  "description": "That page: under a figure like 11/14, the days the five were finished of the gift's days."
+ },
+ "giftEndBackRight": "{n, plural, =1{miss, then right} other{misses, then right}}",
+ "@giftEndBackRight": {
+  "description": "That page: under a count, the moves the reader missed and then got right when they came back, in the gift's days.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "giftLossTitle": "From today, on the free plan",
+ "@giftLossTitle": {
+  "description": "That page: the heading over what changes with the free plan, from this morning."
+ },
+ "giftLossRandom": "{n, plural, =1{One of your five cards comes at random.} other{{n} of your five cards come at random.}}",
+ "@giftLossRandom": {
+  "description": "That page, under that heading: how many of the day's five the free plan deals at random, today.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "giftLossMisses": "The ones you miss no longer come back in your five: they wait in Explore.",
+ "@giftLossMisses": {
+  "description": "That page: on the free plan, cards answered wrong no longer come back among the five; they wait on Explore's shelf of cards that came back."
+ },
+ "giftLossAsk": "The assistant on every card stays with Astute+.",
+ "@giftLossAsk": {
+  "description": "That page, only where the answers by Claude are on: the assistant in Go deeper is Astute+'s."
+ },
+ "giftKeep": "Keep Astute+",
+ "@giftKeep": {
+  "description": "That page: its first button, which opens the paywall."
+ },
+ "sixthRandomToday": "{n, plural, =1{Today one of your five came at random.} other{Today {n} of your five came at random.}}",
+ "@sixthRandomToday": {
+  "description": "The card after the fifth, on the free plan (one true thing a day): set large, how many of today's five came at random rather than chosen for the reader.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "sixthRandomTodayPlus": "With Astute+, all five would have been chosen for you.",
+ "@sixthRandomTodayPlus": {
+  "description": "That card, under it: what Astute+ would have done with today."
+ },
+ "sixthRandomTomorrow": "{n, plural, =1{Tomorrow one of your five will come at random.} other{Tomorrow {n} of your five will come at random.}}",
+ "@sixthRandomTomorrow": {
+  "description": "The card after the fifth, on the free plan: set large, how many of tomorrow's five will come at random, as tomorrow is dealt.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "sixthRandomTomorrowPlus": "With Astute+, all five chosen for you: from your mix, at your level.",
+ "@sixthRandomTomorrowPlus": {
+  "description": "That card, under it: what Astute+ would do with tomorrow."
+ },
+ "sixthSureWrong": "Today you missed one you were {sure} sure of.",
+ "@sixthSureWrong": {
+  "description": "The card after the fifth, on the free plan: set large, a card the reader missed today though they said they were 80% sure or more. sure is that, as a percentage written the language's way (90%).",
+  "placeholders": {
+   "sure": {
+    "type": "String"
+   }
+  }
+ },
+ "sixthSureWrongPlus": "With Astute+ it comes back in your five.",
+ "@sixthSureWrongPlus": {
+  "description": "That card, under it: on Astute+ a card missed comes back among the five."
+ },
+ "sixthMisses": "{n, plural, =1{A card you got wrong came back: it’s waiting in Explore.} other{{n} cards you got wrong came back: they’re waiting in Explore.}}",
+ "@sixthMisses": {
+  "description": "The card after the fifth, on the free plan: set large, how many cards the reader got wrong are back and waiting on Explore (on the free plan they wait there, outside the five).",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "sixthMissesPlus": "With Astute+ the ones you miss come back in your five, one a day.",
+ "@sixthMissesPlus": {
+  "description": "That card, under it: on Astute+ what is missed comes back among the five, one card a day."
+ },
+ "sixthLevel": "In {subject} you get {right} out of {of} right.",
+ "@sixthLevel": {
+  "description": "The card after the fifth, on the free plan: set large, a subject whose latest answers measure the reader a level above the one the free plan deals it at. subject is the subject's name; right of of answers right.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   },
+   "right": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "sixthLevelPlus": "With Astute+ your {subject} cards would go up a level.",
+ "@sixthLevelPlus": {
+  "description": "That card, under it: on Astute+ a subject's cards are dealt at the level the reader's answers measure, which here is one higher. subject is the subject's name.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "paywallScience": "Calibration can be measured, and trained with feedback. Astute measures yours.",
+ "@paywallScience": {
+  "description": "The paywall, under what Astute+ is: what holds up of the evidence for what it trains. Calibration (how sure you are against how often you are right) can be measured and trained with feedback, as forecasting research does, and Astute measures the reader's. No percentage and nothing proven about the reader: the size of the training effect in the Good Judgment Project is disputed (Hauenstein et al., Psychological Science, 2025). The source is the line after it."
+ },
+ "paywallScienceSource": "Forecasting research: Tetlock, Mellers",
+ "@paywallScienceSource": {
+  "description": "The paywall: under that line, where it comes from, by its researchers' names."
+ },
+ "paywallWarnBefore": "We warn you two days before the charge",
+ "@paywallWarnBefore": {
+  "description": "The paywall, under the button, beside a check, on a plan that starts with free days, to a reader the app can notify: the app sends a notification two days before the trial's first charge (AppState.kTrialWarningDays, two)."
+ },
+ "plusInTheAppAndroid": "Astute+ is in the app: download Astute on Android to start your free trial. It’s coming to iPhone.",
+ "@plusInTheAppAndroid": {
+  "description": "The paywall on the web, where nothing is sold, while Astute is on Google Play and not yet on the App Store (kAppStoreOpen in lib/store_links.dart): where to get it, and that the iPhone app is coming, as the site says it."
+ },
+ "exploreCapTitle": "That’s Explore for today.",
+ "@exploreCapTitle": {
+  "description": "Explore, at the end of its endless flow, for a free reader on a day they have read as many cards as the server's explore.freeCards allows: the card's title. Calm, never an alarm."
+ },
+ "exploreCapLine": "{n, plural, =1{You’ve read one card beyond your five. More tomorrow.} other{You’ve read {n} cards beyond your five. More tomorrow.}}",
+ "@exploreCapLine": {
+  "description": "That card, under its title: how many cards the reader read today beyond the day's five, and that more come tomorrow.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "exploreCapPlus": "With Astute+, Explore has no end.",
+ "@exploreCapPlus": {
+  "description": "That card: what Astute+ changes about it, over its button."
+ },
+ "todayLineSure": "Yesterday {right} of {asked}, and you were {sure}% sure.",
+ "@todayLineSure": {
+  "description": "Top of Today on a new reader's second and third days, after \"Day N.\": how the day before went, its questions with a right answer got right of those answered, and how sure the reader said they were on average. Italian: the article before the number is mended in code (all’80%).",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "asked": {
+    "type": "int"
+   },
+   "sure": {
+    "type": "int"
+   }
+  }
+ },
+ "todayLineRight": "Yesterday {right} of {asked}.",
+ "@todayLineRight": {
+  "description": "Top of Today on a new reader's second and third days, after \"Day N.\": the day before's questions with a right answer, right of those answered, where the reader never said how sure.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "asked": {
+    "type": "int"
+   }
+  }
+ },
+ "todayLineRead": "Yesterday you read all five.",
+ "@todayLineRead": {
+  "description": "Top of Today on a new reader's second and third days, after \"Day N.\", when the day before had no question with a right answer: the five were read."
+ },
+ "todayLineFirstSubject": "Today, your first card in {subject}.",
+ "@todayLineFirstSubject": {
+  "description": "Top of Today on a new reader's second and third days, after the day before's numbers: a subject in today's five the reader has not met yet. subject is the subject's name.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "freezeSavedLine": "{days, plural, =1{You skipped yesterday: your streak is safe.} other{You skipped {days} days: your streak is safe.}}",
+ "@freezeSavedLine": {
+  "description": "Top of Today, on the morning a freeze kept the streak: the days missed were covered and the streak goes on.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "freezeCoversLine": "{n, plural, =1{Miss a day and your streak holds: you have 1 freeze.} other{Miss a day and your streak holds: you have {n} freezes.}}",
+ "@freezeCoversLine": {
+  "description": "Under the finished day's heading, and on the streak's moment: one missed day is covered by a freeze, and how many the reader holds.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "streakMomentEyebrow": "In a row",
+ "@streakMomentEyebrow": {
+  "description": "The small capitals over the streak's number on its moment, when it reaches two, three or seven days."
+ },
+ "streakMomentUnit": "{n, plural, =1{day} other{days}}",
+ "@streakMomentUnit": {
+  "description": "Under the streak's big number on its moment: the word for days.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "streakMomentWeek": "A whole week. Tomorrow one more of your five is chosen for you.",
+ "@streakMomentWeek": {
+  "description": "On the streak's moment at seven days, on the free plan: tomorrow one more of the five cards is chosen for the reader from their own mix (three instead of two)."
+ },
+ "streakMomentNext": "Tomorrow makes {next}.",
+ "@streakMomentNext": {
+  "description": "On the streak's moment at two or three days when the reader holds no freeze: the streak tomorrow.",
+  "placeholders": {
+   "next": {
+    "type": "int"
+   }
+  }
+ },
+ "deeperWatchMore": "Watch more",
+ "@deeperWatchMore": {
+  "description": "Go deeper, under the card's source: opens a video that tells the card's story at more length. Who made it follows, in the card's own words (\"Geopop (YouTube, 2018)\"). The video is extra, never the source."
  }
 }

@@ -187,18 +187,31 @@ The knobs this build reads:
 | `place.ask` | switch | on | — | the place's sheet after a finished day (Explore and Profile still ask when the reader asks them to) | `AppState.shouldAskForPlace` |
 | `review.ask` | switch | on | — | the store's rating prompt | `AppState.shouldAskForReview` |
 | `trial.firstRun` | switch | off | — | the first run's free trial: after the onboarding, one real card, then the offer of the year's free days, then the day's five (never to a reader with Astute+, never twice a day, never without the store's own year on sale) | `trialOfferDue` (lib/screens/trial_offer.dart) |
+| `trial.reverse` | switch | off | — | the new reader's gift: where the first run would offer the trial, after its one card, Astute+ given for fourteen days, held on the phone, with no purchase, no card and nothing to cancel; one quiet line on the finished day's shelf in its last two days, the thirteenth's nudge saying it to a reader with the nudge on, and the morning after it, before the five, what the days came to and what goes back to free, then the paywall. Never to a reader with Astute+, one the store ever held it for, or a phone or an account that had a gift; a gift given is never taken back by the switch | `giftDue` (lib/state/gift.dart) |
 | `offer.firstWeek` | switch | off | — | the first week's page: after the five on the seventh day the five are finished (up to the tenth), a reader on the free plan who never had a trial sees what the week came to in their own numbers, and the year's free days under them; once, never on Astute+, never without the store's year with free days for this reader, never on a day with another full-screen moment (a level wins), never on the evening of the reminder sheet or the rating prompt | `firstOfferDue` (lib/state/first_offers.dart) |
 | `offer.firstMonth` | switch | off | — | its twin: after the five on a day 30 to 44 days after the install, with seven days of reading at least and two weeks at least after the week's page, "Your first month", with the month's numbers; the same rules | `firstOfferDue` (lib/state/first_offers.dart) |
 | `cardAi` | switch | off | — | the answers by Claude, Astute+'s: the assistant in Go deeper and the weekly coach in Your journey (a free reader sees them locked); the developer tools have them on regardless | `cardAiOn` (lib/widgets/deeper_sheet.dart) |
 | `share.challenge` | switch | off | — | "Challenge a friend" on today's five: at the end of the five on Explore, in place of the score as squares, and under the finished day's share, a line and a link to `astutetheapp.com/sfida`, where a friend plays the same five in a browser and sees both scores (on in `remote/app.json`) | `AppState.shareChallengeOn` (lib/explore/blocks/bets/three.dart, lib/widgets/share_day.dart) |
 | `listen` | switch | off | — | Listen: the day's five read aloud by ElevenLabs (question, a pause to think, answer and why), from a quiet entry at the end of Today's header while the five are read; the first card of a day for everybody, the rest Astute+'s (`requirePlus`, source `listen`). Off in `remote/app.json` until the ElevenLabs key and a plan are in; a server without a key answers "not configured" and the app hides it then too (functions/src/listen.ts) | `AppState.listenOn` (lib/listen/listen_sheet.dart) |
+| `bookAudio` | switch | off | — | Books read aloud: a book's summary ("Read in 15 minutes" on its page, which needs no switch) heard from the same page by ElevenLabs, a part a clip, played on with the screen locked and kept by a small player over every screen; the week's free book and the first part of any book for everybody, the rest Astute+'s (`requirePlus`, source `book audio`). Off: reading works and listening is hidden. Off in `remote/app.json` until the ElevenLabs key and a plan are in; a server without a key answers "not configured" and the app hides listening then too (functions/src/books.ts) | `AppState.bookAudioOn` (lib/books/summary_entry.dart) |
 | `invite` | switch | off | — | Invita un amico: in the profile, "Invite a friend" (a link with the reader's code, through the share sheet, to `astutetheapp.com/invito`) and "Have a code?" for a new reader; a week of Astute+ for each of the two once the friend has finished a first day (functions/src/invite.ts). Off in `remote/app.json` until RevenueCat's key is in place; even on, nothing shows while the server answers "not configured" | `AppState.inviteOn` (lib/screens/profile_screen.dart, lib/widgets/invite_sheet.dart) |
+| `firstRun.loves` | switch | on | — | the first run's question in the positive: after Your mix, up to three subjects the reader loves; their first three days open on a card of each, and their own cards lean to them after (twice as much); off, the first run goes from the mix to the day | `AppState.lovesAsked` (lib/main.dart) |
+| `parts.offer` | switch | on | — | Which parts, offered once on the finished day's shelf from the `parts.offerDay`th finished day, to a reader who has not chosen any parts already: the question the first run no longer asks | `AppState.partsOfferDue` (lib/widgets/parts_offer.dart) |
+| `journey.preview` | switch | off | — | Your journey for a reader on the free plan: their own journey, worked out from their answers, behind a soft blur, one figure of it in the clear each week (blind spot, strong point, how sure against how right, cards remembered, the next that can be said when one cannot yet), and the way to Astute+ under it; off, its doors open the plans as they always did | `AppState.journeyPreviewOn` (lib/screens/journey_preview.dart) |
+| `week.sunday` | switch | off | — | Sunday's week for a reader on the free plan: on Sunday after the five, or on Monday morning for one who missed Sunday, what the week came to (cards read, right answers, how sure against how right, days in a row, best subject), one figure of Astute+'s blurred, and to a reader without an account the account in one line, three weeks at most; once a week, never on the first day, never over another moment | `AppState.sundayWeekOn` (lib/state/your_week.dart) |
+| `calibration.early` | switch | on | — | a first reading of how sure against how right from the second answer that said how sure, marked as early and firming up with more, on the profile, the journey and its preview; off, nothing is said before the full measure | `AppState.earlyReadingOn` (lib/screens/profile_screen.dart) |
+| `opening.asks` | switch | on | — | the opening's own shape: three of each of a new reader's first three days' five ask (two to read), and every card with a right answer on those days asks how sure every time rather than by its odds (`SureAsk.always`); off, those days ask two, as every day does | `AppState.openingAsksOn` (lib/data/first_days.dart, lib/models/pill.dart) |
+| `firstWeek.drawn` | switch | on | — | the rest of a new reader's first week, days four to seven, dealt on the phone and mostly drawn: four, four, three and three of the five from the strongest drawings (lib/data/drawn_ranks.dart), the rest from the reader's own dealer; off, those days are dealt as any day, by the server first | `AppState.firstWeekDrawnFlagOn` (`dealFirstWeek`, lib/data/first_days.dart) |
+| `opening.dayLine` | switch | on | — | the line at the top of Today on a new reader's second and third days: which day it is, how the day before went in its own numbers ("Day 2. Yesterday 2 of 2, and you were 80% sure."), and the subject met for the first time today, when there is one | `AppState.dayLineOn` (lib/widgets/today_line.dart) |
+| `streak.told` | switch | on | — | the streak told: on the morning after a freeze kept the streak, Today says so first ("You skipped yesterday: your streak is safe."); the finished day says that one missed day is covered and how many freezes the reader has; and a streak reaching two, three or seven days rises once, small, after the five (never with a level, never with the first week's page) | `AppState.streakToldOn` (lib/widgets/today_line.dart, lib/widgets/streak_moment.dart) |
 | `push.askGapDays` | number | 3 | 1 to 30 | the days a "Not now" holds the reminder sheet back | `AppState.shouldAskForPush` |
 | `push.deferralsAllowed` | number | 3 | 1 to 10 | how many "Not now"s the sheet takes before it stops coming | `AppState.shouldAskForPush` |
 | `push.times` | three times | 08:30, 12:30, 19:00 | 05:00–11:00, 11:00–15:00, 17:00–23:00 (the last minute out) | the times the reminder sheet offers, each where its word ("Morning", "Lunchtime", "Evening") stays true | `lib/widgets/reminder_ask.dart` |
 | `place.firstAskDay` | number | 2 | 1 to 20 | the finished days before the place's sheet first asks | `AppState.shouldAskForPlace` |
 | `place.lastAskDay` | number | 7 | 2 to 30, after `place.firstAskDay` | the finished days before it asks the second and last time (a phone keeps thirty) | `AppState.shouldAskForPlace` |
+| `parts.offerDay` | number | 3 | 2 to 30 | the finished days before Which parts is offered on the shelf | `AppState.partsOfferDue` |
 | `review.streakDays` | number | 7 | 3 to 60 | the days in a row that end in the rating prompt | `AppState.shouldAskForReview` |
+| `explore.freeCards` | number | 0 | 0 to 500 | the cards a reader on the free plan reads in a day beyond the day's five before Explore's endless flow ends on a calm card that names Astute+ (0: no end). A soft end: what is on the page stays open, and the shelves above it are as they were | `AppState.exploreCapped` (lib/explore/blocks/core/feed_cap.dart) |
 | `push.firstAsk` | experiment | `cameBack` | `cameBack`, `firstDay` | whether the reminder sheet comes at the end of the very first finished day, or waits for a reader who came back | `AppState.shouldAskForPush` |
 
 Changing them from the server:
@@ -208,6 +221,10 @@ Changing them from the server:
   `"tunables": {"push.askGapDays": 2, "push.times": ["07:45", "12:30", "19:00"]}`;
 - the first run's free trial for half of new readers on iPhone:
   `"flags": {"trial.firstRun": {"on": true, "audience": {"platforms": ["ios"], "rollout": 50}}}`;
+- the new reader's gift for a fifth of new readers on Android, as a test:
+  `"flags": {"trial.reverse": {"on": true, "audience": {"platforms": ["android"], "rollout": 20}}}`;
+- Explore's endless flow ending after thirty cards a day for the free plan:
+  `"tunables": {"explore.freeCards": 30}`;
 - the first week's page for everybody, the first month's held back:
   `"flags": {"offer.firstWeek": true, "offer.firstMonth": false}`;
 - Invita un amico on Android first, once RevenueCat's key is deployed:
@@ -484,10 +501,13 @@ the card turns over, as a native one does), `done`, `haptic`, `open`,
 `zones` (where it wants the finger), `pan` (web build only: a drag that is
 not its own) and `error`. The app says `env` (dark, language, less motion,
 sound, touch, platform, size, the corner to leave, the subject, the line and
-the chip a native card carries, the foot, and, on a hard card the developer
-tools ring, `hard`: the colours to draw itself in and the tag it carries,
+the chip a native card carries, the foot, and, on a hard card, which is
+read ringed, `hard`: the colours to draw itself in and the tag it carries,
 lib/widgets/hard_ring.dart), `show` and `hide`. A page told no `hard` draws
-as it always has.
+as it always has. A page drawn in the kit's ink and ground (`--k`, `--c`,
+`--edge`) is right ringed by itself; one with colours of its own lights them
+up or takes them down under `.kit-hard[data-theme=dark]` or `…=light`, and a
+hard page is checked as it is, with `HARD=1` and with `HARD=day`.
 
 **Touch.** With `taps`, a tap goes to the page; a drag anywhere throws the
 card and a long press keeps it, as on any card. With `drags`, a touch that

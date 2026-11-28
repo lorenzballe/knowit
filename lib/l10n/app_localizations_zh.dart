@@ -627,7 +627,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get manageSubscription => '管理订阅';
 
   @override
-  String get howPillsAreWritten => '卡片是怎么写出来的';
+  String get howPillsAreWritten => '我们怎样写卡片';
 
   @override
   String get howTitle => '这里的每张卡片都由 AI 模型撰写。';
@@ -636,7 +636,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get howIntro => '与其让你自己发现，不如我们先说清楚。下面是一张卡片到你手上的过程。';
 
   @override
-  String get howStep1Title => '由模型提前写好';
+  String get howStep1Title => '用 AI 写成';
 
   @override
   String get howStep1Line => '每张卡片都按同一要求写成：一个值得问的问题，一个讲清原因的答案，一个可以反复用的招。';
@@ -944,6 +944,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reminderAskOther => '其他时间';
 
   @override
+  String get reminderAskPick => '你来选';
+
+  @override
   String get reminderAskUsual => '你平时阅读的时间';
 
   @override
@@ -1059,7 +1062,33 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get everythingIsInDrag => '全部都在。把主题向左滑会少看到它，滑到底则移除。';
+  String get everythingIsInDrag => '全部都在。点一下主题就移除，向左滑会少看到它。';
+
+  @override
+  String get mixLeaveOut => '移除';
+
+  @override
+  String get mixPutBack => '放回';
+
+  @override
+  String get lovesTitle => '选出你最爱的三个';
+
+  @override
+  String get lovesLine => '最多三个。你的头几天从它们开始，之后它们也会更常出现。';
+
+  @override
+  String lovesCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已选 $n / 3',
+      zero: '最多点选三个',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lovesFull => '最多三个：点一下已选的就能取消。';
 
   @override
   String get next => '下一步';
@@ -1089,13 +1118,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get swipeToSeeMore => '滑动查看更多';
 
   @override
+  String get introPromiseTitle => '每天五张卡片，两分钟';
+
+  @override
+  String get introPromiseLine => '说出你有几分把握，看清自己知道的能信几分。';
+
+  @override
   String get tagline => '弄懂事物背后的“为什么”，也看清自己知道的能信几分';
 
   @override
   String get introTopicsTitle => '二十个主题，五张卡片';
 
   @override
-  String get introTopicsLine => '由模型提前写好，每一张都注明出处。';
+  String get introTopicsLine => '用 AI 写成，再经核对，每一张都注明出处。';
 
   @override
   String get introQuestionTitle => '一道题，有多确定，再看为什么';
@@ -1826,13 +1861,13 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get fiveTitle => '今日五题';
+  String get fiveTitle => '今日挑战';
 
   @override
   String get fiveSame => '今天大家都是同样五题，约两分钟。';
 
   @override
-  String get fiveDone => '今日五题 · 完成';
+  String get fiveDone => '今日挑战 · 完成';
 
   @override
   String dailyOf(int max) {
@@ -1919,7 +1954,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String fiveShareHead(String date) {
-    return 'Astute · 今日五题 · $date';
+    return 'Astute · 今日挑战 · $date';
   }
 
   @override
@@ -1931,7 +1966,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fiveChallengeAll => 'Astute 今日五题，我全部答对。你也能做到吗？';
 
   @override
-  String get fiveChallengeInvite => 'Astute 今日五题：每个人都是同样的五道题。你能答对几道？';
+  String get fiveChallengeInvite => 'Astute 今日挑战：每个人都是同样的五道题。你能答对几道？';
 
   @override
   String threeShareHeadIn(String subject, String date) {
@@ -2194,6 +2229,26 @@ class AppLocalizationsZh extends AppLocalizations {
       'lead': '领导力',
       'culture': '通识',
       'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String skillLine(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': '分辨可靠的论证和误导人的论证。',
+      'decisions': '凭风险和概率做选择，而不是凭直觉。',
+      'money': '价格、利息、优惠：你的钱去了哪里。',
+      'numbers': '读懂百分比和图表，不被误导。',
+      'talk': '说话写字，都能让人明白。',
+      'persuade': '说服别人，也能察觉别人在说服你。',
+      'people': '人为什么会那样做。',
+      'fakes': '识破假新闻、修改过的照片和夸大的研究。',
+      'science': '相信一个想法之前，先检验它。',
+      'focus': '把注意力更久地放在重要的地方。',
+      'lead': '带领团队，为大家做决定。',
+      'culture': '历史、科学、艺术：人人都会引用的东西。',
+      'other': '',
     });
     return '$_temp0';
   }
@@ -2736,6 +2791,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get consentLine => '分享你使用应用的方式——绝不包括你的名字、邮箱或你写的内容。';
 
   @override
+  String get consentCardLine => '我们统计应用的使用方式，没有广告，也绝不涉及你的名字。';
+
+  @override
   String get consentNo => '不用了，谢谢';
 
   @override
@@ -2754,6 +2812,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get genresLine => '点一下跳过某个类别。长按，里面更小的主题就在下面展开。';
+
+  @override
+  String get partsOfferLine => '读了几天，你已经了解这些卡片了。在每个主题里，留下想看的部分，其余的拿掉。';
+
+  @override
+  String get partsOfferChoose => '选择部分';
+
+  @override
+  String get partsOfferNotNow => '以后再说';
 
   @override
   String get insideGenre => '里面有';
@@ -6126,7 +6193,7 @@ class AppLocalizationsZh extends AppLocalizations {
       other: '我差了 $off 个百分点',
       zero: '我正好猜中',
     );
-    return '今天的 Astute 挑战：$_temp0。你能猜得更准吗？';
+    return 'Astute 今日一赌：$_temp0。你能猜得更准吗？';
   }
 
   @override
@@ -6953,6 +7020,112 @@ class AppLocalizationsZh extends AppLocalizations {
   String get listenNextCard => '下一张卡片';
 
   @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes 分钟读完',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => '继续阅读';
+
+  @override
+  String get summaryAgain => '再读一遍';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return '第 $part 部分（共 $of 部分）';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '还剩 $n 分钟',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return '收听 · $minutes 分钟';
+  }
+
+  @override
+  String get summaryPause => '暂停';
+
+  @override
+  String get summaryResume => '继续收听';
+
+  @override
+  String get summaryFreeNote => '第一部分免费，其余部分需 Astute+。';
+
+  @override
+  String get summaryTitle => '摘要';
+
+  @override
+  String get summaryNowPlaying => '正在播放';
+
+  @override
+  String get summaryNextPart => '下一部分';
+
+  @override
+  String get summaryFinish => '读完';
+
+  @override
+  String get summaryContents => '目录';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return '你读完了《$title》';
+  }
+
+  @override
+  String get summaryDoneLine => '这本书的卡片能帮你记住它的观点。';
+
+  @override
+  String get summaryToCards => '卡片里的观点';
+
+  @override
+  String get summaryBackToBook => '返回本书';
+
+  @override
+  String get summaryGateTitle => '摘要的其余部分需 Astute+';
+
+  @override
+  String summaryGateLine(int parts) {
+    return '每本书的全部 $parts 个部分，都能读也能听。本周之书对所有人免费。';
+  }
+
+  @override
+  String get summaryNeedsNetwork => '此摘要需要联网一次。';
+
+  @override
+  String get bookAudioBack => '后退 15 秒';
+
+  @override
+  String get bookAudioWaiting => '下一部分马上就来…';
+
+  @override
+  String get bookAudioDone => '已听完。';
+
+  @override
+  String get bookAudioOfferTitle => '收听本书的其余部分';
+
+  @override
+  String get bookAudioOfferLine => '有了 Astute+，每篇摘要都能完整朗读给你听，锁屏时也可以。';
+
+  @override
+  String get bookAudioStop => '停止收听';
+
+  @override
+  String get bookAudioOpen => '打开播放器';
+
+  @override
   String get inviteSection => '朋友';
 
   @override
@@ -7062,4 +7235,389 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => '你的第一天完成了';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return '你有 $sure% 的把握，$total 题答对 $right 题。';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return '$total 题答对 $right 题。';
+  }
+
+  @override
+  String get firstDayRemind => '明天提醒我';
+
+  @override
+  String firstDayReminded(String time) {
+    return '明天 $time 提醒你。';
+  }
+
+  @override
+  String get earlyReadingTag => '初步结果';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '每次都答对了',
+      two: '两次都答对了',
+      one: '答对了',
+    );
+    return '目前：你说过 $n 次 $level%，$_temp0。';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '每次都答错了',
+      two: '两次都答错了',
+      one: '答错了',
+    );
+    return '目前：你说过 $n 次 $level%，$_temp0。';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    return '目前：你说过 $n 次 $level%，其中答对 $right 次。';
+  }
+
+  @override
+  String get journeyClearEyebrow => '本周公开';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return '你的盲点：$subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return '你最强的一项：$subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return '这个科目最近 $n 题，正确率 $pct。';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days 天后',
+      two: '两天后',
+      one: '一天后',
+    );
+    return '$_temp0，$of 张里你还记得 $right 张。';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks 周后',
+      one: '一周后',
+    );
+    return '$_temp0，$of 张里你还记得 $right 张。';
+  }
+
+  @override
+  String get journeyClearBlindNotYet => '两个科目各答满六题，这里就会显示你最常答错的那个。';
+
+  @override
+  String get journeyClearStrongNotYet => '一个科目答满六题，这里就会显示你最擅长的那个。';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '再有 $n 个附带把握度的回答，这里就会出现初步结果。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet => '卡片会在 2 天、7 天和 21 天后回来：这里会显示你还记得多少张。';
+
+  @override
+  String get journeyPreviewDoor => '每周公开一项。其余的，用 Astute+ 打开。';
+
+  @override
+  String weekSheetOf(String date) {
+    return '$date起的一周';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$n 题中 $right 题';
+  }
+
+  @override
+  String get weekSheetRightLabel => '答对';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '基于 $n 个回答',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => '你过于自信的地方';
+
+  @override
+  String get weekSheetMemoryLabel => '你还记得的';
+
+  @override
+  String get weekSheetAccount => '在每部手机上留住你的这一周';
+
+  @override
+  String giftTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '接下来 $days 天，Astute+ 归你。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftMark => '归你';
+
+  @override
+  String get giftLine => '无需绑卡，也无需取消。';
+
+  @override
+  String get giftStepEndLine => '回到免费方案，不会扣任何费用。';
+
+  @override
+  String get giftStart => '开始阅读';
+
+  @override
+  String giftEndsSoon(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ 还归你 $days 天。',
+      one: '今天是 Astute+ 的最后一天。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String giftPlanUntil(String date) {
+    return 'Astute+ · 赠送至 $date';
+  }
+
+  @override
+  String get giftEndEyebrow => '赠送期已结束';
+
+  @override
+  String giftEndTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '你和 Astute+ 的 $days 天。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftEndDaysLabel => '阅读天数';
+
+  @override
+  String giftEndBackRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '答错后又答对',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossTitle => '从今天起，免费方案中';
+
+  @override
+  String giftLossRandom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '五张卡片中有 $n 张是随机的。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get giftLossMisses => '答错的卡片不再回到你的五张里，而是在“探索”里等你。';
+
+  @override
+  String get giftLossAsk => '每张卡片上的助手仅限 Astute+。';
+
+  @override
+  String get giftKeep => '继续使用 Astute+';
+
+  @override
+  String sixthRandomToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天的五张里有 $n 张是随机的。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTodayPlus => '有 Astute+，五张都会为你挑选。';
+
+  @override
+  String sixthRandomTomorrow(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '明天的五张里有 $n 张会是随机的。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthRandomTomorrowPlus => '有 Astute+，五张都为你挑选：来自你的组合，匹配你的水平。';
+
+  @override
+  String sixthSureWrong(String sure) {
+    return '今天你答错了一张你有 $sure 把握的卡片。';
+  }
+
+  @override
+  String get sixthSureWrongPlus => '有 Astute+，它会回到你的五张里。';
+
+  @override
+  String sixthMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '你答错的 $n 张卡片回来了，正在“探索”里等你。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixthMissesPlus => '有 Astute+，答错的卡片每天一张回到你的五张里。';
+
+  @override
+  String sixthLevel(String subject, int right, int of) {
+    return '在$subject上，你答对了 $of 题中的 $right 题。';
+  }
+
+  @override
+  String sixthLevelPlus(String subject) {
+    return '有 Astute+，你的$subject卡片会升一级。';
+  }
+
+  @override
+  String get paywallScience => '校准可以衡量，也能通过反馈来训练。Astute 会衡量你的校准。';
+
+  @override
+  String get paywallScienceSource => '预测研究：Tetlock、Mellers';
+
+  @override
+  String get paywallWarnBefore => '扣费前两天提醒你';
+
+  @override
+  String get plusInTheAppAndroid =>
+      'Astute+ 在应用中提供：在 Android 上下载 Astute，开始免费试用。iPhone 版即将推出。';
+
+  @override
+  String get exploreCapTitle => '今天的“探索”就到这里。';
+
+  @override
+  String exploreCapLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '除了你的五张，你还读了 $n 张。明天还有更多。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreCapPlus => '有 Astute+，“探索”没有尽头。';
+
+  @override
+  String todayLineSure(int right, int asked, int sure) {
+    return '昨天 $asked 题答对 $right 题，你有 $sure% 的把握。';
+  }
+
+  @override
+  String todayLineRight(int right, int asked) {
+    return '昨天 $asked 题答对 $right 题。';
+  }
+
+  @override
+  String get todayLineRead => '昨天五张都读完了。';
+
+  @override
+  String todayLineFirstSubject(String subject) {
+    return '今天第一次读到$subject。';
+  }
+
+  @override
+  String freezeSavedLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '你有 $days 天没来，连续记录保住了。',
+      one: '昨天你没来，连续记录保住了。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String freezeCoversLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '漏掉一天，连续记录也不会断：你有 $n 次冻结。',
+      one: '漏掉一天，连续记录也不会断：你有 1 次冻结。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentEyebrow => '连续';
+
+  @override
+  String streakMomentUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '天',
+      one: '天',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentWeek => '整整一周。明天的五张里，会多一张专门为你挑选。';
+
+  @override
+  String streakMomentNext(int next) {
+    return '明天就是 $next 天。';
+  }
+
+  @override
+  String get deeperWatchMore => '观看视频';
 }

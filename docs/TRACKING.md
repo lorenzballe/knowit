@@ -22,6 +22,17 @@ will find in six months.
   mandato (`invite sent`), il codice di un amico usato e com'è andata
   (`invite code redeemed`), la settimana data, all'amico o a chi invita
   (`invite reward granted`). Mai il codice. §6.14.
+- **Quando si chiede.** Mai prima di una carta: la domanda sui dati di
+  utilizzo è una scheda tranquilla sotto le carte della giornata finita, dalla
+  fine della prima giornata (dopo la festa e dopo la domanda sul promemoria),
+  e resta lì finché il lettore non risponde. Prima di un sì non parte niente.
+- **I primi passi, senza sapere di chi.** Quattro passi (prima apertura,
+  prime domande finite, prima giornata finita, ritorno il giorno dopo) sono
+  contati dal nostro server, non da PostHog: il telefono manda solo il nome
+  del passo e la data, una volta per telefono, e il server tiene solo i
+  totali del giorno in `steps/{giorno}`. Contati comunque, perché non dicono
+  niente di nessuno; solo dalle installazioni dell'App Store e di Google
+  Play. Sezione 2.
 - **Cosa non va mai da nessuna parte:** quello che il lettore scrive o
   cerca, il nome, l'email, i codici amico. Nelle registrazioni di PostHog
   tutto il testo è nascosto. L'interruttore *Profilo → Dati di utilizzo*
@@ -65,6 +76,16 @@ will find in six months.
   prova) e quando parte la prova (`first offer trial started`); gli acquisti
   partiti da lì hanno `source` `first week` o `first month`. Tre eventi per
   pagina al massimo, e ogni pagina si apre una volta sola.
+- **La fine del primo giorno.** La schermata che festeggia il primo giorno
+  finito, subito dopo la quinta carta, dice quando si apre e cosa ha detto
+  (`first day shown`: la serie, i punti, le risposte giuste su quante, quanto
+  il lettore si diceva sicuro, se c'era «Ricordamelo domani»), quando si
+  tocca il promemoria (`first day reminder tapped`) o la sfida di oggi, in
+  Esplora (`first day challenge tapped`), e come si chiude (`first day
+  closed`). Il foglio del
+  promemoria aperto da lì è quello di sempre, contato una volta sola, con
+  `from: celebration` su `push preprompt shown`. Al massimo quattro eventi,
+  una volta per lettore.
 - **Dove vuoi vederci più chiaro.** Quando il lettore sceglie dal profilo
   l'area in cui vuole vederci più chiaro, `goal set` dice quale (`goal`),
   quale c'era prima (`before`) e da dove (`from`: `profile`). Un evento per
@@ -82,12 +103,15 @@ These hold at every call site, old and new.
   an email and a friend code do not. A search is described by its length and
   how many cards it found; a typed answer by whether it was right. A test
   types a sentence into a card and fails if it appears in anything sent.
-- **Nothing before a yes.** The intro asks whether Astute may measure how
-  the app is used, with two answers of one size (`ConsentChoice`); a reader
-  who starts without answering is asked once more, as a sheet, after their
-  first finished day (`showConsentSheet`). PostHog is not set up until the
-  answer is yes, so nothing below is captured, queued or sent before it, and
-  nothing at all after a no; what is stamped on every event and who the
+- **Nothing before a yes.** Nothing is asked before a card: the question
+  whether Astute may measure how the app is used is a calm card on the
+  finished day's shelf (`ConsentCard`, lib/widgets/consent_card.dart), from
+  the end of the first day — after the day's celebration and after the
+  reminder's question, which goes first — with two answers of one size, and
+  it stays on the shelf, day after day, until it is answered. It is never a
+  sheet over the shelf. PostHog is not set up until the answer is yes, so
+  nothing below is captured, queued or sent before it, and nothing at all
+  after a no; what is stamped on every event and who the
   reader is are kept on the phone and said when a yes starts it. Kept as
   `knowit.analytics` with `knowit.analytics.asked`; an old switch turned off
   counts as a no, an old default of on as no answer. *Profile → Usage data*
@@ -127,6 +151,22 @@ Three events are trace-only and never reach PostHog: `card flipped`,
 `card shown` (a card a shelf of Explore put on screen) and `explore
 scrolled` (how far down Explore went, in tenths).
 
+**Neither: the first run's steps.** Four steps of a new phone are counted
+on our own server, the way Today's five counts its crowd, and not through
+`Analytics` at all (`lib/measure/first_steps.dart`, `functions/src/
+steps.ts`): `first_open`, `first_run_done` (the first run's questions
+answered), `first_day_done` (a first day's five read) and `next_day` (the
+app opened the day after the first open). Each is one plain POST to
+`countStep` with the step and the reader's date and nothing else — no
+account, no token, no id of the phone — and the server adds one to that
+day's total in `steps/{day}` (allow-listed, so a fifth name is refused; the
+rules let no app read or write it). Each is sent once per phone, kept in
+`knowit.firstSteps` across a sign-out, and only from a phone new to the app
+that a store installed (`install_channel` `app_store` or `play`: no
+TestFlight, sideload, test lab, debug or web). They carry nothing about
+anyone, so they are counted whatever the reader answers about usage data,
+and the privacy policy says so (`#first-steps`, `#primi-passi`).
+
 ## 3. On every event: super properties
 
 Registered once and re-registered only when they change
@@ -137,7 +177,8 @@ without a join.
 | Property | Values | Set by |
 | --- | --- | --- |
 | `install_channel` | `app_store`, `testflight`, `play`, `sideload`, `test_lab`, `debug`, `web`, `other` | launch, before the first event (§5) |
-| `is_plus` | bool | profile sync, entitlement |
+| `is_plus` | bool: Astute+, bought or the new reader's gift | profile sync, entitlement |
+| `on_gift` **new** | bool: Astute+ as the new reader's gift holds it, nothing bought (`trial.reverse`) | profile sync |
 | `plan` | `free`, `year`, `month`, `plus` (a product the app cannot place) | entitlement |
 | `is_trial` | bool: a free trial is running, cancelled or not | entitlement |
 | `plan_period` | RevenueCat's period: `trial`, `intro`, `normal`, `prepaid`; `none` without an entitlement | entitlement |
@@ -279,28 +320,34 @@ background ends every visit; coming back starts a new one.
 | --- | --- | --- | --- | --- |
 | `$screen` | a visit begins | `$screen_name` | PostHog's screen views and paths | P |
 | `screen left` **new** | a visit ends | `screen`, `ms_on_screen` (in front only), `max_scroll_pct` (how far down its main list was seen, 0–100; absent when nothing scrolls), `scrolls` (finger drags that moved it), `taps`, `screens_opened` (full screens pushed over it), `from` (the screen before, `background` after a return, absent at launch), `left_to` (the next screen, or `background`) | dwell, depth and attention per screen, and the path between them | P |
-| `tab opened` | a tab is chosen | `tab`, `by` (`bar`, `swipe`, `widget`) | how the tabs are reached | P, T:`tab` |
+| `tab opened` | a tab is chosen | `tab`, `by` (`bar`, `swipe`, `widget`, `first day` **new**: Explore, for Today's challenge, from the first day's celebration) | how the tabs are reached | P, T:`tab` |
 | `explore refreshed` **new** | Explore pulled down from its top: read again from the server, whatever its age | none | how often readers pull a feed for more | P |
 
 Every PostHog event carries `$screen_name`: the screen in front when it was
 sent, which after a return from a pushed screen is the screen returned to.
 
 Screen names: `today`, `explore`, `profile` (tabs); `intro`, `onboarding
-subjects`, `onboarding genres`, `comeback` (first run and come-back; the
+subjects`, `onboarding loves`, `comeback` (first run and come-back; the
 first run has had no paywall since October 2026, so `onboarding offer` is
 gone); `onboarding first card`, `onboarding trial` (the one card and the
 offer of the free trial that end the first run behind the server's switch
 `trial.firstRun`, off as built: measured by the steps' own `onboarding step
 done`, and the trial by the store's `entitlement changed`, with no event of
-their own); `first week`, `first month` (the page that rises once after the
+their own); `onboarding gift` (behind `trial.reverse`, where the trial's
+offer would stand: Astute+ given for fourteen days, nothing sold), `gift
+end` (the morning after the gift, once; §6.8); `first week`, `first month`
+(the page that rises once after the
 five on the seventh day of reading, and its twin a month after the install,
 behind `offer.firstWeek` and `offer.firstMonth`; §6.8); `deck viewer`, `pill
 detail`, `archive`, `saved`, `liked`,
-`journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`,
+`journey`, `path`, `week`, `topics`, `how`, `genres` (Which parts, opened
+from the shelf's offer; it was `onboarding genres` while the first run
+asked it), `paywall`, `purchase success`,
 `story` (a true story played from Explore); `update gate`, `pause` (the
 update gate's full screens, over everything, §6.13); `invite week` **new**
 (the purchase's own screen, for a week of Astute+ a friend's invitation
-gave, §6.14).
+gave, §6.14); `first day` **new** (the celebration of a reader's first
+finished day, right after the fifth card, §6.3).
 
 ### 6.3 The day on Today
 
@@ -313,6 +360,10 @@ gave, §6.14).
 | `card advanced` **extended** | a card of the day is thrown on | card facts, `review`, `ms_on_card` (from the card coming up, background included), and the read facts of its last stint (§6.4) | drop-off by place in the day, and how each card was read | P, T:`next` |
 | `card flipped` | a card is turned to its back | `pill_id`, `ms_to_flip` | the scorecard counts turns | T:`flip` only |
 | `day completed` | the fifth card is done | `streak_days`, `best_streak`, `cards`, `days_completed`, `rung`, `score_gained`, `rungs_climbed`, `is_plus`, `answered_right`, `answered_wrong`, `reviews`, `own` | | P, T:`done` |
+| `first day shown` **new** | the celebration of a reader's first finished day rises, right after the fifth card, once per phone (lib/widgets/first_day.dart) | `streak_days`, `points` (what the day's answers added to the Astute score), `answered` (today's graded answers), `right`, `sure` (how sure the reader said they were, on average over today's answers that asked, 50–90; absent when none asked), `remind` (bool: «Remind me tomorrow» was offered), `is_plus` | whether celebrating first keeps readers, read against the day-two return | P |
+| `first day reminder tapped` **new** | «Remind me tomorrow» is tapped on it; the reminder sheet that rises is the shell's, with its own events (§6.9, `from: celebration`) | `ms_open` | | P |
+| `first day challenge tapped` **new** | Today's challenge is tapped on it: it closes onto Explore, at its top, where the challenge is | `ms_open` | whether the day's end leads readers to the part they share most | P |
+| `first day closed` **new** | it goes | `left_by` (`close`, `back`, `challenge`), `ms_open`, `reminder` (`set`: a time chosen and the phone said yes; `not set`: asked from it and not set; absent when not asked from it) | | P |
 | `rung reached` | a new rung of the ladder | `rung`, `rung_index`, `days_in`, `pills_read` | | P |
 | `streak milestone`, `best streak beaten` | the streak hits a milestone, or the best | `streak_days`, `is_plus`, `previous_best` | | P |
 | `streak broken` | the streak is found broken | `streak_lost`, `best_streak`, `days_missed`, `freezes_left`, `is_plus` | | P |
@@ -334,7 +385,7 @@ other ending.
 
 | Event | When | Properties | Why | Where |
 | --- | --- | --- | --- | --- |
-| `card closed` **new** | a stint ends without the day moving on: a card of the day left for a tab, a pushed screen or the background; every card read in the deck viewer, however it left | `ms_on_card` (in sight, this stint), card facts, `where` (`today`, or the screen the viewer was opened from: `explore`, `journey`, `came back`, `widget`, `story` — the card opened from a story's last screen; `detail` — a kept card played again from its own page; `viewer` when none was given), read facts | dwell and depth on cards read outside the day, and on cards of the day left half-read | P, T:`close` |
+| `card closed` **new** | a stint ends without the day moving on: a card of the day left for a tab, a pushed screen or the background; every card read in the deck viewer, however it left | `ms_on_card` (in sight, this stint), card facts, `where` (`today`, or the screen the viewer was opened from: `explore`, `journey`, `came back`, `widget`, `week` **new** — the week gone over from Sunday's week, `story` — the card opened from a story's last screen; `detail` — a kept card played again from its own page; `viewer` when none was given), read facts | dwell and depth on cards read outside the day, and on cards of the day left half-read | P, T:`close` |
 
 **Read facts**, on `card advanced` and `card closed`:
 
@@ -374,6 +425,12 @@ is in its card facts.
 | `explore story opened` **new** | a true story starts playing, from its tile on Explore | card facts, `beats` (how many it has), `authored` (true for a story written to be played, its scenes and its question), `rank` (its place on the shelf, from 1) | which stories are opened, and from where on the shelf | P |
 | `explore story finished` **new** | a story reaches its last screen, once per opening | `pill_id`, `beats`, `authored`, `ms_to_finish` (from opening), `picked_right` (on a story written to be played: whether the outcome picked came true; absent when nothing was picked) | how many stories are told to the end, and how long one takes | P |
 | `explore story closed` **new** | a story is closed, however | `pill_id`, `beats`, `beats_seen` (how many of its beats were on screen), `finished`, `ms_in_story`, `taps_back` (taps on the left to go back), `holds` (fingers held down to stop it), `exit` (`closed` with its button, `swiped down`, `card` — the card opened in its place, `back` — the phone's back) | where readers leave a story, and how: the beats seen are counted on the phone and said once, never an event per beat | P |
+| `summary opened` **new** | a book's summary opens in the reader (lib/books/summary_reader.dart), from the book's page or a part of it | `book`, `from` (`book`), `part` (where it opened, from 1), `of` (its parts), `weekly` (bool: this week's free book), `is_plus`, `resumed` (bool: back where the reader left it) | whether the long way into a book is taken, and taken up again | P |
+| `summary part read` **new** | a part of a summary is read to its foot, or turned past, once a sitting; never a part behind the offer | `book`, `part` (from 1), `of`, `is_plus`, `how` (`scroll`, `turn`) | how far into a summary readers go | P |
+| `summary finished` **new** | the page after a summary's last part | `book`, `of`, `read` (parts read so far), `is_plus` | | P |
+| `book audio played` **new** | a summary starts playing aloud (lib/books/book_player.dart, behind `bookAudio`) | `book`, `part` (where it starts, from 1), `of`, `whole` (bool: every part may be heard, Astute+ or the week's book), `from` (`book`) | whether books are heard, and on which plan | P |
+| `book audio finished` **new** | every part that could be heard was, to the end | `book`, `heard`, `of`, `whole`, `ms_listening` | | P |
+| `book audio stopped` **new** | the player is stopped before the end (its cross, Stop listening) | `book`, `heard`, `at`, `of`, `phase` (`playing`, `waiting`, `offer`, `unavailable`, `preparing`), `whole`, `ms_listening`, `why` (when nothing could be heard: `credit`, `spent`, `busy`, `storage`, `not-configured`, `later`, `audio`) | where listeners stop; `phase: offer` is the free part heard and the rest not taken. The paywall it opens says `plus gate reached` with `source: book audio`, and a locked part read `source: book summary` | P |
 
 ### 6.6 Keeping, saying, sharing
 
@@ -393,10 +450,13 @@ is in its card facts.
 
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
-| `intro scene changed`, `intro skipped` | the intro's scenes | `from`, `to`, `by`, `ms_on_scene`, `at_scene` | P |
-| `onboarding started`, `onboarding step done`, `onboarding step skipped`, `onboarding completed` | the first run | `step`, `next`, `ms_on_step`, `topics`, `shape`, `claimed`, `solid_start`, `hand_picked` | P, T:`onb` (completed) |
-| `genres shown`, `genres set`, `mix set`, `levels set` | the mix | `subjects_in_mix`, `genres_off`, `strands_off`, `genres_on`, `topics`, `leaned_to`, `subjects_rated` | P, T:`genres`/`mix` |
-| `sign in started`, `sign in ended`, `account merged` | signing in | `method`, `outcome` (`signedIn`, `cancelled`, `unavailable`, `failed`, `busy`), `from` (`intro`, `profile`, `day done`), `ms`, `no_sheet` (a cancel that came back too fast for a sheet to have shown), `error` (every outcome but `signedIn`), `route`, `account_had_backup`, `days_on_phone`, `days_in_account`, `days_after`, `saved_after`, `cards_seen_after` | P |
+| `intro scene changed`, `intro skipped` | the intro's scenes; `intro skipped` is its one way on, Start reading, from whichever scene (there is no Skip beside it any more) | `from`, `to`, `by` (`intro skipped`: `start reading`), `ms_on_scene`, `at_scene` | P |
+| `intro how opened` **new** | the second scene's link to How we write the cards | `at_scene` | P |
+| `onboarding started`, `onboarding step done`, `onboarding completed` | the first run: the intro, Your mix, the three loved (`onboarding loves`, behind `firstRun.loves`); none of them has a Skip, so `onboarding step skipped` is gone | `step`, `next`, `ms_on_step`, `topics`, `shape`, `claimed`, `solid_start`, `hand_picked` | P, T:`onb` (completed) |
+| `loves set` **new** | the first run's last question answered: up to three subjects the reader loves, none an answer too | `count`, `loved` (topic keys, comma-separated, in the order picked) | P |
+| `genres shown`, `genres set`, `mix set`, `levels set` | the mix, and Which parts — no longer a first-run step: offered on the shelf, or in the fine-tuning | `subjects_in_mix`, `genres_off`, `strands_off`, `genres_on`, `topics`, `leaned_to`, `subjects_rated` | P, T:`genres`/`mix` |
+| `parts offer shown`, `parts offer answered` **new** | Which parts, offered once on the finished day's shelf from the third finished day (`parts.offer`, `parts.offerDay`) to a reader who has not chosen parts | `days_completed` (shown), `choice` (`choose`, `not now`) | P |
+| `sign in started`, `sign in ended`, `account merged` | signing in | `method`, `outcome` (`signedIn`, `cancelled`, `unavailable`, `failed`, `busy`), `from` (`intro`, `profile`, `day done`, `week` **new**: the line under Sunday's week), `ms`, `no_sheet` (a cancel that came back too fast for a sheet to have shown), `error` (every outcome but `signedIn`), `route`, `account_had_backup`, `days_on_phone`, `days_in_account`, `days_after`, `saved_after`, `cards_seen_after` | P |
 | `sign in ignored` | a press while another sign-in is still waiting | `method`, `from`, `busy_with`, `busy_since_ms` | P |
 | `sign in sheet shown`, `sign in sheet closed` | the sheet with Apple and Google, by its door | `from`, `signed_in` | P |
 | `comeback shown` | the come-back screen after missed days | `days_missed`, `streak_lost` | P |
@@ -406,11 +466,18 @@ is in its card facts.
 
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
-| `paywall shown`, `paywall plan selected`, `paywall link opened`, `paywall closed` | the paywall, by the door that opened it (`sixth card`, `journey`, `archive`, `paths`, `see the plans`, `manage plan`, `explore offer` — the Astute+ card on Explore, the locked features' own; no longer `onboarding`) | `source`, `variant`, `has_number`, `plan_shown`, `store_answered`, `store` (`ready`, `asking`, `unreachable`), `plan`, `from`, `link`, `left_by` (`close`, `back`, `bought`, `pending`, `review access`, `unlocked without a store` in a debug build), `ms_open`, `plan_changes`, `is_plus` | P |
+| `paywall shown`, `paywall plan selected`, `paywall link opened`, `paywall closed` | the paywall, by the door that opened it (`sixth card`, `journey`, `archive`, `paths`, `see the plans`, `manage plan`, `gift` — the plan's row in the gift's days, `gift end` — the morning after it, `explore end` — the end of Explore's flow, `explore offer` — the Astute+ card on Explore, the locked features' own; no longer `onboarding`) | `source`, `variant`, `has_number`, `plan_shown`, `store_answered`, `store` (`ready`, `asking`, `unreachable`), `plan`, `from`, `link`, `left_by` (`close`, `back`, `bought`, `pending`, `review access`, `unlocked without a store` in a debug build), `ms_open`, `plan_changes`, `is_plus` | P |
 | `purchase started`, `purchase ended`, `purchase success shown`, `purchases restored` | buying; `source` is the paywall's door, or `first week` / `first month` for a trial started from those pages | `source`, `plan`, `has_package`, `outcome` (`bought`, `cancelled`, `pending`, `failed`; for a restore `restored`, `nothing`, `unreachable`), `product`, `price`, `currency`, `trial`, `found` | P |
 | `first offer shown` **new** | the first week's page or the first month's rises, once each per phone, after the five | `source` (`first week`, `first month`), `days_read`, `cards_read`, `streak_days`, `has_sure` (the right-when-sure figure was said), `has_strongest`, `best_card` (`said`, `liked`, `saved`, `changed`, absent with none), `trial_days` (the store's free days), `remind` (the reminder before the charge was promised) | P |
 | `first offer closed` **new** | that page goes | `source`, `left_by` (`not now`, `back`, `trial`, `pending`, `restored`, `plus already`, `no offer`), `ms_open`, `is_plus` | P |
 | `first offer trial started` **new** | the year's trial started from that page, as the store confirmed it | `source`, `product`, `trial`, `trial_days`, `ms_open` | P |
+| `gift started` **new** | the new reader's gift is given, as its moment in the first run goes up (`trial.reverse`) | `days` (14), `ends_on` (the date key of the fifteenth, the free plan's first) | P |
+| `gift end shown` **new** | the morning after the gift, before the five, once per reader | `days_read`, `cards_read` (in the gift's days), `has_gap` (how far off sureness ran could be said), `gap_moved` (from one figure to another), `back_right` (moves missed, then right when they came back), `random` (of today's five, at random) | P |
+| `gift end closed` **new** | that page goes | `left_by` (`keep`: to the paywall, whose `source` is `gift end`; `free`; `back`; `plus already`), `ms_open`, `is_plus` | P |
+| `explore end shown` **new** | Explore's endless flow ends for the day on the free plan (`explore.freeCards`), once a day | `cards_read` (today, beyond the five), `cap` | P |
+| `journey preview opened` **new** | a reader on the free plan opens Your journey and sees the preview (behind `journey.preview`): their own journey veiled, one figure in the clear. Its doors to the plans say `plus gate reached` with `source: journey`, as the journey's own door always did | `figure` (`blind`, `strong`, `sure`, `memory`), `ready` (bool: the figure could be said; false when the card says what it takes) | P |
+| `week sheet shown` **new** | Sunday's week rises (behind `week.sunday`): on Sunday once the five are read, or on Monday morning for a reader who missed it, once a week, free plan only | `week` (its Monday), `monday` (bool: shown on the Monday), `cards`, `days`, `answered`, `right`, `has_sure`, `has_best`, `plus_figure` (`overconfident`, `blind`, `memory`, absent with none), `account` (bool: the account's line was offered) | P |
+| `week sheet closed` **new** | that sheet goes | `left_by` (`close`, `review`, `plus`, `account`) | P |
 | `store answered` | each time RevenueCat is asked for the offerings: at launch, then after 3 s, 10 s, 30 s and 2 min while nothing is on sale, on the paywall opening, on Try again and on a return to the app | `ms`, `try`, `offering`, `yearly_product`, `yearly_price`, `yearly_trial`, `monthly_product`, `monthly_price`, `currency`, `is_plus`, `error` | P |
 | `entitlement read`, `entitlement changed` | the subscription as the store holds it, at launch and on every change | `active`, `product`, `period_type`, `will_renew`, `store`, `sandbox`, `expires`, `unsubscribed`, `billing_issue` | P |
 | `trial started`, `plan changed` | the app's own plan | `is_plus` | P, T:`plan` (changed) |
@@ -423,7 +490,7 @@ is in its card facts.
 | --- | --- | --- | --- |
 | `reminder opened` | a reminder's tap opened or brought the app forward (also sets the sitting's `entry` to `notification`) | `slot`, `planned_for`, `launched_app` | P |
 | `reminder switched`, `reminder time set` | the reminder settings | `on`, `at` | P |
-| `push preprompt shown`, `push preprompt answered`, `push permission asked`, `push permission answered` | asking for notifications | `reason`, `starts_on` (the time the sheet starts on), `from_habit` (whether the reader's usual time chose it), `choice`, `granted` | P |
+| `push preprompt shown`, `push preprompt answered`, `push permission asked`, `push permission answered` | asking for notifications | `reason` (`day done`, `trial`), `starts_on` (the time the sheet starts on), `from_habit` (whether the reader's usual time chose it), `from` **new** (`celebration`: raised from the first day's celebration, at the end of that day, which is then the evening's only ask; absent when the shell raised it), `choice`, `granted` | P |
 | `app opened from widget` | a widget's tap (sets `entry` to `widget`) | `widget`, `pill_id`, `where` | P |
 | `widget asked` | the sheet that shows how to put the widget on the home screen is put: once, at the end of the second finished day or later, to a reader with none placed | `can_pin` (the launcher puts it down when asked: Android 8+), `apple` | P |
 | `widget answered` | that sheet closes | `choice` (`pin`, `got it`, `not now`, `dismissed`), `pin_asked` (the launcher's dialog was asked for) | P |
@@ -437,7 +504,7 @@ is in its card facts.
 | `goal set` **new** | where the reader wants to see more clearly, picked on the profile (`lib/widgets/aim_picker.dart`); nothing for a tap on the one already picked | `goal` (`money`, `business`, `people`, `news`, `health`, `decide`), `before` (the goal it replaces, absent where there was none), `from` (`profile`) | P |
 | `music sound switched` | the music cards' sound, off until turned on: Profile's switch, or Turn on after a card's Listen | `on`, `from` (`profile`, `card`) | P |
 | `usage sharing switched` | the reader's switch | `on` | P |
-| `usage sharing answered` | the first event after a yes: the intro's question or the sheet's (a no sends nothing) | `on`, `from` (`intro`, `sheet`) | P |
+| `usage sharing answered` | the first event after a yes: the card on the finished day's shelf (a no sends nothing). `intro` and `sheet` are older builds' | `on`, `from` (`shelf`) | P |
 | `legal page opened` | the privacy policy or the terms, from the intro's small print or Profile's About box (the paywall's own links send `paywall link opened`) | `page` (`privacy`, `terms`), `from` (`intro`, `profile`) | P |
 | `signed out` | | `streak_days`, `days_completed`, `pills_read` | P |
 | `account deletion asked`, `…cancelled`, `…started`, `…ended` | deleting the account | `signed_in`, `is_plus`, `account`, `outcome`, `error` | P |
@@ -600,6 +667,13 @@ once each, one paywall.
 
 Listen adds two to six events to a day it is used on: started, a card heard
 per card (one on the free plan, five on Astute+), and finished or stopped.
+A book's summary adds one to ten to the day it is read on: opened, a part
+read per part (five to eight), finished; heard, two: played, then finished
+or stopped.
+
+The first day's celebration adds two to four events to one evening per
+reader, and nothing after: shown, closed, and between them the reminder or
+the challenge tapped.
 
 Where the reader lives adds nothing to a day: a handful of events per reader
 in all — at most two sheets of the app's own and their answers, one system

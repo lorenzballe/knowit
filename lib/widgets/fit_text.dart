@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'balanced_text.dart';
+
 /// Text that takes the largest size, down from [style]'s, at which it fits
 /// the width it is given in at most [maxLines] lines.
 ///
@@ -22,6 +24,7 @@ class FitText extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.ellipsis = false,
     this.wholeWords = false,
+    this.balanced = false,
   });
 
   final String text;
@@ -40,6 +43,11 @@ class FitText extends StatelessWidget {
   /// cut. Words in scripts that break between any two characters — Chinese,
   /// Japanese, Korean — are no such words.
   final bool wholeWords;
+
+  /// Whether, once the size is found, the lines are broken evenly
+  /// ([BalancedText]): a title that wraps by one word does not leave that
+  /// word alone on the line under it. It never takes a line more.
+  final bool balanced;
 
   /// A character of a script whose lines break between any two of them.
   static final RegExp _breaksAnywhere = RegExp(
@@ -69,6 +77,30 @@ class FitText extends StatelessWidget {
       if (!fits) return false;
     }
     return true;
+  }
+
+  /// The one size [texts] are all set at in [width]: the largest, from
+  /// [from] down by half points to [least], at which each of their words
+  /// fits a line alone in [style] at that size; null where none does. What
+  /// names laid side by side ask, so that none reads louder than the one
+  /// beside it and none breaks inside a word.
+  static double? oneSize(
+    List<String> texts,
+    TextStyle Function(double size) style,
+    double width, {
+    required double from,
+    required double least,
+    required TextScaler scaler,
+    required TextDirection direction,
+  }) {
+    for (double size = from; size >= least; size -= 0.5) {
+      if (texts.every(
+        (t) => wordsFit(t, style(size), scaler, direction, width),
+      )) {
+        return size;
+      }
+    }
+    return null;
   }
 
   @override
@@ -104,6 +136,13 @@ class FitText extends StatelessWidget {
           painter.dispose();
           if (fits) break;
           size -= 1;
+        }
+        if (balanced && !ellipsis) {
+          return BalancedText(
+            text,
+            textAlign: textAlign,
+            style: base.copyWith(fontSize: size),
+          );
         }
         return Text(
           text,

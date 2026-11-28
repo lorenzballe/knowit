@@ -31,7 +31,13 @@
     "touch": "taps",
     "label": "A box of penne labelled 500 g ℮ standing on a kitchen scale whose display reads '? g'. Is it likelier to weigh less than 500 g, 500 g or a bit more, or are the odds equal? Choose one, rate your confidence, then watch 60 packs get weighed and pile up on a shelf by weight."
   },
-  "source": "Geopop, “Avete mai notato questo simbolo di fianco al peso dei prodotti confezionati? #alimenti #scienze” (YouTube, 2024)",
-  "reference": "https://www.youtube.com/watch?v=yqEeMsCXrus&t=36s",
-  "written": "2026-11-03"
+  "source": "Council Directive 76/211/EEC on prepackaged products, Annex I, as amended by Directive 2007/45/EC",
+  "source_kind": "primary_document",
+  "reference": "https://eur-lex.europa.eu/eli/dir/1976/211/oj",
+  "watch": {
+    "url": "https://www.youtube.com/watch?v=yqEeMsCXrus&t=36s",
+    "by": "Geopop (YouTube, 2024)"
+  },
+  "written": "2026-11-03",
+  "checked": "2026-11-28"
 }

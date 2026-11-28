@@ -213,7 +213,9 @@ void main() {
               w.pill.id == app.todaysDeck[first].id &&
               !w.flipped,
         );
-        final Rect face = tester.getRect(card);
+        // A hard card is drawn ringed, the card built again inside itself
+        // (hard_ring.dart): the outer one is the card's edge.
+        final Rect face = tester.getRect(card.first);
         final Rect line = tester.getRect(note);
         expect(line.top, greaterThan(face.top), reason: phone.key);
         expect(line.top, lessThan(face.top + 90), reason: phone.key);

@@ -1,9 +1,10 @@
-"""The challenge on today's five: a page on the site where a friend plays the
-five a reader played, and sees the two scores side by side.
+"""Today's challenge, on the site: a page where a friend plays the five
+questions a reader played, and sees the two scores side by side.
 
-The five at the top of Explore in the app are the same for every reader that
-day, and the deploy publishes them for every day from the day before it to
-four hundred after (tool/todays_five.dart: five/days.json, and for each card
+The five at the top of Explore in the app — Today's challenge, La sfida di
+oggi — are the same for every reader that day, and the deploy publishes them
+for every day from the day before it to four hundred after
+(tool/todays_five.dart: five/days.json, and for each card
 five/cards/<id>.json). A reader who has played them can send a friend
 "Challenge a friend" (lib/explore/blocks/bets/five_challenge.dart): a line in
 the reader's language and a link to this page,
@@ -26,27 +27,34 @@ without the app (the app does not claim the address: site/.well-known/ names
   gives, which are the card's own test read guess by guess);
 - "Five new ones tomorrow", and the way to the app, as the stores stand
   (tool/site/chrome.py: until the App Store listing is live, Google Play is
-  the button and the App Store is marked as coming).
+  the button and the App Store is marked as coming, leading to the list for
+  the iPhone).
 
 A link without a score is the five alone, and the friend's score at the end.
 A day the site has no five for falls back to the friend's own today, and says
 so. One page for every day, so a link is never a page that is not there.
 
-In English, as the whole site is; the line the reader sends is in theirs.
-The site's own chrome, stylesheet and script (the nav, the footer, what the
-site measures: the page read and the store buttons pressed, nothing more);
-the page's own style and script inline, so it is one request and quick.
+In each of the site's languages (WORDS: English at /sfida, Italian at
+/it/sfida, where a browser in Italian is sent): the page's words and the
+script's, the line the friend passes on as the app's own. The cards' words
+are the cards', in English, and marked so. The site's own chrome, stylesheet
+and script (the nav, the footer, what the site measures: the page read and
+the store buttons pressed, nothing more); the page's own style and script
+inline, so it is one request and quick.
 
 Written when the site is put together (.github/workflows/deploy.yml), into
-<site>/sfida.html, which the site serves at /sfida.
+<site>/sfida.html and <site>/it/sfida.html, which the site serves at /sfida
+and /it/sfida.
 
     python3 tool/cards/sfida_page.py _site
 """
 from __future__ import annotations
 
 import html
+import json
 import sys
 from pathlib import Path
+
 
 # The site's chrome and the stores as they stand: one switch there
 # (APP_STORE_OPEN) reaches this page too.
@@ -172,13 +180,16 @@ SCRIPT = """(() => {
   const pad = n => String(n).padStart(2, '0');
   const keyOf = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   const dateOf = key => { const p = key.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2], 12); };
-  const say = (d, o) => new Intl.DateTimeFormat('en-GB', o).format(d);
+  // The page's words, in its language (WORDS, below, as the page writes them).
+  const W = @WORDS@;
+  const say = (d, o) => new Intl.DateTimeFormat(W.locale, o).format(d);
   const esc = s => String(s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
   const hex = h => (/^#[0-9a-f]{6}$/i.test(h) ? h : '#F2F1EC');
   const triplet = h => (/^#[0-9a-f]{6}$/i.test(h) ? [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)).join(' ') : '16 16 12');
   const json = url => fetch(url).then(r => (r.ok ? r.json() : Promise.reject(new Error(url))));
   const percent = v => Math.round(v * 10) / 10 + '%';
-  const words = ['none', 'one', 'two', 'three', 'four', 'five'];
+  const words = W.numbers;
+  const subject = topic => W.subjects[topic] || topic;
 
   // The link: the day the five were dealt on the sender's calendar, and how
   // many of them the sender got right. Anything else is not read.
@@ -214,18 +225,18 @@ SCRIPT = """(() => {
 
   // The subject's mark, drawn from the symbols the site's header carries.
   const label = (c, end) => '<p class="label"><svg class="mark" aria-hidden="true"><use href="#subject-'
-    + esc(String(c.topic || '').toLowerCase().replace(/[^a-z]+/g, '-')) + '"/></svg><span>' + esc(c.topic) + '</span>' + (end || '') + '</p>';
+    + esc(String(c.topic || '').toLowerCase().replace(/[^a-z]+/g, '-')) + '"/></svg><span>' + esc(subject(c.topic)) + '</span>' + (end || '') + '</p>';
 
   function show(i) {
     const c = cards[i];
     const pick = c.kind === 'pick';
     stage.innerHTML = '<article class="duel-card paper' + (i > 0 && !still ? ' enter' : '') + '" style="--c:' + hex(c.color) + ';--ink:' + triplet(c.ink) + '">'
       + label(c, '<span class="duel-n">' + (i + 1) + '/5</span>')
-      + '<h2 class="duel-q" tabindex="-1" style="--fs:' + sizeOf(c.question) + 'px">' + esc(c.question) + '</h2>'
+      + '<h2 class="duel-q" tabindex="-1" lang="en" style="--fs:' + sizeOf(c.question) + 'px">' + esc(c.question) + '</h2>'
       + (pick
-        ? '<div class="duel-opts" role="group" aria-label="Answers">' + c.options.map((o, k) => '<button type="button" class="duel-opt" aria-pressed="false" data-i="' + k + '"><span>' + esc(o) + '</span><i aria-hidden="true"></i></button>').join('') + '</div>'
-        : '<div class="duel-share"><p class="duel-figure" aria-hidden="true">50%</p><input class="duel-range" type="range" min="0" max="100" step="1" value="50" aria-label="Your guess, in per cent" aria-valuetext="50%"><p class="duel-ends" aria-hidden="true"><span>0%</span><span>100%</span></p></div>')
-      + '<button type="button" class="duel-lock"' + (pick ? ' disabled' : '') + '>' + (pick ? 'Pick one first' : 'Lock in') + '</button>'
+        ? '<div class="duel-opts" role="group" aria-label="' + W.answers + '" lang="en">' + c.options.map((o, k) => '<button type="button" class="duel-opt" aria-pressed="false" data-i="' + k + '"><span>' + esc(o) + '</span><i aria-hidden="true"></i></button>').join('') + '</div>'
+        : '<div class="duel-share"><p class="duel-figure" aria-hidden="true">50%</p><input class="duel-range" type="range" min="0" max="100" step="1" value="50" aria-label="' + W.guess + '" aria-valuetext="50%"><p class="duel-ends" aria-hidden="true"><span>0%</span><span>100%</span></p></div>')
+      + '<button type="button" class="duel-lock"' + (pick ? ' disabled' : '') + '>' + (pick ? W.pickFirst : W.lock) + '</button>'
       + '</article>';
     steps.forEach((li, k) => { li.className = k < i ? 'done' : k === i ? 'now' : ''; });
     if (glow) glow.style.setProperty('--glow', hex(c.color));
@@ -238,7 +249,7 @@ SCRIPT = """(() => {
         said = Number(b.dataset.i);
         options.forEach(o => o.setAttribute('aria-pressed', String(o === b)));
         lock.disabled = false;
-        lock.textContent = 'Lock in';
+        lock.textContent = W.lock;
       }));
     } else {
       const range = $('.duel-range', card), figure = $('.duel-figure', card);
@@ -260,7 +271,7 @@ SCRIPT = """(() => {
       const top = play.getBoundingClientRect().top;
       if (top < 64) window.scrollBy({ top: top - 76, behavior: still ? 'auto' : 'smooth' });
       $('.duel-q', stage).focus({ preventScroll: true });
-      status.textContent = 'Question ' + (i + 2) + ' of 5.';
+      status.textContent = W.question.replace('{n}', i + 2);
     });
   }
 
@@ -270,32 +281,32 @@ SCRIPT = """(() => {
     const squares = '<span class="duel-squares" aria-hidden="true">' + marks.map(m => '<i' + (m ? ' class="on"' : '') + '></i>').join('') + '</span>';
     const score = $('[data-score]');
     if (friend !== null) {
-      score.innerHTML = '<span class="duel-side"><small>You</small><b>' + you + '</b>' + squares + '</span>'
-        + '<span class="duel-side"><small>Your friend</small><b>' + friend + '</b></span>';
-      score.setAttribute('aria-label', 'You ' + you + ' \\u00b7 Your friend ' + friend);
+      score.innerHTML = '<span class="duel-side"><small>' + W.you + '</small><b>' + you + '</b>' + squares + '</span>'
+        + '<span class="duel-side"><small>' + W.friend + '</small><b>' + friend + '</b></span>';
+      score.setAttribute('aria-label', W.you + ' ' + you + ' \\u00b7 ' + W.friend + ' ' + friend);
     } else {
       score.classList.add('solo');
-      score.innerHTML = '<span class="duel-side"><small>You</small><b>' + you + '<em> of 5</em></b>' + squares + '</span>';
-      score.setAttribute('aria-label', 'You got ' + you + ' of 5');
+      score.innerHTML = '<span class="duel-side"><small>' + W.you + '</small><b>' + you + '<em> ' + W.of5 + '</em></b>' + squares + '</span>';
+      score.setAttribute('aria-label', W.youGot.replace('{n}', you));
     }
     const missed = 5 - you;
     $('[data-verdict]').textContent = friend !== null
-      ? (you > friend ? 'You win by ' + words[you - friend] + '.' : you < friend ? 'Your friend wins by ' + words[friend - you] + '.' : 'A draw.')
-      : you === 5 ? 'All five right.' : you === 0 ? 'None right this time.'
-        : words[you][0].toUpperCase() + words[you].slice(1) + ' right, ' + words[missed] + ' missed.';
+      ? (you > friend ? W.youWin.replace('{n}', words[you - friend]) : you < friend ? W.friendWins.replace('{n}', words[friend - you]) : W.draw)
+      : you === 5 ? W.allRight : you === 0 ? W.noneRight
+        : W.someRight.replace('{right}', words[you][0].toUpperCase() + words[you].slice(1)).replace('{missed}', words[missed]);
     $('[data-rows]').innerHTML = cards.map((c, i) => {
       const pick = c.kind === 'pick';
       const yours = pick ? c.options[answers[i]] : percent(answers[i]);
       const right = pick ? c.options[c.correct] : percent(c.value);
       return '<li class="duel-row ' + (marks[i] ? 'is-right' : 'is-wrong') + '">'
-        + label(c, '<span class="duel-mark" role="img" aria-label="' + (marks[i] ? 'Right' : 'Not right') + '"></span>')
-        + '<p class="duel-row-q">' + esc(c.question) + '</p>'
-        + (pick && marks[i] ? '' : '<p class="duel-yours">Yours: ' + esc(yours) + '</p>')
-        + '<p class="duel-right">Right: ' + esc(right) + '</p>'
-        + (c.why ? '<p class="duel-why">' + esc(c.why) + '</p>' : '')
+        + label(c, '<span class="duel-mark" role="img" aria-label="' + (marks[i] ? W.right : W.notRight) + '"></span>')
+        + '<p class="duel-row-q" lang="en">' + esc(c.question) + '</p>'
+        + (pick && marks[i] ? '' : '<p class="duel-yours">' + W.yours + ' <span lang="en">' + esc(yours) + '</span></p>')
+        + '<p class="duel-right">' + W.rightIs + ' <span lang="en">' + esc(right) + '</span></p>'
+        + (c.why ? '<p class="duel-why" lang="en">' + esc(c.why) + '</p>' : '')
         + '</li>';
     }).join('');
-    $('[data-pass]').textContent = friend !== null ? 'Challenge someone else' : 'Challenge a friend';
+    $('[data-pass]').textContent = friend !== null ? W.passOn : W.challenge;
     head.hidden = true;
     play.hidden = true;
     result.hidden = false;
@@ -309,14 +320,14 @@ SCRIPT = """(() => {
   // Sent on by the friend, as the app sends it: the score, and this page
   // for the same day. Through the phone's own sheet where there is one.
   $('[data-pass]').addEventListener('click', () => {
-    const whose = day === today ? 'today\\u2019s' : say(dateOf(day), { weekday: 'long' }) + '\\u2019s';
-    const text = you === 5 ? 'I got all of ' + whose + ' 5 on Astute. Can you match it?' : 'I got ' + you + ' of ' + whose + ' 5 on Astute. Can you beat me?';
+    const whose = day === today ? W.today : W.ofDay.replace('{day}', say(dateOf(day), { weekday: 'long' }));
+    const text = (you === 5 ? W.shareAll : W.share).replace('{n}', you).replace('{whose}', whose);
     const url = 'https://astutetheapp.com/sfida?d=' + day + '&s=' + you;
     const passed = $('[data-passed]');
     if (navigator.share) {
       navigator.share({ text: text, url: url }).catch(() => {});
     } else if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text + '\\n' + url).then(() => { passed.textContent = 'Copied. Paste it to a friend.'; }, () => { passed.textContent = url; });
+      navigator.clipboard.writeText(text + '\\n' + url).then(() => { passed.textContent = W.copied; }, () => { passed.textContent = url; });
     } else {
       passed.textContent = url;
     }
@@ -329,19 +340,19 @@ SCRIPT = """(() => {
     const date = dateOf(day);
     const isToday = day === today;
     const weekday = say(date, { weekday: 'long' });
-    const when = (isToday ? 'Today\\u2019s five' : 'The five') + ' \\u00b7 ' + say(date, { weekday: 'long', day: 'numeric', month: 'long' });
+    const when = (isToday ? W.todays : W.theChallenge) + ' \\u00b7 ' + say(date, { weekday: 'long', day: 'numeric', month: 'long' });
     document.querySelectorAll('[data-when]').forEach(el => { el.textContent = when; });
-    const whose = isToday ? 'today\\u2019s' : weekday + '\\u2019s';
-    $('[data-title]').innerHTML = (friend !== null
-      ? 'A friend got ' + friend + ' of ' + whose + ' 5.'
-      : (isToday ? 'Today\\u2019s five.' : weekday + '\\u2019s five.')) + ' <span>Your turn.</span>';
-    $('[data-lede]').textContent = 'Five questions from five subjects, the same for everyone ' + (isToday ? 'today' : 'on ' + weekday) + '. About two minutes.';
+    const whose = isToday ? W.today : W.ofDay.replace('{day}', weekday);
+    $('[data-title]').innerHTML = esc(friend !== null
+      ? (friend === 1 ? W.friendGotOne : W.friendGot).replace('{n}', friend).replace('{whose}', whose)
+      : (isToday ? W.todaysTitle : W.dayTitle.replace('{day}', weekday))) + ' <span>' + W.yourTurn + '</span>';
+    $('[data-lede]').textContent = W.lede.replace('{when}', isToday ? W.todayWord : W.onDay.replace('{day}', weekday));
     if (fellBack) {
       const note = $('[data-note]');
-      note.textContent = 'The five your friend played are no longer here, so these are today\\u2019s.';
+      note.textContent = W.fellBack;
       note.hidden = false;
     }
-    if (friend !== null) document.title = 'A friend got ' + friend + ' of 5 \\u00b7 Astute';
+    if (friend !== null) document.title = W.docTitle.replace('{n}', friend) + ' \\u00b7 Astute';
     show(0);
   }
 
@@ -375,19 +386,162 @@ SCRIPT = """(() => {
 })();
 """
 
+# What the page says, in each of the site's languages: the page's own words
+# (the template's {placeholders}) and its script's (W). The names are the
+# app's: Today's challenge, La sfida di oggi (fiveTitle); the line a friend
+# passes on is the app's own (fiveChallengeLine, fiveChallengeAll), and so
+# are Lock in and Pick one first (betsLockIn, betsPickFirst).
+WORDS = {
+    "en": {
+        "title": "Today’s challenge · Astute",
+        "description": ("A friend played today’s challenge on Astute: five questions from five subjects, "
+                        "the same for everyone today. Your turn."),
+        "og_title": "Today’s challenge: your turn",
+        "skip": "Skip to content",
+        "when": "Today’s challenge",
+        "h1": "Today’s challenge. <span>Your turn.</span>",
+        "lede": "Five questions from five subjects, the same for everyone today. About two minutes.",
+        "five": "The five questions",
+        "noscript": "The five are played on this page with JavaScript on. They are in the app every morning too.",
+        "fail": "Today’s challenge did not load.",
+        "retry": "Try again",
+        "result": "Your result",
+        "rows": "Question by question",
+        "pass": "Challenge someone else",
+        "more": "Five new ones tomorrow.",
+        "more_line": ("Every morning, five new questions in the Astute app, the same for everyone, "
+                      "and five cards with the why behind each."),
+        "js": {
+            "locale": "en-GB",
+            "numbers": ["none", "one", "two", "three", "four", "five"],
+            "subjects": {},
+            "answers": "Answers",
+            "guess": "Your guess, in per cent",
+            "pickFirst": "Pick one first",
+            "lock": "Lock in",
+            "question": "Question {n} of 5.",
+            "you": "You",
+            "friend": "Your friend",
+            "of5": "of 5",
+            "youGot": "You got {n} of 5",
+            "youWin": "You win by {n}.",
+            "friendWins": "Your friend wins by {n}.",
+            "draw": "A draw.",
+            "allRight": "All five right.",
+            "noneRight": "None right this time.",
+            "someRight": "{right} right, {missed} missed.",
+            "right": "Right",
+            "notRight": "Not right",
+            "yours": "Yours:",
+            "rightIs": "Right:",
+            "passOn": "Challenge someone else",
+            "challenge": "Challenge a friend",
+            "today": "today’s",
+            "ofDay": "{day}’s",
+            "share": "I got {n} of {whose} 5 on Astute. Can you beat me?",
+            "shareAll": "I got all of {whose} 5 on Astute. Can you match it?",
+            "copied": "Copied. Paste it to a friend.",
+            "todays": "Today’s challenge",
+            "theChallenge": "The challenge",
+            "friendGot": "A friend got {n} of {whose} 5.",
+            "friendGotOne": "A friend got 1 of {whose} 5.",
+            "todaysTitle": "Today’s challenge.",
+            "dayTitle": "{day}’s challenge.",
+            "yourTurn": "Your turn.",
+            "lede": "Five questions from five subjects, the same for everyone {when}. About two minutes.",
+            "todayWord": "today",
+            "onDay": "on {day}",
+            "fellBack": "The five your friend played are no longer here, so these are today’s.",
+            "docTitle": "A friend got {n} of 5",
+        },
+    },
+    "it": {
+        "title": "La sfida di oggi · Astute",
+        "description": ("Un amico ha giocato la sfida di oggi su Astute: cinque domande da cinque materie, "
+                        "le stesse per tutti oggi. Tocca a te."),
+        "og_title": "La sfida di oggi: tocca a te",
+        "skip": "Vai al contenuto",
+        "when": "La sfida di oggi",
+        "h1": "La sfida di oggi. <span>Tocca a te.</span>",
+        "lede": "Cinque domande da cinque materie, le stesse per tutti oggi. Circa due minuti.",
+        "five": "Le cinque domande",
+        "noscript": "Le cinque si giocano su questa pagina con JavaScript attivo. Ogni mattina sono anche nell’app.",
+        "fail": "La sfida di oggi non si è caricata.",
+        "retry": "Riprova",
+        "result": "Il tuo risultato",
+        "rows": "Domanda per domanda",
+        "pass": "Sfida qualcun altro",
+        "more": "Domani, cinque nuove.",
+        "more_line": ("Ogni mattina, nell’app Astute, cinque domande nuove, le stesse per tutti, "
+                      "e cinque carte con il perché di ognuna."),
+        "js": {
+            "locale": "it-IT",
+            "numbers": ["nessuna", "una", "due", "tre", "quattro", "cinque"],
+            "subjects": {
+                "Economics": "Economia", "Sport": "Sport", "Nature": "Natura", "Science": "Scienza",
+                "Maths": "Matematica", "Language": "Lingua", "Technology": "Tecnologia", "Space": "Spazio",
+                "Philosophy": "Filosofia", "Cinema": "Cinema", "Psychology": "Psicologia", "Music": "Musica",
+                "Weird facts": "Stranezze", "Art": "Arte", "Pop culture": "Cultura pop",
+                "Human body": "Corpo umano", "Medicine": "Medicina", "Food": "Cibo", "History": "Storia",
+                "Life": "Vita", "Thinking": "Pensiero",
+            },
+            "answers": "Risposte",
+            "guess": "La tua stima, in percentuale",
+            "pickFirst": "Prima scegline una",
+            "lock": "Conferma",
+            "question": "Domanda {n} di 5.",
+            "you": "Tu",
+            "friend": "Il tuo amico",
+            "of5": "su 5",
+            "youGot": "Ne hai indovinate {n} su 5",
+            "youWin": "Vinci tu, di {n}.",
+            "friendWins": "Vince il tuo amico, di {n}.",
+            "draw": "Pari.",
+            "allRight": "Tutte e cinque giuste.",
+            "noneRight": "Nessuna giusta, stavolta.",
+            "someRight": "{right} giuste, {missed} sbagliate.",
+            "right": "Giusta",
+            "notRight": "Sbagliata",
+            "yours": "La tua:",
+            "rightIs": "Giusta:",
+            "passOn": "Sfida qualcun altro",
+            "challenge": "Sfida un amico",
+            "today": "di oggi",
+            "ofDay": "di {day}",
+            "share": "Ho indovinato {n} delle cinque {whose} su Astute. Riesci a battermi?",
+            "shareAll": "Ho indovinato tutte le cinque {whose} su Astute. Riesci a fare lo stesso?",
+            "copied": "Copiato. Incollalo a un amico.",
+            "todays": "La sfida di oggi",
+            "theChallenge": "La sfida",
+            "friendGot": "Un amico ne ha indovinate {n} delle cinque {whose}.",
+            "friendGotOne": "Un amico ne ha indovinata 1 delle cinque {whose}.",
+            "todaysTitle": "La sfida di oggi.",
+            "dayTitle": "La sfida di {day}.",
+            "yourTurn": "Tocca a te.",
+            "lede": "Cinque domande da cinque materie, le stesse per tutti {when}. Circa due minuti.",
+            "todayWord": "oggi",
+            "onDay": "{day}",
+            "fellBack": "Le cinque giocate dal tuo amico non ci sono più: queste sono quelle di oggi.",
+            "docTitle": "Un amico ha fatto {n} su 5",
+        },
+    },
+}
+
 PAGE = """<!DOCTYPE html>
-<html lang="en">
+<html lang="{lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Today’s five · Astute</title>
+{lang_script}
+<title>{title}</title>
 <meta name="description" content="{description}">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#141416">
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Astute">
-<meta property="og:title" content="Today’s five: your turn">
+<meta property="og:locale" content="{locale}">
+<meta property="og:title" content="{og_title}">
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{url}">
 <meta property="og:image" content="{site}/assets/og.png">
@@ -403,11 +557,10 @@ PAGE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/assets/site.css">
 <style>
 {css}</style>
-<script>document.documentElement.classList.add('js')</script>
 <script src="/assets/main.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#top">Skip to content</a>
+<a class="skip" href="#top">{skip}</a>
 <div class="grain" aria-hidden="true"></div>
 
 {header}
@@ -417,34 +570,34 @@ PAGE = """<!DOCTYPE html>
 <div class="duel">
   <p class="duel-sr" data-status aria-live="polite"></p>
   <header class="duel-head" data-head>
-    <p class="duel-when" data-when>Today’s five</p>
-    <h1 class="duel-title" data-title>Today’s five. <span>Your turn.</span></h1>
-    <p class="duel-lede" data-lede>Five questions from five subjects, the same for everyone today. About two minutes.</p>
+    <p class="duel-when" data-when>{when}</p>
+    <h1 class="duel-title" data-title>{h1}</h1>
+    <p class="duel-lede" data-lede>{lede}</p>
     <p class="duel-note" data-note hidden></p>
   </header>
 
-  <section class="duel-play" data-play aria-label="The five questions">
+  <section class="duel-play" data-play aria-label="{five}">
     <ol class="duel-steps" data-steps aria-hidden="true"><li class="now"></li><li></li><li></li><li></li><li></li></ol>
     <div class="duel-stage" data-stage><div class="duel-card duel-wait" aria-hidden="true"></div></div>
-    <noscript><p class="duel-lede">The five are played on this page with JavaScript on. They are in the app every morning too.</p></noscript>
-    <p class="duel-fail" data-fail hidden>Today’s five did not load.<button type="button" data-retry>Try again</button></p>
+    <noscript><p class="duel-lede">{noscript}</p></noscript>
+    <p class="duel-fail" data-fail hidden>{fail}<button type="button" data-retry>{retry}</button></p>
   </section>
 
-  <section class="duel-result" data-result hidden aria-label="Your result">
+  <section class="duel-result" data-result hidden aria-label="{result}">
     <div class="duel-sheet">
-      <p class="duel-kicker" data-when>Today’s five</p>
+      <p class="duel-kicker" data-when>{when}</p>
       <h2 class="duel-score" data-score tabindex="-1"></h2>
       <p class="duel-verdict" data-verdict></p>
-      <p class="duel-kicker">Question by question</p>
+      <p class="duel-kicker">{rows}</p>
       <ol class="duel-rows" data-rows></ol>
-      <button type="button" class="duel-pass" data-pass>Challenge someone else</button>
+      <button type="button" class="duel-pass" data-pass>{pass_}</button>
       <p class="duel-passed" data-passed role="status"></p>
     </div>
   </section>
 
   <section class="duel-more later" data-more>
-    <h2>Five new ones tomorrow.</h2>
-    <p>Every morning, five new questions in the Astute app, the same for everyone, and five cards with the why behind each. {where}.</p>
+    <h2>{more}</h2>
+    <p>{more_line} {where}.</p>
     <div class="stores large center">{stores}</div>
   </section>
 </div>
@@ -457,40 +610,61 @@ PAGE = """<!DOCTYPE html>
 </html>
 """
 
+LOCALES = {"en": "en_GB", "it": "it_IT"}
 
-def stores() -> str:
-    """The two stores' badges, as the site draws them (chrome.badge): the
+
+def stores(lang: str = "en") -> str:
+    """The two stores' badges, as the site draws them (chrome.stores): the
     store the app is in first. Until the App Store listing is live, Google
-    Play's is the button and Apple's comes after it, marked as coming."""
-    apple = (chrome.badge("app-store", chrome.APP_STORE_LINK) if APP_STORE_OPEN
-             else chrome.soon("app-store", chrome.APP_STORE_LINK))
-    play = (chrome.badge("google-play", chrome.GOOGLE_PLAY) if GOOGLE_PLAY_OPEN
-            else chrome.coming("google-play"))
-    return play + apple if GOOGLE_PLAY_OPEN and not APP_STORE_OPEN else apple + play
+    Play's is the button and Apple's comes after it, marked as coming and
+    leading to the list for the iPhone."""
+    return chrome.stores(lang, play_first=True)
 
 
-def render() -> str:
-    """The page, whole: the site's chrome around the challenge."""
+def render(lang: str = "en") -> str:
+    """The page, whole, in [lang]: the site's chrome around the challenge."""
+    w = WORDS[lang]
+    script = SCRIPT.replace("@WORDS@", json.dumps(w["js"], ensure_ascii=False))
     return PAGE.format(
-        description=html.escape(
-            "A friend played today’s five on Astute: five questions from five subjects, "
-            "the same for everyone today. Your turn.", quote=True),
-        url=f"{SITE}/{PATH}",
+        lang=lang,
+        lang_script=chrome.lang_script(lang, "/" + PATH),
+        title=w["title"],
+        description=html.escape(w["description"], quote=True),
+        og_title=html.escape(w["og_title"], quote=True),
+        locale=LOCALES[lang],
+        url=f"{SITE}{chrome.at('/' + PATH, lang)}",
         site=SITE,
         css=CSS,
-        header=chrome.header("/", "/"),
-        where=html.escape(where(sentence=True)),
-        stores=stores(),
-        footer=chrome.footer("/", "/"),
-        script=SCRIPT,
+        skip=w["skip"],
+        header=chrome.header(lang, "/" + PATH),
+        when=w["when"],
+        h1=w["h1"],
+        lede=w["lede"],
+        five=w["five"],
+        noscript=w["noscript"],
+        fail=w["fail"],
+        retry=w["retry"],
+        result=w["result"],
+        rows=w["rows"],
+        pass_=w["pass"],
+        more=w["more"],
+        more_line=w["more_line"],
+        where=html.escape(where(sentence=True, lang=lang)),
+        stores=stores(lang),
+        footer=chrome.footer(lang, "/" + PATH),
+        script=script,
     )
 
 
 def write(site: Path) -> Path:
-    """Writes the page into [site], where the site serves it at /sfida."""
-    out = site / f"{PATH}.html"
-    out.write_text(render(), encoding="utf-8")
-    return out
+    """Writes the page into [site] in every language the site speaks, where
+    the site serves them: /sfida, and /it/sfida. Returns the English one."""
+    for lang in chrome.LANGS:
+        out = site / chrome.at(f"/{PATH}", lang).lstrip("/")
+        out = out.with_name(out.name + ".html")
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(render(lang), encoding="utf-8")
+    return site / f"{PATH}.html"
 
 
 def main(argv: list[str]) -> int:
@@ -498,7 +672,7 @@ def main(argv: list[str]) -> int:
         print(__doc__, file=sys.stderr)
         return 2
     out = write(Path(argv[0]))
-    print(f"the challenge on today's five written to {out}")
+    print(f"today's challenge written to {out}, and in every other language under /<lang>/")
     return 0
 
 

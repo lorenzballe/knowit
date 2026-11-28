@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
@@ -14,7 +16,7 @@ import '../data/skill_levels.dart';
 import '../data/why.dart';
 import '../listen/listen_sheet.dart';
 import '../sync/listen_client.dart';
-import '../widgets/magic_card.dart';
+import '../widgets/sixth_card.dart';
 import '../data/pills_repository.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/premium.dart';
@@ -24,13 +26,17 @@ import '../widgets/skill_score.dart' show todayMoveOf;
 import '../sync/invite.dart';
 import '../widgets/invite_sheet.dart' show showInviteWeekIfDue;
 import '../widgets/level_up.dart' show showLevelUpIfDue;
+import '../widgets/streak_moment.dart' show showStreakMomentIfDue;
+import '../widgets/today_line.dart';
 import '../widgets/day_moment.dart' show showDayMomentIfDue;
+import '../widgets/first_day.dart';
 import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
 import '../widgets/learn_looks.dart'
     show goalUnsaid, markedSkills, scoredSkills;
-import 'paywall_screen.dart' show showFirstOfferIfDue;
+import 'paywall_screen.dart'
+    show giftEndMayBeDue, showFirstOfferIfDue, showGiftEndWhenDue;
 import 'today_done_view.dart';
 
 /// The card is the screen: dark chrome, and the deck filling everything
@@ -60,12 +66,19 @@ class TodayScreen extends StatefulWidget {
   /// the table after the fifth is thrown, and it is thrown too.
   final ValueChanged<bool>? onDeckOnTable;
 
+  /// What the shell lends the celebration of a reader's first finished day
+  /// (lib/widgets/first_day.dart): the reminder, asked down its own road,
+  /// and the way to Today's challenge on Explore. Opened as a screen of its
+  /// own, off the path, Today has no shell behind it, and nothing to lend.
+  final FirstDayHost firstDay;
+
   const TodayScreen({
     super.key,
     required this.app,
     this.onBack,
     this.onCardMotion,
     this.onDeckOnTable,
+    this.firstDay = FirstDayHost.none,
   });
 
   @override
@@ -107,6 +120,16 @@ class _TodayScreenState extends State<TodayScreen> {
   /// here, once; on any other opening it starts from the first card.
   bool _landOnDay = false;
 
+  /// Whether the page after the new reader's gift has been looked for on
+  /// this day's Today (lib/screens/gift_pages.dart): once a day at most.
+  bool _giftEndLooked = false;
+
+  /// True from the moment the reader's first finished day is to be
+  /// celebrated (firstDayDue) until the screen that celebrates it has gone:
+  /// it rises right after the fifth card, before anything else the
+  /// evening has, and the shelf's own moments wait for it.
+  bool _celebrating = false;
+
   @override
   void initState() {
     super.initState();
@@ -141,11 +164,13 @@ class _TodayScreenState extends State<TodayScreen> {
   /// for two seconds while its picture came).
   void _warmDay(AppState app) {
     final String day = [for (final Pill p in app.todaysDeck) p.id].join(',');
-    if (day.isEmpty || day == _warmed) return;
-    _warmed = day;
+    // A hard card's pictures are the ones taken on the reader's paper.
+    final bool dark = context.p.isDark;
+    if (day.isEmpty || '$day $dark' == _warmed) return;
+    _warmed = '$day $dark';
     final List<Pill> deck = List.of(app.todaysDeck);
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => CardThumb.warmDay(deck),
+      (_) => CardThumb.warmDay(deck, dark: dark),
     );
   }
 
@@ -166,20 +191,53 @@ class _TodayScreenState extends State<TodayScreen> {
       _magic = false;
       _momentDue = false;
       _landOnDay = false;
+      _giftEndLooked = false;
       return;
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       HapticFeedback.heavyImpact();
     });
+    // The reader's first finished day: celebrated first, on a screen of its
+    // own, before the card after the fifth and before anything the shelf
+    // has. Raised after this frame, and ahead of the word to the shell that
+    // the deck has left the table, so the shell finds the evening already
+    // the celebration's.
+    if (firstDayDue(widget.app)) {
+      _celebrating = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _celebrate());
+    }
     // A friend's code taken, its week waiting on this very day: the server
     // is asked now, and the card after the fifth does not offer Astute+ on
     // the evening a week of it is being given.
     final bool inviteWeek = widget.app.inviteOn && Invites.instance.waiting;
     if (inviteWeek) Invites.instance.settle();
-    if (!widget.app.isPlus && !inviteWeek) _magic = true;
+    if (!widget.app.isPlus && !inviteWeek) {
+      _magic = true;
+      // Dealt after the five, it is not dealt again on the shelf today.
+      widget.app.noteSixthDealt();
+    }
     _levelDue = true;
     _momentDue = true;
     _landOnDay = true;
+  }
+
+  /// The celebration of the reader's first finished day, over the card the
+  /// fifth left on the table (lib/widgets/first_day.dart). Noted as it
+  /// rises, so it rises once whatever happens next. Once it has gone, the
+  /// card after the fifth is there to be thrown — or, on Astute+, the shelf
+  /// — and the shelf's moments come as on any evening but one: the level.
+  Future<void> _celebrate() async {
+    if (!mounted) return;
+    // Noted before the shell hears the deck has left the table: on this
+    // evening the reminder is the celebration's to ask, and the shell's
+    // own sheet does not rise for it.
+    unawaited(widget.app.notedFirstDayCelebrated());
+    await Navigator.of(
+      context,
+      rootNavigator: true,
+    ).push(FirstDayScreen.route(widget.app, host: widget.firstDay));
+    if (!mounted) return;
+    setState(() => _celebrating = false);
   }
 
   /// Once the shelf has landed, the day at rest: a level its answers
@@ -190,6 +248,13 @@ class _TodayScreenState extends State<TodayScreen> {
   /// Where the developer tools try the day's own moment (C), it rises then
   /// instead, if it is due: never on the evening a level rises, which has
   /// that evening and its own way to send (lib/widgets/day_moment.dart).
+  ///
+  /// The evening the first day was celebrated has had its moment: a week a
+  /// friend's code gave still rises, after the celebration and never over
+  /// it, since it is given on that very evening; a level reached is not
+  /// folded into the celebration but waits for the next calm moment, the
+  /// next day finished or Your journey opened; the day's own moment waits
+  /// for another evening.
   void _riseLevel() {
     _levelDue = false;
     final bool moment = _momentDue;
@@ -200,12 +265,17 @@ class _TodayScreenState extends State<TodayScreen> {
       // A week a friend's code gave, once this first day is read: the
       // evening is its own (lib/widgets/invite_sheet.dart).
       if (await showInviteWeekIfDue(context, widget.app)) return;
-      if (!mounted) return;
+      if (!mounted || widget.app.celebratedToday) return;
       final bool rose = await showLevelUpIfDue(context, widget.app);
       if (rose || !mounted) return;
       // The first week's page or the first month's, when one is due
       // (lib/state/first_offers.dart): a level reached wins the evening.
       if (await showFirstOfferIfDue(context, widget.app)) return;
+      // The streak reaching two days, three or seven, small and once
+      // (lib/widgets/streak_moment.dart): never on an evening that had
+      // its moment already.
+      if (!mounted) return;
+      if (await showStreakMomentIfDue(context, widget.app)) return;
       if (!moment || !mounted) return;
       await showDayMomentIfDue(context, widget.app);
     });
@@ -274,6 +344,14 @@ class _TodayScreenState extends State<TodayScreen> {
     final bool done = app.todayCompleted;
     _markCompletion(done);
     _warmDay(app);
+    // The morning after the new reader's gift, before the five: what its
+    // days came to and what goes back to free, once.
+    if (!_giftEndLooked && giftEndMayBeDue(app)) {
+      _giftEndLooked = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) showGiftEndWhenDue(context, app);
+      });
+    }
     // Bought from the card itself: the offer has nothing left to offer and
     // leaves the table, so the shelf comes up. It used to stay "on the
     // table" with no card on it — the deck drops the card after the fifth
@@ -285,7 +363,9 @@ class _TodayScreenState extends State<TodayScreen> {
     // the shelf comes up when it, too, has been thrown.
     final bool onTable = !done || _magic;
     _tellShell(onTable);
-    if (!onTable && _levelDue) _riseLevel();
+    // Not while the first day's celebration is up: what rises over the
+    // shelf rises once it has gone.
+    if (!onTable && _levelDue && !_celebrating) _riseLevel();
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 420),
       switchInCurve: Curves.easeOutCubic,
@@ -342,6 +422,18 @@ class _TodayScreenState extends State<TodayScreen> {
                   : null,
             ),
           ),
+          // What the morning has to say before its first card: the day
+          // missed that a freeze covered, or, on a new reader's second
+          // and third days, how the day before went and what is new
+          // (lib/widgets/today_line.dart). All day, so the deck below
+          // keeps one size.
+          if (todayLineOf(context, app) case (
+            lead: final String? lead,
+            text: final String text,
+          )) ...[
+            const SizedBox(height: 10),
+            TodayLine(lead: lead, text: text),
+          ],
           const SizedBox(height: 16),
           _ProgressBars(total: app.todaysDeck.length, index: app.todayIndex),
           const SizedBox(height: 16),
@@ -351,18 +443,15 @@ class _TodayScreenState extends State<TodayScreen> {
               deck: app.todaysDeck,
               index: app.todayIndex,
               // After the last pill, on the free plan, the card that offers
-              // the whole day: all five the reader's own, the ones dealt at
-              // random too. It is thrown like the rest, and it says where
-              // the reader's week has got to.
+              // the whole day: one true thing about the reader's own day,
+              // and what Astute+ would have done with it
+              // (lib/widgets/sixth_card.dart). It is thrown like the rest,
+              // and it says where the reader's week has got to.
               trailing: app.isPlus
                   ? null
-                  : MagicCard(
+                  : SixthCard(
                       key: const ValueKey('magic-card'),
-                      eyebrow: context.l10n.plusNameCaps,
-                      note: weekNoteOf(context, app),
-                      headline: context.l10n.plusCardHeadline,
-                      line: context.l10n.magicLine,
-                      action: plusActionOf(context),
+                      app: app,
                       onAction: () => _offer(context),
                     ),
               // How each card was read: a card thrown on is said with the
@@ -856,15 +945,28 @@ class _Pool extends StatelessWidget {
   }
 }
 
-/// The small line under the finished day's. The freeze is said here and
-/// nowhere else, so it comes first on the day it was spent. Otherwise the
-/// gesture that likes a card, until the reader has liked one: from then on
-/// they know it, a liked card says so itself with the heart in its corner,
-/// and there is no line.
+/// The small line under the finished day's, which is where the streak is
+/// shown: the freeze, first on the day it was spent. Then, where the streak
+/// is told (`streak.told`) and there is a streak of two days or more to
+/// keep, that a missed day is covered and how many freezes the reader
+/// holds: first in the first week, when the reader is learning the app,
+/// and after the gesture that likes a card later on. That gesture is said
+/// until the reader has liked a card, the first evening's line: from then
+/// on a liked card says so itself with the heart in its corner.
 String? _shelfAside(BuildContext context, AppState app) {
   if (app.streakWasFrozen) return context.l10n.freezeKeptStreak;
+  // The new reader's gift, in its last two days: the one quiet line that
+  // says it is ending (lib/state/gift.dart).
+  if (app.giftDaysLeft case final int left) {
+    return context.l10n.giftEndsSoon(left);
+  }
+  final String? covered =
+      app.streakToldOn && app.liveStreak > 1 && app.freezes > 0
+      ? context.l10n.freezeCoversLine(app.freezes)
+      : null;
+  if (covered != null && app.completedDates.length <= 7) return covered;
   if (app.likedIds.isEmpty) return context.l10n.holdACardYouLike;
-  return null;
+  return covered;
 }
 
 class _ProgressBars extends StatelessWidget {

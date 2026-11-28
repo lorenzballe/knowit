@@ -711,6 +711,159 @@ class _CheckLine extends StatelessWidget {
   );
 }
 
+/// Two or more things under the button, each with its check: side by side
+/// where they fit on one line, one under the other where they do not. One
+/// that takes two lines on a narrow phone is a list's item: its check on
+/// its first line, its words from there, the two in the middle together —
+/// not the check at the edge and the words away from it.
+class _CheckLines extends StatelessWidget {
+  const _CheckLines(this.lines, {super.key});
+
+  final List<String> lines;
+
+  static const double _check = 14;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle style = _smallPrintStyle(context);
+    // The check in the middle of the first line, at whatever size the
+    // reader's text is.
+    final double line =
+        MediaQuery.textScalerOf(context).scale(style.fontSize ?? 12.5) *
+        (style.height ?? 1.4);
+    return Wrap(
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: 16,
+      runSpacing: 3,
+      children: [
+        for (final String text in lines)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: math.max(0, (line - _check) / 2),
+                ),
+                child: ExcludeSemantics(
+                  child: Icon(
+                    Icons.check_circle_rounded,
+                    size: _check,
+                    color: style.color,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  text,
+                  textWidthBasis: TextWidthBasis.longestLine,
+                  style: style,
+                ),
+              ),
+            ],
+          ),
+      ],
+    );
+  }
+}
+
+/// The evidence for what Astute+ trains, only as far as it holds up: that
+/// calibration can be measured and trained with feedback, as forecasting
+/// research does, and that Astute measures the reader's — no percentage,
+/// since the size of the Good Judgment Project's training effect is
+/// disputed (Hauenstein et al., Psychological Science, 2025). Under it,
+/// smaller, where it comes from, a page's mark before it, as the site
+/// marks a source.
+class _ScienceLine extends StatelessWidget {
+  const _ScienceLine({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.p;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 1),
+          child: ExcludeSemantics(
+            child: CustomPaint(
+              size: const Size(13, 15),
+              painter: _SourceMark(p.ink.withValues(alpha: 0.45)),
+            ),
+          ),
+        ),
+        const SizedBox(width: 9),
+        Expanded(
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(text: l.paywallScience),
+                const TextSpan(text: '\n'),
+                TextSpan(
+                  text: l.paywallScienceSource,
+                  style: AppText.body(
+                    size: 11.5,
+                    weight: FontWeight.w500,
+                    height: 1.45,
+                    color: p.ink.withValues(alpha: 0.42),
+                  ),
+                ),
+              ],
+            ),
+            style: AppText.body(
+              size: 13,
+              weight: FontWeight.w500,
+              height: 1.35,
+              color: p.ink.withValues(alpha: 0.66),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// A page with its corner folded, in the line weight of the features'
+/// marks: the site's mark for a source.
+class _SourceMark extends CustomPainter {
+  const _SourceMark(this.ink);
+
+  final Color ink;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double w = size.width, h = size.height;
+    final double fold = w * 0.38;
+    final Paint line = Paint()
+      ..color = ink
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.3
+      ..strokeJoin = StrokeJoin.round
+      ..strokeCap = StrokeCap.round;
+    final Path page = Path()
+      ..moveTo(1, 1)
+      ..lineTo(w - fold, 1)
+      ..lineTo(w - 1, fold)
+      ..lineTo(w - 1, h - 1)
+      ..lineTo(1, h - 1)
+      ..close();
+    canvas.drawPath(page, line);
+    canvas.drawPath(
+      Path()
+        ..moveTo(w - fold, 1)
+        ..lineTo(w - fold, fold)
+        ..lineTo(w - 1, fold),
+      line,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_SourceMark old) => old.ink != ink;
+}
+
 /// D's second step: the plans, rising over the first as a sheet, with the
 /// free days laid out day by day over them. The page stays under it,
 /// dimmed; a tap on it, or the back gesture, lowers the sheet again. What

@@ -3,19 +3,32 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Get Astute</title>
-<meta name="description" content="Get Astute on your phone: five cards a day, a little sharper.">
+<!-- @lang --><script>(function(){var h=document.documentElement,u=navigator.userAgent,s=null,k='astute.lang',q=/([?&])lang=(en|it)(&|$)/.exec(location.search);h.classList.add('js',/android/i.test(u)?'android':/iphone|ipad|ipod/i.test(u)||(/macintosh/i.test(u)&&navigator.maxTouchPoints>1)?'ios':'desktop');try{s=localStorage.getItem(k)}catch(e){}if(q){s=q[2];try{localStorage.setItem(k,s)}catch(e){}}var r=(q?location.search.replace(q[0],q[3]?q[1]:''):location.search)+location.hash,it=/^it(-|$)/i.test(navigator.language||'');var go=function(to){location.replace(to+r)};if(s==='it'||(!s&&it)){go('/it/get');return}if(q)history.replaceState(null,'',location.pathname+r);h.dataset.lang='en';})();</script><!-- /@lang -->
+<title>Get Astute · Five cards a day</title>
+<meta name="description" content="Get Astute on your phone: five cards a day, a little sharper. Free on Android; on iPhone, leave your email to be told the day it is there.">
 <meta name="theme-color" content="#141416">
 <meta name="color-scheme" content="dark">
-<link rel="canonical" href="https://astutetheapp.com/">
+<link rel="canonical" href="https://astutetheapp.com/get">
 <meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Astute">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:url" content="https://astutetheapp.com/get">
+<meta property="og:title" content="Get Astute">
+<meta property="og:description" content="Five cards a day: answer, say how sure you are, then see why. Two minutes.">
+<meta property="og:image" content="https://astutetheapp.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Astute: five cards a day, a little sharper.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
-<script>document.documentElement.classList.add('js')</script>
 <script src="/assets/main.js" defer></script>
+<script src="/assets/notify.js" type="module"></script>
 <script>
   // An iPhone goes straight to the App Store, with the campaign the site's
   // links carry (the ref of a shared link, or this page), unless the browser
@@ -23,10 +36,12 @@
   // Play. A computer stays: the page says what there is. So does an iPhone
   // while the App Store listing is not live (tool/site/chrome.py,
   // APP_STORE_OPEN, writes the switch below): the store would only say it
-  // has no such page, and this one says the app is on its way.
+  // has no such page, and this one says the app is on its way, with the
+  // list to be told the day it is there (#notify) — which an Android
+  // phone sent there for it (an iPhone owner's friend, say) is left on.
   (function () {
     var ua = navigator.userAgent;
-    if (/android/i.test(ua)) { window.location.href = 'https://play.google.com/store/apps/details?id=com.astuto.app'; return; }
+    if (/android/i.test(ua) && location.hash !== '#notify') { window.location.href = 'https://play.google.com/store/apps/details?id=com.astuto.app'; return; }
     var ios = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
     var appStoreOpen = /*@appstore*/false/*/@appstore*/;
     if (!ios || !appStoreOpen) return;
@@ -62,7 +77,7 @@
       <a href="/#faq">FAQ</a>
     </div>
     <div class="nav-actions">
-      <a class="btn-download" href="/get" data-store>Download</a>
+      <a class="lang-to" href="/it/get" hreflang="it" data-lang-to="it" aria-label="Il sito in italiano"><span class="lt-long" lang="it">Italiano</span><span class="lt-short" aria-hidden="true">IT</span></a><a class="btn-download" href="/get" data-store>Download</a>
       <button class="menu-toggle" id="menu-toggle" type="button" data-hide-desktop aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu"><i></i></button>
     </div>
   </nav>
@@ -77,7 +92,7 @@
     </div>
     <div class="menu-foot">
       <p>Free on Android · coming to iPhone · App in 13 languages · No ads</p>
-      <div class="stores small"><a class="store store-app-store store-soon" href="https://apps.apple.com/app/id6806852300" aria-label="Download on the App Store: coming soon"><svg viewBox="0 0 119.66407 40" width="156" height="52" aria-hidden="true" focusable="false"><use href="#badge-app-store"/></svg><span class="soon" aria-hidden="true">Coming soon</span></a><a class="store store-google-play" href="https://play.google.com/store/apps/details?id=com.astuto.app" aria-label="Get it on Google Play"><svg viewBox="-0.11 0 239.17 70.87" width="175" height="52" aria-hidden="true" focusable="false"><use href="#badge-google-play"/></svg></a></div>
+      <div class="stores small"><a class="store store-app-store store-soon" href="/get#notify" aria-label="App Store: coming soon. Be told the day it is there"><svg viewBox="0 0 119.66407 40" width="156" height="52" aria-hidden="true" focusable="false"><use href="#badge-app-store"/></svg><span class="soon" aria-hidden="true">Coming soon</span></a><a class="store store-google-play" href="https://play.google.com/store/apps/details?id=com.astuto.app" aria-label="Get it on Google Play"><svg viewBox="-0.11 0 239.17 70.87" width="175" height="52" aria-hidden="true" focusable="false"><use href="#badge-google-play"/></svg></a></div>
     </div>
   </div>
 </header>
@@ -88,8 +103,29 @@
     <p class="kicker"><!-- @where -->Free on Android · coming to iPhone<!-- /@where --></p>
     <h1>Get Astute.</h1>
     <p>Five cards a day. A little sharper.</p>
-    <div class="stores large center"><!-- @stores --><a class="store store-app-store store-soon" href="https://apps.apple.com/app/id6806852300" aria-label="Download on the App Store: coming soon"><svg viewBox="0 0 119.66407 40" width="156" height="52" aria-hidden="true" focusable="false"><use href="#badge-app-store"/></svg><span class="soon" aria-hidden="true">Coming soon</span></a><a class="store store-google-play" href="https://play.google.com/store/apps/details?id=com.astuto.app" aria-label="Get it on Google Play"><svg viewBox="-0.11 0 239.17 70.87" width="175" height="52" aria-hidden="true" focusable="false"><use href="#badge-google-play"/></svg></a><!-- /@stores --></div>
+    <div class="stores large center"><!-- @stores --><a class="store store-app-store store-soon" href="/get#notify" aria-label="App Store: coming soon. Be told the day it is there"><svg viewBox="0 0 119.66407 40" width="156" height="52" aria-hidden="true" focusable="false"><use href="#badge-app-store"/></svg><span class="soon" aria-hidden="true">Coming soon</span></a><a class="store store-google-play" href="https://play.google.com/store/apps/details?id=com.astuto.app" aria-label="Get it on Google Play"><svg viewBox="-0.11 0 239.17 70.87" width="175" height="52" aria-hidden="true" focusable="false"><use href="#badge-google-play"/></svg></a><!-- /@stores --></div>
     <p class="fine">App in 13 languages · No ads</p>
+    <!-- @notify -->
+<section class="notify" id="notify" aria-labelledby="notify-title">
+  <h2 class="notify-title" id="notify-title">On iPhone?</h2>
+  <p class="notify-lede">The iPhone app is on its way to the App Store. Leave your email and we will write to you once, the day it is there.</p>
+  <form class="notify-form" data-notify data-lang="en" data-bad="Check the address: something seems to be missing." data-fail="That did not go through. Try again in a moment." data-sending="Sending…" hidden novalidate>
+    <label class="notify-label" for="notify-email">Your email</label>
+    <div class="notify-row">
+      <input class="notify-input" id="notify-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" maxlength="254" required placeholder="name@example.com">
+      <button class="btn btn-cream notify-go" type="submit">Notify me when it’s on iPhone</button>
+    </div>
+    <p class="notify-error" data-notify-error role="alert" hidden></p>
+    <p class="notify-fine">For that one email alone, and then the address is deleted. <a href="/privacy#iphone-list">How we keep it</a></p>
+  </form>
+  <div class="notify-done" data-notify-done tabindex="-1" hidden>
+    <p class="notify-done-title">You’re on the list.</p>
+    <p>We will write to you once, the day Astute is on the App Store.</p>
+  </div>
+  <noscript><p class="notify-lede">Write to <a href="mailto:thebalecompany@gmail.com?subject=iPhone">thebalecompany@gmail.com</a> and we will tell you the day it is there.</p></noscript>
+  <a class="notify-try" href="/sfida">Try today’s challenge in your browser <span aria-hidden="true">→</span></a>
+</section>
+<!-- /@notify -->
   </div>
 </main>
 
@@ -103,7 +139,7 @@
           <span>Astute</span>
         </a>
         <p>Five cards a day. A little sharper. Free on Android, and coming to iPhone. The app in thirteen languages, and no ads.</p>
-        <div class="stores small"><a class="store store-app-store store-soon" href="https://apps.apple.com/app/id6806852300" aria-label="Download on the App Store: coming soon"><svg viewBox="0 0 119.66407 40" width="156" height="52" aria-hidden="true" focusable="false"><use href="#badge-app-store"/></svg><span class="soon" aria-hidden="true">Coming soon</span></a><a class="store store-google-play" href="https://play.google.com/store/apps/details?id=com.astuto.app" aria-label="Get it on Google Play"><svg viewBox="-0.11 0 239.17 70.87" width="175" height="52" aria-hidden="true" focusable="false"><use href="#badge-google-play"/></svg></a></div>
+        <div class="stores small"><a class="store store-app-store store-soon" href="/get#notify" aria-label="App Store: coming soon. Be told the day it is there"><svg viewBox="0 0 119.66407 40" width="156" height="52" aria-hidden="true" focusable="false"><use href="#badge-app-store"/></svg><span class="soon" aria-hidden="true">Coming soon</span></a><a class="store store-google-play" href="https://play.google.com/store/apps/details?id=com.astuto.app" aria-label="Get it on Google Play"><svg viewBox="-0.11 0 239.17 70.87" width="175" height="52" aria-hidden="true" focusable="false"><use href="#badge-google-play"/></svg></a></div>
       </div>
       <nav class="foot-cols" aria-label="Footer">
         <div>

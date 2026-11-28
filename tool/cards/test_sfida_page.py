@@ -1,3 +1,4 @@
+import json
 import re
 import tempfile
 import unittest
@@ -12,30 +13,47 @@ chrome = sp.chrome
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def arb(lang: str) -> dict:
+    return json.loads((ROOT / "lib" / "l10n" / f"app_{lang}.arb").read_text(encoding="utf-8"))
+
+
+def curly(s: str) -> str:
+    return s.replace("'", "’")
+
+
 class SfidaPage(unittest.TestCase):
     def test_written_where_the_site_serves_it(self):
         with tempfile.TemporaryDirectory() as d:
             out = sp.write(Path(d))
             self.assertEqual(out, Path(d) / "sfida.html")
             page = out.read_text(encoding="utf-8")
+            italian = (Path(d) / "it" / "sfida.html").read_text(encoding="utf-8")
         self.assertTrue(page.startswith("<!DOCTYPE html>"))
         self.assertIn('<html lang="en">', page)
         self.assertIn('<link rel="canonical" href="https://astutetheapp.com/sfida">', page)
         self.assertIn('<meta name="robots" content="noindex">', page)
         self.assertIn('og:image" content="https://astutetheapp.com/assets/og.png"', page)
+        # And its twin in Italian, at /it/sfida.
+        self.assertIn('<html lang="it">', italian)
+        self.assertIn('<link rel="canonical" href="https://astutetheapp.com/it/sfida">', italian)
+        self.assertIn('<meta name="robots" content="noindex">', italian)
 
     def test_the_site_s_own_chrome_style_and_script(self):
-        page = sp.render()
-        # The nav and the footer, as chrome.py writes them for every page.
-        self.assertIn(chrome.header("/", "/"), page)
-        self.assertIn(chrome.footer("/", "/"), page)
-        # The stylesheet and the script the deploy stamps with the commit,
-        # and through which the site counts the page and its store buttons.
-        self.assertIn('<link rel="stylesheet" href="/assets/site.css">', page)
-        self.assertIn('<script src="/assets/main.js" defer></script>', page)
-        # Every subject's mark, for a card to name its subject as the app does.
-        for subject in ("science", "pop-culture", "human-body", "weird-facts", "thinking"):
-            self.assertIn(f'<symbol id="subject-{subject}"', page)
+        for lang in ("en", "it"):
+            page = sp.render(lang)
+            # The nav and the footer, as chrome.py writes them for every page,
+            # in the page's language, and the head that picks the language.
+            self.assertIn(chrome.header(lang, "/sfida"), page)
+            self.assertIn(chrome.footer(lang, "/sfida"), page)
+            self.assertIn(chrome.lang_script(lang, "/sfida"), page)
+            self.assertLess(page.index("<!-- @lang -->"), page.index("<title>"))
+            # The stylesheet and the script the deploy stamps with the commit,
+            # and through which the site counts the page and its store buttons.
+            self.assertIn('<link rel="stylesheet" href="/assets/site.css">', page)
+            self.assertIn('<script src="/assets/main.js" defer></script>', page)
+            # Every subject's mark, for a card to name its subject as the app does.
+            for subject in ("science", "pop-culture", "human-body", "weird-facts", "thinking"):
+                self.assertIn(f'<symbol id="subject-{subject}"', page)
 
     def test_it_plays_the_five_the_deploy_publishes(self):
         self.assertIn("json('/five/days.json')", sp.SCRIPT)
@@ -72,17 +90,58 @@ class SfidaPage(unittest.TestCase):
 
     def test_it_says_it_in_the_owner_s_words(self):
         page = sp.render()
-        self.has(page, "'A friend got ' + friend + ' of ' + whose + ' 5.'")
+        en = sp.WORDS["en"]["js"]
+        self.assertEqual(en["friendGot"], "A friend got {n} of {whose} 5.")
+        self.assertEqual(en["you"], "You")
+        self.assertEqual(en["friend"], "Your friend")
+        self.has(page, json.dumps(en, ensure_ascii=False))
         self.has(page, "<span>Your turn.</span>")
-        self.has(page, "<small>You</small>")
-        self.has(page, "<small>Your friend</small>")
+        self.has(page, "W.friendGot")
         # Each answer: the friend's, the right one, and its why.
-        self.has(page, ">Yours: ' + esc(yours)")
-        self.has(page, ">Right: ' + esc(right)")
+        self.has(page, "W.yours + ' <span lang=\"en\">' + esc(yours)")
+        self.has(page, "W.rightIs + ' <span lang=\"en\">' + esc(right)")
         self.has(page, "esc(c.why)")
         self.has(page, "<h2>Five new ones tomorrow.</h2>")
         # A day the site no longer has falls back to today's, and says so.
-        self.has(page, "so these are today")
+        self.assertIn("so these are today", en["fellBack"])
+
+    def test_everyone_s_five_goes_by_the_app_s_name_for_it(self):
+        # Today's challenge, La sfida di oggi: what the app calls the five
+        # that are the same for everyone (fiveTitle), never "Today's five",
+        # which is the reader's own.
+        for lang in ("en", "it"):
+            name = curly(arb(lang)["fiveTitle"])
+            page = sp.render(lang)
+            self.assertIn(f"<title>{name} · Astute</title>", page)
+            self.assertIn(f'<p class="duel-when" data-when>{name}</p>', page)
+            self.assertEqual(sp.WORDS[lang]["js"]["todays"], name)
+            self.assertNotIn("Today’s five", page)
+            self.assertNotIn("Le cinque di oggi", page)
+        # Challenge a friend, and the line passed on, as the app says them.
+        self.assertEqual(sp.WORDS["it"]["js"]["challenge"], arb("it")["challengeFriend"])
+        self.assertEqual(sp.WORDS["en"]["js"]["challenge"], arb("en")["challengeFriend"])
+        for lang in ("en", "it"):
+            line = arb(lang)["fiveChallengeLine"].replace("{right}", "{n}")
+            words = sp.WORDS[lang]["js"]
+            self.assertEqual(curly(line), words["share"].replace("{whose}", words["today"]))
+            self.assertEqual(curly(arb(lang)["fiveChallengeAll"]), words["shareAll"].replace("{whose}", words["today"]))
+            self.assertEqual(words["lock"], arb(lang)["betsLockIn"])
+            self.assertEqual(words["pickFirst"], arb(lang)["betsPickFirst"])
+
+    def test_in_italian_every_word_the_english_page_says(self):
+        self.assertEqual(set(sp.WORDS["it"]), set(sp.WORDS["en"]))
+        self.assertEqual(set(sp.WORDS["it"]["js"]), set(sp.WORDS["en"]["js"]))
+        page = sp.render("it")
+        self.has(page, "La sfida di oggi. <span>Tocca a te.</span>")
+        self.has(page, "<h2>Domani, cinque nuove.</h2>")
+        self.has(page, "Gratis su Android, e presto su iPhone.")
+        self.has(page, json.dumps(sp.WORDS["it"]["js"], ensure_ascii=False))
+        # The subjects as the app names them in Italian (subjectName).
+        names = arb("it")["subjectName"]
+        for en_name, it_name in sp.WORDS["it"]["js"]["subjects"].items():
+            self.assertIn("{" + it_name + "}", names, en_name)
+        # The cards' own words are in English, and marked so.
+        self.assertIn("'<h2 class=\"duel-q\" tabindex=\"-1\" lang=\"en\"", sp.SCRIPT)
 
     def test_without_its_script_it_still_reads(self):
         page = sp.render()
@@ -95,10 +154,14 @@ class SfidaPage(unittest.TestCase):
         with mock.patch.object(sp, "APP_STORE_OPEN", False), mock.patch.object(chrome, "APP_STORE_OPEN", False):
             stores = sp.stores()
             page = sp.render()
-            # Google Play the button, the App Store after it and marked as coming.
+            # Google Play the button, the App Store after it and marked as
+            # coming, leading to the list for the iPhone, never Apple's empty page.
             self.assertLess(stores.index("store-google-play"), stores.index("store-app-store"))
             self.assertIn("store-app-store store-soon", stores)
             self.assertIn("Coming soon", stores)
+            self.assertIn('href="/get#notify"', stores)
+            self.assertNotIn("apps.apple.com", stores)
+            self.assertIn('href="/it/get#notify"', sp.stores("it"))
             self.assertIn("Free on Android, and coming to iPhone.", page)
         with mock.patch.object(sp, "APP_STORE_OPEN", True), mock.patch.object(chrome, "APP_STORE_OPEN", True):
             stores = sp.stores()
@@ -110,13 +173,14 @@ class SfidaPage(unittest.TestCase):
         self.assertIn("esc(c.question)", sp.SCRIPT)
         self.assertIn("esc(o)", sp.SCRIPT)
         self.assertIn("esc(c.why)", sp.SCRIPT)
-        self.assertIn("esc(c.topic)", sp.SCRIPT)
+        self.assertIn("esc(subject(c.topic))", sp.SCRIPT)
         self.assertNotRegex(sp.SCRIPT, r"innerHTML = [^;]*c\.question(?!\))")
 
     def test_run_as_the_deploy_runs_it(self):
         with tempfile.TemporaryDirectory() as d:
             self.assertEqual(sp.main([d]), 0)
             self.assertTrue((Path(d) / "sfida.html").exists())
+            self.assertTrue((Path(d) / "it" / "sfida.html").exists())
         self.assertEqual(sp.main([]), 2)
 
 

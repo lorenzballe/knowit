@@ -38,6 +38,14 @@
 //   words. The first card of a day for everyone, the rest for Astute+.
 // - `listenAhead` (twice a day, 03:35 and 18:35 UTC): the next days' cards
 //   of the readers who listen, made before they ask, so playing is instant.
+// - `countStep` (HTTPS POST): one of the first run's four steps — a first
+//   open, the first run finished, a first day finished, a return the next
+//   day — added to that day's total (steps.ts). Sent with nothing that says
+//   who, not even the account, and kept as a number per step per day.
+// - `bookClip` (callable): a part of a book's summary read aloud by
+//   ElevenLabs (books.ts), one clip a part in Storage, made once for
+//   everybody and kept under the hash of its words. The week's free book and
+//   the first part of any book for everyone, the rest for Astute+.
 // - `inviteState` and `redeemInvite` (callable): Invita un amico
 //   (invite.ts). A reader's code, made when they first send it; a friend's
 //   code used, on an account that is new and never held Astute+; and, once
@@ -49,7 +57,8 @@
 // held to one budget, so much a month and so much a day (limits.ts), counted
 // in ai/spend-{month} and ai/spend-{day} (budget.ts): once either is spent,
 // nothing asks the model until it turns. What the voice reads is held to
-// characters the same way, in listenSpend/{month} and listenSpend/{day}.
+// characters the same way, in listenSpend/{month} and listenSpend/{day}, and
+// the books read aloud to their own month, in bookSpend/{month}.
 //
 // The rules (firestore.rules) let no phone write a day, a profile,
 // Explore or the day's games' counts: what the server dealt is what the
@@ -69,9 +78,11 @@ import { logger } from 'firebase-functions';
 
 import { ALL_PER_DAY, MODEL, PER_DAY, SHARED, answer as answerAsk, askWorst, cacheKey, readAsk } from './ask.js';
 import { Bank, currentBank, dateKey, localDate, parseDate, shiftDate } from './bank.js';
+import { BOOK_MODEL_ID, type BookShelf, firestoreBookLedger, hearBook, readBookAsk, siteLibrary, storageBookShelf } from './books.js';
 import { BudgetSpent, firestoreLedger, spendDay, withinBudget, type Usage } from './budget.js';
 import { coachNote, coachWorst, readCoach } from './coach.js';
 import { countPlay, readPlay } from './daily.js';
+import { countStep as addStep, readStep } from './steps.js';
 import { backupHasADay, inviteState as invitesOf, redeem as redeemCode, storeFor, type Reader } from './invite.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
 import {
@@ -373,6 +384,32 @@ export const playDaily = onCall({ enforceAppCheck: false, maxInstances: 10 }, as
   }
 });
 
+// ── The first run, counted ───────────────────────────────────────────────
+
+// A plain request rather than a callable: a callable carries the account's
+// token, and a step is counted with nothing that says whose it was. The
+// phone sends {step, day} and nothing else; the answer says nothing either.
+// No CORS: only the app sends it, and a web page elsewhere has no business
+// adding to the totals from a visitor's browser.
+export const countStep = onRequest({ cors: false, invoker: 'public', maxInstances: 2, memory: '256MiB' }, async (req, res) => {
+  if (req.method !== 'POST') {
+    res.status(405).send('POST only');
+    return;
+  }
+  const taken = readStep(req.body, Date.now());
+  if (typeof taken === 'string') {
+    res.status(400).json({ error: taken });
+    return;
+  }
+  try {
+    await addStep(db, taken);
+    res.status(204).send('');
+  } catch (e) {
+    logger.error('step not counted', { step: taken.step, day: taken.day, error: String(e) });
+    res.status(503).json({ error: 'Try again in a moment.' });
+  }
+});
+
 // ── The day's five, read aloud ───────────────────────────────────────────
 
 /** The key the cards are read aloud with, kept in Secret Manager. Without
@@ -470,6 +507,63 @@ export const listenAhead = onSchedule(
     const cards = aheadCards(readers, bank);
     const run = await makeAhead(cards, { shelf: listenShelf(), ledger: listenLedger, voice: elevenLabs(key), day: spendDay(nowMs) });
     logger.info('listen ahead', { listeners: uids.length, cards: cards.length, ...run });
+  },
+);
+
+// ── Books read aloud ─────────────────────────────────────────────────────
+
+/** The characters the books may have read, so many a month (limits.ts). */
+const bookLedger = firestoreBookLedger(db);
+
+/** The summaries, as the bank names them: the deploy's copies, and the
+ * site's for one revised since. */
+const bookLibrary = siteLibrary();
+
+/** Where the books' clips are kept: the project's own bucket, beside Listen's. */
+let bookShelfHeld: BookShelf | null = null;
+const bookShelf = (): BookShelf => (bookShelfHeld ??= storageBookShelf(db, getStorage().bucket()));
+
+export const bookClip = onCall(
+  { enforceAppCheck: false, secrets: [elevenKey], maxInstances: 10, timeoutSeconds: 90, memory: '256MiB' },
+  async (request) => {
+    const uid = request.auth?.uid;
+    if (!uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
+    const ask = readBookAsk(request.data);
+    if (!ask) throw new HttpsError('invalid-argument', 'A book, one of its parts, and the day.');
+    const key = elevenKey.value();
+    if (!configured(key)) return { none: 'not-configured' };
+    const nowMs = Date.now();
+    // The reader's today, give or take a day: the week's free book is the
+    // week's, and a phone may not make up days to hear another for free.
+    if (!askableDate(ask.date, ask.tz, nowMs)) throw new HttpsError('invalid-argument', 'A day near today.');
+    // The whole bank, as the phones hold it: the week's book is worked out
+    // from every book, whatever is held in quarantine for the day's deal.
+    const [presence, bank] = await Promise.all([db.collection('presence').doc(uid).get(), currentBank()]);
+    // The plan as the phone last said it (presence), as askCard reads it.
+    const plus = presence.get('plus') === true;
+    let out: Awaited<ReturnType<typeof hearBook>>;
+    try {
+      out = await hearBook(plus, bank, ask, {
+        configured: true,
+        library: bookLibrary,
+        shelf: bookShelf(),
+        ledger: bookLedger,
+        voice: elevenLabs(key, fetch, undefined, BOOK_MODEL_ID),
+        month: spendDay(nowMs).slice(0, 7),
+      });
+    } catch (e) {
+      logger.error('book audio failed', { book: ask.book, part: ask.part, error: String(e) });
+      throw new HttpsError('unavailable', 'Try again in a moment.');
+    }
+    if (out === 'plus') throw new HttpsError('permission-denied', 'Astute+ only.');
+    if ('none' in out && out.none !== 'nothing') {
+      // Said once in the log with its reason: a key turned away, or an
+      // account with no credit yet, is the owner's to put right.
+      logger.warn('book audio not available', { book: ask.book, part: ask.part, none: out.none, why: 'why' in out ? out.why : undefined });
+    } else {
+      logger.info('book heard', { book: ask.book, part: ask.part, plus, heard: 'url' in out });
+    }
+    return out;
   },
 );
 

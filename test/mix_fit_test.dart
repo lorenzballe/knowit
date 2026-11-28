@@ -50,7 +50,7 @@ void main() {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           theme: buildAstutoTheme(Brightness.dark),
-          home: MixScreen(onDone: (_) {}, onSkip: () {}),
+          home: MixScreen(onDone: (_) {}),
         ),
       );
       for (int i = 0; i < 8; i++) {

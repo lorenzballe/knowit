@@ -17,8 +17,12 @@
 /// (PageEnv.hard) and the kit draws itself in them
 /// (docs/cards/kit/astute-card.js).
 ///
-/// Tried in the developer tools (DebugLooks.hardCards), as today unless
-/// ringed is picked.
+/// The owner chose it on 28 November 2026, and it ships
+/// (DebugLooks.hardCardsShips); the developer tools can still show a hard
+/// card as today, like any other (DebugLooks.hardCards). Where a drawn card
+/// is shown by its picture, the shelf and Explore show the one taken
+/// ringed, on the paper the reader is on (CardThumb.picturesOf,
+/// tool/cards/thumbs.cjs).
 library;
 
 import 'package:flutter/material.dart';
@@ -27,11 +31,12 @@ import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../state/debug_looks.dart';
 import '../theme.dart';
+import 'card_edge.dart' show colourContrast;
 import 'web/page_messages.dart';
 
 abstract final class HardRing {
-  /// Whether [pill] is drawn ringed in this run: a hard card, with the look
-  /// picked.
+  /// Whether [pill] is drawn ringed in this run: a hard card, in the look
+  /// that ships, or with ringed picked in the tools.
   static bool on(Pill pill) =>
       pill.difficulty == Difficulty.hard &&
       DebugLooks.hardCardsPicked == HardCardLook.ringed;
@@ -42,6 +47,10 @@ abstract final class HardRing {
       !p.isDark && pill.color.computeLuminance() > 0.45
       ? _shade(pill.color, 0.62)
       : pill.color;
+
+  /// [pill]'s ring in this run, or null where it is not drawn ringed.
+  static Color? ringOf(Pill pill, Palette p) =>
+      on(pill) ? accentOf(pill, p) : null;
 
   /// The ground: night black on the night paper, the raised paper on the
   /// day one, as Explore's shelf has them.
@@ -59,21 +68,46 @@ abstract final class HardRing {
   /// What [pill]'s page is told to draw itself ringed, or null when it is
   /// not: the ground; the ink its drawing, its name and what it asks are in,
   /// the subject's colour (a deep one lifted on the night paper until small
-  /// words read in it); the question's, the page's own ink, as on a card in
-  /// words; the ring; and HARD in the reader's language.
+  /// words read in it, and on the day paper the ring's colour taken down,
+  /// its hue kept, until they read there: a drawing's labels are small);
+  /// the question's, the page's own ink, as on a card in words; the ring;
+  /// and HARD in the reader's language. tool/cards/hard_env.cjs gives the
+  /// checker and the camera the same.
   static PageHard? pageOf(BuildContext context, Pill pill) {
     if (!on(pill)) return null;
     final Palette p = context.p;
     final Color accent = accentOf(pill, p);
     return PageHard(
       ground: groundOf(p),
-      ink: p.isDark && accent.computeLuminance() < 0.16
-          ? Color.lerp(accent, Colors.white, 0.4)!
-          : accent,
+      ink: inkOf(accent, p),
       question: p.ink,
       ring: accent,
       label: upperIn(context, context.l10n.hardBadge),
     );
+  }
+
+  /// Small words read on the paper at this contrast, as the web's rule for
+  /// small type asks.
+  static const double reads = 4.5;
+
+  /// The ink a ringed page draws in, from its ring's colour [accent].
+  @visibleForTesting
+  static Color inkOf(Color accent, Palette p) {
+    if (p.isDark) {
+      return accent.computeLuminance() < 0.16
+          ? Color.lerp(accent, Colors.white, 0.4)!
+          : accent;
+    }
+    final Color ground = groundOf(p);
+    Color ink = accent;
+    for (
+      double k = 0.98;
+      colourContrast(ink, ground) < reads && k > 0.2;
+      k -= 0.02
+    ) {
+      ink = _shade(accent, k);
+    }
+    return ink;
   }
 
   /// [text] in capitals, with Turkish's dotted capital I.

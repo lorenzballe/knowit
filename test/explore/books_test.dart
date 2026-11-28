@@ -139,10 +139,20 @@ void main() {
     for (var i = 0; i < other.cards.length; i++) {
       expect(find.byKey(ValueKey('book-idea-$i')), findsOneWidget);
     }
-    expect(
-      find.byIcon(Icons.lock_rounded),
-      findsNWidgets(other.cards.length - kBookFree),
-    );
+    // The ideas past the free ones are locked. A book with a summary has
+    // the summary's parts on the page too, with locks of their own
+    // (summary_entry.dart): only the ideas' are counted here.
+    var locked = 0;
+    for (var i = 0; i < other.cards.length; i++) {
+      locked += find
+          .descendant(
+            of: find.byKey(ValueKey('book-idea-$i')),
+            matching: find.byIcon(Icons.lock_rounded),
+          )
+          .evaluate()
+          .length;
+    }
+    expect(locked, other.cards.length - kBookFree);
     // The idea past the free ones goes through the plans.
     await tester.tap(find.byKey(ValueKey('book-idea-$kBookFree')));
     for (var i = 0; i < 5; i++) {

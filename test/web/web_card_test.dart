@@ -356,6 +356,110 @@ void main() {
     expect(FakeWebSurface.made[1].told.last, {'t': 'show'});
   });
 
+  testWidgets('on the web build a page lets the pointer through whenever '
+      'something is drawn over it: a sheet risen over its card, and the card '
+      'in front of it', (tester) async {
+    // A card of words in front, a drawn card under it: the taps on the card
+    // in front are its own, not the page's under it.
+    final TopicStyle style = kTopics['nature']!;
+    final Pill words = Pill(
+      id: 'w',
+      topic: style.name,
+      color: style.color,
+      ink: style.ink,
+      tint: style.tint,
+      question: 'Why does a straw stop working at ten metres?',
+      answer: 'The air pushes the drink up, and it can push only so far.',
+      barMove: 'Nobody sucks a drink up a straw.',
+      source: 'Veritasium, 2012',
+    );
+    await tester.pumpWidget(
+      _Deck(deck: [words, _card('b')], answers: [], stints: []),
+    );
+    await settle(tester);
+    final FakeWebSurface under = FakeWebSurface.made.single;
+    expect(under.touchable, isFalse);
+
+    // Thrown, the drawn card is in front and its page takes the finger.
+    final Offset centre = tester.getCenter(find.byType(PillCardStack));
+    await tester.dragFrom(centre, const Offset(-300, 0));
+    await settle(tester);
+    await settle(tester);
+    expect(tester.state<_DeckState>(find.byType(_Deck)).index, 1);
+    expect(under.touchable, isTrue);
+
+    // A sheet rises over the card, as Go deeper and Why this card do: the
+    // page lets the pointer through to the sheet until it goes.
+    final BuildContext context = tester.element(find.byType(PillCardStack));
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (_) => const SizedBox(height: 300, child: Text('Go deeper')),
+    );
+    await settle(tester);
+    expect(find.text('Go deeper'), findsOneWidget);
+    expect(under.touchable, isFalse);
+    Navigator.of(context).pop();
+    await settle(tester);
+    await settle(tester);
+    expect(under.touchable, isTrue);
+  });
+
+  testWidgets('the fourth drawn card of a day, risen after three thrown, '
+      'is told it is in front and takes the finger at once: its answers '
+      'never wait on a tap elsewhere', (tester) async {
+    await tester.pumpWidget(
+      _Deck(
+        deck: [
+          _card('a', challenge: const NoChallenge()),
+          _card('b', challenge: const NoChallenge()),
+          _card('c', challenge: const NoChallenge()),
+          _card('d'),
+        ],
+        answers: [],
+        stints: [],
+      ),
+    );
+    await settle(tester);
+    int index() => tester.state<_DeckState>(find.byType(_Deck)).index;
+    final Offset centre = tester.getCenter(find.byType(PillCardStack));
+    for (int thrown = 1; thrown <= 3; thrown++) {
+      await tester.dragFrom(centre, const Offset(-300, 0));
+      await settle(tester);
+      await settle(tester);
+      expect(index(), thrown);
+    }
+    final FakeWebSurface d = FakeWebSurface.made.singleWhere(
+      (s) =>
+          !s.disposed && (s.html ?? '').contains('<assembled>') && s.touchable,
+    );
+    expect(d.told.last, {'t': 'show'});
+    expect(d.gestures.map((f) => f.type), contains(TapGestureRecognizer));
+  });
+
+  testWidgets('a page in a place that keeps it from the finger lets the '
+      'pointer through, and one inside another is shut if either is', (
+    tester,
+  ) async {
+    final FakeWebSurface page = FakeWebSurface();
+    Widget at(bool outer, bool inner) => MaterialApp(
+      home: PageTouch(
+        open: outer,
+        child: PageTouch(
+          open: inner,
+          child: page.view(gestures: const {}),
+        ),
+      ),
+    );
+    await tester.pumpWidget(at(true, true));
+    expect(page.touchable, isTrue);
+    await tester.pumpWidget(at(false, true));
+    expect(page.touchable, isFalse);
+    await tester.pumpWidget(at(true, false));
+    expect(page.touchable, isFalse);
+    await tester.pumpWidget(at(true, true));
+    expect(page.touchable, isTrue);
+  });
+
   testWidgets('a card met with its page drawn is never held', (tester) async {
     await tester.pumpWidget(_Deck(deck: [_card('a')], answers: [], stints: []));
     await settle(tester);

@@ -30,7 +30,13 @@
     "touch": "drags",
     "label": "A page titled 'The longest straw' with a draggable straw and a 'Drag the straw up' control. It asks how long a drinking straw can be and how a 116 m tree drinks. The reveal says air pressure limits a straw to 10.3 m, and trees pull water instead."
   },
-  "source": "Veritasium, “World's Longest Straw” (YouTube, 2012)",
-  "reference": "https://www.youtube.com/watch?v=HUmZrtiXDik",
-  "written": "2026-11-03"
+  "source": "Koch, Sillett, Jennings & Davis, “The limits to tree height”, Nature, 2004; Guinness World Records, 2019",
+  "source_kind": "paper",
+  "reference": "https://doi.org/10.1038/nature02417",
+  "watch": {
+    "url": "https://www.youtube.com/watch?v=HUmZrtiXDik",
+    "by": "Veritasium (YouTube, 2012)"
+  },
+  "written": "2026-11-03",
+  "checked": "2026-11-28"
 }

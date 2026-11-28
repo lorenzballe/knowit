@@ -3,9 +3,10 @@
 <title>Astute free card · MRI field vs Earth's</title>
 <!-- An MRI scanner, front on: the big white magnet, its tunnel, and a patient on the table, feet towards us, under
      a blanket. The field in the tunnel is counted in Earths: one Earth's magnetic field is one little globe. Each tap
-     multiplies it by ten: 10 globes, 100, 1,000, 10,000, and at 100,000 the tunnel is solid with them, the one Earth
-     still marked, a speck. Then a bunch of keys on the floor is pulled in and sticks to the rim: leave metal outside.
-     Taps only. Facts as before: the field is about 100,000 times Earth's (Geopop). -->
+     multiplies it by ten: 10 globes, 100, 1,000, 10,000; the last tap, by three, to a common 1.5 T scanner's
+     30,000, the tunnel thick with them, the one Earth still marked, a speck. Then a bunch of keys on the floor is
+     pulled in and sticks to the rim: leave metal outside. Taps only. Facts: a 1.5 T scanner's field is about 30,000
+     times Earth's (Duke University's MRI safety tutorial); a 3 T scanner's twice that. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
@@ -27,16 +28,16 @@
     <div class="stagebox" id="stage">
       <div id="cvwrap"><svg id="cv" role="img" aria-label="An MRI scanner seen from the front, a patient lying in its tunnel with their feet towards us. In the tunnel, one little globe: Earth's magnetic field."></svg></div>
       <button id="go">×10</button>
-      <div id="why" class="gone"><p class="body">Inside an MRI you sit in a field 100,000 times more intense than Earth's. That is why it can pull metal objects with dangerous force. The scan itself is safe and non-invasive.</p></div>
+      <div id="why" class="gone"><p class="body">Inside a common 1.5-tesla MRI you sit in a field about 30,000 times stronger than Earth's; a 3-tesla one doubles it. That is why it can pull metal objects with dangerous force. The scan itself is safe and non-invasive.</p></div>
     </div>
     <p class="say" id="say">Tap ×10 and watch the field grow, Earth by Earth.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An MRI is 100,000 Earths of magnetism: leave metal outside.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)</span></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An MRI is tens of thousands of Earths of magnetism: leave metal outside.</div>
+    <div class="foot"><span class="src">Source · Duke University, MRI safety tutorial.</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const TOTAL = 100000, STEPS = [1, 10, 100, 1000, 10000, 100000];
+const TOTAL = 30000, STEPS = [1, 10, 100, 1000, 10000, 30000];
 const NAMES = ["Earth's field", "10 Earths", "100 Earths", "1,000 Earths", "10,000 Earths", "the MRI field"];
 // One ink; white for the magnet, warm greys for its sides; navy for the inside of the tunnel; Earth's blue and green
 // for the field counted in Earths; skin, a pale blanket and grey steel for the rest.
@@ -216,7 +217,7 @@ function render() {
   if (!G) return;
   const g = G, n = Math.max(1, shown.n), [mx, my] = marker();
   g.units.innerHTML = '';
-  // Up to a hundred, each Earth drawn; past that, as many as the tunnel holds, a pattern; at 100,000, solid.
+  // Up to a hundred, each Earth drawn; past that, as many as the tunnel holds, a pattern, solid once too fine to see.
   let c, rho;
   if (n <= 100.5) {
     const {c: cc, pts} = grid(Math.round(n));
@@ -284,9 +285,11 @@ function grow() {
   if (last) {
     card.classList.add('answered');
     Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    svg.setAttribute('aria-label', 'The MRI scanner from the front, its tunnel solid blue with 100,000 Earths of magnetic field, the one Earth a speck; a bunch of keys has been pulled off the floor and stuck to the tunnel\'s rim.');
+    svg.setAttribute('aria-label', 'The MRI scanner from the front, its tunnel thick with 30,000 Earths of magnetic field, the one Earth a speck; a bunch of keys has been pulled off the floor and stuck to the tunnel\'s rim.');
   } else {
-    Kit.$('go').textContent = '×10  →  ' + (STEPS[step] * 10).toLocaleString('en') + '×';
+    // The next tap's factor: ten, and three for the last, to a real scanner's field.
+    const next = STEPS[step + 1];
+    Kit.$('go').textContent = '×' + next / STEPS[step] + '  →  ' + next.toLocaleString('en') + '×';
   }
 }
 Kit.$('go').addEventListener('click', grow);

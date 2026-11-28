@@ -142,9 +142,15 @@ function setMoon(v) {
   document.querySelectorAll('.seg').forEach(b => b.classList.toggle('on', +b.dataset.v === v));
   Kit.haptic('selection');
   if (tw) tw.kill();
-  tw = gsap.to(st, {t: v, duration: Kit.calm ? .2 : 1.6, ease: 'power2.inOut', onUpdate: draw, onComplete: () => {
-    if (v === 1 && !told) { told = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }
-  }});
+  tw = gsap.to(st, {t: v, duration: Kit.calm ? .2 : 1.6, ease: 'power2.inOut', onUpdate: draw, onComplete: () => { if (v === 1) tell(); }});
+  // The Moon brought overhead: the answer is due when it gets there, whatever is tapped after.
+  if (v === 1 && !due) due = gsap.delayedCall(tw.duration(), tell);
+}
+let due = null;
+function tell() {
+  if (told) return;
+  told = true; if (due) due.kill();
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
 }
 Kit.$('sw').addEventListener('click', e => { const b = e.target.closest('.seg'); if (b) setMoon(+b.dataset.v); });
 

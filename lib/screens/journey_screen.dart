@@ -42,6 +42,7 @@ import '../widgets/skill_score.dart' show scoreUp, signedNumber;
 import '../widgets/training.dart';
 import '../l10n/dates.dart';
 
+part 'journey_preview.dart';
 part 'journey_story.dart';
 
 /// The journey's first chapter, as What to learn's look has it
@@ -51,8 +52,13 @@ part 'journey_story.dart';
 /// in B the reader's aim and its week, in words; in C the skills as the
 /// reader's answers rank them; in D the skills the aim takes, ranked, with
 /// the blind spot, and the rest of the profile; in E the week's skill, day
-/// by day.
-Widget _learnChapter(BuildContext context, AppState app, int n) {
+/// by day. In the free plan's preview, behind the veil ([veil]).
+Widget _learnChapter(
+  BuildContext context,
+  AppState app,
+  int n, {
+  AppState? veil,
+}) {
   final l = context.l10n;
   Widget overScore(Widget first) => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -63,37 +69,43 @@ Widget _learnChapter(BuildContext context, AppState app, int n) {
     ],
   );
   return switch (learnLook) {
-    LearnLook.today => _Chapter(
+    LearnLook.today || LearnLook.mix => _Chapter(
       n: n,
       title: l.trainingTitle,
       trailing: TrainingChapter.change(context, app),
+      veil: veil,
       child: TrainingChapter(app: app),
     ),
     LearnLook.score => _Chapter(
       n: n,
       title: l.scoreTitle,
+      veil: veil,
       child: TrainingChapter(app: app, skills: false, label: false),
     ),
     LearnLook.aim => _Chapter(
       n: n,
       title: l.whyGoalRow,
       trailing: AimPanel.change(context, app),
+      veil: veil,
       child: overScore(AimPanel(app: app, label: false)),
     ),
     LearnLook.profile => _Chapter(
       n: n,
       title: l.strengthsTitle,
+      veil: veil,
       child: overScore(StrengthsPanel(app: app, label: false)),
     ),
     LearnLook.aimProfile => _Chapter(
       n: n,
       title: l.whyGoalRow,
       trailing: AimPanel.change(context, app),
+      veil: veil,
       child: overScore(AimReadPanel(app: app)),
     ),
     LearnLook.weekly => _Chapter(
       n: n,
       title: l.focusTitle,
+      veil: veil,
       child: overScore(FocusPanel(app: app)),
     ),
   };
@@ -134,19 +146,55 @@ class JourneyScreen extends StatefulWidget {
 }
 
 class _JourneyScreenState extends State<JourneyScreen> {
+  /// Whether the page opened as the free plan's preview
+  /// (journey_preview.dart). Its figures were never seen, so this visit
+  /// writes none of them down and counts none of them: a trial started
+  /// from it opens the journey on a first look.
+  late final bool _openedAsPreview = journeyIsPreview(widget.app);
+
   /// The figures as the reader last saw them, frozen as the page opens, and
   /// what this visit sees of them, written down as it is seen.
-  late final LastSeen _seen = LastSeen(
-    was: widget.app.journeySeen,
-    onSeen: widget.app.rememberJourney,
-  );
+  late final LastSeen _seen = _openedAsPreview
+      ? LastSeen(was: const {}, onSeen: (_) {})
+      : LastSeen(
+          was: widget.app.journeySeen,
+          onSeen: widget.app.rememberJourney,
+        );
 
   /// The day the reader last looked, as it was when the page opened.
-  late final String? _lastOn = widget.app.journeySeenOn;
+  late final String? _lastOn = _openedAsPreview
+      ? null
+      : widget.app.journeySeenOn;
+
+  /// The preview's figure in the clear this week, as the page opened.
+  late final ({ClearFigure figure, bool keep}) _clear = clearFigureOf(
+    widget.app,
+  );
+
+  /// The plan the page was last drawn for: a trial started from the
+  /// preview's door turns it into the journey at once.
+  late bool _plus = widget.app.isPlus;
+
+  void _onApp() {
+    if (mounted && widget.app.isPlus != _plus) {
+      setState(() => _plus = widget.app.isPlus);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    widget.app.addListener(_onApp);
+    if (_openedAsPreview) {
+      final AppState app = widget.app;
+      if (_clear.keep) {
+        app.keepJourneyClear(dateKey(mondayOf(app.today)), _clear.figure.name);
+      }
+      Analytics.capture('journey preview opened', {
+        'figure': _clear.figure.name,
+        'ready': clearFigureReady(app, _clear.figure),
+      });
+    }
     // A level reached since one was last told rises over the journey once
     // it has come in (lib/widgets/level_up.dart). The figures under it
     // count once it has gone (count_since.dart): a count run behind it
@@ -158,6 +206,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
   @override
   void dispose() {
+    widget.app.removeListener(_onApp);
     _seen.dispose();
     super.dispose();
   }
@@ -168,6 +217,9 @@ class _JourneyScreenState extends State<JourneyScreen> {
     final AppState app = widget.app;
     final JourneyRecord record = app.record;
     const chapterGap = SizedBox(height: 28);
+    // The free plan's preview: every chapter behind its veil, and one
+    // figure in the clear over them (journey_preview.dart).
+    final AppState? veil = journeyIsPreview(app) ? app : null;
     // Numbered as they come: the coach's chapter is there only where the
     // answers by Claude are on.
     var n = 0;
@@ -225,6 +277,13 @@ class _JourneyScreenState extends State<JourneyScreen> {
         moved: _seen.moved,
       ),
       const SizedBox(height: 18),
+      // The preview's one figure in the clear, and its one quiet line, the
+      // journey's door to the plans; the chapters under them veiled.
+      if (veil != null) ...[
+        _ClearCard(app: app, figure: _clear.figure),
+        _PreviewDoor(app: app),
+        const SizedBox(height: 14),
+      ],
       // The journey in chapters: what the reader trains and what to
       // practise first, then the week, then the numbers behind them,
       // grouped by what they are about, and the story so far at the end.
@@ -234,12 +293,13 @@ class _JourneyScreenState extends State<JourneyScreen> {
       // score alone, or what the look is about over the score: the aim,
       // where the answers say they are strong, the aim read, or the week's
       // skill (lib/widgets/learn_looks.dart).
-      _learnChapter(context, app, ++n),
+      _learnChapter(context, app, ++n, veil: veil),
       chapterGap,
       // What to do now, under the number it moves.
       _Chapter(
         n: ++n,
         title: l.storyChapterPractice,
+        veil: veil,
         child: _Practice(app: app),
       ),
       chapterGap,
@@ -249,6 +309,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
       _Chapter(
         n: ++n,
         title: l.storyChapterWeek,
+        veil: veil,
         child: _Headline(app: app),
       ),
       if (cardAiOn(app, language)) ...[
@@ -256,17 +317,24 @@ class _JourneyScreenState extends State<JourneyScreen> {
         _Chapter(
           n: ++n,
           title: l.journeyChapterCoach,
+          veil: veil,
           child: _Coach(app: app),
         ),
       ],
       if (know.isNotEmpty) ...[
         chapterGap,
-        _Chapter(n: ++n, title: l.journeyChapterKnow, child: _Stack(know)),
+        _Chapter(
+          n: ++n,
+          title: l.journeyChapterKnow,
+          veil: veil,
+          child: _Stack(know),
+        ),
       ],
       chapterGap,
       _Chapter(
         n: ++n,
         title: l.storyChapterReason,
+        veil: veil,
         child: _Stack([
           _HowYouReason(app: app),
           // How far off the reader's sureness is, once there are enough
@@ -293,12 +361,18 @@ class _JourneyScreenState extends State<JourneyScreen> {
       ),
       if (habits.isNotEmpty) ...[
         chapterGap,
-        _Chapter(n: ++n, title: l.journeyChapterHabits, child: _Stack(habits)),
+        _Chapter(
+          n: ++n,
+          title: l.journeyChapterHabits,
+          veil: veil,
+          child: _Stack(habits),
+        ),
       ],
       chapterGap,
       _Chapter(
         n: ++n,
         title: l.storyChapterStory,
+        veil: veil,
         child: _YourStory(app: app),
       ),
       // Last, the week gone over again: the cards first read this week,
@@ -307,6 +381,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
       _Chapter(
         n: ++n,
         title: l.weekReviewTitle,
+        veil: veil,
         child: _WeekReview(app: app, cards: week),
       ),
       // The day, sent as five squares, once it is done: the way the app

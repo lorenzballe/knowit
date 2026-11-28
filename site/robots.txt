@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+# Kept out of searches: the web app, a preview of the phone app, and the
+# cards' raw pages, made to be played inside the app. Each card has a page
+# of its own for readers, at /q/<id>, which the sitemap lists.
+Disallow: /app/
+Disallow: /cards/pages/
 
 Sitemap: https://astutetheapp.com/sitemap.xml
