@@ -61,7 +61,6 @@ import 'aim_picker.dart' show AimRows;
 import 'area_marks.dart';
 import 'chunky.dart';
 import 'fit_text.dart';
-import 'premium.dart';
 import 'training.dart' show ProfileTraining;
 import 'ui.dart' show BackCircle, Eyebrow;
 
@@ -301,20 +300,10 @@ class LearnProfileBox extends StatelessWidget {
   );
 }
 
-/// Opens Your journey: on the free plan through its own door, the plans.
-void _openJourney(BuildContext context, AppState app) => requirePlus(
-  context,
-  app,
-  () => Navigator.of(context).push(
-    MaterialPageRoute<void>(
-      builder: (routeContext) => JourneyScreen(
-        app: app,
-        onBack: () => Navigator.of(routeContext).pop(),
-      ),
-    ),
-  ),
-  source: 'journey',
-);
+/// Opens Your journey: on the free plan the preview where the server has
+/// it on, or the plans on the journey's own door (openJourney).
+void _openJourney(BuildContext context, AppState app) =>
+    openJourney(context, app);
 
 // ── B · The aim ───────────────────────────────────────────────────────────
 

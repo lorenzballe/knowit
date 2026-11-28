@@ -6979,6 +6979,112 @@ class AppLocalizationsJa extends AppLocalizations {
   String get listenNextCard => '次のカード';
 
   @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes分で読む',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => '続きを読む';
+
+  @override
+  String get summaryAgain => 'もう一度読む';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return 'パート$part／$of';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '残り$n分',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return '聴く · $minutes分';
+  }
+
+  @override
+  String get summaryPause => '一時停止';
+
+  @override
+  String get summaryResume => '続きを聴く';
+
+  @override
+  String get summaryFreeNote => '最初のパートは無料、残りはAstute+で。';
+
+  @override
+  String get summaryTitle => '要約';
+
+  @override
+  String get summaryNowPlaying => '再生中';
+
+  @override
+  String get summaryNextPart => '次のパート';
+
+  @override
+  String get summaryFinish => '読み終える';
+
+  @override
+  String get summaryContents => '目次';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return '$titleを読み終えました';
+  }
+
+  @override
+  String get summaryDoneLine => 'この本のカードで、アイデアを記憶に残しましょう。';
+
+  @override
+  String get summaryToCards => 'アイデアをカードで';
+
+  @override
+  String get summaryBackToBook => '本に戻る';
+
+  @override
+  String get summaryGateTitle => 'この要約の続きはAstute+で';
+
+  @override
+  String summaryGateLine(int parts) {
+    return 'どの本も全$partsパートを読んで聴けます。今週の本は誰でも無料です。';
+  }
+
+  @override
+  String get summaryNeedsNetwork => 'この要約は一度だけインターネット接続が必要です。';
+
+  @override
+  String get bookAudioBack => '15秒戻る';
+
+  @override
+  String get bookAudioWaiting => '次のパートを準備しています…';
+
+  @override
+  String get bookAudioDone => '最後まで聴きました。';
+
+  @override
+  String get bookAudioOfferTitle => 'この本の続きを聴く';
+
+  @override
+  String get bookAudioOfferLine => 'Astute+なら、どの要約も最後まで読み上げます。画面ロック中も。';
+
+  @override
+  String get bookAudioStop => '再生を停止';
+
+  @override
+  String get bookAudioOpen => 'プレーヤーを開く';
+
+  @override
   String get inviteSection => '友だち';
 
   @override
@@ -7091,4 +7197,150 @@ class AppLocalizationsJa extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => '最初の1日、完了';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return '自信は$sure%、$total問中$right問正解でした。';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return '$total問中$right問正解でした。';
+  }
+
+  @override
+  String get firstDayRemind => '明日お知らせを受け取る';
+
+  @override
+  String firstDayReminded(String time) {
+    return '明日$timeにお知らせします。';
+  }
+
+  @override
+  String get earlyReadingTag => '暫定';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$level%と答えたのは$n回、すべて正解でした',
+      two: '$level%と答えたのは2回、2回とも正解でした',
+      one: '$level%と答えたのは1回、正解でした',
+    );
+    return 'ここまで：$_temp0。';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$level%と答えたのは$n回、すべて不正解でした',
+      two: '$level%と答えたのは2回、2回とも不正解でした',
+      one: '$level%と答えたのは1回、不正解でした',
+    );
+    return 'ここまで：$_temp0。';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    return 'ここまで：$level%と答えたのは$n回、そのうち$right回正解でした。';
+  }
+
+  @override
+  String get journeyClearEyebrow => '今週の公開';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return 'あなたの盲点：$subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return 'あなたの強み：$subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return 'この分野の直近$n回の正解率は$pct。';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days日後',
+    );
+    return '$_temp0も、$of枚中$right枚を覚えています。';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks週間後',
+    );
+    return '$_temp0も、$of枚中$right枚を覚えています。';
+  }
+
+  @override
+  String get journeyClearBlindNotYet => '2つの分野でそれぞれ6回答えると、いちばん間違える分野がここに出ます。';
+
+  @override
+  String get journeyClearStrongNotYet => '1つの分野で6回答えると、いちばん得意な分野がここに出ます。';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '自信の度合いを添えた回答があと$n件で、ここに暫定の結果が出ます。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      'カードは2日後、7日後、21日後に戻ってきます。いくつ覚えているかがここに出ます。';
+
+  @override
+  String get journeyPreviewDoor => '毎週ひとつずつ公開。残りは Astute+ で。';
+
+  @override
+  String weekSheetOf(String date) {
+    return '$dateからの週';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$n問中$right問';
+  }
+
+  @override
+  String get weekSheetRightLabel => '正解';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n回の回答から',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => '自信過剰な分野';
+
+  @override
+  String get weekSheetMemoryLabel => 'まだ覚えていること';
+
+  @override
+  String get weekSheetAccount => 'どのスマホでもこの1週間を残す';
 }

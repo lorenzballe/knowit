@@ -288,8 +288,11 @@ service cloud.firestore {
     // The cards read aloud, the server's alone: where each clip is
     // (listen/{hash}), the characters read this day and month
     // (listenSpend/{period}), and when each reader last listened
-    // (listeners/{uid}), which goes with the account. Closed to every
-    // phone by the rule below; named here so nobody opens them by mistake.
+    // (listeners/{uid}), which goes with the account. And the books read
+    // aloud, the server's alone too: where each part's clip is
+    // (bookClips/{hash}) and the characters read this month
+    // (bookSpend/{month}). Closed to every phone by the rule below; named
+    // here so nobody opens them by mistake.
 
     // The list for the iPhone (site/assets/notify.js): whoever leaves an
     // email on the site, to be told the day Astute is on the App Store. The

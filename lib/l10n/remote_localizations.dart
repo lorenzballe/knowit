@@ -6864,6 +6864,121 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('listenNextCard') ?? _base.listenNextCard;
 
   @override
+  String summaryReadIn(int minutes) =>
+      _words.format('summaryReadIn', localeName, {'minutes': minutes}) ??
+      _base.summaryReadIn(minutes);
+
+  @override
+  String get summaryContinue =>
+      _words.text('summaryContinue') ?? _base.summaryContinue;
+
+  @override
+  String get summaryAgain => _words.text('summaryAgain') ?? _base.summaryAgain;
+
+  @override
+  String summaryPartOf(int part, int of) =>
+      _words.format('summaryPartOf', localeName, {'part': part, 'of': of}) ??
+      _base.summaryPartOf(part, of);
+
+  @override
+  String summaryMinutesLeft(int n) =>
+      _words.format('summaryMinutesLeft', localeName, {'n': n}) ??
+      _base.summaryMinutesLeft(n);
+
+  @override
+  String summaryListenFor(int minutes) =>
+      _words.format('summaryListenFor', localeName, {'minutes': minutes}) ??
+      _base.summaryListenFor(minutes);
+
+  @override
+  String get summaryPause => _words.text('summaryPause') ?? _base.summaryPause;
+
+  @override
+  String get summaryResume =>
+      _words.text('summaryResume') ?? _base.summaryResume;
+
+  @override
+  String get summaryFreeNote =>
+      _words.text('summaryFreeNote') ?? _base.summaryFreeNote;
+
+  @override
+  String get summaryTitle => _words.text('summaryTitle') ?? _base.summaryTitle;
+
+  @override
+  String get summaryNowPlaying =>
+      _words.text('summaryNowPlaying') ?? _base.summaryNowPlaying;
+
+  @override
+  String get summaryNextPart =>
+      _words.text('summaryNextPart') ?? _base.summaryNextPart;
+
+  @override
+  String get summaryFinish =>
+      _words.text('summaryFinish') ?? _base.summaryFinish;
+
+  @override
+  String get summaryContents =>
+      _words.text('summaryContents') ?? _base.summaryContents;
+
+  @override
+  String summaryDoneTitle(String title) =>
+      _words.format('summaryDoneTitle', localeName, {'title': title}) ??
+      _base.summaryDoneTitle(title);
+
+  @override
+  String get summaryDoneLine =>
+      _words.text('summaryDoneLine') ?? _base.summaryDoneLine;
+
+  @override
+  String get summaryToCards =>
+      _words.text('summaryToCards') ?? _base.summaryToCards;
+
+  @override
+  String get summaryBackToBook =>
+      _words.text('summaryBackToBook') ?? _base.summaryBackToBook;
+
+  @override
+  String get summaryGateTitle =>
+      _words.text('summaryGateTitle') ?? _base.summaryGateTitle;
+
+  @override
+  String summaryGateLine(int parts) =>
+      _words.format('summaryGateLine', localeName, {'parts': parts}) ??
+      _base.summaryGateLine(parts);
+
+  @override
+  String get summaryNeedsNetwork =>
+      _words.text('summaryNeedsNetwork') ?? _base.summaryNeedsNetwork;
+
+  @override
+  String get bookAudioBack =>
+      _words.text('bookAudioBack') ?? _base.bookAudioBack;
+
+  @override
+  String get bookAudioWaiting =>
+      _words.text('bookAudioWaiting') ?? _base.bookAudioWaiting;
+
+  @override
+  String get bookAudioDone =>
+      _words.text('bookAudioDone') ?? _base.bookAudioDone;
+
+  @override
+  String get bookAudioOfferTitle =>
+      _words.text('bookAudioOfferTitle') ?? _base.bookAudioOfferTitle;
+
+  @override
+  String get bookAudioOfferLine =>
+      _words.text('bookAudioOfferLine') ?? _base.bookAudioOfferLine;
+
+  @override
+  String get bookAudioStop =>
+      _words.text('bookAudioStop') ?? _base.bookAudioStop;
+
+  @override
+  String get bookAudioOpen =>
+      _words.text('bookAudioOpen') ?? _base.bookAudioOpen;
+
+  @override
   String get inviteSection =>
       _words.text('inviteSection') ?? _base.inviteSection;
 
@@ -6988,4 +7103,149 @@ class RemoteLocalizations extends AppLocalizations {
   String inviteEarned(int n) =>
       _words.format('inviteEarned', localeName, {'n': n}) ??
       _base.inviteEarned(n);
+
+  @override
+  String get firstDayTitle =>
+      _words.text('firstDayTitle') ?? _base.firstDayTitle;
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) =>
+      _words.format('firstDaySureRight', localeName, {
+        'sure': sure,
+        'right': right,
+        'total': total,
+      }) ??
+      _base.firstDaySureRight(sure, right, total);
+
+  @override
+  String firstDayRight(int right, int total) =>
+      _words.format('firstDayRight', localeName, {
+        'right': right,
+        'total': total,
+      }) ??
+      _base.firstDayRight(right, total);
+
+  @override
+  String get firstDayRemind =>
+      _words.text('firstDayRemind') ?? _base.firstDayRemind;
+
+  @override
+  String firstDayReminded(String time) =>
+      _words.format('firstDayReminded', localeName, {'time': time}) ??
+      _base.firstDayReminded(time);
+
+  @override
+  String get earlyReadingTag =>
+      _words.text('earlyReadingTag') ?? _base.earlyReadingTag;
+
+  @override
+  String earlyReadingAll(int level, int n) =>
+      _words.format('earlyReadingAll', localeName, {'level': level, 'n': n}) ??
+      _base.earlyReadingAll(level, n);
+
+  @override
+  String earlyReadingNone(int level, int n) =>
+      _words.format('earlyReadingNone', localeName, {'level': level, 'n': n}) ??
+      _base.earlyReadingNone(level, n);
+
+  @override
+  String earlyReadingSome(int level, int n, int right) =>
+      _words.format('earlyReadingSome', localeName, {
+        'level': level,
+        'n': n,
+        'right': right,
+      }) ??
+      _base.earlyReadingSome(level, n, right);
+
+  @override
+  String get journeyClearEyebrow =>
+      _words.text('journeyClearEyebrow') ?? _base.journeyClearEyebrow;
+
+  @override
+  String journeyClearBlind(String subject) =>
+      _words.format('journeyClearBlind', localeName, {'subject': subject}) ??
+      _base.journeyClearBlind(subject);
+
+  @override
+  String journeyClearStrong(String subject) =>
+      _words.format('journeyClearStrong', localeName, {'subject': subject}) ??
+      _base.journeyClearStrong(subject);
+
+  @override
+  String journeyClearShare(String pct, int n) =>
+      _words.format('journeyClearShare', localeName, {'pct': pct, 'n': n}) ??
+      _base.journeyClearShare(pct, n);
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) =>
+      _words.format('journeyClearMemoryDays', localeName, {
+        'days': days,
+        'right': right,
+        'of': of,
+      }) ??
+      _base.journeyClearMemoryDays(days, right, of);
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) =>
+      _words.format('journeyClearMemoryWeeks', localeName, {
+        'weeks': weeks,
+        'right': right,
+        'of': of,
+      }) ??
+      _base.journeyClearMemoryWeeks(weeks, right, of);
+
+  @override
+  String get journeyClearBlindNotYet =>
+      _words.text('journeyClearBlindNotYet') ?? _base.journeyClearBlindNotYet;
+
+  @override
+  String get journeyClearStrongNotYet =>
+      _words.text('journeyClearStrongNotYet') ?? _base.journeyClearStrongNotYet;
+
+  @override
+  String journeyClearSureNotYet(int n) =>
+      _words.format('journeyClearSureNotYet', localeName, {'n': n}) ??
+      _base.journeyClearSureNotYet(n);
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      _words.text('journeyClearMemoryNotYet') ?? _base.journeyClearMemoryNotYet;
+
+  @override
+  String get journeyPreviewDoor =>
+      _words.text('journeyPreviewDoor') ?? _base.journeyPreviewDoor;
+
+  @override
+  String weekSheetOf(String date) =>
+      _words.format('weekSheetOf', localeName, {'date': date}) ??
+      _base.weekSheetOf(date);
+
+  @override
+  String weekSheetRightValue(int right, int n) =>
+      _words.format('weekSheetRightValue', localeName, {
+        'right': right,
+        'n': n,
+      }) ??
+      _base.weekSheetRightValue(right, n);
+
+  @override
+  String get weekSheetRightLabel =>
+      _words.text('weekSheetRightLabel') ?? _base.weekSheetRightLabel;
+
+  @override
+  String weekSheetAcross(int n) =>
+      _words.format('weekSheetAcross', localeName, {'n': n}) ??
+      _base.weekSheetAcross(n);
+
+  @override
+  String get weekSheetOverLabel =>
+      _words.text('weekSheetOverLabel') ?? _base.weekSheetOverLabel;
+
+  @override
+  String get weekSheetMemoryLabel =>
+      _words.text('weekSheetMemoryLabel') ?? _base.weekSheetMemoryLabel;
+
+  @override
+  String get weekSheetAccount =>
+      _words.text('weekSheetAccount') ?? _base.weekSheetAccount;
 }

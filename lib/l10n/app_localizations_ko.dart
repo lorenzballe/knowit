@@ -7007,6 +7007,113 @@ class AppLocalizationsKo extends AppLocalizations {
   String get listenNextCard => '다음 카드';
 
   @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes분 만에 읽기',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => '이어서 읽기';
+
+  @override
+  String get summaryAgain => '다시 읽기';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return '$of개 중 $part번째 파트';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n분 남음',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return '듣기 · $minutes분';
+  }
+
+  @override
+  String get summaryPause => '일시정지';
+
+  @override
+  String get summaryResume => '이어서 듣기';
+
+  @override
+  String get summaryFreeNote => '첫 파트는 무료, 나머지는 Astute+로.';
+
+  @override
+  String get summaryTitle => '요약';
+
+  @override
+  String get summaryNowPlaying => '재생 중';
+
+  @override
+  String get summaryNextPart => '다음 파트';
+
+  @override
+  String get summaryFinish => '다 읽기';
+
+  @override
+  String get summaryContents => '목차';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return '$title을(를) 다 읽었어요';
+  }
+
+  @override
+  String get summaryDoneLine => '이 책의 카드로 아이디어를 오래 기억하세요.';
+
+  @override
+  String get summaryToCards => '카드로 보는 아이디어';
+
+  @override
+  String get summaryBackToBook => '책으로 돌아가기';
+
+  @override
+  String get summaryGateTitle => '요약의 나머지는 Astute+에서';
+
+  @override
+  String summaryGateLine(int parts) {
+    return '모든 책의 $parts개 파트를 읽고 들을 수 있어요. 이번 주의 책은 누구나 무료예요.';
+  }
+
+  @override
+  String get summaryNeedsNetwork => '이 요약은 한 번 인터넷 연결이 필요해요.';
+
+  @override
+  String get bookAudioBack => '15초 뒤로';
+
+  @override
+  String get bookAudioWaiting => '다음 파트를 불러오는 중…';
+
+  @override
+  String get bookAudioDone => '끝까지 들었어요.';
+
+  @override
+  String get bookAudioOfferTitle => '책의 나머지를 들어 보세요';
+
+  @override
+  String get bookAudioOfferLine =>
+      'Astute+와 함께라면 모든 요약을 끝까지 들려드려요. 화면이 잠겨 있어도요.';
+
+  @override
+  String get bookAudioStop => '듣기 중지';
+
+  @override
+  String get bookAudioOpen => '플레이어 열기';
+
+  @override
   String get inviteSection => '친구';
 
   @override
@@ -7119,4 +7226,154 @@ class AppLocalizationsKo extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => '첫날을 마쳤어요';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return '$sure% 확신했고, $total개 중 $right개를 맞혔어요.';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return '$total개 중 $right개를 맞혔어요.';
+  }
+
+  @override
+  String get firstDayRemind => '내일 알려 주세요';
+
+  @override
+  String firstDayReminded(String time) {
+    return '내일 $time에 알려 드릴게요.';
+  }
+
+  @override
+  String get earlyReadingTag => '잠정 결과';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n번 답했고, 모두 맞았어요',
+      two: '두 번 답했고, 두 번 다 맞았어요',
+      one: '한 번 답했고, 맞았어요',
+    );
+    return '지금까지: $level%라고 $_temp0.';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n번 답했고, 모두 틀렸어요',
+      two: '두 번 답했고, 두 번 다 틀렸어요',
+      one: '한 번 답했고, 틀렸어요',
+    );
+    return '지금까지: $level%라고 $_temp0.';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    return '지금까지: $level%라고 $n번 답했고, 그중 $right번 맞았어요.';
+  }
+
+  @override
+  String get journeyClearEyebrow => '이번 주 공개';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return '나의 사각지대: $subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return '나의 강점: $subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return '이 분야 최근 $n번의 답 중 정답률 $pct.';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days일 뒤에도',
+      two: '이틀 뒤에도',
+      one: '하루 뒤에도',
+    );
+    return '$_temp0 $of장 중 $right장을 기억해요.';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks주 뒤에도',
+      one: '일주일 뒤에도',
+    );
+    return '$_temp0 $of장 중 $right장을 기억해요.';
+  }
+
+  @override
+  String get journeyClearBlindNotYet =>
+      '두 분야에서 각각 6번 답하면, 가장 많이 틀리는 분야가 여기 나와요.';
+
+  @override
+  String get journeyClearStrongNotYet => '한 분야에서 6번 답하면, 가장 강한 분야가 여기 나와요.';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '확신 정도를 함께 고른 답이 $n개 더 있으면, 여기 잠정 결과가 나와요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      '카드는 2일, 7일, 21일 뒤에 다시 와요. 몇 장을 아직 기억하는지 여기 나와요.';
+
+  @override
+  String get journeyPreviewDoor => '매주 다른 수치 하나. 나머지는 Astute+로 열려요.';
+
+  @override
+  String weekSheetOf(String date) {
+    return '$date부터 한 주';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$n개 중 $right개';
+  }
+
+  @override
+  String get weekSheetRightLabel => '정답';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '답 $n개 기준',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => '너무 확신하는 분야';
+
+  @override
+  String get weekSheetMemoryLabel => '아직 기억하는 것';
+
+  @override
+  String get weekSheetAccount => '어떤 휴대폰에서도 이번 주를 간직하세요';
 }

@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611280005,
- "built": "2026-11-28T00:05:17Z",
+ "version": 202611280923,
+ "built": "2026-11-28T09:23:45Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -280131,5 +280131,43 @@
    "food-book-the-omnivores-dilemma-4",
    "human_body-digestion-12"
   ]
+ },
+ "summaries": {
+  "business-adventures": {
+   "file": "summaries/business-adventures.json?v=db3c356ef882",
+   "minutes": 15,
+   "parts": 8,
+   "words": 2196
+  },
+  "guns-germs-and-steel": {
+   "file": "summaries/guns-germs-and-steel.json?v=e6650902ad38",
+   "minutes": 15,
+   "parts": 8,
+   "words": 2219
+  },
+  "influence": {
+   "file": "summaries/influence.json?v=760656fbd546",
+   "minutes": 15,
+   "parts": 7,
+   "words": 2229
+  },
+  "sapiens": {
+   "file": "summaries/sapiens.json?v=72ca179a1108",
+   "minutes": 15,
+   "parts": 7,
+   "words": 2190
+  },
+  "the-structure-of-scientific-revolutions": {
+   "file": "summaries/the-structure-of-scientific-revolutions.json?v=b15db14d48af",
+   "minutes": 15,
+   "parts": 7,
+   "words": 2180
+  },
+  "thinking-fast-and-slow": {
+   "file": "summaries/thinking-fast-and-slow.json?v=47910ab604d7",
+   "minutes": 15,
+   "parts": 7,
+   "words": 2251
+  }
  }
 }

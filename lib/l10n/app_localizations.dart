@@ -10104,6 +10104,174 @@ abstract class AppLocalizations {
   /// **'Next card'**
   String get listenNextCard;
 
+  /// A book's page, the first way in when the book has a summary: opens the summary, read whole in about a quarter of an hour. minutes is how long it takes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes, plural, =1{Read in 1 minute} other{Read in {minutes} minutes}}'**
+  String summaryReadIn(int minutes);
+
+  /// A book's page, the same button once the reader has started the summary and not finished it.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue reading'**
+  String get summaryContinue;
+
+  /// A book's page, the same button once the summary has been read to its end.
+  ///
+  /// In en, this message translates to:
+  /// **'Read again'**
+  String get summaryAgain;
+
+  /// Where the reader is in a book's summary: part n of so many. Also the eyebrow over a part in the reader, in capitals, and in the player.
+  ///
+  /// In en, this message translates to:
+  /// **'Part {part} of {of}'**
+  String summaryPartOf(int part, int of);
+
+  /// How many minutes of a summary are left to read or to hear, beside where the reader is.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 min left} other{{n} min left}}'**
+  String summaryMinutesLeft(int n);
+
+  /// A book's page, the second way in beside reading: plays the summary aloud. minutes is how long it takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen · {minutes} min'**
+  String summaryListenFor(int minutes);
+
+  /// A book's page, the listening button while this book's summary is being read aloud: pauses it.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get summaryPause;
+
+  /// A book's page, the listening button while this book's summary is paused: plays on from where it stopped.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume listening'**
+  String get summaryResume;
+
+  /// A book's page and the player, on the free plan, for a book that is not the week's: what of the summary is free.
+  ///
+  /// In en, this message translates to:
+  /// **'The first part is free; the rest comes with Astute+.'**
+  String get summaryFreeNote;
+
+  /// A book's page: the name over the summary's parts, in capitals; also the reader's contents.
+  ///
+  /// In en, this message translates to:
+  /// **'The summary'**
+  String get summaryTitle;
+
+  /// Beside the part of a summary being read aloud, on the book's page and in the player.
+  ///
+  /// In en, this message translates to:
+  /// **'Now playing'**
+  String get summaryNowPlaying;
+
+  /// At the foot of a part in the reader, over the next part's title; and the player's button that goes on to the next part.
+  ///
+  /// In en, this message translates to:
+  /// **'Next part'**
+  String get summaryNextPart;
+
+  /// At the foot of the last part in the reader: ends the summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get summaryFinish;
+
+  /// The reader: the button that lists every part of the summary, and that list's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Contents'**
+  String get summaryContents;
+
+  /// The page after the last part of a summary: the book read. title is the book's title, as published.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ve read {title}'**
+  String summaryDoneTitle(String title);
+
+  /// That page, under its title: the book's cards, the short way in, offered to make the ideas stay.
+  ///
+  /// In en, this message translates to:
+  /// **'The book’s cards are there to make its ideas stay.'**
+  String get summaryDoneLine;
+
+  /// That page's first button: opens the book's ideas as cards.
+  ///
+  /// In en, this message translates to:
+  /// **'The ideas as cards'**
+  String get summaryToCards;
+
+  /// That page's second button: back to the book's page.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the book'**
+  String get summaryBackToBook;
+
+  /// The reader, on the free plan, at a part past the first of a book that is not the week's: what the rest is.
+  ///
+  /// In en, this message translates to:
+  /// **'The rest of this summary comes with Astute+'**
+  String get summaryGateTitle;
+
+  /// Under it: what Astute+ opens. parts is how many parts the summary has.
+  ///
+  /// In en, this message translates to:
+  /// **'All {parts} parts, to read and to hear, for every book. The week’s book is free for everyone.'**
+  String summaryGateLine(int parts);
+
+  /// The reader, when a summary that was never opened cannot be fetched: no network.
+  ///
+  /// In en, this message translates to:
+  /// **'This summary needs the internet once.'**
+  String get summaryNeedsNetwork;
+
+  /// Said to a screen reader on the player's button that goes back fifteen seconds; the button shows a circling arrow and 15.
+  ///
+  /// In en, this message translates to:
+  /// **'Back 15 seconds'**
+  String get bookAudioBack;
+
+  /// The player, when the next part of the summary is still on its way (a slow network).
+  ///
+  /// In en, this message translates to:
+  /// **'The next part is on its way…'**
+  String get bookAudioWaiting;
+
+  /// The player, once every part of the summary has been heard.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard to the end.'**
+  String get bookAudioDone;
+
+  /// The player on the free plan, once the free part is heard: the offer of the rest.
+  ///
+  /// In en, this message translates to:
+  /// **'Hear the rest of the book'**
+  String get bookAudioOfferTitle;
+
+  /// Under it.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ every summary is read to you whole, even with the screen locked.'**
+  String get bookAudioOfferLine;
+
+  /// The player's last button, and the small player's cross as a screen reader says it: stops the summary being read aloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop listening'**
+  String get bookAudioStop;
+
+  /// Said to a screen reader on the small player that stays over every screen while a book is read aloud: opens the whole player.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the player'**
+  String get bookAudioOpen;
+
   /// Profile: the name over the box with the invitation's two rows (Invita un amico).
   ///
   /// In en, this message translates to:
@@ -10277,6 +10445,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =1{A friend finished their first day: a week of Astute+ for you.} other{{n} friends finished their first day: {n} weeks of Astute+ for you.}}'**
   String inviteEarned(int n);
+
+  /// The screen that celebrates the reader's first finished day, right after their fifth card (black at night, paper by day): its headline, in the display face, over the streak, the points the day earned and how sure against how right. Set on up to three lines; no full stop, as a headline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first day is done'**
+  String get firstDayTitle;
+
+  /// That screen, one plain line under the streak and the points: how sure the reader said they were on today's answers, on average (sure, 50 to 90, a percent), set against how many of today's answers were right (right of total). Said only where the card asked how sure at least once that day.
+  ///
+  /// In en, this message translates to:
+  /// **'You were {sure}% sure, and got {right} of {total} right.'**
+  String firstDaySureRight(int sure, int right, int total);
+
+  /// That screen, the same line on a day no card asked how sure: how many of today's answers were right, right of total.
+  ///
+  /// In en, this message translates to:
+  /// **'You got {right} of {total} right.'**
+  String firstDayRight(int right, int total);
+
+  /// That screen, its first button: raises the reminder sheet, which asks at what time to send the daily reminder. Short, as a button.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me tomorrow'**
+  String get firstDayRemind;
+
+  /// That screen, in place of the first button once the reader chose a time and the phone allowed notifications: when the first reminder comes. time is the time as the phone writes it (19:00, or 7:00 PM).
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll remind you tomorrow at {time}.'**
+  String firstDayReminded(String time);
+
+  /// A small tag in capitals over a provisional reading of how sure against how right, on the profile (How well you know yourself), in Your journey and its free preview: it is a first reading from the first few answers, firming up with more.
+  ///
+  /// In en, this message translates to:
+  /// **'First reading'**
+  String get earlyReadingTag;
+
+  /// The provisional reading, before twelve answers said how sure: the level the reader said most often (level, a percentage) and how many times (n), every one of them right. Shown on the profile and in Your journey.
+  ///
+  /// In en, this message translates to:
+  /// **'So far: you said {level}% {n, plural, =1{once, and you were right} =2{twice, and you were right twice} other{{n} times, and you were right every time}}.'**
+  String earlyReadingAll(int level, int n);
+
+  /// The same provisional reading when none of those answers (n of them, said at level %) was right.
+  ///
+  /// In en, this message translates to:
+  /// **'So far: you said {level}% {n, plural, =1{once, and you were wrong} =2{twice, and you were wrong both times} other{{n} times, and you were wrong every time}}.'**
+  String earlyReadingNone(int level, int n);
+
+  /// The same provisional reading when some were right and some were not: said level % n times (two or more), right of them `right` times.
+  ///
+  /// In en, this message translates to:
+  /// **'So far: you said {level}% {n, plural, =2{twice} other{{n} times}}, and you were right {right, plural, =1{once} =2{twice} other{{right} times}}.'**
+  String earlyReadingSome(int level, int n, int right);
+
+  /// Your journey on the free plan, the preview: the small capitals over the one figure shown in the clear this week, every other figure of the journey being blurred under it. A different one each week.
+  ///
+  /// In en, this message translates to:
+  /// **'In the clear this week'**
+  String get journeyClearEyebrow;
+
+  /// The preview's figure in the clear, when it is the blind spot: the subject the reader misses most (subject, its name).
+  ///
+  /// In en, this message translates to:
+  /// **'Your blind spot: {subject}'**
+  String journeyClearBlind(String subject);
+
+  /// The preview's figure in the clear, when it is the strong point: the subject the reader is best in (subject, its name).
+  ///
+  /// In en, this message translates to:
+  /// **'Your strong point: {subject}'**
+  String journeyClearStrong(String subject);
+
+  /// Under the blind spot or the strong point in the clear: how often right (pct, a percentage as the phone writes it) of the reader's latest n answers in that subject (six to twenty).
+  ///
+  /// In en, this message translates to:
+  /// **'{pct} right, of your last {n} answers in it.'**
+  String journeyClearShare(String pct, int n);
+
+  /// The preview's figure in the clear, when it is what the reader remembers: of the cards that came back after a wait of `days` days (two, the review ladder's first wait, after a miss), how many were known then (right of of).
+  ///
+  /// In en, this message translates to:
+  /// **'After {days, plural, =1{a day} =2{two days} other{{days} days}}, you still remember {right} of {of}.'**
+  String journeyClearMemoryDays(int days, int right, int of);
+
+  /// The same, after a wait of `weeks` weeks (one after the first right answer, three after the second): of the cards that came back then, how many were still known (right of of).
+  ///
+  /// In en, this message translates to:
+  /// **'After {weeks, plural, =1{a week} other{{weeks} weeks}}, you still remember {right} of {of}.'**
+  String journeyClearMemoryWeeks(int weeks, int right, int of);
+
+  /// The preview, the blind spot's week, when no subject has six answers yet: what it takes, rather than a sample.
+  ///
+  /// In en, this message translates to:
+  /// **'Six answers in two subjects, and this shows the one you miss most.'**
+  String get journeyClearBlindNotYet;
+
+  /// The preview, the strong point's week, when no subject has six answers yet: what it takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Six answers in one subject, and this shows the one you’re best at.'**
+  String get journeyClearStrongNotYet;
+
+  /// The preview, the week of how sure against how right, before two answers said how sure: how many more it takes (n) for a first reading.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One more answer saying how sure, and a first reading shows here.} other{{n} more answers saying how sure, and a first reading shows here.}}'**
+  String journeyClearSureNotYet(int n);
+
+  /// The preview, the week of what the reader remembers, before any card has come back: how it comes.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards come back after 2, 7 and 21 days: this shows how many you still remember.'**
+  String get journeyClearMemoryNotYet;
+
+  /// The preview, the one quiet line under the figure in the clear, with a lock: it opens the plans, on the journey's door.
+  ///
+  /// In en, this message translates to:
+  /// **'A different figure each week. Astute+ opens the rest.'**
+  String get journeyPreviewDoor;
+
+  /// Sunday's week, the sheet a free reader gets on Sunday after the five (or on Monday morning): the small capitals over its title, naming the week by its Monday (date, a day and a month as the phone writes them).
+  ///
+  /// In en, this message translates to:
+  /// **'The week of {date}'**
+  String weekSheetOf(String date);
+
+  /// Sunday's week: the right answers of the week as a figure, right of n.
+  ///
+  /// In en, this message translates to:
+  /// **'{right} of {n}'**
+  String weekSheetRightValue(int right, int n);
+
+  /// Sunday's week: the small capitals under that figure.
+  ///
+  /// In en, this message translates to:
+  /// **'Right answers'**
+  String get weekSheetRightLabel;
+
+  /// Sunday's week: under how sure against how right, how many of the week's answers said how sure (n), so a figure of three answers says it is one.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{over 1 answer} other{over {n} answers}}'**
+  String weekSheetAcross(int n);
+
+  /// Sunday's week: the name over the one figure only Astute+ shows, blurred, when it is where the reader trusts themselves too much.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you trust yourself too much'**
+  String get weekSheetOverLabel;
+
+  /// Sunday's week: the name over that blurred figure when it is how many cards the reader still remembers after the review ladder's waits.
+  ///
+  /// In en, this message translates to:
+  /// **'What you still remember'**
+  String get weekSheetMemoryLabel;
+
+  /// Sunday's week: the one line that offers the account (Apple or Google) to a reader not signed in, and the title of the sign-in sheet it opens.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your week on every phone'**
+  String get weekSheetAccount;
 }
 
 class _AppLocalizationsDelegate

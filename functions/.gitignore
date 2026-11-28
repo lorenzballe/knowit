@@ -1,4 +1,5 @@
 node_modules/
 lib/
 data/bank.json
+data/summaries/
 *.log

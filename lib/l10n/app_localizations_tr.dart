@@ -7194,6 +7194,115 @@ class AppLocalizationsTr extends AppLocalizations {
   String get listenNextCard => 'Sonraki kart';
 
   @override
+  String summaryReadIn(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes dakikada oku',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get summaryContinue => 'Okumaya devam et';
+
+  @override
+  String get summaryAgain => 'Yeniden oku';
+
+  @override
+  String summaryPartOf(int part, int of) {
+    return 'Bölüm $part/$of';
+  }
+
+  @override
+  String summaryMinutesLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dk kaldı',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String summaryListenFor(int minutes) {
+    return 'Dinle · $minutes dk';
+  }
+
+  @override
+  String get summaryPause => 'Duraklat';
+
+  @override
+  String get summaryResume => 'Dinlemeye devam et';
+
+  @override
+  String get summaryFreeNote => 'İlk bölüm ücretsiz; gerisi Astute+ ile.';
+
+  @override
+  String get summaryTitle => 'Özet';
+
+  @override
+  String get summaryNowPlaying => 'Çalıyor';
+
+  @override
+  String get summaryNextPart => 'Sonraki bölüm';
+
+  @override
+  String get summaryFinish => 'Bitir';
+
+  @override
+  String get summaryContents => 'İçindekiler';
+
+  @override
+  String summaryDoneTitle(String title) {
+    return '$title kitabını okudun';
+  }
+
+  @override
+  String get summaryDoneLine =>
+      'Kitabın kartları fikirlerin akılda kalmasını sağlar.';
+
+  @override
+  String get summaryToCards => 'Kartlarla fikirler';
+
+  @override
+  String get summaryBackToBook => 'Kitaba dön';
+
+  @override
+  String get summaryGateTitle => 'Özetin devamı Astute+ ile';
+
+  @override
+  String summaryGateLine(int parts) {
+    return 'Her kitabın $parts bölümünün tamamı, okumak ve dinlemek için. Haftanın kitabı herkese ücretsiz.';
+  }
+
+  @override
+  String get summaryNeedsNetwork =>
+      'Bu özet bir kez internet bağlantısı gerektirir.';
+
+  @override
+  String get bookAudioBack => '15 saniye geri';
+
+  @override
+  String get bookAudioWaiting => 'Sonraki bölüm geliyor…';
+
+  @override
+  String get bookAudioDone => 'Sonuna kadar dinlendi.';
+
+  @override
+  String get bookAudioOfferTitle => 'Kitabın devamını dinle';
+
+  @override
+  String get bookAudioOfferLine =>
+      'Astute+ ile her özet baştan sona okunur, ekran kilitliyken bile.';
+
+  @override
+  String get bookAudioStop => 'Dinlemeyi durdur';
+
+  @override
+  String get bookAudioOpen => 'Oynatıcıyı aç';
+
+  @override
   String get inviteSection => 'Arkadaşlar';
 
   @override
@@ -7310,4 +7419,157 @@ class AppLocalizationsTr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => 'İlk günün tamam';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return '%$sure emindin, $total sorudan $right tanesini doğru bildin.';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return '$total sorudan $right tanesini doğru bildin.';
+  }
+
+  @override
+  String get firstDayRemind => 'Yarın hatırlat';
+
+  @override
+  String firstDayReminded(String time) {
+    return 'Hatırlatma yarın saat $time.';
+  }
+
+  @override
+  String get earlyReadingTag => 'İlk sonuç';
+
+  @override
+  String earlyReadingAll(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kez %$level dedin ve her seferinde haklıydın',
+      two: 'iki kez %$level dedin ve ikisinde de haklıydın',
+      one: 'bir kez %$level dedin ve haklıydın',
+    );
+    return 'Şimdiye kadar: $_temp0.';
+  }
+
+  @override
+  String earlyReadingNone(int level, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kez %$level dedin ve her seferinde yanıldın',
+      two: 'iki kez %$level dedin ve ikisinde de yanıldın',
+      one: 'bir kez %$level dedin ve yanıldın',
+    );
+    return 'Şimdiye kadar: $_temp0.';
+  }
+
+  @override
+  String earlyReadingSome(int level, int n, int right) {
+    return 'Şimdiye kadar: $n kez %$level dedin ve $right kez haklıydın.';
+  }
+
+  @override
+  String get journeyClearEyebrow => 'Bu hafta açık';
+
+  @override
+  String journeyClearBlind(String subject) {
+    return 'Kör noktan: $subject';
+  }
+
+  @override
+  String journeyClearStrong(String subject) {
+    return 'Güçlü yanın: $subject';
+  }
+
+  @override
+  String journeyClearShare(String pct, int n) {
+    return 'Bu konudaki son $n cevabının $pct doğru.';
+  }
+
+  @override
+  String journeyClearMemoryDays(int days, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days gün',
+      two: 'İki gün',
+      one: 'Bir gün',
+    );
+    return '$_temp0 sonra hâlâ $of karttan $right tanesini hatırlıyorsun.';
+  }
+
+  @override
+  String journeyClearMemoryWeeks(int weeks, int right, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks hafta',
+      one: 'Bir hafta',
+    );
+    return '$_temp0 sonra hâlâ $of karttan $right tanesini hatırlıyorsun.';
+  }
+
+  @override
+  String get journeyClearBlindNotYet =>
+      'İki konuda altışar cevap, burada en çok yanıldığın konu çıkar.';
+
+  @override
+  String get journeyClearStrongNotYet =>
+      'Bir konuda altı cevap, burada en iyi olduğun konu çıkar.';
+
+  @override
+  String journeyClearSureNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Ne kadar emin olduğunu söylediğin $n cevap daha, burada ilk sonuç çıkar.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyClearMemoryNotYet =>
+      'Kartlar 2, 7 ve 21 gün sonra geri gelir: burada kaçını hâlâ hatırladığını görürsün.';
+
+  @override
+  String get journeyPreviewDoor =>
+      'Her hafta başka bir rakam. Gerisini Astute+ açar.';
+
+  @override
+  String weekSheetOf(String date) {
+    return '$date haftası';
+  }
+
+  @override
+  String weekSheetRightValue(int right, int n) {
+    return '$n sorudan $right';
+  }
+
+  @override
+  String get weekSheetRightLabel => 'Doğru cevaplar';
+
+  @override
+  String weekSheetAcross(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cevaba göre',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekSheetOverLabel => 'Kendine fazla güvendiğin yer';
+
+  @override
+  String get weekSheetMemoryLabel => 'Hâlâ hatırladıkların';
+
+  @override
+  String get weekSheetAccount => 'Haftanı her telefonda koru';
 }
