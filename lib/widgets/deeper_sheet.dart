@@ -276,6 +276,14 @@ class _DeeperSheetState extends State<DeeperSheet>
     await launchUrl(url, mode: LaunchMode.externalApplication);
   }
 
+  /// Watch more: the video the card's story is told in at more length.
+  Future<void> _openWatch() async {
+    final Uri? url = Uri.tryParse(pill.watch?.url ?? '');
+    if (url == null) return;
+    Analytics.capture('card video opened', app.cardFacts(pill.id));
+    await launchUrl(url, mode: LaunchMode.externalApplication);
+  }
+
   bool _onScroll(ScrollNotification n) {
     if (n.depth != 0 || n.metrics.axis != Axis.vertical) return false;
     final double at = n.metrics.pixels;
@@ -686,6 +694,10 @@ class _DeeperSheetState extends State<DeeperSheet>
                                                   open: _original.isEmpty
                                                       ? null
                                                       : _openSource,
+                                                  watchBy: pill.watch?.by,
+                                                  watch: pill.watch == null
+                                                      ? null
+                                                      : _openWatch,
                                                 ),
                                                 // Being tried: reporting the
                                                 // card under the source it

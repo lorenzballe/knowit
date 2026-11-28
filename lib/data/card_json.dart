@@ -126,6 +126,12 @@ Map<String, Object?> cardToJson(Pill p) {
   if (p.web != null) out['web'] = webToJson(p.web!, challenge: p.challenge);
   if (p.book != null) out['book'] = p.book!.toJson();
   out['source'] = p.source;
+  // Where the source is, and what kind of thing it is: today's five are kept
+  // on the phone this way, and a day opened again kept its words but lost
+  // the way to the original.
+  if (p.reference.isNotEmpty) out['reference'] = p.reference;
+  if (p.sourceKind.isNotEmpty) out['source_kind'] = p.sourceKind;
+  if (p.watch != null) out['watch'] = p.watch!.toJson();
   return out;
 }
 
@@ -420,6 +426,7 @@ Pill cardFromJson(Map<String, Object?> raw) {
     reacts: raw['reacts'] == true,
     reference: referenceLink(raw['reference']),
     sourceKind: text('source_kind'),
+    watch: PillWatch.fromJson(raw['watch']),
     why: text('why'),
     book: PillBook.fromJson(raw['book']),
     views: switch (raw['views']) {

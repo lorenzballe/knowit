@@ -7435,4 +7435,64 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get exploreCapPlus =>
       _words.text('exploreCapPlus') ?? _base.exploreCapPlus;
+
+  @override
+  String todayLineSure(int right, int asked, int sure) =>
+      _words.format('todayLineSure', localeName, {
+        'right': right,
+        'asked': asked,
+        'sure': sure,
+      }) ??
+      _base.todayLineSure(right, asked, sure);
+
+  @override
+  String todayLineRight(int right, int asked) =>
+      _words.format('todayLineRight', localeName, {
+        'right': right,
+        'asked': asked,
+      }) ??
+      _base.todayLineRight(right, asked);
+
+  @override
+  String get todayLineRead =>
+      _words.text('todayLineRead') ?? _base.todayLineRead;
+
+  @override
+  String todayLineFirstSubject(String subject) =>
+      _words.format('todayLineFirstSubject', localeName, {
+        'subject': subject,
+      }) ??
+      _base.todayLineFirstSubject(subject);
+
+  @override
+  String freezeSavedLine(int days) =>
+      _words.format('freezeSavedLine', localeName, {'days': days}) ??
+      _base.freezeSavedLine(days);
+
+  @override
+  String freezeCoversLine(int n) =>
+      _words.format('freezeCoversLine', localeName, {'n': n}) ??
+      _base.freezeCoversLine(n);
+
+  @override
+  String get streakMomentEyebrow =>
+      _words.text('streakMomentEyebrow') ?? _base.streakMomentEyebrow;
+
+  @override
+  String streakMomentUnit(int n) =>
+      _words.format('streakMomentUnit', localeName, {'n': n}) ??
+      _base.streakMomentUnit(n);
+
+  @override
+  String get streakMomentWeek =>
+      _words.text('streakMomentWeek') ?? _base.streakMomentWeek;
+
+  @override
+  String streakMomentNext(int next) =>
+      _words.format('streakMomentNext', localeName, {'next': next}) ??
+      _base.streakMomentNext(next);
+
+  @override
+  String get deeperWatchMore =>
+      _words.text('deeperWatchMore') ?? _base.deeperWatchMore;
 }

@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611280950,
- "built": "2026-11-28T09:50:20Z",
+ "version": 202611281501,
+ "built": "2026-11-28T15:01:34Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -43189,16 +43189,22 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A box of penne labelled 500 g ℮ standing on a kitchen scale whose display reads '? g'. Is it likelier to weigh less than 500 g, 500 g or a bit more, or are the odds equal? Choose one, rate your confidence, then watch 60 packs get weighed and pile up on a shelf by weight.",
-    "page": "pages/food-estimated-weight-mark.html?v=a656c7e70458",
-    "bytes": 14993,
+    "page": "pages/food-estimated-weight-mark.html?v=dcac0fe58a0a",
+    "bytes": 14915,
     "thumbs": {
-     "front": "thumbs/food-estimated-weight-mark-front.webp?v=f06e95d36405",
-     "back": "thumbs/food-estimated-weight-mark-back.webp?v=f06e95d36405"
+     "front": "thumbs/food-estimated-weight-mark-front.webp?v=8535fe934269",
+     "back": "thumbs/food-estimated-weight-mark-back.webp?v=8535fe934269"
     }
    },
-   "source": "Geopop, “Avete mai notato questo simbolo di fianco al peso dei prodotti confezionati? #alimenti #scienze” (YouTube, 2024)",
-   "reference": "https://www.youtube.com/watch?v=yqEeMsCXrus&t=36s",
-   "written": "2026-11-03"
+   "source": "Council Directive 76/211/EEC on prepackaged products, Annex I, as amended by Directive 2007/45/EC",
+   "source_kind": "primary_document",
+   "reference": "https://eur-lex.europa.eu/eli/dir/1976/211/oj",
+   "watch": {
+    "url": "https://www.youtube.com/watch?v=yqEeMsCXrus&t=36s",
+    "by": "Geopop (YouTube, 2024)"
+   },
+   "written": "2026-11-03",
+   "checked": "2026-11-28"
   },
   {
    "id": "food-estimated-weight-tolerance",
@@ -53016,11 +53022,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Astute free card titled Two brief occupations of San Marino. It asks which two men occupied San Marino and how long they lasted. Two swords labeled Cesare Borgia strike 1503 and Cardinal Alberoni strike 1739–1740 are tapped to attack a small castle.",
-    "page": "pages/history-borgia-alberoni-occupations.html?v=fc982cc7a0cc",
-    "bytes": 9893,
+    "page": "pages/history-borgia-alberoni-occupations.html?v=9a18e14a8e49",
+    "bytes": 10169,
     "thumbs": {
-     "front": "thumbs/history-borgia-alberoni-occupations-front.webp?v=0c87c79100cf",
-     "back": "thumbs/history-borgia-alberoni-occupations-back.webp?v=0c87c79100cf"
+     "front": "thumbs/history-borgia-alberoni-occupations-front.webp?v=4fbae27115f9",
+     "back": "thumbs/history-borgia-alberoni-occupations-back.webp?v=4fbae27115f9"
     }
    },
    "source": "Geopop, “Perché esiste la Repubblica di San Marino e come mai non è mai entrata a far parte dell'Italia?” (YouTube, 2023)",
@@ -94661,9 +94667,11 @@ const String kEmbeddedBank = r'''
      "back": "thumbs/life-jerks-dont-climb-back.webp?v=5aaec9b8445a"
     }
    },
-   "source": "Diventare Strong, “Come Diventare STRONZI - 4 Metodi Insoliti !” (YouTube, 2020)",
-   "reference": "https://www.youtube.com/watch?v=O1qjBAMe1nQ",
-   "written": "2026-11-03"
+   "source": "Anderson, Sharps, Soto & John, “People with disagreeable personalities (selfish, combative, and manipulative) do not have an advantage in pursuing power at work”, PNAS, 2020",
+   "source_kind": "paper",
+   "reference": "https://doi.org/10.1073/pnas.2005088117",
+   "written": "2026-11-03",
+   "checked": "2026-11-28"
   },
   {
    "id": "life-kindness-1",
@@ -114812,8 +114820,8 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "How much stronger is an MRI's magnetic field than Earth's?",
-   "answer": "Inside an MRI you sit in a field 100,000 times more intense than Earth's. That is why it can pull metal objects with dangerous force. The scan itself is safe and non-invasive.",
-   "move": "An MRI is 100,000 Earths of magnetism: leave metal outside.",
+   "answer": "Inside a common 1.5-tesla MRI you sit in a field about 30,000 times stronger than Earth's; a 3-tesla one doubles it. That is why it can pull metal objects with dangerous force. The scan itself is safe and non-invasive.",
+   "move": "An MRI is tens of thousands of Earths of magnetism: leave metal outside.",
    "keywords": [
     "mri",
     "earth",
@@ -114833,17 +114841,23 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "An MRI scanner seen from the front, a patient lying in its tunnel, feet towards us. It asks how much stronger its magnetic field is than Earth's. Each tap of ×10 multiplies the Earths packed into the tunnel, one little globe for one Earth's field: 10, 100, 1,000, up to 100,000, when the tunnel is solid with them and a bunch of keys is pulled off the floor onto its rim.",
-    "page": "pages/medicine-mri-field-strength.html?v=14a551a73a01",
-    "bytes": 21233,
+    "label": "An MRI scanner seen from the front, a patient lying in its tunnel, feet towards us. It asks how much stronger its field is than Earth's. Each tap multiplies the Earths in the tunnel, one little globe for one Earth's field: 10, 100, 1,000, 10,000, then a common scanner's 30,000, and keys fly onto its rim.",
+    "page": "pages/medicine-mri-field-strength.html?v=a053f80604e7",
+    "bytes": 21475,
     "thumbs": {
-     "front": "thumbs/medicine-mri-field-strength-front.webp?v=be7126ac6829",
-     "back": "thumbs/medicine-mri-field-strength-back.webp?v=be7126ac6829"
+     "front": "thumbs/medicine-mri-field-strength-front.webp?v=ba3efde4227a",
+     "back": "thumbs/medicine-mri-field-strength-back.webp?v=ba3efde4227a"
     }
    },
-   "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
-   "reference": "https://www.youtube.com/watch?v=WS2LAuwpFzM&t=33s",
-   "written": "2026-11-03"
+   "source": "Duke University Brain Imaging and Analysis Center, “MRI Safety Tutorial”",
+   "source_kind": "institution",
+   "reference": "https://www.biac.duke.edu/research/safety/mri-safety-tutorial",
+   "watch": {
+    "url": "https://www.youtube.com/watch?v=WS2LAuwpFzM&t=33s",
+    "by": "Geopop (YouTube, 2025)"
+   },
+   "written": "2026-11-03",
+   "checked": "2026-11-28"
   },
   {
    "id": "medicine-new-ones-1",
@@ -138791,11 +138805,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Diagram of a vertical volcanic eruption column with a switch. Flipping it cools the column's top so it turns heavy and falls into a fast, ground-hugging glowing cloud. Asks why pyroclastic flows are deadlier than the eruption column.",
-    "page": "pages/nature-column-collapse-flows-2.html?v=658285384291",
-    "bytes": 8657,
+    "page": "pages/nature-column-collapse-flows-2.html?v=853311193356",
+    "bytes": 9063,
     "thumbs": {
-     "front": "thumbs/nature-column-collapse-flows-2-front.webp?v=0ddfddd04532",
-     "back": "thumbs/nature-column-collapse-flows-2-back.webp?v=0ddfddd04532"
+     "front": "thumbs/nature-column-collapse-flows-2-front.webp?v=b7d754d3a145",
+     "back": "thumbs/nature-column-collapse-flows-2-back.webp?v=b7d754d3a145"
     }
    },
    "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
@@ -141377,16 +141391,22 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A side view of Mount Everest above a dark ocean, with a drag handle. The reader drags Everest down until its base rests on the seabed of the Challenger Deep, then sees where its summit ends up relative to the water surface.",
-    "page": "pages/nature-everest-underwater.html?v=01fc33dd5ad9",
-    "bytes": 16038,
+    "page": "pages/nature-everest-underwater.html?v=86050649f0c4",
+    "bytes": 15964,
     "thumbs": {
-     "front": "thumbs/nature-everest-underwater-front.webp?v=be5a1513b9a8",
-     "back": "thumbs/nature-everest-underwater-back.webp?v=be5a1513b9a8"
+     "front": "thumbs/nature-everest-underwater-front.webp?v=d577e2a3fc6a",
+     "back": "thumbs/nature-everest-underwater-back.webp?v=d577e2a3fc6a"
     }
    },
-   "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",
-   "reference": "https://www.youtube.com/watch?v=CYUaD_ROqGM",
-   "written": "2026-11-06"
+   "source": "NOAA National Centers for Environmental Information, “Planet Postcard: The Mariana Trench”",
+   "source_kind": "institution",
+   "reference": "https://www.ncei.noaa.gov/node/239",
+   "watch": {
+    "url": "https://www.youtube.com/watch?v=CYUaD_ROqGM",
+    "by": "Geopop (YouTube, 2024)"
+   },
+   "written": "2026-11-06",
+   "checked": "2026-11-28"
   },
   {
    "id": "nature-feedback-loops-1",
@@ -142320,11 +142340,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Interactive card: a wave simulation that flips between a rockslide alone and a rockslide hitting a glacier, Lituya Bay 1958. It asks what effect a glacier impact has on tsunami size.",
-    "page": "pages/nature-glacier-wave-amplifier.html?v=bb9579b75d64",
-    "bytes": 12928,
+    "page": "pages/nature-glacier-wave-amplifier.html?v=f31b5147f6c2",
+    "bytes": 13380,
     "thumbs": {
-     "front": "thumbs/nature-glacier-wave-amplifier-front.webp?v=b632b57a748e",
-     "back": "thumbs/nature-glacier-wave-amplifier-back.webp?v=b632b57a748e"
+     "front": "thumbs/nature-glacier-wave-amplifier-front.webp?v=37d080ddefe3",
+     "back": "thumbs/nature-glacier-wave-amplifier-back.webp?v=37d080ddefe3"
     }
    },
    "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
@@ -142809,16 +142829,22 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Illustration of a rock slab plunging into water, with rings of tsunami waves spreading outward. The page asks which falls from Etna's flank, a boulder or half a mountain, and lets the reader flip between the two to watch the far coast.",
-    "page": "pages/nature-half-mountain-tsunami.html?v=a15159a81b56",
-    "bytes": 20578,
+    "page": "pages/nature-half-mountain-tsunami.html?v=fca935e568e3",
+    "bytes": 20951,
     "thumbs": {
-     "front": "thumbs/nature-half-mountain-tsunami-front.webp?v=343cb943449a",
-     "back": "thumbs/nature-half-mountain-tsunami-back.webp?v=343cb943449a"
+     "front": "thumbs/nature-half-mountain-tsunami-front.webp?v=8b913a839f47",
+     "back": "thumbs/nature-half-mountain-tsunami-back.webp?v=8b913a839f47"
     }
    },
-   "source": "Geopop, “▶️ETNA: \"POSSIBILE COLLASSO GRAVITATIVO E TSUNAMI\". VUOI CAPIRE COSA SUCCEDE?” (YouTube, 2018)",
-   "reference": "https://www.youtube.com/watch?v=cwdZkSbbYhw&t=207s",
-   "written": "2026-11-03"
+   "source": "Urlaub et al., “Gravitational collapse of Mount Etna’s southeastern flank”, Science Advances, 2018",
+   "source_kind": "paper",
+   "reference": "https://doi.org/10.1126/sciadv.aat9700",
+   "watch": {
+    "url": "https://www.youtube.com/watch?v=cwdZkSbbYhw&t=207s",
+    "by": "Geopop (YouTube, 2018)"
+   },
+   "written": "2026-11-03",
+   "checked": "2026-11-28"
   },
   {
    "id": "nature-heatwave-only-beginning-2",
@@ -143629,9 +143655,15 @@ const String kEmbeddedBank = r'''
      "back": "thumbs/nature-longest-straw-back.webp?v=6a06b22666f0"
     }
    },
-   "source": "Veritasium, “World's Longest Straw” (YouTube, 2012)",
-   "reference": "https://www.youtube.com/watch?v=HUmZrtiXDik",
-   "written": "2026-11-03"
+   "source": "Koch, Sillett, Jennings & Davis, “The limits to tree height”, Nature, 2004; Guinness World Records, 2019",
+   "source_kind": "paper",
+   "reference": "https://doi.org/10.1038/nature02417",
+   "watch": {
+    "url": "https://www.youtube.com/watch?v=HUmZrtiXDik",
+    "by": "Veritasium (YouTube, 2012)"
+   },
+   "written": "2026-11-03",
+   "checked": "2026-11-28"
   },
   {
    "id": "nature-magnetic-sense-1",
@@ -192028,16 +192060,22 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "The sea of the Bermuda Triangle drawn in section: a cargo ship on the surface and, under it, a column of methane bubbles rising from frozen methane in the seabed. The quiz asks when big methane gas eruptions last rose there: in the last few years, about a century ago, or at least 15,000 years ago. The reader picks one and says how sure.",
-    "page": "pages/science-bermuda-gas-myth.html?v=f10aef9b9810",
-    "bytes": 22897,
+    "page": "pages/science-bermuda-gas-myth.html?v=0ef2996ff6c6",
+    "bytes": 22805,
     "thumbs": {
-     "front": "thumbs/science-bermuda-gas-myth-front.webp?v=6b6981c3b4a2",
-     "back": "thumbs/science-bermuda-gas-myth-back.webp?v=6b6981c3b4a2"
+     "front": "thumbs/science-bermuda-gas-myth-front.webp?v=33e35df71f5f",
+     "back": "thumbs/science-bermuda-gas-myth-back.webp?v=33e35df71f5f"
     }
    },
-   "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
-   "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=301s",
-   "written": "2026-11-03"
+   "source": "W. Dillon, US Geological Survey (Woods Hole), questions and answers on gas hydrates and the Bermuda Triangle, 2006",
+   "source_kind": "institution",
+   "reference": "https://webarchive.library.unt.edu/eot2008/20090109043438/http:/woodshole.er.usgs.gov/project-pages/hydrates/bermuda.html",
+   "watch": {
+    "url": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=301s",
+    "by": "Geopop (YouTube, 2025)"
+   },
+   "written": "2026-11-03",
+   "checked": "2026-11-28"
   },
   {
    "id": "science-big-globe-spin",
@@ -199047,24 +199085,30 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Two glowing steel rails, cherry red and bright orange, each on a plinth rising from a floor marked absolute zero, the hot one only a little higher. Over the warm rail rises a column of heat marked 1×; the reader drags the hot rail's column of heat up to guess how much more heat it radiates, then says how sure.",
-    "page": "pages/science-fourth-power-glow.html?v=92e63c382029",
-    "bytes": 21300,
+    "page": "pages/science-fourth-power-glow.html?v=437da98a7f5d",
+    "bytes": 21251,
     "thumbs": {
-     "front": "thumbs/science-fourth-power-glow-front.webp?v=ccc290ac8d81",
-     "back": "thumbs/science-fourth-power-glow-back.webp?v=ccc290ac8d81",
+     "front": "thumbs/science-fourth-power-glow-front.webp?v=4955b22e2d4d",
+     "back": "thumbs/science-fourth-power-glow-back.webp?v=4955b22e2d4d",
      "ringed": {
-      "front": "thumbs/science-fourth-power-glow-ringed-front.webp?v=239492a8e7fc",
-      "back": "thumbs/science-fourth-power-glow-ringed-back.webp?v=239492a8e7fc"
+      "front": "thumbs/science-fourth-power-glow-ringed-front.webp?v=2cc0870ad0a7",
+      "back": "thumbs/science-fourth-power-glow-ringed-back.webp?v=2cc0870ad0a7"
      },
      "ringed_day": {
-      "front": "thumbs/science-fourth-power-glow-ringed-day-front.webp?v=239492a8e7fc",
-      "back": "thumbs/science-fourth-power-glow-ringed-day-back.webp?v=239492a8e7fc"
+      "front": "thumbs/science-fourth-power-glow-ringed-day-front.webp?v=2cc0870ad0a7",
+      "back": "thumbs/science-fourth-power-glow-ringed-day-back.webp?v=2cc0870ad0a7"
      }
     }
    },
-   "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
-   "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=879s",
-   "written": "2026-11-08"
+   "source": "R. Nave, “Stefan-Boltzmann Law”, HyperPhysics, Georgia State University",
+   "source_kind": "reference_work",
+   "reference": "https://hyperphysics.gsu.edu/hbase/thermo/stefan.html",
+   "watch": {
+    "url": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=879s",
+    "by": "Veritasium (YouTube, 2025)"
+   },
+   "written": "2026-11-08",
+   "checked": "2026-11-28"
   },
   {
    "id": "science-fractures-reach-aquifer",
@@ -204842,11 +204886,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A hand-drawn tree: a wave grows up from its source, forking at three measurements, you at the top. At its foot two rule cards: the Schrödinger equation, and collapse with scissors that cut every branch but yours. The reader flips to Many-Worlds: the collapse card falls away and every branch grows on, with other yous at the tips. Asks why physicists find Many-Worlds cleaner.",
-    "page": "pages/science-many-worlds-flow.html?v=56ed11a87de2",
-    "bytes": 13897,
+    "page": "pages/science-many-worlds-flow.html?v=651b048973c0",
+    "bytes": 14102,
     "thumbs": {
-     "front": "thumbs/science-many-worlds-flow-front.webp?v=f5c06c409bd3",
-     "back": "thumbs/science-many-worlds-flow-back.webp?v=f5c06c409bd3"
+     "front": "thumbs/science-many-worlds-flow-front.webp?v=63039a8956db",
+     "back": "thumbs/science-many-worlds-flow-back.webp?v=63039a8956db"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -205356,11 +205400,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Two side-by-side views of Earth under the Moon's pull: water bulging up toward the Moon, and solid ground that barely moves. Asks why the Moon affects water more than land.",
-    "page": "pages/science-moon-water-land.html?v=03a1a61f2b5a",
-    "bytes": 9439,
+    "page": "pages/science-moon-water-land.html?v=08f4663626f6",
+    "bytes": 9673,
     "thumbs": {
-     "front": "thumbs/science-moon-water-land-front.webp?v=15f1671ae6fd",
-     "back": "thumbs/science-moon-water-land-back.webp?v=15f1671ae6fd"
+     "front": "thumbs/science-moon-water-land-front.webp?v=092dc2ec34c0",
+     "back": "thumbs/science-moon-water-land-back.webp?v=092dc2ec34c0"
     }
    },
    "source": "Geopop, “Mont Saint-Michel: la magia delle maree di oltre 10 metri” (YouTube, 2018)",
@@ -208473,11 +208517,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A switch sets the ground at Campi Flegrei to rise or sink. Two counters show earthquakes in each phase, with rising at 0 and sinking at 0. The question asks when earthquakes strike as the ground breathes.",
-    "page": "pages/science-quakes-rising-ground.html?v=20e32a682c1b",
-    "bytes": 14976,
+    "page": "pages/science-quakes-rising-ground.html?v=675709f34542",
+    "bytes": 15332,
     "thumbs": {
-     "front": "thumbs/science-quakes-rising-ground-front.webp?v=211ce68954c8",
-     "back": "thumbs/science-quakes-rising-ground-back.webp?v=211ce68954c8"
+     "front": "thumbs/science-quakes-rising-ground-front.webp?v=d3ee41264765",
+     "back": "thumbs/science-quakes-rising-ground-back.webp?v=d3ee41264765"
     }
    },
    "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
@@ -230428,11 +230472,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A 3D diagram of Earth with two donut-shaped radiation belts around its middle and a spacecraft path skimming the thin outer edge. Tap a route to fly it and watch its radiation bar fill.",
-    "page": "pages/space-van-allen-donut.html?v=c4defb34e46e",
-    "bytes": 10461,
+    "page": "pages/space-van-allen-donut.html?v=5bfe044d7d8a",
+    "bytes": 10850,
     "thumbs": {
-     "front": "thumbs/space-van-allen-donut-front.webp?v=a075a13deeef",
-     "back": "thumbs/space-van-allen-donut-back.webp?v=a075a13deeef"
+     "front": "thumbs/space-van-allen-donut-front.webp?v=88e01c9c2dc2",
+     "back": "thumbs/space-van-allen-donut-back.webp?v=88e01c9c2dc2"
     }
    },
    "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
@@ -244018,16 +244062,22 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A hand holds a red handle whose pin sits in a hole in a pointer arm, with some give, shown big in a round zoom; the arm hangs from a pivot over a scale. Hold to push and let go to pull back, then pick what the pointer does first: moves at once, waits then follows, or jumps past; then say how sure you are.",
-    "page": "pages/technology-backlash-pin-hole.html?v=855f87536254",
-    "bytes": 24157,
+    "page": "pages/technology-backlash-pin-hole.html?v=67830b60122b",
+    "bytes": 24133,
     "thumbs": {
-     "front": "thumbs/technology-backlash-pin-hole-front.webp?v=0c592d4f3776",
-     "back": "thumbs/technology-backlash-pin-hole-back.webp?v=0c592d4f3776"
+     "front": "thumbs/technology-backlash-pin-hole-front.webp?v=b34b10d8300d",
+     "back": "thumbs/technology-backlash-pin-hole-back.webp?v=b34b10d8300d"
     }
    },
-   "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
-   "reference": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=320s",
-   "written": "2026-11-07"
+   "source": "L. L. Howell, Compliant Mechanisms, Wiley, 2001, chapter 1",
+   "source_kind": "book",
+   "reference": "https://catalogimages.wiley.com/images/db/pdf/047138478X.pdf",
+   "watch": {
+    "url": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=320s",
+    "by": "Veritasium (YouTube, 2019)"
+   },
+   "written": "2026-11-07",
+   "checked": "2026-11-28"
   },
   {
    "id": "technology-ballast-drains-water",
@@ -244061,11 +244111,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A railway cut across under a rain cloud: rails clipped to a concrete sleeper, a deep bed of angular stones with gaps between them, sand and soil below, a ditch at each side, the track running off over fields. It asks how the ballast protects the track from water. Rain on the stones runs down through the gaps and off to the ditches; rain on bare soil pools, turns to mud and the sleeper sinks.",
-    "page": "pages/technology-ballast-drains-water.html?v=2dbf58d4663a",
-    "bytes": 43402,
+    "page": "pages/technology-ballast-drains-water.html?v=d7b1452d1d25",
+    "bytes": 43683,
     "thumbs": {
-     "front": "thumbs/technology-ballast-drains-water-front.webp?v=ba4689482507",
-     "back": "thumbs/technology-ballast-drains-water-back.webp?v=ba4689482507"
+     "front": "thumbs/technology-ballast-drains-water-front.webp?v=456cd71e5f2e",
+     "back": "thumbs/technology-ballast-drains-water-back.webp?v=456cd71e5f2e"
     }
    },
    "source": "Geopop, “A cosa servono le pietre sui binari?” (YouTube, 2021)",
@@ -250092,16 +250142,22 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Concrete pour options for the Hoover Dam: one pour, or 4, 16 or 64 blocks. Pick a pouring method and watch the heat escape from the concrete, then try another way.",
-    "page": "pages/technology-hoover-dam-blocks.html?v=d6d15cc0a7bd",
-    "bytes": 18153,
+    "page": "pages/technology-hoover-dam-blocks.html?v=3292a38a1b37",
+    "bytes": 18119,
     "thumbs": {
-     "front": "thumbs/technology-hoover-dam-blocks-front.webp?v=0a33295f929d",
-     "back": "thumbs/technology-hoover-dam-blocks-back.webp?v=0a33295f929d"
+     "front": "thumbs/technology-hoover-dam-blocks-front.webp?v=f2a13bbfd60a",
+     "back": "thumbs/technology-hoover-dam-blocks-back.webp?v=f2a13bbfd60a"
     }
    },
-   "source": "Geopop, “Come è stata costruita la diga di Hoover” (YouTube, 2022)",
-   "reference": "https://www.youtube.com/watch?v=aye7SUnEHDc&t=264s",
-   "written": "2026-11-03"
+   "source": "US Bureau of Reclamation, “Hoover Dam: Concrete”",
+   "source_kind": "institution",
+   "reference": "https://www.usbr.gov/lc/hooverdam/History/essays/concrete.html",
+   "watch": {
+    "url": "https://www.youtube.com/watch?v=aye7SUnEHDc&t=264s",
+    "by": "Geopop (YouTube, 2022)"
+   },
+   "written": "2026-11-03",
+   "checked": "2026-11-28"
   },
   {
    "id": "technology-human-hair-mechanism",
@@ -262566,16 +262622,22 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Card asks how many people died directly from radiation at Fukushima. The reader drags to guess, and each dot on the display stands for one person. The reveal gives the answer: one death from radiation, while the tsunami killed over 15,000.",
     "graded": false,
-    "page": "pages/thinking-fukushima-radiation-toll.html?v=a11269b39c67",
-    "bytes": 17389,
+    "page": "pages/thinking-fukushima-radiation-toll.html?v=6da37de4809f",
+    "bytes": 17320,
     "thumbs": {
-     "front": "thumbs/thinking-fukushima-radiation-toll-front.webp?v=4fd85fcd8f14",
-     "back": "thumbs/thinking-fukushima-radiation-toll-back.webp?v=4fd85fcd8f14"
+     "front": "thumbs/thinking-fukushima-radiation-toll-front.webp?v=0da8fc63bcd3",
+     "back": "thumbs/thinking-fukushima-radiation-toll-back.webp?v=0da8fc63bcd3"
     }
    },
-   "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
-   "reference": "https://www.youtube.com/watch?v=yoTTJ9BJYIM&t=559s",
-   "written": "2026-11-03"
+   "source": "E. Meixler, TIME, 6 September 2018",
+   "source_kind": "news_archive",
+   "reference": "https://time.com/5388178/japan-first-fukushima-radiation-death/",
+   "watch": {
+    "url": "https://www.youtube.com/watch?v=yoTTJ9BJYIM&t=559s",
+    "by": "Geopop (YouTube, 2021)"
+   },
+   "written": "2026-11-03",
+   "checked": "2026-11-28"
   },
   {
    "id": "thinking-g1",
@@ -263620,7 +263682,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "Can a hidden message in a film make you buy popcorn?",
-   "answer": "Vicary's 1957 claim used a flash of 0.33 ms, 50 times shorter than one frame on this screen (17 ms). In a 2006 lab test with a 23 ms 'Lipton Ice' flash, 80% of thirsty people chose the flashed drink versus 20% without the flash. Not-thirsty people showed no significant effect.",
+   "answer": "Vicary's 1957 claim used a flash of 0.33 ms, 50 times shorter than one frame on this screen (17 ms). In a 2006 lab test with a 23 ms 'Lipton Ice' flash, over 80% of thirsty people chose the flashed drink, against 30% without the flash. Not-thirsty people showed no significant effect.",
    "move": "A hidden flash can’t create a want. At most it tips a choice you were already making.",
    "keywords": [
     "vicary",
@@ -263643,16 +263705,18 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A cinema in the dark: curtains, the screen, the audience's heads, a bucket of popcorn. A word flashes on the screen between rows of X's for as long as the reader picks, down to one frame, and they say which flashed. Then Vicary's 1957 claim, 0.33 ms, against one 17 ms frame, and a 2006 lab: thirsty people chose the drink 20% without the flash, 80% with it.",
-    "page": "pages/thinking-hidden-popcorn.html?v=08de6470e9e7",
-    "bytes": 24214,
+    "page": "pages/thinking-hidden-popcorn.html?v=83802b948639",
+    "bytes": 24310,
     "thumbs": {
-     "front": "thumbs/thinking-hidden-popcorn-front.webp?v=b7c6643b6172",
-     "back": "thumbs/thinking-hidden-popcorn-back.webp?v=b7c6643b6172"
+     "front": "thumbs/thinking-hidden-popcorn-front.webp?v=0bd4fc7e8370",
+     "back": "thumbs/thinking-hidden-popcorn-back.webp?v=0bd4fc7e8370"
     }
    },
-   "source": "Diventare Strong, “Persuasione Ipnotica. \"Comandi Nascosti\". Convincere Persuadere E Influenzare: Linguaggio Ipnotico” (YouTube, 2017)",
-   "reference": "https://www.youtube.com/watch?v=rgMUHXLPtuc",
-   "written": "2026-11-03"
+   "source": "Karremans, Stroebe & Claus, “Beyond Vicary’s fantasies: The impact of subliminal priming and brand choice”, Journal of Experimental Social Psychology, 2006; Stroebe, Scientific American",
+   "source_kind": "paper",
+   "reference": "https://doi.org/10.1016/j.jesp.2005.12.002",
+   "written": "2026-11-03",
+   "checked": "2026-11-28"
   },
   {
    "id": "thinking-hypnosis-recall",

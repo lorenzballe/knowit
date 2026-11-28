@@ -10877,6 +10877,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'With Astute+, Explore has no end.'**
   String get exploreCapPlus;
+
+  /// Top of Today on a new reader's second and third days, after "Day N.": how the day before went, its questions with a right answer got right of those answered, and how sure the reader said they were on average. Italian: the article before the number is mended in code (all’80%).
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday {right} of {asked}, and you were {sure}% sure.'**
+  String todayLineSure(int right, int asked, int sure);
+
+  /// Top of Today on a new reader's second and third days, after "Day N.": the day before's questions with a right answer, right of those answered, where the reader never said how sure.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday {right} of {asked}.'**
+  String todayLineRight(int right, int asked);
+
+  /// Top of Today on a new reader's second and third days, after "Day N.", when the day before had no question with a right answer: the five were read.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday you read all five.'**
+  String get todayLineRead;
+
+  /// Top of Today on a new reader's second and third days, after the day before's numbers: a subject in today's five the reader has not met yet. subject is the subject's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Today, your first card in {subject}.'**
+  String todayLineFirstSubject(String subject);
+
+  /// Top of Today, on the morning a freeze kept the streak: the days missed were covered and the streak goes on.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{You skipped yesterday: your streak is safe.} other{You skipped {days} days: your streak is safe.}}'**
+  String freezeSavedLine(int days);
+
+  /// Under the finished day's heading, and on the streak's moment: one missed day is covered by a freeze, and how many the reader holds.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Miss a day and your streak holds: you have 1 freeze.} other{Miss a day and your streak holds: you have {n} freezes.}}'**
+  String freezeCoversLine(int n);
+
+  /// The small capitals over the streak's number on its moment, when it reaches two, three or seven days.
+  ///
+  /// In en, this message translates to:
+  /// **'In a row'**
+  String get streakMomentEyebrow;
+
+  /// Under the streak's big number on its moment: the word for days.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{day} other{days}}'**
+  String streakMomentUnit(int n);
+
+  /// On the streak's moment at seven days, on the free plan: tomorrow one more of the five cards is chosen for the reader from their own mix (three instead of two).
+  ///
+  /// In en, this message translates to:
+  /// **'A whole week. Tomorrow one more of your five is chosen for you.'**
+  String get streakMomentWeek;
+
+  /// On the streak's moment at two or three days when the reader holds no freeze: the streak tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow makes {next}.'**
+  String streakMomentNext(int next);
+
+  /// Go deeper, under the card's source: opens a video that tells the card's story at more length. Who made it follows, in the card's own words ("Geopop (YouTube, 2018)"). The video is extra, never the source.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch more'**
+  String get deeperWatchMore;
 }
 
 class _AppLocalizationsDelegate

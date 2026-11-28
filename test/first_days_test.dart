@@ -1,17 +1,23 @@
 // The first three days: the cards a new reader opens on, chosen by hand
 // (lib/data/first_days.dart), for whatever they answered in the first run —
-// and nothing of it for a reader who was past the first run before.
+// and nothing of it for a reader who was past the first run before. Then the
+// rest of the first week, still mostly drawn.
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/analytics.dart';
+import 'package:astuto/data/card_json.dart';
 import 'package:astuto/data/daily.dart';
+import 'package:astuto/data/drawn_ranks.dart';
 import 'package:astuto/data/first_days.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/data/reader_profile.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/remote/remote.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/served.dart';
 
@@ -73,9 +79,15 @@ List<String> _ids(Iterable<Pill> cards) => [for (final p in cards) p.id];
 Set<String> _subjectsOf(Map<String, double>? mix) =>
     mix == null ? kTopicOrder.toSet() : {...mix.keys, 'thinking'};
 
-/// A reader's day of the opening, dealt as the app deals it; null once the
-/// opening has nothing left for them.
-Deal? _openingDay(_Choice c, {required int day, Set<String> read = const {}}) {
+/// A reader's day of the opening, dealt as the app deals it, three of the
+/// five asking (with the opening's own shape off, [asking] null: two); null
+/// once the opening has nothing left for them.
+Deal? _openingDay(
+  _Choice c, {
+  required int day,
+  Set<String> read = const {},
+  int? asking = kOpeningAsks,
+}) {
   final ReaderProfile profile = ReaderProfile.read(
     weights: c.mix ?? const {},
     genresOff: c.genresOff,
@@ -90,8 +102,44 @@ Deal? _openingDay(_Choice c, {required int day, Set<String> read = const {}}) {
     taste: profile.lean,
     genresOff: c.genresOff,
     exclude: read,
+    asking: asking,
   );
 }
+
+/// A reader's day of the rest of the first week ([day] 3 to 6), dealt as
+/// the app deals it.
+Deal? _weekDay(_Choice c, {required int day, Set<String> read = const {}}) {
+  final ReaderProfile profile = ReaderProfile.read(
+    weights: c.mix ?? const {},
+    genresOff: c.genresOff,
+  );
+  return dealFirstWeek(
+    date: DateTime(_start.year, _start.month, _start.day + day),
+    day: day,
+    topics: _subjectsOf(c.mix),
+    claimed: profile.claimed,
+    mix: c.mix ?? const {},
+    weights: profile.weightsOn(day, c.mix ?? const {}),
+    levels: profile.levelsUnder(const {}),
+    taste: profile.lean,
+    genresOff: c.genresOff,
+    exclude: read,
+  );
+}
+
+/// Takes up a remote document whose switches are [flags].
+void _flags(Map<String, Object?> flags) => Remote.adopt(
+  RemoteConfig.parse(
+    jsonEncode({
+      'schema': 1,
+      'hash': 'first-days-${flags.hashCode}',
+      'app': {'flags': flags},
+      'strings': <String, Object?>{},
+      'explore': null,
+      'looks': null,
+    }),
+  ),
+);
 
 class _Said implements AnalyticsSink {
   final List<String> names = [];
@@ -166,9 +214,9 @@ void main() {
   });
 
   group('the opening, as data', () {
-    test('is fifteen to twenty-five cards of the bank, each dealt to '
+    test('is fifteen to thirty cards of the bank, each dealt to '
         'everybody, drawn, nothing dark, and each says why', () {
-      expect(kFirstDays.length, inInclusiveRange(15, 25));
+      expect(kFirstDays.length, inInclusiveRange(15, 30));
       expect(
         kFirstDays.map((c) => c.id).toSet(),
         hasLength(kFirstDays.length),
@@ -195,8 +243,8 @@ void main() {
       }
     });
 
-    test('each of its days is five subjects, three cards to read and two '
-        'that ask, one of those with a right answer, a read first', () {
+    test('each of its days is five subjects, two cards to read and three '
+        'that ask, two of those with a right answer, a read first', () {
       for (var day = 1; day <= kOpeningDays; day++) {
         final List<Pill> five = [
           for (final c in kFirstDays)
@@ -206,12 +254,25 @@ void main() {
         expect(five.map((p) => p.topic).toSet(), hasLength(kPillsPerDay));
         expect(
           five.where((p) => p.asksSomething),
-          hasLength(asksInADay(kPillsPerDay)),
+          hasLength(kOpeningAsks),
           reason: 'day $day',
         );
-        expect(five.where((p) => p.asksSomething && p.isGraded), isNotEmpty);
+        expect(
+          five.where((p) => p.asksSomething && p.isGraded),
+          hasLength(greaterThanOrEqualTo(2)),
+          reason: 'day $day',
+        );
         expect(five.first.asksSomething, isFalse, reason: 'day $day');
         expect(arrangeOpening(five), five, reason: 'listed as read');
+      }
+    });
+
+    test('every card of it with a right answer asks how sure, every time, '
+        'whatever its odds', () {
+      for (final FirstCard c in kFirstDays) {
+        final Pill p = PillBank.byId(c.id)!;
+        if (!p.asksSomething || !p.isGraded) continue;
+        expect(p.sureOdds, isNull, reason: '${c.id} asks how sure by odds');
       }
     });
   });
@@ -226,14 +287,43 @@ void main() {
             for (final c in kFirstDays)
               if (c.day == day + 1) c.id,
           ], reason: '$name, day ${day + 1}');
-          // The two questions are the reader's own, as on any free day.
-          expect(deal.own, {
-            for (final p in deal.cards)
-              if (p.asksSomething) p.id,
-          });
+          // Two of the three questions are the reader's own, as on any
+          // free day.
+          expect(deal.own, hasLength(kOwnCardsFree));
+          expect(
+            deal.cards.where((p) => deal.own.contains(p.id)),
+            everyElement(
+              predicate<Pill>((p) => p.asksSomething, 'asks something'),
+            ),
+          );
           read.addAll(_ids(deal.cards));
         }
       }
+    });
+
+    test('with the opening\'s own shape off, its days ask two, as any day '
+        'does, from the same cards in the same order', () {
+      final Set<String> read = {};
+      for (var day = 0; day < kOpeningDays; day++) {
+        final Deal deal = _openingDay(
+          _choices['skipped']!,
+          day: day,
+          read: read,
+          asking: null,
+        )!;
+        expect(deal.cards, hasLength(kPillsPerDay));
+        expect(
+          deal.cards.where((p) => p.asksSomething),
+          hasLength(asksInADay(kPillsPerDay)),
+        );
+        expect(deal.cards.first.id, isIn(_ids(PillBank.cards)));
+        read.addAll(_ids(deal.cards));
+      }
+      expect(
+        read.difference({for (final c in kFirstDays) c.id}),
+        isEmpty,
+        reason: 'all from the opening',
+      );
     });
 
     test(
@@ -352,7 +442,7 @@ void main() {
           );
           expect(
             five.where((p) => p.asksSomething),
-            hasLength(asksInADay(kPillsPerDay)),
+            hasLength(kOpeningAsks),
             reason: at,
           );
           expect(five.first.asksSomething, isFalse, reason: at);
@@ -454,10 +544,117 @@ void main() {
     });
   });
 
+  group('the rest of the first week', () {
+    for (final MapEntry<String, _Choice> e in _choices.entries) {
+      test('${e.key}: days four to seven mostly drawn, from the strong '
+          'drawings first, the cards of words let in one at a time', () {
+        final Set<String> subjects = {
+          for (final key in _subjectsOf(e.value.mix)) ?kTopics[key]?.name,
+        };
+        final Set<String> ranked = {...kStrongDrawings, ...kFairDrawings};
+        // The opening read first, as a reader does.
+        final Set<String> read = {};
+        for (var day = 0; day < kOpeningDays; day++) {
+          final Deal? opening = _openingDay(e.value, day: day, read: read);
+          if (opening == null) break;
+          read.addAll(_ids(opening.cards));
+        }
+        for (var day = kOpeningDays; day < kShowcaseDays; day++) {
+          final String at = '${e.key}, day ${day + 1}';
+          // What this reader can still be dealt from the drawings ranked,
+          // and how many of them one day can hold: two of a subject at most,
+          // two that ask and three to read.
+          final List<Pill> pool = firstWeekFor(
+            DateTime(_start.year, _start.month, _start.day + day),
+            topics: _subjectsOf(e.value.mix),
+            exclude: read,
+          );
+          final int left = pool.length;
+          final Map<String, int> bySubject = {};
+          int roomAsks = 0, roomReads = 0;
+          for (final Pill p in pool) {
+            if ((bySubject[p.topic] ?? 0) >= 2) continue;
+            if (p.asksSomething ? roomAsks >= 2 : roomReads >= 3) continue;
+            bySubject[p.topic] = (bySubject[p.topic] ?? 0) + 1;
+            p.asksSomething ? roomAsks++ : roomReads++;
+          }
+          final int room = roomAsks + roomReads;
+          final Deal? deal = _weekDay(e.value, day: day, read: read);
+          if (left == 0) {
+            expect(deal, isNull, reason: '$at: nothing left to lean on');
+            continue;
+          }
+          expect(deal, isNotNull, reason: at);
+          final List<Pill> five = deal!.cards;
+          expect(five, hasLength(kPillsPerDay), reason: at);
+          expect(read.intersection(_ids(five).toSet()), isEmpty, reason: at);
+          expect(
+            five.map((p) => p.topic).toSet().difference(subjects),
+            isEmpty,
+            reason: '$at: a subject the reader turned off',
+          );
+          expect(
+            five.where((p) => p.asksSomething),
+            hasLength(asksInADay(kPillsPerDay)),
+            reason: at,
+          );
+          final int wanted = firstWeekDrawnOn(day);
+          final List<Pill> fromRank = [
+            for (final p in five)
+              if (ranked.contains(p.id)) p,
+          ];
+          // As many drawn as the day leans to, where the reader's subjects
+          // still have that many for one day; never a weak drawing for it.
+          expect(
+            fromRank.length,
+            greaterThanOrEqualTo(wanted < room ? wanted : room),
+            reason: at,
+          );
+          expect(
+            five.where((p) => p.hasPage).length,
+            greaterThanOrEqualTo(fromRank.length),
+            reason: at,
+          );
+          expect(
+            fromRank.where((p) => p.mature || p.mood == 'dark'),
+            isEmpty,
+            reason: at,
+          );
+          read.addAll(_ids(five));
+        }
+      });
+    }
+
+    test('four, four, three and three of the five drawn, and none on any '
+        'other day', () {
+      expect(
+        [for (var day = 0; day < 9; day++) firstWeekDrawnOn(day)],
+        [0, 0, 0, 4, 4, 3, 3, 0, 0],
+      );
+    });
+
+    test('a reader who leaned nowhere meets the strong drawings before the '
+        'fair ones', () {
+      final Set<String> read = {for (final c in kFirstDays) c.id};
+      final Deal deal = _weekDay(_choices['skipped']!, day: 3, read: read)!;
+      final List<Pill> drawn = [
+        for (final p in deal.cards)
+          if (kStrongDrawings.contains(p.id)) p,
+      ];
+      expect(drawn, hasLength(greaterThanOrEqualTo(firstWeekDrawnOn(3))));
+    });
+  });
+
   group('the app', () {
+    setUp(() {
+      Remote.reset();
+      Remote.fetch = (url) async => null;
+    });
+
     tearDown(() {
       Served.useForTest(Served());
       Analytics.useForTest(null);
+      Remote.reset();
     });
 
     test(
@@ -503,8 +700,59 @@ void main() {
         now = DateTime(now.year, now.month, now.day + 1, 9);
         expect(await app.turnDayIfDue(), isTrue);
         expect(app.opensOn(now), isFalse, reason: 'the fourth day');
+        // The rest of the first week, on the phone and mostly drawn.
+        expect(app.dealtHere(now), isTrue, reason: 'the fourth day');
+        expect(
+          _ids(app.todaysDeck),
+          _ids(_weekDay(c, day: kOpeningDays, read: read)!.cards),
+        );
       },
     );
+
+    test('on the opening\'s days every card with a right answer asks how '
+        'sure, even one whose odds say never; off, by its odds', () async {
+      final AppState app = await _open(() => _start);
+      await app.completeOnboarding();
+      for (final Pill p in app.todaysDeck.where((p) => p.isGraded)) {
+        expect(SureAsk.of(p), isTrue, reason: p.id);
+      }
+      // A card that would never ask by its odds, dealt into the day.
+      final Pill never = cardFromJson({
+        'id': 'never-asks',
+        'topic': 'thinking',
+        'kind': 'pickOne',
+        'difficulty': 'medium',
+        'principle': 'baseRate',
+        'question': 'Which?',
+        'options': ['A', 'B', 'C'],
+        'correct': 1,
+        'answer': 'B.',
+        'move': 'Ask the base rate.',
+        'source': 'A source',
+        'sure': 0,
+      });
+      expect(SureAsk.of(never), isFalse, reason: 'not today\'s');
+      app.todaysDeck = [...app.todaysDeck.take(4), never];
+      expect(SureAsk.of(never), isTrue);
+      _flags({
+        'opening.asks': {'on': false},
+      });
+      expect(SureAsk.of(never), isFalse);
+    });
+
+    test('with the first week\'s drawings off, the fourth day is dealt as '
+        'any day, by the server first', () async {
+      _flags({
+        'firstWeek.drawn': {'on': false},
+      });
+      final DateTime fourth = DateTime(2026, 11, 29, 9);
+      final AppState app = await _open(() => fourth, {
+        'knowit.onboarded': true,
+        'knowit.firstDays': true,
+        'knowit.completedDates': ['2026-11-26', '2026-11-27', '2026-11-28'],
+      });
+      expect(app.dealtHere(fourth), isFalse);
+    });
 
     test('a reader past the first run before the opening is dealt as '
         'before', () async {
@@ -530,8 +778,8 @@ void main() {
       );
     });
 
-    test('the first days are the phone\'s, whatever the server holds; the '
-        'fourth is the server\'s again', () async {
+    test('the first week is the phone\'s, whatever the server holds; the '
+        'eighth day is the server\'s again', () async {
       final MemoryServedStore store = MemoryServedStore();
       Served.useForTest(Served(storeOverride: store, uidOverride: 'me'));
       final ServedDay theirs = ServedDay(
@@ -546,7 +794,8 @@ void main() {
       expect(store.asked, 0);
       expect(_ids(app.todaysDeck), isNot(_ids(theirs.cards)));
 
-      // A reader three days in is past it, and the server deals.
+      // A reader three days in is past the opening, and the phone deals
+      // the rest of their first week, mostly drawn.
       final DateTime fourth = DateTime(2026, 11, 29, 9);
       store.days['me:${dateKey(fourth)}'] = ServedDay(
         date: dateKey(fourth),
@@ -560,7 +809,29 @@ void main() {
         'knowit.completedDates': ['2026-11-26', '2026-11-27', '2026-11-28'],
       });
       expect(later.opensOn(fourth), isFalse);
-      expect(later.dealtBy, 'server');
+      expect(later.dealtHere(fourth), isTrue);
+      expect(later.dealtBy, 'phone');
+      expect(store.asked, 0);
+
+      // A reader seven days in is past the first week, and the server deals.
+      final DateTime eighth = DateTime(2026, 12, 3, 9);
+      store.days['me:${dateKey(eighth)}'] = ServedDay(
+        date: dateKey(eighth),
+        cards: theirs.cards,
+        own: const {},
+        reviews: const {},
+      );
+      final AppState past = await _open(() => eighth, {
+        'knowit.onboarded': true,
+        'knowit.firstDays': true,
+        'knowit.completedDates': [
+          for (var d = 26; d <= 30; d++) '2026-11-$d',
+          '2026-12-01',
+          '2026-12-02',
+        ],
+      });
+      expect(past.dealtHere(eighth), isFalse);
+      expect(past.dealtBy, 'server');
     });
 
     test('the subjects loved open the first morning, and lean the days '

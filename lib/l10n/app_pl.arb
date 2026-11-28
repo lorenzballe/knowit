@@ -1792,5 +1792,16 @@
   "plusInTheAppAndroid": "Astute+ jest w aplikacji: pobierz Astute na Androida, aby zacząć darmowy okres próbny. Na iPhone’a już wkrótce.",
   "exploreCapTitle": "Na dziś to koniec zakładki Odkrywaj.",
   "exploreCapLine": "{n, plural, =1{Przeczytałeś jedną kartę poza swoją piątką. Jutro będą kolejne.} few{Przeczytałeś {n} karty poza swoją piątką. Jutro będą kolejne.} many{Przeczytałeś {n} kart poza swoją piątką. Jutro będą kolejne.} other{Przeczytałeś {n} kart poza swoją piątką. Jutro będą kolejne.}}",
-  "exploreCapPlus": "Z Astute+ zakładka Odkrywaj nie ma końca."
+  "exploreCapPlus": "Z Astute+ zakładka Odkrywaj nie ma końca.",
+  "todayLineSure": "Wczoraj {right} z {asked}, przy pewności {sure}%.",
+  "todayLineRight": "Wczoraj {right} z {asked}.",
+  "todayLineRead": "Wczoraj przeczytałeś wszystkie pięć.",
+  "todayLineFirstSubject": "Dziś pierwsza karta z działu: {subject}.",
+  "freezeSavedLine": "{days, plural, =1{Wczoraj cię nie było: twoja seria jest bezpieczna.} few{Nie było cię {days} dni: twoja seria jest bezpieczna.} many{Nie było cię {days} dni: twoja seria jest bezpieczna.} other{Nie było cię {days} dni: twoja seria jest bezpieczna.}}",
+  "freezeCoversLine": "{n, plural, =1{Opuść dzień, a seria przetrwa: masz 1 zamrożenie.} few{Opuść dzień, a seria przetrwa: masz {n} zamrożenia.} many{Opuść dzień, a seria przetrwa: masz {n} zamrożeń.} other{Opuść dzień, a seria przetrwa: masz {n} zamrożeń.}}",
+  "streakMomentEyebrow": "Z rzędu",
+  "streakMomentUnit": "{n, plural, =1{dzień} few{dni} many{dni} other{dni}}",
+  "streakMomentWeek": "Cały tydzień. Jutro jedna karta więcej z pięciu będzie wybrana dla ciebie.",
+  "streakMomentNext": "Jutro będzie {next}.",
+  "deeperWatchMore": "Obejrzyj wideo"
 }

@@ -30,7 +30,13 @@
     "touch": "drags",
     "label": "Two glowing steel rails, cherry red and bright orange, each on a plinth rising from a floor marked absolute zero, the hot one only a little higher. Over the warm rail rises a column of heat marked 1×; the reader drags the hot rail's column of heat up to guess how much more heat it radiates, then says how sure."
   },
-  "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
-  "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=879s",
-  "written": "2026-11-08"
+  "source": "R. Nave, “Stefan-Boltzmann Law”, HyperPhysics, Georgia State University",
+  "source_kind": "reference_work",
+  "reference": "https://hyperphysics.gsu.edu/hbase/thermo/stefan.html",
+  "watch": {
+    "url": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=879s",
+    "by": "Veritasium (YouTube, 2025)"
+  },
+  "written": "2026-11-08",
+  "checked": "2026-11-28"
 }

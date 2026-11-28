@@ -1792,5 +1792,16 @@
   "plusInTheAppAndroid": "Astute+는 앱에서 이용할 수 있어요. Android에 Astute를 받아 무료 체험을 시작하세요. iPhone 버전은 곧 나와요.",
   "exploreCapTitle": "오늘의 탐색은 여기까지예요.",
   "exploreCapLine": "{n, plural, other{다섯 장 외에 {n}장을 읽었어요. 내일 또 있어요.}}",
-  "exploreCapPlus": "Astute+라면 탐색에 끝이 없어요."
+  "exploreCapPlus": "Astute+라면 탐색에 끝이 없어요.",
+  "todayLineSure": "어제는 {asked}개 중 {right}개, 확신은 {sure}%였어요.",
+  "todayLineRight": "어제는 {asked}개 중 {right}개.",
+  "todayLineRead": "어제는 다섯 장을 모두 읽었어요.",
+  "todayLineFirstSubject": "오늘은 처음으로 {subject} 카드가 있어요.",
+  "freezeSavedLine": "{days, plural, =1{어제는 건너뛰었지만 연속 기록은 안전해요.} other{{days}일을 건너뛰었지만 연속 기록은 안전해요.}}",
+  "freezeCoversLine": "{n, plural, =1{하루를 건너뛰어도 연속 기록은 이어져요. 프리즈가 1개 있어요.} other{하루를 건너뛰어도 연속 기록은 이어져요. 프리즈가 {n}개 있어요.}}",
+  "streakMomentEyebrow": "연속",
+  "streakMomentUnit": "{n, plural, =1{일} other{일}}",
+  "streakMomentWeek": "꼬박 일주일. 내일은 다섯 장 중 한 장이 더 당신을 위해 골라져요.",
+  "streakMomentNext": "내일이면 {next}일이에요.",
+  "deeperWatchMore": "영상으로 보기"
 }

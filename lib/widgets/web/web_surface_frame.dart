@@ -26,12 +26,26 @@ WebSurface makePlatformSurface() => FrameWebSurface();
 /// Whether this platform can show a page: a browser always can.
 bool platformShowsPages() => true;
 
-/// Every page's iframe, so the others can let the pointer through while one
+/// Every page alive, so the others can let the pointer through while one
 /// page's drag is out ([platformWatchRelease]).
-final Set<web.HTMLIFrameElement> _frames = {};
+final Set<FrameWebSurface> _surfaces = {};
 
 /// The window's ear for the button coming up, while a drag is out.
 JSFunction? _release;
+
+/// The page a drag is out from, while one is ([platformWatchRelease]).
+FrameWebSurface? _dragged;
+bool _dragOut = false;
+
+/// Whether [surface]'s iframe takes the pointer: not while something the
+/// app draws covers it ([pageTouchable]), nor while another page's drag is
+/// out. Otherwise the browser hands the iframe every pointer that lands on
+/// it, whatever is drawn over it.
+void _letThrough(FrameWebSurface surface) {
+  final bool through =
+      !surface._open || (_dragOut && !identical(surface, _dragged));
+  surface._frame.style.pointerEvents = through ? 'none' : '';
+}
 
 /// [WebSurfaces.watchRelease] on the web build: every iframe but the one
 /// dragged ([over]) lets the pointer through to the app's window, and the
@@ -43,14 +57,9 @@ void platformWatchRelease(VoidCallback? onRelease, {WebSurface? over}) {
     web.window.removeEventListener('pointerup', was, true.toJS);
     web.window.removeEventListener('pointercancel', was, true.toJS);
   }
-  final web.HTMLIFrameElement? held = over is FrameWebSurface
-      ? over._frame
-      : null;
-  for (final web.HTMLIFrameElement frame in _frames) {
-    frame.style.pointerEvents = onRelease == null || frame == held
-        ? ''
-        : 'none';
-  }
+  _dragOut = onRelease != null;
+  _dragged = _dragOut && over is FrameWebSurface ? over : null;
+  _surfaces.forEach(_letThrough);
   if (onRelease == null) return;
   final JSFunction heard = ((web.Event _) => onRelease()).toJS;
   _release = heard;
@@ -68,7 +77,7 @@ class FrameWebSurface implements WebSurface {
       ..style.width = '100%'
       ..style.height = '100%'
       ..style.display = 'block';
-    _frames.add(_frame);
+    _surfaces.add(this);
     ui_web.platformViewRegistry.registerViewFactory(_type, (int _) => _frame);
     _listener = _heard.toJS;
     web.window.addEventListener('message', _listener);
@@ -80,6 +89,10 @@ class FrameWebSurface implements WebSurface {
   late final web.HTMLIFrameElement _frame;
   late final JSFunction _listener;
   bool _gone = false;
+
+  /// Whether the place the page is drawn lets it take the pointer, as its
+  /// view last read it ([pageTouchable]).
+  bool _open = true;
 
   @override
   bool get available => true;
@@ -115,9 +128,21 @@ class FrameWebSurface implements WebSurface {
     );
   }
 
+  /// The iframe, letting the pointer through whenever something the app
+  /// draws is over it: read again whenever a route rises over its own or a
+  /// [PageTouch] above it shuts.
   @override
   Widget view({required Set<Factory<OneSequenceGestureRecognizer>> gestures}) =>
-      HtmlElementView(viewType: _type);
+      Builder(
+        builder: (context) {
+          final bool open = pageTouchable(context);
+          if (open != _open) {
+            _open = open;
+            _letThrough(this);
+          }
+          return HtmlElementView(viewType: _type);
+        },
+      );
 
   @override
   void dispose() {
@@ -125,7 +150,8 @@ class FrameWebSurface implements WebSurface {
     _gone = true;
     onMessage = null;
     WebSurfaces.live--;
-    _frames.remove(_frame);
+    _surfaces.remove(this);
+    if (identical(_dragged, this)) _dragged = null;
     web.window.removeEventListener('message', _listener);
     _frame.srcdoc = ''.toJS;
   }

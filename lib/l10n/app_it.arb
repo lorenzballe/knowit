@@ -1792,5 +1792,16 @@
   "plusInTheAppAndroid": "Astute+ è nell’app: scarica Astute su Android per iniziare la prova gratuita. Su iPhone arriva presto.",
   "exploreCapTitle": "Per oggi, Esplora finisce qui.",
   "exploreCapLine": "{n, plural, =1{Hai letto una carta oltre le tue cinque. Domani ce ne sono altre.} other{Hai letto {n} carte oltre le tue cinque. Domani ce ne sono altre.}}",
-  "exploreCapPlus": "Con Astute+, Esplora non finisce."
+  "exploreCapPlus": "Con Astute+, Esplora non finisce.",
+  "todayLineSure": "Ieri {right} su {asked}, ed eri sicuro al {sure}%.",
+  "todayLineRight": "Ieri {right} su {asked}.",
+  "todayLineRead": "Ieri le hai lette tutte e cinque.",
+  "todayLineFirstSubject": "Oggi, la tua prima carta di {subject}.",
+  "freezeSavedLine": "{days, plural, =1{Ieri l’hai saltato: la tua serie è salva.} other{Hai saltato {days} giorni: la tua serie è salva.}}",
+  "freezeCoversLine": "{n, plural, =1{Se salti un giorno, la serie regge: hai 1 jolly.} other{Se salti un giorno, la serie regge: hai {n} jolly.}}",
+  "streakMomentEyebrow": "Di fila",
+  "streakMomentUnit": "{n, plural, =1{giorno} other{giorni}}",
+  "streakMomentWeek": "Una settimana intera. Domani una carta in più delle cinque è scelta per te.",
+  "streakMomentNext": "Domani fanno {next}.",
+  "deeperWatchMore": "Guarda il video"
 }

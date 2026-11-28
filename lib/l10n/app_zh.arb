@@ -1792,5 +1792,16 @@
   "plusInTheAppAndroid": "Astute+ 在应用中提供：在 Android 上下载 Astute，开始免费试用。iPhone 版即将推出。",
   "exploreCapTitle": "今天的“探索”就到这里。",
   "exploreCapLine": "{n, plural, other{除了你的五张，你还读了 {n} 张。明天还有更多。}}",
-  "exploreCapPlus": "有 Astute+，“探索”没有尽头。"
+  "exploreCapPlus": "有 Astute+，“探索”没有尽头。",
+  "todayLineSure": "昨天 {asked} 题答对 {right} 题，你有 {sure}% 的把握。",
+  "todayLineRight": "昨天 {asked} 题答对 {right} 题。",
+  "todayLineRead": "昨天五张都读完了。",
+  "todayLineFirstSubject": "今天第一次读到{subject}。",
+  "freezeSavedLine": "{days, plural, =1{昨天你没来，连续记录保住了。} other{你有 {days} 天没来，连续记录保住了。}}",
+  "freezeCoversLine": "{n, plural, =1{漏掉一天，连续记录也不会断：你有 1 次冻结。} other{漏掉一天，连续记录也不会断：你有 {n} 次冻结。}}",
+  "streakMomentEyebrow": "连续",
+  "streakMomentUnit": "{n, plural, =1{天} other{天}}",
+  "streakMomentWeek": "整整一周。明天的五张里，会多一张专门为你挑选。",
+  "streakMomentNext": "明天就是 {next} 天。",
+  "deeperWatchMore": "观看视频"
 }

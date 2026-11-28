@@ -82,6 +82,51 @@ abstract final class WebSurfaces {
   }
 }
 
+/// Whether the pages drawn under it may take the pointer, said beside the
+/// [IgnorePointer] that keeps Flutter's own touches off them.
+///
+/// On a phone a WebView is touched through Flutter, so an [IgnorePointer]
+/// or a route above keeps the finger off it. On the web build a page is an
+/// iframe in the browser's own document, and the browser hands it every
+/// pointer that lands on it, whatever the app has drawn there: the card
+/// under the one in front, a sheet risen over the card (Go deeper, Why this
+/// card), a text card thrown over a drawn one. Each of those took the taps
+/// meant for what covered it. So the places that keep a page from the
+/// finger say so here too, and the page lets the pointer through
+/// ([pageTouchable]). One inside another is shut if either is.
+class PageTouch extends StatelessWidget {
+  const PageTouch({super.key, required this.open, required this.child});
+
+  /// Whether a page here may take the pointer, as far as this place knows.
+  final bool open;
+  final Widget child;
+
+  /// What every [PageTouch] above [context] says together: shut if any is.
+  static bool of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<_PageTouchScope>()?.open ??
+      true;
+
+  @override
+  Widget build(BuildContext context) =>
+      _PageTouchScope(open: open && of(context), child: child);
+}
+
+class _PageTouchScope extends InheritedWidget {
+  const _PageTouchScope({required this.open, required super.child});
+
+  final bool open;
+
+  @override
+  bool updateShouldNotify(_PageTouchScope old) => old.open != open;
+}
+
+/// Whether a page drawn at [context] may take the pointer now: not while a
+/// route is above its own (a sheet, a dialog, a screen pushed over it), nor
+/// where a [PageTouch] above it is shut. Read in the page's build, so it is
+/// asked again whenever either changes.
+bool pageTouchable(BuildContext context) =>
+    PageTouch.of(context) && (ModalRoute.isCurrentOf(context) ?? true);
+
 /// The surface of a platform that has no WebView: it shows nothing, says
 /// so, and the card is drawn natively.
 class UnavailableWebSurface implements WebSurface {

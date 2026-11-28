@@ -344,6 +344,11 @@ const Kit = (() => {
         else if (msg.t === 'hide') { shown && onHide[card.id]?.(); hold(); }
       });
       document.addEventListener('click', e => { if (!e.defaultPrevented && !pressable(e.target)) bridge().tap(); });
+      // A finger on the page is the surest sign its card is in front of the reader: a page left held
+      // still (a 'show' the app never got to say) starts its clock at the touch, so what a choice
+      // brings on (the next row, the answer) never waits on a stopped clock, the choices looking
+      // live and answering nothing.
+      document.addEventListener('pointerdown', e => { if (e.isTrusted && holding) enter(); }, true);
       if (env().platform === 'web') forwardPans();
     }
     new MutationObserver(zonesSoon).observe(card, {subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'style', 'data-drag']});

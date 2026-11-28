@@ -1173,12 +1173,19 @@ class AppSource extends StatelessWidget {
     required this.source,
     required this.kind,
     required this.open,
+    this.watchBy,
+    this.watch,
   });
 
   final DeeperLook look;
   final String source;
   final String? kind;
   final VoidCallback? open;
+
+  /// Who made the video the card's story is told in at more length, and
+  /// where; with [watch], which opens it. Both null where there is none.
+  final String? watchBy;
+  final VoidCallback? watch;
 
   @override
   Widget build(BuildContext context) {
@@ -1255,7 +1262,82 @@ class AppSource extends StatelessWidget {
               ),
             ),
           ],
+          if (watch case final VoidCallback see) ...[
+            SizedBox(height: open == null ? 14 : 10),
+            DeeperWatch(by: watchBy, onTap: see, ink: p.ink, muted: p.inkMuted),
+          ],
         ],
+      ),
+    );
+  }
+}
+
+/// Watch more, under a card's source: the video its story is told in at
+/// more length, named with who made it. Quieter than the source's own way
+/// out, since the source is what the card stands on and the video is extra.
+class DeeperWatch extends StatelessWidget {
+  const DeeperWatch({
+    super.key,
+    required this.by,
+    required this.onTap,
+    required this.ink,
+    required this.muted,
+  });
+
+  final String? by;
+  final VoidCallback onTap;
+  final Color ink;
+  final Color muted;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: Semantics(
+        button: true,
+        link: true,
+        child: GestureDetector(
+          key: const ValueKey('deeper-watch'),
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            HapticFeedback.selectionClick();
+            onTap();
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.play_circle_outline_rounded, size: 19, color: muted),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: l.deeperWatchMore,
+                          style: AppText.body(
+                            size: 14.5,
+                            weight: FontWeight.w600,
+                            color: ink,
+                          ),
+                        ),
+                        if (by case final String who)
+                          TextSpan(
+                            text: '  ·  $who',
+                            style: AppText.body(size: 13.5, color: muted),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Icon(Icons.arrow_outward_rounded, size: 15, color: muted),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

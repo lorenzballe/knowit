@@ -8568,4 +8568,76 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get exploreCapPlus => 'Z Astute+ zakładka Odkrywaj nie ma końca.';
+
+  @override
+  String todayLineSure(int right, int asked, int sure) {
+    return 'Wczoraj $right z $asked, przy pewności $sure%.';
+  }
+
+  @override
+  String todayLineRight(int right, int asked) {
+    return 'Wczoraj $right z $asked.';
+  }
+
+  @override
+  String get todayLineRead => 'Wczoraj przeczytałeś wszystkie pięć.';
+
+  @override
+  String todayLineFirstSubject(String subject) {
+    return 'Dziś pierwsza karta z działu: $subject.';
+  }
+
+  @override
+  String freezeSavedLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Nie było cię $days dni: twoja seria jest bezpieczna.',
+      many: 'Nie było cię $days dni: twoja seria jest bezpieczna.',
+      few: 'Nie było cię $days dni: twoja seria jest bezpieczna.',
+      one: 'Wczoraj cię nie było: twoja seria jest bezpieczna.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String freezeCoversLine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Opuść dzień, a seria przetrwa: masz $n zamrożeń.',
+      many: 'Opuść dzień, a seria przetrwa: masz $n zamrożeń.',
+      few: 'Opuść dzień, a seria przetrwa: masz $n zamrożenia.',
+      one: 'Opuść dzień, a seria przetrwa: masz 1 zamrożenie.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentEyebrow => 'Z rzędu';
+
+  @override
+  String streakMomentUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'dni',
+      many: 'dni',
+      few: 'dni',
+      one: 'dzień',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakMomentWeek =>
+      'Cały tydzień. Jutro jedna karta więcej z pięciu będzie wybrana dla ciebie.';
+
+  @override
+  String streakMomentNext(int next) {
+    return 'Jutro będzie $next.';
+  }
+
+  @override
+  String get deeperWatchMore => 'Obejrzyj wideo';
 }

@@ -138,14 +138,17 @@ class _KitPageViewState extends State<KitPageView> {
         }
         return IgnorePointer(
           ignoring: !_ready,
-          child: AnimatedOpacity(
-            // Not 0 while it loads: see kWaitingOpacity.
-            opacity: _ready ? 1 : kWaitingOpacity,
-            duration: MediaQuery.disableAnimationsOf(context)
-                ? Duration.zero
-                : const Duration(milliseconds: 160),
-            child: _surface.view(
-              gestures: pageGestures(WebTouch.drags, zones: () => _zones),
+          child: PageTouch(
+            open: _ready,
+            child: AnimatedOpacity(
+              // Not 0 while it loads: see kWaitingOpacity.
+              opacity: _ready ? 1 : kWaitingOpacity,
+              duration: MediaQuery.disableAnimationsOf(context)
+                  ? Duration.zero
+                  : const Duration(milliseconds: 160),
+              child: _surface.view(
+                gestures: pageGestures(WebTouch.drags, zones: () => _zones),
+              ),
             ),
           ),
         );

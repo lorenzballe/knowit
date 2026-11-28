@@ -34,7 +34,7 @@
     <p class="say" id="say">Flip between the two and watch the far coast.</p>
     <div id="why" class="gone"><p class="body">The rock shoves aside as much water as its own volume. A boulder moves a little; half a mountain pushes a huge mass of water at once, and it leaves as a system of tsunami waves that can reach distant coasts. How big it would be can't be known, but the risk is real.</p></div>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Water pushed aside by a falling mass doesn't vanish: it travels as a tsunami.</div>
-    <div class="foot"><span class="src">Source · Geopop, “▶️ETNA: "POSSIBILE COLLASSO GRAVITATIVO E TSUNAMI". VUOI CAPIRE COSA SUCCEDE?” (YouTube, 2018).</span></div>
+    <div class="foot"><span class="src">Source · Urlaub et al., Science Advances, 2018.</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
@@ -249,6 +249,11 @@ function render() {
   }
 }
 
+// The answer, once both have been picked: due when the fall then in front lands, and kept due
+// whatever is tapped after (a tap restarts the picture, never the wait). On the app's clock,
+// so it waits with the picture while the card is out of sight.
+let due = null;
+
 function play(mode) {
   if (tl) tl.kill();
   // Counted when chosen, not when its fall ends: switched before the boulder
@@ -275,10 +280,15 @@ function play(mode) {
     tl.fromTo(st, {c: .51}, {c: .885, duration: 2, ease: 'power1.inOut', immediateRender: false}, .5);
   }
   if (Kit.calm) tl.progress(1);
+  else if (seen.size === 2 && !due) due = gsap.delayedCall(tl.duration(), finish);
 }
 
-// Both seen: the switch and its line give their room to the picture, and the answer comes in.
+// Both seen: the switch and its line give their room to the picture, and the answer comes in, once.
+let finished = false;
 function finish() {
+  if (finished) return;
+  finished = true;
+  if (due) due.kill();
   Kit.hide('say'); Kit.hide('read'); Kit.hide('sw');
   Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
 }

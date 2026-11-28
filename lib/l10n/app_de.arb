@@ -1792,5 +1792,16 @@
   "plusInTheAppAndroid": "Astute+ gibt es in der App: Lade Astute auf Android und starte deine kostenlose Testphase. Fürs iPhone kommt die App bald.",
   "exploreCapTitle": "Für heute endet Entdecken hier.",
   "exploreCapLine": "{n, plural, =1{Du hast eine Karte über deine fünf hinaus gelesen. Morgen kommen neue.} other{Du hast {n} Karten über deine fünf hinaus gelesen. Morgen kommen neue.}}",
-  "exploreCapPlus": "Mit Astute+ hat Entdecken kein Ende."
+  "exploreCapPlus": "Mit Astute+ hat Entdecken kein Ende.",
+  "todayLineSure": "Gestern {right} von {asked}, und du warst dir zu {sure} % sicher.",
+  "todayLineRight": "Gestern {right} von {asked}.",
+  "todayLineRead": "Gestern hast du alle fünf gelesen.",
+  "todayLineFirstSubject": "Heute deine erste Karte in {subject}.",
+  "freezeSavedLine": "{days, plural, =1{Gestern hast du ausgesetzt: Deine Serie ist sicher.} other{Du hast {days} Tage ausgesetzt: Deine Serie ist sicher.}}",
+  "freezeCoversLine": "{n, plural, =1{Fällt ein Tag aus, hält die Serie: Du hast 1 Joker.} other{Fällt ein Tag aus, hält die Serie: Du hast {n} Joker.}}",
+  "streakMomentEyebrow": "Am Stück",
+  "streakMomentUnit": "{n, plural, =1{Tag} other{Tage}}",
+  "streakMomentWeek": "Eine ganze Woche. Morgen ist eine Karte mehr der fünf für dich ausgewählt.",
+  "streakMomentNext": "Morgen werden es {next}.",
+  "deeperWatchMore": "Mehr im Video"
 }

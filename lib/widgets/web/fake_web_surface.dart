@@ -44,6 +44,10 @@ class FakeWebSurface implements WebSurface {
   /// The recognisers the page was last drawn with.
   Set<Factory<OneSequenceGestureRecognizer>> gestures = const {};
 
+  /// Whether the page, as last drawn, may take the pointer: what an iframe
+  /// on the web build is told ([pageTouchable]).
+  bool touchable = true;
+
   bool disposed = false;
   int loads = 0;
 
@@ -74,11 +78,16 @@ class FakeWebSurface implements WebSurface {
   @override
   Widget view({required Set<Factory<OneSequenceGestureRecognizer>> gestures}) {
     this.gestures = gestures;
-    return KeyedSubtree(
-      key: const ValueKey('fake-page'),
-      child:
-          face?.call(this) ??
-          ColoredBox(color: background ?? const Color(0x00000000)),
+    return Builder(
+      builder: (context) {
+        touchable = pageTouchable(context);
+        return KeyedSubtree(
+          key: const ValueKey('fake-page'),
+          child:
+              face?.call(this) ??
+              ColoredBox(color: background ?? const Color(0x00000000)),
+        );
+      },
     );
   }
 

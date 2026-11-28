@@ -110,17 +110,19 @@ void main() {
         // Word for word: an edit to a file that was not bundled is the
         // other way a phone and the bank could disagree.
         final id = raw['id'] as String;
-        // The bank keeps more than the phone reads: where the claim was
-        // checked stays with the file.
+        // The bank keeps more than the phone reads: when the claim was
+        // checked, and the passage it was checked against, stay with the
+        // file. The phone keeps the way to the source, as a link.
+        final String link = referenceLink(raw['reference']);
         raw.removeWhere(
           (k, _) =>
               k == 'reference' ||
               k == 'written' ||
               k == 'checked' ||
               k == 'disabled' ||
-              k == 'source_kind' ||
               k == 'quote',
         );
+        if (link.isNotEmpty) raw['reference'] = link;
         // A free card's page lives beside it and travels alone, published
         // word for word and named by the hash of its bytes.
         final Object? web = raw['web'];

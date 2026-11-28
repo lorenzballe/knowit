@@ -1792,5 +1792,16 @@
   "plusInTheAppAndroid": "Astute+ uygulamada: ücretsiz denemeni başlatmak için Astute’u Android’e indir. iPhone’a yakında geliyor.",
   "exploreCapTitle": "Bugünlük Keşfet burada bitiyor.",
   "exploreCapLine": "{n, plural, other{Beşinin dışında {n} kart okudun. Yarın yenileri gelecek.}}",
-  "exploreCapPlus": "Astute+ ile Keşfet’in sonu yok."
+  "exploreCapPlus": "Astute+ ile Keşfet’in sonu yok.",
+  "todayLineSure": "Dün {asked} sorudan {right} doğru, %{sure} emindin.",
+  "todayLineRight": "Dün {asked} sorudan {right} doğru.",
+  "todayLineRead": "Dün beşini de okudun.",
+  "todayLineFirstSubject": "Bugün ilk kez: {subject}.",
+  "freezeSavedLine": "{days, plural, =1{Dün ara verdin: serin güvende.} other{{days} gün ara verdin: serin güvende.}}",
+  "freezeCoversLine": "{n, plural, =1{Bir gün atlarsan serin bozulmaz: 1 dondurman var.} other{Bir gün atlarsan serin bozulmaz: {n} dondurman var.}}",
+  "streakMomentEyebrow": "Üst üste",
+  "streakMomentUnit": "{n, plural, =1{gün} other{gün}}",
+  "streakMomentWeek": "Koca bir hafta. Yarın beş karttan biri daha senin için seçilecek.",
+  "streakMomentNext": "Yarın {next} olur.",
+  "deeperWatchMore": "Videoyu izle"
 }

@@ -31,7 +31,13 @@
     "touch": "taps",
     "label": "The sea of the Bermuda Triangle drawn in section: a cargo ship on the surface and, under it, a column of methane bubbles rising from frozen methane in the seabed. The quiz asks when big methane gas eruptions last rose there: in the last few years, about a century ago, or at least 15,000 years ago. The reader picks one and says how sure."
   },
-  "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
-  "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=301s",
-  "written": "2026-11-03"
+  "source": "W. Dillon, US Geological Survey (Woods Hole), questions and answers on gas hydrates and the Bermuda Triangle, 2006",
+  "source_kind": "institution",
+  "reference": "https://webarchive.library.unt.edu/eot2008/20090109043438/http:/woodshole.er.usgs.gov/project-pages/hydrates/bermuda.html",
+  "watch": {
+    "url": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=301s",
+    "by": "Geopop (YouTube, 2025)"
+  },
+  "written": "2026-11-03",
+  "checked": "2026-11-28"
 }

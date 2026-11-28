@@ -1792,5 +1792,16 @@
   "plusInTheAppAndroid": "Astute+ está en la app: descarga Astute en Android para empezar tu prueba gratuita. Pronto llegará a iPhone.",
   "exploreCapTitle": "Por hoy, Explorar termina aquí.",
   "exploreCapLine": "{n, plural, =1{Has leído una tarjeta además de tus cinco. Mañana, más.} other{Has leído {n} tarjetas además de tus cinco. Mañana, más.}}",
-  "exploreCapPlus": "Con Astute+, Explorar no tiene fin."
+  "exploreCapPlus": "Con Astute+, Explorar no tiene fin.",
+  "todayLineSure": "Ayer {right} de {asked}, y estabas seguro al {sure}%.",
+  "todayLineRight": "Ayer {right} de {asked}.",
+  "todayLineRead": "Ayer leíste las cinco.",
+  "todayLineFirstSubject": "Hoy, tu primera carta de {subject}.",
+  "freezeSavedLine": "{days, plural, =1{Ayer te lo saltaste: tu racha está a salvo.} other{Te saltaste {days} días: tu racha está a salvo.}}",
+  "freezeCoversLine": "{n, plural, =1{Si te saltas un día, tu racha aguanta: tienes 1 comodín.} other{Si te saltas un día, tu racha aguanta: tienes {n} comodines.}}",
+  "streakMomentEyebrow": "Seguidos",
+  "streakMomentUnit": "{n, plural, =1{día} other{días}}",
+  "streakMomentWeek": "Una semana entera. Mañana una carta más de las cinco se elige para ti.",
+  "streakMomentNext": "Mañana serán {next}.",
+  "deeperWatchMore": "Ver el vídeo"
 }

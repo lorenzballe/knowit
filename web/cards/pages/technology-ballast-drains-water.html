@@ -19,6 +19,9 @@
 .opt{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 .opt.done:not(.on){box-shadow:inset 0 0 0 .3cqh var(--k)}
+/* While a run plays the other choice waits, and looks it: dimmed, taking no tap, until the run lands. */
+#btns .opt{transition:opacity .2s ease}
+#btns.wait .opt:not(.on){opacity:.45;pointer-events:none}
 #why{font:500 max(1.9cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
 #say{min-height:2.84em}
 </style>
@@ -599,11 +602,11 @@ Kit.$('btns').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || busy) return;
   const m = b.dataset.m;
   [...Kit.$('btns').children].forEach(x => x.classList.toggle('on', x === b));
-  Kit.haptic('selection'); busy = true;
+  Kit.haptic('selection'); busy = true; Kit.$('btns').classList.add('wait');
   if (tl) tl.kill();
   tl = m === 'stones' ? playStones() : playSoil();
   tl.eventCallback('onComplete', () => {
-    busy = false; done[m] = true; b.classList.add('done');
+    busy = false; done[m] = true; b.classList.add('done'); Kit.$('btns').classList.remove('wait');
     if (done.stones && done.soil && Kit.$('why').classList.contains('gone')) finish();
   });
   if (Kit.calm) tl.progress(1); else tl.timeScale(fast ? 8 : 1);

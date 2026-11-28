@@ -1792,5 +1792,16 @@
   "plusInTheAppAndroid": "Astute+ zit in de app: download Astute op Android om je gratis proefperiode te starten. Binnenkort ook op iPhone.",
   "exploreCapTitle": "Voor vandaag stopt Ontdek hier.",
   "exploreCapLine": "{n, plural, =1{Je hebt naast je vijf één kaart gelezen. Morgen meer.} other{Je hebt naast je vijf {n} kaarten gelezen. Morgen meer.}}",
-  "exploreCapPlus": "Met Astute+ heeft Ontdek geen einde."
+  "exploreCapPlus": "Met Astute+ heeft Ontdek geen einde.",
+  "todayLineSure": "Gisteren {right} van de {asked}, en je was {sure}% zeker.",
+  "todayLineRight": "Gisteren {right} van de {asked}.",
+  "todayLineRead": "Gisteren las je ze alle vijf.",
+  "todayLineFirstSubject": "Vandaag je eerste kaart over {subject}.",
+  "freezeSavedLine": "{days, plural, =1{Gisteren sloeg je over: je reeks is veilig.} other{Je sloeg {days} dagen over: je reeks is veilig.}}",
+  "freezeCoversLine": "{n, plural, =1{Sla je een dag over, dan houdt je reeks stand: je hebt 1 freeze.} other{Sla je een dag over, dan houdt je reeks stand: je hebt {n} freezes.}}",
+  "streakMomentEyebrow": "Op rij",
+  "streakMomentUnit": "{n, plural, =1{dag} other{dagen}}",
+  "streakMomentWeek": "Een hele week. Morgen is er één kaart meer van de vijf voor jou gekozen.",
+  "streakMomentNext": "Morgen worden het er {next}.",
+  "deeperWatchMore": "Bekijk de video"
 }

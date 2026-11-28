@@ -443,7 +443,10 @@ void main() {
     expect(find.text('Astute'), findsOneWidget);
     expect(find.text(kIntroQuestion), findsOneWidget);
     expect(find.text('NATURE'), findsOneWidget);
-    expect(find.text('Five cards a\u00a0day, two\u00a0minutes'), findsOneWidget);
+    expect(
+      find.text('Five cards a\u00a0day, two\u00a0minutes'),
+      findsOneWidget,
+    );
     expect(
       find.text(
         'Say how sure you are, and find out how far to trust what you know.',
@@ -5934,7 +5937,9 @@ void main() {
         );
         expect(band.height, lessThan(small.width * 252 / 344));
         expect(band.top, greaterThanOrEqualTo(20));
-        final Rect title = tester.getRect(find.text('Five cards a\u00a0day, two\u00a0minutes'));
+        final Rect title = tester.getRect(
+          find.text('Five cards a\u00a0day, two\u00a0minutes'),
+        );
         expect(title.top, greaterThanOrEqualTo(band.bottom));
         final Rect apple = tester.getRect(find.text('Start reading'));
         expect(apple.bottom, lessThanOrEqualTo(small.height));
@@ -6249,9 +6254,8 @@ void main() {
       // the app opened onto it with no card dealt after its five, so the
       // shelf ends on the offer.
       final DateTime now = DateTime.now();
-      final String yesterday = dateKey(
-        DateTime(now.year, now.month, now.day - 1),
-      );
+      DateTime ago(int n) => DateTime(now.year, now.month, now.day - n);
+      final String yesterday = dateKey(ago(1));
       SharedPreferences.setMockInitialValues({
         ..._finishedWithoutTheSixth(),
         'knowit.streak': 7,
@@ -6261,6 +6265,9 @@ void main() {
       });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
+      // Opened onto a day already kept, nothing rises over the shelf: the
+      // week's moment is the evening it is kept (test/today_line_test.dart).
+      expect(find.byKey(const ValueKey('streak-moment')), findsNothing);
 
       // The shelf opens on the first card, with the day's name over it and
       // nothing about the week in the way.
