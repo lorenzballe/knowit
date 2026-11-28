@@ -533,7 +533,7 @@ void main() {
       final Pill pill = PillBank.byId(streak)!;
       final int off = (70 - answerOf(pill)!.value).abs().round();
       expect(sent, [
-        "Today's challenge on Astute: I was $off points off. Can you do "
+        "The bet of the day on Astute: I was $off points off. Can you do "
             'better?\n${pill.question}\n${cardLink(streak)}',
       ]);
     });
