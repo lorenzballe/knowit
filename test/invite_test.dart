@@ -828,12 +828,18 @@ void main() {
     });
   });
 
-  test('the switch is the server\'s, off as built', () {
+  test('the switch is the server\'s, off as built, and on for Android '
+      'once the store key is deployed', () {
     expect(AppState.kInviteFlag.name, 'invite');
     expect(AppState.kInviteFlag.fallback, isFalse);
     final Map<String, Object?> app = jsonDecode(
       File('remote/app.json').readAsStringSync(),
     ) as Map<String, Object?>;
-    expect((app['flags'] as Map)['invite'], isFalse);
+    expect((app['flags'] as Map)['invite'], {
+      'on': true,
+      'audience': {
+        'platforms': ['android'],
+      },
+    });
   });
 }
