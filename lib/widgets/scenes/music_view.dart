@@ -373,6 +373,9 @@ mixin _Sounding<T extends StatefulWidget> on State<T> {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
+          // A snack bar with an action stays until it is dismissed, unless
+          // it is told otherwise: this one goes by itself, as it always did.
+          persist: false,
           content: Text(l.musicSoundIsOff),
           action: SnackBarAction(
             label: l.musicSoundTurnOn,

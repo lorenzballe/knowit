@@ -328,6 +328,9 @@ class _TodayScreenState extends State<TodayScreen> {
     messenger.hideCurrentSnackBar();
     messenger.showSnackBar(
       SnackBar(
+        // A snack bar with an action stays until it is dismissed, unless
+        // it is told otherwise: this one goes by itself, as it always did.
+        persist: false,
         content: Text(context.l10n.lessLikeThis),
         duration: const Duration(seconds: 4),
         action: SnackBarAction(

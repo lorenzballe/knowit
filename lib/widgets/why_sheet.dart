@@ -526,6 +526,9 @@ class _Answers extends StatelessWidget {
                 ?..hideCurrentSnackBar()
                 ..showSnackBar(
                   SnackBar(
+                    // A snack bar with an action stays until it is dismissed, unless
+                    // it is told otherwise: this one goes by itself, as it always did.
+                    persist: false,
                     content: Text(l.lessLikeThis),
                     duration: const Duration(seconds: 4),
                     action: SnackBarAction(

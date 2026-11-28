@@ -69,6 +69,9 @@ class _SavedScreenState extends State<SavedScreen> {
     messenger.hideCurrentSnackBar();
     messenger.showSnackBar(
       SnackBar(
+        // A snack bar with an action stays until it is dismissed, unless
+        // it is told otherwise: this one goes by itself, as it always did.
+        persist: false,
         content: Text(_liked ? l.removedFromLiked : l.removedFromSaved),
         duration: const Duration(seconds: 4),
         action: SnackBarAction(

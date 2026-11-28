@@ -696,6 +696,9 @@ class _Asked extends StatelessWidget {
     messenger?.hideCurrentSnackBar();
     messenger?.showSnackBar(
       SnackBar(
+        // A snack bar with an action stays until it is dismissed, unless
+        // it is told otherwise: this one goes by itself, as it always did.
+        persist: false,
         content: Text(l.screensAskedForgotten),
         action: SnackBarAction(
           label: l.undo,
