@@ -984,6 +984,11 @@ class _DailyResultState extends State<DailyResult> {
   DailyCounts? _read;
   late String _key;
 
+  /// Whether the five are open question by question. Folded at first, as
+  /// the owner asked: the result is the score, the squares and where it
+  /// stands, and the questions are a tap away rather than a long list.
+  bool _each = false;
+
   @override
   void initState() {
     super.initState();
@@ -1155,23 +1160,31 @@ class _DailyResultState extends State<DailyResult> {
                 ink: ink,
                 numbers: n,
               ),
-              const SizedBox(height: 18),
-              BetKicker(l.dailyEach, color: ink.sub),
-              const SizedBox(height: 8),
-              for (final (int i, Pill c) in widget.cards.indexed)
-                _DailyRow(
-                  pill: c,
-                  bet: bets[i],
-                  points: _points(bets[i]),
-                  at: i,
-                  of: widget.cards.length,
-                  counts: counts,
-                  ink: ink,
-                  numbers: n,
-                  onTap: () =>
-                      widget.host.open(widget.shelf.section, widget.cards, c),
-                ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
+              _EachToggle(
+                key: const ValueKey('three-each'),
+                open: _each,
+                label: l.dailyEach,
+                ink: ink,
+                onTap: () => setState(() => _each = !_each),
+              ),
+              if (_each) ...[
+                const SizedBox(height: 6),
+                for (final (int i, Pill c) in widget.cards.indexed)
+                  _DailyRow(
+                    pill: c,
+                    bet: bets[i],
+                    points: _points(bets[i]),
+                    at: i,
+                    of: widget.cards.length,
+                    counts: counts,
+                    ink: ink,
+                    numbers: n,
+                    onTap: () =>
+                        widget.host.open(widget.shelf.section, widget.cards, c),
+                  ),
+              ],
+              const SizedBox(height: 12),
               // Today's five, where the server says so, goes on as a
               // challenge: the same five for a friend, on the site, with
               // the score to beat. Each button on a line of its own, as
@@ -1597,8 +1610,10 @@ class _DailyRow extends StatelessWidget {
     }
   }
 
-  /// How everybody did, and how much of the bar it fills, if a bar says it.
-  ({String text, double? share}) _crowd(AppLocalizations l) {
+  /// How everybody did, and how much of the bar it fills, if a bar says it;
+  /// nothing while nobody can be counted, which the standing above the
+  /// questions already says once for all five.
+  ({String text, double? share})? _crowd(AppLocalizations l) {
     final DailyItemCounts? today = counts?.items[pill.id];
     if (today != null &&
         (counts?.players ?? 0) >= kThreeCrowdFloor &&
@@ -1619,14 +1634,14 @@ class _DailyRow extends StatelessWidget {
         share: 1 - wrong,
       );
     }
-    return (text: l.dailyItemFew, share: null);
+    return null;
   }
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final String said = _said(l);
-    final ({String text, double? share}) crowd = _crowd(l);
+    final ({String text, double? share})? crowd = _crowd(l);
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Semantics(
@@ -1636,7 +1651,7 @@ class _DailyRow extends StatelessWidget {
           pill.question,
           said,
           l.threePoints(points),
-          crowd.text,
+          ?crowd?.text,
         ].join('. '),
         excludeSemantics: true,
         child: Material(
@@ -1712,29 +1727,31 @@ class _DailyRow extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  if (crowd.share != null) ...[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(2),
-                      child: LinearProgressIndicator(
-                        value: crowd.share,
-                        minHeight: 4,
-                        backgroundColor: ink.hair,
-                        valueColor: AlwaysStoppedAnimation(ink.ink),
+                  if (crowd != null) ...[
+                    const SizedBox(height: 10),
+                    if (crowd.share case final double share) ...[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(2),
+                        child: LinearProgressIndicator(
+                          value: share,
+                          minHeight: 4,
+                          backgroundColor: ink.hair,
+                          valueColor: AlwaysStoppedAnimation(ink.ink),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                    ],
+                    Text(
+                      crowd.text,
+                      key: ValueKey('three-row-crowd-${pill.id}'),
+                      style: AppText.body(
+                        size: 12,
+                        weight: FontWeight.w600,
+                        height: 1.3,
+                        color: ink.ink.withValues(alpha: 0.78),
                       ),
                     ),
-                    const SizedBox(height: 6),
                   ],
-                  Text(
-                    crowd.text,
-                    key: ValueKey('three-row-crowd-${pill.id}'),
-                    style: AppText.body(
-                      size: 12,
-                      weight: FontWeight.w600,
-                      height: 1.3,
-                      color: ink.ink.withValues(alpha: 0.78),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -1743,6 +1760,49 @@ class _DailyRow extends StatelessWidget {
       ),
     );
   }
+}
+
+/// "Question by question", folded or open: the label in the result's small
+/// capitals and a chevron that turns, the whole row a target of a thumb's
+/// height.
+class _EachToggle extends StatelessWidget {
+  const _EachToggle({
+    super.key,
+    required this.open,
+    required this.label,
+    required this.ink,
+    required this.onTap,
+  });
+
+  final bool open;
+  final String label;
+  final BetInk ink;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    expanded: open,
+    label: label,
+    excludeSemantics: true,
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 44),
+        child: Row(
+          children: [
+            Expanded(child: BetKicker(label, color: ink.sub)),
+            AnimatedRotation(
+              turns: open ? 0.5 : 0,
+              duration: const Duration(milliseconds: 180),
+              child: Icon(Icons.expand_more_rounded, size: 22, color: ink.sub),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 /// A button drawn in an outline of the card's ink: the second of two.

@@ -244,6 +244,9 @@ void main() {
       }
       await bringUp(tester, 'three-result');
       await shoot(tester, 'five-$tone-4-result');
+      // Question by question, opened.
+      await tester.tap(find.byKey(const ValueKey('three-each')));
+      await settle(tester);
       await bringUp(tester, 'three-row-${DailyDeal.five(_now)[2].id}');
       await shoot(tester, 'five-$tone-5-rows');
     });
