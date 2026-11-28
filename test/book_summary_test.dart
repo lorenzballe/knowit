@@ -533,6 +533,33 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('a page under the host makes room for the small player as a '
+      'book starts, and gives it back when it stops', (tester) async {
+    final AppState app = await readyApp({'knowit.plus': true});
+    final List<double> rooms = [];
+    await tester.pumpWidget(
+      frame(
+        app,
+        Scaffold(
+          body: Builder(
+            builder: (context) {
+              rooms.add(bookPlayerRoom(context));
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      ),
+    );
+    expect(rooms.last, 0);
+    final BookPlayer player = await play(app, 'sapiens');
+    await settle(tester, 3);
+    expect(rooms.last, MiniBookPlayer.height + 18);
+    await player.stop();
+    await settle(tester, 3);
+    expect(rooms.last, 0);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('Listen, on the page of a book its player cannot play: the '
       'player opens and says so; nothing is asked behind the reader\'s back', (
     tester,

@@ -90,9 +90,18 @@ Future<void> _openPlus(BuildContext context, AppState app, BookPlayer player) =>
     requirePlus(context, app, player.unlock, source: 'book audio');
 
 /// How much room the small player takes at the foot of a page, so a page
-/// can keep its last lines clear of it: none while nothing plays.
-double bookPlayerRoom(BuildContext context) =>
-    BookPlayer.current.value == null ? 0 : MiniBookPlayer.height + 18;
+/// can keep its last lines clear of it: none while nothing plays. A page
+/// that asks under the host is built again as a book starts and stops.
+double bookPlayerRoom(BuildContext context) {
+  context.dependOnInheritedWidgetOfExactType<_Playing>();
+  return BookPlayer.current.value == null ? 0 : MiniBookPlayer.height + 18;
+}
+
+/// The book playing, for every page under the host: what [bookPlayerRoom]
+/// listens to.
+class _Playing extends InheritedNotifier<ValueNotifier<BookPlayer?>> {
+  const _Playing({required super.notifier, required super.child});
+}
 
 // ── The small player, over every screen ──────────────────────────────────
 
@@ -107,6 +116,10 @@ class BookPlayerHost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _Playing(notifier: BookPlayer.current, child: _stack());
+  }
+
+  Widget _stack() {
     return Stack(
       fit: StackFit.expand,
       children: [
