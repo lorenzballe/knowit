@@ -8697,13 +8697,13 @@
    }
   }
  },
- "paywallScience": "You can train calibration: about 10% better forecasts.",
+ "paywallScience": "Calibration can be measured, and trained with feedback. Astute measures yours.",
  "@paywallScience": {
-  "description": "The paywall, under what Astute+ is: the evidence the site gives for training calibration (Mellers et al., the Good Judgment Project: about 10% better forecasts), in one line. The source is the line after it."
+  "description": "The paywall, under what Astute+ is: what holds up of the evidence for what it trains. Calibration (how sure you are against how often you are right) can be measured and trained with feedback, as forecasting research does, and Astute measures the reader's. No percentage and nothing proven about the reader: the size of the training effect in the Good Judgment Project is disputed (Hauenstein et al., Psychological Science, 2025). The source is the line after it."
  },
- "paywallScienceSource": "Mellers et al., Good Judgment Project",
+ "paywallScienceSource": "Forecasting research: Tetlock, Mellers",
  "@paywallScienceSource": {
-  "description": "The paywall: the source of that line, as the site names it."
+  "description": "The paywall: under that line, where it comes from, by its researchers' names."
  },
  "paywallWarnBefore": "We warn you two days before the charge",
  "@paywallWarnBefore": {

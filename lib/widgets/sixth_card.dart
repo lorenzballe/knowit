@@ -25,7 +25,6 @@ class SixthCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = context.l10n;
     final SixthLine? said = sixthLineOf(app);
     if (said != null) {
       final String kept = said.keptAs(app.today);
@@ -37,19 +36,52 @@ class SixthCard extends StatelessWidget {
         );
       }
     }
-    final (String headline, String line) = said == null
-        ? (l.plusCardHeadline, l.magicLine)
-        : sixthWords(context, said);
-    return MagicCard(
-      key: ValueKey('sixth-${said?.kind.name ?? 'plain'}'),
-      eyebrow: l.plusNameCaps,
+    return sixthCardOf(
+      context,
+      said,
       note: weekNoteOf(context, app),
-      headline: headline,
-      line: line,
       action: plusActionOf(context),
       onAction: onAction,
     );
   }
+}
+
+/// The card that says [said], with the week's [note] over it and the
+/// door's [action]: as the deck and the shelf show it, and as the tests
+/// measure it. With nothing to say, the offer as it always read.
+MagicCard sixthCardOf(
+  BuildContext context,
+  SixthLine? said, {
+  (String, String)? note,
+  required String action,
+  required VoidCallback onAction,
+}) {
+  final l = context.l10n;
+  if (said == null) {
+    return MagicCard(
+      key: const ValueKey('sixth-plain'),
+      eyebrow: l.plusNameCaps,
+      note: note,
+      headline: l.plusCardHeadline,
+      line: l.magicLine,
+      action: action,
+      onAction: onAction,
+    );
+  }
+  final (String headline, String line) = sixthWords(context, said);
+  return MagicCard(
+    key: ValueKey('sixth-${said.kind.name}'),
+    eyebrow: l.plusNameCaps,
+    note: note,
+    headline: headline,
+    line: line,
+    action: action,
+    onAction: onAction,
+    // A sentence rather than an offer: a size smaller, on as many lines
+    // as it needs.
+    headlineSize: 31,
+    headlineLines: 5,
+  );
 }
 
 /// [said] in the reader's language: the thing that is true, set large, and

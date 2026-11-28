@@ -14,7 +14,7 @@ import '../data/skill_levels.dart';
 import '../data/why.dart';
 import '../listen/listen_sheet.dart';
 import '../sync/listen_client.dart';
-import '../widgets/magic_card.dart';
+import '../widgets/sixth_card.dart';
 import '../data/pills_repository.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/premium.dart';
@@ -30,7 +30,8 @@ import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
 import '../widgets/learn_looks.dart'
     show goalUnsaid, markedSkills, scoredSkills;
-import 'paywall_screen.dart' show showFirstOfferIfDue;
+import 'paywall_screen.dart'
+    show giftEndMayBeDue, showFirstOfferIfDue, showGiftEndWhenDue;
 import 'today_done_view.dart';
 
 /// The card is the screen: dark chrome, and the deck filling everything
@@ -107,6 +108,10 @@ class _TodayScreenState extends State<TodayScreen> {
   /// here, once; on any other opening it starts from the first card.
   bool _landOnDay = false;
 
+  /// Whether the page after the new reader's gift has been looked for on
+  /// this day's Today (lib/screens/gift_pages.dart): once a day at most.
+  bool _giftEndLooked = false;
+
   @override
   void initState() {
     super.initState();
@@ -166,6 +171,7 @@ class _TodayScreenState extends State<TodayScreen> {
       _magic = false;
       _momentDue = false;
       _landOnDay = false;
+      _giftEndLooked = false;
       return;
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -176,7 +182,11 @@ class _TodayScreenState extends State<TodayScreen> {
     // the evening a week of it is being given.
     final bool inviteWeek = widget.app.inviteOn && Invites.instance.waiting;
     if (inviteWeek) Invites.instance.settle();
-    if (!widget.app.isPlus && !inviteWeek) _magic = true;
+    if (!widget.app.isPlus && !inviteWeek) {
+      _magic = true;
+      // Dealt after the five, it is not dealt again on the shelf today.
+      widget.app.noteSixthDealt();
+    }
     _levelDue = true;
     _momentDue = true;
     _landOnDay = true;
@@ -274,6 +284,14 @@ class _TodayScreenState extends State<TodayScreen> {
     final bool done = app.todayCompleted;
     _markCompletion(done);
     _warmDay(app);
+    // The morning after the new reader's gift, before the five: what its
+    // days came to and what goes back to free, once.
+    if (!_giftEndLooked && giftEndMayBeDue(app)) {
+      _giftEndLooked = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) showGiftEndWhenDue(context, app);
+      });
+    }
     // Bought from the card itself: the offer has nothing left to offer and
     // leaves the table, so the shelf comes up. It used to stay "on the
     // table" with no card on it — the deck drops the card after the fifth
@@ -351,18 +369,15 @@ class _TodayScreenState extends State<TodayScreen> {
               deck: app.todaysDeck,
               index: app.todayIndex,
               // After the last pill, on the free plan, the card that offers
-              // the whole day: all five the reader's own, the ones dealt at
-              // random too. It is thrown like the rest, and it says where
-              // the reader's week has got to.
+              // the whole day: one true thing about the reader's own day,
+              // and what Astute+ would have done with it
+              // (lib/widgets/sixth_card.dart). It is thrown like the rest,
+              // and it says where the reader's week has got to.
               trailing: app.isPlus
                   ? null
-                  : MagicCard(
+                  : SixthCard(
                       key: const ValueKey('magic-card'),
-                      eyebrow: context.l10n.plusNameCaps,
-                      note: weekNoteOf(context, app),
-                      headline: context.l10n.plusCardHeadline,
-                      line: context.l10n.magicLine,
-                      action: plusActionOf(context),
+                      app: app,
                       onAction: () => _offer(context),
                     ),
               // How each card was read: a card thrown on is said with the
@@ -863,6 +878,11 @@ class _Pool extends StatelessWidget {
 /// and there is no line.
 String? _shelfAside(BuildContext context, AppState app) {
   if (app.streakWasFrozen) return context.l10n.freezeKeptStreak;
+  // The new reader's gift, in its last two days: the one quiet line that
+  // says it is ending (lib/state/gift.dart).
+  if (app.giftDaysLeft case final int left) {
+    return context.l10n.giftEndsSoon(left);
+  }
   if (app.likedIds.isEmpty) return context.l10n.holdACardYouLike;
   return null;
 }

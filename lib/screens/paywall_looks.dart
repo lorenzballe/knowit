@@ -750,9 +750,13 @@ class _CheckLines extends StatelessWidget {
   );
 }
 
-/// The evidence for what Astute+ trains, as the site gives it: the finding
-/// in a line, and under it, smaller, where it comes from — a page's mark
-/// before it, as the site marks a source.
+/// The evidence for what Astute+ trains, only as far as it holds up: that
+/// calibration can be measured and trained with feedback, as forecasting
+/// research does, and that Astute measures the reader's — no percentage,
+/// since the size of the Good Judgment Project's training effect is
+/// disputed (Hauenstein et al., Psychological Science, 2025). Under it,
+/// smaller, where it comes from, a page's mark before it, as the site
+/// marks a source.
 class _ScienceLine extends StatelessWidget {
   const _ScienceLine({super.key});
 

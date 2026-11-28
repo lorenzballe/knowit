@@ -8268,10 +8268,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get paywallScience =>
-      'Калибровку можно натренировать: прогнозы точнее примерно на 10%.';
+      'Калибровку можно измерить и натренировать с обратной связью. Astute измеряет твою.';
 
   @override
-  String get paywallScienceSource => 'Меллерс и др., Good Judgment Project';
+  String get paywallScienceSource =>
+      'Исследования прогнозирования: Тетлок, Меллерс';
 
   @override
   String get paywallWarnBefore => 'Мы предупредим за два дня до списания';

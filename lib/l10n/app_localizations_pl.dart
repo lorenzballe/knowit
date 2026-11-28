@@ -8303,10 +8303,11 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get paywallScience =>
-      'Kalibrację da się wytrenować: prognozy lepsze o około 10%.';
+      'Kalibrację da się zmierzyć i wyćwiczyć dzięki informacji zwrotnej. Astute mierzy twoją.';
 
   @override
-  String get paywallScienceSource => 'Mellers i in., Good Judgment Project';
+  String get paywallScienceSource =>
+      'Badania nad prognozowaniem: Tetlock, Mellers';
 
   @override
   String get paywallWarnBefore => 'Uprzedzimy cię dwa dni przed obciążeniem';

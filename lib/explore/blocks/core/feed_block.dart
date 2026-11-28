@@ -42,6 +42,7 @@ import '../../../widgets/explore/card_tiles.dart';
 import '../../../widgets/scaled_text.dart';
 import '../../../widgets/video_card.dart' show VideoCardHero, videoHeroTag;
 import '../../explore_block.dart';
+import 'feed_cap.dart';
 import 'layout.dart';
 import 'shelves.dart';
 
@@ -824,6 +825,12 @@ class _FeedSliverState extends State<FeedSliver> {
   FeedDeal? _deal;
   String? _dealtFor;
 
+  /// Where the flow ends for today, on the free plan with an end set
+  /// (feed_cap.dart): after the bands laid by the time the day's cards
+  /// reached the number, so nothing on the page goes from under the
+  /// reader. Null while there is no end.
+  int? _endsAt;
+
   /// The deal, kept for as long as the day, the subject in view, the bank
   /// and the page's width and text size are the same: a newer Explore, or a
   /// card read, leaves the bands where they were. Its boxes are as tall as
@@ -843,6 +850,7 @@ class _FeedSliverState extends State<FeedSliver> {
     if (_deal == null || key != _dealtFor) {
       _dealtFor = key;
       _deal = _dealFor(widget.host, widget.section, pool, cover);
+      _endsAt = null;
     }
     return _deal!;
   }
@@ -855,6 +863,12 @@ class _FeedSliverState extends State<FeedSliver> {
     final FeedGrid grid = FeedGrid(_across(context));
     final String? title = section.title(host.language);
     final String? line = section.subtitle(host.language);
+    if (host.app.exploreCapped) {
+      _endsAt ??= deal.bands.length;
+    } else {
+      _endsAt = null;
+    }
+    final int? endsAt = _endsAt;
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, i) {
         if (i == 0) {
@@ -863,6 +877,10 @@ class _FeedSliverState extends State<FeedSliver> {
             section,
             SectionFrame(title: title, line: line, child: const SizedBox()),
           );
+        }
+        // The day's end of the flow, where the next band would have been.
+        if (endsAt != null && i - 1 >= endsAt) {
+          return i - 1 == endsAt ? FeedCapCard(app: host.app) : null;
         }
         final FeedLaid? band = deal.band(
           context,

@@ -1,4 +1,4 @@
-import 'dart:async' show Timer, scheduleMicrotask, unawaited;
+import 'dart:async' show Completer, Timer, scheduleMicrotask, unawaited;
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
@@ -1378,8 +1378,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
           gap: short ? 7 : (twoSteps ? 14 : 8),
         ),
       ),
-      // Why any of it should work, in the one line the site gives it, and
-      // where the line comes from.
+      // Why any of it should work, only as far as the evidence holds up,
+      // and where the line comes from.
       Padding(
         padding: side.copyWith(top: short ? 10 : 14),
         child: const _ScienceLine(key: ValueKey('paywall-science')),

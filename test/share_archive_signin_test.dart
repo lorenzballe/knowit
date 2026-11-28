@@ -22,6 +22,7 @@ import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/utils/share_link.dart';
 import 'package:astuto/utils/share_text.dart';
+import 'package:astuto/widgets/flip_card.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
@@ -354,16 +355,22 @@ void main() {
       Navigator.of(tester.element(find.byType(DayPicture))).pop();
       await _settle(tester);
 
-      // At the last card on the shelf, the one that sells, it is still the
-      // row under the shelf: nothing of it lies on the offer.
+      // At the last card on the shelf it is still the row under the shelf:
+      // nothing of it lies on the card. The card after the fifth was dealt
+      // after the five this evening, so the shelf ends on the fifth and the
+      // offer is not met there again.
       for (var i = 0; i < 5; i++) {
         await tester.drag(find.byType(TodayDoneView), const Offset(-200, 0));
         await _settle(tester);
       }
-      final Finder offer = find.byKey(const ValueKey('shelf-magic'));
-      expect(offer, findsOneWidget);
+      expect(find.byKey(const ValueKey('shelf-magic')), findsNothing);
+      final Finder last = find.descendant(
+        of: find.byType(TodayDoneView),
+        matching: find.byType(FlipCard),
+      );
+      expect(last, findsOneWidget);
       expect(send, findsOneWidget);
-      expect(tester.getRect(offer).overlaps(tester.getRect(send)), isFalse);
+      expect(tester.getRect(last).overlaps(tester.getRect(send)), isFalse);
     });
 
     testWidgets('as a story too, the whole sheet is on the screen, with a '

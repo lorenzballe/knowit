@@ -7372,10 +7372,11 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get paywallScience => '보정은 훈련할 수 있어요: 예측이 약 10% 더 정확해져요.';
+  String get paywallScience =>
+      '보정은 측정할 수 있고, 피드백으로 훈련할 수 있어요. Astute는 당신의 보정을 측정해요.';
 
   @override
-  String get paywallScienceSource => 'Mellers 외, Good Judgment Project';
+  String get paywallScienceSource => '예측 연구: Tetlock, Mellers';
 
   @override
   String get paywallWarnBefore => '결제 이틀 전에 알려 드려요';

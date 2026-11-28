@@ -137,7 +137,8 @@ without a join.
 | Property | Values | Set by |
 | --- | --- | --- |
 | `install_channel` | `app_store`, `testflight`, `play`, `sideload`, `test_lab`, `debug`, `web`, `other` | launch, before the first event (§5) |
-| `is_plus` | bool | profile sync, entitlement |
+| `is_plus` | bool: Astute+, bought or the new reader's gift | profile sync, entitlement |
+| `on_gift` **new** | bool: Astute+ as the new reader's gift holds it, nothing bought (`trial.reverse`) | profile sync |
 | `plan` | `free`, `year`, `month`, `plus` (a product the app cannot place) | entitlement |
 | `is_trial` | bool: a free trial is running, cancelled or not | entitlement |
 | `plan_period` | RevenueCat's period: `trial`, `intro`, `normal`, `prepaid`; `none` without an entitlement | entitlement |
@@ -292,7 +293,10 @@ gone); `onboarding first card`, `onboarding trial` (the one card and the
 offer of the free trial that end the first run behind the server's switch
 `trial.firstRun`, off as built: measured by the steps' own `onboarding step
 done`, and the trial by the store's `entitlement changed`, with no event of
-their own); `first week`, `first month` (the page that rises once after the
+their own); `onboarding gift` (behind `trial.reverse`, where the trial's
+offer would stand: Astute+ given for fourteen days, nothing sold), `gift
+end` (the morning after the gift, once; §6.8); `first week`, `first month`
+(the page that rises once after the
 five on the seventh day of reading, and its twin a month after the install,
 behind `offer.firstWeek` and `offer.firstMonth`; §6.8); `deck viewer`, `pill
 detail`, `archive`, `saved`, `liked`,
@@ -412,11 +416,15 @@ is in its card facts.
 
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
-| `paywall shown`, `paywall plan selected`, `paywall link opened`, `paywall closed` | the paywall, by the door that opened it (`sixth card`, `journey`, `archive`, `paths`, `see the plans`, `manage plan`, `explore offer` — the Astute+ card on Explore, the locked features' own; no longer `onboarding`) | `source`, `variant`, `has_number`, `plan_shown`, `store_answered`, `store` (`ready`, `asking`, `unreachable`), `plan`, `from`, `link`, `left_by` (`close`, `back`, `bought`, `pending`, `review access`, `unlocked without a store` in a debug build), `ms_open`, `plan_changes`, `is_plus` | P |
+| `paywall shown`, `paywall plan selected`, `paywall link opened`, `paywall closed` | the paywall, by the door that opened it (`sixth card`, `journey`, `archive`, `paths`, `see the plans`, `manage plan`, `gift` — the plan's row in the gift's days, `gift end` — the morning after it, `explore end` — the end of Explore's flow, `explore offer` — the Astute+ card on Explore, the locked features' own; no longer `onboarding`) | `source`, `variant`, `has_number`, `plan_shown`, `store_answered`, `store` (`ready`, `asking`, `unreachable`), `plan`, `from`, `link`, `left_by` (`close`, `back`, `bought`, `pending`, `review access`, `unlocked without a store` in a debug build), `ms_open`, `plan_changes`, `is_plus` | P |
 | `purchase started`, `purchase ended`, `purchase success shown`, `purchases restored` | buying; `source` is the paywall's door, or `first week` / `first month` for a trial started from those pages | `source`, `plan`, `has_package`, `outcome` (`bought`, `cancelled`, `pending`, `failed`; for a restore `restored`, `nothing`, `unreachable`), `product`, `price`, `currency`, `trial`, `found` | P |
 | `first offer shown` **new** | the first week's page or the first month's rises, once each per phone, after the five | `source` (`first week`, `first month`), `days_read`, `cards_read`, `streak_days`, `has_sure` (the right-when-sure figure was said), `has_strongest`, `best_card` (`said`, `liked`, `saved`, `changed`, absent with none), `trial_days` (the store's free days), `remind` (the reminder before the charge was promised) | P |
 | `first offer closed` **new** | that page goes | `source`, `left_by` (`not now`, `back`, `trial`, `pending`, `restored`, `plus already`, `no offer`), `ms_open`, `is_plus` | P |
 | `first offer trial started` **new** | the year's trial started from that page, as the store confirmed it | `source`, `product`, `trial`, `trial_days`, `ms_open` | P |
+| `gift started` **new** | the new reader's gift is given, as its moment in the first run goes up (`trial.reverse`) | `days` (14), `ends_on` (the date key of the fifteenth, the free plan's first) | P |
+| `gift end shown` **new** | the morning after the gift, before the five, once per reader | `days_read`, `cards_read` (in the gift's days), `has_gap` (how far off sureness ran could be said), `gap_moved` (from one figure to another), `back_right` (moves missed, then right when they came back), `random` (of today's five, at random) | P |
+| `gift end closed` **new** | that page goes | `left_by` (`keep`: to the paywall, whose `source` is `gift end`; `free`; `back`; `plus already`), `ms_open`, `is_plus` | P |
+| `explore end shown` **new** | Explore's endless flow ends for the day on the free plan (`explore.freeCards`), once a day | `cards_read` (today, beyond the five), `cap` | P |
 | `store answered` | each time RevenueCat is asked for the offerings: at launch, then after 3 s, 10 s, 30 s and 2 min while nothing is on sale, on the paywall opening, on Try again and on a return to the app | `ms`, `try`, `offering`, `yearly_product`, `yearly_price`, `yearly_trial`, `monthly_product`, `monthly_price`, `currency`, `is_plus`, `error` | P |
 | `entitlement read`, `entitlement changed` | the subscription as the store holds it, at launch and on every change | `active`, `product`, `period_type`, `will_renew`, `store`, `sandbox`, `expires`, `unsubscribed`, `billing_issue` | P |
 | `trial started`, `plan changed` | the app's own plan | `is_plus` | P, T:`plan` (changed) |

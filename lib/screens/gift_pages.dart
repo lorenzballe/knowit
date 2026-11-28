@@ -306,6 +306,35 @@ class _GiftDays extends StatelessWidget {
   }
 }
 
+/// Whether the gift's end could be said today, whatever the store will say:
+/// a gift over and never said to be, for a reader with no plan. Today
+/// looks for the page ([showGiftEndWhenDue]) only then.
+bool giftEndMayBeDue(AppState app) =>
+    app.giftEndsOn != null &&
+    app.giftEndShownOn == null &&
+    !app.onGift &&
+    !app.paidPlus;
+
+/// [showGiftEndIfDue], once the store has answered — a few seconds at the
+/// most, at launch — so that a plan bought on another phone is heard of
+/// before the page says the gift is over. A store that does not answer
+/// leaves the page for another morning.
+Future<bool> showGiftEndWhenDue(BuildContext context, AppState app) async {
+  final Subscription store = Subscription.instance;
+  if (store.hasStore && !store.ready) {
+    final Completer<void> answered = Completer<void>();
+    void heard() {
+      if (store.ready && !answered.isCompleted) answered.complete();
+    }
+
+    store.addListener(heard);
+    await answered.future.timeout(const Duration(seconds: 8), onTimeout: () {});
+    store.removeListener(heard);
+    if (!context.mounted) return false;
+  }
+  return showGiftEndIfDue(context, app);
+}
+
 /// True while the gift's end is being looked for: one at a time.
 bool _giftEndLooking = false;
 

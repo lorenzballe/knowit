@@ -7725,10 +7725,10 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get paywallScience =>
-      'Kalibratie is te trainen: zo’n 10% betere voorspellingen.';
+      'Kalibratie is te meten en met feedback te trainen. Astute meet de jouwe.';
 
   @override
-  String get paywallScienceSource => 'Mellers e.a., Good Judgment Project';
+  String get paywallScienceSource => 'Voorspellingsonderzoek: Tetlock, Mellers';
 
   @override
   String get paywallWarnBefore =>

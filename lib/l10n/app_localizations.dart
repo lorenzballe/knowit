@@ -10602,16 +10602,16 @@ abstract class AppLocalizations {
   /// **'With Astute+ your {subject} cards would go up a level.'**
   String sixthLevelPlus(String subject);
 
-  /// The paywall, under what Astute+ is: the evidence the site gives for training calibration (Mellers et al., the Good Judgment Project: about 10% better forecasts), in one line. The source is the line after it.
+  /// The paywall, under what Astute+ is: what holds up of the evidence for what it trains. Calibration (how sure you are against how often you are right) can be measured and trained with feedback, as forecasting research does, and Astute measures the reader's. No percentage and nothing proven about the reader: the size of the training effect in the Good Judgment Project is disputed (Hauenstein et al., Psychological Science, 2025). The source is the line after it.
   ///
   /// In en, this message translates to:
-  /// **'You can train calibration: about 10% better forecasts.'**
+  /// **'Calibration can be measured, and trained with feedback. Astute measures yours.'**
   String get paywallScience;
 
-  /// The paywall: the source of that line, as the site names it.
+  /// The paywall: under that line, where it comes from, by its researchers' names.
   ///
   /// In en, this message translates to:
-  /// **'Mellers et al., Good Judgment Project'**
+  /// **'Forecasting research: Tetlock, Mellers'**
   String get paywallScienceSource;
 
   /// The paywall, under the button, beside a check, on a plan that starts with free days, to a reader the app can notify: the app sends a notification two days before the trial's first charge (AppState.kTrialWarningDays, two).

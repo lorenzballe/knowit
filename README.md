@@ -407,12 +407,34 @@ The one card in the app that is not a card. On the free plan it is the
 last card in the deck: it peeks from under the fifth like any next card,
 comes to the top when the fifth is thrown, and is thrown the same way — a
 rim of every colour the deck has, turning, with its light spilling onto
-the table, and one offer: "all five, yours". The button is the
+the table, and one true thing about the reader's own day, set large, with
+what Astute+ would have done with that day under it. The button is the
 paywall. Nothing times out and nothing says skip; a throw is the way past
-it, as it is past every other card. Then it is the last card on the shelf
-too, after the five, with the counter giving way to the plan's name and a
-dot of every colour under it. With Astute+ there is no sixth card at all:
-the five were all the reader's own, and there is nothing left to sell.
+it, as it is past every other card. With Astute+ there is no sixth card at
+all: the five were all the reader's own, and there is nothing left to sell.
+
+**One true thing a day** (`lib/state/sixth_line.dart`, said by
+`lib/widgets/sixth_card.dart`). The same sale every evening, word for word,
+was a card readers learnt to throw unread, and "free against Astute+" was
+never felt. So the card says what is true tonight, read off the day as it
+was dealt and answered, and what Astute+ would have done with it: how many
+of tomorrow's five will come at random ("With Astute+, all five chosen for
+you: from your mix, at your level"); how many of today's did; a card missed
+today at 80% sure or more ("With Astute+ it comes back in your five"); the
+cards got wrong that are back and waiting in Explore, where Astute+ deals
+them in the five, one a day; a subject the reader's answers measure a level
+above the one the free plan deals it at. A thing not true tonight is not
+said. The kinds come round in a turn, the first true one after the one the
+last day said, so no two days running say the same; once said, it is the
+day's, on the deck and on the shelf, through a relaunch
+(`AppState.sixthSaid`). A test holds every one of them to fitting the card
+on an SE in every language, the week's note over it.
+
+**Once an evening.** Dealt after the five, it is not met again on the
+finished day's shelf that day (`AppState.sixthDealtOn`): the shelf is the
+five. It ends on the offer only on a day the deck did not deal it — opened
+onto a day finished with no card after its five — with the counter giving
+way to the plan's name and a dot of every colour under it.
 
 It is dealt only when the day is finished *in this session* — opening the
 app onto a day already done goes to the shelf. `MagicCard`
@@ -1622,6 +1644,83 @@ whether the entitlement is active. A plan that reads "not in the offering"
 is a RevenueCat package missing; one whose price never arrives is an App
 Store product not yet *Ready to Submit*. The first subscriptions go to App
 Review with an app version, attached on the version's page.
+
+**The paywall's two lines.** Under what Astute+ is, the evidence, only
+as far as it holds up: calibration — how sure you are against how often
+you are right — can be measured and trained with feedback, as forecasting
+research does (Tetlock, Mellers), and Astute measures yours. No percentage:
+the Good Judgment Project's training effect is disputed (Hauenstein et al.,
+*Psychological Science*, 2025). And under the button, beside "Cancel any
+time", that the app warns two days before the charge — the warning it
+arms (`AppState.trialWarning`, a notification at the reader's hour two days
+before the store's trial turns into the year, whatever the daily nudge's
+switch says), said only on a plan that starts with free days and to a
+reader it can notify. The price, the month the year comes to, the saving
+("SAVE 37%") and the free days are all the store's own: a price changed in
+App Store Connect or Play Console is said right with no new build
+(`yearlySaving`, from the store's two prices). The site's plan picker is
+written by hand and is not.
+
+**The web's word.** The web app sells nothing; its paywall says where
+Astute+ is, as the stores stand (`kAppStoreOpen`, `kGooglePlayOpen` in
+`lib/store_links.dart`, held to the site's switches by
+`tool/remote/test_app.py`): on Android now, the iPhone app on its way.
+
+## The new reader's gift
+
+Behind `trial.reverse`, off as built (`lib/state/gift.dart`, the screens
+in `lib/screens/gift_pages.dart`). What Astute+ adds is only understood by
+using it for days; the first run's offer asked for it after one card. With
+the switch on, where the first run would offer the store's trial — after its
+one card — a new reader is *given* Astute+ for fourteen days instead: "Astute+
+is yours for 14 days. No card, nothing to cancel.", the days on the trial's
+own rail (today, the thirteenth's note where it can reach them, the
+fifteenth: the free plan again, nothing charged), and one button to the
+five. Nothing is bought and the store knows nothing of it: it is held on the
+phone (`AppState.giftFrom`, its first day), and `isPlus` is the plan or the
+gift while `paidPlus` is the plan alone, which the paywall sells against —
+so a reader in their gift can still buy, and the profile's plan row says
+"Astute+ · a gift until …" and opens the paywall, not the store's screen.
+The server is told the plan as each morning has it, and a day it dealt the
+night before as Astute+'s is not taken for a free reader's.
+
+- **Who.** A new reader, in the first run: never one the store ever held
+  Astute+ for (a trial or a plan, running or over), never twice on a phone
+  (a sign-out takes the gift with the reader, and the phone remembers it
+  gave one), never on the web's preview. A gift given is never taken back by
+  the switch.
+- **Honest on every phone.** The first day travels in the account's backup
+  (`ReaderSnapshot.giftFrom`), and a merge keeps the earlier: signing in on
+  a new phone keeps the days the first one gave and gives no more. A phone
+  reinstalled without signing in keeps nothing, as with everything else the
+  app keeps; the store's word that it once held Astute+ for the reader is
+  the one memory left, and it is honoured.
+- **The last two days.** One quiet line under the finished day's name
+  ("Astute+ is yours for 2 more days.", then "Last day of Astute+."), and on
+  the thirteenth, for a reader with the nudge on, that morning's nudge says
+  it in its title: the gift's one notification.
+- **The morning after.** Before the five are begun, once, within two weeks
+  of the end, and once the store has answered: "Your 14 days of Astute+.",
+  the reader's own numbers — cards read, days read of fourteen, points off
+  and where they started, moves missed and then got right — then what goes
+  back to the free plan (three of the five at random, misses waiting in
+  Explore rather than coming back, the assistant), "Keep Astute+", which is
+  the paywall in its place, and "Continue for free".
+- **The store's own trial on top.** RevenueCat sells the year with the
+  store's introductory offer; a reader who never had it is still eligible
+  after the gift, so buying the year on the fifteenth starts the store's
+  fourteen free days, and the paywall says so at the store's own terms.
+
+## Explore's end, for the free plan
+
+Behind the number `explore.freeCards`, nought as built (no end;
+`lib/explore/blocks/core/feed_cap.dart`): with a number, once the cards a
+free reader has read today beyond the day's five reach it, Explore's endless
+flow lays no more bands and a calm card stands where the next would have
+been — "That's Explore for today.", how many were read, more tomorrow, and
+"With Astute+, Explore has no end." with the door to the paywall. Soft:
+what is on the page stays open, the shelves above it are as they were, and
+nothing is taken away under the reader's finger.
 
 ## Astute+ on the web, and the account page
 

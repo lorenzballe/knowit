@@ -371,6 +371,32 @@ Future<void> _hold(WidgetTester tester, Finder card) async {
 /// The card at the front of the shelf once the day is read, as its dots say
 /// it: the dot of [n] of five is the one selected. The shelf's heading used
 /// to print it as "0n / 05"; the dots under the cards were already saying it.
+/// A reader on the free plan opening the app onto today's five, read, with
+/// no card dealt after them: the shelf then ends on the offer.
+Map<String, Object> _finishedWithoutTheSixth() => {
+  ..._installed(),
+  'knowit.todayDate': dateKey(DateTime.now()),
+  'knowit.todayDeckIds': _todaysFive.map((p) => p.id).toList(),
+  'knowit.todayIndex': 5,
+  'knowit.lastCompletionDate': dateKey(DateTime.now()),
+  'knowit.completedDates': [dateKey(DateTime.now())],
+  'knowit.streak': 1,
+};
+
+/// What the card after the fifth says on a free reader's first evening:
+/// how many of tomorrow's five come at random, a Sunday's one fewer.
+String _tomorrowAtRandom() {
+  final DateTime now = DateTime.now();
+  final int random =
+      kPillsPerDay -
+      ownCardsFor(
+        plus: false,
+        streak: 1,
+        sunday: isSunday(DateTime(now.year, now.month, now.day + 1)),
+      );
+  return 'Tomorrow $random of your five will come at random.';
+}
+
 void _expectAtFront(WidgetTester tester, int n) => expect(
   tester.getSemantics(find.bySemanticsLabel('Card $n of 5').last),
   isSemantics(isSelected: true),
@@ -2757,9 +2783,18 @@ void main() {
         await _swipeCardAway(tester);
         await _settle(tester);
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
-        // A first day is like any free day: the card offers the whole day,
-        // all five the reader's own.
-        expect(find.text('Make all five yours.'), findsOneWidget);
+        // A first day is like any free day: the card says one true thing
+        // about it — the first evening, how many of tomorrow's five come at
+        // random — and that Astute+ would choose all five
+        // (lib/state/sixth_line.dart).
+        expect(find.text(_tomorrowAtRandom()), findsOneWidget);
+        expect(
+          find.text(
+            'With Astute+, all five chosen for you: from your mix, at your '
+            'level.',
+          ),
+          findsOneWidget,
+        );
         expect(find.text('Try 14 days free'), findsOneWidget);
         expect(find.text('Skip'), findsNothing);
         // Nothing about the week yet: no week has been kept.
@@ -2851,10 +2886,11 @@ void main() {
 
     testWidgets('the card after the fifth is the same card at the front and '
         'to the side, so its rim keeps turning', (tester) async {
-      SharedPreferences.setMockInitialValues(_installed());
+      // Opened onto a day finished with no card dealt after its five: the
+      // shelf ends on the offer.
+      SharedPreferences.setMockInitialValues(_finishedWithoutTheSixth());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
-      await _finishDay(tester);
       for (var i = 0; i < kPillsPerDay; i++) {
         await tester.fling(
           find.byType(TodayDoneView),
@@ -2883,10 +2919,9 @@ void main() {
 
     testWidgets('the offer\'s dot is every colour as soon as the offer is '
         'reached', (tester) async {
-      SharedPreferences.setMockInitialValues(_installed());
+      SharedPreferences.setMockInitialValues(_finishedWithoutTheSixth());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
-      await _finishDay(tester);
 
       // The dot as it is painted: its gradient's colours, whatever point
       // the change has reached.
@@ -2915,20 +2950,41 @@ void main() {
       expect(painted(), kSpectrum);
     });
 
-    testWidgets('the shelf ends on the card that offers the rest of the day', (
-      tester,
-    ) async {
+    testWidgets('the card after the fifth, dealt after the five, is not met '
+        'again on the shelf', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
       await finish(tester);
       expect(find.byKey(const ValueKey('shelf-magic')), findsNothing);
       await toTheSixth(tester);
+      // Past the fifth there is nothing: the shelf stops on it, as on
+      // Astute+, and no dot stands for an offer.
+      _expectAtFront(tester, 5);
+      expect(find.byKey(const ValueKey('shelf-magic')), findsNothing);
+      expect(find.bySemanticsLabel('ASTUTE+'), findsNothing);
+      // Opened again the same evening, still the five.
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await toTheSixth(tester);
+      _expectAtFront(tester, 5);
+      expect(find.byKey(const ValueKey('shelf-magic')), findsNothing);
+    });
+
+    testWidgets('the shelf ends on the card that offers the rest of the day, '
+        'on a day it was not dealt after the five', (tester) async {
+      SharedPreferences.setMockInitialValues(_finishedWithoutTheSixth());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('shelf-magic')), findsNothing);
+      await toTheSixth(tester);
 
       // Past the fifth: the offer, at the front, and the counter gives way
-      // to the plan's name. No skip here — a swipe is the way back.
+      // to the plan's name. No skip here — a swipe is the way back. It says
+      // what the deck's card would have said: one true thing.
       expect(find.byKey(const ValueKey('shelf-magic')), findsOneWidget);
-      expect(find.text('Make all five yours.'), findsOneWidget);
+      expect(find.text(_tomorrowAtRandom()), findsOneWidget);
       expect(find.text('Skip'), findsNothing);
       expect(find.text('06 / 05'), findsNothing);
       expect(find.text('ASTUTE+'), findsWidgets);
@@ -6154,19 +6210,22 @@ void main() {
       tester.view.physicalSize = const Size(402, 874) * 3;
       tester.view.devicePixelRatio = 3;
       addTearDown(tester.view.reset);
-      // Six days kept, the last of them yesterday: today makes the week.
+      // A week kept tonight: seven days in a row, the seventh today, and
+      // the app opened onto it with no card dealt after its five, so the
+      // shelf ends on the offer.
       final DateTime now = DateTime.now();
       final String yesterday = dateKey(
         DateTime(now.year, now.month, now.day - 1),
       );
       SharedPreferences.setMockInitialValues({
-        ..._installed(),
-        'knowit.streak': 6,
-        'knowit.lastCompletionDate': yesterday,
+        ..._finishedWithoutTheSixth(),
+        'knowit.streak': 7,
+        'knowit.bestStreak': 7,
+        'knowit.lastCompletionDate': dateKey(now),
+        'knowit.completedDates': [yesterday, dateKey(now)],
       });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
-      await _finishDay(tester);
 
       // The shelf opens on the first card, with the day's name over it and
       // nothing about the week in the way.

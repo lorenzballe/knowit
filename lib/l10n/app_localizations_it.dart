@@ -7722,10 +7722,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get paywallScience =>
-      'La calibrazione si allena: previsioni migliori di circa il 10%.';
+      'La calibrazione si misura, e con il feedback si allena. Astute misura la tua.';
 
   @override
-  String get paywallScienceSource => 'Mellers e altri, Good Judgment Project';
+  String get paywallScienceSource =>
+      'Ricerca sulle previsioni: Tetlock, Mellers';
 
   @override
   String get paywallWarnBefore => 'Ti avvisiamo due giorni prima dell’addebito';

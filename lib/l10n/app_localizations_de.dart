@@ -7736,10 +7736,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get paywallScience =>
-      'Kalibrierung lässt sich trainieren: rund 10 % bessere Prognosen.';
+      'Kalibrierung lässt sich messen und mit Rückmeldung trainieren. Astute misst deine.';
 
   @override
-  String get paywallScienceSource => 'Mellers u. a., Good Judgment Project';
+  String get paywallScienceSource => 'Prognoseforschung: Tetlock, Mellers';
 
   @override
   String get paywallWarnBefore =>

@@ -702,9 +702,10 @@ class ProfileScreen extends StatelessWidget {
                   // paywall is for everyone else, a reader in their gift
                   // included: there is nothing of theirs at the store.
                   onTap: () {
+                    // Whether it is the gift rides on every event already
+                    // (on_gift).
                     Analytics.capture('manage subscription opened', {
                       'is_plus': app.isPlus,
-                      'on_gift': !app.paidPlus && app.onGift,
                     });
                     app.paidPlus
                         ? Subscription.instance.presentCustomerCenter()

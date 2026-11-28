@@ -26,7 +26,7 @@ import '../widgets/liked_mark.dart';
 import '../widgets/skill_mark.dart';
 import 'journey_screen.dart';
 import '../widgets/motion.dart';
-import '../widgets/magic_card.dart';
+import '../widgets/sixth_card.dart';
 import '../widgets/premium.dart';
 import '../data/topics.dart';
 import '../widgets/day_moment.dart';
@@ -158,9 +158,12 @@ class TodayDoneView extends StatefulWidget {
   /// How many cards [app]'s shelf holds: the day's cards, the day's own
   /// card where it is tried, and the offer on the free plan, where three of
   /// the five came at random; never on Astute+, so nobody is sold what they
-  /// already have.
+  /// already have, and never on a day the card after the fifth was dealt
+  /// after the five, so nobody meets the same card twice in an evening.
   static int countOf(AppState app) =>
-      app.todaysDeck.length + (dayCardOn ? 1 : 0) + (app.isPlus ? 0 : 1);
+      app.todaysDeck.length +
+      (dayCardOn ? 1 : 0) +
+      (app.isPlus || app.sixthDealtToday ? 0 : 1);
 
   /// The colour the tab glows in with the card at [at] in front: a card's
   /// own; the day's card's, that of the card its picture sets large; and
@@ -872,19 +875,11 @@ class _TodayDoneViewState extends State<TodayDoneView>
   /// but a swipe — which is the way past every other card.
   Widget _sixth(BuildContext context) {
     final app = widget.app;
-    final l = context.l10n;
     return SizedBox(
       key: const ValueKey('shelf-magic'),
       width: _cardWidth,
       height: _cardHeight,
-      child: MagicCard(
-        eyebrow: l.plusNameCaps,
-        note: weekNoteOf(context, app),
-        headline: l.plusCardHeadline,
-        line: l.magicLine,
-        action: plusActionOf(context),
-        onAction: _sell,
-      ),
+      child: SixthCard(app: app, onAction: _sell),
     );
   }
 }

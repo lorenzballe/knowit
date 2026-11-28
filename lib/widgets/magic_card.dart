@@ -26,6 +26,8 @@ class MagicCard extends StatefulWidget {
     this.note,
     this.skip,
     this.onSkip,
+    this.headlineSize = 40,
+    this.headlineLines = 2,
   });
 
   final String eyebrow;
@@ -43,6 +45,12 @@ class MagicCard extends StatefulWidget {
   /// The quiet way past the card. Absent on the shelf, where a swipe is.
   final String? skip;
   final VoidCallback? onSkip;
+
+  /// The headline's size, and the lines it may take: a short offer set
+  /// large on two, as built; a sentence about the reader's day a little
+  /// smaller, on as many as it needs (lib/widgets/sixth_card.dart).
+  final double headlineSize;
+  final int headlineLines;
 
   @override
   State<MagicCard> createState() => _MagicCardState();
@@ -135,9 +143,9 @@ class _MagicCardState extends State<MagicCard>
                 // Italian is two words longer, the German longer again.
                 FitText(
                   widget.headline,
-                  maxLines: 2,
-                  minSize: 24,
-                  style: _headlineStyle(ink),
+                  maxLines: widget.headlineLines,
+                  minSize: 24 * widget.headlineSize / 40,
+                  style: _headlineStyle(ink, widget.headlineSize),
                 ),
                 if (line) ...[
                   const SizedBox(height: 14),
@@ -169,13 +177,14 @@ class _MagicCardState extends State<MagicCard>
     color: ink.withValues(alpha: 0.85),
   );
 
-  static TextStyle _headlineStyle(Color ink) => AppText.display(
-    size: 40,
-    weight: FontWeight.w600,
-    height: 1.02,
-    spacing: -1.2,
-    color: ink,
-  );
+  static TextStyle _headlineStyle(Color ink, [double size = 40]) =>
+      AppText.display(
+        size: size,
+        weight: FontWeight.w600,
+        height: size < 40 ? 1.08 : 1.02,
+        spacing: -1.2 * size / 40,
+        color: ink,
+      );
 
   static TextStyle _lineStyle(Color ink) =>
       AppText.body(size: 15, height: 1.4, color: ink.withValues(alpha: 0.62));
@@ -210,7 +219,11 @@ class _MagicCardState extends State<MagicCard>
 
     final double fixed =
         math.max(15, scaler.scale(11) * 1.3) +
-        measure(widget.headline, _headlineStyle(ink), lines: 2) +
+        measure(
+          widget.headline,
+          _headlineStyle(ink, widget.headlineSize),
+          lines: widget.headlineLines,
+        ) +
         // The button is 54, and the quiet way past it its own line.
         54 +
         (widget.skip != null ? 4 + 20 + scaler.scale(13) * 1.3 : 0);

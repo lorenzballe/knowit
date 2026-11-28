@@ -7343,10 +7343,11 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get paywallScience => 'キャリブレーションは鍛えられます。予測が約10%向上。';
+  String get paywallScience =>
+      'キャリブレーションは測定でき、フィードバックで鍛えられます。Astuteはあなたのキャリブレーションを測ります。';
 
   @override
-  String get paywallScienceSource => 'Mellersほか、Good Judgment Project';
+  String get paywallScienceSource => '予測研究：Tetlock、Mellers';
 
   @override
   String get paywallWarnBefore => '請求の2日前にお知らせします';

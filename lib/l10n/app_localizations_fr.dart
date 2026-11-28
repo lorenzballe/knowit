@@ -7765,10 +7765,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paywallScience =>
-      'La calibration s’entraîne : des prévisions meilleures d’environ 10 %.';
+      'La calibration se mesure et s’entraîne grâce aux retours. Astute mesure la tienne.';
 
   @override
-  String get paywallScienceSource => 'Mellers et al., Good Judgment Project';
+  String get paywallScienceSource =>
+      'Recherche sur la prévision : Tetlock, Mellers';
 
   @override
   String get paywallWarnBefore =>

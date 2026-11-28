@@ -7570,10 +7570,10 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get paywallScience =>
-      'Kalibrasyon çalışılarak gelişir: yaklaşık %10 daha iyi tahminler.';
+      'Kalibrasyon ölçülebilir ve geri bildirimle çalışılabilir. Astute seninkini ölçer.';
 
   @override
-  String get paywallScienceSource => 'Mellers ve ark., Good Judgment Project';
+  String get paywallScienceSource => 'Tahmin araştırmaları: Tetlock, Mellers';
 
   @override
   String get paywallWarnBefore => 'Ücretlendirmeden iki gün önce seni uyarırız';

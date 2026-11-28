@@ -7336,10 +7336,10 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get paywallScience => '校准是可以训练的：预测准确度提高约 10%。';
+  String get paywallScience => '校准可以衡量，也能通过反馈来训练。Astute 会衡量你的校准。';
 
   @override
-  String get paywallScienceSource => 'Mellers 等，Good Judgment Project';
+  String get paywallScienceSource => '预测研究：Tetlock、Mellers';
 
   @override
   String get paywallWarnBefore => '扣费前两天提醒你';
