@@ -10445,6 +10445,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =1{A friend finished their first day: a week of Astute+ for you.} other{{n} friends finished their first day: {n} weeks of Astute+ for you.}}'**
   String inviteEarned(int n);
+
+  /// The screen that celebrates the reader's first finished day, right after their fifth card (black at night, paper by day): its headline, in the display face, over the streak, the points the day earned and how sure against how right. Set on up to three lines; no full stop, as a headline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first day is done'**
+  String get firstDayTitle;
+
+  /// That screen, one plain line under the streak and the points: how sure the reader said they were on today's answers, on average (sure, 50 to 90, a percent), set against how many of today's answers were right (right of total). Said only where the card asked how sure at least once that day.
+  ///
+  /// In en, this message translates to:
+  /// **'You were {sure}% sure, and got {right} of {total} right.'**
+  String firstDaySureRight(int sure, int right, int total);
+
+  /// That screen, the same line on a day no card asked how sure: how many of today's answers were right, right of total.
+  ///
+  /// In en, this message translates to:
+  /// **'You got {right} of {total} right.'**
+  String firstDayRight(int right, int total);
+
+  /// That screen, its first button: raises the reminder sheet, which asks at what time to send the daily reminder. Short, as a button.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me tomorrow'**
+  String get firstDayRemind;
+
+  /// That screen, in place of the first button once the reader chose a time and the phone allowed notifications: when the first reminder comes. time is the time as the phone writes it (19:00, or 7:00 PM).
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll remind you tomorrow at {time}.'**
+  String firstDayReminded(String time);
 }
 
 class _AppLocalizationsDelegate

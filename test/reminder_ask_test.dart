@@ -282,14 +282,22 @@ void main() {
   });
 
   group('on the first day', () {
-    testWidgets('the five are read, the card after them thrown, and nothing '
-        'is asked', (tester) async {
+    testWidgets('the five are read, the day celebrated, the card after them '
+        'thrown, and nothing is asked', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
-      for (var i = 0; i < 6; i++) {
+      for (var i = 0; i < 5; i++) {
         await _throw(tester);
       }
+      // The first day's celebration (test/first_day_test.dart), with no
+      // reminder to offer where the sheet waits for a reader who came back.
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('first-day')), findsOneWidget);
+      expect(find.byKey(const ValueKey('first-day-remind')), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('first-day-close')));
+      await _settle(tester);
+      await _throw(tester);
       expect(_appOf(tester).dayClosed, isTrue);
       expect(find.byType(PillCardStack), findsNothing);
       await _wait(tester, seconds: 6);

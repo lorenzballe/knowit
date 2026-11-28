@@ -7191,4 +7191,25 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => '你的第一天完成了';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return '你有 $sure% 的把握，$total 题答对 $right 题。';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return '$total 题答对 $right 题。';
+  }
+
+  @override
+  String get firstDayRemind => '明天提醒我';
+
+  @override
+  String firstDayReminded(String time) {
+    return '明天 $time 提醒你。';
+  }
 }

@@ -1720,5 +1720,10 @@
   "inviteSuccessPlan": "Astute+ · één week",
   "inviteSuccessUntil": "Tot {date}",
   "inviteSuccessFoot": "Niets te betalen en niets op te zeggen: daarna heb je weer het gratis abonnement.",
-  "inviteEarned": "{n, plural, =1{Een vriend maakte zijn eerste dag af: een week Astute+ voor jou.} other{{n} vrienden maakten hun eerste dag af: {n} weken Astute+ voor jou.}}"
+  "inviteEarned": "{n, plural, =1{Een vriend maakte zijn eerste dag af: een week Astute+ voor jou.} other{{n} vrienden maakten hun eerste dag af: {n} weken Astute+ voor jou.}}",
+  "firstDayTitle": "Je eerste dag zit erop",
+  "firstDaySureRight": "Je was {sure}% zeker en had er {right} van de {total} goed.",
+  "firstDayRight": "Je had er {right} van de {total} goed.",
+  "firstDayRemind": "Herinner me morgen",
+  "firstDayReminded": "We herinneren je morgen om {time}."
 }

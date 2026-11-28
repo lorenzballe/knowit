@@ -1720,5 +1720,10 @@
   "inviteSuccessPlan": "Astute+ · 1주일",
   "inviteSuccessUntil": "{date}까지",
   "inviteSuccessFoot": "결제도 해지도 필요 없어요. 이후에는 무료 요금제로 돌아가요.",
-  "inviteEarned": "{n, plural, other{친구 {n}명이 첫날을 마쳤어요. 나에게 Astute+ {n}주.}}"
+  "inviteEarned": "{n, plural, other{친구 {n}명이 첫날을 마쳤어요. 나에게 Astute+ {n}주.}}",
+  "firstDayTitle": "첫날을 마쳤어요",
+  "firstDaySureRight": "{sure}% 확신했고, {total}개 중 {right}개를 맞혔어요.",
+  "firstDayRight": "{total}개 중 {right}개를 맞혔어요.",
+  "firstDayRemind": "내일 알려 주세요",
+  "firstDayReminded": "내일 {time}에 알려 드릴게요."
 }

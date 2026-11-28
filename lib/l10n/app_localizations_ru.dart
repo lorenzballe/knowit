@@ -8095,4 +8095,25 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => 'Твой первый день пройден';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return 'Ты был уверен на $sure% и угадал $right из $total.';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return 'Ты угадал $right из $total.';
+  }
+
+  @override
+  String get firstDayRemind => 'Напомни мне завтра';
+
+  @override
+  String firstDayReminded(String time) {
+    return 'Напомним завтра в $time.';
+  }
 }

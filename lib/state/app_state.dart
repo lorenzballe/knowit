@@ -108,6 +108,10 @@ class AppState extends ChangeNotifier {
   /// [firstWeekOfferedOn]).
   static const _kFirstWeekOfferedOn = 'knowit.firstWeekOfferedOn';
   static const _kFirstMonthOfferedOn = 'knowit.firstMonthOfferedOn';
+
+  /// The day the first finished day was celebrated (see
+  /// [firstDayCelebratedOn]).
+  static const _kFirstDayCelebratedOn = 'knowit.firstDayCelebratedOn';
   static const _kTopics = 'knowit.topics';
   static const _kTopicWeights = 'knowit.topicWeights';
   static const _kGoal = 'knowit.goal';
@@ -668,6 +672,7 @@ class AppState extends ChangeNotifier {
     trialOfferedOn = _prefs.getString(_kTrialOfferedOn);
     firstWeekOfferedOn = _prefs.getString(_kFirstWeekOfferedOn);
     firstMonthOfferedOn = _prefs.getString(_kFirstMonthOfferedOn);
+    firstDayCelebratedOn = _prefs.getString(_kFirstDayCelebratedOn);
     // A reader not yet through the first run is new, and opens on the cards
     // chosen for a first impression; one who was through it before this
     // was kept is dealt as they always were.
@@ -2741,6 +2746,26 @@ class AppState extends ChangeNotifier {
     await _prefs.setString(_kFirstMonthOfferedOn, firstMonthOfferedOn!);
   }
 
+  /// The day the reader's first finished day was celebrated, on a screen of
+  /// its own right after the fifth card (lib/widgets/first_day.dart), as a
+  /// date key; null while it never has been. Noted as the screen rises, so
+  /// it rises once whatever happens next. A reader who signs out leaves it
+  /// behind: whoever reads here next has a first day of their own.
+  String? firstDayCelebratedOn;
+
+  /// Whether this is the evening the first day was celebrated. That screen
+  /// is the evening's one full-screen moment and its one question: the
+  /// reminder is asked from it, never again by the shell on the same
+  /// evening, and a level reached waits for the next calm moment.
+  bool get celebratedToday => firstDayCelebratedOn == dateKey(today);
+
+  /// Notes the celebration as it rises. Kept at once, before the write
+  /// lands: the shell asks whether this is its evening in the same frame.
+  Future<void> notedFirstDayCelebrated() async {
+    firstDayCelebratedOn = dateKey(today);
+    await _prefs.setString(_kFirstDayCelebratedOn, firstDayCelebratedOn!);
+  }
+
   /// The first morning, dealt again now that the reader has said what they
   /// want. It was dealt when the app opened, before the first run asked
   /// anything, so every new reader of a date met the same five whatever
@@ -3863,6 +3888,7 @@ class AppState extends ChangeNotifier {
     reviewAskedOn = null;
     accountOffered = false;
     widgetAsked = false;
+    firstDayCelebratedOn = null;
     pushTokens = [];
     place = null;
     placeRemovedAt = null;

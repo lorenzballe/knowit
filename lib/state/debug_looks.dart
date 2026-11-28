@@ -143,6 +143,21 @@ enum LearnLook {
   mix,
 }
 
+/// How the reader's first finished day ends, as the developer tools pick it
+/// (lib/widgets/first_day.dart): celebrated first, on a screen of its own
+/// right after the fifth card, the offer after it; or as it was before, the
+/// offer at once.
+enum FirstDayEndLook {
+  /// The day celebrated: the streak, the points, how sure against how
+  /// right, the reminder asked from there and Explore offered. The one that
+  /// ships.
+  celebration,
+
+  /// As before: the card after the fifth at once, the reminder sheet over
+  /// the shelf.
+  asBefore,
+}
+
 /// How a card's foot is set, as the developer tools pick it: one of the
 /// four ways being tried, by the letter the owner knows it by
 /// (lib/widgets/source_foot.dart, SourceFoot).
@@ -164,8 +179,8 @@ enum CardFootPick {
 /// on his own phone what only pictures showed him before: the finished day
 /// with no row over its card, the profile's other tops, where the day is
 /// sent from, the picture it is sent as, What to learn five other ways,
-/// the paywall's prototypes, the four feet of a card, and the hard cards
-/// ringed.
+/// the paywall's prototypes, the four feet of a card, the hard cards
+/// ringed, and the first day's end as it was before it was celebrated.
 /// Changed from the debug section at the foot of the profile, kept on the
 /// phone, and listened to where each is drawn, so a change shows at once.
 ///
@@ -181,6 +196,7 @@ abstract final class DebugLooks {
   static const String _kCardFoot = 'knowit.debug.cardFoot';
   static const String _kSharePicture = 'knowit.debug.sharePicture';
   static const String _kHardCards = 'knowit.debug.hardCards';
+  static const String _kFirstDayEnd = 'knowit.debug.firstDayEnd';
 
   /// The finished day with no row over its shelf, as kept.
   static final ValueNotifier<bool> noTopRow = ValueNotifier<bool>(false);
@@ -225,6 +241,13 @@ abstract final class DebugLooks {
   static final ValueNotifier<HardCardLook> hardCards =
       ValueNotifier<HardCardLook>(HardCardLook.today);
 
+  /// How the first finished day ends that ships: celebrated.
+  static const FirstDayEndLook firstDayEndShips = FirstDayEndLook.celebration;
+
+  /// How the first finished day ends, as kept.
+  static final ValueNotifier<FirstDayEndLook> firstDayEnd =
+      ValueNotifier<FirstDayEndLook>(firstDayEndShips);
+
   /// Whether the finished day goes without its top row in this run.
   static bool get todayWithoutTopRow => debugToolsOn && noTopRow.value;
 
@@ -262,6 +285,11 @@ abstract final class DebugLooks {
   static HardCardLook get hardCardsPicked =>
       debugToolsOn ? hardCards.value : HardCardLook.today;
 
+  /// How the first finished day ends in this run: celebrated, as it ships,
+  /// unless the tools are on and as before was picked.
+  static FirstDayEndLook get firstDayEndPicked =>
+      debugToolsOn ? firstDayEnd.value : firstDayEndShips;
+
   /// Reads what this phone keeps. Nothing kept is the app as it ships.
   static void load(SharedPreferences prefs) {
     noTopRow.value = prefs.getBool(_kNoTopRow) ?? false;
@@ -284,6 +312,16 @@ abstract final class DebugLooks {
     hardCards.value =
         HardCardLook.values.asNameMap()[prefs.getString(_kHardCards)] ??
         HardCardLook.today;
+    firstDayEnd.value =
+        FirstDayEndLook.values.asNameMap()[prefs.getString(_kFirstDayEnd)] ??
+        firstDayEndShips;
+  }
+
+  /// Picks how the first finished day ends, and keeps it so.
+  static Future<void> setFirstDayEnd(FirstDayEndLook look) async {
+    firstDayEnd.value = look;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_kFirstDayEnd, look.name);
   }
 
   /// Picks the picture the day is sent as, and keeps it so.
@@ -368,6 +406,9 @@ abstract final class DebugLooks {
     if (hardCards.value != HardCardLook.today) {
       await prefs.setString(_kHardCards, hardCards.value.name);
     }
+    if (firstDayEnd.value != firstDayEndShips) {
+      await prefs.setString(_kFirstDayEnd, firstDayEnd.value.name);
+    }
   }
 
   /// The app as it ships, for a test that changed any of them.
@@ -381,5 +422,6 @@ abstract final class DebugLooks {
     cardFoot.value = null;
     sharePicture.value = sharePictureShips;
     hardCards.value = HardCardLook.today;
+    firstDayEnd.value = firstDayEndShips;
   }
 }

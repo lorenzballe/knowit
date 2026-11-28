@@ -1720,5 +1720,10 @@
   "inviteSuccessPlan": "Astute+・1週間",
   "inviteSuccessUntil": "{date}まで",
   "inviteSuccessFoot": "支払いも解約も不要です。その後は無料プランに戻ります。",
-  "inviteEarned": "{n, plural, other{友だち{n}人が最初の1日を終えました。あなたにAstute+を{n}週間。}}"
+  "inviteEarned": "{n, plural, other{友だち{n}人が最初の1日を終えました。あなたにAstute+を{n}週間。}}",
+  "firstDayTitle": "最初の1日、完了",
+  "firstDaySureRight": "自信は{sure}%、{total}問中{right}問正解でした。",
+  "firstDayRight": "{total}問中{right}問正解でした。",
+  "firstDayRemind": "明日お知らせを受け取る",
+  "firstDayReminded": "明日{time}にお知らせします。"
 }

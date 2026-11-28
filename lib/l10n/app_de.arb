@@ -1720,5 +1720,10 @@
   "inviteSuccessPlan": "Astute+ · eine Woche",
   "inviteSuccessUntil": "Bis zum {date}",
   "inviteSuccessFoot": "Nichts zu bezahlen und nichts zu kündigen: Danach bist du wieder im Gratis-Tarif.",
-  "inviteEarned": "{n, plural, =1{Ein Freund hat seinen ersten Tag beendet: eine Woche Astute+ für dich.} other{{n} Freunde haben ihren ersten Tag beendet: {n} Wochen Astute+ für dich.}}"
+  "inviteEarned": "{n, plural, =1{Ein Freund hat seinen ersten Tag beendet: eine Woche Astute+ für dich.} other{{n} Freunde haben ihren ersten Tag beendet: {n} Wochen Astute+ für dich.}}",
+  "firstDayTitle": "Dein erster Tag ist geschafft",
+  "firstDaySureRight": "Du warst dir zu {sure} % sicher und hattest {right} von {total} richtig.",
+  "firstDayRight": "Du hattest {right} von {total} richtig.",
+  "firstDayRemind": "Erinnere mich morgen",
+  "firstDayReminded": "Wir erinnern dich morgen um {time}."
 }

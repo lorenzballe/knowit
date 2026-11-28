@@ -1720,5 +1720,10 @@
   "inviteSuccessPlan": "Astute+ · неделя",
   "inviteSuccessUntil": "До {date}",
   "inviteSuccessFoot": "Ничего платить и ничего отменять не нужно: потом ты вернёшься на бесплатный план.",
-  "inviteEarned": "{n, plural, one{{n} друг закончил первый день: {n} неделя Astute+ для тебя.} few{{n} друга закончили первый день: {n} недели Astute+ для тебя.} many{{n} друзей закончили первый день: {n} недель Astute+ для тебя.} other{{n} друга закончили первый день: {n} недели Astute+ для тебя.}}"
+  "inviteEarned": "{n, plural, one{{n} друг закончил первый день: {n} неделя Astute+ для тебя.} few{{n} друга закончили первый день: {n} недели Astute+ для тебя.} many{{n} друзей закончили первый день: {n} недель Astute+ для тебя.} other{{n} друга закончили первый день: {n} недели Astute+ для тебя.}}",
+  "firstDayTitle": "Твой первый день пройден",
+  "firstDaySureRight": "Ты был уверен на {sure}% и угадал {right} из {total}.",
+  "firstDayRight": "Ты угадал {right} из {total}.",
+  "firstDayRemind": "Напомни мне завтра",
+  "firstDayReminded": "Напомним завтра в {time}."
 }

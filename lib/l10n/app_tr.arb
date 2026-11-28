@@ -1720,5 +1720,10 @@
   "inviteSuccessPlan": "Astute+ · bir hafta",
   "inviteSuccessUntil": "{date} tarihine kadar",
   "inviteSuccessFoot": "Ödenecek ya da iptal edilecek bir şey yok: sonra ücretsiz plana dönersin.",
-  "inviteEarned": "{n, plural, other{{n} arkadaşın ilk gününü bitirdi: sana {n} hafta Astute+.}}"
+  "inviteEarned": "{n, plural, other{{n} arkadaşın ilk gününü bitirdi: sana {n} hafta Astute+.}}",
+  "firstDayTitle": "İlk günün tamam",
+  "firstDaySureRight": "%{sure} emindin, {total} sorudan {right} tanesini doğru bildin.",
+  "firstDayRight": "{total} sorudan {right} tanesini doğru bildin.",
+  "firstDayRemind": "Yarın hatırlat",
+  "firstDayReminded": "Hatırlatma yarın saat {time}."
 }

@@ -8526,5 +8526,49 @@
     "type": "int"
    }
   }
+ },
+ "firstDayTitle": "Your first day is done",
+ "@firstDayTitle": {
+  "description": "The screen that celebrates the reader's first finished day, right after their fifth card (black at night, paper by day): its headline, in the display face, over the streak, the points the day earned and how sure against how right. Set on up to three lines; no full stop, as a headline."
+ },
+ "firstDaySureRight": "You were {sure}% sure, and got {right} of {total} right.",
+ "@firstDaySureRight": {
+  "description": "That screen, one plain line under the streak and the points: how sure the reader said they were on today's answers, on average (sure, 50 to 90, a percent), set against how many of today's answers were right (right of total). Said only where the card asked how sure at least once that day.",
+  "placeholders": {
+   "sure": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "firstDayRight": "You got {right} of {total} right.",
+ "@firstDayRight": {
+  "description": "That screen, the same line on a day no card asked how sure: how many of today's answers were right, right of total.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "firstDayRemind": "Remind me tomorrow",
+ "@firstDayRemind": {
+  "description": "That screen, its first button: raises the reminder sheet, which asks at what time to send the daily reminder. Short, as a button."
+ },
+ "firstDayReminded": "We’ll remind you tomorrow at {time}.",
+ "@firstDayReminded": {
+  "description": "That screen, in place of the first button once the reader chose a time and the phone allowed notifications: when the first reminder comes. time is the time as the phone writes it (19:00, or 7:00 PM).",
+  "placeholders": {
+   "time": {
+    "type": "String"
+   }
+  }
  }
 }

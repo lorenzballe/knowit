@@ -7626,4 +7626,25 @@ class AppLocalizationsPt extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get firstDayTitle => 'Terminaste o teu primeiro dia';
+
+  @override
+  String firstDaySureRight(int sure, int right, int total) {
+    return 'Estavas $sure% seguro e acertaste $right em $total.';
+  }
+
+  @override
+  String firstDayRight(int right, int total) {
+    return 'Acertaste $right em $total.';
+  }
+
+  @override
+  String get firstDayRemind => 'Lembra-me amanhã';
+
+  @override
+  String firstDayReminded(String time) {
+    return 'Lembramos-te amanhã às $time.';
+  }
 }
