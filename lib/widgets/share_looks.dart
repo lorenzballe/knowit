@@ -842,7 +842,7 @@ class _WholeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? ref = CardThumb.refOf(pill, CardSide.front);
+    final String? ref = CardThumb.refOf(pill, CardSide.front, own: true);
     final BorderRadius round = BorderRadius.circular(width * 34 / 366);
     final Widget words = _CardInWords(pill: pill);
     Widget picture(String at) => Positioned.fill(

@@ -166,9 +166,10 @@ def page_ref(card: dict) -> str:
     return f"{page_file(card)}?v={page_hash(card['_html'])}"
 
 
-def thumbs_index() -> dict[str, str]:
-    """The page hash each card's pictures were taken from, by card."""
-    index = THUMBS / "index.json"
+def thumbs_index(name: str = "index.json") -> dict[str, str]:
+    """The page hash each card's pictures were taken from, by card; with [name] "ringed.json", the hash a hard
+    card's ringed pictures were taken under."""
+    index = THUMBS / name
     return json.loads(index.read_text(encoding="utf-8")) if index.exists() else {}
 
 
@@ -184,17 +185,39 @@ def picture_hash(html: str) -> str:
     return page_hash(html + PICTURES)
 
 
-def thumbs_of(card: dict, index: dict[str, str]) -> dict | None:
+# The ring's edition, bumped when a hard card's look ringed changes (its colours in lib/widgets/hard_ring.dart and
+# tool/cards/hard_env.cjs, the kit's ring()), so every hard card's ringed pictures are taken again under a new name
+# (tool/cards/thumbs.cjs keeps the same) and the phones fetch them anew. 1: the ring as the owner chose it, November
+# 2026.
+RINGED = "\n<!-- ringed 1 -->"
+
+
+def ringed_hash(html: str) -> str:
+    """A hard card's ringed pictures' version: the page's hash with the pictures' edition and the ring's."""
+    return page_hash(html + PICTURES + RINGED)
+
+
+def thumbs_of(card: dict, index: dict[str, str], ringed: dict[str, str] | None = None) -> dict | None:
     """The pictures of a free card's page, front and back, named with the page's hash: only while
     they were taken from the page as it is now. A card whose page changed since goes without until
-    thumbs.cjs takes them again, and the app draws it as it would with no picture."""
+    thumbs.cjs takes them again, and the app draws it as it would with no picture.
+
+    A hard card carries two more pairs, taken ringed as the app reads it (lib/widgets/hard_ring.dart):
+    `ringed` at night, `ringed_day` on the day paper, named with their own hash, while they were taken
+    from the page as it is now and under the ring as it is now ([ringed], the hash each was taken under)."""
     h = picture_hash(card["_html"])
     if index.get(card["id"]) != h:
         return None
-    return {side: f"thumbs/{card['id']}-{side}.webp?v={h}" for side in ("front", "back")}
+    out: dict = {side: f"thumbs/{card['id']}-{side}.webp?v={h}" for side in ("front", "back")}
+    r = ringed_hash(card["_html"])
+    if card.get("difficulty") == "hard" and (ringed or {}).get(card["id"]) == r:
+        for key, look in (("ringed", "ringed"), ("ringed_day", "ringed-day")):
+            out[key] = {side: f"thumbs/{card['id']}-{look}-{side}.webp?v={r}" for side in ("front", "back")}
+    return out
 
 
 _THUMBS: dict[str, str] | None = None
+_RINGED: dict[str, str] | None = None
 
 
 def bundled(card: dict, *, inline: bool = False) -> dict:
@@ -206,12 +229,14 @@ def bundled(card: dict, *, inline: bool = False) -> dict:
         if inline:
             out["web"] = {**out["web"], "html": card["_html"]}
         else:
-            global _THUMBS
+            global _THUMBS, _RINGED
             if _THUMBS is None:
                 _THUMBS = thumbs_index()
+            if _RINGED is None:
+                _RINGED = thumbs_index("ringed.json")
             out["web"] = {**out["web"], "page": page_ref(card),
                           "bytes": len(card["_html"].encode("utf-8"))}
-            pictures = thumbs_of(card, _THUMBS)
+            pictures = thumbs_of(card, _THUMBS, _RINGED)
             if pictures:
                 out["web"]["thumbs"] = pictures
     return out
