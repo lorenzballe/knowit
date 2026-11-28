@@ -200,11 +200,11 @@ const List<FirstCard> kFirstDays = [
         'from the wave. What we fear is not what kills.',
   ),
   FirstCard(
-    'nature-clay-slide-plane',
+    'nature-vesuvius-ash-volume',
     day: 3,
     why:
-        'A hillside in section after rain: tap the layer it slides on. The '
-        'clay that lets no water through, and the slope that rides it.',
+        'A guess with a right answer: Vesuvius\'s ten days of 1944 dragged '
+        'into a cube beside it, 245 million m³ made a size you can see.',
   ),
   // The subjects' own, for a reader who held these highest.
   FirstCard(
@@ -277,13 +277,6 @@ const List<FirstCard> kFirstDays = [
     why:
         'Technology, with a right answer: the give in a pin and its hole, '
         'felt with a handle. The pointer waits, then follows.',
-  ),
-  FirstCard(
-    'nature-vesuvius-ash-volume',
-    day: 0,
-    why:
-        'Nature, with a right answer: Vesuvius\'s ten days of 1944 dragged '
-        'into a cube beside it, 245 million m³ made a size you can see.',
   ),
   FirstCard(
     'thinking-two-four-seven',
