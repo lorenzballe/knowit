@@ -158,7 +158,9 @@ function unsaidByTheCard(sentence: string): string {
   return sentence;
 }
 
-function asWords(text: string): string {
+/** [text] with the signs a voice reads badly put into words. Books read
+ * aloud use it too (books.ts). */
+export function asWords(text: string): string {
   let out = text;
   for (const [re, word] of AS_WORDS) out = out.replace(re, word);
   return out.replace(/[ \t]+/g, ' ').trim();
@@ -226,9 +228,10 @@ export class VoiceRefused extends Error {
   }
 }
 
-/** The request for [text]: the model, English, the settings. */
-export function speechBody(text: string): Record<string, unknown> {
-  return { text, model_id: MODEL_ID, language_code: 'en', voice_settings: { ...VOICE_SETTINGS } };
+/** The request for [text]: the model (Listen's, unless a caller names
+ * another, as the books do), English, the settings. */
+export function speechBody(text: string, model: string = MODEL_ID): Record<string, unknown> {
+  return { text, model_id: model, language_code: 'en', voice_settings: { ...VOICE_SETTINGS } };
 }
 
 /** What ElevenLabs says when the account cannot pay: its codes (402
@@ -256,11 +259,13 @@ export function refusalOf(status: number, body: string): Refusal {
   return 'refused';
 }
 
-/** ElevenLabs, with [key]. A busy answer is tried once more after a breath. */
+/** ElevenLabs, with [key], reading with [model] (Listen's, unless the
+ * books name theirs). A busy answer is tried once more after a breath. */
 export function elevenLabs(
   key: string,
   fetcher: typeof fetch = fetch,
   pause: (ms: number) => Promise<void> = (ms) => new Promise((done) => setTimeout(done, ms)),
+  model: string = MODEL_ID,
 ): Voice {
   return {
     async speak(text) {
@@ -268,7 +273,7 @@ export function elevenLabs(
         const res = await fetcher(`${ELEVENLABS_TTS}/${VOICE_ID}?output_format=${OUTPUT_FORMAT}`, {
           method: 'POST',
           headers: { 'xi-api-key': key, 'content-type': 'application/json', accept: 'audio/mpeg' },
-          body: JSON.stringify(speechBody(text)),
+          body: JSON.stringify(speechBody(text, model)),
         });
         if (res.ok) {
           const audio = Buffer.from(await res.arrayBuffer());

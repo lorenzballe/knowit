@@ -10,21 +10,36 @@ export 'card_page_store_base.dart';
 /// when it runs short of room: a page cleared is fetched again.
 PageStore pageStoreOnThisPhone() => FilePageStore();
 
-/// One file per page, under `card_pages/` in [directory]; the [most] most
-/// recently wanted are kept and the rest let go.
+/// The books' summaries a reader has opened (lib/data/book_summaries.dart),
+/// kept where the phone does not clear them to make room: a book opened once
+/// reads again on a plane.
+PageStore summaryStoreOnThisPhone() => FilePageStore(
+  directory: getApplicationSupportDirectory,
+  folder: 'book_summaries',
+  most: 80,
+);
+
+/// One file per page, under [folder] (`card_pages/`) in [directory]; the
+/// [most] most recently wanted are kept and the rest let go.
 class FilePageStore implements PageStore {
-  FilePageStore({Future<Directory> Function()? directory, this.most = 400})
-    : _directory = directory ?? getApplicationCacheDirectory;
+  FilePageStore({
+    Future<Directory> Function()? directory,
+    this.most = 400,
+    this.folder = 'card_pages',
+  }) : _directory = directory ?? getApplicationCacheDirectory;
 
   /// How many pages are kept, at the most.
   final int most;
+
+  /// The folder they are kept in.
+  final String folder;
 
   final Future<Directory> Function() _directory;
   Future<Directory>? _home;
   int _writes = 0;
 
   Future<Directory> get _folder => _home ??= () async {
-    final Directory d = Directory('${(await _directory()).path}/card_pages');
+    final Directory d = Directory('${(await _directory()).path}/$folder');
     await d.create(recursive: true);
     return d;
   }();
