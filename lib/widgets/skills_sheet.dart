@@ -1,8 +1,8 @@
 /// What to learn the way the owner picked it, "un mix": a page like the
 /// goal's question, one row under another, each skill with its badge, its
-/// name and a line on what it covers, but more than one may be picked; in a
-/// sheet that scrolls, behind a tap on the profile's box of the skills
-/// picked. The scores stay in Your journey, as they are, with the reading
+/// name and a line on what it covers, but more than one may be picked; a
+/// page of its own, laid as the goal's question is (AimScreen), behind a
+/// tap on the profile's box of the skills picked. The scores stay in Your journey, as they are, with the reading
 /// of the answers under them: where the reader sees clearly, and their
 /// blind spot (SkillsReading).
 ///
@@ -21,35 +21,34 @@ import '../data/topics.dart' show inkOn;
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import 'chunky.dart' show ChunkyButton;
 import 'fit_text.dart';
 import 'training.dart' show SkillBadge;
+import 'ui.dart' show BackCircle;
 
-/// Raises the sheet over [context]'s page, and says once, as it goes down,
-/// what changed, as What to learn's screen says on its way out.
+/// Opens What to learn's page over [context]'s, and says once, as it
+/// closes, what changed, as What to learn's screen says on its way out.
 Future<void> showSkillsSheet(BuildContext context, AppState app) {
   HapticFeedback.selectionClick();
   Analytics.capture('skills opened', {'from': 'profile'});
   final List<String> before = List.of(app.skills);
-  return showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
-    backgroundColor: Colors.transparent,
-    barrierColor: const Color(0x8C141416),
-    builder: (_) => SkillsSheet(app: app),
-  ).whenComplete(() {
-    final List<String> now = app.skills;
-    if (now.join(',') == before.join(',')) return;
-    Analytics.capture('skills saved', {
-      'skills': now.join(','),
-      'count': now.length,
-      'added': now.where((k) => !before.contains(k)).length,
-      'removed': before.where((k) => !now.contains(k)).length,
-    });
-  });
+  return Navigator.of(context)
+      .push(MaterialPageRoute<void>(builder: (_) => SkillsSheet(app: app)))
+      .whenComplete(() {
+        final List<String> now = app.skills;
+        if (now.join(',') == before.join(',')) return;
+        Analytics.capture('skills saved', {
+          'skills': now.join(','),
+          'count': now.length,
+          'added': now.where((k) => !before.contains(k)).length,
+          'removed': before.where((k) => !now.contains(k)).length,
+        });
+      });
 }
 
-/// The sheet: the reading of the answers, then the question and the twelve.
+/// The page, laid as the goal's question is (AimScreen): the way back, the
+/// question large, what a pick does, the twelve one under another, and Done
+/// at the foot; any number of them picked, each kept the moment it is.
 class SkillsSheet extends StatelessWidget {
   const SkillsSheet({super.key, required this.app});
 
@@ -66,63 +65,71 @@ class SkillsSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final p = context.p;
-    return Container(
+    final double foot = MediaQuery.paddingOf(context).bottom;
+    return Scaffold(
       key: const ValueKey('profile-skills-sheet'),
-      decoration: BoxDecoration(
-        color: p.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      padding: EdgeInsets.fromLTRB(
-        18,
-        12,
-        18,
-        MediaQuery.paddingOf(context).bottom + 18,
-      ),
-      child: SingleChildScrollView(
-        child: ListenableBuilder(
-          listenable: app,
-          builder: (context, _) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Center(
-                  child: Container(
-                    width: 38,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: p.inkMuted.withValues(alpha: 0.35),
-                      borderRadius: BorderRadius.circular(9),
+      backgroundColor: p.surface,
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 6, 20, 0),
+              child: Row(
+                children: [
+                  BackCircle(onPressed: () => Navigator.of(context).maybePop()),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(20, 18, 20, 12),
+                children: [
+                  Semantics(
+                    header: true,
+                    child: Text(
+                      l.skillsRowTitle,
+                      style: AppText.display(
+                        size: 31,
+                        weight: FontWeight.w600,
+                        height: 1.12,
+                        spacing: -0.5,
+                        color: p.ink,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 18),
-                Semantics(
-                  header: true,
-                  child: Text(
-                    l.trainingTitle,
-                    style: AppText.display(
-                      size: 25,
-                      weight: FontWeight.w600,
-                      height: 1.15,
-                      color: p.ink,
+                  const SizedBox(height: 10),
+                  Text(
+                    l.trainingEmpty,
+                    style: AppText.body(
+                      size: 15,
+                      height: 1.4,
+                      color: p.ink.withValues(alpha: 0.62),
                     ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  l.trainingEmpty,
-                  style: AppText.body(
-                    size: 13.5,
-                    height: 1.4,
-                    color: p.inkMuted,
+                  const SizedBox(height: 22),
+                  ListenableBuilder(
+                    listenable: app,
+                    builder: (context, _) =>
+                        SkillRows(picked: app.skills, onTap: _toggle),
                   ),
-                ),
-                const SizedBox(height: 16),
-                SkillRows(picked: app.skills, onTap: _toggle),
-              ],
-            );
-          },
+                  const SizedBox(height: 10),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 8, 20, foot > 0 ? foot : 16),
+              child: ChunkyButton(
+                key: const ValueKey('profile-skills-done'),
+                label: l.skillsDone,
+                fill: p.inverse,
+                ink: p.onInverse,
+                height: 58,
+                onPressed: () => Navigator.of(context).maybePop(),
+              ),
+            ),
+          ],
         ),
       ),
     );
